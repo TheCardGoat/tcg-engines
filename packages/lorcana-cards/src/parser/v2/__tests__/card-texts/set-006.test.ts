@@ -995,9 +995,7 @@ describe("Set 006 Card Text Parser Tests", () => {
       keyword: "Shift",
       cost: { ink: 5 },
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(shift),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(shift));
 
     // Ability 2: SHINING EXAMPLE
     const shiningExample: TriggeredAbilityDefinition = {
@@ -1071,9 +1069,7 @@ describe("Set 006 Card Text Parser Tests", () => {
       keyword: "Shift",
       cost: { ink: 7 },
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(shift),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(shift));
 
     // Ability 2: ASTRAL ATTUNEMENT
     const astralAttunement: TriggeredAbilityDefinition = {
@@ -1239,9 +1235,7 @@ describe("Set 006 Card Text Parser Tests", () => {
       keyword: "Shift",
       cost: { ink: 5 },
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(shift),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(shift));
 
     // Ability 2: YOUR REWARD AWAITS (triggered)
     const yourRewardAwaits: TriggeredAbilityDefinition = {
@@ -1392,9 +1386,7 @@ describe("Set 006 Card Text Parser Tests", () => {
         target: "CONTROLLER",
       },
     };
-    expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining(draw2),
-    );
+    expect(result.abilities[1].ability).toEqual(expect.objectContaining(draw2));
   });
 
   it.skip("Maleficent's Staff: should parse card text", () => {
@@ -1585,9 +1577,7 @@ describe("Set 006 Card Text Parser Tests", () => {
       keyword: "Shift",
       cost: { ink: 3 },
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(shift),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(shift));
 
     // Ability 2: READY FOR ACTION (triggered)
     const readyForAction: TriggeredAbilityDefinition = {
@@ -2165,7 +2155,6 @@ describe("Set 006 Card Text Parser Tests", () => {
     expect(result.abilities[0].ability).toEqual(
       expect.objectContaining(happyFace),
     );
-    );
   });
 
   it.skip("Galactic Communicator: should parse card text", () => {
@@ -2255,8 +2244,6 @@ describe("Set 006 Card Text Parser Tests", () => {
     };
     expect(result.abilities[0].ability).toEqual(
       expect.objectContaining(teamwork),
-    );
-      }),
     );
 
     // Ability 2: LOTS TO LEARN (triggered)

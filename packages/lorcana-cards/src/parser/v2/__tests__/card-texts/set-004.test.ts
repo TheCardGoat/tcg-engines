@@ -865,9 +865,7 @@ describe("Set 004 Card Text Parser Tests", () => {
       type: "keyword",
       keyword: "Rush",
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(rush),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(rush));
 
     // Second ability: Evasive
     const evasive: KeywordAbilityDefinition = {
@@ -1258,9 +1256,7 @@ describe("Set 004 Card Text Parser Tests", () => {
       type: "keyword",
       keyword: "Ward",
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(ward),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(ward));
 
     // Second ability: PROTECTIVE GODDESS static
     const protectiveGoddess: StaticAbilityDefinition = {
@@ -1367,9 +1363,7 @@ describe("Set 004 Card Text Parser Tests", () => {
       type: "keyword",
       keyword: "Ward",
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(ward),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(ward));
 
     // Second ability: PEOPLE ALWAYS DO CRAZY THINGS triggered
     const peopleAlwaysDoCrazyThings: TriggeredAbilityDefinition = {
@@ -1446,9 +1440,7 @@ describe("Set 004 Card Text Parser Tests", () => {
         type: "conditional",
       },
     };
-    expect(result.abilities[2].ability).toEqual(
-      expect.objectContaining(hopOn),
-    );
+    expect(result.abilities[2].ability).toEqual(expect.objectContaining(hopOn));
   });
 
   it.skip("Pete - Born to Cheat: should parse card text", () => {
@@ -1509,9 +1501,7 @@ describe("Set 004 Card Text Parser Tests", () => {
       type: "keyword",
       keyword: "Ward",
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(ward),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(ward));
 
     // Second ability: THE GOSPEL TRUTH triggered
     const theGospelTruth: TriggeredAbilityDefinition = {
@@ -1565,9 +1555,7 @@ describe("Set 004 Card Text Parser Tests", () => {
         type: "gain-keyword",
       },
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(dodge),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(dodge));
   });
 
   it.skip("Ursula's Trickery: should parse card text", () => {
@@ -1783,9 +1771,7 @@ describe("Set 004 Card Text Parser Tests", () => {
       type: "keyword",
       keyword: "Rush",
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(rush),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(rush));
 
     // Second ability: SUPER PEANUT POWERS triggered
     const superPeanutPowers: TriggeredAbilityDefinition = {
@@ -1814,9 +1800,7 @@ describe("Set 004 Card Text Parser Tests", () => {
       type: "keyword",
       keyword: "Rush",
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(rush),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(rush));
   });
 
   it.skip("Hercules - Daring Demigod: should parse card text", () => {
@@ -1831,9 +1815,7 @@ describe("Set 004 Card Text Parser Tests", () => {
       type: "keyword",
       keyword: "Rush",
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(rush),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(rush));
 
     // Second ability: Reckless
     const reckless: KeywordAbilityDefinition = {
@@ -2072,9 +2054,7 @@ describe("Set 004 Card Text Parser Tests", () => {
         type: "banish",
       },
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(brawl),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(brawl));
   });
 
   it.skip("Imperial Proclamation: should parse card text", () => {
@@ -2117,9 +2097,7 @@ describe("Set 004 Card Text Parser Tests", () => {
         type: "choice",
       },
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(walk),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(walk));
   });
 
   it.skip("Vitalisphere: should parse card text", () => {
@@ -2201,9 +2179,7 @@ describe("Set 004 Card Text Parser Tests", () => {
       type: "keyword",
       keyword: "Ward",
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(ward),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(ward));
 
     // Second ability: THE GIRL WHO HAS EVERYTHING static
     const theGirlWhoHasEverything: StaticAbilityDefinition = {
@@ -2635,9 +2611,7 @@ describe("Set 004 Card Text Parser Tests", () => {
         type: "sequence",
       },
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(glean),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(glean));
   });
 
   it.skip("Seldom All They Seem: should parse card text", () => {

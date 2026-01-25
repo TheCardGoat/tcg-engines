@@ -268,9 +268,7 @@ describe("Set 003 Card Text Parser Tests", () => {
         modifier: -2,
       },
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(bark),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(bark));
   });
 
   it.skip("Perdita - Devoted Mother: should parse card text", () => {
@@ -705,9 +703,7 @@ describe("Set 003 Card Text Parser Tests", () => {
       type: "keyword",
       keyword: "Rush",
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(rush),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(rush));
   });
 
   it.skip("Magic Broom - Dancing Duster: should parse card text", () => {
@@ -746,9 +742,7 @@ describe("Set 003 Card Text Parser Tests", () => {
       type: "keyword",
       keyword: "Rush",
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(rush),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(rush));
 
     // CLEAN THIS, CLEAN THAT (triggered)
     const cleanThisCleanThat: TriggeredAbilityDefinition = {
@@ -1319,9 +1313,7 @@ describe("Set 003 Card Text Parser Tests", () => {
       type: "keyword",
       keyword: "Ward",
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(ward),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(ward));
 
     // EERIE PAIR (static)
     const eeriePair: StaticAbilityDefinition = {
@@ -1537,9 +1529,7 @@ describe("Set 003 Card Text Parser Tests", () => {
       type: "keyword",
       keyword: "Ward",
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(ward),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(ward));
   });
 
   it.skip("Stitch - Covert Agent: should parse card text", () => {
@@ -1567,9 +1557,7 @@ describe("Set 003 Card Text Parser Tests", () => {
         keyword: "Ward",
       },
     };
-    expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining(hide),
-    );
+    expect(result.abilities[1].ability).toEqual(expect.objectContaining(hide));
   });
 
   it.skip("Ursula - Deceiver of All: should parse card text", () => {
@@ -1771,9 +1759,7 @@ describe("Set 003 Card Text Parser Tests", () => {
         type: "compound",
       },
     };
-    expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining(trap),
-    );
+    expect(result.abilities[1].ability).toEqual(expect.objectContaining(trap));
   });
 
   it.skip("Fang - River City: should parse card text", () => {
@@ -2114,9 +2100,7 @@ describe("Set 003 Card Text Parser Tests", () => {
       type: "keyword",
       keyword: "Rush",
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(rush),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(rush));
 
     // OVER HERE, TINK (static)
     const overHereTink: StaticAbilityDefinition = {
@@ -2218,9 +2202,7 @@ describe("Set 003 Card Text Parser Tests", () => {
         modifier: 3,
       },
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(brute),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(brute));
   });
 
   it.skip("Slightly - Lost Boy: should parse card text", () => {
@@ -2263,9 +2245,7 @@ describe("Set 003 Card Text Parser Tests", () => {
       type: "keyword",
       keyword: "Rush",
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(rush),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(rush));
   });
 
   it.skip("Trigger - Not-So-Sharp Shooter: should parse card text", () => {
@@ -2503,9 +2483,7 @@ describe("Set 003 Card Text Parser Tests", () => {
       type: "keyword",
       keyword: "Ward",
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(ward),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(ward));
 
     // SPARE PARTS (triggered)
     const spareParts: TriggeredAbilityDefinition = {
@@ -2674,9 +2652,7 @@ describe("Set 003 Card Text Parser Tests", () => {
       type: "keyword",
       keyword: "Ward",
     };
-    expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining(ward),
-    );
+    expect(result.abilities[1].ability).toEqual(expect.objectContaining(ward));
   });
 
   it.skip("Kit Cloudkicker - Spunky Bear Cub: should parse card text", () => {
@@ -2691,9 +2667,7 @@ describe("Set 003 Card Text Parser Tests", () => {
       type: "keyword",
       keyword: "Ward",
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(ward),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(ward));
   });
 
   it.skip("Rufus - Orphanage Cat: should parse card text", () => {
@@ -2818,9 +2792,7 @@ describe("Set 003 Card Text Parser Tests", () => {
       type: "keyword",
       keyword: "Ward",
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(ward),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(ward));
 
     // Support
     const support: KeywordAbilityDefinition = {
