@@ -284,6 +284,7 @@ export type ComparisonOperator =
   // Alternative naming conventions (for parser compatibility)
   | "greater-than"
   | "less-than"
+  | "more-than" // Alias for greater
   // Additional aliases for natural language
   | "or-more" // Alias for greater-or-equal
   | "or-less"; // Alias for less-or-equal

@@ -10,6 +10,7 @@
  */
 
 import type { CardType } from "../../cards/card-types";
+import type { Condition } from "../condition-types";
 import type {
   CardTarget,
   CharacterTarget,
@@ -122,10 +123,7 @@ export interface RestrictionEffect {
   target?: CharacterTarget | PlayerTarget;
   duration?: EffectDuration;
   /** Condition for when the restriction applies */
-  condition?: {
-    type: string;
-    [key: string]: unknown;
-  };
+  condition?: Condition;
 }
 
 /**

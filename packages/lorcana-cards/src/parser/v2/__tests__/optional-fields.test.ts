@@ -6,7 +6,7 @@
  */
 
 import { describe, expect, it } from "bun:test";
-import { parseAbilityText, parseAbilityTextMulti } from "../parser";
+import { parseAbilityText } from "../parser";
 
 describe("Optional Fields in AbilityWithText", () => {
   describe("Default behavior (no options)", () => {
@@ -27,20 +27,41 @@ describe("Optional Fields in AbilityWithText", () => {
       expect(result.ability?.text).toBe("Rush");
     });
 
-    it("should include name field by default if ability has a name", () => {
+    it("should include name field for named triggered abilities", () => {
+      // Named triggered ability: "NAME When/Whenever..." pattern
       const result = parseAbilityText(
-        "CASE CLOSED During your turn, whenever one of your Detective characters banishes another character in a challenge, draw a card.",
+        "COLD SHOULDER When you play this character, draw a card.",
       );
 
       expect(result.success).toBe(true);
       expect(result.ability).toBeDefined();
-      // name is currently included by default if it exists
-      if (result.ability?.ability && "name" in result.ability.ability) {
-        const abilityName = (result.ability.ability as { name?: string }).name;
-        if (abilityName) {
-          expect(result.ability?.name).toBeDefined();
-        }
-      }
+      // Named triggered abilities should have their name extracted
+      expect(result.ability?.name).toBe("COLD SHOULDER");
+      // Text should also be present
+      expect(result.ability?.text).toBe(
+        "COLD SHOULDER When you play this character, draw a card.",
+      );
+    });
+
+    it("should include name field for named static abilities", () => {
+      // Named static ability: "NAME This character can't/cannot..." pattern
+      const result = parseAbilityText(
+        "STAY LOW This character can't be challenged.",
+      );
+
+      expect(result.success).toBe(true);
+      expect(result.ability).toBeDefined();
+      // Named static abilities should have their name extracted
+      expect(result.ability?.name).toBe("STAY LOW");
+    });
+
+    it("should not include name field for unnamed abilities", () => {
+      const result = parseAbilityText("Rush");
+
+      expect(result.success).toBe(true);
+      expect(result.ability).toBeDefined();
+      // Keyword abilities don't have names, so name should be undefined
+      expect(result.ability?.name).toBeUndefined();
     });
   });
 

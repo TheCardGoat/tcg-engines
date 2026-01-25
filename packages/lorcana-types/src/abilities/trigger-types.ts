@@ -25,6 +25,7 @@
  * ```
  */
 
+import type { Condition } from "./condition-types";
 import type {
   CardReference,
   CharacterFilter,
@@ -345,10 +346,7 @@ export interface BaseTrigger {
    * Condition that must be true for the trigger to fire
    * Used by parser for conditional triggers
    */
-  condition?: {
-    type: string;
-    [key: string]: unknown;
-  };
+  condition?: Condition;
 }
 
 export type Trigger = BaseTrigger | ChallengeTrigger;

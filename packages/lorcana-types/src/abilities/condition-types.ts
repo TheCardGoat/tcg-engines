@@ -870,6 +870,48 @@ export interface HasCharacterNamedCondition {
   controller?: "you" | "opponent" | "any";
 }
 
+/**
+ * Unless condition - negated condition wrapper
+ *
+ * @example "This character can't quest unless you have a Seven Dwarfs character"
+ */
+export interface UnlessCondition {
+  type: "unless";
+  condition: Condition;
+}
+
+/**
+ * Lore comparison condition
+ *
+ * @example "If an opponent has more lore than you"
+ */
+export interface LoreComparisonCondition {
+  type: "lore-comparison";
+  comparison: ComparisonOperator;
+  value?: number;
+  versus?: "you" | "opponent";
+  compareTo?: "you" | "opponent";
+}
+
+/**
+ * Second action in turn condition
+ *
+ * @example "The second time you play a card this turn"
+ */
+export interface SecondInTurnCondition {
+  type: "second-in-turn";
+  action?: "play" | "quest" | "challenge" | "any";
+}
+
+/**
+ * Target is damaged condition
+ *
+ * @example "If the chosen character is damaged"
+ */
+export interface TargetIsDamagedCondition {
+  type: "target-is-damaged";
+}
+
 // ============================================================================
 // Combined Condition Type
 // ============================================================================
@@ -980,7 +1022,12 @@ export type Condition =
   | OpponentHasLoreCondition
   | HasStrongestCharacterCondition
   | HasDamagedCharacterHereCondition
-  | HasItemInPlayCondition;
+  | HasItemInPlayCondition
+  // Additional parser-compatible conditions
+  | UnlessCondition
+  | LoreComparisonCondition
+  | SecondInTurnCondition
+  | TargetIsDamagedCondition;
 
 // ============================================================================
 // Condition Builders (convenience)

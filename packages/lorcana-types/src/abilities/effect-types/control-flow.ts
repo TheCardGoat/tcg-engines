@@ -270,10 +270,7 @@ export interface CompoundEffect {
 export interface ForEachOpponentEffect {
   type: "for-each-opponent";
   effect: Effect;
-  condition?: {
-    type: string;
-    [key: string]: unknown;
-  };
+  condition?: Condition;
 }
 
 /**
