@@ -1,8 +1,5 @@
 import type { CardInstance } from "@tcg/core";
-import type {
-  ComparisonCondition,
-  ComparisonValue,
-} from "../../cards/abilities/types/condition-types";
+import type { ComparisonCondition, ComparisonValue } from "@tcg/lorcana-types";
 import type { LorcanaCardMeta, LorcanaGameState } from "../../types/game-state";
 import { conditionRegistry } from "../condition-registry";
 

@@ -5,6 +5,7 @@
  */
 
 import { describe, expect, it } from "bun:test";
+import type { InkType, LorcanaCardDefinition } from "@tcg/lorcana-types";
 import {
   getAllKeywords,
   getFullName,
@@ -25,8 +26,6 @@ import {
   getUniqueInkTypes,
   validateDeck,
 } from "../deck-validation";
-import type { LorcanaCardDefinition } from "../types/card-types";
-import type { InkType } from "../types/ink-types";
 
 // Helper to create mock cards
 function createMockCard(

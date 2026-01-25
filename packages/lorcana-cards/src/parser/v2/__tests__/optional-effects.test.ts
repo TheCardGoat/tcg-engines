@@ -165,10 +165,11 @@ describe("Optional Effect Parser", () => {
       expect(effect?.type).toBe("sequence");
 
       const sequenceEffect = effect as SequenceEffect;
+      expect(sequenceEffect.steps).toBeDefined();
       expect(sequenceEffect.steps).toHaveLength(2);
 
       // First step should be optional exert
-      expect(sequenceEffect.steps[0]).toEqual({
+      expect(sequenceEffect.steps![0]).toEqual({
         type: "optional",
         effect: {
           type: "exert",
@@ -184,7 +185,7 @@ describe("Optional Effect Parser", () => {
       });
 
       // Second step should be draw
-      expect(sequenceEffect.steps[1]).toEqual({
+      expect(sequenceEffect.steps![1]).toEqual({
         type: "draw",
         amount: 1,
         target: "CONTROLLER",
@@ -200,9 +201,10 @@ describe("Optional Effect Parser", () => {
       expect(effect?.type).toBe("sequence");
 
       const sequenceEffect = effect as SequenceEffect;
+      expect(sequenceEffect.steps).toBeDefined();
       expect(sequenceEffect.steps).toHaveLength(2);
 
-      expect(sequenceEffect.steps[0]).toEqual({
+      expect(sequenceEffect.steps![0]).toEqual({
         type: "optional",
         effect: {
           type: "banish",
@@ -218,7 +220,7 @@ describe("Optional Effect Parser", () => {
         chooser: "CONTROLLER",
       });
 
-      expect(sequenceEffect.steps[1]).toEqual({
+      expect(sequenceEffect.steps![1]).toEqual({
         type: "draw",
         amount: 2,
         target: "CONTROLLER",
@@ -234,9 +236,10 @@ describe("Optional Effect Parser", () => {
       expect(effect?.type).toBe("sequence");
 
       const sequenceEffect = effect as SequenceEffect;
+      expect(sequenceEffect.steps).toBeDefined();
       expect(sequenceEffect.steps).toHaveLength(2);
 
-      expect(sequenceEffect.steps[0]).toEqual({
+      expect(sequenceEffect.steps![0]).toEqual({
         type: "optional",
         effect: {
           type: "deal-damage",
@@ -252,7 +255,7 @@ describe("Optional Effect Parser", () => {
         chooser: "CONTROLLER",
       });
 
-      expect(sequenceEffect.steps[1]).toEqual({
+      expect(sequenceEffect.steps![1]).toEqual({
         type: "gain-lore",
         amount: 1,
       });
@@ -267,9 +270,10 @@ describe("Optional Effect Parser", () => {
       expect(effect?.type).toBe("sequence");
 
       const sequenceEffect = effect as SequenceEffect;
+      expect(sequenceEffect.steps).toBeDefined();
       expect(sequenceEffect.steps).toHaveLength(2);
 
-      expect(sequenceEffect.steps[0]).toEqual({
+      expect(sequenceEffect.steps![0]).toEqual({
         type: "optional",
         effect: {
           type: "return-to-hand",
@@ -284,7 +288,7 @@ describe("Optional Effect Parser", () => {
         chooser: "CONTROLLER",
       });
 
-      expect(sequenceEffect.steps[1]).toEqual({
+      expect(sequenceEffect.steps![1]).toEqual({
         type: "draw",
         amount: 1,
         target: "CONTROLLER",
@@ -300,9 +304,10 @@ describe("Optional Effect Parser", () => {
       expect(effect?.type).toBe("sequence");
 
       const sequenceEffect = effect as SequenceEffect;
+      expect(sequenceEffect.steps).toBeDefined();
       expect(sequenceEffect.steps).toHaveLength(2);
 
-      expect(sequenceEffect.steps[0]).toEqual({
+      expect(sequenceEffect.steps![0]).toEqual({
         type: "optional",
         effect: {
           type: "exert",
@@ -317,7 +322,7 @@ describe("Optional Effect Parser", () => {
         chooser: "CONTROLLER",
       });
 
-      expect(sequenceEffect.steps[1]).toEqual({
+      expect(sequenceEffect.steps![1]).toEqual({
         type: "deal-damage",
         amount: 2,
         target: {
@@ -369,6 +374,7 @@ describe("Optional Effect Parser", () => {
       expect(effect?.type).toBe("sequence");
 
       const sequenceEffect = effect as SequenceEffect;
+      expect(sequenceEffect.steps).toBeDefined();
       expect(sequenceEffect.steps).toHaveLength(2);
     });
 
@@ -381,6 +387,7 @@ describe("Optional Effect Parser", () => {
       expect(effect?.type).toBe("sequence");
 
       const sequenceEffect = effect as SequenceEffect;
+      expect(sequenceEffect.steps).toBeDefined();
       expect(sequenceEffect.steps).toHaveLength(2);
     });
   });
@@ -428,9 +435,10 @@ describe("Optional Effect Parser", () => {
       expect(effect?.type).toBe("sequence");
 
       const sequenceEffect = effect as SequenceEffect;
+      expect(sequenceEffect.steps).toBeDefined();
       expect(sequenceEffect.steps).toHaveLength(2);
 
-      expect(sequenceEffect.steps[0]).toEqual({
+      expect(sequenceEffect.steps![0]).toEqual({
         type: "optional",
         effect: {
           type: "draw",
@@ -440,7 +448,7 @@ describe("Optional Effect Parser", () => {
         chooser: "CONTROLLER",
       });
 
-      expect(sequenceEffect.steps[1]).toEqual({
+      expect(sequenceEffect.steps![1]).toEqual({
         type: "deal-damage",
         amount: 2,
         target: {
@@ -512,9 +520,10 @@ describe("Optional Effect Parser", () => {
       expect(effect?.type).toBe("sequence");
 
       const sequenceEffect = effect as SequenceEffect;
+      expect(sequenceEffect.steps).toBeDefined();
       expect(sequenceEffect.steps).toHaveLength(2);
 
-      expect(sequenceEffect.steps[0]).toEqual({
+      expect(sequenceEffect.steps![0]).toEqual({
         type: "optional",
         effect: {
           type: "exert",
@@ -529,7 +538,7 @@ describe("Optional Effect Parser", () => {
         chooser: "CONTROLLER",
       });
 
-      expect(sequenceEffect.steps[1]).toEqual({
+      expect(sequenceEffect.steps![1]).toEqual({
         type: "deal-damage",
         amount: 1,
         target: {

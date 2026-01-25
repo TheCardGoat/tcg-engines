@@ -1,4 +1,4 @@
-import type { HasCardUnderCondition } from "../../cards/abilities/types/condition-types";
+import type { HasCardUnderCondition } from "@tcg/lorcana-types";
 import { conditionRegistry } from "../condition-registry";
 
 conditionRegistry.register<HasCardUnderCondition>("has-card-under", {

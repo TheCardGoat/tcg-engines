@@ -20,6 +20,7 @@ import {
   type RuleEngineOptions,
 } from "@tcg/core";
 import type {
+  LorcanaCardDefinition,
   ActionCard as LorcanaTypesActionCard,
   CharacterCard as LorcanaTypesCharacterCard,
   ItemCard as LorcanaTypesItemCard,
@@ -32,7 +33,6 @@ import type {
   LorcanaGameState,
   LorcanaMoveParams,
 } from "../types";
-import type { LorcanaCardDefinition } from "../types/card-types";
 
 // Union of engine types and types package types for compatibility
 type LorcanaCardDefinitionInput =

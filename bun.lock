@@ -219,6 +219,7 @@
       "name": "@tcg/lorcana-types",
       "version": "0.1.0",
       "dependencies": {
+        "@tcg/core": "workspace:*",
         "@tcg/core-types": "workspace:*",
       },
       "devDependencies": {

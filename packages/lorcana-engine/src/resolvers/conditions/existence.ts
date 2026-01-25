@@ -4,7 +4,7 @@ import type {
   HasCharacterWithClassificationCondition,
   HasNamedCharacterCondition,
   ResourceCountCondition,
-} from "../../cards/abilities/types/condition-types";
+} from "@tcg/lorcana-types";
 import type { LorcanaFilter } from "../../targeting/lorcana-target-dsl";
 import type { LorcanaCardMeta, LorcanaGameState } from "../../types/game-state";
 import { conditionRegistry } from "../condition-registry";

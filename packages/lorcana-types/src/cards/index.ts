@@ -53,6 +53,20 @@ export {
   isFloodborn,
   isStoryborn,
 } from "./classifications";
+// Deck Validation
+export type {
+  DeckStats,
+  DeckValidationError,
+  DeckValidationResult,
+  TooFewCardsError,
+  TooManyCopiesError,
+  TooManyInkTypesError,
+} from "./deck-validation";
+export {
+  MAX_COPIES_PER_CARD,
+  MAX_INK_TYPES,
+  MIN_DECK_SIZE,
+} from "./deck-validation";
 // Ink Types
 export type { InkType } from "./ink-types";
 export {

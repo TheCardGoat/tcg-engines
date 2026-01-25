@@ -5,20 +5,18 @@
  */
 
 import type {
+  AbilityDefinition,
   KeywordAbility,
+  KeywordAbilityDefinition,
+  LorcanaCardDefinition,
   ParameterizedKeywordType,
-} from "./cards/abilities/types/ability-types";
+} from "@tcg/lorcana-types";
 import {
+  getFullName as cardGetFullName,
   isParameterizedKeywordAbility,
   isShiftKeywordAbility,
   isValueKeywordAbility,
-} from "./cards/abilities/types/ability-types";
-import type {
-  AbilityDefinition,
-  KeywordAbilityDefinition,
-  LorcanaCardDefinition,
-} from "./types/card-types";
-import { getFullName as cardGetFullName } from "./types/card-types";
+} from "@tcg/lorcana-types";
 
 // Re-export getFullName for convenience
 export const getFullName = cardGetFullName;

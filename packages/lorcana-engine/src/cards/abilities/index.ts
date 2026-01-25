@@ -53,8 +53,8 @@
  * @module abilities
  */
 
-// Re-export all types from the types directory
-export * from "./types";
+// Re-export all types from lorcana-types
+export * from "@tcg/lorcana-types/abilities";
 
 // ============================================================================
 // Version Info

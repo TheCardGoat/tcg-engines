@@ -1,5 +1,5 @@
 import type { CardInstance, CardRegistry } from "@tcg/core";
-import type { LorcanaCardDefinition } from "../types/card-types";
+import type { LorcanaCardDefinition } from "@tcg/lorcana-types";
 import type { LorcanaCardMeta, LorcanaGameState } from "../types/game-state";
 import { filterRegistry, registerDefaultFilters } from "./filter-registry";
 import type { LorcanaContext, LorcanaFilter } from "./lorcana-target-dsl";

@@ -1,7 +1,6 @@
 import type { CardInstance, CardRegistry } from "@tcg/core";
-import type { Condition } from "../cards/abilities/types/condition-types";
+import type { Condition, LorcanaCardDefinition } from "@tcg/lorcana-types";
 import type { LorcanaContext } from "../targeting/lorcana-target-dsl";
-import type { LorcanaCardDefinition } from "../types/card-types";
 import type { LorcanaCardMeta, LorcanaGameState } from "../types/game-state";
 import { conditionRegistry } from "./condition-registry";
 
