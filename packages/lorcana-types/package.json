@@ -32,6 +32,7 @@
     "check": "turbo format lint check-types"
   },
   "dependencies": {
+    "@tcg/core": "workspace:*",
     "@tcg/core-types": "workspace:*"
   },
   "devDependencies": {

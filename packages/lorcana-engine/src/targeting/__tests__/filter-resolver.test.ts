@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import type { CardRegistry } from "@tcg/core";
-import type { LorcanaCardDefinition } from "../../types/card-types";
+import type { LorcanaCardDefinition } from "@tcg/lorcana-types";
 import { createDefaultCardMeta } from "../../types/game-state";
 import {
   createTargetFiltersPredicate,

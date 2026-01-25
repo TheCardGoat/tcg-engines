@@ -7,19 +7,20 @@
  * - Maximum 4 copies per full name (Rule 2.1.1.3)
  */
 
-import type { LorcanaCardDefinition } from "./types/card-types";
-import { getFullName, getInkTypes } from "./types/card-types";
 import type {
   DeckStats,
   DeckValidationError,
   DeckValidationResult,
-} from "./types/deck-validation";
+  InkType,
+  LorcanaCardDefinition,
+} from "@tcg/lorcana-types";
 import {
+  getFullName,
+  getInkTypes,
   MAX_COPIES_PER_CARD,
   MAX_INK_TYPES,
   MIN_DECK_SIZE,
-} from "./types/deck-validation";
-import type { InkType } from "./types/ink-types";
+} from "@tcg/lorcana-types";
 
 /**
  * Validate a deck against Lorcana rules

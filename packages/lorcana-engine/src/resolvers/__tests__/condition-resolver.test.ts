@@ -6,10 +6,10 @@ import type { CardInstance, CardRegistry } from "@tcg/core";
 import type {
   Condition,
   HasNamedCharacterCondition,
+  LorcanaCardDefinition,
   TurnCondition,
   UsedShiftCondition,
-} from "../../cards/abilities/types/condition-types";
-import type { LorcanaCardDefinition } from "../../types/card-types";
+} from "@tcg/lorcana-types";
 import {
   createDefaultCardMeta,
   createInitialLorcanaState,

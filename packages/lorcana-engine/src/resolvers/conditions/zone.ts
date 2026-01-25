@@ -4,7 +4,7 @@ import type {
   HasCharacterHereCondition,
   HasNamedLocationCondition,
   ZoneCondition,
-} from "../../cards/abilities/types/condition-types";
+} from "@tcg/lorcana-types";
 import type { LorcanaCardMeta } from "../../types/game-state";
 import { conditionRegistry } from "../condition-registry";
 
