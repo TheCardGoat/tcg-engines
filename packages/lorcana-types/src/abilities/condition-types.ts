@@ -529,6 +529,7 @@ export interface CharacterCountCondition {
  * Generic target condition (for parser flexibility)
  */
 export interface TargetCondition {
+  type: "target";
   target: CharacterTarget | string;
 }
 
