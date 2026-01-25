@@ -48,7 +48,19 @@ export type PlayerTarget =
   | "THAT_PLAYER" // Reference to a previously mentioned player
   | "CHALLENGER_OWNER" // Owner of the challenging character
   | "THEIR_CHOSEN_CHARACTER" // Their chosen character (for each player effects)
-  | "PAWPSICLE_ITEM"; // Specific item reference
+  | "PAWPSICLE_ITEM" // Specific item reference
+  // Extended targets for card text coverage
+  | "ALL_PLAYERS" // All players (for effects like "each player discards")
+  | "SELF" // Self reference (for gain lore effects on self)
+  | "BROOM_CHARACTERS" // Broom characters (for lore gain)
+  | "CHALLENGING_PLAYER" // The player doing the challenge
+  | "NEXT_ACTION" // The next action played (for cost reduction)
+  | "NEXT_ITEM" // The next item played (for cost reduction)
+  | "CARD_FROM_HAND" // A card from hand (for discard effects)
+  | "CHARACTERS_COST_3_OR_LESS" // Characters with cost 3 or less
+  | "CHARACTERS_COST_2_OR_LESS" // Characters with cost 2 or less
+  | "OPPOSING_CHARACTERS" // Alias for ALL_OPPOSING_CHARACTERS
+  | "LOCATIONS"; // All locations (for lore gain effects)
 
 // ============================================================================
 // Card References (Context-Aware)
@@ -168,7 +180,82 @@ export type CharacterTargetEnum =
 
   // Challenge context
   | "challenging-character" // The character doing the challenge
-  | "challenged-character"; // The character being challenged
+  | "challenged-character" // The character being challenged
+
+  // Extended character targets for card text coverage
+  | "YOUR_MUSKETEER_CHARACTERS" // Your Musketeer characters
+  | "YOUR_OTHER_MUSKETEER_CHARACTERS" // Your other Musketeer characters
+  | "YOUR_JETSAM_CHARACTERS" // Your Jetsam characters
+  | "YOUR_FLOTSAM_CHARACTERS" // Your Flotsam characters
+  | "YOUR_BROOM_CHARACTERS" // Your Broom characters
+  | "YOUR_PETER_PAN_CHARACTERS" // Your Peter Pan characters
+  | "YOUR_BODYGUARD_CHARACTERS" // Your Bodyguard characters
+  | "OPPOSING_CHARACTERS" // Alias for ALL_OPPOSING_CHARACTERS
+  | "OPPOSING_EVASIVE_CHARACTERS" // Opposing Evasive characters
+  | "CHOSEN_VILLAIN_CHARACTER" // Chosen Villain character
+  | "CHOSEN_TE_KA_CHARACTER" // Chosen Te Ka character
+  | "CHALLENGED_CHARACTER" // The character being challenged (uppercase)
+  | "CHALLENGING_CHARACTER" // The character doing the challenge (uppercase)
+  | "BANISHED_CHARACTER" // The character that was banished
+  // Extended character targets for additional card text coverage
+  | "CHARACTERS_HERE" // Characters at this location
+  | "YOUR_OTHER_STEEL_CHARACTERS" // Your other Steel characters
+  | "YOUR_DEITY_CHARACTERS" // Your Deity characters
+  | "UP_TO_2_YOUR_CHARACTERS" // Up to 2 of your characters
+  | "THAT_LOCATION" // Reference to a previously mentioned location
+  | "CHOSEN_OPPOSING_DEITY_CHARACTER" // Chosen opposing Deity character
+  | "CHOSEN_CHARACTER_OR_LOCATION" // Chosen character or location
+  // Additional targets for set-005 and beyond
+  | "CHOSEN_CHARACTER_IN_DISCARD" // Chosen character in discard
+  | "CHOSEN_CARD_IN_DISCARD" // Chosen card in discard
+  | "CHOSEN_CARD_FROM_DISCARD" // Chosen card from discard (alias)
+  | "ALL_CHARACTERS_WITH_NAME_IN_DISCARD" // All characters with named card in discard
+  | "CHOSEN_CHARACTER_HERE" // Chosen character at this location
+  | "CHARACTERS_WITH_SUPPORT_HERE" // Characters with Support at this location
+  | "CHOSEN_ITEM_OR_LOCATION" // Chosen item or location
+  | "CHOSEN_CHARACTER_ITEM_OR_LOCATION" // Chosen character, item, or location
+  | "CHOSEN_CHARACTERS_OR_LOCATIONS" // Chosen characters or locations (plural)
+  | "YOUR_VILLAIN_CHARACTERS" // Your Villain characters
+  | "YOUR_ALIEN_CHARACTERS" // Your Alien characters
+  | "YOUR_OTHER_FAIRY_CHARACTERS" // Your other Fairy characters
+  | "YOUR_PUPPY_CHARACTERS" // Your Puppy characters
+  | "YOUR_OTHER_HERO_CHARACTERS" // Your other Hero characters
+  | "YOUR_ALLY_CHARACTERS" // Your Ally characters
+  | "YOUR_OTHER_AMBER_CHARACTERS" // Your other Amber characters
+  | "YOUR_OTHER_RUBY_CHARACTERS" // Your other Ruby characters
+  | "YOUR_OTHER_SAPPHIRE_CHARACTERS" // Your other Sapphire characters
+  | "YOUR_OTHER_EMERALD_CHARACTERS" // Your other Emerald characters
+  | "YOUR_DETECTIVE_CHARACTERS" // Your Detective characters
+  | "CHOSEN_DETECTIVE_CHARACTER" // Chosen Detective character
+  | "CHOSEN_OPPOSING_DAMAGED_CHARACTER" // Chosen opposing damaged character
+  | "CHOSEN_CHARACTERS" // Chosen characters (plural)
+  | "OPPONENT_CHOSEN_CHARACTER" // Opponent's chosen character
+  | "CHOSEN_OPPONENT" // Chosen opponent (for multiplayer)
+  | "YOUR_CHARACTERS_OR_LOCATIONS" // Your characters or locations
+  | "YOUR_CHARACTERS_OR_LOCATIONS_WITH_CARD_UNDER" // Your characters or locations with card under
+  | "CHARACTERS_AT_LOCATION" // Characters at a location
+  | "REVEALED_CARD" // The revealed card
+  | "TOP_OF_DECK" // Top of deck
+  // Additional targets for more card coverage
+  | "CHARACTER_HERE" // Character at this location (singular)
+  | "YOUR_PIRATE_CHARACTERS" // Your Pirate characters
+  | "YOUR_HERO_CHARACTERS" // Your Hero characters
+  | "YOUR_GARGOYLE_CHARACTERS" // Your Gargoyle characters
+  | "YOUR_DEMONA_CHARACTERS" // Your Demona characters
+  | "YOUR_OTHER_DETECTIVE_CHARACTERS" // Your other Detective characters
+  | "YOUR_OTHER_AMETHYST_CHARACTERS" // Your other Amethyst characters
+  | "YOUR_HAND" // Your hand (for card targets)
+  | "TRIGGERING_CHARACTER" // The character that triggered the ability
+  | "TRIGGERING_CARD" // The card that triggered the ability
+  | "THAT_ITEM" // Reference to a previously mentioned item
+  // More additional targets
+  | "YOUR_OTHER_SAPPHIRE_CHARACTERS" // Your other Sapphire characters
+  | "YOUR_OTHER_DETECTIVE_CHARACTERS" // Your other Detective characters
+  | "SONG_CARD" // A song card
+  | "RANDOM_CARDS_IN_INKWELL" // Random cards in inkwell
+  | "YOUR_RECKLESS_CHARACTERS" // Your Reckless characters
+  | "OPPOSING_DAMAGED_CHARACTERS" // Opposing damaged characters
+  | "ALL_CARDS_IN_INKWELL"; // All cards in inkwell
 
 // ============================================================================
 // Character Targeting - Query-Based (Complex)
@@ -657,7 +744,13 @@ export type CardTargetEnum =
   // Additional card targets for parser support
   | "CHARACTER_FROM_DISCARD" // Character card from discard pile
   | "SUPPORT_CHARACTER_FROM_DISCARD" // Support character from discard
-  | "CHOSEN_CHARACTER_OR_ITEM_COST_3_OR_LESS"; // Character or item with cost 3 or less
+  | "CHOSEN_CHARACTER_OR_ITEM_COST_3_OR_LESS" // Character or item with cost 3 or less
+  // Extended card targets for card text coverage
+  | "CARD_FROM_ANY_DISCARD" // Card from any player's discard pile
+  | "ACTION_FROM_DISCARD" // Action card from discard pile
+  | "ITEM_FROM_DISCARD" // Item card from discard pile
+  | "CHARACTER_OR_ITEM" // Character or item card
+  | "BANISHED_CHARACTER"; // The character that was banished
 
 export type CardTarget =
   | CardTargetEnum

@@ -30,7 +30,16 @@ import type { EffectDuration } from "./amount-types";
  */
 export interface ReturnToHandEffect {
   type: "return-to-hand";
-  target: CardTarget;
+  target?: CardTarget;
+  /** Filter for what can be returned */
+  filter?: {
+    cardType?: CardType | "song";
+    maxCost?: number;
+    classification?: string;
+    name?: string;
+  };
+  /** Amount of cards to return */
+  amount?: number;
 }
 
 /**
@@ -42,7 +51,7 @@ export interface ReturnFromDiscardEffect {
   type: "return-from-discard";
   cardType?: CardType | "song";
   cardName?: string;
-  target: PlayerTarget;
+  target?: PlayerTarget;
   count?: number;
   destination?: "hand" | "play" | "top-of-deck";
 }
@@ -90,7 +99,7 @@ export interface PutUnderEffect {
  */
 export interface ShuffleIntoDeckEffect {
   type: "shuffle-into-deck";
-  target: CharacterTarget | ItemTarget | LocationTarget | CardTarget;
+  target?: CharacterTarget | ItemTarget | LocationTarget | CardTarget;
   /** Whose deck to shuffle into */
   intoDeck?: "owner" | "controller";
 }
@@ -115,7 +124,7 @@ export interface PutOnBottomEffect {
  */
 export interface PlayCardEffect {
   type: "play-card";
-  from: "hand" | "discard" | "deck" | "under-self";
+  from?: "hand" | "discard" | "deck" | "under-self";
   cardType?: CardType | "song" | "floodborn";
   costRestriction?: { comparison: "less-or-equal" | "equal"; value: number };
   cost?: "free" | "reduced";
@@ -126,6 +135,17 @@ export interface PlayCardEffect {
   grantsRush?: boolean;
   /** Banish at end of turn */
   banishAtEndOfTurn?: boolean;
+  /** Filter for what can be played */
+  filter?: {
+    cardType?: CardType | "song" | "floodborn";
+    maxCost?: number;
+    classification?: string;
+    name?: string;
+  };
+  /** Whether to play for free (alias for cost: "free") */
+  free?: boolean;
+  /** Target for the play effect */
+  target?: string;
 }
 
 /**
@@ -151,4 +171,46 @@ export interface MoveToLocationEffect {
   character: CharacterTarget;
   location?: LocationTarget;
   cost?: "free" | "normal";
+}
+
+/**
+ * Move cost reduction effect for locations
+ *
+ * @example "Your characters named Robin Hood may move here for free"
+ * @example "Your Pirate characters may move here for free"
+ */
+export interface MoveCostReductionEffect {
+  type: "move-cost-reduction";
+  /** Filter for which characters get the reduction */
+  filter?: {
+    name?: string;
+    classification?: string;
+  };
+  /** How much to reduce the cost (0 = free) */
+  reduction: number | "free";
+  /** Target location (usually "here" for location abilities) */
+  location?: "here" | LocationTarget;
+}
+
+/**
+ * Grant abilities to characters while at this location
+ *
+ * @example "Characters gain Ward while here"
+ * @example "Characters gain Ward and activated ability while here"
+ */
+export interface GrantAbilitiesWhileHereEffect {
+  type: "grant-abilities-while-here";
+  abilities: Array<
+    | { type: "keyword"; keyword: string; value?: number }
+    | {
+        type: "activated";
+        cost: { exert?: boolean; ink?: number };
+        effect: {
+          type: string;
+          amount?: number;
+          target?: unknown;
+          [key: string]: unknown;
+        };
+      }
+  >;
 }

@@ -90,7 +90,17 @@ export type TriggerEvent =
 
   // Additional events for parser support
   | "remove-damage" // Damage is removed from a character
-  | "return-to-hand"; // A card is returned to hand
+  | "return-to-hand" // A card is returned to hand
+  // Event aliases for parser compatibility
+  | "start-of-turn" // Alias for start-turn
+  | "end-of-turn" // Alias for end-turn
+  // Extended events for card text coverage
+  | "put-into-inkwell" // A card is put into inkwell
+  | "add-to-inkwell" // Alias for put-into-inkwell
+  | "put-card-under" // A card is put under another card
+  // Additional trigger events
+  | "support" // Support ability triggers
+  | "inkwell"; // Card put into inkwell
 
 // ============================================================================
 // Trigger Subject (what triggers the event)
@@ -130,7 +140,25 @@ export type TriggerSubjectEnum =
   | "FLOODBORN_CHARACTERS" // Floodborn characters you play
   | "SELF_OR_SEVEN_DWARFS_CHARACTERS" // This character or Seven Dwarfs
   | "CINDERELLA_CHARACTERS" // Characters named Cinderella
-  | "YOUR_CHARACTERS_COST_4_OR_MORE"; // Your characters with cost 4+
+  | "YOUR_CHARACTERS_COST_4_OR_MORE" // Your characters with cost 4+
+  // Extended trigger subjects for card text coverage
+  | "SONGS" // Songs (for song-related triggers)
+  | "YOUR_BROOM_CHARACTERS" // Your Broom characters
+  | "YOUR_MUSKETEER_CHARACTERS" // Your Musketeer characters
+  | "YOUR_BODYGUARD_CHARACTERS" // Your Bodyguard characters
+  | "CONTROLLER" // The controller of this card
+  | "CHARACTERS_HERE" // Characters at this location
+  | "YOUR_OTHER_STEEL_CHARACTERS" // Your other Steel characters
+  // Additional trigger subjects for more card coverage
+  | "CHARACTERS_AT_LOCATION" // Characters at a location
+  | "CHARACTERS_MOVED_HERE" // Characters that moved here
+  | "OPPONENTS_CARDS" // Opponent's cards
+  | "YOUR_PIRATE_CHARACTERS" // Your Pirate characters
+  | "CHARACTER_HERE" // Character at this location (singular)
+  | "SONG" // Song (singular)
+  | "YOUR_CHARACTERS_OR_LOCATIONS" // Your characters or locations
+  | "YOUR_OTHER_AMETHYST_CHARACTERS" // Your other Amethyst characters
+  | "YOUR_CHARACTERS_OR_LOCATIONS_WITH_CARD_UNDER"; // Your characters or locations with card under
 
 /**
  * Query-based trigger subject for complex filtering
@@ -290,8 +318,8 @@ export interface BaseTrigger {
    */
   events?: TriggerEvent[] | Array<{ event: string; on: string }>;
 
-  /** Timing word (when/whenever/at) */
-  timing: TriggerTiming | "when-or-whenever";
+  /** Timing word (when/whenever/at) - optional for parser compatibility */
+  timing?: TriggerTiming | "when-or-whenever";
 
   /**
    * What entity triggers this event
@@ -299,7 +327,7 @@ export interface BaseTrigger {
    * - For player events: which player (YOU, OPPONENT, etc.)
    * - For turn events: whose turn (YOU, OPPONENT)
    */
-  on: TriggerSubject;
+  on?: TriggerSubject;
 
   /**
    * Additional restrictions on when this trigger fires

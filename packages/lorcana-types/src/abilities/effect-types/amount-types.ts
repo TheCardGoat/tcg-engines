@@ -27,7 +27,13 @@ export type AmountString =
   | "RETURNED_CARD_COST" // Cost of returned card
   | "DAMAGE_DEALT" // Amount of damage dealt
   | "OPPONENTS_DAMAGED_CHARACTER_COUNT" // Number of opponent's damaged characters
-  | "X"; // Variable amount (determined at resolution)
+  | "X" // Variable amount (determined at resolution)
+  // Extended amount references for card text coverage
+  | "DAMAGE_REMOVED" // Amount of damage removed
+  | "HAND" // Number of cards in hand
+  | "TARGET_COST" // Cost of target card
+  | "TARGET_STRENGTH" // Strength of target character
+  | "TARGET_WILLPOWER"; // Willpower of target character
 
 /**
  * Counter types for for-each amounts
@@ -75,7 +81,12 @@ export type VariableAmount =
       counter: ForEachCounterType | { type: string; controller?: string };
       count?: number | VariableAmount;
       modifier?: number;
-    };
+    }
+  // Additional variable amounts
+  | { type: "count"; what?: string; controller?: string; of?: string }
+  | { type: "VARIABLE" } // Generic variable amount
+  | { type: "lore-lost" } // Amount of lore lost
+  | { type: "stat"; stat?: string; target?: string }; // Stat value
 
 /**
  * Check if amount is variable (vs fixed number)
@@ -99,4 +110,6 @@ export type EffectDuration =
   | "while-condition"
   | "next-play-this-turn" // Used with static abilities
   | "next-turn" // Until the start/end of their next turn
-  | "their-next-turn"; // Until the opponent's next turn
+  | "their-next-turn" // Until the opponent's next turn
+  | "while-in-play" // While the card is in play
+  | { type: string }; // Allow object-based durations for flexibility

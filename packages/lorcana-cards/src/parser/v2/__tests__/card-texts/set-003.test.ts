@@ -60,6 +60,11 @@ describe("Set 003 Card Text Parser Tests", () => {
       },
       effect: {
         type: "optional",
+        effect: {
+          type: "draw",
+          amount: 1,
+          target: "CONTROLLER",
+        },
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -1443,7 +1448,9 @@ describe("Set 003 Card Text Parser Tests", () => {
       type: "static",
       name: "MIMICRY",
       effect: {
-        type: "property-modification",
+        type: "grant-keyword",
+        keyword: "Shift",
+        target: "SELF",
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -1774,7 +1781,9 @@ describe("Set 003 Card Text Parser Tests", () => {
       type: "static",
       name: "SURROUNDED BY WATER",
       effect: {
-        type: "gain-keyword",
+        type: "grant-keywords",
+        keywords: [{ keyword: "Ward" }, { keyword: "Evasive" }],
+        target: "CHARACTERS_HERE",
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -1896,11 +1905,13 @@ describe("Set 003 Card Text Parser Tests", () => {
       type: "triggered",
       name: "WATCH THE TEETH",
       trigger: {
-        event: "dealt-damage",
+        event: "deal-damage",
         on: "SELF",
       },
       effect: {
         type: "deal-damage",
+        amount: 1,
+        target: { ref: "trigger-source" },
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -3172,8 +3183,14 @@ describe("Set 003 Card Text Parser Tests", () => {
       type: "static",
       name: "LET'S TAKE A LOOK",
       effect: {
-        type: "modify-stat",
-        stat: "strength",
+        type: "for-each",
+        counter: { type: "items-in-play", controller: "you" },
+        effect: {
+          type: "modify-stat",
+          stat: "strength",
+          modifier: 1,
+          target: "SELF",
+        },
       },
     };
     expect(result.abilities[0].ability).toEqual(

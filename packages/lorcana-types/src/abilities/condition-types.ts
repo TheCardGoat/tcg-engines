@@ -32,9 +32,9 @@ import type {
 export interface HasNamedCharacterCondition {
   type: "has-named-character";
   /** Character must have this name - REQUIRED */
-  name: string;
+  name?: string;
   /** Who controls the character - REQUIRED */
-  controller: "you" | "opponent" | "any";
+  controller?: "you" | "opponent" | "any";
 }
 
 /**
@@ -58,9 +58,9 @@ export interface HasCharacterWithClassificationCondition {
 export interface HasCharacterWithKeywordCondition {
   type: "has-character-with-keyword";
   /** Keyword - REQUIRED */
-  keyword: string;
+  keyword?: string;
   /** Who controls the character - REQUIRED */
-  controller: "you" | "opponent" | "any";
+  controller?: "you" | "opponent" | "any";
 }
 
 /**
@@ -71,11 +71,11 @@ export interface HasCharacterWithKeywordCondition {
 export interface HasCharacterCountCondition {
   type: "has-character-count";
   /** Who controls the characters - REQUIRED */
-  controller: "you" | "opponent" | "any";
+  controller?: "you" | "opponent" | "any";
   /** Comparison operator - REQUIRED */
-  comparison: ComparisonOperator;
+  comparison?: ComparisonOperator;
   /** Count to compare against - REQUIRED */
-  count: number;
+  count?: number;
   /** Optional classification filter */
   classification?: string;
   /** Optional keyword filter */
@@ -108,6 +108,174 @@ export interface HasItemCountCondition {
   controller: "you" | "opponent" | "any";
   comparison: ComparisonOperator;
   count: number;
+}
+
+/**
+ * Check if you have a location in play
+ */
+export interface HasLocationInPlayCondition {
+  type: "has-location-in-play";
+  controller?: "you" | "opponent" | "any";
+}
+
+/**
+ * Check if you have fewer characters than opponent
+ */
+export interface HasFewerCharactersCondition {
+  type: "has-fewer-characters";
+  than: "opponent";
+}
+
+/**
+ * Check if opponent has more cards in hand
+ */
+export interface OpponentHasMoreCardsCondition {
+  type: "opponent-has-more-cards";
+  what?: "cards-in-hand" | "lore";
+}
+
+/**
+ * Check if opponent has a damaged character
+ */
+export interface OpponentHasDamagedCharacterCondition {
+  type: "opponent-has-damaged-character";
+}
+
+/**
+ * Check if target is a villain
+ */
+export interface TargetIsVillainCondition {
+  type: "target-is-villain";
+}
+
+/**
+ * Check if target has no damage
+ */
+export interface HasNoDamageCondition {
+  type: "has-no-damage";
+  target?: CharacterTarget | "SELF";
+}
+
+/**
+ * Check if character has strength comparison
+ */
+export interface HasCharacterWithStrengthCondition {
+  type: "has-character-with-strength";
+  comparison: ComparisonOperator;
+  value: number;
+  controller?: "you" | "opponent" | "any";
+}
+
+/**
+ * Check if returned card is a princess
+ */
+export interface ReturnedCardIsPrincessCondition {
+  type: "returned-card-is-princess";
+}
+
+/**
+ * Check if revealed card has same name
+ */
+export interface RevealedHasSameNameCondition {
+  type: "revealed-has-same-name";
+}
+
+/**
+ * Check if there are characters here (at location)
+ */
+export interface HasCharactersHereCondition {
+  type: "has-characters-here";
+  count?: number | { min: number };
+}
+
+/**
+ * Check if character is at a location
+ */
+export interface HasCharacterAtLocationCondition {
+  type: "has-character-at-location";
+}
+
+/**
+ * Check if character is being challenged
+ */
+export interface BeingChallengedCondition {
+  type: "being-challenged";
+}
+
+/**
+ * Check if self has damage
+ */
+export interface SelfHasDamageCondition {
+  type: "self-has-damage";
+}
+
+/**
+ * Check if revealed card is a character with specific name
+ */
+export interface RevealedIsCharacterNamedCondition {
+  type: "revealed-is-character-named";
+  name?: string;
+}
+
+/**
+ * Check if this is the second inkwell this turn
+ */
+export interface SecondInkwellThisTurnCondition {
+  type: "second-inkwell-this-turn";
+}
+
+/**
+ * Check while in play
+ */
+export interface WhileInPlayCondition {
+  type: "while-in-play";
+}
+
+/**
+ * Check if played a card this turn
+ */
+export interface PlayedCardThisTurnCondition {
+  type: "played-card-this-turn";
+  cardType?: string;
+}
+
+/**
+ * Check if opponent has more than X cards
+ */
+export interface OpponentHasMoreThanCardsCondition {
+  type: "opponent-has-more-than-cards";
+  count?: number;
+}
+
+/**
+ * Check if opponent has lore
+ */
+export interface OpponentHasLoreCondition {
+  type: "opponent-has-lore";
+  comparison?: ComparisonOperator;
+  value?: number;
+}
+
+/**
+ * Check if you have the strongest character
+ */
+export interface HasStrongestCharacterCondition {
+  type: "has-strongest-character";
+}
+
+/**
+ * Check if there's a damaged character here
+ */
+export interface HasDamagedCharacterHereCondition {
+  type: "has-damaged-character-here";
+}
+
+/**
+ * Check if you have an item in play
+ */
+export interface HasItemInPlayCondition {
+  type: "has-item-in-play";
+  controller?: "you" | "opponent" | "any";
 }
 
 /**
@@ -325,13 +493,13 @@ export interface KeywordCharacterCountCondition {
 export interface ClassificationCharacterCountCondition {
   type: "classification-character-count";
   /** Which classification - REQUIRED */
-  classification: string;
+  classification?: string;
   /** Whose characters - REQUIRED */
-  controller: "you" | "opponent" | "any";
+  controller?: "you" | "opponent" | "any";
   /** Comparison operator - REQUIRED */
-  comparison: ComparisonOperator;
+  comparison?: ComparisonOperator;
   /** Value to compare against - REQUIRED */
-  value: number;
+  value?: number;
 }
 
 /**
@@ -630,6 +798,79 @@ export interface IfCondition {
 }
 
 // ============================================================================
+// Extended Condition Types for Parser Support
+// ============================================================================
+
+/**
+ * Check if you have another character (besides self)
+ */
+export interface HasAnotherCharacterCondition {
+  type: "has-another-character";
+  classification?: string;
+  name?: string;
+}
+
+/**
+ * Check if you have a Captain character
+ */
+export interface HasCaptainCharacterCondition {
+  type: "has-captain-character";
+}
+
+/**
+ * Check if self is exerted (alias for is-exerted)
+ */
+export interface SelfExertedCondition {
+  type: "self-exerted";
+}
+
+/**
+ * Check if target is a Villain
+ */
+export interface IsVillainCondition {
+  type: "is-villain";
+  target?: string;
+}
+
+/**
+ * Check if target is a Princess
+ */
+export interface IsPrincessCondition {
+  type: "is-princess";
+  target?: string;
+}
+
+/**
+ * Check if target has a specific name
+ */
+export interface IsNamedCondition {
+  type: "is-named";
+  name: string;
+  target?: string;
+}
+
+/**
+ * Check inkwell count
+ */
+export interface InkwellCountCondition {
+  type: "inkwell-count";
+  controller: "you" | "opponent";
+  comparison?: ComparisonOperator;
+  count?: number;
+  /** Minimum inkwell count required */
+  minimum?: number;
+}
+
+/**
+ * Alias for has-named-character (parser compatibility)
+ */
+export interface HasCharacterNamedCondition {
+  type: "has-character-named";
+  name: string;
+  controller?: "you" | "opponent" | "any";
+}
+
+// ============================================================================
 // Combined Condition Type
 // ============================================================================
 
@@ -706,7 +947,40 @@ export type Condition =
   | HaveCardCondition
   | NameCondition
   | CharacterCountCondition
-  | TargetCondition;
+  | TargetCondition
+  // Extended conditions for card text coverage
+  | HasAnotherCharacterCondition
+  | HasCaptainCharacterCondition
+  | SelfExertedCondition
+  | IsVillainCondition
+  | IsPrincessCondition
+  | IsNamedCondition
+  | InkwellCountCondition
+  | HasCharacterNamedCondition
+  // Additional extended conditions
+  | HasLocationInPlayCondition
+  | HasFewerCharactersCondition
+  | OpponentHasMoreCardsCondition
+  | OpponentHasDamagedCharacterCondition
+  | TargetIsVillainCondition
+  | HasNoDamageCondition
+  | HasCharacterWithStrengthCondition
+  | ReturnedCardIsPrincessCondition
+  | RevealedHasSameNameCondition
+  | HasCharactersHereCondition
+  | HasCharacterAtLocationCondition
+  // More extended conditions
+  | BeingChallengedCondition
+  | SelfHasDamageCondition
+  | RevealedIsCharacterNamedCondition
+  | SecondInkwellThisTurnCondition
+  | WhileInPlayCondition
+  | PlayedCardThisTurnCondition
+  | OpponentHasMoreThanCardsCondition
+  | OpponentHasLoreCondition
+  | HasStrongestCharacterCondition
+  | HasDamagedCharacterHereCondition
+  | HasItemInPlayCondition;
 
 // ============================================================================
 // Condition Builders (convenience)

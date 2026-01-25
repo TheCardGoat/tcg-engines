@@ -123,7 +123,7 @@ describe("Integration: Effect Parsing Pipeline", () => {
 
         expect(result).not.toBeNull();
         expect(result?.type).toBe("sequence");
-        if (result && result.type === "sequence") {
+        if (result && result.type === "sequence" && result.steps) {
           expect(result.steps).toHaveLength(2);
           expect(result.steps[0].type).toBe("draw");
           expect(result.steps[1].type).toBe("discard");
@@ -135,7 +135,7 @@ describe("Integration: Effect Parsing Pipeline", () => {
 
         expect(result).not.toBeNull();
         expect(result?.type).toBe("choice");
-        if (result && result.type === "choice") {
+        if (result && result.type === "choice" && result.options) {
           expect(result.options).toHaveLength(2);
           expect(result.options[0].type).toBe("draw");
           expect(result.options[1].type).toBe("gain-lore");
@@ -147,7 +147,7 @@ describe("Integration: Effect Parsing Pipeline", () => {
 
         expect(result).not.toBeNull();
         expect(result?.type).toBe("optional");
-        if (result && result.type === "optional") {
+        if (result && result.type === "optional" && result.effect) {
           expect(result.effect.type).toBe("draw");
         }
       });
@@ -159,7 +159,7 @@ describe("Integration: Effect Parsing Pipeline", () => {
 
         expect(result).not.toBeNull();
         expect(result?.type).toBe("for-each");
-        if (result && result.type === "for-each") {
+        if (result && result.type === "for-each" && result.effect) {
           expect(result.effect.type).toBe("gain-lore");
         }
       });
@@ -171,7 +171,7 @@ describe("Integration: Effect Parsing Pipeline", () => {
 
         expect(result).not.toBeNull();
         expect(result?.type).toBe("conditional");
-        if (result && result.type === "conditional") {
+        if (result && result.type === "conditional" && result.then) {
           expect(result.then.type).toBe("gain-lore");
         }
       });

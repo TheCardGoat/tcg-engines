@@ -155,7 +155,8 @@ describe("searchEffectParser", () => {
       const scry = result as ScryEffect;
       expect(scry.amount).toBe(4);
       // Should have hand destination with filter and remainder destination
-      expect(scry.destinations.length).toBeGreaterThanOrEqual(2);
+      expect(scry.destinations).toBeDefined();
+      expect(scry.destinations!.length).toBeGreaterThanOrEqual(2);
     });
 
     it("parses put back on top in any order", () => {
@@ -168,7 +169,8 @@ describe("searchEffectParser", () => {
       const scry = result as ScryEffect;
       expect(scry.amount).toBe(3);
       // Should have deck-top destination with player-choice ordering
-      const topDest = scry.destinations.find((d) => d.zone === "deck-top");
+      expect(scry.destinations).toBeDefined();
+      const topDest = scry.destinations!.find((d) => d.zone === "deck-top");
       expect(topDest).toBeDefined();
     });
   });

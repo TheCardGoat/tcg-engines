@@ -67,6 +67,8 @@ import type {
 } from "./modifier-effects";
 import type {
   EnablePlayFromUnderEffect,
+  GrantAbilitiesWhileHereEffect,
+  MoveCostReductionEffect,
   MoveToLocationEffect,
   PlayCardEffect,
   PutIntoInkwellEffect,
@@ -114,6 +116,8 @@ export type Effect =
   | EnablePlayFromUnderEffect
   // Location Movement
   | MoveToLocationEffect
+  | MoveCostReductionEffect
+  | GrantAbilitiesWhileHereEffect
   // Stat Modification
   | ModifyStatEffect
   | SetStatEffect
@@ -163,7 +167,34 @@ export type Effect =
   | GainAbilityEffect
   | GainKeywordsEffect
   | EntersPlayWithEffect
-  | RedirectDamageEffect;
+  | RedirectDamageEffect
+  // Extended effects for card text coverage
+  | AdditionalInkwellEffect
+  | MoveEffect
+  | TriggeredEffectWrapper
+  | LookAtTopEffect
+  | ModalEffect
+  | AddToInkwellEffect
+  | RevealTopEffect
+  // Additional effect types for parser support
+  | PutCardUnderEffect
+  | PayCostEffect
+  | LookAtDeckEffect
+  | PreventionEffect
+  | CountEffect
+  | MoveToInkwellEffect
+  | EntersWithDamageEffect
+  | RevealEffect
+  | TakeDamageEffect
+  | SupportEffect
+  | ProtectionEffect
+  | LoreLossEffect
+  | HealEffect
+  // More additional effect types
+  | SearchEffect
+  | RevealDeckEffect
+  | DrawUntilEffect
+  | DiscardUntilEffect;
 
 /**
  * Static effects (always active, used in static abilities)
@@ -193,7 +224,17 @@ export type StaticEffect =
   | GrantKeywordEffect
   | GrantKeywordsEffect
   | GainKeywordsEffect
-  | EntersPlayWithEffect;
+  | EntersPlayWithEffect
+  // Extended static effects for card text coverage
+  | AdditionalInkwellEffect
+  | ForEachEffect
+  | CompoundEffect
+  | MoveCostReductionEffect
+  | GrantAbilitiesWhileHereEffect
+  | EntersWithDamageEffect
+  | LookAtTopEffect
+  | ModalEffect
+  | PropertyModificationEffect;
 
 /**
  * Gain multiple keywords effect (for static abilities)
@@ -233,6 +274,225 @@ export interface ReplacementEffect {
   with?: Effect | "prevent";
   replacement?: Effect | "prevent";
   condition?: Condition;
+}
+
+/**
+ * Additional inkwell effect - allows putting additional cards into inkwell
+ */
+export interface AdditionalInkwellEffect {
+  type: "additional-inkwell";
+  amount?: number;
+  target?: CharacterTarget;
+}
+
+/**
+ * Move effect - move a character to a location
+ */
+export interface MoveEffect {
+  type: "move";
+  target?: CharacterTarget;
+  to?: string;
+  cost?: "free" | "normal";
+  free?: boolean;
+}
+
+/**
+ * Triggered effect wrapper - for effects that contain triggered abilities
+ * @deprecated Use TriggeredAbility instead
+ */
+export interface TriggeredEffectWrapper {
+  type: "triggered";
+  trigger?: unknown;
+  effect?: Effect;
+}
+
+/**
+ * Look at top effect - look at top cards of deck
+ */
+export interface LookAtTopEffect {
+  type: "look-at-top";
+  amount?: number;
+  target?: string;
+}
+
+/**
+ * Modal effect - choose from multiple options
+ */
+export interface ModalEffect {
+  type: "modal";
+  options?: Effect[];
+  chooser?: string;
+}
+
+/**
+ * Add to inkwell effect - alias for put-into-inkwell
+ */
+export interface AddToInkwellEffect {
+  type: "add-to-inkwell";
+  source?: string;
+  target?: string;
+}
+
+/**
+ * Reveal top effect - reveal top card of deck
+ */
+export interface RevealTopEffect {
+  type: "reveal-top";
+  amount?: number;
+  target?: string;
+}
+
+/**
+ * Put card under effect - put a card under another card
+ */
+export interface PutCardUnderEffect {
+  type: "put-card-under";
+  source?: string;
+  under?: CharacterTarget | string;
+  cardType?: string;
+}
+
+/**
+ * Pay cost effect - pay a cost as part of an effect
+ */
+export interface PayCostEffect {
+  type: "pay-cost";
+  cost?: { ink?: number; exert?: boolean };
+  effect?: Effect;
+}
+
+/**
+ * Look at deck effect - look at cards in deck
+ */
+export interface LookAtDeckEffect {
+  type: "look-at-deck";
+  amount?: number;
+  target?: string;
+}
+
+/**
+ * Prevention effect - prevent something from happening
+ */
+export interface PreventionEffect {
+  type: "prevention";
+  prevents?: string;
+  target?: CharacterTarget;
+}
+
+/**
+ * Count effect - count something
+ */
+export interface CountEffect {
+  type: "count";
+  what?: string;
+  controller?: string;
+}
+
+/**
+ * Move to inkwell effect
+ */
+export interface MoveToInkwellEffect {
+  type: "move-to-inkwell";
+  target?: CharacterTarget | string;
+}
+
+/**
+ * Enters with damage effect
+ */
+export interface EntersWithDamageEffect {
+  type: "enters-with-damage";
+  amount?: number;
+  target?: CharacterTarget;
+}
+
+/**
+ * Reveal effect - reveal cards
+ */
+export interface RevealEffect {
+  type: "reveal";
+  source?: string;
+  amount?: number;
+  target?: string;
+}
+
+/**
+ * Take damage effect - character takes damage
+ */
+export interface TakeDamageEffect {
+  type: "take-damage";
+  amount?: number;
+  target?: CharacterTarget;
+}
+
+/**
+ * Support effect - support ability
+ */
+export interface SupportEffect {
+  type: "support";
+  target?: CharacterTarget;
+}
+
+/**
+ * Protection effect - protect from something
+ */
+export interface ProtectionEffect {
+  type: "protection";
+  from?: string;
+  target?: CharacterTarget;
+}
+
+/**
+ * Lore loss effect - lose lore
+ */
+export interface LoreLossEffect {
+  type: "lore-loss";
+  amount?: number;
+  target?: string;
+}
+
+/**
+ * Heal effect - remove damage
+ */
+export interface HealEffect {
+  type: "heal";
+  amount?: number;
+  target?: CharacterTarget;
+}
+
+/**
+ * Search effect - search for cards
+ */
+export interface SearchEffect {
+  type: "search";
+  cardType?: string;
+  target?: string;
+}
+
+/**
+ * Reveal deck effect - reveal cards from deck
+ */
+export interface RevealDeckEffect {
+  type: "reveal-deck";
+  amount?: number;
+  target?: string;
+}
+
+/**
+ * Draw until effect - draw until a condition is met
+ */
+export interface DrawUntilEffect {
+  type: "draw-until";
+  condition?: string;
+  target?: string;
+}
+
+/**
+ * Discard until effect - discard until a condition is met
+ */
+export interface DiscardUntilEffect {
+  type: "discard-until";
+  condition?: string;
+  target?: string;
 }
 
 // ============================================================================

@@ -91,6 +91,8 @@ export type {
 // Movement effects
 export type {
   EnablePlayFromUnderEffect,
+  GrantAbilitiesWhileHereEffect,
+  MoveCostReductionEffect,
   MoveToLocationEffect,
   PlayCardEffect,
   PutIntoInkwellEffect,

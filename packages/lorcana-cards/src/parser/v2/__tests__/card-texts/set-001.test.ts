@@ -124,11 +124,14 @@ describe("Set 001 Card Text Parser Tests", () => {
       type: "static",
       name: "SINISTER PLOT",
       effect: {
-        type: "for-each",
+        type: "modify-stat",
         stat: "lore",
-        modifier: 1,
+        modifier: {
+          type: "for-each",
+          counter: "characters",
+          modifier: 1,
+        },
         target: "SELF",
-        forEach: "YOUR_VILLAIN_CHARACTERS",
       },
     };
     expect(result.abilities[1].ability).toEqual(
@@ -438,6 +441,7 @@ describe("Set 001 Card Text Parser Tests", () => {
       type: "action",
       effect: {
         type: "play-card",
+        from: "hand",
         filter: { maxCost: 5, cardType: "character" },
         free: true,
       },
@@ -1197,6 +1201,7 @@ describe("Set 001 Card Text Parser Tests", () => {
         type: "optional",
         effect: {
           type: "play-card",
+          from: "hand",
           filter: { maxCost: 5, cardType: "action" },
           free: true,
         },
@@ -2083,7 +2088,7 @@ describe("Set 001 Card Text Parser Tests", () => {
       name: "MY FAVOURITE PART!",
       effect: {
         type: "conditional",
-        condition: { type: "inkwell-count", minimum: 10 },
+        condition: { type: "inkwell-count", controller: "you", minimum: 10 },
         effect: {
           type: "modify-stat",
           stat: "lore",
@@ -2176,7 +2181,7 @@ describe("Set 001 Card Text Parser Tests", () => {
       type: "triggered",
       name: "CARETAKER",
       trigger: {
-        event: ["play", "quest"],
+        events: ["play", "quest"],
         timing: "when",
         on: "SELF",
       },
@@ -2314,7 +2319,7 @@ describe("Set 001 Card Text Parser Tests", () => {
       type: "triggered",
       name: "WHAT HAVE WE HERE?",
       trigger: {
-        event: ["play", "quest"],
+        events: ["play", "quest"],
         timing: "when",
         on: "SELF",
       },
@@ -2335,11 +2340,14 @@ describe("Set 001 Card Text Parser Tests", () => {
       type: "static",
       name: "GLAM",
       effect: {
-        type: "for-each",
+        type: "modify-stat",
         stat: "lore",
-        modifier: 1,
+        modifier: {
+          type: "for-each",
+          counter: "items",
+          modifier: 1,
+        },
         target: "SELF",
-        forEach: "YOUR_ITEMS",
       },
     };
     expect(result.abilities[1].ability).toEqual(expect.objectContaining(glam));

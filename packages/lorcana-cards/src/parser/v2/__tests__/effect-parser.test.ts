@@ -419,7 +419,7 @@ describe("Effect Parser", () => {
 
       expect(effect).toBeDefined();
       expect(effect?.type).toBe("sequence");
-      if (effect?.type === "sequence") {
+      if (effect?.type === "sequence" && effect.steps) {
         expect(effect.steps).toHaveLength(2);
         expect(effect.steps[0]).toEqual({
           type: "draw",
@@ -440,7 +440,7 @@ describe("Effect Parser", () => {
 
       expect(effect).toBeDefined();
       expect(effect?.type).toBe("sequence");
-      if (effect?.type === "sequence") {
+      if (effect?.type === "sequence" && effect.steps) {
         expect(effect.steps).toHaveLength(2);
         expect(effect.steps[0].type).toBe("draw");
         expect(effect.steps[1].type).toBe("gain-lore");
@@ -452,7 +452,7 @@ describe("Effect Parser", () => {
 
       expect(effect).toBeDefined();
       expect(effect?.type).toBe("sequence");
-      if (effect?.type === "sequence") {
+      if (effect?.type === "sequence" && effect.steps) {
         expect(effect.steps).toHaveLength(2);
         expect(effect.steps[0].type).toBe("draw");
         expect(effect.steps[1].type).toBe("gain-lore");

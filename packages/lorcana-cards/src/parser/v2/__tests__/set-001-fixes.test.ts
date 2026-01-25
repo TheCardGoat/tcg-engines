@@ -15,7 +15,7 @@ describe("Set 001 Parsing Fixes", () => {
       expect(effect).toBeDefined();
       expect(effect?.type).toBe("sequence");
 
-      if (effect?.type === "sequence") {
+      if (effect?.type === "sequence" && effect.steps) {
         expect(effect.steps[0].type).toBe("remove-damage");
         expect(effect.steps[1].type).toBe("for-each");
 
@@ -33,7 +33,7 @@ describe("Set 001 Parsing Fixes", () => {
       );
 
       expect(effect).toBeDefined();
-      if (effect?.type === "sequence") {
+      if (effect?.type === "sequence" && effect.steps) {
         expect(effect.steps[0].type).toBe("lose-lore");
         // The second part might be wrapped in optional
         const step2 = effect.steps[1];
@@ -57,7 +57,7 @@ describe("Set 001 Parsing Fixes", () => {
 
       expect(effect).toBeDefined();
       expect(effect?.type).toBe("scry");
-      if (effect?.type === "scry") {
+      if (effect?.type === "scry" && effect.destinations) {
         expect(effect.amount).toBe(1);
         expect(effect.destinations.length).toBeGreaterThan(0);
       }
@@ -72,7 +72,7 @@ describe("Set 001 Parsing Fixes", () => {
 
       expect(effect).toBeDefined();
       expect(effect?.type).toBe("sequence");
-      if (effect?.type === "sequence") {
+      if (effect?.type === "sequence" && effect.steps) {
         expect(effect.steps[0].type).toBe("exert");
         expect(effect.steps[1].type).toBe("restriction");
         const restriction = effect.steps[1] as any;

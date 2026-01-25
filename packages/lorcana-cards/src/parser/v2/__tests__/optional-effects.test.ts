@@ -481,7 +481,7 @@ describe("Optional Effect Parser", () => {
 
       // Should parse as a sequence without optional wrapper
       expect(effect).toBeDefined();
-      if (effect?.type === "sequence") {
+      if (effect?.type === "sequence" && effect.steps) {
         expect(effect.steps[0].type).not.toBe("optional");
       }
     });

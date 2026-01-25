@@ -27,7 +27,6 @@ export const rlsLegacySolarGalleon: LocationCard = {
       effect: {
         type: "gain-keyword",
         keyword: "Evasive",
-        // @ts-expect-error - CHARACTERS_HERE needs special location handling
         target: "CHARACTERS_HERE",
       },
       name: "THIS IS OUR SHIP",

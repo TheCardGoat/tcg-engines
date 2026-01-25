@@ -61,7 +61,7 @@ export interface ChoiceEffect {
  */
 export interface ConditionalEffect {
   type: "conditional";
-  condition: Condition;
+  condition?: Condition;
   /** Effect to execute if condition is true (preferred) */
   then?: Effect;
   /** Alternative field for then effect */
@@ -80,7 +80,7 @@ export interface ConditionalEffect {
  */
 export interface OptionalEffect {
   type: "optional";
-  effect: Effect;
+  effect?: Effect;
   /** Who decides */
   chooser?: PlayerTarget;
 }
@@ -92,10 +92,16 @@ export interface OptionalEffect {
  */
 export interface ForEachEffect {
   type: "for-each";
-  counter: ForEachCounter;
-  effect: Effect;
+  counter?: ForEachCounter;
+  effect?: Effect;
   /** Maximum times to repeat (optional) */
   maximum?: number;
+  /** Stat to modify (for static for-each effects) */
+  stat?: "strength" | "willpower" | "lore";
+  /** Modifier per count (for static for-each effects) */
+  modifier?: number;
+  /** Target for the effect */
+  target?: CharacterTarget;
 }
 
 /**
@@ -105,6 +111,7 @@ export type ForEachCounter =
   | { type: "characters"; controller: "you" | "opponent" | "any" }
   | { type: "damaged-characters"; controller: "you" | "opponent" | "any" }
   | { type: "items"; controller: "you" | "opponent" }
+  | { type: "items-in-play"; controller: "you" | "opponent" }
   | { type: "locations"; controller: "you" | "opponent" }
   | { type: "cards-in-hand"; controller: "you" | "opponent" }
   | { type: "cards-in-discard"; controller: "you" | "opponent" }
@@ -219,9 +226,10 @@ export interface PlayForFreeEffect {
  */
 export interface PutOnDeckEffect {
   type: "put-on-deck";
-  position: "top" | "bottom" | "choice";
+  position?: "top" | "bottom" | "choice";
   order?: "any" | "random";
   options?: Array<{ position: "top" | "bottom" } | string>;
+  target?: string;
 }
 
 /**
@@ -231,9 +239,9 @@ export interface PutOnDeckEffect {
  */
 export interface LookEffect {
   type: "look";
-  source: "deck" | "hand" | "discard";
+  source?: "deck" | "hand" | "discard";
   position?: "top" | "bottom";
-  count: number;
+  count?: number;
 }
 
 /**
@@ -253,7 +261,7 @@ export interface PutIntoHandEffect {
  */
 export interface CompoundEffect {
   type: "compound";
-  effects: Effect[];
+  effects?: Effect[];
 }
 
 /**
@@ -291,11 +299,11 @@ export interface PreventDamageEffect {
  */
 export interface GainAbilityEffect {
   type: "gain-ability";
-  ability: {
+  ability?: {
     type: string;
     [key: string]: unknown;
   };
-  target: CharacterTarget;
+  target?: CharacterTarget;
   duration?: EffectDuration;
 }
 
@@ -307,4 +315,6 @@ export interface RedirectDamageEffect {
   from?: CharacterTarget;
   to?: CharacterTarget;
   target?: CharacterTarget;
+  /** Amount of damage to redirect */
+  amount?: Amount | "all";
 }

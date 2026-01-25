@@ -30,10 +30,12 @@ import type { Amount, EffectDuration } from "./amount-types";
  */
 export interface ModifyStatEffect {
   type: "modify-stat";
-  stat: "strength" | "willpower" | "lore";
-  modifier: Amount;
-  target: CharacterTarget | LocationTarget;
+  stat?: "strength" | "willpower" | "lore";
+  modifier?: Amount;
+  target?: CharacterTarget | LocationTarget;
   duration?: EffectDuration;
+  /** Alternative field for modifier value */
+  value?: Amount;
 }
 
 /**
@@ -59,7 +61,7 @@ export interface SetStatEffect {
  */
 export interface GainKeywordEffect {
   type: "gain-keyword";
-  keyword:
+  keyword?:
     | "Rush"
     | "Ward"
     | "Evasive"
@@ -68,10 +70,13 @@ export interface GainKeywordEffect {
     | "Reckless"
     | "Alert"
     | "Challenger"
-    | "Resist";
+    | "Resist"
+    | "Singer"
+    | "Sing Together"
+    | string; // Allow any keyword string for flexibility
   /** For Challenger +X and Resist +X */
   value?: number;
-  target: CharacterTarget;
+  target?: CharacterTarget;
   duration?: EffectDuration;
 }
 
@@ -97,7 +102,7 @@ export interface LoseKeywordEffect {
  */
 export interface RestrictionEffect {
   type: "restriction";
-  restriction:
+  restriction?:
     | "cant-quest"
     | "cant-challenge"
     | "cant-be-challenged"
@@ -110,8 +115,11 @@ export interface RestrictionEffect {
     | "skip-draw-step"
     | "must-quest" // Forces character to quest if able
     | "cant-play-actions" // Opponents can't play actions
-    | "cant-play-characters"; // Opponents can't play characters
-  target: CharacterTarget | PlayerTarget;
+    | "cant-play-characters" // Opponents can't play characters
+    | "cant-play" // Generic can't play restriction
+    // Extended restrictions for card text coverage
+    | "doesnt-ready"; // Character doesn't ready (alias for cant-ready)
+  target?: CharacterTarget | PlayerTarget;
   duration?: EffectDuration;
   /** Condition for when the restriction applies */
   condition?: {
@@ -125,12 +133,12 @@ export interface RestrictionEffect {
  */
 export interface GrantAbilityEffect {
   type: "grant-ability";
-  ability:
+  ability?:
     | "can-challenge-ready"
     | "takes-no-damage-from-challenges"
     | "return-to-hand-when-banished"
     | { type: string; [key: string]: unknown }; // Allow object-based abilities
-  target: CharacterTarget;
+  target?: CharacterTarget;
   duration?: EffectDuration;
 }
 
@@ -164,7 +172,7 @@ export interface RevealTopCardEffect {
 
 export interface PutOnTopEffect {
   type: "put-on-top";
-  source: "revealed" | CardTarget;
+  source?: "revealed" | CardTarget;
 }
 
 export interface DrawUntilHandSizeEffect {
@@ -208,10 +216,10 @@ export interface WinConditionEffect {
  */
 export interface PropertyModificationEffect {
   type: "property-modification";
-  property: "name";
-  value: string;
-  operation: "add-alias";
-  target: CharacterTarget;
+  property?: "name";
+  value?: string;
+  operation?: "add-alias";
+  target?: CharacterTarget;
 }
 
 // ============================================================================
@@ -234,7 +242,9 @@ export interface SearchDeckEffect {
   cardType?: CardType | "song" | "floodborn";
   cardName?: string;
   classification?: string;
-  putInto: "hand" | "top-of-deck" | "play";
+  putInto?: "hand" | "top-of-deck" | "play";
+  /** Alias for putInto: "top-of-deck" */
+  putOnTop?: boolean;
   reveal?: boolean;
   shuffle?: boolean;
 }

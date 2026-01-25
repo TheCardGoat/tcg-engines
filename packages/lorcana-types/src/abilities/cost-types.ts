@@ -181,8 +181,14 @@ export interface AbilityCost {
   /** Banish one of your characters (mutually exclusive with banishSelf/banishItem) */
   banishCharacter?: boolean;
 
+  /** Banish another card (generic) */
+  banishOther?: boolean;
+
   /** Number of cards to discard from hand */
   discardCards?: number;
+
+  /** Alias for discardCards (singular form) */
+  discardCard?: number;
 
   /** Whether discarded cards are chosen (requires discardCards) */
   discardChosen?: boolean;
@@ -210,6 +216,12 @@ export interface AbilityCost {
 
   /** Exert a single character (singular form) */
   exertCharacter?: boolean;
+
+  /** Exert another card (generic) */
+  exertOther?: boolean;
+
+  /** Target for cost (e.g., which character to exert) */
+  target?: string;
 
   /**
    * Discard cost as an object (alternative format)

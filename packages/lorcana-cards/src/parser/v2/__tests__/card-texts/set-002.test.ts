@@ -1878,9 +1878,9 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
         stat: "lore",
         modifier: {
           type: "for-each",
-          count: {
+          counter: {
             type: "cards-in-hand",
-            controller: "opponents",
+            controller: "opponent",
           },
           modifier: -1,
         },
@@ -1905,7 +1905,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       name: "YES, I'M INTIMIDATING",
       condition: {
         type: "hand-count",
-        controller: "opponents",
+        controller: "opponent",
         count: 0,
       },
       effect: {
@@ -2396,8 +2396,8 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
         stat: "lore",
         modifier: {
           type: "for-each",
-          count: "DAMAGE_ON_SELF",
-          multiplier: 1,
+          counter: "damage-on-self",
+          modifier: 1,
         },
         target: "SELF",
       },
@@ -2987,8 +2987,8 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
         stat: "strength",
         modifier: {
           type: "for-each",
-          count: "DAMAGE_ON_TARGET",
-          multiplier: 1,
+          counter: "damage-on-target",
+          modifier: 1,
         },
         target: "CHOSEN_CHARACTER",
         duration: "this-turn",
@@ -3752,12 +3752,13 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
         type: "replacement",
         replaces: "damage-to-character",
         condition: {
+          type: "target",
           target: "YOUR_OTHER_CHARACTERS",
         },
         replacement: {
           type: "redirect-damage",
           target: "SELF",
-          amount: "ALL",
+          amount: "all",
         },
       },
     };
