@@ -273,6 +273,12 @@ describe("Set 005 Card Text Parser Tests", () => {
       name: "NOT WITHOUT MY FAMILY",
       effect: {
         type: "restriction",
+        restriction: "cant-play",
+        target: "SELF",
+      },
+      condition: {
+        type: "has-fewer-characters",
+        count: 5,
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -310,6 +316,16 @@ describe("Set 005 Card Text Parser Tests", () => {
       },
       effect: {
         type: "conditional",
+        condition: { type: "used-shift" },
+        then: {
+          type: "optional",
+          effect: {
+            type: "search-deck",
+            cardType: "character",
+            reveal: true,
+            putOnTop: true,
+          },
+        },
       },
     };
     expect(result.abilities[1].ability).toEqual(
@@ -360,6 +376,12 @@ describe("Set 005 Card Text Parser Tests", () => {
       },
       effect: {
         type: "conditional",
+        condition: { type: "has-location-in-play" },
+        then: {
+          type: "draw",
+          amount: 1,
+          target: "CONTROLLER",
+        },
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -396,6 +418,10 @@ describe("Set 005 Card Text Parser Tests", () => {
       },
       effect: {
         type: "modify-stat",
+        stat: "strength",
+        modifier: 1,
+        target: "YOUR_CHARACTERS",
+        duration: { type: "this-turn" },
       },
     };
     expect(result.abilities[1].ability).toEqual(
@@ -445,6 +471,14 @@ describe("Set 005 Card Text Parser Tests", () => {
       },
       effect: {
         type: "sequence",
+        effects: [
+          { type: "return-to-hand", target: "CHOSEN_CHARACTER_IN_DISCARD" },
+          {
+            type: "conditional",
+            condition: { type: "returned-card-is-princess" },
+            then: { type: "gain-lore", amount: 2 },
+          },
+        ],
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -470,6 +504,10 @@ describe("Set 005 Card Text Parser Tests", () => {
       },
       effect: {
         type: "modify-stat",
+        stat: "strength",
+        modifier: -5,
+        target: "CHOSEN_OPPOSING_CHARACTER",
+        duration: { type: "until-start-of-next-turn" },
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -532,6 +570,11 @@ describe("Set 005 Card Text Parser Tests", () => {
       },
       effect: {
         type: "optional",
+        effect: {
+          type: "remove-damage",
+          amount: { upTo: 2 },
+          target: "CHOSEN_CHARACTER",
+        },
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -551,6 +594,20 @@ describe("Set 005 Card Text Parser Tests", () => {
       type: "action",
       effect: {
         type: "sequence",
+        effects: [
+          {
+            type: "remove-damage",
+            amount: { upTo: 3 },
+            target: "CHOSEN_CHARACTER",
+          },
+          { type: "ready", target: "CHOSEN_CHARACTER" },
+          {
+            type: "restriction",
+            restriction: "cant-quest-or-challenge",
+            target: "CHOSEN_CHARACTER",
+            duration: { type: "this-turn" },
+          },
+        ],
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -569,6 +626,14 @@ describe("Set 005 Card Text Parser Tests", () => {
       type: "action",
       effect: {
         type: "sequence",
+        effects: [
+          {
+            type: "remove-damage",
+            amount: { upTo: 4 },
+            target: "CHOSEN_CHARACTER",
+          },
+          { type: "draw", amount: 1, target: "CONTROLLER" },
+        ],
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -607,6 +672,13 @@ describe("Set 005 Card Text Parser Tests", () => {
       type: "action",
       effect: {
         type: "sequence",
+        effects: [
+          { type: "name-card" },
+          {
+            type: "return-to-hand",
+            target: "ALL_CHARACTERS_WITH_NAME_IN_DISCARD",
+          },
+        ],
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -673,6 +745,14 @@ describe("Set 005 Card Text Parser Tests", () => {
       },
       effect: {
         type: "conditional",
+        condition: {
+          type: "has-character-with-classification",
+          classification: ["Princess", "Queen"],
+        },
+        then: {
+          type: "gain-lore",
+          amount: 1,
+        },
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -731,6 +811,9 @@ describe("Set 005 Card Text Parser Tests", () => {
       name: "SAFE AND SOUND",
       effect: {
         type: "modify-stat",
+        stat: "willpower",
+        modifier: 3,
+        target: "CHARACTERS_HERE",
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -751,6 +834,23 @@ describe("Set 005 Card Text Parser Tests", () => {
       name: "OUR HUMBLE HOME",
       effect: {
         type: "conditional",
+        condition: {
+          type: "has-characters-here",
+          count: { min: 3 },
+        },
+        then: {
+          type: "grant-ability",
+          ability: {
+            type: "activated",
+            cost: { banishSelf: true },
+            effect: {
+              type: "play-card",
+              cardType: "character",
+              from: "discard",
+              free: true,
+            },
+          },
+        },
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -813,6 +913,12 @@ describe("Set 005 Card Text Parser Tests", () => {
       },
       effect: {
         type: "optional",
+        effect: {
+          type: "move-damage",
+          amount: { upTo: 2 },
+          from: "CHOSEN_CHARACTER",
+          to: "CHOSEN_OPPOSING_CHARACTER",
+        },
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -908,6 +1014,11 @@ describe("Set 005 Card Text Parser Tests", () => {
       },
       effect: {
         type: "optional",
+        effect: {
+          type: "draw",
+          amount: 1,
+          target: "CONTROLLER",
+        },
       },
     };
     expect(result.abilities[1].ability).toEqual(
@@ -998,6 +1109,12 @@ describe("Set 005 Card Text Parser Tests", () => {
       },
       effect: {
         type: "optional",
+        effect: {
+          type: "move-damage",
+          amount: { upTo: 2 },
+          from: "SELF",
+          to: "CHOSEN_OPPOSING_CHARACTER",
+        },
       },
     };
     expect(result.abilities[1].ability).toEqual(
@@ -1135,6 +1252,11 @@ describe("Set 005 Card Text Parser Tests", () => {
       name: "PHENOMENAL SHOWMAN",
       effect: {
         type: "restriction",
+        restriction: "cant-ready",
+        target: "OPPOSING_CHARACTERS",
+      },
+      condition: {
+        type: "self-exerted",
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -1189,6 +1311,19 @@ describe("Set 005 Card Text Parser Tests", () => {
       },
       effect: {
         type: "optional",
+        effect: {
+          type: "sequence",
+          effects: [
+            { type: "discard", amount: 1, target: "CONTROLLER" },
+            {
+              type: "return-to-hand",
+              target: {
+                type: "query",
+                query: { costMax: 3 },
+              },
+            },
+          ],
+        },
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -1289,6 +1424,9 @@ describe("Set 005 Card Text Parser Tests", () => {
       },
       effect: {
         type: "restriction",
+        restriction: "cant-ready",
+        target: "CHOSEN_EXERTED_CHARACTER",
+        duration: { type: "until-start-of-next-turn" },
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -1314,6 +1452,20 @@ describe("Set 005 Card Text Parser Tests", () => {
       },
       effect: {
         type: "optional",
+        effect: {
+          type: "sequence",
+          effects: [
+            {
+              type: "gain-lore",
+              amount: {
+                type: "stat",
+                stat: "lore",
+                of: "CHOSEN_OTHER_CHARACTER",
+              },
+            },
+            { type: "return-to-hand", target: "CHOSEN_OTHER_CHARACTER" },
+          ],
+        },
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -1333,6 +1485,16 @@ describe("Set 005 Card Text Parser Tests", () => {
       type: "action",
       effect: {
         type: "sequence",
+        effects: [
+          { type: "draw", amount: 1, target: "CONTROLLER" },
+          {
+            type: "gain-keyword",
+            keyword: "Challenger",
+            value: 2,
+            target: "CHOSEN_CHARACTER",
+            duration: { type: "this-turn" },
+          },
+        ],
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -1371,6 +1533,23 @@ describe("Set 005 Card Text Parser Tests", () => {
       type: "action",
       effect: {
         type: "sequence",
+        effects: [
+          { type: "shuffle-into-deck", target: "CHOSEN_CARD_IN_DISCARD" },
+          { type: "reveal", target: "TOP_OF_DECK" },
+          {
+            type: "conditional",
+            condition: { type: "revealed-has-same-name" },
+            then: {
+              type: "optional",
+              effect: {
+                type: "play-card",
+                target: "REVEALED_CARD",
+                free: true,
+              },
+            },
+            else: { type: "put-in-hand", target: "REVEALED_CARD" },
+          },
+        ],
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -1520,6 +1699,9 @@ describe("Set 005 Card Text Parser Tests", () => {
       },
       effect: {
         type: "restriction",
+        restriction: "cant-ready",
+        target: "CHOSEN_EXERTED_CHARACTER",
+        duration: { type: "while-in-play" },
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -1540,10 +1722,15 @@ describe("Set 005 Card Text Parser Tests", () => {
       name: "LOST IN A BOOK",
       trigger: {
         event: "banish",
-        timing: "when",
+        timing: "whenever",
       },
       effect: {
         type: "optional",
+        effect: {
+          type: "draw",
+          amount: 1,
+          target: "CONTROLLER",
+        },
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -1600,6 +1787,12 @@ describe("Set 005 Card Text Parser Tests", () => {
       name: "EASY PICKINGS",
       effect: {
         type: "modify-stat",
+        stat: "strength",
+        modifier: 2,
+        target: "SELF",
+      },
+      condition: {
+        type: "opponent-has-damaged-character",
       },
     };
     expect(result.abilities[1].ability).toEqual(
@@ -1636,6 +1829,8 @@ describe("Set 005 Card Text Parser Tests", () => {
       name: "SILENT PERFORMANCE",
       effect: {
         type: "restriction",
+        restriction: "cant-sing",
+        target: "SELF",
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -1661,6 +1856,11 @@ describe("Set 005 Card Text Parser Tests", () => {
       },
       effect: {
         type: "optional",
+        effect: {
+          type: "deal-damage",
+          amount: 2,
+          target: "CHOSEN_DAMAGED_CHARACTER",
+        },
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -1681,6 +1881,12 @@ describe("Set 005 Card Text Parser Tests", () => {
       name: "FIDDLE FADDLE",
       effect: {
         type: "modify-stat",
+        stat: "strength",
+        modifier: 2,
+        target: "SELF",
+      },
+      condition: {
+        type: "being-challenged",
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -1706,6 +1912,17 @@ describe("Set 005 Card Text Parser Tests", () => {
       },
       effect: {
         type: "optional",
+        effect: {
+          type: "pay-cost",
+          cost: { ink: 1 },
+          effect: {
+            type: "modify-stat",
+            stat: "strength",
+            modifier: 2,
+            target: "CHOSEN_CHARACTER",
+            duration: { type: "this-turn" },
+          },
+        },
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -1731,6 +1948,13 @@ describe("Set 005 Card Text Parser Tests", () => {
       },
       effect: {
         type: "conditional",
+        condition: {
+          type: "opponent-has-damaged-character",
+        },
+        then: {
+          type: "gain-lore",
+          amount: 1,
+        },
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -1785,6 +2009,9 @@ describe("Set 005 Card Text Parser Tests", () => {
       name: "ROWDY GUEST",
       effect: {
         type: "restriction",
+        restriction: "cant-challenge",
+        target: "DAMAGED_CHARACTERS",
+        restrictedTarget: "SELF",
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -1819,6 +2046,14 @@ describe("Set 005 Card Text Parser Tests", () => {
       },
       effect: {
         type: "optional",
+        effect: {
+          type: "pay-cost",
+          cost: { ink: 3 },
+          effect: {
+            type: "banish",
+            target: "CHOSEN_DAMAGED_CHARACTER",
+          },
+        },
       },
     };
     expect(result.abilities[1].ability).toEqual(
@@ -1896,6 +2131,16 @@ describe("Set 005 Card Text Parser Tests", () => {
       },
       effect: {
         type: "conditional",
+        condition: {
+          type: "has-character-with-classification",
+          classification: "Musketeer",
+          count: { min: 2 },
+        },
+        then: {
+          type: "draw",
+          amount: 1,
+          target: "CONTROLLER",
+        },
       },
     };
     expect(result.abilities[1].ability).toEqual(
@@ -1921,6 +2166,24 @@ describe("Set 005 Card Text Parser Tests", () => {
       },
       effect: {
         type: "optional",
+        effect: {
+          type: "pay-cost",
+          cost: { ink: 2 },
+          effect: {
+            type: "modal",
+            options: [
+              { type: "discard", amount: 1, target: "EACH_OPPONENT" },
+              {
+                type: "modify-stat",
+                stat: "strength",
+                modifier: 2,
+                target: "CHOSEN_CHARACTER",
+                duration: { type: "this-turn" },
+              },
+              { type: "banish", target: "CHOSEN_DAMAGED_CHARACTER" },
+            ],
+          },
+        },
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -1946,6 +2209,14 @@ describe("Set 005 Card Text Parser Tests", () => {
       },
       effect: {
         type: "optional",
+        effect: {
+          type: "pay-cost",
+          cost: { ink: 2 },
+          effect: {
+            type: "banish",
+            target: "CHOSEN_ITEM",
+          },
+        },
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -1971,6 +2242,10 @@ describe("Set 005 Card Text Parser Tests", () => {
       },
       effect: {
         type: "optional",
+        effect: {
+          type: "exert",
+          target: "CHOSEN_DAMAGED_CHARACTER",
+        },
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -2003,6 +2278,9 @@ describe("Set 005 Card Text Parser Tests", () => {
       name: "CLEVER PLAN",
       effect: {
         type: "modify-stat",
+        stat: "lore",
+        modifier: 1,
+        target: "SELF",
       },
     };
     expect(result.abilities[1].ability).toEqual(
@@ -2028,6 +2306,14 @@ describe("Set 005 Card Text Parser Tests", () => {
       },
       effect: {
         type: "optional",
+        effect: {
+          type: "pay-cost",
+          cost: { ink: 3 },
+          effect: {
+            type: "return-to-hand",
+            target: "CHOSEN_CHARACTER",
+          },
+        },
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -2053,6 +2339,17 @@ describe("Set 005 Card Text Parser Tests", () => {
       },
       effect: {
         type: "conditional",
+        condition: {
+          type: "opponent-has-more-cards",
+        },
+        then: {
+          type: "optional",
+          effect: {
+            type: "draw",
+            amount: 1,
+            target: "CONTROLLER",
+          },
+        },
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -2073,6 +2370,9 @@ describe("Set 005 Card Text Parser Tests", () => {
       name: "STICK AROUND FOR DINNER",
       effect: {
         type: "modify-stat",
+        stat: "strength",
+        modifier: { type: "count", of: "OTHER_HYENA_CHARACTERS" },
+        target: "SELF",
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -2158,6 +2458,11 @@ describe("Set 005 Card Text Parser Tests", () => {
       },
       effect: {
         type: "optional",
+        effect: {
+          type: "draw",
+          amount: 1,
+          target: "CONTROLLER",
+        },
       },
     };
     expect(result.abilities[1].ability).toEqual(
@@ -2177,6 +2482,15 @@ describe("Set 005 Card Text Parser Tests", () => {
       type: "action",
       effect: {
         type: "sequence",
+        effects: [
+          { type: "draw", amount: 3, target: "CONTROLLER" },
+          {
+            type: "put-on-deck",
+            amount: 2,
+            target: "CHOSEN_CARDS_IN_HAND",
+            position: "top",
+          },
+        ],
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -2196,6 +2510,15 @@ describe("Set 005 Card Text Parser Tests", () => {
       type: "action",
       effect: {
         type: "sequence",
+        effects: [
+          { type: "draw", amount: 1, target: "CONTROLLER" },
+          {
+            type: "gain-keyword",
+            keyword: "Reckless",
+            target: "CHOSEN_CHARACTER",
+            duration: { type: "next-turn" },
+          },
+        ],
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -2215,6 +2538,13 @@ describe("Set 005 Card Text Parser Tests", () => {
       type: "action",
       effect: {
         type: "sequence",
+        effects: [
+          {
+            type: "shuffle-into-deck",
+            target: "CHOSEN_CHARACTER_ITEM_OR_LOCATION",
+          },
+          { type: "draw", amount: 2, target: "THAT_PLAYER" },
+        ],
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -2234,6 +2564,14 @@ describe("Set 005 Card Text Parser Tests", () => {
       type: "action",
       effect: {
         type: "conditional",
+        condition: {
+          type: "opponent-has-more-cards",
+        },
+        then: {
+          type: "draw-until",
+          target: "CONTROLLER",
+          until: { type: "equal-cards-in-hand" },
+        },
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -2270,6 +2608,15 @@ describe("Set 005 Card Text Parser Tests", () => {
       },
       effect: {
         type: "conditional",
+        condition: {
+          type: "opponent-has-more-than-cards",
+          count: 3,
+        },
+        then: {
+          type: "discard-until",
+          target: "OPPONENT",
+          until: { type: "cards-in-hand", count: 3 },
+        },
       },
     };
     expect(result.abilities[1].ability).toEqual(
@@ -2314,10 +2661,14 @@ describe("Set 005 Card Text Parser Tests", () => {
       name: "EMERALD LIGHT",
       trigger: {
         event: "banish",
-        timing: "when",
+        timing: "whenever",
       },
       effect: {
         type: "optional",
+        effect: {
+          type: "return-to-hand",
+          target: "CHOSEN_CHARACTER",
+        },
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -2418,6 +2769,25 @@ describe("Set 005 Card Text Parser Tests", () => {
       },
       effect: {
         type: "conditional",
+        condition: {
+          type: "has-character-with-strength",
+          strength: { min: 10 },
+        },
+        then: {
+          type: "gain-lore",
+          amount: 5,
+        },
+        else: {
+          type: "conditional",
+          condition: {
+            type: "has-character-with-strength",
+            strength: { min: 5 },
+          },
+          then: {
+            type: "gain-lore",
+            amount: 2,
+          },
+        },
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -2482,6 +2852,12 @@ describe("Set 005 Card Text Parser Tests", () => {
       },
       effect: {
         type: "conditional",
+        condition: { type: "used-shift" },
+        then: {
+          type: "lose-lore",
+          amount: 2,
+          target: "EACH_OPPONENT",
+        },
       },
     };
     expect(result.abilities[1].ability).toEqual(
@@ -2494,6 +2870,13 @@ describe("Set 005 Card Text Parser Tests", () => {
       name: "RAGING DUCK",
       effect: {
         type: "modify-stat",
+        stat: "strength",
+        modifier: 6,
+        target: "SELF",
+      },
+      condition: {
+        type: "opponent-has-lore",
+        amount: { min: 10 },
       },
     };
     expect(result.abilities[2].ability).toEqual(
@@ -2519,6 +2902,13 @@ describe("Set 005 Card Text Parser Tests", () => {
       },
       effect: {
         type: "optional",
+        effect: {
+          type: "banish",
+          target: {
+            type: "query",
+            query: { name: "Mufasa" },
+          },
+        },
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -2570,6 +2960,13 @@ describe("Set 005 Card Text Parser Tests", () => {
       name: "PERFECT PARTNERS",
       effect: {
         type: "modify-stat",
+        stat: "strength",
+        modifier: 2,
+        target: "SELF",
+      },
+      condition: {
+        type: "has-named-character",
+        name: "Minnie Mouse",
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -2590,6 +2987,12 @@ describe("Set 005 Card Text Parser Tests", () => {
       name: "NOTHING CAN STAND IN MY WAY",
       effect: {
         type: "modify-stat",
+        stat: "strength",
+        modifier: 2,
+        target: "SELF",
+      },
+      condition: {
+        type: "self-has-damage",
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -2615,6 +3018,12 @@ describe("Set 005 Card Text Parser Tests", () => {
       },
       effect: {
         type: "conditional",
+        condition: { type: "has-location-in-play" },
+        then: {
+          type: "lose-lore",
+          amount: 1,
+          target: "EACH_OPPONENT",
+        },
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -2640,6 +3049,18 @@ describe("Set 005 Card Text Parser Tests", () => {
       },
       effect: {
         type: "conditional",
+        condition: {
+          type: "has-named-character",
+          name: "Pete",
+          other: true,
+        },
+        then: {
+          type: "optional",
+          effect: {
+            type: "banish",
+            target: "CHOSEN_OPPOSING_CHARACTER",
+          },
+        },
       },
     };
     expect(result.abilities[0].ability).toEqual(expect.objectContaining(scram));
@@ -2810,6 +3231,9 @@ describe("Set 005 Card Text Parser Tests", () => {
       name: "DELIGHTFULLY WICKED",
       effect: {
         type: "modify-stat",
+        stat: "strength",
+        modifier: 1,
+        target: "YOUR_VILLAIN_CHARACTERS",
       },
     };
     expect(result.abilities[2].ability).toEqual(
@@ -2867,6 +3291,10 @@ describe("Set 005 Card Text Parser Tests", () => {
       },
       effect: {
         type: "modify-stat",
+        stat: "strength",
+        modifier: 2,
+        target: "CHOSEN_CHARACTER",
+        duration: { type: "this-turn" },
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -2911,6 +3339,26 @@ describe("Set 005 Card Text Parser Tests", () => {
       type: "action",
       effect: {
         type: "sequence",
+        effects: [
+          {
+            type: "deal-damage",
+            amount: 1,
+            target: "CHOSEN_CHARACTER_OF_YOURS",
+          },
+          {
+            type: "gain-keyword",
+            keyword: "Rush",
+            target: "CHOSEN_CHARACTER_OF_YOURS",
+            duration: { type: "this-turn" },
+          },
+          {
+            type: "modify-stat",
+            stat: "strength",
+            modifier: 1,
+            target: "CHOSEN_CHARACTER_OF_YOURS",
+            duration: { type: "this-turn" },
+          },
+        ],
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -2930,6 +3378,20 @@ describe("Set 005 Card Text Parser Tests", () => {
       type: "action",
       effect: {
         type: "sequence",
+        effects: [
+          { type: "ready", target: "CHOSEN_CHARACTER_OF_YOURS" },
+          {
+            type: "restriction",
+            restriction: "cant-quest",
+            target: "CHOSEN_CHARACTER_OF_YOURS",
+            duration: { type: "this-turn" },
+          },
+          {
+            type: "conditional",
+            condition: { type: "target-is-villain" },
+            then: { type: "gain-lore", amount: 1 },
+          },
+        ],
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -2949,6 +3411,15 @@ describe("Set 005 Card Text Parser Tests", () => {
       type: "action",
       effect: {
         type: "sequence",
+        effects: [
+          { type: "ready", target: "YOUR_CHARACTERS" },
+          {
+            type: "restriction",
+            restriction: "cant-quest",
+            target: "YOUR_CHARACTERS",
+            duration: { type: "this-turn" },
+          },
+        ],
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -2986,6 +3457,10 @@ describe("Set 005 Card Text Parser Tests", () => {
       type: "action",
       effect: {
         type: "modify-stat",
+        stat: "strength",
+        modifier: 2,
+        target: "YOUR_CHARACTERS",
+        duration: { type: "this-turn" },
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -3026,6 +3501,23 @@ describe("Set 005 Card Text Parser Tests", () => {
       },
       effect: {
         type: "conditional",
+        condition: {
+          type: "target-is-villain",
+        },
+        then: {
+          type: "modify-stat",
+          stat: "strength",
+          modifier: 4,
+          target: "CHOSEN_CHARACTER",
+          duration: { type: "this-turn" },
+        },
+        else: {
+          type: "modify-stat",
+          stat: "strength",
+          modifier: 3,
+          target: "CHOSEN_CHARACTER",
+          duration: { type: "this-turn" },
+        },
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -3050,6 +3542,16 @@ describe("Set 005 Card Text Parser Tests", () => {
       },
       effect: {
         type: "conditional",
+        condition: {
+          type: "has-strongest-character",
+        },
+        then: {
+          type: "sequence",
+          effects: [
+            { type: "lose-lore", amount: 1, target: "EACH_OPPONENT" },
+            { type: "gain-lore", amount: { type: "lore-lost" } },
+          ],
+        },
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -3072,6 +3574,10 @@ describe("Set 005 Card Text Parser Tests", () => {
       },
       effect: {
         type: "modify-stat",
+        stat: "strength",
+        modifier: 1,
+        target: "CHOSEN_CHARACTER",
+        duration: { type: "this-turn" },
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -3090,9 +3596,18 @@ describe("Set 005 Card Text Parser Tests", () => {
     const onYourMarks: ActivatedAbilityDefinition = {
       type: "activated",
       name: "ON YOUR MARKS!",
-      effect: {
-        type: "optional",
+      cost: {
+        exert: true,
+        target: "CHOSEN_CHARACTER_HERE",
       },
+      effect: {
+        type: "sequence",
+        effects: [
+          { type: "deal-damage", amount: 1, target: "CHOSEN_CHARACTER_HERE" },
+          { type: "move", target: "CHOSEN_CHARACTER_HERE", free: true },
+        ],
+      },
+      restrictions: [{ type: "once-per-turn" }],
     };
     expect(result.abilities[0].ability).toEqual(
       expect.objectContaining(onYourMarks),
@@ -3112,6 +3627,12 @@ describe("Set 005 Card Text Parser Tests", () => {
       name: "MISFITS' REVELRY",
       effect: {
         type: "modify-stat",
+        stat: "lore",
+        modifier: 2,
+        target: "SELF",
+      },
+      condition: {
+        type: "has-damaged-character-here",
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -3151,6 +3672,10 @@ describe("Set 005 Card Text Parser Tests", () => {
       },
       effect: {
         type: "modify-stat",
+        stat: "strength",
+        modifier: 2,
+        target: "SELF",
+        duration: { type: "this-turn" },
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -3195,6 +3720,11 @@ describe("Set 005 Card Text Parser Tests", () => {
       },
       effect: {
         type: "conditional",
+        condition: { type: "has-item-in-play" },
+        then: {
+          type: "gain-lore",
+          amount: 1,
+        },
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -3211,6 +3741,11 @@ describe("Set 005 Card Text Parser Tests", () => {
       },
       effect: {
         type: "conditional",
+        condition: { type: "has-location-in-play" },
+        then: {
+          type: "gain-lore",
+          amount: 1,
+        },
       },
     };
     expect(result.abilities[1].ability).toEqual(
@@ -3250,6 +3785,9 @@ describe("Set 005 Card Text Parser Tests", () => {
       name: "REFLECTIONS OF VANITY",
       effect: {
         type: "modify-stat",
+        stat: "lore",
+        modifier: { type: "count", of: "OTHER_QUEEN_CHARACTERS" },
+        target: "SELF",
       },
     };
     expect(result.abilities[2].ability).toEqual(
@@ -3312,6 +3850,15 @@ describe("Set 005 Card Text Parser Tests", () => {
       },
       effect: {
         type: "conditional",
+        condition: { type: "second-inkwell-this-turn" },
+        then: {
+          type: "optional",
+          effect: {
+            type: "draw",
+            amount: 1,
+            target: "CONTROLLER",
+          },
+        },
       },
     };
     expect(result.abilities[1].ability).toEqual(
@@ -3392,6 +3939,11 @@ describe("Set 005 Card Text Parser Tests", () => {
       },
       effect: {
         type: "optional",
+        effect: {
+          type: "put-into-inkwell",
+          target: "CHOSEN_ITEM_OR_LOCATION",
+          exerted: true,
+        },
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -3432,6 +3984,14 @@ describe("Set 005 Card Text Parser Tests", () => {
       },
       effect: {
         type: "sequence",
+        effects: [
+          { type: "exert", target: "ALL_CARDS_IN_INKWELL" },
+          {
+            type: "return-to-hand",
+            target: "RANDOM_CARDS_IN_INKWELL",
+            amount: 2,
+          },
+        ],
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -3474,6 +4034,10 @@ describe("Set 005 Card Text Parser Tests", () => {
       },
       effect: {
         type: "modify-stat",
+        stat: "strength",
+        modifier: -2,
+        target: "CHOSEN_CHARACTER",
+        duration: { type: "this-turn" },
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -3528,6 +4092,17 @@ describe("Set 005 Card Text Parser Tests", () => {
       },
       effect: {
         type: "optional",
+        effect: {
+          type: "sequence",
+          effects: [
+            { type: "draw", amount: 1, target: "CONTROLLER" },
+            {
+              type: "put-on-deck",
+              target: "CHOSEN_CARD_IN_HAND",
+              position: "bottom",
+            },
+          ],
+        },
       },
     };
     expect(result.abilities[1].ability).toEqual(
@@ -3553,6 +4128,11 @@ describe("Set 005 Card Text Parser Tests", () => {
       },
       effect: {
         type: "optional",
+        effect: {
+          type: "put-into-inkwell",
+          target: "TOP_OF_DECK",
+          exerted: true,
+        },
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -3578,6 +4158,11 @@ describe("Set 005 Card Text Parser Tests", () => {
       },
       effect: {
         type: "optional",
+        effect: {
+          type: "remove-damage",
+          amount: { upTo: 1 },
+          target: "CHOSEN_CHARACTER_OR_LOCATION",
+        },
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -3603,6 +4188,11 @@ describe("Set 005 Card Text Parser Tests", () => {
       },
       effect: {
         type: "optional",
+        effect: {
+          type: "put-into-inkwell",
+          target: "CHOSEN_CARD_IN_HAND",
+          exerted: true,
+        },
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -3672,6 +4262,13 @@ describe("Set 005 Card Text Parser Tests", () => {
       },
       effect: {
         type: "conditional",
+        condition: { type: "used-shift" },
+        then: {
+          type: "search-deck",
+          cardType: "action",
+          reveal: true,
+          putInHand: true,
+        },
       },
     };
     expect(result.abilities[1].ability).toEqual(
@@ -3710,6 +4307,14 @@ describe("Set 005 Card Text Parser Tests", () => {
       type: "action",
       effect: {
         type: "sequence",
+        effects: [
+          { type: "banish", target: "ANY_NUMBER_OF_YOUR_ITEMS" },
+          {
+            type: "draw",
+            amount: { type: "count", of: "ITEMS_BANISHED" },
+            target: "CONTROLLER",
+          },
+        ],
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -3791,6 +4396,10 @@ describe("Set 005 Card Text Parser Tests", () => {
       },
       effect: {
         type: "modify-stat",
+        stat: "lore",
+        modifier: 2,
+        target: "CHOSEN_CHARACTER_OF_YOURS",
+        duration: { type: "this-turn" },
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -3895,7 +4504,21 @@ describe("Set 005 Card Text Parser Tests", () => {
       type: "static",
       name: "WARM WELCOME",
       effect: {
-        type: "modify-stat",
+        type: "sequence",
+        effects: [
+          {
+            type: "modify-stat",
+            stat: "lore",
+            modifier: 1,
+            target: "CHARACTERS_WITH_SUPPORT_HERE",
+          },
+          {
+            type: "modify-stat",
+            stat: "willpower",
+            modifier: 2,
+            target: "CHARACTERS_WITH_SUPPORT_HERE",
+          },
+        ],
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -3941,6 +4564,11 @@ describe("Set 005 Card Text Parser Tests", () => {
       },
       effect: {
         type: "optional",
+        effect: {
+          type: "deal-damage",
+          amount: 2,
+          target: "CHOSEN_CHARACTER",
+        },
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -3971,6 +4599,12 @@ describe("Set 005 Card Text Parser Tests", () => {
       name: "INTIMIDATING GAZE",
       effect: {
         type: "restriction",
+        restriction: "cant-challenge",
+        target: "OPPOSING_CHARACTERS",
+        restrictedTarget: "SELF",
+      },
+      condition: {
+        type: "opposing-character-has-less-strength",
       },
     };
     expect(result.abilities[1].ability).toEqual(
@@ -3990,11 +4624,16 @@ describe("Set 005 Card Text Parser Tests", () => {
       type: "triggered",
       name: "FACE THE PAST",
       trigger: {
-        event: "banish",
-        timing: "when",
+        event: "banish-in-challenge",
+        timing: "whenever",
       },
       effect: {
         type: "optional",
+        effect: {
+          type: "draw",
+          amount: 1,
+          target: "CONTROLLER",
+        },
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -4114,6 +4753,19 @@ describe("Set 005 Card Text Parser Tests", () => {
       },
       effect: {
         type: "conditional",
+        condition: {
+          type: "has-character-with-classification",
+          classification: "Knight",
+          other: true,
+        },
+        then: {
+          type: "optional",
+          effect: {
+            type: "deal-damage",
+            amount: 1,
+            target: "CHOSEN_CHARACTER_OR_LOCATION",
+          },
+        },
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -4183,11 +4835,16 @@ describe("Set 005 Card Text Parser Tests", () => {
       type: "triggered",
       name: "I'M WARNING YOU!",
       trigger: {
-        event: "banish",
-        timing: "when",
+        event: "banish-in-challenge",
+        timing: "whenever",
       },
       effect: {
         type: "optional",
+        effect: {
+          type: "deal-damage",
+          amount: 1,
+          target: "CHOSEN_CHARACTER",
+        },
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -4219,11 +4876,17 @@ describe("Set 005 Card Text Parser Tests", () => {
       type: "triggered",
       name: "ARE YOU ON THE LIST?",
       trigger: {
-        event: "banish",
-        timing: "when",
+        event: "banish-in-challenge",
+        timing: "whenever",
       },
       effect: {
         type: "optional",
+        effect: {
+          type: "play-card",
+          cardType: "character",
+          costRestriction: { max: 3 },
+          free: true,
+        },
       },
     };
     expect(result.abilities[1].ability).toEqual(
@@ -4278,7 +4941,25 @@ describe("Set 005 Card Text Parser Tests", () => {
         exert: true,
       },
       effect: {
-        type: "conditional",
+        type: "sequence",
+        effects: [
+          { type: "reveal", target: "TOP_OF_DECK" },
+          {
+            type: "conditional",
+            condition: {
+              type: "revealed-is-character-named",
+              name: "Pete",
+            },
+            then: {
+              type: "optional",
+              effect: {
+                type: "play-card",
+                target: "REVEALED_CARD",
+                free: true,
+              },
+            },
+          },
+        ],
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -4356,6 +5037,10 @@ describe("Set 005 Card Text Parser Tests", () => {
       },
       effect: {
         type: "optional",
+        effect: {
+          type: "banish",
+          target: "CHOSEN_ITEM_OR_LOCATION",
+        },
       },
     };
     expect(result.abilities[1].ability).toEqual(
@@ -4381,6 +5066,13 @@ describe("Set 005 Card Text Parser Tests", () => {
       },
       effect: {
         type: "optional",
+        effect: {
+          type: "sequence",
+          effects: [
+            { type: "discard", amount: "all", target: "CONTROLLER" },
+            { type: "draw", amount: 2, target: "CONTROLLER" },
+          ],
+        },
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -4418,6 +5110,28 @@ describe("Set 005 Card Text Parser Tests", () => {
       },
       effect: {
         type: "sequence",
+        effects: [
+          {
+            type: "gain-keyword",
+            keyword: "Challenger",
+            value: 2,
+            target: "CHOSEN_CHARACTER",
+            duration: { type: "this-turn" },
+          },
+          {
+            type: "gain-keyword",
+            keyword: "Resist",
+            value: 2,
+            target: "CHOSEN_CHARACTER",
+            duration: { type: "this-turn" },
+          },
+          {
+            type: "grant-ability",
+            ability: { type: "challenge-ready" },
+            target: "CHOSEN_CHARACTER",
+            duration: { type: "this-turn" },
+          },
+        ],
       },
     };
     expect(result.abilities[1].ability).toEqual(
@@ -4443,6 +5157,9 @@ describe("Set 005 Card Text Parser Tests", () => {
       },
       effect: {
         type: "restriction",
+        restriction: "cant-play-actions",
+        target: "OPPONENTS",
+        duration: { type: "until-start-of-next-turn" },
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -4481,6 +5198,15 @@ describe("Set 005 Card Text Parser Tests", () => {
       type: "action",
       effect: {
         type: "sequence",
+        effects: [
+          {
+            type: "restriction",
+            restriction: "cant-challenge",
+            target: "CHOSEN_CHARACTER",
+            duration: { type: "next-turn" },
+          },
+          { type: "draw", amount: 1, target: "CONTROLLER" },
+        ],
       },
     };
     expect(result.abilities[0].ability).toEqual(
@@ -4631,8 +5357,25 @@ describe("Set 005 Card Text Parser Tests", () => {
         timing: "whenever",
       },
       effect: {
-        type: "conditional",
+        type: "optional",
+        effect: {
+          type: "conditional",
+          condition: {
+            type: "moved-character-is-knight",
+          },
+          then: {
+            type: "deal-damage",
+            amount: 2,
+            target: "CHOSEN_CHARACTER",
+          },
+          else: {
+            type: "deal-damage",
+            amount: 1,
+            target: "CHOSEN_CHARACTER",
+          },
+        },
       },
+      restrictions: [{ type: "first-time-each-turn" }],
     };
     expect(result.abilities[0].ability).toEqual(
       expect.objectContaining(mountainDefense),
