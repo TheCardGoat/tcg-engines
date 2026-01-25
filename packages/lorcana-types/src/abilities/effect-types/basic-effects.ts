@@ -42,13 +42,21 @@ export interface DrawEffect {
 export interface DiscardEffect {
   type: "discard";
   amount: Amount;
-  target: PlayerTarget;
+  target?: PlayerTarget;
   /** Whether the affected player chooses which cards */
   chosen?: boolean;
+  /** Who chooses (alternative to chosen) */
+  chosenBy?: "you" | "opponent" | "TARGET";
   /** If not chosen, discard is random */
   random?: boolean;
   /** Discard from specific zone (default: hand) */
   from?: TargetZone;
+  /** Filter for what can be discarded */
+  filter?: {
+    cardType?: string;
+    maxCost?: number;
+    classification?: string;
+  };
 }
 
 // ============================================================================
@@ -124,7 +132,7 @@ export interface GainLoreEffect {
 export interface LoseLoreEffect {
   type: "lose-lore";
   amount: Amount;
-  target: PlayerTarget;
+  target?: PlayerTarget;
 }
 
 // ============================================================================

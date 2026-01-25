@@ -14,7 +14,11 @@
  */
 
 import type { CardType } from "../cards/card-types";
-import type { ComparisonOperator, TargetZone } from "./target-types";
+import type {
+  CharacterTarget,
+  ComparisonOperator,
+  TargetZone,
+} from "./target-types";
 
 // ============================================================================
 // Character/Card Existence Conditions - Strict Variants
@@ -202,6 +206,7 @@ export type HasDamageCondition =
  */
 export interface NoDamageCondition {
   type: "no-damage";
+  target?: "SELF" | CharacterTarget;
 }
 
 /**
@@ -438,6 +443,96 @@ export interface TurnCondition {
 }
 
 /**
+ * Check if it's your turn (simplified version)
+ */
+export interface YourTurnCondition {
+  type: "your-turn";
+}
+
+/**
+ * Check if a character is exerted
+ */
+export interface ExertedCondition {
+  type: "exerted";
+  target?: "SELF" | CharacterTarget;
+}
+
+/**
+ * Check hand count
+ */
+export interface HandCountCondition {
+  type: "hand-count";
+  controller: "you" | "opponent";
+  count: number;
+  comparison?: ComparisonOperator;
+}
+
+/**
+ * Check if a stat meets a threshold
+ */
+export interface StatThresholdCondition {
+  type: "stat-threshold";
+  stat: "strength" | "willpower" | "lore";
+  value: number;
+  comparison: ComparisonOperator;
+  target?: "SELF" | CharacterTarget;
+}
+
+/**
+ * Check if something was played this turn
+ */
+export interface PlayedThisTurnCondition {
+  type: "played-this-turn";
+  cardType?: "character" | "action" | "item" | "song";
+}
+
+/**
+ * Check if you have a character (simplified)
+ */
+export interface HaveCharacterCondition {
+  type: "have-character";
+  name?: string;
+  classification?: string;
+}
+
+/**
+ * Check if you have a card
+ */
+export interface HaveCardCondition {
+  type: "have-card";
+  cardType?: "character" | "action" | "item" | "song";
+  name?: string;
+  zone?: "hand" | "play" | "discard";
+  controller?: "you" | "opponent";
+}
+
+/**
+ * Check a name condition
+ */
+export interface NameCondition {
+  type: "name";
+  name: string;
+  target?: CharacterTarget;
+}
+
+/**
+ * Character count condition (simplified)
+ */
+export interface CharacterCountCondition {
+  type: "character-count";
+  count: number;
+  comparison?: ComparisonOperator;
+  controller?: "you" | "opponent";
+}
+
+/**
+ * Generic target condition (for parser flexibility)
+ */
+export interface TargetCondition {
+  target: CharacterTarget | string;
+}
+
+/**
  * Check if this is the first occurrence of something this turn
  */
 export interface FirstThisTurnCondition {
@@ -580,6 +675,7 @@ export type Condition =
   | ThisTurnCountCondition
   // Turn
   | TurnCondition
+  | YourTurnCondition
   | FirstThisTurnCondition
   // Zone
   | ZoneCondition
@@ -599,7 +695,17 @@ export type Condition =
   // Parser catch-all
   | IfCondition
   // Legacy Resolution (deprecated)
-  | ResolutionCondition;
+  | ResolutionCondition
+  // Additional conditions for parser support
+  | ExertedCondition
+  | HandCountCondition
+  | StatThresholdCondition
+  | PlayedThisTurnCondition
+  | HaveCharacterCondition
+  | HaveCardCondition
+  | NameCondition
+  | CharacterCountCondition
+  | TargetCondition;
 
 // ============================================================================
 // Condition Builders (convenience)

@@ -86,7 +86,11 @@ export type TriggerEvent =
 
   // Turn phases
   | "start-turn" // Start of turn
-  | "end-turn"; // End of turn
+  | "end-turn" // End of turn
+
+  // Additional events for parser support
+  | "remove-damage" // Damage is removed from a character
+  | "return-to-hand"; // A card is returned to hand
 
 // ============================================================================
 // Trigger Subject (what triggers the event)
@@ -111,12 +115,22 @@ export type TriggerSubjectEnum =
   | "YOUR_CHARACTERS" // Any of your characters
   | "YOUR_OTHER_CHARACTERS" // Your characters except this one
   | "OPPONENT_CHARACTERS" // Opponent's characters
+  | "OPPOSING_CHARACTERS" // Alias for OPPONENT_CHARACTERS
+  | "OTHER_CHARACTERS" // Any character except this one
   | "ANY_CHARACTER" // Any character
   | "YOUR_ITEMS" // Any of your items
+  | "YOUR_OTHER_ITEMS" // Your items except this one
   | "YOUR_LOCATIONS" // Any of your locations
+  | "YOUR_ACTIONS" // Any of your actions
+  | "YOUR_SONGS" // Any of your songs
   | "YOU" // The controller (for lore/draw events)
   | "OPPONENT" // The opponent (for lore/draw events)
-  | "ANY_PLAYER"; // Any player
+  | "ANY_PLAYER" // Any player
+  // Classification-based triggers
+  | "FLOODBORN_CHARACTERS" // Floodborn characters you play
+  | "SELF_OR_SEVEN_DWARFS_CHARACTERS" // This character or Seven Dwarfs
+  | "CINDERELLA_CHARACTERS" // Characters named Cinderella
+  | "YOUR_CHARACTERS_COST_4_OR_MORE"; // Your characters with cost 4+
 
 /**
  * Query-based trigger subject for complex filtering
@@ -268,10 +282,16 @@ export type TriggerSubject = TriggerSubjectEnum | TriggerSubjectQuery;
 
 export interface BaseTrigger {
   /** The event that causes this trigger to fire */
-  event: TriggerEvent;
+  event?: TriggerEvent;
+
+  /**
+   * Multiple events that can cause this trigger to fire
+   * Used for "When you play this character and when he leaves play"
+   */
+  events?: TriggerEvent[] | Array<{ event: string; on: string }>;
 
   /** Timing word (when/whenever/at) */
-  timing: TriggerTiming;
+  timing: TriggerTiming | "when-or-whenever";
 
   /**
    * What entity triggers this event
@@ -292,6 +312,15 @@ export interface BaseTrigger {
    * Used by parser for simpler challenge-related triggers
    */
   challengeContext?: ChallengeTriggerContext;
+
+  /**
+   * Condition that must be true for the trigger to fire
+   * Used by parser for conditional triggers
+   */
+  condition?: {
+    type: string;
+    [key: string]: unknown;
+  };
 }
 
 export type Trigger = BaseTrigger | ChallengeTrigger;

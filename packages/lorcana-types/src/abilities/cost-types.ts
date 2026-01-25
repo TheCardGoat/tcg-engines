@@ -208,6 +208,18 @@ export interface AbilityCost {
   /** Number of characters to exert (other than self) */
   exertCharacters?: number;
 
+  /** Exert a single character (singular form) */
+  exertCharacter?: boolean;
+
+  /**
+   * Discard cost as an object (alternative format)
+   * Used by parser for complex discard costs
+   */
+  discard?: {
+    cardType?: CardType | "song" | "character";
+    amount?: number;
+  };
+
   /**
    * Complex cost components (for less common costs)
    * Used when the simple fields above don't suffice

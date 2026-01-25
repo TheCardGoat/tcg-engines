@@ -44,6 +44,7 @@ export interface ReturnFromDiscardEffect {
   cardName?: string;
   target: PlayerTarget;
   count?: number;
+  destination?: "hand" | "play" | "top-of-deck";
 }
 
 /**
@@ -53,7 +54,7 @@ export interface ReturnFromDiscardEffect {
  */
 export interface PutIntoInkwellEffect {
   type: "put-into-inkwell";
-  source:
+  source?:
     | "top-of-deck"
     | "hand"
     | "chosen-card-in-play"
@@ -61,12 +62,17 @@ export interface PutIntoInkwellEffect {
     | "this-card"
     | "discard"
     | "revealed"
+    | "deck"
     | CardTarget;
-  target?: PlayerTarget;
+  target?: PlayerTarget | CharacterTarget | "SELF";
   cardType?: CardType;
   exerted?: boolean;
   /** Whether the card is placed facedown in the inkwell */
   facedown?: boolean;
+  /** Position in deck to take from */
+  position?: "top" | "bottom";
+  /** Who chooses the card */
+  chosenBy?: "you" | "opponent" | "TARGET";
 }
 
 /**

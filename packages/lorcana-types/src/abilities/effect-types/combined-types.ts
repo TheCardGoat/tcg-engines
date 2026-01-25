@@ -6,6 +6,9 @@
  */
 
 // Import all effect types
+import type { Condition } from "../condition-types";
+import type { CharacterTarget } from "../target-types";
+import type { EffectDuration } from "./amount-types";
 import type {
   BanishEffect,
   DealDamageEffect,
@@ -23,10 +26,25 @@ import type {
 } from "./basic-effects";
 import type {
   ChoiceEffect,
+  CompoundEffect,
   ConditionalEffect,
+  CostEffectEffect,
+  DelayedEffect,
   ForEachEffect,
+  ForEachOpponentEffect,
+  ForEachPlayerEffect,
+  GainAbilityEffect,
+  GrantKeywordEffect,
+  GrantKeywordsEffect,
+  LookEffect,
   OptionalEffect,
+  PlayForFreeEffect,
+  PreventDamageEffect,
+  PutIntoHandEffect,
+  PutOnDeckEffect,
+  RedirectDamageEffect,
   RepeatEffect,
+  RevealAndConditionalEffect,
   SequenceEffect,
 } from "./control-flow";
 import type {
@@ -125,7 +143,27 @@ export type Effect =
   // Special State Modifications
   | EntersPlayEffect
   | WinConditionEffect
-  | PropertyModificationEffect;
+  | PropertyModificationEffect
+  // Additional effects for parser support
+  | CostEffectEffect
+  | RevealAndConditionalEffect
+  | GrantKeywordEffect
+  | GrantKeywordsEffect
+  | DelayedEffect
+  | PlayForFreeEffect
+  | PutOnDeckEffect
+  | LookEffect
+  | PutIntoHandEffect
+  | CompoundEffect
+  | ChallengeReadyEffect
+  | ReplacementEffect
+  | ForEachOpponentEffect
+  | ForEachPlayerEffect
+  | PreventDamageEffect
+  | GainAbilityEffect
+  | GainKeywordsEffect
+  | EntersPlayWithEffect
+  | RedirectDamageEffect;
 
 /**
  * Static effects (always active, used in static abilities)
@@ -148,7 +186,54 @@ export type StaticEffect =
   | ConditionalEffect
   | OptionalEffect
   | PlayCardEffect
-  | SearchDeckEffect;
+  | SearchDeckEffect
+  // Additional static effects for parser support
+  | ChallengeReadyEffect
+  | ReplacementEffect
+  | GrantKeywordEffect
+  | GrantKeywordsEffect
+  | GainKeywordsEffect
+  | EntersPlayWithEffect;
+
+/**
+ * Gain multiple keywords effect (for static abilities)
+ */
+export interface GainKeywordsEffect {
+  type: "gain-keywords";
+  keywords: Array<{ keyword: string; value?: number }>;
+  target: CharacterTarget;
+  duration?: EffectDuration;
+}
+
+/**
+ * Enters play with effect
+ */
+export interface EntersPlayWithEffect {
+  type: "enters-play-with";
+  modification?: "damage" | "exerted" | "cards-under";
+  amount?: number;
+  damage?: number;
+  target?: CharacterTarget;
+}
+
+/**
+ * Challenge ready effect - allows challenging ready characters
+ */
+export interface ChallengeReadyEffect {
+  type: "challenge-ready";
+  target: CharacterTarget;
+}
+
+/**
+ * Replacement effect - replaces one event with another
+ */
+export interface ReplacementEffect {
+  type: "replacement";
+  replaces: "damage" | "banish" | "quest" | "damage-to-character";
+  with?: Effect | "prevent";
+  replacement?: Effect | "prevent";
+  condition?: Condition;
+}
 
 // ============================================================================
 // Type Guards

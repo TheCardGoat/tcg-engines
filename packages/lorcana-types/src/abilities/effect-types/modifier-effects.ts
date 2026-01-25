@@ -108,9 +108,16 @@ export interface RestrictionEffect {
     | "cant-move"
     | "enters-play-exerted"
     | "skip-draw-step"
-    | "must-quest"; // Forces character to quest if able
+    | "must-quest" // Forces character to quest if able
+    | "cant-play-actions" // Opponents can't play actions
+    | "cant-play-characters"; // Opponents can't play characters
   target: CharacterTarget | PlayerTarget;
   duration?: EffectDuration;
+  /** Condition for when the restriction applies */
+  condition?: {
+    type: string;
+    [key: string]: unknown;
+  };
 }
 
 /**
@@ -121,7 +128,8 @@ export interface GrantAbilityEffect {
   ability:
     | "can-challenge-ready"
     | "takes-no-damage-from-challenges"
-    | "return-to-hand-when-banished";
+    | "return-to-hand-when-banished"
+    | { type: string; [key: string]: unknown }; // Allow object-based abilities
   target: CharacterTarget;
   duration?: EffectDuration;
 }
@@ -133,7 +141,9 @@ export interface GrantAbilityEffect {
  */
 export interface CostReductionEffect {
   type: "cost-reduction";
-  amount: Amount;
+  amount?: Amount | string;
+  /** Alternative field for reduction amount */
+  reduction?: { ink: number | string };
   cardType?: CardType | "song";
   target?: PlayerTarget; // Who gets the reduction (usually YOU)
   duration?: EffectDuration;

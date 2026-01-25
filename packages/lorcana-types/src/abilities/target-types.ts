@@ -36,11 +36,19 @@ import type { TargetDSL } from "@tcg/core-types";
 export type PlayerTarget =
   | "CONTROLLER" // The player who controls this card
   | "OPPONENT" // A single opponent (2-player default)
+  | "OPPONENTS" // All opponents (alias for EACH_OPPONENT in 2-player)
   | "EACH_PLAYER" // All players including controller
   | "EACH_OPPONENT" // All opponents
   | "CHOSEN_PLAYER" // A player chosen by the controller
   | "CARD_OWNER" // The owner of the target card (context-dependent)
-  | "CURRENT_TURN"; // The player whose turn it is
+  | "CURRENT_TURN" // The player whose turn it is
+  // Additional targets for parser support
+  | "NEXT_CHARACTER" // The next character played (for cost reduction)
+  | "SEVEN_DWARFS_CHARACTERS" // Seven Dwarfs characters (for lore gain)
+  | "THAT_PLAYER" // Reference to a previously mentioned player
+  | "CHALLENGER_OWNER" // Owner of the challenging character
+  | "THEIR_CHOSEN_CHARACTER" // Their chosen character (for each player effects)
+  | "PAWPSICLE_ITEM"; // Specific item reference
 
 // ============================================================================
 // Card References (Context-Aware)
@@ -120,14 +128,43 @@ export type CharacterTargetEnum =
   | "CHOSEN_CHARACTER_OF_YOURS" // Your character
   | "ANOTHER_CHOSEN_CHARACTER" // Any character except self
   | "ANOTHER_CHOSEN_CHARACTER_OF_YOURS" // Your character except self
+  | "CHOSEN_DAMAGED_CHARACTER" // Any damaged character
+  | "CHOSEN_DAMAGED_OPPOSING_CHARACTER" // Opponent's damaged character
+  | "CHOSEN_EXERTED_CHARACTER" // Any exerted character
+  | "CHOSEN_OTHER_CHARACTER" // Another character (not self)
+  | "CHOSEN_CHALLENGED_CHARACTER" // Character being challenged
+
+  // Your chosen characters
+  | "YOUR_CHOSEN_CHARACTER" // Your chosen character
+  | "YOUR_CHOSEN_DAMAGED_CHARACTER" // Your chosen damaged character
+  | "YOUR_CHOSEN_VILLAIN" // Your chosen Villain character
+  | "YOUR_CHOSEN_ITEM" // Your chosen item
 
   // All/Each (affects multiple)
   | "ALL_CHARACTERS" // Every character in play
   | "ALL_OPPOSING_CHARACTERS" // All of opponent's characters
   | "YOUR_CHARACTERS" // All of your characters
   | "YOUR_OTHER_CHARACTERS" // All of your characters except self
+  | "YOUR_OTHER_CHARACTER" // Another of your characters (singular)
+  | "YOUR_OTHER_2_CHARACTERS" // 2 other characters of yours
   | "EACH_CHARACTER" // Same as ALL_CHARACTERS
   | "EACH_OPPOSING_CHARACTER" // Same as ALL_OPPOSING_CHARACTERS
+
+  // Up to N characters
+  | "UP_TO_2_CHOSEN_CHARACTERS" // Up to 2 chosen characters
+
+  // Classification-based targets
+  | "YOUR_OTHER_SEVEN_DWARFS_CHARACTERS" // Your Seven Dwarfs except self
+  | "YOUR_PRINCE_PRINCESS_KING_QUEEN_CHARACTERS" // Your royalty characters
+  | "YOUR_EXERTED_CHARACTERS" // Your exerted characters
+  | "YOUR_EVASIVE_CHARACTERS" // Your Evasive characters
+  | "YOUR_RECKLESS_CHARACTERS" // Your Reckless characters
+  | "CHOSEN_DRAGON_CHARACTER" // Chosen Dragon character
+
+  // Played card reference
+  | "PLAYED_CARD" // The card that was just played
+  | "THEIR_CHOSEN_CHARACTER" // Their chosen character (for each player effects)
+  | "CHOSEN_OPPOSING_CHARACTER_3_STRENGTH_OR_LESS" // Opposing character with 3 or less strength
 
   // Challenge context
   | "challenging-character" // The character doing the challenge
@@ -159,7 +196,10 @@ export type ComparisonOperator =
   | "greater-or-equal"
   // Alternative naming conventions (for parser compatibility)
   | "greater-than"
-  | "less-than";
+  | "less-than"
+  // Additional aliases for natural language
+  | "or-more" // Alias for greater-or-equal
+  | "or-less"; // Alias for less-or-equal
 
 // ============================================================================
 // Shared Filter Types (used across Character, Location, Item targeting)
@@ -547,6 +587,7 @@ export type ItemTargetEnum =
   | "CHOSEN_ITEM"
   | "CHOSEN_OPPOSING_ITEM"
   | "YOUR_ITEMS"
+  | "YOUR_ITEM" // Singular - one of your items
   | "ALL_ITEMS"
   | "ALL_OPPOSING_ITEMS"
   | "THIS_ITEM"; // For abilities on items
@@ -612,7 +653,11 @@ export type CardTargetEnum =
   | "CHOSEN_CARD_FROM_HAND"
   | "CHOSEN_CARD_FROM_DISCARD"
   | "TOP_CARD_OF_DECK"
-  | "revealed";
+  | "revealed"
+  // Additional card targets for parser support
+  | "CHARACTER_FROM_DISCARD" // Character card from discard pile
+  | "SUPPORT_CHARACTER_FROM_DISCARD" // Support character from discard
+  | "CHOSEN_CHARACTER_OR_ITEM_COST_3_OR_LESS"; // Character or item with cost 3 or less
 
 export type CardTarget =
   | CardTargetEnum

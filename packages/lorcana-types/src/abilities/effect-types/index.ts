@@ -6,7 +6,13 @@
  */
 
 // Shared types
-export type { Amount, EffectDuration, VariableAmount } from "./amount-types";
+export type {
+  Amount,
+  AmountString,
+  EffectDuration,
+  ForEachCounterType,
+  VariableAmount,
+} from "./amount-types";
 export { isVariableAmount } from "./amount-types";
 
 // Basic effects
@@ -24,7 +30,14 @@ export type {
   RemoveDamageEffect,
 } from "./basic-effects";
 // Combined types and guards
-export type { Effect, StaticEffect } from "./combined-types";
+export type {
+  ChallengeReadyEffect,
+  Effect,
+  EntersPlayWithEffect,
+  GainKeywordsEffect,
+  ReplacementEffect,
+  StaticEffect,
+} from "./combined-types";
 export {
   isControlFlowEffect,
   isScryEffect,
@@ -33,11 +46,26 @@ export {
 // Control flow effects
 export type {
   ChoiceEffect,
+  CompoundEffect,
   ConditionalEffect,
+  CostEffectEffect,
+  DelayedEffect,
   ForEachCounter,
   ForEachEffect,
+  ForEachOpponentEffect,
+  ForEachPlayerEffect,
+  GainAbilityEffect,
+  GrantKeywordEffect,
+  GrantKeywordsEffect,
+  LookEffect,
   OptionalEffect,
+  PlayForFreeEffect,
+  PreventDamageEffect,
+  PutIntoHandEffect,
+  PutOnDeckEffect,
+  RedirectDamageEffect,
   RepeatEffect,
+  RevealAndConditionalEffect,
   SequenceEffect,
 } from "./control-flow";
 
