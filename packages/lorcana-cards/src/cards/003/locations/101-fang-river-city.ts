@@ -26,7 +26,6 @@ export const fangRiverCity: LocationCard = {
       effect: {
         type: "gain-keyword",
         keyword: "Ward",
-        // @ts-expect-error - CHARACTERS_HERE needs special location handling
         target: "CHARACTERS_HERE",
       },
       name: "SURROUNDED BY WATER",

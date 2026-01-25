@@ -73,7 +73,10 @@ function getPlayZoneFilter(
 conditionRegistry.register<HasNamedCharacterCondition>("has-named-character", {
   complexity: 40,
   evaluate: (condition, sourceCard, { state, registry }) => {
-    const zoneFilter = getPlayZoneFilter(condition.controller, sourceCard);
+    const zoneFilter = getPlayZoneFilter(
+      condition.controller ?? "you",
+      sourceCard,
+    );
 
     // Check if ANY card matches
     return Object.values(state.internal.cards).some((c) => {
@@ -117,7 +120,10 @@ conditionRegistry.register<HasCharacterWithClassificationCondition>(
 conditionRegistry.register<HasCharacterCountCondition>("has-character-count", {
   complexity: 50,
   evaluate: (condition, sourceCard, { state, registry }) => {
-    const zoneFilter = getPlayZoneFilter(condition.controller, sourceCard);
+    const zoneFilter = getPlayZoneFilter(
+      condition.controller ?? "you",
+      sourceCard,
+    );
 
     let count = 0;
 
@@ -131,7 +137,7 @@ conditionRegistry.register<HasCharacterCountCondition>("has-character-count", {
       return def?.cardType === "character";
     });
 
-    return compare(count, condition.comparison, condition.count);
+    return compare(count, condition.comparison ?? "gte", condition.count ?? 1);
   },
 });
 

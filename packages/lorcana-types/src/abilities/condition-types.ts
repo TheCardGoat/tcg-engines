@@ -14,7 +14,11 @@
  */
 
 import type { CardType } from "../cards/card-types";
-import type { ComparisonOperator, TargetZone } from "./target-types";
+import type {
+  CharacterTarget,
+  ComparisonOperator,
+  TargetZone,
+} from "./target-types";
 
 // ============================================================================
 // Character/Card Existence Conditions - Strict Variants
@@ -28,9 +32,9 @@ import type { ComparisonOperator, TargetZone } from "./target-types";
 export interface HasNamedCharacterCondition {
   type: "has-named-character";
   /** Character must have this name - REQUIRED */
-  name: string;
+  name?: string;
   /** Who controls the character - REQUIRED */
-  controller: "you" | "opponent" | "any";
+  controller?: "you" | "opponent" | "any";
 }
 
 /**
@@ -54,9 +58,9 @@ export interface HasCharacterWithClassificationCondition {
 export interface HasCharacterWithKeywordCondition {
   type: "has-character-with-keyword";
   /** Keyword - REQUIRED */
-  keyword: string;
+  keyword?: string;
   /** Who controls the character - REQUIRED */
-  controller: "you" | "opponent" | "any";
+  controller?: "you" | "opponent" | "any";
 }
 
 /**
@@ -67,11 +71,11 @@ export interface HasCharacterWithKeywordCondition {
 export interface HasCharacterCountCondition {
   type: "has-character-count";
   /** Who controls the characters - REQUIRED */
-  controller: "you" | "opponent" | "any";
+  controller?: "you" | "opponent" | "any";
   /** Comparison operator - REQUIRED */
-  comparison: ComparisonOperator;
+  comparison?: ComparisonOperator;
   /** Count to compare against - REQUIRED */
-  count: number;
+  count?: number;
   /** Optional classification filter */
   classification?: string;
   /** Optional keyword filter */
@@ -104,6 +108,174 @@ export interface HasItemCountCondition {
   controller: "you" | "opponent" | "any";
   comparison: ComparisonOperator;
   count: number;
+}
+
+/**
+ * Check if you have a location in play
+ */
+export interface HasLocationInPlayCondition {
+  type: "has-location-in-play";
+  controller?: "you" | "opponent" | "any";
+}
+
+/**
+ * Check if you have fewer characters than opponent
+ */
+export interface HasFewerCharactersCondition {
+  type: "has-fewer-characters";
+  than: "opponent";
+}
+
+/**
+ * Check if opponent has more cards in hand
+ */
+export interface OpponentHasMoreCardsCondition {
+  type: "opponent-has-more-cards";
+  what?: "cards-in-hand" | "lore";
+}
+
+/**
+ * Check if opponent has a damaged character
+ */
+export interface OpponentHasDamagedCharacterCondition {
+  type: "opponent-has-damaged-character";
+}
+
+/**
+ * Check if target is a villain
+ */
+export interface TargetIsVillainCondition {
+  type: "target-is-villain";
+}
+
+/**
+ * Check if target has no damage
+ */
+export interface HasNoDamageCondition {
+  type: "has-no-damage";
+  target?: CharacterTarget | "SELF";
+}
+
+/**
+ * Check if character has strength comparison
+ */
+export interface HasCharacterWithStrengthCondition {
+  type: "has-character-with-strength";
+  comparison: ComparisonOperator;
+  value: number;
+  controller?: "you" | "opponent" | "any";
+}
+
+/**
+ * Check if returned card is a princess
+ */
+export interface ReturnedCardIsPrincessCondition {
+  type: "returned-card-is-princess";
+}
+
+/**
+ * Check if revealed card has same name
+ */
+export interface RevealedHasSameNameCondition {
+  type: "revealed-has-same-name";
+}
+
+/**
+ * Check if there are characters here (at location)
+ */
+export interface HasCharactersHereCondition {
+  type: "has-characters-here";
+  count?: number | { min: number };
+}
+
+/**
+ * Check if character is at a location
+ */
+export interface HasCharacterAtLocationCondition {
+  type: "has-character-at-location";
+}
+
+/**
+ * Check if character is being challenged
+ */
+export interface BeingChallengedCondition {
+  type: "being-challenged";
+}
+
+/**
+ * Check if self has damage
+ */
+export interface SelfHasDamageCondition {
+  type: "self-has-damage";
+}
+
+/**
+ * Check if revealed card is a character with specific name
+ */
+export interface RevealedIsCharacterNamedCondition {
+  type: "revealed-is-character-named";
+  name?: string;
+}
+
+/**
+ * Check if this is the second inkwell this turn
+ */
+export interface SecondInkwellThisTurnCondition {
+  type: "second-inkwell-this-turn";
+}
+
+/**
+ * Check while in play
+ */
+export interface WhileInPlayCondition {
+  type: "while-in-play";
+}
+
+/**
+ * Check if played a card this turn
+ */
+export interface PlayedCardThisTurnCondition {
+  type: "played-card-this-turn";
+  cardType?: string;
+}
+
+/**
+ * Check if opponent has more than X cards
+ */
+export interface OpponentHasMoreThanCardsCondition {
+  type: "opponent-has-more-than-cards";
+  count?: number;
+}
+
+/**
+ * Check if opponent has lore
+ */
+export interface OpponentHasLoreCondition {
+  type: "opponent-has-lore";
+  comparison?: ComparisonOperator;
+  value?: number;
+}
+
+/**
+ * Check if you have the strongest character
+ */
+export interface HasStrongestCharacterCondition {
+  type: "has-strongest-character";
+}
+
+/**
+ * Check if there's a damaged character here
+ */
+export interface HasDamagedCharacterHereCondition {
+  type: "has-damaged-character-here";
+}
+
+/**
+ * Check if you have an item in play
+ */
+export interface HasItemInPlayCondition {
+  type: "has-item-in-play";
+  controller?: "you" | "opponent" | "any";
 }
 
 /**
@@ -202,6 +374,7 @@ export type HasDamageCondition =
  */
 export interface NoDamageCondition {
   type: "no-damage";
+  target?: "SELF" | CharacterTarget;
 }
 
 /**
@@ -320,13 +493,13 @@ export interface KeywordCharacterCountCondition {
 export interface ClassificationCharacterCountCondition {
   type: "classification-character-count";
   /** Which classification - REQUIRED */
-  classification: string;
+  classification?: string;
   /** Whose characters - REQUIRED */
-  controller: "you" | "opponent" | "any";
+  controller?: "you" | "opponent" | "any";
   /** Comparison operator - REQUIRED */
-  comparison: ComparisonOperator;
+  comparison?: ComparisonOperator;
   /** Value to compare against - REQUIRED */
-  value: number;
+  value?: number;
 }
 
 /**
@@ -438,6 +611,97 @@ export interface TurnCondition {
 }
 
 /**
+ * Check if it's your turn (simplified version)
+ */
+export interface YourTurnCondition {
+  type: "your-turn";
+}
+
+/**
+ * Check if a character is exerted
+ */
+export interface ExertedCondition {
+  type: "exerted";
+  target?: "SELF" | CharacterTarget;
+}
+
+/**
+ * Check hand count
+ */
+export interface HandCountCondition {
+  type: "hand-count";
+  controller: "you" | "opponent";
+  count: number;
+  comparison?: ComparisonOperator;
+}
+
+/**
+ * Check if a stat meets a threshold
+ */
+export interface StatThresholdCondition {
+  type: "stat-threshold";
+  stat: "strength" | "willpower" | "lore";
+  value: number;
+  comparison: ComparisonOperator;
+  target?: "SELF" | CharacterTarget;
+}
+
+/**
+ * Check if something was played this turn
+ */
+export interface PlayedThisTurnCondition {
+  type: "played-this-turn";
+  cardType?: "character" | "action" | "item" | "song";
+}
+
+/**
+ * Check if you have a character (simplified)
+ */
+export interface HaveCharacterCondition {
+  type: "have-character";
+  name?: string;
+  classification?: string;
+}
+
+/**
+ * Check if you have a card
+ */
+export interface HaveCardCondition {
+  type: "have-card";
+  cardType?: "character" | "action" | "item" | "song";
+  name?: string;
+  zone?: "hand" | "play" | "discard";
+  controller?: "you" | "opponent";
+}
+
+/**
+ * Check a name condition
+ */
+export interface NameCondition {
+  type: "name";
+  name: string;
+  target?: CharacterTarget;
+}
+
+/**
+ * Character count condition (simplified)
+ */
+export interface CharacterCountCondition {
+  type: "character-count";
+  count: number;
+  comparison?: ComparisonOperator;
+  controller?: "you" | "opponent";
+}
+
+/**
+ * Generic target condition (for parser flexibility)
+ */
+export interface TargetCondition {
+  type: "target";
+  target: CharacterTarget | string;
+}
+
+/**
  * Check if this is the first occurrence of something this turn
  */
 export interface FirstThisTurnCondition {
@@ -534,6 +798,121 @@ export interface IfCondition {
 }
 
 // ============================================================================
+// Extended Condition Types for Parser Support
+// ============================================================================
+
+/**
+ * Check if you have another character (besides self)
+ */
+export interface HasAnotherCharacterCondition {
+  type: "has-another-character";
+  classification?: string;
+  name?: string;
+}
+
+/**
+ * Check if you have a Captain character
+ */
+export interface HasCaptainCharacterCondition {
+  type: "has-captain-character";
+}
+
+/**
+ * Check if self is exerted (alias for is-exerted)
+ */
+export interface SelfExertedCondition {
+  type: "self-exerted";
+}
+
+/**
+ * Check if target is a Villain
+ */
+export interface IsVillainCondition {
+  type: "is-villain";
+  target?: string;
+}
+
+/**
+ * Check if target is a Princess
+ */
+export interface IsPrincessCondition {
+  type: "is-princess";
+  target?: string;
+}
+
+/**
+ * Check if target has a specific name
+ */
+export interface IsNamedCondition {
+  type: "is-named";
+  name: string;
+  target?: string;
+}
+
+/**
+ * Check inkwell count
+ */
+export interface InkwellCountCondition {
+  type: "inkwell-count";
+  controller: "you" | "opponent";
+  comparison?: ComparisonOperator;
+  count?: number;
+  /** Minimum inkwell count required */
+  minimum?: number;
+}
+
+/**
+ * Alias for has-named-character (parser compatibility)
+ */
+export interface HasCharacterNamedCondition {
+  type: "has-character-named";
+  name: string;
+  controller?: "you" | "opponent" | "any";
+}
+
+/**
+ * Unless condition - negated condition wrapper
+ *
+ * @example "This character can't quest unless you have a Seven Dwarfs character"
+ */
+export interface UnlessCondition {
+  type: "unless";
+  condition: Condition;
+}
+
+/**
+ * Lore comparison condition
+ *
+ * @example "If an opponent has more lore than you"
+ */
+export interface LoreComparisonCondition {
+  type: "lore-comparison";
+  comparison: ComparisonOperator;
+  value?: number;
+  versus?: "you" | "opponent";
+  compareTo?: "you" | "opponent";
+}
+
+/**
+ * Second action in turn condition
+ *
+ * @example "The second time you play a card this turn"
+ */
+export interface SecondInTurnCondition {
+  type: "second-in-turn";
+  action?: "play" | "quest" | "challenge" | "any";
+}
+
+/**
+ * Target is damaged condition
+ *
+ * @example "If the chosen character is damaged"
+ */
+export interface TargetIsDamagedCondition {
+  type: "target-is-damaged";
+}
+
+// ============================================================================
 // Combined Condition Type
 // ============================================================================
 
@@ -580,6 +959,7 @@ export type Condition =
   | ThisTurnCountCondition
   // Turn
   | TurnCondition
+  | YourTurnCondition
   | FirstThisTurnCondition
   // Zone
   | ZoneCondition
@@ -599,7 +979,55 @@ export type Condition =
   // Parser catch-all
   | IfCondition
   // Legacy Resolution (deprecated)
-  | ResolutionCondition;
+  | ResolutionCondition
+  // Additional conditions for parser support
+  | ExertedCondition
+  | HandCountCondition
+  | StatThresholdCondition
+  | PlayedThisTurnCondition
+  | HaveCharacterCondition
+  | HaveCardCondition
+  | NameCondition
+  | CharacterCountCondition
+  | TargetCondition
+  // Extended conditions for card text coverage
+  | HasAnotherCharacterCondition
+  | HasCaptainCharacterCondition
+  | SelfExertedCondition
+  | IsVillainCondition
+  | IsPrincessCondition
+  | IsNamedCondition
+  | InkwellCountCondition
+  | HasCharacterNamedCondition
+  // Additional extended conditions
+  | HasLocationInPlayCondition
+  | HasFewerCharactersCondition
+  | OpponentHasMoreCardsCondition
+  | OpponentHasDamagedCharacterCondition
+  | TargetIsVillainCondition
+  | HasNoDamageCondition
+  | HasCharacterWithStrengthCondition
+  | ReturnedCardIsPrincessCondition
+  | RevealedHasSameNameCondition
+  | HasCharactersHereCondition
+  | HasCharacterAtLocationCondition
+  // More extended conditions
+  | BeingChallengedCondition
+  | SelfHasDamageCondition
+  | RevealedIsCharacterNamedCondition
+  | SecondInkwellThisTurnCondition
+  | WhileInPlayCondition
+  | PlayedCardThisTurnCondition
+  | OpponentHasMoreThanCardsCondition
+  | OpponentHasLoreCondition
+  | HasStrongestCharacterCondition
+  | HasDamagedCharacterHereCondition
+  | HasItemInPlayCondition
+  // Additional parser-compatible conditions
+  | UnlessCondition
+  | LoreComparisonCondition
+  | SecondInTurnCondition
+  | TargetIsDamagedCondition;
 
 // ============================================================================
 // Condition Builders (convenience)

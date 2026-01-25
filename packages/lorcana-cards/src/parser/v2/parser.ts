@@ -89,10 +89,13 @@ export function parseAbilityText(
     // entry can be AbilityWithText or AbilityWithText[]
     const singleEntry = Array.isArray(entry) ? entry[0] : entry;
     // Ensure we return the entry as AbilityWithText structure
+    // Preserve existing id from manual entry if present
+    const entryId = (singleEntry as { id?: string }).id;
     const entryName = (singleEntry as { name?: string }).name;
     const entryText = (singleEntry as { text?: string }).text || text;
     const ability: AbilityWithText = {
       ability: (singleEntry as { ability: unknown }).ability,
+      ...(entryId && { id: entryId }),
       ...(entryName && entryName.trim() && { name: entryName }),
       ...(entryText && entryText.trim() && { text: entryText }),
     } as AbilityWithText;
@@ -127,8 +130,8 @@ export function parseAbilityText(
       // architectural issue that needs to be resolved by re-exporting all ability
       // types from lorcana-types in the engine, similar to what was done for Condition.
       // See: packages/lorcana-engine/src/cards/abilities/types/condition-types.ts
-      ...(name && name.trim() && { name }),
-      ...(text && text.trim() && { text }),
+      ...(name && name.trim() && { name: name }),
+      ...(text && text.trim() && { text: text }),
     };
     return {
       success: true,

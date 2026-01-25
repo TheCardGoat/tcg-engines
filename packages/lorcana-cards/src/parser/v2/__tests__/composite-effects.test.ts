@@ -459,7 +459,7 @@ describe("Composite Effect Parser", () => {
       // So the parser correctly returns a sequence
       expect(effect).toBeDefined();
       expect(effect?.type).toBe("sequence");
-      if (effect?.type === "sequence") {
+      if (effect?.type === "sequence" && effect.steps) {
         expect(effect.steps).toHaveLength(2);
         expect(effect.steps[0].type).toBe("ready");
         expect((effect.steps[1] as any).type).toBe("restriction");

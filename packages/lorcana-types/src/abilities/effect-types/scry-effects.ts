@@ -29,11 +29,11 @@ import type { Amount, VariableAmount } from "./amount-types";
 export interface ScryEffect {
   type: "scry";
   /** Number of cards to look at from top of deck */
-  amount: Amount;
+  amount?: Amount;
   /** Whose deck to look at (default: CONTROLLER) */
   target?: PlayerTarget;
   /** Destinations for the looked-at cards, processed in order */
-  destinations: ScryDestination[];
+  destinations?: ScryDestination[];
   /** Whether all looked-at cards should be revealed to opponent */
   revealAll?: boolean;
 }

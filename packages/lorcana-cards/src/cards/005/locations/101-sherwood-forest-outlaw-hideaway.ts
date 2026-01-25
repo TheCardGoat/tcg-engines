@@ -25,12 +25,12 @@ export const sherwoodForestOutlawHideaway: LocationCard = {
       name: "FOREST HOME",
       type: "static",
       effect: {
-        // @ts-expect-error: Custom effect type "free-move-here" not yet supported in engine types
-        type: "free-move-here",
+        type: "move-cost-reduction",
         filter: {
-          type: "name",
           name: "Robin Hood",
         },
+        reduction: "free",
+        location: "here",
       },
     },
     {
@@ -39,7 +39,6 @@ export const sherwoodForestOutlawHideaway: LocationCard = {
       name: "FAMILIAR TERRAIN",
       type: "static",
       effect: {
-        // @ts-expect-error: Custom effect type "grant-abilities-while-here" not yet supported in engine types
         type: "grant-abilities-while-here",
         abilities: [
           {
@@ -50,11 +49,11 @@ export const sherwoodForestOutlawHideaway: LocationCard = {
             type: "activated",
             cost: {
               exert: true,
-              ink: 0,
+              ink: 1,
             },
             effect: {
               type: "deal-damage",
-              amount: 0,
+              amount: 2,
               target: {
                 selector: "chosen",
                 filters: [

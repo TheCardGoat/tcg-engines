@@ -29,8 +29,8 @@ import type { Amount } from "./amount-types";
  */
 export interface DrawEffect {
   type: "draw";
-  amount: Amount;
-  target: PlayerTarget;
+  amount?: Amount;
+  target?: PlayerTarget;
 }
 
 /**
@@ -41,14 +41,22 @@ export interface DrawEffect {
  */
 export interface DiscardEffect {
   type: "discard";
-  amount: Amount;
-  target: PlayerTarget;
+  amount?: Amount;
+  target?: PlayerTarget;
   /** Whether the affected player chooses which cards */
   chosen?: boolean;
+  /** Who chooses (alternative to chosen) */
+  chosenBy?: "you" | "opponent" | "TARGET";
   /** If not chosen, discard is random */
   random?: boolean;
   /** Discard from specific zone (default: hand) */
   from?: TargetZone;
+  /** Filter for what can be discarded */
+  filter?: {
+    cardType?: string;
+    maxCost?: number;
+    classification?: string;
+  };
 }
 
 // ============================================================================
@@ -63,8 +71,8 @@ export interface DiscardEffect {
  */
 export interface DealDamageEffect {
   type: "deal-damage";
-  amount: Amount;
-  target: CharacterTarget | LocationTarget;
+  amount?: Amount;
+  target?: CharacterTarget | LocationTarget;
 }
 
 /**
@@ -83,8 +91,8 @@ export interface PutDamageEffect {
  */
 export interface RemoveDamageEffect {
   type: "remove-damage";
-  amount: Amount;
-  target: CharacterTarget | LocationTarget;
+  amount?: Amount;
+  target?: CharacterTarget | LocationTarget;
   /** "up to" allows removing less than max */
   upTo?: boolean;
 }
@@ -96,9 +104,9 @@ export interface RemoveDamageEffect {
  */
 export interface MoveDamageEffect {
   type: "move-damage";
-  amount: Amount;
-  from: CharacterTarget;
-  to: CharacterTarget;
+  amount?: Amount;
+  from?: CharacterTarget;
+  to?: CharacterTarget;
 }
 
 // ============================================================================
@@ -112,7 +120,7 @@ export interface MoveDamageEffect {
  */
 export interface GainLoreEffect {
   type: "gain-lore";
-  amount: Amount;
+  amount?: Amount;
   target?: PlayerTarget;
 }
 
@@ -124,7 +132,7 @@ export interface GainLoreEffect {
 export interface LoseLoreEffect {
   type: "lose-lore";
   amount: Amount;
-  target: PlayerTarget;
+  target?: PlayerTarget;
 }
 
 // ============================================================================
@@ -138,7 +146,7 @@ export interface LoseLoreEffect {
  */
 export interface ExertEffect {
   type: "exert";
-  target: CharacterTarget | ItemTarget | LocationTarget;
+  target?: CharacterTarget | ItemTarget | LocationTarget;
 }
 
 /**
@@ -148,7 +156,7 @@ export interface ExertEffect {
  */
 export interface ReadyEffect {
   type: "ready";
-  target: CharacterTarget | ItemTarget | LocationTarget;
+  target?: CharacterTarget | ItemTarget | LocationTarget;
   /** Restriction after readying */
   restriction?: "cant-quest" | "cant-challenge" | "cant-quest-or-challenge";
 }
@@ -161,7 +169,7 @@ export interface ReadyEffect {
  */
 export interface BanishEffect {
   type: "banish";
-  target: CharacterTarget | ItemTarget | LocationTarget;
+  target?: CharacterTarget | ItemTarget | LocationTarget;
 }
 
 // ============================================================================
