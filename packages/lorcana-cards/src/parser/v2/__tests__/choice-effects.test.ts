@@ -23,15 +23,16 @@ describe("Choice Effect Parser", () => {
       expect(effect?.type).toBe("choice");
 
       const choice = effect as ChoiceEffect;
+      expect(choice.options).toBeDefined();
       expect(choice.options).toHaveLength(2);
 
-      expect(choice.options[0]).toEqual({
+      expect(choice.options![0]).toEqual({
         type: "draw",
         amount: 1,
         target: "CONTROLLER",
       });
 
-      expect(choice.options[1]).toEqual({
+      expect(choice.options![1]).toEqual({
         type: "deal-damage",
         amount: 2,
         target: {
@@ -60,18 +61,18 @@ describe("Choice Effect Parser", () => {
       const choice = effect as ChoiceEffect;
       expect(choice.options).toHaveLength(3);
 
-      expect(choice.options[0]).toEqual({
+      expect(choice.options![0]).toEqual({
         type: "gain-lore",
         amount: 2,
       });
 
-      expect(choice.options[1]).toEqual({
+      expect(choice.options![1]).toEqual({
         type: "draw",
         amount: 2,
         target: "CONTROLLER",
       });
 
-      expect(choice.options[2]).toEqual({
+      expect(choice.options![2]).toEqual({
         type: "deal-damage",
         amount: 3,
         target: {
@@ -101,7 +102,7 @@ describe("Choice Effect Parser", () => {
       const choice = effect as ChoiceEffect;
       expect(choice.options).toHaveLength(2);
 
-      expect(choice.options[0]).toEqual({
+      expect(choice.options![0]).toEqual({
         type: "exert",
         target: {
           selector: "chosen",
@@ -112,7 +113,7 @@ describe("Choice Effect Parser", () => {
         },
       });
 
-      expect(choice.options[1]).toEqual({
+      expect(choice.options![1]).toEqual({
         type: "ready",
         target: {
           selector: "chosen",
@@ -133,9 +134,10 @@ describe("Choice Effect Parser", () => {
       expect(effect?.type).toBe("choice");
 
       const choice = effect as ChoiceEffect;
+      expect(choice.options).toBeDefined();
       expect(choice.options).toHaveLength(2);
 
-      expect(choice.options[0]).toEqual({
+      expect(choice.options![0]).toEqual({
         type: "banish",
         target: {
           selector: "chosen",
@@ -146,7 +148,7 @@ describe("Choice Effect Parser", () => {
         },
       });
 
-      expect(choice.options[1]).toEqual({
+      expect(choice.options![1]).toEqual({
         type: "return-to-hand",
         target: {
           selector: "chosen",
@@ -169,15 +171,16 @@ describe("Choice Effect Parser", () => {
       expect(effect?.type).toBe("choice");
 
       const choice = effect as ChoiceEffect;
+      expect(choice.options).toBeDefined();
       expect(choice.options).toHaveLength(2);
 
-      expect(choice.options[0]).toEqual({
+      expect(choice.options![0]).toEqual({
         type: "draw",
         amount: 1,
         target: "CONTROLLER",
       });
 
-      expect(choice.options[1]).toEqual({
+      expect(choice.options![1]).toEqual({
         type: "deal-damage",
         amount: 2,
         target: {
@@ -204,20 +207,21 @@ describe("Choice Effect Parser", () => {
       expect(effect?.type).toBe("choice");
 
       const choice = effect as ChoiceEffect;
+      expect(choice.options).toBeDefined();
       expect(choice.options).toHaveLength(3);
 
-      expect(choice.options[0]).toEqual({
+      expect(choice.options![0]).toEqual({
         type: "gain-lore",
         amount: 2,
       });
 
-      expect(choice.options[1]).toEqual({
+      expect(choice.options![1]).toEqual({
         type: "draw",
         amount: 2,
         target: "CONTROLLER",
       });
 
-      expect(choice.options[2]).toEqual({
+      expect(choice.options![2]).toEqual({
         type: "banish",
         target: {
           selector: "chosen",
@@ -246,15 +250,16 @@ describe("Choice Effect Parser", () => {
       expect(effect?.type).toBe("choice");
 
       const choice = effect as ChoiceEffect;
+      expect(choice.options).toBeDefined();
       expect(choice.options).toHaveLength(2);
 
-      expect(choice.options[0]).toEqual({
+      expect(choice.options![0]).toEqual({
         type: "draw",
         amount: 1,
         target: "CONTROLLER",
       });
 
-      expect(choice.options[1]).toEqual({
+      expect(choice.options![1]).toEqual({
         type: "deal-damage",
         amount: 2,
         target: {
@@ -279,14 +284,15 @@ describe("Choice Effect Parser", () => {
       expect(effect?.type).toBe("choice");
 
       const choice = effect as ChoiceEffect;
+      expect(choice.options).toBeDefined();
       expect(choice.options).toHaveLength(2);
 
-      expect(choice.options[0]).toEqual({
+      expect(choice.options![0]).toEqual({
         type: "gain-lore",
         amount: 1,
       });
 
-      expect(choice.options[1]).toEqual({
+      expect(choice.options![1]).toEqual({
         type: "draw",
         amount: 1,
         target: "CONTROLLER",
@@ -302,9 +308,10 @@ describe("Choice Effect Parser", () => {
       expect(effect?.type).toBe("choice");
 
       const choice = effect as ChoiceEffect;
+      expect(choice.options).toBeDefined();
       expect(choice.options).toHaveLength(2);
 
-      expect(choice.options[0]).toEqual({
+      expect(choice.options![0]).toEqual({
         type: "exert",
         target: {
           selector: "chosen",
@@ -315,7 +322,7 @@ describe("Choice Effect Parser", () => {
         },
       });
 
-      expect(choice.options[1]).toEqual({
+      expect(choice.options![1]).toEqual({
         type: "ready",
         target: {
           selector: "chosen",
@@ -336,9 +343,10 @@ describe("Choice Effect Parser", () => {
       expect(effect?.type).toBe("choice");
 
       const choice = effect as ChoiceEffect;
+      expect(choice.options).toBeDefined();
       expect(choice.options).toHaveLength(2);
 
-      expect(choice.options[0]).toEqual({
+      expect(choice.options![0]).toEqual({
         type: "deal-damage",
         amount: 3,
         target: {
@@ -350,7 +358,7 @@ describe("Choice Effect Parser", () => {
         },
       });
 
-      expect(choice.options[1]).toEqual({
+      expect(choice.options![1]).toEqual({
         type: "banish",
         target: {
           selector: "chosen",
@@ -427,14 +435,15 @@ describe("Choice Effect Parser", () => {
       expect(effect?.type).toBe("choice");
 
       const choice = effect as ChoiceEffect;
+      expect(choice.options).toBeDefined();
       expect(choice.options).toHaveLength(2);
 
-      expect(choice.options[0]).toEqual({
+      expect(choice.options![0]).toEqual({
         type: "gain-lore",
         amount: 3,
       });
 
-      expect(choice.options[1]).toEqual({
+      expect(choice.options![1]).toEqual({
         type: "deal-damage",
         amount: 4,
         target: {
@@ -454,15 +463,16 @@ describe("Choice Effect Parser", () => {
       expect(effect?.type).toBe("choice");
 
       const choice = effect as ChoiceEffect;
+      expect(choice.options).toBeDefined();
       expect(choice.options).toHaveLength(2);
 
-      expect(choice.options[0]).toEqual({
+      expect(choice.options![0]).toEqual({
         type: "draw",
         amount: 3,
         target: "CONTROLLER",
       });
 
-      expect(choice.options[1]).toEqual({
+      expect(choice.options![1]).toEqual({
         type: "discard",
         amount: 2,
         target: "CONTROLLER",
@@ -479,9 +489,10 @@ describe("Choice Effect Parser", () => {
       expect(effect?.type).toBe("choice");
 
       const choice = effect as ChoiceEffect;
+      expect(choice.options).toBeDefined();
       expect(choice.options).toHaveLength(2);
 
-      expect(choice.options[0]).toEqual({
+      expect(choice.options![0]).toEqual({
         type: "remove-damage",
         amount: 3,
         target: {
@@ -494,7 +505,7 @@ describe("Choice Effect Parser", () => {
         upTo: true,
       });
 
-      expect(choice.options[1]).toEqual({
+      expect(choice.options![1]).toEqual({
         type: "deal-damage",
         amount: 2,
         target: {

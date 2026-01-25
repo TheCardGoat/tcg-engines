@@ -24,7 +24,8 @@ describe("Task 2.4: Triggered Abilities with Optional Effects", () => {
       expect(ability!.effect.type).toBe("optional");
 
       const effect = ability!.effect as OptionalEffect;
-      expect(effect.effect.type).toBe("draw");
+      expect(effect.effect).toBeDefined();
+      expect(effect.effect!.type).toBe("draw");
     });
 
     it("should parse 'When this character is banished, you may draw a card'", () => {
@@ -40,7 +41,8 @@ describe("Task 2.4: Triggered Abilities with Optional Effects", () => {
       expect(ability!.effect.type).toBe("optional");
 
       const effect = ability!.effect as OptionalEffect;
-      expect(effect.effect.type).toBe("draw");
+      expect(effect.effect).toBeDefined();
+      expect(effect.effect!.type).toBe("draw");
     });
 
     it("should parse 'Whenever this character quests, you may gain 1 lore'", () => {
@@ -55,7 +57,7 @@ describe("Task 2.4: Triggered Abilities with Optional Effects", () => {
       expect(ability!.effect.type).toBe("optional");
 
       const effect = ability!.effect as OptionalEffect;
-      expect(effect.effect.type).toBe("gain-lore");
+      expect(effect.effect!.type).toBe("gain-lore");
     });
   });
 
@@ -74,7 +76,8 @@ describe("Task 2.4: Triggered Abilities with Optional Effects", () => {
       expect(ability!.effect.type).toBe("optional");
 
       const effect = ability!.effect as OptionalEffect;
-      expect(effect.effect.type).toBe("draw");
+      expect(effect.effect).toBeDefined();
+      expect(effect.effect!.type).toBe("draw");
     });
 
     it("should parse 'DARK KNOWLEDGE Whenever this character quests, you may draw a card'", () => {
@@ -142,7 +145,7 @@ describe("Task 2.4: Triggered Abilities with Optional Effects", () => {
       expect(ability!.effect.type).toBe("optional");
 
       const effect = ability!.effect as OptionalEffect;
-      expect(effect.effect.type).toBe("deal-damage");
+      expect(effect.effect!.type).toBe("deal-damage");
     });
 
     it("should parse optional banish effect", () => {
@@ -155,7 +158,7 @@ describe("Task 2.4: Triggered Abilities with Optional Effects", () => {
       expect(ability!.effect.type).toBe("optional");
 
       const effect = ability!.effect as OptionalEffect;
-      expect(effect.effect.type).toBe("banish");
+      expect(effect.effect!.type).toBe("banish");
     });
 
     it("should parse optional exert effect", () => {
@@ -168,7 +171,7 @@ describe("Task 2.4: Triggered Abilities with Optional Effects", () => {
       expect(ability!.effect.type).toBe("optional");
 
       const effect = ability!.effect as OptionalEffect;
-      expect(effect.effect.type).toBe("exert");
+      expect(effect.effect!.type).toBe("exert");
     });
   });
 
@@ -197,7 +200,8 @@ describe("Task 2.4: Triggered Abilities with Optional Effects", () => {
       expect(ability!.effect.type).toBe("optional");
 
       const effect = ability!.effect as OptionalEffect;
-      expect(effect.effect.type).toBe("draw");
+      expect(effect.effect).toBeDefined();
+      expect(effect.effect!.type).toBe("draw");
     });
   });
 });

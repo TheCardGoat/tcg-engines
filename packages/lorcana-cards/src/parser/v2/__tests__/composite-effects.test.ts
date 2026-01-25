@@ -20,17 +20,18 @@ describe("Composite Effect Parser", () => {
       expect(effect?.type).toBe("sequence");
 
       const sequence = effect as SequenceEffect;
+      expect(sequence.steps).toBeDefined();
       expect(sequence.steps).toHaveLength(2);
 
       // Step 1: Draw 2 cards
-      expect(sequence.steps[0]).toEqual({
+      expect(sequence.steps![0]).toEqual({
         type: "draw",
         amount: 2,
         target: "CONTROLLER",
       });
 
       // Step 2: Choose and discard a card
-      expect(sequence.steps[1]).toEqual({
+      expect(sequence.steps![1]).toEqual({
         type: "discard",
         amount: 1,
         target: "CONTROLLER",
@@ -47,10 +48,11 @@ describe("Composite Effect Parser", () => {
       expect(effect?.type).toBe("sequence");
 
       const sequence = effect as SequenceEffect;
+      expect(sequence.steps).toBeDefined();
       expect(sequence.steps).toHaveLength(2);
 
       // Step 1: Deal 2 damage
-      expect(sequence.steps[0]).toEqual({
+      expect(sequence.steps![0]).toEqual({
         type: "deal-damage",
         amount: 2,
         target: {
@@ -63,7 +65,7 @@ describe("Composite Effect Parser", () => {
       });
 
       // Step 2: Draw a card
-      expect(sequence.steps[1]).toEqual({
+      expect(sequence.steps![1]).toEqual({
         type: "draw",
         amount: 1,
         target: "CONTROLLER",
@@ -79,10 +81,11 @@ describe("Composite Effect Parser", () => {
       expect(effect?.type).toBe("sequence");
 
       const sequence = effect as SequenceEffect;
+      expect(sequence.steps).toBeDefined();
       expect(sequence.steps).toHaveLength(2);
 
       // Step 1: Exert character
-      expect(sequence.steps[0]).toEqual({
+      expect(sequence.steps![0]).toEqual({
         type: "exert",
         target: {
           selector: "chosen",
@@ -94,7 +97,7 @@ describe("Composite Effect Parser", () => {
       });
 
       // Step 2: Deal 1 damage
-      expect(sequence.steps[1]).toEqual({
+      expect(sequence.steps![1]).toEqual({
         type: "deal-damage",
         amount: 1,
         target: {
@@ -114,14 +117,15 @@ describe("Composite Effect Parser", () => {
       expect(effect?.type).toBe("sequence");
 
       const sequence = effect as SequenceEffect;
+      expect(sequence.steps).toBeDefined();
       expect(sequence.steps).toHaveLength(2);
 
-      expect(sequence.steps[0]).toEqual({
+      expect(sequence.steps![0]).toEqual({
         type: "gain-lore",
         amount: 2,
       });
 
-      expect(sequence.steps[1]).toEqual({
+      expect(sequence.steps![1]).toEqual({
         type: "draw",
         amount: 2,
         target: "CONTROLLER",
@@ -137,15 +141,16 @@ describe("Composite Effect Parser", () => {
       expect(effect?.type).toBe("sequence");
 
       const sequence = effect as SequenceEffect;
+      expect(sequence.steps).toBeDefined();
       expect(sequence.steps).toHaveLength(2);
 
-      expect(sequence.steps[0]).toEqual({
+      expect(sequence.steps![0]).toEqual({
         type: "draw",
         amount: 1,
         target: "CONTROLLER",
       });
 
-      expect(sequence.steps[1]).toEqual({
+      expect(sequence.steps![1]).toEqual({
         type: "gain-lore",
         amount: 1,
       });
@@ -160,9 +165,10 @@ describe("Composite Effect Parser", () => {
       expect(effect?.type).toBe("sequence");
 
       const sequence = effect as SequenceEffect;
+      expect(sequence.steps).toBeDefined();
       expect(sequence.steps).toHaveLength(2);
 
-      expect(sequence.steps[0]).toEqual({
+      expect(sequence.steps![0]).toEqual({
         type: "exert",
         target: {
           selector: "chosen",
@@ -173,7 +179,7 @@ describe("Composite Effect Parser", () => {
         },
       });
 
-      expect(sequence.steps[1]).toEqual({
+      expect(sequence.steps![1]).toEqual({
         type: "deal-damage",
         amount: 2,
         target: {
@@ -193,9 +199,10 @@ describe("Composite Effect Parser", () => {
       expect(effect?.type).toBe("sequence");
 
       const sequence = effect as SequenceEffect;
+      expect(sequence.steps).toBeDefined();
       expect(sequence.steps).toHaveLength(2);
 
-      expect(sequence.steps[0]).toEqual({
+      expect(sequence.steps![0]).toEqual({
         type: "ready",
         target: {
           selector: "chosen",
@@ -206,7 +213,7 @@ describe("Composite Effect Parser", () => {
         },
       });
 
-      expect(sequence.steps[1]).toEqual({
+      expect(sequence.steps![1]).toEqual({
         type: "draw",
         amount: 1,
         target: "CONTROLLER",
@@ -222,15 +229,16 @@ describe("Composite Effect Parser", () => {
       expect(effect?.type).toBe("sequence");
 
       const sequence = effect as SequenceEffect;
+      expect(sequence.steps).toBeDefined();
       expect(sequence.steps).toHaveLength(2);
 
-      expect(sequence.steps[0]).toEqual({
+      expect(sequence.steps![0]).toEqual({
         type: "draw",
         amount: 1,
         target: "CONTROLLER",
       });
 
-      expect(sequence.steps[1]).toEqual({
+      expect(sequence.steps![1]).toEqual({
         type: "gain-lore",
         amount: 1,
       });
@@ -243,14 +251,15 @@ describe("Composite Effect Parser", () => {
       expect(effect?.type).toBe("sequence");
 
       const sequence = effect as SequenceEffect;
+      expect(sequence.steps).toBeDefined();
       expect(sequence.steps).toHaveLength(2);
 
-      expect(sequence.steps[0]).toEqual({
+      expect(sequence.steps![0]).toEqual({
         type: "gain-lore",
         amount: 2,
       });
 
-      expect(sequence.steps[1]).toEqual({
+      expect(sequence.steps![1]).toEqual({
         type: "draw",
         amount: 1,
         target: "CONTROLLER",
@@ -266,9 +275,10 @@ describe("Composite Effect Parser", () => {
       expect(effect?.type).toBe("sequence");
 
       const sequence = effect as SequenceEffect;
+      expect(sequence.steps).toBeDefined();
       expect(sequence.steps).toHaveLength(2);
 
-      expect(sequence.steps[0]).toEqual({
+      expect(sequence.steps![0]).toEqual({
         type: "deal-damage",
         amount: 2,
         target: {
@@ -280,7 +290,7 @@ describe("Composite Effect Parser", () => {
         },
       });
 
-      expect(sequence.steps[1]).toEqual({
+      expect(sequence.steps![1]).toEqual({
         type: "deal-damage",
         amount: 2,
         target: {
@@ -304,20 +314,21 @@ describe("Composite Effect Parser", () => {
       expect(effect?.type).toBe("sequence");
 
       const sequence = effect as SequenceEffect;
+      expect(sequence.steps).toBeDefined();
       expect(sequence.steps).toHaveLength(3);
 
-      expect(sequence.steps[0]).toEqual({
+      expect(sequence.steps![0]).toEqual({
         type: "draw",
         amount: 1,
         target: "CONTROLLER",
       });
 
-      expect(sequence.steps[1]).toEqual({
+      expect(sequence.steps![1]).toEqual({
         type: "gain-lore",
         amount: 1,
       });
 
-      expect(sequence.steps[2]).toEqual({
+      expect(sequence.steps![2]).toEqual({
         type: "deal-damage",
         amount: 1,
         target: {
@@ -339,20 +350,21 @@ describe("Composite Effect Parser", () => {
       expect(effect?.type).toBe("sequence");
 
       const sequence = effect as SequenceEffect;
+      expect(sequence.steps).toBeDefined();
       expect(sequence.steps).toHaveLength(3);
 
-      expect(sequence.steps[0]).toEqual({
+      expect(sequence.steps![0]).toEqual({
         type: "gain-lore",
         amount: 1,
       });
 
-      expect(sequence.steps[1]).toEqual({
+      expect(sequence.steps![1]).toEqual({
         type: "draw",
         amount: 1,
         target: "CONTROLLER",
       });
 
-      expect(sequence.steps[2]).toEqual({
+      expect(sequence.steps![2]).toEqual({
         type: "banish",
         target: {
           selector: "chosen",
@@ -373,15 +385,16 @@ describe("Composite Effect Parser", () => {
       expect(effect?.type).toBe("sequence");
 
       const sequence = effect as SequenceEffect;
+      expect(sequence.steps).toBeDefined();
       expect(sequence.steps).toHaveLength(2);
 
-      expect(sequence.steps[0]).toEqual({
+      expect(sequence.steps![0]).toEqual({
         type: "draw",
         amount: 2,
         target: "CONTROLLER",
       });
 
-      expect(sequence.steps[1]).toEqual({
+      expect(sequence.steps![1]).toEqual({
         type: "gain-lore",
         amount: 1,
       });
@@ -394,9 +407,10 @@ describe("Composite Effect Parser", () => {
       expect(effect?.type).toBe("sequence");
 
       const sequence = effect as SequenceEffect;
+      expect(sequence.steps).toBeDefined();
       expect(sequence.steps).toHaveLength(2);
 
-      expect(sequence.steps[0]).toEqual({
+      expect(sequence.steps![0]).toEqual({
         type: "exert",
         target: {
           selector: "chosen",
@@ -407,7 +421,7 @@ describe("Composite Effect Parser", () => {
         },
       });
 
-      expect(sequence.steps[1]).toEqual({
+      expect(sequence.steps![1]).toEqual({
         type: "draw",
         amount: 1,
         target: "CONTROLLER",
