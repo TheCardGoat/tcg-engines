@@ -17,27 +17,29 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(2);
 
     // First ability: Bodyguard
+    const bodyguard: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Bodyguard",
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Bodyguard",
-      }),
+      expect.objectContaining(bodyguard),
     );
 
     // Second ability: LET'S MAKE LIKE A TREE (triggered)
+    const letsMakeLikeATree: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "LET'S MAKE LIKE A TREE",
+      trigger: {
+        event: "banish",
+        on: "SELF",
+      },
+      effect: {
+        type: "gain-lore",
+        amount: 2,
+      },
+    };
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "LET'S MAKE LIKE A TREE",
-        trigger: expect.objectContaining({
-          event: "banish",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "gain-lore",
-          amount: 2,
-        }),
-      }),
+      expect.objectContaining(letsMakeLikeATree),
     );
   });
 
@@ -49,18 +51,19 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // I'LL CHECK IT OUT (triggered)
+    const illCheckItOut: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "I'LL CHECK IT OUT",
+      trigger: {
+        event: "end-of-turn",
+        timing: "at",
+      },
+      effect: {
+        type: "optional",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "I'LL CHECK IT OUT",
-        trigger: expect.objectContaining({
-          event: "end-of-turn",
-          timing: "at",
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-        }),
-      }),
+      expect.objectContaining(illCheckItOut),
     );
   });
 
@@ -72,29 +75,31 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(2);
 
     // THE POWER OF EVIL (static - cost reduction)
+    const thePowerOfEvil: StaticAbilityDefinition = {
+      type: "static",
+      name: "THE POWER OF EVIL",
+      effect: {
+        type: "cost-reduction",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "THE POWER OF EVIL",
-        effect: expect.objectContaining({
-          type: "cost-reduction",
-        }),
-      }),
+      expect.objectContaining(thePowerOfEvil),
     );
 
     // SUMMON THE SPIRITS (triggered)
+    const summonTheSpirits: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "SUMMON THE SPIRITS",
+      trigger: {
+        event: "play",
+        on: "SELF",
+      },
+      effect: {
+        type: "shuffle-into-deck",
+      },
+    };
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "SUMMON THE SPIRITS",
-        trigger: expect.objectContaining({
-          event: "play",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "shuffle-into-deck",
-        }),
-      }),
+      expect.objectContaining(summonTheSpirits),
     );
   });
 
@@ -106,11 +111,12 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // Bodyguard
+    const bodyguard: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Bodyguard",
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Bodyguard",
-      }),
+      expect.objectContaining(bodyguard),
     );
   });
 
@@ -122,31 +128,33 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(2);
 
     // Shift 3
+    const shift3: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Shift",
+      cost: {
+        ink: 3,
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Shift",
-        cost: expect.objectContaining({
-          ink: 3,
-        }),
-      }),
+      expect.objectContaining(shift3),
     );
 
     // PERHAPS WE CAN SAVE OUR FUTURE (triggered)
+    const perhapsWeCanSaveOurFuture: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "PERHAPS WE CAN SAVE OUR FUTURE",
+      trigger: {
+        event: "play",
+        on: "SELF",
+      },
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+        modifier: -3,
+      },
+    };
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "PERHAPS WE CAN SAVE OUR FUTURE",
-        trigger: expect.objectContaining({
-          event: "play",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "modify-stat",
-          stat: "strength",
-          modifier: -3,
-        }),
-      }),
+      expect.objectContaining(perhapsWeCanSaveOurFuture),
     );
   });
 
@@ -158,32 +166,34 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(2);
 
     // GOOD AS NEW (activated)
+    const goodAsNew: ActivatedAbilityDefinition = {
+      type: "activated",
+      name: "GOOD AS NEW",
+      cost: {
+        exert: true,
+      },
+      effect: {
+        type: "compound",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "activated",
-        name: "GOOD AS NEW",
-        cost: expect.objectContaining({
-          exert: true,
-        }),
-        effect: expect.objectContaining({
-          type: "compound",
-        }),
-      }),
+      expect.objectContaining(goodAsNew),
     );
 
     // PUPPY LOVE (triggered)
+    const puppyLove: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "PUPPY LOVE",
+      trigger: {
+        event: "quest",
+        on: "SELF",
+      },
+      effect: {
+        type: "conditional",
+      },
+    };
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "PUPPY LOVE",
-        trigger: expect.objectContaining({
-          event: "quest",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "conditional",
-        }),
-      }),
+      expect.objectContaining(puppyLove),
     );
   });
 
@@ -195,27 +205,29 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(2);
 
     // Singer 3
+    const singer3: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Singer",
+      value: 3,
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Singer",
-        value: 3,
-      }),
+      expect.objectContaining(singer3),
     );
 
     // ENTOURAGE (triggered)
+    const entourage: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "ENTOURAGE",
+      trigger: {
+        event: "play",
+        timing: "whenever",
+      },
+      effect: {
+        type: "optional",
+      },
+    };
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "ENTOURAGE",
-        trigger: expect.objectContaining({
-          event: "play",
-          timing: "whenever",
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-        }),
-      }),
+      expect.objectContaining(entourage),
     );
   });
 
@@ -226,12 +238,13 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // Singer 4
+    const singer4: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Singer",
+      value: 4,
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Singer",
-        value: 4,
-      }),
+      expect.objectContaining(singer4),
     );
   });
 
@@ -243,19 +256,20 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // BARK (activated)
+    const bark: ActivatedAbilityDefinition = {
+      type: "activated",
+      name: "BARK",
+      cost: {
+        exert: true,
+      },
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+        modifier: -2,
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "activated",
-        name: "BARK",
-        cost: expect.objectContaining({
-          exert: true,
-        }),
-        effect: expect.objectContaining({
-          type: "modify-stat",
-          stat: "strength",
-          modifier: -2,
-        }),
-      }),
+      expect.objectContaining(bark),
     );
   });
 
@@ -267,18 +281,19 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // COME ALONG, CHILDREN (triggered with dual trigger)
+    const comeAlongChildren: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "COME ALONG, CHILDREN",
+      trigger: {
+        event: "play",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "COME ALONG, CHILDREN",
-        trigger: expect.objectContaining({
-          event: "play",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-        }),
-      }),
+      expect.objectContaining(comeAlongChildren),
     );
   });
 
@@ -290,16 +305,17 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // AND I'M THE CAPTAIN! (static)
+    const andImTheCaptain: StaticAbilityDefinition = {
+      type: "static",
+      name: "AND I'M THE CAPTAIN!",
+      effect: {
+        type: "modify-stat",
+        stat: "lore",
+        modifier: 2,
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "AND I'M THE CAPTAIN!",
-        effect: expect.objectContaining({
-          type: "modify-stat",
-          stat: "lore",
-          modifier: 2,
-        }),
-      }),
+      expect.objectContaining(andImTheCaptain),
     );
   });
 
@@ -311,11 +327,12 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // Support
+    const support: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Support",
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Support",
-      }),
+      expect.objectContaining(support),
     );
   });
 
@@ -327,13 +344,14 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // Action ability
+    const actionAbility: ActionAbilityDefinition = {
+      type: "action",
+      effect: {
+        type: "triggered",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "action",
-        effect: expect.objectContaining({
-          type: "triggered",
-        }),
-      }),
+      expect.objectContaining(actionAbility),
     );
   });
 
@@ -345,14 +363,15 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // Action ability
+    const actionAbility: ActionAbilityDefinition = {
+      type: "action",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Support",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "action",
-        effect: expect.objectContaining({
-          type: "gain-keyword",
-          keyword: "Support",
-        }),
-      }),
+      expect.objectContaining(actionAbility),
     );
   });
 
@@ -363,14 +382,15 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // Action ability
+    const actionAbility: ActionAbilityDefinition = {
+      type: "action",
+      effect: {
+        type: "remove-damage",
+        amount: 3,
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "action",
-        effect: expect.objectContaining({
-          type: "remove-damage",
-          amount: 3,
-        }),
-      }),
+      expect.objectContaining(actionAbility),
     );
   });
 
@@ -382,13 +402,14 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // Action ability
+    const actionAbility: ActionAbilityDefinition = {
+      type: "action",
+      effect: {
+        type: "compound",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "action",
-        effect: expect.objectContaining({
-          type: "compound",
-        }),
-      }),
+      expect.objectContaining(actionAbility),
     );
   });
 
@@ -400,18 +421,19 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // ANCIENT POWER (activated)
+    const ancientPower: ActivatedAbilityDefinition = {
+      type: "activated",
+      name: "ANCIENT POWER",
+      cost: {
+        banishSelf: true,
+      },
+      effect: {
+        type: "remove-damage",
+        amount: 2,
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "activated",
-        name: "ANCIENT POWER",
-        cost: expect.objectContaining({
-          banishSelf: true,
-        }),
-        effect: expect.objectContaining({
-          type: "remove-damage",
-          amount: 2,
-        }),
-      }),
+      expect.objectContaining(ancientPower),
     );
   });
 
@@ -423,18 +445,19 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // LIFE GIVER (activated)
+    const lifeGiver: ActivatedAbilityDefinition = {
+      type: "activated",
+      name: "LIFE GIVER",
+      cost: {
+        exert: true,
+      },
+      effect: {
+        type: "cost-reduction",
+        amount: 2,
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "activated",
-        name: "LIFE GIVER",
-        cost: expect.objectContaining({
-          exert: true,
-        }),
-        effect: expect.objectContaining({
-          type: "cost-reduction",
-          amount: 2,
-        }),
-      }),
+      expect.objectContaining(lifeGiver),
     );
   });
 
@@ -445,18 +468,19 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // REBUILD (activated)
+    const rebuild: ActivatedAbilityDefinition = {
+      type: "activated",
+      name: "REBUILD",
+      cost: {
+        exert: true,
+      },
+      effect: {
+        type: "remove-damage",
+        amount: 2,
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "activated",
-        name: "REBUILD",
-        cost: expect.objectContaining({
-          exert: true,
-        }),
-        effect: expect.objectContaining({
-          type: "remove-damage",
-          amount: 2,
-        }),
-      }),
+      expect.objectContaining(rebuild),
     );
   });
 
@@ -468,27 +492,29 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(2);
 
     // WE ARE ALL CONNECTED (static)
+    const weAreAllConnected: StaticAbilityDefinition = {
+      type: "static",
+      name: "WE ARE ALL CONNECTED",
+      effect: {
+        type: "modify-stat",
+        stat: "willpower",
+        modifier: 2,
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "WE ARE ALL CONNECTED",
-        effect: expect.objectContaining({
-          type: "modify-stat",
-          stat: "willpower",
-          modifier: 2,
-        }),
-      }),
+      expect.objectContaining(weAreAllConnected),
     );
 
     // LION HOME (static)
+    const lionHome: StaticAbilityDefinition = {
+      type: "static",
+      name: "LION HOME",
+      effect: {
+        type: "cost-reduction",
+      },
+    };
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "LION HOME",
-        effect: expect.objectContaining({
-          type: "cost-reduction",
-        }),
-      }),
+      expect.objectContaining(lionHome),
     );
   });
 
@@ -499,15 +525,16 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // NIGHT OUT (static)
+    const nightOut: StaticAbilityDefinition = {
+      type: "static",
+      name: "NIGHT OUT",
+      effect: {
+        type: "restriction",
+        restriction: "cant-be-challenged",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "NIGHT OUT",
-        effect: expect.objectContaining({
-          type: "restriction",
-          restriction: "cant-be-challenged",
-        }),
-      }),
+      expect.objectContaining(nightOut),
     );
   });
 
@@ -519,17 +546,18 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // CURIOUSER AND CURIOUSER (activated)
+    const curiouserAndCuriouser: ActivatedAbilityDefinition = {
+      type: "activated",
+      name: "CURIOUSER AND CURIOUSER",
+      cost: {
+        exert: true,
+      },
+      effect: {
+        type: "exert",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "activated",
-        name: "CURIOUSER AND CURIOUSER",
-        cost: expect.objectContaining({
-          exert: true,
-        }),
-        effect: expect.objectContaining({
-          type: "exert",
-        }),
-      }),
+      expect.objectContaining(curiouserAndCuriouser),
     );
   });
 
@@ -541,18 +569,19 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // RESTLESS SOULS (triggered)
+    const restlessSouls: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "RESTLESS SOULS",
+      trigger: {
+        event: "quest",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "RESTLESS SOULS",
-        trigger: expect.objectContaining({
-          event: "quest",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-        }),
-      }),
+      expect.objectContaining(restlessSouls),
     );
   });
 
@@ -564,18 +593,19 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // LOOKING FOR AURORA (triggered)
+    const lookingForAurora: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "LOOKING FOR AURORA",
+      trigger: {
+        event: "play",
+        timing: "whenever",
+      },
+      effect: {
+        type: "optional",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "LOOKING FOR AURORA",
-        trigger: expect.objectContaining({
-          event: "play",
-          timing: "whenever",
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-        }),
-      }),
+      expect.objectContaining(lookingForAurora),
     );
   });
 
@@ -586,17 +616,18 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // BLIZZARD (activated)
+    const blizzard: ActivatedAbilityDefinition = {
+      type: "activated",
+      name: "BLIZZARD",
+      cost: {
+        exert: true,
+      },
+      effect: {
+        type: "exert",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "activated",
-        name: "BLIZZARD",
-        cost: expect.objectContaining({
-          exert: true,
-        }),
-        effect: expect.objectContaining({
-          type: "exert",
-        }),
-      }),
+      expect.objectContaining(blizzard),
     );
   });
 
@@ -608,11 +639,12 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // Evasive
+    const evasive: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Evasive",
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Evasive",
-      }),
+      expect.objectContaining(evasive),
     );
   });
 
@@ -624,38 +656,41 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(3);
 
     // Shift 5
+    const shift5: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Shift",
+      cost: {
+        ink: 5,
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Shift",
-        cost: expect.objectContaining({
-          ink: 5,
-        }),
-      }),
+      expect.objectContaining(shift5),
     );
 
     // Evasive
+    const evasive: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Evasive",
+    };
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Evasive",
-      }),
+      expect.objectContaining(evasive),
     );
 
     // POWER BEYOND MEASURE (triggered)
+    const powerBeyondMeasure: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "POWER BEYOND MEASURE",
+      trigger: {
+        event: "draw",
+        timing: "whenever",
+      },
+      effect: {
+        type: "gain-lore",
+        amount: 1,
+      },
+    };
     expect(result.abilities[2].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "POWER BEYOND MEASURE",
-        trigger: expect.objectContaining({
-          event: "draw",
-          timing: "whenever",
-        }),
-        effect: expect.objectContaining({
-          type: "gain-lore",
-          amount: 1,
-        }),
-      }),
+      expect.objectContaining(powerBeyondMeasure),
     );
   });
 
@@ -666,11 +701,12 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // Rush
+    const rush: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Rush",
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Rush",
-      }),
+      expect.objectContaining(rush),
     );
   });
 
@@ -682,18 +718,19 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // POWER CLEAN (triggered)
+    const powerClean: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "POWER CLEAN",
+      trigger: {
+        event: "play",
+        on: "SELF",
+      },
+      effect: {
+        type: "conditional",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "POWER CLEAN",
-        trigger: expect.objectContaining({
-          event: "play",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "conditional",
-        }),
-      }),
+      expect.objectContaining(powerClean),
     );
   });
 
@@ -705,26 +742,28 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(2);
 
     // Rush
+    const rush: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Rush",
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Rush",
-      }),
+      expect.objectContaining(rush),
     );
 
     // CLEAN THIS, CLEAN THAT (triggered)
+    const cleanThisCleanThat: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "CLEAN THIS, CLEAN THAT",
+      trigger: {
+        event: "play",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+      },
+    };
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "CLEAN THIS, CLEAN THAT",
-        trigger: expect.objectContaining({
-          event: "play",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-        }),
-      }),
+      expect.objectContaining(cleanThisCleanThat),
     );
   });
 
@@ -736,16 +775,17 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // CLEAN SWEEP (static)
+    const cleanSweep: StaticAbilityDefinition = {
+      type: "static",
+      name: "CLEAN SWEEP",
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+        modifier: 2,
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "CLEAN SWEEP",
-        effect: expect.objectContaining({
-          type: "modify-stat",
-          stat: "strength",
-          modifier: 2,
-        }),
-      }),
+      expect.objectContaining(cleanSweep),
     );
   });
 
@@ -757,25 +797,27 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(2);
 
     // Evasive
+    const evasive: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Evasive",
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Evasive",
-      }),
+      expect.objectContaining(evasive),
     );
 
     // FIND THE WAY (activated)
+    const findTheWay: ActivatedAbilityDefinition = {
+      type: "activated",
+      name: "FIND THE WAY",
+      cost: {
+        exert: true,
+      },
+      effect: {
+        type: "move",
+      },
+    };
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "activated",
-        name: "FIND THE WAY",
-        cost: expect.objectContaining({
-          exert: true,
-        }),
-        effect: expect.objectContaining({
-          type: "move",
-        }),
-      }),
+      expect.objectContaining(findTheWay),
     );
   });
 
@@ -787,29 +829,31 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(2);
 
     // Shift 5
+    const shift5: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Shift",
+      cost: {
+        ink: 5,
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Shift",
-        cost: expect.objectContaining({
-          ink: 5,
-        }),
-      }),
+      expect.objectContaining(shift5),
     );
 
     // ALL MINE (triggered)
+    const allMine: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "ALL MINE",
+      trigger: {
+        event: "quest",
+        on: "SELF",
+      },
+      effect: {
+        type: "gain-lore",
+      },
+    };
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "ALL MINE",
-        trigger: expect.objectContaining({
-          event: "quest",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "gain-lore",
-        }),
-      }),
+      expect.objectContaining(allMine),
     );
   });
 
@@ -821,17 +865,18 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // TELEKINESIS (activated)
+    const telekinesis: ActivatedAbilityDefinition = {
+      type: "activated",
+      name: "TELEKINESIS",
+      cost: {
+        exert: true,
+      },
+      effect: {
+        type: "return-to-hand",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "activated",
-        name: "TELEKINESIS",
-        cost: expect.objectContaining({
-          exert: true,
-        }),
-        effect: expect.objectContaining({
-          type: "return-to-hand",
-        }),
-      }),
+      expect.objectContaining(telekinesis),
     );
   });
 
@@ -843,33 +888,35 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(2);
 
     // DARK KNOWLEDGE (triggered)
+    const darkKnowledge: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "DARK KNOWLEDGE",
+      trigger: {
+        event: "quest",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "DARK KNOWLEDGE",
-        trigger: expect.objectContaining({
-          event: "quest",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-        }),
-      }),
+      expect.objectContaining(darkKnowledge),
     );
 
     // DIVINATION (triggered)
+    const divination: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "DIVINATION",
+      trigger: {
+        event: "draw",
+        timing: "whenever",
+      },
+      effect: {
+        type: "optional",
+      },
+    };
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "DIVINATION",
-        trigger: expect.objectContaining({
-          event: "draw",
-          timing: "whenever",
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-        }),
-      }),
+      expect.objectContaining(divination),
     );
   });
 
@@ -881,18 +928,19 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // ALWAYS THERE (triggered)
+    const alwaysThere: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "ALWAYS THERE",
+      trigger: {
+        event: "banish",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "ALWAYS THERE",
-        trigger: expect.objectContaining({
-          event: "banish",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-        }),
-      }),
+      expect.objectContaining(alwaysThere),
     );
   });
 
@@ -904,25 +952,27 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(2);
 
     // Evasive
+    const evasive: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Evasive",
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Evasive",
-      }),
+      expect.objectContaining(evasive),
     );
 
     // CYCLONE (activated)
+    const cyclone: ActivatedAbilityDefinition = {
+      type: "activated",
+      name: "CYCLONE",
+      cost: {
+        exert: true,
+      },
+      effect: {
+        type: "gain-lore",
+      },
+    };
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "activated",
-        name: "CYCLONE",
-        cost: expect.objectContaining({
-          exert: true,
-        }),
-        effect: expect.objectContaining({
-          type: "gain-lore",
-        }),
-      }),
+      expect.objectContaining(cyclone),
     );
   });
 
@@ -934,14 +984,15 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // WHO DISTURBS MY SLUMBER? (static)
+    const whoDisturbsMySlumber: StaticAbilityDefinition = {
+      type: "static",
+      name: "WHO DISTURBS MY SLUMBER?",
+      effect: {
+        type: "restriction",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "WHO DISTURBS MY SLUMBER?",
-        effect: expect.objectContaining({
-          type: "restriction",
-        }),
-      }),
+      expect.objectContaining(whoDisturbsMySlumber),
     );
   });
 
@@ -953,14 +1004,15 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // Action ability
+    const actionAbility: ActionAbilityDefinition = {
+      type: "action",
+      effect: {
+        type: "move-damage",
+        amount: 1,
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "action",
-        effect: expect.objectContaining({
-          type: "move-damage",
-          amount: 1,
-        }),
-      }),
+      expect.objectContaining(actionAbility),
     );
   });
 
@@ -972,13 +1024,14 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // Action ability
+    const actionAbility: ActionAbilityDefinition = {
+      type: "action",
+      effect: {
+        type: "compound",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "action",
-        effect: expect.objectContaining({
-          type: "compound",
-        }),
-      }),
+      expect.objectContaining(actionAbility),
     );
   });
 
@@ -990,13 +1043,14 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // Action ability
+    const actionAbility: ActionAbilityDefinition = {
+      type: "action",
+      effect: {
+        type: "compound",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "action",
-        effect: expect.objectContaining({
-          type: "compound",
-        }),
-      }),
+      expect.objectContaining(actionAbility),
     );
   });
 
@@ -1008,17 +1062,18 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // GOOD OR EVIL (activated)
+    const goodOrEvil: ActivatedAbilityDefinition = {
+      type: "activated",
+      name: "GOOD OR EVIL",
+      cost: {
+        banishSelf: true,
+      },
+      effect: {
+        type: "conditional",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "activated",
-        name: "GOOD OR EVIL",
-        cost: expect.objectContaining({
-          banishSelf: true,
-        }),
-        effect: expect.objectContaining({
-          type: "conditional",
-        }),
-      }),
+      expect.objectContaining(goodOrEvil),
     );
   });
 
@@ -1030,18 +1085,19 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // INCREDIBLE ENERGY (activated)
+    const incredibleEnergy: ActivatedAbilityDefinition = {
+      type: "activated",
+      name: "INCREDIBLE ENERGY",
+      cost: {
+        exert: true,
+        ink: 1,
+      },
+      effect: {
+        type: "compound",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "activated",
-        name: "INCREDIBLE ENERGY",
-        cost: expect.objectContaining({
-          exert: true,
-          ink: 1,
-        }),
-        effect: expect.objectContaining({
-          type: "compound",
-        }),
-      }),
+      expect.objectContaining(incredibleEnergy),
     );
   });
 
@@ -1053,18 +1109,19 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // USING THE MIRROR (triggered)
+    const usingTheMirror: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "USING THE MIRROR",
+      trigger: {
+        event: "start-of-turn",
+        timing: "at",
+      },
+      effect: {
+        type: "optional",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "USING THE MIRROR",
-        trigger: expect.objectContaining({
-          event: "start-of-turn",
-          timing: "at",
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-        }),
-      }),
+      expect.objectContaining(usingTheMirror),
     );
   });
 
@@ -1076,27 +1133,29 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(2);
 
     // BROOM CLOSET (static)
+    const broomCloset: StaticAbilityDefinition = {
+      type: "static",
+      name: "BROOM CLOSET",
+      effect: {
+        type: "cost-reduction",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "BROOM CLOSET",
-        effect: expect.objectContaining({
-          type: "cost-reduction",
-        }),
-      }),
+      expect.objectContaining(broomCloset),
     );
 
     // MAGICAL POWER (static)
+    const magicalPower: StaticAbilityDefinition = {
+      type: "static",
+      name: "MAGICAL POWER",
+      effect: {
+        type: "modify-stat",
+        stat: "lore",
+        modifier: 1,
+      },
+    };
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "MAGICAL POWER",
-        effect: expect.objectContaining({
-          type: "modify-stat",
-          stat: "lore",
-          modifier: 1,
-        }),
-      }),
+      expect.objectContaining(magicalPower),
     );
   });
 
@@ -1108,20 +1167,21 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // THE BEAR (triggered)
+    const theBear: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "THE BEAR",
+      trigger: {
+        event: "move",
+        on: "SELF",
+      },
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+        modifier: 3,
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "THE BEAR",
-        trigger: expect.objectContaining({
-          event: "move",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "modify-stat",
-          stat: "strength",
-          modifier: 3,
-        }),
-      }),
+      expect.objectContaining(theBear),
     );
   });
 
@@ -1133,11 +1193,12 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // Evasive
+    const evasive: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Evasive",
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Evasive",
-      }),
+      expect.objectContaining(evasive),
     );
   });
 
@@ -1148,16 +1209,17 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // EERIE PAIR (static)
+    const eeriePair: StaticAbilityDefinition = {
+      type: "static",
+      name: "EERIE PAIR",
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+        modifier: 3,
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "EERIE PAIR",
-        effect: expect.objectContaining({
-          type: "modify-stat",
-          stat: "strength",
-          modifier: 3,
-        }),
-      }),
+      expect.objectContaining(eeriePair),
     );
   });
 
@@ -1169,18 +1231,19 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // YOU THIEVING SCOUNDREL (triggered)
+    const youThievingScoundrel: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "YOU THIEVING SCOUNDREL",
+      trigger: {
+        event: "play",
+        on: "SELF",
+      },
+      effect: {
+        type: "discard",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "YOU THIEVING SCOUNDREL",
-        trigger: expect.objectContaining({
-          event: "play",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "discard",
-        }),
-      }),
+      expect.objectContaining(youThievingScoundrel),
     );
   });
 
@@ -1192,29 +1255,31 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(2);
 
     // Shift 3
+    const shift3: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Shift",
+      cost: {
+        ink: 3,
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Shift",
-        cost: expect.objectContaining({
-          ink: 3,
-        }),
-      }),
+      expect.objectContaining(shift3),
     );
 
     // THIS CHANGES EVERYTHING (triggered)
+    const thisChangesEverything: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "THIS CHANGES EVERYTHING",
+      trigger: {
+        event: "quest",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+      },
+    };
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "THIS CHANGES EVERYTHING",
-        trigger: expect.objectContaining({
-          event: "quest",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-        }),
-      }),
+      expect.objectContaining(thisChangesEverything),
     );
   });
 
@@ -1226,18 +1291,19 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // NOTHING PERSONAL (triggered)
+    const nothingPersonal: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "NOTHING PERSONAL",
+      trigger: {
+        event: "banish-in-challenge",
+        on: "SELF",
+      },
+      effect: {
+        type: "banish",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "NOTHING PERSONAL",
-        trigger: expect.objectContaining({
-          event: "banish-in-challenge",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "banish",
-        }),
-      }),
+      expect.objectContaining(nothingPersonal),
     );
   });
 
@@ -1249,23 +1315,25 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(2);
 
     // Ward
+    const ward: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Ward",
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Ward",
-      }),
+      expect.objectContaining(ward),
     );
 
     // EERIE PAIR (static)
+    const eeriePair: StaticAbilityDefinition = {
+      type: "static",
+      name: "EERIE PAIR",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Ward",
+      },
+    };
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "EERIE PAIR",
-        effect: expect.objectContaining({
-          type: "gain-keyword",
-          keyword: "Ward",
-        }),
-      }),
+      expect.objectContaining(eeriePair),
     );
   });
 
@@ -1277,18 +1345,19 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // SKYSURFING (triggered)
+    const skysurfing: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "SKYSURFING",
+      trigger: {
+        event: "play",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "SKYSURFING",
-        trigger: expect.objectContaining({
-          event: "play",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-        }),
-      }),
+      expect.objectContaining(skysurfing),
     );
   });
 
@@ -1300,35 +1369,37 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(2);
 
     // WELL, NOW YOU KNOW (triggered)
+    const wellNowYouKnow: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "WELL, NOW YOU KNOW",
+      trigger: {
+        event: "play",
+        on: "SELF",
+      },
+      effect: {
+        type: "gain-keyword",
+        keyword: "Reckless",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "WELL, NOW YOU KNOW",
-        trigger: expect.objectContaining({
-          event: "play",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "gain-keyword",
-          keyword: "Reckless",
-        }),
-      }),
+      expect.objectContaining(wellNowYouKnow),
     );
 
     // THANKS FOR VOLUNTEERING (triggered)
+    const thanksForVolunteering: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "THANKS FOR VOLUNTEERING",
+      trigger: {
+        event: "banish",
+        timing: "whenever",
+      },
+      effect: {
+        type: "lose-lore",
+        amount: 1,
+      },
+    };
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "THANKS FOR VOLUNTEERING",
-        trigger: expect.objectContaining({
-          event: "banish",
-          timing: "whenever",
-        }),
-        effect: expect.objectContaining({
-          type: "lose-lore",
-          amount: 1,
-        }),
-      }),
+      expect.objectContaining(thanksForVolunteering),
     );
   });
 
@@ -1340,29 +1411,31 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(2);
 
     // Shift 4
+    const shift4: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Shift",
+      cost: {
+        ink: 4,
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Shift",
-        cost: expect.objectContaining({
-          ink: 4,
-        }),
-      }),
+      expect.objectContaining(shift4),
     );
 
     // TAKE THEM BY SURPRISE (triggered)
+    const takeThemBySurprise: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "TAKE THEM BY SURPRISE",
+      trigger: {
+        event: "banish",
+        on: "SELF",
+      },
+      effect: {
+        type: "return-to-hand",
+      },
+    };
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "TAKE THEM BY SURPRISE",
-        trigger: expect.objectContaining({
-          event: "banish",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "return-to-hand",
-        }),
-      }),
+      expect.objectContaining(takeThemBySurprise),
     );
   });
 
@@ -1374,14 +1447,15 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // MIMICRY (static)
+    const mimicry: StaticAbilityDefinition = {
+      type: "static",
+      name: "MIMICRY",
+      effect: {
+        type: "property-modification",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "MIMICRY",
-        effect: expect.objectContaining({
-          type: "property-modification",
-        }),
-      }),
+      expect.objectContaining(mimicry),
     );
   });
 
@@ -1393,18 +1467,19 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // I CAME TO LISTEN TO THE STORIES (triggered)
+    const iCameToListenToTheStories: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "I CAME TO LISTEN TO THE STORIES",
+      trigger: {
+        event: "move",
+        on: "SELF",
+      },
+      effect: {
+        type: "gain-lore",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "I CAME TO LISTEN TO THE STORIES",
-        trigger: expect.objectContaining({
-          event: "move",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "gain-lore",
-        }),
-      }),
+      expect.objectContaining(iCameToListenToTheStories),
     );
   });
 
@@ -1416,19 +1491,20 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // COLLECT TAXES (triggered)
+    const collectTaxes: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "COLLECT TAXES",
+      trigger: {
+        event: "quest",
+        on: "SELF",
+      },
+      effect: {
+        type: "lose-lore",
+        amount: 2,
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "COLLECT TAXES",
-        trigger: expect.objectContaining({
-          event: "quest",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "lose-lore",
-          amount: 2,
-        }),
-      }),
+      expect.objectContaining(collectTaxes),
     );
   });
 
@@ -1440,11 +1516,12 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // Evasive
+    const evasive: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Evasive",
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Evasive",
-      }),
+      expect.objectContaining(evasive),
     );
   });
 
@@ -1456,11 +1533,12 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // Ward
+    const ward: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Ward",
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Ward",
-      }),
+      expect.objectContaining(ward),
     );
   });
 
@@ -1472,23 +1550,25 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(2);
 
     // Evasive
+    const evasive: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Evasive",
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Evasive",
-      }),
+      expect.objectContaining(evasive),
     );
 
     // HIDE (static)
+    const hide: StaticAbilityDefinition = {
+      type: "static",
+      name: "HIDE",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Ward",
+      },
+    };
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "HIDE",
-        effect: expect.objectContaining({
-          type: "gain-keyword",
-          keyword: "Ward",
-        }),
-      }),
+      expect.objectContaining(hide),
     );
   });
 
@@ -1500,18 +1580,19 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // WHAT A DEAL (triggered)
+    const whatADeal: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "WHAT A DEAL",
+      trigger: {
+        event: "sing",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "WHAT A DEAL",
-        trigger: expect.objectContaining({
-          event: "sing",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-        }),
-      }),
+      expect.objectContaining(whatADeal),
     );
   });
 
@@ -1523,16 +1604,17 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // IT'S TIME TO GO! (static)
+    const itsTimeToGo: StaticAbilityDefinition = {
+      type: "static",
+      name: "IT'S TIME TO GO!",
+      effect: {
+        type: "modify-stat",
+        stat: "lore",
+        modifier: 1,
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "IT'S TIME TO GO!",
-        effect: expect.objectContaining({
-          type: "modify-stat",
-          stat: "lore",
-          modifier: 1,
-        }),
-      }),
+      expect.objectContaining(itsTimeToGo),
     );
   });
 
@@ -1543,13 +1625,14 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // Action ability
+    const actionAbility: ActionAbilityDefinition = {
+      type: "action",
+      effect: {
+        type: "banish",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "action",
-        effect: expect.objectContaining({
-          type: "banish",
-        }),
-      }),
+      expect.objectContaining(actionAbility),
     );
   });
 
@@ -1561,13 +1644,14 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // Action ability
+    const actionAbility: ActionAbilityDefinition = {
+      type: "action",
+      effect: {
+        type: "compound",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "action",
-        effect: expect.objectContaining({
-          type: "compound",
-        }),
-      }),
+      expect.objectContaining(actionAbility),
     );
   });
 
@@ -1578,13 +1662,14 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // Action ability
+    const actionAbility: ActionAbilityDefinition = {
+      type: "action",
+      effect: {
+        type: "compound",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "action",
-        effect: expect.objectContaining({
-          type: "compound",
-        }),
-      }),
+      expect.objectContaining(actionAbility),
     );
   });
 
@@ -1596,17 +1681,18 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // I GOT TO BE GOING (activated)
+    const iGotToBeGoing: ActivatedAbilityDefinition = {
+      type: "activated",
+      name: "I GOT TO BE GOING",
+      cost: {
+        exert: true,
+      },
+      effect: {
+        type: "conditional",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "activated",
-        name: "I GOT TO BE GOING",
-        cost: expect.objectContaining({
-          exert: true,
-        }),
-        effect: expect.objectContaining({
-          type: "conditional",
-        }),
-      }),
+      expect.objectContaining(iGotToBeGoing),
     );
   });
 
@@ -1618,33 +1704,35 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(2);
 
     // FOREST'S GIFT (activated)
+    const forestsGift: ActivatedAbilityDefinition = {
+      type: "activated",
+      name: "FOREST'S GIFT",
+      cost: {
+        exert: true,
+      },
+      effect: {
+        type: "deal-damage",
+        amount: 1,
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "activated",
-        name: "FOREST'S GIFT",
-        cost: expect.objectContaining({
-          exert: true,
-        }),
-        effect: expect.objectContaining({
-          type: "deal-damage",
-          amount: 1,
-        }),
-      }),
+      expect.objectContaining(forestsGift),
     );
 
     // A BIT OF A LARK (triggered)
+    const aBitOfALark: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "A BIT OF A LARK",
+      trigger: {
+        event: "quest",
+        timing: "whenever",
+      },
+      effect: {
+        type: "optional",
+      },
+    };
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "A BIT OF A LARK",
-        trigger: expect.objectContaining({
-          event: "quest",
-          timing: "whenever",
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-        }),
-      }),
+      expect.objectContaining(aBitOfALark),
     );
   });
 
@@ -1656,33 +1744,35 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(2);
 
     // EFFICIENT ENERGY (activated)
+    const efficientEnergy: ActivatedAbilityDefinition = {
+      type: "activated",
+      name: "EFFICIENT ENERGY",
+      cost: {
+        exert: true,
+      },
+      effect: {
+        type: "cost-reduction",
+        amount: 2,
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "activated",
-        name: "EFFICIENT ENERGY",
-        cost: expect.objectContaining({
-          exert: true,
-        }),
-        effect: expect.objectContaining({
-          type: "cost-reduction",
-          amount: 2,
-        }),
-      }),
+      expect.objectContaining(efficientEnergy),
     );
 
     // TRAP (activated)
+    const trap: ActivatedAbilityDefinition = {
+      type: "activated",
+      name: "TRAP",
+      cost: {
+        ink: 2,
+        banishSelf: true,
+      },
+      effect: {
+        type: "compound",
+      },
+    };
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "activated",
-        name: "TRAP",
-        cost: expect.objectContaining({
-          ink: 2,
-          banishSelf: true,
-        }),
-        effect: expect.objectContaining({
-          type: "compound",
-        }),
-      }),
+      expect.objectContaining(trap),
     );
   });
 
@@ -1694,14 +1784,15 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // SURROUNDED BY WATER (static)
+    const surroundedByWater: StaticAbilityDefinition = {
+      type: "static",
+      name: "SURROUNDED BY WATER",
+      effect: {
+        type: "gain-keyword",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "SURROUNDED BY WATER",
-        effect: expect.objectContaining({
-          type: "gain-keyword",
-        }),
-      }),
+      expect.objectContaining(surroundedByWater),
     );
   });
 
@@ -1713,18 +1804,19 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // CITY WALLS (triggered)
+    const cityWalls: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "CITY WALLS",
+      trigger: {
+        event: "banish-in-challenge",
+        timing: "whenever",
+      },
+      effect: {
+        type: "banish",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "CITY WALLS",
-        trigger: expect.objectContaining({
-          event: "banish-in-challenge",
-          timing: "whenever",
-        }),
-        effect: expect.objectContaining({
-          type: "banish",
-        }),
-      }),
+      expect.objectContaining(cityWalls),
     );
   });
 
@@ -1736,29 +1828,31 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(2);
 
     // NEMESIS (triggered)
+    const nemesis: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "NEMESIS",
+      trigger: {
+        event: "banish-in-challenge",
+        timing: "whenever",
+      },
+      effect: {
+        type: "compound",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "NEMESIS",
-        trigger: expect.objectContaining({
-          event: "banish-in-challenge",
-          timing: "whenever",
-        }),
-        effect: expect.objectContaining({
-          type: "compound",
-        }),
-      }),
+      expect.objectContaining(nemesis),
     );
 
     // MAN-TO-MAN (static)
+    const manToMan: StaticAbilityDefinition = {
+      type: "static",
+      name: "MAN-TO-MAN",
+      effect: {
+        type: "restriction",
+      },
+    };
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "MAN-TO-MAN",
-        effect: expect.objectContaining({
-          type: "restriction",
-        }),
-      }),
+      expect.objectContaining(manToMan),
     );
   });
 
@@ -1770,11 +1864,12 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // Reckless
+    const reckless: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Reckless",
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Reckless",
-      }),
+      expect.objectContaining(reckless),
     );
   });
 
@@ -1786,19 +1881,20 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // MINDLESS WANDERING (triggered)
+    const mindlessWandering: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "MINDLESS WANDERING",
+      trigger: {
+        event: "move",
+        on: "SELF",
+      },
+      effect: {
+        type: "lose-lore",
+        amount: 1,
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "MINDLESS WANDERING",
-        trigger: expect.objectContaining({
-          event: "move",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "lose-lore",
-          amount: 1,
-        }),
-      }),
+      expect.objectContaining(mindlessWandering),
     );
   });
 
@@ -1810,18 +1906,19 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // WATCH THE TEETH (triggered)
+    const watchTheTeeth: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "WATCH THE TEETH",
+      trigger: {
+        event: "dealt-damage",
+        on: "SELF",
+      },
+      effect: {
+        type: "deal-damage",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "WATCH THE TEETH",
-        trigger: expect.objectContaining({
-          event: "dealt-damage",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "deal-damage",
-        }),
-      }),
+      expect.objectContaining(watchTheTeeth),
     );
   });
 
@@ -1833,33 +1930,35 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(2);
 
     // THIS IS IT! (triggered)
+    const thisIsIt: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "THIS IS IT!",
+      trigger: {
+        event: "play",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "THIS IS IT!",
-        trigger: expect.objectContaining({
-          event: "play",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-        }),
-      }),
+      expect.objectContaining(thisIsIt),
     );
 
     // TAKE THE HELM (triggered)
+    const takeTheHelm: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "TAKE THE HELM",
+      trigger: {
+        event: "play",
+        timing: "whenever",
+      },
+      effect: {
+        type: "move",
+      },
+    };
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "TAKE THE HELM",
-        trigger: expect.objectContaining({
-          event: "play",
-          timing: "whenever",
-        }),
-        effect: expect.objectContaining({
-          type: "move",
-        }),
-      }),
+      expect.objectContaining(takeTheHelm),
     );
   });
 
@@ -1871,19 +1970,20 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // PLUNDER (triggered)
+    const plunder: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "PLUNDER",
+      trigger: {
+        event: "play",
+        on: "SELF",
+      },
+      effect: {
+        type: "lose-lore",
+        amount: 1,
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "PLUNDER",
-        trigger: expect.objectContaining({
-          event: "play",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "lose-lore",
-          amount: 1,
-        }),
-      }),
+      expect.objectContaining(plunder),
     );
   });
 
@@ -1895,18 +1995,19 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // THAT TERRIBLE WOMAN (triggered)
+    const thatTerribleWoman: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "THAT TERRIBLE WOMAN",
+      trigger: {
+        event: "play",
+        on: "SELF",
+      },
+      effect: {
+        type: "banish",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "THAT TERRIBLE WOMAN",
-        trigger: expect.objectContaining({
-          event: "play",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "banish",
-        }),
-      }),
+      expect.objectContaining(thatTerribleWoman),
     );
   });
 
@@ -1918,26 +2019,28 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(2);
 
     // Reckless
+    const reckless: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Reckless",
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Reckless",
-      }),
+      expect.objectContaining(reckless),
     );
 
     // IN MA BELLY (triggered)
+    const inMaBelly: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "IN MA BELLY",
+      trigger: {
+        event: "quest",
+        timing: "whenever",
+      },
+      effect: {
+        type: "compound",
+      },
+    };
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "IN MA BELLY",
-        trigger: expect.objectContaining({
-          event: "quest",
-          timing: "whenever",
-        }),
-        effect: expect.objectContaining({
-          type: "compound",
-        }),
-      }),
+      expect.objectContaining(inMaBelly),
     );
   });
 
@@ -1949,16 +2052,17 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // I'M YOUR MAN! (static)
+    const imYourMan: StaticAbilityDefinition = {
+      type: "static",
+      name: "I'M YOUR MAN!",
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+        modifier: 2,
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "I'M YOUR MAN!",
-        effect: expect.objectContaining({
-          type: "modify-stat",
-          stat: "strength",
-          modifier: 2,
-        }),
-      }),
+      expect.objectContaining(imYourMan),
     );
   });
 
@@ -1970,29 +2074,31 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(2);
 
     // Shift 3
+    const shift3: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Shift",
+      cost: {
+        ink: 3,
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Shift",
-        cost: expect.objectContaining({
-          ink: 3,
-        }),
-      }),
+      expect.objectContaining(shift3),
     );
 
     // WELCOME TO MY BOAT (triggered)
+    const welcomeToMyBoat: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "WELCOME TO MY BOAT",
+      trigger: {
+        event: "quest",
+        on: "SELF",
+      },
+      effect: {
+        type: "compound",
+      },
+    };
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "WELCOME TO MY BOAT",
-        trigger: expect.objectContaining({
-          event: "quest",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "compound",
-        }),
-      }),
+      expect.objectContaining(welcomeToMyBoat),
     );
   });
 
@@ -2004,24 +2110,26 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(2);
 
     // Rush
+    const rush: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Rush",
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Rush",
-      }),
+      expect.objectContaining(rush),
     );
 
     // OVER HERE, TINK (static)
+    const overHereTink: StaticAbilityDefinition = {
+      type: "static",
+      name: "OVER HERE, TINK",
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+        modifier: 2,
+      },
+    };
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "OVER HERE, TINK",
-        effect: expect.objectContaining({
-          type: "modify-stat",
-          stat: "strength",
-          modifier: 2,
-        }),
-      }),
+      expect.objectContaining(overHereTink),
     );
   });
 
@@ -2033,37 +2141,40 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(3);
 
     // Shift 4
+    const shift4: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Shift",
+      cost: {
+        ink: 4,
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Shift",
-        cost: expect.objectContaining({
-          ink: 4,
-        }),
-      }),
+      expect.objectContaining(shift4),
     );
 
     // Evasive
+    const evasive: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Evasive",
+    };
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Evasive",
-      }),
+      expect.objectContaining(evasive),
     );
 
     // YOU'RE NEXT! (triggered)
+    const youreNext: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "YOU'RE NEXT!",
+      trigger: {
+        event: "challenge",
+        on: "SELF",
+      },
+      effect: {
+        type: "prevention",
+      },
+    };
     expect(result.abilities[2].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "YOU'RE NEXT!",
-        trigger: expect.objectContaining({
-          event: "challenge",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "prevention",
-        }),
-      }),
+      expect.objectContaining(youreNext),
     );
   });
 
@@ -2075,18 +2186,19 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // SURPRISE MANEUVER (triggered)
+    const surpriseManeuver: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "SURPRISE MANEUVER",
+      trigger: {
+        event: "banish",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "SURPRISE MANEUVER",
-        trigger: expect.objectContaining({
-          event: "banish",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-        }),
-      }),
+      expect.objectContaining(surpriseManeuver),
     );
   });
 
@@ -2097,16 +2209,17 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // BRUTE (static)
+    const brute: StaticAbilityDefinition = {
+      type: "static",
+      name: "BRUTE",
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+        modifier: 3,
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "BRUTE",
-        effect: expect.objectContaining({
-          type: "modify-stat",
-          stat: "strength",
-          modifier: 3,
-        }),
-      }),
+      expect.objectContaining(brute),
     );
   });
 
@@ -2118,22 +2231,24 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(2);
 
     // THE FOX (static)
+    const theFox: StaticAbilityDefinition = {
+      type: "static",
+      name: "THE FOX",
+      effect: {
+        type: "cost-reduction",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "THE FOX",
-        effect: expect.objectContaining({
-          type: "cost-reduction",
-        }),
-      }),
+      expect.objectContaining(theFox),
     );
 
     // Evasive
+    const evasive: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Evasive",
+    };
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Evasive",
-      }),
+      expect.objectContaining(evasive),
     );
   });
 
@@ -2144,11 +2259,12 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // Rush
+    const rush: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Rush",
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Rush",
-      }),
+      expect.objectContaining(rush),
     );
   });
 
@@ -2159,16 +2275,17 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // OLD BETSY (static)
+    const oldBetsy: StaticAbilityDefinition = {
+      type: "static",
+      name: "OLD BETSY",
+      effect: {
+        type: "modify-stat",
+        stat: "lore",
+        modifier: 1,
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "OLD BETSY",
-        effect: expect.objectContaining({
-          type: "modify-stat",
-          stat: "lore",
-          modifier: 1,
-        }),
-      }),
+      expect.objectContaining(oldBetsy),
     );
   });
 
@@ -2180,13 +2297,14 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // Action ability
+    const actionAbility: ActionAbilityDefinition = {
+      type: "action",
+      effect: {
+        type: "banish",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "action",
-        effect: expect.objectContaining({
-          type: "banish",
-        }),
-      }),
+      expect.objectContaining(actionAbility),
     );
   });
 
@@ -2198,13 +2316,14 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // Action ability
+    const actionAbility: ActionAbilityDefinition = {
+      type: "action",
+      effect: {
+        type: "compound",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "action",
-        effect: expect.objectContaining({
-          type: "compound",
-        }),
-      }),
+      expect.objectContaining(actionAbility),
     );
   });
 
@@ -2216,13 +2335,14 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // Action ability
+    const actionAbility: ActionAbilityDefinition = {
+      type: "action",
+      effect: {
+        type: "compound",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "action",
-        effect: expect.objectContaining({
-          type: "compound",
-        }),
-      }),
+      expect.objectContaining(actionAbility),
     );
   });
 
@@ -2234,13 +2354,14 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // Action ability
+    const actionAbility: ActionAbilityDefinition = {
+      type: "action",
+      effect: {
+        type: "move",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "action",
-        effect: expect.objectContaining({
-          type: "move",
-        }),
-      }),
+      expect.objectContaining(actionAbility),
     );
   });
 
@@ -2252,29 +2373,31 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(2);
 
     // IT'S MAUI TIME! (static)
+    const itsMauiTime: StaticAbilityDefinition = {
+      type: "static",
+      name: "IT'S MAUI TIME!",
+      effect: {
+        type: "cost-reduction",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "IT'S MAUI TIME!",
-        effect: expect.objectContaining({
-          type: "cost-reduction",
-        }),
-      }),
+      expect.objectContaining(itsMauiTime),
     );
 
     // SHAPESHIFT (activated with modal)
+    const shapeshift: ActivatedAbilityDefinition = {
+      type: "activated",
+      name: "SHAPESHIFT",
+      cost: {
+        exert: true,
+        ink: 2,
+      },
+      effect: {
+        type: "modal",
+      },
+    };
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "activated",
-        name: "SHAPESHIFT",
-        cost: expect.objectContaining({
-          exert: true,
-          ink: 2,
-        }),
-        effect: expect.objectContaining({
-          type: "modal",
-        }),
-      }),
+      expect.objectContaining(shapeshift),
     );
   });
 
@@ -2286,18 +2409,19 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // SOURCE OF MAGIC (triggered)
+    const sourceOfMagic: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "SOURCE OF MAGIC",
+      trigger: {
+        event: "banish-in-challenge",
+        timing: "whenever",
+      },
+      effect: {
+        type: "optional",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "SOURCE OF MAGIC",
-        trigger: expect.objectContaining({
-          event: "banish-in-challenge",
-          timing: "whenever",
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-        }),
-      }),
+      expect.objectContaining(sourceOfMagic),
     );
   });
 
@@ -2309,26 +2433,28 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(2);
 
     // LOOK ALIVE, YOU SWABS! (static)
+    const lookAliveYouSwabs: StaticAbilityDefinition = {
+      type: "static",
+      name: "LOOK ALIVE, YOU SWABS!",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Rush",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "LOOK ALIVE, YOU SWABS!",
-        effect: expect.objectContaining({
-          type: "gain-keyword",
-          keyword: "Rush",
-        }),
-      }),
+      expect.objectContaining(lookAliveYouSwabs),
     );
 
     // ALL HANDS ON DECK! (static)
+    const allHandsOnDeck: StaticAbilityDefinition = {
+      type: "static",
+      name: "ALL HANDS ON DECK!",
+      effect: {
+        type: "cost-reduction",
+      },
+    };
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "ALL HANDS ON DECK!",
-        effect: expect.objectContaining({
-          type: "cost-reduction",
-        }),
-      }),
+      expect.objectContaining(allHandsOnDeck),
     );
   });
 
@@ -2340,26 +2466,28 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(2);
 
     // THIS IS OUR SHIP (static)
+    const thisIsOurShip: StaticAbilityDefinition = {
+      type: "static",
+      name: "THIS IS OUR SHIP",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Evasive",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "THIS IS OUR SHIP",
-        effect: expect.objectContaining({
-          type: "gain-keyword",
-          keyword: "Evasive",
-        }),
-      }),
+      expect.objectContaining(thisIsOurShip),
     );
 
     // HEAVE TOGETHER NOW (static)
+    const heaveTogetherNow: StaticAbilityDefinition = {
+      type: "static",
+      name: "HEAVE TOGETHER NOW",
+      effect: {
+        type: "cost-reduction",
+      },
+    };
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "HEAVE TOGETHER NOW",
-        effect: expect.objectContaining({
-          type: "cost-reduction",
-        }),
-      }),
+      expect.objectContaining(heaveTogetherNow),
     );
   });
 
@@ -2371,26 +2499,28 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(2);
 
     // Ward
+    const ward: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Ward",
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Ward",
-      }),
+      expect.objectContaining(ward),
     );
 
     // SPARE PARTS (triggered)
+    const spareParts: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "SPARE PARTS",
+      trigger: {
+        event: "quest",
+        on: "SELF",
+      },
+      effect: {
+        type: "ready",
+      },
+    };
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "SPARE PARTS",
-        trigger: expect.objectContaining({
-          event: "quest",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "ready",
-        }),
-      }),
+      expect.objectContaining(spareParts),
     );
   });
 
@@ -2402,15 +2532,16 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // DISCIPLINE (static)
+    const discipline: StaticAbilityDefinition = {
+      type: "static",
+      name: "DISCIPLINE",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Evasive",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "DISCIPLINE",
-        effect: expect.objectContaining({
-          type: "gain-keyword",
-          keyword: "Evasive",
-        }),
-      }),
+      expect.objectContaining(discipline),
     );
   });
 
@@ -2422,15 +2553,16 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // THEY'LL NEVER SEE IT COMING! (static)
+    const theyllNeverSeeItComing: StaticAbilityDefinition = {
+      type: "static",
+      name: "THEY'LL NEVER SEE IT COMING!",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Evasive",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "THEY'LL NEVER SEE IT COMING!",
-        effect: expect.objectContaining({
-          type: "gain-keyword",
-          keyword: "Evasive",
-        }),
-      }),
+      expect.objectContaining(theyllNeverSeeItComing),
     );
   });
 
@@ -2442,18 +2574,19 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // THERE WAS ONLY OCEAN (triggered)
+    const thereWasOnlyOcean: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "THERE WAS ONLY OCEAN",
+      trigger: {
+        event: "play",
+        on: "SELF",
+      },
+      effect: {
+        type: "look-at-top",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "THERE WAS ONLY OCEAN",
-        trigger: expect.objectContaining({
-          event: "play",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "look-at-top",
-        }),
-      }),
+      expect.objectContaining(thereWasOnlyOcean),
     );
   });
 
@@ -2465,30 +2598,32 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(2);
 
     // Shift 5
+    const shift5: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Shift",
+      cost: {
+        ink: 5,
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Shift",
-        cost: expect.objectContaining({
-          ink: 5,
-        }),
-      }),
+      expect.objectContaining(shift5),
     );
 
     // DO YOU KNOW WHO YOU ARE? (triggered)
+    const doYouKnowWhoYouAre: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "DO YOU KNOW WHO YOU ARE?",
+      trigger: {
+        event: "put-into-inkwell",
+        timing: "whenever",
+      },
+      effect: {
+        type: "gain-lore",
+        amount: 1,
+      },
+    };
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "DO YOU KNOW WHO YOU ARE?",
-        trigger: expect.objectContaining({
-          event: "put-into-inkwell",
-          timing: "whenever",
-        }),
-        effect: expect.objectContaining({
-          type: "gain-lore",
-          amount: 1,
-        }),
-      }),
+      expect.objectContaining(doYouKnowWhoYouAre),
     );
   });
 
@@ -2500,17 +2635,18 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // NOW TRY TO KEEP UP (activated)
+    const nowTryToKeepUp: ActivatedAbilityDefinition = {
+      type: "activated",
+      name: "NOW TRY TO KEEP UP",
+      cost: {
+        exert: true,
+      },
+      effect: {
+        type: "put-on-top",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "activated",
-        name: "NOW TRY TO KEEP UP",
-        cost: expect.objectContaining({
-          exert: true,
-        }),
-        effect: expect.objectContaining({
-          type: "put-on-top",
-        }),
-      }),
+      expect.objectContaining(nowTryToKeepUp),
     );
   });
 
@@ -2522,22 +2658,24 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(2);
 
     // Shift 3
+    const shift3: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Shift",
+      cost: {
+        ink: 3,
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Shift",
-        cost: expect.objectContaining({
-          ink: 3,
-        }),
-      }),
+      expect.objectContaining(shift3),
     );
 
     // Ward
+    const ward: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Ward",
+    };
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Ward",
-      }),
+      expect.objectContaining(ward),
     );
   });
 
@@ -2549,11 +2687,12 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // Ward
+    const ward: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Ward",
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Ward",
-      }),
+      expect.objectContaining(ward),
     );
   });
 
@@ -2565,18 +2704,19 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // TOO OLD TO BE CHASING MICE (triggered)
+    const tooOldToBeChasingMice: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "TOO OLD TO BE CHASING MICE",
+      trigger: {
+        event: "banish",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "TOO OLD TO BE CHASING MICE",
-        trigger: expect.objectContaining({
-          event: "banish",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-        }),
-      }),
+      expect.objectContaining(tooOldToBeChasingMice),
     );
   });
 
@@ -2588,30 +2728,32 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(2);
 
     // I'M GOING HOME! (static)
+    const imGoingHome: StaticAbilityDefinition = {
+      type: "static",
+      name: "I'M GOING HOME!",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Evasive",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "I'M GOING HOME!",
-        effect: expect.objectContaining({
-          type: "gain-keyword",
-          keyword: "Evasive",
-        }),
-      }),
+      expect.objectContaining(imGoingHome),
     );
 
     // I DIDN'T GET RICH BY BEING STUPID (triggered)
+    const iDidntGetRichByBeingStupid: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "I DIDN'T GET RICH BY BEING STUPID",
+      trigger: {
+        event: "banish-in-challenge",
+        timing: "whenever",
+      },
+      effect: {
+        type: "optional",
+      },
+    };
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "I DIDN'T GET RICH BY BEING STUPID",
-        trigger: expect.objectContaining({
-          event: "banish-in-challenge",
-          timing: "whenever",
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-        }),
-      }),
+      expect.objectContaining(iDidntGetRichByBeingStupid),
     );
   });
 
@@ -2623,19 +2765,20 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // TREASURE FINDER (triggered)
+    const treasureFinder: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "TREASURE FINDER",
+      trigger: {
+        event: "quest",
+        on: "SELF",
+      },
+      effect: {
+        type: "cost-reduction",
+        amount: 1,
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "TREASURE FINDER",
-        trigger: expect.objectContaining({
-          event: "quest",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "cost-reduction",
-          amount: 1,
-        }),
-      }),
+      expect.objectContaining(treasureFinder),
     );
   });
 
@@ -2647,18 +2790,19 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // I CAN USE THAT (triggered)
+    const iCanUseThat: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "I CAN USE THAT",
+      trigger: {
+        event: "banish",
+        timing: "whenever",
+      },
+      effect: {
+        type: "optional",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "I CAN USE THAT",
-        trigger: expect.objectContaining({
-          event: "banish",
-          timing: "whenever",
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-        }),
-      }),
+      expect.objectContaining(iCanUseThat),
     );
   });
 
@@ -2670,19 +2814,21 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(2);
 
     // Ward
+    const ward: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Ward",
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Ward",
-      }),
+      expect.objectContaining(ward),
     );
 
     // Support
+    const support: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Support",
+    };
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Support",
-      }),
+      expect.objectContaining(support),
     );
   });
 
@@ -2693,13 +2839,14 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // Action ability
+    const actionAbility: ActionAbilityDefinition = {
+      type: "action",
+      effect: {
+        type: "compound",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "action",
-        effect: expect.objectContaining({
-          type: "compound",
-        }),
-      }),
+      expect.objectContaining(actionAbility),
     );
   });
 
@@ -2711,13 +2858,14 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // Action ability
+    const actionAbility: ActionAbilityDefinition = {
+      type: "action",
+      effect: {
+        type: "put-into-inkwell",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "action",
-        effect: expect.objectContaining({
-          type: "put-into-inkwell",
-        }),
-      }),
+      expect.objectContaining(actionAbility),
     );
   });
 
@@ -2729,13 +2877,14 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // Action ability
+    const actionAbility: ActionAbilityDefinition = {
+      type: "action",
+      effect: {
+        type: "look-at-top",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "action",
-        effect: expect.objectContaining({
-          type: "look-at-top",
-        }),
-      }),
+      expect.objectContaining(actionAbility),
     );
   });
 
@@ -2747,14 +2896,15 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // Action ability
+    const actionAbility: ActionAbilityDefinition = {
+      type: "action",
+      effect: {
+        type: "remove-damage",
+        amount: 3,
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "action",
-        effect: expect.objectContaining({
-          type: "remove-damage",
-          amount: 3,
-        }),
-      }),
+      expect.objectContaining(actionAbility),
     );
   });
 
@@ -2766,18 +2916,19 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // NUMBER ONE (activated)
+    const numberOne: ActivatedAbilityDefinition = {
+      type: "activated",
+      name: "NUMBER ONE",
+      cost: {
+        exert: true,
+        ink: 2,
+      },
+      effect: {
+        type: "gain-lore",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "activated",
-        name: "NUMBER ONE",
-        cost: expect.objectContaining({
-          exert: true,
-          ink: 2,
-        }),
-        effect: expect.objectContaining({
-          type: "gain-lore",
-        }),
-      }),
+      expect.objectContaining(numberOne),
     );
   });
 
@@ -2789,18 +2940,19 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // BUSINESS EXPERTISE (activated)
+    const businessExpertise: ActivatedAbilityDefinition = {
+      type: "activated",
+      name: "BUSINESS EXPERTISE",
+      cost: {
+        exert: true,
+      },
+      effect: {
+        type: "cost-reduction",
+        amount: 1,
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "activated",
-        name: "BUSINESS EXPERTISE",
-        cost: expect.objectContaining({
-          exert: true,
-        }),
-        effect: expect.objectContaining({
-          type: "cost-reduction",
-          amount: 1,
-        }),
-      }),
+      expect.objectContaining(businessExpertise),
     );
   });
 
@@ -2812,16 +2964,17 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // SEALED AWAY (static)
+    const sealedAway: StaticAbilityDefinition = {
+      type: "static",
+      name: "SEALED AWAY",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Resist",
+        value: 1,
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "SEALED AWAY",
-        effect: expect.objectContaining({
-          type: "gain-keyword",
-          keyword: "Resist",
-          value: 1,
-        }),
-      }),
+      expect.objectContaining(sealedAway),
     );
   });
 
@@ -2833,14 +2986,15 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // LABORATORY (static)
+    const laboratory: StaticAbilityDefinition = {
+      type: "static",
+      name: "LABORATORY",
+      effect: {
+        type: "cost-reduction",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "LABORATORY",
-        effect: expect.objectContaining({
-          type: "cost-reduction",
-        }),
-      }),
+      expect.objectContaining(laboratory),
     );
   });
 
@@ -2852,29 +3006,31 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(2);
 
     // ALL TIED UP (static)
+    const allTiedUp: StaticAbilityDefinition = {
+      type: "static",
+      name: "ALL TIED UP",
+      effect: {
+        type: "restriction",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "ALL TIED UP",
-        effect: expect.objectContaining({
-          type: "restriction",
-        }),
-      }),
+      expect.objectContaining(allTiedUp),
     );
 
     // BREAK FREE (triggered)
+    const breakFree: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "BREAK FREE",
+      trigger: {
+        event: "banish-in-challenge",
+        timing: "whenever",
+      },
+      effect: {
+        type: "optional",
+      },
+    };
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "BREAK FREE",
-        trigger: expect.objectContaining({
-          event: "banish-in-challenge",
-          timing: "whenever",
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-        }),
-      }),
+      expect.objectContaining(breakFree),
     );
   });
 
@@ -2885,17 +3041,18 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // CALL THE TITANS (activated)
+    const callTheTitans: ActivatedAbilityDefinition = {
+      type: "activated",
+      name: "CALL THE TITANS",
+      cost: {
+        exert: true,
+      },
+      effect: {
+        type: "ready",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "activated",
-        name: "CALL THE TITANS",
-        cost: expect.objectContaining({
-          exert: true,
-        }),
-        effect: expect.objectContaining({
-          type: "ready",
-        }),
-      }),
+      expect.objectContaining(callTheTitans),
     );
   });
 
@@ -2907,12 +3064,13 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // Challenger +2
+    const challenger2: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Challenger",
+      value: 2,
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Challenger",
-        value: 2,
-      }),
+      expect.objectContaining(challenger2),
     );
   });
 
@@ -2924,11 +3082,12 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // Bodyguard
+    const bodyguard: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Bodyguard",
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Bodyguard",
-      }),
+      expect.objectContaining(bodyguard),
     );
   });
 
@@ -2940,25 +3099,27 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(2);
 
     // Shift 4
+    const shift4: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Shift",
+      cost: {
+        ink: 4,
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Shift",
-        cost: expect.objectContaining({
-          ink: 4,
-        }),
-      }),
+      expect.objectContaining(shift4),
     );
 
     // OKAY, BIG SHOT (static)
+    const okayBigShot: StaticAbilityDefinition = {
+      type: "static",
+      name: "OKAY, BIG SHOT",
+      effect: {
+        type: "compound",
+      },
+    };
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "OKAY, BIG SHOT",
-        effect: expect.objectContaining({
-          type: "compound",
-        }),
-      }),
+      expect.objectContaining(okayBigShot),
     );
   });
 
@@ -2970,23 +3131,25 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(2);
 
     // Bodyguard
+    const bodyguard: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Bodyguard",
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Bodyguard",
-      }),
+      expect.objectContaining(bodyguard),
     );
 
     // DISGUISED (static)
+    const disguised: StaticAbilityDefinition = {
+      type: "static",
+      name: "DISGUISED",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Evasive",
+      },
+    };
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "DISGUISED",
-        effect: expect.objectContaining({
-          type: "gain-keyword",
-          keyword: "Evasive",
-        }),
-      }),
+      expect.objectContaining(disguised),
     );
   });
 
@@ -2998,28 +3161,30 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(2);
 
     // Resist +2
+    const resist2: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Resist",
+      value: 2,
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Resist",
-        value: 2,
-      }),
+      expect.objectContaining(resist2),
     );
 
     // STONE SKIN (activated)
+    const stoneSkin: ActivatedAbilityDefinition = {
+      type: "activated",
+      name: "STONE SKIN",
+      cost: {
+        exert: true,
+      },
+      effect: {
+        type: "gain-keyword",
+        keyword: "Resist",
+        value: 2,
+      },
+    };
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "activated",
-        name: "STONE SKIN",
-        cost: expect.objectContaining({
-          exert: true,
-        }),
-        effect: expect.objectContaining({
-          type: "gain-keyword",
-          keyword: "Resist",
-          value: 2,
-        }),
-      }),
+      expect.objectContaining(stoneSkin),
     );
   });
 
@@ -3031,15 +3196,16 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // LET'S TAKE A LOOK (static)
+    const letsTakeALook: StaticAbilityDefinition = {
+      type: "static",
+      name: "LET'S TAKE A LOOK",
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "LET'S TAKE A LOOK",
-        effect: expect.objectContaining({
-          type: "modify-stat",
-          stat: "strength",
-        }),
-      }),
+      expect.objectContaining(letsTakeALook),
     );
   });
 
@@ -3051,16 +3217,17 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // JOURNEY (static)
+    const journey: StaticAbilityDefinition = {
+      type: "static",
+      name: "JOURNEY",
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+        modifier: 2,
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "JOURNEY",
-        effect: expect.objectContaining({
-          type: "modify-stat",
-          stat: "strength",
-          modifier: 2,
-        }),
-      }),
+      expect.objectContaining(journey),
     );
   });
 
@@ -3072,18 +3239,19 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // OH DEAR, DEAR, DEAR (triggered)
+    const ohDearDearDear: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "OH DEAR, DEAR, DEAR",
+      trigger: {
+        event: "end-of-turn",
+        timing: "at",
+      },
+      effect: {
+        type: "conditional",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "OH DEAR, DEAR, DEAR",
-        trigger: expect.objectContaining({
-          event: "end-of-turn",
-          timing: "at",
-        }),
-        effect: expect.objectContaining({
-          type: "conditional",
-        }),
-      }),
+      expect.objectContaining(ohDearDearDear),
     );
   });
 
@@ -3095,18 +3263,19 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // ERUPTION (triggered)
+    const eruption: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "ERUPTION",
+      trigger: {
+        event: "banish-in-challenge",
+        timing: "whenever",
+      },
+      effect: {
+        type: "optional",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "ERUPTION",
-        trigger: expect.objectContaining({
-          event: "banish-in-challenge",
-          timing: "whenever",
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-        }),
-      }),
+      expect.objectContaining(eruption),
     );
   });
 
@@ -3118,16 +3287,17 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // LOOKY HERE (static)
+    const lookyHere: StaticAbilityDefinition = {
+      type: "static",
+      name: "LOOKY HERE",
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+        modifier: 2,
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "LOOKY HERE",
-        effect: expect.objectContaining({
-          type: "modify-stat",
-          stat: "strength",
-          modifier: 2,
-        }),
-      }),
+      expect.objectContaining(lookyHere),
     );
   });
 
@@ -3139,18 +3309,19 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // TAXES SHOULD HURT (triggered)
+    const taxesShouldHurt: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "TAXES SHOULD HURT",
+      trigger: {
+        event: "discard",
+        timing: "whenever",
+      },
+      effect: {
+        type: "optional",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "TAXES SHOULD HURT",
-        trigger: expect.objectContaining({
-          event: "discard",
-          timing: "whenever",
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-        }),
-      }),
+      expect.objectContaining(taxesShouldHurt),
     );
   });
 
@@ -3162,18 +3333,19 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // STEP DOWN OR FIGHT (triggered with modal)
+    const stepDownOrFight: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "STEP DOWN OR FIGHT",
+      trigger: {
+        event: "play",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "STEP DOWN OR FIGHT",
-        trigger: expect.objectContaining({
-          event: "play",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-        }),
-      }),
+      expect.objectContaining(stepDownOrFight),
     );
   });
 
@@ -3185,18 +3357,19 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // TRIUMPHANT STANCE (triggered)
+    const triumphantStance: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "TRIUMPHANT STANCE",
+      trigger: {
+        event: "banish-in-challenge",
+        timing: "whenever",
+      },
+      effect: {
+        type: "restriction",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "TRIUMPHANT STANCE",
-        trigger: expect.objectContaining({
-          event: "banish-in-challenge",
-          timing: "whenever",
-        }),
-        effect: expect.objectContaining({
-          type: "restriction",
-        }),
-      }),
+      expect.objectContaining(triumphantStance),
     );
   });
 
@@ -3208,18 +3381,19 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // MY TEETH ARE SHARPER (triggered)
+    const myTeethAreSharper: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "MY TEETH ARE SHARPER",
+      trigger: {
+        event: "quest",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "MY TEETH ARE SHARPER",
-        trigger: expect.objectContaining({
-          event: "quest",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-        }),
-      }),
+      expect.objectContaining(myTeethAreSharper),
     );
   });
 
@@ -3230,14 +3404,15 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // Action ability
+    const actionAbility: ActionAbilityDefinition = {
+      type: "action",
+      effect: {
+        type: "deal-damage",
+        amount: 5,
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "action",
-        effect: expect.objectContaining({
-          type: "deal-damage",
-          amount: 5,
-        }),
-      }),
+      expect.objectContaining(actionAbility),
     );
   });
 
@@ -3248,14 +3423,15 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // Action ability
+    const actionAbility: ActionAbilityDefinition = {
+      type: "action",
+      effect: {
+        type: "deal-damage",
+        amount: 2,
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "action",
-        effect: expect.objectContaining({
-          type: "deal-damage",
-          amount: 2,
-        }),
-      }),
+      expect.objectContaining(actionAbility),
     );
   });
 
@@ -3267,15 +3443,16 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // Action ability
+    const actionAbility: ActionAbilityDefinition = {
+      type: "action",
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+        modifier: 3,
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "action",
-        effect: expect.objectContaining({
-          type: "modify-stat",
-          stat: "strength",
-          modifier: 3,
-        }),
-      }),
+      expect.objectContaining(actionAbility),
     );
   });
 
@@ -3286,13 +3463,14 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // Action ability
+    const actionAbility: ActionAbilityDefinition = {
+      type: "action",
+      effect: {
+        type: "banish",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "action",
-        effect: expect.objectContaining({
-          type: "banish",
-        }),
-      }),
+      expect.objectContaining(actionAbility),
     );
   });
 
@@ -3304,31 +3482,33 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(2);
 
     // GET THOSE SCURVY BRATS! (triggered)
+    const getThoseScurvyBrats: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "GET THOSE SCURVY BRATS!",
+      trigger: {
+        event: "banish-in-challenge",
+        timing: "whenever",
+      },
+      effect: {
+        type: "optional",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "GET THOSE SCURVY BRATS!",
-        trigger: expect.objectContaining({
-          event: "banish-in-challenge",
-          timing: "whenever",
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-        }),
-      }),
+      expect.objectContaining(getThoseScurvyBrats),
     );
 
     // LET'S HAVE AT IT! (static)
+    const letsHaveAtIt: StaticAbilityDefinition = {
+      type: "static",
+      name: "LET'S HAVE AT IT!",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Challenger",
+        value: 1,
+      },
+    };
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "LET'S HAVE AT IT!",
-        effect: expect.objectContaining({
-          type: "gain-keyword",
-          keyword: "Challenger",
-          value: 1,
-        }),
-      }),
+      expect.objectContaining(letsHaveAtIt),
     );
   });
 
@@ -3340,19 +3520,20 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // CYBERNETIC ARMOR (activated)
+    const cyberneticArmor: ActivatedAbilityDefinition = {
+      type: "activated",
+      name: "CYBERNETIC ARMOR",
+      cost: {
+        banishSelf: true,
+      },
+      effect: {
+        type: "gain-keyword",
+        keyword: "Resist",
+        value: 2,
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "activated",
-        name: "CYBERNETIC ARMOR",
-        cost: expect.objectContaining({
-          banishSelf: true,
-        }),
-        effect: expect.objectContaining({
-          type: "gain-keyword",
-          keyword: "Resist",
-          value: 2,
-        }),
-      }),
+      expect.objectContaining(cyberneticArmor),
     );
   });
 
@@ -3364,30 +3545,32 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(2);
 
     // KEY TO THE PORTAL (activated)
+    const keyToThePortal: ActivatedAbilityDefinition = {
+      type: "activated",
+      name: "KEY TO THE PORTAL",
+      cost: {
+        exert: true,
+      },
+      effect: {
+        type: "cost-reduction",
+        amount: 1,
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "activated",
-        name: "KEY TO THE PORTAL",
-        cost: expect.objectContaining({
-          exert: true,
-        }),
-        effect: expect.objectContaining({
-          type: "cost-reduction",
-          amount: 1,
-        }),
-      }),
+      expect.objectContaining(keyToThePortal),
     );
 
     // SHOW THE WAY (static)
+    const showTheWay: StaticAbilityDefinition = {
+      type: "static",
+      name: "SHOW THE WAY",
+      effect: {
+        type: "cost-reduction",
+        amount: 1,
+      },
+    };
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "SHOW THE WAY",
-        effect: expect.objectContaining({
-          type: "cost-reduction",
-          amount: 1,
-        }),
-      }),
+      expect.objectContaining(showTheWay),
     );
   });
 
@@ -3399,18 +3582,19 @@ describe("Set 003 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(1);
 
     // SHOW ME THE WAY (triggered)
+    const showMeTheWay: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "SHOW ME THE WAY",
+      trigger: {
+        event: "quest",
+        timing: "whenever",
+      },
+      effect: {
+        type: "optional",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "SHOW ME THE WAY",
-        trigger: expect.objectContaining({
-          event: "quest",
-          timing: "whenever",
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-        }),
-      }),
+      expect.objectContaining(showMeTheWay),
     );
   });
 });

@@ -16,23 +16,25 @@ describe("Set 002 Card Text Parser Tests", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const ohGosh: StaticAbilityDefinition = {
+      type: "static",
+      name: "OH, GOSH!",
+      effect: {
+        type: "restriction",
+        restriction: "cant-quest",
+        target: "SELF",
+        condition: {
+          type: "unless",
+          condition: {
+            type: "have-character",
+            classification: "Seven Dwarfs",
+          },
+        },
+      },
+    };
     expect(result.abilities[0].name).toBe("OH, GOSH!");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "OH, GOSH!",
-        effect: expect.objectContaining({
-          type: "restriction",
-          restriction: "cant-quest",
-          condition: expect.objectContaining({
-            type: "unless",
-            condition: expect.objectContaining({
-              type: "have-character",
-              classification: "Seven Dwarfs",
-            }),
-          }),
-        }),
-      }),
+      expect.objectContaining(ohGosh),
     );
   });
 
@@ -43,29 +45,31 @@ describe("Set 002 Card Text Parser Tests", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const wellAlwaysBeTogether: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "WE'LL ALWAYS BE TOGETHER",
+      trigger: {
+        timing: "whenever",
+        event: "ready",
+        on: "SELF",
+      },
+      effect: {
+        type: "conditional",
+        condition: {
+          type: "character-count",
+          count: 2,
+          comparison: "or-more",
+        },
+        effect: {
+          type: "gain-lore",
+          amount: 2,
+          target: "CONTROLLER",
+        },
+      },
+    };
     expect(result.abilities[0].name).toBe("WE'LL ALWAYS BE TOGETHER");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "WE'LL ALWAYS BE TOGETHER",
-        trigger: expect.objectContaining({
-          timing: "whenever",
-          event: "ready",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "conditional",
-          condition: expect.objectContaining({
-            type: "character-count",
-            count: 2,
-            comparison: "or-more",
-          }),
-          effect: expect.objectContaining({
-            type: "gain-lore",
-            amount: 2,
-          }),
-        }),
-      }),
+      expect.objectContaining(wellAlwaysBeTogether),
     );
   });
 
@@ -75,12 +79,13 @@ describe("Set 002 Card Text Parser Tests", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const singer: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Singer",
+      value: 3,
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Singer",
-        value: 3,
-      }),
+      expect.objectContaining(singer),
     );
   });
 
@@ -91,23 +96,23 @@ describe("Set 002 Card Text Parser Tests", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const shareAndShareAlike: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "SHARE AND SHARE ALIKE",
+      trigger: {
+        timing: "whenever",
+        event: "quest",
+        on: "SELF",
+      },
+      effect: {
+        type: "cost-reduction",
+        reduction: { ink: 1 },
+        target: "NEXT_CHARACTER",
+      },
+    };
     expect(result.abilities[0].name).toBe("SHARE AND SHARE ALIKE");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "SHARE AND SHARE ALIKE",
-        trigger: expect.objectContaining({
-          timing: "whenever",
-          event: "quest",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "cost-reduction",
-          amount: 1,
-          cardType: "character",
-          duration: "this-turn",
-        }),
-      }),
+      expect.objectContaining(shareAndShareAlike),
     );
   });
 
@@ -118,28 +123,25 @@ describe("Set 002 Card Text Parser Tests", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const oddOneOut: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "ODD ONE OUT",
+      trigger: {
+        timing: "when",
+        event: "banish",
+        on: "SELF",
+      },
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+        modifier: 2,
+        target: "YOUR_OTHER_SEVEN_DWARFS_CHARACTERS",
+        duration: "until-start-of-next-turn",
+      },
+    };
     expect(result.abilities[0].name).toBe("ODD ONE OUT");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "ODD ONE OUT",
-        trigger: expect.objectContaining({
-          timing: "when",
-          event: "banish",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "modify-stat",
-          stat: "strength",
-          modifier: 2,
-          target: expect.objectContaining({
-            controller: "you",
-            classification: "Seven Dwarfs",
-            excludeSelf: true,
-          }),
-          duration: "until-start-of-next-turn",
-        }),
-      }),
+      expect.objectContaining(oddOneOut),
     );
   });
 
@@ -149,12 +151,13 @@ describe("Set 002 Card Text Parser Tests", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const singer: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Singer",
+      value: 5,
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Singer",
-        value: 5,
-      }),
+      expect.objectContaining(singer),
     );
   });
 
@@ -165,21 +168,19 @@ describe("Set 002 Card Text Parser Tests", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const yesYourMajesty: StaticAbilityDefinition = {
+      type: "static",
+      name: "YES, YOUR MAJESTY",
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+        modifier: 1,
+        target: "YOUR_PRINCE_PRINCESS_KING_QUEEN_CHARACTERS",
+      },
+    };
     expect(result.abilities[0].name).toBe("YES, YOUR MAJESTY");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "YES, YOUR MAJESTY",
-        effect: expect.objectContaining({
-          type: "modify-stat",
-          stat: "strength",
-          modifier: 1,
-          target: expect.objectContaining({
-            controller: "you",
-            classifications: ["Prince", "Princess", "King", "Queen"],
-          }),
-        }),
-      }),
+      expect.objectContaining(yesYourMajesty),
     );
   });
 
@@ -190,22 +191,19 @@ describe("Set 002 Card Text Parser Tests", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const theresTroubleABrewin: StaticAbilityDefinition = {
+      type: "static",
+      name: "THERE'S TROUBLE A-BREWIN'",
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+        modifier: 1,
+        target: "YOUR_OTHER_SEVEN_DWARFS_CHARACTERS",
+      },
+    };
     expect(result.abilities[0].name).toBe("THERE'S TROUBLE A-BREWIN'");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "THERE'S TROUBLE A-BREWIN'",
-        effect: expect.objectContaining({
-          type: "modify-stat",
-          stat: "strength",
-          modifier: 1,
-          target: expect.objectContaining({
-            controller: "you",
-            classification: "Seven Dwarfs",
-            excludeSelf: true,
-          }),
-        }),
-      }),
+      expect.objectContaining(theresTroubleABrewin),
     );
   });
 
@@ -216,11 +214,12 @@ describe("Set 002 Card Text Parser Tests", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const support: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Support",
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Support",
-      }),
+      expect.objectContaining(support),
     );
   });
 
@@ -231,29 +230,26 @@ describe("Set 002 Card Text Parser Tests", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const layItOnTheLine: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "LAY IT ON THE LINE",
+      trigger: {
+        timing: "whenever",
+        event: "banish",
+        on: "OTHER_CHARACTERS",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "remove-damage",
+          amount: 2,
+          target: "SELF",
+        },
+      },
+    };
     expect(result.abilities[0].name).toBe("LAY IT ON THE LINE");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "LAY IT ON THE LINE",
-        trigger: expect.objectContaining({
-          timing: "whenever",
-          event: "banish",
-          on: expect.objectContaining({
-            cardType: "character",
-            excludeSelf: true,
-          }),
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-          effect: expect.objectContaining({
-            type: "remove-damage",
-            amount: 2,
-            upTo: true,
-            target: "SELF",
-          }),
-        }),
-      }),
+      expect.objectContaining(layItOnTheLine),
     );
   });
 
@@ -264,23 +260,23 @@ describe("Set 002 Card Text Parser Tests", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const gladYoureHere: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "GLAD YOU'RE HERE!",
+      trigger: {
+        timing: "whenever",
+        event: "quest",
+        on: "SELF",
+      },
+      effect: {
+        type: "cost-reduction",
+        reduction: { ink: 3 },
+        target: "NEXT_CHARACTER",
+      },
+    };
     expect(result.abilities[0].name).toBe("GLAD YOU'RE HERE!");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "GLAD YOU'RE HERE!",
-        trigger: expect.objectContaining({
-          timing: "whenever",
-          event: "quest",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "cost-reduction",
-          amount: 3,
-          cardType: "character",
-          duration: "this-turn",
-        }),
-      }),
+      expect.objectContaining(gladYoureHere),
     );
   });
 
@@ -291,39 +287,40 @@ describe("Set 002 Card Text Parser Tests", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const theSunWillSet: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "THE SUN WILL SET",
+      trigger: {
+        timing: "when",
+        event: "banish",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "reveal-and-conditional",
+          reveal: {
+            source: "deck",
+            count: 1,
+          },
+          condition: {
+            type: "card-type",
+            cardType: "character",
+          },
+          ifTrue: {
+            type: "play-for-free",
+            enterExerted: true,
+          },
+          ifFalse: {
+            type: "put-on-deck",
+            position: "top",
+          },
+        },
+      },
+    };
     expect(result.abilities[0].name).toBe("THE SUN WILL SET");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "THE SUN WILL SET",
-        trigger: expect.objectContaining({
-          timing: "when",
-          event: "banish",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-          effect: expect.objectContaining({
-            type: "reveal-and-conditional",
-            reveal: expect.objectContaining({
-              source: "deck",
-              count: 1,
-            }),
-            condition: expect.objectContaining({
-              type: "card-type",
-              cardType: "character",
-            }),
-            ifTrue: expect.objectContaining({
-              type: "play-for-free",
-              enterExerted: true,
-            }),
-            ifFalse: expect.objectContaining({
-              type: "put-on-deck",
-              position: "top",
-            }),
-          }),
-        }),
-      }),
+      expect.objectContaining(theSunWillSet),
     );
   });
 
@@ -335,47 +332,47 @@ describe("Set 002 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(2);
 
     // First ability: Shift 2
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Shift",
-        cost: { ink: 2 },
-      }),
-    );
+    const shift: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Shift",
+      cost: { ink: 2 },
+    };
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(shift));
 
     // Second ability: HONOR TO THE ANCESTORS
+    const honorToTheAncestors: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "HONOR TO THE ANCESTORS",
+      trigger: {
+        timing: "whenever",
+        event: "quest",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "reveal-and-conditional",
+          reveal: {
+            source: "deck",
+            count: 1,
+          },
+          condition: {
+            type: "card-type",
+            cardType: "song",
+          },
+          ifTrue: {
+            type: "play-for-free",
+          },
+          ifFalse: {
+            type: "put-on-deck",
+            position: "top",
+          },
+        },
+      },
+    };
     expect(result.abilities[1].name).toBe("HONOR TO THE ANCESTORS");
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "HONOR TO THE ANCESTORS",
-        trigger: expect.objectContaining({
-          timing: "whenever",
-          event: "quest",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-          effect: expect.objectContaining({
-            type: "reveal-and-conditional",
-            reveal: expect.objectContaining({
-              source: "deck",
-              count: 1,
-            }),
-            condition: expect.objectContaining({
-              type: "card-type",
-              cardType: "song",
-            }),
-            ifTrue: expect.objectContaining({
-              type: "play-for-free",
-            }),
-            ifFalse: expect.objectContaining({
-              type: "put-on-deck",
-              position: "top",
-            }),
-          }),
-        }),
-      }),
+      expect.objectContaining(honorToTheAncestors),
     );
   });
 
@@ -386,29 +383,26 @@ describe("Set 002 Card Text Parser Tests", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const nursemaid: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "NURSEMAID",
+      trigger: {
+        timing: "whenever",
+        event: "play",
+        on: "FLOODBORN_CHARACTERS",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "remove-damage",
+          amount: "all",
+          target: "CHOSEN_CHARACTER",
+        },
+      },
+    };
     expect(result.abilities[0].name).toBe("NURSEMAID");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "NURSEMAID",
-        trigger: expect.objectContaining({
-          timing: "whenever",
-          event: "play",
-          on: expect.objectContaining({
-            controller: "you",
-            cardType: "character",
-            classification: "Floodborn",
-          }),
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-          effect: expect.objectContaining({
-            type: "remove-damage",
-            amount: "all",
-            target: "CHOSEN_CHARACTER",
-          }),
-        }),
-      }),
+      expect.objectContaining(nursemaid),
     );
   });
 
@@ -420,36 +414,34 @@ describe("Set 002 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(2);
 
     // First ability: Shift 3
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Shift",
-        cost: { ink: 3 },
-      }),
-    );
+    const shift: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Shift",
+      cost: { ink: 3 },
+    };
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(shift));
 
     // Second ability: LET YOUR POWER SHINE
+    const letYourPowerShine: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "LET YOUR POWER SHINE",
+      trigger: {
+        timing: "whenever",
+        event: "remove-damage",
+        on: "YOUR_CHARACTERS",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "draw",
+          amount: 1,
+          target: "CONTROLLER",
+        },
+      },
+    };
     expect(result.abilities[1].name).toBe("LET YOUR POWER SHINE");
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "LET YOUR POWER SHINE",
-        trigger: expect.objectContaining({
-          timing: "whenever",
-          event: "remove-damage",
-          on: expect.objectContaining({
-            controller: "you",
-            cardType: "character",
-          }),
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-          effect: expect.objectContaining({
-            type: "draw",
-            amount: 1,
-          }),
-        }),
-      }),
+      expect.objectContaining(letYourPowerShine),
     );
   });
 
@@ -459,18 +451,17 @@ describe("Set 002 Card Text Parser Tests", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const yawn: StaticAbilityDefinition = {
+      type: "static",
+      name: "YAWN!",
+      effect: {
+        type: "restriction",
+        restriction: "enters-play-exerted",
+        target: "SELF",
+      },
+    };
     expect(result.abilities[0].name).toBe("YAWN!");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "YAWN!",
-        effect: expect.objectContaining({
-          type: "restriction",
-          restriction: "enters-play-exerted",
-          target: "SELF",
-        }),
-      }),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(yawn));
   });
 
   it.skip("Sneezy - Very Allergic: should parse card text", () => {
@@ -480,35 +471,28 @@ describe("Set 002 Card Text Parser Tests", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const ahChoo: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "AH-CHOO!",
+      trigger: {
+        timing: "whenever",
+        event: "play",
+        on: "SELF_OR_SEVEN_DWARFS_CHARACTERS",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "modify-stat",
+          stat: "strength",
+          modifier: -1,
+          target: "CHOSEN_CHARACTER",
+          duration: "this-turn",
+        },
+      },
+    };
     expect(result.abilities[0].name).toBe("AH-CHOO!");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "AH-CHOO!",
-        trigger: expect.objectContaining({
-          timing: "whenever",
-          event: "play",
-          on: expect.objectContaining({
-            or: [
-              "SELF",
-              expect.objectContaining({
-                controller: "you",
-                classification: "Seven Dwarfs",
-              }),
-            ],
-          }),
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-          effect: expect.objectContaining({
-            type: "modify-stat",
-            stat: "strength",
-            modifier: -1,
-            target: "CHOSEN_CHARACTER",
-            duration: "this-turn",
-          }),
-        }),
-      }),
+      expect.objectContaining(ahChoo),
     );
   });
 
@@ -519,26 +503,26 @@ describe("Set 002 Card Text Parser Tests", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const iWontHurtYou: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "I WON'T HURT YOU",
+      trigger: {
+        timing: "when",
+        event: "play",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "remove-damage",
+          amount: 2,
+          target: "CHOSEN_CHARACTER",
+        },
+      },
+    };
     expect(result.abilities[0].name).toBe("I WON'T HURT YOU");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "I WON'T HURT YOU",
-        trigger: expect.objectContaining({
-          timing: "when",
-          event: "play",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-          effect: expect.objectContaining({
-            type: "remove-damage",
-            amount: 2,
-            upTo: true,
-            target: "CHOSEN_CHARACTER",
-          }),
-        }),
-      }),
+      expect.objectContaining(iWontHurtYou),
     );
   });
 
@@ -549,20 +533,18 @@ describe("Set 002 Card Text Parser Tests", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const howDoYouDo: StaticAbilityDefinition = {
+      type: "static",
+      name: "HOW DO YOU DO?",
+      effect: {
+        type: "cost-reduction",
+        reduction: { ink: 1 },
+        target: "SEVEN_DWARFS_CHARACTERS",
+      },
+    };
     expect(result.abilities[0].name).toBe("HOW DO YOU DO?");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "HOW DO YOU DO?",
-        effect: expect.objectContaining({
-          type: "cost-reduction",
-          amount: 1,
-          target: expect.objectContaining({
-            cardType: "character",
-            classification: "Seven Dwarfs",
-          }),
-        }),
-      }),
+      expect.objectContaining(howDoYouDo),
     );
   });
 
@@ -574,34 +556,33 @@ describe("Set 002 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(2);
 
     // First ability: Shift 4
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Shift",
-        cost: { ink: 4 },
-      }),
-    );
+    const shift: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Shift",
+      cost: { ink: 4 },
+    };
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(shift));
 
     // Second ability: WISHES COME TRUE
+    const wishesComeTrue: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "WISHES COME TRUE",
+      trigger: {
+        timing: "whenever",
+        event: "quest",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "return-to-hand",
+          target: "CHARACTER_FROM_DISCARD",
+        },
+      },
+    };
     expect(result.abilities[1].name).toBe("WISHES COME TRUE");
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "WISHES COME TRUE",
-        trigger: expect.objectContaining({
-          timing: "whenever",
-          event: "quest",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-          effect: expect.objectContaining({
-            type: "return-from-discard",
-            cardType: "character",
-            target: "CONTROLLER",
-          }),
-        }),
-      }),
+      expect.objectContaining(wishesComeTrue),
     );
   });
 
@@ -613,45 +594,45 @@ describe("Set 002 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(2);
 
     // First ability: Shift 2
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Shift",
-        cost: { ink: 2 },
-      }),
-    );
+    const shift: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Shift",
+      cost: { ink: 2 },
+    };
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(shift));
 
     // Second ability: WHO IS THE FAIREST?
+    const whoIsTheFairest: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "WHO IS THE FAIREST?",
+      trigger: {
+        timing: "whenever",
+        event: "quest",
+        on: "SELF",
+      },
+      effect: {
+        type: "compound",
+        effects: [
+          {
+            type: "modify-stat",
+            stat: "strength",
+            modifier: -4,
+            target: "CHOSEN_OPPOSING_CHARACTER",
+            duration: "this-turn",
+          },
+          {
+            type: "modify-stat",
+            stat: "strength",
+            modifier: 4,
+            target: "CHOSEN_CHARACTER",
+            duration: "this-turn",
+          },
+        ],
+      },
+    };
     expect(result.abilities[1].name).toBe("WHO IS THE FAIREST?");
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "WHO IS THE FAIREST?",
-        trigger: expect.objectContaining({
-          timing: "whenever",
-          event: "quest",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "compound",
-          effects: [
-            expect.objectContaining({
-              type: "modify-stat",
-              stat: "strength",
-              modifier: -4,
-              target: "CHOSEN_OPPOSING_CHARACTER",
-              duration: "this-turn",
-            }),
-            expect.objectContaining({
-              type: "modify-stat",
-              stat: "strength",
-              modifier: 4,
-              target: "CHOSEN_CHARACTER",
-              duration: "this-turn",
-            }),
-          ],
-        }),
-      }),
+      expect.objectContaining(whoIsTheFairest),
     );
   });
 
@@ -661,16 +642,16 @@ describe("Set 002 Card Text Parser Tests", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const holdStill: ActionAbilityDefinition = {
+      type: "action",
+      effect: {
+        type: "remove-damage",
+        amount: 4,
+        target: "CHOSEN_CHARACTER",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "action",
-        effect: expect.objectContaining({
-          type: "remove-damage",
-          amount: 4,
-          upTo: true,
-          target: "CHOSEN_CHARACTER",
-        }),
-      }),
+      expect.objectContaining(holdStill),
     );
   });
 
@@ -680,20 +661,15 @@ describe("Set 002 Card Text Parser Tests", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const lastStand: ActionAbilityDefinition = {
+      type: "action",
+      effect: {
+        type: "banish",
+        target: "CHOSEN_CHALLENGED_CHARACTER",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "action",
-        effect: expect.objectContaining({
-          type: "banish",
-          target: expect.objectContaining({
-            selector: "chosen",
-            cardType: "character",
-            condition: expect.objectContaining({
-              type: "was-challenged-this-turn",
-            }),
-          }),
-        }),
-      }),
+      expect.objectContaining(lastStand),
     );
   });
 
@@ -703,31 +679,28 @@ describe("Set 002 Card Text Parser Tests", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const paintingTheRosesRed: ActionAbilityDefinition = {
+      type: "action",
+      effect: {
+        type: "sequence",
+        effects: [
+          {
+            type: "modify-stat",
+            stat: "strength",
+            modifier: -1,
+            target: "UP_TO_2_CHOSEN_CHARACTERS",
+            duration: "this-turn",
+          },
+          {
+            type: "draw",
+            amount: 1,
+            target: "CONTROLLER",
+          },
+        ],
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "action",
-        effect: expect.objectContaining({
-          type: "sequence",
-          steps: [
-            expect.objectContaining({
-              type: "modify-stat",
-              stat: "strength",
-              modifier: -1,
-              target: expect.objectContaining({
-                selector: "chosen",
-                count: 2,
-                upTo: true,
-                cardType: "character",
-              }),
-              duration: "this-turn",
-            }),
-            expect.objectContaining({
-              type: "draw",
-              amount: 1,
-            }),
-          ],
-        }),
-      }),
+      expect.objectContaining(paintingTheRosesRed),
     );
   });
 
@@ -738,23 +711,16 @@ describe("Set 002 Card Text Parser Tests", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const zeroToHero: ActionAbilityDefinition = {
+      type: "action",
+      effect: {
+        type: "cost-reduction",
+        reduction: { ink: "CHARACTER_COUNT" },
+        target: "NEXT_CHARACTER",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "action",
-        effect: expect.objectContaining({
-          type: "cost-reduction",
-          amount: expect.objectContaining({
-            type: "count",
-            target: expect.objectContaining({
-              controller: "you",
-              cardType: "character",
-              zone: "play",
-            }),
-          }),
-          cardType: "character",
-          duration: "this-turn",
-        }),
-      }),
+      expect.objectContaining(zeroToHero),
     );
   });
 
@@ -765,24 +731,21 @@ describe("Set 002 Card Text Parser Tests", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const bringBackToLife: ActivatedAbilityDefinition = {
+      type: "activated",
+      name: "BRING BACK TO LIFE",
+      cost: {
+        exert: true,
+        ink: 3,
+      },
+      effect: {
+        type: "return-to-hand",
+        target: "SUPPORT_CHARACTER_FROM_DISCARD",
+      },
+    };
     expect(result.abilities[0].name).toBe("BRING BACK TO LIFE");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "activated",
-        name: "BRING BACK TO LIFE",
-        cost: expect.objectContaining({
-          exert: true,
-          ink: 3,
-        }),
-        effect: expect.objectContaining({
-          type: "return-from-discard",
-          cardType: "character",
-          filter: expect.objectContaining({
-            hasKeyword: "Support",
-          }),
-          target: "CONTROLLER",
-        }),
-      }),
+      expect.objectContaining(bringBackToLife),
     );
   });
 
@@ -793,26 +756,28 @@ describe("Set 002 Card Text Parser Tests", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const aSillySong: ActivatedAbilityDefinition = {
+      type: "activated",
+      name: "A SILLY SONG",
+      cost: {
+        exert: true,
+      },
+      effect: {
+        type: "conditional",
+        condition: {
+          type: "played-this-turn",
+          cardType: "song",
+        },
+        effect: {
+          type: "gain-lore",
+          amount: 1,
+          target: "CONTROLLER",
+        },
+      },
+    };
     expect(result.abilities[0].name).toBe("A SILLY SONG");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "activated",
-        name: "A SILLY SONG",
-        cost: expect.objectContaining({
-          exert: true,
-        }),
-        effect: expect.objectContaining({
-          type: "conditional",
-          condition: expect.objectContaining({
-            type: "played-this-turn",
-            cardType: "song",
-          }),
-          effect: expect.objectContaining({
-            type: "gain-lore",
-            amount: 1,
-          }),
-        }),
-      }),
+      expect.objectContaining(aSillySong),
     );
   });
 
@@ -823,34 +788,33 @@ describe("Set 002 Card Text Parser Tests", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const student: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "STUDENT",
+      trigger: {
+        timing: "whenever",
+        event: "quest",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "cost-effect",
+          cost: {
+            type: "return-to-hand",
+            target: "YOUR_OTHER_CHARACTER",
+          },
+          effect: {
+            type: "gain-lore",
+            amount: 2,
+            target: "CONTROLLER",
+          },
+        },
+      },
+    };
     expect(result.abilities[0].name).toBe("STUDENT");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "STUDENT",
-        trigger: expect.objectContaining({
-          timing: "whenever",
-          event: "quest",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-          effect: expect.objectContaining({
-            type: "cost-effect",
-            cost: expect.objectContaining({
-              type: "return-to-hand",
-              target: expect.objectContaining({
-                controller: "you",
-                excludeSelf: true,
-              }),
-            }),
-            effect: expect.objectContaining({
-              type: "gain-lore",
-              amount: 2,
-            }),
-          }),
-        }),
-      }),
+      expect.objectContaining(student),
     );
   });
 
@@ -862,36 +826,35 @@ describe("Set 002 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBe(2);
 
     // First ability: Evasive
+    const evasive: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Evasive",
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Evasive",
-      }),
+      expect.objectContaining(evasive),
     );
 
     // Second ability: ETHEREAL GLOW
+    const etherealGlow: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "ETHEREAL GLOW",
+      trigger: {
+        timing: "whenever",
+        event: "play",
+        on: "FLOODBORN_CHARACTERS",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "draw",
+          amount: 1,
+          target: "CONTROLLER",
+        },
+      },
+    };
     expect(result.abilities[1].name).toBe("ETHEREAL GLOW");
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "ETHEREAL GLOW",
-        trigger: expect.objectContaining({
-          timing: "whenever",
-          event: "play",
-          on: expect.objectContaining({
-            controller: "you",
-            cardType: "character",
-            classification: "Floodborn",
-          }),
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-          effect: expect.objectContaining({
-            type: "draw",
-            amount: 1,
-          }),
-        }),
-      }),
+      expect.objectContaining(etherealGlow),
     );
   });
 
@@ -902,11 +865,12 @@ describe("Set 002 Card Text Parser Tests", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const evasive: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Evasive",
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Evasive",
-      }),
+      expect.objectContaining(evasive),
     );
   });
 
@@ -918,53 +882,53 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.abilities.length).toBe(2);
 
     // First ability: Shift 2
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Shift",
-        cost: { ink: 2 },
-      }),
-    );
+    const shift: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Shift",
+      cost: { ink: 2 },
+    };
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(shift));
 
     // Second ability: FORGET THE COACH, HERE'S A SWORD
+    const forgetTheCoach: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "FORGET THE COACH, HERE'S A SWORD",
+      trigger: {
+        timing: "whenever",
+        event: "quest",
+        on: "SELF",
+      },
+      effect: {
+        type: "compound",
+        effects: [
+          {
+            type: "gain-keyword",
+            keyword: "Challenger",
+            value: 3,
+            target: "YOUR_CHARACTERS",
+            duration: "this-turn",
+          },
+          {
+            type: "gain-ability",
+            ability: {
+              type: "triggered",
+              trigger: {
+                event: "banish-in-challenge",
+              },
+              effect: {
+                type: "return-to-hand",
+                target: "SELF",
+              },
+            },
+            target: "YOUR_CHARACTERS",
+            duration: "this-turn",
+          },
+        ],
+      },
+    };
     expect(result.abilities[1].name).toBe("FORGET THE COACH, HERE'S A SWORD");
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "FORGET THE COACH, HERE'S A SWORD",
-        trigger: expect.objectContaining({
-          timing: "whenever",
-          event: "quest",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "compound",
-          effects: [
-            expect.objectContaining({
-              type: "gain-keyword",
-              keyword: "Challenger",
-              value: 3,
-              target: "YOUR_CHARACTERS",
-              duration: "this-turn",
-            }),
-            expect.objectContaining({
-              type: "gain-ability",
-              ability: expect.objectContaining({
-                type: "triggered",
-                trigger: expect.objectContaining({
-                  event: "banish-in-challenge",
-                }),
-                effect: expect.objectContaining({
-                  type: "return-to-hand",
-                  target: "SELF",
-                }),
-              }),
-              target: "YOUR_CHARACTERS",
-              duration: "this-turn",
-            }),
-          ],
-        }),
-      }),
+      expect.objectContaining(forgetTheCoach),
     );
   });
 
@@ -975,28 +939,25 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const justLeaveItToMe: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "JUST LEAVE IT TO ME",
+      trigger: {
+        timing: "whenever",
+        event: "play",
+        on: "CINDERELLA_CHARACTERS",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "exert",
+          target: "CHOSEN_CHARACTER",
+        },
+      },
+    };
     expect(result.abilities[0].name).toBe("JUST LEAVE IT TO ME");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "JUST LEAVE IT TO ME",
-        trigger: expect.objectContaining({
-          timing: "whenever",
-          event: "play",
-          on: expect.objectContaining({
-            controller: "you",
-            cardType: "character",
-            name: "Cinderella",
-          }),
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-          effect: expect.objectContaining({
-            type: "exert",
-            target: "CHOSEN_CHARACTER",
-          }),
-        }),
-      }),
+      expect.objectContaining(justLeaveItToMe),
     );
   });
 
@@ -1007,21 +968,22 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const hesBack: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "HE'S BACK!",
+      trigger: {
+        timing: "when",
+        event: "banish-in-challenge",
+        on: "SELF",
+      },
+      effect: {
+        type: "return-to-hand",
+        target: "SELF",
+      },
+    };
     expect(result.abilities[0].name).toBe("HE'S BACK!");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "HE'S BACK!",
-        trigger: expect.objectContaining({
-          timing: "when",
-          event: "banish-in-challenge",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "return-to-hand",
-          target: "SELF",
-        }),
-      }),
+      expect.objectContaining(hesBack),
     );
   });
 
@@ -1033,39 +995,42 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.abilities.length).toBe(2);
 
     // First ability: Evasive
+    const evasive: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Evasive",
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Evasive",
-      }),
+      expect.objectContaining(evasive),
     );
 
     // Second ability: THAT STILL, SMALL VOICE
+    const thatStillSmallVoice: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "THAT STILL, SMALL VOICE",
+      trigger: {
+        timing: "when",
+        event: "play",
+        on: "SELF",
+      },
+      effect: {
+        type: "conditional",
+        condition: {
+          type: "have-character",
+          name: "Pinocchio",
+        },
+        effect: {
+          type: "optional",
+          effect: {
+            type: "draw",
+            amount: 1,
+            target: "CONTROLLER",
+          },
+        },
+      },
+    };
     expect(result.abilities[1].name).toBe("THAT STILL, SMALL VOICE");
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "THAT STILL, SMALL VOICE",
-        trigger: expect.objectContaining({
-          timing: "when",
-          event: "play",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "conditional",
-          condition: expect.objectContaining({
-            type: "have-character",
-            name: "Pinocchio",
-          }),
-          effect: expect.objectContaining({
-            type: "optional",
-            effect: expect.objectContaining({
-              type: "draw",
-              amount: 1,
-            }),
-          }),
-        }),
-      }),
+      expect.objectContaining(thatStillSmallVoice),
     );
   });
 
@@ -1077,42 +1042,39 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.abilities.length).toBe(2);
 
     // First ability: CHASING THE RABBIT
+    const chasingTheRabbit: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "CHASING THE RABBIT",
+      trigger: {
+        timing: "when",
+        event: "play",
+        on: "SELF",
+      },
+      effect: {
+        type: "choice",
+        choices: [
+          {
+            type: "banish",
+            target: "SELF",
+          },
+          {
+            type: "return-to-hand",
+            target: "YOUR_OTHER_CHARACTER",
+          },
+        ],
+      },
+    };
     expect(result.abilities[0].name).toBe("CHASING THE RABBIT");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "CHASING THE RABBIT",
-        trigger: expect.objectContaining({
-          timing: "when",
-          event: "play",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "choice",
-          choices: [
-            expect.objectContaining({
-              type: "banish",
-              target: "SELF",
-            }),
-            expect.objectContaining({
-              type: "return-to-hand",
-              target: expect.objectContaining({
-                controller: "you",
-                excludeSelf: true,
-              }),
-            }),
-          ],
-        }),
-      }),
+      expect.objectContaining(chasingTheRabbit),
     );
 
     // Second ability: Rush
-    expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Rush",
-      }),
-    );
+    const rush: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Rush",
+    };
+    expect(result.abilities[1].ability).toEqual(expect.objectContaining(rush));
   });
 
   it.skip("Madam Mim - Purple Dragon: should parse card text", () => {
@@ -1123,43 +1085,40 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.abilities.length).toBe(2);
 
     // First ability: Evasive
+    const evasive: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Evasive",
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Evasive",
-      }),
+      expect.objectContaining(evasive),
     );
 
     // Second ability: I WIN, I WIN!
+    const iWinIWin: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "I WIN, I WIN!",
+      trigger: {
+        timing: "when",
+        event: "play",
+        on: "SELF",
+      },
+      effect: {
+        type: "choice",
+        choices: [
+          {
+            type: "banish",
+            target: "SELF",
+          },
+          {
+            type: "return-to-hand",
+            target: "YOUR_OTHER_2_CHARACTERS",
+          },
+        ],
+      },
+    };
     expect(result.abilities[1].name).toBe("I WIN, I WIN!");
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "I WIN, I WIN!",
-        trigger: expect.objectContaining({
-          timing: "when",
-          event: "play",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "choice",
-          choices: [
-            expect.objectContaining({
-              type: "banish",
-              target: "SELF",
-            }),
-            expect.objectContaining({
-              type: "return-to-hand",
-              target: expect.objectContaining({
-                selector: "chosen",
-                count: 2,
-                controller: "you",
-                excludeSelf: true,
-              }),
-            }),
-          ],
-        }),
-      }),
+      expect.objectContaining(iWinIWin),
     );
   });
 
@@ -1171,49 +1130,49 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.abilities.length).toBe(2);
 
     // First ability: Shift 3
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Shift",
-        cost: { ink: 3 },
-      }),
-    );
+    const shift: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Shift",
+      cost: { ink: 3 },
+    };
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(shift));
 
     // Second ability: GRUESOME AND GRIM
+    const gruesomeAndGrim: ActivatedAbilityDefinition = {
+      type: "activated",
+      name: "GRUESOME AND GRIM",
+      cost: {
+        exert: true,
+      },
+      effect: {
+        type: "sequence",
+        effects: [
+          {
+            type: "play-for-free",
+            filter: {
+              cardType: "character",
+              maxCost: 4,
+            },
+          },
+          {
+            type: "gain-keyword",
+            keyword: "Rush",
+            target: "PLAYED_CARD",
+          },
+          {
+            type: "delayed",
+            timing: "end-of-turn",
+            effect: {
+              type: "banish",
+              target: "PLAYED_CARD",
+            },
+          },
+        ],
+      },
+    };
     expect(result.abilities[1].name).toBe("GRUESOME AND GRIM");
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "activated",
-        name: "GRUESOME AND GRIM",
-        cost: expect.objectContaining({
-          exert: true,
-        }),
-        effect: expect.objectContaining({
-          type: "sequence",
-          steps: [
-            expect.objectContaining({
-              type: "play-for-free",
-              filter: expect.objectContaining({
-                cardType: "character",
-                maxCost: 4,
-              }),
-            }),
-            expect.objectContaining({
-              type: "gain-keyword",
-              keyword: "Rush",
-              target: "PLAYED_CARD",
-            }),
-            expect.objectContaining({
-              type: "delayed",
-              timing: "end-of-turn",
-              effect: expect.objectContaining({
-                type: "banish",
-                target: "PLAYED_CARD",
-              }),
-            }),
-          ],
-        }),
-      }),
+      expect.objectContaining(gruesomeAndGrim),
     );
   });
 
@@ -1224,33 +1183,31 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const justYouWait: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "JUST YOU WAIT",
+      trigger: {
+        timing: "when",
+        event: "play",
+        on: "SELF",
+      },
+      effect: {
+        type: "choice",
+        choices: [
+          {
+            type: "banish",
+            target: "SELF",
+          },
+          {
+            type: "return-to-hand",
+            target: "YOUR_OTHER_CHARACTER",
+          },
+        ],
+      },
+    };
     expect(result.abilities[0].name).toBe("JUST YOU WAIT");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "JUST YOU WAIT",
-        trigger: expect.objectContaining({
-          timing: "when",
-          event: "play",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "choice",
-          choices: [
-            expect.objectContaining({
-              type: "banish",
-              target: "SELF",
-            }),
-            expect.objectContaining({
-              type: "return-to-hand",
-              target: expect.objectContaining({
-                controller: "you",
-                excludeSelf: true,
-              }),
-            }),
-          ],
-        }),
-      }),
+      expect.objectContaining(justYouWait),
     );
   });
 
@@ -1261,24 +1218,25 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const readyOrNot: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "READY OR NOT!",
+      trigger: {
+        timing: "when",
+        events: ["play", "leave-play"],
+        on: "SELF",
+      },
+      effect: {
+        type: "gain-keyword",
+        keyword: "Challenger",
+        value: 3,
+        target: "CHOSEN_CHARACTER",
+        duration: "this-turn",
+      },
+    };
     expect(result.abilities[0].name).toBe("READY OR NOT!");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "READY OR NOT!",
-        trigger: expect.objectContaining({
-          timing: "when",
-          events: ["play", "leave-play"],
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "gain-keyword",
-          keyword: "Challenger",
-          value: 3,
-          target: "CHOSEN_CHARACTER",
-          duration: "this-turn",
-        }),
-      }),
+      expect.objectContaining(readyOrNot),
     );
   });
 
@@ -1289,21 +1247,23 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const hereICome: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "HERE I COME!",
+      trigger: {
+        timing: "when",
+        events: ["play", "leave-play"],
+        on: "SELF",
+      },
+      effect: {
+        type: "gain-lore",
+        amount: 1,
+        target: "CONTROLLER",
+      },
+    };
     expect(result.abilities[0].name).toBe("HERE I COME!");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "HERE I COME!",
-        trigger: expect.objectContaining({
-          timing: "when",
-          events: ["play", "leave-play"],
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "gain-lore",
-          amount: 1,
-        }),
-      }),
+      expect.objectContaining(hereICome),
     );
   });
 
@@ -1314,24 +1274,26 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const hoppityHip: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "HOPPITY HIP!",
+      trigger: {
+        timing: "when",
+        events: ["play", "leave-play"],
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "draw",
+          amount: 1,
+          target: "CONTROLLER",
+        },
+      },
+    };
     expect(result.abilities[0].name).toBe("HOPPITY HIP!");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "HOPPITY HIP!",
-        trigger: expect.objectContaining({
-          timing: "when",
-          events: ["play", "leave-play"],
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-          effect: expect.objectContaining({
-            type: "draw",
-            amount: 1,
-          }),
-        }),
-      }),
+      expect.objectContaining(hoppityHip),
     );
   });
 
@@ -1342,28 +1304,25 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const battleOfWits: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "BATTLE OF WITS",
+      trigger: {
+        timing: "whenever",
+        event: "return-to-hand",
+        on: "YOUR_OTHER_CHARACTERS",
+      },
+      effect: {
+        type: "modify-stat",
+        stat: "lore",
+        modifier: 1,
+        target: "SELF",
+        duration: "this-turn",
+      },
+    };
     expect(result.abilities[0].name).toBe("BATTLE OF WITS");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "BATTLE OF WITS",
-        trigger: expect.objectContaining({
-          timing: "whenever",
-          event: "return-to-hand",
-          on: expect.objectContaining({
-            controller: "you",
-            cardType: "character",
-            excludeSelf: true,
-          }),
-        }),
-        effect: expect.objectContaining({
-          type: "modify-stat",
-          stat: "lore",
-          modifier: 1,
-          target: "SELF",
-          duration: "this-turn",
-        }),
-      }),
+      expect.objectContaining(battleOfWits),
     );
   });
 
@@ -1374,33 +1333,34 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const lookBeforeYouLeap: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "LOOK BEFORE YOU LEAP",
+      trigger: {
+        timing: "when",
+        events: ["play", "leave-play"],
+        on: "SELF",
+      },
+      effect: {
+        type: "sequence",
+        effects: [
+          {
+            type: "look",
+            source: "deck",
+            position: "top",
+            count: 1,
+          },
+          {
+            type: "put-on-deck",
+            position: "choice",
+            options: ["top", "bottom"],
+          },
+        ],
+      },
+    };
     expect(result.abilities[0].name).toBe("LOOK BEFORE YOU LEAP");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "LOOK BEFORE YOU LEAP",
-        trigger: expect.objectContaining({
-          timing: "when",
-          events: ["play", "leave-play"],
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "sequence",
-          steps: [
-            expect.objectContaining({
-              type: "look",
-              source: "deck",
-              position: "top",
-              count: 1,
-            }),
-            expect.objectContaining({
-              type: "put-on-deck",
-              position: "choice",
-              options: ["top", "bottom"],
-            }),
-          ],
-        }),
-      }),
+      expect.objectContaining(lookBeforeYouLeap),
     );
   });
 
@@ -1412,37 +1372,33 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.abilities.length).toBe(2);
 
     // First ability: Shift 3
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Shift",
-        cost: { ink: 3 },
-      }),
-    );
+    const shift: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Shift",
+      cost: { ink: 3 },
+    };
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(shift));
 
     // Second ability: LISTEN TO YOUR CONSCIENCE
+    const listenToYourConscience: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "LISTEN TO YOUR CONSCIENCE",
+      trigger: {
+        timing: "when",
+        event: "play",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "return-to-hand",
+          target: "CHOSEN_CHARACTER_OR_ITEM_COST_3_OR_LESS",
+        },
+      },
+    };
     expect(result.abilities[1].name).toBe("LISTEN TO YOUR CONSCIENCE");
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "LISTEN TO YOUR CONSCIENCE",
-        trigger: expect.objectContaining({
-          timing: "when",
-          event: "play",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-          effect: expect.objectContaining({
-            type: "return-to-hand",
-            target: expect.objectContaining({
-              selector: "chosen",
-              cardTypes: ["character", "item"],
-              maxCost: 3,
-            }),
-          }),
-        }),
-      }),
+      expect.objectContaining(listenToYourConscience),
     );
   });
 
@@ -1453,24 +1409,25 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const tellingLies: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "TELLING LIES",
+      trigger: {
+        timing: "when",
+        event: "play",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "exert",
+          target: "CHOSEN_OPPOSING_CHARACTER",
+        },
+      },
+    };
     expect(result.abilities[0].name).toBe("TELLING LIES");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "TELLING LIES",
-        trigger: expect.objectContaining({
-          timing: "when",
-          event: "play",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-          effect: expect.objectContaining({
-            type: "exert",
-            target: "CHOSEN_OPPOSING_CHARACTER",
-          }),
-        }),
-      }),
+      expect.objectContaining(tellingLies),
     );
   });
 
@@ -1482,44 +1439,40 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.abilities.length).toBe(2);
 
     // First ability: Shift 4
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Shift",
-        cost: { ink: 4 },
-      }),
-    );
+    const shift: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Shift",
+      cost: { ink: 4 },
+    };
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(shift));
 
     // Second ability: CRUEL IRONY
+    const cruelIrony: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "CRUEL IRONY",
+      trigger: {
+        timing: "when",
+        event: "play",
+        on: "SELF",
+      },
+      effect: {
+        type: "sequence",
+        effects: [
+          {
+            type: "shuffle-into-deck",
+            target: "CHOSEN_OTHER_CHARACTER",
+          },
+          {
+            type: "draw",
+            amount: 2,
+            target: "THAT_PLAYER",
+          },
+        ],
+      },
+    };
     expect(result.abilities[1].name).toBe("CRUEL IRONY");
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "CRUEL IRONY",
-        trigger: expect.objectContaining({
-          timing: "when",
-          event: "play",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "sequence",
-          steps: [
-            expect.objectContaining({
-              type: "shuffle-into-deck",
-              target: expect.objectContaining({
-                selector: "chosen",
-                cardType: "character",
-                excludeSelf: true,
-              }),
-            }),
-            expect.objectContaining({
-              type: "draw",
-              amount: 2,
-              target: "TARGET_OWNER",
-            }),
-          ],
-        }),
-      }),
+      expect.objectContaining(cruelIrony),
     );
   });
 
@@ -1530,35 +1483,36 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "action",
-        effect: expect.objectContaining({
-          type: "sequence",
-          steps: [
-            expect.objectContaining({
-              type: "play-for-free",
-              filter: expect.objectContaining({
-                cardType: "character",
-                maxCost: 4,
-              }),
-            }),
-            expect.objectContaining({
-              type: "gain-keyword",
-              keyword: "Rush",
+    const gruesomeAndGrim: ActionAbilityDefinition = {
+      type: "action",
+      effect: {
+        type: "sequence",
+        effects: [
+          {
+            type: "play-for-free",
+            filter: {
+              cardType: "character",
+              maxCost: 4,
+            },
+          },
+          {
+            type: "gain-keyword",
+            keyword: "Rush",
+            target: "PLAYED_CARD",
+          },
+          {
+            type: "delayed",
+            timing: "end-of-turn",
+            effect: {
+              type: "banish",
               target: "PLAYED_CARD",
-            }),
-            expect.objectContaining({
-              type: "delayed",
-              timing: "end-of-turn",
-              effect: expect.objectContaining({
-                type: "banish",
-                target: "PLAYED_CARD",
-              }),
-            }),
-          ],
-        }),
-      }),
+            },
+          },
+        ],
+      },
+    };
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining(gruesomeAndGrim),
     );
   });
 
@@ -1569,17 +1523,18 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const legendOfTheSword: ActionAbilityDefinition = {
+      type: "action",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Challenger",
+        value: 3,
+        target: "CHOSEN_CHARACTER",
+        duration: "this-turn",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "action",
-        effect: expect.objectContaining({
-          type: "gain-keyword",
-          keyword: "Challenger",
-          value: 3,
-          target: "CHOSEN_CHARACTER",
-          duration: "this-turn",
-        }),
-      }),
+      expect.objectContaining(legendOfTheSword),
     );
   });
 
@@ -1590,20 +1545,21 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const forAllEternity: ActivatedAbilityDefinition = {
+      type: "activated",
+      name: "FOR ALL ETERNITY",
+      cost: {
+        exert: true,
+        exertCharacter: true,
+      },
+      effect: {
+        type: "exert",
+        target: "CHOSEN_CHARACTER",
+      },
+    };
     expect(result.abilities[0].name).toBe("FOR ALL ETERNITY");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "activated",
-        name: "FOR ALL ETERNITY",
-        cost: expect.objectContaining({
-          exert: true,
-          exertCharacter: true,
-        }),
-        effect: expect.objectContaining({
-          type: "exert",
-          target: "CHOSEN_CHARACTER",
-        }),
-      }),
+      expect.objectContaining(forAllEternity),
     );
   });
 
@@ -1614,21 +1570,22 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const hurtlingHedgehog: ActivatedAbilityDefinition = {
+      type: "activated",
+      name: "HURTLING HEDGEHOG",
+      cost: {
+        banishSelf: true,
+      },
+      effect: {
+        type: "gain-keyword",
+        keyword: "Rush",
+        target: "CHOSEN_CHARACTER",
+        duration: "this-turn",
+      },
+    };
     expect(result.abilities[0].name).toBe("HURTLING HEDGEHOG");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "activated",
-        name: "HURTLING HEDGEHOG",
-        cost: expect.objectContaining({
-          banishSelf: true,
-        }),
-        effect: expect.objectContaining({
-          type: "gain-keyword",
-          keyword: "Rush",
-          target: "CHOSEN_CHARACTER",
-          duration: "this-turn",
-        }),
-      }),
+      expect.objectContaining(hurtlingHedgehog),
     );
   });
 
@@ -1639,23 +1596,20 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const toWonderland: ActivatedAbilityDefinition = {
+      type: "activated",
+      name: "TO WONDERLAND",
+      cost: {
+        banishSelf: true,
+      },
+      effect: {
+        type: "return-to-hand",
+        target: "YOUR_CHOSEN_CHARACTER",
+      },
+    };
     expect(result.abilities[0].name).toBe("TO WONDERLAND");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "activated",
-        name: "TO WONDERLAND",
-        cost: expect.objectContaining({
-          banishSelf: true,
-        }),
-        effect: expect.objectContaining({
-          type: "return-to-hand",
-          target: expect.objectContaining({
-            selector: "chosen",
-            controller: "you",
-            cardType: "character",
-          }),
-        }),
-      }),
+      expect.objectContaining(toWonderland),
     );
   });
 
@@ -1665,20 +1619,22 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const knowledge: ActivatedAbilityDefinition = {
+      type: "activated",
+      name: "KNOWLEDGE",
+      cost: {
+        exert: true,
+        ink: 1,
+      },
+      effect: {
+        type: "gain-lore",
+        amount: 1,
+        target: "CONTROLLER",
+      },
+    };
     expect(result.abilities[0].name).toBe("KNOWLEDGE");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "activated",
-        name: "KNOWLEDGE",
-        cost: expect.objectContaining({
-          exert: true,
-          ink: 1,
-        }),
-        effect: expect.objectContaining({
-          type: "gain-lore",
-          amount: 1,
-        }),
-      }),
+      expect.objectContaining(knowledge),
     );
   });
 
@@ -1689,27 +1645,25 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const secondWind: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "SECOND WIND",
+      trigger: {
+        timing: "whenever",
+        event: "damage",
+        on: "OPPOSING_CHARACTERS",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "ready",
+          target: "SELF",
+        },
+      },
+    };
     expect(result.abilities[0].name).toBe("SECOND WIND");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "SECOND WIND",
-        trigger: expect.objectContaining({
-          timing: "whenever",
-          event: "damage",
-          on: expect.objectContaining({
-            controller: "opponent",
-            cardType: "character",
-          }),
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-          effect: expect.objectContaining({
-            type: "ready",
-            target: "SELF",
-          }),
-        }),
-      }),
+      expect.objectContaining(secondWind),
     );
   });
 
@@ -1720,23 +1674,24 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const useYourImagination: StaticAbilityDefinition = {
+      type: "static",
+      name: "USE YOUR IMAGINATION",
+      condition: {
+        type: "hand-count",
+        controller: "opponent",
+        count: 0,
+      },
+      effect: {
+        type: "modify-stat",
+        stat: "lore",
+        modifier: 2,
+        target: "SELF",
+      },
+    };
     expect(result.abilities[0].name).toBe("USE YOUR IMAGINATION");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "USE YOUR IMAGINATION",
-        condition: expect.objectContaining({
-          type: "hand-count",
-          controller: "opponent",
-          count: 0,
-        }),
-        effect: expect.objectContaining({
-          type: "modify-stat",
-          stat: "lore",
-          modifier: 2,
-          target: "SELF",
-        }),
-      }),
+      expect.objectContaining(useYourImagination),
     );
   });
 
@@ -1748,31 +1703,31 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.abilities.length).toBe(2);
 
     // First ability: Shift 3
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Shift",
-        cost: { ink: 3 },
-      }),
-    );
+    const shift: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Shift",
+      cost: { ink: 3 },
+    };
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(shift));
 
     // Second ability: THORNY ARROWS
+    const thornyArrows: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "THORNY ARROWS",
+      trigger: {
+        timing: "whenever",
+        event: "challenge",
+        on: "SELF",
+      },
+      effect: {
+        type: "discard",
+        amount: "all",
+        target: "CHALLENGER_OWNER",
+      },
+    };
     expect(result.abilities[1].name).toBe("THORNY ARROWS");
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "THORNY ARROWS",
-        trigger: expect.objectContaining({
-          timing: "whenever",
-          event: "challenge",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "discard",
-          amount: "all",
-          target: "CHALLENGER_OWNER",
-        }),
-      }),
+      expect.objectContaining(thornyArrows),
     );
   });
 
@@ -1783,33 +1738,30 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const squeak: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "SQUEAK",
+      trigger: {
+        timing: "whenever",
+        event: "play",
+        on: "FLOODBORN_CHARACTERS",
+      },
+      effect: {
+        type: "conditional",
+        condition: {
+          type: "used-shift",
+        },
+        effect: {
+          type: "discard",
+          amount: 1,
+          target: "EACH_OPPONENT",
+          chosenBy: "TARGET",
+        },
+      },
+    };
     expect(result.abilities[0].name).toBe("SQUEAK");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "SQUEAK",
-        trigger: expect.objectContaining({
-          timing: "whenever",
-          event: "play",
-          on: expect.objectContaining({
-            controller: "you",
-            cardType: "character",
-            classification: "Floodborn",
-          }),
-        }),
-        effect: expect.objectContaining({
-          type: "conditional",
-          condition: expect.objectContaining({
-            type: "used-shift",
-          }),
-          effect: expect.objectContaining({
-            type: "discard",
-            amount: 1,
-            target: "EACH_OPPONENT",
-            chosenBy: "TARGET",
-          }),
-        }),
-      }),
+      expect.objectContaining(squeak),
     );
   });
 
@@ -1821,42 +1773,37 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.abilities.length).toBe(3);
 
     // First ability: Shift 5
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Shift",
-        cost: { ink: 5 },
-      }),
-    );
+    const shift: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Shift",
+      cost: { ink: 5 },
+    };
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(shift));
 
     // Second ability: Evasive
+    const evasive: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Evasive",
+    };
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Evasive",
-      }),
+      expect.objectContaining(evasive),
     );
 
     // Third ability: WICKED SMILE
+    const wickedSmile: ActivatedAbilityDefinition = {
+      type: "activated",
+      name: "WICKED SMILE",
+      cost: {
+        exert: true,
+      },
+      effect: {
+        type: "banish",
+        target: "CHOSEN_DAMAGED_CHARACTER",
+      },
+    };
     expect(result.abilities[2].name).toBe("WICKED SMILE");
     expect(result.abilities[2].ability).toEqual(
-      expect.objectContaining({
-        type: "activated",
-        name: "WICKED SMILE",
-        cost: expect.objectContaining({
-          exert: true,
-        }),
-        effect: expect.objectContaining({
-          type: "banish",
-          target: expect.objectContaining({
-            selector: "chosen",
-            cardType: "character",
-            condition: expect.objectContaining({
-              type: "damaged",
-            }),
-          }),
-        }),
-      }),
+      expect.objectContaining(wickedSmile),
     );
   });
 
@@ -1868,31 +1815,33 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.abilities.length).toBe(2);
 
     // First ability: Evasive
+    const evasive: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Evasive",
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Evasive",
-      }),
+      expect.objectContaining(evasive),
     );
 
     // Second ability: YOU'RE IN MY WORLD
+    const youreInMyWorld: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "YOU'RE IN MY WORLD",
+      trigger: {
+        timing: "whenever",
+        event: "quest",
+        on: "SELF",
+      },
+      effect: {
+        type: "restriction",
+        restriction: "cant-quest",
+        target: "CHOSEN_OPPOSING_CHARACTER",
+        duration: "next-turn",
+      },
+    };
     expect(result.abilities[1].name).toBe("YOU'RE IN MY WORLD");
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "YOU'RE IN MY WORLD",
-        trigger: expect.objectContaining({
-          timing: "whenever",
-          event: "quest",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "restriction",
-          restriction: "cant-quest",
-          target: "CHOSEN_OPPOSING_CHARACTER",
-          duration: "next-turn",
-        }),
-      }),
+      expect.objectContaining(youreInMyWorld),
     );
   });
 
@@ -1904,42 +1853,43 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.abilities.length).toBe(3);
 
     // First ability: Shift 2
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Shift",
-        cost: { ink: 2 },
-      }),
-    );
+    const shift: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Shift",
+      cost: { ink: 2 },
+    };
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(shift));
 
     // Second ability: Evasive
+    const evasive: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Evasive",
+    };
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Evasive",
-      }),
+      expect.objectContaining(evasive),
     );
 
     // Third ability: ONE LAST, BIG SCORE
+    const oneLastBigScore: StaticAbilityDefinition = {
+      type: "static",
+      name: "ONE LAST, BIG SCORE",
+      effect: {
+        type: "modify-stat",
+        stat: "lore",
+        modifier: {
+          type: "for-each",
+          count: {
+            type: "cards-in-hand",
+            controller: "opponents",
+          },
+          modifier: -1,
+        },
+        target: "SELF",
+      },
+    };
     expect(result.abilities[2].name).toBe("ONE LAST, BIG SCORE");
     expect(result.abilities[2].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "ONE LAST, BIG SCORE",
-        effect: expect.objectContaining({
-          type: "modify-stat",
-          stat: "lore",
-          modifier: expect.objectContaining({
-            type: "for-each",
-            count: expect.objectContaining({
-              type: "cards-in-hand",
-              controller: "opponents",
-            }),
-            modifier: -1,
-          }),
-          target: "SELF",
-        }),
-      }),
+      expect.objectContaining(oneLastBigScore),
     );
   });
 
@@ -1950,23 +1900,24 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const yesImIntimidating: StaticAbilityDefinition = {
+      type: "static",
+      name: "YES, I'M INTIMIDATING",
+      condition: {
+        type: "hand-count",
+        controller: "opponents",
+        count: 0,
+      },
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+        modifier: 3,
+        target: "SELF",
+      },
+    };
     expect(result.abilities[0].name).toBe("YES, I'M INTIMIDATING");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "YES, I'M INTIMIDATING",
-        condition: expect.objectContaining({
-          type: "hand-count",
-          controller: "opponents",
-          count: 0,
-        }),
-        effect: expect.objectContaining({
-          type: "modify-stat",
-          stat: "strength",
-          modifier: 3,
-          target: "SELF",
-        }),
-      }),
+      expect.objectContaining(yesImIntimidating),
     );
   });
 
@@ -1977,37 +1928,38 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const mouseCatcher: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "MOUSE CATCHER",
+      trigger: {
+        timing: "when",
+        event: "play",
+        on: "SELF",
+      },
+      effect: {
+        type: "for-each-opponent",
+        effect: {
+          type: "choice",
+          chosenBy: "TARGET",
+          choices: [
+            {
+              type: "discard",
+              amount: 2,
+            },
+            {
+              type: "discard",
+              amount: 1,
+              filter: {
+                cardType: "action",
+              },
+            },
+          ],
+        },
+      },
+    };
     expect(result.abilities[0].name).toBe("MOUSE CATCHER");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "MOUSE CATCHER",
-        trigger: expect.objectContaining({
-          timing: "when",
-          event: "play",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "for-each-opponent",
-          effect: expect.objectContaining({
-            type: "choice",
-            chosenBy: "TARGET",
-            choices: [
-              expect.objectContaining({
-                type: "discard",
-                amount: 2,
-              }),
-              expect.objectContaining({
-                type: "discard",
-                amount: 1,
-                filter: expect.objectContaining({
-                  cardType: "action",
-                }),
-              }),
-            ],
-          }),
-        }),
-      }),
+      expect.objectContaining(mouseCatcher),
     );
   });
 
@@ -2018,25 +1970,26 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const comingYourMostLugubriousness: StaticAbilityDefinition = {
+      type: "static",
+      name: "COMING, YOUR MOST LUGUBRIOUSNESS",
+      condition: {
+        type: "stat-threshold",
+        stat: "strength",
+        value: 5,
+        comparison: "or-more",
+        target: "SELF",
+      },
+      effect: {
+        type: "modify-stat",
+        stat: "lore",
+        modifier: 2,
+        target: "SELF",
+      },
+    };
     expect(result.abilities[0].name).toBe("COMING, YOUR MOST LUGUBRIOUSNESS");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "COMING, YOUR MOST LUGUBRIOUSNESS",
-        condition: expect.objectContaining({
-          type: "stat-threshold",
-          stat: "strength",
-          value: 5,
-          comparison: "or-more",
-          target: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "modify-stat",
-          stat: "lore",
-          modifier: 2,
-          target: "SELF",
-        }),
-      }),
+      expect.objectContaining(comingYourMostLugubriousness),
     );
   });
 
@@ -2047,38 +2000,40 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const iCanHandleIt: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "I CAN HANDLE IT",
+      trigger: {
+        timing: "when",
+        event: "play",
+        on: "SELF",
+      },
+      effect: {
+        type: "conditional",
+        condition: {
+          type: "name",
+          name: "Pain",
+          target: "CHOSEN_CHARACTER",
+        },
+        ifTrue: {
+          type: "modify-stat",
+          stat: "strength",
+          modifier: 4,
+          target: "CHOSEN_CHARACTER",
+          duration: "this-turn",
+        },
+        ifFalse: {
+          type: "modify-stat",
+          stat: "strength",
+          modifier: 2,
+          target: "CHOSEN_CHARACTER",
+          duration: "this-turn",
+        },
+      },
+    };
     expect(result.abilities[0].name).toBe("I CAN HANDLE IT");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "I CAN HANDLE IT",
-        trigger: expect.objectContaining({
-          timing: "when",
-          event: "play",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "conditional-modifier",
-          baseEffect: expect.objectContaining({
-            type: "modify-stat",
-            stat: "strength",
-            modifier: 2,
-            target: "CHOSEN_CHARACTER",
-            duration: "this-turn",
-          }),
-          condition: expect.objectContaining({
-            type: "named",
-            name: "Pain",
-          }),
-          modifiedEffect: expect.objectContaining({
-            type: "modify-stat",
-            stat: "strength",
-            modifier: 4,
-            target: "CHOSEN_CHARACTER",
-            duration: "this-turn",
-          }),
-        }),
-      }),
+      expect.objectContaining(iCanHandleIt),
     );
   });
 
@@ -2090,57 +2045,55 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.abilities.length).toBe(3);
 
     // First ability: Ward
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Ward",
-      }),
-    );
+    const ward: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Ward",
+    };
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(ward));
 
     // Second ability: TAKE THAT!
+    const takeThat: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "TAKE THAT!",
+      trigger: {
+        timing: "whenever",
+        event: "play",
+        on: "YOUR_ACTIONS",
+      },
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+        modifier: 2,
+        target: "SELF",
+        duration: "this-turn",
+      },
+    };
     expect(result.abilities[1].name).toBe("TAKE THAT!");
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "TAKE THAT!",
-        trigger: expect.objectContaining({
-          timing: "whenever",
-          event: "play",
-          on: expect.objectContaining({
-            controller: "you",
-            cardType: "action",
-          }),
-        }),
-        effect: expect.objectContaining({
-          type: "modify-stat",
-          stat: "strength",
-          modifier: 2,
-          target: "SELF",
-          duration: "this-turn",
-        }),
-      }),
+      expect.objectContaining(takeThat),
     );
 
     // Third ability: WHO'S NEXT?
+    const whosNext: StaticAbilityDefinition = {
+      type: "static",
+      name: "WHO'S NEXT?",
+      condition: {
+        type: "stat-threshold",
+        stat: "strength",
+        value: 7,
+        comparison: "or-more",
+        target: "SELF",
+      },
+      effect: {
+        type: "modify-stat",
+        stat: "lore",
+        modifier: 2,
+        target: "SELF",
+      },
+    };
     expect(result.abilities[2].name).toBe("WHO'S NEXT?");
     expect(result.abilities[2].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "WHO'S NEXT?",
-        condition: expect.objectContaining({
-          type: "stat-threshold",
-          stat: "strength",
-          value: 7,
-          comparison: "or-more",
-          target: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "modify-stat",
-          stat: "lore",
-          modifier: 2,
-          target: "SELF",
-        }),
-      }),
+      expect.objectContaining(whosNext),
     );
   });
 
@@ -2152,37 +2105,33 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.abilities.length).toBe(2);
 
     // First ability: Ward
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Ward",
-      }),
-    );
+    const ward: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Ward",
+    };
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(ward));
 
     // Second ability: I SENTENCE YOU
+    const iSentenceYou: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "I SENTENCE YOU",
+      trigger: {
+        timing: "whenever",
+        event: "discard",
+        on: "OPPONENT",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "draw",
+          amount: "DISCARDED_COUNT",
+          target: "CONTROLLER",
+        },
+      },
+    };
     expect(result.abilities[1].name).toBe("I SENTENCE YOU");
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "I SENTENCE YOU",
-        trigger: expect.objectContaining({
-          timing: "whenever",
-          event: "discard",
-          on: expect.objectContaining({
-            controller: "opponent",
-          }),
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-          effect: expect.objectContaining({
-            type: "draw",
-            amount: expect.objectContaining({
-              type: "for-each",
-              count: "DISCARDED_COUNT",
-            }),
-          }),
-        }),
-      }),
+      expect.objectContaining(iSentenceYou),
     );
   });
 
@@ -2193,29 +2142,23 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const royalRage: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "ROYAL RAGE",
+      trigger: {
+        timing: "when",
+        event: "play",
+        on: "SELF",
+      },
+      effect: {
+        type: "deal-damage",
+        amount: 1,
+        target: "CHOSEN_DAMAGED_OPPOSING_CHARACTER",
+      },
+    };
     expect(result.abilities[0].name).toBe("ROYAL RAGE");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "ROYAL RAGE",
-        trigger: expect.objectContaining({
-          timing: "when",
-          event: "play",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "deal-damage",
-          amount: 1,
-          target: expect.objectContaining({
-            selector: "chosen",
-            controller: "opponent",
-            cardType: "character",
-            condition: expect.objectContaining({
-              type: "damaged",
-            }),
-          }),
-        }),
-      }),
+      expect.objectContaining(royalRage),
     );
   });
 
@@ -2226,11 +2169,12 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const evasive: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Evasive",
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Evasive",
-      }),
+      expect.objectContaining(evasive),
     );
   });
 
@@ -2241,11 +2185,12 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const evasive: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Evasive",
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Evasive",
-      }),
+      expect.objectContaining(evasive),
     );
   });
 
@@ -2256,27 +2201,25 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const aPerfectDisguise: ActivatedAbilityDefinition = {
+      type: "activated",
+      name: "A PERFECT DISGUISE",
+      cost: {
+        exert: true,
+        discard: {
+          cardType: "character",
+          amount: 1,
+        },
+      },
+      effect: {
+        type: "gain-lore",
+        amount: "DISCARDED_CARD_LORE",
+        target: "CONTROLLER",
+      },
+    };
     expect(result.abilities[0].name).toBe("A PERFECT DISGUISE");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "activated",
-        name: "A PERFECT DISGUISE",
-        cost: expect.objectContaining({
-          exert: true,
-          discard: expect.objectContaining({
-            cardType: "character",
-            amount: 1,
-          }),
-        }),
-        effect: expect.objectContaining({
-          type: "gain-lore",
-          amount: expect.objectContaining({
-            type: "equal-to-stat",
-            stat: "lore",
-            target: "DISCARDED_CARD",
-          }),
-        }),
-      }),
+      expect.objectContaining(aPerfectDisguise),
     );
   });
 
@@ -2287,28 +2230,25 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const bibbidiBobbidiBoo: ActionAbilityDefinition = {
+      type: "action",
+      effect: {
+        type: "cost-effect",
+        cost: {
+          type: "return-to-hand",
+          target: "YOUR_CHOSEN_CHARACTER",
+        },
+        effect: {
+          type: "play-for-free",
+          filter: {
+            cardType: "character",
+            maxCost: "RETURNED_CARD_COST",
+          },
+        },
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "action",
-        effect: expect.objectContaining({
-          type: "cost-effect",
-          cost: expect.objectContaining({
-            type: "return-to-hand",
-            target: expect.objectContaining({
-              selector: "chosen",
-              controller: "you",
-              cardType: "character",
-            }),
-          }),
-          effect: expect.objectContaining({
-            type: "play-for-free",
-            filter: expect.objectContaining({
-              cardType: "character",
-              maxCost: "RETURNED_CARD_COST",
-            }),
-          }),
-        }),
-      }),
+      expect.objectContaining(bibbidiBobbidiBoo),
     );
   });
 
@@ -2319,29 +2259,22 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const bounce: ActionAbilityDefinition = {
+      type: "action",
+      effect: {
+        type: "cost-effect",
+        cost: {
+          type: "return-to-hand",
+          target: "YOUR_CHOSEN_CHARACTER",
+        },
+        effect: {
+          type: "return-to-hand",
+          target: "CHOSEN_OTHER_CHARACTER",
+        },
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "action",
-        effect: expect.objectContaining({
-          type: "cost-effect",
-          cost: expect.objectContaining({
-            type: "return-to-hand",
-            target: expect.objectContaining({
-              selector: "chosen",
-              controller: "you",
-              cardType: "character",
-            }),
-          }),
-          effect: expect.objectContaining({
-            type: "return-to-hand",
-            target: expect.objectContaining({
-              selector: "chosen",
-              cardType: "character",
-              excludeSelf: true,
-            }),
-          }),
-        }),
-      }),
+      expect.objectContaining(bounce),
     );
   });
 
@@ -2351,25 +2284,27 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const hypnotize: ActionAbilityDefinition = {
+      type: "action",
+      effect: {
+        type: "sequence",
+        effects: [
+          {
+            type: "discard",
+            amount: 1,
+            target: "EACH_OPPONENT",
+            chosenBy: "TARGET",
+          },
+          {
+            type: "draw",
+            amount: 1,
+            target: "CONTROLLER",
+          },
+        ],
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "action",
-        effect: expect.objectContaining({
-          type: "sequence",
-          steps: [
-            expect.objectContaining({
-              type: "discard",
-              amount: 1,
-              target: "EACH_OPPONENT",
-              chosenBy: "TARGET",
-            }),
-            expect.objectContaining({
-              type: "draw",
-              amount: 1,
-            }),
-          ],
-        }),
-      }),
+      expect.objectContaining(hypnotize),
     );
   });
 
@@ -2380,24 +2315,16 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const packTactics: ActionAbilityDefinition = {
+      type: "action",
+      effect: {
+        type: "gain-lore",
+        amount: "OPPONENTS_DAMAGED_CHARACTER_COUNT",
+        target: "CONTROLLER",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "action",
-        effect: expect.objectContaining({
-          type: "gain-lore",
-          amount: expect.objectContaining({
-            type: "for-each",
-            count: expect.objectContaining({
-              type: "character-count",
-              controller: "opponents",
-              condition: expect.objectContaining({
-                type: "damaged",
-              }),
-            }),
-            multiplier: 1,
-          }),
-        }),
-      }),
+      expect.objectContaining(packTactics),
     );
   });
 
@@ -2407,20 +2334,15 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const ringTheBell: ActionAbilityDefinition = {
+      type: "action",
+      effect: {
+        type: "banish",
+        target: "CHOSEN_DAMAGED_CHARACTER",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "action",
-        effect: expect.objectContaining({
-          type: "banish",
-          target: expect.objectContaining({
-            selector: "chosen",
-            cardType: "character",
-            condition: expect.objectContaining({
-              type: "damaged",
-            }),
-          }),
-        }),
-      }),
+      expect.objectContaining(ringTheBell),
     );
   });
 
@@ -2431,20 +2353,21 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const snapBoomTwang: ActivatedAbilityDefinition = {
+      type: "activated",
+      name: "SNAP! BOOM! TWANG!",
+      cost: {
+        banishSelf: true,
+      },
+      effect: {
+        type: "lose-lore",
+        amount: 2,
+        target: "EACH_OPPONENT",
+      },
+    };
     expect(result.abilities[0].name).toBe("SNAP! BOOM! TWANG!");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "activated",
-        name: "SNAP! BOOM! TWANG!",
-        cost: expect.objectContaining({
-          banishSelf: true,
-        }),
-        effect: expect.objectContaining({
-          type: "lose-lore",
-          amount: 2,
-          target: "EACH_OPPONENT",
-        }),
-      }),
+      expect.objectContaining(snapBoomTwang),
     );
   });
 
@@ -2456,33 +2379,32 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.abilities.length).toBe(2);
 
     // First ability: Evasive
+    const evasive: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Evasive",
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Evasive",
-      }),
+      expect.objectContaining(evasive),
     );
 
     // Second ability: PHOOEY!
+    const phooey: StaticAbilityDefinition = {
+      type: "static",
+      name: "PHOOEY!",
+      effect: {
+        type: "modify-stat",
+        stat: "lore",
+        modifier: {
+          type: "for-each",
+          count: "DAMAGE_ON_SELF",
+          multiplier: 1,
+        },
+        target: "SELF",
+      },
+    };
     expect(result.abilities[1].name).toBe("PHOOEY!");
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "PHOOEY!",
-        effect: expect.objectContaining({
-          type: "modify-stat",
-          stat: "lore",
-          modifier: expect.objectContaining({
-            type: "for-each",
-            count: expect.objectContaining({
-              type: "damage-on",
-              target: "SELF",
-            }),
-            multiplier: 1,
-          }),
-          target: "SELF",
-        }),
-      }),
+      expect.objectContaining(phooey),
     );
   });
 
@@ -2493,11 +2415,12 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const reckless: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Reckless",
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Reckless",
-      }),
+      expect.objectContaining(reckless),
     );
   });
 
@@ -2508,11 +2431,12 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const evasive: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Evasive",
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Evasive",
-      }),
+      expect.objectContaining(evasive),
     );
   });
 
@@ -2523,26 +2447,23 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const easyStreet: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "EASY STREET",
+      trigger: {
+        timing: "whenever",
+        event: "play",
+        on: "FLOODBORN_CHARACTERS",
+      },
+      effect: {
+        type: "lose-lore",
+        amount: 1,
+        target: "EACH_OPPONENT",
+      },
+    };
     expect(result.abilities[0].name).toBe("EASY STREET");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "EASY STREET",
-        trigger: expect.objectContaining({
-          timing: "whenever",
-          event: "play",
-          on: expect.objectContaining({
-            controller: "you",
-            cardType: "character",
-            classification: "Floodborn",
-          }),
-        }),
-        effect: expect.objectContaining({
-          type: "lose-lore",
-          amount: 1,
-          target: "EACH_OPPONENT",
-        }),
-      }),
+      expect.objectContaining(easyStreet),
     );
   });
 
@@ -2554,38 +2475,33 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.abilities.length).toBe(2);
 
     // First ability: Shift 4
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Shift",
-        cost: { ink: 4 },
-      }),
-    );
+    const shift: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Shift",
+      cost: { ink: 4 },
+    };
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(shift));
 
     // Second ability: POWER TO RULE AT LAST
+    const powerToRuleAtLast: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "POWER TO RULE AT LAST",
+      trigger: {
+        timing: "when",
+        event: "play",
+        on: "SELF",
+      },
+      effect: {
+        type: "for-each-opponent",
+        effect: {
+          type: "banish",
+          target: "THEIR_CHOSEN_CHARACTER",
+        },
+      },
+    };
     expect(result.abilities[1].name).toBe("POWER TO RULE AT LAST");
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "POWER TO RULE AT LAST",
-        trigger: expect.objectContaining({
-          timing: "when",
-          event: "play",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "for-each-opponent",
-          effect: expect.objectContaining({
-            type: "banish",
-            target: expect.objectContaining({
-              selector: "chosen",
-              controller: "TARGET",
-              cardType: "character",
-            }),
-            chosenBy: "TARGET",
-          }),
-        }),
-      }),
+      expect.objectContaining(powerToRuleAtLast),
     );
   });
 
@@ -2596,29 +2512,30 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const notForYou: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "NOT FOR YOU",
+      trigger: {
+        timing: "when",
+        event: "play",
+        on: "SELF",
+      },
+      effect: {
+        type: "for-each-opponent",
+        condition: {
+          type: "lore-comparison",
+          comparison: "more-than",
+          compareTo: "you",
+        },
+        effect: {
+          type: "lose-lore",
+          amount: 1,
+        },
+      },
+    };
     expect(result.abilities[0].name).toBe("NOT FOR YOU");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "NOT FOR YOU",
-        trigger: expect.objectContaining({
-          timing: "when",
-          event: "play",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "for-each-opponent",
-          condition: expect.objectContaining({
-            type: "lore-comparison",
-            comparison: "more-than",
-            compareTo: "you",
-          }),
-          effect: expect.objectContaining({
-            type: "lose-lore",
-            amount: 1,
-          }),
-        }),
-      }),
+      expect.objectContaining(notForYou),
     );
   });
 
@@ -2629,11 +2546,12 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const evasive: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Evasive",
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Evasive",
-      }),
+      expect.objectContaining(evasive),
     );
   });
 
@@ -2645,47 +2563,45 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.abilities.length).toBe(3);
 
     // First ability: Shift 2
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Shift",
-        cost: { ink: 2 },
-      }),
-    );
+    const shift: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Shift",
+      cost: { ink: 2 },
+    };
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(shift));
 
     // Second ability: Evasive
+    const evasive: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Evasive",
+    };
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Evasive",
-      }),
+      expect.objectContaining(evasive),
     );
 
     // Third ability: UNDERSEA ADVENTURE
+    const underseaAdventure: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "UNDERSEA ADVENTURE",
+      trigger: {
+        timing: "whenever",
+        event: "play",
+        on: "YOUR_ACTIONS",
+        condition: {
+          type: "second-in-turn",
+        },
+      },
+      effect: {
+        type: "modify-stat",
+        stat: "lore",
+        modifier: 2,
+        target: "SELF",
+        duration: "this-turn",
+      },
+    };
     expect(result.abilities[2].name).toBe("UNDERSEA ADVENTURE");
     expect(result.abilities[2].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "UNDERSEA ADVENTURE",
-        trigger: expect.objectContaining({
-          timing: "whenever",
-          event: "play",
-          on: expect.objectContaining({
-            controller: "you",
-            cardType: "action",
-          }),
-          condition: expect.objectContaining({
-            type: "second-in-turn",
-          }),
-        }),
-        effect: expect.objectContaining({
-          type: "modify-stat",
-          stat: "lore",
-          modifier: 2,
-          target: "SELF",
-          duration: "this-turn",
-        }),
-      }),
+      expect.objectContaining(underseaAdventure),
     );
   });
 
@@ -2696,16 +2612,17 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const whatHaveYouDone: StaticAbilityDefinition = {
+      type: "static",
+      name: "WHAT HAVE YOU DONE?!",
+      effect: {
+        type: "enters-play-with",
+        damage: 3,
+      },
+    };
     expect(result.abilities[0].name).toBe("WHAT HAVE YOU DONE?!");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "WHAT HAVE YOU DONE?!",
-        effect: expect.objectContaining({
-          type: "enters-play-with",
-          damage: 3,
-        }),
-      }),
+      expect.objectContaining(whatHaveYouDone),
     );
   });
 
@@ -2715,12 +2632,11 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Rush",
-      }),
-    );
+    const rush: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Rush",
+    };
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(rush));
   });
 
   it.skip("Namaari - Nemesis: should parse card text", () => {
@@ -2730,20 +2646,21 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const thisShouldntTakeLong: ActivatedAbilityDefinition = {
+      type: "activated",
+      name: "THIS SHOULDN'T TAKE LONG",
+      cost: {
+        exert: true,
+        banishSelf: true,
+      },
+      effect: {
+        type: "banish",
+        target: "CHOSEN_CHARACTER",
+      },
+    };
     expect(result.abilities[0].name).toBe("THIS SHOULDN'T TAKE LONG");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "activated",
-        name: "THIS SHOULDN'T TAKE LONG",
-        cost: expect.objectContaining({
-          exert: true,
-          banishSelf: true,
-        }),
-        effect: expect.objectContaining({
-          type: "banish",
-          target: "CHOSEN_CHARACTER",
-        }),
-      }),
+      expect.objectContaining(thisShouldntTakeLong),
     );
   });
 
@@ -2754,50 +2671,37 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const thisIsMyKingdom: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "THIS IS MY KINGDOM",
+      trigger: {
+        timing: "when",
+        event: "play",
+        on: "SELF",
+      },
+      effect: {
+        type: "sequence",
+        effects: [
+          {
+            type: "exert",
+            target: "CHOSEN_OPPOSING_CHARACTER_3_STRENGTH_OR_LESS",
+          },
+          {
+            type: "ready",
+            target: "YOUR_CHOSEN_CHARACTER",
+          },
+          {
+            type: "restriction",
+            restriction: "cant-quest",
+            target: "CHOSEN_CHARACTER",
+            duration: "this-turn",
+          },
+        ],
+      },
+    };
     expect(result.abilities[0].name).toBe("THIS IS MY KINGDOM");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "THIS IS MY KINGDOM",
-        trigger: expect.objectContaining({
-          timing: "when",
-          event: "play",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "sequence",
-          steps: [
-            expect.objectContaining({
-              type: "exert",
-              target: expect.objectContaining({
-                selector: "chosen",
-                controller: "opponent",
-                cardType: "character",
-                condition: expect.objectContaining({
-                  type: "stat-threshold",
-                  stat: "strength",
-                  value: 3,
-                  comparison: "or-less",
-                }),
-              }),
-            }),
-            expect.objectContaining({
-              type: "ready",
-              target: expect.objectContaining({
-                selector: "chosen",
-                controller: "you",
-                cardType: "character",
-              }),
-            }),
-            expect.objectContaining({
-              type: "restriction",
-              restriction: "cant-quest",
-              target: "CHOSEN_CHARACTER",
-              duration: "this-turn",
-            }),
-          ],
-        }),
-      }),
+      expect.objectContaining(thisIsMyKingdom),
     );
   });
 
@@ -2809,38 +2713,34 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.abilities.length).toBe(2);
 
     // First ability: Shift 4
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Shift",
-        cost: { ink: 4 },
-      }),
-    );
+    const shift: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Shift",
+      cost: { ink: 4 },
+    };
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(shift));
 
     // Second ability: CHAMPION OF KUMANDRA
+    const championOfKumandra: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "CHAMPION OF KUMANDRA",
+      trigger: {
+        timing: "whenever",
+        event: "challenge",
+        on: "SELF",
+        condition: {
+          type: "target-is-damaged",
+        },
+      },
+      effect: {
+        type: "prevent-damage",
+        target: "SELF",
+        source: "CHALLENGE",
+      },
+    };
     expect(result.abilities[1].name).toBe("CHAMPION OF KUMANDRA");
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "CHAMPION OF KUMANDRA",
-        trigger: expect.objectContaining({
-          timing: "whenever",
-          event: "challenge",
-          on: "SELF",
-          condition: expect.objectContaining({
-            type: "target-is",
-            target: "CHALLENGED_CHARACTER",
-            condition: expect.objectContaining({
-              type: "damaged",
-            }),
-          }),
-        }),
-        effect: expect.objectContaining({
-          type: "prevent-damage",
-          target: "SELF",
-          source: "challenge",
-        }),
-      }),
+      expect.objectContaining(championOfKumandra),
     );
   });
 
@@ -2852,46 +2752,46 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.abilities.length).toBe(2);
 
     // First ability: Rush
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Rush",
-      }),
-    );
+    const rush: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Rush",
+    };
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(rush));
 
     // Second ability: DADDY ISN'T HERE TO SAVE YOU
+    const daddyIsntHereToSaveYou: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "DADDY ISN'T HERE TO SAVE YOU",
+      condition: {
+        type: "your-turn",
+      },
+      trigger: {
+        timing: "whenever",
+        event: "banish-in-challenge",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "sequence",
+          effects: [
+            {
+              type: "ready",
+              target: "SELF",
+            },
+            {
+              type: "restriction",
+              restriction: "cant-quest",
+              target: "SELF",
+              duration: "this-turn",
+            },
+          ],
+        },
+      },
+    };
     expect(result.abilities[1].name).toBe("DADDY ISN'T HERE TO SAVE YOU");
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "DADDY ISN'T HERE TO SAVE YOU",
-        condition: expect.objectContaining({
-          type: "your-turn",
-        }),
-        trigger: expect.objectContaining({
-          timing: "whenever",
-          event: "banish-in-challenge",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-          effect: expect.objectContaining({
-            type: "sequence",
-            steps: [
-              expect.objectContaining({
-                type: "ready",
-                target: "SELF",
-              }),
-              expect.objectContaining({
-                type: "restriction",
-                restriction: "cant-quest",
-                target: "SELF",
-                duration: "this-turn",
-              }),
-            ],
-          }),
-        }),
-      }),
+      expect.objectContaining(daddyIsntHereToSaveYou),
     );
   });
 
@@ -2902,27 +2802,25 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const energetic: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "ENERGETIC",
+      trigger: {
+        timing: "whenever",
+        event: "play",
+        on: "YOUR_ACTIONS",
+      },
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+        modifier: 2,
+        target: "SELF",
+        duration: "this-turn",
+      },
+    };
     expect(result.abilities[0].name).toBe("ENERGETIC");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "ENERGETIC",
-        trigger: expect.objectContaining({
-          timing: "whenever",
-          event: "play",
-          on: expect.objectContaining({
-            controller: "you",
-            cardType: "action",
-          }),
-        }),
-        effect: expect.objectContaining({
-          type: "modify-stat",
-          stat: "strength",
-          modifier: 2,
-          target: "SELF",
-          duration: "this-turn",
-        }),
-      }),
+      expect.objectContaining(energetic),
     );
   });
 
@@ -2933,11 +2831,12 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const reckless: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Reckless",
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Reckless",
-      }),
+      expect.objectContaining(reckless),
     );
   });
 
@@ -2948,36 +2847,31 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const goTheDistance: ActionAbilityDefinition = {
+      type: "action",
+      effect: {
+        type: "sequence",
+        effects: [
+          {
+            type: "ready",
+            target: "YOUR_CHOSEN_DAMAGED_CHARACTER",
+          },
+          {
+            type: "restriction",
+            restriction: "cant-quest",
+            target: "CHOSEN_CHARACTER",
+            duration: "this-turn",
+          },
+          {
+            type: "draw",
+            amount: 1,
+            target: "CONTROLLER",
+          },
+        ],
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "action",
-        effect: expect.objectContaining({
-          type: "sequence",
-          steps: [
-            expect.objectContaining({
-              type: "ready",
-              target: expect.objectContaining({
-                selector: "chosen",
-                controller: "you",
-                cardType: "character",
-                condition: expect.objectContaining({
-                  type: "damaged",
-                }),
-              }),
-            }),
-            expect.objectContaining({
-              type: "restriction",
-              restriction: "cant-quest",
-              target: "CHOSEN_CHARACTER",
-              duration: "this-turn",
-            }),
-            expect.objectContaining({
-              type: "draw",
-              amount: 1,
-            }),
-          ],
-        }),
-      }),
+      expect.objectContaining(goTheDistance),
     );
   });
 
@@ -2988,31 +2882,24 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const teethAndAmbitions: ActionAbilityDefinition = {
+      type: "action",
+      effect: {
+        type: "cost-effect",
+        cost: {
+          type: "deal-damage",
+          amount: 2,
+          target: "YOUR_CHOSEN_CHARACTER",
+        },
+        effect: {
+          type: "deal-damage",
+          amount: 2,
+          target: "CHOSEN_OTHER_CHARACTER",
+        },
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "action",
-        effect: expect.objectContaining({
-          type: "cost-effect",
-          cost: expect.objectContaining({
-            type: "deal-damage",
-            amount: 2,
-            target: expect.objectContaining({
-              selector: "chosen",
-              controller: "you",
-              cardType: "character",
-            }),
-          }),
-          effect: expect.objectContaining({
-            type: "deal-damage",
-            amount: 2,
-            target: expect.objectContaining({
-              selector: "chosen",
-              cardType: "character",
-              excludeSelf: true,
-            }),
-          }),
-        }),
-      }),
+      expect.objectContaining(teethAndAmbitions),
     );
   });
 
@@ -3022,25 +2909,22 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const theMostDiabolicalScheme: ActionAbilityDefinition = {
+      type: "action",
+      effect: {
+        type: "cost-effect",
+        cost: {
+          type: "banish",
+          target: "YOUR_CHOSEN_VILLAIN",
+        },
+        effect: {
+          type: "banish",
+          target: "CHOSEN_CHARACTER",
+        },
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "action",
-        effect: expect.objectContaining({
-          type: "cost-effect",
-          cost: expect.objectContaining({
-            type: "banish",
-            target: expect.objectContaining({
-              selector: "chosen",
-              controller: "you",
-              classification: "Villain",
-            }),
-          }),
-          effect: expect.objectContaining({
-            type: "banish",
-            target: "CHOSEN_CHARACTER",
-          }),
-        }),
-      }),
+      expect.objectContaining(theMostDiabolicalScheme),
     );
   });
 
@@ -3050,23 +2934,18 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const whatDidYouCallMe: ActionAbilityDefinition = {
+      type: "action",
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+        modifier: 3,
+        target: "CHOSEN_DAMAGED_CHARACTER",
+        duration: "this-turn",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "action",
-        effect: expect.objectContaining({
-          type: "modify-stat",
-          stat: "strength",
-          modifier: 3,
-          target: expect.objectContaining({
-            selector: "chosen",
-            cardType: "character",
-            condition: expect.objectContaining({
-              type: "damaged",
-            }),
-          }),
-          duration: "this-turn",
-        }),
-      }),
+      expect.objectContaining(whatDidYouCallMe),
     );
   });
 
@@ -3076,20 +2955,17 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const peterPansDagger: StaticAbilityDefinition = {
+      type: "static",
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+        modifier: 1,
+        target: "YOUR_EVASIVE_CHARACTERS",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        effect: expect.objectContaining({
-          type: "modify-stat",
-          stat: "strength",
-          modifier: 1,
-          target: expect.objectContaining({
-            controller: "you",
-            cardType: "character",
-            hasKeyword: "Evasive",
-          }),
-        }),
-      }),
+      expect.objectContaining(peterPansDagger),
     );
   });
 
@@ -3100,28 +2976,26 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const swordInTheStone: ActivatedAbilityDefinition = {
+      type: "activated",
+      cost: {
+        exert: true,
+        ink: 2,
+      },
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+        modifier: {
+          type: "for-each",
+          count: "DAMAGE_ON_TARGET",
+          multiplier: 1,
+        },
+        target: "CHOSEN_CHARACTER",
+        duration: "this-turn",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "activated",
-        cost: expect.objectContaining({
-          exert: true,
-          ink: 2,
-        }),
-        effect: expect.objectContaining({
-          type: "modify-stat",
-          stat: "strength",
-          modifier: expect.objectContaining({
-            type: "for-each",
-            count: expect.objectContaining({
-              type: "damage-on",
-              target: "CHOSEN_CHARACTER",
-            }),
-            multiplier: 1,
-          }),
-          target: "CHOSEN_CHARACTER",
-          duration: "this-turn",
-        }),
-      }),
+      expect.objectContaining(swordInTheStone),
     );
   });
 
@@ -3133,36 +3007,37 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.abilities.length).toBe(2);
 
     // First ability: Shift 5
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Shift",
-        cost: { ink: 5 },
-      }),
-    );
+    const shift: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Shift",
+      cost: { ink: 5 },
+    };
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(shift));
 
     // Second ability: THERE'S ALWAYS A CHANCE
+    const theresAlwaysAChance: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "THERE'S ALWAYS A CHANCE",
+      trigger: {
+        timing: "when",
+        event: "play",
+        on: "SELF",
+      },
+      condition: {
+        type: "used-shift",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "draw",
+          amount: 2,
+          target: "CONTROLLER",
+        },
+      },
+    };
     expect(result.abilities[1].name).toBe("THERE'S ALWAYS A CHANCE");
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "THERE'S ALWAYS A CHANCE",
-        trigger: expect.objectContaining({
-          timing: "when",
-          event: "play",
-          on: "SELF",
-        }),
-        condition: expect.objectContaining({
-          type: "used-shift",
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-          effect: expect.objectContaining({
-            type: "draw",
-            amount: 2,
-          }),
-        }),
-      }),
+      expect.objectContaining(theresAlwaysAChance),
     );
   });
 
@@ -3173,11 +3048,12 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const support: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Support",
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Support",
-      }),
+      expect.objectContaining(support),
     );
   });
 
@@ -3189,39 +3065,34 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.abilities.length).toBe(3);
 
     // First ability: Shift 3
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Shift",
-        cost: { ink: 3 },
-      }),
-    );
+    const shift: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Shift",
+      cost: { ink: 3 },
+    };
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(shift));
 
     // Second ability: Ward
-    expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Ward",
-      }),
-    );
+    const ward: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Ward",
+    };
+    expect(result.abilities[1].ability).toEqual(expect.objectContaining(ward));
 
     // Third ability: UNWIND
+    const unwind: StaticAbilityDefinition = {
+      type: "static",
+      name: "UNWIND",
+      effect: {
+        type: "grant-keyword",
+        keyword: "Resist",
+        value: 1,
+        target: "YOUR_OTHER_CHARACTERS",
+      },
+    };
     expect(result.abilities[2].name).toBe("UNWIND");
     expect(result.abilities[2].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "UNWIND",
-        effect: expect.objectContaining({
-          type: "gain-keyword",
-          keyword: "Resist",
-          value: 1,
-          target: expect.objectContaining({
-            controller: "you",
-            cardType: "character",
-            excludeSelf: true,
-          }),
-        }),
-      }),
+      expect.objectContaining(unwind),
     );
   });
 
@@ -3231,30 +3102,28 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const waitAMinute: StaticAbilityDefinition = {
+      type: "static",
+      name: "WAIT A MINUTE",
+      effect: {
+        type: "grant-ability",
+        ability: {
+          type: "activated",
+          cost: {
+            exert: true,
+          },
+          effect: {
+            type: "gain-lore",
+            amount: 1,
+            target: "CONTROLLER",
+          },
+        },
+        target: "YOUR_RECKLESS_CHARACTERS",
+      },
+    };
     expect(result.abilities[0].name).toBe("WAIT A MINUTE");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "WAIT A MINUTE",
-        effect: expect.objectContaining({
-          type: "grant-ability",
-          ability: expect.objectContaining({
-            type: "activated",
-            cost: expect.objectContaining({
-              exert: true,
-            }),
-            effect: expect.objectContaining({
-              type: "gain-lore",
-              amount: 1,
-            }),
-          }),
-          target: expect.objectContaining({
-            controller: "you",
-            cardType: "character",
-            hasKeyword: "Reckless",
-          }),
-        }),
-      }),
+      expect.objectContaining(waitAMinute),
     );
   });
 
@@ -3266,33 +3135,33 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.abilities.length).toBe(2);
 
     // First ability: Shift 3
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Shift",
-        cost: { ink: 3 },
-      }),
-    );
+    const shift: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Shift",
+      cost: { ink: 3 },
+    };
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(shift));
 
     // Second ability: OH, NO YOU DON'T
+    const ohNoYouDont: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "OH, NO YOU DON'T",
+      trigger: {
+        timing: "whenever",
+        event: "quest",
+        on: "SELF",
+      },
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+        modifier: -2,
+        target: "CHOSEN_OPPOSING_CHARACTER",
+        duration: "this-turn",
+      },
+    };
     expect(result.abilities[1].name).toBe("OH, NO YOU DON'T");
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "OH, NO YOU DON'T",
-        trigger: expect.objectContaining({
-          timing: "whenever",
-          event: "quest",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "modify-stat",
-          stat: "strength",
-          modifier: -2,
-          target: "CHOSEN_OPPOSING_CHARACTER",
-          duration: "this-turn",
-        }),
-      }),
+      expect.objectContaining(ohNoYouDont),
     );
   });
 
@@ -3303,12 +3172,11 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Ward",
-      }),
-    );
+    const ward: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Ward",
+    };
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(ward));
   });
 
   it.skip("Gaston - Intellectual Powerhouse: should parse card text", () => {
@@ -3319,49 +3187,49 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.abilities.length).toBe(2);
 
     // First ability: Shift 4
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Shift",
-        cost: { ink: 4 },
-      }),
-    );
+    const shift: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Shift",
+      cost: { ink: 4 },
+    };
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(shift));
 
     // Second ability: DEVELOPED BRAIN
+    const developedBrain: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "DEVELOPED BRAIN",
+      trigger: {
+        timing: "when",
+        event: "play",
+        on: "SELF",
+      },
+      effect: {
+        type: "sequence",
+        effects: [
+          {
+            type: "look",
+            source: "deck",
+            position: "top",
+            count: 3,
+          },
+          {
+            type: "optional",
+            effect: {
+              type: "put-into-hand",
+              count: 1,
+            },
+          },
+          {
+            type: "put-on-deck",
+            position: "bottom",
+            order: "any",
+          },
+        ],
+      },
+    };
     expect(result.abilities[1].name).toBe("DEVELOPED BRAIN");
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "DEVELOPED BRAIN",
-        trigger: expect.objectContaining({
-          timing: "when",
-          event: "play",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "sequence",
-          steps: [
-            expect.objectContaining({
-              type: "look",
-              source: "deck",
-              position: "top",
-              count: 3,
-            }),
-            expect.objectContaining({
-              type: "optional",
-              effect: expect.objectContaining({
-                type: "put-into-hand",
-                count: 1,
-              }),
-            }),
-            expect.objectContaining({
-              type: "put-on-deck",
-              position: "bottom",
-              order: "any",
-            }),
-          ],
-        }),
-      }),
+      expect.objectContaining(developedBrain),
     );
   });
 
@@ -3372,34 +3240,35 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const artificer: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "ARTIFICER",
+      trigger: {
+        timing: "when-or-whenever",
+        events: [
+          { event: "play", on: "SELF" },
+          { event: "quest", on: "SELF" },
+        ],
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "cost-effect",
+          cost: {
+            type: "banish",
+            target: "YOUR_ITEM",
+          },
+          effect: {
+            type: "draw",
+            amount: 2,
+            target: "CONTROLLER",
+          },
+        },
+      },
+    };
     expect(result.abilities[0].name).toBe("ARTIFICER");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "ARTIFICER",
-        trigger: expect.objectContaining({
-          timing: "when",
-          events: ["play", "quest"],
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-          effect: expect.objectContaining({
-            type: "cost-effect",
-            cost: expect.objectContaining({
-              type: "banish",
-              target: expect.objectContaining({
-                controller: "you",
-                cardType: "item",
-              }),
-            }),
-            effect: expect.objectContaining({
-              type: "draw",
-              amount: 2,
-            }),
-          }),
-        }),
-      }),
+      expect.objectContaining(artificer),
     );
   });
 
@@ -3410,25 +3279,26 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const neverEverLoseSight: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "NEVER, EVER LOSE SIGHT",
+      trigger: {
+        timing: "when",
+        event: "banish",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "put-into-inkwell",
+          target: "SELF",
+          exerted: true,
+        },
+      },
+    };
     expect(result.abilities[0].name).toBe("NEVER, EVER LOSE SIGHT");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "NEVER, EVER LOSE SIGHT",
-        trigger: expect.objectContaining({
-          timing: "when",
-          event: "banish",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-          effect: expect.objectContaining({
-            type: "put-into-inkwell",
-            target: "SELF",
-            exerted: true,
-          }),
-        }),
-      }),
+      expect.objectContaining(neverEverLoseSight),
     );
   });
 
@@ -3439,30 +3309,27 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const tidyUp: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "TIDY UP",
+      trigger: {
+        timing: "whenever",
+        event: "play",
+        on: "FLOODBORN_CHARACTERS",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "put-into-inkwell",
+          source: "deck",
+          position: "top",
+          exerted: true,
+        },
+      },
+    };
     expect(result.abilities[0].name).toBe("TIDY UP");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "TIDY UP",
-        trigger: expect.objectContaining({
-          timing: "whenever",
-          event: "play",
-          on: expect.objectContaining({
-            controller: "you",
-            cardType: "character",
-            classification: "Floodborn",
-          }),
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-          effect: expect.objectContaining({
-            type: "put-into-inkwell",
-            source: "deck",
-            position: "top",
-            exerted: true,
-          }),
-        }),
-      }),
+      expect.objectContaining(tidyUp),
     );
   });
 
@@ -3473,28 +3340,26 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const itsCalledAHustle: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "IT'S CALLED A HUSTLE",
+      trigger: {
+        timing: "when",
+        event: "play",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "return-from-discard",
+          target: "PAWPSICLE_ITEM",
+          destination: "hand",
+        },
+      },
+    };
     expect(result.abilities[0].name).toBe("IT'S CALLED A HUSTLE");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "IT'S CALLED A HUSTLE",
-        trigger: expect.objectContaining({
-          timing: "when",
-          event: "play",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-          effect: expect.objectContaining({
-            type: "return-from-discard",
-            target: expect.objectContaining({
-              cardType: "item",
-              name: "Pawpsicle",
-            }),
-            destination: "hand",
-          }),
-        }),
-      }),
+      expect.objectContaining(itsCalledAHustle),
     );
   });
 
@@ -3505,22 +3370,23 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const hideAndSeek: StaticAbilityDefinition = {
+      type: "static",
+      name: "HIDE AND SEEK",
+      condition: {
+        type: "have-card",
+        cardType: "item",
+        controller: "you",
+      },
+      effect: {
+        type: "gain-keywords",
+        keywords: [{ keyword: "Resist", value: 1 }, { keyword: "Ward" }],
+        target: "SELF",
+      },
+    };
     expect(result.abilities[0].name).toBe("HIDE AND SEEK");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "HIDE AND SEEK",
-        condition: expect.objectContaining({
-          type: "have-card",
-          cardType: "item",
-          controller: "you",
-        }),
-        effect: expect.objectContaining({
-          type: "gain-keywords",
-          keywords: [{ keyword: "Resist", value: 1 }, { keyword: "Ward" }],
-          target: "SELF",
-        }),
-      }),
+      expect.objectContaining(hideAndSeek),
     );
   });
 
@@ -3531,40 +3397,41 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const iTrustYou: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "I TRUST YOU",
+      trigger: {
+        timing: "whenever",
+        event: "quest",
+        on: "SELF",
+      },
+      effect: {
+        type: "sequence",
+        effects: [
+          {
+            type: "look",
+            source: "deck",
+            position: "top",
+            count: 2,
+          },
+          {
+            type: "optional",
+            effect: {
+              type: "put-into-hand",
+              count: 1,
+            },
+          },
+          {
+            type: "put-on-deck",
+            position: "bottom",
+            order: "any",
+          },
+        ],
+      },
+    };
     expect(result.abilities[0].name).toBe("I TRUST YOU");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "I TRUST YOU",
-        trigger: expect.objectContaining({
-          timing: "whenever",
-          event: "quest",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "sequence",
-          steps: [
-            expect.objectContaining({
-              type: "look",
-              source: "deck",
-              position: "top",
-              count: 2,
-            }),
-            expect.objectContaining({
-              type: "optional",
-              effect: expect.objectContaining({
-                type: "put-into-hand",
-                count: 1,
-              }),
-            }),
-            expect.objectContaining({
-              type: "put-on-deck",
-              position: "bottom",
-              order: "any",
-            }),
-          ],
-        }),
-      }),
+      expect.objectContaining(iTrustYou),
     );
   });
 
@@ -3575,12 +3442,11 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Ward",
-      }),
-    );
+    const ward: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Ward",
+    };
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(ward));
   });
 
   it.skip("Falling Down the Rabbit Hole: should parse card text", () => {
@@ -3590,23 +3456,20 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const fallingDownTheRabbitHole: ActionAbilityDefinition = {
+      type: "action",
+      effect: {
+        type: "for-each-player",
+        effect: {
+          type: "put-into-inkwell",
+          target: "THEIR_CHOSEN_CHARACTER",
+          chosenBy: "TARGET",
+          exerted: true,
+        },
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "action",
-        effect: expect.objectContaining({
-          type: "for-each-player",
-          effect: expect.objectContaining({
-            type: "put-into-inkwell",
-            target: expect.objectContaining({
-              selector: "chosen",
-              controller: "TARGET",
-              cardType: "character",
-            }),
-            chosenBy: "TARGET",
-            exerted: true,
-          }),
-        }),
-      }),
+      expect.objectContaining(fallingDownTheRabbitHole),
     );
   });
 
@@ -3617,26 +3480,23 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const launch: ActionAbilityDefinition = {
+      type: "action",
+      effect: {
+        type: "cost-effect",
+        cost: {
+          type: "banish",
+          target: "YOUR_CHOSEN_ITEM",
+        },
+        effect: {
+          type: "deal-damage",
+          amount: 5,
+          target: "CHOSEN_CHARACTER",
+        },
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "action",
-        effect: expect.objectContaining({
-          type: "cost-effect",
-          cost: expect.objectContaining({
-            type: "banish",
-            target: expect.objectContaining({
-              selector: "chosen",
-              controller: "you",
-              cardType: "item",
-            }),
-          }),
-          effect: expect.objectContaining({
-            type: "deal-damage",
-            amount: 5,
-            target: "CHOSEN_CHARACTER",
-          }),
-        }),
-      }),
+      expect.objectContaining(launch),
     );
   });
 
@@ -3646,23 +3506,25 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const nothingToHide: ActionAbilityDefinition = {
+      type: "action",
+      effect: {
+        type: "sequence",
+        effects: [
+          {
+            type: "reveal-hand",
+            target: "EACH_OPPONENT",
+          },
+          {
+            type: "draw",
+            amount: 1,
+            target: "CONTROLLER",
+          },
+        ],
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "action",
-        effect: expect.objectContaining({
-          type: "sequence",
-          steps: [
-            expect.objectContaining({
-              type: "reveal-hand",
-              target: "EACH_OPPONENT",
-            }),
-            expect.objectContaining({
-              type: "draw",
-              amount: 1,
-            }),
-          ],
-        }),
-      }),
+      expect.objectContaining(nothingToHide),
     );
   });
 
@@ -3674,44 +3536,42 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.abilities.length).toBe(2);
 
     // First ability: CAREFUL AIM
+    const carefulAim: ActivatedAbilityDefinition = {
+      type: "activated",
+      name: "CAREFUL AIM",
+      cost: {
+        exert: true,
+        ink: 2,
+      },
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+        modifier: -2,
+        target: "CHOSEN_CHARACTER",
+        duration: "this-turn",
+      },
+    };
     expect(result.abilities[0].name).toBe("CAREFUL AIM");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "activated",
-        name: "CAREFUL AIM",
-        cost: expect.objectContaining({
-          exert: true,
-          ink: 2,
-        }),
-        effect: expect.objectContaining({
-          type: "modify-stat",
-          stat: "strength",
-          modifier: -2,
-          target: "CHOSEN_CHARACTER",
-          duration: "this-turn",
-        }),
-      }),
+      expect.objectContaining(carefulAim),
     );
 
     // Second ability: STAY BACK!
+    const stayBack: ActivatedAbilityDefinition = {
+      type: "activated",
+      name: "STAY BACK!",
+      cost: {
+        exert: true,
+        banishSelf: true,
+      },
+      effect: {
+        type: "banish",
+        target: "CHOSEN_DRAGON_CHARACTER",
+      },
+    };
     expect(result.abilities[1].name).toBe("STAY BACK!");
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "activated",
-        name: "STAY BACK!",
-        cost: expect.objectContaining({
-          exert: true,
-          banishSelf: true,
-        }),
-        effect: expect.objectContaining({
-          type: "banish",
-          target: expect.objectContaining({
-            selector: "chosen",
-            cardType: "character",
-            classification: "Dragon",
-          }),
-        }),
-      }),
+      expect.objectContaining(stayBack),
     );
   });
 
@@ -3722,25 +3582,21 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const theBestIveEverTasted: ActivatedAbilityDefinition = {
+      type: "activated",
+      name: "THE BEST I'VE EVER TASTED",
+      cost: {
+        exert: true,
+      },
+      effect: {
+        type: "remove-damage",
+        amount: 1,
+        target: "UP_TO_2_CHOSEN_CHARACTERS",
+      },
+    };
     expect(result.abilities[0].name).toBe("THE BEST I'VE EVER TASTED");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "activated",
-        name: "THE BEST I'VE EVER TASTED",
-        cost: expect.objectContaining({
-          exert: true,
-        }),
-        effect: expect.objectContaining({
-          type: "remove-damage",
-          amount: 1,
-          target: expect.objectContaining({
-            selector: "chosen",
-            cardType: "character",
-            count: 2,
-            upTo: true,
-          }),
-        }),
-      }),
+      expect.objectContaining(theBestIveEverTasted),
     );
   });
 
@@ -3751,34 +3607,32 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const lookingForThis: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "LOOKING FOR THIS?",
+      trigger: {
+        timing: "whenever",
+        event: "play",
+        on: "YOUR_OTHER_ITEMS",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "cost-effect",
+          cost: {
+            ink: 1,
+          },
+          effect: {
+            type: "draw",
+            amount: 1,
+            target: "CONTROLLER",
+          },
+        },
+      },
+    };
     expect(result.abilities[0].name).toBe("LOOKING FOR THIS?");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "LOOKING FOR THIS?",
-        trigger: expect.objectContaining({
-          timing: "whenever",
-          event: "play",
-          on: expect.objectContaining({
-            controller: "you",
-            cardType: "item",
-            excludeSelf: true,
-          }),
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-          effect: expect.objectContaining({
-            type: "cost-effect",
-            cost: expect.objectContaining({
-              ink: 1,
-            }),
-            effect: expect.objectContaining({
-              type: "draw",
-              amount: 1,
-            }),
-          }),
-        }),
-      }),
+      expect.objectContaining(lookingForThis),
     );
   });
 
@@ -3790,42 +3644,45 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.abilities.length).toBe(2);
 
     // First ability: JUMBO POP
+    const jumboPop: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "JUMBO POP",
+      trigger: {
+        timing: "when",
+        event: "play",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "draw",
+          amount: 1,
+          target: "CONTROLLER",
+        },
+      },
+    };
     expect(result.abilities[0].name).toBe("JUMBO POP");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "JUMBO POP",
-        trigger: expect.objectContaining({
-          timing: "when",
-          event: "play",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-          effect: expect.objectContaining({
-            type: "draw",
-            amount: 1,
-          }),
-        }),
-      }),
+      expect.objectContaining(jumboPop),
     );
 
     // Second ability: THAT'S REDWOOD
+    const thatsRedwood: ActivatedAbilityDefinition = {
+      type: "activated",
+      name: "THAT'S REDWOOD",
+      cost: {
+        banishSelf: true,
+      },
+      effect: {
+        type: "remove-damage",
+        amount: 2,
+        upTo: true,
+        target: "CHOSEN_CHARACTER",
+      },
+    };
     expect(result.abilities[1].name).toBe("THAT'S REDWOOD");
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "activated",
-        name: "THAT'S REDWOOD",
-        cost: expect.objectContaining({
-          banishSelf: true,
-        }),
-        effect: expect.objectContaining({
-          type: "remove-damage",
-          amount: 2,
-          upTo: true,
-          target: "CHOSEN_CHARACTER",
-        }),
-      }),
+      expect.objectContaining(thatsRedwood),
     );
   });
 
@@ -3836,23 +3693,18 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const flightCabin: StaticAbilityDefinition = {
+      type: "static",
+      name: "FLIGHT CABIN",
+      effect: {
+        type: "grant-keyword",
+        keyword: "Ward",
+        target: "YOUR_EXERTED_CHARACTERS",
+      },
+    };
     expect(result.abilities[0].name).toBe("FLIGHT CABIN");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "FLIGHT CABIN",
-        effect: expect.objectContaining({
-          type: "gain-keyword",
-          keyword: "Ward",
-          target: expect.objectContaining({
-            controller: "you",
-            cardType: "character",
-            condition: expect.objectContaining({
-              type: "exerted",
-            }),
-          }),
-        }),
-      }),
+      expect.objectContaining(flightCabin),
     );
   });
 
@@ -3863,25 +3715,26 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const youreNotWelcomeHere: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "YOU'RE NOT WELCOME HERE",
+      trigger: {
+        timing: "when",
+        event: "play",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "deal-damage",
+          amount: 1,
+          target: "CHOSEN_CHARACTER",
+        },
+      },
+    };
     expect(result.abilities[0].name).toBe("YOU'RE NOT WELCOME HERE");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "YOU'RE NOT WELCOME HERE",
-        trigger: expect.objectContaining({
-          timing: "when",
-          event: "play",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-          effect: expect.objectContaining({
-            type: "deal-damage",
-            amount: 1,
-            target: "CHOSEN_CHARACTER",
-          }),
-        }),
-      }),
+      expect.objectContaining(youreNotWelcomeHere),
     );
   });
 
@@ -3892,25 +3745,25 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    expect(result.abilities[0].name).toBe("SHIELD ANOTHER");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
+    const shieldAnother: StaticAbilityDefinition = {
+      type: "static",
+      name: "SHIELD ANOTHER",
+      effect: {
         type: "replacement",
-        name: "SHIELD ANOTHER",
         replaces: "damage-to-character",
-        condition: expect.objectContaining({
-          target: expect.objectContaining({
-            controller: "you",
-            cardType: "character",
-            excludeSelf: true,
-          }),
-        }),
-        replacement: expect.objectContaining({
+        condition: {
+          target: "YOUR_OTHER_CHARACTERS",
+        },
+        replacement: {
           type: "redirect-damage",
           target: "SELF",
           amount: "ALL",
-        }),
-      }),
+        },
+      },
+    };
+    expect(result.abilities[0].name).toBe("SHIELD ANOTHER");
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining(shieldAnother),
     );
   });
 
@@ -3922,44 +3775,45 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.abilities.length).toBe(2);
 
     // First ability: Shift 3
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Shift",
-        cost: { ink: 3 },
-      }),
-    );
+    const shift: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Shift",
+      cost: { ink: 3 },
+    };
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(shift));
 
     // Second ability: IT'S BETTER THIS WAY
+    const itsBetterThisWay: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "IT'S BETTER THIS WAY",
+      trigger: {
+        timing: "at",
+        event: "start-turn",
+        on: "YOU",
+      },
+      effect: {
+        type: "conditional",
+        condition: {
+          type: "no-damage",
+          target: "SELF",
+        },
+        ifTrue: {
+          type: "draw",
+          amount: 1,
+          target: "CONTROLLER",
+        },
+        ifFalse: {
+          type: "modify-stat",
+          stat: "strength",
+          modifier: 4,
+          target: "SELF",
+          duration: "this-turn",
+        },
+      },
+    };
     expect(result.abilities[1].name).toBe("IT'S BETTER THIS WAY");
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "IT'S BETTER THIS WAY",
-        trigger: expect.objectContaining({
-          timing: "at",
-          event: "start-turn",
-          on: "YOU",
-        }),
-        effect: expect.objectContaining({
-          type: "conditional",
-          condition: expect.objectContaining({
-            type: "no-damage",
-            target: "SELF",
-          }),
-          thenEffect: expect.objectContaining({
-            type: "draw",
-            amount: 1,
-          }),
-          elseEffect: expect.objectContaining({
-            type: "modify-stat",
-            stat: "strength",
-            modifier: 4,
-            target: "SELF",
-            duration: "this-turn",
-          }),
-        }),
-      }),
+      expect.objectContaining(itsBetterThisWay),
     );
   });
 
@@ -3970,26 +3824,23 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const insubordination: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "INSUBORDINATION!",
+      trigger: {
+        timing: "whenever",
+        event: "play",
+        on: "FLOODBORN_CHARACTERS",
+      },
+      effect: {
+        type: "deal-damage",
+        amount: 1,
+        target: "EACH_OPPOSING_CHARACTER",
+      },
+    };
     expect(result.abilities[0].name).toBe("INSUBORDINATION!");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "INSUBORDINATION!",
-        trigger: expect.objectContaining({
-          timing: "whenever",
-          event: "play",
-          on: expect.objectContaining({
-            controller: "you",
-            cardType: "character",
-            classification: "Floodborn",
-          }),
-        }),
-        effect: expect.objectContaining({
-          type: "deal-damage",
-          amount: 1,
-          target: "EACH_OPPOSING_CHARACTER",
-        }),
-      }),
+      expect.objectContaining(insubordination),
     );
   });
 
@@ -4000,34 +3851,36 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const haveCourage: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "HAVE COURAGE",
+      trigger: {
+        timing: "when",
+        event: "play",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "sequence",
+          effects: [
+            {
+              type: "draw",
+              amount: 1,
+              target: "CONTROLLER",
+            },
+            {
+              type: "discard",
+              amount: 1,
+              chosenBy: "you",
+            },
+          ],
+        },
+      },
+    };
     expect(result.abilities[0].name).toBe("HAVE COURAGE");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "HAVE COURAGE",
-        trigger: expect.objectContaining({
-          timing: "when",
-          event: "play",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-          effect: expect.objectContaining({
-            type: "sequence",
-            steps: [
-              expect.objectContaining({
-                type: "draw",
-                amount: 1,
-              }),
-              expect.objectContaining({
-                type: "discard",
-                amount: 1,
-                chosenBy: "you",
-              }),
-            ],
-          }),
-        }),
-      }),
+      expect.objectContaining(haveCourage),
     );
   });
 
@@ -4039,47 +3892,44 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.abilities.length).toBe(3);
 
     // First ability: Shift 5
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Shift",
-        cost: { ink: 5 },
-      }),
-    );
+    const shift: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Shift",
+      cost: { ink: 5 },
+    };
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(shift));
 
     // Second ability: Resist +2
+    const resist: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Resist",
+      value: 2,
+    };
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Resist",
-        value: 2,
-      }),
+      expect.objectContaining(resist),
     );
 
     // Third ability: THE SINGING SWORD
+    const theSingingSword: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "THE SINGING SWORD",
+      trigger: {
+        timing: "whenever",
+        event: "play",
+        on: "YOUR_SONGS",
+      },
+      effect: {
+        type: "grant-ability",
+        ability: {
+          type: "can-challenge-ready",
+        },
+        target: "SELF",
+        duration: "this-turn",
+      },
+    };
     expect(result.abilities[2].name).toBe("THE SINGING SWORD");
     expect(result.abilities[2].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "THE SINGING SWORD",
-        trigger: expect.objectContaining({
-          timing: "whenever",
-          event: "play",
-          on: expect.objectContaining({
-            controller: "you",
-            cardType: "action",
-            subtype: "song",
-          }),
-        }),
-        effect: expect.objectContaining({
-          type: "gain-ability",
-          ability: expect.objectContaining({
-            type: "challenge-ready",
-          }),
-          target: "SELF",
-          duration: "this-turn",
-        }),
-      }),
+      expect.objectContaining(theSingingSword),
     );
   });
 
@@ -4091,21 +3941,21 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.abilities.length).toBe(2);
 
     // First ability: Shift 4
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Shift",
-        cost: { ink: 4 },
-      }),
-    );
+    const shift: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Shift",
+      cost: { ink: 4 },
+    };
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(shift));
 
     // Second ability: Resist +2
+    const resist: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Resist",
+      value: 2,
+    };
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Resist",
-        value: 2,
-      }),
+      expect.objectContaining(resist),
     );
   });
 
@@ -4117,36 +3967,37 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.abilities.length).toBe(2);
 
     // First ability: Shift 2
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Shift",
-        cost: { ink: 2 },
-      }),
-    );
+    const shift: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Shift",
+      cost: { ink: 2 },
+    };
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(shift));
 
     // Second ability: NOW WHERE WERE WE?
+    const nowWhereWereWe: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "NOW WHERE WERE WE?",
+      condition: {
+        type: "your-turn",
+      },
+      trigger: {
+        timing: "whenever",
+        event: "banish-in-challenge",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "draw",
+          amount: 1,
+          target: "CONTROLLER",
+        },
+      },
+    };
     expect(result.abilities[1].name).toBe("NOW WHERE WERE WE?");
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "NOW WHERE WERE WE?",
-        condition: expect.objectContaining({
-          type: "your-turn",
-        }),
-        trigger: expect.objectContaining({
-          timing: "whenever",
-          event: "banish-in-challenge",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-          effect: expect.objectContaining({
-            type: "draw",
-            amount: 1,
-          }),
-        }),
-      }),
+      expect.objectContaining(nowWhereWereWe),
     );
   });
 
@@ -4158,37 +4009,39 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.abilities.length).toBe(2);
 
     // First ability: Resist +1
+    const resist: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Resist",
+      value: 1,
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Resist",
-        value: 1,
-      }),
+      expect.objectContaining(resist),
     );
 
     // Second ability: SCOUT LEADER
+    const scoutLeader: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "SCOUT LEADER",
+      condition: {
+        type: "your-turn",
+      },
+      trigger: {
+        timing: "whenever",
+        event: "banish-in-challenge",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "deal-damage",
+          amount: 2,
+          target: "CHOSEN_CHARACTER",
+        },
+      },
+    };
     expect(result.abilities[1].name).toBe("SCOUT LEADER");
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "SCOUT LEADER",
-        condition: expect.objectContaining({
-          type: "your-turn",
-        }),
-        trigger: expect.objectContaining({
-          timing: "whenever",
-          event: "banish-in-challenge",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-          effect: expect.objectContaining({
-            type: "deal-damage",
-            amount: 2,
-            target: "CHOSEN_CHARACTER",
-          }),
-        }),
-      }),
+      expect.objectContaining(scoutLeader),
     );
   });
 
@@ -4199,23 +4052,24 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const archeryLesson: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "ARCHERY LESSON",
+      trigger: {
+        timing: "whenever",
+        event: "quest",
+        on: "SELF",
+      },
+      effect: {
+        type: "grant-keyword",
+        keyword: "Evasive",
+        target: "YOUR_CHARACTERS",
+        duration: "this-turn",
+      },
+    };
     expect(result.abilities[0].name).toBe("ARCHERY LESSON");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "ARCHERY LESSON",
-        trigger: expect.objectContaining({
-          timing: "whenever",
-          event: "quest",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "gain-keyword",
-          keyword: "Evasive",
-          target: "YOUR_CHARACTERS",
-          duration: "this-turn",
-        }),
-      }),
+      expect.objectContaining(archeryLesson),
     );
   });
 
@@ -4226,24 +4080,25 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const makeItShine: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "MAKE IT SHINE",
+      trigger: {
+        timing: "when",
+        event: "play",
+        on: "SELF",
+      },
+      effect: {
+        type: "grant-keyword",
+        keyword: "Resist",
+        value: 1,
+        target: "CHOSEN_CHARACTER",
+        duration: "until-start-of-next-turn",
+      },
+    };
     expect(result.abilities[0].name).toBe("MAKE IT SHINE");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "MAKE IT SHINE",
-        trigger: expect.objectContaining({
-          timing: "when",
-          event: "play",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "gain-keyword",
-          keyword: "Resist",
-          value: 1,
-          target: "CHOSEN_CHARACTER",
-          duration: "until-start-of-next-turn",
-        }),
-      }),
+      expect.objectContaining(makeItShine),
     );
   });
 
@@ -4255,24 +4110,26 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.abilities.length).toBe(2);
 
     // First ability: Bodyguard
+    const bodyguard: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Bodyguard",
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Bodyguard",
-      }),
+      expect.objectContaining(bodyguard),
     );
 
     // Second ability: BLADES
+    const blades: StaticAbilityDefinition = {
+      type: "static",
+      name: "BLADES",
+      effect: {
+        type: "challenge-ready",
+        target: "SELF",
+      },
+    };
     expect(result.abilities[1].name).toBe("BLADES");
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "BLADES",
-        effect: expect.objectContaining({
-          type: "challenge-ready",
-          target: "SELF",
-        }),
-      }),
+      expect.objectContaining(blades),
     );
   });
 
@@ -4283,27 +4140,25 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const offWithTheirHeads: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "OFF WITH THEIR HEADS!",
+      trigger: {
+        timing: "whenever",
+        event: "banish",
+        on: "OPPOSING_CHARACTERS",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "ready",
+          target: "SELF",
+        },
+      },
+    };
     expect(result.abilities[0].name).toBe("OFF WITH THEIR HEADS!");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "OFF WITH THEIR HEADS!",
-        trigger: expect.objectContaining({
-          timing: "whenever",
-          event: "banish",
-          on: expect.objectContaining({
-            controller: "opponent",
-            cardType: "character",
-          }),
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-          effect: expect.objectContaining({
-            type: "ready",
-            target: "SELF",
-          }),
-        }),
-      }),
+      expect.objectContaining(offWithTheirHeads),
     );
   });
 
@@ -4314,34 +4169,36 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const changeOfHeart: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "CHANGE OF HEART",
+      trigger: {
+        timing: "whenever",
+        event: "quest",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "sequence",
+          effects: [
+            {
+              type: "draw",
+              amount: 1,
+              target: "CONTROLLER",
+            },
+            {
+              type: "discard",
+              amount: 1,
+              chosenBy: "you",
+            },
+          ],
+        },
+      },
+    };
     expect(result.abilities[0].name).toBe("CHANGE OF HEART");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "CHANGE OF HEART",
-        trigger: expect.objectContaining({
-          timing: "whenever",
-          event: "quest",
-          on: "SELF",
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-          effect: expect.objectContaining({
-            type: "sequence",
-            steps: [
-              expect.objectContaining({
-                type: "draw",
-                amount: 1,
-              }),
-              expect.objectContaining({
-                type: "discard",
-                amount: 1,
-                chosenBy: "you",
-              }),
-            ],
-          }),
-        }),
-      }),
+      expect.objectContaining(changeOfHeart),
     );
   });
 
@@ -4353,20 +4210,22 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.abilities.length).toBe(2);
 
     // First ability: Bodyguard
+    const bodyguard: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Bodyguard",
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Bodyguard",
-      }),
+      expect.objectContaining(bodyguard),
     );
 
     // Second ability: Resist +1
+    const resist: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Resist",
+      value: 1,
+    };
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Resist",
-        value: 1,
-      }),
+      expect.objectContaining(resist),
     );
   });
 
@@ -4378,40 +4237,35 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.abilities.length).toBe(2);
 
     // First ability: Resist +2
+    const resist: KeywordAbilityDefinition = {
+      type: "keyword",
+      keyword: "Resist",
+      value: 2,
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "keyword",
-        keyword: "Resist",
-        value: 2,
-      }),
+      expect.objectContaining(resist),
     );
 
     // Second ability: WHAT YOU GIVE IS WHAT YOU GET
+    const whatYouGive: StaticAbilityDefinition = {
+      type: "static",
+      name: "WHAT YOU GIVE IS WHAT YOU GET",
+      condition: {
+        type: "and",
+        conditions: [
+          { type: "exerted", target: "SELF" },
+          { type: "hand-count", controller: "you", count: 0 },
+        ],
+      },
+      effect: {
+        type: "restriction",
+        restriction: "cant-play-actions",
+        target: "OPPONENTS",
+      },
+    };
     expect(result.abilities[1].name).toBe("WHAT YOU GIVE IS WHAT YOU GET");
     expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining({
-        type: "static",
-        name: "WHAT YOU GIVE IS WHAT YOU GET",
-        condition: expect.objectContaining({
-          type: "and",
-          conditions: [
-            expect.objectContaining({
-              type: "exerted",
-              target: "SELF",
-            }),
-            expect.objectContaining({
-              type: "hand-count",
-              controller: "you",
-              count: 0,
-            }),
-          ],
-        }),
-        effect: expect.objectContaining({
-          type: "restriction",
-          restriction: "cant-play-actions",
-          target: "OPPONENTS",
-        }),
-      }),
+      expect.objectContaining(whatYouGive),
     );
   });
 
@@ -4422,19 +4276,20 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const charge: ActionAbilityDefinition = {
+      type: "action",
+      effect: {
+        type: "grant-keywords",
+        keywords: [
+          { keyword: "Challenger", value: 2 },
+          { keyword: "Resist", value: 2 },
+        ],
+        target: "CHOSEN_CHARACTER",
+        duration: "this-turn",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "action",
-        effect: expect.objectContaining({
-          type: "gain-keywords",
-          keywords: [
-            { keyword: "Challenger", value: 2 },
-            { keyword: "Resist", value: 2 },
-          ],
-          target: "CHOSEN_CHARACTER",
-          duration: "this-turn",
-        }),
-      }),
+      expect.objectContaining(charge),
     );
   });
 
@@ -4444,24 +4299,26 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const letTheStormRageOn: ActionAbilityDefinition = {
+      type: "action",
+      effect: {
+        type: "sequence",
+        effects: [
+          {
+            type: "deal-damage",
+            amount: 2,
+            target: "CHOSEN_CHARACTER",
+          },
+          {
+            type: "draw",
+            amount: 1,
+            target: "CONTROLLER",
+          },
+        ],
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "action",
-        effect: expect.objectContaining({
-          type: "sequence",
-          steps: [
-            expect.objectContaining({
-              type: "deal-damage",
-              amount: 2,
-              target: "CHOSEN_CHARACTER",
-            }),
-            expect.objectContaining({
-              type: "draw",
-              amount: 1,
-            }),
-          ],
-        }),
-      }),
+      expect.objectContaining(letTheStormRageOn),
     );
   });
 
@@ -4471,18 +4328,19 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const pickAFight: ActionAbilityDefinition = {
+      type: "action",
+      effect: {
+        type: "grant-ability",
+        ability: {
+          type: "can-challenge-ready",
+        },
+        target: "CHOSEN_CHARACTER",
+        duration: "this-turn",
+      },
+    };
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "action",
-        effect: expect.objectContaining({
-          type: "gain-ability",
-          ability: expect.objectContaining({
-            type: "challenge-ready",
-          }),
-          target: "CHOSEN_CHARACTER",
-          duration: "this-turn",
-        }),
-      }),
+      expect.objectContaining(pickAFight),
     );
   });
 
@@ -4493,23 +4351,24 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const armYourself: ActivatedAbilityDefinition = {
+      type: "activated",
+      name: "ARM YOURSELF",
+      cost: {
+        ink: 1,
+        banishSelf: true,
+      },
+      effect: {
+        type: "grant-keyword",
+        keyword: "Challenger",
+        value: 3,
+        target: "CHOSEN_CHARACTER",
+        duration: "this-turn",
+      },
+    };
     expect(result.abilities[0].name).toBe("ARM YOURSELF");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "activated",
-        name: "ARM YOURSELF",
-        cost: expect.objectContaining({
-          ink: 1,
-          banishSelf: true,
-        }),
-        effect: expect.objectContaining({
-          type: "gain-keyword",
-          keyword: "Challenger",
-          value: 3,
-          target: "CHOSEN_CHARACTER",
-          duration: "this-turn",
-        }),
-      }),
+      expect.objectContaining(armYourself),
     );
   });
 
@@ -4520,22 +4379,23 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const protection: ActivatedAbilityDefinition = {
+      type: "activated",
+      name: "PROTECTION",
+      cost: {
+        exert: true,
+      },
+      effect: {
+        type: "grant-keyword",
+        keyword: "Resist",
+        value: 1,
+        target: "CHOSEN_CHARACTER",
+        duration: "until-start-of-next-turn",
+      },
+    };
     expect(result.abilities[0].name).toBe("PROTECTION");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "activated",
-        name: "PROTECTION",
-        cost: expect.objectContaining({
-          exert: true,
-        }),
-        effect: expect.objectContaining({
-          type: "gain-keyword",
-          keyword: "Resist",
-          value: 1,
-          target: "CHOSEN_CHARACTER",
-          duration: "until-start-of-next-turn",
-        }),
-      }),
+      expect.objectContaining(protection),
     );
   });
 
@@ -4546,38 +4406,32 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
+    const training: TriggeredAbilityDefinition = {
+      type: "triggered",
+      name: "TRAINING",
+      trigger: {
+        timing: "whenever",
+        event: "play",
+        on: "YOUR_CHARACTERS_COST_4_OR_MORE",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "cost-effect",
+          cost: {
+            ink: 1,
+          },
+          effect: {
+            type: "draw",
+            amount: 1,
+            target: "CONTROLLER",
+          },
+        },
+      },
+    };
     expect(result.abilities[0].name).toBe("TRAINING");
     expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining({
-        type: "triggered",
-        name: "TRAINING",
-        trigger: expect.objectContaining({
-          timing: "whenever",
-          event: "play",
-          on: expect.objectContaining({
-            controller: "you",
-            cardType: "character",
-            condition: expect.objectContaining({
-              type: "cost-threshold",
-              value: 4,
-              comparison: "or-more",
-            }),
-          }),
-        }),
-        effect: expect.objectContaining({
-          type: "optional",
-          effect: expect.objectContaining({
-            type: "cost-effect",
-            cost: expect.objectContaining({
-              ink: 1,
-            }),
-            effect: expect.objectContaining({
-              type: "draw",
-              amount: 1,
-            }),
-          }),
-        }),
-      }),
+      expect.objectContaining(training),
     );
   });
 });
