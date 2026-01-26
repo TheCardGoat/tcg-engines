@@ -8,8 +8,36 @@
  * Each operation is pure and operates through the MoveContext API.
  */
 
-import type { CardId, MoveContext } from "@tcg/core";
+import {
+  type CardId,
+  draw,
+  type MoveContext,
+  type PlayerId,
+  type ZoneId,
+} from "@tcg/core";
 import type { GundamCardMeta } from "../types";
+
+/**
+ * Extracts and validates the draw count from move context
+ * @param context - Move context
+ * @returns Validated draw count
+ * @throws {Error} If count is invalid
+ */
+function getDrawCount(context: MoveContext): number {
+  const count = context.params?.count;
+
+  // Default to 1 if not specified
+  if (count === undefined) return 1;
+
+  // Validate type and value
+  if (typeof count !== "number" || count < 0 || !Number.isInteger(count)) {
+    throw new Error(
+      `Invalid draw count: ${count}. Must be a non-negative integer.`,
+    );
+  }
+
+  return count;
+}
 
 /**
  * Gundam Operations Type
@@ -93,6 +121,8 @@ export type GundamOperations = {
    * @returns Card type (unit, pilot, base, shield, resource)
    */
   getCardType(cardId: CardId): string | undefined;
+
+  drawCard(playerId: PlayerId): void;
 };
 
 /**
@@ -140,6 +170,36 @@ export function createGundamOperations<TParams>(
         amount === undefined ? 0 : Math.max(0, current - amount);
       context.cards.updateCardMeta(cardId, { damage: newDamage });
       return newDamage;
+    },
+    drawCard(playerId: PlayerId): void {
+      const drawCount = getDrawCount(context);
+
+      // Get player's zones
+      const deck = context.zones.getCardsInZone(
+        "deck" as ZoneId,
+        playerId as PlayerId,
+      );
+      const hand = context.zones.getCardsInZone(
+        "hand" as ZoneId,
+        playerId as PlayerId,
+      );
+
+      // Validate zones exist (should never fail if condition passed)
+      if (!(deck && hand)) {
+        throw new Error(
+          `Missing zones for player ${playerId}: deck=${!!deck}, hand=${!!hand}`,
+        );
+      }
+
+      // Handle no-op case
+      if (drawCount === 0) return;
+
+      context.zones.drawCards({
+        from: "deck" as ZoneId,
+        to: "hand" as ZoneId,
+        playerId,
+        count: drawCount,
+      });
     },
     isRested(cardId: CardId): boolean {
       return context.cards.getCardMeta(cardId)?.isRested ?? false;

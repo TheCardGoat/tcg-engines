@@ -92,34 +92,7 @@ export type CardPosition = "active" | "rested";
  * Each move type specifies its required parameters.
  */
 export type GundamMoves = {
-  /** Draw cards from deck to hand */
-  draw: {
-    /** Player drawing cards */
-    playerId: PlayerId;
-    /** Number of cards to draw */
-    count: number;
-  };
-
   playCard: {
-    playerId: PlayerId;
-    cardId: CardId;
-  };
-
-  /** Deploy a unit to battle area */
-  deployUnit: {
-    playerId: PlayerId;
-    cardId: CardId;
-    position?: number;
-  };
-
-  /** Deploy a base to base section */
-  deployBase: {
-    playerId: PlayerId;
-    cardId: CardId;
-  };
-
-  /** Place a resource */
-  playResource: {
     playerId: PlayerId;
     cardId: CardId;
   };
