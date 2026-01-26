@@ -33,6 +33,16 @@ describe("Set 001 Card Text Parser Tests - Characters N Z", () => {
         },
       },
     };
+    const heroism: TriggeredAbilityDefinition = TriggeredAbility({
+      trigger: Triggers.BanishInChallenge({
+        timing: Timings.When(),
+        on: PlayerTargets.Self(),
+      }),
+      effect: Effects.Banish({
+        target: CardTargets.ChallengedCharacter(),
+        optional: true,
+      }),
+    });
     expect(result.abilities[0].ability).toEqual(
       expect.objectContaining(heroism),
     );
