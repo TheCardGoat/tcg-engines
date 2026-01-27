@@ -5,4 +5,4 @@ export type {
   MoveValidationError,
   ParameterInfo,
   ParamFieldSchema,
-} from "./move-enumaration";
+} from "./move-enumeration";

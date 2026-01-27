@@ -39,4 +39,4 @@ export type {
   MoveValidationError,
   ParameterInfo,
   ParamFieldSchema,
-} from "./types/move-enumaration";
+} from "./types/move-enumeration";

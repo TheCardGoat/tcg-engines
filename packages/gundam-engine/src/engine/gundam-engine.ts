@@ -4,7 +4,7 @@ import type {
   AvailableMoveInfo,
   MoveParameterOptions,
   MoveValidationError,
-} from "../types/move-enumaration";
+} from "../types/move-enumeration";
 
 /**
  * Gundam Engine
