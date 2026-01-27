@@ -22,7 +22,8 @@ export type {
   RuleEngineOptions,
 } from "@tcg/core";
 // Targeting DSL
-export * from "@tcg/gundam-types";
+// Types should be imported directly from @tcg/gundam-types
+// export * from "@tcg/gundam-types";
 // Engine exports
 export { GundamEngine } from "./engine/gundam-engine";
 
