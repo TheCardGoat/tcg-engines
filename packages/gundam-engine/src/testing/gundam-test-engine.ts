@@ -11,7 +11,7 @@ import type {
   CardDefinition as GundamCardDefinition,
   PilotCardDefinition,
   UnitCardDefinition,
-} from "../cards/card-types";
+} from "@tcg/gundam-types";
 import { GundamEngine } from "../engine/gundam-engine";
 import { gundamGameDefinition } from "../game-definition/definition";
 import type { GundamCardMeta, GundamGameState, GundamMoves } from "../types";
