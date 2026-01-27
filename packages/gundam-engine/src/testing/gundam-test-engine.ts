@@ -416,7 +416,7 @@ export class GundamTestEngine {
   // ========== Setup Moves ==========
 
   /**
-   * Challenge another character (combat)
+   * Attack with a unit (combat)
    */
   attack(attackerId: string, defenderId: string) {
     return this.executeMove("attack", {
