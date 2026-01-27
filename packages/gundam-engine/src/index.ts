@@ -5,39 +5,38 @@
  * This package serves as both a production-ready game engine and a reference implementation
  * for building TCG engines with @tcg/core.
  *
- * @example
- * ```typescript
- * import { createGundamGame } from "@tcg/gundam";
- *
- * const game = createGundamGame({
- *   players: [
- *     { id: "player1", deck: deck1 },
- *     { id: "player2", deck: deck2 },
- *   ],
- * });
- *
- * const result = game.executeMove({
- *   type: "PLAY_RESOURCE",
- *   playerId: "player1",
- * });
- * ```
+ * - NO defineMove(), defineZone(), definePhase(), defineCard() helpers
+ * - Use GameDefinition<TState, TMoves> type directly
+ * - Zones are simple state arrays: Record<PlayerId, CardId[]>
+ * - Cards are plain objects in lookup tables
+ * - Moves use GameMoveDefinitions with condition and reducer
+ * - Flow is optional - use FlowDefinition or simple state tracking
  */
 
-// Card types (for deck building)
-export * from "./cards/card-types";
-// Main game definition
-export { gundamGame } from "./game-definition";
+// Re-export core framework types for convenience
+export type {
+  GameDefinition,
+  MoveContext,
+  MoveExecutionResult,
+  RuleEngine,
+  RuleEngineOptions,
+} from "@tcg/core";
 
-// Moves
-export {
-  attackMove,
-  deployBaseMove,
-  deployUnitMove,
-  drawMove,
-  passMove,
-  playResourceMove,
-} from "./moves";
-// Type definitions
-export type { CardPosition, GundamGameState, GundamMoves } from "./types";
-// Zone utilities
-export * from "./zones";
+// Engine exports
+export { GundamEngine } from "./engine/gundam-engine";
+
+// Targeting DSL
+export * from "./targeting";
+
+// Type exports
+export * from "./types";
+
+// Move enumeration type exports
+export type {
+  AvailableMoveInfo,
+  MoveParameterOptions,
+  MoveParamSchema,
+  MoveValidationError,
+  ParameterInfo,
+  ParamFieldSchema,
+} from "./types/move-enumeration";
