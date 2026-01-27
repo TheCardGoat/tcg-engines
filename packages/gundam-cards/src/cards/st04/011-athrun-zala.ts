@@ -17,15 +17,16 @@ export const AthrunZala: PilotCardDefinition = {
   traits: ["zaft", "coordinator"],
   apModifier: 1,
   hpModifier: 2,
-  abilities: [
+  effects: [
     {
-      trigger: "ON_BURST",
+      id: "st04-011-effect-1",
       description:
         "【Burst】 Add this card to your hand. 【When Linked】During this turn, this Unit may choose an active enemy Unit that is Lv.5 or lower as its attack target.",
-      effect: {
-        type: "UNKNOWN",
-        rawText:
-          "Add this card to your hand. 【When Linked】During this turn, this Unit may choose an active enemy Unit that is Lv.5 or lower as its attack target.",
+      type: "TRIGGERED",
+      timing: "BURST",
+      action: {
+        type: "CUSTOM",
+        text: "Add this card to your hand. 【When Linked】During this turn, this Unit may choose an active enemy Unit that is Lv.5 or lower as its attack target.",
       },
     },
   ],

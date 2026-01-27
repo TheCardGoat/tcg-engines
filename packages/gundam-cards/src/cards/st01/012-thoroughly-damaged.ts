@@ -21,16 +21,20 @@ export const ThoroughlyDamaged: CommandCardDefinition = {
     apModifier: 0,
     hpModifier: 1,
   },
-  abilities: [
+  effects: [
     {
+      id: "st01-012-effect-1",
       description:
         "【Main】Choose 1 rested enemy Unit. Deal 1 damage to it. 【Pilot】[Hayato Kobayashi]",
-      effect: {
+      type: "CONSTANT",
+      action: {
         type: "DAMAGE",
-        amount: 1,
-        target: {
-          type: "unknown",
-          rawText: "it",
+        parameters: {
+          target: {
+            type: "unknown",
+            rawText: "it",
+          },
+          amount: 1,
         },
       },
     },

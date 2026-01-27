@@ -19,12 +19,14 @@ export const StrikeDagger: UnitCardDefinition = {
   zones: ["space", "earth"],
   traits: ["earth", "alliance"],
   linkRequirements: ["-"],
-  abilities: [
+  effects: [
     {
+      id: "st04-005-effect-1",
       description: "-",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "-",
+      type: "CONSTANT",
+      action: {
+        type: "CUSTOM",
+        text: "-",
       },
     },
   ],

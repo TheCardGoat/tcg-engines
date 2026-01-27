@@ -15,17 +15,21 @@ export const BattleOfAces: CommandCardDefinition = {
     "https://www.gundam-gcg.com/en/images/cards/card/GD01-111.webp?2510031",
   sourceTitle: "Mobile Suit Gundam SEED",
   timing: "MAIN",
-  abilities: [
+  effects: [
     {
-      trigger: "ON_BURST",
+      id: "gd01-111-effect-1",
       description:
         "【Burst】 Choose 1 enemy Unit. Deal 2 damage to it. 【Main】/【Action】Choose 1 damaged enemy Unit. Deal 3 damage to it.",
-      effect: {
+      type: "TRIGGERED",
+      timing: "BURST",
+      action: {
         type: "DAMAGE",
-        amount: 2,
-        target: {
-          type: "unknown",
-          rawText: "it",
+        parameters: {
+          target: {
+            type: "unknown",
+            rawText: "it",
+          },
+          amount: 2,
         },
       },
     },

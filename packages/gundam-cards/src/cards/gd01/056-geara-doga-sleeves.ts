@@ -19,17 +19,21 @@ export const GearaDogaSleeves: UnitCardDefinition = {
   zones: ["space", "earth"],
   traits: ["neo", "zeon"],
   linkRequirements: ["-"],
-  abilities: [
+  effects: [
     {
-      trigger: "ON_DESTROYED",
+      id: "gd01-056-effect-1",
       description:
         "【Destroyed】 Choose 1 enemy Unit with 5 or less AP. Deal 1 damage to it.",
-      effect: {
+      type: "TRIGGERED",
+      timing: "DESTROYED",
+      action: {
         type: "DAMAGE",
-        amount: 1,
-        target: {
-          type: "unknown",
-          rawText: "it",
+        parameters: {
+          target: {
+            type: "unknown",
+            rawText: "it",
+          },
+          amount: 1,
         },
       },
     },

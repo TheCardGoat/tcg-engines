@@ -15,15 +15,19 @@ export const StrategicArms: CommandCardDefinition = {
     "https://www.gundam-gcg.com/en/images/cards/card/GD01-108.webp?2510031",
   sourceTitle: "Mobile Suit Gundam",
   timing: "MAIN",
-  abilities: [
+  effects: [
     {
+      id: "gd01-108-effect-1",
       description: "【Main】Deal 2 damage to all Units with <Blocker>.",
-      effect: {
+      type: "CONSTANT",
+      action: {
         type: "DAMAGE",
-        amount: 2,
-        target: {
-          type: "unknown",
-          rawText: "all Units with <Blocker>",
+        parameters: {
+          target: {
+            type: "unknown",
+            rawText: "all Units with <Blocker>",
+          },
+          amount: 2,
         },
       },
     },

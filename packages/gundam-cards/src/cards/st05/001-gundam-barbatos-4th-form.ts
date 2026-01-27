@@ -18,17 +18,21 @@ export const GundamBarbatos4thForm: UnitCardDefinition = {
   zones: ["space", "earth"],
   traits: ["tekkadan", "gundam", "frame"],
   linkRequirements: ["mikazuki-augus"],
-  abilities: [
+  effects: [
     {
-      trigger: "ON_DEPLOY",
+      id: "st05-001-effect-1",
       description:
         "【Deploy】 Choose 1 of your other Units. Deal 1 damage to it. It gets AP+1 during this turn. While this is damaged, it gains <Suppression>. (Damage to Shields by an attack is dealt to the first 2 cards simultaneously.)",
-      effect: {
+      type: "TRIGGERED",
+      timing: "DEPLOY",
+      action: {
         type: "DAMAGE",
-        amount: 1,
-        target: {
-          type: "unknown",
-          rawText: "it",
+        parameters: {
+          target: {
+            type: "unknown",
+            rawText: "it",
+          },
+          amount: 1,
         },
       },
     },

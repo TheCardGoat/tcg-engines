@@ -19,12 +19,14 @@ export const Guncannon: UnitCardDefinition = {
   zones: ["space", "earth"],
   traits: ["earth", "federation", "white", "base", "team"],
   linkRequirements: ["kai-shiden"],
-  abilities: [
+  effects: [
     {
+      id: "st01-003-effect-1",
       description: "-",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "-",
+      type: "CONSTANT",
+      action: {
+        type: "CUSTOM",
+        text: "-",
       },
     },
   ],

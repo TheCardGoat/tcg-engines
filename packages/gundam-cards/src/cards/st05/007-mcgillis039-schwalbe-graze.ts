@@ -24,16 +24,20 @@ export const Mcgillis039SchwalbeGraze: UnitCardDefinition = {
       keyword: "Blocker",
     },
   ],
-  abilities: [
+  effects: [
     {
-      trigger: "WHEN_PAIRED",
+      id: "st05-007-effect-1",
       description:
         "【When Paired】 Choose 1 enemy Unit that is Lv.3 or lower. It gets AP-2 during this turn.",
-      effect: {
+      type: "TRIGGERED",
+      timing: "WHEN_PAIRED",
+      action: {
         type: "MODIFY_STATS",
-        attribute: "ap",
-        modifier: -2,
-        duration: "turn",
+        parameters: {
+          attribute: "ap",
+          modifier: -2,
+          duration: "turn",
+        },
       },
     },
   ],

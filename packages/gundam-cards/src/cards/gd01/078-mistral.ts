@@ -19,16 +19,20 @@ export const Mistral: UnitCardDefinition = {
   zones: ["space"],
   traits: ["earth", "alliance"],
   linkRequirements: ["-"],
-  abilities: [
+  effects: [
     {
-      trigger: "ON_DEPLOY",
+      id: "gd01-078-effect-1",
       description:
         "【Deploy】 Choose 1 enemy Unit. It gets AP-1 during this turn.",
-      effect: {
+      type: "TRIGGERED",
+      timing: "DEPLOY",
+      action: {
         type: "MODIFY_STATS",
-        attribute: "ap",
-        modifier: -1,
-        duration: "turn",
+        parameters: {
+          attribute: "ap",
+          modifier: -1,
+          duration: "turn",
+        },
       },
     },
   ],

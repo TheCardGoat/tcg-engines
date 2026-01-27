@@ -17,26 +17,30 @@ export const ElanCeresEnhancedPersonNumber4: PilotCardDefinition = {
   traits: ["academy"],
   apModifier: 2,
   hpModifier: 1,
-  abilities: [
+  effects: [
     {
-      trigger: "ON_BURST",
+      id: "gd01-098-effect-1",
       description: "【Burst】 Add this card to your hand.",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "Add this card to your hand.",
+      type: "TRIGGERED",
+      timing: "BURST",
+      action: {
+        type: "CUSTOM",
+        text: "Add this card to your hand.",
       },
     },
     {
-      activated: {
-        timing: "ACTION",
-      },
+      id: "gd01-098-effect-2",
       description:
         "【Activate･Action】 【Once per Turn】If an enemy Unit with 1 or less AP is in play, this Unit recovers 1 HP.",
-      effect: {
-        type: "RECOVER_HP",
-        amount: 1,
-        target: {
-          type: "self",
+      type: "ACTIVATED",
+      timing: "ACTION",
+      action: {
+        type: "HEAL",
+        parameters: {
+          target: {
+            type: "self",
+          },
+          amount: 1,
         },
       },
     },

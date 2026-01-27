@@ -15,15 +15,16 @@ export const TheWitchAndTheBride: CommandCardDefinition = {
     "https://www.gundam-gcg.com/en/images/cards/card/GD01-117.webp?2510031",
   sourceTitle: "Mobile Suit Gundam the Witch from Mercury",
   timing: "MAIN",
-  abilities: [
+  effects: [
     {
-      trigger: "ON_BURST",
+      id: "gd01-117-effect-1",
       description:
         "【Burst】 Activate this card&#039;s 【Main】. 【Main】/【Action】Choose 1 enemy Unit with 5 or less HP. Return it to its owner&#039;s hand.",
-      effect: {
-        type: "UNKNOWN",
-        rawText:
-          "Activate this card&#039;s 【Main】. 【Main】/【Action】Choose 1 enemy Unit with 5 or less HP. Return it to its owner&#039;s hand.",
+      type: "TRIGGERED",
+      timing: "BURST",
+      action: {
+        type: "CUSTOM",
+        text: "Activate this card&#039;s 【Main】. 【Main】/【Action】Choose 1 enemy Unit with 5 or less HP. Return it to its owner&#039;s hand.",
       },
     },
   ],

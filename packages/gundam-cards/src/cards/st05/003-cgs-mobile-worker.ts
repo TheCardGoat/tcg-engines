@@ -18,19 +18,21 @@ export const CgsMobileWorker: UnitCardDefinition = {
   zones: ["earth"],
   traits: ["tekkadan"],
   linkRequirements: ["-"],
-  abilities: [
+  effects: [
     {
-      activated: {
-        timing: "MAIN",
-      },
+      id: "st05-003-effect-1",
       description:
         "【Activate･Main】 Rest this Unit：Choose 1 of your Units. Deal 1 damage to it. It gets AP+1 during this turn.",
-      effect: {
+      type: "ACTIVATED",
+      timing: "MAIN",
+      action: {
         type: "DAMAGE",
-        amount: 1,
-        target: {
-          type: "unknown",
-          rawText: "it",
+        parameters: {
+          target: {
+            type: "unknown",
+            rawText: "it",
+          },
+          amount: 1,
         },
       },
     },

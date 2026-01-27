@@ -25,14 +25,15 @@ export const StarkJegan: UnitCardDefinition = {
       value: 1,
     },
   ],
-  abilities: [
+  effects: [
     {
+      id: "gd01-017-effect-1",
       description:
         "<Repair 1> (At the end of your turn, this Unit recovers the specified number of HP.)",
-      effect: {
-        type: "UNKNOWN",
-        rawText:
-          "<Repair 1> (At the end of your turn, this Unit recovers the specified number of HP.)",
+      type: "CONSTANT",
+      action: {
+        type: "CUSTOM",
+        text: "<Repair 1> (At the end of your turn, this Unit recovers the specified number of HP.)",
       },
     },
   ],

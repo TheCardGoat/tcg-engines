@@ -19,20 +19,24 @@ export const Adzam: UnitCardDefinition = {
   zones: ["earth"],
   traits: ["zeon"],
   linkRequirements: ["(zeon)-trait"],
-  abilities: [
+  effects: [
     {
-      trigger: "ON_DEPLOY",
+      id: "gd01-038-effect-1",
       description:
         "【Deploy】 If 5 or more enemy Units are in play, deal 1 damage to all enemy Units.",
-      effect: {
+      type: "TRIGGERED",
+      timing: "DEPLOY",
+      action: {
         type: "DAMAGE",
-        amount: 1,
-        target: {
-          type: "unit",
-          controller: "opponent",
-          filter: {
-            zone: "battle-area",
+        parameters: {
+          target: {
+            type: "unit",
+            controller: "opponent",
+            filter: {
+              zone: "battle-area",
+            },
           },
+          amount: 1,
         },
       },
     },

@@ -25,14 +25,15 @@ export const DuelGundam: UnitCardDefinition = {
       value: 3,
     },
   ],
-  abilities: [
+  effects: [
     {
+      id: "gd01-054-effect-1",
       description:
         "While this Unit has 5 or more AP, it gains <Breach 3>. (When this Unit&#039;s attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent&#039;s shield area.)",
-      effect: {
-        type: "UNKNOWN",
-        rawText:
-          "While this Unit has 5 or more AP, it gains <Breach 3>. (When this Unit&#039;s attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent&#039;s shield area.)",
+      type: "CONSTANT",
+      action: {
+        type: "CUSTOM",
+        text: "While this Unit has 5 or more AP, it gains <Breach 3>. (When this Unit&#039;s attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent&#039;s shield area.)",
       },
     },
   ],

@@ -28,17 +28,21 @@ export const BigZam: UnitCardDefinition = {
       keyword: "Blocker",
     },
   ],
-  abilities: [
+  effects: [
     {
-      trigger: "ON_DEPLOY",
+      id: "gd01-027-effect-1",
       description:
         "【Deploy】 If there are 10 or more (Zeon)/(Neo Zeon) Unit cards in your trash, deal 4 damage to all Units with <Blocker>.",
-      effect: {
+      type: "TRIGGERED",
+      timing: "DEPLOY",
+      action: {
         type: "DAMAGE",
-        amount: 4,
-        target: {
-          type: "unknown",
-          rawText: "all Units with <Blocker>",
+        parameters: {
+          target: {
+            type: "unknown",
+            rawText: "all Units with <Blocker>",
+          },
+          amount: 4,
         },
       },
     },

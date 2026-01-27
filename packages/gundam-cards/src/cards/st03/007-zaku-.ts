@@ -19,12 +19,14 @@ export const Zaku_ST03_007: UnitCardDefinition = {
   zones: ["space", "earth"],
   traits: ["zeon"],
   linkRequirements: ["-"],
-  abilities: [
+  effects: [
     {
+      id: "st03-007-effect-1",
       description: "-",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "-",
+      type: "CONSTANT",
+      action: {
+        type: "CUSTOM",
+        text: "-",
       },
     },
   ],

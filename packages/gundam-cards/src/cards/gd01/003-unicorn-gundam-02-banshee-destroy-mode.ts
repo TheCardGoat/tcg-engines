@@ -24,16 +24,16 @@ export const UnicornGundam02BansheeDestroyMode: UnitCardDefinition = {
       keyword: "First-Strike",
     },
   ],
-  abilities: [
+  effects: [
     {
-      condition: "DURING_LINK",
-      trigger: "ON_ATTACK",
+      id: "gd01-003-effect-1",
       description:
         "【During Link】 【Attack】 Choose 12 cards from your trash. Return them to their owner&#039;s deck and shuffle it. If you do, set this Unit as active. It gains <First Strike> during this turn. (While this Unit is attacking, it deals damage before the enemy Unit.)",
-      effect: {
-        type: "UNKNOWN",
-        rawText:
-          "Choose 12 cards from your trash. Return them to their owner&#039;s deck and shuffle it. If you do, set this Unit as active. It gains <First Strike> during this turn. (While this Unit is attacking, it deals damage before the enemy Unit.)",
+      type: "TRIGGERED",
+      timing: "ATTACK",
+      action: {
+        type: "CUSTOM",
+        text: "Choose 12 cards from your trash. Return them to their owner&#039;s deck and shuffle it. If you do, set this Unit as active. It gains <First Strike> during this turn. (While this Unit is attacking, it deals damage before the enemy Unit.)",
       },
     },
   ],

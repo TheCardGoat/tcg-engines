@@ -19,13 +19,15 @@ export const StrikeGundam: UnitCardDefinition = {
   zones: ["space", "earth"],
   traits: ["earth", "alliance"],
   linkRequirements: ["kira-yamato"],
-  abilities: [
+  effects: [
     {
-      trigger: "ON_DEPLOY",
+      id: "st04-002-effect-1",
       description: "【Deploy】 Draw 1. Then, discard 1.",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "Draw 1. Then, discard 1.",
+      type: "TRIGGERED",
+      timing: "DEPLOY",
+      action: {
+        type: "CUSTOM",
+        text: "Draw 1. Then, discard 1.",
       },
     },
   ],

@@ -19,13 +19,15 @@ export const Guntank: UnitCardDefinition = {
   zones: ["space", "earth"],
   traits: ["earth", "federation", "white", "base", "team"],
   linkRequirements: ["hayato-kobayashi"],
-  abilities: [
+  effects: [
     {
-      trigger: "ON_DEPLOY",
+      id: "st01-004-effect-1",
       description: "【Deploy】 Choose 1 enemy Unit with 2 or less HP. Rest it.",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "Choose 1 enemy Unit with 2 or less HP. Rest it.",
+      type: "TRIGGERED",
+      timing: "DEPLOY",
+      action: {
+        type: "CUSTOM",
+        text: "Choose 1 enemy Unit with 2 or less HP. Rest it.",
       },
     },
   ],

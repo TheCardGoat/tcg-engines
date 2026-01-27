@@ -17,23 +17,26 @@ export const SulettaMercury: PilotCardDefinition = {
   traits: ["academy"],
   apModifier: 1,
   hpModifier: 2,
-  abilities: [
+  effects: [
     {
-      trigger: "ON_BURST",
+      id: "st01-011-effect-1",
       description: "【Burst】 Add this card to your hand.",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "Add this card to your hand.",
+      type: "TRIGGERED",
+      timing: "BURST",
+      action: {
+        type: "CUSTOM",
+        text: "Add this card to your hand.",
       },
     },
     {
-      trigger: "ON_ATTACK",
+      id: "st01-011-effect-2",
       description:
         "【Attack】 【Once per Turn】Choose 1 of your Resources. Set it as active.",
-      effect: {
-        type: "UNKNOWN",
-        rawText:
-          "【Once per Turn】Choose 1 of your Resources. Set it as active.",
+      type: "TRIGGERED",
+      timing: "ATTACK",
+      action: {
+        type: "CUSTOM",
+        text: "【Once per Turn】Choose 1 of your Resources. Set it as active.",
       },
     },
   ],

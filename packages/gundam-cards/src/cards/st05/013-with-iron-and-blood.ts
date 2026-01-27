@@ -14,16 +14,20 @@ export const WithIronAndBlood: CommandCardDefinition = {
     "https://www.gundam-gcg.com/en/images/cards/card/ST05-013.webp?2510031",
   sourceTitle: "Mobile Suit Gundam IRON-BLOODED ORPHANS",
   timing: "MAIN",
-  abilities: [
+  effects: [
     {
+      id: "st05-013-effect-1",
       description:
         "【Main】/【Action】Choose 1 of your Units. Deal 1 damage to it. It gets AP+3 during this turn.",
-      effect: {
+      type: "CONSTANT",
+      action: {
         type: "DAMAGE",
-        amount: 1,
-        target: {
-          type: "unknown",
-          rawText: "it",
+        parameters: {
+          target: {
+            type: "unknown",
+            rawText: "it",
+          },
+          amount: 1,
         },
       },
     },

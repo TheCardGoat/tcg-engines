@@ -24,17 +24,21 @@ export const WingGundamZero: UnitCardDefinition = {
       keyword: "High-Maneuver",
     },
   ],
-  abilities: [
+  effects: [
     {
-      trigger: "ON_DEPLOY",
+      id: "gd01-024-effect-1",
       description:
         "【Deploy】 Deal 3 damage to all Units that are Lv.5 or lower.",
-      effect: {
+      type: "TRIGGERED",
+      timing: "DEPLOY",
+      action: {
         type: "DAMAGE",
-        amount: 3,
-        target: {
-          type: "unknown",
-          rawText: "all Units that are Lv",
+        parameters: {
+          target: {
+            type: "unknown",
+            rawText: "all Units that are Lv",
+          },
+          amount: 3,
         },
       },
     },

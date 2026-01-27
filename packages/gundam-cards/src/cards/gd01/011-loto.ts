@@ -19,12 +19,14 @@ export const Loto: UnitCardDefinition = {
   zones: ["space", "earth"],
   traits: ["earth", "federation"],
   linkRequirements: ["(earth-federation)-trait"],
-  abilities: [
+  effects: [
     {
+      id: "gd01-011-effect-1",
       description: "-",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "-",
+      type: "CONSTANT",
+      action: {
+        type: "CUSTOM",
+        text: "-",
       },
     },
   ],

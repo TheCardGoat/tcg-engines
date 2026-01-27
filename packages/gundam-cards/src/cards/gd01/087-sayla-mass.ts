@@ -17,15 +17,16 @@ export const SaylaMass: PilotCardDefinition = {
   traits: ["earth", "federation", "white", "base", "team", "newtype"],
   apModifier: 1,
   hpModifier: 1,
-  abilities: [
+  effects: [
     {
-      trigger: "ON_BURST",
+      id: "gd01-087-effect-1",
       description:
         "【Burst】 Add this card to your hand. While this Unit is blue, it gains <Repair 1>. (At the end of your turn, this Unit recovers the specified number of HP.)",
-      effect: {
-        type: "UNKNOWN",
-        rawText:
-          "Add this card to your hand. While this Unit is blue, it gains <Repair 1>. (At the end of your turn, this Unit recovers the specified number of HP.)",
+      type: "TRIGGERED",
+      timing: "BURST",
+      action: {
+        type: "CUSTOM",
+        text: "Add this card to your hand. While this Unit is blue, it gains <Repair 1>. (At the end of your turn, this Unit recovers the specified number of HP.)",
       },
     },
   ],

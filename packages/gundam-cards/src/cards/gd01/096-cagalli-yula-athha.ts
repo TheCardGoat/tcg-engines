@@ -17,15 +17,16 @@ export const CagalliYulaAthha: PilotCardDefinition = {
   traits: ["orb"],
   apModifier: 1,
   hpModifier: 1,
-  abilities: [
+  effects: [
     {
-      trigger: "ON_BURST",
+      id: "gd01-096-effect-1",
       description:
         "【Burst】 Add this card to your hand. While this Unit is white, it gains <Blocker>. (Rest this Unit to change the attack target to it.)",
-      effect: {
-        type: "UNKNOWN",
-        rawText:
-          "Add this card to your hand. While this Unit is white, it gains <Blocker>. (Rest this Unit to change the attack target to it.)",
+      type: "TRIGGERED",
+      timing: "BURST",
+      action: {
+        type: "CUSTOM",
+        text: "Add this card to your hand. While this Unit is white, it gains <Blocker>. (Rest this Unit to change the attack target to it.)",
       },
     },
   ],

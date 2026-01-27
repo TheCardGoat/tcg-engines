@@ -24,14 +24,15 @@ export const Zno: UnitCardDefinition = {
       keyword: "First-Strike",
     },
   ],
-  abilities: [
+  effects: [
     {
+      id: "gd01-063-effect-1",
       description:
         "During your turn, while this Unit is battling an enemy Unit that is Lv.2 or lower, it gains <First Strike>. (While this Unit is attacking, it deals damage before the enemy Unit.)",
-      effect: {
-        type: "UNKNOWN",
-        rawText:
-          "During your turn, while this Unit is battling an enemy Unit that is Lv.2 or lower, it gains <First Strike>. (While this Unit is attacking, it deals damage before the enemy Unit.)",
+      type: "CONSTANT",
+      action: {
+        type: "CUSTOM",
+        text: "During your turn, while this Unit is battling an enemy Unit that is Lv.2 or lower, it gains <First Strike>. (While this Unit is attacking, it deals damage before the enemy Unit.)",
       },
     },
   ],

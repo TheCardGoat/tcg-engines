@@ -19,12 +19,14 @@ export const GundamMaForm: UnitCardDefinition = {
   zones: ["space"],
   traits: ["earth", "federation", "white", "base", "team"],
   linkRequirements: ["amuro-ray"],
-  abilities: [
+  effects: [
     {
+      id: "st01-002-effect-1",
       description: "【When Paired･(White Base Team) Pilot】Draw 1.",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "【When Paired･(White Base Team) Pilot】Draw 1.",
+      type: "CONSTANT",
+      action: {
+        type: "CUSTOM",
+        text: "【When Paired･(White Base Team) Pilot】Draw 1.",
       },
     },
   ],

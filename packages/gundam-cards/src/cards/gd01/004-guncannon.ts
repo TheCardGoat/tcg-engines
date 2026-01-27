@@ -25,14 +25,16 @@ export const Guncannon: UnitCardDefinition = {
       value: 1,
     },
   ],
-  abilities: [
+  effects: [
     {
-      trigger: "WHEN_PAIRED",
+      id: "gd01-004-effect-1",
       description:
         "【When Paired】 Choose 1 enemy Unit with 2 or less HP. Rest it.",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "Choose 1 enemy Unit with 2 or less HP. Rest it.",
+      type: "TRIGGERED",
+      timing: "WHEN_PAIRED",
+      action: {
+        type: "CUSTOM",
+        text: "Choose 1 enemy Unit with 2 or less HP. Rest it.",
       },
     },
   ],

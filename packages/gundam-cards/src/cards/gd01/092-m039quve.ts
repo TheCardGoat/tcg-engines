@@ -17,15 +17,16 @@ export const M039quve: PilotCardDefinition = {
   traits: ["zeon"],
   apModifier: 1,
   hpModifier: 1,
-  abilities: [
+  effects: [
     {
-      trigger: "ON_BURST",
+      id: "gd01-092-effect-1",
       description:
         "【Burst】 Add this card to your hand. While this Unit is (Zeon), it gains <Breach 1>. (When this Unit&#039;s attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent&#039;s shield area.)",
-      effect: {
-        type: "UNKNOWN",
-        rawText:
-          "Add this card to your hand. While this Unit is (Zeon), it gains <Breach 1>. (When this Unit&#039;s attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent&#039;s shield area.)",
+      type: "TRIGGERED",
+      timing: "BURST",
+      action: {
+        type: "CUSTOM",
+        text: "Add this card to your hand. While this Unit is (Zeon), it gains <Breach 1>. (When this Unit&#039;s attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent&#039;s shield area.)",
       },
     },
   ],

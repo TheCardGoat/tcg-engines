@@ -19,15 +19,19 @@ export const Ball: UnitCardDefinition = {
   zones: ["space"],
   traits: ["earth", "federation"],
   linkRequirements: ["-"],
-  abilities: [
+  effects: [
     {
-      trigger: "ON_ATTACK",
+      id: "gd01-015-effect-1",
       description: "【Attack】 Choose 1 of your Units. It recovers 1 HP.",
-      effect: {
-        type: "RECOVER_HP",
-        amount: 1,
-        target: {
-          type: "self",
+      type: "TRIGGERED",
+      timing: "ATTACK",
+      action: {
+        type: "HEAL",
+        parameters: {
+          target: {
+            type: "self",
+          },
+          amount: 1,
         },
       },
     },

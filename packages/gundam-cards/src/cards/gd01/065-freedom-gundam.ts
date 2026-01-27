@@ -24,16 +24,20 @@ export const FreedomGundam: UnitCardDefinition = {
       keyword: "Blocker",
     },
   ],
-  abilities: [
+  effects: [
     {
-      condition: "DURING_PAIR",
+      id: "gd01-065-effect-1",
       description:
         "【During Pair】 【Once per Turn】When you pair a Pilot with this Unit or one of your white Units, choose 1 enemy Unit. It gets AP-2 during this turn.",
-      effect: {
+      type: "CONSTANT",
+      conditions: ["DURING_PAIR"],
+      action: {
         type: "MODIFY_STATS",
-        attribute: "ap",
-        modifier: -2,
-        duration: "turn",
+        parameters: {
+          attribute: "ap",
+          modifier: -2,
+          duration: "turn",
+        },
       },
     },
   ],

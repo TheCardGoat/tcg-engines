@@ -18,12 +18,14 @@ export const Hyakuren: UnitCardDefinition = {
   zones: ["space", "earth"],
   traits: ["teiwaz"],
   linkRequirements: ["-"],
-  abilities: [
+  effects: [
     {
+      id: "st05-006-effect-1",
       description: "-",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "-",
+      type: "CONSTANT",
+      action: {
+        type: "CUSTOM",
+        text: "-",
       },
     },
   ],

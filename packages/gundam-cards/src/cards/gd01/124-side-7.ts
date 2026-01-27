@@ -18,34 +18,40 @@ export const Side7: BaseCardDefinition_Structure = {
   hp: 4,
   zones: ["space"],
   traits: ["earth", "federation", "stronghold"],
-  abilities: [
+  effects: [
     {
-      trigger: "ON_BURST",
+      id: "gd01-124-effect-1",
       description: "【Burst】 Deploy this card.",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "Deploy this card.",
+      type: "TRIGGERED",
+      timing: "BURST",
+      action: {
+        type: "CUSTOM",
+        text: "Deploy this card.",
       },
     },
     {
-      trigger: "ON_DEPLOY",
+      id: "gd01-124-effect-2",
       description: "【Deploy】 Add 1 of your Shields to your hand.",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "Add 1 of your Shields to your hand.",
+      type: "TRIGGERED",
+      timing: "DEPLOY",
+      action: {
+        type: "CUSTOM",
+        text: "Add 1 of your Shields to your hand.",
       },
     },
     {
-      activated: {
-        timing: "MAIN",
-      },
+      id: "gd01-124-effect-3",
       description:
         "【Activate･Main】 Rest this Base：Choose 1 friendly Unit. It recovers 1 HP.",
-      effect: {
-        type: "RECOVER_HP",
-        amount: 1,
-        target: {
-          type: "self",
+      type: "ACTIVATED",
+      timing: "MAIN",
+      action: {
+        type: "HEAL",
+        parameters: {
+          target: {
+            type: "self",
+          },
+          amount: 1,
         },
       },
     },

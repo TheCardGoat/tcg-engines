@@ -17,23 +17,26 @@ export const FullFrontal: PilotCardDefinition = {
   traits: ["neo", "zeon", "cyber-newtype"],
   apModifier: 2,
   hpModifier: 2,
-  abilities: [
+  effects: [
     {
-      trigger: "ON_BURST",
+      id: "st03-010-effect-1",
       description: "【Burst】 Add this card to your hand.",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "Add this card to your hand.",
+      type: "TRIGGERED",
+      timing: "BURST",
+      action: {
+        type: "CUSTOM",
+        text: "Add this card to your hand.",
       },
     },
     {
-      trigger: "WHEN_PAIRED",
+      id: "st03-010-effect-2",
       description:
         "【When Paired】 You may deploy 1 (Neo Zeon)/(Zeon) Unit card that is Lv.4 or lower from your hand.",
-      effect: {
-        type: "UNKNOWN",
-        rawText:
-          "You may deploy 1 (Neo Zeon)/(Zeon) Unit card that is Lv.4 or lower from your hand.",
+      type: "TRIGGERED",
+      timing: "WHEN_PAIRED",
+      action: {
+        type: "CUSTOM",
+        text: "You may deploy 1 (Neo Zeon)/(Zeon) Unit card that is Lv.4 or lower from your hand.",
       },
     },
   ],

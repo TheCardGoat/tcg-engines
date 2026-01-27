@@ -15,12 +15,14 @@ export const AShowOfResolve: CommandCardDefinition = {
     "https://www.gundam-gcg.com/en/images/cards/card/GD01-100.webp?2510031",
   sourceTitle: "Mobile Suit Gundam Unicorn",
   timing: "MAIN",
-  abilities: [
+  effects: [
     {
+      id: "gd01-100-effect-1",
       description: "【Main】Draw 2.",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "【Main】Draw 2.",
+      type: "CONSTANT",
+      action: {
+        type: "CUSTOM",
+        text: "【Main】Draw 2.",
       },
     },
   ],

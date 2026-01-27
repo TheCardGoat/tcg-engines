@@ -19,14 +19,16 @@ export const Zechs039Leo: UnitCardDefinition = {
   zones: ["space", "earth"],
   traits: ["oz"],
   linkRequirements: ["(oz)-trait"],
-  abilities: [
+  effects: [
     {
-      trigger: "WHEN_PAIRED",
+      id: "gd01-012-effect-1",
       description:
         "【When Paired】 Choose 1 enemy Unit with 3 or less HP. Rest it.",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "Choose 1 enemy Unit with 3 or less HP. Rest it.",
+      type: "TRIGGERED",
+      timing: "WHEN_PAIRED",
+      action: {
+        type: "CUSTOM",
+        text: "Choose 1 enemy Unit with 3 or less HP. Rest it.",
       },
     },
   ],

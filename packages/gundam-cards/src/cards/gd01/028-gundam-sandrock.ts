@@ -19,14 +19,16 @@ export const GundamSandrock: UnitCardDefinition = {
   zones: ["earth"],
   traits: ["operation", "meteor"],
   linkRequirements: ["quatre-raberba-winner"],
-  abilities: [
+  effects: [
     {
-      trigger: "ON_DEPLOY",
+      id: "gd01-028-effect-1",
       description:
         "【Deploy】 You may deploy 1 (Maganac Corps) Unit card from your hand.",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "You may deploy 1 (Maganac Corps) Unit card from your hand.",
+      type: "TRIGGERED",
+      timing: "DEPLOY",
+      action: {
+        type: "CUSTOM",
+        text: "You may deploy 1 (Maganac Corps) Unit card from your hand.",
       },
     },
   ],

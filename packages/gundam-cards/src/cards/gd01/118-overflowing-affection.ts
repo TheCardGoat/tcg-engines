@@ -15,12 +15,14 @@ export const OverflowingAffection: CommandCardDefinition = {
     "https://www.gundam-gcg.com/en/images/cards/card/GD01-118.webp?2510031",
   sourceTitle: "Mobile Suit Gundam SEED",
   timing: "MAIN",
-  abilities: [
+  effects: [
     {
+      id: "gd01-118-effect-1",
       description: "【Main】Draw 2. Then, discard 1.",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "【Main】Draw 2. Then, discard 1.",
+      type: "CONSTANT",
+      action: {
+        type: "CUSTOM",
+        text: "【Main】Draw 2. Then, discard 1.",
       },
     },
   ],

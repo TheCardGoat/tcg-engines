@@ -19,18 +19,20 @@ export const GskyEasy: UnitCardDefinition = {
   zones: ["space", "earth"],
   traits: ["earth", "federation", "white", "base", "team"],
   linkRequirements: ["(white-base-team)-trait"],
-  abilities: [
+  effects: [
     {
-      activated: {
-        timing: "ACTION",
-      },
+      id: "gd01-014-effect-1",
       description:
         "【Activate･Action】 【Once per Turn】Choose 1 Unit. It recovers 1 HP.",
-      effect: {
-        type: "RECOVER_HP",
-        amount: 1,
-        target: {
-          type: "self",
+      type: "ACTIVATED",
+      timing: "ACTION",
+      action: {
+        type: "HEAL",
+        parameters: {
+          target: {
+            type: "self",
+          },
+          amount: 1,
         },
       },
     },

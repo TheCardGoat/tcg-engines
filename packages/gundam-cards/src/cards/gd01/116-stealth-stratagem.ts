@@ -21,16 +21,20 @@ export const StealthStratagem: CommandCardDefinition = {
     apModifier: 0,
     hpModifier: 1,
   },
-  abilities: [
+  effects: [
     {
+      id: "gd01-116-effect-1",
       description:
         "【Main】/【Action】Choose 1 enemy Unit with 2 or less AP. Deal 2 damage to it. 【Pilot】[Nicol Amarfi]",
-      effect: {
+      type: "CONSTANT",
+      action: {
         type: "DAMAGE",
-        amount: 2,
-        target: {
-          type: "unknown",
-          rawText: "it",
+        parameters: {
+          target: {
+            type: "unknown",
+            rawText: "it",
+          },
+          amount: 2,
         },
       },
     },

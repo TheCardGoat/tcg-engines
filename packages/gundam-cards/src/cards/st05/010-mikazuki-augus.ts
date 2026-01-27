@@ -16,25 +16,31 @@ export const MikazukiAugus: PilotCardDefinition = {
   traits: ["tekkadan", "alaya-vijnana"],
   apModifier: 2,
   hpModifier: 1,
-  abilities: [
+  effects: [
     {
-      trigger: "ON_BURST",
+      id: "st05-010-effect-1",
       description: "【Burst】 Add this card to your hand.",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "Add this card to your hand.",
+      type: "TRIGGERED",
+      timing: "BURST",
+      action: {
+        type: "CUSTOM",
+        text: "Add this card to your hand.",
       },
     },
     {
-      trigger: "WHEN_PAIRED",
+      id: "st05-010-effect-2",
       description:
         "【When Paired】 Choose 1 of your Units and 1 enemy Unit. Deal 1 damage to them.",
-      effect: {
+      type: "TRIGGERED",
+      timing: "WHEN_PAIRED",
+      action: {
         type: "DAMAGE",
-        amount: 1,
-        target: {
-          type: "unknown",
-          rawText: "them",
+        parameters: {
+          target: {
+            type: "unknown",
+            rawText: "them",
+          },
+          amount: 1,
         },
       },
     },

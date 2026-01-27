@@ -18,33 +18,36 @@ export const Gamow: BaseCardDefinition_Structure = {
   hp: 5,
   zones: ["space"],
   traits: ["zaft", "warship"],
-  abilities: [
+  effects: [
     {
-      trigger: "ON_BURST",
+      id: "gd01-127-effect-1",
       description: "【Burst】 Deploy this card.",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "Deploy this card.",
+      type: "TRIGGERED",
+      timing: "BURST",
+      action: {
+        type: "CUSTOM",
+        text: "Deploy this card.",
       },
     },
     {
-      trigger: "ON_DEPLOY",
+      id: "gd01-127-effect-2",
       description: "【Deploy】 Add 1 of your Shields to your hand.",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "Add 1 of your Shields to your hand.",
+      type: "TRIGGERED",
+      timing: "DEPLOY",
+      action: {
+        type: "CUSTOM",
+        text: "Add 1 of your Shields to your hand.",
       },
     },
     {
-      activated: {
-        timing: "ACTION",
-      },
+      id: "gd01-127-effect-3",
       description:
         "【Activate･Action】 Rest this Base：Choose 1 friendly (ZAFT) Unit with 5 or more AP. It gains <Breach 3> during this battle. (When this Unit&#039;s attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent&#039;s shield area.)",
-      effect: {
-        type: "UNKNOWN",
-        rawText:
-          "Rest this Base：Choose 1 friendly (ZAFT) Unit with 5 or more AP. It gains <Breach 3> during this battle. (When this Unit&#039;s attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent&#039;s shield area.)",
+      type: "ACTIVATED",
+      timing: "ACTION",
+      action: {
+        type: "CUSTOM",
+        text: "Rest this Base：Choose 1 friendly (ZAFT) Unit with 5 or more AP. It gains <Breach 3> during this battle. (When this Unit&#039;s attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent&#039;s shield area.)",
       },
     },
   ],

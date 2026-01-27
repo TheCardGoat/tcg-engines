@@ -18,21 +18,25 @@ export const UndergroundDesertBase: BaseCardDefinition_Structure = {
   hp: 6,
   zones: ["earth"],
   traits: ["maganac", "corps", "stronghold"],
-  abilities: [
+  effects: [
     {
-      trigger: "ON_BURST",
+      id: "gd01-126-effect-1",
       description: "【Burst】 Deploy this card.",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "Deploy this card.",
+      type: "TRIGGERED",
+      timing: "BURST",
+      action: {
+        type: "CUSTOM",
+        text: "Deploy this card.",
       },
     },
     {
-      trigger: "ON_DEPLOY",
+      id: "gd01-126-effect-2",
       description: "【Deploy】 Add 1 of your Shields to your hand.",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "Add 1 of your Shields to your hand.",
+      type: "TRIGGERED",
+      timing: "DEPLOY",
+      action: {
+        type: "CUSTOM",
+        text: "Add 1 of your Shields to your hand.",
       },
     },
   ],

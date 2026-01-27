@@ -25,14 +25,16 @@ export const Gundam_GD01_001: UnitCardDefinition = {
       value: 1,
     },
   ],
-  abilities: [
+  effects: [
     {
-      trigger: "WHEN_PAIRED",
+      id: "gd01-001-effect-1",
       description:
         "【When Paired】 If you have 2 or more other Units in play, draw 1.",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "If you have 2 or more other Units in play, draw 1.",
+      type: "TRIGGERED",
+      timing: "WHEN_PAIRED",
+      action: {
+        type: "CUSTOM",
+        text: "If you have 2 or more other Units in play, draw 1.",
       },
     },
   ],

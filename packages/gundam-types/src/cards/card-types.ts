@@ -336,9 +336,6 @@ export type UnitCardDefinition = BaseCardDefinition & {
 
   /** Keyword abilities */
   keywords?: KeywordAbility[];
-
-  /** Triggered/Activated abilities */
-  abilities?: ParsedAbility[];
 };
 
 // ============================================================================
@@ -356,9 +353,6 @@ export type PilotCardDefinition = BaseCardDefinition & {
 
   /** HP bonus when paired */
   hpModifier: number;
-
-  /** Abilities */
-  abilities?: ParsedAbility[];
 };
 
 // ============================================================================
@@ -378,9 +372,6 @@ export type CommandCardDefinition = BaseCardDefinition & {
     apModifier: number;
     hpModifier: number;
   };
-
-  /** Abilities */
-  abilities?: ParsedAbility[];
 };
 
 // ============================================================================
@@ -401,9 +392,6 @@ export type BaseCardDefinition_Structure = BaseCardDefinition & {
 
   /** Traits */
   traits: string[];
-
-  /** Abilities */
-  abilities?: ParsedAbility[];
 };
 
 // ============================================================================

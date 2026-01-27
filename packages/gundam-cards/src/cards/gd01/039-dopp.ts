@@ -19,15 +19,16 @@ export const Dopp: UnitCardDefinition = {
   zones: ["earth"],
   traits: ["zeon"],
   linkRequirements: ["-"],
-  abilities: [
+  effects: [
     {
-      trigger: "ON_DEPLOY",
+      id: "gd01-039-effect-1",
       description:
         "【Deploy】 Look at the top card of your deck. Return it to the top or bottom of your deck.",
-      effect: {
-        type: "UNKNOWN",
-        rawText:
-          "Look at the top card of your deck. Return it to the top or bottom of your deck.",
+      type: "TRIGGERED",
+      timing: "DEPLOY",
+      action: {
+        type: "CUSTOM",
+        text: "Look at the top card of your deck. Return it to the top or bottom of your deck.",
       },
     },
   ],

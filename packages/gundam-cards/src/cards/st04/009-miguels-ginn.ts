@@ -19,14 +19,16 @@ export const MiguelsGinn: UnitCardDefinition = {
   zones: ["space", "earth"],
   traits: ["zaft"],
   linkRequirements: ["miguel-ayman"],
-  abilities: [
+  effects: [
     {
-      trigger: "ON_DESTROYED",
+      id: "st04-009-effect-1",
       description:
         "【Destroyed】 If you have another Link Unit in play, draw 1.",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "If you have another Link Unit in play, draw 1.",
+      type: "TRIGGERED",
+      timing: "DESTROYED",
+      action: {
+        type: "CUSTOM",
+        text: "If you have another Link Unit in play, draw 1.",
       },
     },
   ],

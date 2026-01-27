@@ -19,15 +19,16 @@ export const Cagalli039sSkygrasper: UnitCardDefinition = {
   zones: ["earth"],
   traits: ["earth", "alliance"],
   linkRequirements: ["cagalli-yula-athha"],
-  abilities: [
+  effects: [
     {
-      trigger: "ON_DESTROYED",
+      id: "gd01-080-effect-1",
       description:
         "【Destroyed】 Choose 1 enemy Unit that is Lv.2 or lower. Return it to its owner&#039;s hand.",
-      effect: {
-        type: "UNKNOWN",
-        rawText:
-          "Choose 1 enemy Unit that is Lv.2 or lower. Return it to its owner&#039;s hand.",
+      type: "TRIGGERED",
+      timing: "DESTROYED",
+      action: {
+        type: "CUSTOM",
+        text: "Choose 1 enemy Unit that is Lv.2 or lower. Return it to its owner&#039;s hand.",
       },
     },
   ],

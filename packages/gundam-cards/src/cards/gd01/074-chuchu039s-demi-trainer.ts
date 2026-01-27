@@ -19,13 +19,15 @@ export const Chuchu039sDemiTrainer: UnitCardDefinition = {
   zones: ["space", "earth"],
   traits: ["academy"],
   linkRequirements: ["chuatury-panlunch"],
-  abilities: [
+  effects: [
     {
-      trigger: "ON_ATTACK",
+      id: "gd01-074-effect-1",
       description: "【Attack】 Draw 1. Then, discard 1.",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "Draw 1. Then, discard 1.",
+      type: "TRIGGERED",
+      timing: "ATTACK",
+      action: {
+        type: "CUSTOM",
+        text: "Draw 1. Then, discard 1.",
       },
     },
   ],

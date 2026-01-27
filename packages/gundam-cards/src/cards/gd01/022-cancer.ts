@@ -19,12 +19,14 @@ export const Cancer: UnitCardDefinition = {
   zones: ["earth"],
   traits: ["oz"],
   linkRequirements: ["-"],
-  abilities: [
+  effects: [
     {
+      id: "gd01-022-effect-1",
       description: "-",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "-",
+      type: "CONSTANT",
+      action: {
+        type: "CUSTOM",
+        text: "-",
       },
     },
   ],

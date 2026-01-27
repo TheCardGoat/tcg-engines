@@ -28,15 +28,16 @@ export const ShenlongGundam_GD01_029: UnitCardDefinition = {
       keyword: "Blocker",
     },
   ],
-  abilities: [
+  effects: [
     {
-      trigger: "ON_ATTACK",
+      id: "gd01-029-effect-1",
       description:
         "【Attack】 Choose 1 enemy Unit with <Blocker> that is Lv.3 or lower. Destroy it.",
-      effect: {
-        type: "UNKNOWN",
-        rawText:
-          "Choose 1 enemy Unit with <Blocker> that is Lv.3 or lower. Destroy it.",
+      type: "TRIGGERED",
+      timing: "ATTACK",
+      action: {
+        type: "CUSTOM",
+        text: "Choose 1 enemy Unit with <Blocker> that is Lv.3 or lower. Destroy it.",
       },
     },
   ],

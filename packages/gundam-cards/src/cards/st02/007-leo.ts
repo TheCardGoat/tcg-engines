@@ -19,12 +19,14 @@ export const Leo: UnitCardDefinition = {
   zones: ["space", "earth"],
   traits: ["oz"],
   linkRequirements: ["(oz)-trait"],
-  abilities: [
+  effects: [
     {
+      id: "st02-007-effect-1",
       description: "-",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "-",
+      type: "CONSTANT",
+      action: {
+        type: "CUSTOM",
+        text: "-",
       },
     },
   ],

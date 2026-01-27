@@ -3,6 +3,7 @@
  */
 
 import { describe, expect, it } from "bun:test";
+import type { TriggeredEffect } from "@tcg/gundam-types";
 import type { ParseResult } from "../../parser/text-parser";
 import type { ScrapedCardData } from "../../scraper/card-scraper";
 import {
@@ -32,17 +33,21 @@ describe("Card Generator", () => {
 
   const mockParsed: ParseResult = {
     keywords: [{ keyword: "First-Strike" }],
-    abilities: [
+    effects: [
       {
-        trigger: "ON_DEPLOY",
+        id: "mock-effect",
+        type: "TRIGGERED",
+        timing: "DEPLOY",
         description: "【Deploy】Search your deck for a Pilot.",
-        effect: {
-          type: "SEARCH_DECK",
-          filter: { cardType: "PILOT" },
-          destination: "hand",
-          count: 1,
+        action: {
+          type: "SEARCH",
+          parameters: {
+            filter: { cardType: "PILOT" },
+            destination: "hand",
+            count: 1,
+          },
         },
-      },
+      } as TriggeredEffect,
     ],
     warnings: [],
   };
@@ -65,7 +70,7 @@ describe("Card Generator", () => {
         expect(card.traits).toContain("federation");
         expect(card.linkRequirements).toContain("amuro-ray");
         expect(card.keywords).toHaveLength(1);
-        expect(card.abilities).toHaveLength(1);
+        expect(card.effects).toHaveLength(1);
       }
     });
 
@@ -81,7 +86,7 @@ describe("Card Generator", () => {
 
       const card = createCardDefinition(mockPilot, {
         keywords: [],
-        abilities: [],
+        effects: [],
         warnings: [],
       });
 
@@ -105,7 +110,7 @@ describe("Card Generator", () => {
 
       const card = createCardDefinition(mockResource, {
         keywords: [],
-        abilities: [],
+        effects: [],
         warnings: [],
       });
 

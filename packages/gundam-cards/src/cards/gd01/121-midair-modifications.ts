@@ -15,15 +15,16 @@ export const MidairModifications: CommandCardDefinition = {
     "https://www.gundam-gcg.com/en/images/cards/card/GD01-121.webp?2510031",
   sourceTitle: "Mobile Suit Gundam SEED",
   timing: "MAIN",
-  abilities: [
+  effects: [
     {
-      trigger: "ON_BURST",
+      id: "gd01-121-effect-1",
       description:
         "【Burst】 Activate this card&#039;s 【Main】. 【Main】Choose 1 rested Unit with <Blocker>. Set it as active. It can&#039;t attack during this turn.",
-      effect: {
-        type: "UNKNOWN",
-        rawText:
-          "Activate this card&#039;s 【Main】. 【Main】Choose 1 rested Unit with <Blocker>. Set it as active. It can&#039;t attack during this turn.",
+      type: "TRIGGERED",
+      timing: "BURST",
+      action: {
+        type: "CUSTOM",
+        text: "Activate this card&#039;s 【Main】. 【Main】Choose 1 rested Unit with <Blocker>. Set it as active. It can&#039;t attack during this turn.",
       },
     },
   ],

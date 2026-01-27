@@ -19,16 +19,20 @@ export const Kshatriya_GD01_044: UnitCardDefinition = {
   zones: ["space", "earth"],
   traits: ["neo", "zeon"],
   linkRequirements: ["marida-cruz"],
-  abilities: [
+  effects: [
     {
+      id: "gd01-044-effect-1",
       description:
         "【When Paired･(Cyber-Newtype)/(Newtype) Pilot】Choose 1 to 2 enemy Units. Deal 1 damage to them.",
-      effect: {
+      type: "CONSTANT",
+      action: {
         type: "DAMAGE",
-        amount: 1,
-        target: {
-          type: "unknown",
-          rawText: "them",
+        parameters: {
+          target: {
+            type: "unknown",
+            rawText: "them",
+          },
+          amount: 1,
         },
       },
     },

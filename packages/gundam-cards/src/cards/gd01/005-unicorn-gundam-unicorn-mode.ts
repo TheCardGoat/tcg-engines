@@ -19,15 +19,16 @@ export const UnicornGundamUnicornMode: UnitCardDefinition = {
   zones: ["space", "earth"],
   traits: ["civilian"],
   linkRequirements: ["banagher-links"],
-  abilities: [
+  effects: [
     {
-      trigger: "ON_DESTROYED",
+      id: "gd01-005-effect-1",
       description:
         "【Destroyed】 Return this Unit&#039;s paired Pilot to its owner&#039;s hand. Then, discard 1.",
-      effect: {
-        type: "UNKNOWN",
-        rawText:
-          "Return this Unit&#039;s paired Pilot to its owner&#039;s hand. Then, discard 1.",
+      type: "TRIGGERED",
+      timing: "DESTROYED",
+      action: {
+        type: "CUSTOM",
+        text: "Return this Unit&#039;s paired Pilot to its owner&#039;s hand. Then, discard 1.",
       },
     },
   ],

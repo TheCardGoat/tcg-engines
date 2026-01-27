@@ -19,14 +19,16 @@ export const Gouf: UnitCardDefinition = {
   zones: ["earth"],
   traits: ["zeon"],
   linkRequirements: ["ramba-ral"],
-  abilities: [
+  effects: [
     {
-      trigger: "ON_DEPLOY",
+      id: "st03-009-effect-1",
       description:
         "【Deploy】 Deploy 1 rested [Zaku Ⅱ]((Zeon)･AP1･HP1) Unit token.",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "Deploy 1 rested [Zaku Ⅱ]((Zeon)･AP1･HP1) Unit token.",
+      type: "TRIGGERED",
+      timing: "DEPLOY",
+      action: {
+        type: "CUSTOM",
+        text: "Deploy 1 rested [Zaku Ⅱ]((Zeon)･AP1･HP1) Unit token.",
       },
     },
   ],

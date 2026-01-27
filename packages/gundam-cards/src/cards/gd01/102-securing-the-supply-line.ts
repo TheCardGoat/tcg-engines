@@ -15,15 +15,19 @@ export const SecuringTheSupplyLine: CommandCardDefinition = {
     "https://www.gundam-gcg.com/en/images/cards/card/GD01-102.webp?2510031",
   sourceTitle: "Mobile Suit Gundam",
   timing: "MAIN",
-  abilities: [
+  effects: [
     {
+      id: "gd01-102-effect-1",
       description:
         "【Main】All friendly Units that are Lv.4 or lower recover 2 HP.",
-      effect: {
-        type: "RECOVER_HP",
-        amount: 2,
-        target: {
-          type: "self",
+      type: "CONSTANT",
+      action: {
+        type: "HEAL",
+        parameters: {
+          target: {
+            type: "self",
+          },
+          amount: 2,
         },
       },
     },

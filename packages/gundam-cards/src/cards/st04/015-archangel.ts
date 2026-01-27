@@ -18,33 +18,36 @@ export const Archangel: BaseCardDefinition_Structure = {
   hp: 5,
   zones: ["space", "earth"],
   traits: ["earth", "alliance", "warship"],
-  abilities: [
+  effects: [
     {
-      trigger: "ON_BURST",
+      id: "st04-015-effect-1",
       description: "【Burst】 Deploy this card.",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "Deploy this card.",
+      type: "TRIGGERED",
+      timing: "BURST",
+      action: {
+        type: "CUSTOM",
+        text: "Deploy this card.",
       },
     },
     {
-      trigger: "ON_DEPLOY",
+      id: "st04-015-effect-2",
       description: "【Deploy】 Add 1 of your Shields to your hand.",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "Add 1 of your Shields to your hand.",
+      type: "TRIGGERED",
+      timing: "DEPLOY",
+      action: {
+        type: "CUSTOM",
+        text: "Add 1 of your Shields to your hand.",
       },
     },
     {
-      activated: {
-        timing: "MAIN",
-      },
+      id: "st04-015-effect-3",
       description:
         "【Activate･Main】 【Once per Turn】②：Choose 1 friendly Unit with <Blocker>. Set it as active. It can't attack during this turn.",
-      effect: {
-        type: "UNKNOWN",
-        rawText:
-          "【Once per Turn】②：Choose 1 friendly Unit with <Blocker>. Set it as active. It can't attack during this turn.",
+      type: "ACTIVATED",
+      timing: "MAIN",
+      action: {
+        type: "CUSTOM",
+        text: "【Once per Turn】②：Choose 1 friendly Unit with <Blocker>. Set it as active. It can't attack during this turn.",
       },
     },
   ],

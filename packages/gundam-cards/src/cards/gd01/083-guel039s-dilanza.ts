@@ -19,12 +19,14 @@ export const Guel039sDilanza: UnitCardDefinition = {
   zones: ["space", "earth"],
   traits: ["academy"],
   linkRequirements: ["(academy)-trait"],
-  abilities: [
+  effects: [
     {
+      id: "gd01-083-effect-1",
       description: "-",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "-",
+      type: "CONSTANT",
+      action: {
+        type: "CUSTOM",
+        text: "-",
       },
     },
   ],

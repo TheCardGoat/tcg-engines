@@ -19,12 +19,14 @@ export const StrikeGundam: UnitCardDefinition = {
   zones: ["space", "earth"],
   traits: ["earth", "alliance"],
   linkRequirements: ["kira-yamato"],
-  abilities: [
+  effects: [
     {
+      id: "gd01-077-effect-1",
       description: "-",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "-",
+      type: "CONSTANT",
+      action: {
+        type: "CUSTOM",
+        text: "-",
       },
     },
   ],
