@@ -42,8 +42,8 @@ export type TestInitialState = {
   deck?: number | GundamCardDefinitionInput[];
   /** Cards in play - number or card definitions */
   play?: number | GundamCardDefinitionInput[];
-  /** Cards in inkwell - number or card definitions */
-  inkwell?: number | GundamCardDefinitionInput[];
+  /** Cards in resource area - number or card definitions */
+  resourceArea?: number | GundamCardDefinitionInput[];
   /** Cards in discard - number or card definitions */
   discard?: number | GundamCardDefinitionInput[];
 };
