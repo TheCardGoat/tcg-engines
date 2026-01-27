@@ -1,14 +1,10 @@
 import { type PlayerId, RuleEngine } from "@tcg/core";
-import type {
-  GundamCardMeta,
-  GundamGameState,
-  GundamMoves,
-} from "../src/types";
+import type { GundamCardMeta, GundamGameState, GundamMoves } from "../types";
 import type {
   AvailableMoveInfo,
   MoveParameterOptions,
   MoveValidationError,
-} from "../src/types/move-enumaration";
+} from "../types/move-enumaration";
 
 /**
  * Gundam Engine

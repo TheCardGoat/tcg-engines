@@ -31,8 +31,6 @@ export * from "./targeting";
 // Type exports
 export * from "./types";
 
-// Type exports
-export * from "./types";
 // Move enumeration type exports
 export type {
   AvailableMoveInfo,
