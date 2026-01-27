@@ -198,11 +198,10 @@ export class GundamTestEngine {
     // Helper to initialize metadata for created cards
     const initializeCardMetadata = (cardIds: string[]) => {
       for (const cardId of cardIds) {
-        // Initialize with default Lorcana card metadata
+        // Initialize with default Gundam card metadata
         cardOps.setCardMeta(createCardId(cardId), {
           damage: 0,
           state: "ready",
-          isDrying: true, // Characters start with summoning sickness
         } as any);
       }
     };
