@@ -5,7 +5,6 @@ import {
   createZoneOperations,
   type RuleEngineOptions,
 } from "@tcg/core";
-import { GundamEngine } from "../../engine/gundam-engine";
 import type {
   BaseCardDefinition,
   CommandCardDefinition,
@@ -13,6 +12,7 @@ import type {
   PilotCardDefinition,
   UnitCardDefinition,
 } from "../cards/card-types";
+import { GundamEngine } from "../engine/gundam-engine";
 import { gundamGameDefinition } from "../game-definition/definition";
 import type { GundamCardMeta, GundamGameState, GundamMoves } from "../types";
 
