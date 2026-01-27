@@ -18,23 +18,26 @@ export const CorsicaBase: BaseCardDefinition_Structure = {
   hp: 5,
   zones: ["earth"],
   traits: ["oz", "stronghold"],
-  abilities: [
+  effects: [
     {
-      trigger: "ON_BURST",
+      id: "st02-016-effect-1",
       description: "【Burst】 Deploy this card.",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "Deploy this card.",
+      type: "TRIGGERED",
+      timing: "BURST",
+      action: {
+        type: "CUSTOM",
+        text: "Deploy this card.",
       },
     },
     {
-      trigger: "ON_DEPLOY",
+      id: "st02-016-effect-2",
       description:
         '【Deploy】 Add 1 of your Shields to your hand. Then, if it is your turn, deploy 1 [Tallgeese]((OZ)･AP4･HP2) Unit token. If it is your turn and a card with "Corsica Base" in its card name is in your trash, deploy 2 [Leo]((OZ)･AP1･HP1) Unit tokens instead.',
-      effect: {
-        type: "UNKNOWN",
-        rawText:
-          'Add 1 of your Shields to your hand. Then, if it is your turn, deploy 1 [Tallgeese]((OZ)･AP4･HP2) Unit token. If it is your turn and a card with "Corsica Base" in its card name is in your trash, deploy 2 [Leo]((OZ)･AP1･HP1) Unit tokens instead.',
+      type: "TRIGGERED",
+      timing: "DEPLOY",
+      action: {
+        type: "CUSTOM",
+        text: 'Add 1 of your Shields to your hand. Then, if it is your turn, deploy 1 [Tallgeese]((OZ)･AP4･HP2) Unit token. If it is your turn and a card with "Corsica Base" in its card name is in your trash, deploy 2 [Leo]((OZ)･AP1･HP1) Unit tokens instead.',
       },
     },
   ],

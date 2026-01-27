@@ -17,15 +17,16 @@ export const ChangWufei: PilotCardDefinition = {
   traits: ["operation", "meteor"],
   apModifier: 2,
   hpModifier: 1,
-  abilities: [
+  effects: [
     {
-      trigger: "ON_BURST",
+      id: "gd01-091-effect-1",
       description:
         "【Burst】 Add this card to your hand. During your turn, while this Unit has <Breach>, it can&#039;t receive battle damage from enemy Units with 3 or less AP.",
-      effect: {
-        type: "UNKNOWN",
-        rawText:
-          "Add this card to your hand. During your turn, while this Unit has <Breach>, it can&#039;t receive battle damage from enemy Units with 3 or less AP.",
+      type: "TRIGGERED",
+      timing: "BURST",
+      action: {
+        type: "CUSTOM",
+        text: "Add this card to your hand. During your turn, while this Unit has <Breach>, it can&#039;t receive battle damage from enemy Units with 3 or less AP.",
       },
     },
   ],

@@ -19,15 +19,16 @@ export const Rasid039sMaganac: UnitCardDefinition = {
   zones: ["space", "earth"],
   traits: ["maganac", "corps"],
   linkRequirements: ["(maganac-corps)-trait"],
-  abilities: [
+  effects: [
     {
-      trigger: "ON_DEPLOY",
+      id: "gd01-043-effect-1",
       description:
         "【Deploy】 Choose 1 of your green Units. During this turn, it may choose an active enemy Unit with 4 or less AP as its attack target.",
-      effect: {
-        type: "UNKNOWN",
-        rawText:
-          "Choose 1 of your green Units. During this turn, it may choose an active enemy Unit with 4 or less AP as its attack target.",
+      type: "TRIGGERED",
+      timing: "DEPLOY",
+      action: {
+        type: "CUSTOM",
+        text: "Choose 1 of your green Units. During this turn, it may choose an active enemy Unit with 4 or less AP as its attack target.",
       },
     },
   ],

@@ -19,13 +19,15 @@ export const UnicornGundamDestroyMode: UnitCardDefinition = {
   zones: ["space", "earth"],
   traits: ["civilian"],
   linkRequirements: ["banagher-links"],
-  abilities: [
+  effects: [
     {
-      trigger: "ON_ATTACK",
+      id: "gd01-002-effect-1",
       description: "【Attack】 Choose 1 enemy Unit. Rest it.",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "Choose 1 enemy Unit. Rest it.",
+      type: "TRIGGERED",
+      timing: "ATTACK",
+      action: {
+        type: "CUSTOM",
+        text: "Choose 1 enemy Unit. Rest it.",
       },
     },
   ],

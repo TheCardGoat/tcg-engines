@@ -19,12 +19,14 @@ export const Kshatriya_GD01_051: UnitCardDefinition = {
   zones: ["space", "earth"],
   traits: ["neo", "zeon"],
   linkRequirements: ["(cyber-newtype)-trait"],
-  abilities: [
+  effects: [
     {
+      id: "gd01-051-effect-1",
       description: "-",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "-",
+      type: "CONSTANT",
+      action: {
+        type: "CUSTOM",
+        text: "-",
       },
     },
   ],

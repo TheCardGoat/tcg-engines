@@ -18,14 +18,16 @@ export const GundamGusionRebake: UnitCardDefinition = {
   zones: ["space", "earth"],
   traits: ["tekkadan", "gundam", "frame"],
   linkRequirements: ["akihiro-altland"],
-  abilities: [
+  effects: [
     {
-      trigger: "ON_DESTROYED",
+      id: "st05-005-effect-1",
       description:
         "【Destroyed】 Choose 1 enemy Unit with 4 or less AP. Rest it.",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "Choose 1 enemy Unit with 4 or less AP. Rest it.",
+      type: "TRIGGERED",
+      timing: "DESTROYED",
+      action: {
+        type: "CUSTOM",
+        text: "Choose 1 enemy Unit with 4 or less AP. Rest it.",
       },
     },
   ],

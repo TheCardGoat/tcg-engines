@@ -19,12 +19,14 @@ export const DemiGarrison: UnitCardDefinition = {
   zones: ["space", "earth"],
   traits: ["academy"],
   linkRequirements: ["-"],
-  abilities: [
+  effects: [
     {
+      id: "gd01-085-effect-1",
       description: "-",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "-",
+      type: "CONSTANT",
+      action: {
+        type: "CUSTOM",
+        text: "-",
       },
     },
   ],

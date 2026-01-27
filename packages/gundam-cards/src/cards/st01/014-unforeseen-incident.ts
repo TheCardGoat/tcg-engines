@@ -15,16 +15,20 @@ export const UnforeseenIncident: CommandCardDefinition = {
     "https://www.gundam-gcg.com/en/images/cards/card/ST01-014.webp?2510031",
   sourceTitle: "Mobile Suit Gundam the Witch from Mercury",
   timing: "MAIN",
-  abilities: [
+  effects: [
     {
-      trigger: "ON_BURST",
+      id: "st01-014-effect-1",
       description:
         "【Burst】 Activate this card's 【Main】. 【Main】/【Action】Choose 1 enemy Unit. It gets AP-3 during this turn.",
-      effect: {
+      type: "TRIGGERED",
+      timing: "BURST",
+      action: {
         type: "MODIFY_STATS",
-        attribute: "ap",
-        modifier: -3,
-        duration: "turn",
+        parameters: {
+          attribute: "ap",
+          modifier: -3,
+          duration: "turn",
+        },
       },
     },
   ],

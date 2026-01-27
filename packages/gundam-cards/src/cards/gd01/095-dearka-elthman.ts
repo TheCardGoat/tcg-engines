@@ -17,15 +17,16 @@ export const DearkaElthman: PilotCardDefinition = {
   traits: ["zaft", "coordinator"],
   apModifier: 1,
   hpModifier: 1,
-  abilities: [
+  effects: [
     {
-      trigger: "ON_BURST",
+      id: "gd01-095-effect-1",
       description:
         "【Burst】 Add this card to your hand. 【When Linked】Discard 1. If you do, draw 1.",
-      effect: {
-        type: "UNKNOWN",
-        rawText:
-          "Add this card to your hand. 【When Linked】Discard 1. If you do, draw 1.",
+      type: "TRIGGERED",
+      timing: "BURST",
+      action: {
+        type: "CUSTOM",
+        text: "Add this card to your hand. 【When Linked】Discard 1. If you do, draw 1.",
       },
     },
   ],

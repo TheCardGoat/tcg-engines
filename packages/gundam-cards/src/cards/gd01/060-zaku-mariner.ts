@@ -19,12 +19,14 @@ export const ZakuMariner: UnitCardDefinition = {
   zones: ["earth"],
   traits: ["zeon"],
   linkRequirements: ["-"],
-  abilities: [
+  effects: [
     {
+      id: "gd01-060-effect-1",
       description: "-",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "-",
+      type: "CONSTANT",
+      action: {
+        type: "CUSTOM",
+        text: "-",
       },
     },
   ],

@@ -19,12 +19,14 @@ export const DracSleeves: UnitCardDefinition = {
   zones: ["space"],
   traits: ["neo", "zeon"],
   linkRequirements: ["-"],
-  abilities: [
+  effects: [
     {
+      id: "st03-005-effect-1",
       description: "-",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "-",
+      type: "CONSTANT",
+      action: {
+        type: "CUSTOM",
+        text: "-",
       },
     },
   ],

@@ -19,16 +19,16 @@ export const Tallgeese: UnitCardDefinition = {
   zones: ["space", "earth"],
   traits: ["oz"],
   linkRequirements: ["zechs-merquise"],
-  abilities: [
+  effects: [
     {
-      activated: {
-        timing: "MAIN",
-      },
+      id: "st02-006-effect-1",
       description:
         "【Activate･Main】 【Once per Turn】④：Set this Unit as active.",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "【Once per Turn】④：Set this Unit as active.",
+      type: "ACTIVATED",
+      timing: "MAIN",
+      action: {
+        type: "CUSTOM",
+        text: "【Once per Turn】④：Set this Unit as active.",
       },
     },
   ],

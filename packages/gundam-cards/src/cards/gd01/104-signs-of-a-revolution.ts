@@ -15,17 +15,21 @@ export const SignsOfARevolution: CommandCardDefinition = {
     "https://www.gundam-gcg.com/en/images/cards/card/GD01-104.webp?2510031",
   sourceTitle: "Mobile Suit Gundam Wing",
   timing: "MAIN",
-  abilities: [
+  effects: [
     {
-      trigger: "ON_BURST",
+      id: "gd01-104-effect-1",
       description:
         "【Burst】 Draw 1. 【Main】Choose 1 rested enemy Unit. Deal 2 damage to it.",
-      effect: {
+      type: "TRIGGERED",
+      timing: "BURST",
+      action: {
         type: "DAMAGE",
-        amount: 2,
-        target: {
-          type: "unknown",
-          rawText: "it",
+        parameters: {
+          target: {
+            type: "unknown",
+            rawText: "it",
+          },
+          amount: 2,
         },
       },
     },

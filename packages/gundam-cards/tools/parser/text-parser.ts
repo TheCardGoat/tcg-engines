@@ -4,11 +4,16 @@
  * Converts card effect text into structured ability format.
  */
 
-import type { KeywordAbility, ParsedAbility } from "@tcg/gundam-types";
+import type {
+  Effect,
+  EffectAction,
+  EffectActionType,
+  KeywordAbility,
+} from "@tcg/gundam-types";
 
 export type ParseResult = {
   keywords: KeywordAbility[];
-  abilities: ParsedAbility[];
+  abilities: Effect[];
   warnings: string[];
 };
 
@@ -31,21 +36,28 @@ const KEYWORD_PATTERNS: Record<string, KeywordAbility["keyword"]> = {
 // ============================================================================
 
 // Separate patterns for conditions and triggers
-const CONDITION_PATTERNS: Record<string, ParsedAbility["condition"]> = {
+const CONDITION_PATTERNS: Record<string, "DURING_LINK" | "DURING_PAIR"> = {
   "【During Link】": "DURING_LINK",
   "【During Pair】": "DURING_PAIR",
 };
 
 const TRIGGER_PATTERNS: Record<
   string,
-  ParsedAbility["trigger"] | "ACTIVATED_MAIN" | "ACTIVATED_ACTION"
+  | "DEPLOY"
+  | "ATTACK"
+  | "DESTROYED"
+  | "WHEN_PAIRED"
+  | "WHEN_LINKED"
+  | "BURST"
+  | "ACTIVATED_MAIN"
+  | "ACTIVATED_ACTION"
 > = {
-  "【Deploy】": "ON_DEPLOY",
-  "【Attack】": "ON_ATTACK",
+  "【Deploy】": "DEPLOY",
+  "【Attack】": "ATTACK",
   "【When Paired】": "WHEN_PAIRED",
   "【When Linked】": "WHEN_LINKED",
-  "【Destroyed】": "ON_DESTROYED",
-  "【Burst】": "ON_BURST",
+  "【Destroyed】": "DESTROYED",
+  "【Burst】": "BURST",
   "【Activate･Main】": "ACTIVATED_MAIN",
   "【Activate･Action】": "ACTIVATED_ACTION",
 };
@@ -116,11 +128,8 @@ export function extractKeywords(text: string): KeywordAbility[] {
 /**
  * Parses ability text into structured abilities
  */
-export function parseAbilityText(
-  text: string,
-  warnings: string[],
-): ParsedAbility[] {
-  const abilities: ParsedAbility[] = [];
+export function parseAbilityText(text: string, warnings: string[]): Effect[] {
+  const abilities: Effect[] = [];
 
   // Split by timing markers
   const segments = splitByTimingMarkers(text);
@@ -238,14 +247,14 @@ function splitByTimingMarkers(
 function parseAbilitySegment(
   segment: { markers: string[]; text: string },
   warnings: string[],
-): ParsedAbility | null {
+): Effect | null {
   if (!segment.text.trim()) {
     return null;
   }
 
   // Parse markers to identify conditions and triggers
-  let condition: ParsedAbility["condition"] | undefined;
-  let trigger: ParsedAbility["trigger"] | undefined;
+  let condition: "DURING_LINK" | "DURING_PAIR" | undefined;
+  let trigger: string | undefined;
   let activatedTiming: "MAIN" | "ACTION" | undefined;
   const unknownMarkers: string[] = [];
 
@@ -272,45 +281,54 @@ function parseAbilitySegment(
   }
 
   const description = `${segment.markers.join(" ")} ${segment.text}`;
+  const action = parseEffect(segment.text, warnings);
+  const id = `parsed-${Math.random().toString(36).substr(2, 9)}`; // Generate temp ID
 
   // Handle activated abilities
   if (activatedTiming) {
-    const cost = extractActivationCost(segment.text);
+    const costStr = extractActivationCost(segment.text);
+    const cost = costStr
+      ? Number.parseInt(costStr.replace(/\D/g, ""), 10)
+      : undefined;
 
     return {
-      condition,
-      activated: {
-        timing: activatedTiming,
-        cost,
-      },
+      id,
+      type: "ACTIVATED",
+      timing: activatedTiming,
+      cost,
       description,
-      effect: parseEffect(segment.text, warnings),
+      action,
     };
   }
 
   // Handle triggered abilities
   if (trigger) {
     return {
-      condition,
-      trigger,
+      id,
+      type: "TRIGGERED",
+      timing: trigger as any, // Cast because trigger type includes ACTIVATED... wait, TRIGGER_PATTERNS includes ACTIVATED keys but values are distinct
       description,
-      effect: parseEffect(segment.text, warnings),
+      action,
     };
   }
 
-  // Handle condition-only abilities (continuous effects during certain conditions)
+  // Handle condition-only abilities (constant effects)
   if (condition) {
     return {
-      condition,
+      id,
+      type: "CONSTANT",
+      conditions: [condition],
       description,
-      effect: parseEffect(segment.text, warnings),
+      action,
     };
   }
 
-  // No recognized trigger - treat as continuous or unknown
+  // No recognized trigger - treat as constant or unknown
   return {
+    id,
+    type: "CONSTANT",
     description,
-    effect: parseEffect(segment.text, warnings),
+    action,
   };
 }
 
@@ -321,10 +339,7 @@ function parseAbilitySegment(
 /**
  * Parses effect text into structured effect data
  */
-function parseEffect(
-  text: string,
-  warnings: string[],
-): ParsedAbility["effect"] {
+function parseEffect(text: string, warnings: string[]): EffectAction {
   // Try to match common patterns
 
   // Draw pattern
@@ -332,8 +347,8 @@ function parseEffect(
   if (drawMatch) {
     return {
       type: "DRAW",
-      amount: Number.parseInt(drawMatch[1], 10),
-      player: "self",
+      value: Number.parseInt(drawMatch[1], 10),
+      target: { player: "SELF" },
     };
   }
 
@@ -342,8 +357,9 @@ function parseEffect(
   if (damageMatch) {
     return {
       type: "DAMAGE",
-      amount: Number.parseInt(damageMatch[1], 10),
-      target: parseTarget(damageMatch[2]),
+      value: Number.parseInt(damageMatch[1], 10),
+      // target: parseTarget(damageMatch[2]), // parseTarget needs to return EffectTarget compatible object
+      parameters: { target: parseTarget(damageMatch[2]) }, // Temporary until parseTarget is updated
     };
   }
 
@@ -351,10 +367,15 @@ function parseEffect(
   const searchMatch = text.match(/search (?:your )?deck for (.+?)(?:\.|$)/i);
   if (searchMatch) {
     return {
-      type: "SEARCH_DECK",
-      filter: parseSearchFilter(searchMatch[1]),
-      destination: "hand",
-      count: 1,
+      type: "SEARCH", // "SEARCH_DECK" was old, check EffectActionType: "SEARCH"
+      // filter: parseSearchFilter(searchMatch[1]),
+      // destination: "hand",
+      // count: 1,
+      parameters: {
+        filter: parseSearchFilter(searchMatch[1]),
+        destination: "hand",
+        count: 1,
+      },
     };
   }
 
@@ -362,9 +383,9 @@ function parseEffect(
   const recoverMatch = text.match(/(?:recovers?|gains?) (\d+) HP/i);
   if (recoverMatch) {
     return {
-      type: "RECOVER_HP",
-      amount: Number.parseInt(recoverMatch[1], 10),
-      target: { type: "self" },
+      type: "HEAL", // "RECOVER_HP" -> "HEAL"
+      value: Number.parseInt(recoverMatch[1], 10),
+      target: { player: "SELF" }, // Approximate
     };
   }
 
@@ -373,17 +394,19 @@ function parseEffect(
   if (statMatch) {
     return {
       type: "MODIFY_STATS",
-      attribute: statMatch[1].toLowerCase(),
-      modifier: Number.parseInt(statMatch[2], 10),
-      duration: "turn",
+      parameters: {
+        attribute: statMatch[1].toLowerCase(),
+        modifier: Number.parseInt(statMatch[2], 10),
+        duration: "turn",
+      },
     };
   }
 
   // Default: unknown effect
   warnings.push(`Could not parse effect: ${text}`);
   return {
-    type: "UNKNOWN",
-    rawText: text,
+    type: "CUSTOM",
+    text: text,
   };
 }
 

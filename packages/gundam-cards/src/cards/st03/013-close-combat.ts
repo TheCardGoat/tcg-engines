@@ -15,17 +15,21 @@ export const CloseCombat: CommandCardDefinition = {
     "https://www.gundam-gcg.com/en/images/cards/card/ST03-013.webp?2510031",
   sourceTitle: "Mobile Suit Gundam Unicorn",
   timing: "MAIN",
-  abilities: [
+  effects: [
     {
-      trigger: "ON_BURST",
+      id: "st03-013-effect-1",
       description:
         "【Burst】 Activate this card's 【Main】. 【Main】/【Action】Choose 1 enemy Unit. Deal 2 damage to it.",
-      effect: {
+      type: "TRIGGERED",
+      timing: "BURST",
+      action: {
         type: "DAMAGE",
-        amount: 2,
-        target: {
-          type: "unknown",
-          rawText: "it",
+        parameters: {
+          target: {
+            type: "unknown",
+            rawText: "it",
+          },
+          amount: 2,
         },
       },
     },

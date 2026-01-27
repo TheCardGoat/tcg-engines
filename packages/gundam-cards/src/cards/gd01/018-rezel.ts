@@ -19,12 +19,14 @@ export const Rezel: UnitCardDefinition = {
   zones: ["space", "earth"],
   traits: ["earth", "federation"],
   linkRequirements: ["-"],
-  abilities: [
+  effects: [
     {
+      id: "gd01-018-effect-1",
       description: "-",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "-",
+      type: "CONSTANT",
+      action: {
+        type: "CUSTOM",
+        text: "-",
       },
     },
   ],

@@ -17,14 +17,16 @@ export const BanagherLinks: PilotCardDefinition = {
   traits: ["civilian", "newtype"],
   apModifier: 2,
   hpModifier: 2,
-  abilities: [
+  effects: [
     {
-      trigger: "ON_BURST",
+      id: "gd01-088-effect-1",
       description:
         "【Burst】 Add this card to your hand. 【When Linked】Draw 1.",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "Add this card to your hand. 【When Linked】Draw 1.",
+      type: "TRIGGERED",
+      timing: "BURST",
+      action: {
+        type: "CUSTOM",
+        text: "Add this card to your hand. 【When Linked】Draw 1.",
       },
     },
   ],

@@ -17,16 +17,20 @@ export const HeeroYuy: PilotCardDefinition = {
   traits: ["operation", "meteor"],
   apModifier: 2,
   hpModifier: 1,
-  abilities: [
+  effects: [
     {
-      trigger: "ON_BURST",
+      id: "st02-010-effect-1",
       description:
         "【Burst】 Add this card to your hand. 【During Link】This Unit gets AP+1 and HP+1.",
-      effect: {
+      type: "TRIGGERED",
+      timing: "BURST",
+      action: {
         type: "MODIFY_STATS",
-        attribute: "ap",
-        modifier: 1,
-        duration: "turn",
+        parameters: {
+          attribute: "ap",
+          modifier: 1,
+          duration: "turn",
+        },
       },
     },
   ],

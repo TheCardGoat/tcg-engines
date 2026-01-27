@@ -24,25 +24,27 @@ export const JusticeGundam: UnitCardDefinition = {
       keyword: "Blocker",
     },
   ],
-  abilities: [
+  effects: [
     {
-      trigger: "ON_DEPLOY",
+      id: "gd01-066-effect-1",
       description:
         "【Deploy】 Deploy 1 [Fatum-00]((Triple Ship Alliance)･AP2･HP2･<Blocker>) Unit token.",
-      effect: {
-        type: "UNKNOWN",
-        rawText:
-          "Deploy 1 [Fatum-00]((Triple Ship Alliance)･AP2･HP2･<Blocker>) Unit token.",
+      type: "TRIGGERED",
+      timing: "DEPLOY",
+      action: {
+        type: "CUSTOM",
+        text: "Deploy 1 [Fatum-00]((Triple Ship Alliance)･AP2･HP2･<Blocker>) Unit token.",
       },
     },
     {
-      trigger: "ON_ATTACK",
+      id: "gd01-066-effect-2",
       description:
         "【Attack】 Choose 1 of your (Triple Ship Alliance) Unit tokens. It may attack on the turn it is deployed.",
-      effect: {
-        type: "UNKNOWN",
-        rawText:
-          "Choose 1 of your (Triple Ship Alliance) Unit tokens. It may attack on the turn it is deployed.",
+      type: "TRIGGERED",
+      timing: "ATTACK",
+      action: {
+        type: "CUSTOM",
+        text: "Choose 1 of your (Triple Ship Alliance) Unit tokens. It may attack on the turn it is deployed.",
       },
     },
   ],

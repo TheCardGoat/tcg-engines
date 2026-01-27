@@ -19,12 +19,14 @@ export const Maganac: UnitCardDefinition = {
   zones: ["space", "earth"],
   traits: ["maganac", "corps"],
   linkRequirements: ["-"],
-  abilities: [
+  effects: [
     {
+      id: "st02-005-effect-1",
       description: "-",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "-",
+      type: "CONSTANT",
+      action: {
+        type: "CUSTOM",
+        text: "-",
       },
     },
   ],

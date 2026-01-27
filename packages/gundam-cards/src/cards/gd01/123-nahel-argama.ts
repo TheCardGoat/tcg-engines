@@ -18,23 +18,26 @@ export const NahelArgama: BaseCardDefinition_Structure = {
   hp: 5,
   zones: ["space", "earth"],
   traits: ["earth", "federation", "warship"],
-  abilities: [
+  effects: [
     {
-      trigger: "ON_BURST",
+      id: "gd01-123-effect-1",
       description: "【Burst】 Deploy this card.",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "Deploy this card.",
+      type: "TRIGGERED",
+      timing: "BURST",
+      action: {
+        type: "CUSTOM",
+        text: "Deploy this card.",
       },
     },
     {
-      trigger: "ON_DEPLOY",
+      id: "gd01-123-effect-2",
       description:
         "【Deploy】 Add 1 of your Shields to your hand. Then, choose 1 enemy Unit with 3 or less HP. Rest it.",
-      effect: {
-        type: "UNKNOWN",
-        rawText:
-          "Add 1 of your Shields to your hand. Then, choose 1 enemy Unit with 3 or less HP. Rest it.",
+      type: "TRIGGERED",
+      timing: "DEPLOY",
+      action: {
+        type: "CUSTOM",
+        text: "Add 1 of your Shields to your hand. Then, choose 1 enemy Unit with 3 or less HP. Rest it.",
       },
     },
   ],

@@ -15,14 +15,16 @@ export const FirstContact: CommandCardDefinition = {
     "https://www.gundam-gcg.com/en/images/cards/card/GD01-107.webp?2510031",
   sourceTitle: "Mobile Suit Gundam Wing",
   timing: "MAIN",
-  abilities: [
+  effects: [
     {
-      trigger: "ON_BURST",
+      id: "gd01-107-effect-1",
       description:
         "【Burst】 Place 1 EX Resource. 【Main】Place 1 rested Resource.",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "Place 1 EX Resource. 【Main】Place 1 rested Resource.",
+      type: "TRIGGERED",
+      timing: "BURST",
+      action: {
+        type: "CUSTOM",
+        text: "Place 1 EX Resource. 【Main】Place 1 rested Resource.",
       },
     },
   ],

@@ -19,12 +19,14 @@ export const GearaZulu: UnitCardDefinition = {
   zones: ["space", "earth"],
   traits: ["neo", "zeon"],
   linkRequirements: ["(neo-zeon)-trait"],
-  abilities: [
+  effects: [
     {
+      id: "st03-003-effect-1",
       description: "-",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "-",
+      type: "CONSTANT",
+      action: {
+        type: "CUSTOM",
+        text: "-",
       },
     },
   ],

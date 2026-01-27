@@ -19,17 +19,21 @@ export const Anksha: UnitCardDefinition = {
   zones: ["earth"],
   traits: ["earth", "federation"],
   linkRequirements: ["-"],
-  abilities: [
+  effects: [
     {
-      trigger: "ON_DEPLOY",
+      id: "gd01-020-effect-1",
       description:
         "【Deploy】 Choose 1 rested enemy Unit. Deal 1 damage to it.",
-      effect: {
+      type: "TRIGGERED",
+      timing: "DEPLOY",
+      action: {
         type: "DAMAGE",
-        amount: 1,
-        target: {
-          type: "unknown",
-          rawText: "it",
+        parameters: {
+          target: {
+            type: "unknown",
+            rawText: "it",
+          },
+          amount: 1,
         },
       },
     },

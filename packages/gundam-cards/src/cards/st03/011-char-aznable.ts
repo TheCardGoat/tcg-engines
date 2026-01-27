@@ -17,24 +17,30 @@ export const CharAznable: PilotCardDefinition = {
   traits: ["zeon", "newtype"],
   apModifier: 1,
   hpModifier: 1,
-  abilities: [
+  effects: [
     {
-      trigger: "ON_BURST",
+      id: "st03-011-effect-1",
       description: "【Burst】 Add this card to your hand.",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "Add this card to your hand.",
+      type: "TRIGGERED",
+      timing: "BURST",
+      action: {
+        type: "CUSTOM",
+        text: "Add this card to your hand.",
       },
     },
     {
-      trigger: "ON_ATTACK",
+      id: "st03-011-effect-2",
       description:
         "【Attack】 During this turn, this Unit gets AP+1 and, if it is a Link Unit, it gains <High-Maneuver>. (This Unit can't be blocked.)",
-      effect: {
+      type: "TRIGGERED",
+      timing: "ATTACK",
+      action: {
         type: "MODIFY_STATS",
-        attribute: "ap",
-        modifier: 1,
-        duration: "turn",
+        parameters: {
+          attribute: "ap",
+          modifier: 1,
+          duration: "turn",
+        },
       },
     },
   ],

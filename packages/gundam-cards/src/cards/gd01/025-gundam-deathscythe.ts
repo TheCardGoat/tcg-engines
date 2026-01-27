@@ -24,14 +24,15 @@ export const GundamDeathscythe_GD01_025: UnitCardDefinition = {
       keyword: "First-Strike",
     },
   ],
-  abilities: [
+  effects: [
     {
+      id: "gd01-025-effect-1",
       description:
         "【When Paired･(Operation Meteor) Pilot】Place 1 rested Resource. Then, this Unit gains <First Strike> during this turn. (While this Unit is attacking, it deals damage before the enemy Unit.)",
-      effect: {
-        type: "UNKNOWN",
-        rawText:
-          "【When Paired･(Operation Meteor) Pilot】Place 1 rested Resource. Then, this Unit gains <First Strike> during this turn. (While this Unit is attacking, it deals damage before the enemy Unit.)",
+      type: "CONSTANT",
+      action: {
+        type: "CUSTOM",
+        text: "【When Paired･(Operation Meteor) Pilot】Place 1 rested Resource. Then, this Unit gains <First Strike> during this turn. (While this Unit is attacking, it deals damage before the enemy Unit.)",
       },
     },
   ],

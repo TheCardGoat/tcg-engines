@@ -21,14 +21,15 @@ export const Rasid039sOrders: CommandCardDefinition = {
     apModifier: 0,
     hpModifier: 1,
   },
-  abilities: [
+  effects: [
     {
+      id: "gd01-110-effect-1",
       description:
         "【Main】/【Action】Choose 1 Unit that is Lv.4 or higher. During this turn, it may choose an active enemy Unit with 6 or less AP as its attack target. 【Pilot】[Rasid Kurama]",
-      effect: {
-        type: "UNKNOWN",
-        rawText:
-          "【Main】/【Action】Choose 1 Unit that is Lv.4 or higher. During this turn, it may choose an active enemy Unit with 6 or less AP as its attack target. 【Pilot】[Rasid Kurama]",
+      type: "CONSTANT",
+      action: {
+        type: "CUSTOM",
+        text: "【Main】/【Action】Choose 1 Unit that is Lv.4 or higher. During this turn, it may choose an active enemy Unit with 6 or less AP as its attack target. 【Pilot】[Rasid Kurama]",
       },
     },
   ],

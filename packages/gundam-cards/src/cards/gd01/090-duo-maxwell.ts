@@ -17,15 +17,16 @@ export const DuoMaxwell: PilotCardDefinition = {
   traits: ["operation", "meteor"],
   apModifier: 1,
   hpModifier: 2,
-  abilities: [
+  effects: [
     {
-      trigger: "ON_BURST",
+      id: "gd01-090-effect-1",
       description:
         "【Burst】 Add this card to your hand. 【During Link】This Unit&#039;s AP can&#039;t be reduced by enemy effects.",
-      effect: {
-        type: "UNKNOWN",
-        rawText:
-          "Add this card to your hand. 【During Link】This Unit&#039;s AP can&#039;t be reduced by enemy effects.",
+      type: "TRIGGERED",
+      timing: "BURST",
+      action: {
+        type: "CUSTOM",
+        text: "Add this card to your hand. 【During Link】This Unit&#039;s AP can&#039;t be reduced by enemy effects.",
       },
     },
   ],

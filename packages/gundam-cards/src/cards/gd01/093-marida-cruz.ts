@@ -17,25 +17,31 @@ export const MaridaCruz: PilotCardDefinition = {
   traits: ["neo", "zeon", "cyber-newtype"],
   apModifier: 2,
   hpModifier: 1,
-  abilities: [
+  effects: [
     {
-      trigger: "ON_BURST",
+      id: "gd01-093-effect-1",
       description: "【Burst】 Add this card to your hand. 【During Link】",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "Add this card to your hand. 【During Link】",
+      type: "TRIGGERED",
+      timing: "BURST",
+      action: {
+        type: "CUSTOM",
+        text: "Add this card to your hand. 【During Link】",
       },
     },
     {
-      trigger: "ON_ATTACK",
+      id: "gd01-093-effect-2",
       description:
         "【Attack】 Choose 1 enemy Unit whose Lv. is equal to or lower than this Unit. Deal 1 damage to it.",
-      effect: {
+      type: "TRIGGERED",
+      timing: "ATTACK",
+      action: {
         type: "DAMAGE",
-        amount: 1,
-        target: {
-          type: "unknown",
-          rawText: "it",
+        parameters: {
+          target: {
+            type: "unknown",
+            rawText: "it",
+          },
+          amount: 1,
         },
       },
     },

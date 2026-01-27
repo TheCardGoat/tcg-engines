@@ -19,17 +19,21 @@ export const Shamblo: UnitCardDefinition = {
   zones: ["earth"],
   traits: ["zeon"],
   linkRequirements: ["(newtype)-trait-/-(cyber-newtype)-trait"],
-  abilities: [
+  effects: [
     {
-      trigger: "ON_ATTACK",
+      id: "gd01-047-effect-1",
       description:
         "【Attack】 If 2 or more other rested friendly Units are in play, choose 1 enemy Unit. Deal 3 damage to it.",
-      effect: {
+      type: "TRIGGERED",
+      timing: "ATTACK",
+      action: {
         type: "DAMAGE",
-        amount: 3,
-        target: {
-          type: "unknown",
-          rawText: "it",
+        parameters: {
+          target: {
+            type: "unknown",
+            rawText: "it",
+          },
+          amount: 3,
         },
       },
     },

@@ -19,12 +19,14 @@ export const DreissenSleeves: UnitCardDefinition = {
   zones: ["space", "earth"],
   traits: ["neo", "zeon"],
   linkRequirements: ["-"],
-  abilities: [
+  effects: [
     {
+      id: "gd01-057-effect-1",
       description: "-",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "-",
+      type: "CONSTANT",
+      action: {
+        type: "CUSTOM",
+        text: "-",
       },
     },
   ],

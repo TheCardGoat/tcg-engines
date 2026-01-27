@@ -17,23 +17,26 @@ export const McgillisFareed: PilotCardDefinition = {
   traits: ["gjallarhorn"],
   apModifier: 2,
   hpModifier: 1,
-  abilities: [
+  effects: [
     {
-      trigger: "ON_BURST",
+      id: "st05-012-effect-1",
       description: "【Burst】 Add this card to your hand.",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "Add this card to your hand.",
+      type: "TRIGGERED",
+      timing: "BURST",
+      action: {
+        type: "CUSTOM",
+        text: "Add this card to your hand.",
       },
     },
     {
-      trigger: "WHEN_PAIRED",
+      id: "st05-012-effect-2",
       description:
         "【When Paired】 If you have 2 or more other (Gjallarhorn)/(Tekkadan) Units in play, choose 1 enemy Unit with 3 or less HP. Rest it.",
-      effect: {
-        type: "UNKNOWN",
-        rawText:
-          "If you have 2 or more other (Gjallarhorn)/(Tekkadan) Units in play, choose 1 enemy Unit with 3 or less HP. Rest it.",
+      type: "TRIGGERED",
+      timing: "WHEN_PAIRED",
+      action: {
+        type: "CUSTOM",
+        text: "If you have 2 or more other (Gjallarhorn)/(Tekkadan) Units in play, choose 1 enemy Unit with 3 or less HP. Rest it.",
       },
     },
   ],

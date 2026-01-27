@@ -19,14 +19,15 @@ export const GundamAerial: UnitCardDefinition = {
   zones: ["space", "earth"],
   traits: ["academy"],
   linkRequirements: ["suletta-mercury"],
-  abilities: [
+  effects: [
     {
+      id: "gd01-070-effect-1",
       description:
         "While there are 4 or more Command cards in your trash, this card in your hand gets cost -2.",
-      effect: {
-        type: "UNKNOWN",
-        rawText:
-          "While there are 4 or more Command cards in your trash, this card in your hand gets cost -2.",
+      type: "CONSTANT",
+      action: {
+        type: "CUSTOM",
+        text: "While there are 4 or more Command cards in your trash, this card in your hand gets cost -2.",
       },
     },
   ],

@@ -19,14 +19,16 @@ export const Noin039sAries: UnitCardDefinition = {
   zones: ["earth"],
   traits: ["oz"],
   linkRequirements: ["lucrezia-noin"],
-  abilities: [
+  effects: [
     {
-      trigger: "ON_DESTROYED",
+      id: "gd01-007-effect-1",
       description:
         "【Destroyed】 If you have another (OZ) Unit in play, draw 1.",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "If you have another (OZ) Unit in play, draw 1.",
+      type: "TRIGGERED",
+      timing: "DESTROYED",
+      action: {
+        type: "CUSTOM",
+        text: "If you have another (OZ) Unit in play, draw 1.",
       },
     },
   ],

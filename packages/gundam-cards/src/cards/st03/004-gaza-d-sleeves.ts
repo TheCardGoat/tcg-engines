@@ -25,17 +25,16 @@ export const GazaDSleeves: UnitCardDefinition = {
       value: 2,
     },
   ],
-  abilities: [
+  effects: [
     {
-      activated: {
-        timing: "MAIN",
-      },
+      id: "st03-004-effect-1",
       description:
         "【Activate･Main】 <Support 2> (Rest this Unit. 1 other friendly Unit gets AP+(specified amount) during this turn.)",
-      effect: {
-        type: "UNKNOWN",
-        rawText:
-          "<Support 2> (Rest this Unit. 1 other friendly Unit gets AP+(specified amount) during this turn.)",
+      type: "ACTIVATED",
+      timing: "MAIN",
+      action: {
+        type: "CUSTOM",
+        text: "<Support 2> (Rest this Unit. 1 other friendly Unit gets AP+(specified amount) during this turn.)",
       },
     },
   ],

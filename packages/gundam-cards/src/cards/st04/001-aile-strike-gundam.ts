@@ -24,14 +24,15 @@ export const AileStrikeGundam: UnitCardDefinition = {
       keyword: "Blocker",
     },
   ],
-  abilities: [
+  effects: [
     {
+      id: "st04-001-effect-1",
       description:
         "<Blocker> (Rest this Unit to change the attack target to it.) 【When Paired･Lv.4 or Higher Pilot】Choose 1 enemy Unit with 4 or less HP. Return it to its owner's hand.",
-      effect: {
-        type: "UNKNOWN",
-        rawText:
-          "<Blocker> (Rest this Unit to change the attack target to it.) 【When Paired･Lv.4 or Higher Pilot】Choose 1 enemy Unit with 4 or less HP. Return it to its owner's hand.",
+      type: "CONSTANT",
+      action: {
+        type: "CUSTOM",
+        text: "<Blocker> (Rest this Unit to change the attack target to it.) 【When Paired･Lv.4 or Higher Pilot】Choose 1 enemy Unit with 4 or less HP. Return it to its owner's hand.",
       },
     },
   ],

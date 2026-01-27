@@ -19,12 +19,14 @@ export const Gelgoog: UnitCardDefinition = {
   zones: ["space", "earth"],
   traits: ["zeon"],
   linkRequirements: ["(zeon)-trait"],
-  abilities: [
+  effects: [
     {
+      id: "gd01-031-effect-1",
       description: "-",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "-",
+      type: "CONSTANT",
+      action: {
+        type: "CUSTOM",
+        text: "-",
       },
     },
   ],

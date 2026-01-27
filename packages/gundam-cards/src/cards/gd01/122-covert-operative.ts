@@ -21,14 +21,15 @@ export const CovertOperative: CommandCardDefinition = {
     apModifier: 1,
     hpModifier: 0,
   },
-  abilities: [
+  effects: [
     {
+      id: "gd01-122-effect-1",
       description:
         "【Main】Choose 1 enemy Unit with 2 or less HP. Return it to its owner&#039;s hand. If you have a Link Unit in play, choose 1 enemy Unit with 4 or less HP instead. 【Pilot】[Shaddiq Zenelli]",
-      effect: {
-        type: "UNKNOWN",
-        rawText:
-          "【Main】Choose 1 enemy Unit with 2 or less HP. Return it to its owner&#039;s hand. If you have a Link Unit in play, choose 1 enemy Unit with 4 or less HP instead. 【Pilot】[Shaddiq Zenelli]",
+      type: "CONSTANT",
+      action: {
+        type: "CUSTOM",
+        text: "【Main】Choose 1 enemy Unit with 2 or less HP. Return it to its owner&#039;s hand. If you have a Link Unit in play, choose 1 enemy Unit with 4 or less HP instead. 【Pilot】[Shaddiq Zenelli]",
       },
     },
   ],

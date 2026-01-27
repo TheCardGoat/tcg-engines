@@ -19,15 +19,16 @@ export const SwordStrikeGundam: UnitCardDefinition = {
   zones: ["space", "earth"],
   traits: ["earth", "alliance"],
   linkRequirements: ["(earth-alliance)-trait"],
-  abilities: [
+  effects: [
     {
-      trigger: "ON_ATTACK",
+      id: "gd01-073-effect-1",
       description:
         "【Attack】 Choose 1 enemy Unit with 2 or less HP. Return it to its owner&#039;s hand.",
-      effect: {
-        type: "UNKNOWN",
-        rawText:
-          "Choose 1 enemy Unit with 2 or less HP. Return it to its owner&#039;s hand.",
+      type: "TRIGGERED",
+      timing: "ATTACK",
+      action: {
+        type: "CUSTOM",
+        text: "Choose 1 enemy Unit with 2 or less HP. Return it to its owner&#039;s hand.",
       },
     },
   ],

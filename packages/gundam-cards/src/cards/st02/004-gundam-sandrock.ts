@@ -19,12 +19,14 @@ export const GundamSandrock: UnitCardDefinition = {
   zones: ["earth"],
   traits: ["operation", "meteor"],
   linkRequirements: ["quatre-raberba-winner"],
-  abilities: [
+  effects: [
     {
+      id: "st02-004-effect-1",
       description: "-",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "-",
+      type: "CONSTANT",
+      action: {
+        type: "CUSTOM",
+        text: "-",
       },
     },
   ],

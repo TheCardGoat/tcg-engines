@@ -19,16 +19,20 @@ export const GundamAerialPermetScoreSix: UnitCardDefinition = {
   zones: ["space", "earth"],
   traits: ["academy"],
   linkRequirements: ["suletta-mercury"],
-  abilities: [
+  effects: [
     {
-      trigger: "WHEN_PAIRED",
+      id: "st01-006-effect-1",
       description:
         "【When Paired】 Choose 1 enemy Unit that is Lv.5 or lower. It gets AP-3 during this turn.",
-      effect: {
+      type: "TRIGGERED",
+      timing: "WHEN_PAIRED",
+      action: {
         type: "MODIFY_STATS",
-        attribute: "ap",
-        modifier: -3,
-        duration: "turn",
+        parameters: {
+          attribute: "ap",
+          modifier: -3,
+          duration: "turn",
+        },
       },
     },
   ],

@@ -19,18 +19,20 @@ export const Gallussk: UnitCardDefinition = {
   zones: ["space", "earth"],
   traits: ["zeon"],
   linkRequirements: ["-"],
-  abilities: [
+  effects: [
     {
-      activated: {
-        timing: "ACTION",
-      },
+      id: "gd01-058-effect-1",
       description:
         "【Activate･Action】 【Once per Turn】①：Choose 1 Unit that is Lv.4 or higher. It gets AP+1 during this battle.",
-      effect: {
+      type: "ACTIVATED",
+      timing: "ACTION",
+      action: {
         type: "MODIFY_STATS",
-        attribute: "ap",
-        modifier: 1,
-        duration: "turn",
+        parameters: {
+          attribute: "ap",
+          modifier: 1,
+          duration: "turn",
+        },
       },
     },
   ],

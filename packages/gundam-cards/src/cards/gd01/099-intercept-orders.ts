@@ -15,15 +15,16 @@ export const InterceptOrders: CommandCardDefinition = {
     "https://www.gundam-gcg.com/en/images/cards/card/GD01-099.webp?2510031",
   sourceTitle: "Mobile Suit Gundam",
   timing: "MAIN",
-  abilities: [
+  effects: [
     {
-      trigger: "ON_BURST",
+      id: "gd01-099-effect-1",
       description:
         "【Burst】 Choose 1 enemy Unit with 5 or less HP. Rest it. 【Main】/【Action】Choose 1 to 2 enemy Units with 3 or less HP. Rest them.",
-      effect: {
-        type: "UNKNOWN",
-        rawText:
-          "Choose 1 enemy Unit with 5 or less HP. Rest it. 【Main】/【Action】Choose 1 to 2 enemy Units with 3 or less HP. Rest them.",
+      type: "TRIGGERED",
+      timing: "BURST",
+      action: {
+        type: "CUSTOM",
+        text: "Choose 1 enemy Unit with 5 or less HP. Rest it. 【Main】/【Action】Choose 1 to 2 enemy Units with 3 or less HP. Rest them.",
       },
     },
   ],

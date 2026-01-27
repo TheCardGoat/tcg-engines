@@ -19,19 +19,21 @@ export const GearaDogaHeavyArmedType: UnitCardDefinition = {
   zones: ["space", "earth"],
   traits: ["neo", "zeon"],
   linkRequirements: ["-"],
-  abilities: [
+  effects: [
     {
-      activated: {
-        timing: "MAIN",
-      },
+      id: "gd01-053-effect-1",
       description:
         "【Activate･Main】 【Once per Turn】①：Choose 1 enemy Unit with 2 or less AP. Deal 1 damage to it.",
-      effect: {
+      type: "ACTIVATED",
+      timing: "MAIN",
+      action: {
         type: "DAMAGE",
-        amount: 1,
-        target: {
-          type: "unknown",
-          rawText: "it",
+        parameters: {
+          target: {
+            type: "unknown",
+            rawText: "it",
+          },
+          amount: 1,
         },
       },
     },

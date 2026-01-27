@@ -21,16 +21,20 @@ export const ExtremeHatred: CommandCardDefinition = {
     apModifier: 1,
     hpModifier: 0,
   },
-  abilities: [
+  effects: [
     {
+      id: "gd01-112-effect-1",
       description:
         "【Main】Choose 2 of your active Units. Rest them. If you do, choose 1 enemy Unit. Deal 3 damage to it. 【Pilot】[Loni Garvey]",
-      effect: {
+      type: "CONSTANT",
+      action: {
         type: "DAMAGE",
-        amount: 3,
-        target: {
-          type: "unknown",
-          rawText: "it",
+        parameters: {
+          target: {
+            type: "unknown",
+            rawText: "it",
+          },
+          amount: 3,
         },
       },
     },

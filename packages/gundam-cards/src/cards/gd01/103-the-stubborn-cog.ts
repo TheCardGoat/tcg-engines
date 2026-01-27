@@ -21,14 +21,15 @@ export const TheStubbornCog: CommandCardDefinition = {
     apModifier: 0,
     hpModifier: 1,
   },
-  abilities: [
+  effects: [
     {
+      id: "gd01-103-effect-1",
       description:
         "【Main】Choose 1 active friendly (Earth Federation) Unit and 1 active enemy Unit. Rest them. 【Pilot】[Daguza Mackle]",
-      effect: {
-        type: "UNKNOWN",
-        rawText:
-          "【Main】Choose 1 active friendly (Earth Federation) Unit and 1 active enemy Unit. Rest them. 【Pilot】[Daguza Mackle]",
+      type: "CONSTANT",
+      action: {
+        type: "CUSTOM",
+        text: "【Main】Choose 1 active friendly (Earth Federation) Unit and 1 active enemy Unit. Rest them. 【Pilot】[Daguza Mackle]",
       },
     },
   ],

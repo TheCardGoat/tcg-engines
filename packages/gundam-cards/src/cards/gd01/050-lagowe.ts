@@ -19,17 +19,21 @@ export const Lagowe: UnitCardDefinition = {
   zones: ["earth"],
   traits: ["zaft"],
   linkRequirements: ["(zaft)-trait"],
-  abilities: [
+  effects: [
     {
-      trigger: "ON_ATTACK",
+      id: "gd01-050-effect-1",
       description:
         "【Attack】 If this Unit has 5 or more AP and it is attacking an enemy Unit, choose 1 enemy Unit. Deal 2 damage to it.",
-      effect: {
+      type: "TRIGGERED",
+      timing: "ATTACK",
+      action: {
         type: "DAMAGE",
-        amount: 2,
-        target: {
-          type: "unknown",
-          rawText: "it",
+        parameters: {
+          target: {
+            type: "unknown",
+            rawText: "it",
+          },
+          amount: 2,
         },
       },
     },

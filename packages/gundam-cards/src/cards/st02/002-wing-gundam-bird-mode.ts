@@ -19,13 +19,15 @@ export const WingGundamBirdMode: UnitCardDefinition = {
   zones: ["space", "earth"],
   traits: ["operation", "meteor"],
   linkRequirements: ["heero-yuy"],
-  abilities: [
+  effects: [
     {
-      trigger: "ON_DEPLOY",
+      id: "st02-002-effect-1",
       description: "【Deploy】 Place 1 EX Resource.",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "Place 1 EX Resource.",
+      type: "TRIGGERED",
+      timing: "DEPLOY",
+      action: {
+        type: "CUSTOM",
+        text: "Place 1 EX Resource.",
       },
     },
   ],

@@ -25,27 +25,27 @@ export const ZakuISniperType: UnitCardDefinition = {
       value: 1,
     },
   ],
-  abilities: [
+  effects: [
     {
-      activated: {
-        timing: "MAIN",
-      },
+      id: "gd01-048-effect-1",
       description:
         "【Activate･Main】 <Support 1> (Rest this Unit. 1 other friendly Unit gets AP+(specified amount) during this turn.)",
-      effect: {
-        type: "UNKNOWN",
-        rawText:
-          "<Support 1> (Rest this Unit. 1 other friendly Unit gets AP+(specified amount) during this turn.)",
+      type: "ACTIVATED",
+      timing: "MAIN",
+      action: {
+        type: "CUSTOM",
+        text: "<Support 1> (Rest this Unit. 1 other friendly Unit gets AP+(specified amount) during this turn.)",
       },
     },
     {
-      trigger: "ON_DEPLOY",
+      id: "gd01-048-effect-2",
       description:
         "【Deploy】 Look at the top card of your deck. If it is a (Zeon)/(Neo Zeon) Unit card, you may reveal it and add it to your hand. Return any remaining card to the bottom of your deck.",
-      effect: {
-        type: "UNKNOWN",
-        rawText:
-          "Look at the top card of your deck. If it is a (Zeon)/(Neo Zeon) Unit card, you may reveal it and add it to your hand. Return any remaining card to the bottom of your deck.",
+      type: "TRIGGERED",
+      timing: "DEPLOY",
+      action: {
+        type: "CUSTOM",
+        text: "Look at the top card of your deck. If it is a (Zeon)/(Neo Zeon) Unit card, you may reveal it and add it to your hand. Return any remaining card to the bottom of your deck.",
       },
     },
   ],

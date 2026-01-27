@@ -21,14 +21,15 @@ export const SimultaneousFire: CommandCardDefinition = {
     apModifier: 1,
     hpModifier: 1,
   },
-  abilities: [
+  effects: [
     {
+      id: "st02-012-effect-1",
       description:
         "【Main】Choose 1 of your Units. It gains <Breach 3> during this turn. (When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.) 【Pilot】[Trowa Barton]",
-      effect: {
-        type: "UNKNOWN",
-        rawText:
-          "【Main】Choose 1 of your Units. It gains <Breach 3> during this turn. (When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.) 【Pilot】[Trowa Barton]",
+      type: "CONSTANT",
+      action: {
+        type: "CUSTOM",
+        text: "【Main】Choose 1 of your Units. It gains <Breach 3> during this turn. (When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.) 【Pilot】[Trowa Barton]",
       },
     },
   ],

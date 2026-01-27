@@ -19,14 +19,15 @@ export const Duo039sLeo: UnitCardDefinition = {
   zones: ["space", "earth"],
   traits: ["operation", "meteor"],
   linkRequirements: ["duo-maxwell"],
-  abilities: [
+  effects: [
     {
+      id: "gd01-042-effect-1",
       description:
         "This Unit may choose an active enemy Unit that is Lv.2 or lower as its attack target.",
-      effect: {
-        type: "UNKNOWN",
-        rawText:
-          "This Unit may choose an active enemy Unit that is Lv.2 or lower as its attack target.",
+      type: "CONSTANT",
+      action: {
+        type: "CUSTOM",
+        text: "This Unit may choose an active enemy Unit that is Lv.2 or lower as its attack target.",
       },
     },
   ],

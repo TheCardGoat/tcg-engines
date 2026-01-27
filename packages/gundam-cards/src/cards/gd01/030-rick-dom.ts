@@ -25,14 +25,15 @@ export const RickDom: UnitCardDefinition = {
       value: 2,
     },
   ],
-  abilities: [
+  effects: [
     {
+      id: "gd01-030-effect-1",
       description:
         "<Breach 2> (When this Unit&#039;s attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent&#039;s shield area.)",
-      effect: {
-        type: "UNKNOWN",
-        rawText:
-          "<Breach 2> (When this Unit&#039;s attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent&#039;s shield area.)",
+      type: "CONSTANT",
+      action: {
+        type: "CUSTOM",
+        text: "<Breach 2> (When this Unit&#039;s attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent&#039;s shield area.)",
       },
     },
   ],

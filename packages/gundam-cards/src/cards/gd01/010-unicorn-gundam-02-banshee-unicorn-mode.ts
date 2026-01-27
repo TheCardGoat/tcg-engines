@@ -19,14 +19,16 @@ export const UnicornGundam02BansheeUnicornMode: UnitCardDefinition = {
   zones: ["space", "earth"],
   traits: ["earth", "federation"],
   linkRequirements: ["(cyber-newtype)-trait"],
-  abilities: [
+  effects: [
     {
-      trigger: "WHEN_PAIRED",
+      id: "gd01-010-effect-1",
       description:
         "【When Paired】 Choose 1 enemy Unit with 3 or less HP. Rest it.",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "Choose 1 enemy Unit with 3 or less HP. Rest it.",
+      type: "TRIGGERED",
+      timing: "WHEN_PAIRED",
+      action: {
+        type: "CUSTOM",
+        text: "Choose 1 enemy Unit with 3 or less HP. Rest it.",
       },
     },
   ],

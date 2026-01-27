@@ -19,12 +19,14 @@ export const Goohn: UnitCardDefinition = {
   zones: ["earth"],
   traits: ["zaft"],
   linkRequirements: ["-"],
-  abilities: [
+  effects: [
     {
+      id: "gd01-062-effect-1",
       description: "-",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "-",
+      type: "CONSTANT",
+      action: {
+        type: "CUSTOM",
+        text: "-",
       },
     },
   ],

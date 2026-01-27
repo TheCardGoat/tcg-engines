@@ -17,15 +17,16 @@ export const YzakJule: PilotCardDefinition = {
   traits: ["zaft", "coordinator"],
   apModifier: 1,
   hpModifier: 1,
-  abilities: [
+  effects: [
     {
-      trigger: "ON_BURST",
+      id: "gd01-094-effect-1",
       description:
         "【Burst】 Add this card to your hand. 【Once per Turn】 When an enemy Link Unit is destroyed with damage while this Unit is attacking, draw 1.",
-      effect: {
-        type: "UNKNOWN",
-        rawText:
-          "Add this card to your hand. 【Once per Turn】 When an enemy Link Unit is destroyed with damage while this Unit is attacking, draw 1.",
+      type: "TRIGGERED",
+      timing: "BURST",
+      action: {
+        type: "CUSTOM",
+        text: "Add this card to your hand. 【Once per Turn】 When an enemy Link Unit is destroyed with damage while this Unit is attacking, draw 1.",
       },
     },
   ],

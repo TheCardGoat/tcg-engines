@@ -19,18 +19,20 @@ export const GundamAerialMirasoulFlightUnit: UnitCardDefinition = {
   zones: ["space", "earth"],
   traits: ["academy"],
   linkRequirements: ["suletta-mercury"],
-  abilities: [
+  effects: [
     {
-      activated: {
-        timing: "ACTION",
-      },
+      id: "gd01-082-effect-1",
       description:
         "【Activate･Action】 【Once per Turn】②：Choose 1 enemy Unit. It gets AP-1 during this battle.",
-      effect: {
+      type: "ACTIVATED",
+      timing: "ACTION",
+      action: {
         type: "MODIFY_STATS",
-        attribute: "ap",
-        modifier: -1,
-        duration: "turn",
+        parameters: {
+          attribute: "ap",
+          modifier: -1,
+          duration: "turn",
+        },
       },
     },
   ],

@@ -19,34 +19,40 @@ export const AsticassiaSchoolOfTechnologyEarthHouse: BaseCardDefinition_Structur
     hp: 5,
     zones: ["space"],
     traits: ["academy", "stronghold"],
-    abilities: [
+    effects: [
       {
-        trigger: "ON_BURST",
+        id: "st01-016-effect-1",
         description: "【Burst】 Deploy this card.",
-        effect: {
-          type: "UNKNOWN",
-          rawText: "Deploy this card.",
+        type: "TRIGGERED",
+        timing: "BURST",
+        action: {
+          type: "CUSTOM",
+          text: "Deploy this card.",
         },
       },
       {
-        trigger: "ON_DEPLOY",
+        id: "st01-016-effect-2",
         description: "【Deploy】 Add 1 of your Shields to your hand.",
-        effect: {
-          type: "UNKNOWN",
-          rawText: "Add 1 of your Shields to your hand.",
+        type: "TRIGGERED",
+        timing: "DEPLOY",
+        action: {
+          type: "CUSTOM",
+          text: "Add 1 of your Shields to your hand.",
         },
       },
       {
-        activated: {
-          timing: "MAIN",
-        },
+        id: "st01-016-effect-3",
         description:
           "【Activate･Main】 Rest this Base：All friendly Link Units get AP+1 during this turn.",
-        effect: {
+        type: "ACTIVATED",
+        timing: "MAIN",
+        action: {
           type: "MODIFY_STATS",
-          attribute: "ap",
-          modifier: 1,
-          duration: "turn",
+          parameters: {
+            attribute: "ap",
+            modifier: 1,
+            duration: "turn",
+          },
         },
       },
     ],

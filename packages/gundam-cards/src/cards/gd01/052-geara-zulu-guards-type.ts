@@ -19,16 +19,20 @@ export const GearaZuluGuardsType: UnitCardDefinition = {
   zones: ["space", "earth"],
   traits: ["neo", "zeon"],
   linkRequirements: ["-"],
-  abilities: [
+  effects: [
     {
-      trigger: "ON_DEPLOY",
+      id: "gd01-052-effect-1",
       description: "【Deploy】 Choose 1 enemy Unit. Deal 1 damage to it.",
-      effect: {
+      type: "TRIGGERED",
+      timing: "DEPLOY",
+      action: {
         type: "DAMAGE",
-        amount: 1,
-        target: {
-          type: "unknown",
-          rawText: "it",
+        parameters: {
+          target: {
+            type: "unknown",
+            rawText: "it",
+          },
+          amount: 1,
         },
       },
     },

@@ -19,15 +19,16 @@ export const CharsZaku: UnitCardDefinition = {
   zones: ["space", "earth"],
   traits: ["zeon"],
   linkRequirements: ["char-aznable"],
-  abilities: [
+  effects: [
     {
-      trigger: "ON_DESTROYED",
+      id: "st03-006-effect-1",
       description:
         "【Destroyed】 Look at the top 3 cards of your deck. You may reveal 1 (Zeon)/(Neo Zeon) Unit card among them and add it to your hand. Return the remaining cards randomly to the bottom of your deck.",
-      effect: {
-        type: "UNKNOWN",
-        rawText:
-          "Look at the top 3 cards of your deck. You may reveal 1 (Zeon)/(Neo Zeon) Unit card among them and add it to your hand. Return the remaining cards randomly to the bottom of your deck.",
+      type: "TRIGGERED",
+      timing: "DESTROYED",
+      action: {
+        type: "CUSTOM",
+        text: "Look at the top 3 cards of your deck. You may reveal 1 (Zeon)/(Neo Zeon) Unit card among them and add it to your hand. Return the remaining cards randomly to the bottom of your deck.",
       },
     },
   ],

@@ -19,15 +19,16 @@ export const Char039sZaku: UnitCardDefinition = {
   zones: ["space", "earth"],
   traits: ["zeon"],
   linkRequirements: ["char-aznable"],
-  abilities: [
+  effects: [
     {
-      trigger: "ON_DESTROYED",
+      id: "gd01-026-effect-1",
       description:
         "【Destroyed】 Deploy 1 rested [Char&#039;s Zaku Ⅱ]((Zeon)･AP3･HP1) Unit token.",
-      effect: {
-        type: "UNKNOWN",
-        rawText:
-          "Deploy 1 rested [Char&#039;s Zaku Ⅱ]((Zeon)･AP3･HP1) Unit token.",
+      type: "TRIGGERED",
+      timing: "DESTROYED",
+      action: {
+        type: "CUSTOM",
+        text: "Deploy 1 rested [Char&#039;s Zaku Ⅱ]((Zeon)･AP3･HP1) Unit token.",
       },
     },
   ],

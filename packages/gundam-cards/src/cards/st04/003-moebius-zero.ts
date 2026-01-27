@@ -19,12 +19,14 @@ export const MoebiusZero: UnitCardDefinition = {
   zones: ["space"],
   traits: ["earth", "alliance"],
   linkRequirements: ["mu-la-flaga"],
-  abilities: [
+  effects: [
     {
+      id: "st04-003-effect-1",
       description: "-",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "-",
+      type: "CONSTANT",
+      action: {
+        type: "CUSTOM",
+        text: "-",
       },
     },
   ],

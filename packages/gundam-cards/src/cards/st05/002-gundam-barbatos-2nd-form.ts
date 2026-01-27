@@ -18,14 +18,18 @@ export const GundamBarbatos2ndForm: UnitCardDefinition = {
   zones: ["space", "earth"],
   traits: ["tekkadan", "gundam", "frame"],
   linkRequirements: ["mikazuki-augus"],
-  abilities: [
+  effects: [
     {
+      id: "st05-002-effect-1",
       description: "While this Unit is damaged, it gets AP+2.",
-      effect: {
+      type: "CONSTANT",
+      action: {
         type: "MODIFY_STATS",
-        attribute: "ap",
-        modifier: 2,
-        duration: "turn",
+        parameters: {
+          attribute: "ap",
+          modifier: 2,
+          duration: "turn",
+        },
       },
     },
   ],

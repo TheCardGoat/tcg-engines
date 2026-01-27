@@ -15,16 +15,20 @@ export const NavalBombardment: CommandCardDefinition = {
     "https://www.gundam-gcg.com/en/images/cards/card/GD01-120.webp?2510031",
   sourceTitle: "Mobile Suit Gundam SEED",
   timing: "ACTION",
-  abilities: [
+  effects: [
     {
-      trigger: "ON_BURST",
+      id: "gd01-120-effect-1",
       description:
         "【Burst】 Choose 1 enemy Unit. It gets AP-3 during this turn. 【Action】Choose 1 friendly Unit with <Blocker>. It gets AP+3 during this turn.",
-      effect: {
+      type: "TRIGGERED",
+      timing: "BURST",
+      action: {
         type: "MODIFY_STATS",
-        attribute: "ap",
-        modifier: -3,
-        duration: "turn",
+        parameters: {
+          attribute: "ap",
+          modifier: -3,
+          duration: "turn",
+        },
       },
     },
   ],

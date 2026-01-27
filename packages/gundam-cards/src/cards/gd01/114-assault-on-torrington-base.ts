@@ -21,15 +21,19 @@ export const AssaultOnTorringtonBase: CommandCardDefinition = {
     apModifier: 1,
     hpModifier: 0,
   },
-  abilities: [
+  effects: [
     {
+      id: "gd01-114-effect-1",
       description:
         "【Action】Choose 2 friendly Units. They get AP+1 during this turn. 【Pilot】[Yonem Kirks]",
-      effect: {
+      type: "CONSTANT",
+      action: {
         type: "MODIFY_STATS",
-        attribute: "ap",
-        modifier: 1,
-        duration: "turn",
+        parameters: {
+          attribute: "ap",
+          modifier: 1,
+          duration: "turn",
+        },
       },
     },
   ],

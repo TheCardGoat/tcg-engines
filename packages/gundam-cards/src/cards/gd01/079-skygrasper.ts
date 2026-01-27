@@ -19,12 +19,14 @@ export const Skygrasper: UnitCardDefinition = {
   zones: ["earth"],
   traits: ["earth", "alliance"],
   linkRequirements: ["(earth-alliance)-trait"],
-  abilities: [
+  effects: [
     {
+      id: "gd01-079-effect-1",
       description: "-",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "-",
+      type: "CONSTANT",
+      action: {
+        type: "CUSTOM",
+        text: "-",
       },
     },
   ],

@@ -17,16 +17,20 @@ export const RiddheMarcenas: PilotCardDefinition = {
   traits: ["earth", "federation"],
   apModifier: 1,
   hpModifier: 1,
-  abilities: [
+  effects: [
     {
-      trigger: "ON_BURST",
+      id: "gd01-089-effect-1",
       description:
         "【Burst】 Add this card to your hand. While this Unit has <Repair>, it gets AP+1.",
-      effect: {
+      type: "TRIGGERED",
+      timing: "BURST",
+      action: {
         type: "MODIFY_STATS",
-        attribute: "ap",
-        modifier: 1,
-        duration: "turn",
+        parameters: {
+          attribute: "ap",
+          modifier: 1,
+          duration: "turn",
+        },
       },
     },
   ],

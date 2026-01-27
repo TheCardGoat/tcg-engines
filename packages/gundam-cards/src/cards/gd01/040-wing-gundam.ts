@@ -19,12 +19,14 @@ export const WingGundam: UnitCardDefinition = {
   zones: ["space", "earth"],
   traits: ["operation", "meteor"],
   linkRequirements: ["heero-yuy"],
-  abilities: [
+  effects: [
     {
+      id: "gd01-040-effect-1",
       description: "-",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "-",
+      type: "CONSTANT",
+      action: {
+        type: "CUSTOM",
+        text: "-",
       },
     },
   ],

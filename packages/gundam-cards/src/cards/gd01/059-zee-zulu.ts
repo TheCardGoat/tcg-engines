@@ -19,16 +19,20 @@ export const ZeeZulu: UnitCardDefinition = {
   zones: ["earth"],
   traits: ["neo", "zeon"],
   linkRequirements: ["-"],
-  abilities: [
+  effects: [
     {
-      trigger: "ON_ATTACK",
+      id: "gd01-059-effect-1",
       description:
         "【Attack】 If you are attacking the enemy player, this Unit gets AP+2 during this battle.",
-      effect: {
+      type: "TRIGGERED",
+      timing: "ATTACK",
+      action: {
         type: "MODIFY_STATS",
-        attribute: "ap",
-        modifier: 2,
-        duration: "turn",
+        parameters: {
+          attribute: "ap",
+          modifier: 2,
+          duration: "turn",
+        },
       },
     },
   ],

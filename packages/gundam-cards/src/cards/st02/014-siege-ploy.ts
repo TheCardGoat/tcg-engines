@@ -15,15 +15,16 @@ export const SiegePloy: CommandCardDefinition = {
     "https://www.gundam-gcg.com/en/images/cards/card/ST02-014.webp?2510031",
   sourceTitle: "Mobile Suit Gundam Wing",
   timing: "MAIN",
-  abilities: [
+  effects: [
     {
-      trigger: "ON_BURST",
+      id: "st02-014-effect-1",
       description:
         "【Burst】 Activate this card's 【Main】. 【Main】/【Action】Choose 1 enemy Unit with 5 or less HP. Rest it.",
-      effect: {
-        type: "UNKNOWN",
-        rawText:
-          "Activate this card's 【Main】. 【Main】/【Action】Choose 1 enemy Unit with 5 or less HP. Rest it.",
+      type: "TRIGGERED",
+      timing: "BURST",
+      action: {
+        type: "CUSTOM",
+        text: "Activate this card's 【Main】. 【Main】/【Action】Choose 1 enemy Unit with 5 or less HP. Rest it.",
       },
     },
   ],

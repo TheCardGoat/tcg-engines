@@ -24,17 +24,16 @@ export const StrikeRouge: UnitCardDefinition = {
       keyword: "Blocker",
     },
   ],
-  abilities: [
+  effects: [
     {
-      activated: {
-        timing: "MAIN",
-      },
+      id: "gd01-069-effect-1",
       description:
         "【Activate･Main】 【Once per Turn】①：Choose 1 of your rested white Units with <Blocker>. Set it as active. It can&#039;t attack during this turn.",
-      effect: {
-        type: "UNKNOWN",
-        rawText:
-          "【Once per Turn】①：Choose 1 of your rested white Units with <Blocker>. Set it as active. It can&#039;t attack during this turn.",
+      type: "ACTIVATED",
+      timing: "MAIN",
+      action: {
+        type: "CUSTOM",
+        text: "【Once per Turn】①：Choose 1 of your rested white Units with <Blocker>. Set it as active. It can&#039;t attack during this turn.",
       },
     },
   ],

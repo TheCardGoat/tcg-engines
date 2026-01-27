@@ -17,34 +17,40 @@ export const Isaribi: BaseCardDefinition_Structure = {
   hp: 5,
   zones: ["space"],
   traits: ["tekkadan", "warship"],
-  abilities: [
+  effects: [
     {
-      trigger: "ON_BURST",
+      id: "st05-015-effect-1",
       description: "【Burst】 Deploy this card.",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "Deploy this card.",
+      type: "TRIGGERED",
+      timing: "BURST",
+      action: {
+        type: "CUSTOM",
+        text: "Deploy this card.",
       },
     },
     {
-      trigger: "ON_DEPLOY",
+      id: "st05-015-effect-2",
       description: "【Deploy】 Add 1 of your Shields to your hand.",
-      effect: {
-        type: "UNKNOWN",
-        rawText: "Add 1 of your Shields to your hand.",
+      type: "TRIGGERED",
+      timing: "DEPLOY",
+      action: {
+        type: "CUSTOM",
+        text: "Add 1 of your Shields to your hand.",
       },
     },
     {
-      activated: {
-        timing: "MAIN",
-      },
+      id: "st05-015-effect-3",
       description:
         "【Activate･Main】 Rest this Base：Choose 1 of your damaged Units. It gets AP+2 during this turn.",
-      effect: {
+      type: "ACTIVATED",
+      timing: "MAIN",
+      action: {
         type: "MODIFY_STATS",
-        attribute: "ap",
-        modifier: 2,
-        duration: "turn",
+        parameters: {
+          attribute: "ap",
+          modifier: 2,
+          duration: "turn",
+        },
       },
     },
   ],
