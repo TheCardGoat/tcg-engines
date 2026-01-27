@@ -10,7 +10,6 @@
 
 import {
   type CardId,
-  draw,
   type MoveContext,
   type PlayerId,
   type ZoneId,
