@@ -33,7 +33,7 @@ describe("Card Generator", () => {
 
   const mockParsed: ParseResult = {
     keywords: [{ keyword: "First-Strike" }],
-    abilities: [
+    effects: [
       {
         id: "mock-effect",
         type: "TRIGGERED",
@@ -86,7 +86,7 @@ describe("Card Generator", () => {
 
       const card = createCardDefinition(mockPilot, {
         keywords: [],
-        abilities: [],
+        effects: [],
         warnings: [],
       });
 
@@ -110,7 +110,7 @@ describe("Card Generator", () => {
 
       const card = createCardDefinition(mockResource, {
         keywords: [],
-        abilities: [],
+        effects: [],
         warnings: [],
       });
 

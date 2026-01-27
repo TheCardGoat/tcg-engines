@@ -57,8 +57,8 @@ describe("Text Parser", () => {
       const text = "【Deploy】Draw 1 card.";
       const result = parseCardText(text);
 
-      expect(result.abilities).toHaveLength(1);
-      const ability = result.abilities[0] as TriggeredEffect;
+      expect(result.effects).toHaveLength(1);
+      const ability = result.effects[0] as TriggeredEffect;
       expect(ability.type).toBe("TRIGGERED");
       expect(ability.timing).toBe("DEPLOY");
       expect(ability.action.type).toBe("DRAW");
@@ -69,8 +69,8 @@ describe("Text Parser", () => {
       const text = "【Attack】Deal 2 damage to target enemy Unit.";
       const result = parseCardText(text);
 
-      expect(result.abilities).toHaveLength(1);
-      const ability = result.abilities[0] as TriggeredEffect;
+      expect(result.effects).toHaveLength(1);
+      const ability = result.effects[0] as TriggeredEffect;
       expect(ability.type).toBe("TRIGGERED");
       expect(ability.timing).toBe("ATTACK");
       expect(ability.action.type).toBe("DAMAGE");
@@ -82,8 +82,8 @@ describe("Text Parser", () => {
         '【Deploy】Search your deck for a Pilot card named "Amuro Ray".';
       const result = parseCardText(text);
 
-      expect(result.abilities).toHaveLength(1);
-      const ability = result.abilities[0] as TriggeredEffect;
+      expect(result.effects).toHaveLength(1);
+      const ability = result.effects[0] as TriggeredEffect;
       expect(ability.type).toBe("TRIGGERED");
       expect(ability.timing).toBe("DEPLOY");
       expect(ability.action.type).toBe("SEARCH");
@@ -93,8 +93,8 @@ describe("Text Parser", () => {
       const text = "【Activate･Main】[Rest this Unit] Deal 2 damage.";
       const result = parseCardText(text);
 
-      expect(result.abilities).toHaveLength(1);
-      const ability = result.abilities[0] as ActivatedEffect;
+      expect(result.effects).toHaveLength(1);
+      const ability = result.effects[0] as ActivatedEffect;
       expect(ability.type).toBe("ACTIVATED");
       expect(ability.timing).toBe("MAIN");
       // Cost parsing might vary depending on implementation detail (number vs string)
@@ -110,16 +110,16 @@ describe("Text Parser", () => {
       const result = parseCardText(text);
 
       expect(result.keywords).toHaveLength(2);
-      expect(result.abilities).toHaveLength(1);
+      expect(result.effects).toHaveLength(1);
     });
 
     it("should handle complex text with multiple triggers", () => {
       const text = "【Deploy】Draw 1 card. 【Attack】Deal 2 damage.";
       const result = parseCardText(text);
 
-      expect(result.abilities).toHaveLength(2);
-      expect((result.abilities[0] as TriggeredEffect).timing).toBe("DEPLOY");
-      expect((result.abilities[1] as TriggeredEffect).timing).toBe("ATTACK");
+      expect(result.effects).toHaveLength(2);
+      expect((result.effects[0] as TriggeredEffect).timing).toBe("DEPLOY");
+      expect((result.effects[1] as TriggeredEffect).timing).toBe("ATTACK");
     });
   });
 });

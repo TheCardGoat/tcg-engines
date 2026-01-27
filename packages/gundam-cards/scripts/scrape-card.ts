@@ -39,7 +39,7 @@ async function main() {
   const parsed = parseCardText(scraped.effectText);
 
   console.log(`   Keywords: ${parsed.keywords.length}`);
-  console.log(`   Abilities: ${parsed.abilities.length}`);
+  console.log(`   Effects: ${parsed.effects.length}`);
 
   if (parsed.warnings.length > 0) {
     console.log(`   ⚠️  Warnings: ${parsed.warnings.length}`);

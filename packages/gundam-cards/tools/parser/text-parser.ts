@@ -8,12 +8,13 @@ import type {
   Effect,
   EffectAction,
   EffectActionType,
+  EffectTarget,
   KeywordAbility,
 } from "@tcg/gundam-types";
 
 export type ParseResult = {
   keywords: KeywordAbility[];
-  abilities: Effect[];
+  effects: Effect[];
   warnings: string[];
 };
 
@@ -89,11 +90,11 @@ export function parseCardText(text: string): ParseResult {
   const keywords = extractKeywords(cleanText);
 
   // Extract abilities
-  const abilities = parseAbilityText(cleanText, warnings);
+  const effects = parseAbilityText(cleanText, warnings);
 
   return {
     keywords,
-    abilities,
+    effects,
     warnings,
   };
 }
@@ -254,7 +255,14 @@ function parseAbilitySegment(
 
   // Parse markers to identify conditions and triggers
   let condition: "DURING_LINK" | "DURING_PAIR" | undefined;
-  let trigger: string | undefined;
+  let trigger:
+    | "DEPLOY"
+    | "ATTACK"
+    | "DESTROYED"
+    | "WHEN_PAIRED"
+    | "WHEN_LINKED"
+    | "BURST"
+    | undefined;
   let activatedTiming: "MAIN" | "ACTION" | undefined;
   const unknownMarkers: string[] = [];
 
@@ -306,7 +314,7 @@ function parseAbilitySegment(
     return {
       id,
       type: "TRIGGERED",
-      timing: trigger as any, // Cast because trigger type includes ACTIVATED... wait, TRIGGER_PATTERNS includes ACTIVATED keys but values are distinct
+      timing: trigger,
       description,
       action,
     };
@@ -329,6 +337,7 @@ function parseAbilitySegment(
     type: "CONSTANT",
     description,
     action,
+    conditions: undefined,
   };
 }
 
@@ -367,10 +376,7 @@ function parseEffect(text: string, warnings: string[]): EffectAction {
   const searchMatch = text.match(/search (?:your )?deck for (.+?)(?:\.|$)/i);
   if (searchMatch) {
     return {
-      type: "SEARCH", // "SEARCH_DECK" was old, check EffectActionType: "SEARCH"
-      // filter: parseSearchFilter(searchMatch[1]),
-      // destination: "hand",
-      // count: 1,
+      type: "SEARCH",
       parameters: {
         filter: parseSearchFilter(searchMatch[1]),
         destination: "hand",
@@ -383,7 +389,7 @@ function parseEffect(text: string, warnings: string[]): EffectAction {
   const recoverMatch = text.match(/(?:recovers?|gains?) (\d+) HP/i);
   if (recoverMatch) {
     return {
-      type: "HEAL", // "RECOVER_HP" -> "HEAL"
+      type: "HEAL",
       value: Number.parseInt(recoverMatch[1], 10),
       target: { player: "SELF" }, // Approximate
     };
@@ -394,9 +400,9 @@ function parseEffect(text: string, warnings: string[]): EffectAction {
   if (statMatch) {
     return {
       type: "MODIFY_STATS",
+      value: Number.parseInt(statMatch[2], 10),
       parameters: {
         attribute: statMatch[1].toLowerCase(),
-        modifier: Number.parseInt(statMatch[2], 10),
         duration: "turn",
       },
     };
