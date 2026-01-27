@@ -599,12 +599,12 @@ export class GundamTestEngine {
       ap: stats.ap ?? 1,
     };
 
-    // Initialize card metadata (ready to use, no summoning sickness)
+    // Initialize card metadata (unit enters play ready to act)
     const cardOps = createCardOperations(internalState);
     cardOps.setCardMeta(createCardId(cardId), {
       damage: 0,
       state: "ready",
-      isDrying: false, // No summoning sickness - ready to use immediately
+      isDrying: false, // Unit is active and can attack or act immediately
     } as any);
 
     return cardId;
