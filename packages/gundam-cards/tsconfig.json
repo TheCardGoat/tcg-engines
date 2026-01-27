@@ -1,5 +1,5 @@
 {
-  "include": ["src/**/*", "tools/**/*"],
+  "include": ["src/**/*", "tools/**/*", "scripts/**/*"],
   "exclude": ["node_modules"],
   "compilerOptions": {
     "target": "ES2022",

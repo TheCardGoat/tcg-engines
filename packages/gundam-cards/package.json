@@ -7,7 +7,8 @@
   "types": "./src/index.ts",
   "files": [
     "src/",
-    "tools/"
+    "tools/",
+    "scripts/"
   ],
   "exports": {
     ".": {
@@ -21,6 +22,7 @@
     "check-types": "tsc --noEmit",
     "format": "bun x @biomejs/biome check --fix --max-diagnostics=none --diagnostic-level=error --linter-enabled=false ./src",
     "lint": "bun x @biomejs/biome lint --fix --max-diagnostics=none --diagnostic-level=error ./src",
+    "test": "echo \"No tests specified\"",
     "check": "turbo format lint check-types"
   },
   "dependencies": {
