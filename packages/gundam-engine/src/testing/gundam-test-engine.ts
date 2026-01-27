@@ -418,10 +418,10 @@ export class GundamTestEngine {
   /**
    * Attack with a unit (combat)
    */
-  attack(attackerId: string, defenderId: string) {
+  attack(attackerId: string, targetId: string) {
     return this.executeMove("attack", {
       attackerId,
-      defenderId,
+      targetId,
     });
   }
 
