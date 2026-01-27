@@ -572,8 +572,6 @@ export class GundamTestEngine {
       throw new Error("Cannot access engine internal state for test setup");
     }
 
-    // Create zone operations using internal state
-    const zoneOps = createZoneOperations(internalState);
     const pid = createPlayerId(playerId);
 
     // Generate unique card ID using counter
