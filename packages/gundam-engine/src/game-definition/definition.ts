@@ -30,7 +30,7 @@ export const gundamGameDefinition: GameDefinition<
   unknown,
   GundamCardMeta
 > = {
-  name: "Disney Gundam TCG",
+  name: "Gundam TCG",
   zones: gundamZones,
   flow: gundamFlow,
   moves: gundamMoves,
