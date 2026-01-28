@@ -5,23 +5,25 @@
  * These match the types in @tcg/riftbound-types.
  */
 
-import type { Condition } from "@tcg/riftbound-types/abilities/condition-types";
-import type { Cost, Domain } from "@tcg/riftbound-types/abilities/cost-types";
 import type {
   AddResourceEffect,
   AmountExpression,
+  AnyTarget,
   AttachEffect,
   BanishEffect,
   BuffEffect,
   ChannelEffect,
   ChoiceEffect,
   ChoiceOption,
+  Condition,
   ConditionalEffect,
+  Cost,
   CounterEffect,
   CreateTokenEffect,
   DamageEffect,
   DetachEffect,
   DiscardEffect,
+  Domain,
   DoubleMightEffect,
   DrawEffect,
   Effect,
@@ -34,6 +36,7 @@ import type {
   GrantKeywordsEffect,
   HealEffect,
   KillEffect,
+  Location,
   LookEffect,
   LookThenEffect,
   ModifyMightEffect,
@@ -53,14 +56,10 @@ import type {
   StunEffect,
   SwapMightEffect,
   TakeControlEffect,
+  Target,
   TokenDefinition,
   WinGameEffect,
-} from "@tcg/riftbound-types/abilities/effect-types";
-import type {
-  AnyTarget,
-  Location,
-  Target,
-} from "@tcg/riftbound-types/targeting";
+} from "@tcg/riftbound-types";
 
 /**
  * Effect builder helpers for tests

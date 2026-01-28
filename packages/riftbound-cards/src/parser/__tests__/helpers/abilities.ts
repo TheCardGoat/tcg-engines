@@ -7,7 +7,11 @@
 
 import type {
   ActivatedAbility,
+  AnyTarget,
+  Condition,
+  Cost,
   CostKeywordAbility,
+  Effect,
   EffectKeywordAbility,
   KeywordAbility,
   ReplacementAbility,
@@ -16,18 +20,12 @@ import type {
   SimpleKeywordAbility,
   SpellAbility,
   StaticAbility,
+  StaticEffect,
+  Trigger,
   TriggeredAbility,
   ValueKeyword,
   ValueKeywordAbility,
 } from "@tcg/riftbound-types";
-import type { Condition } from "@tcg/riftbound-types/abilities/condition-types";
-import type { Cost } from "@tcg/riftbound-types/abilities/cost-types";
-import type {
-  Effect,
-  StaticEffect,
-} from "@tcg/riftbound-types/abilities/effect-types";
-import type { Trigger } from "@tcg/riftbound-types/abilities/trigger-types";
-import type { AnyTarget } from "@tcg/riftbound-types/targeting";
 
 /**
  * Ability builder helpers for tests
