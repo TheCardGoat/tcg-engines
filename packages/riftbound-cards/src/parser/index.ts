@@ -7,11 +7,20 @@
 import type { Ability } from "@tcg/riftbound-types";
 
 /**
- * Result of parsing ability text
+ * Result of parsing a single ability text
  */
 export interface ParseResult {
   readonly success: boolean;
   readonly ability?: Ability;
+  readonly error?: string;
+}
+
+/**
+ * Result of parsing ability text that may contain multiple abilities
+ */
+export interface ParseAbilitiesResult {
+  readonly success: boolean;
+  readonly abilities?: Ability[];
   readonly error?: string;
 }
 
@@ -50,6 +59,40 @@ export function parseAbilityText(text: string): ParseResult {
       type: "keyword",
       keyword: "Action",
     },
+  };
+}
+
+/**
+ * Parse ability text that may contain multiple abilities.
+ *
+ * Card text often contains multiple abilities separated by line breaks or
+ * specific patterns. This function parses all abilities from the text.
+ *
+ * @param text - The ability text to parse (may contain multiple abilities)
+ * @returns ParseAbilitiesResult with all parsed abilities or error
+ *
+ * @example
+ * ```typescript
+ * const result = parseAbilities("[Assault 2] (+2 :rb_might: while I'm an attacker.)");
+ * if (result.success) {
+ *   console.log(result.abilities); // [{ type: "keyword", keyword: "Assault", value: 2 }]
+ * }
+ * ```
+ */
+export function parseAbilities(text: string): ParseAbilitiesResult {
+  // Placeholder implementation - parser will be implemented using TDD
+  if (!text || text.trim().length === 0) {
+    return {
+      success: false,
+      error: "Empty ability text",
+    };
+  }
+
+  // TODO: Implement proper parser using TDD
+  // The tests will guide the implementation
+  return {
+    success: false,
+    error: "Parser not yet implemented",
   };
 }
 
