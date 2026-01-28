@@ -10,7 +10,7 @@ import { Effects, Targets } from "../helpers";
 
 describe("Spell: Reaction", () => {
   describe("draw spells", () => {
-    it.skip("should parse '[Reaction] Draw 3.'", () => {
+    it("should parse '[Reaction] Draw 3.'", () => {
       const result = parseAbilities(
         "[Reaction] (Play any time, even before spells and abilities resolve.)Draw 3.",
       );

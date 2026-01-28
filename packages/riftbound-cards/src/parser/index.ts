@@ -22,6 +22,8 @@ import type {
   SimpleKeywordAbility,
   SpellAbility,
   Target,
+  Trigger,
+  TriggeredAbility,
   ValueKeyword,
   ValueKeywordAbility,
 } from "@tcg/riftbound-types";
@@ -56,7 +58,7 @@ export interface ParseResult {
  */
 export interface ParseAbilitiesResult {
   readonly success: boolean;
-  readonly abilities?: AbilityWithText[];
+  readonly abilities?: Ability[];
   readonly error?: string;
 }
 
@@ -66,12 +68,11 @@ export interface ParseAbilitiesResult {
 
 /**
  * Simple keywords that have no parameters
+ * Note: Action and Reaction are NOT included here - they are spell timing indicators
  */
 const SIMPLE_KEYWORDS: readonly SimpleKeyword[] = [
   "Tank",
   "Ganking",
-  "Action",
-  "Reaction",
   "Hidden",
   "Temporary",
   "Quick-Draw",
@@ -172,6 +173,19 @@ const POWER_PATTERN = /:rb_rune_(fury|calm|mind|body|chaos|order|rainbow):/g;
  * Cost tokens end with : (like :rb_exhaust:), so we match up to and including the last :
  */
 const ACTIVATED_ABILITY_PATTERN = /^(.+:): (.+)$/;
+
+/**
+ * Pattern to match spell timing: [Action] or [Reaction] at the start
+ * Captures: timing word (Action or Reaction)
+ */
+const SPELL_TIMING_PATTERN = /^\[(Action|Reaction)\]/i;
+
+/**
+ * Pattern to match triggered abilities: "When you play me, EFFECT"
+ * Captures: trigger phrase, effect phrase
+ */
+const TRIGGERED_ABILITY_PATTERN =
+  /^(When (?:you play me|I (?:attack|defend|conquer|hold|die|move))),\s*(.+)$/i;
 
 // ============================================================================
 // Parser Functions
@@ -528,6 +542,30 @@ function parseEffect(text: string): Effect | undefined {
     return channelEffect;
   }
 
+  // Try buff effect
+  const buffEffect = parseBuffEffect(cleanText);
+  if (buffEffect) {
+    return buffEffect;
+  }
+
+  // Try damage effect
+  const damageEffect = parseDamageEffect(cleanText);
+  if (damageEffect) {
+    return damageEffect;
+  }
+
+  // Try ready effect
+  const readyEffect = parseReadyEffect(cleanText);
+  if (readyEffect) {
+    return readyEffect;
+  }
+
+  // Try movement effect
+  const moveEffect = parseMovementEffect(cleanText);
+  if (moveEffect) {
+    return moveEffect;
+  }
+
   return undefined;
 }
 
@@ -562,11 +600,79 @@ function parseActivatedAbility(text: string): ActivatedAbility | undefined {
 }
 
 /**
+ * Parse trigger phrase to Trigger object
+ * @param triggerPhrase - The trigger phrase (e.g., "When you play me")
+ * @returns Trigger object
+ */
+function parseTrigger(triggerPhrase: string): Trigger {
+  const lowerPhrase = triggerPhrase.toLowerCase();
+
+  if (lowerPhrase.includes("when you play me")) {
+    return { event: "play-self", timing: "when" };
+  }
+  if (lowerPhrase.includes("when i attack")) {
+    return { event: "attack", on: "self", timing: "when" };
+  }
+  if (lowerPhrase.includes("when i defend")) {
+    return { event: "defend", on: "self", timing: "when" };
+  }
+  if (lowerPhrase.includes("when i conquer")) {
+    return { event: "conquer", on: "self", timing: "when" };
+  }
+  if (lowerPhrase.includes("when i hold")) {
+    return { event: "hold", on: "self", timing: "when" };
+  }
+  if (lowerPhrase.includes("when i die")) {
+    return { event: "die", on: "self", timing: "when" };
+  }
+  if (lowerPhrase.includes("when i move")) {
+    return { event: "move", on: "self", timing: "when" };
+  }
+
+  // Default fallback
+  return { event: "play-self", timing: "when" };
+}
+
+/**
+ * Parse triggered ability from text
+ * @param text - The ability text to parse
+ * @returns TriggeredAbility if parsed successfully, undefined otherwise
+ */
+function parseTriggeredAbility(text: string): TriggeredAbility | undefined {
+  const cleanText = removeReminderText(text).trim();
+  const match = TRIGGERED_ABILITY_PATTERN.exec(cleanText);
+
+  if (!match) {
+    return undefined;
+  }
+
+  const triggerPhrase = match[1];
+  const effectText = match[2];
+
+  const trigger = parseTrigger(triggerPhrase);
+  const effect = parseEffect(effectText);
+
+  if (!effect) {
+    return undefined;
+  }
+
+  return {
+    type: "triggered",
+    trigger,
+    effect,
+  };
+}
+
+/**
  * Parse effect from text and wrap in SpellAbility
  * @param text - The text to parse
+ * @param timing - The spell timing (action or reaction)
  * @returns SpellAbility if an effect was parsed, undefined otherwise
  */
-function parseEffectAsSpell(text: string): SpellAbility | undefined {
+function parseEffectAsSpell(
+  text: string,
+  timing: "action" | "reaction" = "action",
+): SpellAbility | undefined {
   const cleanText = removeReminderText(text);
 
   // Try draw effect
@@ -574,7 +680,7 @@ function parseEffectAsSpell(text: string): SpellAbility | undefined {
   if (drawEffect) {
     return {
       type: "spell",
-      timing: "action",
+      timing,
       effect: drawEffect,
     };
   }
@@ -584,7 +690,7 @@ function parseEffectAsSpell(text: string): SpellAbility | undefined {
   if (channelEffect) {
     return {
       type: "spell",
-      timing: "action",
+      timing,
       effect: channelEffect,
     };
   }
@@ -594,7 +700,7 @@ function parseEffectAsSpell(text: string): SpellAbility | undefined {
   if (damageEffect) {
     return {
       type: "spell",
-      timing: "action",
+      timing,
       effect: damageEffect,
     };
   }
@@ -604,7 +710,7 @@ function parseEffectAsSpell(text: string): SpellAbility | undefined {
   if (buffEffect) {
     return {
       type: "spell",
-      timing: "action",
+      timing,
       effect: buffEffect,
     };
   }
@@ -614,7 +720,7 @@ function parseEffectAsSpell(text: string): SpellAbility | undefined {
   if (readyEffect) {
     return {
       type: "spell",
-      timing: "action",
+      timing,
       effect: readyEffect,
     };
   }
@@ -624,12 +730,33 @@ function parseEffectAsSpell(text: string): SpellAbility | undefined {
   if (movementEffect) {
     return {
       type: "spell",
-      timing: "action",
+      timing,
       effect: movementEffect,
     };
   }
 
   return undefined;
+}
+
+/**
+ * Parse a spell ability from text starting with [Action] or [Reaction]
+ * @param text - The text to parse
+ * @returns SpellAbility if parsed successfully, undefined otherwise
+ */
+function parseSpellAbility(text: string): SpellAbility | undefined {
+  const cleanText = removeReminderText(text).trim();
+  const match = SPELL_TIMING_PATTERN.exec(cleanText);
+
+  if (!match) {
+    return undefined;
+  }
+
+  const timing = match[1].toLowerCase() as "action" | "reaction";
+  // Remove the [Action] or [Reaction] prefix and any following reminder text
+  const effectText = cleanText.slice(match[0].length).trim();
+
+  // Parse the effect from the remaining text
+  return parseEffectAsSpell(effectText, timing);
 }
 
 /**
@@ -755,12 +882,30 @@ export function parseAbilities(
     };
   }
 
-  // Try parsing as activated ability first (cost:: effect pattern)
+  // Try parsing as spell ability first ([Action] or [Reaction] prefix)
+  const spellAbility = parseSpellAbility(text);
+  if (spellAbility) {
+    return {
+      success: true,
+      abilities: [spellAbility],
+    };
+  }
+
+  // Try parsing as activated ability (cost:: effect pattern)
   const activatedAbility = parseActivatedAbility(text);
   if (activatedAbility) {
     return {
       success: true,
       abilities: [activatedAbility],
+    };
+  }
+
+  // Try parsing as triggered ability (When X, effect pattern)
+  const triggeredAbility = parseTriggeredAbility(text);
+  if (triggeredAbility) {
+    return {
+      success: true,
+      abilities: [triggeredAbility],
     };
   }
 

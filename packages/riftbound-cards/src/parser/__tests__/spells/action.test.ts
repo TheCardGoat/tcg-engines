@@ -10,7 +10,7 @@ import { Effects, Targets } from "../helpers";
 
 describe("Spell: Action", () => {
   describe("damage spells", () => {
-    it.skip("should parse '[Action] Deal 3 to a unit at a battlefield.'", () => {
+    it("should parse '[Action] Deal 3 to a unit at a battlefield.'", () => {
       const result = parseAbilities(
         "[Action] (Play on your turn or in showdowns.)Deal 3 to a unit at a battlefield.",
       );
@@ -47,7 +47,7 @@ describe("Spell: Action", () => {
       expect(result.abilities).toHaveLength(1);
     });
 
-    it.skip("should parse '[Action] Deal 6 to a unit at a battlefield.'", () => {
+    it("should parse '[Action] Deal 6 to a unit at a battlefield.'", () => {
       const result = parseAbilities(
         "[Action] (Play on your turn or in showdowns.)Deal 6 to a unit at a battlefield.",
       );
@@ -66,7 +66,7 @@ describe("Spell: Action", () => {
       );
     });
 
-    it.skip("should parse '[Action] Deal 8 to a unit.'", () => {
+    it("should parse '[Action] Deal 8 to a unit.'", () => {
       const result = parseAbilities(
         "[Action] (Play on your turn or in showdowns.)Deal 8 to a unit.",
       );
