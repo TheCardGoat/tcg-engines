@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { CardImage } from "@tcg/component-library";
+  import { CardImage } from "@tcg/core-ui";
   import { onMount } from "svelte";
   import { fade, fly } from "svelte/transition";
   import { browser } from "$app/environment";

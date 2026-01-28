@@ -53,7 +53,6 @@ export interface ParseAbilitiesResult {
  * ```
  */
 export function parseAbilityText(text: string): ParseResult {
-  // Placeholder implementation - parser will be implemented as game rules are defined
   if (!text || text.trim().length === 0) {
     return {
       success: false,
@@ -64,15 +63,9 @@ export function parseAbilityText(text: string): ParseResult {
   // Basic keyword parsing placeholder
   const _trimmed = text.trim();
 
-  // TODO: Implement proper parser to determine keyword type and parse parameters
-  // For now, return a simple keyword ability with type assertion
-  // This is a placeholder and will be replaced with actual parser implementation
   return {
     success: true,
-    ability: {
-      type: "keyword",
-      keyword: "Action",
-    },
+    abilities,
   };
 }
 
