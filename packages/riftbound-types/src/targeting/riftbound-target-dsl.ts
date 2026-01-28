@@ -1,114 +1,423 @@
 /**
  * Riftbound Target DSL Type Definitions
  *
- * Domain-specific language for targeting cards and players.
+ * Domain-specific language for targeting cards, players, and locations.
+ * This is a comprehensive targeting system that supports:
+ * - Controller filtering (friendly, enemy, any)
+ * - Card type filtering (unit, gear, spell, etc.)
+ * - Location filtering (base, battlefield, here, etc.)
+ * - State filtering (mighty, buffed, damaged, etc.)
+ * - Quantity specification (one, all, up to X)
  */
 
-/**
- * Target controller - who controls the target
- */
-export type TargetController = "self" | "opponent" | "any";
+// ============================================================================
+// Controller Types
+// ============================================================================
 
 /**
- * Target zone - where the target is located
+ * Who controls the target
  */
-export type TargetZone =
-  | "hand"
-  | "deck"
-  | "discard"
-  | "field"
-  | "exile"
-  | "any";
+export type TargetController =
+  | "friendly" // Your cards
+  | "enemy" // Opponent's cards
+  | "opponent" // Alias for enemy
+  | "any"; // Any player's cards
+
+// ============================================================================
+// Card Types
+// ============================================================================
 
 /**
- * Base target query interface
+ * Types of cards that can be targeted
  */
-export interface BaseTargetQuery {
-  readonly type: string;
+export type CardType =
+  | "unit" // Units (characters)
+  | "gear" // Gear cards (equipment + other gear)
+  | "equipment" // Equipment specifically
+  | "spell" // Spell cards
+  | "legend" // Legend cards
+  | "rune" // Rune cards
+  | "card" // Any card type
+  | "permanent"; // Any permanent (unit, gear, legend)
+
+// ============================================================================
+// Location Types
+// ============================================================================
+
+/**
+ * Where the target is located
+ */
+export type Location =
+  | "base" // Player's base zone
+  | "battlefield" // Any battlefield
+  | "here" // Same location as source
+  | "trash" // Discard pile
+  | "hand" // Player's hand
+  | "deck" // Main deck
+  | "rune-deck" // Rune deck
+  | "champion-zone" // Champion zone
+  | "anywhere" // Any location
+  | "same" // Same location as another target
+  | BattlefieldLocation;
+
+/**
+ * Specific battlefield location
+ */
+export interface BattlefieldLocation {
+  readonly battlefield: "controlled" | "enemy" | "open" | "contested" | "any";
 }
 
 /**
- * Card target query - targets cards
+ * Type guard for battlefield location
  */
-export interface CardTargetQuery extends BaseTargetQuery {
-  readonly type: "card";
+export function isBattlefieldLocation(
+  location: Location,
+): location is BattlefieldLocation {
+  return typeof location === "object" && "battlefield" in location;
+}
+
+// ============================================================================
+// Filter Types
+// ============================================================================
+
+/**
+ * Simple state filters (string literals)
+ */
+export type SimpleFilter =
+  | "mighty" // 5+ Might
+  | "buffed" // Has a buff
+  | "damaged" // Has damage
+  | "stunned" // Is stunned
+  | "ready" // Is ready (not exhausted)
+  | "exhausted" // Is exhausted
+  | "token" // Is a token
+  | "equipped" // Has equipment attached
+  | "attacking" // Is currently attacking
+  | "defending" // Is currently defending
+  | "alone" // Only unit at location
+  | "facedown"; // Is face down (hidden)
+
+/**
+ * Tag filter - matches cards with specific tags
+ */
+export interface TagFilter {
+  readonly tag: string; // e.g., "Mech", "Dragon", "Sand Soldier"
+}
+
+/**
+ * Might comparison filter
+ */
+export interface MightFilter {
+  readonly might: Comparison;
+}
+
+/**
+ * Cost comparison filter
+ */
+export interface CostFilter {
+  readonly cost: Comparison;
+}
+
+/**
+ * Energy cost comparison filter
+ */
+export interface EnergyCostFilter {
+  readonly energyCost: Comparison;
+}
+
+/**
+ * Power cost comparison filter
+ */
+export interface PowerCostFilter {
+  readonly powerCost: Comparison;
+}
+
+/**
+ * Keyword filter - has specific keyword
+ */
+export interface KeywordFilter {
+  readonly keyword: string;
+}
+
+/**
+ * Name filter - matches card name
+ */
+export interface NameFilter {
+  readonly name: string;
+}
+
+/**
+ * Comparison operators for numeric filters
+ */
+export interface Comparison {
+  readonly eq?: number; // Equal to
+  readonly lt?: number; // Less than
+  readonly lte?: number; // Less than or equal
+  readonly gt?: number; // Greater than
+  readonly gte?: number; // Greater than or equal
+}
+
+/**
+ * All filter types
+ */
+export type Filter =
+  | SimpleFilter
+  | TagFilter
+  | MightFilter
+  | CostFilter
+  | EnergyCostFilter
+  | PowerCostFilter
+  | KeywordFilter
+  | NameFilter;
+
+/**
+ * Type guard for simple filters
+ */
+export function isSimpleFilter(filter: Filter): filter is SimpleFilter {
+  return typeof filter === "string";
+}
+
+/**
+ * Type guard for tag filters
+ */
+export function isTagFilter(filter: Filter): filter is TagFilter {
+  return typeof filter === "object" && "tag" in filter;
+}
+
+/**
+ * Type guard for might filters
+ */
+export function isMightFilter(filter: Filter): filter is MightFilter {
+  return typeof filter === "object" && "might" in filter;
+}
+
+/**
+ * Type guard for keyword filters
+ */
+export function isKeywordFilter(filter: Filter): filter is KeywordFilter {
+  return typeof filter === "object" && "keyword" in filter;
+}
+
+// ============================================================================
+// Quantity Types
+// ============================================================================
+
+/**
+ * How many targets to select
+ */
+export type Quantity =
+  | number // Exactly N
+  | "all" // All matching
+  | "any" // Any number (player chooses)
+  | QuantityRange;
+
+/**
+ * Range-based quantity
+ */
+export interface QuantityRange {
+  readonly upTo?: number; // Up to N
+  readonly atLeast?: number; // At least N
+  readonly exactly?: number; // Exactly N
+}
+
+/**
+ * Type guard for quantity range
+ */
+export function isQuantityRange(quantity: Quantity): quantity is QuantityRange {
+  return typeof quantity === "object";
+}
+
+// ============================================================================
+// Target Definition
+// ============================================================================
+
+/**
+ * Complete target specification
+ *
+ * @example "a unit at a battlefield"
+ * { type: "unit", location: "battlefield" }
+ *
+ * @example "all enemy units here"
+ * { type: "unit", controller: "enemy", location: "here", quantity: "all" }
+ *
+ * @example "a friendly unit with 3 Might or less"
+ * { type: "unit", controller: "friendly", filter: { might: { lte: 3 } } }
+ *
+ * @example "your Mechs"
+ * { type: "unit", controller: "friendly", filter: { tag: "Mech" }, quantity: "all" }
+ */
+export interface Target {
+  /** Type of card to target */
+  readonly type: CardType;
+
+  /** Who controls the target */
   readonly controller?: TargetController;
-  readonly zone?: TargetZone;
-  readonly cardType?: string;
-  readonly filters?: TargetFilter[];
+
+  /** Where the target is located */
+  readonly location?: Location;
+
+  /** Additional filters */
+  readonly filter?: Filter | Filter[];
+
+  /** How many to target */
+  readonly quantity?: Quantity;
+
+  /** Exclude the source card from targeting */
+  readonly excludeSelf?: boolean;
+
+  /** Optional targeting (player may choose not to target) */
+  readonly optional?: boolean;
 }
 
 /**
- * Player target query - targets players
+ * Player target specification
  */
-export interface PlayerTargetQuery extends BaseTargetQuery {
+export interface PlayerTarget {
   readonly type: "player";
-  readonly which: "self" | "opponent" | "any" | "all";
+  readonly which: "self" | "opponent" | "each" | "any" | "all";
 }
 
 /**
- * Self target query - targets the source card
+ * Self reference (the source card)
  */
-export interface SelfTargetQuery extends BaseTargetQuery {
+export interface SelfTarget {
   readonly type: "self";
 }
 
 /**
- * Union type for all target queries
+ * Trigger source reference (for triggered abilities)
  */
-export type TargetQuery = CardTargetQuery | PlayerTargetQuery | SelfTargetQuery;
-
-/**
- * Target filter - additional constraints on targets
- */
-export interface TargetFilter {
-  readonly property: string;
-  readonly operator: "eq" | "neq" | "gt" | "gte" | "lt" | "lte" | "contains";
-  readonly value: unknown;
+export interface TriggerSourceTarget {
+  readonly type: "trigger-source";
 }
 
 /**
- * Target selection mode
+ * Last target reference (for chained effects)
  */
-export type TargetSelectionMode =
-  | "single" // Select exactly one
-  | "multiple" // Select multiple (up to max)
-  | "all" // Select all matching
-  | "optional"; // Select zero or one
-
-/**
- * Complete target specification
- */
-export interface TargetSpec {
-  readonly query: TargetQuery;
-  readonly mode: TargetSelectionMode;
-  readonly min?: number;
-  readonly max?: number;
+export interface LastTargetRef {
+  readonly type: "last-target";
 }
 
 /**
- * Type guard for card target queries
+ * All target types
  */
-export function isCardTargetQuery(
-  query: TargetQuery,
-): query is CardTargetQuery {
-  return query.type === "card";
+export type AnyTarget =
+  | Target
+  | PlayerTarget
+  | SelfTarget
+  | TriggerSourceTarget
+  | LastTargetRef
+  | "self"
+  | "controller"
+  | "opponent";
+
+// ============================================================================
+// Type Guards
+// ============================================================================
+
+/**
+ * Check if target is a card target
+ */
+export function isCardTarget(target: AnyTarget): target is Target {
+  return (
+    typeof target === "object" &&
+    "type" in target &&
+    target.type !== "player" &&
+    target.type !== "self" &&
+    target.type !== "trigger-source" &&
+    target.type !== "last-target"
+  );
 }
 
 /**
- * Type guard for player target queries
+ * Check if target is a player target
  */
-export function isPlayerTargetQuery(
-  query: TargetQuery,
-): query is PlayerTargetQuery {
-  return query.type === "player";
+export function isPlayerTarget(target: AnyTarget): target is PlayerTarget {
+  return (
+    typeof target === "object" && "type" in target && target.type === "player"
+  );
 }
 
 /**
- * Type guard for self target queries
+ * Check if target is self
  */
-export function isSelfTargetQuery(
-  query: TargetQuery,
-): query is SelfTargetQuery {
-  return query.type === "self";
+export function isSelfTarget(target: AnyTarget): target is SelfTarget | "self" {
+  return (
+    target === "self" ||
+    (typeof target === "object" && "type" in target && target.type === "self")
+  );
+}
+
+/**
+ * Check if target is trigger source
+ */
+export function isTriggerSourceTarget(
+  target: AnyTarget,
+): target is TriggerSourceTarget {
+  return (
+    typeof target === "object" &&
+    "type" in target &&
+    target.type === "trigger-source"
+  );
+}
+
+// ============================================================================
+// Builder Functions
+// ============================================================================
+
+/**
+ * Create a unit target
+ */
+export function unit(options?: Partial<Omit<Target, "type">>): Target {
+  return { type: "unit", ...options };
+}
+
+/**
+ * Create a gear target
+ */
+export function gear(options?: Partial<Omit<Target, "type">>): Target {
+  return { type: "gear", ...options };
+}
+
+/**
+ * Create an equipment target
+ */
+export function equipment(options?: Partial<Omit<Target, "type">>): Target {
+  return { type: "equipment", ...options };
+}
+
+/**
+ * Create a friendly unit target
+ */
+export function friendlyUnit(
+  options?: Partial<Omit<Target, "type" | "controller">>,
+): Target {
+  return { type: "unit", controller: "friendly", ...options };
+}
+
+/**
+ * Create an enemy unit target
+ */
+export function enemyUnit(
+  options?: Partial<Omit<Target, "type" | "controller">>,
+): Target {
+  return { type: "unit", controller: "enemy", ...options };
+}
+
+/**
+ * Create a unit at battlefield target
+ */
+export function unitAtBattlefield(
+  options?: Partial<Omit<Target, "type" | "location">>,
+): Target {
+  return { type: "unit", location: "battlefield", ...options };
+}
+
+/**
+ * Create a unit here (same location) target
+ */
+export function unitHere(
+  options?: Partial<Omit<Target, "type" | "location">>,
+): Target {
+  return { type: "unit", location: "here", ...options };
 }
