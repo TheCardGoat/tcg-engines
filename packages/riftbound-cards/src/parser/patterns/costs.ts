@@ -92,7 +92,9 @@ export const COST_STRING_PATTERN = new RegExp(
  * Check if a string contains any cost tokens
  */
 export function hasCostTokens(text: string): boolean {
-  return ANY_COST_TOKEN_PATTERN.test(text);
+  // Create a new regex to avoid global state issues with lastIndex
+  const pattern = new RegExp(ANY_COST_TOKEN_PATTERN.source);
+  return pattern.test(text);
 }
 
 /**

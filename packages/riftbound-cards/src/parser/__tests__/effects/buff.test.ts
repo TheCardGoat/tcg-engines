@@ -10,7 +10,7 @@ import { Effects } from "../helpers";
 
 describe("Effect: Buff", () => {
   describe("buff target", () => {
-    it.skip("should parse 'Buff a friendly unit.'", () => {
+    it("should parse 'Buff a friendly unit.'", () => {
       const result = parseAbilities(
         "Buff a friendly unit. (If it doesn't have a buff, it gets a +1 :rb_might: buff.)",
       );
@@ -27,7 +27,7 @@ describe("Effect: Buff", () => {
       );
     });
 
-    it.skip("should parse 'Buff me.'", () => {
+    it("should parse 'Buff me.'", () => {
       const result = parseAbilities(
         "Buff me. (If I don't have a buff, I get a +1 :rb_might: buff.)",
       );

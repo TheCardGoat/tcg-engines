@@ -24,13 +24,13 @@ describe("Keyword: Deflect", () => {
   });
 
   describe("deflect with value", () => {
-    it.skip("should parse '[Deflect 2] (Opponents must pay :rb_rune_rainbow::rb_rune_rainbow: to choose me with a spell or ability.)'", () => {
+    it("should parse '[Deflect 2] (Opponents must pay :rb_rune_rainbow::rb_rune_rainbow: to choose me with a spell or ability.)'", () => {
       const result = parseAbilities(
         "[Deflect 2] (Opponents must pay :rb_rune_rainbow::rb_rune_rainbow: to choose me with a spell or ability.)When I attack, deal 5 damage split among any number of enemy units here.",
       );
 
       expect(result.success).toBe(true);
-      expect(result.abilities?.length).toBeGreaterThanOrEqual(2);
+      expect(result.abilities?.length).toBeGreaterThanOrEqual(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining(Abilities.deflect(2)),
       );

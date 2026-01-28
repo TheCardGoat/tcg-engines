@@ -10,7 +10,7 @@ import { Effects } from "../helpers";
 
 describe("Effect: Channel", () => {
   describe("channel exhausted", () => {
-    it.skip("should parse 'Channel 1 rune exhausted.'", () => {
+    it("should parse 'Channel 1 rune exhausted.'", () => {
       const result = parseAbilities("Channel 1 rune exhausted.");
 
       expect(result.success).toBe(true);
@@ -27,7 +27,7 @@ describe("Effect: Channel", () => {
       );
     });
 
-    it.skip("should parse 'Channel 2 runes exhausted.'", () => {
+    it("should parse 'Channel 2 runes exhausted.'", () => {
       const result = parseAbilities("Channel 2 runes exhausted.");
 
       expect(result.success).toBe(true);
@@ -46,7 +46,7 @@ describe("Effect: Channel", () => {
   });
 
   describe("channel ready", () => {
-    it.skip("should parse 'Channel 1 rune.'", () => {
+    it("should parse 'Channel 1 rune.'", () => {
       const result = parseAbilities("Channel 1 rune.");
 
       expect(result.success).toBe(true);

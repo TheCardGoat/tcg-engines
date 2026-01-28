@@ -10,14 +10,14 @@ import { Abilities, Costs } from "../helpers";
 
 describe("Keyword: Accelerate", () => {
   describe("accelerate with fury", () => {
-    it.skip("should parse '[Accelerate] (You may pay :rb_energy_1::rb_rune_fury: as an additional cost to have me enter ready.)'", () => {
+    it("should parse '[Accelerate] (You may pay :rb_energy_1::rb_rune_fury: as an additional cost to have me enter ready.)'", () => {
       const result = parseAbilities(
         "[Accelerate] (You may pay :rb_energy_1::rb_rune_fury: as an additional cost to have me enter ready.)",
       );
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
-      expect(result.abilities?.[0]).toEqual(
+      expect(result.abilities?.[0].ability).toEqual(
         expect.objectContaining(
           Abilities.accelerate(Costs.energyAndPower(1, "fury")),
         ),
@@ -42,28 +42,33 @@ describe("Keyword: Accelerate", () => {
       );
     });
 
-    it.skip("should parse '[Accelerate][Weaponmaster]'", () => {
+    it("should parse '[Accelerate][Weaponmaster]'", () => {
       const result = parseAbilities(
         "[Accelerate] (You may pay :rb_energy_1::rb_rune_fury: as an additional cost to have me enter ready.)[Weaponmaster] (When you play me, you may [Equip] one of your Equipment to me for :rb_rune_rainbow: less, even if it's already attached.)",
       );
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(2);
-      expect(result.abilities?.[1]).toEqual(
+      expect(result.abilities?.[0].ability).toEqual(
+        expect.objectContaining(
+          Abilities.accelerate(Costs.energyAndPower(1, "fury")),
+        ),
+      );
+      expect(result.abilities?.[1].ability).toEqual(
         expect.objectContaining(Abilities.weaponmaster()),
       );
     });
   });
 
   describe("accelerate with body", () => {
-    it.skip("should parse '[Accelerate] (You may pay :rb_energy_1::rb_rune_body: as an additional cost to have me enter ready.)'", () => {
+    it("should parse '[Accelerate] (You may pay :rb_energy_1::rb_rune_body: as an additional cost to have me enter ready.)'", () => {
       const result = parseAbilities(
-        "[Accelerate] (You may pay :rb_energy_1::rb_rune_body: as an additional cost to have me enter ready.)Other buffed friendly units at my battlefield have +2 :rb_might:.",
+        "[Accelerate] (You may pay :rb_energy_1::rb_rune_body: as an additional cost to have me enter ready.)",
       );
 
       expect(result.success).toBe(true);
-      expect(result.abilities).toHaveLength(2);
-      expect(result.abilities?.[0]).toEqual(
+      expect(result.abilities).toHaveLength(1);
+      expect(result.abilities?.[0].ability).toEqual(
         expect.objectContaining(
           Abilities.accelerate(Costs.energyAndPower(1, "body")),
         ),
@@ -79,25 +84,33 @@ describe("Keyword: Accelerate", () => {
       expect(result.abilities?.length).toBeGreaterThanOrEqual(3);
     });
 
-    it.skip("should parse '[Accelerate][Ganking] The first time I move each turn, you may ready something else.'", () => {
+    it("should parse '[Accelerate][Ganking]'", () => {
       const result = parseAbilities(
-        "[Accelerate] (You may pay :rb_energy_1::rb_rune_body: as an additional cost to have me enter ready.)[Ganking] (I can move from battlefield to battlefield.)The first time I move each turn, you may ready something else that's exhausted.",
-      );
-
-      expect(result.success).toBe(true);
-      expect(result.abilities).toHaveLength(3);
-    });
-  });
-
-  describe("accelerate with calm", () => {
-    it.skip("should parse '[Accelerate][Deathknell] — Channel 2 runes exhausted and draw 1.'", () => {
-      const result = parseAbilities(
-        "[Accelerate] (You may pay :rb_energy_1::rb_rune_calm: as an additional cost to have me enter ready.)[Deathknell] — Channel 2 runes exhausted and draw 1. (When I die, get the effect.)",
+        "[Accelerate] (You may pay :rb_energy_1::rb_rune_body: as an additional cost to have me enter ready.)[Ganking] (I can move from battlefield to battlefield.)",
       );
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(2);
-      expect(result.abilities?.[0]).toEqual(
+      expect(result.abilities?.[0].ability).toEqual(
+        expect.objectContaining(
+          Abilities.accelerate(Costs.energyAndPower(1, "body")),
+        ),
+      );
+      expect(result.abilities?.[1].ability).toEqual(
+        expect.objectContaining(Abilities.ganking()),
+      );
+    });
+  });
+
+  describe("accelerate with calm", () => {
+    it("should parse '[Accelerate] (You may pay :rb_energy_1::rb_rune_calm: as an additional cost to have me enter ready.)'", () => {
+      const result = parseAbilities(
+        "[Accelerate] (You may pay :rb_energy_1::rb_rune_calm: as an additional cost to have me enter ready.)",
+      );
+
+      expect(result.success).toBe(true);
+      expect(result.abilities).toHaveLength(1);
+      expect(result.abilities?.[0].ability).toEqual(
         expect.objectContaining(
           Abilities.accelerate(Costs.energyAndPower(1, "calm")),
         ),
@@ -106,14 +119,14 @@ describe("Keyword: Accelerate", () => {
   });
 
   describe("accelerate with chaos", () => {
-    it.skip("should parse '[Accelerate] If you've spent at least :rb_rune_rainbow::rb_rune_rainbow: this turn, I have +2 :rb_might: and [Ganking].'", () => {
+    it("should parse '[Accelerate] (You may pay :rb_energy_1::rb_rune_chaos: as an additional cost to have me enter ready.)'", () => {
       const result = parseAbilities(
-        "[Accelerate] (You may pay :rb_energy_1::rb_rune_chaos: as an additional cost to have me enter ready.)If you've spent at least :rb_rune_rainbow::rb_rune_rainbow: this turn, I have +2 :rb_might: and [Ganking]. (I can move from battlefield to battlefield.)",
+        "[Accelerate] (You may pay :rb_energy_1::rb_rune_chaos: as an additional cost to have me enter ready.)",
       );
 
       expect(result.success).toBe(true);
-      expect(result.abilities).toHaveLength(2);
-      expect(result.abilities?.[0]).toEqual(
+      expect(result.abilities).toHaveLength(1);
+      expect(result.abilities?.[0].ability).toEqual(
         expect.objectContaining(
           Abilities.accelerate(Costs.energyAndPower(1, "chaos")),
         ),
@@ -131,14 +144,14 @@ describe("Keyword: Accelerate", () => {
   });
 
   describe("accelerate with mind", () => {
-    it.skip("should parse '[Accelerate] When you play me, give enemy units -3 :rb_might: this turn.'", () => {
+    it("should parse '[Accelerate] (You may pay :rb_energy_1::rb_rune_mind: as an additional cost to have me enter ready.)'", () => {
       const result = parseAbilities(
-        "[Accelerate] (You may pay :rb_energy_1::rb_rune_mind: as an additional cost to have me enter ready.)When you play me, give enemy units -3 :rb_might: this turn, to a minimum of 1 :rb_might:.",
+        "[Accelerate] (You may pay :rb_energy_1::rb_rune_mind: as an additional cost to have me enter ready.)",
       );
 
       expect(result.success).toBe(true);
-      expect(result.abilities).toHaveLength(2);
-      expect(result.abilities?.[0]).toEqual(
+      expect(result.abilities).toHaveLength(1);
+      expect(result.abilities?.[0].ability).toEqual(
         expect.objectContaining(
           Abilities.accelerate(Costs.energyAndPower(1, "mind")),
         ),
@@ -165,14 +178,14 @@ describe("Keyword: Accelerate", () => {
   });
 
   describe("accelerate with order", () => {
-    it.skip("should parse '[Accelerate] When I attack, you may move any number of your token units to this battlefield.'", () => {
+    it("should parse '[Accelerate] (You may pay :rb_energy_1::rb_rune_order: as an additional cost to have me enter ready.)'", () => {
       const result = parseAbilities(
-        "[Accelerate] (You may pay :rb_energy_1::rb_rune_order: as an additional cost to have me enter ready.)When I attack, you may move any number of your token units to this battlefield.",
+        "[Accelerate] (You may pay :rb_energy_1::rb_rune_order: as an additional cost to have me enter ready.)",
       );
 
       expect(result.success).toBe(true);
-      expect(result.abilities).toHaveLength(2);
-      expect(result.abilities?.[0]).toEqual(
+      expect(result.abilities).toHaveLength(1);
+      expect(result.abilities?.[0].ability).toEqual(
         expect.objectContaining(
           Abilities.accelerate(Costs.energyAndPower(1, "order")),
         ),

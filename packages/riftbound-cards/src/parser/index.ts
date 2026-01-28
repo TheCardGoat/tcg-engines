@@ -7,13 +7,25 @@
 import type {
   Ability,
   AbilityWithText,
+  ActivatedAbility,
+  BuffEffect,
+  ChannelEffect,
+  Cost,
+  CostKeywordAbility,
+  DamageEffect,
+  Domain,
+  DrawEffect,
+  Effect,
+  ReadyEffect,
   SimpleKeyword,
   SimpleKeywordAbility,
   SpellAbility,
+  Target,
   ValueKeyword,
   ValueKeywordAbility,
 } from "@tcg/riftbound-types";
-import type { DrawEffect } from "@tcg/riftbound-types/abilities/effect-types";
+import { parseMovementEffect } from "./parsers/effect-parser";
+import { parseCostKeywords } from "./parsers/keyword-parser";
 
 /**
  * Options for controlling parser behavior and output
@@ -105,6 +117,55 @@ const REMINDER_TEXT_PATTERN = /\([^)]*\)/g;
  */
 const DRAW_PATTERN = /^Draw (\d+)\.?$/i;
 
+/**
+ * Pattern to match channel effects: "Channel N rune(s) [exhausted]."
+ */
+const CHANNEL_PATTERN = /^Channel (\d+) runes?(?:\s+(exhausted))?\.?$/i;
+
+/**
+ * Pattern to match damage effects: "Deal N to TARGET."
+ */
+const DAMAGE_PATTERN = /^Deal (\d+) to (.+)\.?$/i;
+
+/**
+ * Pattern to match split damage effects: "Deal N damage split among TARGET."
+ */
+const SPLIT_DAMAGE_PATTERN = /^Deal (\d+) damage split among (.+)\.?$/i;
+
+/**
+ * Pattern to match buff effects: "Buff TARGET."
+ */
+const BUFF_PATTERN = /^Buff (me|a friendly unit|a unit)\.?/i;
+
+/**
+ * Pattern to match ready effects: "Ready TARGET."
+ */
+const READY_PATTERN =
+  /^Ready (me|a unit|your units|your runes|a friendly unit)\.?/i;
+
+/**
+ * Pattern to match exhaust symbol: :rb_exhaust:
+ */
+const EXHAUST_PATTERN = /:rb_exhaust:/g;
+
+/**
+ * Pattern to match energy cost: :rb_energy_N:
+ */
+const ENERGY_PATTERN = /:rb_energy_(\d+):/g;
+
+/**
+ * Pattern to match power/rune cost: :rb_rune_domain:
+ */
+const POWER_PATTERN = /:rb_rune_(fury|calm|mind|body|chaos|order|rainbow):/g;
+
+/**
+ * Pattern to match activated ability: cost: effect
+ * Captures: cost part (including trailing colon), effect part
+ * The separator is ": " (colon followed by space)
+ * Cost tokens end with : (like :rb_exhaust:), so we match up to and including the last :
+ */
+const ACTIVATED_ABILITY_PATTERN = /^(.+:): (.+)$/;
+
 // ============================================================================
 // Parser Functions
 // ============================================================================
@@ -117,10 +178,13 @@ function removeReminderText(text: string): string {
 }
 
 /**
- * Parse simple keywords from text
+ * Parse simple keywords from text with positions
  */
-function parseSimpleKeywords(text: string): SimpleKeywordAbility[] {
-  const abilities: SimpleKeywordAbility[] = [];
+function parseSimpleKeywordsWithPositions(
+  text: string,
+): Array<{ ability: SimpleKeywordAbility; startIndex: number }> {
+  const results: Array<{ ability: SimpleKeywordAbility; startIndex: number }> =
+    [];
   const cleanText = removeReminderText(text);
 
   let match: RegExpExecArray | null;
@@ -128,20 +192,40 @@ function parseSimpleKeywords(text: string): SimpleKeywordAbility[] {
 
   while ((match = pattern.exec(cleanText)) !== null) {
     const keyword = match[1] as SimpleKeyword;
-    abilities.push({
-      type: "keyword",
-      keyword,
+    // Find the actual position in the original text
+    const keywordPattern = new RegExp(`\\[${keyword}\\]`);
+    const originalMatch = text.match(keywordPattern);
+    const startIndex = originalMatch
+      ? text.indexOf(originalMatch[0])
+      : match.index;
+
+    results.push({
+      ability: {
+        type: "keyword",
+        keyword,
+      },
+      startIndex,
     });
   }
 
-  return abilities;
+  return results;
 }
 
 /**
- * Parse value keywords from text
+ * Parse simple keywords from text
  */
-function parseValueKeywords(text: string): ValueKeywordAbility[] {
-  const abilities: ValueKeywordAbility[] = [];
+function parseSimpleKeywords(text: string): SimpleKeywordAbility[] {
+  return parseSimpleKeywordsWithPositions(text).map((r) => r.ability);
+}
+
+/**
+ * Parse value keywords from text with positions
+ */
+function parseValueKeywordsWithPositions(
+  text: string,
+): Array<{ ability: ValueKeywordAbility; startIndex: number }> {
+  const results: Array<{ ability: ValueKeywordAbility; startIndex: number }> =
+    [];
   const cleanText = removeReminderText(text);
 
   let match: RegExpExecArray | null;
@@ -150,14 +234,31 @@ function parseValueKeywords(text: string): ValueKeywordAbility[] {
   while ((match = pattern.exec(cleanText)) !== null) {
     const keyword = match[1] as ValueKeyword;
     const value = match[2] ? Number.parseInt(match[2], 10) : 1;
-    abilities.push({
-      type: "keyword",
-      keyword,
-      value,
+    // Find the actual position in the original text
+    const keywordPattern = new RegExp(`\\[${keyword}(?:\\s+${value})?\\]`);
+    const originalMatch = text.match(keywordPattern);
+    const startIndex = originalMatch
+      ? text.indexOf(originalMatch[0])
+      : match.index;
+
+    results.push({
+      ability: {
+        type: "keyword",
+        keyword,
+        value,
+      },
+      startIndex,
     });
   }
 
-  return abilities;
+  return results;
+}
+
+/**
+ * Parse value keywords from text
+ */
+function parseValueKeywords(text: string): ValueKeywordAbility[] {
+  return parseValueKeywordsWithPositions(text).map((r) => r.ability);
 }
 
 /**
@@ -178,6 +279,252 @@ function parseDrawEffect(text: string): DrawEffect | undefined {
 }
 
 /**
+ * Parse channel effect from text
+ * @param text - The text to parse (should be cleaned of reminder text)
+ * @returns ChannelEffect if matched, undefined otherwise
+ */
+function parseChannelEffect(text: string): ChannelEffect | undefined {
+  const match = CHANNEL_PATTERN.exec(text);
+  if (match) {
+    const amount = Number.parseInt(match[1], 10);
+    const exhausted = match[2] === "exhausted";
+    if (exhausted) {
+      return {
+        type: "channel",
+        amount,
+        exhausted: true,
+      };
+    }
+    return {
+      type: "channel",
+      amount,
+    };
+  }
+  return undefined;
+}
+
+/**
+ * Parse a target expression from text
+ * @param text - The target text (e.g., "a unit", "an enemy unit", "a unit at a battlefield")
+ * @returns Target object
+ */
+function parseTarget(text: string): Target {
+  const normalized = text.trim().toLowerCase();
+
+  // Start with default target
+  const target: {
+    type: "unit" | "gear" | "spell" | "card" | "permanent";
+    controller?: "friendly" | "enemy" | "any";
+    location?: string | { battlefield: string };
+    quantity?: "all" | "any" | number;
+  } = { type: "unit" };
+
+  // Parse quantity: "all units" or "any number of"
+  if (normalized.includes("all units") || normalized.includes("all ")) {
+    target.quantity = "all";
+  } else if (normalized.includes("any number of")) {
+    target.quantity = "any";
+  }
+
+  // Parse controller: "enemy" or "friendly"
+  if (normalized.includes("enemy")) {
+    target.controller = "enemy";
+  } else if (normalized.includes("friendly")) {
+    target.controller = "friendly";
+  }
+
+  // Parse location: "here"
+  if (normalized.includes(" here")) {
+    target.location = "here";
+  }
+  // Parse location: "at my battlefield" -> { battlefield: "controlled" }
+  else if (normalized.includes("at my battlefield")) {
+    target.location = { battlefield: "controlled" };
+  }
+  // Parse location: "at a battlefield" or "at battlefields"
+  else if (
+    normalized.includes("at a battlefield") ||
+    normalized.includes("at battlefields")
+  ) {
+    target.location = "battlefield";
+  }
+
+  return target as Target;
+}
+
+/**
+ * Parse damage effect from text
+ * @param text - The text to parse (should be cleaned of reminder text)
+ * @returns DamageEffect if matched, undefined otherwise
+ */
+function parseDamageEffect(text: string): DamageEffect | undefined {
+  const match = DAMAGE_PATTERN.exec(text);
+  if (match) {
+    const amount = Number.parseInt(match[1], 10);
+    const targetText = match[2];
+    const target = parseTarget(targetText);
+
+    return {
+      type: "damage",
+      amount,
+      target,
+    };
+  }
+  return undefined;
+}
+
+/**
+ * Parse buff effect from text
+ * @param text - The text to parse (should be cleaned of reminder text)
+ * @returns BuffEffect if matched, undefined otherwise
+ */
+function parseBuffEffect(text: string): BuffEffect | undefined {
+  const match = BUFF_PATTERN.exec(text);
+  if (match) {
+    const targetText = match[1].toLowerCase();
+    let target: Target;
+
+    if (targetText === "me") {
+      target = { type: "self" } as unknown as Target;
+    } else if (targetText === "a friendly unit") {
+      target = { type: "unit", controller: "friendly" };
+    } else {
+      target = { type: "unit" };
+    }
+
+    return {
+      type: "buff",
+      target,
+    };
+  }
+  return undefined;
+}
+
+/**
+ * Parse ready effect from text
+ * @param text - The text to parse (should be cleaned of reminder text)
+ * @returns ReadyEffect if matched, undefined otherwise
+ */
+function parseReadyEffect(text: string): ReadyEffect | undefined {
+  const match = READY_PATTERN.exec(text);
+  if (match) {
+    const targetText = match[1].toLowerCase();
+    let target: Target;
+
+    if (targetText === "me") {
+      target = { type: "self" } as unknown as Target;
+    } else if (targetText === "a friendly unit") {
+      target = { type: "unit", controller: "friendly" };
+    } else if (targetText === "your units") {
+      target = { type: "unit", controller: "friendly", quantity: "all" };
+    } else if (targetText === "your runes") {
+      target = { type: "rune", controller: "friendly", quantity: "all" };
+    } else {
+      target = { type: "unit" };
+    }
+
+    return {
+      type: "ready",
+      target,
+    };
+  }
+  return undefined;
+}
+
+/**
+ * Parse cost from text
+ * @param text - The cost text to parse
+ * @returns Cost object
+ */
+function parseCost(text: string): Cost {
+  const cost: {
+    exhaust?: boolean;
+    energy?: number;
+    power?: Domain[];
+  } = {};
+
+  // Check for exhaust - use a new regex to avoid global state issues
+  const exhaustPattern = new RegExp(EXHAUST_PATTERN.source);
+  if (exhaustPattern.test(text)) {
+    cost.exhaust = true;
+  }
+
+  // Parse energy
+  const energyPattern = new RegExp(ENERGY_PATTERN.source, "g");
+  let energyMatch: RegExpExecArray | null;
+  while ((energyMatch = energyPattern.exec(text)) !== null) {
+    const amount = Number.parseInt(energyMatch[1], 10);
+    cost.energy = (cost.energy || 0) + amount;
+  }
+
+  // Parse power/runes
+  const powerPattern = new RegExp(POWER_PATTERN.source, "g");
+  let powerMatch: RegExpExecArray | null;
+  while ((powerMatch = powerPattern.exec(text)) !== null) {
+    const domain = powerMatch[1] as Domain;
+    if (!cost.power) {
+      cost.power = [];
+    }
+    cost.power.push(domain);
+  }
+
+  return cost;
+}
+
+/**
+ * Parse effect from text
+ * @param text - The effect text to parse
+ * @returns Effect if matched, undefined otherwise
+ */
+function parseEffect(text: string): Effect | undefined {
+  const cleanText = removeReminderText(text).trim();
+
+  // Try draw effect
+  const drawEffect = parseDrawEffect(cleanText);
+  if (drawEffect) {
+    return drawEffect;
+  }
+
+  // Try channel effect
+  const channelEffect = parseChannelEffect(cleanText);
+  if (channelEffect) {
+    return channelEffect;
+  }
+
+  return undefined;
+}
+
+/**
+ * Parse activated ability from text
+ * @param text - The text to parse
+ * @returns ActivatedAbility if matched, undefined otherwise
+ */
+function parseActivatedAbility(text: string): ActivatedAbility | undefined {
+  const cleanText = removeReminderText(text).trim();
+  const match = ACTIVATED_ABILITY_PATTERN.exec(cleanText);
+
+  if (!match) {
+    return undefined;
+  }
+
+  const costText = match[1];
+  const effectText = match[2];
+
+  const cost = parseCost(costText);
+  const effect = parseEffect(effectText);
+
+  if (!effect) {
+    return undefined;
+  }
+
+  return {
+    type: "activated",
+    cost,
+    effect,
+  };
+}
+
+/**
  * Parse effect from text and wrap in SpellAbility
  * @param text - The text to parse
  * @returns SpellAbility if an effect was parsed, undefined otherwise
@@ -192,6 +539,56 @@ function parseEffectAsSpell(text: string): SpellAbility | undefined {
       type: "spell",
       timing: "action",
       effect: drawEffect,
+    };
+  }
+
+  // Try channel effect
+  const channelEffect = parseChannelEffect(cleanText);
+  if (channelEffect) {
+    return {
+      type: "spell",
+      timing: "action",
+      effect: channelEffect,
+    };
+  }
+
+  // Try damage effect
+  const damageEffect = parseDamageEffect(cleanText);
+  if (damageEffect) {
+    return {
+      type: "spell",
+      timing: "action",
+      effect: damageEffect,
+    };
+  }
+
+  // Try buff effect
+  const buffEffect = parseBuffEffect(cleanText);
+  if (buffEffect) {
+    return {
+      type: "spell",
+      timing: "action",
+      effect: buffEffect,
+    };
+  }
+
+  // Try ready effect
+  const readyEffect = parseReadyEffect(cleanText);
+  if (readyEffect) {
+    return {
+      type: "spell",
+      timing: "action",
+      effect: readyEffect,
+    };
+  }
+
+  // Try movement effects (move, recall)
+  const movementEffect = parseMovementEffect(cleanText);
+  if (movementEffect) {
+    return {
+      type: "spell",
+      timing: "action",
+      effect: movementEffect,
     };
   }
 
@@ -297,7 +694,16 @@ export function buildAbilityWithText(
  * ```typescript
  * const result = parseAbilities("[Assault 2] (+2 :rb_might: while I'm an attacker.)");
  * if (result.success) {
- *   console.log(result.abilities); // [{ type: "keyword", keyword: "Assault", value: 2 }]
+ *   console.log(result.abilities); // [{ ability: { type: "keyword", keyword: "Assault", value: 2 }, text: "..." }]
+ * }
+ * ```
+ *
+ * @example
+ * ```typescript
+ * // Omit text and id fields for cleaner test assertions
+ * const result = parseAbilities("Draw 1.", { omitText: true, omitId: true });
+ * if (result.success) {
+ *   console.log(result.abilities); // [{ ability: { type: "spell", ... } }]
  * }
  * ```
  */
@@ -312,15 +718,38 @@ export function parseAbilities(
     };
   }
 
-  const abilities: Ability[] = [];
+  // Try parsing as activated ability first (cost:: effect pattern)
+  const activatedAbility = parseActivatedAbility(text);
+  if (activatedAbility) {
+    return {
+      success: true,
+      abilities: [activatedAbility],
+    };
+  }
+
+  // Collect all abilities with their positions
+  const abilitiesWithPositions: Array<{
+    ability: Ability;
+    startIndex: number;
+  }> = [];
+
+  // Parse cost keywords (Accelerate, Equip, Repeat)
+  const costKeywordResults = parseCostKeywords(text);
+  abilitiesWithPositions.push(...costKeywordResults);
 
   // Parse simple keywords
-  const simpleKeywords = parseSimpleKeywords(text);
-  abilities.push(...simpleKeywords);
+  const simpleKeywordResults = parseSimpleKeywordsWithPositions(text);
+  abilitiesWithPositions.push(...simpleKeywordResults);
 
   // Parse value keywords
-  const valueKeywords = parseValueKeywords(text);
-  abilities.push(...valueKeywords);
+  const valueKeywordResults = parseValueKeywordsWithPositions(text);
+  abilitiesWithPositions.push(...valueKeywordResults);
+
+  // Sort by position in text
+  abilitiesWithPositions.sort((a, b) => a.startIndex - b.startIndex);
+
+  // Extract just the abilities
+  const abilities = abilitiesWithPositions.map((r) => r.ability);
 
   // If no keywords found, try parsing as an effect
   if (abilities.length === 0) {
