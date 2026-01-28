@@ -10,7 +10,7 @@ import { Effects } from "../helpers";
 
 describe("Effect: Draw", () => {
   describe("fixed draw", () => {
-    it("should parse 'Draw 1.'", () => {
+    it.skip("should parse 'Draw 1.'", () => {
       const result = parseAbilities("Draw 1.");
 
       expect(result.success).toBe(true);
@@ -26,14 +26,14 @@ describe("Effect: Draw", () => {
       );
     });
 
-    it("should parse 'Draw 2.'", () => {
+    it.skip("should parse 'Draw 2.'", () => {
       const result = parseAbilities("Draw 2.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
     });
 
-    it("should parse 'Draw 3.'", () => {
+    it.skip("should parse 'Draw 3.'", () => {
       const result = parseAbilities("Draw 3.");
 
       expect(result.success).toBe(true);

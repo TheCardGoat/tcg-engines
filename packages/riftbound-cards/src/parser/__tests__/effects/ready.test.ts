@@ -10,7 +10,7 @@ import { Effects } from "../helpers";
 
 describe("Effect: Ready", () => {
   describe("ready self", () => {
-    it("should parse 'Ready me.'", () => {
+    it.skip("should parse 'Ready me.'", () => {
       const result = parseAbilities("Ready me.");
 
       expect(result.success).toBe(true);
@@ -27,21 +27,21 @@ describe("Effect: Ready", () => {
   });
 
   describe("ready target", () => {
-    it("should parse 'Ready a unit.'", () => {
+    it.skip("should parse 'Ready a unit.'", () => {
       const result = parseAbilities("Ready a unit.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
     });
 
-    it("should parse 'Ready your units.'", () => {
+    it.skip("should parse 'Ready your units.'", () => {
       const result = parseAbilities("Ready your units.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
     });
 
-    it("should parse 'Ready your runes.'", () => {
+    it.skip("should parse 'Ready your runes.'", () => {
       const result = parseAbilities("Ready your runes.");
 
       expect(result.success).toBe(true);

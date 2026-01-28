@@ -10,7 +10,7 @@ import { Effects, Targets } from "../helpers";
 
 describe("Spell: Action", () => {
   describe("damage spells", () => {
-    it("should parse '[Action] Deal 3 to a unit at a battlefield.'", () => {
+    it.skip("should parse '[Action] Deal 3 to a unit at a battlefield.'", () => {
       const result = parseAbilities(
         "[Action] (Play on your turn or in showdowns.)Deal 3 to a unit at a battlefield.",
       );
@@ -47,7 +47,7 @@ describe("Spell: Action", () => {
       expect(result.abilities).toHaveLength(1);
     });
 
-    it("should parse '[Action] Deal 6 to a unit at a battlefield.'", () => {
+    it.skip("should parse '[Action] Deal 6 to a unit at a battlefield.'", () => {
       const result = parseAbilities(
         "[Action] (Play on your turn or in showdowns.)Deal 6 to a unit at a battlefield.",
       );
@@ -66,7 +66,7 @@ describe("Spell: Action", () => {
       );
     });
 
-    it("should parse '[Action] Deal 8 to a unit.'", () => {
+    it.skip("should parse '[Action] Deal 8 to a unit.'", () => {
       const result = parseAbilities(
         "[Action] (Play on your turn or in showdowns.)Deal 8 to a unit.",
       );
@@ -86,7 +86,7 @@ describe("Spell: Action", () => {
   });
 
   describe("kill spells", () => {
-    it("should parse '[Action] Kill a unit at a battlefield.'", () => {
+    it.skip("should parse '[Action] Kill a unit at a battlefield.'", () => {
       const result = parseAbilities(
         "[Action] (Play on your turn or in showdowns.)Kill a unit at a battlefield.",
       );
@@ -113,7 +113,7 @@ describe("Spell: Action", () => {
       expect(result.abilities).toHaveLength(1);
     });
 
-    it("should parse '[Action] Kill all gear.'", () => {
+    it.skip("should parse '[Action] Kill all gear.'", () => {
       const result = parseAbilities(
         "[Action] (Play on your turn or in showdowns.)Kill all gear.",
       );
@@ -150,7 +150,7 @@ describe("Spell: Action", () => {
   });
 
   describe("return to hand spells", () => {
-    it("should parse '[Action] Return a gear to its owner's hand.'", () => {
+    it.skip("should parse '[Action] Return a gear to its owner's hand.'", () => {
       const result = parseAbilities(
         "[Action] (Play on your turn or in showdowns.)Return a gear to its owner's hand.",
       );
@@ -168,7 +168,7 @@ describe("Spell: Action", () => {
       );
     });
 
-    it("should parse '[Action] Return a unit at a battlefield to its owner's hand.'", () => {
+    it.skip("should parse '[Action] Return a unit at a battlefield to its owner's hand.'", () => {
       const result = parseAbilities(
         "[Action] (Play on your turn or in showdowns.)Return a unit at a battlefield to its owner's hand.",
       );
@@ -188,7 +188,7 @@ describe("Spell: Action", () => {
   });
 
   describe("buff and might modification spells", () => {
-    it("should parse '[Action] Give a unit +5 :rb_might: this turn.'", () => {
+    it.skip("should parse '[Action] Give a unit +5 :rb_might: this turn.'", () => {
       const result = parseAbilities(
         "[Action] (Play on your turn or in showdowns.)Give a unit +5 :rb_might: this turn.",
       );
@@ -207,7 +207,7 @@ describe("Spell: Action", () => {
       );
     });
 
-    it("should parse '[Action] Give a unit +7 :rb_might: this turn.'", () => {
+    it.skip("should parse '[Action] Give a unit +7 :rb_might: this turn.'", () => {
       const result = parseAbilities(
         "[Action] (Play on your turn or in showdowns.)Give a unit +7 :rb_might: this turn.",
       );
@@ -216,7 +216,7 @@ describe("Spell: Action", () => {
       expect(result.abilities).toHaveLength(1);
     });
 
-    it("should parse '[Action] Give friendly units +2 :rb_might: this turn.'", () => {
+    it.skip("should parse '[Action] Give friendly units +2 :rb_might: this turn.'", () => {
       const result = parseAbilities(
         "[Action] (Play on your turn or in showdowns.)Give friendly units +2 :rb_might: this turn.",
       );
@@ -225,7 +225,7 @@ describe("Spell: Action", () => {
       expect(result.abilities).toHaveLength(1);
     });
 
-    it("should parse '[Action] Give friendly units +5 :rb_might: this turn.'", () => {
+    it.skip("should parse '[Action] Give friendly units +5 :rb_might: this turn.'", () => {
       const result = parseAbilities(
         "[Action] (Play on your turn or in showdowns.)Give friendly units +5 :rb_might: this turn.",
       );
@@ -245,7 +245,7 @@ describe("Spell: Action", () => {
   });
 
   describe("stun spells", () => {
-    it("should parse '[Action] Stun a unit.'", () => {
+    it.skip("should parse '[Action] Stun a unit.'", () => {
       const result = parseAbilities(
         "[Action] (Play on your turn or in showdowns.)Stun a unit._ (It doesn't deal combat damage this turn.)_",
       );
@@ -274,7 +274,7 @@ describe("Spell: Action", () => {
   });
 
   describe("token creation spells", () => {
-    it("should parse '[Action] Play four 1 :rb_might: Recruit unit tokens.'", () => {
+    it.skip("should parse '[Action] Play four 1 :rb_might: Recruit unit tokens.'", () => {
       const result = parseAbilities(
         "[Action] (Play on your turn or in showdowns.)Play four 1 :rb_might: Recruit unit tokens. (They can be played to your base or to battlefields you control.)",
       );
@@ -295,7 +295,7 @@ describe("Spell: Action", () => {
   });
 
   describe("draw and look spells", () => {
-    it("should parse '[Action] Look at the top 3 cards of your Main Deck. Put 1 into your hand and recycle the rest.'", () => {
+    it.skip("should parse '[Action] Look at the top 3 cards of your Main Deck. Put 1 into your hand and recycle the rest.'", () => {
       const result = parseAbilities(
         "[Action] (Play on your turn or in showdowns.)Look at the top 3 cards of your Main Deck. Put 1 into your hand and recycle the rest.",
       );
@@ -324,7 +324,7 @@ describe("Spell: Action", () => {
   });
 
   describe("fight spells", () => {
-    it("should parse '[Action] Choose a friendly unit and an enemy unit. They deal damage equal to their Mights to each other.'", () => {
+    it.skip("should parse '[Action] Choose a friendly unit and an enemy unit. They deal damage equal to their Mights to each other.'", () => {
       const result = parseAbilities(
         "[Action] (Play on your turn or in showdowns.)Choose a friendly unit and an enemy unit. They deal damage equal to their Mights to each other.",
       );

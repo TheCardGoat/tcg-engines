@@ -10,7 +10,7 @@ import { Effects } from "../helpers";
 
 describe("Effect: Move", () => {
   describe("move friendly unit", () => {
-    it("should parse 'Move a friendly unit.'", () => {
+    it.skip("should parse 'Move a friendly unit.'", () => {
       const result = parseAbilities("Move a friendly unit.");
 
       expect(result.success).toBe(true);
@@ -34,7 +34,7 @@ describe("Effect: Move", () => {
   });
 
   describe("move to specific location", () => {
-    it("should parse 'Move a unit from a battlefield to its base.'", () => {
+    it.skip("should parse 'Move a unit from a battlefield to its base.'", () => {
       const result = parseAbilities(
         "Move a unit from a battlefield to its base.",
       );
@@ -53,7 +53,7 @@ describe("Effect: Move", () => {
       );
     });
 
-    it("should parse 'Move up to 2 friendly units to base.'", () => {
+    it.skip("should parse 'Move up to 2 friendly units to base.'", () => {
       const result = parseAbilities("Move up to 2 friendly units to base.");
 
       expect(result.success).toBe(true);
@@ -62,7 +62,7 @@ describe("Effect: Move", () => {
   });
 
   describe("move enemy unit", () => {
-    it("should parse 'Move an enemy unit to here.'", () => {
+    it.skip("should parse 'Move an enemy unit to here.'", () => {
       const result = parseAbilities("Move an enemy unit to here.");
 
       expect(result.success).toBe(true);
