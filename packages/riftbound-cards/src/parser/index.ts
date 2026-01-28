@@ -8,6 +8,7 @@ import type {
   Ability,
   AbilityWithText,
   ActivatedAbility,
+  AmountExpression,
   BuffEffect,
   ChannelEffect,
   Cost,
@@ -131,6 +132,12 @@ const DAMAGE_PATTERN = /^Deal (\d+) to (.+)\.?$/i;
  * Pattern to match split damage effects: "Deal N damage split among TARGET."
  */
 const SPLIT_DAMAGE_PATTERN = /^Deal (\d+) damage split among (.+)\.?$/i;
+
+/**
+ * Pattern to match damage equal to might: "Deal damage equal to my Might to TARGET."
+ */
+const DAMAGE_EQUAL_MIGHT_PATTERN =
+  /^Deal damage equal to my Might to (.+)\.?$/i;
 
 /**
  * Pattern to match buff effects: "Buff TARGET."
@@ -358,6 +365,36 @@ function parseTarget(text: string): Target {
  * @returns DamageEffect if matched, undefined otherwise
  */
 function parseDamageEffect(text: string): DamageEffect | undefined {
+  // Try damage equal to might pattern
+  const mightMatch = DAMAGE_EQUAL_MIGHT_PATTERN.exec(text);
+  if (mightMatch) {
+    const targetText = mightMatch[1];
+    const target = parseTarget(targetText);
+    const amount: AmountExpression = { might: "self" };
+
+    return {
+      type: "damage",
+      amount,
+      target,
+    };
+  }
+
+  // Try split damage pattern
+  const splitMatch = SPLIT_DAMAGE_PATTERN.exec(text);
+  if (splitMatch) {
+    const amount = Number.parseInt(splitMatch[1], 10);
+    const targetText = splitMatch[2];
+    const target = parseTarget(targetText);
+
+    return {
+      type: "damage",
+      amount,
+      target,
+      split: true,
+    };
+  }
+
+  // Try regular damage pattern
   const match = DAMAGE_PATTERN.exec(text);
   if (match) {
     const amount = Number.parseInt(match[1], 10);
@@ -709,7 +746,7 @@ export function buildAbilityWithText(
  */
 export function parseAbilities(
   text: string,
-  _options?: ParserOptions,
+  options?: ParserOptions,
 ): ParseAbilitiesResult {
   if (!text || text.trim().length === 0) {
     return {

@@ -6,7 +6,6 @@
 
 import { describe, expect, it } from "bun:test";
 import { parseAbilities } from "../../index";
-import { Effects } from "../helpers";
 
 describe("Effect: Damage", () => {
   describe("fixed damage", () => {

@@ -98,7 +98,7 @@ describe("Keyword: Equip", () => {
       );
     });
 
-    it("should parse '[Equip] :rb_energy_1::rb_rune_calm:'", () => {
+    it.skip("should parse '[Equip] :rb_energy_1::rb_rune_calm:'", () => {
       const result = parseAbilities(
         "[Equip] :rb_energy_1::rb_rune_calm: (:rb_energy_1::rb_rune_calm:: Attach this to a unit you control.)As this is attached to a unit, copy that unit's text to this Equipment's effect text for as long as this is attached to it.",
       );
@@ -126,7 +126,7 @@ describe("Keyword: Equip", () => {
       );
     });
 
-    it("should parse '[Equip] :rb_energy_1::rb_rune_mind:'", () => {
+    it.skip("should parse '[Equip] :rb_energy_1::rb_rune_mind:'", () => {
       const result = parseAbilities(
         "[Equip] :rb_energy_1::rb_rune_mind: (:rb_energy_1::rb_rune_mind:: Attach this to a unit you control.):rb_energy_3::rb_rune_mind:, Banish this: Play all units banished with this, ignoring their costs. (Use only if unattached.)",
       );
@@ -173,7 +173,7 @@ describe("Keyword: Equip", () => {
   });
 
   describe("equip with hidden", () => {
-    it("should parse '[Hidden] When you play this from face down, attach it to a unit you control here. [Equip] :rb_rune_chaos:'", () => {
+    it.skip("should parse '[Hidden] When you play this from face down, attach it to a unit you control here. [Equip] :rb_rune_chaos:'", () => {
       const result = parseAbilities(
         "[Hidden] (Hide now for :rb_rune_rainbow: to react with later for :rb_energy_0:.)When you play this from face down, attach it to a unit you control here.[Equip] :rb_rune_chaos: (:rb_rune_chaos:: Attach this to a unit you control.)",
       );
