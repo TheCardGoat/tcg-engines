@@ -63,9 +63,10 @@ export function parseAbilityText(text: string): ParseResult {
   // Basic keyword parsing placeholder
   const _trimmed = text.trim();
 
+  // TODO: Implement proper ability parsing using TDD
   return {
-    success: true,
-    abilities,
+    success: false,
+    error: "Parser not yet implemented",
   };
 }
 
