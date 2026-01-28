@@ -38,7 +38,7 @@ Define your technical stack below. This serves as a reference for all team membe
 
 ### Build & Distribution
 - **Package Builder:** svelte-package + publint
-- **Registry:** npm (@tcg/component-library)
+- **Registry:** npm (@tcg/core-ui)
 - **Development Tools:** vite-plugin-devtools-json, Lefthook
 
 ### Third-Party Integrations

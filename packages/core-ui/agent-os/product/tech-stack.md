@@ -45,7 +45,7 @@
 - **bun**: Package distribution and dependency management
 - **svelte-package**: Optimized package building for component libraries
 - **publint**: Package validation before publishing
-- **Package name**: @tcg/component-library
+- **Package name**: @tcg/core-ui
 
 ## Development Tools
 - **vite-plugin-devtools-json**: Enhanced debugging capabilities

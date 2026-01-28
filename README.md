@@ -72,7 +72,7 @@ Complete, production-ready game engines demonstrating best practices:
 
 Supporting packages for building and maintaining game engines:
 
-- **`@tcg/component-library`** - Svelte-based UI component library
+- **`@tcg/core-ui`** - Svelte-based UI component library
   - Reusable components for TCG interfaces
   - Storybook integration
   - Internationalization support
