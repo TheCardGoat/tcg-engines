@@ -26,7 +26,7 @@ export const Zowort: UnitCardDefinition = {
   ],
   effects: [
     {
-      id: "eff-awz6z0sxr",
+      id: "eff-qbchh34cp",
       type: "CONSTANT",
       description:
         "This Unit can't choose the enemy player as its attack target.",

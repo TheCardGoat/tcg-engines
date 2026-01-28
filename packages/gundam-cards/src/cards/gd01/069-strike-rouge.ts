@@ -26,7 +26,7 @@ export const StrikeRouge: UnitCardDefinition = {
   ],
   effects: [
     {
-      id: "eff-qkwm203vx",
+      id: "eff-c33n9j9jj",
       type: "ACTIVATED",
       timing: "MAIN",
       description:
@@ -44,20 +44,29 @@ export const StrikeRouge: UnitCardDefinition = {
       ],
       conditions: [],
       action: {
-        type: "STAND",
-        target: {
-          controller: "SELF",
-          cardType: "UNIT",
-          count: {
-            min: 1,
-            max: 1,
-          },
-          filters: [
-            {
-              type: "exerted",
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "STAND",
+            target: {
+              controller: "SELF",
+              cardType: "UNIT",
+              count: {
+                min: 1,
+                max: 1,
+              },
+              filters: [
+                {
+                  type: "exerted",
+                },
+              ],
             },
-          ],
-        },
+          },
+          {
+            type: "CUSTOM",
+            text: "It can&#039;t attack during this turn",
+          },
+        ],
       },
     },
   ],

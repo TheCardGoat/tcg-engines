@@ -21,7 +21,7 @@ export const Gallussk: UnitCardDefinition = {
   linkRequirements: ["-"],
   effects: [
     {
-      id: "eff-fx938hlud",
+      id: "eff-l8sfxo3oi",
       type: "ACTIVATED",
       timing: "ACTION",
       description:
@@ -39,19 +39,28 @@ export const Gallussk: UnitCardDefinition = {
       ],
       conditions: [],
       action: {
-        type: "MODIFY_STATS",
-        attribute: "AP",
-        value: 1,
-        duration: "TURN",
-        target: {
-          controller: "ANY",
-          cardType: "UNIT",
-          count: {
-            min: 1,
-            max: 1,
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "CUSTOM",
+            text: "4 or higher",
           },
-          filters: [],
-        },
+          {
+            type: "MODIFY_STATS",
+            attribute: "AP",
+            value: 1,
+            duration: "TURN",
+            target: {
+              controller: "ANY",
+              cardType: "UNIT",
+              count: {
+                min: 1,
+                max: 1,
+              },
+              filters: [],
+            },
+          },
+        ],
       },
     },
   ],

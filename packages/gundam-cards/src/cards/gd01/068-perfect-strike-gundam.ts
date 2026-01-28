@@ -26,7 +26,7 @@ export const PerfectStrikeGundam: UnitCardDefinition = {
   ],
   effects: [
     {
-      id: "eff-yqrfwbm1x",
+      id: "eff-wnts29css",
       type: "TRIGGERED",
       timing: "DEPLOY",
       description:

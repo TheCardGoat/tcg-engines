@@ -96,8 +96,11 @@ export function splitIntoSegments(text: string): EffectSegment[] {
     let j = i + 1;
     while (j < markerPositions.length) {
       const nextMarker = markerPositions[j];
+      const between = text.substring(contentStart, nextMarker.pos).trim();
+
       // If next marker starts exactly where current ended (ignoring space)
-      if (text.substring(contentStart, nextMarker.pos).trim() === "") {
+      // OR if the separator is just a slash "/" (e.g. 【Main】/【Action】)
+      if (between === "" || between === "/") {
         currentMarkers.push(nextMarker.marker);
         contentStart = nextMarker.end;
         j++;

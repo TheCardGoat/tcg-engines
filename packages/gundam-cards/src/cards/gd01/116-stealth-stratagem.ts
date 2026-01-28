@@ -23,41 +23,39 @@ export const StealthStratagem: CommandCardDefinition = {
   },
   effects: [
     {
-      id: "eff-czrnkj9si",
-      type: "CONSTANT",
-      description: "/",
-      restrictions: [],
-      conditions: [],
-      action: {
-        type: "CUSTOM",
-        text: "/",
-      },
-    },
-    {
-      id: "eff-hwwu5ethe",
+      id: "eff-a3ae5cg2w",
       type: "CONSTANT",
       description:
         "Choose 1 enemy Unit with 2 or less AP. Deal 2 damage to it. 【Pilot】[Nicol Amarfi]",
       restrictions: [],
       conditions: [],
       action: {
-        type: "DAMAGE",
-        value: 2,
-        target: {
-          controller: "OPPONENT",
-          cardType: "UNIT",
-          count: {
-            min: 1,
-            max: 1,
-          },
-          filters: [
-            {
-              type: "ap",
-              comparison: "lte",
-              value: 2,
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "DAMAGE",
+            value: 2,
+            target: {
+              controller: "OPPONENT",
+              cardType: "UNIT",
+              count: {
+                min: 1,
+                max: 1,
+              },
+              filters: [
+                {
+                  type: "ap",
+                  comparison: "lte",
+                  value: 2,
+                },
+              ],
             },
-          ],
-        },
+          },
+          {
+            type: "CUSTOM",
+            text: "【Pilot】[Nicol Amarfi]",
+          },
+        ],
       },
     },
   ],

@@ -19,24 +19,33 @@ export const GundamDeathscythe: UnitCardDefinition = {
   zones: ["earth"],
   traits: ["operation", "meteor"],
   linkRequirements: ["duo-maxwell"],
-  keywords: [
-    {
-      keyword: "First-Strike",
-    },
-  ],
   effects: [
     {
-      id: "eff-adovwsfff",
+      id: "eff-a2r506423",
       type: "TRIGGERED",
       timing: "WHEN_PAIRED",
       description:
-        "Place 1 rested Resource. Then, this Unit gains during this turn. (While this Unit is attacking, it deals damage before the enemy Unit.)",
+        "Place 1 rested Resource. Then, this Unit gains <First Strike> during this turn. (While this Unit is attacking, it deals damage before the enemy Unit.)",
       restrictions: [],
       costs: [],
       conditions: [],
       action: {
-        type: "DAMAGE",
-        value: 0,
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "CUSTOM",
+            text: "Place 1 rested Resource",
+          },
+          {
+            type: "GAIN_KEYWORDS",
+            keywords: ["First Strike"],
+            duration: "TURN",
+          },
+          {
+            type: "CUSTOM",
+            text: ")",
+          },
+        ],
       },
     },
   ],

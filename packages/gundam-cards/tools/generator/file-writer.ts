@@ -49,11 +49,27 @@ export async function generateSetIndex(
   const setDir = join(baseDir, setCode.toLowerCase());
   const indexPath = join(setDir, "index.ts");
 
+  // First pass: Count occurrences of each variable name to detect conflicts
+  const nameCounts = new Map<string, number>();
+  for (const card of cards) {
+    const variableName = generateVariableName(card.name);
+    nameCounts.set(variableName, (nameCounts.get(variableName) || 0) + 1);
+  }
+
   // Generate exports
   const exports = cards
     .map((card) => {
       const filename = generateFilename(card).replace(".ts", "");
-      const variableName = generateVariableName(card.name);
+      let variableName = generateVariableName(card.name);
+      const originalVarName = variableName;
+
+      // If name is used multiple times, append card number to ensure uniqueness
+      if ((nameCounts.get(variableName) || 0) > 1) {
+        // e.g. Zaku_ST03_008
+        variableName = `${variableName}_${card.cardNumber.replace(/-/g, "_")}`;
+        return `export { ${originalVarName} as ${variableName} } from "./${filename}";`;
+      }
+
       return `export { ${variableName} } from "./${filename}";`;
     })
     .join("\n");

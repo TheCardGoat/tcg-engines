@@ -21,7 +21,7 @@ export const Cancer: UnitCardDefinition = {
   linkRequirements: ["-"],
   effects: [
     {
-      id: "eff-dejyw3nl1",
+      id: "eff-b8mvbucej",
       type: "CONSTANT",
       description: "-",
       restrictions: [],

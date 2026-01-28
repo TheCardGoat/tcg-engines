@@ -21,7 +21,7 @@ export const Cagalli039sSkygrasper: UnitCardDefinition = {
   linkRequirements: ["cagalli-yula-athha"],
   effects: [
     {
-      id: "eff-vnyg7tmfz",
+      id: "eff-5hlt5lybm",
       type: "TRIGGERED",
       timing: "DESTROYED",
       description:
@@ -30,16 +30,25 @@ export const Cagalli039sSkygrasper: UnitCardDefinition = {
       costs: [],
       conditions: [],
       action: {
-        type: "ADD_TO_HAND",
-        target: {
-          controller: "OPPONENT",
-          cardType: "UNIT",
-          count: {
-            min: 1,
-            max: 1,
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "CUSTOM",
+            text: "2 or lower",
           },
-          filters: [],
-        },
+          {
+            type: "ADD_TO_HAND",
+            target: {
+              controller: "OPPONENT",
+              cardType: "UNIT",
+              count: {
+                min: 1,
+                max: 1,
+              },
+              filters: [],
+            },
+          },
+        ],
       },
     },
   ],

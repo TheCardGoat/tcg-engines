@@ -21,7 +21,7 @@ export const Rasid039sMaganac: UnitCardDefinition = {
   linkRequirements: ["(maganac-corps)-trait"],
   effects: [
     {
-      id: "eff-6bh1vz6hl",
+      id: "eff-sh51jnda5",
       type: "TRIGGERED",
       timing: "DEPLOY",
       description:

@@ -21,7 +21,7 @@ export const Guntank: UnitCardDefinition = {
   linkRequirements: ["-"],
   effects: [
     {
-      id: "eff-eeq8eg062",
+      id: "eff-cmmaphi0r",
       type: "TRIGGERED",
       timing: "DEPLOY",
       description: "Choose 1 rested enemy Unit. Deal 1 damage to it.",

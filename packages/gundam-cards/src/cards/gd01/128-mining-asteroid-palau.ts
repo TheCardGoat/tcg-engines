@@ -20,7 +20,7 @@ export const MiningAsteroidPalau: BaseCardDefinition_Structure = {
   traits: ["neo", "zeon", "stronghold"],
   effects: [
     {
-      id: "eff-vyt1xuj5f",
+      id: "eff-2g2nkdgsu",
       type: "TRIGGERED",
       timing: "BURST",
       description: "Deploy this card.",
@@ -32,7 +32,7 @@ export const MiningAsteroidPalau: BaseCardDefinition_Structure = {
       },
     },
     {
-      id: "eff-mh9fpl9vr",
+      id: "eff-ass02jlev",
       type: "TRIGGERED",
       timing: "DEPLOY",
       description: "Add 1 of your Shields to your hand.",

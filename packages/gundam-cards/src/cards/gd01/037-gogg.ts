@@ -21,7 +21,7 @@ export const Gogg: UnitCardDefinition = {
   linkRequirements: ["-"],
   effects: [
     {
-      id: "eff-fstgj0dik",
+      id: "eff-0ouudk4wf",
       type: "CONSTANT",
       description: "-",
       restrictions: [],

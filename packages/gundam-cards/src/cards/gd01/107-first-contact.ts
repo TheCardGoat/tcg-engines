@@ -17,7 +17,7 @@ export const FirstContact: CommandCardDefinition = {
   timing: "MAIN",
   effects: [
     {
-      id: "eff-dwf948v3o",
+      id: "eff-2l71f2tep",
       type: "TRIGGERED",
       timing: "BURST",
       description: "Place 1 EX Resource.",
@@ -30,7 +30,7 @@ export const FirstContact: CommandCardDefinition = {
       },
     },
     {
-      id: "eff-4uefeqg9o",
+      id: "eff-sqzaw4dqh",
       type: "CONSTANT",
       description: "Place 1 rested Resource.",
       restrictions: [],

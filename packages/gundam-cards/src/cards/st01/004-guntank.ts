@@ -21,7 +21,7 @@ export const Guntank: UnitCardDefinition = {
   linkRequirements: ["hayato-kobayashi"],
   effects: [
     {
-      id: "eff-11qchr3sg",
+      id: "eff-dmtto23lh",
       type: "TRIGGERED",
       timing: "DEPLOY",
       description: "Choose 1 enemy Unit with 2 or less HP. Rest it.",

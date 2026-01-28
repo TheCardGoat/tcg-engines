@@ -26,7 +26,7 @@ export const JusticeGundam: UnitCardDefinition = {
   ],
   effects: [
     {
-      id: "eff-5k92uiimm",
+      id: "eff-uwtbbovez",
       type: "TRIGGERED",
       timing: "DEPLOY",
       description:
@@ -39,7 +39,7 @@ export const JusticeGundam: UnitCardDefinition = {
       },
     },
     {
-      id: "eff-xaarya3a8",
+      id: "eff-phqpkv1lp",
       type: "TRIGGERED",
       timing: "ATTACK",
       description:

@@ -45,7 +45,10 @@ const KEYWORD_PATTERNS: Record<string, KeywordAbility["keyword"]> = {
 export function extractKeywords(text: string): KeywordAbility[] {
   const keywords: KeywordAbility[] = [];
   for (const [pattern, keyword] of Object.entries(KEYWORD_PATTERNS)) {
-    const regex = new RegExp(pattern, "gi");
+    // Only match if NOT preceded by gain/get/have/grant verbs
+    const regexSource = `(?<!\\b(?:gain|gains|get|gets|have|has|grant|grants|give|gives)\\s*)${pattern}`;
+    const regex = new RegExp(regexSource, "gi");
+
     const matches = text.matchAll(regex);
     for (const match of matches) {
       const value = match[1] ? Number.parseInt(match[1], 10) : undefined;
@@ -68,7 +71,10 @@ export function parseCardText(text: string): ParseResult {
   for (const [pattern, _] of Object.entries(KEYWORD_PATTERNS)) {
     // Match keyword + optional space + optional reminder text in parens
     // e.g. <Blocker> (Rest this unit to redirect...)
-    const fullPattern = pattern + "(?:\\s*\\([^)]+\\))?";
+    // Only remove if it matched the extraction criteria (inherent keyword)
+    const prefix =
+      "(?<!\\b(?:gain|gains|get|gets|have|has|grant|grants|give|gives)\\s*)";
+    const fullPattern = prefix + pattern + "(?:\\s*\\([^)]+\\))?";
     textToParse = textToParse.replace(new RegExp(fullPattern, "gi"), "");
   }
 
@@ -88,7 +94,7 @@ export function parseCardText(text: string): ParseResult {
 
     // Parse target context if present
     let processing = cleanText;
-    let contextTarget: TargetQuery | undefined;
+    let contextTarget: TargetQuery | TargetQuery[] | undefined;
 
     const targetRes = parseTarget(processing);
     if (targetRes) {

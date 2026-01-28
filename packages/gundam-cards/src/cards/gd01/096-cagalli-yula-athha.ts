@@ -19,22 +19,31 @@ export const CagalliYulaAthha: PilotCardDefinition = {
   hpModifier: 1,
   effects: [
     {
-      id: "eff-ot231irrj",
+      id: "eff-07kty292o",
       type: "TRIGGERED",
       timing: "BURST",
       description:
-        "Add this card to your hand. While this Unit is white, it gains . (Rest this Unit to change the attack target to it.)",
+        "Add this card to your hand. While this Unit is white, it gains <Blocker>. (Rest this Unit to change the attack target to it.)",
       restrictions: [],
       costs: [],
       conditions: [],
       action: {
-        type: "ADD_TO_HAND",
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "ADD_TO_HAND",
+          },
+          {
+            type: "GAIN_KEYWORDS",
+            keywords: ["Blocker"],
+            duration: "PERMANENT",
+          },
+          {
+            type: "CUSTOM",
+            text: ")",
+          },
+        ],
       },
-    },
-  ],
-  keywords: [
-    {
-      keyword: "Blocker",
     },
   ],
 };

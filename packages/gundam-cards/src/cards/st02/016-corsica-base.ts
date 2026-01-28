@@ -20,7 +20,7 @@ export const CorsicaBase: BaseCardDefinition_Structure = {
   traits: ["oz", "stronghold"],
   effects: [
     {
-      id: "eff-9p2j4dhit",
+      id: "eff-plwa038w5",
       type: "TRIGGERED",
       timing: "BURST",
       description: "Deploy this card.",
@@ -32,7 +32,7 @@ export const CorsicaBase: BaseCardDefinition_Structure = {
       },
     },
     {
-      id: "eff-p6f9q1wg4",
+      id: "eff-hy64fzeah",
       type: "TRIGGERED",
       timing: "DEPLOY",
       description:
@@ -41,7 +41,25 @@ export const CorsicaBase: BaseCardDefinition_Structure = {
       costs: [],
       conditions: [],
       action: {
-        type: "ADD_TO_HAND",
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "ADD_TO_HAND",
+          },
+          {
+            type: "MODIFY_STATS",
+            attribute: "AP",
+            value: 4,
+            duration: "TURN",
+          },
+          {
+            type: "CONDITIONAL",
+            conditions: [],
+            trueAction: {
+              type: "DEPLOY",
+            },
+          },
+        ],
       },
     },
   ],

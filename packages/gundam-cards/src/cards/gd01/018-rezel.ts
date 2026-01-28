@@ -21,7 +21,7 @@ export const Rezel: UnitCardDefinition = {
   linkRequirements: ["-"],
   effects: [
     {
-      id: "eff-440qswktn",
+      id: "eff-dvf50ad87",
       type: "CONSTANT",
       description: "-",
       restrictions: [],

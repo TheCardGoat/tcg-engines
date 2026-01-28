@@ -21,7 +21,7 @@ export const GearaDogaSleeves: UnitCardDefinition = {
   linkRequirements: ["-"],
   effects: [
     {
-      id: "eff-m2sza3q95",
+      id: "eff-a4ebk0gvk",
       type: "TRIGGERED",
       timing: "DESTROYED",
       description:

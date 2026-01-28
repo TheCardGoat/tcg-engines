@@ -21,7 +21,7 @@ export const GearaZulu: UnitCardDefinition = {
   linkRequirements: ["(neo-zeon)-trait"],
   effects: [
     {
-      id: "eff-hxetn3feq",
+      id: "eff-cagu2zdw3",
       type: "CONSTANT",
       description: "-",
       restrictions: [],

@@ -21,7 +21,7 @@ export const CharsZaku: UnitCardDefinition = {
   linkRequirements: ["char-aznable"],
   effects: [
     {
-      id: "eff-7ph7dagi8",
+      id: "eff-26w1ui85p",
       type: "TRIGGERED",
       timing: "DESTROYED",
       description:
@@ -30,7 +30,20 @@ export const CharsZaku: UnitCardDefinition = {
       costs: [],
       conditions: [],
       action: {
-        type: "ADD_TO_HAND",
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "CUSTOM",
+            text: "Look at the top 3 cards of your deck",
+          },
+          {
+            type: "ADD_TO_HAND",
+          },
+          {
+            type: "CUSTOM",
+            text: "Return the remaining cards randomly to the bottom of your deck",
+          },
+        ],
       },
     },
   ],

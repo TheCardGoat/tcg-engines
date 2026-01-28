@@ -26,7 +26,7 @@ export const WingGundamZero: UnitCardDefinition = {
   ],
   effects: [
     {
-      id: "eff-usq4ixpui",
+      id: "eff-1qnmmhk25",
       type: "TRIGGERED",
       timing: "DEPLOY",
       description: "Deal 3 damage to all Units that are Lv.5 or lower.",

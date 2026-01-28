@@ -30,7 +30,7 @@ export const BusterGundam: UnitCardDefinition = {
   ],
   effects: [
     {
-      id: "eff-zytnxz9js",
+      id: "eff-4gyd3fh2u",
       type: "ACTIVATED",
       timing: "MAIN",
       description: "during this turn.)",
@@ -43,7 +43,7 @@ export const BusterGundam: UnitCardDefinition = {
       },
     },
     {
-      id: "eff-qwz1v4yln",
+      id: "eff-h1okr7ti7",
       type: "CONSTANT",
       description:
         "【Once per Turn】When you use this Unit&#039;s to increase a (ZAFT) Unit&#039;s AP, set this Unit as active.",

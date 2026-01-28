@@ -19,7 +19,7 @@ export const AmuroRay: PilotCardDefinition = {
   hpModifier: 1,
   effects: [
     {
-      id: "eff-twb3sj1f6",
+      id: "eff-7s3jt8kt0",
       type: "TRIGGERED",
       timing: "BURST",
       description: "Add this card to your hand.",
@@ -31,7 +31,7 @@ export const AmuroRay: PilotCardDefinition = {
       },
     },
     {
-      id: "eff-k5jo3sl64",
+      id: "eff-b8x49uslj",
       type: "TRIGGERED",
       timing: "WHEN_PAIRED",
       description: "Choose 1 enemy Unit with 5 or less HP. Rest it.",

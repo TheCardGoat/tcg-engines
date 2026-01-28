@@ -21,7 +21,7 @@ export const GearaDogaHeavyArmedType: UnitCardDefinition = {
   linkRequirements: ["-"],
   effects: [
     {
-      id: "eff-h23nul2mc",
+      id: "eff-x82ozlt95",
       type: "ACTIVATED",
       timing: "MAIN",
       description:

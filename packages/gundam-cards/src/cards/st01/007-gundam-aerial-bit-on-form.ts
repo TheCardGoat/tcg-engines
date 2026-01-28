@@ -21,7 +21,7 @@ export const GundamAerialBitOnForm: UnitCardDefinition = {
   linkRequirements: ["suletta-mercury"],
   effects: [
     {
-      id: "eff-tymqy754q",
+      id: "eff-t2jytq6s1",
       type: "CONSTANT",
       description: "-",
       restrictions: [],

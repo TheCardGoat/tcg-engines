@@ -17,7 +17,7 @@ export const CloseCombat: CommandCardDefinition = {
   timing: "MAIN",
   effects: [
     {
-      id: "eff-42i6qlqm9",
+      id: "eff-ia170hyl2",
       type: "TRIGGERED",
       timing: "BURST",
       description: "Activate this card's",
@@ -30,7 +30,7 @@ export const CloseCombat: CommandCardDefinition = {
       },
     },
     {
-      id: "eff-roqvfzwz2",
+      id: "eff-3t3v5l3fr",
       type: "CONSTANT",
       description: ".",
       restrictions: [],
@@ -41,18 +41,7 @@ export const CloseCombat: CommandCardDefinition = {
       },
     },
     {
-      id: "eff-qcn282dr4",
-      type: "CONSTANT",
-      description: "/",
-      restrictions: [],
-      conditions: [],
-      action: {
-        type: "CUSTOM",
-        text: "/",
-      },
-    },
-    {
-      id: "eff-a8o5xmtcq",
+      id: "eff-um174x7qo",
       type: "CONSTANT",
       description: "Choose 1 enemy Unit. Deal 2 damage to it.",
       restrictions: [],

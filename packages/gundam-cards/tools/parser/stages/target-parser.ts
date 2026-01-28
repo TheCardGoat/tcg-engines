@@ -5,13 +5,60 @@ import type {
 } from "@tcg/gundam-types";
 
 export interface TargetParseResult {
-  query: TargetQuery;
+  query: TargetQuery | TargetQuery[];
   remainingText: string;
+}
+
+function parseCount(countStr: string): { min: number; max: number } {
+  const lower = countStr.toLowerCase();
+  if (lower.includes("up to")) {
+    return {
+      min: 0,
+      max: Number.parseInt(lower.replace(/\D/g, ""), 10),
+    };
+  }
+  const val = Number.parseInt(lower, 10);
+  return { min: val, max: val };
 }
 
 export function parseTarget(text: string): TargetParseResult | null {
   // Normalize case for checking but keep original for value extraction
   const lower = text.toLowerCase();
+
+  // 0. "Choose X ... and Y ..." pattern (Multiple groups)
+  const multiChooseMatch = text.match(
+    /^Choose (\d+|up to \d+)(?: of)? (.*?) and (\d+|up to \d+)(?: of)? (.*?)(?:\.|$)/i,
+  );
+
+  if (multiChooseMatch) {
+    const count1 = parseCount(multiChooseMatch[1]);
+    const desc1 = multiChooseMatch[2];
+    const result1 = parseTargetDescription(desc1);
+
+    const count2 = parseCount(multiChooseMatch[3]);
+    const desc2 = multiChooseMatch[4];
+    const result2 = parseTargetDescription(desc2);
+
+    return {
+      query: [
+        {
+          controller: result1.controller,
+          cardType: result1.cardType,
+          count: count1,
+          filters: result1.filters,
+          zone: result1.zone,
+        },
+        {
+          controller: result2.controller,
+          cardType: result2.cardType,
+          count: count2,
+          filters: result2.filters,
+          zone: result2.zone,
+        },
+      ],
+      remainingText: text.substring(multiChooseMatch[0].length).trim(),
+    };
+  }
 
   // 1. "Choose X ..." pattern
   const chooseMatch = text.match(
@@ -19,19 +66,7 @@ export function parseTarget(text: string): TargetParseResult | null {
   );
 
   if (chooseMatch) {
-    const countStr = chooseMatch[1].toLowerCase();
-    let min = 1;
-    let max = 1;
-
-    if (countStr.includes("up to")) {
-      min = 0;
-      max = Number.parseInt(countStr.replace(/\D/g, ""), 10);
-    } else {
-      const val = Number.parseInt(countStr, 10);
-      min = val;
-      max = val;
-    }
-
+    const count = parseCount(chooseMatch[1]);
     const desc = chooseMatch[2];
     const { controller, cardType, filters, zone } =
       parseTargetDescription(desc);
@@ -40,7 +75,7 @@ export function parseTarget(text: string): TargetParseResult | null {
       query: {
         controller,
         cardType,
-        count: { min, max },
+        count,
         filters,
         zone,
       },

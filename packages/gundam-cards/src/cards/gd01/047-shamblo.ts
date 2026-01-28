@@ -21,7 +21,7 @@ export const Shamblo: UnitCardDefinition = {
   linkRequirements: ["(newtype)-trait-/-(cyber-newtype)-trait"],
   effects: [
     {
-      id: "eff-1gdjev0v8",
+      id: "eff-ahox62ekg",
       type: "TRIGGERED",
       timing: "ATTACK",
       description:
@@ -30,17 +30,26 @@ export const Shamblo: UnitCardDefinition = {
       costs: [],
       conditions: [],
       action: {
-        type: "CONDITIONAL",
-        conditions: [
+        type: "SEQUENCE",
+        actions: [
           {
-            type: "STATE_CHECK",
-            text: "2 or more other rested friendly Units are in play",
+            type: "CONDITIONAL",
+            conditions: [
+              {
+                type: "STATE_CHECK",
+                text: "2 or more other rested friendly Units are in play",
+              },
+            ],
+            trueAction: {
+              type: "CUSTOM",
+              text: "choose 1 enemy Unit",
+            },
+          },
+          {
+            type: "DAMAGE",
+            value: 3,
           },
         ],
-        trueAction: {
-          type: "DAMAGE",
-          value: 3,
-        },
       },
     },
   ],

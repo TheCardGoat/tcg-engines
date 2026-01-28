@@ -20,7 +20,7 @@ export const Kusanagi: BaseCardDefinition_Structure = {
   traits: ["triple", "ship", "alliance", "warship"],
   effects: [
     {
-      id: "eff-p0dzncs1r",
+      id: "eff-2kbs94pun",
       type: "TRIGGERED",
       timing: "BURST",
       description: "Deploy this card.",
@@ -32,7 +32,7 @@ export const Kusanagi: BaseCardDefinition_Structure = {
       },
     },
     {
-      id: "eff-8l375eqco",
+      id: "eff-1abi364or",
       type: "TRIGGERED",
       timing: "DEPLOY",
       description:
@@ -41,7 +41,19 @@ export const Kusanagi: BaseCardDefinition_Structure = {
       costs: [],
       conditions: [],
       action: {
-        type: "ADD_TO_HAND",
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "ADD_TO_HAND",
+          },
+          {
+            type: "CUSTOM",
+            text: "Then, choose 1 enemy Unit with 3 or less HP",
+          },
+          {
+            type: "ADD_TO_HAND",
+          },
+        ],
       },
     },
   ],

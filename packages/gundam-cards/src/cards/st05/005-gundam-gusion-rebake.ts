@@ -20,7 +20,7 @@ export const GundamGusionRebake: UnitCardDefinition = {
   linkRequirements: ["akihiro-altland"],
   effects: [
     {
-      id: "eff-4ak74yc1u",
+      id: "eff-sj5x3v5xv",
       type: "TRIGGERED",
       timing: "DESTROYED",
       description: "Choose 1 enemy Unit with 4 or less AP. Rest it.",

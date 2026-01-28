@@ -30,7 +30,7 @@ export const ShenlongGundam: UnitCardDefinition = {
   ],
   effects: [
     {
-      id: "eff-o3igbubcr",
+      id: "eff-nya62d9ug",
       type: "TRIGGERED",
       timing: "ATTACK",
       description:
@@ -39,8 +39,17 @@ export const ShenlongGundam: UnitCardDefinition = {
       costs: [],
       conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "3 or lower. Destroy it.",
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "CUSTOM",
+            text: "3 or lower",
+          },
+          {
+            type: "CUSTOM",
+            text: "Destroy it",
+          },
+        ],
       },
     },
   ],

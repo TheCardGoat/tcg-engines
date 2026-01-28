@@ -27,7 +27,7 @@ export const Guncannon: UnitCardDefinition = {
   ],
   effects: [
     {
-      id: "eff-0clozxe5o",
+      id: "eff-jz0fyx7wp",
       type: "TRIGGERED",
       timing: "WHEN_PAIRED",
       description: "Choose 1 enemy Unit with 2 or less HP. Rest it.",

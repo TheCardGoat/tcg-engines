@@ -20,7 +20,7 @@ export const Hyakuren: UnitCardDefinition = {
   linkRequirements: ["-"],
   effects: [
     {
-      id: "eff-2tsqhy4ps",
+      id: "eff-ksxa8zuja",
       type: "CONSTANT",
       description: "-",
       restrictions: [],

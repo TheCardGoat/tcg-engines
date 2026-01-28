@@ -20,32 +20,65 @@ export const GundamBarbatos4thForm: UnitCardDefinition = {
   linkRequirements: ["mikazuki-augus"],
   effects: [
     {
-      id: "eff-s6kte4st7",
+      id: "eff-24h35hx9u",
       type: "TRIGGERED",
       timing: "DEPLOY",
       description:
-        "Choose 1 of your other Units. Deal 1 damage to it. It gets AP+1 during this turn. While this is damaged, it gains . (Damage to Shields by an attack is dealt to the first 2 cards simultaneously.)",
+        "Choose 1 of your other Units. Deal 1 damage to it. It gets AP+1 during this turn. While this is damaged, it gains <Suppression>. (Damage to Shields by an attack is dealt to the first 2 cards simultaneously.)",
       restrictions: [],
       costs: [],
       conditions: [],
       action: {
-        type: "DAMAGE",
-        value: 1,
-        target: {
-          controller: "SELF",
-          cardType: "UNIT",
-          count: {
-            min: 1,
-            max: 1,
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "DAMAGE",
+            value: 1,
+            target: {
+              controller: "SELF",
+              cardType: "UNIT",
+              count: {
+                min: 1,
+                max: 1,
+              },
+              filters: [],
+            },
           },
-          filters: [],
-        },
+          {
+            type: "MODIFY_STATS",
+            attribute: "AP",
+            value: 1,
+            duration: "TURN",
+            target: {
+              controller: "SELF",
+              cardType: "UNIT",
+              count: {
+                min: 1,
+                max: 1,
+              },
+              filters: [],
+            },
+          },
+          {
+            type: "GAIN_KEYWORDS",
+            keywords: ["Suppression"],
+            duration: "PERMANENT",
+            target: {
+              controller: "SELF",
+              cardType: "UNIT",
+              count: {
+                min: 1,
+                max: 1,
+              },
+              filters: [],
+            },
+          },
+          {
+            type: "CUSTOM",
+            text: ")",
+          },
+        ],
       },
-    },
-  ],
-  keywords: [
-    {
-      keyword: "Suppression",
     },
   ],
 };

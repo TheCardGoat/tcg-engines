@@ -17,7 +17,7 @@ export const CitizensTakeAStand: CommandCardDefinition = {
   timing: "MAIN",
   effects: [
     {
-      id: "eff-c90qzixl5",
+      id: "eff-4h5i1hgxk",
       type: "TRIGGERED",
       timing: "BURST",
       description: "Add this card to your hand.",
@@ -29,7 +29,7 @@ export const CitizensTakeAStand: CommandCardDefinition = {
       },
     },
     {
-      id: "eff-qe0sk428o",
+      id: "eff-raxlhyyvr",
       type: "CONSTANT",
       description: "All your Units get AP+2 during this turn.",
       restrictions: [],

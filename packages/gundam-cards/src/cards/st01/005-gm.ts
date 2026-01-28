@@ -21,7 +21,7 @@ export const Gm: UnitCardDefinition = {
   linkRequirements: ["-"],
   effects: [
     {
-      id: "eff-4dtbj3my6",
+      id: "eff-gu1hp2v9f",
       type: "CONSTANT",
       description: "-",
       restrictions: [],

@@ -19,7 +19,7 @@ export const CharAznable: PilotCardDefinition = {
   hpModifier: 1,
   effects: [
     {
-      id: "eff-wmf4o1pcl",
+      id: "eff-zteblg2q0",
       type: "TRIGGERED",
       timing: "BURST",
       description: "Add this card to your hand.",
@@ -31,25 +31,29 @@ export const CharAznable: PilotCardDefinition = {
       },
     },
     {
-      id: "eff-uqlip0x1j",
+      id: "eff-u45upvjei",
       type: "TRIGGERED",
       timing: "ATTACK",
       description:
-        "During this turn, this Unit gets AP+1 and, if it is a Link Unit, it gains . (This Unit can't be blocked.)",
+        "During this turn, this Unit gets AP+1 and, if it is a Link Unit, it gains <High-Maneuver>. (This Unit can't be blocked.)",
       restrictions: [],
       costs: [],
       conditions: [],
       action: {
-        type: "MODIFY_STATS",
-        attribute: "AP",
-        value: 1,
-        duration: "TURN",
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "MODIFY_STATS",
+            attribute: "AP",
+            value: 1,
+            duration: "TURN",
+          },
+          {
+            type: "CUSTOM",
+            text: ")",
+          },
+        ],
       },
-    },
-  ],
-  keywords: [
-    {
-      keyword: "High-Maneuver",
     },
   ],
 };

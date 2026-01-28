@@ -27,7 +27,7 @@ export const WingGundam: UnitCardDefinition = {
   ],
   effects: [
     {
-      id: "eff-e5r72a74c",
+      id: "eff-sb3govvoe",
       type: "CONSTANT",
       description:
         "This Unit may choose an active enemy Unit that is Lv.4 or lower as its attack target.",

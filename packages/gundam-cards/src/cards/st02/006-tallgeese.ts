@@ -21,7 +21,7 @@ export const Tallgeese: UnitCardDefinition = {
   linkRequirements: ["zechs-merquise"],
   effects: [
     {
-      id: "eff-5mm7ryx85",
+      id: "eff-zdtphklep",
       type: "ACTIVATED",
       timing: "MAIN",
       description: "【Once per Turn】④:Set this Unit as active.",

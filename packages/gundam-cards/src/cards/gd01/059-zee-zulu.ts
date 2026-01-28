@@ -21,7 +21,7 @@ export const ZeeZulu: UnitCardDefinition = {
   linkRequirements: ["-"],
   effects: [
     {
-      id: "eff-r6d3jsibg",
+      id: "eff-g8u23nmrf",
       type: "TRIGGERED",
       timing: "ATTACK",
       description:

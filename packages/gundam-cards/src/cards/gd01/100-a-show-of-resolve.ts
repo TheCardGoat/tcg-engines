@@ -17,7 +17,7 @@ export const AShowOfResolve: CommandCardDefinition = {
   timing: "MAIN",
   effects: [
     {
-      id: "eff-5je4nsmo9",
+      id: "eff-1rb6t9mkr",
       type: "CONSTANT",
       description: "Draw 2.",
       restrictions: [],

@@ -21,7 +21,7 @@ export const Gundam: UnitCardDefinition = {
   linkRequirements: ["amuro-ray"],
   effects: [
     {
-      id: "eff-38u4hr4hr",
+      id: "eff-uvw5smd4d",
       type: "CONSTANT",
       description: "-",
       restrictions: [],

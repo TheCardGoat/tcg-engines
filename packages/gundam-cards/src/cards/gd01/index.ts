@@ -133,5 +133,4 @@ export { UndergroundDesertBase } from "./126-underground-desert-base";
 export { Gamow } from "./127-gamow";
 export { MiningAsteroidPalau } from "./128-mining-asteroid-palau";
 export { Kusanagi } from "./129-kusanagi";
-
-export { The13thTacticalTestingSector as ThirteenthTacticalTestingSector } from "./130-13th-tactical-testing-sector";
+export { The13thTacticalTestingSector } from "./130-13th-tactical-testing-sector";

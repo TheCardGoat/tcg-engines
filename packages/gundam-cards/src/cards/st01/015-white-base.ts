@@ -20,7 +20,7 @@ export const WhiteBase: BaseCardDefinition_Structure = {
   traits: ["earth", "federation", "white", "base", "team", "warship"],
   effects: [
     {
-      id: "eff-qum5o4ag3",
+      id: "eff-p9ge3h1bm",
       type: "TRIGGERED",
       timing: "BURST",
       description: "Deploy this card.",
@@ -32,7 +32,7 @@ export const WhiteBase: BaseCardDefinition_Structure = {
       },
     },
     {
-      id: "eff-61kviqopf",
+      id: "eff-sclkrstf0",
       type: "TRIGGERED",
       timing: "DEPLOY",
       description: "Add 1 of your Shields to your hand.",
@@ -44,7 +44,7 @@ export const WhiteBase: BaseCardDefinition_Structure = {
       },
     },
     {
-      id: "eff-40pq551fi",
+      id: "eff-o6owvvu8b",
       type: "ACTIVATED",
       timing: "MAIN",
       description:

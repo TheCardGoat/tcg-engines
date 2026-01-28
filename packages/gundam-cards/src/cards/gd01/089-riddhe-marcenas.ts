@@ -19,22 +19,28 @@ export const RiddheMarcenas: PilotCardDefinition = {
   hpModifier: 1,
   effects: [
     {
-      id: "eff-akbmqbyua",
+      id: "eff-86jq1ly6b",
       type: "TRIGGERED",
       timing: "BURST",
       description:
-        "Add this card to your hand. While this Unit has , it gets AP+1.",
+        "Add this card to your hand. While this Unit has <Repair>, it gets AP+1.",
       restrictions: [],
       costs: [],
       conditions: [],
       action: {
-        type: "ADD_TO_HAND",
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "ADD_TO_HAND",
+          },
+          {
+            type: "MODIFY_STATS",
+            attribute: "AP",
+            value: 1,
+            duration: "TURN",
+          },
+        ],
       },
-    },
-  ],
-  keywords: [
-    {
-      keyword: "Repair",
     },
   ],
 };

@@ -20,7 +20,7 @@ export const Zanzibar: BaseCardDefinition_Structure = {
   traits: ["zeon", "warship"],
   effects: [
     {
-      id: "eff-4fqf3xruh",
+      id: "eff-0p5vtl6n4",
       type: "TRIGGERED",
       timing: "BURST",
       description: "Deploy this card.",
@@ -32,7 +32,7 @@ export const Zanzibar: BaseCardDefinition_Structure = {
       },
     },
     {
-      id: "eff-q6awrskfx",
+      id: "eff-v2frzccsl",
       type: "TRIGGERED",
       timing: "DEPLOY",
       description:
@@ -41,7 +41,16 @@ export const Zanzibar: BaseCardDefinition_Structure = {
       costs: [],
       conditions: [],
       action: {
-        type: "ADD_TO_HAND",
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "ADD_TO_HAND",
+          },
+          {
+            type: "CUSTOM",
+            text: "4 or lower from your hand",
+          },
+        ],
       },
     },
   ],

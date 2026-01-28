@@ -17,7 +17,7 @@ export const UnforeseenIncident: CommandCardDefinition = {
   timing: "MAIN",
   effects: [
     {
-      id: "eff-8gev9yq0y",
+      id: "eff-rjxdn5zir",
       type: "TRIGGERED",
       timing: "BURST",
       description: "Activate this card's",
@@ -30,7 +30,7 @@ export const UnforeseenIncident: CommandCardDefinition = {
       },
     },
     {
-      id: "eff-wesqvnym0",
+      id: "eff-mrtj2ysii",
       type: "CONSTANT",
       description: ".",
       restrictions: [],
@@ -41,18 +41,7 @@ export const UnforeseenIncident: CommandCardDefinition = {
       },
     },
     {
-      id: "eff-vaogmaria",
-      type: "CONSTANT",
-      description: "/",
-      restrictions: [],
-      conditions: [],
-      action: {
-        type: "CUSTOM",
-        text: "/",
-      },
-    },
-    {
-      id: "eff-9vk7w8d2q",
+      id: "eff-14n76k9eb",
       type: "CONSTANT",
       description: "Choose 1 enemy Unit. It gets AP-3 during this turn.",
       restrictions: [],

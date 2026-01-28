@@ -21,7 +21,7 @@ export const Jegan: UnitCardDefinition = {
   linkRequirements: ["-"],
   effects: [
     {
-      id: "eff-5ixal7lkx",
+      id: "eff-snwrfg1ig",
       type: "CONSTANT",
       description:
         "While you have 2 or more (Earth Federation) Units in play, this card in your hand gets cost -1.",

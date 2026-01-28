@@ -21,7 +21,7 @@ export const UnicornGundamUnicornMode: UnitCardDefinition = {
   linkRequirements: ["banagher-links"],
   effects: [
     {
-      id: "eff-e4chg7s5d",
+      id: "eff-tdx01kygr",
       type: "TRIGGERED",
       timing: "DESTROYED",
       description:
@@ -30,7 +30,16 @@ export const UnicornGundamUnicornMode: UnitCardDefinition = {
       costs: [],
       conditions: [],
       action: {
-        type: "ADD_TO_HAND",
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "ADD_TO_HAND",
+          },
+          {
+            type: "CUSTOM",
+            text: "Then, discard 1",
+          },
+        ],
       },
     },
   ],

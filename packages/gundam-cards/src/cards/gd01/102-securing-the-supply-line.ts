@@ -17,7 +17,7 @@ export const SecuringTheSupplyLine: CommandCardDefinition = {
   timing: "MAIN",
   effects: [
     {
-      id: "eff-h4imhybsj",
+      id: "eff-5zh2vfpie",
       type: "CONSTANT",
       description: "All friendly Units that are Lv.4 or lower recover 2 HP.",
       restrictions: [],

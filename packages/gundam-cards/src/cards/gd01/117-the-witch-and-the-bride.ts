@@ -17,7 +17,7 @@ export const TheWitchAndTheBride: CommandCardDefinition = {
   timing: "MAIN",
   effects: [
     {
-      id: "eff-diiswsfua",
+      id: "eff-ia7bubyq2",
       type: "TRIGGERED",
       timing: "BURST",
       description: "Activate this card&#039;s",
@@ -30,7 +30,7 @@ export const TheWitchAndTheBride: CommandCardDefinition = {
       },
     },
     {
-      id: "eff-3nvstkalu",
+      id: "eff-blmc48yui",
       type: "CONSTANT",
       description: ".",
       restrictions: [],
@@ -41,18 +41,7 @@ export const TheWitchAndTheBride: CommandCardDefinition = {
       },
     },
     {
-      id: "eff-x805nyi7g",
-      type: "CONSTANT",
-      description: "/",
-      restrictions: [],
-      conditions: [],
-      action: {
-        type: "CUSTOM",
-        text: "/",
-      },
-    },
-    {
-      id: "eff-46k3ahhqq",
+      id: "eff-ga5bavi8h",
       type: "CONSTANT",
       description:
         "Choose 1 enemy Unit with 5 or less HP. Return it to its owner&#039;s hand.",

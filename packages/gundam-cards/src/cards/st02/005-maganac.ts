@@ -21,7 +21,7 @@ export const Maganac: UnitCardDefinition = {
   linkRequirements: ["-"],
   effects: [
     {
-      id: "eff-1xk7rflwk",
+      id: "eff-2fikt25dm",
       type: "CONSTANT",
       description: "-",
       restrictions: [],

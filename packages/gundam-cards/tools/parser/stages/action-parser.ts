@@ -1,7 +1,38 @@
 import type { Action, EffectCondition, TargetQuery } from "@tcg/gundam-types";
 import { parseTarget } from "./target-parser";
 
-export function parseAction(text: string, contextTarget?: TargetQuery): Action {
+export function parseAction(
+  text: string,
+  contextTarget?: TargetQuery | TargetQuery[],
+): Action {
+  // 0. Sequence Logic (Sentence splitting)
+  // Split by ". " or just "." if followed by space/end, but avoid "Lv.X" etc.
+  // We use a safe split approach.
+  const potentialSentences = text.match(/[^.!?]+[.!?]+(?:\s|$)|[^.!?]+$/g);
+
+  if (potentialSentences && potentialSentences.length > 1) {
+    const actions: Action[] = [];
+    const allValid = true;
+
+    for (const sentence of potentialSentences) {
+      const cleanSentence = sentence.trim().replace(/[.!?]$/, "");
+      if (!cleanSentence) continue;
+
+      // Avoid infinite recursion if sentence is same as text (shouldn't happen with split)
+      if (cleanSentence === text) continue;
+
+      const action = parseAction(cleanSentence, contextTarget);
+      actions.push(action);
+    }
+
+    if (actions.length > 1) {
+      return {
+        type: "SEQUENCE",
+        actions,
+      };
+    }
+  }
+
   const lower = text.toLowerCase();
 
   // 0. Conditional Logic
@@ -61,7 +92,7 @@ export function parseAction(text: string, contextTarget?: TargetQuery): Action {
     const match = text.match(/deal (\d+) damage/i);
     const value = match ? Number.parseInt(match[1], 10) : 0;
 
-    let target: TargetQuery | undefined = contextTarget;
+    let target: TargetQuery | TargetQuery[] | undefined = contextTarget;
 
     const toMatch = text.match(/to (.*?)(?:\.|$)/i);
     if (toMatch) {
@@ -83,7 +114,7 @@ export function parseAction(text: string, contextTarget?: TargetQuery): Action {
 
   // 5. Rest / Stand
   if (lower.startsWith("rest ") || lower.includes("set it as rest")) {
-    let target: TargetQuery | undefined = contextTarget;
+    let target: TargetQuery | TargetQuery[] | undefined = contextTarget;
     const targetText = text.substring(5);
     const res = parseTarget(targetText);
     if (res) target = res.query;
@@ -105,7 +136,6 @@ export function parseAction(text: string, contextTarget?: TargetQuery): Action {
     (lower.includes("add") || lower.includes("return")) &&
     lower.includes("hand")
   ) {
-    const target: TargetQuery | undefined = contextTarget;
     // Check for "Return X to hand" or "Return it to hand"
     if (lower.includes("return")) {
       // "Return it to hand" -> target is contextTarget
@@ -137,7 +167,24 @@ export function parseAction(text: string, contextTarget?: TargetQuery): Action {
     } as any;
   }
 
-  // 9. Discard
+  // 9. Gain Keywords
+  if (
+    lower.includes("gain") ||
+    lower.includes("get") ||
+    lower.includes("have")
+  ) {
+    const keywordMatches = [...text.matchAll(/<([^>]+)>/g)];
+    if (keywordMatches.length > 0) {
+      return {
+        type: "GAIN_KEYWORDS",
+        keywords: keywordMatches.map((m) => m[1]),
+        duration: lower.includes("turn") ? "TURN" : "PERMANENT",
+        target: contextTarget,
+      } as any;
+    }
+  }
+
+  // 10. Discard
   if (lower.startsWith("discard")) {
     const match = text.match(/discard (\d+)/i);
     const value = match ? Number.parseInt(match[1], 10) : 1;

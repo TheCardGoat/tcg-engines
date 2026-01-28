@@ -21,7 +21,7 @@ export const DracSleeves: UnitCardDefinition = {
   linkRequirements: ["-"],
   effects: [
     {
-      id: "eff-9ty1cyewe",
+      id: "eff-ggm6dk8tg",
       type: "CONSTANT",
       description: "-",
       restrictions: [],

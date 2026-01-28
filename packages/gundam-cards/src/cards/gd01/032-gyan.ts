@@ -26,7 +26,7 @@ export const Gyan: UnitCardDefinition = {
   ],
   effects: [
     {
-      id: "eff-ttcdc0qyo",
+      id: "eff-o87b9jzit",
       type: "TRIGGERED",
       timing: "WHEN_PAIRED",
       description:
@@ -35,8 +35,17 @@ export const Gyan: UnitCardDefinition = {
       costs: [],
       conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "2 or lower. Destroy it.",
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "CUSTOM",
+            text: "2 or lower",
+          },
+          {
+            type: "CUSTOM",
+            text: "Destroy it",
+          },
+        ],
       },
     },
   ],

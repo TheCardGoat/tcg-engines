@@ -21,7 +21,7 @@ export const Char039sZaku: UnitCardDefinition = {
   linkRequirements: ["char-aznable"],
   effects: [
     {
-      id: "eff-y5dk7ljxn",
+      id: "eff-mhntwsbjm",
       type: "TRIGGERED",
       timing: "DESTROYED",
       description:

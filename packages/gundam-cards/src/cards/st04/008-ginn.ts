@@ -21,7 +21,7 @@ export const Ginn: UnitCardDefinition = {
   linkRequirements: ["-"],
   effects: [
     {
-      id: "eff-mhipsh32l",
+      id: "eff-vja7m4aty",
       type: "CONSTANT",
       description: "-",
       restrictions: [],

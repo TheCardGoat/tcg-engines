@@ -21,7 +21,7 @@ export const GundamAerialMirasoulFlightUnit: UnitCardDefinition = {
   linkRequirements: ["suletta-mercury"],
   effects: [
     {
-      id: "eff-dusup1euk",
+      id: "eff-qfq9dcs82",
       type: "ACTIVATED",
       timing: "ACTION",
       description:

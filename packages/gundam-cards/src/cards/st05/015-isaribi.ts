@@ -19,7 +19,7 @@ export const Isaribi: BaseCardDefinition_Structure = {
   traits: ["tekkadan", "warship"],
   effects: [
     {
-      id: "eff-0ym5jcm25",
+      id: "eff-305jk287s",
       type: "TRIGGERED",
       timing: "BURST",
       description: "Deploy this card.",
@@ -31,7 +31,7 @@ export const Isaribi: BaseCardDefinition_Structure = {
       },
     },
     {
-      id: "eff-fthjab4iw",
+      id: "eff-4oxqn98sw",
       type: "TRIGGERED",
       timing: "DEPLOY",
       description: "Add 1 of your Shields to your hand.",
@@ -43,7 +43,7 @@ export const Isaribi: BaseCardDefinition_Structure = {
       },
     },
     {
-      id: "eff-7r4a7w7cg",
+      id: "eff-gn52r826g",
       type: "ACTIVATED",
       timing: "MAIN",
       description:

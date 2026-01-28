@@ -19,7 +19,7 @@ export const BanagherLinks: PilotCardDefinition = {
   hpModifier: 2,
   effects: [
     {
-      id: "eff-3gw8sz4xb",
+      id: "eff-dbg1nqeun",
       type: "TRIGGERED",
       timing: "BURST",
       description: "Add this card to your hand.",
@@ -31,7 +31,7 @@ export const BanagherLinks: PilotCardDefinition = {
       },
     },
     {
-      id: "eff-v40ypr751",
+      id: "eff-jrj8vuqko",
       type: "TRIGGERED",
       timing: "WHEN_LINKED",
       description: "Draw 1.",

@@ -27,7 +27,7 @@ export const GazaDSleeves: UnitCardDefinition = {
   ],
   effects: [
     {
-      id: "eff-z3a8kh0d1",
+      id: "eff-x80a1d1rw",
       type: "ACTIVATED",
       timing: "MAIN",
       description: "during this turn.)",

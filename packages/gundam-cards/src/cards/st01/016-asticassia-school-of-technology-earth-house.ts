@@ -21,7 +21,7 @@ export const AsticassiaSchoolOfTechnologyEarthHouse: BaseCardDefinition_Structur
     traits: ["academy", "stronghold"],
     effects: [
       {
-        id: "eff-cb3eu80ik",
+        id: "eff-ar31orywz",
         type: "TRIGGERED",
         timing: "BURST",
         description: "Deploy this card.",
@@ -33,7 +33,7 @@ export const AsticassiaSchoolOfTechnologyEarthHouse: BaseCardDefinition_Structur
         },
       },
       {
-        id: "eff-jopu3r6n7",
+        id: "eff-6j56y1rtg",
         type: "TRIGGERED",
         timing: "DEPLOY",
         description: "Add 1 of your Shields to your hand.",
@@ -45,7 +45,7 @@ export const AsticassiaSchoolOfTechnologyEarthHouse: BaseCardDefinition_Structur
         },
       },
       {
-        id: "eff-fdadpwitn",
+        id: "eff-9dxp1lxy4",
         type: "ACTIVATED",
         timing: "MAIN",
         description:

@@ -23,28 +23,37 @@ export const ThoroughlyDamaged: CommandCardDefinition = {
   },
   effects: [
     {
-      id: "eff-3gffflt89",
+      id: "eff-0ha3zftrt",
       type: "CONSTANT",
       description:
         "Choose 1 rested enemy Unit. Deal 1 damage to it. 【Pilot】[Hayato Kobayashi]",
       restrictions: [],
       conditions: [],
       action: {
-        type: "DAMAGE",
-        value: 1,
-        target: {
-          controller: "OPPONENT",
-          cardType: "UNIT",
-          count: {
-            min: 1,
-            max: 1,
-          },
-          filters: [
-            {
-              type: "exerted",
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "DAMAGE",
+            value: 1,
+            target: {
+              controller: "OPPONENT",
+              cardType: "UNIT",
+              count: {
+                min: 1,
+                max: 1,
+              },
+              filters: [
+                {
+                  type: "exerted",
+                },
+              ],
             },
-          ],
-        },
+          },
+          {
+            type: "CUSTOM",
+            text: "【Pilot】[Hayato Kobayashi]",
+          },
+        ],
       },
     },
   ],

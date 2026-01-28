@@ -16,35 +16,44 @@ export const WithIronAndBlood: CommandCardDefinition = {
   timing: "MAIN",
   effects: [
     {
-      id: "eff-mxve1y6jr",
-      type: "CONSTANT",
-      description: "/",
-      restrictions: [],
-      conditions: [],
-      action: {
-        type: "CUSTOM",
-        text: "/",
-      },
-    },
-    {
-      id: "eff-1fg6gyq93",
+      id: "eff-sv8w42b07",
       type: "CONSTANT",
       description:
         "Choose 1 of your Units. Deal 1 damage to it. It gets AP+3 during this turn.",
       restrictions: [],
       conditions: [],
       action: {
-        type: "DAMAGE",
-        value: 1,
-        target: {
-          controller: "SELF",
-          cardType: "UNIT",
-          count: {
-            min: 1,
-            max: 1,
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "DAMAGE",
+            value: 1,
+            target: {
+              controller: "SELF",
+              cardType: "UNIT",
+              count: {
+                min: 1,
+                max: 1,
+              },
+              filters: [],
+            },
           },
-          filters: [],
-        },
+          {
+            type: "MODIFY_STATS",
+            attribute: "AP",
+            value: 3,
+            duration: "TURN",
+            target: {
+              controller: "SELF",
+              cardType: "UNIT",
+              count: {
+                min: 1,
+                max: 1,
+              },
+              filters: [],
+            },
+          },
+        ],
       },
     },
   ],

@@ -20,7 +20,7 @@ export const UndergroundDesertBase: BaseCardDefinition_Structure = {
   traits: ["maganac", "corps", "stronghold"],
   effects: [
     {
-      id: "eff-091riar8u",
+      id: "eff-49fjd7u8l",
       type: "TRIGGERED",
       timing: "BURST",
       description: "Deploy this card.",
@@ -32,7 +32,7 @@ export const UndergroundDesertBase: BaseCardDefinition_Structure = {
       },
     },
     {
-      id: "eff-ufwq5phpy",
+      id: "eff-rkbpq5370",
       type: "TRIGGERED",
       timing: "DEPLOY",
       description: "Add 1 of your Shields to your hand.",

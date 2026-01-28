@@ -27,7 +27,7 @@ export const Zuoot: UnitCardDefinition = {
   ],
   effects: [
     {
-      id: "eff-efms6r4ej",
+      id: "eff-08dudewre",
       type: "ACTIVATED",
       timing: "MAIN",
       description: "during this turn.)",

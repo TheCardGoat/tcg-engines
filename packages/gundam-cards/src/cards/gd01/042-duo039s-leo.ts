@@ -21,7 +21,7 @@ export const Duo039sLeo: UnitCardDefinition = {
   linkRequirements: ["duo-maxwell"],
   effects: [
     {
-      id: "eff-fc7lnsszs",
+      id: "eff-4g2yl7t9w",
       type: "CONSTANT",
       description:
         "This Unit may choose an active enemy Unit that is Lv.2 or lower as its attack target.",

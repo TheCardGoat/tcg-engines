@@ -30,7 +30,7 @@ export const BigZam: UnitCardDefinition = {
   ],
   effects: [
     {
-      id: "eff-mq1md8qzh",
+      id: "eff-45olp6w68",
       type: "TRIGGERED",
       timing: "DEPLOY",
       description:

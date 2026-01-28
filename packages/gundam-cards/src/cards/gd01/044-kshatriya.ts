@@ -21,7 +21,7 @@ export const Kshatriya: UnitCardDefinition = {
   linkRequirements: ["marida-cruz"],
   effects: [
     {
-      id: "eff-8hvi48gy5",
+      id: "eff-btpo8jymo",
       type: "TRIGGERED",
       timing: "WHEN_PAIRED",
       description: "Choose 1 to 2 enemy Units. Deal 1 damage to them.",

@@ -21,7 +21,7 @@ export const Gelgoog: UnitCardDefinition = {
   linkRequirements: ["(zeon)-trait"],
   effects: [
     {
-      id: "eff-clwedrnpj",
+      id: "eff-gvqwyjyab",
       type: "CONSTANT",
       description: "-",
       restrictions: [],

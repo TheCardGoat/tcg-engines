@@ -19,7 +19,7 @@ export const GuelJeturk: PilotCardDefinition = {
   hpModifier: 1,
   effects: [
     {
-      id: "eff-nv4u4x6nb",
+      id: "eff-n0yql9mra",
       type: "TRIGGERED",
       timing: "BURST",
       description: "Add this card to your hand.",
@@ -31,7 +31,7 @@ export const GuelJeturk: PilotCardDefinition = {
       },
     },
     {
-      id: "eff-8zqdrjali",
+      id: "eff-61okzrqqq",
       type: "ACTIVATED",
       timing: "MAIN",
       description:
@@ -44,12 +44,21 @@ export const GuelJeturk: PilotCardDefinition = {
       costs: [],
       conditions: [],
       action: {
-        type: "CONDITIONAL",
-        conditions: [],
-        trueAction: {
-          type: "CUSTOM",
-          text: "set this Unit as active. It can&#039;t attack during this turn.",
-        },
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "CONDITIONAL",
+            conditions: [],
+            trueAction: {
+              type: "CUSTOM",
+              text: "set this Unit as active",
+            },
+          },
+          {
+            type: "CUSTOM",
+            text: "It can&#039;t attack during this turn",
+          },
+        ],
       },
     },
   ],

@@ -21,7 +21,7 @@ export const GundamPharact: UnitCardDefinition = {
   linkRequirements: ["(academy)-trait"],
   effects: [
     {
-      id: "eff-7v3191xly",
+      id: "eff-mtjon43od",
       type: "TRIGGERED",
       timing: "ATTACK",
       description: "Choose 1 enemy Unit. It gets AP-2 during this battle.",

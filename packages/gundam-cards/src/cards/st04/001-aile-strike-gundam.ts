@@ -26,7 +26,7 @@ export const AileStrikeGundam: UnitCardDefinition = {
   ],
   effects: [
     {
-      id: "eff-hmi4hj6ob",
+      id: "eff-2gp4qqc66",
       type: "TRIGGERED",
       timing: "WHEN_PAIRED",
       description:

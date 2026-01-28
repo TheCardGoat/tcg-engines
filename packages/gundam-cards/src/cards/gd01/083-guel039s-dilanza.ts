@@ -21,7 +21,7 @@ export const Guel039sDilanza: UnitCardDefinition = {
   linkRequirements: ["(academy)-trait"],
   effects: [
     {
-      id: "eff-jf2zhq8qb",
+      id: "eff-w9rjh40r5",
       type: "CONSTANT",
       description: "-",
       restrictions: [],

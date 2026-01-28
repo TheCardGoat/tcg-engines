@@ -21,7 +21,7 @@ export const Noin039sAries: UnitCardDefinition = {
   linkRequirements: ["lucrezia-noin"],
   effects: [
     {
-      id: "eff-04f8nsrze",
+      id: "eff-4g90l3us3",
       type: "TRIGGERED",
       timing: "DESTROYED",
       description: "If you have another (OZ) Unit in play, draw 1.",

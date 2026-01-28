@@ -19,18 +19,12 @@ export const Gundam: UnitCardDefinition = {
   zones: ["space", "earth"],
   traits: ["earth", "federation", "white", "base", "team"],
   linkRequirements: ["amuro-ray"],
-  keywords: [
-    {
-      keyword: "Repair",
-      value: 1,
-    },
-  ],
   effects: [
     {
-      id: "eff-jvud6r603",
+      id: "eff-pmx9jjii1",
       type: "CONSTANT",
       description:
-        "All your (White Base Team) Units gain . (At the end of your turn, this Unit recovers the specified number of HP.)",
+        "All your (White Base Team) Units gain <Repair 1>. (At the end of your turn, this Unit recovers the specified number of HP.)",
       restrictions: [],
       conditions: [],
       action: {
@@ -44,7 +38,7 @@ export const Gundam: UnitCardDefinition = {
       },
     },
     {
-      id: "eff-qgi4ik3l7",
+      id: "eff-zl9lykfm9",
       type: "TRIGGERED",
       timing: "WHEN_PAIRED",
       description: "If you have 2 or more other Units in play, draw 1.",

@@ -17,7 +17,7 @@ export const StrikerPack: CommandCardDefinition = {
   timing: "MAIN",
   effects: [
     {
-      id: "eff-d2wil0adh",
+      id: "eff-21cpcsuyt",
       type: "TRIGGERED",
       timing: "BURST",
       description:
@@ -39,7 +39,7 @@ export const StrikerPack: CommandCardDefinition = {
       },
     },
     {
-      id: "eff-u1hjmfd0z",
+      id: "eff-waub395wi",
       type: "CONSTANT",
       description:
         "If you have no (Earth Alliance) Unit tokens in play, deploy 1 [Sword Strike Gundam]((Earth Alliance)･AP4･HP2･) or 1 [Launcher Strike Gundam]((Earth Alliance)･AP2･HP4･) Unit token.",

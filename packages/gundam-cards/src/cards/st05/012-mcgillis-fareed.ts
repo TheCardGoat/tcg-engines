@@ -19,7 +19,7 @@ export const McgillisFareed: PilotCardDefinition = {
   hpModifier: 1,
   effects: [
     {
-      id: "eff-9stedzcbi",
+      id: "eff-s12zi970v",
       type: "TRIGGERED",
       timing: "BURST",
       description: "Add this card to your hand.",
@@ -31,7 +31,7 @@ export const McgillisFareed: PilotCardDefinition = {
       },
     },
     {
-      id: "eff-ba4nkxvmj",
+      id: "eff-6rogtqzxc",
       type: "TRIGGERED",
       timing: "WHEN_PAIRED",
       description:
@@ -40,17 +40,25 @@ export const McgillisFareed: PilotCardDefinition = {
       costs: [],
       conditions: [],
       action: {
-        type: "CONDITIONAL",
-        conditions: [
+        type: "SEQUENCE",
+        actions: [
           {
-            type: "STATE_CHECK",
-            text: "you have 2 or more other (Gjallarhorn)/(Tekkadan) Units in play",
+            type: "CONDITIONAL",
+            conditions: [
+              {
+                type: "STATE_CHECK",
+                text: "you have 2 or more other (Gjallarhorn)/(Tekkadan) Units in play",
+              },
+            ],
+            trueAction: {
+              type: "CUSTOM",
+              text: "choose 1 enemy Unit with 3 or less HP",
+            },
+          },
+          {
+            type: "REST",
           },
         ],
-        trueAction: {
-          type: "CUSTOM",
-          text: "choose 1 enemy Unit with 3 or less HP. Rest it.",
-        },
       },
     },
   ],

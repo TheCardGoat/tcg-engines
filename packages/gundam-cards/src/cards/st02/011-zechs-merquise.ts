@@ -19,7 +19,7 @@ export const ZechsMerquise: PilotCardDefinition = {
   hpModifier: 1,
   effects: [
     {
-      id: "eff-oxm0szf65",
+      id: "eff-rmkcndwan",
       type: "TRIGGERED",
       timing: "BURST",
       description: "Add this card to your hand.",
@@ -31,7 +31,7 @@ export const ZechsMerquise: PilotCardDefinition = {
       },
     },
     {
-      id: "eff-20rl924zy",
+      id: "eff-io4mhcye3",
       type: "CONSTANT",
       description:
         "During your turn, when this Unit destroys an enemy Unit with battle damage, draw 1.",

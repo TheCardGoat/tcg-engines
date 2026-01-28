@@ -21,7 +21,7 @@ export const Mistral: UnitCardDefinition = {
   linkRequirements: ["-"],
   effects: [
     {
-      id: "eff-mudmjvnhu",
+      id: "eff-lvgk4g8eo",
       type: "TRIGGERED",
       timing: "DEPLOY",
       description: "Choose 1 enemy Unit. It gets AP-1 during this turn.",

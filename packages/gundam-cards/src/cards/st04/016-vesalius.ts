@@ -20,7 +20,7 @@ export const Vesalius: BaseCardDefinition_Structure = {
   traits: ["zaft", "warship"],
   effects: [
     {
-      id: "eff-q1yvfh3hm",
+      id: "eff-5ur4gh1mt",
       type: "TRIGGERED",
       timing: "BURST",
       description: "Deploy this card.",
@@ -32,7 +32,7 @@ export const Vesalius: BaseCardDefinition_Structure = {
       },
     },
     {
-      id: "eff-jgtpg1j3x",
+      id: "eff-xzkac8aa5",
       type: "TRIGGERED",
       timing: "DEPLOY",
       description: "Add 1 of your Shields to your hand.",
@@ -44,7 +44,7 @@ export const Vesalius: BaseCardDefinition_Structure = {
       },
     },
     {
-      id: "eff-xlwgdizac",
+      id: "eff-tjcrjkc25",
       type: "ACTIVATED",
       timing: "MAIN",
       description:

@@ -27,7 +27,7 @@ export const ZakuISniperType: UnitCardDefinition = {
   ],
   effects: [
     {
-      id: "eff-u7ehm6t71",
+      id: "eff-hhu6m97n8",
       type: "ACTIVATED",
       timing: "MAIN",
       description: "during this turn.)",
@@ -40,7 +40,7 @@ export const ZakuISniperType: UnitCardDefinition = {
       },
     },
     {
-      id: "eff-kobfh6yfd",
+      id: "eff-nftzatoxg",
       type: "TRIGGERED",
       timing: "DEPLOY",
       description:
@@ -49,7 +49,24 @@ export const ZakuISniperType: UnitCardDefinition = {
       costs: [],
       conditions: [],
       action: {
-        type: "ADD_TO_HAND",
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "CUSTOM",
+            text: "Look at the top card of your deck",
+          },
+          {
+            type: "CONDITIONAL",
+            conditions: [],
+            trueAction: {
+              type: "ADD_TO_HAND",
+            },
+          },
+          {
+            type: "CUSTOM",
+            text: "Return any remaining card to the bottom of your deck",
+          },
+        ],
       },
     },
   ],

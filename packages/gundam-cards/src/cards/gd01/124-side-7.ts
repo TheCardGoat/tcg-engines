@@ -20,7 +20,7 @@ export const Side7: BaseCardDefinition_Structure = {
   traits: ["earth", "federation", "stronghold"],
   effects: [
     {
-      id: "eff-54zawgyx4",
+      id: "eff-rmxq863uk",
       type: "TRIGGERED",
       timing: "BURST",
       description: "Deploy this card.",
@@ -32,7 +32,7 @@ export const Side7: BaseCardDefinition_Structure = {
       },
     },
     {
-      id: "eff-1bcrbpyhw",
+      id: "eff-gikt7x6ad",
       type: "TRIGGERED",
       timing: "DEPLOY",
       description: "Add 1 of your Shields to your hand.",
@@ -44,7 +44,7 @@ export const Side7: BaseCardDefinition_Structure = {
       },
     },
     {
-      id: "eff-y8r03scsm",
+      id: "eff-6qlpwajrg",
       type: "ACTIVATED",
       timing: "MAIN",
       description: "Rest this Base:Choose 1 friendly Unit. It recovers 1 HP.",

@@ -26,7 +26,7 @@ export const Mcgillis039SchwalbeGraze: UnitCardDefinition = {
   ],
   effects: [
     {
-      id: "eff-j7ho2a360",
+      id: "eff-d25vpjk0o",
       type: "TRIGGERED",
       timing: "WHEN_PAIRED",
       description:
@@ -35,19 +35,28 @@ export const Mcgillis039SchwalbeGraze: UnitCardDefinition = {
       costs: [],
       conditions: [],
       action: {
-        type: "MODIFY_STATS",
-        attribute: "AP",
-        value: -2,
-        duration: "TURN",
-        target: {
-          controller: "OPPONENT",
-          cardType: "UNIT",
-          count: {
-            min: 1,
-            max: 1,
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "CUSTOM",
+            text: "3 or lower",
           },
-          filters: [],
-        },
+          {
+            type: "MODIFY_STATS",
+            attribute: "AP",
+            value: -2,
+            duration: "TURN",
+            target: {
+              controller: "OPPONENT",
+              cardType: "UNIT",
+              count: {
+                min: 1,
+                max: 1,
+              },
+              filters: [],
+            },
+          },
+        ],
       },
     },
   ],

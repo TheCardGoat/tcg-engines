@@ -19,24 +19,31 @@ export const M039quve: PilotCardDefinition = {
   hpModifier: 1,
   effects: [
     {
-      id: "eff-vdzeji7vo",
+      id: "eff-42lx7o115",
       type: "TRIGGERED",
       timing: "BURST",
       description:
-        "Add this card to your hand. While this Unit is (Zeon), it gains . (When this Unit&#039;s attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent&#039;s shield area.)",
+        "Add this card to your hand. While this Unit is (Zeon), it gains <Breach 1>. (When this Unit&#039;s attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent&#039;s shield area.)",
       restrictions: [],
       costs: [],
       conditions: [],
       action: {
-        type: "DAMAGE",
-        value: 0,
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "ADD_TO_HAND",
+          },
+          {
+            type: "GAIN_KEYWORDS",
+            keywords: ["Breach 1"],
+            duration: "PERMANENT",
+          },
+          {
+            type: "CUSTOM",
+            text: ")",
+          },
+        ],
       },
-    },
-  ],
-  keywords: [
-    {
-      keyword: "Breach",
-      value: 1,
     },
   ],
 };

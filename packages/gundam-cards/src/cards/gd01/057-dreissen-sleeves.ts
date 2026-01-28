@@ -21,7 +21,7 @@ export const DreissenSleeves: UnitCardDefinition = {
   linkRequirements: ["-"],
   effects: [
     {
-      id: "eff-r1xvwgrgl",
+      id: "eff-8zxgb7g38",
       type: "CONSTANT",
       description: "-",
       restrictions: [],

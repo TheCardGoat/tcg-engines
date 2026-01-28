@@ -19,7 +19,7 @@ export const AthrunZala: PilotCardDefinition = {
   hpModifier: 2,
   effects: [
     {
-      id: "eff-9h78rcje7",
+      id: "eff-8l37j27l7",
       type: "TRIGGERED",
       timing: "BURST",
       description: "Add this card to your hand.",
@@ -31,7 +31,7 @@ export const AthrunZala: PilotCardDefinition = {
       },
     },
     {
-      id: "eff-ykhutvbqw",
+      id: "eff-8g1e1mcs1",
       type: "TRIGGERED",
       timing: "WHEN_LINKED",
       description:

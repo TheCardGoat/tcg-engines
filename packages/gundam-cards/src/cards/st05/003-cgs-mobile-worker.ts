@@ -20,7 +20,7 @@ export const CgsMobileWorker: UnitCardDefinition = {
   linkRequirements: ["-"],
   effects: [
     {
-      id: "eff-tg5zyaa4t",
+      id: "eff-d95r2sm5p",
       type: "ACTIVATED",
       timing: "MAIN",
       description:
@@ -34,17 +34,37 @@ export const CgsMobileWorker: UnitCardDefinition = {
       ],
       conditions: [],
       action: {
-        type: "DAMAGE",
-        value: 1,
-        target: {
-          controller: "SELF",
-          cardType: "UNIT",
-          count: {
-            min: 1,
-            max: 1,
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "DAMAGE",
+            value: 1,
+            target: {
+              controller: "SELF",
+              cardType: "UNIT",
+              count: {
+                min: 1,
+                max: 1,
+              },
+              filters: [],
+            },
           },
-          filters: [],
-        },
+          {
+            type: "MODIFY_STATS",
+            attribute: "AP",
+            value: 1,
+            duration: "TURN",
+            target: {
+              controller: "SELF",
+              cardType: "UNIT",
+              count: {
+                min: 1,
+                max: 1,
+              },
+              filters: [],
+            },
+          },
+        ],
       },
     },
   ],

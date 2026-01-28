@@ -19,7 +19,7 @@ export const ElanCeresEnhancedPersonNumber4: PilotCardDefinition = {
   hpModifier: 1,
   effects: [
     {
-      id: "eff-h6dbcwo6m",
+      id: "eff-luwr43r2t",
       type: "TRIGGERED",
       timing: "BURST",
       description: "Add this card to your hand.",
@@ -31,7 +31,7 @@ export const ElanCeresEnhancedPersonNumber4: PilotCardDefinition = {
       },
     },
     {
-      id: "eff-je9n88b6h",
+      id: "eff-g6wkthyz8",
       type: "ACTIVATED",
       timing: "ACTION",
       description:

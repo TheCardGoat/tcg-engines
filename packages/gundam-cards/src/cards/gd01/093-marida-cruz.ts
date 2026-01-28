@@ -19,7 +19,7 @@ export const MaridaCruz: PilotCardDefinition = {
   hpModifier: 1,
   effects: [
     {
-      id: "eff-m29700phd",
+      id: "eff-smmo19058",
       type: "TRIGGERED",
       timing: "BURST",
       description: "Add this card to your hand.",
@@ -31,7 +31,7 @@ export const MaridaCruz: PilotCardDefinition = {
       },
     },
     {
-      id: "eff-l16z48hky",
+      id: "eff-zp03rym43",
       type: "TRIGGERED",
       timing: "ATTACK",
       description:
@@ -40,17 +40,26 @@ export const MaridaCruz: PilotCardDefinition = {
       costs: [],
       conditions: [],
       action: {
-        type: "DAMAGE",
-        value: 1,
-        target: {
-          controller: "OPPONENT",
-          cardType: "UNIT",
-          count: {
-            min: 1,
-            max: 1,
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "CUSTOM",
+            text: "is equal to or lower than this Unit",
           },
-          filters: [],
-        },
+          {
+            type: "DAMAGE",
+            value: 1,
+            target: {
+              controller: "OPPONENT",
+              cardType: "UNIT",
+              count: {
+                min: 1,
+                max: 1,
+              },
+              filters: [],
+            },
+          },
+        ],
       },
     },
   ],

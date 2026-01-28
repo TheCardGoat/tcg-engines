@@ -21,7 +21,7 @@ export const Lagowe: UnitCardDefinition = {
   linkRequirements: ["(zaft)-trait"],
   effects: [
     {
-      id: "eff-f18xmoecm",
+      id: "eff-hm7p7wzii",
       type: "TRIGGERED",
       timing: "ATTACK",
       description:
@@ -30,12 +30,21 @@ export const Lagowe: UnitCardDefinition = {
       costs: [],
       conditions: [],
       action: {
-        type: "CONDITIONAL",
-        conditions: [],
-        trueAction: {
-          type: "DAMAGE",
-          value: 2,
-        },
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "CONDITIONAL",
+            conditions: [],
+            trueAction: {
+              type: "CUSTOM",
+              text: "choose 1 enemy Unit",
+            },
+          },
+          {
+            type: "DAMAGE",
+            value: 2,
+          },
+        ],
       },
     },
   ],

@@ -21,7 +21,7 @@ export const Adzam: UnitCardDefinition = {
   linkRequirements: ["(zeon)-trait"],
   effects: [
     {
-      id: "eff-s1girkyo7",
+      id: "eff-vmg467hs9",
       type: "TRIGGERED",
       timing: "DEPLOY",
       description:

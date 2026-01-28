@@ -19,24 +19,31 @@ export const SaylaMass: PilotCardDefinition = {
   hpModifier: 1,
   effects: [
     {
-      id: "eff-v7tgf542o",
+      id: "eff-vhj8bij7h",
       type: "TRIGGERED",
       timing: "BURST",
       description:
-        "Add this card to your hand. While this Unit is blue, it gains . (At the end of your turn, this Unit recovers the specified number of HP.)",
+        "Add this card to your hand. While this Unit is blue, it gains <Repair 1>. (At the end of your turn, this Unit recovers the specified number of HP.)",
       restrictions: [],
       costs: [],
       conditions: [],
       action: {
-        type: "HEAL",
-        amount: 1,
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "ADD_TO_HAND",
+          },
+          {
+            type: "GAIN_KEYWORDS",
+            keywords: ["Repair 1"],
+            duration: "PERMANENT",
+          },
+          {
+            type: "CUSTOM",
+            text: ")",
+          },
+        ],
       },
-    },
-  ],
-  keywords: [
-    {
-      keyword: "Repair",
-      value: 1,
     },
   ],
 };

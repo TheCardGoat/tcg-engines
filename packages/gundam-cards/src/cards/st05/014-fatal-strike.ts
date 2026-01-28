@@ -16,7 +16,7 @@ export const FatalStrike: CommandCardDefinition = {
   timing: "MAIN",
   effects: [
     {
-      id: "eff-bdf90jl2u",
+      id: "eff-unrieu6nx",
       type: "TRIGGERED",
       timing: "BURST",
       description: "Choose 1 enemy Unit. Deal 1 damage to it.",
@@ -38,14 +38,23 @@ export const FatalStrike: CommandCardDefinition = {
       },
     },
     {
-      id: "eff-uxsip1rua",
+      id: "eff-hx9qajvhi",
       type: "CONSTANT",
       description: "Choose 1 enemy Unit that is Lv.3 or lower. Destroy it.",
       restrictions: [],
       conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "3 or lower. Destroy it.",
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "CUSTOM",
+            text: "3 or lower",
+          },
+          {
+            type: "CUSTOM",
+            text: "Destroy it",
+          },
+        ],
       },
     },
   ],

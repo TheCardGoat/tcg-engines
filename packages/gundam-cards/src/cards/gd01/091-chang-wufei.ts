@@ -19,22 +19,26 @@ export const ChangWufei: PilotCardDefinition = {
   hpModifier: 1,
   effects: [
     {
-      id: "eff-0eyw3fuhr",
+      id: "eff-lfiuwoksp",
       type: "TRIGGERED",
       timing: "BURST",
       description:
-        "Add this card to your hand. During your turn, while this Unit has , it can&#039;t receive battle damage from enemy Units with 3 or less AP.",
+        "Add this card to your hand. During your turn, while this Unit has <Breach>, it can&#039;t receive battle damage from enemy Units with 3 or less AP.",
       restrictions: [],
       costs: [],
       conditions: [],
       action: {
-        type: "ADD_TO_HAND",
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "ADD_TO_HAND",
+          },
+          {
+            type: "CUSTOM",
+            text: "During your turn, while this Unit has <Breach>, it can&#039;t receive battle damage from enemy Units with 3 or less AP",
+          },
+        ],
       },
-    },
-  ],
-  keywords: [
-    {
-      keyword: "Breach",
     },
   ],
 };

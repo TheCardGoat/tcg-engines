@@ -21,7 +21,7 @@ export const Char039sGelgoog: UnitCardDefinition = {
   linkRequirements: ["char-aznable"],
   effects: [
     {
-      id: "eff-17ucfyzy5",
+      id: "eff-yzvku1b4x",
       type: "ACTIVATED",
       timing: "MAIN",
       description:
@@ -30,8 +30,17 @@ export const Char039sGelgoog: UnitCardDefinition = {
       costs: [],
       conditions: [],
       action: {
-        type: "DISCARD",
-        value: 1,
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "CUSTOM",
+            text: "3 or lower from your trash",
+          },
+          {
+            type: "CUSTOM",
+            text: "Pair it with this Unit",
+          },
+        ],
       },
     },
   ],

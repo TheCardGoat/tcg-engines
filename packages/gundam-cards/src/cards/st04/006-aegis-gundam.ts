@@ -21,7 +21,7 @@ export const AegisGundam: UnitCardDefinition = {
   linkRequirements: ["athrun-zala"],
   effects: [
     {
-      id: "eff-gp2oo3tgm",
+      id: "eff-n222t2h8k",
       type: "TRIGGERED",
       timing: "ATTACK",
       description:
@@ -30,12 +30,17 @@ export const AegisGundam: UnitCardDefinition = {
       costs: [],
       conditions: [],
       action: {
-        type: "CONDITIONAL",
-        conditions: [],
-        trueAction: {
-          type: "DAMAGE",
-          value: 3,
-        },
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "CUSTOM",
+            text: "5 or higher",
+          },
+          {
+            type: "DAMAGE",
+            value: 3,
+          },
+        ],
       },
     },
   ],

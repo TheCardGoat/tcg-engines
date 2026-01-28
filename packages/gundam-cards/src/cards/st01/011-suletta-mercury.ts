@@ -19,7 +19,7 @@ export const SulettaMercury: PilotCardDefinition = {
   hpModifier: 2,
   effects: [
     {
-      id: "eff-2geat1wdx",
+      id: "eff-3cer2k1sj",
       type: "TRIGGERED",
       timing: "BURST",
       description: "Add this card to your hand.",
@@ -31,7 +31,7 @@ export const SulettaMercury: PilotCardDefinition = {
       },
     },
     {
-      id: "eff-4h3uuaddw",
+      id: "eff-st1nz7ydf",
       type: "TRIGGERED",
       timing: "ATTACK",
       description:

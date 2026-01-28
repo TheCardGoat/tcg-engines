@@ -17,7 +17,7 @@ export const BattleOfAces: CommandCardDefinition = {
   timing: "MAIN",
   effects: [
     {
-      id: "eff-k6ga9q9v1",
+      id: "eff-vrv2xvlsw",
       type: "TRIGGERED",
       timing: "BURST",
       description: "Choose 1 enemy Unit. Deal 2 damage to it.",
@@ -39,18 +39,7 @@ export const BattleOfAces: CommandCardDefinition = {
       },
     },
     {
-      id: "eff-hf4q6sobf",
-      type: "CONSTANT",
-      description: "/",
-      restrictions: [],
-      conditions: [],
-      action: {
-        type: "CUSTOM",
-        text: "/",
-      },
-    },
-    {
-      id: "eff-w35r17dzt",
+      id: "eff-hsxqr23ni",
       type: "CONSTANT",
       description: "Choose 1 damaged enemy Unit. Deal 3 damage to it.",
       restrictions: [],

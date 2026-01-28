@@ -19,7 +19,7 @@ export const KiraYamato: PilotCardDefinition = {
   hpModifier: 1,
   effects: [
     {
-      id: "eff-t873cv0vz",
+      id: "eff-p8z8emm23",
       type: "TRIGGERED",
       timing: "BURST",
       description: "Add this card to your hand.",
@@ -31,7 +31,7 @@ export const KiraYamato: PilotCardDefinition = {
       },
     },
     {
-      id: "eff-h6bqzbxij",
+      id: "eff-r0k66hcf0",
       type: "TRIGGERED",
       timing: "ATTACK",
       description: "Choose 1 enemy Unit. It gets AP-2 during this battle.",

@@ -19,7 +19,7 @@ export const DuoMaxwell: PilotCardDefinition = {
   hpModifier: 2,
   effects: [
     {
-      id: "eff-xa2rkajsv",
+      id: "eff-0zriq0965",
       type: "TRIGGERED",
       timing: "BURST",
       description: "Add this card to your hand.",
@@ -31,7 +31,7 @@ export const DuoMaxwell: PilotCardDefinition = {
       },
     },
     {
-      id: "eff-wfhfr6l09",
+      id: "eff-va918mu58",
       type: "CONSTANT",
       description:
         "This Unit&#039;s AP can&#039;t be reduced by enemy effects.",

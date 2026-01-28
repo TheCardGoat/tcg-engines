@@ -17,7 +17,7 @@ export const StrategicArms: CommandCardDefinition = {
   timing: "MAIN",
   effects: [
     {
-      id: "eff-1sqpn5st7",
+      id: "eff-j2fz4lkhx",
       type: "CONSTANT",
       description: "Deal 2 damage to all Units with .",
       restrictions: [],

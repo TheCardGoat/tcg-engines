@@ -17,7 +17,7 @@ export const InterceptOrders: CommandCardDefinition = {
   timing: "MAIN",
   effects: [
     {
-      id: "eff-89ytf1qpq",
+      id: "eff-5katwx918",
       type: "TRIGGERED",
       timing: "BURST",
       description: "Choose 1 enemy Unit with 5 or less HP. Rest it.",
@@ -44,18 +44,7 @@ export const InterceptOrders: CommandCardDefinition = {
       },
     },
     {
-      id: "eff-cdcct9iub",
-      type: "CONSTANT",
-      description: "/",
-      restrictions: [],
-      conditions: [],
-      action: {
-        type: "CUSTOM",
-        text: "/",
-      },
-    },
-    {
-      id: "eff-fwzsxwfj1",
+      id: "eff-6t4ezdhnu",
       type: "CONSTANT",
       description: "Choose 1 to 2 enemy Units with 3 or less HP. Rest them.",
       restrictions: [],

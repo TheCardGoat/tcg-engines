@@ -20,7 +20,7 @@ export const Falmel: BaseCardDefinition_Structure = {
   traits: ["zeon", "warship"],
   effects: [
     {
-      id: "eff-b287qqhk0",
+      id: "eff-i1srfp42h",
       type: "TRIGGERED",
       timing: "BURST",
       description: "Deploy this card.",
@@ -32,7 +32,7 @@ export const Falmel: BaseCardDefinition_Structure = {
       },
     },
     {
-      id: "eff-z23so08wz",
+      id: "eff-dpk4vo5ei",
       type: "TRIGGERED",
       timing: "DEPLOY",
       description:
@@ -41,7 +41,18 @@ export const Falmel: BaseCardDefinition_Structure = {
       costs: [],
       conditions: [],
       action: {
-        type: "ADD_TO_HAND",
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "ADD_TO_HAND",
+          },
+          {
+            type: "MODIFY_STATS",
+            attribute: "AP",
+            value: 3,
+            duration: "TURN",
+          },
+        ],
       },
     },
   ],

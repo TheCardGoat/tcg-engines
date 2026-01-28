@@ -27,7 +27,7 @@ export const AngelosGearaZulu: UnitCardDefinition = {
   ],
   effects: [
     {
-      id: "eff-ivv19lm92",
+      id: "eff-gf2jxeosp",
       type: "ACTIVATED",
       timing: "MAIN",
       description: "during this turn.)",

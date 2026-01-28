@@ -20,7 +20,7 @@ export const GrazeCustom: UnitCardDefinition = {
   linkRequirements: ["-"],
   effects: [
     {
-      id: "eff-vrs7dlpmt",
+      id: "eff-jhruosa6b",
       type: "CONSTANT",
       description: "-",
       restrictions: [],

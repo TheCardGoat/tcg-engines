@@ -21,7 +21,7 @@ export const GundamHeavyarms: UnitCardDefinition = {
   linkRequirements: ["trowa-barton"],
   effects: [
     {
-      id: "eff-t4fuwg4eb",
+      id: "eff-kqw7c3i7i",
       type: "CONSTANT",
       description:
         "During your turn, when this Unit destroys an enemy Unit with battle damage, deal 1 damage to all enemy Units that are Lv.3 or lower.",

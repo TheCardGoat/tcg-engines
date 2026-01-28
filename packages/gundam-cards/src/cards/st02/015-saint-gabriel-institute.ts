@@ -20,7 +20,7 @@ export const SaintGabrielInstitute: BaseCardDefinition_Structure = {
   traits: ["academy", "stronghold"],
   effects: [
     {
-      id: "eff-p75og14t1",
+      id: "eff-hbzpx6wxh",
       type: "TRIGGERED",
       timing: "BURST",
       description: "Deploy this card.",
@@ -32,7 +32,7 @@ export const SaintGabrielInstitute: BaseCardDefinition_Structure = {
       },
     },
     {
-      id: "eff-2tdeoniul",
+      id: "eff-93fsxsuyw",
       type: "TRIGGERED",
       timing: "DEPLOY",
       description:
@@ -41,7 +41,16 @@ export const SaintGabrielInstitute: BaseCardDefinition_Structure = {
       costs: [],
       conditions: [],
       action: {
-        type: "ADD_TO_HAND",
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "ADD_TO_HAND",
+          },
+          {
+            type: "CUSTOM",
+            text: "Then, look at the top 2 cards of your deck and return 1 to the top and 1 to the bottom",
+          },
+        ],
       },
     },
   ],

@@ -27,7 +27,7 @@ export const Bucue: UnitCardDefinition = {
   ],
   effects: [
     {
-      id: "eff-s22tk0rnn",
+      id: "eff-dvr79c5xp",
       type: "ACTIVATED",
       timing: "MAIN",
       description: "during this turn.)",

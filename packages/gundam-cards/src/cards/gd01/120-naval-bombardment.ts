@@ -17,7 +17,7 @@ export const NavalBombardment: CommandCardDefinition = {
   timing: "ACTION",
   effects: [
     {
-      id: "eff-syx0zxuwr",
+      id: "eff-e99suiyxg",
       type: "TRIGGERED",
       timing: "BURST",
       description: "Choose 1 enemy Unit. It gets AP-3 during this turn.",
@@ -41,7 +41,7 @@ export const NavalBombardment: CommandCardDefinition = {
       },
     },
     {
-      id: "eff-hjlsj18w8",
+      id: "eff-k9cgf1epz",
       type: "CONSTANT",
       description:
         "Choose 1 friendly Unit with . It gets AP+3 during this turn.",

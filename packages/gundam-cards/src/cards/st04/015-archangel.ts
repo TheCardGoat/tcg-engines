@@ -20,7 +20,7 @@ export const Archangel: BaseCardDefinition_Structure = {
   traits: ["earth", "alliance", "warship"],
   effects: [
     {
-      id: "eff-pranzu34m",
+      id: "eff-w3o4u2p0n",
       type: "TRIGGERED",
       timing: "BURST",
       description: "Deploy this card.",
@@ -32,7 +32,7 @@ export const Archangel: BaseCardDefinition_Structure = {
       },
     },
     {
-      id: "eff-9wgipj49x",
+      id: "eff-ecmnehczz",
       type: "TRIGGERED",
       timing: "DEPLOY",
       description: "Add 1 of your Shields to your hand.",
@@ -44,7 +44,7 @@ export const Archangel: BaseCardDefinition_Structure = {
       },
     },
     {
-      id: "eff-cw8s0g7h1",
+      id: "eff-qa505iwx6",
       type: "ACTIVATED",
       timing: "MAIN",
       description:
@@ -62,16 +62,25 @@ export const Archangel: BaseCardDefinition_Structure = {
       ],
       conditions: [],
       action: {
-        type: "STAND",
-        target: {
-          controller: "SELF",
-          cardType: "UNIT",
-          count: {
-            min: 1,
-            max: 1,
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "STAND",
+            target: {
+              controller: "SELF",
+              cardType: "UNIT",
+              count: {
+                min: 1,
+                max: 1,
+              },
+              filters: [],
+            },
           },
-          filters: [],
-        },
+          {
+            type: "CUSTOM",
+            text: "It can't attack during this turn",
+          },
+        ],
       },
     },
   ],

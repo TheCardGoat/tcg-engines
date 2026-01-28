@@ -21,7 +21,7 @@ export const Ball: UnitCardDefinition = {
   linkRequirements: ["-"],
   effects: [
     {
-      id: "eff-0th03awsu",
+      id: "eff-j9qox38bo",
       type: "TRIGGERED",
       timing: "ATTACK",
       description: "Choose 1 of your Units. It recovers 1 HP.",

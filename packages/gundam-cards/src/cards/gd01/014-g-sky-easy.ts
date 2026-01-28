@@ -21,7 +21,7 @@ export const GskyEasy: UnitCardDefinition = {
   linkRequirements: ["(white-base-team)-trait"],
   effects: [
     {
-      id: "eff-zresfn2c0",
+      id: "eff-g3qqkc3oc",
       type: "ACTIVATED",
       timing: "ACTION",
       description: "【Once per Turn】Choose 1 Unit. It recovers 1 HP.",

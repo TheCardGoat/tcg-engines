@@ -21,7 +21,7 @@ export const StrikeGundam: UnitCardDefinition = {
   linkRequirements: ["kira-yamato"],
   effects: [
     {
-      id: "eff-fiqc1mcgq",
+      id: "eff-qrrg9esa6",
       type: "TRIGGERED",
       timing: "DEPLOY",
       description: "Draw 1. Then, discard 1.",
@@ -29,8 +29,17 @@ export const StrikeGundam: UnitCardDefinition = {
       costs: [],
       conditions: [],
       action: {
-        type: "DRAW",
-        value: 1,
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "DRAW",
+            value: 1,
+          },
+          {
+            type: "CUSTOM",
+            text: "Then, discard 1",
+          },
+        ],
       },
     },
   ],

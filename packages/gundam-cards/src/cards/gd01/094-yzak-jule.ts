@@ -19,7 +19,7 @@ export const YzakJule: PilotCardDefinition = {
   hpModifier: 1,
   effects: [
     {
-      id: "eff-revuu7f1r",
+      id: "eff-bjh186rgl",
       type: "TRIGGERED",
       timing: "BURST",
       description:
@@ -32,7 +32,16 @@ export const YzakJule: PilotCardDefinition = {
       costs: [],
       conditions: [],
       action: {
-        type: "ADD_TO_HAND",
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "ADD_TO_HAND",
+          },
+          {
+            type: "CUSTOM",
+            text: "When an enemy Link Unit is destroyed with damage while this Unit is attacking, draw 1",
+          },
+        ],
       },
     },
   ],

@@ -21,7 +21,7 @@ export const Graze: UnitCardDefinition = {
   linkRequirements: ["-"],
   effects: [
     {
-      id: "eff-lamgg269j",
+      id: "eff-kqfpvg4at",
       type: "CONSTANT",
       description: "-",
       restrictions: [],

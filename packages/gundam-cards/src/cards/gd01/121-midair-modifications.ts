@@ -17,7 +17,7 @@ export const MidairModifications: CommandCardDefinition = {
   timing: "MAIN",
   effects: [
     {
-      id: "eff-1v427ry5z",
+      id: "eff-7lioqlu3z",
       type: "TRIGGERED",
       timing: "BURST",
       description: "Activate this card&#039;s",
@@ -30,7 +30,7 @@ export const MidairModifications: CommandCardDefinition = {
       },
     },
     {
-      id: "eff-b4t0011lq",
+      id: "eff-28wutnhak",
       type: "CONSTANT",
       description: ".",
       restrictions: [],
@@ -41,27 +41,36 @@ export const MidairModifications: CommandCardDefinition = {
       },
     },
     {
-      id: "eff-sua8s9n4c",
+      id: "eff-bzi997n4j",
       type: "CONSTANT",
       description:
         "Choose 1 rested Unit with . Set it as active. It can&#039;t attack during this turn.",
       restrictions: [],
       conditions: [],
       action: {
-        type: "STAND",
-        target: {
-          controller: "ANY",
-          cardType: "UNIT",
-          count: {
-            min: 1,
-            max: 1,
-          },
-          filters: [
-            {
-              type: "exerted",
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "STAND",
+            target: {
+              controller: "ANY",
+              cardType: "UNIT",
+              count: {
+                min: 1,
+                max: 1,
+              },
+              filters: [
+                {
+                  type: "exerted",
+                },
+              ],
             },
-          ],
-        },
+          },
+          {
+            type: "CUSTOM",
+            text: "It can&#039;t attack during this turn",
+          },
+        ],
       },
     },
   ],

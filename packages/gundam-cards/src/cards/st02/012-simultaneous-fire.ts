@@ -23,31 +23,35 @@ export const SimultaneousFire: CommandCardDefinition = {
   },
   effects: [
     {
-      id: "eff-133hb45pz",
+      id: "eff-gh8ob4wr3",
       type: "CONSTANT",
       description:
-        "Choose 1 of your Units. It gains during this turn. (When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.) 【Pilot】[Trowa Barton]",
+        "Choose 1 of your Units. It gains <Breach 3> during this turn. (When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.) 【Pilot】[Trowa Barton]",
       restrictions: [],
       conditions: [],
       action: {
-        type: "DAMAGE",
-        value: 0,
-        target: {
-          controller: "SELF",
-          cardType: "UNIT",
-          count: {
-            min: 1,
-            max: 1,
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "GAIN_KEYWORDS",
+            keywords: ["Breach 3"],
+            duration: "TURN",
+            target: {
+              controller: "SELF",
+              cardType: "UNIT",
+              count: {
+                min: 1,
+                max: 1,
+              },
+              filters: [],
+            },
           },
-          filters: [],
-        },
+          {
+            type: "CUSTOM",
+            text: ") 【Pilot】[Trowa Barton]",
+          },
+        ],
       },
-    },
-  ],
-  keywords: [
-    {
-      keyword: "Breach",
-      value: 3,
     },
   ],
 };

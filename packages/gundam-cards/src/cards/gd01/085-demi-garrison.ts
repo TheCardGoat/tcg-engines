@@ -21,7 +21,7 @@ export const DemiGarrison: UnitCardDefinition = {
   linkRequirements: ["-"],
   effects: [
     {
-      id: "eff-ifzhvf6ty",
+      id: "eff-mycmaic76",
       type: "CONSTANT",
       description: "-",
       restrictions: [],

@@ -27,7 +27,7 @@ export const DeltaPlus: UnitCardDefinition = {
   ],
   effects: [
     {
-      id: "eff-frdqjcfoo",
+      id: "eff-4xzbhbc9b",
       type: "CONSTANT",
       description: "This Unit gets HP+1.",
       restrictions: [],

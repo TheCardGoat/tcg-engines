@@ -19,7 +19,7 @@ export const HeeroYuy: PilotCardDefinition = {
   hpModifier: 1,
   effects: [
     {
-      id: "eff-mj7b2bot6",
+      id: "eff-apf4044sj",
       type: "TRIGGERED",
       timing: "BURST",
       description: "Add this card to your hand.",
@@ -31,7 +31,7 @@ export const HeeroYuy: PilotCardDefinition = {
       },
     },
     {
-      id: "eff-rxl3jg8n4",
+      id: "eff-61os1sspp",
       type: "CONSTANT",
       description: "This Unit gets AP+1 and HP+1.",
       restrictions: [],

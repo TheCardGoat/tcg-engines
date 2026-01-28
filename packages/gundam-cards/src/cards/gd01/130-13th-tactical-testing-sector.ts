@@ -20,7 +20,7 @@ export const The13thTacticalTestingSector: BaseCardDefinition_Structure = {
   traits: ["academy", "stronghold"],
   effects: [
     {
-      id: "eff-zn57oipkt",
+      id: "eff-pyknw5k3t",
       type: "TRIGGERED",
       timing: "BURST",
       description: "Deploy this card.",
@@ -32,7 +32,7 @@ export const The13thTacticalTestingSector: BaseCardDefinition_Structure = {
       },
     },
     {
-      id: "eff-rjg5i1i5i",
+      id: "eff-2okejklcu",
       type: "TRIGGERED",
       timing: "DEPLOY",
       description: "Add 1 of your Shields to your hand.",
@@ -44,7 +44,7 @@ export const The13thTacticalTestingSector: BaseCardDefinition_Structure = {
       },
     },
     {
-      id: "eff-e5jld9r49",
+      id: "eff-ctlnxtfr1",
       type: "ACTIVATED",
       timing: "MAIN",
       description:
@@ -58,14 +58,23 @@ export const The13thTacticalTestingSector: BaseCardDefinition_Structure = {
       ],
       conditions: [],
       action: {
-        type: "CONDITIONAL",
-        conditions: [],
-        trueAction: {
-          type: "MODIFY_STATS",
-          attribute: "AP",
-          value: -1,
-          duration: "TURN",
-        },
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "CONDITIONAL",
+            conditions: [],
+            trueAction: {
+              type: "CUSTOM",
+              text: "choose 1 enemy Unit",
+            },
+          },
+          {
+            type: "MODIFY_STATS",
+            attribute: "AP",
+            value: -1,
+            duration: "TURN",
+          },
+        ],
       },
     },
   ],

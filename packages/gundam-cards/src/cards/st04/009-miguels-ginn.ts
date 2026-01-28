@@ -21,7 +21,7 @@ export const MiguelsGinn: UnitCardDefinition = {
   linkRequirements: ["miguel-ayman"],
   effects: [
     {
-      id: "eff-tuspdzhxh",
+      id: "eff-ebkx7b89j",
       type: "TRIGGERED",
       timing: "DESTROYED",
       description: "If you have another Link Unit in play, draw 1.",

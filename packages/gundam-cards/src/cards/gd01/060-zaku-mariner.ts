@@ -21,7 +21,7 @@ export const ZakuMariner: UnitCardDefinition = {
   linkRequirements: ["-"],
   effects: [
     {
-      id: "eff-du842kmcn",
+      id: "eff-ejmeqr5jc",
       type: "CONSTANT",
       description: "-",
       restrictions: [],

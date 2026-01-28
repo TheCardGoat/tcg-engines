@@ -21,7 +21,7 @@ export const Chuchu039sDemiTrainer: UnitCardDefinition = {
   linkRequirements: ["chuatury-panlunch"],
   effects: [
     {
-      id: "eff-9eruj7p7h",
+      id: "eff-qaff3l1jn",
       type: "TRIGGERED",
       timing: "ATTACK",
       description: "Draw 1. Then, discard 1.",
@@ -29,8 +29,17 @@ export const Chuchu039sDemiTrainer: UnitCardDefinition = {
       costs: [],
       conditions: [],
       action: {
-        type: "DRAW",
-        value: 1,
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "DRAW",
+            value: 1,
+          },
+          {
+            type: "CUSTOM",
+            text: "Then, discard 1",
+          },
+        ],
       },
     },
   ],

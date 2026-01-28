@@ -21,7 +21,7 @@ export const Dinn: UnitCardDefinition = {
   linkRequirements: ["-"],
   effects: [
     {
-      id: "eff-zeutcsvx3",
+      id: "eff-c5rtvyfvm",
       type: "CONSTANT",
       description: "-",
       restrictions: [],

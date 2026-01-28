@@ -18,7 +18,7 @@ export const MikazukiAugus: PilotCardDefinition = {
   hpModifier: 1,
   effects: [
     {
-      id: "eff-2zmywj9s4",
+      id: "eff-wc3hsx5mk",
       type: "TRIGGERED",
       timing: "BURST",
       description: "Add this card to your hand.",
@@ -30,7 +30,7 @@ export const MikazukiAugus: PilotCardDefinition = {
       },
     },
     {
-      id: "eff-fkymyg5un",
+      id: "eff-r1jhnzw8d",
       type: "TRIGGERED",
       timing: "WHEN_PAIRED",
       description:
@@ -41,15 +41,26 @@ export const MikazukiAugus: PilotCardDefinition = {
       action: {
         type: "DAMAGE",
         value: 1,
-        target: {
-          controller: "OPPONENT",
-          cardType: "UNIT",
-          count: {
-            min: 1,
-            max: 1,
+        target: [
+          {
+            controller: "SELF",
+            cardType: "UNIT",
+            count: {
+              min: 1,
+              max: 1,
+            },
+            filters: [],
           },
-          filters: [],
-        },
+          {
+            controller: "OPPONENT",
+            cardType: "UNIT",
+            count: {
+              min: 1,
+              max: 1,
+            },
+            filters: [],
+          },
+        ],
       },
     },
   ],

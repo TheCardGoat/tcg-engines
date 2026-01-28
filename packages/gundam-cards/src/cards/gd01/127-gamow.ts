@@ -20,7 +20,7 @@ export const Gamow: BaseCardDefinition_Structure = {
   traits: ["zaft", "warship"],
   effects: [
     {
-      id: "eff-p85grrtwm",
+      id: "eff-u6m0vjwvf",
       type: "TRIGGERED",
       timing: "BURST",
       description: "Deploy this card.",
@@ -32,7 +32,7 @@ export const Gamow: BaseCardDefinition_Structure = {
       },
     },
     {
-      id: "eff-stakkgbma",
+      id: "eff-cb7s10yxj",
       type: "TRIGGERED",
       timing: "DEPLOY",
       description: "Add 1 of your Shields to your hand.",
@@ -44,11 +44,11 @@ export const Gamow: BaseCardDefinition_Structure = {
       },
     },
     {
-      id: "eff-ligchaznp",
+      id: "eff-yyj2lgl8h",
       type: "ACTIVATED",
       timing: "ACTION",
       description:
-        "Rest this Base:Choose 1 friendly (ZAFT) Unit with 5 or more AP. It gains during this battle. (When this Unit&#039;s attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent&#039;s shield area.)",
+        "Rest this Base:Choose 1 friendly (ZAFT) Unit with 5 or more AP. It gains <Breach 3> during this battle. (When this Unit&#039;s attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent&#039;s shield area.)",
       restrictions: [],
       costs: [
         {
@@ -58,24 +58,28 @@ export const Gamow: BaseCardDefinition_Structure = {
       ],
       conditions: [],
       action: {
-        type: "DAMAGE",
-        value: 0,
-        target: {
-          controller: "SELF",
-          cardType: "UNIT",
-          count: {
-            min: 1,
-            max: 1,
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "GAIN_KEYWORDS",
+            keywords: ["Breach 3"],
+            duration: "PERMANENT",
+            target: {
+              controller: "SELF",
+              cardType: "UNIT",
+              count: {
+                min: 1,
+                max: 1,
+              },
+              filters: [],
+            },
           },
-          filters: [],
-        },
+          {
+            type: "CUSTOM",
+            text: ")",
+          },
+        ],
       },
-    },
-  ],
-  keywords: [
-    {
-      keyword: "Breach",
-      value: 3,
     },
   ],
 };

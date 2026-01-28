@@ -74,13 +74,13 @@ export interface BaseAction {
 export interface HealAction extends BaseAction {
   type: "HEAL";
   amount: number;
-  target?: TargetQuery;
+  target?: TargetQuery | TargetQuery[];
 }
 
 export interface DamageAction extends BaseAction {
   type: "DAMAGE";
   value: number;
-  target?: TargetQuery;
+  target?: TargetQuery | TargetQuery[];
 }
 
 export interface DrawAction extends BaseAction {
@@ -101,7 +101,14 @@ export interface ModifyStatsAction extends BaseAction {
   attribute: "AP" | "HP" | "BOTH";
   value: number;
   duration: "TURN" | "PERMANENT";
-  target?: TargetQuery;
+  target?: TargetQuery | TargetQuery[];
+}
+
+export interface GainKeywordsAction extends BaseAction {
+  type: "GAIN_KEYWORDS";
+  keywords: string[];
+  duration: "TURN" | "PERMANENT";
+  target?: TargetQuery | TargetQuery[];
 }
 
 export interface CustomAction extends BaseAction {
@@ -134,8 +141,9 @@ export interface GenericAction extends BaseAction {
     | "CUSTOM"
     | "SEQUENCE"
     | "CONDITIONAL"
+    | "GAIN_KEYWORDS"
   >;
-  target?: TargetQuery;
+  target?: TargetQuery | TargetQuery[];
   value?: number;
   parameters?: Record<string, unknown>;
   text?: string;
@@ -147,6 +155,7 @@ export type Action =
   | DrawAction
   | SearchAction
   | ModifyStatsAction
+  | GainKeywordsAction
   | CustomAction
   | SequenceAction
   | ConditionalAction

@@ -21,7 +21,7 @@ export const Anksha: UnitCardDefinition = {
   linkRequirements: ["-"],
   effects: [
     {
-      id: "eff-o8bchj4mg",
+      id: "eff-fl1d2vadw",
       type: "TRIGGERED",
       timing: "DEPLOY",
       description: "Choose 1 rested enemy Unit. Deal 1 damage to it.",

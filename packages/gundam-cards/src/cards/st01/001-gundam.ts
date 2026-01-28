@@ -27,7 +27,7 @@ export const Gundam: UnitCardDefinition = {
   ],
   effects: [
     {
-      id: "eff-r5axhi6bj",
+      id: "eff-k3cadefrm",
       type: "CONSTANT",
       description: "During your turn, all your Units get AP+1.",
       restrictions: [],

@@ -17,7 +17,7 @@ export const SignsOfARevolution: CommandCardDefinition = {
   timing: "MAIN",
   effects: [
     {
-      id: "eff-6wdgg0adq",
+      id: "eff-b5q7jxbfm",
       type: "TRIGGERED",
       timing: "BURST",
       description: "Draw 1.",
@@ -30,7 +30,7 @@ export const SignsOfARevolution: CommandCardDefinition = {
       },
     },
     {
-      id: "eff-bd7q33tmz",
+      id: "eff-8rlnv9418",
       type: "CONSTANT",
       description: "Choose 1 rested enemy Unit. Deal 2 damage to it.",
       restrictions: [],

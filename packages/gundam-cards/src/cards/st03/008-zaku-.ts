@@ -21,7 +21,7 @@ export const Zaku: UnitCardDefinition = {
   linkRequirements: ["-"],
   effects: [
     {
-      id: "eff-cyusjmimo",
+      id: "eff-ypyul9hpi",
       type: "TRIGGERED",
       timing: "ATTACK",
       description: "This Unit gets AP+2 during this turn.",

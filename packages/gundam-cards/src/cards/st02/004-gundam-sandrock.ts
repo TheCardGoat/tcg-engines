@@ -21,7 +21,7 @@ export const GundamSandrock: UnitCardDefinition = {
   linkRequirements: ["quatre-raberba-winner"],
   effects: [
     {
-      id: "eff-96eiff29i",
+      id: "eff-ernwzqaj6",
       type: "CONSTANT",
       description: "-",
       restrictions: [],

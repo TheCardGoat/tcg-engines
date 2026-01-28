@@ -19,7 +19,7 @@ export const DearkaElthman: PilotCardDefinition = {
   hpModifier: 1,
   effects: [
     {
-      id: "eff-8y0f5i2wr",
+      id: "eff-4mexisil2",
       type: "TRIGGERED",
       timing: "BURST",
       description: "Add this card to your hand.",
@@ -31,7 +31,7 @@ export const DearkaElthman: PilotCardDefinition = {
       },
     },
     {
-      id: "eff-m9hlgyzlf",
+      id: "eff-s5p542nao",
       type: "TRIGGERED",
       timing: "WHEN_LINKED",
       description: "Discard 1. If you do, draw 1.",
@@ -39,8 +39,21 @@ export const DearkaElthman: PilotCardDefinition = {
       costs: [],
       conditions: [],
       action: {
-        type: "DISCARD",
-        value: 1,
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "DISCARD",
+            value: 1,
+          },
+          {
+            type: "CONDITIONAL",
+            conditions: [],
+            trueAction: {
+              type: "DRAW",
+              value: 1,
+            },
+          },
+        ],
       },
     },
   ],

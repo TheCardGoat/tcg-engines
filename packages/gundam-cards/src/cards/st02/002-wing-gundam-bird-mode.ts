@@ -21,7 +21,7 @@ export const WingGundamBirdMode: UnitCardDefinition = {
   linkRequirements: ["heero-yuy"],
   effects: [
     {
-      id: "eff-9c1xajwi3",
+      id: "eff-aza8zssex",
       type: "TRIGGERED",
       timing: "DEPLOY",
       description: "Place 1 EX Resource.",

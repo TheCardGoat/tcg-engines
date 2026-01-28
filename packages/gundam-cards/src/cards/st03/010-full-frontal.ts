@@ -19,7 +19,7 @@ export const FullFrontal: PilotCardDefinition = {
   hpModifier: 2,
   effects: [
     {
-      id: "eff-iueqgau71",
+      id: "eff-unsagg58k",
       type: "TRIGGERED",
       timing: "BURST",
       description: "Add this card to your hand.",
@@ -31,7 +31,7 @@ export const FullFrontal: PilotCardDefinition = {
       },
     },
     {
-      id: "eff-h7mrj87w5",
+      id: "eff-mfy8n17wl",
       type: "TRIGGERED",
       timing: "WHEN_PAIRED",
       description:

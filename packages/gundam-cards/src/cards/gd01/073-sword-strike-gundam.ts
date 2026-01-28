@@ -21,7 +21,7 @@ export const SwordStrikeGundam: UnitCardDefinition = {
   linkRequirements: ["(earth-alliance)-trait"],
   effects: [
     {
-      id: "eff-2owsjawtb",
+      id: "eff-p8bq5tfdd",
       type: "TRIGGERED",
       timing: "ATTACK",
       description:

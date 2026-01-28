@@ -21,7 +21,7 @@ export const GundamMaForm: UnitCardDefinition = {
   linkRequirements: ["amuro-ray"],
   effects: [
     {
-      id: "eff-irep3zy00",
+      id: "eff-cdp8lp97b",
       type: "TRIGGERED",
       timing: "WHEN_PAIRED",
       description: "Draw 1.",

@@ -21,7 +21,7 @@ export const Pisces: UnitCardDefinition = {
   linkRequirements: ["-"],
   effects: [
     {
-      id: "eff-rl955vshm",
+      id: "eff-ubmbs108o",
       type: "CONSTANT",
       description: "-",
       restrictions: [],

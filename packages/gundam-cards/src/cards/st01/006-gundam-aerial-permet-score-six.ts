@@ -21,7 +21,7 @@ export const GundamAerialPermetScoreSix: UnitCardDefinition = {
   linkRequirements: ["suletta-mercury"],
   effects: [
     {
-      id: "eff-r3xgvus6e",
+      id: "eff-e9056lhgi",
       type: "TRIGGERED",
       timing: "WHEN_PAIRED",
       description:
@@ -30,19 +30,28 @@ export const GundamAerialPermetScoreSix: UnitCardDefinition = {
       costs: [],
       conditions: [],
       action: {
-        type: "MODIFY_STATS",
-        attribute: "AP",
-        value: -3,
-        duration: "TURN",
-        target: {
-          controller: "OPPONENT",
-          cardType: "UNIT",
-          count: {
-            min: 1,
-            max: 1,
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "CUSTOM",
+            text: "5 or lower",
           },
-          filters: [],
-        },
+          {
+            type: "MODIFY_STATS",
+            attribute: "AP",
+            value: -3,
+            duration: "TURN",
+            target: {
+              controller: "OPPONENT",
+              cardType: "UNIT",
+              count: {
+                min: 1,
+                max: 1,
+              },
+              filters: [],
+            },
+          },
+        ],
       },
     },
   ],

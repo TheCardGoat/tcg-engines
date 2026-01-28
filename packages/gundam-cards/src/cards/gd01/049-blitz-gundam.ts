@@ -19,33 +19,38 @@ export const BlitzGundam: UnitCardDefinition = {
   zones: ["space", "earth"],
   traits: ["zaft"],
   linkRequirements: ["nicol-amarfi"],
-  keywords: [
-    {
-      keyword: "First-Strike",
-    },
-  ],
   effects: [
     {
-      id: "eff-ejxsxg6kz",
+      id: "eff-yfs09vbx8",
       type: "TRIGGERED",
       timing: "DEPLOY",
       description:
-        "Choose 1 of your (ZAFT) Units with 5 or more AP. It gains during this turn. (While this Unit is attacking, it deals damage before the enemy Unit.)",
+        "Choose 1 of your (ZAFT) Units with 5 or more AP. It gains <First Strike> during this turn. (While this Unit is attacking, it deals damage before the enemy Unit.)",
       restrictions: [],
       costs: [],
       conditions: [],
       action: {
-        type: "DAMAGE",
-        value: 0,
-        target: {
-          controller: "SELF",
-          cardType: "UNIT",
-          count: {
-            min: 1,
-            max: 1,
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "GAIN_KEYWORDS",
+            keywords: ["First Strike"],
+            duration: "TURN",
+            target: {
+              controller: "SELF",
+              cardType: "UNIT",
+              count: {
+                min: 1,
+                max: 1,
+              },
+              filters: [],
+            },
           },
-          filters: [],
-        },
+          {
+            type: "CUSTOM",
+            text: ")",
+          },
+        ],
       },
     },
   ],

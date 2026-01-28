@@ -20,7 +20,7 @@ export const NahelArgama: BaseCardDefinition_Structure = {
   traits: ["earth", "federation", "warship"],
   effects: [
     {
-      id: "eff-tivauztkl",
+      id: "eff-cnbao9bmw",
       type: "TRIGGERED",
       timing: "BURST",
       description: "Deploy this card.",
@@ -32,7 +32,7 @@ export const NahelArgama: BaseCardDefinition_Structure = {
       },
     },
     {
-      id: "eff-wzclas4xs",
+      id: "eff-3ybgoadai",
       type: "TRIGGERED",
       timing: "DEPLOY",
       description:
@@ -41,7 +41,19 @@ export const NahelArgama: BaseCardDefinition_Structure = {
       costs: [],
       conditions: [],
       action: {
-        type: "ADD_TO_HAND",
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "ADD_TO_HAND",
+          },
+          {
+            type: "CUSTOM",
+            text: "Then, choose 1 enemy Unit with 3 or less HP",
+          },
+          {
+            type: "REST",
+          },
+        ],
       },
     },
   ],

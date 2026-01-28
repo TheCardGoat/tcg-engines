@@ -21,7 +21,7 @@ export const Dopp: UnitCardDefinition = {
   linkRequirements: ["-"],
   effects: [
     {
-      id: "eff-xiipoeur9",
+      id: "eff-i5y9asxur",
       type: "TRIGGERED",
       timing: "DEPLOY",
       description:
@@ -30,8 +30,17 @@ export const Dopp: UnitCardDefinition = {
       costs: [],
       conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Look at the top card of your deck. Return it to the top or bottom of your deck.",
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "CUSTOM",
+            text: "Look at the top card of your deck",
+          },
+          {
+            type: "CUSTOM",
+            text: "Return it to the top or bottom of your deck",
+          },
+        ],
       },
     },
   ],

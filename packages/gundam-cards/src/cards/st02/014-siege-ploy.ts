@@ -17,7 +17,7 @@ export const SiegePloy: CommandCardDefinition = {
   timing: "MAIN",
   effects: [
     {
-      id: "eff-05wn5xw41",
+      id: "eff-opg593ka0",
       type: "TRIGGERED",
       timing: "BURST",
       description: "Activate this card's",
@@ -30,7 +30,7 @@ export const SiegePloy: CommandCardDefinition = {
       },
     },
     {
-      id: "eff-dq1z9a9ht",
+      id: "eff-zwatxyw2a",
       type: "CONSTANT",
       description: ".",
       restrictions: [],
@@ -41,18 +41,7 @@ export const SiegePloy: CommandCardDefinition = {
       },
     },
     {
-      id: "eff-z4xqxyqy2",
-      type: "CONSTANT",
-      description: "/",
-      restrictions: [],
-      conditions: [],
-      action: {
-        type: "CUSTOM",
-        text: "/",
-      },
-    },
-    {
-      id: "eff-91mdhvslq",
+      id: "eff-pd28ljx5m",
       type: "CONSTANT",
       description: "Choose 1 enemy Unit with 5 or less HP. Rest it.",
       restrictions: [],

@@ -19,33 +19,50 @@ export const UnicornGundam02BansheeDestroyMode: UnitCardDefinition = {
   zones: ["space", "earth"],
   traits: ["earth", "federation"],
   linkRequirements: ["marida-cruz"],
-  keywords: [
-    {
-      keyword: "First-Strike",
-    },
-  ],
   effects: [
     {
-      id: "eff-qyjtto6hc",
+      id: "eff-7ybchwya0",
       type: "TRIGGERED",
       timing: "ATTACK",
       description:
-        "Choose 12 cards from your trash. Return them to their owner&#039;s deck and shuffle it. If you do, set this Unit as active. It gains during this turn. (While this Unit is attacking, it deals damage before the enemy Unit.)",
+        "Choose 12 cards from your trash. Return them to their owner&#039;s deck and shuffle it. If you do, set this Unit as active. It gains <First Strike> during this turn. (While this Unit is attacking, it deals damage before the enemy Unit.)",
       restrictions: [],
       costs: [],
       conditions: [],
       action: {
-        type: "DAMAGE",
-        value: 0,
-        target: {
-          controller: "SELF",
-          count: {
-            min: 12,
-            max: 12,
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "CUSTOM",
+            text: "Return them to their owner&#039;s deck and shuffle it",
           },
-          filters: [],
-          zone: ["trashArea"],
-        },
+          {
+            type: "CONDITIONAL",
+            conditions: [],
+            trueAction: {
+              type: "CUSTOM",
+              text: "set this Unit as active",
+            },
+          },
+          {
+            type: "GAIN_KEYWORDS",
+            keywords: ["First Strike"],
+            duration: "TURN",
+            target: {
+              controller: "SELF",
+              count: {
+                min: 12,
+                max: 12,
+              },
+              filters: [],
+              zone: ["trashArea"],
+            },
+          },
+          {
+            type: "CUSTOM",
+            text: ")",
+          },
+        ],
       },
     },
   ],

@@ -21,7 +21,7 @@ export const Leo: UnitCardDefinition = {
   linkRequirements: ["(oz)-trait"],
   effects: [
     {
-      id: "eff-oovt4v2iv",
+      id: "eff-henb2klog",
       type: "CONSTANT",
       description: "-",
       restrictions: [],

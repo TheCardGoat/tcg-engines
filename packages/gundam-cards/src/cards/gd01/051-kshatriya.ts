@@ -21,7 +21,7 @@ export const Kshatriya: UnitCardDefinition = {
   linkRequirements: ["(cyber-newtype)-trait"],
   effects: [
     {
-      id: "eff-zpo87q6pi",
+      id: "eff-72rishlqn",
       type: "CONSTANT",
       description: "-",
       restrictions: [],

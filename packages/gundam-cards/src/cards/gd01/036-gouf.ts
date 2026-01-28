@@ -21,7 +21,7 @@ export const Gouf: UnitCardDefinition = {
   linkRequirements: ["-"],
   effects: [
     {
-      id: "eff-v9g7dsc99",
+      id: "eff-wefapsqca",
       type: "CONSTANT",
       description: "-",
       restrictions: [],

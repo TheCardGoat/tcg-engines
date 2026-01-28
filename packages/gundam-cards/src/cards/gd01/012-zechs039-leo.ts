@@ -21,7 +21,7 @@ export const Zechs039Leo: UnitCardDefinition = {
   linkRequirements: ["(oz)-trait"],
   effects: [
     {
-      id: "eff-gew4dzdra",
+      id: "eff-x6anxf1o3",
       type: "TRIGGERED",
       timing: "WHEN_PAIRED",
       description: "Choose 1 enemy Unit with 3 or less HP. Rest it.",

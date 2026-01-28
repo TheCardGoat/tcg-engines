@@ -21,7 +21,7 @@ export const Darilbalde: UnitCardDefinition = {
   linkRequirements: ["(academy)-trait"],
   effects: [
     {
-      id: "eff-37lq39976",
+      id: "eff-fp92881jy",
       type: "TRIGGERED",
       timing: "DEPLOY",
       description:

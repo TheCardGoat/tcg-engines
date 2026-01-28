@@ -21,7 +21,7 @@ export const GundamAerialRebuild: UnitCardDefinition = {
   linkRequirements: ["suletta-mercury"],
   effects: [
     {
-      id: "eff-wf42paqgh",
+      id: "eff-ytli9q0mp",
       type: "TRIGGERED",
       timing: "WHEN_PAIRED",
       description:
@@ -30,16 +30,25 @@ export const GundamAerialRebuild: UnitCardDefinition = {
       costs: [],
       conditions: [],
       action: {
-        type: "ADD_TO_HAND",
-        target: {
-          controller: "ANY",
-          cardType: "COMMAND",
-          count: {
-            min: 1,
-            max: 1,
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "CUSTOM",
+            text: "5 or lower from your trash",
           },
-          filters: [],
-        },
+          {
+            type: "ADD_TO_HAND",
+            target: {
+              controller: "ANY",
+              cardType: "COMMAND",
+              count: {
+                min: 1,
+                max: 1,
+              },
+              filters: [],
+            },
+          },
+        ],
       },
     },
   ],

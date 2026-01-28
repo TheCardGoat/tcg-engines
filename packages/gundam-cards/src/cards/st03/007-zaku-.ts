@@ -21,7 +21,7 @@ export const Zaku: UnitCardDefinition = {
   linkRequirements: ["-"],
   effects: [
     {
-      id: "eff-cehh3rkn8",
+      id: "eff-kiop3wlzz",
       type: "CONSTANT",
       description: "-",
       restrictions: [],
