@@ -17,15 +17,57 @@ export const StrikerPack: CommandCardDefinition = {
   timing: "MAIN",
   effects: [
     {
-      id: "st04-012-effect-1",
-      description:
-        "【Burst】 If you have no (Earth Alliance) Unit tokens in play, deploy 1 [Aile Strike Gundam]((Earth Alliance)･AP3･HP3･<Blocker>) Unit token. 【Main】If you have no (Earth Alliance) Unit tokens in play, deploy 1 [Sword Strike Gundam]((Earth Alliance)･AP4･HP2･<Blocker>) or 1 [Launcher Strike Gundam]((Earth Alliance)･AP2･HP4･<Blocker>) Unit token.",
+      id: "eff-21cpcsuyt",
       type: "TRIGGERED",
       timing: "BURST",
+      description:
+        "If you have no (Earth Alliance) Unit tokens in play, deploy 1 [Aile Strike Gundam]((Earth Alliance)･AP3･HP3･) Unit token.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "If you have no (Earth Alliance) Unit tokens in play, deploy 1 [Aile Strike Gundam]((Earth Alliance)･AP3･HP3･<Blocker>) Unit token. 【Main】If you have no (Earth Alliance) Unit tokens in play, deploy 1 [Sword Strike Gundam]((Earth Alliance)･AP4･HP2･<Blocker>) or 1 [Launcher Strike Gundam]((Earth Alliance)･AP2･HP4･<Blocker>) Unit token.",
+        type: "CONDITIONAL",
+        conditions: [
+          {
+            type: "STATE_CHECK",
+            text: "you have no (Earth Alliance) Unit tokens in play",
+          },
+        ],
+        trueAction: {
+          type: "DEPLOY",
+        },
       },
+    },
+    {
+      id: "eff-waub395wi",
+      type: "CONSTANT",
+      description:
+        "If you have no (Earth Alliance) Unit tokens in play, deploy 1 [Sword Strike Gundam]((Earth Alliance)･AP4･HP2･) or 1 [Launcher Strike Gundam]((Earth Alliance)･AP2･HP4･) Unit token.",
+      restrictions: [],
+      conditions: [],
+      action: {
+        type: "CONDITIONAL",
+        conditions: [
+          {
+            type: "STATE_CHECK",
+            text: "you have no (Earth Alliance) Unit tokens in play",
+          },
+        ],
+        trueAction: {
+          type: "DEPLOY",
+        },
+      },
+    },
+  ],
+  keywords: [
+    {
+      keyword: "Blocker",
+    },
+    {
+      keyword: "Blocker",
+    },
+    {
+      keyword: "Blocker",
     },
   ],
 };

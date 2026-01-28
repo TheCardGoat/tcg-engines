@@ -21,14 +21,30 @@ export const Zechs039Leo: UnitCardDefinition = {
   linkRequirements: ["(oz)-trait"],
   effects: [
     {
-      id: "gd01-012-effect-1",
-      description:
-        "【When Paired】 Choose 1 enemy Unit with 3 or less HP. Rest it.",
+      id: "eff-x6anxf1o3",
       type: "TRIGGERED",
       timing: "WHEN_PAIRED",
+      description: "Choose 1 enemy Unit with 3 or less HP. Rest it.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Choose 1 enemy Unit with 3 or less HP. Rest it.",
+        type: "REST",
+        target: {
+          controller: "OPPONENT",
+          cardType: "UNIT",
+          count: {
+            min: 1,
+            max: 1,
+          },
+          filters: [
+            {
+              type: "hp",
+              comparison: "lte",
+              value: 3,
+            },
+          ],
+        },
       },
     },
   ],

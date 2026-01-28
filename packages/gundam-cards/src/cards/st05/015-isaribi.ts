@@ -19,37 +19,60 @@ export const Isaribi: BaseCardDefinition_Structure = {
   traits: ["tekkadan", "warship"],
   effects: [
     {
-      id: "st05-015-effect-1",
-      description: "【Burst】 Deploy this card.",
+      id: "eff-305jk287s",
       type: "TRIGGERED",
       timing: "BURST",
+      description: "Deploy this card.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Deploy this card.",
+        type: "DEPLOY",
       },
     },
     {
-      id: "st05-015-effect-2",
-      description: "【Deploy】 Add 1 of your Shields to your hand.",
+      id: "eff-4oxqn98sw",
       type: "TRIGGERED",
       timing: "DEPLOY",
+      description: "Add 1 of your Shields to your hand.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Add 1 of your Shields to your hand.",
+        type: "ADD_TO_HAND",
       },
     },
     {
-      id: "st05-015-effect-3",
-      description:
-        "【Activate･Main】 Rest this Base：Choose 1 of your damaged Units. It gets AP+2 during this turn.",
+      id: "eff-gn52r826g",
       type: "ACTIVATED",
       timing: "MAIN",
+      description:
+        "Rest this Base:Choose 1 of your damaged Units. It gets AP+2 during this turn.",
+      restrictions: [],
+      costs: [
+        {
+          type: "REST_SELF",
+          amount: 1,
+        },
+      ],
+      conditions: [],
       action: {
         type: "MODIFY_STATS",
-        parameters: {
-          attribute: "ap",
-          modifier: 2,
-          duration: "turn",
+        attribute: "AP",
+        value: 2,
+        duration: "TURN",
+        target: {
+          controller: "SELF",
+          cardType: "UNIT",
+          count: {
+            min: 1,
+            max: 1,
+          },
+          filters: [
+            {
+              type: "damaged",
+            },
+          ],
         },
       },
     },

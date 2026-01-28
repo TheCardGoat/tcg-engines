@@ -20,35 +20,73 @@ export const Archangel: BaseCardDefinition_Structure = {
   traits: ["earth", "alliance", "warship"],
   effects: [
     {
-      id: "st04-015-effect-1",
-      description: "【Burst】 Deploy this card.",
+      id: "eff-w3o4u2p0n",
       type: "TRIGGERED",
       timing: "BURST",
+      description: "Deploy this card.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Deploy this card.",
+        type: "DEPLOY",
       },
     },
     {
-      id: "st04-015-effect-2",
-      description: "【Deploy】 Add 1 of your Shields to your hand.",
+      id: "eff-ecmnehczz",
       type: "TRIGGERED",
       timing: "DEPLOY",
+      description: "Add 1 of your Shields to your hand.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Add 1 of your Shields to your hand.",
+        type: "ADD_TO_HAND",
       },
     },
     {
-      id: "st04-015-effect-3",
-      description:
-        "【Activate･Main】 【Once per Turn】②：Choose 1 friendly Unit with <Blocker>. Set it as active. It can't attack during this turn.",
+      id: "eff-qa505iwx6",
       type: "ACTIVATED",
       timing: "MAIN",
+      description:
+        "【Once per Turn】②:Choose 1 friendly Unit with . Set it as active. It can't attack during this turn.",
+      restrictions: [
+        {
+          type: "ONCE_PER_TURN",
+        },
+      ],
+      costs: [
+        {
+          type: "ENERGY",
+          amount: 2,
+        },
+      ],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "【Once per Turn】②：Choose 1 friendly Unit with <Blocker>. Set it as active. It can't attack during this turn.",
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "STAND",
+            target: {
+              controller: "SELF",
+              cardType: "UNIT",
+              count: {
+                min: 1,
+                max: 1,
+              },
+              filters: [],
+            },
+          },
+          {
+            type: "CUSTOM",
+            text: "It can't attack during this turn",
+          },
+        ],
       },
+    },
+  ],
+  keywords: [
+    {
+      keyword: "Blocker",
     },
   ],
 };

@@ -19,14 +19,29 @@ export const YzakJule: PilotCardDefinition = {
   hpModifier: 1,
   effects: [
     {
-      id: "gd01-094-effect-1",
-      description:
-        "【Burst】 Add this card to your hand. 【Once per Turn】 When an enemy Link Unit is destroyed with damage while this Unit is attacking, draw 1.",
+      id: "eff-bjh186rgl",
       type: "TRIGGERED",
       timing: "BURST",
+      description:
+        "Add this card to your hand. 【Once per Turn】 When an enemy Link Unit is destroyed with damage while this Unit is attacking, draw 1.",
+      restrictions: [
+        {
+          type: "ONCE_PER_TURN",
+        },
+      ],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Add this card to your hand. 【Once per Turn】 When an enemy Link Unit is destroyed with damage while this Unit is attacking, draw 1.",
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "ADD_TO_HAND",
+          },
+          {
+            type: "CUSTOM",
+            text: "When an enemy Link Unit is destroyed with damage while this Unit is attacking, draw 1",
+          },
+        ],
       },
     },
   ],

@@ -27,16 +27,24 @@ export const DeltaPlus: UnitCardDefinition = {
   ],
   effects: [
     {
-      id: "gd01-006-effect-1",
-      description:
-        "<Repair 1> (At the end of your turn, this Unit recovers the specified number of HP.) 【During Link】This Unit gets HP+1.",
+      id: "eff-4xzbhbc9b",
       type: "CONSTANT",
+      description: "This Unit gets HP+1.",
+      restrictions: [],
+      conditions: [],
       action: {
         type: "MODIFY_STATS",
-        parameters: {
-          attribute: "hp",
-          modifier: 1,
-          duration: "turn",
+        attribute: "HP",
+        value: 1,
+        duration: "TURN",
+        target: {
+          controller: "SELF",
+          cardType: "UNIT",
+          filters: [],
+          count: {
+            min: 1,
+            max: 1,
+          },
         },
       },
     },

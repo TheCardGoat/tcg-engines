@@ -20,24 +20,40 @@ export const Kusanagi: BaseCardDefinition_Structure = {
   traits: ["triple", "ship", "alliance", "warship"],
   effects: [
     {
-      id: "gd01-129-effect-1",
-      description: "【Burst】 Deploy this card.",
+      id: "eff-2kbs94pun",
       type: "TRIGGERED",
       timing: "BURST",
+      description: "Deploy this card.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Deploy this card.",
+        type: "DEPLOY",
       },
     },
     {
-      id: "gd01-129-effect-2",
-      description:
-        "【Deploy】 Add 1 of your Shields to your hand. Then, choose 1 enemy Unit with 3 or less HP. Return it to its owner&#039;s hand.",
+      id: "eff-1abi364or",
       type: "TRIGGERED",
       timing: "DEPLOY",
+      description:
+        "Add 1 of your Shields to your hand. Then, choose 1 enemy Unit with 3 or less HP. Return it to its owner&#039;s hand.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Add 1 of your Shields to your hand. Then, choose 1 enemy Unit with 3 or less HP. Return it to its owner&#039;s hand.",
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "ADD_TO_HAND",
+          },
+          {
+            type: "CUSTOM",
+            text: "Then, choose 1 enemy Unit with 3 or less HP",
+          },
+          {
+            type: "ADD_TO_HAND",
+          },
+        ],
       },
     },
   ],

@@ -21,10 +21,12 @@ export const GundamAerial: UnitCardDefinition = {
   linkRequirements: ["suletta-mercury"],
   effects: [
     {
-      id: "gd01-070-effect-1",
+      id: "eff-e18bmsril",
+      type: "CONSTANT",
       description:
         "While there are 4 or more Command cards in your trash, this card in your hand gets cost -2.",
-      type: "CONSTANT",
+      restrictions: [],
+      conditions: [],
       action: {
         type: "CUSTOM",
         text: "While there are 4 or more Command cards in your trash, this card in your hand gets cost -2.",

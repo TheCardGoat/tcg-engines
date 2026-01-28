@@ -21,9 +21,11 @@ export const Pisces: UnitCardDefinition = {
   linkRequirements: ["-"],
   effects: [
     {
-      id: "gd01-021-effect-1",
-      description: "-",
+      id: "eff-ubmbs108o",
       type: "CONSTANT",
+      description: "-",
+      restrictions: [],
+      conditions: [],
       action: {
         type: "CUSTOM",
         text: "-",

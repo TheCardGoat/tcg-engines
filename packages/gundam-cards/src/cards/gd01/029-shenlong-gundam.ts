@@ -1,6 +1,6 @@
 import type { UnitCardDefinition } from "@tcg/gundam-types";
 
-export const ShenlongGundam_GD01_029: UnitCardDefinition = {
+export const ShenlongGundam: UnitCardDefinition = {
   id: "gd01-029",
   name: "Shenlong Gundam",
   cardNumber: "GD01-029",
@@ -30,14 +30,26 @@ export const ShenlongGundam_GD01_029: UnitCardDefinition = {
   ],
   effects: [
     {
-      id: "gd01-029-effect-1",
-      description:
-        "【Attack】 Choose 1 enemy Unit with <Blocker> that is Lv.3 or lower. Destroy it.",
+      id: "eff-nya62d9ug",
       type: "TRIGGERED",
       timing: "ATTACK",
+      description:
+        "Choose 1 enemy Unit with that is Lv.3 or lower. Destroy it.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Choose 1 enemy Unit with <Blocker> that is Lv.3 or lower. Destroy it.",
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "CUSTOM",
+            text: "3 or lower",
+          },
+          {
+            type: "CUSTOM",
+            text: "Destroy it",
+          },
+        ],
       },
     },
   ],

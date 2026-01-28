@@ -21,9 +21,11 @@ export const Gouf: UnitCardDefinition = {
   linkRequirements: ["-"],
   effects: [
     {
-      id: "gd01-036-effect-1",
-      description: "-",
+      id: "eff-wefapsqca",
       type: "CONSTANT",
+      description: "-",
+      restrictions: [],
+      conditions: [],
       action: {
         type: "CUSTOM",
         text: "-",

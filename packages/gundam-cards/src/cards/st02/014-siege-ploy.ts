@@ -17,14 +17,52 @@ export const SiegePloy: CommandCardDefinition = {
   timing: "MAIN",
   effects: [
     {
-      id: "st02-014-effect-1",
-      description:
-        "【Burst】 Activate this card's 【Main】. 【Main】/【Action】Choose 1 enemy Unit with 5 or less HP. Rest it.",
+      id: "eff-opg593ka0",
       type: "TRIGGERED",
       timing: "BURST",
+      description: "Activate this card's",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
         type: "CUSTOM",
-        text: "Activate this card's 【Main】. 【Main】/【Action】Choose 1 enemy Unit with 5 or less HP. Rest it.",
+        text: "Activate this card's",
+      },
+    },
+    {
+      id: "eff-zwatxyw2a",
+      type: "CONSTANT",
+      description: ".",
+      restrictions: [],
+      conditions: [],
+      action: {
+        type: "CUSTOM",
+        text: ".",
+      },
+    },
+    {
+      id: "eff-pd28ljx5m",
+      type: "CONSTANT",
+      description: "Choose 1 enemy Unit with 5 or less HP. Rest it.",
+      restrictions: [],
+      conditions: [],
+      action: {
+        type: "REST",
+        target: {
+          controller: "OPPONENT",
+          cardType: "UNIT",
+          count: {
+            min: 1,
+            max: 1,
+          },
+          filters: [
+            {
+              type: "hp",
+              comparison: "lte",
+              value: 5,
+            },
+          ],
+        },
       },
     },
   ],

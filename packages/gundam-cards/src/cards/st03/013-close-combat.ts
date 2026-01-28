@@ -17,19 +17,46 @@ export const CloseCombat: CommandCardDefinition = {
   timing: "MAIN",
   effects: [
     {
-      id: "st03-013-effect-1",
-      description:
-        "【Burst】 Activate this card's 【Main】. 【Main】/【Action】Choose 1 enemy Unit. Deal 2 damage to it.",
+      id: "eff-ia170hyl2",
       type: "TRIGGERED",
       timing: "BURST",
+      description: "Activate this card's",
+      restrictions: [],
+      costs: [],
+      conditions: [],
+      action: {
+        type: "CUSTOM",
+        text: "Activate this card's",
+      },
+    },
+    {
+      id: "eff-3t3v5l3fr",
+      type: "CONSTANT",
+      description: ".",
+      restrictions: [],
+      conditions: [],
+      action: {
+        type: "CUSTOM",
+        text: ".",
+      },
+    },
+    {
+      id: "eff-um174x7qo",
+      type: "CONSTANT",
+      description: "Choose 1 enemy Unit. Deal 2 damage to it.",
+      restrictions: [],
+      conditions: [],
       action: {
         type: "DAMAGE",
-        parameters: {
-          target: {
-            type: "unknown",
-            rawText: "it",
+        value: 2,
+        target: {
+          controller: "OPPONENT",
+          cardType: "UNIT",
+          count: {
+            min: 1,
+            max: 1,
           },
-          amount: 2,
+          filters: [],
         },
       },
     },

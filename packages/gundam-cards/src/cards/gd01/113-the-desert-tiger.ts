@@ -23,17 +23,35 @@ export const TheDesertTiger: CommandCardDefinition = {
   },
   effects: [
     {
-      id: "gd01-113-effect-1",
-      description:
-        "【Main】/【Action】Choose 1 friendly (ZAFT) Unit. It gets AP+3 during this turn. 【Pilot】[Andrew Waldfeld]",
+      id: "eff-p3g2qf6aj",
       type: "CONSTANT",
+      description:
+        "Choose 1 friendly (ZAFT) Unit. It gets AP+3 during this turn. 【Pilot】[Andrew Waldfeld]",
+      restrictions: [],
+      conditions: [],
       action: {
-        type: "MODIFY_STATS",
-        parameters: {
-          attribute: "ap",
-          modifier: 3,
-          duration: "turn",
-        },
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "MODIFY_STATS",
+            attribute: "AP",
+            value: 3,
+            duration: "TURN",
+            target: {
+              controller: "SELF",
+              cardType: "UNIT",
+              count: {
+                min: 1,
+                max: 1,
+              },
+              filters: [],
+            },
+          },
+          {
+            type: "CUSTOM",
+            text: "【Pilot】[Andrew Waldfeld]",
+          },
+        ],
       },
     },
   ],

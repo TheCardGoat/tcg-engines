@@ -30,19 +30,30 @@ export const BigZam: UnitCardDefinition = {
   ],
   effects: [
     {
-      id: "gd01-027-effect-1",
-      description:
-        "【Deploy】 If there are 10 or more (Zeon)/(Neo Zeon) Unit cards in your trash, deal 4 damage to all Units with <Blocker>.",
+      id: "eff-45olp6w68",
       type: "TRIGGERED",
       timing: "DEPLOY",
+      description:
+        "If there are 10 or more (Zeon)/(Neo Zeon) Unit cards in your trash, deal 4 damage to all Units with .",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "DAMAGE",
-        parameters: {
-          target: {
-            type: "unknown",
-            rawText: "all Units with <Blocker>",
+        type: "CONDITIONAL",
+        conditions: [
+          {
+            type: "STATE_CHECK",
+            text: "there are 10 or more (Zeon)/(Neo Zeon) Unit cards in your trash",
           },
-          amount: 4,
+        ],
+        trueAction: {
+          type: "DAMAGE",
+          value: 4,
+          target: {
+            controller: "ANY",
+            cardType: "UNIT",
+            filters: [],
+          },
         },
       },
     },

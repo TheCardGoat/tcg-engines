@@ -23,13 +23,38 @@ export const TheMagicBulletOfDusk: CommandCardDefinition = {
   },
   effects: [
     {
-      id: "st04-014-effect-1",
-      description:
-        "【Main】/【Action】Choose 1 friendly Unit that is Lv.2 or lower. It gains <First Strike> during this turn. (While this Unit is attacking, it deals damage before the enemy Unit.) 【Pilot】[Miguel Ayman]",
+      id: "eff-e7snbjo21",
       type: "CONSTANT",
+      description:
+        "Choose 1 friendly Unit that is Lv.2 or lower. It gains <First Strike> during this turn. (While this Unit is attacking, it deals damage before the enemy Unit.) 【Pilot】[Miguel Ayman]",
+      restrictions: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "【Main】/【Action】Choose 1 friendly Unit that is Lv.2 or lower. It gains <First Strike> during this turn. (While this Unit is attacking, it deals damage before the enemy Unit.) 【Pilot】[Miguel Ayman]",
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "CUSTOM",
+            text: "2 or lower",
+          },
+          {
+            type: "GAIN_KEYWORDS",
+            keywords: ["First Strike"],
+            duration: "TURN",
+            target: {
+              controller: "SELF",
+              cardType: "UNIT",
+              count: {
+                min: 1,
+                max: 1,
+              },
+              filters: [],
+            },
+          },
+          {
+            type: "CUSTOM",
+            text: ") 【Pilot】[Miguel Ayman]",
+          },
+        ],
       },
     },
   ],

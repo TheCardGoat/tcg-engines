@@ -23,17 +23,35 @@ export const Indignation: CommandCardDefinition = {
   },
   effects: [
     {
-      id: "st03-012-effect-1",
-      description:
-        "【Main】/【Action】Choose 1 friendly Unit. It gets AP+2 during this turn. 【Pilot】[Angelo Sauper]",
+      id: "eff-evy8n4q0d",
       type: "CONSTANT",
+      description:
+        "Choose 1 friendly Unit. It gets AP+2 during this turn. 【Pilot】[Angelo Sauper]",
+      restrictions: [],
+      conditions: [],
       action: {
-        type: "MODIFY_STATS",
-        parameters: {
-          attribute: "ap",
-          modifier: 2,
-          duration: "turn",
-        },
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "MODIFY_STATS",
+            attribute: "AP",
+            value: 2,
+            duration: "TURN",
+            target: {
+              controller: "SELF",
+              cardType: "UNIT",
+              count: {
+                min: 1,
+                max: 1,
+              },
+              filters: [],
+            },
+          },
+          {
+            type: "CUSTOM",
+            text: "【Pilot】[Angelo Sauper]",
+          },
+        ],
       },
     },
   ],

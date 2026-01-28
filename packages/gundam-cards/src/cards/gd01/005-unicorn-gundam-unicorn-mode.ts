@@ -21,14 +21,25 @@ export const UnicornGundamUnicornMode: UnitCardDefinition = {
   linkRequirements: ["banagher-links"],
   effects: [
     {
-      id: "gd01-005-effect-1",
-      description:
-        "【Destroyed】 Return this Unit&#039;s paired Pilot to its owner&#039;s hand. Then, discard 1.",
+      id: "eff-tdx01kygr",
       type: "TRIGGERED",
       timing: "DESTROYED",
+      description:
+        "Return this Unit&#039;s paired Pilot to its owner&#039;s hand. Then, discard 1.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Return this Unit&#039;s paired Pilot to its owner&#039;s hand. Then, discard 1.",
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "ADD_TO_HAND",
+          },
+          {
+            type: "CUSTOM",
+            text: "Then, discard 1",
+          },
+        ],
       },
     },
   ],

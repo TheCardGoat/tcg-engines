@@ -30,14 +30,32 @@ export const BusterGundam: UnitCardDefinition = {
   ],
   effects: [
     {
-      id: "gd01-046-effect-1",
-      description:
-        "【Activate･Main】 <Support 3> (Rest this Unit. 1 other friendly Unit gets AP+(specified amount) during this turn.) 【During Pair･(Coordinator) Pilot】【Once per Turn】When you use this Unit&#039;s <Support> to increase a (ZAFT) Unit&#039;s AP, set this Unit as active.",
+      id: "eff-4gyd3fh2u",
       type: "ACTIVATED",
       timing: "MAIN",
+      description: "during this turn.)",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
         type: "CUSTOM",
-        text: "<Support 3> (Rest this Unit. 1 other friendly Unit gets AP+(specified amount) during this turn.) 【During Pair･(Coordinator) Pilot】【Once per Turn】When you use this Unit&#039;s <Support> to increase a (ZAFT) Unit&#039;s AP, set this Unit as active.",
+        text: "during this turn.)",
+      },
+    },
+    {
+      id: "eff-h1okr7ti7",
+      type: "CONSTANT",
+      description:
+        "【Once per Turn】When you use this Unit&#039;s to increase a (ZAFT) Unit&#039;s AP, set this Unit as active.",
+      restrictions: [
+        {
+          type: "ONCE_PER_TURN",
+        },
+      ],
+      conditions: [],
+      action: {
+        type: "CUSTOM",
+        text: "When you use this Unit&#039;s to increase a (ZAFT) Unit&#039;s AP, set this Unit as active.",
       },
     },
   ],

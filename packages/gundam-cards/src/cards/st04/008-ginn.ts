@@ -21,9 +21,11 @@ export const Ginn: UnitCardDefinition = {
   linkRequirements: ["-"],
   effects: [
     {
-      id: "st04-008-effect-1",
-      description: "-",
+      id: "eff-vja7m4aty",
       type: "CONSTANT",
+      description: "-",
+      restrictions: [],
+      conditions: [],
       action: {
         type: "CUSTOM",
         text: "-",

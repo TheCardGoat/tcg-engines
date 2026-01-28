@@ -19,14 +19,29 @@ export const AthrunZala: PilotCardDefinition = {
   hpModifier: 2,
   effects: [
     {
-      id: "st04-011-effect-1",
-      description:
-        "【Burst】 Add this card to your hand. 【When Linked】During this turn, this Unit may choose an active enemy Unit that is Lv.5 or lower as its attack target.",
+      id: "eff-8l37j27l7",
       type: "TRIGGERED",
       timing: "BURST",
+      description: "Add this card to your hand.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
+      action: {
+        type: "ADD_TO_HAND",
+      },
+    },
+    {
+      id: "eff-8g1e1mcs1",
+      type: "TRIGGERED",
+      timing: "WHEN_LINKED",
+      description:
+        "During this turn, this Unit may choose an active enemy Unit that is Lv.5 or lower as its attack target.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
         type: "CUSTOM",
-        text: "Add this card to your hand. 【When Linked】During this turn, this Unit may choose an active enemy Unit that is Lv.5 or lower as its attack target.",
+        text: "During this turn, this Unit may choose an active enemy Unit that is Lv.5 or lower as its attack target.",
       },
     },
   ],

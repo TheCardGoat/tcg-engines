@@ -26,18 +26,37 @@ export const Mcgillis039SchwalbeGraze: UnitCardDefinition = {
   ],
   effects: [
     {
-      id: "st05-007-effect-1",
-      description:
-        "【When Paired】 Choose 1 enemy Unit that is Lv.3 or lower. It gets AP-2 during this turn.",
+      id: "eff-d25vpjk0o",
       type: "TRIGGERED",
       timing: "WHEN_PAIRED",
+      description:
+        "Choose 1 enemy Unit that is Lv.3 or lower. It gets AP-2 during this turn.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "MODIFY_STATS",
-        parameters: {
-          attribute: "ap",
-          modifier: -2,
-          duration: "turn",
-        },
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "CUSTOM",
+            text: "3 or lower",
+          },
+          {
+            type: "MODIFY_STATS",
+            attribute: "AP",
+            value: -2,
+            duration: "TURN",
+            target: {
+              controller: "OPPONENT",
+              cardType: "UNIT",
+              count: {
+                min: 1,
+                max: 1,
+              },
+              filters: [],
+            },
+          },
+        ],
       },
     },
   ],

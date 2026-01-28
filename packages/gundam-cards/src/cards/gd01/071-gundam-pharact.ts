@@ -21,17 +21,26 @@ export const GundamPharact: UnitCardDefinition = {
   linkRequirements: ["(academy)-trait"],
   effects: [
     {
-      id: "gd01-071-effect-1",
-      description:
-        "【Attack】 Choose 1 enemy Unit. It gets AP-2 during this battle.",
+      id: "eff-mtjon43od",
       type: "TRIGGERED",
       timing: "ATTACK",
+      description: "Choose 1 enemy Unit. It gets AP-2 during this battle.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
         type: "MODIFY_STATS",
-        parameters: {
-          attribute: "ap",
-          modifier: -2,
-          duration: "turn",
+        attribute: "AP",
+        value: -2,
+        duration: "TURN",
+        target: {
+          controller: "OPPONENT",
+          cardType: "UNIT",
+          count: {
+            min: 1,
+            max: 1,
+          },
+          filters: [],
         },
       },
     },

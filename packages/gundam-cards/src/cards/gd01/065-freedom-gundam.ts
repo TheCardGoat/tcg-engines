@@ -26,18 +26,30 @@ export const FreedomGundam: UnitCardDefinition = {
   ],
   effects: [
     {
-      id: "gd01-065-effect-1",
-      description:
-        "【During Pair】 【Once per Turn】When you pair a Pilot with this Unit or one of your white Units, choose 1 enemy Unit. It gets AP-2 during this turn.",
+      id: "eff-9wd80sbr6",
       type: "CONSTANT",
-      conditions: ["DURING_PAIR"],
-      action: {
-        type: "MODIFY_STATS",
-        parameters: {
-          attribute: "ap",
-          modifier: -2,
-          duration: "turn",
+      description:
+        "【Once per Turn】When you pair a Pilot with this Unit or one of your white Units, choose 1 enemy Unit. It gets AP-2 during this turn.",
+      restrictions: [
+        {
+          type: "ONCE_PER_TURN",
         },
+      ],
+      conditions: [],
+      action: {
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "CUSTOM",
+            text: "When you pair a Pilot with this Unit or one of your white Units, choose 1 enemy Unit",
+          },
+          {
+            type: "MODIFY_STATS",
+            attribute: "AP",
+            value: -2,
+            duration: "TURN",
+          },
+        ],
       },
     },
   ],

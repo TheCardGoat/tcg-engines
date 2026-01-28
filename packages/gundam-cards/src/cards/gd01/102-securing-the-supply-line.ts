@@ -17,17 +17,18 @@ export const SecuringTheSupplyLine: CommandCardDefinition = {
   timing: "MAIN",
   effects: [
     {
-      id: "gd01-102-effect-1",
-      description:
-        "【Main】All friendly Units that are Lv.4 or lower recover 2 HP.",
+      id: "eff-5zh2vfpie",
       type: "CONSTANT",
+      description: "All friendly Units that are Lv.4 or lower recover 2 HP.",
+      restrictions: [],
+      conditions: [],
       action: {
         type: "HEAL",
-        parameters: {
-          target: {
-            type: "self",
-          },
-          amount: 2,
+        amount: 2,
+        target: {
+          controller: "SELF",
+          cardType: "UNIT",
+          filters: [],
         },
       },
     },

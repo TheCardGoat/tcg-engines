@@ -19,21 +19,38 @@ export const Gfighter: UnitCardDefinition = {
   zones: ["space", "earth"],
   traits: ["earth", "federation", "white", "base", "team"],
   linkRequirements: ["(white-base-team)-trait"],
-  keywords: [
-    {
-      keyword: "High-Maneuver",
-    },
-  ],
   effects: [
     {
-      id: "gd01-009-effect-1",
-      description:
-        "【Deploy】 Choose 1 of your (White Base Team) Units. It gains <High-Maneuver> during this turn. (This Unit can&#039;t be blocked.)",
+      id: "eff-hdcz9kq48",
       type: "TRIGGERED",
       timing: "DEPLOY",
+      description:
+        "Choose 1 of your (White Base Team) Units. It gains <High-Maneuver> during this turn. (This Unit can&#039;t be blocked.)",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Choose 1 of your (White Base Team) Units. It gains <High-Maneuver> during this turn. (This Unit can&#039;t be blocked.)",
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "GAIN_KEYWORDS",
+            keywords: ["High-Maneuver"],
+            duration: "TURN",
+            target: {
+              controller: "SELF",
+              cardType: "UNIT",
+              count: {
+                min: 1,
+                max: 1,
+              },
+              filters: [],
+            },
+          },
+          {
+            type: "CUSTOM",
+            text: ")",
+          },
+        ],
       },
     },
   ],

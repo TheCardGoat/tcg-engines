@@ -7,7 +7,11 @@
 import type { CardDefinition } from "@tcg/gundam-types";
 import { mkdir, writeFile } from "fs/promises";
 import { dirname, join } from "path";
-import { generateCardFile, generateFilename } from "./card-generator";
+import {
+  generateCardFile,
+  generateFilename,
+  generateVariableName,
+} from "./card-generator";
 
 /**
  * Saves a card definition to a TypeScript file
@@ -45,11 +49,27 @@ export async function generateSetIndex(
   const setDir = join(baseDir, setCode.toLowerCase());
   const indexPath = join(setDir, "index.ts");
 
+  // First pass: Count occurrences of each variable name to detect conflicts
+  const nameCounts = new Map<string, number>();
+  for (const card of cards) {
+    const variableName = generateVariableName(card.name);
+    nameCounts.set(variableName, (nameCounts.get(variableName) || 0) + 1);
+  }
+
   // Generate exports
   const exports = cards
     .map((card) => {
       const filename = generateFilename(card).replace(".ts", "");
-      const variableName = generateVariableName(card.name);
+      let variableName = generateVariableName(card.name);
+      const originalVarName = variableName;
+
+      // If name is used multiple times, append card number to ensure uniqueness
+      if ((nameCounts.get(variableName) || 0) > 1) {
+        // e.g. Zaku_ST03_008
+        variableName = `${variableName}_${card.cardNumber.replace(/-/g, "_")}`;
+        return `export { ${originalVarName} as ${variableName} } from "./${filename}";`;
+      }
+
       return `export { ${variableName} } from "./${filename}";`;
     })
     .join("\n");
@@ -92,17 +112,4 @@ ${exports}
 
   await writeFile(indexPath, content, "utf-8");
   console.log(`📝 Generated master index: ${indexPath}`);
-}
-
-function generateVariableName(name: string): string {
-  return name
-    .replace(/[^a-zA-Z0-9\s]/g, "")
-    .split(/\s+/)
-    .map((word, index) => {
-      if (index === 0) {
-        return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-      }
-      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-    })
-    .join("");
 }

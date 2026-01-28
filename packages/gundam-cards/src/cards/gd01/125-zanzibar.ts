@@ -20,24 +20,37 @@ export const Zanzibar: BaseCardDefinition_Structure = {
   traits: ["zeon", "warship"],
   effects: [
     {
-      id: "gd01-125-effect-1",
-      description: "【Burst】 Deploy this card.",
+      id: "eff-0p5vtl6n4",
       type: "TRIGGERED",
       timing: "BURST",
+      description: "Deploy this card.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Deploy this card.",
+        type: "DEPLOY",
       },
     },
     {
-      id: "gd01-125-effect-2",
-      description:
-        "【Deploy】 Add 1 of your Shields to your hand. Then, if it is your turn, you may deploy 1 (Zeon) Unit card that is Lv.4 or lower from your hand.",
+      id: "eff-v2frzccsl",
       type: "TRIGGERED",
       timing: "DEPLOY",
+      description:
+        "Add 1 of your Shields to your hand. Then, if it is your turn, you may deploy 1 (Zeon) Unit card that is Lv.4 or lower from your hand.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Add 1 of your Shields to your hand. Then, if it is your turn, you may deploy 1 (Zeon) Unit card that is Lv.4 or lower from your hand.",
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "ADD_TO_HAND",
+          },
+          {
+            type: "CUSTOM",
+            text: "4 or lower from your hand",
+          },
+        ],
       },
     },
   ],

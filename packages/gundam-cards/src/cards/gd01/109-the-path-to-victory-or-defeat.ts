@@ -17,13 +17,27 @@ export const ThePathToVictoryOrDefeat: CommandCardDefinition = {
   timing: "MAIN",
   effects: [
     {
-      id: "gd01-109-effect-1",
-      description:
-        "【Main】Look at the top 5 cards of your deck. You may reveal 1 (Operation Meteor)/(G Team) Unit card/Pilot card among them and add it to your hand. Return the remaining cards randomly to the bottom of your deck.",
+      id: "eff-63bx3r5ka",
       type: "CONSTANT",
+      description:
+        "Look at the top 5 cards of your deck. You may reveal 1 (Operation Meteor)/(G Team) Unit card/Pilot card among them and add it to your hand. Return the remaining cards randomly to the bottom of your deck.",
+      restrictions: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "【Main】Look at the top 5 cards of your deck. You may reveal 1 (Operation Meteor)/(G Team) Unit card/Pilot card among them and add it to your hand. Return the remaining cards randomly to the bottom of your deck.",
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "CUSTOM",
+            text: "Look at the top 5 cards of your deck",
+          },
+          {
+            type: "ADD_TO_HAND",
+          },
+          {
+            type: "CUSTOM",
+            text: "Return the remaining cards randomly to the bottom of your deck",
+          },
+        ],
       },
     },
   ],

@@ -23,17 +23,39 @@ export const IronfistedDiscipline: CommandCardDefinition = {
   },
   effects: [
     {
-      id: "gd01-119-effect-1",
-      description:
-        "【Main】/【Action】Choose 1 enemy Unit that is Lv.4 or lower. It gets AP-2 during this turn. 【Pilot】[Chuatury Panlunch]",
+      id: "eff-mmcr7eosh",
       type: "CONSTANT",
+      description:
+        "Choose 1 enemy Unit that is Lv.4 or lower. It gets AP-2 during this turn. 【Pilot】[Chuatury Panlunch]",
+      restrictions: [],
+      conditions: [],
       action: {
-        type: "MODIFY_STATS",
-        parameters: {
-          attribute: "ap",
-          modifier: -2,
-          duration: "turn",
-        },
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "CUSTOM",
+            text: "4 or lower",
+          },
+          {
+            type: "MODIFY_STATS",
+            attribute: "AP",
+            value: -2,
+            duration: "TURN",
+            target: {
+              controller: "OPPONENT",
+              cardType: "UNIT",
+              count: {
+                min: 1,
+                max: 1,
+              },
+              filters: [],
+            },
+          },
+          {
+            type: "CUSTOM",
+            text: "【Pilot】[Chuatury Panlunch]",
+          },
+        ],
       },
     },
   ],

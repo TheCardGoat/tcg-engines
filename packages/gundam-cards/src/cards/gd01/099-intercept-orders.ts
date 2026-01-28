@@ -17,14 +17,55 @@ export const InterceptOrders: CommandCardDefinition = {
   timing: "MAIN",
   effects: [
     {
-      id: "gd01-099-effect-1",
-      description:
-        "【Burst】 Choose 1 enemy Unit with 5 or less HP. Rest it. 【Main】/【Action】Choose 1 to 2 enemy Units with 3 or less HP. Rest them.",
+      id: "eff-5katwx918",
       type: "TRIGGERED",
       timing: "BURST",
+      description: "Choose 1 enemy Unit with 5 or less HP. Rest it.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Choose 1 enemy Unit with 5 or less HP. Rest it. 【Main】/【Action】Choose 1 to 2 enemy Units with 3 or less HP. Rest them.",
+        type: "REST",
+        target: {
+          controller: "OPPONENT",
+          cardType: "UNIT",
+          count: {
+            min: 1,
+            max: 1,
+          },
+          filters: [
+            {
+              type: "hp",
+              comparison: "lte",
+              value: 5,
+            },
+          ],
+        },
+      },
+    },
+    {
+      id: "eff-6t4ezdhnu",
+      type: "CONSTANT",
+      description: "Choose 1 to 2 enemy Units with 3 or less HP. Rest them.",
+      restrictions: [],
+      conditions: [],
+      action: {
+        type: "REST",
+        target: {
+          controller: "OPPONENT",
+          cardType: "UNIT",
+          count: {
+            min: 1,
+            max: 1,
+          },
+          filters: [
+            {
+              type: "hp",
+              comparison: "lte",
+              value: 3,
+            },
+          ],
+        },
       },
     },
   ],

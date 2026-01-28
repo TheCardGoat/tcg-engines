@@ -21,14 +21,30 @@ export const DuelGundamAssaultShroud: UnitCardDefinition = {
   linkRequirements: ["yzak-jule"],
   effects: [
     {
-      id: "gd01-045-effect-1",
-      description:
-        "【When Paired】 Look at the top 3 cards of your deck. You may deploy 1 (ZAFT) Unit card that is Lv.4 or lower among them. Return the remaining cards randomly to the bottom of your deck.",
+      id: "eff-f8zfy8smo",
       type: "TRIGGERED",
       timing: "WHEN_PAIRED",
+      description:
+        "Look at the top 3 cards of your deck. You may deploy 1 (ZAFT) Unit card that is Lv.4 or lower among them. Return the remaining cards randomly to the bottom of your deck.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Look at the top 3 cards of your deck. You may deploy 1 (ZAFT) Unit card that is Lv.4 or lower among them. Return the remaining cards randomly to the bottom of your deck.",
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "CUSTOM",
+            text: "Look at the top 3 cards of your deck",
+          },
+          {
+            type: "CUSTOM",
+            text: "4 or lower among them",
+          },
+          {
+            type: "CUSTOM",
+            text: "Return the remaining cards randomly to the bottom of your deck",
+          },
+        ],
       },
     },
   ],

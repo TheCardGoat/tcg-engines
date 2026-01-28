@@ -20,37 +20,56 @@ export const Vesalius: BaseCardDefinition_Structure = {
   traits: ["zaft", "warship"],
   effects: [
     {
-      id: "st04-016-effect-1",
-      description: "【Burst】 Deploy this card.",
+      id: "eff-5ur4gh1mt",
       type: "TRIGGERED",
       timing: "BURST",
+      description: "Deploy this card.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Deploy this card.",
+        type: "DEPLOY",
       },
     },
     {
-      id: "st04-016-effect-2",
-      description: "【Deploy】 Add 1 of your Shields to your hand.",
+      id: "eff-xzkac8aa5",
       type: "TRIGGERED",
       timing: "DEPLOY",
+      description: "Add 1 of your Shields to your hand.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Add 1 of your Shields to your hand.",
+        type: "ADD_TO_HAND",
       },
     },
     {
-      id: "st04-016-effect-3",
-      description:
-        "【Activate･Main】 Rest this Base：Choose 1 friendly Unit. It gets AP+1 during this turn.",
+      id: "eff-tjcrjkc25",
       type: "ACTIVATED",
       timing: "MAIN",
+      description:
+        "Rest this Base:Choose 1 friendly Unit. It gets AP+1 during this turn.",
+      restrictions: [],
+      costs: [
+        {
+          type: "REST_SELF",
+          amount: 1,
+        },
+      ],
+      conditions: [],
       action: {
         type: "MODIFY_STATS",
-        parameters: {
-          attribute: "ap",
-          modifier: 1,
-          duration: "turn",
+        attribute: "AP",
+        value: 1,
+        duration: "TURN",
+        target: {
+          controller: "SELF",
+          cardType: "UNIT",
+          count: {
+            min: 1,
+            max: 1,
+          },
+          filters: [],
         },
       },
     },

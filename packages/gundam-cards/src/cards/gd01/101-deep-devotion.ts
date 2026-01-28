@@ -23,18 +23,33 @@ export const DeepDevotion: CommandCardDefinition = {
   },
   effects: [
     {
-      id: "gd01-101-effect-1",
-      description:
-        "【Main】/【Action】Choose 1 friendly Link Unit. It recovers 3 HP. 【Pilot】[Lucrezia Noin]",
+      id: "eff-8mi7tr9q5",
       type: "CONSTANT",
+      description:
+        "Choose 1 friendly Link Unit. It recovers 3 HP. 【Pilot】[Lucrezia Noin]",
+      restrictions: [],
+      conditions: [],
       action: {
-        type: "HEAL",
-        parameters: {
-          target: {
-            type: "self",
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "HEAL",
+            amount: 3,
+            target: {
+              controller: "SELF",
+              cardType: "UNIT",
+              count: {
+                min: 1,
+                max: 1,
+              },
+              filters: [],
+            },
           },
-          amount: 3,
-        },
+          {
+            type: "CUSTOM",
+            text: "【Pilot】[Lucrezia Noin]",
+          },
+        ],
       },
     },
   ],

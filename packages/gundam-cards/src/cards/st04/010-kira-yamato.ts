@@ -19,27 +19,38 @@ export const KiraYamato: PilotCardDefinition = {
   hpModifier: 1,
   effects: [
     {
-      id: "st04-010-effect-1",
-      description: "【Burst】 Add this card to your hand.",
+      id: "eff-p8z8emm23",
       type: "TRIGGERED",
       timing: "BURST",
+      description: "Add this card to your hand.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Add this card to your hand.",
+        type: "ADD_TO_HAND",
       },
     },
     {
-      id: "st04-010-effect-2",
-      description:
-        "【Attack】 Choose 1 enemy Unit. It gets AP-2 during this battle.",
+      id: "eff-r0k66hcf0",
       type: "TRIGGERED",
       timing: "ATTACK",
+      description: "Choose 1 enemy Unit. It gets AP-2 during this battle.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
         type: "MODIFY_STATS",
-        parameters: {
-          attribute: "ap",
-          modifier: -2,
-          duration: "turn",
+        attribute: "AP",
+        value: -2,
+        duration: "TURN",
+        target: {
+          controller: "OPPONENT",
+          cardType: "UNIT",
+          count: {
+            min: 1,
+            max: 1,
+          },
+          filters: [],
         },
       },
     },

@@ -21,9 +21,11 @@ export const Guncannon: UnitCardDefinition = {
   linkRequirements: ["kai-shiden"],
   effects: [
     {
-      id: "st01-003-effect-1",
-      description: "-",
+      id: "eff-ttrdcv2zx",
       type: "CONSTANT",
+      description: "-",
+      restrictions: [],
+      conditions: [],
       action: {
         type: "CUSTOM",
         text: "-",

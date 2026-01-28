@@ -19,24 +19,46 @@ export const McgillisFareed: PilotCardDefinition = {
   hpModifier: 1,
   effects: [
     {
-      id: "st05-012-effect-1",
-      description: "【Burst】 Add this card to your hand.",
+      id: "eff-s12zi970v",
       type: "TRIGGERED",
       timing: "BURST",
+      description: "Add this card to your hand.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Add this card to your hand.",
+        type: "ADD_TO_HAND",
       },
     },
     {
-      id: "st05-012-effect-2",
-      description:
-        "【When Paired】 If you have 2 or more other (Gjallarhorn)/(Tekkadan) Units in play, choose 1 enemy Unit with 3 or less HP. Rest it.",
+      id: "eff-6rogtqzxc",
       type: "TRIGGERED",
       timing: "WHEN_PAIRED",
+      description:
+        "If you have 2 or more other (Gjallarhorn)/(Tekkadan) Units in play, choose 1 enemy Unit with 3 or less HP. Rest it.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "If you have 2 or more other (Gjallarhorn)/(Tekkadan) Units in play, choose 1 enemy Unit with 3 or less HP. Rest it.",
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "CONDITIONAL",
+            conditions: [
+              {
+                type: "STATE_CHECK",
+                text: "you have 2 or more other (Gjallarhorn)/(Tekkadan) Units in play",
+              },
+            ],
+            trueAction: {
+              type: "CUSTOM",
+              text: "choose 1 enemy Unit with 3 or less HP",
+            },
+          },
+          {
+            type: "REST",
+          },
+        ],
       },
     },
   ],

@@ -21,20 +21,35 @@ export const Shamblo: UnitCardDefinition = {
   linkRequirements: ["(newtype)-trait-/-(cyber-newtype)-trait"],
   effects: [
     {
-      id: "gd01-047-effect-1",
-      description:
-        "【Attack】 If 2 or more other rested friendly Units are in play, choose 1 enemy Unit. Deal 3 damage to it.",
+      id: "eff-ahox62ekg",
       type: "TRIGGERED",
       timing: "ATTACK",
+      description:
+        "If 2 or more other rested friendly Units are in play, choose 1 enemy Unit. Deal 3 damage to it.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "DAMAGE",
-        parameters: {
-          target: {
-            type: "unknown",
-            rawText: "it",
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "CONDITIONAL",
+            conditions: [
+              {
+                type: "STATE_CHECK",
+                text: "2 or more other rested friendly Units are in play",
+              },
+            ],
+            trueAction: {
+              type: "CUSTOM",
+              text: "choose 1 enemy Unit",
+            },
           },
-          amount: 3,
-        },
+          {
+            type: "DAMAGE",
+            value: 3,
+          },
+        ],
       },
     },
   ],

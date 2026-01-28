@@ -19,21 +19,26 @@ export const FullFrontal: PilotCardDefinition = {
   hpModifier: 2,
   effects: [
     {
-      id: "st03-010-effect-1",
-      description: "【Burst】 Add this card to your hand.",
+      id: "eff-unsagg58k",
       type: "TRIGGERED",
       timing: "BURST",
+      description: "Add this card to your hand.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Add this card to your hand.",
+        type: "ADD_TO_HAND",
       },
     },
     {
-      id: "st03-010-effect-2",
-      description:
-        "【When Paired】 You may deploy 1 (Neo Zeon)/(Zeon) Unit card that is Lv.4 or lower from your hand.",
+      id: "eff-mfy8n17wl",
       type: "TRIGGERED",
       timing: "WHEN_PAIRED",
+      description:
+        "You may deploy 1 (Neo Zeon)/(Zeon) Unit card that is Lv.4 or lower from your hand.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
         type: "CUSTOM",
         text: "You may deploy 1 (Neo Zeon)/(Zeon) Unit card that is Lv.4 or lower from your hand.",

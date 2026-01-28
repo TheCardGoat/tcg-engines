@@ -23,13 +23,38 @@ export const HawkOfEndymion: CommandCardDefinition = {
   },
   effects: [
     {
-      id: "st04-013-effect-1",
-      description:
-        "【Main】/【Action】Choose 1 enemy Unit with 3 or less HP. Return it to its owner's hand. 【Pilot】[Mu La Flaga]",
+      id: "eff-r8o9uacq6",
       type: "CONSTANT",
+      description:
+        "Choose 1 enemy Unit with 3 or less HP. Return it to its owner's hand. 【Pilot】[Mu La Flaga]",
+      restrictions: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "【Main】/【Action】Choose 1 enemy Unit with 3 or less HP. Return it to its owner's hand. 【Pilot】[Mu La Flaga]",
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "ADD_TO_HAND",
+            target: {
+              controller: "OPPONENT",
+              cardType: "UNIT",
+              count: {
+                min: 1,
+                max: 1,
+              },
+              filters: [
+                {
+                  type: "hp",
+                  comparison: "lte",
+                  value: 3,
+                },
+              ],
+            },
+          },
+          {
+            type: "CUSTOM",
+            text: "【Pilot】[Mu La Flaga]",
+          },
+        ],
       },
     },
   ],

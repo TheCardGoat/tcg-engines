@@ -21,9 +21,11 @@ export const Rezel: UnitCardDefinition = {
   linkRequirements: ["-"],
   effects: [
     {
-      id: "gd01-018-effect-1",
-      description: "-",
+      id: "eff-dvf50ad87",
       type: "CONSTANT",
+      description: "-",
+      restrictions: [],
+      conditions: [],
       action: {
         type: "CUSTOM",
         text: "-",

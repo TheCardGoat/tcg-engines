@@ -19,20 +19,27 @@ export const ByarlantCustom: UnitCardDefinition = {
   zones: ["space", "earth"],
   traits: ["earth", "federation"],
   linkRequirements: ["-"],
-  keywords: [
-    {
-      keyword: "Blocker",
-    },
-  ],
   effects: [
     {
-      id: "gd01-019-effect-1",
+      id: "eff-a2pbl8fh8",
+      type: "CONSTANT",
       description:
         "While 4 or more enemy Units are in play, this Unit gains <Blocker>. (Rest this Unit to change the attack target to it.)",
-      type: "CONSTANT",
+      restrictions: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "While 4 or more enemy Units are in play, this Unit gains <Blocker>. (Rest this Unit to change the attack target to it.)",
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "GAIN_KEYWORDS",
+            keywords: ["Blocker"],
+            duration: "PERMANENT",
+          },
+          {
+            type: "CUSTOM",
+            text: ")",
+          },
+        ],
       },
     },
   ],

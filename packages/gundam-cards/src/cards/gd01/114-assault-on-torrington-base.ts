@@ -23,17 +23,35 @@ export const AssaultOnTorringtonBase: CommandCardDefinition = {
   },
   effects: [
     {
-      id: "gd01-114-effect-1",
-      description:
-        "【Action】Choose 2 friendly Units. They get AP+1 during this turn. 【Pilot】[Yonem Kirks]",
+      id: "eff-2g9d6ypdh",
       type: "CONSTANT",
+      description:
+        "Choose 2 friendly Units. They get AP+1 during this turn. 【Pilot】[Yonem Kirks]",
+      restrictions: [],
+      conditions: [],
       action: {
-        type: "MODIFY_STATS",
-        parameters: {
-          attribute: "ap",
-          modifier: 1,
-          duration: "turn",
-        },
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "MODIFY_STATS",
+            attribute: "AP",
+            value: 1,
+            duration: "TURN",
+            target: {
+              controller: "SELF",
+              cardType: "UNIT",
+              count: {
+                min: 2,
+                max: 2,
+              },
+              filters: [],
+            },
+          },
+          {
+            type: "CUSTOM",
+            text: "【Pilot】[Yonem Kirks]",
+          },
+        ],
       },
     },
   ],

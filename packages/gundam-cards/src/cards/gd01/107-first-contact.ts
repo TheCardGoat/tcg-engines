@@ -17,14 +17,27 @@ export const FirstContact: CommandCardDefinition = {
   timing: "MAIN",
   effects: [
     {
-      id: "gd01-107-effect-1",
-      description:
-        "【Burst】 Place 1 EX Resource. 【Main】Place 1 rested Resource.",
+      id: "eff-2l71f2tep",
       type: "TRIGGERED",
       timing: "BURST",
+      description: "Place 1 EX Resource.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
         type: "CUSTOM",
-        text: "Place 1 EX Resource. 【Main】Place 1 rested Resource.",
+        text: "Place 1 EX Resource.",
+      },
+    },
+    {
+      id: "eff-sqzaw4dqh",
+      type: "CONSTANT",
+      description: "Place 1 rested Resource.",
+      restrictions: [],
+      conditions: [],
+      action: {
+        type: "CUSTOM",
+        text: "Place 1 rested Resource.",
       },
     },
   ],

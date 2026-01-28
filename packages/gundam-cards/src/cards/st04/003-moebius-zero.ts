@@ -21,9 +21,11 @@ export const MoebiusZero: UnitCardDefinition = {
   linkRequirements: ["mu-la-flaga"],
   effects: [
     {
-      id: "st04-003-effect-1",
-      description: "-",
+      id: "eff-ym3inv8fq",
       type: "CONSTANT",
+      description: "-",
+      restrictions: [],
+      conditions: [],
       action: {
         type: "CUSTOM",
         text: "-",

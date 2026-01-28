@@ -19,20 +19,27 @@ export const Zno: UnitCardDefinition = {
   zones: ["earth"],
   traits: ["zaft"],
   linkRequirements: ["(zaft)-trait"],
-  keywords: [
-    {
-      keyword: "First-Strike",
-    },
-  ],
   effects: [
     {
-      id: "gd01-063-effect-1",
+      id: "eff-ovfiam39c",
+      type: "CONSTANT",
       description:
         "During your turn, while this Unit is battling an enemy Unit that is Lv.2 or lower, it gains <First Strike>. (While this Unit is attacking, it deals damage before the enemy Unit.)",
-      type: "CONSTANT",
+      restrictions: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "During your turn, while this Unit is battling an enemy Unit that is Lv.2 or lower, it gains <First Strike>. (While this Unit is attacking, it deals damage before the enemy Unit.)",
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "GAIN_KEYWORDS",
+            keywords: ["First Strike"],
+            duration: "PERMANENT",
+          },
+          {
+            type: "CUSTOM",
+            text: ")",
+          },
+        ],
       },
     },
   ],

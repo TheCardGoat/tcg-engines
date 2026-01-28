@@ -19,21 +19,27 @@ export const DuelGundam: UnitCardDefinition = {
   zones: ["space", "earth"],
   traits: ["zaft"],
   linkRequirements: ["(zaft)-trait"],
-  keywords: [
-    {
-      keyword: "Breach",
-      value: 3,
-    },
-  ],
   effects: [
     {
-      id: "gd01-054-effect-1",
+      id: "eff-qqjkpuu9d",
+      type: "CONSTANT",
       description:
         "While this Unit has 5 or more AP, it gains <Breach 3>. (When this Unit&#039;s attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent&#039;s shield area.)",
-      type: "CONSTANT",
+      restrictions: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "While this Unit has 5 or more AP, it gains <Breach 3>. (When this Unit&#039;s attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent&#039;s shield area.)",
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "GAIN_KEYWORDS",
+            keywords: ["Breach 3"],
+            duration: "PERMANENT",
+          },
+          {
+            type: "CUSTOM",
+            text: ")",
+          },
+        ],
       },
     },
   ],

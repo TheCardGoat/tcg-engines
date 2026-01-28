@@ -21,19 +21,40 @@ export const GearaDogaHeavyArmedType: UnitCardDefinition = {
   linkRequirements: ["-"],
   effects: [
     {
-      id: "gd01-053-effect-1",
-      description:
-        "【Activate･Main】 【Once per Turn】①：Choose 1 enemy Unit with 2 or less AP. Deal 1 damage to it.",
+      id: "eff-x82ozlt95",
       type: "ACTIVATED",
       timing: "MAIN",
+      description:
+        "【Once per Turn】①:Choose 1 enemy Unit with 2 or less AP. Deal 1 damage to it.",
+      restrictions: [
+        {
+          type: "ONCE_PER_TURN",
+        },
+      ],
+      costs: [
+        {
+          type: "ENERGY",
+          amount: 1,
+        },
+      ],
+      conditions: [],
       action: {
         type: "DAMAGE",
-        parameters: {
-          target: {
-            type: "unknown",
-            rawText: "it",
+        value: 1,
+        target: {
+          controller: "OPPONENT",
+          cardType: "UNIT",
+          count: {
+            min: 1,
+            max: 1,
           },
-          amount: 1,
+          filters: [
+            {
+              type: "ap",
+              comparison: "lte",
+              value: 2,
+            },
+          ],
         },
       },
     },

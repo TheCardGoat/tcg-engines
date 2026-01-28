@@ -20,24 +20,39 @@ export const Falmel: BaseCardDefinition_Structure = {
   traits: ["zeon", "warship"],
   effects: [
     {
-      id: "st03-016-effect-1",
-      description: "【Burst】 Deploy this card.",
+      id: "eff-i1srfp42h",
       type: "TRIGGERED",
       timing: "BURST",
+      description: "Deploy this card.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Deploy this card.",
+        type: "DEPLOY",
       },
     },
     {
-      id: "st03-016-effect-2",
-      description:
-        "【Deploy】 Add 1 of your Shields to your hand. Then, if it is your turn, deploy 1 rested [Char's Zaku Ⅱ]((Zeon)･AP3･HP1) Unit token.",
+      id: "eff-dpk4vo5ei",
       type: "TRIGGERED",
       timing: "DEPLOY",
+      description:
+        "Add 1 of your Shields to your hand. Then, if it is your turn, deploy 1 rested [Char's Zaku Ⅱ]((Zeon)･AP3･HP1) Unit token.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Add 1 of your Shields to your hand. Then, if it is your turn, deploy 1 rested [Char's Zaku Ⅱ]((Zeon)･AP3･HP1) Unit token.",
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "ADD_TO_HAND",
+          },
+          {
+            type: "MODIFY_STATS",
+            attribute: "AP",
+            value: 3,
+            duration: "TURN",
+          },
+        ],
       },
     },
   ],

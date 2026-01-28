@@ -21,20 +21,30 @@ export const Lagowe: UnitCardDefinition = {
   linkRequirements: ["(zaft)-trait"],
   effects: [
     {
-      id: "gd01-050-effect-1",
-      description:
-        "【Attack】 If this Unit has 5 or more AP and it is attacking an enemy Unit, choose 1 enemy Unit. Deal 2 damage to it.",
+      id: "eff-hm7p7wzii",
       type: "TRIGGERED",
       timing: "ATTACK",
+      description:
+        "If this Unit has 5 or more AP and it is attacking an enemy Unit, choose 1 enemy Unit. Deal 2 damage to it.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "DAMAGE",
-        parameters: {
-          target: {
-            type: "unknown",
-            rawText: "it",
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "CONDITIONAL",
+            conditions: [],
+            trueAction: {
+              type: "CUSTOM",
+              text: "choose 1 enemy Unit",
+            },
           },
-          amount: 2,
-        },
+          {
+            type: "DAMAGE",
+            value: 2,
+          },
+        ],
       },
     },
   ],

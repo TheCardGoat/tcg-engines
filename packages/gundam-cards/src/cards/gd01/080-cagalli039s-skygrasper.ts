@@ -21,14 +21,34 @@ export const Cagalli039sSkygrasper: UnitCardDefinition = {
   linkRequirements: ["cagalli-yula-athha"],
   effects: [
     {
-      id: "gd01-080-effect-1",
-      description:
-        "【Destroyed】 Choose 1 enemy Unit that is Lv.2 or lower. Return it to its owner&#039;s hand.",
+      id: "eff-5hlt5lybm",
       type: "TRIGGERED",
       timing: "DESTROYED",
+      description:
+        "Choose 1 enemy Unit that is Lv.2 or lower. Return it to its owner&#039;s hand.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Choose 1 enemy Unit that is Lv.2 or lower. Return it to its owner&#039;s hand.",
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "CUSTOM",
+            text: "2 or lower",
+          },
+          {
+            type: "ADD_TO_HAND",
+            target: {
+              controller: "OPPONENT",
+              cardType: "UNIT",
+              count: {
+                min: 1,
+                max: 1,
+              },
+              filters: [],
+            },
+          },
+        ],
       },
     },
   ],

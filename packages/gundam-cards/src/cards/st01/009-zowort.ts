@@ -26,13 +26,15 @@ export const Zowort: UnitCardDefinition = {
   ],
   effects: [
     {
-      id: "st01-009-effect-1",
-      description:
-        "<Blocker> (Rest this Unit to change the attack target to it.) This Unit can't choose the enemy player as its attack target.",
+      id: "eff-qbchh34cp",
       type: "CONSTANT",
+      description:
+        "This Unit can't choose the enemy player as its attack target.",
+      restrictions: [],
+      conditions: [],
       action: {
         type: "CUSTOM",
-        text: "<Blocker> (Rest this Unit to change the attack target to it.) This Unit can't choose the enemy player as its attack target.",
+        text: "can't choose the enemy player as its attack target.",
       },
     },
   ],

@@ -19,30 +19,47 @@ export const MaridaCruz: PilotCardDefinition = {
   hpModifier: 1,
   effects: [
     {
-      id: "gd01-093-effect-1",
-      description: "【Burst】 Add this card to your hand. 【During Link】",
+      id: "eff-smmo19058",
       type: "TRIGGERED",
       timing: "BURST",
+      description: "Add this card to your hand.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Add this card to your hand. 【During Link】",
+        type: "ADD_TO_HAND",
       },
     },
     {
-      id: "gd01-093-effect-2",
-      description:
-        "【Attack】 Choose 1 enemy Unit whose Lv. is equal to or lower than this Unit. Deal 1 damage to it.",
+      id: "eff-zp03rym43",
       type: "TRIGGERED",
       timing: "ATTACK",
+      description:
+        "Choose 1 enemy Unit whose Lv. is equal to or lower than this Unit. Deal 1 damage to it.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "DAMAGE",
-        parameters: {
-          target: {
-            type: "unknown",
-            rawText: "it",
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "CUSTOM",
+            text: "is equal to or lower than this Unit",
           },
-          amount: 1,
-        },
+          {
+            type: "DAMAGE",
+            value: 1,
+            target: {
+              controller: "OPPONENT",
+              cardType: "UNIT",
+              count: {
+                min: 1,
+                max: 1,
+              },
+              filters: [],
+            },
+          },
+        ],
       },
     },
   ],

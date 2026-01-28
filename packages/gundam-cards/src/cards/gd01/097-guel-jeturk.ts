@@ -19,24 +19,46 @@ export const GuelJeturk: PilotCardDefinition = {
   hpModifier: 1,
   effects: [
     {
-      id: "gd01-097-effect-1",
-      description: "【Burst】 Add this card to your hand.",
+      id: "eff-n0yql9mra",
       type: "TRIGGERED",
       timing: "BURST",
+      description: "Add this card to your hand.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Add this card to your hand.",
+        type: "ADD_TO_HAND",
       },
     },
     {
-      id: "gd01-097-effect-2",
-      description:
-        "【Activate･Main】 【Once per Turn】If your opponent has 8 or more cards in their hand, set this Unit as active. It can&#039;t attack during this turn.",
+      id: "eff-61okzrqqq",
       type: "ACTIVATED",
       timing: "MAIN",
+      description:
+        "【Once per Turn】If your opponent has 8 or more cards in their hand, set this Unit as active. It can&#039;t attack during this turn.",
+      restrictions: [
+        {
+          type: "ONCE_PER_TURN",
+        },
+      ],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "【Once per Turn】If your opponent has 8 or more cards in their hand, set this Unit as active. It can&#039;t attack during this turn.",
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "CONDITIONAL",
+            conditions: [],
+            trueAction: {
+              type: "CUSTOM",
+              text: "set this Unit as active",
+            },
+          },
+          {
+            type: "CUSTOM",
+            text: "It can&#039;t attack during this turn",
+          },
+        ],
       },
     },
   ],

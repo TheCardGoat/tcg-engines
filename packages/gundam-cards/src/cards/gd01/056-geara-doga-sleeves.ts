@@ -21,19 +21,31 @@ export const GearaDogaSleeves: UnitCardDefinition = {
   linkRequirements: ["-"],
   effects: [
     {
-      id: "gd01-056-effect-1",
-      description:
-        "【Destroyed】 Choose 1 enemy Unit with 5 or less AP. Deal 1 damage to it.",
+      id: "eff-a4ebk0gvk",
       type: "TRIGGERED",
       timing: "DESTROYED",
+      description:
+        "Choose 1 enemy Unit with 5 or less AP. Deal 1 damage to it.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
         type: "DAMAGE",
-        parameters: {
-          target: {
-            type: "unknown",
-            rawText: "it",
+        value: 1,
+        target: {
+          controller: "OPPONENT",
+          cardType: "UNIT",
+          count: {
+            min: 1,
+            max: 1,
           },
-          amount: 1,
+          filters: [
+            {
+              type: "ap",
+              comparison: "lte",
+              value: 5,
+            },
+          ],
         },
       },
     },

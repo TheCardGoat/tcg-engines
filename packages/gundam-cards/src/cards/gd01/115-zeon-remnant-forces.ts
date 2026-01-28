@@ -17,18 +17,22 @@ export const ZeonRemnantForces: CommandCardDefinition = {
   timing: "MAIN",
   effects: [
     {
-      id: "gd01-115-effect-1",
-      description:
-        "【Main】/【Action】Choose 1 enemy Unit. Deal 1 damage to it.",
+      id: "eff-hbhxbq3ts",
       type: "CONSTANT",
+      description: "Choose 1 enemy Unit. Deal 1 damage to it.",
+      restrictions: [],
+      conditions: [],
       action: {
         type: "DAMAGE",
-        parameters: {
-          target: {
-            type: "unknown",
-            rawText: "it",
+        value: 1,
+        target: {
+          controller: "OPPONENT",
+          cardType: "UNIT",
+          count: {
+            min: 1,
+            max: 1,
           },
-          amount: 1,
+          filters: [],
         },
       },
     },

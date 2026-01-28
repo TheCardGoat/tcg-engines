@@ -21,9 +21,11 @@ export const StrikeGundam: UnitCardDefinition = {
   linkRequirements: ["kira-yamato"],
   effects: [
     {
-      id: "gd01-077-effect-1",
-      description: "-",
+      id: "eff-pv6yz33vh",
       type: "CONSTANT",
+      description: "-",
+      restrictions: [],
+      conditions: [],
       action: {
         type: "CUSTOM",
         text: "-",

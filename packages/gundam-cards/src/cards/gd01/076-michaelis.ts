@@ -21,17 +21,17 @@ export const Michaelis: UnitCardDefinition = {
   linkRequirements: ["(academy)-trait"],
   effects: [
     {
-      id: "gd01-076-effect-1",
+      id: "eff-j1fb65jgz",
+      type: "CONSTANT",
       description:
         "While there are 4 or more Command cards in your trash, this Unit gets AP+1 and HP+1.",
-      type: "CONSTANT",
+      restrictions: [],
+      conditions: [],
       action: {
         type: "MODIFY_STATS",
-        parameters: {
-          attribute: "ap",
-          modifier: 1,
-          duration: "turn",
-        },
+        attribute: "AP",
+        value: 1,
+        duration: "TURN",
       },
     },
   ],

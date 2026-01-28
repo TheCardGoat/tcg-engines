@@ -25,16 +25,4 @@ export const AegisGundamMaMode: UnitCardDefinition = {
       value: 3,
     },
   ],
-  effects: [
-    {
-      id: "st04-007-effect-1",
-      description:
-        "<Breach 3> (When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)",
-      type: "CONSTANT",
-      action: {
-        type: "CUSTOM",
-        text: "<Breach 3> (When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)",
-      },
-    },
-  ],
 };

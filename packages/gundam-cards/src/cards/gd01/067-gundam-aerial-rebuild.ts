@@ -21,14 +21,34 @@ export const GundamAerialRebuild: UnitCardDefinition = {
   linkRequirements: ["suletta-mercury"],
   effects: [
     {
-      id: "gd01-067-effect-1",
-      description:
-        "【When Paired】 Choose 1 Command card that is Lv.5 or lower from your trash. Add it to your hand.",
+      id: "eff-ytli9q0mp",
       type: "TRIGGERED",
       timing: "WHEN_PAIRED",
+      description:
+        "Choose 1 Command card that is Lv.5 or lower from your trash. Add it to your hand.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Choose 1 Command card that is Lv.5 or lower from your trash. Add it to your hand.",
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "CUSTOM",
+            text: "5 or lower from your trash",
+          },
+          {
+            type: "ADD_TO_HAND",
+            target: {
+              controller: "ANY",
+              cardType: "COMMAND",
+              count: {
+                min: 1,
+                max: 1,
+              },
+              filters: [],
+            },
+          },
+        ],
       },
     },
   ],

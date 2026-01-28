@@ -21,14 +21,25 @@ export const Noin039sAries: UnitCardDefinition = {
   linkRequirements: ["lucrezia-noin"],
   effects: [
     {
-      id: "gd01-007-effect-1",
-      description:
-        "【Destroyed】 If you have another (OZ) Unit in play, draw 1.",
+      id: "eff-4g90l3us3",
       type: "TRIGGERED",
       timing: "DESTROYED",
+      description: "If you have another (OZ) Unit in play, draw 1.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "If you have another (OZ) Unit in play, draw 1.",
+        type: "CONDITIONAL",
+        conditions: [
+          {
+            type: "STATE_CHECK",
+            text: "you have another (OZ) Unit in play",
+          },
+        ],
+        trueAction: {
+          type: "DRAW",
+          value: 1,
+        },
       },
     },
   ],

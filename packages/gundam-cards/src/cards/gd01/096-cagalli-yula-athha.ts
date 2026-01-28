@@ -19,14 +19,30 @@ export const CagalliYulaAthha: PilotCardDefinition = {
   hpModifier: 1,
   effects: [
     {
-      id: "gd01-096-effect-1",
-      description:
-        "【Burst】 Add this card to your hand. While this Unit is white, it gains <Blocker>. (Rest this Unit to change the attack target to it.)",
+      id: "eff-07kty292o",
       type: "TRIGGERED",
       timing: "BURST",
+      description:
+        "Add this card to your hand. While this Unit is white, it gains <Blocker>. (Rest this Unit to change the attack target to it.)",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Add this card to your hand. While this Unit is white, it gains <Blocker>. (Rest this Unit to change the attack target to it.)",
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "ADD_TO_HAND",
+          },
+          {
+            type: "GAIN_KEYWORDS",
+            keywords: ["Blocker"],
+            duration: "PERMANENT",
+          },
+          {
+            type: "CUSTOM",
+            text: ")",
+          },
+        ],
       },
     },
   ],

@@ -21,9 +21,11 @@ export const WingGundam: UnitCardDefinition = {
   linkRequirements: ["heero-yuy"],
   effects: [
     {
-      id: "gd01-040-effect-1",
-      description: "-",
+      id: "eff-35dkwdr04",
       type: "CONSTANT",
+      description: "-",
+      restrictions: [],
+      conditions: [],
       action: {
         type: "CUSTOM",
         text: "-",

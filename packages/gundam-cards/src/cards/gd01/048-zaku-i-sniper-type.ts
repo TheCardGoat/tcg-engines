@@ -27,25 +27,46 @@ export const ZakuISniperType: UnitCardDefinition = {
   ],
   effects: [
     {
-      id: "gd01-048-effect-1",
-      description:
-        "【Activate･Main】 <Support 1> (Rest this Unit. 1 other friendly Unit gets AP+(specified amount) during this turn.)",
+      id: "eff-hhu6m97n8",
       type: "ACTIVATED",
       timing: "MAIN",
+      description: "during this turn.)",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
         type: "CUSTOM",
-        text: "<Support 1> (Rest this Unit. 1 other friendly Unit gets AP+(specified amount) during this turn.)",
+        text: "during this turn.)",
       },
     },
     {
-      id: "gd01-048-effect-2",
-      description:
-        "【Deploy】 Look at the top card of your deck. If it is a (Zeon)/(Neo Zeon) Unit card, you may reveal it and add it to your hand. Return any remaining card to the bottom of your deck.",
+      id: "eff-nftzatoxg",
       type: "TRIGGERED",
       timing: "DEPLOY",
+      description:
+        "Look at the top card of your deck. If it is a (Zeon)/(Neo Zeon) Unit card, you may reveal it and add it to your hand. Return any remaining card to the bottom of your deck.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Look at the top card of your deck. If it is a (Zeon)/(Neo Zeon) Unit card, you may reveal it and add it to your hand. Return any remaining card to the bottom of your deck.",
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "CUSTOM",
+            text: "Look at the top card of your deck",
+          },
+          {
+            type: "CONDITIONAL",
+            conditions: [],
+            trueAction: {
+              type: "ADD_TO_HAND",
+            },
+          },
+          {
+            type: "CUSTOM",
+            text: "Return any remaining card to the bottom of your deck",
+          },
+        ],
       },
     },
   ],

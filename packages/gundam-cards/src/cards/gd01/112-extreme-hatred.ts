@@ -23,19 +23,61 @@ export const ExtremeHatred: CommandCardDefinition = {
   },
   effects: [
     {
-      id: "gd01-112-effect-1",
-      description:
-        "【Main】Choose 2 of your active Units. Rest them. If you do, choose 1 enemy Unit. Deal 3 damage to it. 【Pilot】[Loni Garvey]",
+      id: "eff-o7resqjhh",
       type: "CONSTANT",
+      description:
+        "Choose 2 of your active Units. Rest them. If you do, choose 1 enemy Unit. Deal 3 damage to it. 【Pilot】[Loni Garvey]",
+      restrictions: [],
+      conditions: [],
       action: {
-        type: "DAMAGE",
-        parameters: {
-          target: {
-            type: "unknown",
-            rawText: "it",
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "REST",
+            target: {
+              controller: "SELF",
+              cardType: "UNIT",
+              count: {
+                min: 2,
+                max: 2,
+              },
+              filters: [
+                {
+                  type: "ready",
+                },
+              ],
+            },
           },
-          amount: 3,
-        },
+          {
+            type: "CONDITIONAL",
+            conditions: [],
+            trueAction: {
+              type: "CUSTOM",
+              text: "choose 1 enemy Unit",
+            },
+          },
+          {
+            type: "DAMAGE",
+            value: 3,
+            target: {
+              controller: "SELF",
+              cardType: "UNIT",
+              count: {
+                min: 2,
+                max: 2,
+              },
+              filters: [
+                {
+                  type: "ready",
+                },
+              ],
+            },
+          },
+          {
+            type: "CUSTOM",
+            text: "【Pilot】[Loni Garvey]",
+          },
+        ],
       },
     },
   ],

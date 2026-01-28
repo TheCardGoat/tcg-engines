@@ -19,22 +19,36 @@ export const GundamHeavyarms: UnitCardDefinition = {
   zones: ["earth"],
   traits: ["operation", "meteor"],
   linkRequirements: ["trowa-barton"],
-  keywords: [
-    {
-      keyword: "Breach",
-      value: 3,
-    },
-  ],
   effects: [
     {
-      id: "gd01-034-effect-1",
-      description:
-        "【During Pair】 This Unit gains <Breach 3>. (When this Unit&#039;s attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent&#039;s shield area.)",
+      id: "eff-m1ni1yjbu",
       type: "CONSTANT",
-      conditions: ["DURING_PAIR"],
+      description:
+        "This Unit gains <Breach 3>. (When this Unit&#039;s attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent&#039;s shield area.)",
+      restrictions: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "This Unit gains <Breach 3>. (When this Unit&#039;s attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent&#039;s shield area.)",
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "GAIN_KEYWORDS",
+            keywords: ["Breach 3"],
+            duration: "PERMANENT",
+            target: {
+              controller: "SELF",
+              cardType: "UNIT",
+              filters: [],
+              count: {
+                min: 1,
+                max: 1,
+              },
+            },
+          },
+          {
+            type: "CUSTOM",
+            text: ")",
+          },
+        ],
       },
     },
   ],

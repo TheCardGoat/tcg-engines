@@ -21,9 +21,11 @@ export const Goohn: UnitCardDefinition = {
   linkRequirements: ["-"],
   effects: [
     {
-      id: "gd01-062-effect-1",
-      description: "-",
+      id: "eff-pb8rxs5wl",
       type: "CONSTANT",
+      description: "-",
+      restrictions: [],
+      conditions: [],
       action: {
         type: "CUSTOM",
         text: "-",

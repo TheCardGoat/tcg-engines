@@ -23,13 +23,51 @@ export const TheStubbornCog: CommandCardDefinition = {
   },
   effects: [
     {
-      id: "gd01-103-effect-1",
-      description:
-        "【Main】Choose 1 active friendly (Earth Federation) Unit and 1 active enemy Unit. Rest them. 【Pilot】[Daguza Mackle]",
+      id: "eff-6d6sm0fva",
       type: "CONSTANT",
+      description:
+        "Choose 1 active friendly (Earth Federation) Unit and 1 active enemy Unit. Rest them. 【Pilot】[Daguza Mackle]",
+      restrictions: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "【Main】Choose 1 active friendly (Earth Federation) Unit and 1 active enemy Unit. Rest them. 【Pilot】[Daguza Mackle]",
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "REST",
+            target: [
+              {
+                controller: "SELF",
+                cardType: "UNIT",
+                count: {
+                  min: 1,
+                  max: 1,
+                },
+                filters: [
+                  {
+                    type: "ready",
+                  },
+                ],
+              },
+              {
+                controller: "OPPONENT",
+                cardType: "UNIT",
+                count: {
+                  min: 1,
+                  max: 1,
+                },
+                filters: [
+                  {
+                    type: "ready",
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            type: "CUSTOM",
+            text: "【Pilot】[Daguza Mackle]",
+          },
+        ],
       },
     },
   ],

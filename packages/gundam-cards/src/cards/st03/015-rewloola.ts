@@ -20,30 +20,41 @@ export const Rewloola: BaseCardDefinition_Structure = {
   traits: ["neo", "zeon", "warship"],
   effects: [
     {
-      id: "st03-015-effect-1",
-      description: "【Burst】 Deploy this card.",
+      id: "eff-m8cln2429",
       type: "TRIGGERED",
       timing: "BURST",
+      description: "Deploy this card.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Deploy this card.",
+        type: "DEPLOY",
       },
     },
     {
-      id: "st03-015-effect-2",
-      description:
-        "【Deploy】 Add 1 of your Shields to your hand. Then, choose 1 enemy Unit with 5 or less AP. Deal 1 damage to it.",
+      id: "eff-q9dvr219h",
       type: "TRIGGERED",
       timing: "DEPLOY",
+      description:
+        "Add 1 of your Shields to your hand. Then, choose 1 enemy Unit with 5 or less AP. Deal 1 damage to it.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "DAMAGE",
-        parameters: {
-          target: {
-            type: "unknown",
-            rawText: "it",
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "ADD_TO_HAND",
           },
-          amount: 1,
-        },
+          {
+            type: "CUSTOM",
+            text: "Then, choose 1 enemy Unit with 5 or less AP",
+          },
+          {
+            type: "DAMAGE",
+            value: 1,
+          },
+        ],
       },
     },
   ],

@@ -21,14 +21,30 @@ export const UnicornGundam02BansheeUnicornMode: UnitCardDefinition = {
   linkRequirements: ["(cyber-newtype)-trait"],
   effects: [
     {
-      id: "gd01-010-effect-1",
-      description:
-        "【When Paired】 Choose 1 enemy Unit with 3 or less HP. Rest it.",
+      id: "eff-jesl392no",
       type: "TRIGGERED",
       timing: "WHEN_PAIRED",
+      description: "Choose 1 enemy Unit with 3 or less HP. Rest it.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Choose 1 enemy Unit with 3 or less HP. Rest it.",
+        type: "REST",
+        target: {
+          controller: "OPPONENT",
+          cardType: "UNIT",
+          count: {
+            min: 1,
+            max: 1,
+          },
+          filters: [
+            {
+              type: "hp",
+              comparison: "lte",
+              value: 3,
+            },
+          ],
+        },
       },
     },
   ],

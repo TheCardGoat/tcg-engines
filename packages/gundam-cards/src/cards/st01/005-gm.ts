@@ -21,9 +21,11 @@ export const Gm: UnitCardDefinition = {
   linkRequirements: ["-"],
   effects: [
     {
-      id: "st01-005-effect-1",
-      description: "-",
+      id: "eff-gu1hp2v9f",
       type: "CONSTANT",
+      description: "-",
+      restrictions: [],
+      conditions: [],
       action: {
         type: "CUSTOM",
         text: "-",

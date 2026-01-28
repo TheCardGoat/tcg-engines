@@ -17,12 +17,14 @@ export const AShowOfResolve: CommandCardDefinition = {
   timing: "MAIN",
   effects: [
     {
-      id: "gd01-100-effect-1",
-      description: "【Main】Draw 2.",
+      id: "eff-1rb6t9mkr",
       type: "CONSTANT",
+      description: "Draw 2.",
+      restrictions: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "【Main】Draw 2.",
+        type: "DRAW",
+        value: 2,
       },
     },
   ],

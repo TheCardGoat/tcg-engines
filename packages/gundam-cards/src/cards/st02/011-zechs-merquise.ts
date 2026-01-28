@@ -19,14 +19,27 @@ export const ZechsMerquise: PilotCardDefinition = {
   hpModifier: 1,
   effects: [
     {
-      id: "st02-011-effect-1",
-      description:
-        "【Burst】 Add this card to your hand. 【During Link】During your turn, when this Unit destroys an enemy Unit with battle damage, draw 1.",
+      id: "eff-rmkcndwan",
       type: "TRIGGERED",
       timing: "BURST",
+      description: "Add this card to your hand.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
+      action: {
+        type: "ADD_TO_HAND",
+      },
+    },
+    {
+      id: "eff-io4mhcye3",
+      type: "CONSTANT",
+      description:
+        "During your turn, when this Unit destroys an enemy Unit with battle damage, draw 1.",
+      restrictions: [],
+      conditions: [],
       action: {
         type: "CUSTOM",
-        text: "Add this card to your hand. 【During Link】During your turn, when this Unit destroys an enemy Unit with battle damage, draw 1.",
+        text: "During your turn, when this Unit destroys an enemy Unit with battle damage, draw 1.",
       },
     },
   ],

@@ -20,20 +20,51 @@ export const CgsMobileWorker: UnitCardDefinition = {
   linkRequirements: ["-"],
   effects: [
     {
-      id: "st05-003-effect-1",
-      description:
-        "【Activate･Main】 Rest this Unit：Choose 1 of your Units. Deal 1 damage to it. It gets AP+1 during this turn.",
+      id: "eff-d95r2sm5p",
       type: "ACTIVATED",
       timing: "MAIN",
-      action: {
-        type: "DAMAGE",
-        parameters: {
-          target: {
-            type: "unknown",
-            rawText: "it",
-          },
+      description:
+        "Rest this Unit:Choose 1 of your Units. Deal 1 damage to it. It gets AP+1 during this turn.",
+      restrictions: [],
+      costs: [
+        {
+          type: "REST_SELF",
           amount: 1,
         },
+      ],
+      conditions: [],
+      action: {
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "DAMAGE",
+            value: 1,
+            target: {
+              controller: "SELF",
+              cardType: "UNIT",
+              count: {
+                min: 1,
+                max: 1,
+              },
+              filters: [],
+            },
+          },
+          {
+            type: "MODIFY_STATS",
+            attribute: "AP",
+            value: 1,
+            duration: "TURN",
+            target: {
+              controller: "SELF",
+              cardType: "UNIT",
+              count: {
+                min: 1,
+                max: 1,
+              },
+              filters: [],
+            },
+          },
+        ],
       },
     },
   ],

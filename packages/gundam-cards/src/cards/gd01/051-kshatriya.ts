@@ -1,6 +1,6 @@
 import type { UnitCardDefinition } from "@tcg/gundam-types";
 
-export const Kshatriya_GD01_051: UnitCardDefinition = {
+export const Kshatriya: UnitCardDefinition = {
   id: "gd01-051",
   name: "Kshatriya",
   cardNumber: "GD01-051",
@@ -21,9 +21,11 @@ export const Kshatriya_GD01_051: UnitCardDefinition = {
   linkRequirements: ["(cyber-newtype)-trait"],
   effects: [
     {
-      id: "gd01-051-effect-1",
-      description: "-",
+      id: "eff-72rishlqn",
       type: "CONSTANT",
+      description: "-",
+      restrictions: [],
+      conditions: [],
       action: {
         type: "CUSTOM",
         text: "-",

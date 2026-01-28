@@ -23,13 +23,24 @@ export const PeacefulTimbre: CommandCardDefinition = {
   },
   effects: [
     {
-      id: "st02-013-effect-1",
-      description:
-        "【Action】During this battle, your shield area cards can't receive damage from enemy Units that are Lv.4 or lower. 【Pilot】[Quatre Raberba Winner]",
+      id: "eff-2foqlblow",
       type: "CONSTANT",
+      description:
+        "During this battle, your shield area cards can't receive damage from enemy Units that are Lv.4 or lower. 【Pilot】[Quatre Raberba Winner]",
+      restrictions: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "【Action】During this battle, your shield area cards can't receive damage from enemy Units that are Lv.4 or lower. 【Pilot】[Quatre Raberba Winner]",
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "CUSTOM",
+            text: "4 or lower",
+          },
+          {
+            type: "CUSTOM",
+            text: "【Pilot】[Quatre Raberba Winner]",
+          },
+        ],
       },
     },
   ],

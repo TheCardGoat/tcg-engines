@@ -21,13 +21,53 @@ export const UnicornGundamDestroyMode: UnitCardDefinition = {
   linkRequirements: ["banagher-links"],
   effects: [
     {
-      id: "gd01-002-effect-1",
-      description: "【Attack】 Choose 1 enemy Unit. Rest it.",
+      id: "eff-gm4vabo3c",
+      type: "CONSTANT",
+      description:
+        'When playing this card from your hand, you may destroy 1 of your Link Units with "Unicorn Mode" in its card name that is Lv.5. If you do, play this card as if it has 0 Lv. and cost.',
+      restrictions: [],
+      conditions: [],
+      action: {
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "CUSTOM",
+            text: "5",
+          },
+          {
+            type: "CONDITIONAL",
+            conditions: [],
+            trueAction: {
+              type: "CUSTOM",
+              text: "play this card as if it has 0 Lv",
+            },
+          },
+          {
+            type: "CUSTOM",
+            text: "and cost",
+          },
+        ],
+      },
+    },
+    {
+      id: "eff-wa5p01gnn",
       type: "TRIGGERED",
       timing: "ATTACK",
+      description: "Choose 1 enemy Unit. Rest it.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Choose 1 enemy Unit. Rest it.",
+        type: "REST",
+        target: {
+          controller: "OPPONENT",
+          cardType: "UNIT",
+          count: {
+            min: 1,
+            max: 1,
+          },
+          filters: [],
+        },
       },
     },
   ],

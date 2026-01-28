@@ -21,9 +21,11 @@ export const Loto: UnitCardDefinition = {
   linkRequirements: ["(earth-federation)-trait"],
   effects: [
     {
-      id: "gd01-011-effect-1",
-      description: "-",
+      id: "eff-hiw1re54a",
       type: "CONSTANT",
+      description: "-",
+      restrictions: [],
+      conditions: [],
       action: {
         type: "CUSTOM",
         text: "-",

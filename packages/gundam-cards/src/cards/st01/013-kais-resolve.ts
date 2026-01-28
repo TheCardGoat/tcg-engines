@@ -23,18 +23,33 @@ export const KaisResolve: CommandCardDefinition = {
   },
   effects: [
     {
-      id: "st01-013-effect-1",
-      description:
-        "【Main】Choose 1 friendly Unit. It recovers 3 HP. 【Pilot】[Kai Shiden]",
+      id: "eff-h50noeevf",
       type: "CONSTANT",
+      description:
+        "Choose 1 friendly Unit. It recovers 3 HP. 【Pilot】[Kai Shiden]",
+      restrictions: [],
+      conditions: [],
       action: {
-        type: "HEAL",
-        parameters: {
-          target: {
-            type: "self",
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "HEAL",
+            amount: 3,
+            target: {
+              controller: "SELF",
+              cardType: "UNIT",
+              count: {
+                min: 1,
+                max: 1,
+              },
+              filters: [],
+            },
           },
-          amount: 3,
-        },
+          {
+            type: "CUSTOM",
+            text: "【Pilot】[Kai Shiden]",
+          },
+        ],
       },
     },
   ],

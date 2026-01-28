@@ -21,17 +21,27 @@ export const ZeeZulu: UnitCardDefinition = {
   linkRequirements: ["-"],
   effects: [
     {
-      id: "gd01-059-effect-1",
-      description:
-        "【Attack】 If you are attacking the enemy player, this Unit gets AP+2 during this battle.",
+      id: "eff-g8u23nmrf",
       type: "TRIGGERED",
       timing: "ATTACK",
+      description:
+        "If you are attacking the enemy player, this Unit gets AP+2 during this battle.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "MODIFY_STATS",
-        parameters: {
-          attribute: "ap",
-          modifier: 2,
-          duration: "turn",
+        type: "CONDITIONAL",
+        conditions: [
+          {
+            type: "STATE_CHECK",
+            text: "you are attacking the enemy player",
+          },
+        ],
+        trueAction: {
+          type: "MODIFY_STATS",
+          attribute: "AP",
+          value: 2,
+          duration: "TURN",
         },
       },
     },

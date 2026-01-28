@@ -21,9 +21,11 @@ export const Skygrasper: UnitCardDefinition = {
   linkRequirements: ["(earth-alliance)-trait"],
   effects: [
     {
-      id: "gd01-079-effect-1",
-      description: "-",
+      id: "eff-qnw0i02f4",
       type: "CONSTANT",
+      description: "-",
+      restrictions: [],
+      conditions: [],
       action: {
         type: "CUSTOM",
         text: "-",

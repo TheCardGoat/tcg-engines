@@ -27,14 +27,16 @@ export const Zuoot: UnitCardDefinition = {
   ],
   effects: [
     {
-      id: "gd01-061-effect-1",
-      description:
-        "【Activate･Main】 <Support 1> (Rest this Unit. 1 other friendly Unit gets AP+(specified amount) during this turn.)",
+      id: "eff-08dudewre",
       type: "ACTIVATED",
       timing: "MAIN",
+      description: "during this turn.)",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
         type: "CUSTOM",
-        text: "<Support 1> (Rest this Unit. 1 other friendly Unit gets AP+(specified amount) during this turn.)",
+        text: "during this turn.)",
       },
     },
   ],

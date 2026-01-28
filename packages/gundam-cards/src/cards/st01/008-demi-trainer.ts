@@ -24,16 +24,4 @@ export const DemiTrainer: UnitCardDefinition = {
       keyword: "Blocker",
     },
   ],
-  effects: [
-    {
-      id: "st01-008-effect-1",
-      description:
-        "<Blocker> (Rest this Unit to change the attack target to it.)",
-      type: "CONSTANT",
-      action: {
-        type: "CUSTOM",
-        text: "<Blocker> (Rest this Unit to change the attack target to it.)",
-      },
-    },
-  ],
 };

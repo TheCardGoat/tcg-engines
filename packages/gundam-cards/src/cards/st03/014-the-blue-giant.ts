@@ -23,13 +23,24 @@ export const TheBlueGiant: CommandCardDefinition = {
   },
   effects: [
     {
-      id: "st03-014-effect-1",
-      description:
-        "【Action】Choose 1 friendly Unit. It can't receive battle damage from enemy Units with 2 or less AP during this battle. 【Pilot】[Ramba Ral]",
+      id: "eff-vntf5ghrw",
       type: "CONSTANT",
+      description:
+        "Choose 1 friendly Unit. It can't receive battle damage from enemy Units with 2 or less AP during this battle. 【Pilot】[Ramba Ral]",
+      restrictions: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "【Action】Choose 1 friendly Unit. It can't receive battle damage from enemy Units with 2 or less AP during this battle. 【Pilot】[Ramba Ral]",
+        type: "SEQUENCE",
+        actions: [
+          {
+            type: "CUSTOM",
+            text: "can't receive battle damage from enemy Units with 2 or less AP during this battle",
+          },
+          {
+            type: "CUSTOM",
+            text: "【Pilot】[Ramba Ral]",
+          },
+        ],
       },
     },
   ],
