@@ -1,75 +1,82 @@
 /**
  * Riftbound Game Setup
  *
- * Initial game setup logic.
+ * Initial game setup logic for the tabletop simulator.
  */
 
-import type { PlayerId, RiftboundState } from "../../types";
+import type {
+  createPlayerState,
+  createRunePool,
+  PlayerId,
+  RiftboundGameState,
+} from "../../types";
 
 /**
  * Configuration for game setup
  */
 export interface SetupConfig {
-  readonly players: [PlayerId, PlayerId];
-  readonly startingHealth: number;
-  readonly startingHandSize: number;
+  readonly players: PlayerId[];
+  readonly victoryScore: number;
 }
 
 /**
- * Default setup configuration
+ * Default setup configuration for 1v1
  */
 export const DEFAULT_SETUP_CONFIG: SetupConfig = {
-  players: ["player1", "player2"],
-  startingHealth: 20,
-  startingHandSize: 7,
+  players: [],
+  victoryScore: 8,
 };
 
 /**
  * Create the initial game state
  *
- * @param config - Setup configuration
+ * This creates the game-specific state. Zone state and card metadata
+ * are managed by the core engine.
+ *
+ * @param players - Array of player objects from the engine
  * @returns Initial game state
  */
 export function createInitialState(
-  config: Partial<SetupConfig> = {},
-): RiftboundState {
-  const fullConfig = { ...DEFAULT_SETUP_CONFIG, ...config };
-  const { players, startingHealth } = fullConfig;
-  // TODO: startingHandSize will be used when deck/draw logic is implemented
+  players: Array<{ id: string }>,
+): RiftboundGameState {
+  const playerIds = players.map((p) => p.id as PlayerId);
+
+  // Initialize player states
+  const playerStates: Record<
+    PlayerId,
+    { id: PlayerId; victoryPoints: number }
+  > = {};
+  const runePools: Record<
+    PlayerId,
+    { energy: number; power: Record<string, number> }
+  > = {};
+  const conqueredThisTurn: Record<PlayerId, string[]> = {};
+  const scoredThisTurn: Record<PlayerId, string[]> = {};
+
+  for (const playerId of playerIds) {
+    playerStates[playerId] = {
+      id: playerId,
+      victoryPoints: 0,
+    };
+    runePools[playerId] = {
+      energy: 0,
+      power: {},
+    };
+    conqueredThisTurn[playerId] = [];
+    scoredThisTurn[playerId] = [];
+  }
 
   return {
     gameId: crypto.randomUUID(),
-    players: {
-      [players[0]]: {
-        id: players[0],
-        health: startingHealth,
-        resources: 0,
-      },
-      [players[1]]: {
-        id: players[1],
-        health: startingHealth,
-        resources: 0,
-      },
-    },
-    zones: {
-      [players[0]]: {
-        hand: [],
-        deck: [],
-        field: [],
-        discard: [],
-        exile: [],
-      },
-      [players[1]]: {
-        hand: [],
-        deck: [],
-        field: [],
-        discard: [],
-        exile: [],
-      },
-    },
+    players: playerStates,
+    victoryScore: 8, // 1v1 victory score
+    battlefields: {},
+    runePools,
+    conqueredThisTurn,
+    scoredThisTurn,
     turn: {
-      number: 0,
-      activePlayer: players[0],
+      number: 1,
+      activePlayer: playerIds[0] ?? ("" as PlayerId),
       phase: "setup",
     },
     status: "setup",

@@ -5,13 +5,13 @@
  * These match the types in @tcg/riftbound-types.
  */
 
-import type { Condition } from "@tcg/riftbound-types/abilities/condition-types";
 import type {
+  Condition,
   Trigger,
   TriggerEvent,
   TriggerRestriction,
   TriggerSubject,
-} from "@tcg/riftbound-types/abilities/trigger-types";
+} from "@tcg/riftbound-types";
 
 /**
  * Trigger builder helpers for tests

@@ -1,10 +1,11 @@
 /**
  * Riftbound Victory Conditions
  *
- * Win condition logic for the game.
+ * Win condition logic for the tabletop simulator.
+ * Victory is achieved by reaching the victory score (8 points for 1v1).
  */
 
-import type { PlayerId, RiftboundState } from "../../types";
+import type { PlayerId, RiftboundGameState } from "../../types";
 
 /**
  * Check if a player has won the game
@@ -12,15 +13,13 @@ import type { PlayerId, RiftboundState } from "../../types";
  * @param state - Current game state
  * @returns The winning player ID, or null if no winner
  */
-export function checkVictory(state: RiftboundState): PlayerId | null {
-  const playerIds = Object.keys(state.players);
+export function checkVictory(state: RiftboundGameState): PlayerId | null {
+  const playerIds = Object.keys(state.players) as PlayerId[];
 
   for (const playerId of playerIds) {
     const player = state.players[playerId];
-    if (player.health <= 0) {
-      // Return the opponent as the winner
-      const opponent = playerIds.find((id) => id !== playerId);
-      return opponent ?? null;
+    if (player && player.victoryPoints >= state.victoryScore) {
+      return playerId;
     }
   }
 
@@ -33,6 +32,35 @@ export function checkVictory(state: RiftboundState): PlayerId | null {
  * @param state - Current game state
  * @returns true if the game has ended
  */
-export function isGameOver(state: RiftboundState): boolean {
+export function isGameOver(state: RiftboundGameState): boolean {
   return state.status === "finished" || checkVictory(state) !== null;
+}
+
+/**
+ * Get the current score for a player
+ *
+ * @param state - Current game state
+ * @param playerId - Player to check
+ * @returns Victory points for the player
+ */
+export function getPlayerScore(
+  state: RiftboundGameState,
+  playerId: PlayerId,
+): number {
+  return state.players[playerId]?.victoryPoints ?? 0;
+}
+
+/**
+ * Check if a player is one point away from victory
+ *
+ * @param state - Current game state
+ * @param playerId - Player to check
+ * @returns true if player needs only one more point to win
+ */
+export function isAtMatchPoint(
+  state: RiftboundGameState,
+  playerId: PlayerId,
+): boolean {
+  const score = getPlayerScore(state, playerId);
+  return score === state.victoryScore - 1;
 }

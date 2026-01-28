@@ -29,6 +29,7 @@ import type { CardRegistry } from "../operations/card-registry";
 import { createCardRegistry } from "../operations/card-registry-impl";
 import {
   createCardOperations,
+  createCounterOperations,
   createGameOperations,
   createZoneOperations,
 } from "../operations/operations-impl";
@@ -553,6 +554,10 @@ export class RuleEngine<
       this.internalState,
       this.logger.child("game"),
     );
+    const counterOps = createCounterOperations(
+      this.internalState,
+      this.logger.child("counters"),
+    );
 
     // Track pending flow transitions
     let pendingPhaseEnd = false;
@@ -611,6 +616,7 @@ export class RuleEngine<
         zones: zoneOps,
         cards: cardOps,
         game: gameOps,
+        counters: counterOps,
         history: historyOps,
         registry: this.cardRegistry,
         flow: flowState,
@@ -784,6 +790,10 @@ export class RuleEngine<
       this.internalState,
       this.logger.child("game"),
     );
+    const counterOps = createCounterOperations(
+      this.internalState,
+      this.logger.child("counters"),
+    );
 
     // Add flow state for condition checks
     const flowState = this.flowManager
@@ -815,6 +825,7 @@ export class RuleEngine<
       zones: zoneOps,
       cards: cardOps,
       game: gameOps,
+      counters: counterOps,
       history: dummyHistoryOps,
       registry: this.cardRegistry,
       flow: flowState,
@@ -1172,6 +1183,10 @@ export class RuleEngine<
       this.internalState,
       this.logger.child("game"),
     );
+    const counterOps = createCounterOperations(
+      this.internalState,
+      this.logger.child("counters"),
+    );
 
     // Add flow state if available
     const flowState = this.flowManager
@@ -1189,6 +1204,7 @@ export class RuleEngine<
       zones: zoneOps,
       cards: cardOps,
       game: gameOps,
+      counters: counterOps,
       registry: this.cardRegistry,
       flow: flowState,
       rng: this.rng,

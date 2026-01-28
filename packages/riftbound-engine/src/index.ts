@@ -1,17 +1,16 @@
 /**
- * @tcg/riftbound - Riftbound TCG Engine
+ * @tcg/riftbound - Riftbound TCG Tabletop Simulator
  *
- * A complete implementation of Riftbound TCG using the @tcg/core framework.
- * This package serves as both a production-ready game engine and a reference
- * implementation demonstrating best practices for building TCG engines.
+ * A tabletop simulator implementation of Riftbound TCG using the @tcg/core framework.
+ * This is NOT a rules engine - players enforce rules themselves.
+ * The system handles card movement, counters/tokens, and phase tracking.
  *
- * Key Concepts:
- * - NO defineMove(), defineZone(), definePhase(), defineCard() helpers
- * - Use GameDefinition<TState, TMoves> type directly
- * - Zones are simple state arrays: Record<PlayerId, CardId[]>
- * - Cards are plain objects in lookup tables
- * - Moves use GameMoveDefinitions with condition and reducer
- * - Flow is optional - use FlowDefinition or simple state tracking
+ * Key Features:
+ * - 35+ manual moves for all game actions
+ * - Counter/token system for damage, buffs, exhaustion
+ * - Zone management for all Riftbound zones
+ * - Victory point tracking
+ * - Rune pool resource management
  */
 
 // Re-export core framework types for convenience
@@ -26,9 +25,14 @@ export type {
 // Engine exports
 export { RiftboundEngine } from "./engine/riftbound-engine";
 
+// Game definition export
+export { riftboundDefinition } from "./game-definition/definition";
+
+// Move exports
+export { riftboundMoves } from "./game-definition/moves";
+
 // Type exports
 export * from "./types";
-
 // Move enumeration type exports
 export type {
   AvailableMoveInfo,
@@ -38,3 +42,16 @@ export type {
   ParameterInfo,
   ParamFieldSchema,
 } from "./types/move-enumeration";
+// Zone configuration exports
+export {
+  createBattlefieldZone,
+  createFacedownZone,
+  extractBattlefieldId,
+  getBattlefieldZoneId,
+  getFacedownZoneId,
+  isBattlefieldZone,
+  isFacedownZone,
+  isLocation,
+  isPublicZone,
+  riftboundZones,
+} from "./zones/zone-configs";

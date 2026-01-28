@@ -2,6 +2,7 @@ import type { Logger } from "../logging";
 import type { CardId, PlayerId } from "../types";
 import type { InternalState } from "../types/state";
 import type { CardOperations } from "./card-operations";
+import type { CounterOperations } from "./counter-operations";
 import type { GameOperations } from "./game-operations";
 import type { ZoneOperations } from "./zone-operations";
 
@@ -348,6 +349,120 @@ export const createGameOperations = <TCardDef, TCardMeta>(
       if (index !== -1) {
         state.pendingMulligan.splice(index, 1);
       }
+    },
+  };
+};
+
+/**
+ * Internal counter state stored in cardMetas
+ * Uses a reserved key to avoid conflicts with game-specific metadata
+ */
+interface CounterState {
+  __counters?: Record<string, number>;
+  __flags?: Record<string, boolean>;
+}
+
+/**
+ * Create a CounterOperations implementation backed by InternalState
+ *
+ * Counters and flags are stored in cardMetas using reserved keys (__counters, __flags)
+ * to avoid conflicts with game-specific metadata.
+ *
+ * @param state - Internal state to operate on (will be mutated)
+ * @param logger - Optional logger for TRACE-level logging
+ * @returns CounterOperations implementation
+ */
+export const createCounterOperations = <TCardDef, TCardMeta>(
+  state: InternalState<TCardDef, TCardMeta>,
+  logger?: Logger,
+): CounterOperations => {
+  const getCounterState = (cardId: CardId): CounterState => {
+    const meta = state.cardMetas[cardId as string];
+    if (!meta) {
+      state.cardMetas[cardId as string] = {} as TCardMeta;
+    }
+    return state.cardMetas[cardId as string] as unknown as CounterState;
+  };
+
+  return {
+    setFlag: (cardId, flag, value) => {
+      logger?.trace("Setting flag", { cardId, flag, value });
+      const counterState = getCounterState(cardId);
+      if (!counterState.__flags) {
+        counterState.__flags = {};
+      }
+      counterState.__flags[flag] = value;
+    },
+
+    getFlag: (cardId, flag) => {
+      const meta = state.cardMetas[cardId as string] as unknown as CounterState;
+      return meta?.__flags?.[flag] ?? false;
+    },
+
+    addCounter: (cardId, type, amount) => {
+      logger?.trace("Adding counter", { cardId, type, amount });
+      if (amount <= 0) return;
+      const counterState = getCounterState(cardId);
+      if (!counterState.__counters) {
+        counterState.__counters = {};
+      }
+      counterState.__counters[type] =
+        (counterState.__counters[type] ?? 0) + amount;
+    },
+
+    removeCounter: (cardId, type, amount) => {
+      logger?.trace("Removing counter", { cardId, type, amount });
+      if (amount <= 0) return;
+      const counterState = getCounterState(cardId);
+      if (!counterState.__counters) return;
+      const current = counterState.__counters[type] ?? 0;
+      counterState.__counters[type] = Math.max(0, current - amount);
+    },
+
+    getCounter: (cardId, type) => {
+      const meta = state.cardMetas[cardId as string] as unknown as CounterState;
+      return meta?.__counters?.[type] ?? 0;
+    },
+
+    clearCounter: (cardId, type) => {
+      logger?.trace("Clearing counter", { cardId, type });
+      const meta = state.cardMetas[cardId as string] as unknown as CounterState;
+      if (meta?.__counters) {
+        delete meta.__counters[type];
+      }
+    },
+
+    clearAllCounters: (cardId) => {
+      logger?.trace("Clearing all counters", { cardId });
+      const meta = state.cardMetas[cardId as string] as unknown as CounterState;
+      if (meta) {
+        delete meta.__counters;
+        delete meta.__flags;
+      }
+    },
+
+    getCardsWithFlag: (flag, value) => {
+      const results: CardId[] = [];
+      for (const cardId in state.cardMetas) {
+        const meta = state.cardMetas[cardId] as unknown as CounterState;
+        const flagValue = meta?.__flags?.[flag] ?? false;
+        if (flagValue === value) {
+          results.push(cardId as CardId);
+        }
+      }
+      return results;
+    },
+
+    getCardsWithCounter: (type, minValue = 1) => {
+      const results: CardId[] = [];
+      for (const cardId in state.cardMetas) {
+        const meta = state.cardMetas[cardId] as unknown as CounterState;
+        const counterValue = meta?.__counters?.[type] ?? 0;
+        if (counterValue >= minValue) {
+          results.push(cardId as CardId);
+        }
+      }
+      return results;
     },
   };
 };

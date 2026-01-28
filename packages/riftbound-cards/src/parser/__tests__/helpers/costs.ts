@@ -5,8 +5,7 @@
  * These match the types in @tcg/riftbound-types.
  */
 
-import type { Cost, Domain } from "@tcg/riftbound-types/abilities/cost-types";
-import type { Target } from "@tcg/riftbound-types/targeting";
+import type { Cost, Domain, Target } from "@tcg/riftbound-types";
 
 /**
  * Cost builder helpers for tests

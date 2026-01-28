@@ -4,31 +4,44 @@
  * A test-friendly wrapper around the Riftbound engine.
  */
 
-import type { CardId } from "@tcg/riftbound-types";
+import type { CardId } from "@tcg/core";
 import {
   RiftboundEngine,
   type RiftboundGameConfig,
 } from "../engine/riftbound-engine";
-import type { PlayerId, RiftboundState } from "../types";
+import type { PlayerId, RiftboundGameState } from "../types";
 
 /**
- * Deep merge utility for RiftboundState
- * Handles nested objects like players and zones while preserving type safety
+ * Deep merge utility for RiftboundGameState
+ * Handles nested objects like players and battlefields while preserving type safety
  */
 function deepMergeState(
-  target: RiftboundState,
-  source: Partial<RiftboundState>,
-): RiftboundState {
+  target: RiftboundGameState,
+  source: Partial<RiftboundGameState>,
+): RiftboundGameState {
   return {
     gameId: source.gameId ?? target.gameId,
     players:
       source.players !== undefined
         ? { ...target.players, ...source.players }
         : target.players,
-    zones:
-      source.zones !== undefined
-        ? { ...target.zones, ...source.zones }
-        : target.zones,
+    victoryScore: source.victoryScore ?? target.victoryScore,
+    battlefields:
+      source.battlefields !== undefined
+        ? { ...target.battlefields, ...source.battlefields }
+        : target.battlefields,
+    runePools:
+      source.runePools !== undefined
+        ? { ...target.runePools, ...source.runePools }
+        : target.runePools,
+    conqueredThisTurn:
+      source.conqueredThisTurn !== undefined
+        ? { ...target.conqueredThisTurn, ...source.conqueredThisTurn }
+        : target.conqueredThisTurn,
+    scoredThisTurn:
+      source.scoredThisTurn !== undefined
+        ? { ...target.scoredThisTurn, ...source.scoredThisTurn }
+        : target.scoredThisTurn,
     turn:
       source.turn !== undefined
         ? { ...target.turn, ...source.turn }
@@ -43,7 +56,7 @@ function deepMergeState(
  */
 export interface TestEngineConfig extends RiftboundGameConfig {
   /** Initial state override for testing */
-  readonly initialState?: Partial<RiftboundState>;
+  readonly initialState?: Partial<RiftboundGameState>;
 }
 
 /**
@@ -53,7 +66,7 @@ export interface TestEngineConfig extends RiftboundGameConfig {
  */
 export class RiftboundTestEngine {
   private engine: RiftboundEngine;
-  private state: RiftboundState;
+  private state: RiftboundGameState;
 
   constructor(config: TestEngineConfig) {
     this.engine = new RiftboundEngine();
@@ -68,36 +81,29 @@ export class RiftboundTestEngine {
   /**
    * Get the current game state
    */
-  getState(): RiftboundState {
+  getState(): RiftboundGameState {
     return this.state;
   }
 
   /**
    * Set the game state directly (for testing)
    */
-  setState(state: RiftboundState): void {
+  setState(state: RiftboundGameState): void {
     this.state = state;
   }
 
   /**
-   * Get a player's hand
+   * Get a player's victory points
    */
-  getHand(playerId: PlayerId): CardId[] {
-    return this.state.zones[playerId]?.hand ?? [];
+  getVictoryPoints(playerId: PlayerId): number {
+    return this.state.players[playerId]?.victoryPoints ?? 0;
   }
 
   /**
-   * Get a player's field
+   * Get a player's rune pool energy
    */
-  getField(playerId: PlayerId): CardId[] {
-    return this.state.zones[playerId]?.field ?? [];
-  }
-
-  /**
-   * Get a player's health
-   */
-  getHealth(playerId: PlayerId): number {
-    return this.state.players[playerId]?.health ?? 0;
+  getEnergy(playerId: PlayerId): number {
+    return this.state.runePools[playerId]?.energy ?? 0;
   }
 
   /**
@@ -109,15 +115,16 @@ export class RiftboundTestEngine {
 
   /**
    * Check if the game is over
-   * Returns true if status is "finished" or if any player has 0 or less health
+   * Returns true if status is "finished" or if any player has reached victory score
    */
   isGameOver(): boolean {
     if (this.state.status === "finished") {
       return true;
     }
-    // Also check for health-based victory conditions
+    // Check for victory point win condition
     for (const playerId of Object.keys(this.state.players)) {
-      if (this.state.players[playerId].health <= 0) {
+      const player = this.state.players[playerId];
+      if (player && player.victoryPoints >= this.state.victoryScore) {
         return true;
       }
     }

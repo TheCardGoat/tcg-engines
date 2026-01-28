@@ -16,7 +16,7 @@ import type {
   Target,
   TargetController,
   TriggerSourceTarget,
-} from "@tcg/riftbound-types/targeting";
+} from "@tcg/riftbound-types";
 
 /**
  * Target builder helpers for tests

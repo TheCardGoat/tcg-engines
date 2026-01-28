@@ -10,6 +10,7 @@
 
 import type { CardOperations } from "../operations/card-operations";
 import type { CardRegistry } from "../operations/card-registry";
+import type { CounterOperations } from "../operations/counter-operations";
 import type { GameOperations } from "../operations/game-operations";
 import type { ZoneOperations } from "../operations/zone-operations";
 import type { SeededRNG } from "../rng/seeded-rng";
@@ -110,6 +111,9 @@ export type MoveEnumerationContext<
 
   /** Game operations for game-level state */
   game: GameOperations;
+
+  /** Counter operations for querying card counters/flags */
+  counters: CounterOperations;
 
   /** Card registry for static card definitions */
   registry?: CardRegistry<TCardDefinition>;

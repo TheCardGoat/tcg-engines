@@ -8,6 +8,7 @@
 import type { HistoryOperations } from "../history/history-operations";
 import type { MoveContext, MoveContextInput } from "../moves/move-system";
 import type { CardOperations } from "../operations/card-operations";
+import type { CounterOperations } from "../operations/counter-operations";
 import type { GameOperations } from "../operations/game-operations";
 import type { ZoneOperations } from "../operations/zone-operations";
 import { SeededRNG } from "../rng/seeded-rng";
@@ -44,6 +45,7 @@ export function createMockContext<TParams = any>(
     zones?: Partial<ZoneOperations>;
     cards?: Partial<CardOperations<any>>;
     game?: Partial<GameOperations>;
+    counters?: Partial<CounterOperations>;
     registry?: any;
     flow?: {
       currentPhase?: string;
@@ -101,12 +103,26 @@ export function createMockContext<TParams = any>(
     ...options?.game,
   };
 
+  const mockCounters: CounterOperations = {
+    setFlag: () => {},
+    getFlag: () => false,
+    addCounter: () => {},
+    removeCounter: () => {},
+    getCounter: () => 0,
+    clearCounter: () => {},
+    clearAllCounters: () => {},
+    getCardsWithFlag: () => [],
+    getCardsWithCounter: () => [],
+    ...options?.counters,
+  };
+
   return {
     ...input,
     rng: options?.rng || new SeededRNG("test-seed"),
     zones: mockZones,
     cards: mockCards,
     game: mockGame,
+    counters: mockCounters,
     registry: options?.registry,
     flow: options?.flow
       ? {

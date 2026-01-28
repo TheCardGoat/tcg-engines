@@ -4,7 +4,7 @@
  * Validation logic for game moves.
  */
 
-import type { PlayerId, RiftboundState } from "../types";
+import type { PlayerId, RiftboundGameState } from "../types";
 import type { MoveValidationError } from "../types/move-enumeration";
 
 /**
@@ -39,7 +39,7 @@ export function invalidResult(
  * @returns Validation result
  */
 export function validateActivePlayer(
-  state: RiftboundState,
+  state: RiftboundGameState,
   playerId: PlayerId,
 ): ValidationResult {
   if (state.turn.activePlayer !== playerId) {
@@ -58,7 +58,7 @@ export function validateActivePlayer(
  * @returns Validation result
  */
 export function validateGameInProgress(
-  state: RiftboundState,
+  state: RiftboundGameState,
 ): ValidationResult {
   if (state.status !== "playing") {
     return invalidResult({

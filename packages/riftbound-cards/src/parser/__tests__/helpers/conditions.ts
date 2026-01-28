@@ -8,9 +8,11 @@
 import type {
   AndCondition,
   AttackingCondition,
+  Comparison,
   Condition,
   ControlBattlefieldCondition,
   ControlCondition,
+  Cost,
   CountCondition,
   DefendingCondition,
   FirstTimeCondition,
@@ -25,14 +27,13 @@ import type {
   ScoreCondition,
   ScoreWithinCondition,
   SpentPowerCondition,
+  Target,
   ThisTurnCondition,
   WhileAloneCondition,
   WhileAtBattlefieldCondition,
   WhileBuffedCondition,
   WhileMightyCondition,
-} from "@tcg/riftbound-types/abilities/condition-types";
-import type { Cost } from "@tcg/riftbound-types/abilities/cost-types";
-import type { Comparison, Target } from "@tcg/riftbound-types/targeting";
+} from "@tcg/riftbound-types";
 
 /**
  * Condition builder helpers for tests
