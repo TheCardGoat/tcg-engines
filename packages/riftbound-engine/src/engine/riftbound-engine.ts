@@ -1,11 +1,11 @@
 /**
  * Riftbound Engine
  *
- * Main engine class for the Riftbound TCG.
+ * Main engine class for the Riftbound TCG tabletop simulator.
  */
 
 import type { RuleEngine } from "@tcg/core";
-import type { RiftboundState } from "../types";
+import type { PlayerId, RiftboundGameState } from "../types";
 
 /**
  * Configuration options for creating a new game
@@ -15,12 +15,15 @@ export interface RiftboundGameConfig {
   readonly players: [string, string];
   /** Optional random seed for reproducibility */
   readonly seed?: number;
+  /** Victory score (default: 8 for 1v1) */
+  readonly victoryScore?: number;
 }
 
 /**
  * RiftboundEngine - Main game engine class
  *
  * Provides the interface for creating and managing Riftbound games.
+ * This is a tabletop simulator - players enforce rules themselves.
  */
 export class RiftboundEngine {
   /**
@@ -29,44 +32,46 @@ export class RiftboundEngine {
    * @param config - Game configuration
    * @returns Initial game state
    */
-  createGame(config: RiftboundGameConfig): RiftboundState {
-    const { players } = config;
-    // TODO: seed will be used for deterministic randomization when deck shuffling is implemented
+  createGame(config: RiftboundGameConfig): RiftboundGameState {
+    const { players, victoryScore = 8 } = config;
+
+    // Initialize player states
+    const playerStates: Record<
+      PlayerId,
+      { id: PlayerId; victoryPoints: number }
+    > = {};
+    const runePools: Record<
+      PlayerId,
+      { energy: number; power: Record<string, number> }
+    > = {};
+    const conqueredThisTurn: Record<PlayerId, string[]> = {};
+    const scoredThisTurn: Record<PlayerId, string[]> = {};
+
+    for (const playerId of players) {
+      playerStates[playerId as PlayerId] = {
+        id: playerId as PlayerId,
+        victoryPoints: 0,
+      };
+      runePools[playerId as PlayerId] = {
+        energy: 0,
+        power: {},
+      };
+      conqueredThisTurn[playerId as PlayerId] = [];
+      scoredThisTurn[playerId as PlayerId] = [];
+    }
 
     // Create initial game state
-    const initialState: RiftboundState = {
+    const initialState: RiftboundGameState = {
       gameId: crypto.randomUUID(),
-      players: {
-        [players[0]]: {
-          id: players[0],
-          health: 20,
-          resources: 0,
-        },
-        [players[1]]: {
-          id: players[1],
-          health: 20,
-          resources: 0,
-        },
-      },
-      zones: {
-        [players[0]]: {
-          hand: [],
-          deck: [],
-          field: [],
-          discard: [],
-          exile: [],
-        },
-        [players[1]]: {
-          hand: [],
-          deck: [],
-          field: [],
-          discard: [],
-          exile: [],
-        },
-      },
+      players: playerStates,
+      victoryScore,
+      battlefields: {},
+      runePools,
+      conqueredThisTurn,
+      scoredThisTurn,
       turn: {
-        number: 0,
-        activePlayer: players[0],
+        number: 1,
+        activePlayer: players[0] as PlayerId,
         phase: "setup",
       },
       status: "setup",
@@ -80,7 +85,10 @@ export class RiftboundEngine {
    *
    * @returns RuleEngine instance (placeholder)
    */
-  getRuleEngine(): RuleEngine<RiftboundState, Record<string, unknown>> | null {
+  getRuleEngine(): RuleEngine<
+    RiftboundGameState,
+    Record<string, unknown>
+  > | null {
     // Rule engine will be implemented when game rules are defined
     return null;
   }

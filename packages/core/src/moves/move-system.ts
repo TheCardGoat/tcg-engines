@@ -2,6 +2,7 @@ import type { Draft } from "immer";
 import type { HistoryOperations } from "../history/history-operations";
 import type { CardOperations } from "../operations/card-operations";
 import type { CardRegistry } from "../operations/card-registry";
+import type { CounterOperations } from "../operations/counter-operations";
 import type { GameOperations } from "../operations/game-operations";
 import type { ZoneOperations } from "../operations/zone-operations";
 import type { SeededRNG } from "../rng/seeded-rng";
@@ -273,6 +274,34 @@ export type MoveContext<
     mark(name: string, playerId?: PlayerId): void;
     unmark(name: string, playerId?: PlayerId): void;
   };
+
+  /**
+   * Counter operations API (provided by RuleEngine)
+   *
+   * Provides methods to manage counters and flags on cards:
+   * - setFlag/getFlag: Boolean flags (exhausted, stunned, buffed)
+   * - addCounter/removeCounter/getCounter/clearCounter: Numeric counters (damage)
+   * - clearAllCounters: Reset all counters on a card
+   * - getCardsWithFlag/getCardsWithCounter: Query cards by counter state
+   *
+   * This is the recommended way to manage card counters/tokens.
+   * Always provided by RuleEngine.
+   *
+   * @example
+   * ```typescript
+   * // Mark card as exhausted
+   * context.counters.setFlag(cardId, 'exhausted', true);
+   *
+   * // Add damage to a card
+   * context.counters.addCounter(cardId, 'damage', 3);
+   *
+   * // Check if card is stunned
+   * if (context.counters.getFlag(cardId, 'stunned')) {
+   *   // Card is stunned
+   * }
+   * ```
+   */
+  counters: CounterOperations;
 };
 
 /**
