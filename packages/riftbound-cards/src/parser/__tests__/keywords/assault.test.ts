@@ -17,7 +17,7 @@ import {
 
 describe("Keyword: Assault", () => {
   describe("simple assault", () => {
-    it.skip("should parse '[Assault] (+1 :rb_might: while I'm an attacker.)'", () => {
+    it("should parse '[Assault] (+1 :rb_might: while I'm an attacker.)'", () => {
       const result = parseAbilities(
         "[Assault] (+1 :rb_might: while I'm an attacker.)",
       );
@@ -31,7 +31,7 @@ describe("Keyword: Assault", () => {
   });
 
   describe("assault with value", () => {
-    it.skip("should parse '[Assault 2] (+2 :rb_might: while I'm an attacker.)'", () => {
+    it("should parse '[Assault 2] (+2 :rb_might: while I'm an attacker.)'", () => {
       const result = parseAbilities(
         "[Assault 2] (+2 :rb_might: while I'm an attacker.)",
       );

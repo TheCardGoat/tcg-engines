@@ -161,6 +161,44 @@ function parseValueKeywords(text: string): ValueKeywordAbility[] {
 }
 
 /**
+ * Parse draw effect from text
+ * @param text - The text to parse (should be cleaned of reminder text)
+ * @returns DrawEffect if matched, undefined otherwise
+ */
+function parseDrawEffect(text: string): DrawEffect | undefined {
+  const match = DRAW_PATTERN.exec(text);
+  if (match) {
+    const amount = Number.parseInt(match[1], 10);
+    return {
+      type: "draw",
+      amount,
+    };
+  }
+  return undefined;
+}
+
+/**
+ * Parse effect from text and wrap in SpellAbility
+ * @param text - The text to parse
+ * @returns SpellAbility if an effect was parsed, undefined otherwise
+ */
+function parseEffectAsSpell(text: string): SpellAbility | undefined {
+  const cleanText = removeReminderText(text);
+
+  // Try draw effect
+  const drawEffect = parseDrawEffect(cleanText);
+  if (drawEffect) {
+    return {
+      type: "spell",
+      timing: "action",
+      effect: drawEffect,
+    };
+  }
+
+  return undefined;
+}
+
+/**
  * Parse ability text into a structured ability object.
  *
  * @param text - The ability text to parse

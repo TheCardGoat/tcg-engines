@@ -10,7 +10,7 @@ import { Abilities, Conditions, Effects } from "../helpers";
 
 describe("Keyword: Deflect", () => {
   describe("simple deflect", () => {
-    it.skip("should parse '[Deflect] (Opponents must pay :rb_rune_rainbow: to choose me with a spell or ability.)'", () => {
+    it("should parse '[Deflect] (Opponents must pay :rb_rune_rainbow: to choose me with a spell or ability.)'", () => {
       const result = parseAbilities(
         "[Deflect] (Opponents must pay :rb_rune_rainbow: to choose me with a spell or ability.)",
       );

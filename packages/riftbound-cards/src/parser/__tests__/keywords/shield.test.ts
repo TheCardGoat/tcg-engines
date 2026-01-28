@@ -10,7 +10,7 @@ import { Abilities, Effects, Targets } from "../helpers";
 
 describe("Keyword: Shield", () => {
   describe("simple shield", () => {
-    it.skip("should parse '[Shield] (+1 :rb_might: while I'm a defender.)'", () => {
+    it("should parse '[Shield] (+1 :rb_might: while I'm a defender.)'", () => {
       const result = parseAbilities(
         "[Shield] (+1 :rb_might: while I'm a defender.)",
       );
@@ -24,7 +24,7 @@ describe("Keyword: Shield", () => {
   });
 
   describe("shield with value", () => {
-    it.skip("should parse '[Shield 2] (+2 :rb_might: while I'm a defender.)'", () => {
+    it("should parse '[Shield 2] (+2 :rb_might: while I'm a defender.)'", () => {
       const result = parseAbilities(
         "[Shield 2] (+2 :rb_might: while I'm a defender.)",
       );
