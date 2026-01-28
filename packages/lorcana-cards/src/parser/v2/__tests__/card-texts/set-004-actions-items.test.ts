@@ -1,11 +1,12 @@
 // @ts-nocheck - Skipped tests contain expected values that don't match current types
 import { describe, expect, it } from "bun:test";
-import type {
-  ActionAbilityDefinition,
-  ActivatedAbilityDefinition,
-  KeywordAbilityDefinition,
-  StaticAbilityDefinition,
-  TriggeredAbilityDefinition,
+import {
+  Abilities,
+  Conditions,
+  Costs,
+  Effects,
+  Targets,
+  Triggers,
 } from "@tcg/lorcana-types";
 import { parseAbilityTextMulti } from "../../parser";
 
@@ -17,7 +18,7 @@ describe("Set 004 Card Text Parser Tests - Actions Items", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const swingIntoAction: ActionAbilityDefinition = {
+    const swingIntoAction = {
       type: "action",
       effect: {
         type: "gain-keyword",

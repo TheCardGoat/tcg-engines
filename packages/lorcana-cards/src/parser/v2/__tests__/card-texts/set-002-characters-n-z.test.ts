@@ -1,11 +1,12 @@
 // @ts-nocheck - Skipped tests contain expected values that don't match current types
 import { describe, expect, it } from "bun:test";
-import type {
-  ActionAbilityDefinition,
-  ActivatedAbilityDefinition,
-  KeywordAbilityDefinition,
-  StaticAbilityDefinition,
-  TriggeredAbilityDefinition,
+import {
+  Abilities,
+  Conditions,
+  Costs,
+  Effects,
+  Targets,
+  Triggers,
 } from "@tcg/lorcana-types";
 import { parseAbilityTextMulti } from "../../parser";
 
@@ -17,7 +18,7 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const nursemaid: TriggeredAbilityDefinition = {
+    const nursemaid = {
       type: "triggered",
       name: "NURSEMAID",
       trigger: {
@@ -56,7 +57,7 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
     expect(result.abilities[0].ability).toEqual(expect.objectContaining(shift));
 
     // Second ability: LET YOUR POWER SHINE
-    const letYourPowerShine: TriggeredAbilityDefinition = {
+    const letYourPowerShine = {
       type: "triggered",
       name: "LET YOUR POWER SHINE",
       trigger: {
@@ -85,7 +86,7 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const yawn: StaticAbilityDefinition = {
+    const yawn = {
       type: "static",
       name: "YAWN!",
       effect: {
@@ -105,7 +106,7 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const ahChoo: TriggeredAbilityDefinition = {
+    const ahChoo = {
       type: "triggered",
       name: "AH-CHOO!",
       trigger: {
@@ -137,7 +138,7 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const iWontHurtYou: TriggeredAbilityDefinition = {
+    const iWontHurtYou = {
       type: "triggered",
       name: "I WON'T HURT YOU",
       trigger: {
@@ -167,7 +168,7 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const howDoYouDo: StaticAbilityDefinition = {
+    const howDoYouDo = {
       type: "static",
       name: "HOW DO YOU DO?",
       effect: {
@@ -198,7 +199,7 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
     expect(result.abilities[0].ability).toEqual(expect.objectContaining(shift));
 
     // Second ability: WISHES COME TRUE
-    const wishesComeTrue: TriggeredAbilityDefinition = {
+    const wishesComeTrue = {
       type: "triggered",
       name: "WISHES COME TRUE",
       trigger: {
@@ -236,7 +237,7 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
     expect(result.abilities[0].ability).toEqual(expect.objectContaining(shift));
 
     // Second ability: WHO IS THE FAIREST?
-    const whoIsTheFairest: TriggeredAbilityDefinition = {
+    const whoIsTheFairest = {
       type: "triggered",
       name: "WHO IS THE FAIREST?",
       trigger: {
@@ -276,7 +277,7 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const paintingTheRosesRed: ActionAbilityDefinition = {
+    const paintingTheRosesRed = {
       type: "action",
       effect: {
         type: "sequence",
@@ -308,7 +309,7 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const zeroToHero: ActionAbilityDefinition = {
+    const zeroToHero = {
       type: "action",
       effect: {
         type: "cost-reduction",
@@ -328,7 +329,7 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const aSillySong: ActivatedAbilityDefinition = {
+    const aSillySong = {
       type: "activated",
       name: "A SILLY SONG",
       cost: {
@@ -369,7 +370,7 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
     expect(result.abilities[0].ability).toEqual(expect.objectContaining(shift));
 
     // Second ability: LISTEN TO YOUR CONSCIENCE
-    const listenToYourConscience: TriggeredAbilityDefinition = {
+    const listenToYourConscience = {
       type: "triggered",
       name: "LISTEN TO YOUR CONSCIENCE",
       trigger: {
@@ -398,7 +399,7 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const tellingLies: TriggeredAbilityDefinition = {
+    const tellingLies = {
       type: "triggered",
       name: "TELLING LIES",
       trigger: {
@@ -436,7 +437,7 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
     expect(result.abilities[0].ability).toEqual(expect.objectContaining(shift));
 
     // Second ability: CRUEL IRONY
-    const cruelIrony: TriggeredAbilityDefinition = {
+    const cruelIrony = {
       type: "triggered",
       name: "CRUEL IRONY",
       trigger: {
@@ -472,7 +473,7 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const toWonderland: ActivatedAbilityDefinition = {
+    const toWonderland = {
       type: "activated",
       name: "TO WONDERLAND",
       cost: {
@@ -495,7 +496,7 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const knowledge: ActivatedAbilityDefinition = {
+    const knowledge = {
       type: "activated",
       name: "KNOWLEDGE",
       cost: {
@@ -521,7 +522,7 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const comingYourMostLugubriousness: StaticAbilityDefinition = {
+    const comingYourMostLugubriousness = {
       type: "static",
       name: "COMING, YOUR MOST LUGUBRIOUSNESS",
       condition: {
@@ -551,7 +552,7 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const iCanHandleIt: TriggeredAbilityDefinition = {
+    const iCanHandleIt = {
       type: "triggered",
       name: "I CAN HANDLE IT",
       trigger: {
@@ -596,14 +597,11 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
     expect(result.abilities.length).toBe(3);
 
     // First ability: Ward
-    const ward: KeywordAbilityDefinition = {
-      type: "keyword",
-      keyword: "Ward",
-    };
+    const ward = Abilities.Keyword("Ward");
     expect(result.abilities[0].ability).toEqual(expect.objectContaining(ward));
 
     // Second ability: TAKE THAT!
-    const takeThat: TriggeredAbilityDefinition = {
+    const takeThat = {
       type: "triggered",
       name: "TAKE THAT!",
       trigger: {
@@ -625,7 +623,7 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
     );
 
     // Third ability: WHO'S NEXT?
-    const whosNext: StaticAbilityDefinition = {
+    const whosNext = {
       type: "static",
       name: "WHO'S NEXT?",
       condition: {
@@ -656,14 +654,11 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
     expect(result.abilities.length).toBe(2);
 
     // First ability: Ward
-    const ward: KeywordAbilityDefinition = {
-      type: "keyword",
-      keyword: "Ward",
-    };
+    const ward = Abilities.Keyword("Ward");
     expect(result.abilities[0].ability).toEqual(expect.objectContaining(ward));
 
     // Second ability: I SENTENCE YOU
-    const iSentenceYou: TriggeredAbilityDefinition = {
+    const iSentenceYou = {
       type: "triggered",
       name: "I SENTENCE YOU",
       trigger: {
@@ -693,7 +688,7 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const royalRage: TriggeredAbilityDefinition = {
+    const royalRage = {
       type: "triggered",
       name: "ROYAL RAGE",
       trigger: {
@@ -720,10 +715,7 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const evasive: KeywordAbilityDefinition = {
-      type: "keyword",
-      keyword: "Evasive",
-    };
+    const evasive = Abilities.Keyword("Evasive");
     expect(result.abilities[0].ability).toEqual(
       expect.objectContaining(evasive),
     );
@@ -736,10 +728,7 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const evasive: KeywordAbilityDefinition = {
-      type: "keyword",
-      keyword: "Evasive",
-    };
+    const evasive = Abilities.Keyword("Evasive");
     expect(result.abilities[0].ability).toEqual(
       expect.objectContaining(evasive),
     );
@@ -752,7 +741,7 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const aPerfectDisguise: ActivatedAbilityDefinition = {
+    const aPerfectDisguise = {
       type: "activated",
       name: "A PERFECT DISGUISE",
       cost: {
@@ -781,7 +770,7 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const packTactics: ActionAbilityDefinition = {
+    const packTactics = {
       type: "action",
       effect: {
         type: "gain-lore",
@@ -800,7 +789,7 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const ringTheBell: ActionAbilityDefinition = {
+    const ringTheBell = {
       type: "action",
       effect: {
         type: "banish",
@@ -819,7 +808,7 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const snapBoomTwang: ActivatedAbilityDefinition = {
+    const snapBoomTwang = {
       type: "activated",
       name: "SNAP! BOOM! TWANG!",
       cost: {
@@ -844,7 +833,7 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const thisShouldntTakeLong: ActivatedAbilityDefinition = {
+    const thisShouldntTakeLong = {
       type: "activated",
       name: "THIS SHOULDN'T TAKE LONG",
       cost: {
@@ -869,7 +858,7 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const thisIsMyKingdom: TriggeredAbilityDefinition = {
+    const thisIsMyKingdom = {
       type: "triggered",
       name: "THIS IS MY KINGDOM",
       trigger: {
@@ -919,7 +908,7 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
     expect(result.abilities[0].ability).toEqual(expect.objectContaining(shift));
 
     // Second ability: CHAMPION OF KUMANDRA
-    const championOfKumandra: TriggeredAbilityDefinition = {
+    const championOfKumandra = {
       type: "triggered",
       name: "CHAMPION OF KUMANDRA",
       trigger: {
@@ -950,14 +939,11 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
     expect(result.abilities.length).toBe(2);
 
     // First ability: Rush
-    const rush: KeywordAbilityDefinition = {
-      type: "keyword",
-      keyword: "Rush",
-    };
+    const rush = Abilities.Keyword("Rush");
     expect(result.abilities[0].ability).toEqual(expect.objectContaining(rush));
 
     // Second ability: DADDY ISN'T HERE TO SAVE YOU
-    const daddyIsntHereToSaveYou: TriggeredAbilityDefinition = {
+    const daddyIsntHereToSaveYou = {
       type: "triggered",
       name: "DADDY ISN'T HERE TO SAVE YOU",
       condition: {
@@ -1000,7 +986,7 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const energetic: TriggeredAbilityDefinition = {
+    const energetic = {
       type: "triggered",
       name: "ENERGETIC",
       trigger: {
@@ -1029,10 +1015,7 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const reckless: KeywordAbilityDefinition = {
-      type: "keyword",
-      keyword: "Reckless",
-    };
+    const reckless = Abilities.Keyword("Reckless");
     expect(result.abilities[0].ability).toEqual(
       expect.objectContaining(reckless),
     );
@@ -1045,7 +1028,7 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const teethAndAmbitions: ActionAbilityDefinition = {
+    const teethAndAmbitions = {
       type: "action",
       effect: {
         type: "cost-effect",
@@ -1072,7 +1055,7 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const theMostDiabolicalScheme: ActionAbilityDefinition = {
+    const theMostDiabolicalScheme = {
       type: "action",
       effect: {
         type: "cost-effect",
@@ -1097,7 +1080,7 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const whatDidYouCallMe: ActionAbilityDefinition = {
+    const whatDidYouCallMe = {
       type: "action",
       effect: {
         type: "modify-stat",
@@ -1118,7 +1101,7 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const peterPansDagger: StaticAbilityDefinition = {
+    const peterPansDagger = {
       type: "static",
       effect: {
         type: "modify-stat",
@@ -1139,7 +1122,7 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const swordInTheStone: ActivatedAbilityDefinition = {
+    const swordInTheStone = {
       type: "activated",
       cost: {
         exert: true,
@@ -1169,7 +1152,7 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const itsCalledAHustle: TriggeredAbilityDefinition = {
+    const itsCalledAHustle = {
       type: "triggered",
       name: "IT'S CALLED A HUSTLE",
       trigger: {
@@ -1199,7 +1182,7 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const hideAndSeek: StaticAbilityDefinition = {
+    const hideAndSeek = {
       type: "static",
       name: "HIDE AND SEEK",
       condition: {
@@ -1226,7 +1209,7 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const iTrustYou: TriggeredAbilityDefinition = {
+    const iTrustYou = {
       type: "triggered",
       name: "I TRUST YOU",
       trigger: {
@@ -1271,10 +1254,7 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const ward: KeywordAbilityDefinition = {
-      type: "keyword",
-      keyword: "Ward",
-    };
+    const ward = Abilities.Keyword("Ward");
     expect(result.abilities[0].ability).toEqual(expect.objectContaining(ward));
   });
 
@@ -1284,7 +1264,7 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const nothingToHide: ActionAbilityDefinition = {
+    const nothingToHide = {
       type: "action",
       effect: {
         type: "sequence",
@@ -1314,7 +1294,7 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
     expect(result.abilities.length).toBe(2);
 
     // First ability: JUMBO POP
-    const jumboPop: TriggeredAbilityDefinition = {
+    const jumboPop = {
       type: "triggered",
       name: "JUMBO POP",
       trigger: {
@@ -1337,7 +1317,7 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
     );
 
     // Second ability: THAT'S REDWOOD
-    const thatsRedwood: ActivatedAbilityDefinition = {
+    const thatsRedwood = {
       type: "activated",
       name: "THAT'S REDWOOD",
       cost: {
@@ -1363,7 +1343,7 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const flightCabin: StaticAbilityDefinition = {
+    const flightCabin = {
       type: "static",
       name: "FLIGHT CABIN",
       effect: {
@@ -1386,16 +1366,13 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
     expect(result.abilities.length).toBe(2);
 
     // First ability: Bodyguard
-    const bodyguard: KeywordAbilityDefinition = {
-      type: "keyword",
-      keyword: "Bodyguard",
-    };
+    const bodyguard = Abilities.Keyword("Bodyguard");
     expect(result.abilities[0].ability).toEqual(
       expect.objectContaining(bodyguard),
     );
 
     // Second ability: BLADES
-    const blades: StaticAbilityDefinition = {
+    const blades = {
       type: "static",
       name: "BLADES",
       effect: {
@@ -1416,7 +1393,7 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const offWithTheirHeads: TriggeredAbilityDefinition = {
+    const offWithTheirHeads = {
       type: "triggered",
       name: "OFF WITH THEIR HEADS!",
       trigger: {
@@ -1445,7 +1422,7 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const changeOfHeart: TriggeredAbilityDefinition = {
+    const changeOfHeart = {
       type: "triggered",
       name: "CHANGE OF HEART",
       trigger: {
@@ -1486,10 +1463,7 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
     expect(result.abilities.length).toBe(2);
 
     // First ability: Bodyguard
-    const bodyguard: KeywordAbilityDefinition = {
-      type: "keyword",
-      keyword: "Bodyguard",
-    };
+    const bodyguard = Abilities.Keyword("Bodyguard");
     expect(result.abilities[0].ability).toEqual(
       expect.objectContaining(bodyguard),
     );
@@ -1523,7 +1497,7 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
     );
 
     // Second ability: WHAT YOU GIVE IS WHAT YOU GET
-    const whatYouGive: StaticAbilityDefinition = {
+    const whatYouGive = {
       type: "static",
       name: "WHAT YOU GIVE IS WHAT YOU GET",
       condition: {
@@ -1551,7 +1525,7 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const pickAFight: ActionAbilityDefinition = {
+    const pickAFight = {
       type: "action",
       effect: {
         type: "grant-ability",
@@ -1574,7 +1548,7 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const training: TriggeredAbilityDefinition = {
+    const training = {
       type: "triggered",
       name: "TRAINING",
       trigger: {
