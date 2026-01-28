@@ -10,7 +10,7 @@ import { Abilities, Effects, Triggers } from "../helpers";
 
 describe("Keyword: Ganking", () => {
   describe("simple ganking", () => {
-    it.skip("should parse '[Ganking] (I can move from battlefield to battlefield.)'", () => {
+    it("should parse '[Ganking] (I can move from battlefield to battlefield.)'", () => {
       const result = parseAbilities(
         "[Ganking] (I can move from battlefield to battlefield.)",
       );

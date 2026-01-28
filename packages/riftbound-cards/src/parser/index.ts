@@ -9,9 +9,11 @@ import type {
   AbilityWithText,
   SimpleKeyword,
   SimpleKeywordAbility,
+  SpellAbility,
   ValueKeyword,
   ValueKeywordAbility,
 } from "@tcg/riftbound-types";
+import type { DrawEffect } from "@tcg/riftbound-types/abilities/effect-types";
 
 /**
  * Options for controlling parser behavior and output
@@ -41,7 +43,7 @@ export interface ParseResult {
  */
 export interface ParseAbilitiesResult {
   readonly success: boolean;
-  readonly abilities?: Ability[];
+  readonly abilities?: AbilityWithText[];
   readonly error?: string;
 }
 
@@ -97,6 +99,11 @@ const VALUE_KEYWORD_PATTERN = new RegExp(
  * Pattern to match reminder text in parentheses
  */
 const REMINDER_TEXT_PATTERN = /\([^)]*\)/g;
+
+/**
+ * Pattern to match draw effects: "Draw N."
+ */
+const DRAW_PATTERN = /^Draw (\d+)\.?$/i;
 
 // ============================================================================
 // Parser Functions
@@ -276,6 +283,14 @@ export function parseAbilities(
   // Parse value keywords
   const valueKeywords = parseValueKeywords(text);
   abilities.push(...valueKeywords);
+
+  // If no keywords found, try parsing as an effect
+  if (abilities.length === 0) {
+    const spellAbility = parseEffectAsSpell(text);
+    if (spellAbility) {
+      abilities.push(spellAbility);
+    }
+  }
 
   if (abilities.length === 0) {
     return {

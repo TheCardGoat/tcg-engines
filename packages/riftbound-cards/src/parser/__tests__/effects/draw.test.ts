@@ -10,7 +10,7 @@ import { Effects } from "../helpers";
 
 describe("Effect: Draw", () => {
   describe("fixed draw", () => {
-    it.skip("should parse 'Draw 1.'", () => {
+    it("should parse 'Draw 1.'", () => {
       const result = parseAbilities("Draw 1.");
 
       expect(result.success).toBe(true);
