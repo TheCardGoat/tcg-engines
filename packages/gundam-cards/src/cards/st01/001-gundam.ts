@@ -27,17 +27,16 @@ export const Gundam: UnitCardDefinition = {
   ],
   effects: [
     {
-      id: "st01-001-effect-1",
-      description: "【During Pair】 During your turn, all your Units get AP+1.",
+      id: "eff-r5axhi6bj",
       type: "CONSTANT",
-      conditions: ["DURING_PAIR"],
+      description: "During your turn, all your Units get AP+1.",
+      restrictions: [],
+      conditions: [],
       action: {
         type: "MODIFY_STATS",
-        parameters: {
-          attribute: "ap",
-          modifier: 1,
-          duration: "turn",
-        },
+        attribute: "AP",
+        value: 1,
+        duration: "TURN",
       },
     },
   ],

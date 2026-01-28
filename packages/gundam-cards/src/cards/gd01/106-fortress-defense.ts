@@ -23,13 +23,14 @@ export const FortressDefense: CommandCardDefinition = {
   },
   effects: [
     {
-      id: "gd01-106-effect-1",
-      description:
-        "【Main】Deploy 2 [Zaku Ⅱ]((Zeon)･AP1･HP1) Unit tokens. 【Pilot】[Dozle Zabi]",
+      id: "eff-tokqdxr86",
       type: "CONSTANT",
+      description:
+        "Deploy 2 [Zaku Ⅱ]((Zeon)･AP1･HP1) Unit tokens. 【Pilot】[Dozle Zabi]",
+      restrictions: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "【Main】Deploy 2 [Zaku Ⅱ]((Zeon)･AP1･HP1) Unit tokens. 【Pilot】[Dozle Zabi]",
+        type: "DEPLOY",
       },
     },
   ],

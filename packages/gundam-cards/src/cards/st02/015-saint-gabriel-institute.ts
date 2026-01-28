@@ -20,24 +20,28 @@ export const SaintGabrielInstitute: BaseCardDefinition_Structure = {
   traits: ["academy", "stronghold"],
   effects: [
     {
-      id: "st02-015-effect-1",
-      description: "【Burst】 Deploy this card.",
+      id: "eff-p75og14t1",
       type: "TRIGGERED",
       timing: "BURST",
+      description: "Deploy this card.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Deploy this card.",
+        type: "DEPLOY",
       },
     },
     {
-      id: "st02-015-effect-2",
-      description:
-        "【Deploy】 Add 1 of your Shields to your hand. Then, look at the top 2 cards of your deck and return 1 to the top and 1 to the bottom.",
+      id: "eff-2tdeoniul",
       type: "TRIGGERED",
       timing: "DEPLOY",
+      description:
+        "Add 1 of your Shields to your hand. Then, look at the top 2 cards of your deck and return 1 to the top and 1 to the bottom.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Add 1 of your Shields to your hand. Then, look at the top 2 cards of your deck and return 1 to the top and 1 to the bottom.",
+        type: "ADD_TO_HAND",
       },
     },
   ],

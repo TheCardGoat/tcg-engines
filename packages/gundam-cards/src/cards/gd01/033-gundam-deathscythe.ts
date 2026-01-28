@@ -1,6 +1,6 @@
 import type { UnitCardDefinition } from "@tcg/gundam-types";
 
-export const GundamDeathscythe_GD01_033: UnitCardDefinition = {
+export const GundamDeathscythe: UnitCardDefinition = {
   id: "gd01-033",
   name: "Gundam Deathscythe",
   cardNumber: "GD01-033",
@@ -23,18 +23,6 @@ export const GundamDeathscythe_GD01_033: UnitCardDefinition = {
     {
       keyword: "Repair",
       value: 1,
-    },
-  ],
-  effects: [
-    {
-      id: "gd01-033-effect-1",
-      description:
-        "<Repair 1> (At the end of your turn, this Unit recovers the specified number of HP.)",
-      type: "CONSTANT",
-      action: {
-        type: "CUSTOM",
-        text: "<Repair 1> (At the end of your turn, this Unit recovers the specified number of HP.)",
-      },
     },
   ],
 };

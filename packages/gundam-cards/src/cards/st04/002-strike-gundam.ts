@@ -21,13 +21,16 @@ export const StrikeGundam: UnitCardDefinition = {
   linkRequirements: ["kira-yamato"],
   effects: [
     {
-      id: "st04-002-effect-1",
-      description: "【Deploy】 Draw 1. Then, discard 1.",
+      id: "eff-fiqc1mcgq",
       type: "TRIGGERED",
       timing: "DEPLOY",
+      description: "Draw 1. Then, discard 1.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Draw 1. Then, discard 1.",
+        type: "DRAW",
+        value: 1,
       },
     },
   ],

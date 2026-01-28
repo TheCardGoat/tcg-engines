@@ -17,12 +17,14 @@ export const OverflowingAffection: CommandCardDefinition = {
   timing: "MAIN",
   effects: [
     {
-      id: "gd01-118-effect-1",
-      description: "【Main】Draw 2. Then, discard 1.",
+      id: "eff-1uzu5lpeq",
       type: "CONSTANT",
+      description: "Draw 2. Then, discard 1.",
+      restrictions: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "【Main】Draw 2. Then, discard 1.",
+        type: "DRAW",
+        value: 2,
       },
     },
   ],

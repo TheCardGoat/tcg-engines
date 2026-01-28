@@ -21,9 +21,11 @@ export const Graze: UnitCardDefinition = {
   linkRequirements: ["-"],
   effects: [
     {
-      id: "st05-009-effect-1",
-      description: "-",
+      id: "eff-lamgg269j",
       type: "CONSTANT",
+      description: "-",
+      restrictions: [],
+      conditions: [],
       action: {
         type: "CUSTOM",
         text: "-",

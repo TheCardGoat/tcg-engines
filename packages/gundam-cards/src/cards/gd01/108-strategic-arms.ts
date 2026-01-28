@@ -17,19 +17,25 @@ export const StrategicArms: CommandCardDefinition = {
   timing: "MAIN",
   effects: [
     {
-      id: "gd01-108-effect-1",
-      description: "【Main】Deal 2 damage to all Units with <Blocker>.",
+      id: "eff-1sqpn5st7",
       type: "CONSTANT",
+      description: "Deal 2 damage to all Units with .",
+      restrictions: [],
+      conditions: [],
       action: {
         type: "DAMAGE",
-        parameters: {
-          target: {
-            type: "unknown",
-            rawText: "all Units with <Blocker>",
-          },
-          amount: 2,
+        value: 2,
+        target: {
+          controller: "ANY",
+          cardType: "UNIT",
+          filters: [],
         },
       },
+    },
+  ],
+  keywords: [
+    {
+      keyword: "Blocker",
     },
   ],
 };

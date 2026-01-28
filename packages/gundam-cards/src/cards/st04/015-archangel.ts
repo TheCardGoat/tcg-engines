@@ -20,35 +20,64 @@ export const Archangel: BaseCardDefinition_Structure = {
   traits: ["earth", "alliance", "warship"],
   effects: [
     {
-      id: "st04-015-effect-1",
-      description: "【Burst】 Deploy this card.",
+      id: "eff-pranzu34m",
       type: "TRIGGERED",
       timing: "BURST",
+      description: "Deploy this card.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Deploy this card.",
+        type: "DEPLOY",
       },
     },
     {
-      id: "st04-015-effect-2",
-      description: "【Deploy】 Add 1 of your Shields to your hand.",
+      id: "eff-9wgipj49x",
       type: "TRIGGERED",
       timing: "DEPLOY",
+      description: "Add 1 of your Shields to your hand.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Add 1 of your Shields to your hand.",
+        type: "ADD_TO_HAND",
       },
     },
     {
-      id: "st04-015-effect-3",
-      description:
-        "【Activate･Main】 【Once per Turn】②：Choose 1 friendly Unit with <Blocker>. Set it as active. It can't attack during this turn.",
+      id: "eff-cw8s0g7h1",
       type: "ACTIVATED",
       timing: "MAIN",
+      description:
+        "【Once per Turn】②:Choose 1 friendly Unit with . Set it as active. It can't attack during this turn.",
+      restrictions: [
+        {
+          type: "ONCE_PER_TURN",
+        },
+      ],
+      costs: [
+        {
+          type: "ENERGY",
+          amount: 2,
+        },
+      ],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "【Once per Turn】②：Choose 1 friendly Unit with <Blocker>. Set it as active. It can't attack during this turn.",
+        type: "STAND",
+        target: {
+          controller: "SELF",
+          cardType: "UNIT",
+          count: {
+            min: 1,
+            max: 1,
+          },
+          filters: [],
+        },
       },
+    },
+  ],
+  keywords: [
+    {
+      keyword: "Blocker",
     },
   ],
 };

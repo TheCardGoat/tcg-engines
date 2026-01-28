@@ -21,14 +21,31 @@ export const SwordStrikeGundam: UnitCardDefinition = {
   linkRequirements: ["(earth-alliance)-trait"],
   effects: [
     {
-      id: "gd01-073-effect-1",
-      description:
-        "【Attack】 Choose 1 enemy Unit with 2 or less HP. Return it to its owner&#039;s hand.",
+      id: "eff-2owsjawtb",
       type: "TRIGGERED",
       timing: "ATTACK",
+      description:
+        "Choose 1 enemy Unit with 2 or less HP. Return it to its owner&#039;s hand.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Choose 1 enemy Unit with 2 or less HP. Return it to its owner&#039;s hand.",
+        type: "ADD_TO_HAND",
+        target: {
+          controller: "OPPONENT",
+          cardType: "UNIT",
+          count: {
+            min: 1,
+            max: 1,
+          },
+          filters: [
+            {
+              type: "hp",
+              comparison: "lte",
+              value: 2,
+            },
+          ],
+        },
       },
     },
   ],

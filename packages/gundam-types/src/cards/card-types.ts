@@ -5,6 +5,8 @@
  * All cards are plain data objects following @tcg/core patterns.
  */
 
+import type { TargetQuery } from "../targeting/gundam-target-dsl";
+
 // ============================================================================
 // EFFECT TYPES
 // ============================================================================
@@ -12,82 +14,151 @@
 /**
  * Effect restrictions that limit how often an effect can be used
  */
-export type EffectRestriction = "ONCE_PER_TURN";
+export interface EffectRestriction {
+  type: "ONCE_PER_TURN" | "ONCE_PER_GAME" | "MAX_PER_TURN";
+  value?: number; // For MAX_PER_TURN
+}
+
 export type EffectConditions = "DURING_PAIR" | "DURING_LINK";
 
-/**
- * Types of actions/effects that can be performed
- */
+export interface EffectCondition {
+  type:
+    | "STATE_CHECK"
+    | "LOCATION_CHECK"
+    | "COMPARISON"
+    | "HAS_UNIT"
+    | "HAS_CARD";
+  // Add more as needed
+  [key: string]: unknown;
+}
+
+export interface EffectCost {
+  type:
+    | "ENERGY"
+    | "DISCARD"
+    | "REST_SELF"
+    | "RETURN_TO_HAND"
+    | "DESTROY_SELF"
+    | "REMOVE_FROM_GRAVEYARD";
+  amount?: number;
+  target?: TargetQuery;
+}
+
+// --- Actions ---
+
 export type EffectActionType =
-  | "DRAW" // Draw cards from deck
-  | "DAMAGE" // Deal damage to units/players
-  | "HEAL" // Restore HP
-  | "REST" // Change unit to rest state
-  | "STAND" // Change unit to stand state
-  | "DESTROY" // Destroy a unit
-  | "SEARCH" // Search deck for cards
-  | "ADD_TO_HAND" // Add card from deck to hand
-  | "DISCARD" // Discard cards from hand
-  | "MODIFY_STATS" // Modify AP/HP
-  | "GAIN_KEYWORDS" // Add keyword abilities
-  | "REMOVE_KEYWORDS" // Remove keyword abilities
-  | "SWITCH_CONTROL" // Change control of units
-  | "PREVENT_DAMAGE" // Prevent damage that would be dealt
-  | "CUSTOM"; // Custom effect text
+  | "DRAW"
+  | "DAMAGE"
+  | "HEAL"
+  | "REST"
+  | "STAND"
+  | "DESTROY"
+  | "SEARCH"
+  | "ADD_TO_HAND"
+  | "DISCARD"
+  | "MODIFY_STATS"
+  | "GAIN_KEYWORDS"
+  | "REMOVE_KEYWORDS"
+  | "SWITCH_CONTROL"
+  | "PREVENT_DAMAGE"
+  | "DEPLOY"
+  | "CREATE_TOKEN"
+  | "SEQUENCE"
+  | "CONDITIONAL"
+  | "CUSTOM";
 
-/**
- * Target selection for effects
- */
-export interface EffectTarget {
-  /** Who/what can be targeted */
-  player: "SELF" | "OPPONENT" | "BOTH" | "ANY";
-
-  /** What card types can be targeted */
-  cardTypes?: ("UNIT" | "PILOT" | "COMMAND" | "BASE")[];
-
-  /** Target must be in specific location */
-  location?: ("field" | "hand" | "deck" | "discard" | "shield")[];
-
-  /** Target must have specific traits */
-  traits?: string[];
-
-  /** Target must meet specific condition (e.g., "HP <= 3", "AP >= 5") */
-  condition?: string;
-
-  /** How many targets to choose */
-  count?: number;
-
-  /** Whether player can choose fewer targets ("up to X") */
-  upTo?: boolean;
-
-  /** Whether player must choose targets if available */
-  mustChoose?: boolean;
-}
-
-/**
- * The actual action/compensation part of an effect
- */
-export interface EffectAction {
-  /** Type of action to perform */
+export interface BaseAction {
   type: EffectActionType;
-
-  /** Target selection for this action */
-  target?: EffectTarget;
-
-  /** Numeric value for the action (e.g., damage amount, cards to draw) */
-  value?: number;
-
-  /** Text for custom actions or additional details */
-  text?: string;
-
-  /** Parameters specific to the action type */
-  parameters?: Record<string, unknown>;
 }
 
+export interface HealAction extends BaseAction {
+  type: "HEAL";
+  amount: number;
+  target?: TargetQuery;
+}
+
+export interface DamageAction extends BaseAction {
+  type: "DAMAGE";
+  value: number;
+  target?: TargetQuery;
+}
+
+export interface DrawAction extends BaseAction {
+  type: "DRAW";
+  value: number;
+  target?: TargetQuery;
+}
+
+export interface SearchAction extends BaseAction {
+  type: "SEARCH";
+  filter?: Record<string, unknown>; // Should use proper filter type eventually
+  destination: "hand" | "deck" | "discard" | "field";
+  count: number;
+}
+
+export interface ModifyStatsAction extends BaseAction {
+  type: "MODIFY_STATS";
+  attribute: "AP" | "HP" | "BOTH";
+  value: number;
+  duration: "TURN" | "PERMANENT";
+  target?: TargetQuery;
+}
+
+export interface CustomAction extends BaseAction {
+  type: "CUSTOM";
+  text: string;
+}
+
+export interface SequenceAction extends BaseAction {
+  type: "SEQUENCE";
+  actions: Action[];
+}
+
+export interface ConditionalAction extends BaseAction {
+  type: "CONDITIONAL";
+  conditions: EffectCondition[];
+  trueAction: Action;
+  falseAction?: Action;
+}
+
+// Generic Action for now to cover all cases without huge boilerplate
+// Or I can define a union of specific actions + GenericAction
+export interface GenericAction extends BaseAction {
+  type: Exclude<
+    EffectActionType,
+    | "HEAL"
+    | "DAMAGE"
+    | "DRAW"
+    | "SEARCH"
+    | "MODIFY_STATS"
+    | "CUSTOM"
+    | "SEQUENCE"
+    | "CONDITIONAL"
+  >;
+  target?: TargetQuery;
+  value?: number;
+  parameters?: Record<string, unknown>;
+  text?: string;
+}
+
+export type Action =
+  | HealAction
+  | DamageAction
+  | DrawAction
+  | SearchAction
+  | ModifyStatsAction
+  | CustomAction
+  | SequenceAction
+  | ConditionalAction
+  | GenericAction;
+
+// Compatibility alias
+export type EffectAction = Action;
+
+// --- Effects ---
+
 /**
- * Base effect structure according to rules 5-1 and 10-1
- * An effect consists of a directive and related compensation which originate
- * from the text on a card.
+ * Base effect structure
  */
 export interface BaseEffect {
   /** Unique identifier for this effect */
@@ -96,7 +167,7 @@ export interface BaseEffect {
   /** Human-readable description (original card text) */
   description: string;
 
-  /** Whether this effect is mandatory ("instructed to perform") or optional ("you may") */
+  /** Whether this effect is mandatory or optional */
   optional?: boolean;
 
   /** Target location where effect can be activated (default: field only) */
@@ -105,19 +176,22 @@ export interface BaseEffect {
   /** Effect restrictions that limit usage */
   restrictions?: EffectRestriction[];
 
-  /** What the effect actually does (the compensation part) */
-  action: EffectAction;
+  /** Activation costs */
+  costs?: EffectCost[];
+
+  /** Conditions for usage */
+  conditions?: EffectCondition[];
+
+  /** The action to perform */
+  action: Action;
 }
 
 /**
- * 10-1-5. Constant Effects
- * A constant effect is an effect that remains constantly active in some form.
+ * Constant Effect
  */
 export interface ConstantEffect extends BaseEffect {
   type: "CONSTANT";
-
-  /** Conditions that must be fulfilled for effect to remain active */
-  conditions?: EffectConditions[];
+  // conditions field in BaseEffect covers usage conditions
 
   /** Whether effect has conditional targets applied when conditions appear */
   hasConditionalTargets?: boolean;
@@ -127,83 +201,49 @@ export interface ConstantEffect extends BaseEffect {
 }
 
 /**
- * 10-1-6. Triggered Effects
- * A triggered effect activates automatically when some conditional event occurs.
+ * Triggered Effect
  */
 export interface TriggeredEffect extends BaseEffect {
   type: "TRIGGERED";
-
-  /** When the effect triggers - effects that specify timing */
   timing:
-    | "DEPLOY" // 【Deploy】
-    | "ATTACK" // 【Attack】
-    | "DESTROYED" // 【Destroyed】
-    | "WHEN_PAIRED" // 【When Paired】
-    | "WHEN_LINKED" // Custom trigger
-    | "BURST"; // 【Burst】 - takes priority over other triggered effects
-
-  /** Custom trigger condition like "when (some event occurs)" */
+    | "DEPLOY"
+    | "ATTACK"
+    | "DESTROYED"
+    | "WHEN_PAIRED"
+    | "WHEN_LINKED"
+    | "BURST";
   customTrigger?: string;
-
-  /** Whether effect still activates if card leaves location after triggering */
   persistsAfterLeaving?: boolean;
 }
 
 /**
- * 10-1-7. Activated Effects
- * An activated effect can be freely activated by the player.
+ * Activated Effect
  */
 export interface ActivatedEffect extends BaseEffect {
   type: "ACTIVATED";
-
-  /** When the effect can be activated */
-  timing: "MAIN" | "ACTION"; // 【Activate･Main】, 【Activate･Action】
-
-  /** Cost to activate (①, ②, etc.) */
-  cost?: number;
-
-  /** Additional activation conditions */
-  additionalConditions?: string[];
-
-  /** Whether effect requires declaration to activate (no colon/conditions) */
+  timing: "MAIN" | "ACTION";
   requiresDeclaration?: boolean;
 }
 
 /**
- * 10-1-8. Command Effects
- * A command effect activates when it is played during the timing specified on a Command card.
+ * Command Effect
  */
 export interface CommandEffect extends BaseEffect {
   type: "COMMAND";
-
-  /** When the command can be played */
   timing: "MAIN" | "ACTION" | "BURST";
-
-  /** Whether this effect requires choosing targets to play */
   requiresTarget?: boolean;
-
-  /** Target requirements for playing the card */
   targetRequirements?: string[];
 }
 
 /**
- * 10-1-9. Substitution Effects
- * When some event would occur, a substitution effect replaces the implementation
- * of that event with another event.
+ * Substitution Effect
  */
 export interface SubstitutionEffect extends BaseEffect {
   type: "SUBSTITUTION";
-
-  /** The original event that would occur (A in "do B instead of A") */
   originalEvent: string;
-
-  /** The replacement event that occurs instead (B in "do B instead of A") */
   replacementEvent: string;
 }
 
-/**
- * Union type for all effect types according to rules 10-1-4
- */
 export type Effect =
   | ConstantEffect
   | TriggeredEffect

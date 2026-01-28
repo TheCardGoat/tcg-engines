@@ -21,18 +21,28 @@ export const GskyEasy: UnitCardDefinition = {
   linkRequirements: ["(white-base-team)-trait"],
   effects: [
     {
-      id: "gd01-014-effect-1",
-      description:
-        "【Activate･Action】 【Once per Turn】Choose 1 Unit. It recovers 1 HP.",
+      id: "eff-zresfn2c0",
       type: "ACTIVATED",
       timing: "ACTION",
+      description: "【Once per Turn】Choose 1 Unit. It recovers 1 HP.",
+      restrictions: [
+        {
+          type: "ONCE_PER_TURN",
+        },
+      ],
+      costs: [],
+      conditions: [],
       action: {
         type: "HEAL",
-        parameters: {
-          target: {
-            type: "self",
+        amount: 1,
+        target: {
+          controller: "ANY",
+          cardType: "UNIT",
+          count: {
+            min: 1,
+            max: 1,
           },
-          amount: 1,
+          filters: [],
         },
       },
     },

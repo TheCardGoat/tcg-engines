@@ -21,11 +21,13 @@ export const GundamSandrock: UnitCardDefinition = {
   linkRequirements: ["quatre-raberba-winner"],
   effects: [
     {
-      id: "gd01-028-effect-1",
-      description:
-        "【Deploy】 You may deploy 1 (Maganac Corps) Unit card from your hand.",
+      id: "eff-242ly3wx4",
       type: "TRIGGERED",
       timing: "DEPLOY",
+      description: "You may deploy 1 (Maganac Corps) Unit card from your hand.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
         type: "CUSTOM",
         text: "You may deploy 1 (Maganac Corps) Unit card from your hand.",

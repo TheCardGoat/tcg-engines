@@ -21,19 +21,28 @@ export const Guntank: UnitCardDefinition = {
   linkRequirements: ["-"],
   effects: [
     {
-      id: "gd01-008-effect-1",
-      description:
-        "【Deploy】 Choose 1 rested enemy Unit. Deal 1 damage to it.",
+      id: "eff-eeq8eg062",
       type: "TRIGGERED",
       timing: "DEPLOY",
+      description: "Choose 1 rested enemy Unit. Deal 1 damage to it.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
         type: "DAMAGE",
-        parameters: {
-          target: {
-            type: "unknown",
-            rawText: "it",
+        value: 1,
+        target: {
+          controller: "OPPONENT",
+          cardType: "UNIT",
+          count: {
+            min: 1,
+            max: 1,
           },
-          amount: 1,
+          filters: [
+            {
+              type: "exerted",
+            },
+          ],
         },
       },
     },

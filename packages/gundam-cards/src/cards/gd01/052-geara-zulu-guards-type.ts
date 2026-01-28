@@ -21,18 +21,24 @@ export const GearaZuluGuardsType: UnitCardDefinition = {
   linkRequirements: ["-"],
   effects: [
     {
-      id: "gd01-052-effect-1",
-      description: "【Deploy】 Choose 1 enemy Unit. Deal 1 damage to it.",
+      id: "eff-4tnc2ih9q",
       type: "TRIGGERED",
       timing: "DEPLOY",
+      description: "Choose 1 enemy Unit. Deal 1 damage to it.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
         type: "DAMAGE",
-        parameters: {
-          target: {
-            type: "unknown",
-            rawText: "it",
+        value: 1,
+        target: {
+          controller: "OPPONENT",
+          cardType: "UNIT",
+          count: {
+            min: 1,
+            max: 1,
           },
-          amount: 1,
+          filters: [],
         },
       },
     },

@@ -21,9 +21,11 @@ export const Maganac: UnitCardDefinition = {
   linkRequirements: ["-"],
   effects: [
     {
-      id: "st02-005-effect-1",
-      description: "-",
+      id: "eff-1xk7rflwk",
       type: "CONSTANT",
+      description: "-",
+      restrictions: [],
+      conditions: [],
       action: {
         type: "CUSTOM",
         text: "-",

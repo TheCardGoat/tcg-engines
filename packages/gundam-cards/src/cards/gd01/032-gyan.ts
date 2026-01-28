@@ -26,13 +26,17 @@ export const Gyan: UnitCardDefinition = {
   ],
   effects: [
     {
-      id: "gd01-032-effect-1",
+      id: "eff-ttcdc0qyo",
+      type: "TRIGGERED",
+      timing: "WHEN_PAIRED",
       description:
-        "【When Paired･(Zeon) Pilot】Choose 1 enemy Unit with <Blocker> that is Lv.2 or lower. Destroy it.",
-      type: "CONSTANT",
+        "Choose 1 enemy Unit with that is Lv.2 or lower. Destroy it.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
         type: "CUSTOM",
-        text: "【When Paired･(Zeon) Pilot】Choose 1 enemy Unit with <Blocker> that is Lv.2 or lower. Destroy it.",
+        text: "2 or lower. Destroy it.",
       },
     },
   ],

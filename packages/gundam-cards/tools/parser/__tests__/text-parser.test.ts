@@ -17,13 +17,14 @@ describe("Text Parser", () => {
     it("should replace br tags with newlines", () => {
       const text = "Effect 1<br>Effect 2<br>Effect 3";
       const cleaned = cleanCardText(text);
-      expect(cleaned).toBe("Effect 1\n\nEffect 2\n\nEffect 3");
+      expect(cleaned).toBe("Effect 1\nEffect 2\nEffect 3");
     });
 
     it("should normalize whitespace", () => {
       const text = "Multiple    spaces   and\n\n  newlines";
       const cleaned = cleanCardText(text);
-      expect(cleaned).toBe("Multiple spaces and newlines");
+      // New normalizer preserves newlines but collapses spaces
+      expect(cleaned).toBe("Multiple spaces and\n\n newlines");
     });
   });
 
@@ -62,7 +63,7 @@ describe("Text Parser", () => {
       expect(ability.type).toBe("TRIGGERED");
       expect(ability.timing).toBe("DEPLOY");
       expect(ability.action.type).toBe("DRAW");
-      expect(ability.action.value).toBe(1);
+      expect((ability.action as any).value).toBe(1);
     });
 
     it("should parse damage effect", () => {
@@ -74,7 +75,7 @@ describe("Text Parser", () => {
       expect(ability.type).toBe("TRIGGERED");
       expect(ability.timing).toBe("ATTACK");
       expect(ability.action.type).toBe("DAMAGE");
-      expect(ability.action.value).toBe(2);
+      expect((ability.action as any).value).toBe(2);
     });
 
     it("should parse search deck effect", () => {

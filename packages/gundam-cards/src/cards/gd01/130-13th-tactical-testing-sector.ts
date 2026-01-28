@@ -1,6 +1,6 @@
 import type { BaseCardDefinition_Structure } from "@tcg/gundam-types";
 
-export const ThirteenthTacticalTestingSector: BaseCardDefinition_Structure = {
+export const The13thTacticalTestingSector: BaseCardDefinition_Structure = {
   id: "gd01-130",
   name: "13th Tactical Testing Sector",
   cardNumber: "GD01-130",
@@ -20,37 +20,51 @@ export const ThirteenthTacticalTestingSector: BaseCardDefinition_Structure = {
   traits: ["academy", "stronghold"],
   effects: [
     {
-      id: "gd01-130-effect-1",
-      description: "【Burst】 Deploy this card.",
+      id: "eff-zn57oipkt",
       type: "TRIGGERED",
       timing: "BURST",
+      description: "Deploy this card.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Deploy this card.",
+        type: "DEPLOY",
       },
     },
     {
-      id: "gd01-130-effect-2",
-      description: "【Deploy】 Add 1 of your Shields to your hand.",
+      id: "eff-rjg5i1i5i",
       type: "TRIGGERED",
       timing: "DEPLOY",
+      description: "Add 1 of your Shields to your hand.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Add 1 of your Shields to your hand.",
+        type: "ADD_TO_HAND",
       },
     },
     {
-      id: "gd01-130-effect-3",
-      description:
-        "【Activate･Main】 Rest this Base：If a friendly (Academy) Unit is in play, choose 1 enemy Unit. It gets AP-1 during this turn.",
+      id: "eff-e5jld9r49",
       type: "ACTIVATED",
       timing: "MAIN",
+      description:
+        "Rest this Base:If a friendly (Academy) Unit is in play, choose 1 enemy Unit. It gets AP-1 during this turn.",
+      restrictions: [],
+      costs: [
+        {
+          type: "REST_SELF",
+          amount: 1,
+        },
+      ],
+      conditions: [],
       action: {
-        type: "MODIFY_STATS",
-        parameters: {
-          attribute: "ap",
-          modifier: -1,
-          duration: "turn",
+        type: "CONDITIONAL",
+        conditions: [],
+        trueAction: {
+          type: "MODIFY_STATS",
+          attribute: "AP",
+          value: -1,
+          duration: "TURN",
         },
       },
     },

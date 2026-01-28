@@ -19,29 +19,37 @@ export const CharAznable: PilotCardDefinition = {
   hpModifier: 1,
   effects: [
     {
-      id: "st03-011-effect-1",
-      description: "【Burst】 Add this card to your hand.",
+      id: "eff-wmf4o1pcl",
       type: "TRIGGERED",
       timing: "BURST",
+      description: "Add this card to your hand.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Add this card to your hand.",
+        type: "ADD_TO_HAND",
       },
     },
     {
-      id: "st03-011-effect-2",
-      description:
-        "【Attack】 During this turn, this Unit gets AP+1 and, if it is a Link Unit, it gains <High-Maneuver>. (This Unit can't be blocked.)",
+      id: "eff-uqlip0x1j",
       type: "TRIGGERED",
       timing: "ATTACK",
+      description:
+        "During this turn, this Unit gets AP+1 and, if it is a Link Unit, it gains . (This Unit can't be blocked.)",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
         type: "MODIFY_STATS",
-        parameters: {
-          attribute: "ap",
-          modifier: 1,
-          duration: "turn",
-        },
+        attribute: "AP",
+        value: 1,
+        duration: "TURN",
       },
+    },
+  ],
+  keywords: [
+    {
+      keyword: "High-Maneuver",
     },
   ],
 };

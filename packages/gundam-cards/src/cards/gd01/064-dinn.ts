@@ -21,9 +21,11 @@ export const Dinn: UnitCardDefinition = {
   linkRequirements: ["-"],
   effects: [
     {
-      id: "gd01-064-effect-1",
-      description: "-",
+      id: "eff-zeutcsvx3",
       type: "CONSTANT",
+      description: "-",
+      restrictions: [],
+      conditions: [],
       action: {
         type: "CUSTOM",
         text: "-",

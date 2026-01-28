@@ -19,17 +19,36 @@ export const HeeroYuy: PilotCardDefinition = {
   hpModifier: 1,
   effects: [
     {
-      id: "st02-010-effect-1",
-      description:
-        "【Burst】 Add this card to your hand. 【During Link】This Unit gets AP+1 and HP+1.",
+      id: "eff-mj7b2bot6",
       type: "TRIGGERED",
       timing: "BURST",
+      description: "Add this card to your hand.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
+      action: {
+        type: "ADD_TO_HAND",
+      },
+    },
+    {
+      id: "eff-rxl3jg8n4",
+      type: "CONSTANT",
+      description: "This Unit gets AP+1 and HP+1.",
+      restrictions: [],
+      conditions: [],
       action: {
         type: "MODIFY_STATS",
-        parameters: {
-          attribute: "ap",
-          modifier: 1,
-          duration: "turn",
+        attribute: "AP",
+        value: 1,
+        duration: "TURN",
+        target: {
+          controller: "SELF",
+          cardType: "UNIT",
+          filters: [],
+          count: {
+            min: 1,
+            max: 1,
+          },
         },
       },
     },

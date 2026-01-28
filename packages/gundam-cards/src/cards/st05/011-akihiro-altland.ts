@@ -18,14 +18,26 @@ export const AkihiroAltland: PilotCardDefinition = {
   hpModifier: 1,
   effects: [
     {
-      id: "st05-011-effect-1",
-      description:
-        "【Burst】 Add this card to your hand. 【During Link】During your turn, when this Unit destroys an enemy Unit with battle damage, choose 1 (Tekkadan) Unit card that is Lv.2 or lower from your trash. Add it to your hand.",
+      id: "eff-dd9zybix9",
       type: "TRIGGERED",
       timing: "BURST",
+      description: "Add this card to your hand.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Add this card to your hand. 【During Link】During your turn, when this Unit destroys an enemy Unit with battle damage, choose 1 (Tekkadan) Unit card that is Lv.2 or lower from your trash. Add it to your hand.",
+        type: "ADD_TO_HAND",
+      },
+    },
+    {
+      id: "eff-j6fotn3up",
+      type: "CONSTANT",
+      description:
+        "During your turn, when this Unit destroys an enemy Unit with battle damage, choose 1 (Tekkadan) Unit card that is Lv.2 or lower from your trash. Add it to your hand.",
+      restrictions: [],
+      conditions: [],
+      action: {
+        type: "ADD_TO_HAND",
       },
     },
   ],

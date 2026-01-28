@@ -17,19 +17,39 @@ export const SignsOfARevolution: CommandCardDefinition = {
   timing: "MAIN",
   effects: [
     {
-      id: "gd01-104-effect-1",
-      description:
-        "【Burst】 Draw 1. 【Main】Choose 1 rested enemy Unit. Deal 2 damage to it.",
+      id: "eff-6wdgg0adq",
       type: "TRIGGERED",
       timing: "BURST",
+      description: "Draw 1.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
+      action: {
+        type: "DRAW",
+        value: 1,
+      },
+    },
+    {
+      id: "eff-bd7q33tmz",
+      type: "CONSTANT",
+      description: "Choose 1 rested enemy Unit. Deal 2 damage to it.",
+      restrictions: [],
+      conditions: [],
       action: {
         type: "DAMAGE",
-        parameters: {
-          target: {
-            type: "unknown",
-            rawText: "it",
+        value: 2,
+        target: {
+          controller: "OPPONENT",
+          cardType: "UNIT",
+          count: {
+            min: 1,
+            max: 1,
           },
-          amount: 2,
+          filters: [
+            {
+              type: "exerted",
+            },
+          ],
         },
       },
     },

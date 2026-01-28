@@ -20,16 +20,16 @@ export const GundamBarbatos2ndForm: UnitCardDefinition = {
   linkRequirements: ["mikazuki-augus"],
   effects: [
     {
-      id: "st05-002-effect-1",
-      description: "While this Unit is damaged, it gets AP+2.",
+      id: "eff-1dyace4gy",
       type: "CONSTANT",
+      description: "While this Unit is damaged, it gets AP+2.",
+      restrictions: [],
+      conditions: [],
       action: {
         type: "MODIFY_STATS",
-        parameters: {
-          attribute: "ap",
-          modifier: 2,
-          duration: "turn",
-        },
+        attribute: "AP",
+        value: 2,
+        duration: "TURN",
       },
     },
   ],

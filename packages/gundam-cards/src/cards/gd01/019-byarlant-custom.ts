@@ -26,13 +26,15 @@ export const ByarlantCustom: UnitCardDefinition = {
   ],
   effects: [
     {
-      id: "gd01-019-effect-1",
-      description:
-        "While 4 or more enemy Units are in play, this Unit gains <Blocker>. (Rest this Unit to change the attack target to it.)",
+      id: "eff-xj8kt29t5",
       type: "CONSTANT",
+      description:
+        "While 4 or more enemy Units are in play, this Unit gains . (Rest this Unit to change the attack target to it.)",
+      restrictions: [],
+      conditions: [],
       action: {
         type: "CUSTOM",
-        text: "While 4 or more enemy Units are in play, this Unit gains <Blocker>. (Rest this Unit to change the attack target to it.)",
+        text: "While 4 or more enemy Units are in play, this Unit gains . (Rest this Unit to change the attack target to it.)",
       },
     },
   ],

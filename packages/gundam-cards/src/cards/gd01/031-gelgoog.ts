@@ -21,9 +21,11 @@ export const Gelgoog: UnitCardDefinition = {
   linkRequirements: ["(zeon)-trait"],
   effects: [
     {
-      id: "gd01-031-effect-1",
-      description: "-",
+      id: "eff-clwedrnpj",
       type: "CONSTANT",
+      description: "-",
+      restrictions: [],
+      conditions: [],
       action: {
         type: "CUSTOM",
         text: "-",

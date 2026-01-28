@@ -26,19 +26,20 @@ export const WingGundamZero: UnitCardDefinition = {
   ],
   effects: [
     {
-      id: "gd01-024-effect-1",
-      description:
-        "【Deploy】 Deal 3 damage to all Units that are Lv.5 or lower.",
+      id: "eff-usq4ixpui",
       type: "TRIGGERED",
       timing: "DEPLOY",
+      description: "Deal 3 damage to all Units that are Lv.5 or lower.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
         type: "DAMAGE",
-        parameters: {
-          target: {
-            type: "unknown",
-            rawText: "all Units that are Lv",
-          },
-          amount: 3,
+        value: 3,
+        target: {
+          controller: "ANY",
+          cardType: "UNIT",
+          filters: [],
         },
       },
     },

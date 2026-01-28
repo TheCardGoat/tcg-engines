@@ -20,38 +20,53 @@ export const Side7: BaseCardDefinition_Structure = {
   traits: ["earth", "federation", "stronghold"],
   effects: [
     {
-      id: "gd01-124-effect-1",
-      description: "【Burst】 Deploy this card.",
+      id: "eff-54zawgyx4",
       type: "TRIGGERED",
       timing: "BURST",
+      description: "Deploy this card.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Deploy this card.",
+        type: "DEPLOY",
       },
     },
     {
-      id: "gd01-124-effect-2",
-      description: "【Deploy】 Add 1 of your Shields to your hand.",
+      id: "eff-1bcrbpyhw",
       type: "TRIGGERED",
       timing: "DEPLOY",
+      description: "Add 1 of your Shields to your hand.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Add 1 of your Shields to your hand.",
+        type: "ADD_TO_HAND",
       },
     },
     {
-      id: "gd01-124-effect-3",
-      description:
-        "【Activate･Main】 Rest this Base：Choose 1 friendly Unit. It recovers 1 HP.",
+      id: "eff-y8r03scsm",
       type: "ACTIVATED",
       timing: "MAIN",
+      description: "Rest this Base:Choose 1 friendly Unit. It recovers 1 HP.",
+      restrictions: [],
+      costs: [
+        {
+          type: "REST_SELF",
+          amount: 1,
+        },
+      ],
+      conditions: [],
       action: {
         type: "HEAL",
-        parameters: {
-          target: {
-            type: "self",
+        amount: 1,
+        target: {
+          controller: "SELF",
+          cardType: "UNIT",
+          count: {
+            min: 1,
+            max: 1,
           },
-          amount: 1,
+          filters: [],
         },
       },
     },

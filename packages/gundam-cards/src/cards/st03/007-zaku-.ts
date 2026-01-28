@@ -1,6 +1,6 @@
 import type { UnitCardDefinition } from "@tcg/gundam-types";
 
-export const Zaku_ST03_007: UnitCardDefinition = {
+export const Zaku: UnitCardDefinition = {
   id: "st03-007",
   name: "Zaku Ⅰ",
   cardNumber: "ST03-007",
@@ -21,9 +21,11 @@ export const Zaku_ST03_007: UnitCardDefinition = {
   linkRequirements: ["-"],
   effects: [
     {
-      id: "st03-007-effect-1",
-      description: "-",
+      id: "eff-cehh3rkn8",
       type: "CONSTANT",
+      description: "-",
+      restrictions: [],
+      conditions: [],
       action: {
         type: "CUSTOM",
         text: "-",

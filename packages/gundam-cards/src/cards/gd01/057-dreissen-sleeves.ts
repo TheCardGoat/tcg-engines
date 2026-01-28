@@ -21,9 +21,11 @@ export const DreissenSleeves: UnitCardDefinition = {
   linkRequirements: ["-"],
   effects: [
     {
-      id: "gd01-057-effect-1",
-      description: "-",
+      id: "eff-r1xvwgrgl",
       type: "CONSTANT",
+      description: "-",
+      restrictions: [],
+      conditions: [],
       action: {
         type: "CUSTOM",
         text: "-",

@@ -26,14 +26,38 @@ export const StrikeRouge: UnitCardDefinition = {
   ],
   effects: [
     {
-      id: "gd01-069-effect-1",
-      description:
-        "【Activate･Main】 【Once per Turn】①：Choose 1 of your rested white Units with <Blocker>. Set it as active. It can&#039;t attack during this turn.",
+      id: "eff-qkwm203vx",
       type: "ACTIVATED",
       timing: "MAIN",
+      description:
+        "【Once per Turn】①:Choose 1 of your rested white Units with . Set it as active. It can&#039;t attack during this turn.",
+      restrictions: [
+        {
+          type: "ONCE_PER_TURN",
+        },
+      ],
+      costs: [
+        {
+          type: "ENERGY",
+          amount: 1,
+        },
+      ],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "【Once per Turn】①：Choose 1 of your rested white Units with <Blocker>. Set it as active. It can&#039;t attack during this turn.",
+        type: "STAND",
+        target: {
+          controller: "SELF",
+          cardType: "UNIT",
+          count: {
+            min: 1,
+            max: 1,
+          },
+          filters: [
+            {
+              type: "exerted",
+            },
+          ],
+        },
       },
     },
   ],

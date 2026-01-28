@@ -1,6 +1,6 @@
 import type { UnitCardDefinition } from "@tcg/gundam-types";
 
-export const GundamDeathscythe_GD01_025: UnitCardDefinition = {
+export const GundamDeathscythe: UnitCardDefinition = {
   id: "gd01-025",
   name: "Gundam Deathscythe",
   cardNumber: "GD01-025",
@@ -26,13 +26,17 @@ export const GundamDeathscythe_GD01_025: UnitCardDefinition = {
   ],
   effects: [
     {
-      id: "gd01-025-effect-1",
+      id: "eff-adovwsfff",
+      type: "TRIGGERED",
+      timing: "WHEN_PAIRED",
       description:
-        "【When Paired･(Operation Meteor) Pilot】Place 1 rested Resource. Then, this Unit gains <First Strike> during this turn. (While this Unit is attacking, it deals damage before the enemy Unit.)",
-      type: "CONSTANT",
+        "Place 1 rested Resource. Then, this Unit gains during this turn. (While this Unit is attacking, it deals damage before the enemy Unit.)",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "【When Paired･(Operation Meteor) Pilot】Place 1 rested Resource. Then, this Unit gains <First Strike> during this turn. (While this Unit is attacking, it deals damage before the enemy Unit.)",
+        type: "DAMAGE",
+        value: 0,
       },
     },
   ],

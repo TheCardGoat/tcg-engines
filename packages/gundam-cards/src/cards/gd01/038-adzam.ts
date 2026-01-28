@@ -21,22 +21,30 @@ export const Adzam: UnitCardDefinition = {
   linkRequirements: ["(zeon)-trait"],
   effects: [
     {
-      id: "gd01-038-effect-1",
-      description:
-        "【Deploy】 If 5 or more enemy Units are in play, deal 1 damage to all enemy Units.",
+      id: "eff-s1girkyo7",
       type: "TRIGGERED",
       timing: "DEPLOY",
+      description:
+        "If 5 or more enemy Units are in play, deal 1 damage to all enemy Units.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "DAMAGE",
-        parameters: {
-          target: {
-            type: "unit",
-            controller: "opponent",
-            filter: {
-              zone: "battle-area",
-            },
+        type: "CONDITIONAL",
+        conditions: [
+          {
+            type: "STATE_CHECK",
+            text: "5 or more enemy Units are in play",
           },
-          amount: 1,
+        ],
+        trueAction: {
+          type: "DAMAGE",
+          value: 1,
+          target: {
+            controller: "OPPONENT",
+            cardType: "UNIT",
+            filters: [],
+          },
         },
       },
     },

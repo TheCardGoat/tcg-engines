@@ -19,24 +19,40 @@ export const SulettaMercury: PilotCardDefinition = {
   hpModifier: 2,
   effects: [
     {
-      id: "st01-011-effect-1",
-      description: "【Burst】 Add this card to your hand.",
+      id: "eff-2geat1wdx",
       type: "TRIGGERED",
       timing: "BURST",
+      description: "Add this card to your hand.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Add this card to your hand.",
+        type: "ADD_TO_HAND",
       },
     },
     {
-      id: "st01-011-effect-2",
-      description:
-        "【Attack】 【Once per Turn】Choose 1 of your Resources. Set it as active.",
+      id: "eff-4h3uuaddw",
       type: "TRIGGERED",
       timing: "ATTACK",
+      description:
+        "【Once per Turn】Choose 1 of your Resources. Set it as active.",
+      restrictions: [
+        {
+          type: "ONCE_PER_TURN",
+        },
+      ],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "【Once per Turn】Choose 1 of your Resources. Set it as active.",
+        type: "STAND",
+        target: {
+          controller: "SELF",
+          count: {
+            min: 1,
+            max: 1,
+          },
+          filters: [],
+        },
       },
     },
   ],

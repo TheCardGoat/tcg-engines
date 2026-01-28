@@ -7,7 +7,11 @@
 import type { CardDefinition } from "@tcg/gundam-types";
 import { mkdir, writeFile } from "fs/promises";
 import { dirname, join } from "path";
-import { generateCardFile, generateFilename } from "./card-generator";
+import {
+  generateCardFile,
+  generateFilename,
+  generateVariableName,
+} from "./card-generator";
 
 /**
  * Saves a card definition to a TypeScript file
@@ -92,17 +96,4 @@ ${exports}
 
   await writeFile(indexPath, content, "utf-8");
   console.log(`📝 Generated master index: ${indexPath}`);
-}
-
-function generateVariableName(name: string): string {
-  return name
-    .replace(/[^a-zA-Z0-9\s]/g, "")
-    .split(/\s+/)
-    .map((word, index) => {
-      if (index === 0) {
-        return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-      }
-      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-    })
-    .join("");
 }

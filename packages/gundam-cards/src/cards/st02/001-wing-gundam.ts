@@ -27,13 +27,15 @@ export const WingGundam: UnitCardDefinition = {
   ],
   effects: [
     {
-      id: "st02-001-effect-1",
-      description:
-        "<Breach 5> (When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.) This Unit may choose an active enemy Unit that is Lv.4 or lower as its attack target.",
+      id: "eff-e5r72a74c",
       type: "CONSTANT",
+      description:
+        "This Unit may choose an active enemy Unit that is Lv.4 or lower as its attack target.",
+      restrictions: [],
+      conditions: [],
       action: {
         type: "CUSTOM",
-        text: "<Breach 5> (When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.) This Unit may choose an active enemy Unit that is Lv.4 or lower as its attack target.",
+        text: "may choose an active enemy Unit that is Lv.4 or lower as its attack target.",
       },
     },
   ],

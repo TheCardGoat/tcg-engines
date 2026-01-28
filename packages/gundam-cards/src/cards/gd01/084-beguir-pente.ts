@@ -21,9 +21,11 @@ export const Beguirpente: UnitCardDefinition = {
   linkRequirements: ["-"],
   effects: [
     {
-      id: "gd01-084-effect-1",
-      description: "-",
+      id: "eff-xtn6z9o80",
       type: "CONSTANT",
+      description: "-",
+      restrictions: [],
+      conditions: [],
       action: {
         type: "CUSTOM",
         text: "-",

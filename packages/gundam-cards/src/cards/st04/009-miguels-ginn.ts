@@ -21,14 +21,25 @@ export const MiguelsGinn: UnitCardDefinition = {
   linkRequirements: ["miguel-ayman"],
   effects: [
     {
-      id: "st04-009-effect-1",
-      description:
-        "【Destroyed】 If you have another Link Unit in play, draw 1.",
+      id: "eff-tuspdzhxh",
       type: "TRIGGERED",
       timing: "DESTROYED",
+      description: "If you have another Link Unit in play, draw 1.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "If you have another Link Unit in play, draw 1.",
+        type: "CONDITIONAL",
+        conditions: [
+          {
+            type: "STATE_CHECK",
+            text: "you have another Link Unit in play",
+          },
+        ],
+        trueAction: {
+          type: "DRAW",
+          value: 1,
+        },
       },
     },
   ],

@@ -19,24 +19,42 @@ export const AmuroRay: PilotCardDefinition = {
   hpModifier: 1,
   effects: [
     {
-      id: "st01-010-effect-1",
-      description: "【Burst】 Add this card to your hand.",
+      id: "eff-twb3sj1f6",
       type: "TRIGGERED",
       timing: "BURST",
+      description: "Add this card to your hand.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Add this card to your hand.",
+        type: "ADD_TO_HAND",
       },
     },
     {
-      id: "st01-010-effect-2",
-      description:
-        "【When Paired】 Choose 1 enemy Unit with 5 or less HP. Rest it.",
+      id: "eff-k5jo3sl64",
       type: "TRIGGERED",
       timing: "WHEN_PAIRED",
+      description: "Choose 1 enemy Unit with 5 or less HP. Rest it.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Choose 1 enemy Unit with 5 or less HP. Rest it.",
+        type: "REST",
+        target: {
+          controller: "OPPONENT",
+          cardType: "UNIT",
+          count: {
+            min: 1,
+            max: 1,
+          },
+          filters: [
+            {
+              type: "hp",
+              comparison: "lte",
+              value: 5,
+            },
+          ],
+        },
       },
     },
   ],

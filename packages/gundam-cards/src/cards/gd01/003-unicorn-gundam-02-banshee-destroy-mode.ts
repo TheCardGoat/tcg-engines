@@ -26,14 +26,26 @@ export const UnicornGundam02BansheeDestroyMode: UnitCardDefinition = {
   ],
   effects: [
     {
-      id: "gd01-003-effect-1",
-      description:
-        "【During Link】 【Attack】 Choose 12 cards from your trash. Return them to their owner&#039;s deck and shuffle it. If you do, set this Unit as active. It gains <First Strike> during this turn. (While this Unit is attacking, it deals damage before the enemy Unit.)",
+      id: "eff-qyjtto6hc",
       type: "TRIGGERED",
       timing: "ATTACK",
+      description:
+        "Choose 12 cards from your trash. Return them to their owner&#039;s deck and shuffle it. If you do, set this Unit as active. It gains during this turn. (While this Unit is attacking, it deals damage before the enemy Unit.)",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Choose 12 cards from your trash. Return them to their owner&#039;s deck and shuffle it. If you do, set this Unit as active. It gains <First Strike> during this turn. (While this Unit is attacking, it deals damage before the enemy Unit.)",
+        type: "DAMAGE",
+        value: 0,
+        target: {
+          controller: "SELF",
+          count: {
+            min: 12,
+            max: 12,
+          },
+          filters: [],
+          zone: ["trashArea"],
+        },
       },
     },
   ],

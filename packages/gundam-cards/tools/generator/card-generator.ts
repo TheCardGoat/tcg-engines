@@ -256,9 +256,17 @@ function generateCardId(cardNumber: string): string {
   return cardNumber.toLowerCase();
 }
 
-function generateVariableName(name: string): string {
-  return name
-    .replace(/[^a-zA-Z0-9\s]/g, "")
+export function generateVariableName(name: string): string {
+  let cleanName = name.replace(/[^a-zA-Z0-9\s]/g, "");
+
+  // Handle names starting with numbers (e.g. "13th Tactical...")
+  if (/^\d/.test(cleanName)) {
+    // Basic number map for common cases if needed, or just prefix
+    // For "13th", "The13th" is a valid identifier
+    cleanName = "The " + cleanName;
+  }
+
+  return cleanName
     .split(/\s+/)
     .map((word, index) => {
       if (index === 0) {

@@ -20,9 +20,11 @@ export const Hyakuren: UnitCardDefinition = {
   linkRequirements: ["-"],
   effects: [
     {
-      id: "st05-006-effect-1",
-      description: "-",
+      id: "eff-2tsqhy4ps",
       type: "CONSTANT",
+      description: "-",
+      restrictions: [],
+      conditions: [],
       action: {
         type: "CUSTOM",
         text: "-",

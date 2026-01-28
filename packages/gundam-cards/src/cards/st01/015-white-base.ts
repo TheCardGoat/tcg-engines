@@ -20,34 +20,49 @@ export const WhiteBase: BaseCardDefinition_Structure = {
   traits: ["earth", "federation", "white", "base", "team", "warship"],
   effects: [
     {
-      id: "st01-015-effect-1",
-      description: "【Burst】 Deploy this card.",
+      id: "eff-qum5o4ag3",
       type: "TRIGGERED",
       timing: "BURST",
+      description: "Deploy this card.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Deploy this card.",
+        type: "DEPLOY",
       },
     },
     {
-      id: "st01-015-effect-2",
-      description: "【Deploy】 Add 1 of your Shields to your hand.",
+      id: "eff-61kviqopf",
       type: "TRIGGERED",
       timing: "DEPLOY",
+      description: "Add 1 of your Shields to your hand.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Add 1 of your Shields to your hand.",
+        type: "ADD_TO_HAND",
       },
     },
     {
-      id: "st01-015-effect-3",
-      description:
-        "【Activate･Main】 【Once per Turn】②：Deploy 1 [Gundam]((White Base Team)･AP3･HP3) Unit token if you have no Units in play, deploy 1 [Guncannon]((White Base Team)･AP2･HP2) Unit token if you have only 1 Unit in play, or deploy 1 [Guntank]((White Base Team)･AP1･HP1) Unit token if you have 2 or more Units in play.",
+      id: "eff-40pq551fi",
       type: "ACTIVATED",
       timing: "MAIN",
+      description:
+        "【Once per Turn】②:Deploy 1 [Gundam]((White Base Team)･AP3･HP3) Unit token if you have no Units in play, deploy 1 [Guncannon]((White Base Team)･AP2･HP2) Unit token if you have only 1 Unit in play, or deploy 1 [Guntank]((White Base Team)･AP1･HP1) Unit token if you have 2 or more Units in play.",
+      restrictions: [
+        {
+          type: "ONCE_PER_TURN",
+        },
+      ],
+      costs: [
+        {
+          type: "ENERGY",
+          amount: 2,
+        },
+      ],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "【Once per Turn】②：Deploy 1 [Gundam]((White Base Team)･AP3･HP3) Unit token if you have no Units in play, deploy 1 [Guncannon]((White Base Team)･AP2･HP2) Unit token if you have only 1 Unit in play, or deploy 1 [Guntank]((White Base Team)･AP1･HP1) Unit token if you have 2 or more Units in play.",
+        type: "DEPLOY",
       },
     },
   ],

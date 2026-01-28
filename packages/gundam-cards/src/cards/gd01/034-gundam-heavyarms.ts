@@ -27,14 +27,24 @@ export const GundamHeavyarms: UnitCardDefinition = {
   ],
   effects: [
     {
-      id: "gd01-034-effect-1",
-      description:
-        "【During Pair】 This Unit gains <Breach 3>. (When this Unit&#039;s attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent&#039;s shield area.)",
+      id: "eff-w0e11afg1",
       type: "CONSTANT",
-      conditions: ["DURING_PAIR"],
+      description:
+        "This Unit gains . (When this Unit&#039;s attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent&#039;s shield area.)",
+      restrictions: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "This Unit gains <Breach 3>. (When this Unit&#039;s attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent&#039;s shield area.)",
+        type: "DAMAGE",
+        value: 0,
+        target: {
+          controller: "SELF",
+          cardType: "UNIT",
+          filters: [],
+          count: {
+            min: 1,
+            max: 1,
+          },
+        },
       },
     },
   ],

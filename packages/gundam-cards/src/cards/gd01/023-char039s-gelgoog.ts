@@ -21,14 +21,17 @@ export const Char039sGelgoog: UnitCardDefinition = {
   linkRequirements: ["char-aznable"],
   effects: [
     {
-      id: "gd01-023-effect-1",
-      description:
-        "【Activate･Main】 Discard 1 (Zeon)/(Neo Zeon) Unit card：If a Pilot is not paired with this Unit, choose 1 (Newtype) Pilot card that is Lv.3 or lower from your trash. Pair it with this Unit.",
+      id: "eff-17ucfyzy5",
       type: "ACTIVATED",
       timing: "MAIN",
+      description:
+        "Discard 1 (Zeon)/(Neo Zeon) Unit card:If a Pilot is not paired with this Unit, choose 1 (Newtype) Pilot card that is Lv.3 or lower from your trash. Pair it with this Unit.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Discard 1 (Zeon)/(Neo Zeon) Unit card：If a Pilot is not paired with this Unit, choose 1 (Newtype) Pilot card that is Lv.3 or lower from your trash. Pair it with this Unit.",
+        type: "DISCARD",
+        value: 1,
       },
     },
   ],

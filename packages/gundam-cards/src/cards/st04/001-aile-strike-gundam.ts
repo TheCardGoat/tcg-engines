@@ -26,13 +26,31 @@ export const AileStrikeGundam: UnitCardDefinition = {
   ],
   effects: [
     {
-      id: "st04-001-effect-1",
+      id: "eff-hmi4hj6ob",
+      type: "TRIGGERED",
+      timing: "WHEN_PAIRED",
       description:
-        "<Blocker> (Rest this Unit to change the attack target to it.) 【When Paired･Lv.4 or Higher Pilot】Choose 1 enemy Unit with 4 or less HP. Return it to its owner's hand.",
-      type: "CONSTANT",
+        "Choose 1 enemy Unit with 4 or less HP. Return it to its owner's hand.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "<Blocker> (Rest this Unit to change the attack target to it.) 【When Paired･Lv.4 or Higher Pilot】Choose 1 enemy Unit with 4 or less HP. Return it to its owner's hand.",
+        type: "ADD_TO_HAND",
+        target: {
+          controller: "OPPONENT",
+          cardType: "UNIT",
+          count: {
+            min: 1,
+            max: 1,
+          },
+          filters: [
+            {
+              type: "hp",
+              comparison: "lte",
+              value: 4,
+            },
+          ],
+        },
       },
     },
   ],

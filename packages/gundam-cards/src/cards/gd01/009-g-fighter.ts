@@ -26,14 +26,17 @@ export const Gfighter: UnitCardDefinition = {
   ],
   effects: [
     {
-      id: "gd01-009-effect-1",
-      description:
-        "【Deploy】 Choose 1 of your (White Base Team) Units. It gains <High-Maneuver> during this turn. (This Unit can&#039;t be blocked.)",
+      id: "eff-bbe6ncynu",
       type: "TRIGGERED",
       timing: "DEPLOY",
+      description:
+        "Choose 1 of your (White Base Team) Units. It gains during this turn. (This Unit can&#039;t be blocked.)",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
         type: "CUSTOM",
-        text: "Choose 1 of your (White Base Team) Units. It gains <High-Maneuver> during this turn. (This Unit can&#039;t be blocked.)",
+        text: "gains during this turn. (This Unit can&#039;t be blocked.)",
       },
     },
   ],

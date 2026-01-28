@@ -21,14 +21,16 @@ export const CharsZaku: UnitCardDefinition = {
   linkRequirements: ["char-aznable"],
   effects: [
     {
-      id: "st03-006-effect-1",
-      description:
-        "【Destroyed】 Look at the top 3 cards of your deck. You may reveal 1 (Zeon)/(Neo Zeon) Unit card among them and add it to your hand. Return the remaining cards randomly to the bottom of your deck.",
+      id: "eff-7ph7dagi8",
       type: "TRIGGERED",
       timing: "DESTROYED",
+      description:
+        "Look at the top 3 cards of your deck. You may reveal 1 (Zeon)/(Neo Zeon) Unit card among them and add it to your hand. Return the remaining cards randomly to the bottom of your deck.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Look at the top 3 cards of your deck. You may reveal 1 (Zeon)/(Neo Zeon) Unit card among them and add it to your hand. Return the remaining cards randomly to the bottom of your deck.",
+        type: "ADD_TO_HAND",
       },
     },
   ],

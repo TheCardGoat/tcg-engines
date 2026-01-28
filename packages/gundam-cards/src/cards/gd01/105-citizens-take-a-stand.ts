@@ -17,18 +17,26 @@ export const CitizensTakeAStand: CommandCardDefinition = {
   timing: "MAIN",
   effects: [
     {
-      id: "gd01-105-effect-1",
-      description:
-        "【Burst】 Add this card to your hand. 【Main】All your Units get AP+2 during this turn.",
+      id: "eff-c90qzixl5",
       type: "TRIGGERED",
       timing: "BURST",
+      description: "Add this card to your hand.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "MODIFY_STATS",
-        parameters: {
-          attribute: "ap",
-          modifier: 2,
-          duration: "turn",
-        },
+        type: "ADD_TO_HAND",
+      },
+    },
+    {
+      id: "eff-qe0sk428o",
+      type: "CONSTANT",
+      description: "All your Units get AP+2 during this turn.",
+      restrictions: [],
+      conditions: [],
+      action: {
+        type: "CUSTOM",
+        text: "",
       },
     },
   ],

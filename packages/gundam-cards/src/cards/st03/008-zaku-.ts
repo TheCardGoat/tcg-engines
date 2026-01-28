@@ -1,6 +1,6 @@
 import type { UnitCardDefinition } from "@tcg/gundam-types";
 
-export const Zaku_ST03_008: UnitCardDefinition = {
+export const Zaku: UnitCardDefinition = {
   id: "st03-008",
   name: "Zaku Ⅱ",
   cardNumber: "ST03-008",
@@ -21,16 +21,26 @@ export const Zaku_ST03_008: UnitCardDefinition = {
   linkRequirements: ["-"],
   effects: [
     {
-      id: "st03-008-effect-1",
-      description: "【Attack】 This Unit gets AP+2 during this turn.",
+      id: "eff-cyusjmimo",
       type: "TRIGGERED",
       timing: "ATTACK",
+      description: "This Unit gets AP+2 during this turn.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
         type: "MODIFY_STATS",
-        parameters: {
-          attribute: "ap",
-          modifier: 2,
-          duration: "turn",
+        attribute: "AP",
+        value: 2,
+        duration: "TURN",
+        target: {
+          controller: "SELF",
+          cardType: "UNIT",
+          filters: [],
+          count: {
+            min: 1,
+            max: 1,
+          },
         },
       },
     },

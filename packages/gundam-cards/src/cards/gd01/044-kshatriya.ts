@@ -1,6 +1,6 @@
 import type { UnitCardDefinition } from "@tcg/gundam-types";
 
-export const Kshatriya_GD01_044: UnitCardDefinition = {
+export const Kshatriya: UnitCardDefinition = {
   id: "gd01-044",
   name: "Kshatriya",
   cardNumber: "GD01-044",
@@ -21,18 +21,24 @@ export const Kshatriya_GD01_044: UnitCardDefinition = {
   linkRequirements: ["marida-cruz"],
   effects: [
     {
-      id: "gd01-044-effect-1",
-      description:
-        "【When Paired･(Cyber-Newtype)/(Newtype) Pilot】Choose 1 to 2 enemy Units. Deal 1 damage to them.",
-      type: "CONSTANT",
+      id: "eff-8hvi48gy5",
+      type: "TRIGGERED",
+      timing: "WHEN_PAIRED",
+      description: "Choose 1 to 2 enemy Units. Deal 1 damage to them.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
         type: "DAMAGE",
-        parameters: {
-          target: {
-            type: "unknown",
-            rawText: "them",
+        value: 1,
+        target: {
+          controller: "OPPONENT",
+          cardType: "UNIT",
+          count: {
+            min: 1,
+            max: 1,
           },
-          amount: 1,
+          filters: [],
         },
       },
     },

@@ -26,19 +26,23 @@ export const Sinanju: UnitCardDefinition = {
   ],
   effects: [
     {
-      id: "st03-001-effect-1",
-      description:
-        "【During Pair】 This Unit gains <High-Maneuver>. (This Unit can't be blocked.) During your turn, when this Unit destroys an enemy shield area card with battle damage, choose 1 enemy Unit. Deal 2 damage to it.",
+      id: "eff-z4ss34kt5",
       type: "CONSTANT",
-      conditions: ["DURING_PAIR"],
+      description:
+        "This Unit gains . (This Unit can't be blocked.) During your turn, when this Unit destroys an enemy shield area card with battle damage, choose 1 enemy Unit. Deal 2 damage to it.",
+      restrictions: [],
+      conditions: [],
       action: {
         type: "DAMAGE",
-        parameters: {
-          target: {
-            type: "unknown",
-            rawText: "it",
+        value: 2,
+        target: {
+          controller: "SELF",
+          cardType: "UNIT",
+          filters: [],
+          count: {
+            min: 1,
+            max: 1,
           },
-          amount: 2,
         },
       },
     },

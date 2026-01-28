@@ -219,6 +219,22 @@ export interface GundamCardTarget
 }
 
 // ============================================================================
+// Target Query (New Standard)
+// ============================================================================
+
+/**
+ * Structured target query used in the new Effect system.
+ * Provides a stricter, more expressive way to define targeting requirements.
+ */
+export interface TargetQuery {
+  controller: "SELF" | "OPPONENT" | "ANY";
+  cardType?: "UNIT" | "PILOT" | "BASE" | "COMMAND";
+  filters?: GundamFilter[];
+  count?: { min: number; max: number };
+  zone?: GundamLocationsId[];
+}
+
+// ============================================================================
 // Convenience Type Aliases
 // ============================================================================
 
@@ -303,4 +319,5 @@ export type GundamBaseTarget = BaseTarget;
 export type GundamTarget =
   | GundamUnitTarget
   | GundamBaseTarget
-  | GundamCardTarget;
+  | GundamCardTarget
+  | TargetQuery;

@@ -18,29 +18,37 @@ export const MikazukiAugus: PilotCardDefinition = {
   hpModifier: 1,
   effects: [
     {
-      id: "st05-010-effect-1",
-      description: "【Burst】 Add this card to your hand.",
+      id: "eff-2zmywj9s4",
       type: "TRIGGERED",
       timing: "BURST",
+      description: "Add this card to your hand.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Add this card to your hand.",
+        type: "ADD_TO_HAND",
       },
     },
     {
-      id: "st05-010-effect-2",
-      description:
-        "【When Paired】 Choose 1 of your Units and 1 enemy Unit. Deal 1 damage to them.",
+      id: "eff-fkymyg5un",
       type: "TRIGGERED",
       timing: "WHEN_PAIRED",
+      description:
+        "Choose 1 of your Units and 1 enemy Unit. Deal 1 damage to them.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
         type: "DAMAGE",
-        parameters: {
-          target: {
-            type: "unknown",
-            rawText: "them",
+        value: 1,
+        target: {
+          controller: "OPPONENT",
+          cardType: "UNIT",
+          count: {
+            min: 1,
+            max: 1,
           },
-          amount: 1,
+          filters: [],
         },
       },
     },

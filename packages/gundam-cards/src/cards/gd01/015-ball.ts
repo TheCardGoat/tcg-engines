@@ -21,17 +21,24 @@ export const Ball: UnitCardDefinition = {
   linkRequirements: ["-"],
   effects: [
     {
-      id: "gd01-015-effect-1",
-      description: "【Attack】 Choose 1 of your Units. It recovers 1 HP.",
+      id: "eff-0th03awsu",
       type: "TRIGGERED",
       timing: "ATTACK",
+      description: "Choose 1 of your Units. It recovers 1 HP.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
         type: "HEAL",
-        parameters: {
-          target: {
-            type: "self",
+        amount: 1,
+        target: {
+          controller: "SELF",
+          cardType: "UNIT",
+          count: {
+            min: 1,
+            max: 1,
           },
-          amount: 1,
+          filters: [],
         },
       },
     },

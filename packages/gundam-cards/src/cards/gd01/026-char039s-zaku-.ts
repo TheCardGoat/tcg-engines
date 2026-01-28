@@ -21,14 +21,16 @@ export const Char039sZaku: UnitCardDefinition = {
   linkRequirements: ["char-aznable"],
   effects: [
     {
-      id: "gd01-026-effect-1",
-      description:
-        "【Destroyed】 Deploy 1 rested [Char&#039;s Zaku Ⅱ]((Zeon)･AP3･HP1) Unit token.",
+      id: "eff-y5dk7ljxn",
       type: "TRIGGERED",
       timing: "DESTROYED",
+      description:
+        "Deploy 1 rested [Char&#039;s Zaku Ⅱ]((Zeon)･AP3･HP1) Unit token.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Deploy 1 rested [Char&#039;s Zaku Ⅱ]((Zeon)･AP3･HP1) Unit token.",
+        type: "DEPLOY",
       },
     },
   ],

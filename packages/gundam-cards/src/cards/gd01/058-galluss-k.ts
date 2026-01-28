@@ -21,17 +21,36 @@ export const Gallussk: UnitCardDefinition = {
   linkRequirements: ["-"],
   effects: [
     {
-      id: "gd01-058-effect-1",
-      description:
-        "【Activate･Action】 【Once per Turn】①：Choose 1 Unit that is Lv.4 or higher. It gets AP+1 during this battle.",
+      id: "eff-fx938hlud",
       type: "ACTIVATED",
       timing: "ACTION",
+      description:
+        "【Once per Turn】①:Choose 1 Unit that is Lv.4 or higher. It gets AP+1 during this battle.",
+      restrictions: [
+        {
+          type: "ONCE_PER_TURN",
+        },
+      ],
+      costs: [
+        {
+          type: "ENERGY",
+          amount: 1,
+        },
+      ],
+      conditions: [],
       action: {
         type: "MODIFY_STATS",
-        parameters: {
-          attribute: "ap",
-          modifier: 1,
-          duration: "turn",
+        attribute: "AP",
+        value: 1,
+        duration: "TURN",
+        target: {
+          controller: "ANY",
+          cardType: "UNIT",
+          count: {
+            min: 1,
+            max: 1,
+          },
+          filters: [],
         },
       },
     },

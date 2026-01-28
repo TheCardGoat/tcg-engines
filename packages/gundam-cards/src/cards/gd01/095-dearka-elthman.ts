@@ -19,14 +19,28 @@ export const DearkaElthman: PilotCardDefinition = {
   hpModifier: 1,
   effects: [
     {
-      id: "gd01-095-effect-1",
-      description:
-        "【Burst】 Add this card to your hand. 【When Linked】Discard 1. If you do, draw 1.",
+      id: "eff-8y0f5i2wr",
       type: "TRIGGERED",
       timing: "BURST",
+      description: "Add this card to your hand.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Add this card to your hand. 【When Linked】Discard 1. If you do, draw 1.",
+        type: "ADD_TO_HAND",
+      },
+    },
+    {
+      id: "eff-m9hlgyzlf",
+      type: "TRIGGERED",
+      timing: "WHEN_LINKED",
+      description: "Discard 1. If you do, draw 1.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
+      action: {
+        type: "DISCARD",
+        value: 1,
       },
     },
   ],

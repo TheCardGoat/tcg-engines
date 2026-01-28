@@ -21,11 +21,14 @@ export const Dopp: UnitCardDefinition = {
   linkRequirements: ["-"],
   effects: [
     {
-      id: "gd01-039-effect-1",
-      description:
-        "【Deploy】 Look at the top card of your deck. Return it to the top or bottom of your deck.",
+      id: "eff-xiipoeur9",
       type: "TRIGGERED",
       timing: "DEPLOY",
+      description:
+        "Look at the top card of your deck. Return it to the top or bottom of your deck.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
         type: "CUSTOM",
         text: "Look at the top card of your deck. Return it to the top or bottom of your deck.",

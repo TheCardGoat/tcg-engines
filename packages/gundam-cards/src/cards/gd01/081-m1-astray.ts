@@ -26,17 +26,17 @@ export const M1Astray: UnitCardDefinition = {
   ],
   effects: [
     {
-      id: "gd01-081-effect-1",
-      description:
-        "While you have another (Triple Ship Alliance) Unit in play, this Unit gets AP+1 and <Blocker>. (Rest this Unit to change the attack target to it.)",
+      id: "eff-fixjz3skm",
       type: "CONSTANT",
+      description:
+        "While you have another (Triple Ship Alliance) Unit in play, this Unit gets AP+1 and . (Rest this Unit to change the attack target to it.)",
+      restrictions: [],
+      conditions: [],
       action: {
         type: "MODIFY_STATS",
-        parameters: {
-          attribute: "ap",
-          modifier: 1,
-          duration: "turn",
-        },
+        attribute: "AP",
+        value: 1,
+        duration: "TURN",
       },
     },
   ],

@@ -19,14 +19,28 @@ export const BanagherLinks: PilotCardDefinition = {
   hpModifier: 2,
   effects: [
     {
-      id: "gd01-088-effect-1",
-      description:
-        "【Burst】 Add this card to your hand. 【When Linked】Draw 1.",
+      id: "eff-3gw8sz4xb",
       type: "TRIGGERED",
       timing: "BURST",
+      description: "Add this card to your hand.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Add this card to your hand. 【When Linked】Draw 1.",
+        type: "ADD_TO_HAND",
+      },
+    },
+    {
+      id: "eff-v40ypr751",
+      type: "TRIGGERED",
+      timing: "WHEN_LINKED",
+      description: "Draw 1.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
+      action: {
+        type: "DRAW",
+        value: 1,
       },
     },
   ],

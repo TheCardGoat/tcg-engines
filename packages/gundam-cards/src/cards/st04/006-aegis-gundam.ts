@@ -21,19 +21,20 @@ export const AegisGundam: UnitCardDefinition = {
   linkRequirements: ["athrun-zala"],
   effects: [
     {
-      id: "st04-006-effect-1",
-      description:
-        "【Attack】 If this Unit has 5 or more AP, choose 1 enemy Unit that is Lv.5 or higher. Deal 3 damage to it.",
+      id: "eff-gp2oo3tgm",
       type: "TRIGGERED",
       timing: "ATTACK",
+      description:
+        "If this Unit has 5 or more AP, choose 1 enemy Unit that is Lv.5 or higher. Deal 3 damage to it.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "DAMAGE",
-        parameters: {
-          target: {
-            type: "unknown",
-            rawText: "it",
-          },
-          amount: 3,
+        type: "CONDITIONAL",
+        conditions: [],
+        trueAction: {
+          type: "DAMAGE",
+          value: 3,
         },
       },
     },

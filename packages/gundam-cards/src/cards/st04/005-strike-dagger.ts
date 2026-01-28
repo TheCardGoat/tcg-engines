@@ -21,9 +21,11 @@ export const StrikeDagger: UnitCardDefinition = {
   linkRequirements: ["-"],
   effects: [
     {
-      id: "st04-005-effect-1",
-      description: "-",
+      id: "eff-lm7ofw30j",
       type: "CONSTANT",
+      description: "-",
+      restrictions: [],
+      conditions: [],
       action: {
         type: "CUSTOM",
         text: "-",

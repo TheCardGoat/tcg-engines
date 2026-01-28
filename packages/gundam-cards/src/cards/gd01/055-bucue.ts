@@ -27,14 +27,16 @@ export const Bucue: UnitCardDefinition = {
   ],
   effects: [
     {
-      id: "gd01-055-effect-1",
-      description:
-        "【Activate･Main】 <Support 2> (Rest this Unit. 1 other friendly Unit gets AP+(specified amount) during this turn.)",
+      id: "eff-s22tk0rnn",
       type: "ACTIVATED",
       timing: "MAIN",
+      description: "during this turn.)",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
         type: "CUSTOM",
-        text: "<Support 2> (Rest this Unit. 1 other friendly Unit gets AP+(specified amount) during this turn.)",
+        text: "during this turn.)",
       },
     },
   ],

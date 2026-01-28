@@ -21,14 +21,15 @@ export const Gouf: UnitCardDefinition = {
   linkRequirements: ["ramba-ral"],
   effects: [
     {
-      id: "st03-009-effect-1",
-      description:
-        "【Deploy】 Deploy 1 rested [Zaku Ⅱ]((Zeon)･AP1･HP1) Unit token.",
+      id: "eff-jznbhytou",
       type: "TRIGGERED",
       timing: "DEPLOY",
+      description: "Deploy 1 rested [Zaku Ⅱ]((Zeon)･AP1･HP1) Unit token.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Deploy 1 rested [Zaku Ⅱ]((Zeon)･AP1･HP1) Unit token.",
+        type: "DEPLOY",
       },
     },
   ],

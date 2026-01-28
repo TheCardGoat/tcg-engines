@@ -21,12 +21,16 @@ export const GundamMaForm: UnitCardDefinition = {
   linkRequirements: ["amuro-ray"],
   effects: [
     {
-      id: "st01-002-effect-1",
-      description: "【When Paired･(White Base Team) Pilot】Draw 1.",
-      type: "CONSTANT",
+      id: "eff-irep3zy00",
+      type: "TRIGGERED",
+      timing: "WHEN_PAIRED",
+      description: "Draw 1.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "【When Paired･(White Base Team) Pilot】Draw 1.",
+        type: "DRAW",
+        value: 1,
       },
     },
   ],

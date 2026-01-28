@@ -20,21 +20,32 @@ export const GundamBarbatos4thForm: UnitCardDefinition = {
   linkRequirements: ["mikazuki-augus"],
   effects: [
     {
-      id: "st05-001-effect-1",
-      description:
-        "【Deploy】 Choose 1 of your other Units. Deal 1 damage to it. It gets AP+1 during this turn. While this is damaged, it gains <Suppression>. (Damage to Shields by an attack is dealt to the first 2 cards simultaneously.)",
+      id: "eff-s6kte4st7",
       type: "TRIGGERED",
       timing: "DEPLOY",
+      description:
+        "Choose 1 of your other Units. Deal 1 damage to it. It gets AP+1 during this turn. While this is damaged, it gains . (Damage to Shields by an attack is dealt to the first 2 cards simultaneously.)",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
         type: "DAMAGE",
-        parameters: {
-          target: {
-            type: "unknown",
-            rawText: "it",
+        value: 1,
+        target: {
+          controller: "SELF",
+          cardType: "UNIT",
+          count: {
+            min: 1,
+            max: 1,
           },
-          amount: 1,
+          filters: [],
         },
       },
+    },
+  ],
+  keywords: [
+    {
+      keyword: "Suppression",
     },
   ],
 };

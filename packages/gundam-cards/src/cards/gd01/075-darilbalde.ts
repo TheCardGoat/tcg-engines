@@ -21,14 +21,25 @@ export const Darilbalde: UnitCardDefinition = {
   linkRequirements: ["(academy)-trait"],
   effects: [
     {
-      id: "gd01-075-effect-1",
-      description:
-        "【Deploy】 Choose 1 enemy Unit with 1 HP. Return it to its owner&#039;s hand.",
+      id: "eff-37lq39976",
       type: "TRIGGERED",
       timing: "DEPLOY",
+      description:
+        "Choose 1 enemy Unit with 1 HP. Return it to its owner&#039;s hand.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "Choose 1 enemy Unit with 1 HP. Return it to its owner&#039;s hand.",
+        type: "ADD_TO_HAND",
+        target: {
+          controller: "OPPONENT",
+          cardType: "UNIT",
+          count: {
+            min: 1,
+            max: 1,
+          },
+          filters: [],
+        },
       },
     },
   ],

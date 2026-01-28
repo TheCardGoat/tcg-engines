@@ -1,6 +1,6 @@
 import type { UnitCardDefinition } from "@tcg/gundam-types";
 
-export const Gundam_GD01_001: UnitCardDefinition = {
+export const Gundam: UnitCardDefinition = {
   id: "gd01-001",
   name: "Gundam",
   cardNumber: "GD01-001",
@@ -27,14 +27,42 @@ export const Gundam_GD01_001: UnitCardDefinition = {
   ],
   effects: [
     {
-      id: "gd01-001-effect-1",
+      id: "eff-jvud6r603",
+      type: "CONSTANT",
       description:
-        "【When Paired】 If you have 2 or more other Units in play, draw 1.",
+        "All your (White Base Team) Units gain . (At the end of your turn, this Unit recovers the specified number of HP.)",
+      restrictions: [],
+      conditions: [],
+      action: {
+        type: "HEAL",
+        amount: 1,
+        target: {
+          controller: "SELF",
+          cardType: "UNIT",
+          filters: [],
+        },
+      },
+    },
+    {
+      id: "eff-qgi4ik3l7",
       type: "TRIGGERED",
       timing: "WHEN_PAIRED",
+      description: "If you have 2 or more other Units in play, draw 1.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
       action: {
-        type: "CUSTOM",
-        text: "If you have 2 or more other Units in play, draw 1.",
+        type: "CONDITIONAL",
+        conditions: [
+          {
+            type: "STATE_CHECK",
+            text: "you have 2 or more other Units in play",
+          },
+        ],
+        trueAction: {
+          type: "DRAW",
+          value: 1,
+        },
       },
     },
   ],

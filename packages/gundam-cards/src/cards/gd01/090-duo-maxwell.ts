@@ -19,14 +19,27 @@ export const DuoMaxwell: PilotCardDefinition = {
   hpModifier: 2,
   effects: [
     {
-      id: "gd01-090-effect-1",
-      description:
-        "【Burst】 Add this card to your hand. 【During Link】This Unit&#039;s AP can&#039;t be reduced by enemy effects.",
+      id: "eff-xa2rkajsv",
       type: "TRIGGERED",
       timing: "BURST",
+      description: "Add this card to your hand.",
+      restrictions: [],
+      costs: [],
+      conditions: [],
+      action: {
+        type: "ADD_TO_HAND",
+      },
+    },
+    {
+      id: "eff-wfhfr6l09",
+      type: "CONSTANT",
+      description:
+        "This Unit&#039;s AP can&#039;t be reduced by enemy effects.",
+      restrictions: [],
+      conditions: [],
       action: {
         type: "CUSTOM",
-        text: "Add this card to your hand. 【During Link】This Unit&#039;s AP can&#039;t be reduced by enemy effects.",
+        text: "&#039;s AP can&#039;t be reduced by enemy effects.",
       },
     },
   ],

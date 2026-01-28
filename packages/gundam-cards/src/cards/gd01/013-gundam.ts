@@ -1,6 +1,6 @@
 import type { UnitCardDefinition } from "@tcg/gundam-types";
 
-export const Gundam_GD01_013: UnitCardDefinition = {
+export const Gundam: UnitCardDefinition = {
   id: "gd01-013",
   name: "Gundam",
   cardNumber: "GD01-013",
@@ -21,9 +21,11 @@ export const Gundam_GD01_013: UnitCardDefinition = {
   linkRequirements: ["amuro-ray"],
   effects: [
     {
-      id: "gd01-013-effect-1",
-      description: "-",
+      id: "eff-38u4hr4hr",
       type: "CONSTANT",
+      description: "-",
+      restrictions: [],
+      conditions: [],
       action: {
         type: "CUSTOM",
         text: "-",
