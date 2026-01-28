@@ -36,7 +36,9 @@
     "test:watch": "bun test --watch src/cards src/parser src/data",
     "test:coverage": "bun test --coverage src/cards src/parser src/data",
     "check": "turbo format lint check-types test",
-    "fetch": "bun scripts/fetch-inputs.ts"
+    "fetch": "bun scripts/fetch-inputs.ts",
+    "categorize": "bun scripts/categorize-text.ts",
+    "pipeline": "bun run fetch && bun run categorize"
   },
   "dependencies": {
     "@tcg/riftbound-types": "workspace:*"
