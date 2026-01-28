@@ -35,7 +35,8 @@
     "test": "echo \"No tests specified\"",
     "test:watch": "bun test --watch src/cards src/parser src/data",
     "test:coverage": "bun test --coverage src/cards src/parser src/data",
-    "check": "turbo format lint check-types test"
+    "check": "turbo format lint check-types test",
+    "fetch": "bun scripts/fetch-inputs.ts"
   },
   "dependencies": {
     "@tcg/riftbound-types": "workspace:*"

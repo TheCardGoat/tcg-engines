@@ -1,0 +1,9 @@
+node_modules/
+build/
+turbo/
+
+# Input files (fetched from APIs)
+data/inputs/riftcodex-input.json
+
+# Verbose generation logs
+src/data/generation-verbose.log
