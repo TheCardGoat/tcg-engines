@@ -359,6 +359,9 @@ export type BaseCardDefinition = {
    * and consists of a directive and related compensation
    */
   effects?: Effect[];
+
+  /** Keyword abilities */
+  keywords?: KeywordAbility[];
 };
 
 // ============================================================================
@@ -382,9 +385,6 @@ export type UnitCardDefinition = BaseCardDefinition & {
 
   /** Link requirements (pilot names) */
   linkRequirements?: string[];
-
-  /** Keyword abilities */
-  keywords?: KeywordAbility[];
 };
 
 // ============================================================================

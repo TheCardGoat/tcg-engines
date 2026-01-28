@@ -36,8 +36,8 @@ for (const card of allCards) {
     } else {
       // Check if target is unknown (partially structured)
       // Current parser's parseTarget returns object that might be put into parameters.target
-      const target =
-        (effect.action.parameters as any)?.target || effect.action.target;
+      const action = effect.action as any;
+      const target = action.parameters?.target || action.target;
 
       if (target && target.type === "unknown") {
         partiallyStructuredEffects++;

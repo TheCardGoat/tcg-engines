@@ -41,11 +41,9 @@ describe("Card Generator", () => {
         description: "【Deploy】Search your deck for a Pilot.",
         action: {
           type: "SEARCH",
-          parameters: {
-            filter: { cardType: "PILOT" },
-            destination: "hand",
-            count: 1,
-          },
+          destination: "hand",
+          count: 1,
+          filter: { cardType: "PILOT" },
         },
       } as TriggeredEffect,
     ],
