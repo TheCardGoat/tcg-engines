@@ -31,6 +31,7 @@ export class RiftboundEngine {
    */
   createGame(config: RiftboundGameConfig): RiftboundState {
     const { players } = config;
+    // TODO: seed will be used for deterministic randomization when deck shuffling is implemented
 
     // Create initial game state
     const initialState: RiftboundState = {
@@ -53,12 +54,14 @@ export class RiftboundEngine {
           deck: [],
           field: [],
           discard: [],
+          exile: [],
         },
         [players[1]]: {
           hand: [],
           deck: [],
           field: [],
           discard: [],
+          exile: [],
         },
       },
       turn: {

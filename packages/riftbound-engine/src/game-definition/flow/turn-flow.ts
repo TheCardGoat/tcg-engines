@@ -10,6 +10,7 @@ import type { GamePhase } from "../../types";
  * Phase order for a standard turn
  */
 export const PHASE_ORDER: readonly GamePhase[] = [
+  "setup",
   "draw",
   "main",
   "combat",

@@ -35,6 +35,7 @@ export function createInitialState(
 ): RiftboundState {
   const fullConfig = { ...DEFAULT_SETUP_CONFIG, ...config };
   const { players, startingHealth } = fullConfig;
+  // TODO: startingHandSize will be used when deck/draw logic is implemented
 
   return {
     gameId: crypto.randomUUID(),
@@ -56,12 +57,14 @@ export function createInitialState(
         deck: [],
         field: [],
         discard: [],
+        exile: [],
       },
       [players[1]]: {
         hand: [],
         deck: [],
         field: [],
         discard: [],
+        exile: [],
       },
     },
     turn: {

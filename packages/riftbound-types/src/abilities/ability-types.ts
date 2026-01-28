@@ -5,6 +5,9 @@
  * These types define the structure of card abilities.
  */
 
+import type { Effect } from "./effect-types";
+import type { Trigger } from "./trigger-types";
+
 /**
  * Base ability type - all abilities extend from this
  */
@@ -24,12 +27,21 @@ export interface KeywordAbility extends BaseAbility {
 }
 
 /**
+ * Cost type for activated abilities
+ * TODO: Will be refined with specific cost types (mana, tap, sacrifice, etc.)
+ */
+export interface AbilityCost {
+  readonly type: string;
+  readonly amount?: number;
+}
+
+/**
  * Triggered ability - activates when a specific event occurs
  */
 export interface TriggeredAbility extends BaseAbility {
   readonly type: "triggered";
-  readonly trigger: unknown; // Will be refined with TriggerEvent
-  readonly effect: unknown; // Will be refined with Effect
+  readonly trigger: Trigger;
+  readonly effect: Effect;
 }
 
 /**
@@ -37,8 +49,8 @@ export interface TriggeredAbility extends BaseAbility {
  */
 export interface ActivatedAbility extends BaseAbility {
   readonly type: "activated";
-  readonly cost: unknown; // Will be refined with Cost types
-  readonly effect: unknown; // Will be refined with Effect
+  readonly cost: AbilityCost;
+  readonly effect: Effect;
 }
 
 /**
@@ -46,7 +58,7 @@ export interface ActivatedAbility extends BaseAbility {
  */
 export interface StaticAbility extends BaseAbility {
   readonly type: "static";
-  readonly effect: unknown; // Will be refined with StaticEffect
+  readonly effect: Effect;
 }
 
 /**

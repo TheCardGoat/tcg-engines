@@ -44,6 +44,7 @@ export interface PlayerZones {
   readonly deck: CardId[];
   readonly field: CardId[];
   readonly discard: CardId[];
+  readonly exile: CardId[];
 }
 
 /**
