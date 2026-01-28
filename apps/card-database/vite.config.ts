@@ -15,7 +15,7 @@ export default defineConfig({
     }) as any,
   ],
   optimizeDeps: {
-    exclude: ["@tcg/component-library", "@tcg/lorcana-cards"],
+    exclude: ["@tcg/core-ui", "@tcg/lorcana-cards"],
   },
   test: {
     expect: { requireAssertions: true },
