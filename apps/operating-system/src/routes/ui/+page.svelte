@@ -143,30 +143,21 @@
           <h2 class="card-title">Dropdown & Modal</h2>
           <div class="flex flex-wrap items-center gap-3">
             <div class="dropdown">
-              <button type="button" class="btn">Dropdown</button>
-              <div
-                class="dropdown-content bg-base-100 rounded-box z-10 w-52 p-2 shadow"
-              >
+              <button type="button" class="btn">
+              <ul
+              </button>
+              <div class="dropdown-content bg-base-100 rounded-box z-10 w-52 p-2 shadow">
                 <ul class="menu p-0" role="menu">
-                  <li>
-                    <button type="button" role="menuitem">Item 1</button>
-                  </li>
-                  <li>
-                    <button type="button" role="menuitem">Item 2</button>
-                  </li>
-                  <li>
-                    <button type="button" role="menuitem">Item 3</button>
-                  </li>
+                  <li><button type="button" role="menuitem">Item 1</button></li>
+                  <li><button type="button" role="menuitem">Item 2</button></li>
+                  <li><button type="button" role="menuitem">Item 3</button></li>
                 </ul>
               </div>
-            </div>
-            <button
               class="btn btn-secondary"
               onclick={() => (isModalOpen = true)}
             >
               Open modal
             </button>
-          </div>
 
           {#if isModalOpen}
             <dialog class="modal" open>

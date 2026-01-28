@@ -2,7 +2,6 @@
   import { Bell, Search, X } from "lucide-svelte";
   import { tick } from "svelte";
   import { os } from "../os.svelte";
-  import { theme } from "$lib/theme.svelte";
 
   type MenuItem =
     | { type: "link"; label: string; action: () => void; rightLabel?: string }
@@ -116,30 +115,6 @@
           label: "Search apps",
           action: openCommandCenter,
           rightLabel: commandCenterShortcutLabel,
-        },
-        {
-          type: "submenu",
-          label: "Settings",
-          items: [
-            {
-              type: "link",
-              label: "Theme: Light",
-              action: () => {
-                theme.set("light");
-                closeMenus();
-              },
-              rightLabel: theme.current === "light" ? "✓" : undefined,
-            },
-            {
-              type: "link",
-              label: "Theme: Dark",
-              action: () => {
-                theme.set("dark");
-                closeMenus();
-              },
-              rightLabel: theme.current === "dark" ? "✓" : undefined,
-            },
-          ],
         },
       ],
     },
@@ -286,7 +261,7 @@
 
     {#each menus.filter((m) => m.id === openMenuId) as active (active.id)}
       <div
-        class="absolute top-12 left-3 w-[320px] bg-base-100 rounded-box shadow-2xl border border-base-300 overflow-visible z-[10001]"
+        class="absolute top-12 left-3 w-[320px] bg-base-100 rounded-box shadow-2xl border border-base-300 overflow-hidden z-[10001]"
         role="menu"
         aria-label={active.label}
       >
@@ -314,21 +289,13 @@
                 {/if}
               </button>
             {:else}
-              <div
-                class="relative"
-                role="presentation"
-                onmouseenter={() => (openSubmenuLabel = item.label)}
-                onmouseleave={() => {
-                  if (openSubmenuLabel === item.label) openSubmenuLabel = null;
-                }}
-              >
+              <div class="relative">
                 <button
                   class="w-full flex items-center justify-between gap-3 px-3 py-2 rounded-box hover:bg-base-200 transition-colors text-left"
                   role="menuitem"
                   aria-haspopup="menu"
                   aria-expanded={openSubmenuLabel === item.label}
                   onclick={() => openMenuSubmenu(item.label)}
-                  onfocus={() => (openSubmenuLabel = item.label)}
                 >
                   <span
                     class="text-sm font-medium text-base-content/80 truncate"
