@@ -10,7 +10,7 @@ import { Abilities, Effects, Tokens } from "../helpers";
 
 describe("Keyword: Deathknell", () => {
   describe("deathknell with draw", () => {
-    it.skip("should parse '[Deathknell] — Draw 1. (When I die, get the effect.)'", () => {
+    it("should parse '[Deathknell] — Draw 1. (When I die, get the effect.)'", () => {
       const result = parseAbilities(
         "[Deathknell] — Draw 1. (When I die, get the effect.)",
       );
@@ -22,7 +22,7 @@ describe("Keyword: Deathknell", () => {
       );
     });
 
-    it.skip("should parse '[Deathknell] — If I was [Mighty], draw 2.'", () => {
+    it("should parse '[Deathknell] — If I was [Mighty], draw 2.'", () => {
       const result = parseAbilities(
         "[Deathknell] — If I was [Mighty], draw 2. (When I die, get the effect. I'm Mighty while I have 5+ :rb_might:.)",
       );
@@ -40,7 +40,7 @@ describe("Keyword: Deathknell", () => {
       );
     });
 
-    it.skip("should parse '[Deathknell] — If I died alone, draw 1.'", () => {
+    it("should parse '[Deathknell] — If I died alone, draw 1.'", () => {
       const result = parseAbilities(
         "[Deathknell] — If I died alone, draw 1. (When I die, get the effect. I'm alone if there are no other friendly units here.)",
       );
@@ -60,7 +60,7 @@ describe("Keyword: Deathknell", () => {
   });
 
   describe("deathknell with channel", () => {
-    it.skip("should parse '[Deathknell] — Channel 1 rune exhausted.'", () => {
+    it("should parse '[Deathknell] — Channel 1 rune exhausted.'", () => {
       const result = parseAbilities(
         "[Deathknell] — Channel 1 rune exhausted. (When I die, get the effect.)",
       );
@@ -95,7 +95,7 @@ describe("Keyword: Deathknell", () => {
   });
 
   describe("deathknell with damage", () => {
-    it.skip("should parse '[Deathknell] — Deal 4 to all units at my battlefield.'", () => {
+    it("should parse '[Deathknell] — Deal 4 to all units at my battlefield.'", () => {
       const result = parseAbilities(
         "[Deathknell] — Deal 4 to all units at my battlefield. (When I die, get the effect.)",
       );

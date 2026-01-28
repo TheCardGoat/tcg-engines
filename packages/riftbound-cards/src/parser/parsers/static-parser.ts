@@ -6,6 +6,7 @@
  */
 
 import type {
+  AnyTarget,
   Condition,
   Effect,
   StaticAbility,
@@ -217,12 +218,12 @@ export function parseStaticAbility(
           ? {
               type: "grant-keyword",
               keyword: keywords[0],
-              target: { type: "self" } as Target,
+              target: { type: "self" } as AnyTarget,
             }
           : {
               type: "grant-keywords",
               keywords,
-              target: { type: "self" } as Target,
+              target: { type: "self" } as AnyTarget,
             };
 
       return {
@@ -254,12 +255,12 @@ export function parseStaticAbility(
           ? {
               type: "grant-keyword",
               keyword: keywords[0],
-              target: { type: "self" } as Target,
+              target: { type: "self" } as AnyTarget,
             }
           : {
               type: "grant-keywords",
               keywords,
-              target: { type: "self" } as Target,
+              target: { type: "self" } as AnyTarget,
             };
 
       return {

@@ -17,18 +17,38 @@ import type {
   Domain,
   DrawEffect,
   Effect,
+  EffectKeywordAbility,
   ReadyEffect,
   SimpleKeyword,
   SimpleKeywordAbility,
   SpellAbility,
+  StaticAbility,
   Target,
   Trigger,
   TriggeredAbility,
   ValueKeyword,
   ValueKeywordAbility,
 } from "@tcg/riftbound-types";
-import { parseMovementEffect } from "./parsers/effect-parser";
+import { parseInlineCondition } from "./parsers/condition-parser";
+import {
+  hasEffectKeyword,
+  parseEffectKeywordsWithPositions,
+} from "./parsers/effect-keyword-parser";
+import {
+  parseCounterEffect,
+  parseCreateTokenEffect,
+  parseFightEffect,
+  parseGainControlOfSpellEffect,
+  parseKillEffect,
+  parseLookEffect,
+  parseModifyMightEffect,
+  parseMovementEffect,
+  parsePreventDamageEffect,
+  parseReturnToHandEffect,
+  parseStunEffect,
+} from "./parsers/effect-parser";
 import { parseCostKeywords } from "./parsers/keyword-parser";
+import { isStaticAbility, parseStaticAbility } from "./parsers/static-parser";
 
 /**
  * Options for controlling parser behavior and output
@@ -115,6 +135,18 @@ const VALUE_KEYWORD_PATTERN = new RegExp(
 const REMINDER_TEXT_PATTERN = /\([^)]*\)/g;
 
 /**
+ * Pattern to match italic reminder text: _..._
+ * Only matches when the underscore is at word boundary (not inside :rb_xxx:)
+ */
+const ITALIC_REMINDER_TEXT_PATTERN = /(?<![:\w])_[^_]+_(?![:\w])/g;
+
+/**
+ * Pattern to match empty italic markers: _ _
+ * This can occur after removing parenthetical content from italic text
+ */
+const EMPTY_ITALIC_PATTERN = /_ _/g;
+
+/**
  * Pattern to match draw effects: "Draw N."
  */
 const DRAW_PATTERN = /^Draw (\d+)\.?$/i;
@@ -195,7 +227,11 @@ const TRIGGERED_ABILITY_PATTERN =
  * Remove reminder text (text in parentheses) from ability text
  */
 function removeReminderText(text: string): string {
-  return text.replace(REMINDER_TEXT_PATTERN, "").trim();
+  return text
+    .replace(REMINDER_TEXT_PATTERN, "")
+    .replace(ITALIC_REMINDER_TEXT_PATTERN, "")
+    .replace(EMPTY_ITALIC_PATTERN, "")
+    .trim();
 }
 
 /**
@@ -735,6 +771,106 @@ function parseEffectAsSpell(
     };
   }
 
+  // Try modify-might effect
+  const modifyMightEffect = parseModifyMightEffect(cleanText);
+  if (modifyMightEffect) {
+    return {
+      type: "spell",
+      timing,
+      effect: modifyMightEffect,
+    };
+  }
+
+  // Try kill effect
+  const killEffect = parseKillEffect(cleanText);
+  if (killEffect) {
+    return {
+      type: "spell",
+      timing,
+      effect: killEffect,
+    };
+  }
+
+  // Try counter effect
+  const counterEffect = parseCounterEffect(cleanText);
+  if (counterEffect) {
+    return {
+      type: "spell",
+      timing,
+      effect: counterEffect,
+    };
+  }
+
+  // Try stun effect
+  const stunEffect = parseStunEffect(cleanText);
+  if (stunEffect) {
+    return {
+      type: "spell",
+      timing,
+      effect: stunEffect,
+    };
+  }
+
+  // Try return-to-hand effect
+  const returnToHandEffect = parseReturnToHandEffect(cleanText);
+  if (returnToHandEffect) {
+    return {
+      type: "spell",
+      timing,
+      effect: returnToHandEffect,
+    };
+  }
+
+  // Try create-token effect
+  const createTokenEffect = parseCreateTokenEffect(cleanText);
+  if (createTokenEffect) {
+    return {
+      type: "spell",
+      timing,
+      effect: createTokenEffect,
+    };
+  }
+
+  // Try look effect
+  const lookEffect = parseLookEffect(cleanText);
+  if (lookEffect) {
+    return {
+      type: "spell",
+      timing,
+      effect: lookEffect,
+    };
+  }
+
+  // Try fight effect
+  const fightEffect = parseFightEffect(cleanText);
+  if (fightEffect) {
+    return {
+      type: "spell",
+      timing,
+      effect: fightEffect,
+    };
+  }
+
+  // Try prevent-damage effect
+  const preventDamageEffect = parsePreventDamageEffect(cleanText);
+  if (preventDamageEffect) {
+    return {
+      type: "spell",
+      timing,
+      effect: preventDamageEffect,
+    };
+  }
+
+  // Try gain-control-of-spell effect
+  const gainControlOfSpellEffect = parseGainControlOfSpellEffect(cleanText);
+  if (gainControlOfSpellEffect) {
+    return {
+      type: "spell",
+      timing,
+      effect: gainControlOfSpellEffect,
+    };
+  }
+
   return undefined;
 }
 
@@ -845,6 +981,130 @@ export function buildAbilityWithText(
 }
 
 /**
+ * Split text into multiple ability segments
+ * Handles patterns like:
+ * - "[Vision] Other friendly units have [Vision]."
+ * - "[Accelerate][Deathknell] — Draw 1."
+ * - "[Tank] When you play me, draw 1. When I hold, buff me."
+ */
+function splitMultiAbilityText(text: string): string[] {
+  const cleanText = removeReminderText(text);
+  const segments: string[] = [];
+
+  // Check if text starts with an effect keyword
+  const startsWithEffectKeyword = /^\[(Deathknell|Legion|Vision)\]/i.test(
+    cleanText,
+  );
+
+  // If text starts with an effect keyword, don't split on "When you play me"
+  // because that's part of the effect keyword's effect text
+  if (startsWithEffectKeyword) {
+    // Only split if there are OTHER abilities after the effect keyword
+    const staticPatterns = [
+      /(?:Other |Your |Friendly |Units |Each ).+?(?:have|has|give).+?(?:\.|$)/gi,
+      /(?:While |If you've ).+?(?:have|has|can't).+?(?:\.|$)/gi,
+      /You may play me to .+?(?:\.|$)/gi,
+    ];
+
+    // Collect static matches
+    const staticMatches: Array<{ text: string; index: number }> = [];
+    for (const pattern of staticPatterns) {
+      let match: RegExpExecArray | null;
+      while ((match = pattern.exec(cleanText)) !== null) {
+        staticMatches.push({ text: match[0], index: match.index });
+      }
+    }
+
+    if (staticMatches.length > 0) {
+      // Sort by index
+      staticMatches.sort((a, b) => a.index - b.index);
+
+      // Get the keyword portion (everything before first static)
+      const firstStaticIndex = staticMatches[0].index;
+      const keywordPortion = cleanText.slice(0, firstStaticIndex).trim();
+      if (keywordPortion) {
+        segments.push(keywordPortion);
+      }
+
+      // Add static abilities
+      for (const m of staticMatches) {
+        segments.push(m.text.trim());
+      }
+
+      return segments;
+    }
+
+    // No splitting needed for effect keyword text
+    return [text];
+  }
+
+  // Pattern to find ability boundaries
+  // Look for: static ability patterns, triggered ability patterns after keywords
+  const staticPatterns = [
+    /(?:Other |Your |Friendly |Units |Each ).+?(?:have|has|give).+?(?:\.|$)/gi,
+    /(?:While |If you've ).+?(?:have|has|can't).+?(?:\.|$)/gi,
+    /You may play me to .+?(?:\.|$)/gi,
+  ];
+  const triggeredPattern =
+    /When (?:you play me|I (?:attack|defend|conquer|hold|die|move|become)|you recycle|a friendly unit).+?(?:\.|$)/gi;
+
+  // Collect all static matches
+  const staticMatches: Array<{ text: string; index: number }> = [];
+  for (const pattern of staticPatterns) {
+    let match: RegExpExecArray | null;
+    while ((match = pattern.exec(cleanText)) !== null) {
+      staticMatches.push({ text: match[0], index: match.index });
+    }
+  }
+
+  // Collect triggered matches
+  const triggeredMatches: Array<{ text: string; index: number }> = [];
+  let match: RegExpExecArray | null;
+  while ((match = triggeredPattern.exec(cleanText)) !== null) {
+    triggeredMatches.push({ text: match[0], index: match.index });
+  }
+
+  // Check if this is a multi-ability card
+  const hasStatic = staticMatches.length > 0;
+  const hasTriggered = triggeredMatches.length > 0;
+  const textHasEffectKeywords = hasEffectKeyword(cleanText);
+
+  // If we have multiple ability types, try to split
+  if (
+    (hasStatic && textHasEffectKeywords) ||
+    (hasStatic && hasTriggered) ||
+    (textHasEffectKeywords && hasTriggered)
+  ) {
+    // Sort all matches by index
+    const allMatches = [...staticMatches, ...triggeredMatches].sort(
+      (a, b) => a.index - b.index,
+    );
+
+    // Get the keyword portion (everything before first static/triggered)
+    const firstAbilityEnd = allMatches[0]?.index ?? cleanText.length;
+
+    if (firstAbilityEnd > 0 && firstAbilityEnd < cleanText.length) {
+      const keywordPortion = cleanText.slice(0, firstAbilityEnd).trim();
+      if (keywordPortion) {
+        segments.push(keywordPortion);
+      }
+    }
+
+    // Add all matched abilities
+    for (const m of allMatches) {
+      segments.push(m.text.trim());
+    }
+
+    if (segments.length > 0) {
+      return segments;
+    }
+  }
+
+  // No splitting needed, return original
+  return [text];
+}
+
+/**
  * Parse ability text that may contain multiple abilities.
  *
  * Card text often contains multiple abilities separated by line breaks or
@@ -882,7 +1142,26 @@ export function parseAbilities(
     };
   }
 
-  // Try parsing as spell ability first ([Action] or [Reaction] prefix)
+  const cleanText = removeReminderText(text);
+
+  // Check if text STARTS with an effect keyword (not just contains one)
+  const startsWithEffectKeyword = /^\[(Deathknell|Legion|Vision)\]/i.test(
+    cleanText,
+  );
+
+  // Try parsing as static ability first (keyword grants, restrictions)
+  // But only if text doesn't start with an effect keyword
+  if (!startsWithEffectKeyword && isStaticAbility(cleanText)) {
+    const staticResult = parseStaticAbility(text);
+    if (staticResult) {
+      return {
+        success: true,
+        abilities: [staticResult.ability],
+      };
+    }
+  }
+
+  // Try parsing as spell ability ([Action] or [Reaction] prefix)
   const spellAbility = parseSpellAbility(text);
   if (spellAbility) {
     return {
@@ -901,13 +1180,19 @@ export function parseAbilities(
   }
 
   // Try parsing as triggered ability (When X, effect pattern)
-  const triggeredAbility = parseTriggeredAbility(text);
-  if (triggeredAbility) {
-    return {
-      success: true,
-      abilities: [triggeredAbility],
-    };
+  // But only if text doesn't start with an effect keyword
+  if (!startsWithEffectKeyword) {
+    const triggeredAbility = parseTriggeredAbility(text);
+    if (triggeredAbility) {
+      return {
+        success: true,
+        abilities: [triggeredAbility],
+      };
+    }
   }
+
+  // Split into multiple ability segments if needed
+  const segments = splitMultiAbilityText(text);
 
   // Collect all abilities with their positions
   const abilitiesWithPositions: Array<{
@@ -915,17 +1200,77 @@ export function parseAbilities(
     startIndex: number;
   }> = [];
 
-  // Parse cost keywords (Accelerate, Equip, Repeat)
-  const costKeywordResults = parseCostKeywords(text);
-  abilitiesWithPositions.push(...costKeywordResults);
+  // Process each segment
+  for (const segment of segments) {
+    const segmentClean = removeReminderText(segment);
+    const segmentStartsWithEffectKeyword =
+      /^\[(Deathknell|Legion|Vision)\]/i.test(segmentClean);
 
-  // Parse simple keywords
-  const simpleKeywordResults = parseSimpleKeywordsWithPositions(text);
-  abilitiesWithPositions.push(...simpleKeywordResults);
+    // Try static ability for this segment
+    if (!segmentStartsWithEffectKeyword && isStaticAbility(segmentClean)) {
+      const staticResult = parseStaticAbility(segment);
+      if (staticResult) {
+        abilitiesWithPositions.push({
+          ability: staticResult.ability,
+          startIndex: text.indexOf(segment),
+        });
+        continue;
+      }
+    }
 
-  // Parse value keywords
-  const valueKeywordResults = parseValueKeywordsWithPositions(text);
-  abilitiesWithPositions.push(...valueKeywordResults);
+    // Try triggered ability for this segment (but not if it starts with effect keywords)
+    if (!segmentStartsWithEffectKeyword) {
+      const triggeredResult = parseTriggeredAbility(segment);
+      if (triggeredResult) {
+        abilitiesWithPositions.push({
+          ability: triggeredResult,
+          startIndex: text.indexOf(segment),
+        });
+        continue;
+      }
+    }
+
+    // Parse effect keywords (Deathknell, Legion, Vision)
+    const effectKeywordResults = parseEffectKeywordsWithPositions(segment);
+    for (const result of effectKeywordResults) {
+      abilitiesWithPositions.push({
+        ability: result.ability,
+        startIndex: text.indexOf(segment) + result.startIndex,
+      });
+    }
+
+    // Skip other keyword parsing if we found effect keywords
+    if (effectKeywordResults.length > 0) {
+      continue;
+    }
+
+    // Parse cost keywords (Accelerate, Equip, Repeat)
+    const costKeywordResults = parseCostKeywords(segment);
+    abilitiesWithPositions.push(
+      ...costKeywordResults.map((r) => ({
+        ability: r.ability,
+        startIndex: text.indexOf(segment) + r.startIndex,
+      })),
+    );
+
+    // Parse simple keywords
+    const simpleKeywordResults = parseSimpleKeywordsWithPositions(segment);
+    abilitiesWithPositions.push(
+      ...simpleKeywordResults.map((r) => ({
+        ability: r.ability,
+        startIndex: text.indexOf(segment) + r.startIndex,
+      })),
+    );
+
+    // Parse value keywords
+    const valueKeywordResults = parseValueKeywordsWithPositions(segment);
+    abilitiesWithPositions.push(
+      ...valueKeywordResults.map((r) => ({
+        ability: r.ability,
+        startIndex: text.indexOf(segment) + r.startIndex,
+      })),
+    );
+  }
 
   // Sort by position in text
   abilitiesWithPositions.sort((a, b) => a.startIndex - b.startIndex);

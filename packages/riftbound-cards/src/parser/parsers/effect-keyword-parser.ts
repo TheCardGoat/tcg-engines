@@ -6,10 +6,12 @@
  */
 
 import type {
+  AnyTarget,
   Condition,
   Effect,
   EffectKeyword,
   EffectKeywordAbility,
+  Location,
 } from "@tcg/riftbound-types";
 
 // ============================================================================
@@ -176,7 +178,7 @@ function parseSimpleEffect(text: string): Effect | undefined {
     const target: {
       type: "unit";
       controller?: "friendly" | "enemy";
-      location?: string | { battlefield: string };
+      location?: Location;
       quantity?: "all" | "any" | number;
     } = { type: "unit" };
 
@@ -314,7 +316,7 @@ export function parseEffectKeywordsWithPositions(
         type: "look",
         amount: 1,
         from: "deck",
-        then: { action: "recycle-optional" },
+        then: { recycle: 1 },
       };
     } else {
       // Parse the effect text

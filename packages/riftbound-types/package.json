@@ -17,9 +17,29 @@
       "types": "./src/abilities/index.ts",
       "default": "./src/abilities/index.ts"
     },
+    "./abilities/condition-types": {
+      "types": "./src/abilities/condition-types.ts",
+      "default": "./src/abilities/condition-types.ts"
+    },
+    "./abilities/cost-types": {
+      "types": "./src/abilities/cost-types.ts",
+      "default": "./src/abilities/cost-types.ts"
+    },
+    "./abilities/effect-types": {
+      "types": "./src/abilities/effect-types.ts",
+      "default": "./src/abilities/effect-types.ts"
+    },
+    "./abilities/trigger-types": {
+      "types": "./src/abilities/trigger-types.ts",
+      "default": "./src/abilities/trigger-types.ts"
+    },
     "./cards": {
       "types": "./src/cards/index.ts",
       "default": "./src/cards/index.ts"
+    },
+    "./targeting": {
+      "types": "./src/targeting/index.ts",
+      "default": "./src/targeting/index.ts"
     }
   },
   "scripts": {

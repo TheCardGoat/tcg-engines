@@ -67,7 +67,7 @@ describe("Spell: Reaction", () => {
       expect(result.abilities).toHaveLength(1);
     });
 
-    it.skip("should parse '[Reaction] Give a unit -4 :rb_might: this turn, to a minimum of 1 :rb_might:.'", () => {
+    it("should parse '[Reaction] Give a unit -4 :rb_might: this turn, to a minimum of 1 :rb_might:.'", () => {
       const result = parseAbilities(
         "[Reaction] (Play any time, even before spells and abilities resolve.)Give a unit -4 :rb_might: this turn, to a minimum of 1 :rb_might:.",
       );
@@ -116,7 +116,7 @@ describe("Spell: Reaction", () => {
   });
 
   describe("counter spells", () => {
-    it.skip("should parse '[Reaction] Counter a spell.'", () => {
+    it("should parse '[Reaction] Counter a spell.'", () => {
       const result = parseAbilities(
         "[Reaction] (Play any time, even before spells and abilities resolve.)Counter a spell.",
       );
@@ -211,7 +211,7 @@ describe("Spell: Reaction", () => {
       expect(result.abilities).toHaveLength(1);
     });
 
-    it.skip("should parse '[Reaction] Prevent all spell and ability damage this turn.'", () => {
+    it("should parse '[Reaction] Prevent all spell and ability damage this turn.'", () => {
       const result = parseAbilities(
         "[Reaction]_ (Play any time, even before spells and abilities resolve.)_Prevent all spell and ability damage this turn.",
       );
@@ -282,7 +282,7 @@ describe("Spell: Reaction", () => {
   });
 
   describe("control spells", () => {
-    it.skip("should parse '[Reaction] Gain control of a spell. You may make new choices for it.'", () => {
+    it("should parse '[Reaction] Gain control of a spell. You may make new choices for it.'", () => {
       const result = parseAbilities(
         "[Reaction] (Play any time, even before spells and abilities resolve.)Gain control of a spell. You may make new choices for it.",
       );

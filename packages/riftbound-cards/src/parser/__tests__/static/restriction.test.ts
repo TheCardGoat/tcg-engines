@@ -10,7 +10,7 @@ import { Abilities } from "../helpers";
 
 describe("Static: Restriction", () => {
   describe("scoring restrictions", () => {
-    it.skip("should parse 'While I'm at a battlefield, opponents can't score points.'", () => {
+    it("should parse 'While I'm at a battlefield, opponents can't score points.'", () => {
       const result = parseAbilities(
         "While I'm at a battlefield, opponents can't score points.",
       );
@@ -29,7 +29,7 @@ describe("Static: Restriction", () => {
   });
 
   describe("play restrictions", () => {
-    it.skip("should parse 'You may play me to an occupied enemy battlefield.'", () => {
+    it("should parse 'You may play me to an occupied enemy battlefield.'", () => {
       const result = parseAbilities(
         "You may play me to an occupied enemy battlefield.",
       );
@@ -43,7 +43,7 @@ describe("Static: Restriction", () => {
       );
     });
 
-    it.skip("should parse 'You may play me to an open battlefield.'", () => {
+    it("should parse 'You may play me to an open battlefield.'", () => {
       const result = parseAbilities("You may play me to an open battlefield.");
 
       expect(result.success).toBe(true);

@@ -110,63 +110,43 @@ export function extractAndParseCost(text: string): Cost | null {
  * @returns Partial Cost object with additional cost components
  */
 export function parseAdditionalCostText(text: string): Partial<Cost> {
-  const cost: Partial<Cost> = {};
-
-  // Parse "Recycle N cards"
+  // Build the cost object with all properties at once
   const recycleMatch = text.match(/Recycle\s+(\d+)\s+cards?/i);
-  if (recycleMatch) {
-    cost.recycle = Number.parseInt(recycleMatch[1], 10);
-  }
+  const hasKillFriendlyUnit = /Kill\s+a\s+friendly\s+unit/i.test(text);
 
-  // Parse "Kill a friendly unit" - simplified for now
-  // Note: kill cost expects Target | "self", using Target with required fields
-  if (/Kill\s+a\s+friendly\s+unit/i.test(text)) {
-    cost.kill = {
-      type: "unit",
-      controller: "friendly",
-    };
-  }
-
-  return cost;
+  return {
+    ...(recycleMatch
+      ? { recycle: Number.parseInt(recycleMatch[1], 10) }
+      : undefined),
+    ...(hasKillFriendlyUnit
+      ? {
+          kill: {
+            type: "unit" as const,
+            controller: "friendly" as const,
+          },
+        }
+      : undefined),
+  };
 }
 
 /**
  * Merge two Cost objects
  */
 export function mergeCosts(base: Cost, additional: Partial<Cost>): Cost {
-  const merged: Cost = { ...base };
-
-  if (additional.energy !== undefined) {
-    merged.energy = (merged.energy ?? 0) + additional.energy;
-  }
-
-  if (additional.power !== undefined) {
-    merged.power = [...(merged.power ?? []), ...additional.power];
-  }
-
-  if (additional.exhaust !== undefined) {
-    merged.exhaust = additional.exhaust;
-  }
-
-  if (additional.recycle !== undefined) {
-    merged.recycle = additional.recycle;
-  }
-
-  if (additional.kill !== undefined) {
-    merged.kill = additional.kill;
-  }
-
-  if (additional.discard !== undefined) {
-    merged.discard = additional.discard;
-  }
-
-  if (additional.spend !== undefined) {
-    merged.spend = additional.spend;
-  }
-
-  if (additional.returnToHand !== undefined) {
-    merged.returnToHand = additional.returnToHand;
-  }
-
-  return merged;
+  return {
+    energy:
+      additional.energy !== undefined
+        ? (base.energy ?? 0) + additional.energy
+        : base.energy,
+    power:
+      additional.power !== undefined
+        ? [...(base.power ?? []), ...additional.power]
+        : base.power,
+    exhaust: additional.exhaust ?? base.exhaust,
+    recycle: additional.recycle ?? base.recycle,
+    kill: additional.kill ?? base.kill,
+    discard: additional.discard ?? base.discard,
+    spend: additional.spend ?? base.spend,
+    returnToHand: additional.returnToHand ?? base.returnToHand,
+  };
 }
