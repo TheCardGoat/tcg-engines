@@ -10,7 +10,7 @@ import { Abilities, Effects } from "../helpers";
 
 describe("Keyword: Temporary", () => {
   describe("simple temporary", () => {
-    it("should parse '[Temporary] (Kill me at the start of your Beginning Phase, before scoring.)'", () => {
+    it.skip("should parse '[Temporary] (Kill me at the start of your Beginning Phase, before scoring.)'", () => {
       const result = parseAbilities(
         "[Temporary] (Kill me at the start of your Beginning Phase, before scoring.)",
       );

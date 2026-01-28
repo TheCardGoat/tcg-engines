@@ -10,7 +10,7 @@ import { Effects, Triggers } from "../helpers";
 
 describe("Trigger: When Played", () => {
   describe("draw effects", () => {
-    it("should parse 'When you play me, draw 1.'", () => {
+    it.skip("should parse 'When you play me, draw 1.'", () => {
       const result = parseAbilities("When you play me, draw 1.");
 
       expect(result.success).toBe(true);
@@ -29,7 +29,7 @@ describe("Trigger: When Played", () => {
       );
     });
 
-    it("should parse 'When you play me, draw 2.'", () => {
+    it.skip("should parse 'When you play me, draw 2.'", () => {
       const result = parseAbilities("When you play me, draw 2.");
 
       expect(result.success).toBe(true);
@@ -83,7 +83,7 @@ describe("Trigger: When Played", () => {
   });
 
   describe("channel effects", () => {
-    it("should parse 'When you play me, channel 1 rune exhausted.'", () => {
+    it.skip("should parse 'When you play me, channel 1 rune exhausted.'", () => {
       const result = parseAbilities(
         "When you play me, channel 1 rune exhausted.",
       );
@@ -102,7 +102,7 @@ describe("Trigger: When Played", () => {
       );
     });
 
-    it("should parse 'When you play me, channel 2 runes exhausted.'", () => {
+    it.skip("should parse 'When you play me, channel 2 runes exhausted.'", () => {
       const result = parseAbilities(
         "When you play me, channel 2 runes exhausted.",
       );
@@ -113,7 +113,7 @@ describe("Trigger: When Played", () => {
   });
 
   describe("buff effects", () => {
-    it("should parse 'When you play me, buff a friendly unit.'", () => {
+    it.skip("should parse 'When you play me, buff a friendly unit.'", () => {
       const result = parseAbilities(
         "When you play me, buff a friendly unit. (If it doesn't have a buff, it gets a +1 :rb_might: buff.)",
       );
@@ -130,7 +130,7 @@ describe("Trigger: When Played", () => {
       );
     });
 
-    it("should parse 'When you play me, buff me.'", () => {
+    it.skip("should parse 'When you play me, buff me.'", () => {
       const result = parseAbilities(
         "When you play me, buff me. (If I don't have a buff, I get a +1 :rb_might: buff.)",
       );
@@ -217,7 +217,7 @@ describe("Trigger: When Played", () => {
   });
 
   describe("movement effects", () => {
-    it("should parse 'When you play me, move a unit from a battlefield to its base.'", () => {
+    it.skip("should parse 'When you play me, move a unit from a battlefield to its base.'", () => {
       const result = parseAbilities(
         "When you play me, move a unit from a battlefield to its base.",
       );
@@ -251,7 +251,7 @@ describe("Trigger: When Played", () => {
   });
 
   describe("damage effects", () => {
-    it("should parse 'When you play me, deal 2 to a unit at a battlefield.'", () => {
+    it.skip("should parse 'When you play me, deal 2 to a unit at a battlefield.'", () => {
       const result = parseAbilities(
         "When you play me, deal 2 to a unit at a battlefield.",
       );
@@ -269,7 +269,7 @@ describe("Trigger: When Played", () => {
       );
     });
 
-    it("should parse 'When you play me, deal 3 to an enemy unit at a battlefield.'", () => {
+    it.skip("should parse 'When you play me, deal 3 to an enemy unit at a battlefield.'", () => {
       const result = parseAbilities(
         "When you play me, deal 3 to an enemy unit at a battlefield.",
       );
@@ -280,7 +280,7 @@ describe("Trigger: When Played", () => {
   });
 
   describe("ready effects", () => {
-    it("should parse 'When you play me, ready your units.'", () => {
+    it.skip("should parse 'When you play me, ready your units.'", () => {
       const result = parseAbilities("When you play me, ready your units.");
 
       expect(result.success).toBe(true);

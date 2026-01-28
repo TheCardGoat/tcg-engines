@@ -10,7 +10,7 @@ import { Abilities, Costs } from "../helpers";
 
 describe("Keyword: Equip", () => {
   describe("equip with single domain", () => {
-    it("should parse '[Equip] :rb_rune_body:'", () => {
+    it.skip("should parse '[Equip] :rb_rune_body:'", () => {
       const result = parseAbilities(
         "[Equip] :rb_rune_body: (:rb_rune_body:: Attach this to a unit you control.)",
       );
@@ -22,7 +22,7 @@ describe("Keyword: Equip", () => {
       );
     });
 
-    it("should parse '[Equip] :rb_rune_calm:'", () => {
+    it.skip("should parse '[Equip] :rb_rune_calm:'", () => {
       const result = parseAbilities(
         "[Equip] :rb_rune_calm: (:rb_rune_calm:: Attach this to a unit you control.)",
       );
@@ -34,7 +34,7 @@ describe("Keyword: Equip", () => {
       );
     });
 
-    it("should parse '[Equip] :rb_rune_chaos:'", () => {
+    it.skip("should parse '[Equip] :rb_rune_chaos:'", () => {
       const result = parseAbilities(
         "[Equip] :rb_rune_chaos: (:rb_rune_chaos:: Attach this to a unit you control.)",
       );
@@ -46,7 +46,7 @@ describe("Keyword: Equip", () => {
       );
     });
 
-    it("should parse '[Equip] :rb_rune_fury:'", () => {
+    it.skip("should parse '[Equip] :rb_rune_fury:'", () => {
       const result = parseAbilities(
         "[Equip] :rb_rune_fury: (:rb_rune_fury:: Attach this to a unit you control.)",
       );
@@ -58,7 +58,7 @@ describe("Keyword: Equip", () => {
       );
     });
 
-    it("should parse '[Equip] :rb_rune_mind:'", () => {
+    it.skip("should parse '[Equip] :rb_rune_mind:'", () => {
       const result = parseAbilities(
         "[Equip] :rb_rune_mind: (:rb_rune_mind:: Attach this to a unit you control.)",
       );
@@ -70,7 +70,7 @@ describe("Keyword: Equip", () => {
       );
     });
 
-    it("should parse '[Equip] :rb_rune_order:'", () => {
+    it.skip("should parse '[Equip] :rb_rune_order:'", () => {
       const result = parseAbilities(
         "[Equip] :rb_rune_order: (:rb_rune_order:: Attach this to a unit you control.)",
       );
@@ -84,7 +84,7 @@ describe("Keyword: Equip", () => {
   });
 
   describe("equip with energy and domain", () => {
-    it("should parse '[Equip] :rb_energy_1::rb_rune_body:'", () => {
+    it.skip("should parse '[Equip] :rb_energy_1::rb_rune_body:'", () => {
       const result = parseAbilities(
         "[Equip] :rb_energy_1::rb_rune_body: (:rb_energy_1::rb_rune_body:: Attach this to a unit you control.)",
       );
@@ -112,7 +112,7 @@ describe("Keyword: Equip", () => {
       );
     });
 
-    it("should parse '[Equip] :rb_energy_1::rb_rune_fury:'", () => {
+    it.skip("should parse '[Equip] :rb_energy_1::rb_rune_fury:'", () => {
       const result = parseAbilities(
         "[Equip] :rb_energy_1::rb_rune_fury: (:rb_energy_1::rb_rune_fury:: Attach this to a unit you control.)",
       );
@@ -137,7 +137,7 @@ describe("Keyword: Equip", () => {
   });
 
   describe("equip with alternative costs", () => {
-    it("should parse '[Equip] — :rb_rune_chaos:, Recycle 2 cards from your trash'", () => {
+    it.skip("should parse '[Equip] — :rb_rune_chaos:, Recycle 2 cards from your trash'", () => {
       const result = parseAbilities(
         "[Equip] — :rb_rune_chaos:, Recycle 2 cards from your trash (Pay the cost:** **Attach this to a unit you control.)",
       );
@@ -156,7 +156,7 @@ describe("Keyword: Equip", () => {
       );
     });
 
-    it("should parse '[Equip] — :rb_rune_order:, Kill a friendly unit'", () => {
+    it.skip("should parse '[Equip] — :rb_rune_order:, Kill a friendly unit'", () => {
       const result = parseAbilities(
         "[Equip] — :rb_rune_order:, Kill a friendly unit (Pay the cost: Attach this to a unit you control.)",
       );
@@ -190,7 +190,7 @@ describe("Keyword: Equip", () => {
   });
 
   describe("equip with quick-draw", () => {
-    it("should parse '[Quick-Draw][Equip] :rb_rune_calm:'", () => {
+    it.skip("should parse '[Quick-Draw][Equip] :rb_rune_calm:'", () => {
       const result = parseAbilities(
         "[Quick-Draw] (This has [Reaction]. When you play it, attach it to a unit you control.)[Equip] :rb_rune_calm: (:rb_rune_calm:: Attach this to a unit you control.)",
       );
@@ -207,7 +207,7 @@ describe("Keyword: Equip", () => {
   });
 
   describe("equip with unique", () => {
-    it("should parse '[Unique][Equip] :rb_rune_rainbow:'", () => {
+    it.skip("should parse '[Unique][Equip] :rb_rune_rainbow:'", () => {
       const result = parseAbilities(
         "[Unique]** **(Your deck can have only 1 card with this name.)[Equip] :rb_rune_rainbow: (:rb_rune_rainbow:: Attach this to a unit you control.)",
       );

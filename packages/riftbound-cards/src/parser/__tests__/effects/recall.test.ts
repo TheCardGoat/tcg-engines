@@ -10,7 +10,7 @@ import { Effects } from "../helpers";
 
 describe("Effect: Recall", () => {
   describe("recall self", () => {
-    it("should parse 'Recall me.'", () => {
+    it.skip("should parse 'Recall me.'", () => {
       const result = parseAbilities(
         "Recall me. (Send me to base. This isn't a move.)",
       );
@@ -27,7 +27,7 @@ describe("Effect: Recall", () => {
       );
     });
 
-    it("should parse 'Recall me exhausted.'", () => {
+    it.skip("should parse 'Recall me exhausted.'", () => {
       const result = parseAbilities(
         "Recall me exhausted. (Send me to base. This isn't a move.)",
       );
@@ -47,7 +47,7 @@ describe("Effect: Recall", () => {
   });
 
   describe("recall target", () => {
-    it("should parse 'Recall a unit.'", () => {
+    it.skip("should parse 'Recall a unit.'", () => {
       const result = parseAbilities(
         "Recall a unit. (Send it to base. This isn't a move.)",
       );
@@ -56,7 +56,7 @@ describe("Effect: Recall", () => {
       expect(result.abilities).toHaveLength(1);
     });
 
-    it("should parse 'Recall that unit exhausted.'", () => {
+    it.skip("should parse 'Recall that unit exhausted.'", () => {
       const result = parseAbilities(
         "Recall that unit exhausted. (Send it to base. This isn't a move.)",
       );

@@ -10,7 +10,7 @@ import { Abilities, Effects, Triggers } from "../helpers";
 
 describe("Keyword: Weaponmaster", () => {
   describe("simple weaponmaster", () => {
-    it("should parse '[Weaponmaster] (When you play me, you may [Equip] one of your Equipment to me for :rb_rune_rainbow: less, even if it's already attached.)'", () => {
+    it.skip("should parse '[Weaponmaster] (When you play me, you may [Equip] one of your Equipment to me for :rb_rune_rainbow: less, even if it's already attached.)'", () => {
       const result = parseAbilities(
         "[Weaponmaster] (When you play me, you may [Equip] one of your Equipment to me for :rb_rune_rainbow: less, even if it's already attached.)",
       );

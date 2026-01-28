@@ -174,22 +174,20 @@ describe("test-rng-helpers", () => {
       expectDeterministicBehavior(fn, "array-seed");
     });
 
-    it("should detect non-determinism in shuffles", () => {
-      let useRandom = false;
+    it("should detect non-determinism from external state", () => {
+      let callCount = 0;
       const fn = (rng: SeededRNG) => {
-        const array = [1, 2, 3, 4, 5];
-        if (useRandom) {
-          // Introduce non-determinism
-          return array.sort(() => Math.random() - 0.5);
-        }
-        return rng.shuffle(array);
+        // Each call uses a different RNG seed due to external state
+        callCount++;
+        const tempRng = new (
+          rng.constructor as new (
+            seed: string,
+          ) => SeededRNG
+        )(`seed-${callCount}`);
+        return tempRng.randomInt(1, 100);
       };
 
-      // First run should pass
-      expectDeterministicBehavior(fn, "shuffle-seed");
-
-      // Second run with non-determinism should fail
-      useRandom = true;
+      callCount = 0;
       expect(() => {
         expectDeterministicBehavior(fn, "shuffle-seed");
       }).toThrow(/deterministic/);

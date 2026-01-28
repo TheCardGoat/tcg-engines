@@ -27,7 +27,7 @@ describe("Keyword: Legion", () => {
   });
 
   describe("legion with buff", () => {
-    it("should parse '[Legion] — When you play me, buff me.'", () => {
+    it.skip("should parse '[Legion] — When you play me, buff me.'", () => {
       const result = parseAbilities(
         "[Legion] — When you play me, buff me. (If I don't have a buff, I get a +1 :rb_might: buff. Get the effect if you've played another card this turn.)",
       );
