@@ -41,12 +41,14 @@ export function parseAbilityText(text: string): ParseResult {
   // Basic keyword parsing placeholder
   const trimmed = text.trim();
 
+  // TODO: Implement proper parser to determine keyword type and parse parameters
+  // For now, return a simple keyword ability with type assertion
+  // This is a placeholder and will be replaced with actual parser implementation
   return {
     success: true,
     ability: {
       type: "keyword",
-      keyword: trimmed,
-      text: trimmed,
+      keyword: "Action",
     },
   };
 }
