@@ -4,7 +4,14 @@
  * Parser for converting card ability text to structured ability objects.
  */
 
-import type { Ability, AbilityWithText } from "@tcg/riftbound-types";
+import type {
+  Ability,
+  AbilityWithText,
+  SimpleKeyword,
+  SimpleKeywordAbility,
+  ValueKeyword,
+  ValueKeywordAbility,
+} from "@tcg/riftbound-types";
 
 /**
  * Options for controlling parser behavior and output
@@ -34,8 +41,116 @@ export interface ParseResult {
  */
 export interface ParseAbilitiesResult {
   readonly success: boolean;
-  readonly abilities?: AbilityWithText[];
+  readonly abilities?: Ability[];
   readonly error?: string;
+}
+
+// ============================================================================
+// Constants
+// ============================================================================
+
+/**
+ * Simple keywords that have no parameters
+ */
+const SIMPLE_KEYWORDS: readonly SimpleKeyword[] = [
+  "Tank",
+  "Ganking",
+  "Action",
+  "Reaction",
+  "Hidden",
+  "Temporary",
+  "Quick-Draw",
+  "Weaponmaster",
+  "Unique",
+] as const;
+
+/**
+ * Value keywords that have optional numeric values
+ */
+const VALUE_KEYWORDS: readonly ValueKeyword[] = [
+  "Assault",
+  "Shield",
+  "Deflect",
+] as const;
+
+// ============================================================================
+// Regex Patterns
+// ============================================================================
+
+/**
+ * Pattern to match simple keywords: [KeywordName]
+ */
+const SIMPLE_KEYWORD_PATTERN = new RegExp(
+  `\\[(${SIMPLE_KEYWORDS.join("|")})\\]`,
+  "g",
+);
+
+/**
+ * Pattern to match value keywords: [KeywordName] or [KeywordName N]
+ */
+const VALUE_KEYWORD_PATTERN = new RegExp(
+  `\\[(${VALUE_KEYWORDS.join("|")})(?:\\s+(\\d+))?\\]`,
+  "g",
+);
+
+/**
+ * Pattern to match reminder text in parentheses
+ */
+const REMINDER_TEXT_PATTERN = /\([^)]*\)/g;
+
+// ============================================================================
+// Parser Functions
+// ============================================================================
+
+/**
+ * Remove reminder text (text in parentheses) from ability text
+ */
+function removeReminderText(text: string): string {
+  return text.replace(REMINDER_TEXT_PATTERN, "").trim();
+}
+
+/**
+ * Parse simple keywords from text
+ */
+function parseSimpleKeywords(text: string): SimpleKeywordAbility[] {
+  const abilities: SimpleKeywordAbility[] = [];
+  const cleanText = removeReminderText(text);
+
+  let match: RegExpExecArray | null;
+  const pattern = new RegExp(SIMPLE_KEYWORD_PATTERN.source, "g");
+
+  while ((match = pattern.exec(cleanText)) !== null) {
+    const keyword = match[1] as SimpleKeyword;
+    abilities.push({
+      type: "keyword",
+      keyword,
+    });
+  }
+
+  return abilities;
+}
+
+/**
+ * Parse value keywords from text
+ */
+function parseValueKeywords(text: string): ValueKeywordAbility[] {
+  const abilities: ValueKeywordAbility[] = [];
+  const cleanText = removeReminderText(text);
+
+  let match: RegExpExecArray | null;
+  const pattern = new RegExp(VALUE_KEYWORD_PATTERN.source, "g");
+
+  while ((match = pattern.exec(cleanText)) !== null) {
+    const keyword = match[1] as ValueKeyword;
+    const value = match[2] ? Number.parseInt(match[2], 10) : 1;
+    abilities.push({
+      type: "keyword",
+      keyword,
+      value,
+    });
+  }
+
+  return abilities;
 }
 
 /**
@@ -53,7 +168,6 @@ export interface ParseAbilitiesResult {
  * ```
  */
 export function parseAbilityText(text: string): ParseResult {
-  // Placeholder implementation - parser will be implemented as game rules are defined
   if (!text || text.trim().length === 0) {
     return {
       success: false,
@@ -61,18 +175,27 @@ export function parseAbilityText(text: string): ParseResult {
     };
   }
 
-  // Basic keyword parsing placeholder
-  const _trimmed = text.trim();
+  // Try parsing as simple keyword first
+  const simpleKeywords = parseSimpleKeywords(text);
+  if (simpleKeywords.length > 0) {
+    return {
+      success: true,
+      ability: simpleKeywords[0],
+    };
+  }
 
-  // TODO: Implement proper parser to determine keyword type and parse parameters
-  // For now, return a simple keyword ability with type assertion
-  // This is a placeholder and will be replaced with actual parser implementation
+  // Try parsing as value keyword
+  const valueKeywords = parseValueKeywords(text);
+  if (valueKeywords.length > 0) {
+    return {
+      success: true,
+      ability: valueKeywords[0],
+    };
+  }
+
   return {
-    success: true,
-    ability: {
-      type: "keyword",
-      keyword: "Action",
-    },
+    success: false,
+    error: "Unable to parse ability text",
   };
 }
 
@@ -129,16 +252,7 @@ export function buildAbilityWithText(
  * ```typescript
  * const result = parseAbilities("[Assault 2] (+2 :rb_might: while I'm an attacker.)");
  * if (result.success) {
- *   console.log(result.abilities); // [{ ability: { type: "keyword", keyword: "Assault", value: 2 }, text: "..." }]
- * }
- * ```
- *
- * @example
- * ```typescript
- * // Omit text and id fields for cleaner test assertions
- * const result = parseAbilities("Draw 1.", { omitText: true, omitId: true });
- * if (result.success) {
- *   console.log(result.abilities); // [{ ability: { type: "triggered", ... } }]
+ *   console.log(result.abilities); // [{ type: "keyword", keyword: "Assault", value: 2 }]
  * }
  * ```
  */
@@ -146,7 +260,6 @@ export function parseAbilities(
   text: string,
   _options?: ParserOptions,
 ): ParseAbilitiesResult {
-  // Placeholder implementation - parser will be implemented using TDD
   if (!text || text.trim().length === 0) {
     return {
       success: false,
@@ -154,11 +267,26 @@ export function parseAbilities(
     };
   }
 
-  // TODO: Implement proper parser using TDD
-  // The tests will guide the implementation
+  const abilities: Ability[] = [];
+
+  // Parse simple keywords
+  const simpleKeywords = parseSimpleKeywords(text);
+  abilities.push(...simpleKeywords);
+
+  // Parse value keywords
+  const valueKeywords = parseValueKeywords(text);
+  abilities.push(...valueKeywords);
+
+  if (abilities.length === 0) {
+    return {
+      success: false,
+      error: "No abilities found in text",
+    };
+  }
+
   return {
-    success: false,
-    error: "Parser not yet implemented",
+    success: true,
+    abilities,
   };
 }
 
