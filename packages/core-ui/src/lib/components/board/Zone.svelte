@@ -57,12 +57,14 @@
 
   // Zone type specific styling
   const zoneTypeClasses: Record<ZoneType, string> = {
-    hand: "p-2 rounded-lg",
-    field: "p-3 rounded-xl",
-    deck: "p-1 rounded-lg",
-    graveyard: "p-1 rounded-lg",
-    resource: "p-2 rounded-lg",
-    exile: "p-1 rounded-lg opacity-75",
+    hand: "p-4 min-h-[120px] flex items-end justify-center perspective-1000",
+    field:
+      "p-4 min-h-[200px] rounded-xl bg-base-content/5 border-2 border-dashed border-base-content/10 backdrop-blur-sm shadow-inner",
+    deck: "p-2 rounded-lg border-2 border-solid border-base-content/20 bg-base-200/30 shadow-sm",
+    graveyard:
+      "p-2 rounded-lg border-2 border-solid border-base-content/20 bg-black/20 shadow-inner",
+    resource: "p-2 rounded-lg bg-primary/5 border border-primary/20",
+    exile: "p-2 rounded-lg opacity-60 border border-base-content/10 grayscale",
     custom: "",
   };
 

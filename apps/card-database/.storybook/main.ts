@@ -1,8 +1,28 @@
 import type { StorybookConfig } from "@storybook/sveltekit";
-
+import tailwindcss from "@tailwindcss/vite";
 import { dirname } from "path";
-
 import { fileURLToPath } from "url";
+import type { PluginOption } from "vite";
+
+function isNamedPlugin(value: unknown): value is { name: string } {
+  if (typeof value !== "object" || value === null) {
+    return false;
+  }
+
+  if (!("name" in value)) {
+    return false;
+  }
+
+  return typeof (value as { name?: unknown }).name === "string";
+}
+
+function pluginOptionHasName(option: PluginOption, name: string): boolean {
+  if (Array.isArray(option)) {
+    return option.some((inner) => pluginOptionHasName(inner, name));
+  }
+
+  return isNamedPlugin(option) && option.name === name;
+}
 
 /**
  * This function is used to resolve the absolute path of a package.
@@ -15,5 +35,17 @@ const config: StorybookConfig = {
   stories: ["../src/**/*.stories.@(js|ts|svelte)"],
   addons: [getAbsolutePath("@storybook/addon-svelte-csf")],
   framework: getAbsolutePath("@storybook/sveltekit"),
+  async viteFinal(config) {
+    const existingPlugins = config.plugins ?? [];
+    const hasTailwind = existingPlugins.some((plugin) =>
+      pluginOptionHasName(plugin, "tailwindcss"),
+    );
+
+    if (!hasTailwind) {
+      config.plugins = [...existingPlugins, tailwindcss()];
+    }
+
+    return config;
+  },
 };
 export default config;

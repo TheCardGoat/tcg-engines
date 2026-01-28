@@ -1,10 +1,11 @@
 <script lang="ts">
   import type { Snippet } from "svelte";
+  import type { HTMLAttributes } from "svelte/elements";
   import { cn } from "../../utils.js";
 
   type OverflowStrategy = "hidden" | "auto" | "scroll";
 
-  interface BoardViewportProps {
+  interface BoardViewportProps extends HTMLAttributes<HTMLDivElement> {
     /** Background color/gradient for the empty space (letterbox/pillarbox) */
     background?: string;
     /** How to handle overflow when board exceeds viewport */
@@ -20,6 +21,7 @@
     overflow = "hidden",
     class: className,
     children,
+    ...rest
   }: BoardViewportProps = $props();
 
   const overflowClasses: Record<OverflowStrategy, string> = {
@@ -44,6 +46,7 @@
   style:background={background ?? "var(--color-base-300, #1a1a1a)"}
   role="application"
   aria-label="Game board viewport"
+  {...rest}
 >
   {@render children()}
 </div>
