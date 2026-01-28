@@ -1,11 +1,12 @@
 // @ts-nocheck - Skipped tests contain expected values that don't match current types
 import { describe, expect, it } from "bun:test";
-import type {
-  ActionAbilityDefinition,
-  ActivatedAbilityDefinition,
-  KeywordAbilityDefinition,
-  StaticAbilityDefinition,
-  TriggeredAbilityDefinition,
+import {
+  Abilities,
+  Conditions,
+  Costs,
+  Effects,
+  Targets,
+  Triggers,
 } from "@tcg/lorcana-types";
 import { parseAbilityTextMulti } from "../../parser";
 

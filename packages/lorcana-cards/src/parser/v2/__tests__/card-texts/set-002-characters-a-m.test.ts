@@ -1,11 +1,12 @@
 // @ts-nocheck - Skipped tests contain expected values that don't match current types
 import { describe, expect, it } from "bun:test";
-import type {
-  ActionAbilityDefinition,
-  ActivatedAbilityDefinition,
-  KeywordAbilityDefinition,
-  StaticAbilityDefinition,
-  TriggeredAbilityDefinition,
+import {
+  Abilities,
+  Conditions,
+  Costs,
+  Effects,
+  Targets,
+  Triggers,
 } from "@tcg/lorcana-types";
 import { parseAbilityTextMulti } from "../../parser";
 
@@ -17,7 +18,7 @@ describe("Set 002 Card Text Parser Tests - Characters A M", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const ohGosh: StaticAbilityDefinition = {
+    const ohGosh = {
       type: "static",
       name: "OH, GOSH!",
       effect: {
@@ -46,7 +47,7 @@ describe("Set 002 Card Text Parser Tests - Characters A M", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const wellAlwaysBeTogether: TriggeredAbilityDefinition = {
+    const wellAlwaysBeTogether = {
       type: "triggered",
       name: "WE'LL ALWAYS BE TOGETHER",
       trigger: {
@@ -97,7 +98,7 @@ describe("Set 002 Card Text Parser Tests - Characters A M", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const shareAndShareAlike: TriggeredAbilityDefinition = {
+    const shareAndShareAlike = {
       type: "triggered",
       name: "SHARE AND SHARE ALIKE",
       trigger: {
@@ -124,7 +125,7 @@ describe("Set 002 Card Text Parser Tests - Characters A M", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const oddOneOut: TriggeredAbilityDefinition = {
+    const oddOneOut = {
       type: "triggered",
       name: "ODD ONE OUT",
       trigger: {
@@ -169,7 +170,7 @@ describe("Set 002 Card Text Parser Tests - Characters A M", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const yesYourMajesty: StaticAbilityDefinition = {
+    const yesYourMajesty = {
       type: "static",
       name: "YES, YOUR MAJESTY",
       effect: {
@@ -192,7 +193,7 @@ describe("Set 002 Card Text Parser Tests - Characters A M", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const theresTroubleABrewin: StaticAbilityDefinition = {
+    const theresTroubleABrewin = {
       type: "static",
       name: "THERE'S TROUBLE A-BREWIN'",
       effect: {
@@ -215,10 +216,7 @@ describe("Set 002 Card Text Parser Tests - Characters A M", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const support: KeywordAbilityDefinition = {
-      type: "keyword",
-      keyword: "Support",
-    };
+    const support = Abilities.Keyword("Support");
     expect(result.abilities[0].ability).toEqual(
       expect.objectContaining(support),
     );
@@ -231,7 +229,7 @@ describe("Set 002 Card Text Parser Tests - Characters A M", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const layItOnTheLine: TriggeredAbilityDefinition = {
+    const layItOnTheLine = {
       type: "triggered",
       name: "LAY IT ON THE LINE",
       trigger: {
@@ -261,7 +259,7 @@ describe("Set 002 Card Text Parser Tests - Characters A M", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const gladYoureHere: TriggeredAbilityDefinition = {
+    const gladYoureHere = {
       type: "triggered",
       name: "GLAD YOU'RE HERE!",
       trigger: {
@@ -288,7 +286,7 @@ describe("Set 002 Card Text Parser Tests - Characters A M", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const theSunWillSet: TriggeredAbilityDefinition = {
+    const theSunWillSet = {
       type: "triggered",
       name: "THE SUN WILL SET",
       trigger: {
@@ -341,7 +339,7 @@ describe("Set 002 Card Text Parser Tests - Characters A M", () => {
     expect(result.abilities[0].ability).toEqual(expect.objectContaining(shift));
 
     // Second ability: HONOR TO THE ANCESTORS
-    const honorToTheAncestors: TriggeredAbilityDefinition = {
+    const honorToTheAncestors = {
       type: "triggered",
       name: "HONOR TO THE ANCESTORS",
       trigger: {
@@ -383,7 +381,7 @@ describe("Set 002 Card Text Parser Tests - Characters A M", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const holdStill: ActionAbilityDefinition = {
+    const holdStill = {
       type: "action",
       effect: {
         type: "remove-damage",
@@ -402,7 +400,7 @@ describe("Set 002 Card Text Parser Tests - Characters A M", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const lastStand: ActionAbilityDefinition = {
+    const lastStand = {
       type: "action",
       effect: {
         type: "banish",
@@ -421,7 +419,7 @@ describe("Set 002 Card Text Parser Tests - Characters A M", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const bringBackToLife: ActivatedAbilityDefinition = {
+    const bringBackToLife = {
       type: "activated",
       name: "BRING BACK TO LIFE",
       cost: {
@@ -446,7 +444,7 @@ describe("Set 002 Card Text Parser Tests - Characters A M", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const student: TriggeredAbilityDefinition = {
+    const student = {
       type: "triggered",
       name: "STUDENT",
       trigger: {
@@ -484,16 +482,13 @@ describe("Set 002 Card Text Parser Tests - Characters A M", () => {
     expect(result.abilities.length).toBe(2);
 
     // First ability: Evasive
-    const evasive: KeywordAbilityDefinition = {
-      type: "keyword",
-      keyword: "Evasive",
-    };
+    const evasive = Abilities.Keyword("Evasive");
     expect(result.abilities[0].ability).toEqual(
       expect.objectContaining(evasive),
     );
 
     // Second ability: ETHEREAL GLOW
-    const etherealGlow: TriggeredAbilityDefinition = {
+    const etherealGlow = {
       type: "triggered",
       name: "ETHEREAL GLOW",
       trigger: {
@@ -523,10 +518,7 @@ describe("Set 002 Card Text Parser Tests - Characters A M", () => {
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const evasive: KeywordAbilityDefinition = {
-      type: "keyword",
-      keyword: "Evasive",
-    };
+    const evasive = Abilities.Keyword("Evasive");
     expect(result.abilities[0].ability).toEqual(
       expect.objectContaining(evasive),
     );
@@ -548,7 +540,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.abilities[0].ability).toEqual(expect.objectContaining(shift));
 
     // Second ability: FORGET THE COACH, HERE'S A SWORD
-    const forgetTheCoach: TriggeredAbilityDefinition = {
+    const forgetTheCoach = {
       type: "triggered",
       name: "FORGET THE COACH, HERE'S A SWORD",
       trigger: {
@@ -597,7 +589,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const justLeaveItToMe: TriggeredAbilityDefinition = {
+    const justLeaveItToMe = {
       type: "triggered",
       name: "JUST LEAVE IT TO ME",
       trigger: {
@@ -626,7 +618,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const hesBack: TriggeredAbilityDefinition = {
+    const hesBack = {
       type: "triggered",
       name: "HE'S BACK!",
       trigger: {
@@ -653,16 +645,13 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.abilities.length).toBe(2);
 
     // First ability: Evasive
-    const evasive: KeywordAbilityDefinition = {
-      type: "keyword",
-      keyword: "Evasive",
-    };
+    const evasive = Abilities.Keyword("Evasive");
     expect(result.abilities[0].ability).toEqual(
       expect.objectContaining(evasive),
     );
 
     // Second ability: THAT STILL, SMALL VOICE
-    const thatStillSmallVoice: TriggeredAbilityDefinition = {
+    const thatStillSmallVoice = {
       type: "triggered",
       name: "THAT STILL, SMALL VOICE",
       trigger: {
@@ -700,7 +689,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.abilities.length).toBe(2);
 
     // First ability: CHASING THE RABBIT
-    const chasingTheRabbit: TriggeredAbilityDefinition = {
+    const chasingTheRabbit = {
       type: "triggered",
       name: "CHASING THE RABBIT",
       trigger: {
@@ -728,10 +717,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     );
 
     // Second ability: Rush
-    const rush: KeywordAbilityDefinition = {
-      type: "keyword",
-      keyword: "Rush",
-    };
+    const rush = Abilities.Keyword("Rush");
     expect(result.abilities[1].ability).toEqual(expect.objectContaining(rush));
   });
 
@@ -743,16 +729,13 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.abilities.length).toBe(2);
 
     // First ability: Evasive
-    const evasive: KeywordAbilityDefinition = {
-      type: "keyword",
-      keyword: "Evasive",
-    };
+    const evasive = Abilities.Keyword("Evasive");
     expect(result.abilities[0].ability).toEqual(
       expect.objectContaining(evasive),
     );
 
     // Second ability: I WIN, I WIN!
-    const iWinIWin: TriggeredAbilityDefinition = {
+    const iWinIWin = {
       type: "triggered",
       name: "I WIN, I WIN!",
       trigger: {
@@ -796,7 +779,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.abilities[0].ability).toEqual(expect.objectContaining(shift));
 
     // Second ability: GRUESOME AND GRIM
-    const gruesomeAndGrim: ActivatedAbilityDefinition = {
+    const gruesomeAndGrim = {
       type: "activated",
       name: "GRUESOME AND GRIM",
       cost: {
@@ -841,7 +824,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const justYouWait: TriggeredAbilityDefinition = {
+    const justYouWait = {
       type: "triggered",
       name: "JUST YOU WAIT",
       trigger: {
@@ -876,7 +859,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const readyOrNot: TriggeredAbilityDefinition = {
+    const readyOrNot = {
       type: "triggered",
       name: "READY OR NOT!",
       trigger: {
@@ -905,7 +888,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const hereICome: TriggeredAbilityDefinition = {
+    const hereICome = {
       type: "triggered",
       name: "HERE I COME!",
       trigger: {
@@ -932,7 +915,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const hoppityHip: TriggeredAbilityDefinition = {
+    const hoppityHip = {
       type: "triggered",
       name: "HOPPITY HIP!",
       trigger: {
@@ -962,7 +945,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const battleOfWits: TriggeredAbilityDefinition = {
+    const battleOfWits = {
       type: "triggered",
       name: "BATTLE OF WITS",
       trigger: {
@@ -991,7 +974,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const lookBeforeYouLeap: TriggeredAbilityDefinition = {
+    const lookBeforeYouLeap = {
       type: "triggered",
       name: "LOOK BEFORE YOU LEAP",
       trigger: {
@@ -1029,7 +1012,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const gruesomeAndGrim: ActionAbilityDefinition = {
+    const gruesomeAndGrim = {
       type: "action",
       effect: {
         type: "sequence",
@@ -1069,7 +1052,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const legendOfTheSword: ActionAbilityDefinition = {
+    const legendOfTheSword = {
       type: "action",
       effect: {
         type: "gain-keyword",
@@ -1091,7 +1074,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const forAllEternity: ActivatedAbilityDefinition = {
+    const forAllEternity = {
       type: "activated",
       name: "FOR ALL ETERNITY",
       cost: {
@@ -1116,7 +1099,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const hurtlingHedgehog: ActivatedAbilityDefinition = {
+    const hurtlingHedgehog = {
       type: "activated",
       name: "HURTLING HEDGEHOG",
       cost: {
@@ -1142,7 +1125,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const secondWind: TriggeredAbilityDefinition = {
+    const secondWind = {
       type: "triggered",
       name: "SECOND WIND",
       trigger: {
@@ -1171,7 +1154,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const useYourImagination: StaticAbilityDefinition = {
+    const useYourImagination = {
       type: "static",
       name: "USE YOUR IMAGINATION",
       condition: {
@@ -1208,7 +1191,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.abilities[0].ability).toEqual(expect.objectContaining(shift));
 
     // Second ability: THORNY ARROWS
-    const thornyArrows: TriggeredAbilityDefinition = {
+    const thornyArrows = {
       type: "triggered",
       name: "THORNY ARROWS",
       trigger: {
@@ -1235,7 +1218,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const squeak: TriggeredAbilityDefinition = {
+    const squeak = {
       type: "triggered",
       name: "SQUEAK",
       trigger: {
@@ -1278,16 +1261,13 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.abilities[0].ability).toEqual(expect.objectContaining(shift));
 
     // Second ability: Evasive
-    const evasive: KeywordAbilityDefinition = {
-      type: "keyword",
-      keyword: "Evasive",
-    };
+    const evasive = Abilities.Keyword("Evasive");
     expect(result.abilities[1].ability).toEqual(
       expect.objectContaining(evasive),
     );
 
     // Third ability: WICKED SMILE
-    const wickedSmile: ActivatedAbilityDefinition = {
+    const wickedSmile = {
       type: "activated",
       name: "WICKED SMILE",
       cost: {
@@ -1312,16 +1292,13 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.abilities.length).toBe(2);
 
     // First ability: Evasive
-    const evasive: KeywordAbilityDefinition = {
-      type: "keyword",
-      keyword: "Evasive",
-    };
+    const evasive = Abilities.Keyword("Evasive");
     expect(result.abilities[0].ability).toEqual(
       expect.objectContaining(evasive),
     );
 
     // Second ability: YOU'RE IN MY WORLD
-    const youreInMyWorld: TriggeredAbilityDefinition = {
+    const youreInMyWorld = {
       type: "triggered",
       name: "YOU'RE IN MY WORLD",
       trigger: {
@@ -1358,16 +1335,13 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.abilities[0].ability).toEqual(expect.objectContaining(shift));
 
     // Second ability: Evasive
-    const evasive: KeywordAbilityDefinition = {
-      type: "keyword",
-      keyword: "Evasive",
-    };
+    const evasive = Abilities.Keyword("Evasive");
     expect(result.abilities[1].ability).toEqual(
       expect.objectContaining(evasive),
     );
 
     // Third ability: ONE LAST, BIG SCORE
-    const oneLastBigScore: StaticAbilityDefinition = {
+    const oneLastBigScore = {
       type: "static",
       name: "ONE LAST, BIG SCORE",
       effect: {
@@ -1397,7 +1371,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const yesImIntimidating: StaticAbilityDefinition = {
+    const yesImIntimidating = {
       type: "static",
       name: "YES, I'M INTIMIDATING",
       condition: {
@@ -1425,7 +1399,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const mouseCatcher: TriggeredAbilityDefinition = {
+    const mouseCatcher = {
       type: "triggered",
       name: "MOUSE CATCHER",
       trigger: {
@@ -1467,7 +1441,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const bibbidiBobbidiBoo: ActionAbilityDefinition = {
+    const bibbidiBobbidiBoo = {
       type: "action",
       effect: {
         type: "cost-effect",
@@ -1496,7 +1470,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const bounce: ActionAbilityDefinition = {
+    const bounce = {
       type: "action",
       effect: {
         type: "cost-effect",
@@ -1521,7 +1495,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const hypnotize: ActionAbilityDefinition = {
+    const hypnotize = {
       type: "action",
       effect: {
         type: "sequence",
@@ -1553,16 +1527,13 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.abilities.length).toBe(2);
 
     // First ability: Evasive
-    const evasive: KeywordAbilityDefinition = {
-      type: "keyword",
-      keyword: "Evasive",
-    };
+    const evasive = Abilities.Keyword("Evasive");
     expect(result.abilities[0].ability).toEqual(
       expect.objectContaining(evasive),
     );
 
     // Second ability: PHOOEY!
-    const phooey: StaticAbilityDefinition = {
+    const phooey = {
       type: "static",
       name: "PHOOEY!",
       effect: {
@@ -1589,10 +1560,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const reckless: KeywordAbilityDefinition = {
-      type: "keyword",
-      keyword: "Reckless",
-    };
+    const reckless = Abilities.Keyword("Reckless");
     expect(result.abilities[0].ability).toEqual(
       expect.objectContaining(reckless),
     );
@@ -1605,10 +1573,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const evasive: KeywordAbilityDefinition = {
-      type: "keyword",
-      keyword: "Evasive",
-    };
+    const evasive = Abilities.Keyword("Evasive");
     expect(result.abilities[0].ability).toEqual(
       expect.objectContaining(evasive),
     );
@@ -1621,7 +1586,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const easyStreet: TriggeredAbilityDefinition = {
+    const easyStreet = {
       type: "triggered",
       name: "EASY STREET",
       trigger: {
@@ -1657,7 +1622,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.abilities[0].ability).toEqual(expect.objectContaining(shift));
 
     // Second ability: POWER TO RULE AT LAST
-    const powerToRuleAtLast: TriggeredAbilityDefinition = {
+    const powerToRuleAtLast = {
       type: "triggered",
       name: "POWER TO RULE AT LAST",
       trigger: {
@@ -1686,7 +1651,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const notForYou: TriggeredAbilityDefinition = {
+    const notForYou = {
       type: "triggered",
       name: "NOT FOR YOU",
       trigger: {
@@ -1720,10 +1685,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const evasive: KeywordAbilityDefinition = {
-      type: "keyword",
-      keyword: "Evasive",
-    };
+    const evasive = Abilities.Keyword("Evasive");
     expect(result.abilities[0].ability).toEqual(
       expect.objectContaining(evasive),
     );
@@ -1745,16 +1707,13 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.abilities[0].ability).toEqual(expect.objectContaining(shift));
 
     // Second ability: Evasive
-    const evasive: KeywordAbilityDefinition = {
-      type: "keyword",
-      keyword: "Evasive",
-    };
+    const evasive = Abilities.Keyword("Evasive");
     expect(result.abilities[1].ability).toEqual(
       expect.objectContaining(evasive),
     );
 
     // Third ability: UNDERSEA ADVENTURE
-    const underseaAdventure: TriggeredAbilityDefinition = {
+    const underseaAdventure = {
       type: "triggered",
       name: "UNDERSEA ADVENTURE",
       trigger: {
@@ -1786,7 +1745,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const whatHaveYouDone: StaticAbilityDefinition = {
+    const whatHaveYouDone = {
       type: "static",
       name: "WHAT HAVE YOU DONE?!",
       effect: {
@@ -1806,10 +1765,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const rush: KeywordAbilityDefinition = {
-      type: "keyword",
-      keyword: "Rush",
-    };
+    const rush = Abilities.Keyword("Rush");
     expect(result.abilities[0].ability).toEqual(expect.objectContaining(rush));
   });
 
@@ -1820,7 +1776,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const goTheDistance: ActionAbilityDefinition = {
+    const goTheDistance = {
       type: "action",
       effect: {
         type: "sequence",
@@ -1864,7 +1820,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.abilities[0].ability).toEqual(expect.objectContaining(shift));
 
     // Second ability: THERE'S ALWAYS A CHANCE
-    const theresAlwaysAChance: TriggeredAbilityDefinition = {
+    const theresAlwaysAChance = {
       type: "triggered",
       name: "THERE'S ALWAYS A CHANCE",
       trigger: {
@@ -1897,10 +1853,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const support: KeywordAbilityDefinition = {
-      type: "keyword",
-      keyword: "Support",
-    };
+    const support = Abilities.Keyword("Support");
     expect(result.abilities[0].ability).toEqual(
       expect.objectContaining(support),
     );
@@ -1922,14 +1875,11 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.abilities[0].ability).toEqual(expect.objectContaining(shift));
 
     // Second ability: Ward
-    const ward: KeywordAbilityDefinition = {
-      type: "keyword",
-      keyword: "Ward",
-    };
+    const ward = Abilities.Keyword("Ward");
     expect(result.abilities[1].ability).toEqual(expect.objectContaining(ward));
 
     // Third ability: UNWIND
-    const unwind: StaticAbilityDefinition = {
+    const unwind = {
       type: "static",
       name: "UNWIND",
       effect: {
@@ -1951,7 +1901,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const waitAMinute: StaticAbilityDefinition = {
+    const waitAMinute = {
       type: "static",
       name: "WAIT A MINUTE",
       effect: {
@@ -1992,7 +1942,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.abilities[0].ability).toEqual(expect.objectContaining(shift));
 
     // Second ability: OH, NO YOU DON'T
-    const ohNoYouDont: TriggeredAbilityDefinition = {
+    const ohNoYouDont = {
       type: "triggered",
       name: "OH, NO YOU DON'T",
       trigger: {
@@ -2021,10 +1971,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const ward: KeywordAbilityDefinition = {
-      type: "keyword",
-      keyword: "Ward",
-    };
+    const ward = Abilities.Keyword("Ward");
     expect(result.abilities[0].ability).toEqual(expect.objectContaining(ward));
   });
 
@@ -2044,7 +1991,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.abilities[0].ability).toEqual(expect.objectContaining(shift));
 
     // Second ability: DEVELOPED BRAIN
-    const developedBrain: TriggeredAbilityDefinition = {
+    const developedBrain = {
       type: "triggered",
       name: "DEVELOPED BRAIN",
       trigger: {
@@ -2089,7 +2036,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const artificer: TriggeredAbilityDefinition = {
+    const artificer = {
       type: "triggered",
       name: "ARTIFICER",
       trigger: {
@@ -2128,7 +2075,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const neverEverLoseSight: TriggeredAbilityDefinition = {
+    const neverEverLoseSight = {
       type: "triggered",
       name: "NEVER, EVER LOSE SIGHT",
       trigger: {
@@ -2158,7 +2105,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const tidyUp: TriggeredAbilityDefinition = {
+    const tidyUp = {
       type: "triggered",
       name: "TIDY UP",
       trigger: {
@@ -2189,7 +2136,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const fallingDownTheRabbitHole: ActionAbilityDefinition = {
+    const fallingDownTheRabbitHole = {
       type: "action",
       effect: {
         type: "for-each-player",
@@ -2213,7 +2160,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const launch: ActionAbilityDefinition = {
+    const launch = {
       type: "action",
       effect: {
         type: "cost-effect",
@@ -2241,7 +2188,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.abilities.length).toBe(2);
 
     // First ability: CAREFUL AIM
-    const carefulAim: ActivatedAbilityDefinition = {
+    const carefulAim = {
       type: "activated",
       name: "CAREFUL AIM",
       cost: {
@@ -2262,7 +2209,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     );
 
     // Second ability: STAY BACK!
-    const stayBack: ActivatedAbilityDefinition = {
+    const stayBack = {
       type: "activated",
       name: "STAY BACK!",
       cost: {
@@ -2287,7 +2234,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const theBestIveEverTasted: ActivatedAbilityDefinition = {
+    const theBestIveEverTasted = {
       type: "activated",
       name: "THE BEST I'VE EVER TASTED",
       cost: {
@@ -2312,7 +2259,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const lookingForThis: TriggeredAbilityDefinition = {
+    const lookingForThis = {
       type: "triggered",
       name: "LOOKING FOR THIS?",
       trigger: {
@@ -2348,7 +2295,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const youreNotWelcomeHere: TriggeredAbilityDefinition = {
+    const youreNotWelcomeHere = {
       type: "triggered",
       name: "YOU'RE NOT WELCOME HERE",
       trigger: {
@@ -2378,7 +2325,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const shieldAnother: StaticAbilityDefinition = {
+    const shieldAnother = {
       type: "static",
       name: "SHIELD ANOTHER",
       effect: {
@@ -2417,7 +2364,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.abilities[0].ability).toEqual(expect.objectContaining(shift));
 
     // Second ability: IT'S BETTER THIS WAY
-    const itsBetterThisWay: TriggeredAbilityDefinition = {
+    const itsBetterThisWay = {
       type: "triggered",
       name: "IT'S BETTER THIS WAY",
       trigger: {
@@ -2458,7 +2405,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const insubordination: TriggeredAbilityDefinition = {
+    const insubordination = {
       type: "triggered",
       name: "INSUBORDINATION!",
       trigger: {
@@ -2485,7 +2432,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const haveCourage: TriggeredAbilityDefinition = {
+    const haveCourage = {
       type: "triggered",
       name: "HAVE COURAGE",
       trigger: {
@@ -2544,7 +2491,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     );
 
     // Third ability: THE SINGING SWORD
-    const theSingingSword: TriggeredAbilityDefinition = {
+    const theSingingSword = {
       type: "triggered",
       name: "THE SINGING SWORD",
       trigger: {
@@ -2609,7 +2556,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.abilities[0].ability).toEqual(expect.objectContaining(shift));
 
     // Second ability: NOW WHERE WERE WE?
-    const nowWhereWereWe: TriggeredAbilityDefinition = {
+    const nowWhereWereWe = {
       type: "triggered",
       name: "NOW WHERE WERE WE?",
       condition: {
@@ -2653,7 +2600,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     );
 
     // Second ability: SCOUT LEADER
-    const scoutLeader: TriggeredAbilityDefinition = {
+    const scoutLeader = {
       type: "triggered",
       name: "SCOUT LEADER",
       condition: {
@@ -2686,7 +2633,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const archeryLesson: TriggeredAbilityDefinition = {
+    const archeryLesson = {
       type: "triggered",
       name: "ARCHERY LESSON",
       trigger: {
@@ -2714,7 +2661,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const makeItShine: TriggeredAbilityDefinition = {
+    const makeItShine = {
       type: "triggered",
       name: "MAKE IT SHINE",
       trigger: {
@@ -2743,7 +2690,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const charge: ActionAbilityDefinition = {
+    const charge = {
       type: "action",
       effect: {
         type: "grant-keywords",
@@ -2766,7 +2713,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const letTheStormRageOn: ActionAbilityDefinition = {
+    const letTheStormRageOn = {
       type: "action",
       effect: {
         type: "sequence",
@@ -2796,7 +2743,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const armYourself: ActivatedAbilityDefinition = {
+    const armYourself = {
       type: "activated",
       name: "ARM YOURSELF",
       cost: {
@@ -2824,7 +2771,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
-    const protection: ActivatedAbilityDefinition = {
+    const protection = {
       type: "activated",
       name: "PROTECTION",
       cost: {
