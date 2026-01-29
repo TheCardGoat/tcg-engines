@@ -1,0 +1,36 @@
+{
+  "name": "@tcg/auth-service",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "bun run --watch src/index.ts",
+    "start": "bun run src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "check-types": "tsc --noEmit",
+    "format": "bun x @biomejs/biome check --fix --max-diagnostics=none --diagnostic-level=error --linter-enabled=false ./src",
+    "lint": "bun x @biomejs/biome lint --write ./src",
+    "db:generate": "drizzle-kit generate",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio",
+    "db:migrate": "drizzle-kit migrate",
+    "test": "echo 'No tests yet'"
+  },
+  "dependencies": {
+    "elysia": "^1.2.25",
+    "@elysiajs/cors": "^1.2.0",
+    "@bogeychan/elysia-logger": "^0.1.10",
+    "elysia-rate-limit": "^4.1.0",
+    "better-auth": "^1.2.8",
+    "drizzle-orm": "^0.44.2",
+    "postgres": "^3.4.7",
+    "@tcg/config": "workspace:*",
+    "@tcg/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "bun-types": "latest",
+    "drizzle-kit": "^0.31.1",
+    "@biomejs/biome": "2.3.11",
+    "@lorcanito/typescript-config": "workspace:*",
+    "typescript": "^5.8.3"
+  }
+}

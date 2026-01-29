@@ -14,9 +14,9 @@
 
 <script lang="ts">
   import BoardSurface from "$lib/components/board/BoardSurface.svelte";
-  import Zone from "$lib/components/board/Zone.svelte";
   import GameCard from "$lib/components/board/GameCard.svelte";
   import UIChrome from "$lib/components/board/UIChrome.svelte";
+  import Zone from "$lib/components/board/Zone.svelte";
 
   const playerLife = 20;
   const opponentLife = 20;
