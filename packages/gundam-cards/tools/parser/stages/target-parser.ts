@@ -1,11 +1,13 @@
 import type {
-  GundamFilter,
-  GundamLocationsId,
-  TargetQuery,
+  CardTarget,
+  TargetZone,
+  UnitFilter,
+  UnitTarget,
+  UnitTargetQuery,
 } from "@tcg/gundam-types";
 
 export interface TargetParseResult {
-  query: TargetQuery | TargetQuery[];
+  query: CardTarget | CardTarget[];
   remainingText: string;
 }
 
@@ -41,20 +43,8 @@ export function parseTarget(text: string): TargetParseResult | null {
 
     return {
       query: [
-        {
-          controller: result1.controller,
-          cardType: result1.cardType,
-          count: count1,
-          filters: result1.filters,
-          zone: result1.zone,
-        },
-        {
-          controller: result2.controller,
-          cardType: result2.cardType,
-          count: count2,
-          filters: result2.filters,
-          zone: result2.zone,
-        },
+        createUnitTarget(count1, result1),
+        createUnitTarget(count2, result2),
       ],
       remainingText: text.substring(multiChooseMatch[0].length).trim(),
     };
@@ -68,17 +58,10 @@ export function parseTarget(text: string): TargetParseResult | null {
   if (chooseMatch) {
     const count = parseCount(chooseMatch[1]);
     const desc = chooseMatch[2];
-    const { controller, cardType, filters, zone } =
-      parseTargetDescription(desc);
+    const result = parseTargetDescription(desc);
 
     return {
-      query: {
-        controller,
-        cardType,
-        count,
-        filters,
-        zone,
-      },
+      query: createUnitTarget(count, result),
       remainingText: text.substring(chooseMatch[0].length).trim(),
     };
   }
@@ -89,15 +72,15 @@ export function parseTarget(text: string): TargetParseResult | null {
     const match = text.match(/^All (.*?)(?:\.|$)/i);
     if (match) {
       const desc = match[1];
-      const { controller, cardType, filters, zone } =
-        parseTargetDescription(desc);
+      const result = parseTargetDescription(desc);
       return {
         query: {
-          controller,
-          cardType,
-          filters, // No count means all
-          zone,
-        },
+          selector: "all",
+          count: "all",
+          owner: result.owner,
+          filters: result.filters,
+          zone: result.zone,
+        } as unknown as UnitTargetQuery, // cast to ensure type safety if generic constraints differ
         remainingText: text.substring(match[0].length).trim(),
       };
     }
@@ -107,10 +90,7 @@ export function parseTarget(text: string): TargetParseResult | null {
   if (lower.startsWith("this unit")) {
     return {
       query: {
-        controller: "SELF",
-        cardType: "UNIT",
-        filters: [], // Implicit self
-        count: { min: 1, max: 1 },
+        ref: "self",
       },
       remainingText: text.substring("this unit".length).trim(),
     };
@@ -119,48 +99,67 @@ export function parseTarget(text: string): TargetParseResult | null {
   return null;
 }
 
+function createUnitTarget(
+  count: { min: number; max: number },
+  desc: { owner: any; filters: any[]; zone?: any },
+): UnitTarget {
+  const base = {
+    selector: "chosen",
+    owner: desc.owner,
+    filters: desc.filters,
+    zone: desc.zone,
+  };
+
+  if (count.min === count.max) {
+    return {
+      ...base,
+      count: count.min,
+    } as unknown as UnitTargetQuery;
+  }
+  if (count.min === 0) {
+    return {
+      ...base,
+      count: { upTo: count.max },
+    } as unknown as UnitTargetQuery;
+  }
+
+  return {
+    ...base,
+    count: count.max,
+  } as unknown as UnitTargetQuery;
+}
+
 function parseTargetDescription(desc: string): {
-  controller: "SELF" | "OPPONENT" | "ANY";
-  cardType?: "UNIT" | "PILOT" | "BASE" | "COMMAND";
-  filters: GundamFilter[];
-  zone?: GundamLocationsId[];
+  owner: "you" | "opponent" | "any";
+  filters: UnitFilter[];
+  zone?: TargetZone[];
 } {
   const lower = desc.toLowerCase();
-  let controller: "SELF" | "OPPONENT" | "ANY" = "ANY";
-  let cardType: "UNIT" | "PILOT" | "BASE" | "COMMAND" | undefined;
-  const filters: GundamFilter[] = [];
-  let zone: GundamLocationsId[] | undefined;
+  let owner: "you" | "opponent" | "any" = "any";
+  const filters: UnitFilter[] = [];
+  let zone: TargetZone[] | undefined;
 
-  // Controller
+  // Controller -> Owner
   if (lower.includes("enemy") || lower.includes("opponent")) {
-    controller = "OPPONENT";
+    owner = "opponent";
   } else if (lower.includes("your") || lower.includes("friendly")) {
-    controller = "SELF";
+    owner = "you";
   }
 
-  // Card Type
-  if (lower.includes("unit")) cardType = "UNIT";
-  else if (lower.includes("pilot")) cardType = "PILOT";
-  else if (lower.includes("base")) cardType = "BASE";
-  else if (lower.includes("command")) cardType = "COMMAND";
-  else if (lower.includes("card")) {
-    /* Generic */
-  }
-
-  // Zone (e.g. "in your discard pile", "in hand")
+  // Zone
   if (lower.includes("discard") || lower.includes("trash")) {
     zone = ["trashArea"];
   } else if (lower.includes("hand")) {
-    zone = ["handArea"];
+    zone = ["hand"];
   }
 
   // Filters
-  // 1. Stats: "with X or less HP"
+  // 1. Stats
   const hpMatch = desc.match(/with (\d+) or less HP/i);
   if (hpMatch) {
     filters.push({
-      type: "hp",
-      comparison: "lte",
+      type: "hp-comparison",
+      comparison: "less-or-equal",
       value: Number.parseInt(hpMatch[1], 10),
     });
   }
@@ -168,8 +167,8 @@ function parseTargetDescription(desc: string): {
   const apMatch = desc.match(/with (\d+) or less AP/i);
   if (apMatch) {
     filters.push({
-      type: "ap",
-      comparison: "lte",
+      type: "ap-comparison",
+      comparison: "less-or-equal",
       value: Number.parseInt(apMatch[1], 10),
     });
   }
@@ -177,13 +176,13 @@ function parseTargetDescription(desc: string): {
   const costMatch = desc.match(/with (?:a )?cost (?:of )?(\d+) or less/i);
   if (costMatch) {
     filters.push({
-      type: "cost",
-      comparison: "lte",
+      type: "cost-comparison",
+      comparison: "less-or-equal",
       value: Number.parseInt(costMatch[1], 10),
     });
   }
 
-  // 2. State: "damaged"
+  // 2. State
   if (lower.includes("damaged")) {
     filters.push({ type: "damaged" });
   }
@@ -192,11 +191,11 @@ function parseTargetDescription(desc: string): {
     lower.includes("exerted") ||
     lower.includes("rest mode")
   ) {
-    filters.push({ type: "exerted" });
+    filters.push({ type: "rested" });
   }
   if (lower.includes("active") || lower.includes("stand mode")) {
-    filters.push({ type: "ready" });
+    filters.push({ type: "active" });
   }
 
-  return { controller, cardType, filters, zone };
+  return { owner, filters, zone };
 }

@@ -1,144 +1,95 @@
 /**
- * Gundam Target DSL
+ * Target Types for Gundam Effects
  *
- * Extends the core Target DSL with Gundam-specific targeting capabilities:
- * - Game-specific filters (damaged, exerted, keywords, etc.)
- * - Context references (trigger-source, attacker, defender)
- * - Card type constraints (unit, shield, base, command)
+ * Defines how effects select their targets. Uses a hybrid approach:
+ * - Common targeting patterns as string literal enums for simplicity
+ * - Complex targeting with query-based filters for advanced cases
  *
- * @module targeting/gundam-target-dsl
+ * @example Simple targeting
+ * ```typescript
+ * const target: UnitTarget = "CHOSEN_UNIT";
+ * ```
+ *
+ * @example Complex targeting with filters
+ * ```typescript
+ * const target: UnitTarget = {
+ *   selector: "chosen",
+ *   owner: "opponent",
+ *   filter: [{ type: "damaged" }, { type: "hp-comparison", comparison: "less-or-equal", value: 3 }]
+ * };
+ * ```
  */
 
-import type { BaseContext, PlayerTargetDSL, TargetDSL } from "@tcg/core";
-
-/** Gundam locations IDs */
-export type GundamLocationsId =
-  | "deckArea"
-  | "resourceDeckArea"
-  | "resourceArea"
-  | "battleArea"
-  | "shieldArea"
-  | "removalArea"
-  | "trashArea"
-  | "handArea";
+import type { PlayerTargetDSL, TargetDSL } from "@tcg/core";
 
 // ============================================================================
-// Gundam-Specific Filters
+// Player Targeting
 // ============================================================================
 
-// --- State Filters ---
+/**
+ * Player target - who is affected by the ability
+ *
+ * @example "draw 2 cards" targets CONTROLLER
+ * @example "each opponent loses 1 shield" targets EACH_OPPONENT
+ */
+
+export type PlayerTarget =
+  | "CONTROLLER" // The player who controls this card
+  | "OPPONENT" // A single opponent (2-player default)
+  | "OPPONENTS" // All opponents (alias for EACH_OPPONENT in 2-player)
+  | "EACH_PLAYER" // All players including controller
+  | "EACH_OPPONENT" // All opponents
+  | "CHOSEN_PLAYER" // A player chosen by the controller
+  | "CARD_OWNER" // The owner of the target card (context-dependent)
+  | "ALL_PLAYERS" // All players (for effects like "each player discards")
+  | "SELF"; // Self reference (for gain lore effects on self)
 
 /**
- * Filter for damaged cards (have damage counters)
+ * Context-aware card references for abilities
+ *
+ * These allow effects to reference cards based on the current game context
+ * rather than requiring explicit targeting.
+ *
+ * @example Reference the card that triggered an ability
+ * ```typescript
+ * { ref: "trigger-source" }
+ * ```
+ *
+ * @example Reference the attacker in a challenge
+ * ```typescript
+ * { ref: "attacker" }
+ * ```
  */
-export interface DamagedFilter {
-  type: "damaged";
+
+export type CardReference =
+  // Self-referential
+  | { ref: "self" } // This card (the one with the ability)
+
+  // Trigger context (for triggered abilities)
+  | { ref: "trigger-source" } // Card that triggered the ability
+
+  // Challenge context
+  | { ref: "attacker" } // Unit attacking
+  | { ref: "defender" } // Unit being attacked
+
+  // Effect chain context
+  | { ref: "previous-target" } // Target selected earlier in effect chain
+
+  // Player context
+  | { ref: "controller" } // Controller of this card
+  | { ref: "opponent" }; // Opponent of controller (1v1)
+
+/**
+ * Check if a value is a CardReference
+ */
+export function isCardReference(value: unknown): value is CardReference {
+  return (
+    typeof value === "object" &&
+    value !== null &&
+    "ref" in value &&
+    typeof (value as CardReference).ref === "string"
+  );
 }
-
-/**
- * Filter for undamaged cards (no damage counters)
- */
-export interface UndamagedFilter {
-  type: "undamaged";
-}
-
-/**
- * Filter for exerted cards
- */
-export interface ExertedFilter {
-  type: "exerted";
-}
-
-/**
- * Filter for ready (non-exerted) cards
- */
-export interface ReadyFilter {
-  type: "ready";
-}
-
-/**
- * Filter for dry cards (freshly played, can't be used)
- */
-export interface DryFilter {
-  type: "dry";
-}
-
-// --- Property Filters ---
-
-/**
- * Filter for cards with a specific classification (Hero, Villain, etc.)
- */
-export interface HasClassificationFilter {
-  type: "has-classification";
-  classification: string;
-}
-
-// --- Numeric Comparison Filters ---
-
-type ComparisonOperator = "eq" | "ne" | "gt" | "gte" | "lt" | "lte";
-
-/**
- * Filter by AP value
- */
-export interface ApFilter {
-  type: "ap";
-  comparison: ComparisonOperator;
-  value: number;
-  /** Ignore temporary bonuses when comparing */
-  ignoreBonuses?: boolean;
-}
-
-/**
- * Filter by willpower value
- */
-export interface HpFilter {
-  type: "hp";
-  comparison: ComparisonOperator;
-  value: number;
-}
-
-/**
- * Filter by cost
- */
-export interface CostFilter {
-  type: "cost";
-  comparison: ComparisonOperator;
-  value: number;
-}
-
-// --- Name Filters ---
-
-/**
- * Filter by card name
- */
-export type NameFilter =
-  | { type: "name"; equals: string }
-  | { type: "name"; contains: string };
-
-// --- Combined Gundam Filter Type ---
-
-/**
- * All Gundam-specific filters
- */
-export type GundamFilter =
-  // State filters
-  | DamagedFilter
-  | UndamagedFilter
-  | ExertedFilter
-  | ReadyFilter
-  | DryFilter
-  // Property filters
-  | HasClassificationFilter
-  // Numeric filters
-  | ApFilter
-  | HpFilter
-  | CostFilter
-  // Name filter
-  | NameFilter
-  // Composite filters
-  | { type: "and"; filters: GundamFilter[] }
-  | { type: "or"; filters: GundamFilter[] }
-  | { type: "not"; filter: GundamFilter };
 
 // ============================================================================
 // Gundam Context References
@@ -150,174 +101,349 @@ export type GundamFilter =
  * These allow effects to reference cards based on the current context
  * rather than requiring explicit targeting.
  */
-export interface GundamContext extends BaseContext {
+export interface GundamContext {
   /** Reference the source card itself */
   self?: boolean;
-
-  /** Reference the card that triggered this ability */
-  triggerSource?: boolean;
-
-  /** Reference the attacker in a challenge */
-  attacker?: boolean;
-
-  /** Reference the defender in a battle */
-  defender?: boolean;
-
-  /** Reference the previously selected target in an effect chain */
-  previousTarget?: boolean;
 }
 
 // ============================================================================
-// Gundam Card Types
+// Unit Targeting - Query-Based (Complex)
 // ============================================================================
 
 /**
- * Gundam card types for targeting
+ * Zone where targets can be found
  */
-export type GundamCardType = "unit" | "shield" | "base" | "command";
+export type TargetZone =
+  | "battleArea"
+  | "hand"
+  | "trashArea"
+  | "deck"
+  | "shieldArea";
+
+/**
+ * Who controls the target
+ */
+export type TargetController = "you" | "opponent" | "any" | "CURRENT_TURN";
+
+/**
+ * Comparison operators for numeric filters
+ */
+export type ComparisonOperator =
+  | "equal"
+  | "not-equal"
+  | "less"
+  | "greater"
+  | "less-or-equal"
+  | "greater-or-equal"
+  // Alternative naming conventions (for parser compatibility)
+  | "greater-than"
+  | "less-than"
+  | "more-than" // Alias for greater
+  // Additional aliases for natural language
+  | "or-more" // Alias for greater-or-equal
+  | "or-less"; // Alias for less-or-equal
 
 // ============================================================================
-// Gundam Target DSL
+// Shared Filter Types
 // ============================================================================
 
 /**
- * Gundam card target - extends core DSL with Gundam-specific features
+ * Base filters shared across all card types
+ * Uses a unified DSL so contributors only learn one pattern
+ */
+
+// State filters
+export interface DamagedFilter {
+  type: "damaged";
+}
+
+export interface UndamagedFilter {
+  type: "undamaged";
+}
+
+export interface RestedFilter {
+  type: "rested";
+}
+
+export interface ActiveFilter {
+  type: "active";
+}
+
+// Property filters
+export interface HasKeywordFilter {
+  type: "has-keyword";
+  keyword: string;
+}
+
+export interface HasTraitsFilter {
+  type: "has-traits";
+  traits: string;
+}
+
+export interface HasNameFilter {
+  type: "has-name";
+  name: string;
+}
+
+// Numeric comparison filters
+export interface CostComparisonFilter {
+  type: "cost-comparison";
+  comparison: ComparisonOperator;
+  value: number;
+}
+
+export interface ApComparisonFilter {
+  type: "ap-comparison";
+  comparison: ComparisonOperator;
+  value: number;
+}
+
+export interface HpComparisonFilter {
+  type: "hp-comparison";
+  comparison: ComparisonOperator;
+  value: number;
+}
+
+export interface LevelComparisonFilter {
+  type: "level-comparison";
+  comparison: ComparisonOperator;
+  value: number;
+}
+
+// ============================================================================
+// Source/Reference Filters
+// ============================================================================
+
+/**
+ * Filter by relationship to source card
  *
- * @example Target a chosen opposing damaged character
- *   cardType: "unit",
- * const target: GundamCardTarget = {
- *   selector: "chosen",
- *   count: 1,
- *   owner: "opponent",
- *   cardType: "character",
- *   zones: ["play"],
- *   filters: [{ type: "damaged" }]
- * };
- * ```
- *
- * @example Target all your characters with Evasive
+ * @example Filter to exclude self
  * ```typescript
- * const target: GundamCardTarget = {
- *   selector: "all",
- *   owner: "you",
- *   cardType: "character",
- *   zones: ["play"],
- *   filters: [{ type: "has-keyword", keyword: "Evasive" }]
- * };
+ * { type: "source", ref: "other" }
+ * ```
+ *
+ * @example Filter to match the card that triggered this ability
+ * ```typescript
+ * { type: "source", ref: "trigger-source" }
  * ```
  */
-export interface GundamCardTarget
-  extends TargetDSL<GundamFilter, GundamContext> {
-  /** Gundam card type constraint */
-  cardType?: GundamCardType;
-
-  /** Override zones with Gundam-specific zone IDs */
-  zones?: GundamLocationsId[];
-
-  /** Gundam-specific filters */
-  filters?: GundamFilter[];
+export interface SourceFilter {
+  type: "source";
+  ref: "self" | "other" | "trigger-source";
 }
 
 // ============================================================================
-// Target Query (New Standard)
+// Zone and Owner Filters
 // ============================================================================
 
 /**
- * Structured target query used in the new Effect system.
- * Provides a stricter, more expressive way to define targeting requirements.
- */
-export interface TargetQuery {
-  controller: "SELF" | "OPPONENT" | "ANY";
-  cardType?: "UNIT" | "PILOT" | "BASE" | "COMMAND";
-  filters?: GundamFilter[];
-  count?: { min: number; max: number };
-  zone?: GundamLocationsId[];
-}
-
-// ============================================================================
-// Convenience Type Aliases
-// ============================================================================
-
-/**
- * Unit target (card type constrained)
- */
-export type UnitTarget = GundamCardTarget & { cardType: "unit" };
-
-/**
- * Base target (card type constrained)
- */
-export type BaseTarget = GundamCardTarget & { cardType: "base" };
-
-// ============================================================================
-// Player Targeting (re-export with Gundam context)
-// ============================================================================
-
-/**
- * Gundam player target
+ * Filter by zone
  *
- * Uses the core PlayerTargetDSL with Gundam terminology
+ * @example Filter to cards in play
+ * ```typescript
+ * { type: "zone", zone: "play" }
+ * ```
  */
-export type GundamPlayerTarget = PlayerTargetDSL;
+export interface ZoneFilter {
+  type: "zone";
+  zone: TargetZone | TargetZone[];
+}
+
+/**
+ * Filter by owner/controller
+ *
+ * @example Filter to opponent's cards
+ * ```typescript
+ * { type: "owner", owner: "opponent" }
+ * ```
+ */
+export interface OwnerFilter {
+  type: "owner";
+  owner: "you" | "opponent" | "any";
+}
+// ============================================================================
+// Generic Attribute Filter
+// ============================================================================
+
+/**
+ * Generic attribute comparison - extensible for future attributes
+ * This provides flexibility beyond the specific comparison filters
+ */
+export type AttributeFilter = AttributeNumericFilter | AttributeStringFilter;
+
+export interface AttributeNumericFilter {
+  type: "attribute";
+  attribute: "cost" | "ap" | "hp" | "level";
+  comparison: ComparisonOperator;
+  value: number;
+  /** Ignore stat bonuses when comparing */
+  ignoreBonuses?: boolean;
+}
+
+export interface AttributeStringFilter {
+  type: "attribute";
+  attribute: "name" | "title";
+  comparison: "equals" | "contains";
+  value: string;
+}
+
+/**
+ * All filters that can be applied to any card type
+ * Specific card types may only support a subset
+ */
+export type CardFilter =
+  // State
+  | UndamagedFilter
+  // Property
+  | HasKeywordFilter
+  | HasTraitsFilter
+  | HasNameFilter
+  // Numeric
+  | CostComparisonFilter
+  | ApComparisonFilter
+  | HpComparisonFilter
+  | LevelComparisonFilter
+  // Source/Reference
+  | SourceFilter
+  // Zone/Owner
+  | ZoneFilter
+  | OwnerFilter
+  // Generic Attribute
+  | AttributeFilter;
+
+/**
+ * Filters applicable to units
+ * (all except move-cost which is location-specific)
+ */
+export type UnitFilter =
+  // State
+  | DamagedFilter
+  | UndamagedFilter
+  | RestedFilter
+  | ActiveFilter
+  // Property
+  | HasKeywordFilter
+  | HasTraitsFilter
+  | HasNameFilter
+  // Numeric comparisons
+  | CostComparisonFilter
+  | ApComparisonFilter
+  | HpComparisonFilter
+  | LevelComparisonFilter
+  // Source/Reference
+  | SourceFilter
+  // Zone/Owner
+  | ZoneFilter
+  | OwnerFilter
+  // Generic Attribute
+  | AttributeFilter;
+
+// ============================================================================
+// Unit Targeting - Strict Query Variants
+// ============================================================================
+
+/**
+ * Base properties shared by all unit query variants
+ * Extended from generic TargetDSL
+ */
+export type UnitQueryBase = TargetDSL<UnitFilter[], GundamContext>;
+
+/**
+ * Target exactly N unit
+ *
+ * @example Target exactly 2 unit
+ * ```typescript
+ * {
+ *   selector: "chosen",
+ *   count: { exactly: 2 },
+ *   owner: "opponent"
+ * }
+ * ```
+ */
+export interface ExactCountUnitQuery extends UnitQueryBase {
+  count: number | { exactly: number };
+}
+
+/**
+ * Target up to N units (player chooses 0 to maxCount)
+ *
+ * @example Target up to 2 damaged opposing units
+ * ```typescript
+ * {
+ *   selector: "chosen",
+ *   owner: "opponent",
+ *   filter: [{ type: "damaged" }],
+ *   count: { upTo: 2 }
+ * }
+ * ```
+ */
+export interface UpToCountUnitQuery extends UnitQueryBase {
+  count: { upTo: number };
+}
+
+/**
+ * Target all matching units
+ *
+ * @example Target all opposing units
+ * ```typescript
+ * {
+ *   selector: "all",
+ *   owner: "opponent"
+ * }
+ * ```
+ */
+export interface AllMatchingUnitQuery extends UnitQueryBase {
+  count: "all";
+}
+
+/**
+ * Complex character targeting with query-based filters
+ *
+ * Uses discriminated union to ensure type safety:
+ * - `count: number` for exact targeting
+ * - `count: "up-to"` requires `maxCount`
+ * - `count: "all"` for all matching
+ */
+export type UnitTargetQuery =
+  | ExactCountUnitQuery
+  | UpToCountUnitQuery
+  | AllMatchingUnitQuery;
+
+/**
+ * Union type for all character targeting options
+ */
+export type UnitTarget = UnitTargetQuery | CardReference;
+
+// ============================================================================
+// Card Targeting (any card type)
+// ============================================================================
+
+/**
+ * Common card targeting patterns (any type)
+ */
+export type CardTargetEnum =
+  | "CHOSEN_CARD"
+  | "CHOSEN_CARD_FROM_HAND"
+  | "CHOSEN_CARD_FROM_DISCARD"
+  | "TOP_CARD_OF_DECK"
+  | "revealed"
+  // Additional card targets for parser support
+  // Extended card targets for card text coverage
+  | "CARD_FROM_ANY_DISCARD" // Card from any player's discard pile
+  | "COMMAND_FROM_DISCARD" // Command card from discard pile
+  | "BASE_FROM_DISCARD"; // Base card from discard pile
+
+export type CardTarget = CardTargetEnum | UnitTarget;
 
 // ============================================================================
 // Type Guards
 // ============================================================================
 
 /**
- * Check if a target is a DSL object (vs enum string)
+ * Check if a unit target is a query (vs enum)
  */
-export function isDSLTarget(target: GundamTarget): target is GundamCardTarget {
-  return typeof target === "object" && target !== null;
+export function isUnitTargetQuery(
+  target: UnitTarget,
+): target is UnitTargetQuery {
+  return typeof target === "object"; // && (target as any).selector !== undefined;
 }
-
-/**
- * Check if a filter is a state filter
- */
-export function isStateFilter(
-  filter: GundamFilter,
-): filter is
-  | DamagedFilter
-  | UndamagedFilter
-  | ExertedFilter
-  | ReadyFilter
-  | DryFilter {
-  return (
-    filter.type === "damaged" ||
-    filter.type === "undamaged" ||
-    filter.type === "exerted" ||
-    filter.type === "ready" ||
-    filter.type === "dry"
-  );
-}
-
-/**
- * Check if a filter is a numeric comparison filter
- */
-export function isNumericFilter(
-  filter: GundamFilter,
-): filter is ApFilter | HpFilter | CostFilter {
-  return filter.type === "ap" || filter.type === "hp" || filter.type === "cost";
-}
-
-// ============================================================================
-// Union Types (enum OR DSL)
-// ============================================================================
-
-/**
- * Unit target: either an enum shortcut or full DSL
- */
-export type GundamUnitTarget = UnitTarget;
-
-/**
- * Base target: either an enum shortcut or full DSL
- */
-export type GundamBaseTarget = BaseTarget;
-
-/**
- * Any card target
- */
-export type GundamTarget =
-  | GundamUnitTarget
-  | GundamBaseTarget
-  | GundamCardTarget
-  | TargetQuery;

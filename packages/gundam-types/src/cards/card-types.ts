@@ -5,7 +5,7 @@
  * All cards are plain data objects following @tcg/core patterns.
  */
 
-import type { TargetQuery } from "../targeting/gundam-target-dsl";
+import type { CardTarget } from "../targeting/gundam-target-dsl";
 
 // ============================================================================
 // EFFECT TYPES
@@ -41,7 +41,7 @@ export interface EffectCost {
     | "DESTROY_SELF"
     | "REMOVE_FROM_GRAVEYARD";
   amount?: number;
-  target?: TargetQuery;
+  target?: CardTarget;
 }
 
 // --- Actions ---
@@ -74,19 +74,19 @@ export interface BaseAction {
 export interface HealAction extends BaseAction {
   type: "HEAL";
   amount: number;
-  target?: TargetQuery | TargetQuery[];
+  target?: CardTarget | CardTarget[];
 }
 
 export interface DamageAction extends BaseAction {
   type: "DAMAGE";
   value: number;
-  target?: TargetQuery | TargetQuery[];
+  target?: CardTarget | CardTarget[];
 }
 
 export interface DrawAction extends BaseAction {
   type: "DRAW";
   value: number;
-  target?: TargetQuery;
+  target?: CardTarget;
 }
 
 export interface SearchAction extends BaseAction {
@@ -101,14 +101,7 @@ export interface ModifyStatsAction extends BaseAction {
   attribute: "AP" | "HP" | "BOTH";
   value: number;
   duration: "TURN" | "PERMANENT";
-  target?: TargetQuery | TargetQuery[];
-}
-
-export interface GainKeywordsAction extends BaseAction {
-  type: "GAIN_KEYWORDS";
-  keywords: string[];
-  duration: "TURN" | "PERMANENT";
-  target?: TargetQuery | TargetQuery[];
+  target?: CardTarget | CardTarget[];
 }
 
 export interface CustomAction extends BaseAction {
@@ -143,7 +136,7 @@ export interface GenericAction extends BaseAction {
     | "CONDITIONAL"
     | "GAIN_KEYWORDS"
   >;
-  target?: TargetQuery | TargetQuery[];
+  target?: CardTarget | CardTarget[];
   value?: number;
   parameters?: Record<string, unknown>;
   text?: string;
@@ -155,7 +148,6 @@ export type Action =
   | DrawAction
   | SearchAction
   | ModifyStatsAction
-  | GainKeywordsAction
   | CustomAction
   | SequenceAction
   | ConditionalAction
