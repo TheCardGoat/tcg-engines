@@ -30,7 +30,9 @@
 
 <!-- Default 3:2 aspect ratio -->
 <Story name="Default (3:2)">
-  <div class="bg-base-300 w-screen h-screen p-8 flex items-center justify-center">
+  <div
+    class="bg-base-300 w-screen h-screen p-8 flex items-center justify-center"
+  >
     <BoardSurface class="bg-green-800 border-8 border-amber-900">
       <div
         class="w-full h-full flex items-center justify-center text-white text-xl"
@@ -43,7 +45,9 @@
 
 <!-- Widescreen 16:9 -->
 <Story name="Widescreen (16:9)">
-  <div class="bg-base-300 w-screen h-screen p-8 flex items-center justify-center">
+  <div
+    class="bg-base-300 w-screen h-screen p-8 flex items-center justify-center"
+  >
     <BoardSurface
       aspectRatio="16/9"
       class="bg-blue-900 border-8 border-blue-700"
@@ -59,7 +63,9 @@
 
 <!-- Portrait 9:16 -->
 <Story name="Portrait (9:16)">
-  <div class="bg-base-300 w-screen h-screen p-8 flex items-center justify-center">
+  <div
+    class="bg-base-300 w-screen h-screen p-8 flex items-center justify-center"
+  >
     <BoardSurface
       aspectRatio="9/16"
       class="bg-purple-900 border-8 border-purple-700"
@@ -75,7 +81,9 @@
 
 <!-- Square 1:1 -->
 <Story name="Square (1:1)">
-  <div class="bg-base-300 w-screen h-screen p-8 flex items-center justify-center">
+  <div
+    class="bg-base-300 w-screen h-screen p-8 flex items-center justify-center"
+  >
     <BoardSurface aspectRatio="1/1" class="bg-red-900 border-8 border-red-700">
       <div
         class="w-full h-full flex items-center justify-center text-white text-xl"
@@ -88,7 +96,9 @@
 
 <!-- Responsive (different ratios for mobile/desktop) -->
 <Story name="Responsive">
-  <div class="bg-base-300 w-screen h-screen p-8 flex items-center justify-center">
+  <div
+    class="bg-base-300 w-screen h-screen p-8 flex items-center justify-center"
+  >
     <BoardSurface
       aspectRatio="3/2"
       mobileAspectRatio="9/16"

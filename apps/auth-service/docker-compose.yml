@@ -1,0 +1,53 @@
+# Auth Service Docker Compose
+# Development environment configuration
+
+services:
+  # Auth Service
+  auth-service:
+    build:
+      context: ../..
+      dockerfile: apps/auth-service/Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      - AUTH_DATABASE_URL=postgresql://postgres:postgres@postgres-auth:5432/tcg_auth
+      - AUTH_SECRET=${AUTH_SECRET:-dev-auth-secret-32-characters-minimum-0000}
+      - AUTH_DISCORD_CLIENT_ID=${AUTH_DISCORD_CLIENT_ID:-}
+      - AUTH_DISCORD_CLIENT_SECRET=${AUTH_DISCORD_CLIENT_SECRET:-}
+      - AUTH_PORT=3001
+      - AUTH_CORS_ORIGIN=*
+      - AUTH_RATE_LIMIT_ENABLED=true
+      - NODE_ENV=development
+    depends_on:
+      postgres-auth:
+        condition: service_healthy
+    networks:
+      - tcg-network
+    restart: unless-stopped
+
+  # Auth Database
+  postgres-auth:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_DB=tcg_auth
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - postgres-auth-data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    networks:
+      - tcg-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d tcg_auth"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+volumes:
+  postgres-auth-data:
+
+networks:
+  tcg-network:
+    driver: bridge

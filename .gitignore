@@ -41,3 +41,9 @@ apps/card-database/project.inlang/cache/plugins/ygx0uiahq6uw
 .gitignore
 apps/card-database/.env
 apps/operating-system/.svelte-kit/
+packages/component-library/.svelte-kit/
+packages/component-library/dist
+packages/core-ui/.svelte-kit/
+packages/core-ui/dist
+*/.svelte-kit/
+*/dist
