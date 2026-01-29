@@ -13,7 +13,8 @@
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
     "db:migrate": "drizzle-kit migrate",
-    "test": "echo 'No tests yet'"
+    "test": "bun test",
+    "test:watch": "bun test --watch"
   },
   "dependencies": {
     "elysia": "^1.2.25",

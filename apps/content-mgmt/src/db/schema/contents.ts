@@ -17,7 +17,7 @@ import { games } from "./games";
 /**
  * YouTube metadata interface
  */
-interface YouTubeMetadata {
+export interface YouTubeMetadata {
   authorName: string;
   channelName: string;
   channelId: string;
@@ -33,6 +33,29 @@ interface YouTubeMetadata {
 }
 
 /**
+ * Article metadata interface
+ */
+export interface ArticleMetadata {
+  authorName?: string;
+  siteName?: string;
+  siteUrl?: string;
+  publishedAt?: string;
+  wordCount?: number;
+  readingTimeMinutes?: number;
+  imageUrl?: string;
+  description?: string;
+  tags?: string[];
+}
+
+/**
+ * Content metadata - union of all source-specific metadata types
+ */
+export type ContentMetadataJson =
+  | YouTubeMetadata
+  | ArticleMetadata
+  | Record<string, unknown>;
+
+/**
  * Contents table - Content-agnostic storage for videos, articles, etc.
  */
 export const contents = pgTable(
@@ -40,11 +63,11 @@ export const contents = pgTable(
   {
     id: uuid("id").primaryKey().defaultRandom(),
     sourceType: sourceTypeEnum("source_type").notNull(),
-    externalId: text("external_id").notNull(), // YouTube video ID
+    externalId: text("external_id").notNull(), // YouTube video ID, article URL, etc.
     url: text("url").notNull(),
     title: text("title").notNull(),
     thumbnailUrl: text("thumbnail_url"),
-    metadataJson: jsonb("metadata_json").$type<YouTubeMetadata>().notNull(),
+    metadataJson: jsonb("metadata_json").$type<ContentMetadataJson>().notNull(),
     // Reference to auth service user - NOT a foreign key
     userId: text("user_id").notNull(),
     creatorId: uuid("creator_id").references(() => creators.id),

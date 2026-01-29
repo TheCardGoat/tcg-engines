@@ -8,6 +8,22 @@
  * via JWT tokens from the auth service - NOT as foreign keys.
  */
 
+// Cache Tables
+export {
+  type ExtractionCache,
+  extractionCache,
+  type NewExtractionCache,
+  type NewPostprocessingCache,
+  type NewPreprocessingCache,
+  type NewProcessingCache,
+  type PostprocessingCache,
+  type PreprocessingCache,
+  type ProcessingCache,
+  postprocessingCache,
+  preprocessingCache,
+  processingCache,
+} from "./cache";
+
 // Comments
 export {
   type Comment,
@@ -15,6 +31,7 @@ export {
   commentsRelations,
   type NewComment,
 } from "./comments";
+
 // Contents
 export {
   type Content,
@@ -38,16 +55,29 @@ export {
   type NewCreatorGame,
   type NewCreatorSocial,
 } from "./creators";
+
 // Enums
 export {
   contentStatusEnum,
   extractionStatusEnum,
+  postprocessingStatusEnum,
+  preprocessingStatusEnum,
   processingStatusEnum,
   sourceTypeEnum,
   summaryTypeEnum,
 } from "./enums";
+
 // Games
 export { type Game, games, type NewGame } from "./games";
+
+// Summaries
+export {
+  type ContentSummary,
+  contentSummaries,
+  contentSummariesRelations,
+  type NewContentSummary,
+} from "./summaries";
+
 // Tags
 export {
   type ContentTag,
@@ -60,5 +90,6 @@ export {
   tags,
   tagsRelations,
 } from "./tags";
+
 // Votes
 export { type NewVote, type Vote, votes } from "./votes";
