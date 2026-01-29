@@ -61,6 +61,13 @@ export const authCorsOriginSchema = z
   .default("*")
   .describe("CORS origin for auth service");
 
+export const authBaseUrlSchema = z
+  .string()
+  .url({ message: "AUTH_BASE_URL must be a valid URL" })
+  .optional()
+  .default("http://localhost:3001")
+  .describe("Base URL for auth service (used for JWT issuer/audience)");
+
 export const nodeEnvSchema = z
   .enum(["development", "production", "test"])
   .optional()
@@ -119,6 +126,7 @@ export const authServerSchema = {
   // Server
   AUTH_PORT: authPortSchema,
   AUTH_CORS_ORIGIN: authCorsOriginSchema,
+  AUTH_BASE_URL: authBaseUrlSchema,
   NODE_ENV: nodeEnvSchema,
 
   // Rate Limiting

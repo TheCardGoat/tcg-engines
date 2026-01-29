@@ -1,7 +1,12 @@
-import { Elysia } from "elysia";
+import { createApp } from "./app";
+import { env } from "./config/env";
 
-const app = new Elysia().get("/", () => "Hello Elysia").listen(3000);
+const app = createApp();
+
+app.listen(env.PORT);
 
 console.log(
-  `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`,
+  `🚀 Content Management Service is running at http://localhost:${env.PORT}`,
 );
+console.log(`   Auth Service URL: ${env.AUTH_SERVICE_URL}`);
+console.log(`   Environment: ${env.NODE_ENV}`);

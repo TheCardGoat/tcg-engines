@@ -2,7 +2,7 @@ import type { AuthSession, AuthUser, SessionResult } from "@tcg/shared";
 import type { BetterAuthOptions } from "better-auth";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { username } from "better-auth/plugins";
+import { jwt } from "better-auth/plugins";
 import { Elysia } from "elysia";
 import { env } from "../config/env";
 import { getDb } from "../db/client";
@@ -39,6 +39,11 @@ function getTrustedOrigins(): string[] {
     origins.push(env.AUTH_CORS_ORIGIN);
   }
 
+  // Add base URL as trusted origin
+  if (env.AUTH_BASE_URL) {
+    origins.push(env.AUTH_BASE_URL);
+  }
+
   if (origins.length === 0) {
     console.warn(
       "Warning: AUTH_CORS_ORIGIN not configured in production. CSRF protection may be weakened.",
@@ -49,16 +54,45 @@ function getTrustedOrigins(): string[] {
 }
 
 /**
- * Better Auth configuration
+ * Better Auth configuration with JWT plugin for server-to-server authentication
+ *
+ * - Discord OAuth ONLY (no email/password)
+ * - JWT plugin provides /api/auth/jwks and /api/auth/token endpoints
+ * - Short-lived JWT tokens (15 minutes) for stateless verification
  */
 const betterAuthConfig: BetterAuthOptions = {
   secret: env.AUTH_SECRET,
 
-  plugins: [username()],
+  plugins: [
+    jwt({
+      jwt: {
+        issuer: env.AUTH_BASE_URL,
+        audience: env.AUTH_BASE_URL,
+        expirationTime: "15m", // Short-lived tokens for S2S
+        definePayload: ({ user }) => ({
+          id: user.id,
+          email: user.email,
+          name: user.name,
+          // Include subscription tier for authorization in content service
+          subscriptionTier:
+            (user as AuthUser & { subscriptionTier?: string })
+              .subscriptionTier || "free",
+        }),
+      },
+      jwks: {
+        keyPairConfig: {
+          alg: "EdDSA",
+          crv: "Ed25519",
+        },
+        rotationInterval: 60 * 60 * 24 * 30, // 30 days
+        gracePeriod: 60 * 60 * 24 * 7, // 7 days grace period for key rotation
+      },
+    }),
+  ],
 
-  // Enable email/password sign-up/sign-in
+  // DISABLE email/password - Discord OAuth ONLY
   emailAndPassword: {
-    enabled: true,
+    enabled: false,
   },
 
   session: {
@@ -76,16 +110,13 @@ const betterAuthConfig: BetterAuthOptions = {
     useSecureCookies: env.NODE_ENV === "production",
   },
 
-  // Discord OAuth (optional - only enabled if credentials are provided)
-  ...(env.AUTH_DISCORD_CLIENT_ID &&
-    env.AUTH_DISCORD_CLIENT_SECRET && {
-      socialProviders: {
-        discord: {
-          clientId: env.AUTH_DISCORD_CLIENT_ID,
-          clientSecret: env.AUTH_DISCORD_CLIENT_SECRET,
-        },
-      },
-    }),
+  // Discord OAuth - REQUIRED for authentication
+  socialProviders: {
+    discord: {
+      clientId: env.AUTH_DISCORD_CLIENT_ID || "",
+      clientSecret: env.AUTH_DISCORD_CLIENT_SECRET || "",
+    },
+  },
 };
 
 /**
