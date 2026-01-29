@@ -76,7 +76,13 @@ const createRateLimitSchema = (defaultValue: string) =>
     .string()
     .optional()
     .default(defaultValue)
-    .transform((val) => Number.parseInt(val, 10));
+    .transform((val) => Number.parseInt(val, 10))
+    .pipe(
+      z
+        .number()
+        .int()
+        .min(1, { message: "Rate limit value must be at least 1" }),
+    );
 
 export const authRateLimitEnabledSchema = z
   .enum(["true", "false"])

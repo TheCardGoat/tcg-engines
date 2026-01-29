@@ -2,7 +2,7 @@
 # Multi-stage build for optimized production image
 
 # Stage 1: Install dependencies
-FROM oven/bun:1.2.18-alpine AS deps
+FROM oven/bun:1.3.3-alpine AS deps
 
 WORKDIR /app
 
@@ -17,7 +17,7 @@ COPY apps/auth-service/package.json ./apps/auth-service/
 RUN bun install --frozen-lockfile --production
 
 # Stage 2: Build
-FROM oven/bun:1.2.18-alpine AS builder
+FROM oven/bun:1.3.3-alpine AS builder
 
 WORKDIR /app
 
@@ -34,7 +34,7 @@ COPY packages/typescript-config ./packages/typescript-config
 COPY apps/auth-service ./apps/auth-service
 
 # Stage 3: Production
-FROM oven/bun:1.2.18-alpine AS runner
+FROM oven/bun:1.3.3-alpine AS runner
 
 WORKDIR /app
 
@@ -56,7 +56,7 @@ EXPOSE 3001
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-  CMD wget --no-verbose --tries=1 --spider http://localhost:3001/health || exit 1
+  CMD ["bun", "-e", "fetch(\"http://localhost:3001/health\").then(r => r.ok ? process.exit(0) : process.exit(1)).catch(() => process.exit(1))"]
 
 # Start the application
 CMD ["bun", "run", "src/index.ts"]

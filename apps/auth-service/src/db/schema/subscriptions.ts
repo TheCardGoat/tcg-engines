@@ -8,6 +8,7 @@ import {
   text,
   time,
   timestamp,
+  unique,
   uuid,
 } from "drizzle-orm/pg-core";
 import { users } from "./auth";
@@ -42,6 +43,10 @@ export const userSubscriptions = pgTable(
   (table) => [
     index("user_subscriptions_user_id_idx").on(table.userId),
     index("user_subscriptions_creator_id_idx").on(table.creatorId),
+    unique("user_subscriptions_user_creator_unique").on(
+      table.userId,
+      table.creatorId,
+    ),
   ],
 );
 
@@ -60,7 +65,10 @@ export const digestPreferences = pgTable("digest_preferences", {
   deliveryTime: time("delivery_time").notNull().default("09:00:00"),
   isActive: boolean("is_active").notNull().default(true),
   createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at")
+    .defaultNow()
+    .$onUpdate(() => new Date())
+    .notNull(),
 });
 
 /**

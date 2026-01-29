@@ -23,6 +23,9 @@ export interface ElysiaSessionResult
 
 /**
  * Get trusted origins for CORS and CSRF protection
+ *
+ * In production, requires explicit AUTH_CORS_ORIGIN configuration.
+ * Wildcard is only allowed in development mode.
  */
 function getTrustedOrigins(): string[] {
   if (env.NODE_ENV !== "production") {
@@ -36,7 +39,13 @@ function getTrustedOrigins(): string[] {
     origins.push(env.AUTH_CORS_ORIGIN);
   }
 
-  return origins.length > 0 ? origins : ["*"];
+  if (origins.length === 0) {
+    console.warn(
+      "Warning: AUTH_CORS_ORIGIN not configured in production. CSRF protection may be weakened.",
+    );
+  }
+
+  return origins.length > 0 ? origins : [];
 }
 
 /**
@@ -203,6 +212,9 @@ export function requireAuth(
  *   .get('/public', () => 'public', { auth: false })
  *   .get('/protected', ({ user }) => user, { auth: true })
  * ```
+ *
+ * When `auth: true`, the route will return 401 if the user is not authenticated.
+ * When `auth: false` or not set, session info is still resolved but not enforced.
  */
 export const betterAuthMacro = new Elysia({ name: "better-auth" })
   .mount(async (request) => {
@@ -211,14 +223,25 @@ export const betterAuthMacro = new Elysia({ name: "better-auth" })
     return response;
   })
   .macro({
-    auth: {
+    auth: (enabled: boolean) => ({
+      async beforeHandle({ request, set }) {
+        if (!enabled) return;
+
+        const session = await getSession(request);
+        if (!(session.user && session.session)) {
+          set.status = 401;
+          return {
+            error: "UNAUTHORIZED",
+            message: "Authentication required",
+          };
+        }
+      },
       async resolve({ request }) {
         const session = await getSession(request);
-
         return {
           user: session.user,
           session: session.session,
         };
       },
-    },
+    }),
   });

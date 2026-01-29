@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { and, desc, eq } from "drizzle-orm";
 import { getDb } from "../db/client";
 import {
   type DigestPreference,
@@ -59,11 +59,14 @@ export async function removeSubscription(
 
   const result = await db
     .delete(userSubscriptions)
-    .where(eq(userSubscriptions.userId, userId))
+    .where(
+      and(
+        eq(userSubscriptions.userId, userId),
+        eq(userSubscriptions.creatorId, creatorId),
+      ),
+    )
     .returning({ id: userSubscriptions.id });
 
-  // Filter by creatorId in application since we can't use AND easily
-  // This is a simplified version - in production, use proper AND clause
   return result.length > 0;
 }
 
@@ -140,7 +143,7 @@ export async function updateDigestPreferences(
       userId,
       frequency: data.frequency ?? "daily",
       deliveryTime: data.deliveryTime ?? "09:00:00",
-      isActive: data.isActive ?? true,
+      isActive: data.isActive ?? false,
     })
     .returning();
 
@@ -160,6 +163,6 @@ export async function getDigestHistory(userId: string, limit = 10) {
     .select()
     .from(digestHistory)
     .where(eq(digestHistory.userId, userId))
-    .orderBy(digestHistory.sentAt)
+    .orderBy(desc(digestHistory.sentAt))
     .limit(limit);
 }

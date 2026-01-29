@@ -9,7 +9,7 @@
     const w = Number(wRaw);
     const h = Number(hRaw);
 
-    if (!Number.isFinite(w) || !Number.isFinite(h) || w <= 0 || h <= 0) {
+    if (!(Number.isFinite(w) && Number.isFinite(h) ) || w <= 0 || h <= 0) {
       return { w: 3, h: 2 };
     }
 

@@ -48,8 +48,8 @@ function getClientIdentifier(request: Request, server: unknown): string {
   if (forwardedFor) {
     // X-Forwarded-For can contain multiple IPs: "client, proxy1, proxy2"
     // The first IP is the original client
-    const firstIp = forwardedFor.split(",")[0];
-    return firstIp?.trim() ?? "unknown";
+    const firstIp = forwardedFor.split(",")[0]?.trim();
+    return firstIp && firstIp.length > 0 ? firstIp : "unknown";
   }
 
   // Try X-Real-IP
@@ -117,8 +117,9 @@ function isRateLimitEnabled(): boolean {
 /**
  * Global rate limiter - fallback for all endpoints
  *
- * Limits: 200 requests/minute (anonymous), 300 requests/minute (authenticated)
+ * Limits: 200 requests/minute (anonymous)
  * Uses IP-based identification (applied before auth middleware)
+ * Note: Authenticated endpoints use their own rate limiters with higher limits
  */
 export const globalRateLimiter = ():
   | ReturnType<typeof rateLimit>
@@ -126,10 +127,9 @@ export const globalRateLimiter = ():
   if (!isRateLimitEnabled()) {
     return undefined;
   }
-  const maxLimit = env.AUTH_RATE_LIMIT_GLOBAL_MAX_AUTH;
   return rateLimit({
     duration: 60_000, // 1 minute
-    max: maxLimit,
+    max: env.AUTH_RATE_LIMIT_GLOBAL_MAX,
     generator: getClientIdentifier,
     errorResponse: RATE_LIMIT_RESPONSE,
     headers: true,

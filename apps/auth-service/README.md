@@ -13,7 +13,7 @@ The Auth Service handles:
 
 ## Technology Stack
 
-- **Runtime**: Bun 1.2.18+
+- **Runtime**: Bun 1.3.3+
 - **Framework**: Elysia.js
 - **Database**: PostgreSQL with Drizzle ORM
 - **Authentication**: Better Auth
@@ -22,7 +22,7 @@ The Auth Service handles:
 
 ### Prerequisites
 
-- Bun 1.2.18+
+- Bun 1.3.3+
 - PostgreSQL 16+
 
 ### Development Setup
