@@ -1395,7 +1395,11 @@ They will be split between Auth Service and Content Service as described above.
 
  16-a EXPECTED CONTENT PROCESSING PIPELINE
 
- The main difference between the previous imple
+ The main difference between the previous implentation and this one is that we'd like to make the content processing more modular and reusable. We'd like to be able to easily add new content sources and processors. Change prompts, models, etc.
+ The main is similar:
+ - We sanitize the URL to extract the content ID. So the Caching entries are consistent. We strip URL params to avoid duplicate entries.
+ - For each step (extraction, preprocessing, processing, postprocessing) we have a cache table to store the results. We check the cache before running the step. And we store the results in the cache.
+ 
 
  6.1 Pipeline Flow
 

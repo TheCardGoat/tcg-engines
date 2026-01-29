@@ -20,6 +20,7 @@
   "devDependencies": {
     "@biomejs/biome": "2.3.11",
     "@lorcanito/typescript-config": "workspace:*",
+    "@types/node": "^22.15.30",
     "typescript": "^5.8.3"
   },
   "exports": {

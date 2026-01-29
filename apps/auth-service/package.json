@@ -1,5 +1,5 @@
 {
-  "name": "auth-service",
+  "name": "@tcg/auth-service",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -12,7 +12,8 @@
     "db:generate": "drizzle-kit generate",
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
-    "db:migrate": "drizzle-kit migrate"
+    "db:migrate": "drizzle-kit migrate",
+    "test": "echo 'No tests yet'"
   },
   "dependencies": {
     "elysia": "^1.2.25",
