@@ -1,0 +1,133 @@
+# TCG Engines - Microservices Docker Compose
+# Development environment with Auth Service and Content Management Service
+#
+# Usage:
+#   docker-compose up -d              # Start all services
+#   docker-compose up -d auth-service # Start auth service only
+#   docker-compose logs -f            # Follow logs
+#   docker-compose down               # Stop all services
+
+services:
+  # ==========================================================================
+  # Auth Service
+  # ==========================================================================
+  auth-service:
+    build:
+      context: .
+      dockerfile: apps/auth-service/Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      - AUTH_DATABASE_URL=postgresql://postgres:postgres@postgres-auth:5432/tcg_auth
+      - AUTH_SECRET=${AUTH_SECRET:-dev-auth-secret-32-characters-minimum-0000}
+      - AUTH_BASE_URL=http://localhost:3001
+      - AUTH_DISCORD_CLIENT_ID=${AUTH_DISCORD_CLIENT_ID:-}
+      - AUTH_DISCORD_CLIENT_SECRET=${AUTH_DISCORD_CLIENT_SECRET:-}
+      - AUTH_PORT=3001
+      - AUTH_CORS_ORIGIN=*
+      - AUTH_RATE_LIMIT_ENABLED=true
+      - NODE_ENV=development
+    depends_on:
+      postgres-auth:
+        condition: service_healthy
+    networks:
+      - tcg-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  # ==========================================================================
+  # Content Management Service
+  # ==========================================================================
+  content-mgmt:
+    build:
+      context: .
+      dockerfile: apps/content-mgmt/Dockerfile
+    ports:
+      - "3002:3002"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@postgres-content:5432/tcg_content
+      - AUTH_SERVICE_URL=http://auth-service:3001
+      - PORT=3002
+      - CORS_ORIGIN=*
+      - RATE_LIMIT_ENABLED=true
+      - NODE_ENV=development
+    depends_on:
+      postgres-content:
+        condition: service_healthy
+      auth-service:
+        condition: service_healthy
+    networks:
+      - tcg-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3002/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  # ==========================================================================
+  # Auth Database (PostgreSQL)
+  # ==========================================================================
+  postgres-auth:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_DB=tcg_auth
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - postgres-auth-data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    networks:
+      - tcg-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d tcg_auth"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # ==========================================================================
+  # Content Database (PostgreSQL)
+  # ==========================================================================
+  postgres-content:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_DB=tcg_content
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - postgres-content-data:/var/lib/postgresql/data
+    ports:
+      - "5434:5432"
+    networks:
+      - tcg-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d tcg_content"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+# ==========================================================================
+# Volumes
+# ==========================================================================
+volumes:
+  postgres-auth-data:
+    name: tcg-postgres-auth-data
+  postgres-content-data:
+    name: tcg-postgres-content-data
+
+# ==========================================================================
+# Networks
+# ==========================================================================
+networks:
+  tcg-network:
+    name: tcg-network
+    driver: bridge

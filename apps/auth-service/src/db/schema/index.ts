@@ -24,6 +24,9 @@ export {
   verifications,
 } from "./auth";
 
+// JWKS table (Better Auth JWT plugin)
+export { type Jwk, jwks, type NewJwk } from "./jwks";
+
 // Subscription and digest tables
 export {
   type DigestHistoryRecord,

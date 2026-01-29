@@ -12,6 +12,7 @@ services:
     environment:
       - AUTH_DATABASE_URL=postgresql://postgres:postgres@postgres-auth:5432/tcg_auth
       - AUTH_SECRET=${AUTH_SECRET:-dev-auth-secret-32-characters-minimum-0000}
+      - AUTH_BASE_URL=http://localhost:3001
       - AUTH_DISCORD_CLIENT_ID=${AUTH_DISCORD_CLIENT_ID:-}
       - AUTH_DISCORD_CLIENT_SECRET=${AUTH_DISCORD_CLIENT_SECRET:-}
       - AUTH_PORT=3001
