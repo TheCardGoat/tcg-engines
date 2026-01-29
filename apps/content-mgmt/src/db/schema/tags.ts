@@ -1,6 +1,7 @@
 import { relations } from "drizzle-orm";
 import {
   boolean,
+  doublePrecision,
   index,
   integer,
   jsonb,
@@ -75,7 +76,8 @@ export const contentTags = pgTable(
     tagId: uuid("tag_id")
       .references(() => tags.id, { onDelete: "cascade" })
       .notNull(),
-    confidence: jsonb("confidence").$type<number>(),
+    // Use doublePrecision instead of JSONB for efficient numeric storage
+    confidence: doublePrecision("confidence"),
     appliedBy: text("applied_by").$type<"user" | "ai" | "admin">(),
     appliedAt: timestamp("applied_at").defaultNow().notNull(),
   },

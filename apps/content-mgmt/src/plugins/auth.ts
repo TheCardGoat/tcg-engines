@@ -4,6 +4,7 @@ import {
   extractBearerToken,
   verifyAuthToken,
 } from "../lib/auth-verify";
+import { UnauthorizedError } from "../lib/errors";
 
 /**
  * Authenticated user from JWT token
@@ -17,6 +18,17 @@ export interface AuthUser {
   name?: string;
   subscriptionTier?: string;
 }
+
+/**
+ * Valid subscription tiers
+ */
+export const SUBSCRIPTION_TIERS = {
+  free: 0,
+  premium: 1,
+  admin: 2,
+} as const;
+
+export type SubscriptionTier = keyof typeof SUBSCRIPTION_TIERS;
 
 /**
  * Convert AuthPayload to AuthUser
@@ -39,6 +51,9 @@ function payloadToUser(payload: AuthPayload): AuthUser {
  * 3. Provides user context to route handlers
  * 4. Provides `auth` macro for requiring authentication
  *
+ * Note: Authentication only runs when `auth: true` is set on a route.
+ * Public routes skip JWT verification entirely for better performance.
+ *
  * @example
  * ```ts
  * app
@@ -49,32 +64,37 @@ function payloadToUser(payload: AuthPayload): AuthUser {
  * ```
  */
 export const authPlugin = new Elysia({ name: "content-auth" })
-  .derive(async ({ request }) => {
-    const authHeader = request.headers.get("Authorization");
-    const token = extractBearerToken(authHeader);
-
-    if (!token) {
-      return { user: null as AuthUser | null };
-    }
-
-    const payload = await verifyAuthToken(token);
-
-    if (!payload) {
-      return { user: null as AuthUser | null };
-    }
-
-    return {
-      user: payloadToUser(payload) as AuthUser | null,
-    };
-  })
   .macro({
     /**
      * Auth macro for requiring authentication
      *
-     * When `auth: true`, returns 401 if user is not authenticated.
-     * When `auth: false` or not set, user may be null.
+     * When `auth: true`, verifies JWT and returns 401 if user is not authenticated.
+     * When `auth: false` or not set, authentication is skipped entirely.
      */
     auth: (required: boolean) => ({
+      async resolve({ request }: { request: Request }) {
+        // Skip authentication entirely for non-protected routes
+        if (!required) {
+          return { user: null as AuthUser | null };
+        }
+
+        const authHeader = request.headers.get("Authorization");
+        const token = extractBearerToken(authHeader);
+
+        if (!token) {
+          return { user: null as AuthUser | null };
+        }
+
+        const payload = await verifyAuthToken(token);
+
+        if (!payload) {
+          return { user: null as AuthUser | null };
+        }
+
+        return {
+          user: payloadToUser(payload),
+        };
+      },
       async beforeHandle({
         user,
         set,
@@ -103,7 +123,7 @@ export const authPlugin = new Elysia({ name: "content-auth" })
  * @param user - User from context (may be null)
  * @param set - Elysia set object for status
  * @returns Authenticated user
- * @throws Error if user is not authenticated
+ * @throws UnauthorizedError if user is not authenticated
  *
  * @example
  * ```ts
@@ -120,7 +140,7 @@ export function requireAuth(
 ): AuthUser {
   if (!user) {
     set.status = 401;
-    throw new Error("UNAUTHORIZED");
+    throw new UnauthorizedError();
   }
   return user;
 }
@@ -134,9 +154,16 @@ export function requireAuth(
  */
 export function hasSubscriptionTier(
   user: AuthUser,
-  requiredTier: "free" | "premium" | "admin",
+  requiredTier: SubscriptionTier,
 ): boolean {
-  const tierOrder = { free: 0, premium: 1, admin: 2 };
-  const userTier = (user.subscriptionTier || "free") as keyof typeof tierOrder;
-  return tierOrder[userTier] >= tierOrder[requiredTier];
+  const userTierName = user.subscriptionTier || "free";
+
+  // Validate that userTier is a known tier
+  if (!(userTierName in SUBSCRIPTION_TIERS)) {
+    // Unknown tier, deny access for safety
+    return false;
+  }
+
+  const userTier = userTierName as SubscriptionTier;
+  return SUBSCRIPTION_TIERS[userTier] >= SUBSCRIPTION_TIERS[requiredTier];
 }

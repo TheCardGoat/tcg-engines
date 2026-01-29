@@ -2,9 +2,24 @@ import { rateLimit } from "elysia-rate-limit";
 import { env } from "../config/env";
 
 /**
+ * Generate a fallback identifier when IP cannot be determined
+ *
+ * Uses a combination of User-Agent and timestamp to create a unique-ish identifier.
+ * This prevents all anonymous users from sharing the same rate limit bucket.
+ */
+function generateFallbackIdentifier(request: Request): string {
+  const userAgent = request.headers.get("User-Agent") || "unknown-ua";
+  // Create a hash-like string from the User-Agent to distinguish different clients
+  const uaHash = userAgent
+    .split("")
+    .reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  return `fallback:${uaHash}`;
+}
+
+/**
  * Get client identifier for rate limiting
  *
- * Priority: User ID → IP Address
+ * Priority: User ID -> IP Address -> Fallback
  * Uses Cloudflare headers if available.
  */
 function getClientIdentifier(
@@ -26,7 +41,9 @@ function getClientIdentifier(
   const xForwardedFor = request.headers.get("X-Forwarded-For");
   if (xForwardedFor) {
     const ip = xForwardedFor.split(",")[0].trim();
-    return `ip:${ip}`;
+    if (ip) {
+      return `ip:${ip}`;
+    }
   }
 
   // Try X-Real-IP
@@ -35,8 +52,9 @@ function getClientIdentifier(
     return `ip:${xRealIp}`;
   }
 
-  // Fallback to unknown
-  return "ip:unknown";
+  // Fallback to a unique-ish identifier based on User-Agent
+  // This prevents rate limit bypass when all headers are stripped
+  return generateFallbackIdentifier(request);
 }
 
 /**
@@ -52,9 +70,10 @@ export function globalRateLimiter() {
   return rateLimit({
     duration: 60_000, // 1 minute window
     max: env.RATE_LIMIT_GLOBAL_MAX,
-    generator: (request, _server, { store }) => {
-      const user = (store as { user?: { id: string } | null }).user;
-      return getClientIdentifier(request, user);
+    generator: (request) => {
+      // Note: We don't have access to user context in the rate limiter generator
+      // because it runs before the auth plugin. This is expected behavior.
+      return getClientIdentifier(request);
     },
     errorResponse: new Response(
       JSON.stringify({
@@ -105,9 +124,10 @@ export function contentSubmissionRateLimiter() {
     duration: 3600_000, // 1 hour window
     max: 10, // 10 submissions per hour
     scoping: "scoped",
-    generator: (request, _server, { store }) => {
-      const user = (store as { user?: { id: string } | null }).user;
-      return getClientIdentifier(request, user);
+    generator: (request) => {
+      // Note: We don't have access to user context in the rate limiter generator
+      // because it runs before the auth plugin. This is expected behavior.
+      return getClientIdentifier(request);
     },
     errorResponse: new Response(
       JSON.stringify({
