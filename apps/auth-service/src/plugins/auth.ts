@@ -1,0 +1,224 @@
+import type { AuthSession, AuthUser, SessionResult } from "@tcg/shared";
+import type { BetterAuthOptions } from "better-auth";
+import { betterAuth } from "better-auth";
+import { drizzleAdapter } from "better-auth/adapters/drizzle";
+import { username } from "better-auth/plugins";
+import { Elysia } from "elysia";
+import { env } from "../config/env";
+import { getDb } from "../db/client";
+import * as schema from "../db/schema";
+
+// Re-export shared types for convenience
+export type { AuthUser, AuthSession, SessionResult };
+
+/**
+ * Elysia requires types to extend Record<string, unknown> for context derivation
+ */
+export interface ElysiaSessionResult
+  extends SessionResult,
+    Record<string, unknown> {
+  user: AuthUser | null;
+  session: AuthSession | null;
+}
+
+/**
+ * Get trusted origins for CORS and CSRF protection
+ */
+function getTrustedOrigins(): string[] {
+  if (env.NODE_ENV !== "production") {
+    return ["*"];
+  }
+
+  const origins: string[] = [];
+
+  // Add configured CORS origin
+  if (env.AUTH_CORS_ORIGIN && env.AUTH_CORS_ORIGIN !== "*") {
+    origins.push(env.AUTH_CORS_ORIGIN);
+  }
+
+  return origins.length > 0 ? origins : ["*"];
+}
+
+/**
+ * Better Auth configuration
+ */
+const betterAuthConfig: BetterAuthOptions = {
+  secret: env.AUTH_SECRET,
+
+  plugins: [username()],
+
+  // Enable email/password sign-up/sign-in
+  emailAndPassword: {
+    enabled: true,
+  },
+
+  session: {
+    // Cookie configuration for session management
+    cookieCache: {
+      enabled: true,
+      maxAge: 60 * 5, // 5 minutes cache
+    },
+  },
+
+  trustedOrigins: getTrustedOrigins(),
+
+  advanced: {
+    cookiePrefix: "tcg-auth",
+    useSecureCookies: env.NODE_ENV === "production",
+  },
+
+  // Discord OAuth (optional - only enabled if credentials are provided)
+  ...(env.AUTH_DISCORD_CLIENT_ID &&
+    env.AUTH_DISCORD_CLIENT_SECRET && {
+      socialProviders: {
+        discord: {
+          clientId: env.AUTH_DISCORD_CLIENT_ID,
+          clientSecret: env.AUTH_DISCORD_CLIENT_SECRET,
+        },
+      },
+    }),
+};
+
+/**
+ * Better Auth instance
+ *
+ * Lazily initialized to ensure database is ready.
+ */
+let _auth: ReturnType<typeof betterAuth<BetterAuthOptions>> | null = null;
+
+function getAuth(): ReturnType<typeof betterAuth<BetterAuthOptions>> {
+  if (!_auth) {
+    _auth = betterAuth({
+      ...betterAuthConfig,
+      database: drizzleAdapter(getDb(), {
+        provider: "pg",
+        usePlural: true,
+        schema,
+      }),
+    });
+  }
+  return _auth;
+}
+
+/**
+ * Shared session retrieval logic
+ * Attempts to get the current session from the request headers
+ */
+async function getSession(request: Request): Promise<ElysiaSessionResult> {
+  try {
+    const auth = getAuth();
+    const session = await auth.api.getSession({
+      headers: request.headers,
+    });
+
+    if (session?.user && session?.session) {
+      return {
+        user: session.user as AuthUser,
+        session: session.session as AuthSession,
+      };
+    }
+  } catch (error) {
+    // Session retrieval failed, user is not authenticated
+    console.error("Session retrieval error:", error);
+  }
+
+  return {
+    user: null,
+    session: null,
+  };
+}
+
+/**
+ * Guard for protected routes
+ *
+ * Use this to ensure a route requires authentication.
+ * Returns 401 if user is not authenticated.
+ *
+ * Usage:
+ * ```ts
+ * app.use(authGuard).get('/protected', ({ user }) => {
+ *   // user is guaranteed to be defined here
+ *   return { userId: user.id };
+ * });
+ * ```
+ */
+export const authGuard = new Elysia({ name: "auth-guard" }).derive(
+  async ({ request, set }) => {
+    const result = await getSession(request);
+
+    if (!(result.user && result.session)) {
+      // User is not authenticated - return 401
+      set.status = 401;
+      return {
+        ...result,
+        error: {
+          code: "UNAUTHORIZED",
+          message: "Authentication required",
+        },
+      };
+    }
+
+    return result;
+  },
+);
+
+/**
+ * Helper function to assert user is authenticated
+ *
+ * Use this in route handlers that require authentication.
+ * Returns the authenticated user or sets status and throws an error.
+ *
+ * Usage:
+ * ```ts
+ * .get('/protected', async ({ user, set }) => {
+ *   const authenticatedUser = requireAuth(user, set);
+ *   // authenticatedUser is guaranteed to be AuthUser
+ *   return { userId: authenticatedUser.id };
+ * })
+ * ```
+ */
+export function requireAuth(
+  user: AuthUser | null,
+  set: { status?: number | string },
+): AuthUser {
+  if (!user) {
+    set.status = 401;
+    throw new Error("UNAUTHORIZED");
+  }
+
+  return user;
+}
+
+/**
+ * Better Auth Elysia plugin with macro support
+ *
+ * This plugin:
+ * 1. Mounts the Better Auth handler for all /api/auth/* routes
+ * 2. Provides a macro for easy auth checking on routes
+ *
+ * Usage:
+ * ```ts
+ * app
+ *   .use(betterAuthMacro)
+ *   .get('/public', () => 'public', { auth: false })
+ *   .get('/protected', ({ user }) => user, { auth: true })
+ * ```
+ */
+export const betterAuthMacro = new Elysia({ name: "better-auth" })
+  .mount(async (request) => {
+    const auth = getAuth();
+    const response = await auth.handler(request);
+    return response;
+  })
+  .macro({
+    auth: {
+      async resolve({ request }) {
+        const session = await getSession(request);
+
+        return {
+          user: session.user,
+          session: session.session,
+        };
+      },
+    },
+  });
