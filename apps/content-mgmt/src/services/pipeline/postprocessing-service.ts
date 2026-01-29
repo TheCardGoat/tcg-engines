@@ -199,9 +199,9 @@ export class PostprocessingService {
     category: string,
     gameId?: string,
   ): Promise<{ id: string } | null> {
-    // Try to find existing tag
+    // Try to find existing tag - select usageCount for increment
     const [existing] = await this.db
-      .select({ id: tags.id })
+      .select({ id: tags.id, usageCount: tags.usageCount })
       .from(tags)
       .where(eq(tags.slug, slug))
       .limit(1);
@@ -211,13 +211,11 @@ export class PostprocessingService {
       await this.db
         .update(tags)
         .set({
-          usageCount:
-            (existing as { id: string; usageCount?: number }).usageCount ??
-            0 + 1,
+          usageCount: (existing.usageCount ?? 0) + 1,
         })
         .where(eq(tags.id, existing.id));
 
-      return existing;
+      return { id: existing.id };
     }
 
     // Create new tag

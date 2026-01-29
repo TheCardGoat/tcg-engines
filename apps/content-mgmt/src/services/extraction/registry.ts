@@ -14,7 +14,7 @@ import type { ExtractionServiceAdapter, SourceType } from "../../types";
  * @example
  * ```typescript
  * const registry = new ExtractionServiceRegistry();
- * registry.register(new SuperdataExtractionAdapter());
+ * registry.register(new SupadataExtractionAdapter());
  * registry.register(new TabstackExtractionAdapter());
  *
  * const adapter = registry.getAdapterForUrl('https://youtube.com/watch?v=abc123');
@@ -28,19 +28,22 @@ export class ExtractionServiceRegistry {
   /**
    * Register an extraction service adapter
    *
+   * Registration is atomic - either all validations pass and the adapter
+   * is fully registered, or no changes are made to the registry.
+   *
    * @param adapter - The adapter to register
    * @throws Error if an adapter with the same serviceId is already registered
+   * @throws Error if any source type is already handled by another adapter
    */
   register(adapter: ExtractionServiceAdapter): void {
+    // Validate serviceId first
     if (this.adapters.has(adapter.serviceId)) {
       throw new Error(
         `Extraction service adapter '${adapter.serviceId}' is already registered`,
       );
     }
 
-    this.adapters.set(adapter.serviceId, adapter);
-
-    // Map source types to this adapter
+    // Validate all source types before making any changes
     for (const sourceType of adapter.supportedSourceTypes) {
       if (this.sourceTypeToAdapter.has(sourceType)) {
         const existing = this.sourceTypeToAdapter.get(sourceType);
@@ -48,6 +51,12 @@ export class ExtractionServiceRegistry {
           `Source type '${sourceType}' is already handled by adapter '${existing?.serviceId}'`,
         );
       }
+    }
+
+    // All validations passed - now perform the registration
+    this.adapters.set(adapter.serviceId, adapter);
+
+    for (const sourceType of adapter.supportedSourceTypes) {
       this.sourceTypeToAdapter.set(sourceType, adapter);
     }
   }

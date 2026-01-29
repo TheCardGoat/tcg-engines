@@ -5,7 +5,7 @@
  * Manages cache, coordinates with extraction adapters, and handles blocking.
  */
 
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import type { PostgresJsDatabase } from "drizzle-orm/postgres-js";
 import type * as schema from "../../db/schema";
 import { contents, extractionCache } from "../../db/schema";
@@ -24,6 +24,7 @@ import {
  * Extraction cache data structure (matches database schema)
  */
 interface ExtractionCacheData {
+  sourceType: "youtube" | "article" | "rss" | "http";
   textContent: string;
   segments?: Array<{
     text: string;
@@ -106,6 +107,7 @@ export class ExtractionService {
         adapter.serviceId,
         `Invalid URL format: ${url}`,
         true,
+        adapter.supportedSourceTypes[0],
       );
     }
 
@@ -124,6 +126,7 @@ export class ExtractionService {
           adapter.serviceId,
           "Content is blocked",
           true,
+          sourceType,
         );
       }
 
@@ -143,6 +146,7 @@ export class ExtractionService {
             adapter.serviceId,
             cached.errorMessage ?? "Content is blocked",
             true,
+            sourceType,
           );
         }
       }
@@ -210,6 +214,7 @@ export class ExtractionService {
         adapter.serviceId,
         errorMessage,
         shouldBlock,
+        sourceType,
       );
     }
   }
@@ -259,7 +264,15 @@ export class ExtractionService {
     const [existing] = await this.db
       .select({ id: contents.id, status: contents.status })
       .from(contents)
-      .where(eq(contents.externalId, externalId))
+      .where(
+        and(
+          eq(contents.externalId, externalId),
+          eq(
+            contents.sourceType,
+            sourceType as "youtube" | "article" | "rss" | "http",
+          ),
+        ),
+      )
       .limit(1);
 
     return existing ?? null;
@@ -371,6 +384,7 @@ export class ExtractionService {
     gameId?: string,
   ): Promise<void> {
     const cacheData: ExtractionCacheData = {
+      sourceType: result.rawContent.sourceType,
       textContent: result.rawContent.textContent,
       segments: result.rawContent.segments,
       metadata: {
@@ -481,7 +495,7 @@ export class ExtractionService {
       contentId,
       rawContent: {
         contentId,
-        sourceType: "youtube", // Will be determined from content record
+        sourceType: data.sourceType,
         textContent: data.textContent,
         segments: data.segments,
         rawMetadata: data.metadata.sourceMetadata,
@@ -525,12 +539,13 @@ export class ExtractionService {
     provider: string,
     errorMessage: string,
     shouldBlock: boolean,
+    sourceType: "youtube" | "article" | "rss" | "http" = "youtube",
   ): ExtractionResult {
     return {
       contentId,
       rawContent: {
         contentId,
-        sourceType: "youtube",
+        sourceType,
         textContent: "",
         rawMetadata: {},
       },

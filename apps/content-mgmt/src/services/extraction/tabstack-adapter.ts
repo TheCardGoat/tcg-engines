@@ -157,7 +157,13 @@ export class TabstackExtractionAdapter extends BaseExtractionAdapter {
         "tiktok.com",
       ];
 
-      if (excludedDomains.some((domain) => parsed.hostname.includes(domain))) {
+      // Check for exact domain match or subdomain match (e.g., www.youtube.com)
+      const isExcludedDomain = excludedDomains.some(
+        (domain) =>
+          parsed.hostname === domain || parsed.hostname.endsWith(`.${domain}`),
+      );
+
+      if (isExcludedDomain) {
         return null;
       }
 
@@ -255,7 +261,7 @@ export class TabstackExtractionAdapter extends BaseExtractionAdapter {
       authorName: metadata.author,
       channelName: metadata.siteName,
       channelUrl: metadata.siteUrl,
-      contentLength: metadata.wordCount ?? rawContent.textContent.length,
+      contentLength: rawContent.textContent.length,
       publishedAt: metadata.publishedAt
         ? new Date(metadata.publishedAt)
         : undefined,

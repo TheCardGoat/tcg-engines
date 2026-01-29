@@ -6,12 +6,12 @@
 
 import { beforeEach, describe, expect, it, mock } from "bun:test";
 import {
-  type SuperdataClient,
-  SuperdataExtractionAdapter,
+  type SupadataClient,
+  SupadataExtractionAdapter,
 } from "../../services/extraction/supadata-adapter";
 
 // Mock Supadata client
-const createMockClient = (): SuperdataClient => ({
+const createMockClient = (): SupadataClient => ({
   metadata: mock(() =>
     Promise.resolve({
       title: "Test Video Title",
@@ -40,13 +40,13 @@ const createMockClient = (): SuperdataClient => ({
   ),
 });
 
-describe("SuperdataExtractionAdapter", () => {
-  let adapter: SuperdataExtractionAdapter;
-  let mockClient: SuperdataClient;
+describe("SupadataExtractionAdapter", () => {
+  let adapter: SupadataExtractionAdapter;
+  let mockClient: SupadataClient;
 
   beforeEach(() => {
     mockClient = createMockClient();
-    adapter = new SuperdataExtractionAdapter(mockClient);
+    adapter = new SupadataExtractionAdapter(mockClient);
   });
 
   describe("parseUrl", () => {
@@ -195,7 +195,7 @@ describe("SuperdataExtractionAdapter", () => {
 
     it("should fail validation for content exceeding max duration", async () => {
       // Create adapter with short max duration
-      const shortAdapter = new SuperdataExtractionAdapter(mockClient, {
+      const shortAdapter = new SupadataExtractionAdapter(mockClient, {
         maxDurationSeconds: 300, // 5 minutes
       });
 
@@ -212,7 +212,7 @@ describe("SuperdataExtractionAdapter", () => {
 
     it("should fail validation for missing title", async () => {
       // Mock client that returns empty title
-      const emptyTitleClient: SuperdataClient = {
+      const emptyTitleClient: SupadataClient = {
         ...mockClient,
         metadata: mock(() =>
           Promise.resolve({
@@ -222,7 +222,7 @@ describe("SuperdataExtractionAdapter", () => {
         ),
       };
 
-      const emptyAdapter = new SuperdataExtractionAdapter(emptyTitleClient);
+      const emptyAdapter = new SupadataExtractionAdapter(emptyTitleClient);
       const rawContent = await emptyAdapter.fetchContent("abc123def45");
       const metadata = await emptyAdapter.extractMetadata(rawContent);
       const validation = await emptyAdapter.validateContent(metadata);
@@ -244,7 +244,7 @@ describe("SuperdataExtractionAdapter", () => {
     });
 
     it("should allow custom configuration", () => {
-      const customAdapter = new SuperdataExtractionAdapter(mockClient, {
+      const customAdapter = new SupadataExtractionAdapter(mockClient, {
         maxDurationSeconds: 900,
         supportedLanguages: ["en", "es", "fr"],
       });

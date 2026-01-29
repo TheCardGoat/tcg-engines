@@ -69,7 +69,7 @@ export class ContentIngestionService {
     if (!adapter) {
       return this.createBlockedResult(
         "",
-        "youtube", // Default, will be overridden
+        "http", // Fallback for unknown URLs
         "extraction",
         `No extraction service available for URL: ${url}`,
       );
@@ -80,7 +80,7 @@ export class ContentIngestionService {
     if (!parsed) {
       return this.createBlockedResult(
         "",
-        "youtube",
+        adapter.supportedSourceTypes[0] ?? "http",
         "extraction",
         `Invalid URL format: ${url}`,
       );
@@ -248,7 +248,7 @@ export class ContentIngestionService {
         contentId,
         rawContent: {
           contentId,
-          sourceType: "youtube",
+          sourceType: adapter.supportedSourceTypes[0] ?? "http",
           textContent: "",
           rawMetadata: {},
         },
@@ -354,18 +354,18 @@ export class ContentIngestionService {
   /**
    * Mark the result as blocked
    */
-  private markBlocked(
+  private async markBlocked(
     result: PipelineResult,
     stage: PipelineStage,
     reason: string,
-  ): PipelineResult {
+  ): Promise<PipelineResult> {
     result.blocked = true;
     result.blockedAtStage = stage;
     result.blockReason = reason;
     result.success = false;
 
-    // Call blocked handler
-    this.handlers.onBlocked?.(stage, reason);
+    // Call blocked handler and await to prevent unhandled rejections
+    await this.handlers.onBlocked?.(stage, reason);
 
     return result;
   }

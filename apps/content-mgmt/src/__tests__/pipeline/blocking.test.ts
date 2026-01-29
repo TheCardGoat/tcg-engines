@@ -5,10 +5,7 @@
  */
 
 import { beforeEach, describe, expect, it, mock } from "bun:test";
-import {
-  ExtractionServiceRegistry,
-  extractionServiceRegistry,
-} from "../../services/extraction/registry";
+import { extractionServiceRegistry } from "../../services/extraction/registry";
 import {
   ContentIngestionService,
   type PipelineStageHandlers,

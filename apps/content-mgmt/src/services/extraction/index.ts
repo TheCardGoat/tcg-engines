@@ -20,8 +20,8 @@ export {
 // Adapters
 export {
   createSupadataAdapter,
-  type SuperdataClient,
-  SuperdataExtractionAdapter,
+  type SupadataClient,
+  SupadataExtractionAdapter,
 } from "./supadata-adapter";
 
 export {

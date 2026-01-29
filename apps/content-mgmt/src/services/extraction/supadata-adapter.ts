@@ -47,7 +47,7 @@ const DEFAULT_CONFIG: ExtractionConfig = {
 /**
  * Supadata transcript response structure
  */
-interface SuperdataTranscriptResponse {
+interface SupadataTranscriptResponse {
   content: Array<{
     text: string;
     offset: number; // milliseconds
@@ -61,7 +61,7 @@ interface SuperdataTranscriptResponse {
 /**
  * Supadata metadata response structure
  */
-interface SuperdataMetadataResponse {
+interface SupadataMetadataResponse {
   title: string;
   author_name?: string;
   author_url?: string;
@@ -84,14 +84,14 @@ interface SuperdataMetadataResponse {
 /**
  * Supadata client interface (for dependency injection)
  */
-export interface SuperdataClient {
-  metadata(options: { url: string }): Promise<SuperdataMetadataResponse>;
+export interface SupadataClient {
+  metadata(options: { url: string }): Promise<SupadataMetadataResponse>;
   transcript(options: {
     url: string;
     mode?: "native" | "auto" | "generate";
     lang?: string;
     text?: boolean;
-  }): Promise<SuperdataTranscriptResponse>;
+  }): Promise<SupadataTranscriptResponse>;
 }
 
 /**
@@ -99,14 +99,14 @@ export interface SuperdataClient {
  *
  * Extracts YouTube video transcripts and metadata using the Supadata API.
  */
-export class SuperdataExtractionAdapter extends BaseExtractionAdapter {
+export class SupadataExtractionAdapter extends BaseExtractionAdapter {
   readonly serviceId = "supadata";
   readonly supportedSourceTypes = ["youtube"] as const;
 
-  private client: SuperdataClient | null = null;
+  private client: SupadataClient | null = null;
   private config: ExtractionConfig;
 
-  constructor(client?: SuperdataClient, config?: Partial<ExtractionConfig>) {
+  constructor(client?: SupadataClient, config?: Partial<ExtractionConfig>) {
     super();
     this.client = client ?? null;
     this.config = {
@@ -123,7 +123,7 @@ export class SuperdataExtractionAdapter extends BaseExtractionAdapter {
   /**
    * Set the Supadata client (for lazy initialization)
    */
-  setClient(client: SuperdataClient): void {
+  setClient(client: SupadataClient): void {
     this.client = client;
   }
 
@@ -131,7 +131,7 @@ export class SuperdataExtractionAdapter extends BaseExtractionAdapter {
    * Get the Supadata client
    * @throws Error if client is not initialized
    */
-  private getClient(): SuperdataClient {
+  private getClient(): SupadataClient {
     if (!this.client) {
       throw new Error(
         "Supadata client not initialized. Call setClient() first or provide client in constructor.",
@@ -324,8 +324,8 @@ export class SuperdataExtractionAdapter extends BaseExtractionAdapter {
  * Create a Supadata extraction adapter with the given client
  */
 export function createSupadataAdapter(
-  client: SuperdataClient,
+  client: SupadataClient,
   config?: Partial<ExtractionConfig>,
-): SuperdataExtractionAdapter {
-  return new SuperdataExtractionAdapter(client, config);
+): SupadataExtractionAdapter {
+  return new SupadataExtractionAdapter(client, config);
 }
