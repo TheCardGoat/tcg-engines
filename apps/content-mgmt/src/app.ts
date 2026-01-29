@@ -3,6 +3,7 @@ import { cors } from "@elysiajs/cors";
 import { Elysia } from "elysia";
 import { assertContentEnv, env } from "./config/env";
 import { initDatabase } from "./db/client";
+import { isUnauthorizedError } from "./lib/errors";
 import { authPlugin } from "./plugins/auth";
 import { globalRateLimiter, healthRateLimiter } from "./plugins/rate-limit";
 
@@ -40,12 +41,12 @@ export function createApp(options: AppOptions = {}) {
       const errorMessage =
         error instanceof Error ? error.message : "An unexpected error occurred";
 
-      // Handle UNAUTHORIZED errors
-      if (errorMessage === "UNAUTHORIZED") {
+      // Handle UNAUTHORIZED errors using proper error class
+      if (isUnauthorizedError(error)) {
         set.status = 401;
         return {
           error: "UNAUTHORIZED",
-          message: "Authentication required",
+          message: error.message,
         };
       }
 
@@ -110,17 +111,11 @@ export function createApp(options: AppOptions = {}) {
 
   return (
     app
-      .get("/health", ({ user }) => ({
+      // Health endpoint - no user PII, only service status
+      .get("/health", () => ({
         status: "ok",
         timestamp: new Date().toISOString(),
         service: "content-mgmt",
-        authenticated: !!user,
-        user: user
-          ? {
-              id: user.id,
-              email: user.email,
-            }
-          : null,
       }))
       // API v1 routes - placeholder for future routes
       .group("/v1", (app) =>

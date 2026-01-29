@@ -110,13 +110,17 @@ const betterAuthConfig: BetterAuthOptions = {
     useSecureCookies: env.NODE_ENV === "production",
   },
 
-  // Discord OAuth - REQUIRED for authentication
-  socialProviders: {
-    discord: {
-      clientId: env.AUTH_DISCORD_CLIENT_ID || "",
-      clientSecret: env.AUTH_DISCORD_CLIENT_SECRET || "",
-    },
-  },
+  // Discord OAuth - only enabled if credentials are provided
+  // This allows local development without Discord setup
+  ...(env.AUTH_DISCORD_CLIENT_ID &&
+    env.AUTH_DISCORD_CLIENT_SECRET && {
+      socialProviders: {
+        discord: {
+          clientId: env.AUTH_DISCORD_CLIENT_ID,
+          clientSecret: env.AUTH_DISCORD_CLIENT_SECRET,
+        },
+      },
+    }),
 };
 
 /**

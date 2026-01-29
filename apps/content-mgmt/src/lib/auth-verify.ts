@@ -1,10 +1,24 @@
 import {
   createRemoteJWKSet,
+  errors,
   type JWTPayload,
   type JWTVerifyResult,
   jwtVerify,
 } from "jose";
+import { z } from "zod";
 import { env } from "../config/env";
+
+/**
+ * Zod schema for validating JWT payload
+ *
+ * This ensures runtime type safety for the JWT payload
+ */
+const AuthPayloadSchema = z.object({
+  id: z.string().min(1),
+  email: z.string().email(),
+  name: z.string().optional(),
+  subscriptionTier: z.string().optional(),
+});
 
 /**
  * Auth payload from JWT token
@@ -50,6 +64,32 @@ export function clearJWKSCache(): void {
 }
 
 /**
+ * JWT verification options
+ */
+const JWT_VERIFY_OPTIONS = {
+  issuer: env.AUTH_SERVICE_URL,
+  audience: env.AUTH_SERVICE_URL,
+  clockTolerance: 30, // 30 seconds tolerance for clock skew between services
+};
+
+/**
+ * Validate and parse JWT payload using Zod schema
+ *
+ * @param payload - Raw JWT payload
+ * @returns Validated AuthPayload or null if invalid
+ */
+function validatePayload(payload: JWTPayload): AuthPayload | null {
+  const result = AuthPayloadSchema.safeParse(payload);
+  if (!result.success) {
+    if (env.NODE_ENV !== "production") {
+      console.error("JWT payload validation failed:", result.error.format());
+    }
+    return null;
+  }
+  return { ...payload, ...result.data };
+}
+
+/**
  * Verify JWT token from auth service
  *
  * Validates the token using JWKS from auth-service.
@@ -71,12 +111,13 @@ export async function verifyAuthToken(
 ): Promise<AuthPayload | null> {
   try {
     const JWKS = getJWKS();
-    const result: JWTVerifyResult = await jwtVerify(token, JWKS, {
-      issuer: env.AUTH_SERVICE_URL,
-      audience: env.AUTH_SERVICE_URL,
-    });
+    const result: JWTVerifyResult = await jwtVerify(
+      token,
+      JWKS,
+      JWT_VERIFY_OPTIONS,
+    );
 
-    return result.payload as AuthPayload;
+    return validatePayload(result.payload);
   } catch (error) {
     // Log error for debugging
     if (env.NODE_ENV !== "production") {
@@ -84,17 +125,18 @@ export async function verifyAuthToken(
     }
 
     // Handle key rotation - clear cache and retry once
-    if (error instanceof Error && error.message.includes("kid")) {
+    if (error instanceof errors.JWKSNoMatchingKey) {
       clearJWKSCache();
 
       try {
         const JWKS = getJWKS();
-        const result: JWTVerifyResult = await jwtVerify(token, JWKS, {
-          issuer: env.AUTH_SERVICE_URL,
-          audience: env.AUTH_SERVICE_URL,
-        });
+        const result: JWTVerifyResult = await jwtVerify(
+          token,
+          JWKS,
+          JWT_VERIFY_OPTIONS,
+        );
 
-        return result.payload as AuthPayload;
+        return validatePayload(result.payload);
       } catch {
         // Retry failed, token is invalid
         return null;

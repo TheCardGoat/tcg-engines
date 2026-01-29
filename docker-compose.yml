@@ -18,9 +18,10 @@ services:
     ports:
       - "3001:3001"
     environment:
-      - AUTH_DATABASE_URL=postgresql://postgres:postgres@postgres-auth:5432/tcg_auth
+      - AUTH_DATABASE_URL=postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres-auth:5432/tcg_auth
       - AUTH_SECRET=${AUTH_SECRET:-dev-auth-secret-32-characters-minimum-0000}
-      - AUTH_BASE_URL=http://localhost:3001
+      # Use internal Docker hostname for JWT issuer/audience consistency
+      - AUTH_BASE_URL=http://auth-service:3001
       - AUTH_DISCORD_CLIENT_ID=${AUTH_DISCORD_CLIENT_ID:-}
       - AUTH_DISCORD_CLIENT_SECRET=${AUTH_DISCORD_CLIENT_SECRET:-}
       - AUTH_PORT=3001
@@ -50,7 +51,7 @@ services:
     ports:
       - "3002:3002"
     environment:
-      - DATABASE_URL=postgresql://postgres:postgres@postgres-content:5432/tcg_content
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres-content:5432/tcg_content
       - AUTH_SERVICE_URL=http://auth-service:3001
       - PORT=3002
       - CORS_ORIGIN=*
@@ -78,8 +79,8 @@ services:
     image: postgres:16-alpine
     environment:
       - POSTGRES_DB=tcg_auth
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=${POSTGRES_USER:-postgres}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-postgres}
     volumes:
       - postgres-auth-data:/var/lib/postgresql/data
     ports:
@@ -100,8 +101,8 @@ services:
     image: postgres:16-alpine
     environment:
       - POSTGRES_DB=tcg_content
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=${POSTGRES_USER:-postgres}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-postgres}
     volumes:
       - postgres-content-data:/var/lib/postgresql/data
     ports:
