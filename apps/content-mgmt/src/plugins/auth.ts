@@ -64,7 +64,7 @@ export const authPlugin = new Elysia({ name: "content-auth" })
     }
 
     return {
-      user: payloadToUser(payload),
+      user: payloadToUser(payload) as AuthUser | null,
     };
   })
   .macro({
@@ -79,7 +79,7 @@ export const authPlugin = new Elysia({ name: "content-auth" })
         user,
         set,
       }: {
-        user: AuthUser | null;
+        user?: AuthUser | null;
         set: { status?: number | string };
       }) {
         if (required && !user) {
@@ -91,7 +91,8 @@ export const authPlugin = new Elysia({ name: "content-auth" })
         }
       },
     }),
-  });
+  })
+  .as("global");
 
 /**
  * Helper function to assert user is authenticated

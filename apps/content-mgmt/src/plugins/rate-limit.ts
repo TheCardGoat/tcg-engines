@@ -56,10 +56,13 @@ export function globalRateLimiter() {
       const user = (store as { user?: { id: string } | null }).user;
       return getClientIdentifier(request, user);
     },
-    responseMessage: {
-      error: "RATE_LIMITED",
-      message: "Too many requests. Please try again later.",
-    },
+    errorResponse: new Response(
+      JSON.stringify({
+        error: "RATE_LIMITED",
+        message: "Too many requests. Please try again later.",
+      }),
+      { status: 429, headers: { "Content-Type": "application/json" } },
+    ),
   });
 }
 
@@ -78,10 +81,13 @@ export function healthRateLimiter() {
     max: 1000, // High limit for health checks
     scoping: "scoped",
     generator: (request) => getClientIdentifier(request),
-    responseMessage: {
-      error: "RATE_LIMITED",
-      message: "Too many health check requests.",
-    },
+    errorResponse: new Response(
+      JSON.stringify({
+        error: "RATE_LIMITED",
+        message: "Too many health check requests.",
+      }),
+      { status: 429, headers: { "Content-Type": "application/json" } },
+    ),
   });
 }
 
@@ -103,9 +109,12 @@ export function contentSubmissionRateLimiter() {
       const user = (store as { user?: { id: string } | null }).user;
       return getClientIdentifier(request, user);
     },
-    responseMessage: {
-      error: "RATE_LIMITED",
-      message: "Content submission limit reached. Please try again later.",
-    },
+    errorResponse: new Response(
+      JSON.stringify({
+        error: "RATE_LIMITED",
+        message: "Content submission limit reached. Please try again later.",
+      }),
+      { status: 429, headers: { "Content-Type": "application/json" } },
+    ),
   });
 }
