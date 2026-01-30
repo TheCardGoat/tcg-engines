@@ -101,7 +101,7 @@ export function parseTarget(text: string): TargetParseResult | null {
 
 function createUnitTarget(
   count: { min: number; max: number },
-  desc: { owner: any; filters: any[]; zone?: any },
+  desc: { owner: "you" | "opponent" | "any"; filters: any[]; zone?: any },
 ): UnitTarget {
   const base = {
     selector: "chosen",

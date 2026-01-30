@@ -20,7 +20,7 @@
  * ```
  */
 
-import type { PlayerTargetDSL, TargetDSL } from "@tcg/core";
+import type { TargetDSL } from "@tcg/core";
 
 // ============================================================================
 // Player Targeting

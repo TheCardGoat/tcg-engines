@@ -5,7 +5,7 @@
  * All cards are plain data objects following @tcg/core patterns.
  */
 
-import type { CardTarget } from "../targeting/gundam-target-dsl";
+import type { CardTarget, UnitFilter } from "../targeting/gundam-target-dsl";
 
 // ============================================================================
 // EFFECT TYPES
@@ -91,7 +91,7 @@ export interface DrawAction extends BaseAction {
 
 export interface SearchAction extends BaseAction {
   type: "SEARCH";
-  filter?: Record<string, unknown>; // Should use proper filter type eventually
+  filter?: UnitFilter[]; // Should use proper filter type eventually
   destination: "hand" | "deck" | "discard" | "field";
   count: number;
 }
@@ -100,6 +100,13 @@ export interface ModifyStatsAction extends BaseAction {
   type: "MODIFY_STATS";
   attribute: "AP" | "HP" | "BOTH";
   value: number;
+  duration: "TURN" | "PERMANENT";
+  target?: CardTarget | CardTarget[];
+}
+
+export interface GainKeywordsAction extends BaseAction {
+  type: "GAIN_KEYWORDS";
+  keywords: string[];
   duration: "TURN" | "PERMANENT";
   target?: CardTarget | CardTarget[];
 }
