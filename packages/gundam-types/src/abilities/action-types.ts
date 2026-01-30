@@ -15,11 +15,7 @@
  * @example "Choose 1 rested enemy Unit with 3 or less HP" = { type: "choose", amount: 1, target: "ENEMY_UNIT", condition: "RESTED", filter: { type: "less-or-equal", value: 3 } }
  */
 
-import type {
-  GundamBaseTarget,
-  GundamPlayerTarget,
-  GundamUnitTarget,
-} from "../targeting/gundam-target-dsl";
+import type { UnitTarget } from "../targeting/gundam-target-dsl";
 
 export type ActionDuration =
   | "this-turn"
@@ -46,7 +42,7 @@ export type Amount = number;
 export interface DrawAction {
   type: "draw";
   amount: Amount;
-  target: GundamPlayerTarget;
+  target: UnitTarget;
 }
 
 /**
@@ -58,7 +54,7 @@ export interface DrawAction {
 export interface DiscardAction {
   type: "discard";
   amount: Amount;
-  target: GundamPlayerTarget;
+  target: UnitTarget;
   /** Whether the affected player chooses which cards */
   chosen?: boolean;
   /** If not chosen, discard is random */
@@ -72,7 +68,7 @@ export interface LookAtCardsAction {
   type: "look-at-cards";
   amount: Amount;
   from: "top-of-deck" | "hand" | "discard";
-  target: GundamPlayerTarget;
+  target: UnitTarget;
   /** Follow-up actions */
   then?: LookAtFollowUp;
 }
@@ -94,7 +90,7 @@ export type LookAtFollowUp =
  */
 export interface RestAction {
   type: "rest";
-  target: GundamUnitTarget;
+  target: UnitTarget;
 }
 
 /**
@@ -104,7 +100,7 @@ export interface RestAction {
  */
 export interface ActivateAction {
   type: "activate";
-  target: GundamUnitTarget;
+  target: UnitTarget;
 }
 
 // ============================================================================
@@ -120,7 +116,7 @@ export interface ActivateAction {
 export interface DealDamageAction {
   type: "deal-damage";
   amount: Amount;
-  target: GundamUnitTarget | GundamBaseTarget;
+  target: UnitTarget;
 }
 
 /**
@@ -131,7 +127,7 @@ export interface DealDamageAction {
 export interface RemoveDamageAction {
   type: "remove-damage";
   amount: Amount;
-  target: GundamUnitTarget | GundamBaseTarget;
+  target: UnitTarget;
   /** "up to" allows removing less than max */
   upTo?: boolean;
 }
@@ -147,7 +143,7 @@ export interface RemoveDamageAction {
  */
 export interface ReturnToHandAction {
   type: "return-to-hand";
-  target: GundamUnitTarget | GundamBaseTarget;
+  target: UnitTarget;
 }
 
 /**
@@ -158,7 +154,7 @@ export interface ReturnToHandAction {
 export interface ReturnFromDiscardAction {
   type: "return-from-discard";
   cardName?: string;
-  target: GundamUnitTarget | GundamBaseTarget;
+  target: UnitTarget;
 }
 
 /**
@@ -169,7 +165,7 @@ export interface ReturnFromDiscardAction {
 export interface PutIntoResourceAreaAction {
   type: "put-into-resource-area";
   source: "this-card" | "resourceDeck";
-  target?: GundamPlayerTarget;
+  target?: UnitTarget;
   rested?: boolean;
 }
 
@@ -186,7 +182,7 @@ export interface PutIntoResourceAreaAction {
 export interface DeployUnitOrBaseAction {
   type: "deploy-unit-or-base";
   from: "hand" | "discard" | "deck" | "under-self";
-  target: GundamUnitTarget | GundamBaseTarget;
+  target: UnitTarget;
 }
 
 // ============================================================================
@@ -203,7 +199,7 @@ export interface ModifyStatAction {
   type: "modify-stat";
   stat: "ap" | "hp";
   modifier: Amount;
-  target: GundamUnitTarget | GundamBaseTarget;
+  target: UnitTarget;
 }
 
 // ============================================================================
@@ -221,7 +217,7 @@ export interface GainKeywordAction {
   keyword: string;
   /** For Challenger +X and Resist +X */
   value?: number;
-  target: GundamUnitTarget | GundamBaseTarget;
+  target: UnitTarget;
   duration?: ActionDuration;
 }
 
@@ -231,7 +227,7 @@ export interface GainKeywordAction {
 export interface LoseKeywordAction {
   type: "lose-keyword";
   keyword: string;
-  target: GundamUnitTarget | GundamBaseTarget;
+  target: UnitTarget;
   duration?: ActionDuration;
 }
 
@@ -252,7 +248,7 @@ export interface RestrictionAction {
     | "cant-be-attacked"
     | "cant-receive-damage"
     | "enters-battle-rested";
-  target: GundamUnitTarget | GundamBaseTarget;
+  target: UnitTarget;
   duration?: ActionDuration;
 }
 
