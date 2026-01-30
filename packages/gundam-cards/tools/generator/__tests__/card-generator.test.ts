@@ -43,7 +43,7 @@ describe("Card Generator", () => {
           type: "SEARCH",
           destination: "hand",
           count: 1,
-          filter: { cardType: "PILOT" },
+          filter: [], // Mock empty filter for now, matching UnitFilter[]
         },
       } as TriggeredEffect,
     ],
