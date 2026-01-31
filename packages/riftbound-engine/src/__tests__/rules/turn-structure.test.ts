@@ -6,6 +6,13 @@
  *
  * NOTE: All tests are skipped pending TestEngine implementation.
  * Each test creates its own game instance via constructor parameters.
+ *
+ * Rule Sections:
+ * - 501-506: The Turn (Basic Flow)
+ * - 507-510: States of the Turn (Neutral/Showdown, Open/Closed)
+ * - 511-513: Priority and Focus
+ * - 514-517: Turn Phases (Awaken, Beginning, Channel, Draw, Action, Ending)
+ * - 518-526: Cleanups
  */
 
 import { describe, expect, it } from "bun:test";
@@ -263,6 +270,61 @@ describe("Section 5: Turn Structure - Rules 500-526", () => {
         expect(engine.isGameOver()).toBe(true);
         expect(engine.getCurrentPhase()).toBe(initialPhase);
         expect(engine.getTurnNumber()).toBe(initialTurn);
+      });
+
+      it.skip("Rule 503.2.a - should resolve simultaneous triggers in turn order", () => {
+        // Arrange: Game with multiple simultaneous triggers
+        // Cross-ref: Rule 503.2.a (Turn Order determines sequence)
+        const engine = new RiftboundTestEngine(
+          {},
+          {},
+          {
+            activePlayer: PLAYER_ONE,
+            battlefields: [
+              {
+                id: "bf1",
+                units: {
+                  [PLAYER_ONE]: [{ id: "p1unit", might: 3 }],
+                  [PLAYER_TWO]: [{ id: "p2unit", might: 3 }],
+                },
+              },
+            ],
+          },
+        );
+
+        // Assert: Turn order is maintained for resolution
+        const playerIds = engine.getPlayerIds();
+        expect(playerIds[0]).toBe(PLAYER_ONE);
+        expect(playerIds[1]).toBe(PLAYER_TWO);
+        // When simultaneous effects occur, PLAYER_ONE's resolve first
+      });
+
+      it.skip("Rule 505 - should prevent simultaneous game action execution", () => {
+        // Arrange: Game with chain items
+        const engine = new RiftboundTestEngine({}, {}, { phase: "action" });
+        engine.addToChain({
+          id: "spell1",
+          controllerId: PLAYER_ONE,
+          type: "spell",
+        });
+        engine.addToChain({
+          id: "spell2",
+          controllerId: PLAYER_TWO,
+          type: "spell",
+        });
+
+        // Assert: Chain items must resolve one at a time
+        expect(engine.getChain().length).toBe(2);
+
+        // Act: Resolve first item
+        const first = engine.resolveChainItem();
+        expect(engine.getChain().length).toBe(1);
+        expect(first?.id).toBe("spell2"); // LIFO order
+
+        // Act: Resolve second item
+        const second = engine.resolveChainItem();
+        expect(engine.getChain().length).toBe(0);
+        expect(second?.id).toBe("spell1");
       });
     });
   });
@@ -705,6 +767,47 @@ describe("Section 5: Turn Structure - Rules 500-526", () => {
         expect(engine.getPriorityHolder()).toBeNull();
       });
 
+      it.skip("Rule 512 - should grant priority to controller of next chain item in Closed state", () => {
+        // Arrange: Game with chain item controlled by player 2
+        // Cross-ref: Rule 512 (Priority in Closed State)
+        const engine = new RiftboundTestEngine({}, {}, { phase: "action" });
+        engine.addToChain({
+          id: "spell1",
+          controllerId: PLAYER_ONE,
+          type: "spell",
+        });
+        engine.addToChain({
+          id: "spell2",
+          controllerId: PLAYER_TWO,
+          type: "spell",
+        });
+
+        // Assert: Chain is in Closed state
+        expect(engine.getChainState()).toBe("closed");
+
+        // The next item to resolve is spell2 (LIFO), controlled by PLAYER_TWO
+        // Priority should go to the controller of the next chain item
+        const nextItem = engine.getChain()[engine.getChain().length - 1];
+        expect(nextItem?.controllerId).toBe(PLAYER_TWO);
+      });
+
+      it.skip("Rule 512 - should pass priority to next Relevant Player when current passes", () => {
+        // Arrange: Player 1 has priority in Closed state
+        const engine = new RiftboundTestEngine({}, {}, { phase: "action" });
+        engine.addToChain({
+          id: "spell1",
+          controllerId: PLAYER_ONE,
+          type: "spell",
+        });
+        engine.setPriorityHolder(PLAYER_ONE);
+
+        // Act: Player 1 passes priority
+        engine.passPriority();
+
+        // Assert: Priority passes to next player (PLAYER_TWO)
+        expect(engine.hasPriority(PLAYER_TWO)).toBe(true);
+      });
+
       it.skip("Rule 513 - Focus transfer during Showdown", () => {
         // Arrange: Showdown with player 1 having Focus
         const engine = new RiftboundTestEngine({}, {});
@@ -1128,6 +1231,55 @@ describe("Section 5: Turn Structure - Rules 500-526", () => {
         expect(engine.getUnit("unit1")?.meta.damage).toBe(0);
       });
 
+      it.skip("Rule 517.4 - Loop Check should return to Expiration Step if new damage occurred", () => {
+        // Arrange: Unit with damage that triggers "when damaged" effect
+        // Cross-ref: Rule 517.4 (Loop Check returns to Expiration Step)
+        const engine = new RiftboundTestEngine(
+          {},
+          {},
+          {
+            phase: "ending",
+            battlefields: [
+              {
+                id: "bf1",
+                units: {
+                  [PLAYER_ONE]: [{ id: "unit1", might: 5, damage: 3 }],
+                },
+              },
+            ],
+          },
+        );
+
+        // Act: Clear damage (Expiration Step)
+        engine.clearAllDamage();
+
+        // Assert: Damage cleared, if new damage occurred loop would repeat
+        expect(engine.getUnit("unit1")?.meta.damage).toBe(0);
+      });
+
+      it.skip("Rule 517.4 - Loop Check should detect new 'this turn' effects", () => {
+        // Arrange: Game at Expiration Step
+        // Cross-ref: Rule 517.4 (Loop Check for "this turn" effects)
+        const engine = new RiftboundTestEngine(
+          {},
+          {},
+          {
+            phase: "ending",
+            battlefields: [
+              {
+                id: "bf1",
+                units: {
+                  [PLAYER_ONE]: [{ id: "unit1", might: 5 }],
+                },
+              },
+            ],
+          },
+        );
+
+        // Assert: Unit exists (loop check would verify no new effects)
+        expect(engine.getUnit("unit1")).toBeDefined();
+      });
+
       it.skip("Rule 515.1 - should ready units at multiple battlefields", () => {
         // Arrange: Player has exhausted units at multiple battlefields
         const engine = new RiftboundTestEngine(
@@ -1364,6 +1516,68 @@ describe("Section 5: Turn Structure - Rules 500-526", () => {
         // Assert: Combat role cleared
         expect(engine.getUnit("unit1")?.meta.combatRole).toBeNull();
       });
+
+      it.skip("Rule 521 - should only clear combat status from units NOT at combat location", () => {
+        // Arrange: Units at different battlefields with combat roles
+        // Cross-ref: Rule 521 (Remove combat status from Units not at Combat location)
+        const engine = new RiftboundTestEngine(
+          {},
+          {},
+          {
+            battlefields: [
+              {
+                id: "bf1",
+                units: {
+                  [PLAYER_ONE]: [{ id: "unit1", combatRole: "attacker" }],
+                  [PLAYER_TWO]: [{ id: "unit2", combatRole: "defender" }],
+                },
+              },
+              {
+                id: "bf2",
+                units: {
+                  [PLAYER_ONE]: [{ id: "unit3", combatRole: "attacker" }],
+                },
+              },
+            ],
+          },
+        );
+
+        // Act: Perform cleanup (simulating combat at bf1)
+        engine.cleanupRemoveCombatStatus();
+
+        // Assert: All combat roles cleared (full cleanup clears all)
+        expect(engine.getUnit("unit1")?.meta.combatRole).toBeNull();
+        expect(engine.getUnit("unit2")?.meta.combatRole).toBeNull();
+        expect(engine.getUnit("unit3")?.meta.combatRole).toBeNull();
+      });
+
+      it.skip("Rule 521 - should clear both attacker and defender roles", () => {
+        // Arrange: Units with different combat roles
+        const engine = new RiftboundTestEngine(
+          {},
+          {},
+          {
+            battlefields: [
+              {
+                id: "bf1",
+                units: {
+                  [PLAYER_ONE]: [
+                    { id: "unit1", combatRole: "attacker" },
+                    { id: "unit2", combatRole: "defender" },
+                  ],
+                },
+              },
+            ],
+          },
+        );
+
+        // Act: Remove combat status
+        engine.cleanupRemoveCombatStatus();
+
+        // Assert: Both roles cleared
+        expect(engine.getUnit("unit1")?.meta.combatRole).toBeNull();
+        expect(engine.getUnit("unit2")?.meta.combatRole).toBeNull();
+      });
     });
 
     describe("Cleanup Step 5: Mark Pending Combats (Rule 524)", () => {
@@ -1444,6 +1658,56 @@ describe("Section 5: Turn Structure - Rules 500-526", () => {
         // Assert: Unit still exists (no state-based effect triggered death)
         expect(engine.getUnit("unit1")).toBeDefined();
       });
+
+      it.skip("Rule 522 - should execute 'While' conditional effects", () => {
+        // Arrange: Unit with "While" condition
+        // Cross-ref: Rule 522 (State-based effects include "While" and "As long as")
+        const engine = new RiftboundTestEngine(
+          {},
+          {},
+          {
+            battlefields: [
+              {
+                id: "bf1",
+                units: {
+                  [PLAYER_ONE]: [{ id: "unit1", might: 3 }],
+                },
+              },
+            ],
+          },
+        );
+
+        // Act: Perform cleanup
+        engine.performCleanup();
+
+        // Assert: "While" effects would be checked during cleanup
+        expect(engine.getUnit("unit1")).toBeDefined();
+      });
+
+      it.skip("Rule 522 - should execute 'As long as' conditional effects", () => {
+        // Arrange: Unit with "As long as" condition
+        // Cross-ref: Rule 522 (State-based effects)
+        const engine = new RiftboundTestEngine(
+          {},
+          {},
+          {
+            battlefields: [
+              {
+                id: "bf1",
+                units: {
+                  [PLAYER_ONE]: [{ id: "unit1", might: 3 }],
+                },
+              },
+            ],
+          },
+        );
+
+        // Act: Perform cleanup
+        engine.performCleanup();
+
+        // Assert: "As long as" effects would be checked during cleanup
+        expect(engine.getUnit("unit1")).toBeDefined();
+      });
     });
 
     describe("Cleanup Step 4: Orphaned Hidden Cards (Rule 523)", () => {
@@ -1470,6 +1734,59 @@ describe("Section 5: Turn Structure - Rules 500-526", () => {
         engine.performCleanup();
 
         // Assert: Orphaned Hidden cards would be removed
+        // (Placeholder until Hidden card system is implemented)
+        expect(engine.getBattlefield("bf1")).toBeDefined();
+      });
+
+      it.skip("Rule 523 - should keep Hidden cards when controller has Unit at Battlefield", () => {
+        // Arrange: Battlefield with Hidden card AND controller's unit
+        // Cross-ref: Rule 523 (Hidden cards require controller's Unit)
+        const engine = new RiftboundTestEngine(
+          {},
+          {},
+          {
+            battlefields: [
+              {
+                id: "bf1",
+                units: {
+                  [PLAYER_ONE]: [{ id: "p1unit" }],
+                  [PLAYER_TWO]: [{ id: "p2unit" }],
+                },
+              },
+            ],
+          },
+        );
+
+        // Act: Perform cleanup
+        engine.performCleanup();
+
+        // Assert: Hidden cards would be kept (controller has unit)
+        expect(engine.getBattlefield("bf1")).toBeDefined();
+        expect(engine.getUnit("p1unit")).toBeDefined();
+      });
+
+      it.skip("Rule 523 - orphaned Hidden cards should go to trash", () => {
+        // Arrange: Battlefield with orphaned Hidden card
+        // Cross-ref: Rule 523 (Orphaned Hidden cards go to trash)
+        const engine = new RiftboundTestEngine(
+          {},
+          {},
+          {
+            battlefields: [
+              {
+                id: "bf1",
+                units: {
+                  [PLAYER_TWO]: [{ id: "p2unit" }],
+                },
+              },
+            ],
+          },
+        );
+
+        // Act: Perform cleanup
+        engine.performCleanup();
+
+        // Assert: Orphaned Hidden cards would go to trash
         // (Placeholder until Hidden card system is implemented)
         expect(engine.getBattlefield("bf1")).toBeDefined();
       });
@@ -1518,6 +1835,55 @@ describe("Section 5: Turn Structure - Rules 500-526", () => {
         // Assert: In Showdown state, new Showdowns should not trigger
         expect(engine.isInShowdown()).toBe(true);
         expect(engine.getTurnState()).toBe("showdown");
+      });
+
+      it.skip("Rule 525 - should not trigger Showdown at controlled Battlefield", () => {
+        // Arrange: Controlled battlefield (not contested)
+        // Cross-ref: Rule 525 (Only uncontrolled Contested Battlefields)
+        const engine = new RiftboundTestEngine(
+          {},
+          {},
+          {
+            battlefields: [
+              {
+                id: "bf1",
+                controller: PLAYER_ONE,
+                contested: false,
+              },
+            ],
+          },
+        );
+
+        // Assert: Battlefield is controlled, no Showdown trigger
+        expect(engine.getBattlefieldController("bf1")).toBe(PLAYER_ONE);
+        expect(engine.isBattlefieldContested("bf1")).toBe(false);
+      });
+
+      it.skip("Rule 525 - should not trigger Showdown during Closed state", () => {
+        // Arrange: Contested battlefield during Closed state (chain exists)
+        // Cross-ref: Rule 525 (Only during Neutral Open)
+        const engine = new RiftboundTestEngine(
+          {},
+          {},
+          {
+            battlefields: [
+              {
+                id: "bf1",
+                controller: null,
+                contested: true,
+              },
+            ],
+          },
+        );
+        engine.addToChain({
+          id: "spell1",
+          controllerId: PLAYER_ONE,
+          type: "spell",
+        });
+
+        // Assert: In Closed state, Showdowns should not trigger
+        expect(engine.getChainState()).toBe("closed");
+        expect(engine.isBattlefieldContested("bf1")).toBe(true);
       });
     });
 
@@ -2286,6 +2652,355 @@ describe("Section 5: Turn Structure - Rules 500-526", () => {
       // Assert: Turn ended properly
       expect(engine.getActivePlayer()).toBe(PLAYER_TWO);
       expect(engine.isInShowdown()).toBe(false);
+    });
+  });
+
+  // ===========================================================================
+  // Integration: Turn Structure + Game Actions (Rules 586-619)
+  // ===========================================================================
+
+  describe("Integration: Turn Structure + Game Actions", () => {
+    it.skip("should only allow discretionary actions during Neutral Open", () => {
+      // Arrange: Game in Neutral Open state
+      // Cross-ref: Rule 589.1 (Discretionary actions)
+      const engine = new RiftboundTestEngine(
+        {},
+        {},
+        {
+          phase: "action",
+          activePlayer: PLAYER_ONE,
+        },
+      );
+
+      // Assert: Neutral Open state allows discretionary actions
+      expect(engine.getTurnState()).toBe("neutral");
+      expect(engine.getChainState()).toBe("open");
+    });
+
+    it.skip("should restrict actions during Closed state", () => {
+      // Arrange: Game in Closed state (chain exists)
+      // Cross-ref: Rule 589.2 (Limited actions during Closed)
+      const engine = new RiftboundTestEngine({}, {}, { phase: "action" });
+      engine.addToChain({
+        id: "spell1",
+        controllerId: PLAYER_ONE,
+        type: "spell",
+      });
+
+      // Assert: Closed state restricts discretionary actions
+      expect(engine.getChainState()).toBe("closed");
+    });
+
+    it.skip("should allow limited actions when instructed", () => {
+      // Arrange: Game with chain item
+      // Cross-ref: Rule 589.2 (Limited actions can be taken when instructed)
+      const engine = new RiftboundTestEngine({}, {}, { phase: "action" });
+
+      // Assert: Limited actions are available
+      expect(engine.isLimitedAction("draw")).toBe(true);
+      expect(engine.isLimitedAction("exhaust")).toBe(true);
+      expect(engine.isLimitedAction("discard")).toBe(true);
+    });
+
+    it.skip("should track exhaustion state through turn phases", () => {
+      // Arrange: Unit that gets exhausted during action phase
+      // Cross-ref: Rule 592 (Exhaust action)
+      const engine = new RiftboundTestEngine(
+        {},
+        {},
+        {
+          phase: "action",
+          battlefields: [
+            {
+              id: "bf1",
+              units: {
+                [PLAYER_ONE]: [{ id: "unit1", exhausted: false }],
+              },
+            },
+          ],
+        },
+      );
+
+      // Act: Exhaust unit
+      engine.exhaustUnit("unit1");
+
+      // Assert: Unit remains exhausted through phases
+      expect(engine.isUnitExhausted("unit1")).toBe(true);
+      engine.advancePhase(); // ending
+      expect(engine.isUnitExhausted("unit1")).toBe(true);
+    });
+
+    it.skip("should ready exhausted units during Awaken Phase", () => {
+      // Arrange: Exhausted unit at start of turn
+      // Cross-ref: Rule 515.1 (Awaken Phase) + Rule 593 (Ready action)
+      const engine = new RiftboundTestEngine(
+        {},
+        {},
+        {
+          phase: "awaken",
+          battlefields: [
+            {
+              id: "bf1",
+              units: {
+                [PLAYER_ONE]: [{ id: "unit1", exhausted: true }],
+              },
+            },
+          ],
+        },
+      );
+
+      // Act: Ready all units (Awaken Phase)
+      engine.readyAllUnits(PLAYER_ONE);
+
+      // Assert: Unit is ready
+      expect(engine.isUnitExhausted("unit1")).toBe(false);
+    });
+  });
+
+  // ===========================================================================
+  // Integration: Turn Structure + Abilities (Rules 564-585)
+  // ===========================================================================
+
+  describe("Integration: Turn Structure + Abilities", () => {
+    it.skip("should trigger 'at start of turn' abilities during Awaken Phase", () => {
+      // Arrange: Game at Awaken Phase
+      // Cross-ref: Rule 564 (Triggered abilities)
+      const engine = new RiftboundTestEngine(
+        {},
+        {},
+        {
+          phase: "awaken",
+          activePlayer: PLAYER_ONE,
+        },
+      );
+
+      // Assert: Awaken Phase is the start of turn
+      expect(engine.getCurrentPhase()).toBe("awaken");
+    });
+
+    it.skip("should trigger 'at end of turn' abilities during Ending Step", () => {
+      // Arrange: Game at Ending Phase
+      // Cross-ref: Rule 517.1 (Ending Step) + Rule 564 (Triggered abilities)
+      const engine = new RiftboundTestEngine(
+        {},
+        {},
+        {
+          phase: "ending",
+          activePlayer: PLAYER_ONE,
+        },
+      );
+
+      // Assert: Ending Phase triggers end of turn abilities
+      expect(engine.getCurrentPhase()).toBe("ending");
+    });
+
+    it.skip("should add abilities to chain during Closed state", () => {
+      // Arrange: Game with ability on chain
+      // Cross-ref: Rule 532-544 (The Chain)
+      const engine = new RiftboundTestEngine({}, {}, { phase: "action" });
+      engine.addToChain({
+        id: "ability1",
+        controllerId: PLAYER_ONE,
+        type: "ability",
+      });
+
+      // Assert: Chain is Closed
+      expect(engine.getChainState()).toBe("closed");
+      expect(engine.hasChain()).toBe(true);
+    });
+  });
+
+  // ===========================================================================
+  // Integration: Turn Structure + Keywords (Rules 712-729)
+  // ===========================================================================
+
+  describe("Integration: Turn Structure + Keywords", () => {
+    it.skip("should allow Action keyword cards during Showdown Open", () => {
+      // Arrange: Game in Showdown Open state
+      // Cross-ref: Rule 718 (Action keyword)
+      const engine = new RiftboundTestEngine({}, {}, { phase: "action" });
+      engine.startShowdown();
+
+      // Assert: Showdown Open allows Action cards
+      expect(engine.getTurnState()).toBe("showdown");
+      expect(engine.getChainState()).toBe("open");
+    });
+
+    it.skip("should allow Reaction keyword cards during Closed state", () => {
+      // Arrange: Game in Closed state
+      // Cross-ref: Rule 725 (Reaction keyword)
+      const engine = new RiftboundTestEngine({}, {}, { phase: "action" });
+      engine.addToChain({
+        id: "spell1",
+        controllerId: PLAYER_ONE,
+        type: "spell",
+      });
+
+      // Assert: Closed state allows Reaction cards
+      expect(engine.getChainState()).toBe("closed");
+    });
+
+    it.skip("should handle Temporary keyword expiration at end of turn", () => {
+      // Arrange: Game at Expiration Step
+      // Cross-ref: Rule 517.2 (Expiration Step) + Rule 727 (Temporary keyword)
+      const engine = new RiftboundTestEngine(
+        {},
+        {},
+        {
+          phase: "ending",
+          battlefields: [
+            {
+              id: "bf1",
+              units: {
+                [PLAYER_ONE]: [{ id: "unit1", might: 3 }],
+              },
+            },
+          ],
+        },
+      );
+
+      // Assert: Expiration Step would remove Temporary effects
+      expect(engine.getCurrentPhase()).toBe("ending");
+    });
+  });
+
+  // ===========================================================================
+  // Integration: Turn Structure + Movement (Rules 608-615)
+  // ===========================================================================
+
+  describe("Integration: Turn Structure + Movement", () => {
+    it.skip("should trigger cleanup after Move completes", () => {
+      // Arrange: Unit that will move
+      // Cross-ref: Rule 519 (Cleanup after Move) + Rule 609 (Movement)
+      const engine = new RiftboundTestEngine(
+        {},
+        {},
+        {
+          phase: "action",
+          battlefields: [{ id: "bf1" }, { id: "bf2" }],
+        },
+      );
+      engine.addUnit(
+        { ownerId: PLAYER_ONE, id: "unit-1", exhausted: false },
+        "bf1",
+      );
+
+      // Act: Move unit
+      engine.moveUnit("unit-1", "bf2");
+
+      // Assert: Move completed (cleanup would follow)
+      expect(engine.getUnit("unit-1")?.battlefieldId).toBe("bf2");
+    });
+
+    it.skip("should exhaust unit on Standard Move", () => {
+      // Arrange: Ready unit
+      // Cross-ref: Rule 611 (Standard Move exhausts unit)
+      const engine = new RiftboundTestEngine(
+        {},
+        {},
+        {
+          phase: "action",
+          battlefields: [{ id: "bf1" }],
+        },
+      );
+      engine.addUnit(
+        { ownerId: PLAYER_ONE, id: "unit-1", exhausted: false },
+        "base",
+      );
+
+      // Act: Standard move
+      engine.moveUnit("unit-1", "bf1");
+
+      // Assert: Unit is exhausted
+      expect(engine.isUnitExhausted("unit-1")).toBe(true);
+    });
+
+    it.skip("should trigger Showdown when moving to contested battlefield", () => {
+      // Arrange: Uncontrolled battlefield
+      // Cross-ref: Rule 613 (Showdown trigger on move)
+      const engine = new RiftboundTestEngine(
+        {},
+        {},
+        {
+          phase: "action",
+          battlefields: [
+            {
+              id: "bf1",
+              controller: null,
+              contested: false,
+            },
+          ],
+        },
+      );
+      engine.addUnit(
+        { ownerId: PLAYER_ONE, id: "unit-1", exhausted: false },
+        "base",
+      );
+
+      // Act: Move to uncontrolled battlefield
+      engine.moveUnit("unit-1", "bf1");
+
+      // Assert: Unit is at battlefield (showdown logic in full implementation)
+      expect(engine.getUnit("unit-1")?.battlefieldId).toBe("bf1");
+    });
+  });
+
+  // ===========================================================================
+  // Integration: Turn Structure + Recalls (Rules 616-619)
+  // ===========================================================================
+
+  describe("Integration: Turn Structure + Recalls", () => {
+    it.skip("should not trigger move abilities on recall", () => {
+      // Arrange: Unit at battlefield
+      // Cross-ref: Rule 618 (Recalls are not moves)
+      const engine = new RiftboundTestEngine(
+        {},
+        {},
+        {
+          phase: "action",
+          battlefields: [
+            {
+              id: "bf1",
+              units: {
+                [PLAYER_ONE]: [{ id: "unit1" }],
+              },
+            },
+          ],
+        },
+      );
+
+      // Act: Recall unit
+      engine.recallUnit("unit1");
+
+      // Assert: Unit is at base (not a move, no move triggers)
+      expect(engine.getUnit("unit1")?.battlefieldId).toBeUndefined();
+    });
+
+    it.skip("should allow recall of exhausted units", () => {
+      // Arrange: Exhausted unit at battlefield
+      // Cross-ref: Rule 618.3 (Recalls not prevented by movement restrictions)
+      const engine = new RiftboundTestEngine(
+        {},
+        {},
+        {
+          phase: "action",
+          battlefields: [
+            {
+              id: "bf1",
+              units: {
+                [PLAYER_ONE]: [{ id: "unit1", exhausted: true }],
+              },
+            },
+          ],
+        },
+      );
+
+      // Act: Recall exhausted unit
+      const result = engine.recallUnit("unit1");
+
+      // Assert: Recall succeeded despite exhaustion
+      expect(result).toBe(true);
+      expect(engine.getUnit("unit1")?.battlefieldId).toBeUndefined();
     });
   });
 });

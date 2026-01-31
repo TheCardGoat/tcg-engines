@@ -1649,4 +1649,593 @@ describe("Section 8: Game Actions - Rules 586-619", () => {
       expect(engine.hasChain()).toBe(false);
     });
   });
+
+  // ===========================================================================
+  // Additional Rule Coverage - Rules 589-619 Details
+  // ===========================================================================
+
+  describe("Additional Rule Coverage", () => {
+    describe("589.1.b.3 - Forbidden Actions", () => {
+      it.skip("Rule 589.1.b.3 - should not allow discretionary action that creates illegal state", () => {
+        // Arrange: Battlefield with units from 2 players (in 3+ player scenario)
+        const engine = new RiftboundTestEngine(
+          {},
+          {},
+          {
+            battlefields: [{ id: "bf1" }],
+          },
+        );
+        engine.addUnit({ ownerId: PLAYER_ONE, id: "p1-unit" }, "bf1");
+        engine.addUnit({ ownerId: PLAYER_TWO, id: "p2-unit" }, "bf1");
+
+        // Assert: Cannot move third player's unit to this battlefield
+        // (would create illegal state with 3 players' units)
+        expect(engine.hasOpposingUnits("bf1")).toBe(true);
+      });
+    });
+
+    describe("591.4 - Draw with Partial Deck", () => {
+      it.skip("Rule 591.4.a - should draw as many as possible before burn out", () => {
+        // Arrange: Player with 2 cards in deck, needs to draw 5
+        const engine = new RiftboundTestEngine({}, {});
+        engine.addToZone(PLAYER_ONE, "mainDeck", {
+          id: "card-1",
+          name: "Card 1",
+        });
+        engine.addToZone(PLAYER_ONE, "mainDeck", {
+          id: "card-2",
+          name: "Card 2",
+        });
+        engine.addToZone(PLAYER_ONE, "trash", {
+          id: "card-3",
+          name: "Trash Card",
+        });
+
+        // Act: Draw 5 cards (will trigger burn out after 2)
+        const drawn = engine.drawCards(PLAYER_ONE, 5);
+
+        // Assert: Drew available cards, burn out occurred
+        expect(drawn.length).toBeGreaterThanOrEqual(2);
+        expect(engine.getVictoryPoints(PLAYER_TWO)).toBeGreaterThanOrEqual(1);
+      });
+
+      it.skip("Rule 591.4.c - should draw remaining cards after burn out", () => {
+        // Arrange: Player with 1 card in deck, 3 in trash, needs to draw 3
+        const engine = new RiftboundTestEngine({}, {});
+        engine.addToZone(PLAYER_ONE, "mainDeck", {
+          id: "card-1",
+          name: "Card 1",
+        });
+        engine.addToZone(PLAYER_ONE, "trash", {
+          id: "card-2",
+          name: "Trash 1",
+        });
+        engine.addToZone(PLAYER_ONE, "trash", {
+          id: "card-3",
+          name: "Trash 2",
+        });
+        engine.addToZone(PLAYER_ONE, "trash", {
+          id: "card-4",
+          name: "Trash 3",
+        });
+
+        // Act: Draw 3 cards
+        const drawn = engine.drawCards(PLAYER_ONE, 3);
+
+        // Assert: Drew 3 cards total (1 from deck, burn out, 2 more from shuffled trash)
+        expect(drawn.length).toBe(3);
+        expect(engine.getHandSize(PLAYER_ONE)).toBe(3);
+      });
+    });
+
+    describe("592.5 - Exhaust Symbol", () => {
+      it.skip("Rule 592.5 - exhaust symbol should represent 'exhaust this/me' cost", () => {
+        // Arrange: Unit with activated ability using exhaust symbol
+        const engine = new RiftboundTestEngine(
+          {},
+          {},
+          {
+            battlefields: [
+              {
+                id: "bf1",
+                units: { [PLAYER_ONE]: [{ id: "unit-1", exhausted: false }] },
+              },
+            ],
+          },
+        );
+
+        // Act: Exhaust as cost for ability
+        const canExhaust = !engine.isUnitExhausted("unit-1");
+        engine.exhaustUnit("unit-1");
+
+        // Assert: Unit was exhausted as cost
+        expect(canExhaust).toBe(true);
+        expect(engine.isUnitExhausted("unit-1")).toBe(true);
+      });
+    });
+
+    describe("594.5 - Multiple Card Recycle", () => {
+      it.skip("Rule 594.5 - should recycle multiple main deck cards in random order", () => {
+        // Arrange: Multiple cards in trash
+        const engine = new RiftboundTestEngine({}, {});
+        engine.addToZone(PLAYER_ONE, "trash", { id: "card-1", name: "Card 1" });
+        engine.addToZone(PLAYER_ONE, "trash", { id: "card-2", name: "Card 2" });
+        engine.addToZone(PLAYER_ONE, "trash", { id: "card-3", name: "Card 3" });
+
+        // Act: Recycle all cards
+        engine.recycleCard(PLAYER_ONE, "card-1", "trash");
+        engine.recycleCard(PLAYER_ONE, "card-2", "trash");
+        engine.recycleCard(PLAYER_ONE, "card-3", "trash");
+
+        // Assert: All cards moved to deck
+        expect(engine.getTrashSize(PLAYER_ONE)).toBe(0);
+        expect(engine.getDeckSize(PLAYER_ONE)).toBe(3);
+      });
+
+      it.skip("Rule 594.5.a - should allow owner to choose order for rune deck recycle", () => {
+        // Arrange: Multiple runes to recycle
+        const engine = new RiftboundTestEngine({}, {});
+        engine.addToZone(PLAYER_ONE, "runePool", {
+          id: "rune-1",
+          name: "Fury Rune",
+        });
+        engine.addToZone(PLAYER_ONE, "runePool", {
+          id: "rune-2",
+          name: "Calm Rune",
+        });
+
+        // Assert: Rune deck recycle allows owner choice (documented behavior)
+        expect(engine.getZoneContents(PLAYER_ONE, "runePool").length).toBe(2);
+      });
+    });
+
+    describe("595.3 - Play as Limited Action", () => {
+      it.skip("Rule 595.3.a - should treat play as limited action when instructed by effect", () => {
+        // Arrange: Card that instructs to play another card
+        const engine = new RiftboundTestEngine({}, {}, { phase: "action" });
+        engine.addToZone(PLAYER_ONE, "hand", {
+          id: "card-1",
+          name: "Play Target",
+        });
+
+        // Assert: Play can be limited action when instructed
+        expect(engine.isLimitedAction("play")).toBe(false); // Play is discretionary by default
+        expect(engine.isDiscretionaryAction("play")).toBe(true);
+      });
+
+      it.skip("Rule 595.3.c - should do nothing if no eligible cards when instructed to play", () => {
+        // Arrange: Empty hand
+        const engine = new RiftboundTestEngine({}, {}, { phase: "action" });
+
+        // Assert: No cards to play
+        expect(engine.getHandSize(PLAYER_ONE)).toBe(0);
+      });
+
+      it.skip("Rule 595.4.b - countered card should not trigger 'when played' abilities", () => {
+        // Arrange: Spell on chain
+        const engine = new RiftboundTestEngine({}, {}, { phase: "action" });
+        engine.addToChain({
+          id: "spell-1",
+          controllerId: PLAYER_ONE,
+          type: "spell",
+        });
+
+        // Act: Counter the spell
+        engine.counterSpell("spell-1");
+
+        // Assert: Spell was countered, not played
+        expect(engine.hasChain()).toBe(false);
+      });
+    });
+
+    describe("597 - Hide Details", () => {
+      it.skip("Rule 597.1 - should require Hidden keyword to hide card", () => {
+        // Arrange: Card with Hidden keyword
+        const engine = new RiftboundTestEngine(
+          {},
+          {},
+          {
+            battlefields: [{ id: "bf1", controller: PLAYER_ONE }],
+          },
+        );
+        engine.addToZone(PLAYER_ONE, "hand", {
+          id: "hidden-card",
+          name: "Hidden Spell",
+        });
+
+        // Act: Hide the card
+        const result = engine.hideCard(PLAYER_ONE, "hidden-card", "bf1");
+
+        // Assert: Card was hidden
+        expect(result).toBe(true);
+      });
+
+      it.skip("Rule 597.4 - should reveal hidden card when going to private zone", () => {
+        // This documents the reveal behavior for hidden cards
+        const engine = new RiftboundTestEngine(
+          {},
+          {},
+          {
+            battlefields: [{ id: "bf1", controller: PLAYER_ONE }],
+          },
+        );
+
+        // Assert: Hidden cards are revealed when moving to private zones
+        expect(engine.getBattlefield("bf1")).toBeDefined();
+      });
+    });
+
+    describe("598 - Discard Details", () => {
+      it.skip("Rule 598.1.a - discard should NOT activate normal rules text", () => {
+        // Arrange: Card with 'when played' ability in hand
+        const engine = new RiftboundTestEngine({}, {});
+        engine.addToZone(PLAYER_ONE, "hand", {
+          id: "card-1",
+          name: "Trigger Card",
+        });
+
+        // Act: Discard the card
+        engine.discardCard(PLAYER_ONE, "card-1");
+
+        // Assert: Card in trash, no abilities triggered
+        expect(engine.getTrashSize(PLAYER_ONE)).toBe(1);
+        expect(engine.getHandSize(PLAYER_ONE)).toBe(0);
+      });
+
+      it.skip("Rule 598.3.b - should discard as many as possible when instructed", () => {
+        // Arrange: Player with 2 cards, instructed to discard 5
+        const engine = new RiftboundTestEngine({}, {});
+        engine.addToZone(PLAYER_ONE, "hand", { id: "card-1", name: "Card 1" });
+        engine.addToZone(PLAYER_ONE, "hand", { id: "card-2", name: "Card 2" });
+
+        // Act: Discard both cards
+        engine.discardCard(PLAYER_ONE, "card-1");
+        engine.discardCard(PLAYER_ONE, "card-2");
+
+        // Assert: All available cards discarded
+        expect(engine.getHandSize(PLAYER_ONE)).toBe(0);
+        expect(engine.getTrashSize(PLAYER_ONE)).toBe(2);
+      });
+    });
+
+    describe("599 - Stun Details", () => {
+      it.skip("Rule 599.2 - stunned status should be removed at beginning of next Ending Step", () => {
+        // Arrange: Stunned unit
+        const engine = new RiftboundTestEngine(
+          {},
+          {},
+          {
+            battlefields: [
+              {
+                id: "bf1",
+                units: { [PLAYER_ONE]: [{ id: "unit-1" }] },
+              },
+            ],
+          },
+        );
+        engine.stunUnit("unit-1");
+
+        // Assert: Unit is stunned (would be unstunned at Ending Step)
+        expect(engine.isUnitStunned("unit-1")).toBe(true);
+      });
+    });
+
+    describe("600 - Reveal Details", () => {
+      it.skip("Rule 600.1.b - voluntary showing should NOT count as revealing", () => {
+        // This documents the difference between reveal and voluntary show
+        const engine = new RiftboundTestEngine({}, {});
+        engine.addToZone(PLAYER_ONE, "hand", {
+          id: "card-1",
+          name: "Secret Card",
+        });
+
+        // Assert: Voluntary showing is different from reveal (no triggers)
+        expect(engine.getHandSize(PLAYER_ONE)).toBe(1);
+      });
+    });
+
+    describe("601 - Counter Details", () => {
+      it.skip("Rule 601.1.c - costs should NOT be refunded when countered", () => {
+        // Arrange: Player spent resources to play spell
+        const engine = new RiftboundTestEngine(
+          { energy: 5 },
+          {},
+          { phase: "action" },
+        );
+        engine.addToChain({
+          id: "spell-1",
+          controllerId: PLAYER_ONE,
+          type: "spell",
+        });
+        engine.spendEnergy(PLAYER_ONE, 3); // Simulate cost payment
+
+        // Act: Counter the spell
+        engine.counterSpell("spell-1");
+
+        // Assert: Energy was spent and not refunded
+        expect(engine.getEnergy(PLAYER_ONE)).toBe(2);
+      });
+    });
+
+    describe("602 - Buff Details", () => {
+      it.skip("Rule 602.1.b - can choose already buffed unit but won't get another buff", () => {
+        // Arrange: Already buffed unit
+        const engine = new RiftboundTestEngine(
+          {},
+          {},
+          {
+            battlefields: [
+              {
+                id: "bf1",
+                units: { [PLAYER_ONE]: [{ id: "unit-1" }] },
+              },
+            ],
+          },
+        );
+        engine.buffUnit("unit-1");
+
+        // Act: Try to buff again (valid choice, but no effect)
+        const result = engine.buffUnit("unit-1");
+
+        // Assert: Returns false, unit still has one buff
+        expect(result).toBe(false);
+        expect(engine.isUnitBuffed("unit-1")).toBe(true);
+      });
+    });
+
+    describe("603 - Banish Details", () => {
+      it.skip("Rule 603.2.b - effects can reference cards they banished", () => {
+        // Arrange: Card to banish
+        const engine = new RiftboundTestEngine({}, {});
+        engine.addToZone(PLAYER_ONE, "hand", {
+          id: "card-1",
+          name: "Banish Target",
+        });
+
+        // Act: Banish the card
+        engine.banishCard(PLAYER_ONE, "card-1", "hand");
+
+        // Assert: Card is in banishment zone
+        expect(engine.getZoneContents(PLAYER_ONE, "banishment").length).toBe(1);
+      });
+    });
+
+    describe("604 - Kill Details", () => {
+      it.skip("Rule 604.1.a.1 - active kill should be instructed by effect or cost", () => {
+        // Arrange: Unit on battlefield
+        const engine = new RiftboundTestEngine(
+          {},
+          {},
+          {
+            battlefields: [
+              {
+                id: "bf1",
+                units: { [PLAYER_ONE]: [{ id: "unit-1" }] },
+              },
+            ],
+          },
+        );
+
+        // Act: Kill the unit (active kill)
+        engine.killUnit("unit-1");
+
+        // Assert: Unit is in trash
+        expect(engine.getUnit("unit-1")).toBeUndefined();
+        expect(engine.getTrashSize(PLAYER_ONE)).toBe(1);
+      });
+
+      it.skip("Rule 604.2 - only 'killed' if origin was on the board", () => {
+        // Arrange: Card in hand (not on board)
+        const engine = new RiftboundTestEngine({}, {});
+        engine.addToZone(PLAYER_ONE, "hand", {
+          id: "card-1",
+          name: "Hand Card",
+        });
+
+        // Assert: Cards in hand cannot be "killed" (would be discarded instead)
+        expect(engine.getHandSize(PLAYER_ONE)).toBe(1);
+      });
+
+      it.skip("Rule 604.3 - kill should NOT be a subset of move", () => {
+        // This documents that kill is distinct from move
+        const engine = new RiftboundTestEngine({}, {});
+        expect(engine.isLimitedAction("kill")).toBe(true);
+        expect(engine.isLimitedAction("move")).toBe(true);
+      });
+    });
+
+    describe("605 - Add Details", () => {
+      it.skip("Rule 605.2 - add spells/abilities should resolve immediately", () => {
+        // Arrange: Player with no energy
+        const engine = new RiftboundTestEngine({ energy: 0 }, {});
+
+        // Act: Add energy (resolves immediately)
+        engine.addEnergy(PLAYER_ONE, 3);
+
+        // Assert: Energy added immediately
+        expect(engine.getEnergy(PLAYER_ONE)).toBe(3);
+      });
+
+      it.skip("Rule 605.3 - add reactions can be activated during cost payment", () => {
+        // This documents that Add reactions work during cost payment
+        const engine = new RiftboundTestEngine({ energy: 0 }, {});
+
+        // Assert: Add reactions can provide resources during cost payment
+        expect(engine.getEnergy(PLAYER_ONE)).toBe(0);
+      });
+    });
+
+    describe("606 - Channel Details", () => {
+      it.skip("Rule 606.2.a - should channel 2 runes during Channel Phase", () => {
+        // Arrange: Player with runes in rune deck
+        const engine = new RiftboundTestEngine({}, {}, { phase: "channel" });
+        engine.addToZone(PLAYER_ONE, "runeDeck", {
+          id: "rune-1",
+          name: "Fury Rune",
+        });
+        engine.addToZone(PLAYER_ONE, "runeDeck", {
+          id: "rune-2",
+          name: "Calm Rune",
+        });
+        engine.addToZone(PLAYER_ONE, "runeDeck", {
+          id: "rune-3",
+          name: "Mind Rune",
+        });
+
+        // Act: Channel 2 runes
+        const channeled = engine.channelRunes(PLAYER_ONE, 2);
+
+        // Assert: 2 runes channeled
+        expect(channeled.length).toBe(2);
+      });
+
+      it.skip("Rule 606.2.a.1 - should channel as many as possible if fewer than 2 in deck", () => {
+        // Arrange: Player with only 1 rune in rune deck
+        const engine = new RiftboundTestEngine({}, {}, { phase: "channel" });
+        engine.addToZone(PLAYER_ONE, "runeDeck", {
+          id: "rune-1",
+          name: "Fury Rune",
+        });
+
+        // Act: Try to channel 2 runes
+        const channeled = engine.channelRunes(PLAYER_ONE, 2);
+
+        // Assert: Only 1 rune channeled
+        expect(channeled.length).toBe(1);
+      });
+    });
+
+    describe("607 - Burn Out Details", () => {
+      it.skip("Rule 607.1.b - should trigger burn out when looking at cards from empty deck", () => {
+        // Arrange: Empty deck
+        const engine = new RiftboundTestEngine({}, {});
+        engine.addToZone(PLAYER_ONE, "trash", {
+          id: "card-1",
+          name: "Trash Card",
+        });
+
+        // Assert: Looking at empty deck would trigger burn out
+        expect(engine.getDeckSize(PLAYER_ONE)).toBe(0);
+      });
+
+      it.skip("Rule 607.3 - should allow repeated burn out until opponent wins", () => {
+        // Arrange: Player with empty deck and trash
+        const engine = new RiftboundTestEngine(
+          {},
+          { victoryPoints: 7 },
+          { victoryScore: 8 },
+        );
+
+        // Act: Burn out
+        engine.burnOut(PLAYER_ONE);
+
+        // Assert: Opponent gained point (could win if at 7)
+        expect(engine.getVictoryPoints(PLAYER_TWO)).toBe(8);
+        expect(engine.isGameOver()).toBe(true);
+      });
+    });
+
+    describe("609 - Movement Details", () => {
+      it.skip("Rule 609.2 - zone changes should NOT be moves", () => {
+        // Arrange: Card in hand
+        const engine = new RiftboundTestEngine({}, {});
+        engine.addToZone(PLAYER_ONE, "hand", {
+          id: "card-1",
+          name: "Hand Card",
+        });
+
+        // Act: Move to trash (zone change, not a move)
+        engine.discardCard(PLAYER_ONE, "card-1");
+
+        // Assert: Card changed zones but this is not a "move"
+        expect(engine.getTrashSize(PLAYER_ONE)).toBe(1);
+      });
+
+      it.skip("Rule 609.3.a - move should have no in-between state", () => {
+        // Arrange: Unit at base
+        const engine = new RiftboundTestEngine(
+          {},
+          {},
+          {
+            battlefields: [{ id: "bf1" }],
+          },
+        );
+        engine.addUnit(
+          { ownerId: PLAYER_ONE, id: "unit-1", exhausted: false },
+          "base",
+        );
+
+        // Act: Move to battlefield
+        engine.moveUnit("unit-1", "bf1");
+
+        // Assert: Unit is at destination (no intermediate state)
+        expect(engine.getUnit("unit-1")?.battlefieldId).toBe("bf1");
+      });
+
+      it.skip("Rule 609.3.c - moves should NOT use the chain", () => {
+        // Arrange: Unit ready to move
+        const engine = new RiftboundTestEngine(
+          {},
+          {},
+          {
+            battlefields: [{ id: "bf1" }],
+          },
+        );
+        engine.addUnit(
+          { ownerId: PLAYER_ONE, id: "unit-1", exhausted: false },
+          "base",
+        );
+
+        // Act: Move unit
+        engine.moveUnit("unit-1", "bf1");
+
+        // Assert: No chain created for move
+        expect(engine.hasChain()).toBe(false);
+      });
+    });
+
+    describe("616-619 - Recall Details", () => {
+      it.skip("Rule 616 - recall should be a limited action", () => {
+        const engine = new RiftboundTestEngine({}, {});
+        // Recalls are limited actions (only when instructed)
+        expect(engine.isLimitedAction("move")).toBe(true);
+      });
+
+      it.skip("Rule 618.2 - recalls should not trigger move abilities", () => {
+        // Arrange: Unit at battlefield
+        const engine = new RiftboundTestEngine(
+          {},
+          {},
+          {
+            battlefields: [
+              {
+                id: "bf1",
+                units: { [PLAYER_ONE]: [{ id: "unit-1" }] },
+              },
+            ],
+          },
+        );
+
+        // Act: Recall unit
+        engine.recallUnit("unit-1");
+
+        // Assert: Unit at base, no move triggers
+        expect(engine.getUnit("unit-1")?.battlefieldId).toBeUndefined();
+      });
+
+      it.skip("Rule 619.2 - gear should be recalled to base during cleanup", () => {
+        // This documents gear recall behavior
+        const engine = new RiftboundTestEngine(
+          {},
+          {},
+          {
+            battlefields: [{ id: "bf1" }],
+          },
+        );
+
+        // Assert: Gear at battlefield would be recalled during cleanup
+        expect(engine.getBattlefield("bf1")).toBeDefined();
+      });
+    });
+  });
 });

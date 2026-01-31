@@ -7,6 +7,13 @@
  *
  * NOTE: All tests are skipped pending TestEngine implementation.
  * Each test creates its own game instance via constructor parameters.
+ *
+ * Rule Sections:
+ * - 156.1: Rune Pool - Energy
+ * - 156.2: Rune Pool - Power
+ * - 158-161: Resource Management
+ * - 606: Channeling
+ * - 100-127: Deck Construction
  */
 
 import { describe, expect, it } from "bun:test";

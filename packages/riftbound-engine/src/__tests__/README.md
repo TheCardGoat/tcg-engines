@@ -805,3 +805,140 @@ it.skip("should complete a full turn cycle through all phases", () => {
 - **Test Engine API**: `packages/riftbound-engine/src/testing/riftbound-test-engine.ts`
 - **Turn Structure Tests**: `packages/riftbound-engine/src/__tests__/rules/turn-structure.test.ts`
 - **Game Actions Tests**: `packages/riftbound-engine/src/__tests__/rules/game-actions.test.ts`
+- **Resources Tests**: `packages/riftbound-engine/src/__tests__/rules/resources-and-deck-construction.test.ts`
+
+## Cross-Category Integration Tests
+
+Integration tests verify behavior across multiple rule categories. They are essential for ensuring the game engine handles complex interactions correctly.
+
+### Integration Test Categories
+
+| Category | Rules | Description |
+|----------|-------|-------------|
+| Turn Structure + Combat | 500-526, 620-633 | State transitions during combat |
+| Turn Structure + Scoring | 500-526, 629-633 | Victory point accumulation |
+| Turn Structure + Chain | 500-526, 532-544 | Chain resolution timing |
+| Turn Structure + Zones | 500-526, 105-183 | Card movement during phases |
+| Turn Structure + Resources | 500-526, 156-161 | Rune pool management |
+| Turn Structure + Game Actions | 500-526, 586-619 | Action timing and restrictions |
+| Turn Structure + Abilities | 500-526, 564-585 | Triggered ability timing |
+| Turn Structure + Keywords | 500-526, 712-729 | Keyword timing restrictions |
+| Turn Structure + Movement | 500-526, 608-615 | Movement and cleanup triggers |
+| Turn Structure + Recalls | 500-526, 616-619 | Recall vs move distinction |
+
+### Integration Test Naming
+
+Integration tests should clearly indicate the categories being tested:
+
+```typescript
+describe("Integration: Turn Structure + Combat", () => {
+  it.skip("should transition to Showdown state when combat begins", () => {
+    // Cross-ref: Rule 620 (Combat initiation)
+    // ...
+  });
+});
+```
+
+### Cross-Reference Comments
+
+Always include cross-reference comments in integration tests:
+
+```typescript
+it.skip("should clear damage at end of turn after combat", () => {
+  // Arrange: Units with combat damage
+  // Cross-ref: Rule 517.2 (Expiration Step) + Rule 626 (Damage assignment)
+  // ...
+});
+```
+
+## Test File Organization Summary
+
+### Current Test Files
+
+| File | Rules | Status |
+|------|-------|--------|
+| `turn-structure.test.ts` | 500-526 | Complete |
+| `game-actions.test.ts` | 586-619 | Complete |
+| `resources-and-deck-construction.test.ts` | 100-127, 156-161, 606 | Complete |
+
+### Planned Test Files
+
+| File | Rules | Description |
+|------|-------|-------------|
+| `combat-and-scoring.test.ts` | 620-633 | Combat resolution and victory |
+| `abilities.test.ts` | 564-585 | Ability types and triggers |
+| `keywords.test.ts` | 712-729 | Keyword mechanics |
+| `chains-and-showdowns.test.ts` | 527-563 | Chain and showdown rules |
+| `zones-and-movement.test.ts` | 105-183 | Zone management |
+
+## Test Coverage Goals
+
+### Coverage Targets
+
+- **Unit Tests**: 95%+ line coverage
+- **Edge Cases**: All boundary conditions tested
+- **Integration Tests**: All cross-category interactions covered
+- **Rule Coverage**: Every rule number has at least one test
+
+### Coverage Verification
+
+Run coverage reports to verify test completeness:
+
+```bash
+bun test --coverage
+```
+
+## Cleanup Step Order Reference
+
+The cleanup procedure follows a specific order (Rules 518-526):
+
+1. **Kill damaged Units** (Rule 520) - Units with damage ≥ Might go to trash
+2. **Remove combat status** (Rule 521) - Clear Attacker/Defender roles
+3. **Execute state-based effects** (Rule 522) - "While" and "As long as" effects
+4. **Remove orphaned Hidden cards** (Rule 523) - Hidden cards without controller's Unit
+5. **Mark Pending Combats** (Rule 524) - At Battlefields with opposing Units
+6. **Trigger Showdowns** (Rule 525) - At uncontrolled Contested Battlefields (Neutral Open only)
+7. **Trigger Combats** (Rule 526) - At Battlefields with Pending Combat (Neutral Open only)
+
+## Turn Phase Reference
+
+```
+START OF TURN
+├── Awaken Phase (515.1) - Ready all game objects
+├── Beginning Phase (515.2)
+│   ├── Beginning Step - "At the start of Beginning Phase" effects
+│   └── Scoring Step - Hold scoring
+├── Channel Phase (515.3) - Channel 2 runes
+└── Draw Phase (515.4) - Draw 1, Rune Pool empties
+
+ACTION PHASE (516)
+├── Take Discretionary Actions
+├── Combat (when triggered)
+└── Showdowns (when triggered)
+
+END OF TURN (517)
+├── Ending Step (517.1) - "At the end of turn" effects
+├── Expiration Step (517.2) - Clear damage, expire effects, Rune Pool empties
+├── Cleanup Step (517.3) - Perform Cleanup
+├── Loop Check (517.4) - Return to Expiration if new damage/effects
+└── Turn Passes (517.5) - Next player becomes Turn Player
+```
+
+## Game State Reference
+
+### Combined States (Rule 510)
+
+| State | Showdown? | Chain? | What Can Be Played |
+|-------|-----------|--------|-------------------|
+| **Neutral Open** | No | No | Any card (on your turn) |
+| **Neutral Closed** | No | Yes | Reaction only |
+| **Showdown Open** | Yes | No | Action or Reaction |
+| **Showdown Closed** | Yes | Yes | Reaction only |
+
+### Priority and Focus (Rules 511-513)
+
+- **Priority**: Permission to take Discretionary Actions
+- **Focus**: Permission during Showdown Open State
+- Gaining Focus also grants Priority
+- Passing Priority retains Focus
+- No Focus during Neutral State
