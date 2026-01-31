@@ -240,6 +240,7 @@ export class RiftboundTestEngine {
   private _phase: GamePhase;
   private _status: GameStatus;
   private _victoryScore: number;
+  private _winner: PlayerId | null;
   private _players: Record<PlayerId, { victoryPoints: number }>;
   private _runePools: Record<PlayerId, RunePool>;
   private _battlefields: Map<string, BattlefieldState>;
@@ -267,6 +268,7 @@ export class RiftboundTestEngine {
     this._phase = options.phase ?? "action";
     this._status = options.status ?? "playing";
     this._victoryScore = options.victoryScore ?? 8;
+    this._winner = null;
 
     // Initialize players
     this._players = {
@@ -274,15 +276,29 @@ export class RiftboundTestEngine {
       [PLAYER_TWO]: { victoryPoints: playerTwoState.victoryPoints ?? 0 },
     };
 
-    // Initialize rune pools
+    // Initialize rune pools with explicit domain defaults
     this._runePools = {
       [PLAYER_ONE]: {
         energy: playerOneState.energy ?? 0,
-        power: (playerOneState.power ?? {}) as Record<Domain, number>,
+        power: {
+          fury: playerOneState.power?.fury ?? 0,
+          calm: playerOneState.power?.calm ?? 0,
+          mind: playerOneState.power?.mind ?? 0,
+          body: playerOneState.power?.body ?? 0,
+          chaos: playerOneState.power?.chaos ?? 0,
+          order: playerOneState.power?.order ?? 0,
+        },
       },
       [PLAYER_TWO]: {
         energy: playerTwoState.energy ?? 0,
-        power: (playerTwoState.power ?? {}) as Record<Domain, number>,
+        power: {
+          fury: playerTwoState.power?.fury ?? 0,
+          calm: playerTwoState.power?.calm ?? 0,
+          mind: playerTwoState.power?.mind ?? 0,
+          body: playerTwoState.power?.body ?? 0,
+          chaos: playerTwoState.power?.chaos ?? 0,
+          order: playerTwoState.power?.order ?? 0,
+        },
       },
     };
 
@@ -389,7 +405,9 @@ export class RiftboundTestEngine {
   }
 
   getWinner(): PlayerId | undefined {
-    // Stub - check for victory condition
+    // Return explicit winner first (handles concession scenarios)
+    if (this._winner) return this._winner;
+    // Fall back to victory point check
     for (const [playerId, player] of Object.entries(this._players)) {
       if (player.victoryPoints >= this._victoryScore) return playerId;
     }
@@ -408,7 +426,8 @@ export class RiftboundTestEngine {
 
   setWinner(playerId: PlayerId): void {
     this._status = "finished";
-    // Winner is determined by getWinner() based on victory points
+    this._winner = playerId;
+    // Also set victory points for consistency
     this._players[playerId].victoryPoints = this._victoryScore;
   }
 
@@ -1049,10 +1068,9 @@ export class RiftboundTestEngine {
    * ```
    */
   getAbilities(cardId: string): string[] {
-    // Stub implementation - abilities not yet tracked
-    // Will be implemented when ability system is complete
-    const _card = this._cardDefinitions.get(cardId);
-    // For now, return empty array
+    // TODO: Implement ability tracking when ability system is complete
+    // Will look up card definition and return its abilities
+    void cardId; // Parameter reserved for future implementation
     return [];
   }
 
@@ -1072,10 +1090,9 @@ export class RiftboundTestEngine {
    * ```
    */
   getKeywords(unitId: string): string[] {
-    // Stub implementation - keywords not yet tracked
-    // Will be implemented when keyword system is complete
-    const _unit = this._units.get(unitId);
-    // For now, return empty array
+    // TODO: Implement keyword tracking when keyword system is complete
+    // Will look up unit and return its keywords
+    void unitId; // Parameter reserved for future implementation
     return [];
   }
 
@@ -1166,6 +1183,7 @@ export class RiftboundTestEngine {
     INVALID_DOMAIN: "invalid_domain",
     MISSING_CHAMPION: "missing_champion",
     INVALID_SIGNATURE_COUNT: "invalid_signature_count",
+    INVALID_SIGNATURE_TAG: "invalid_signature_tag",
     INVALID_RUNE_COUNT: "invalid_rune_count",
   } as const;
 
@@ -1362,6 +1380,14 @@ export class RiftboundTestEngine {
       };
     }
 
+    if (champions.length > 1) {
+      return {
+        isValid: false,
+        error: `Deck has ${champions.length} champions, must have exactly one`,
+        code: RiftboundTestEngine.DECK_VALIDATION.MISSING_CHAMPION,
+      };
+    }
+
     const matchingChampions = champions.filter(
       (c) => c.championTag === legendTag,
     );
@@ -1416,7 +1442,7 @@ export class RiftboundTestEngine {
         return {
           isValid: false,
           error: `Signature card "${card.name}" has tag "${card.championTag}", must match legend tag "${legendTag}"`,
-          code: RiftboundTestEngine.DECK_VALIDATION.INVALID_DOMAIN,
+          code: RiftboundTestEngine.DECK_VALIDATION.INVALID_SIGNATURE_TAG,
         };
       }
     }
@@ -1697,6 +1723,7 @@ export class RiftboundTestEngine {
   canPlayCard(playerId: PlayerId, cardId: string): boolean {
     // TODO: Implement - check phase, priority, costs, etc.
     // For now, check basic conditions
+    if (this.isGameOver()) return false;
     if (this._activePlayer !== playerId) return false;
     if (this._phase !== "action") return false;
     if (this.getChainState() !== "open") return false;
@@ -1722,8 +1749,8 @@ export class RiftboundTestEngine {
     abilityIndex: number,
   ): boolean {
     // TODO: Implement - validate costs, add to chain, etc.
-    const _abilities = this.getAbilities(cardId);
-    if (abilityIndex < 0) return false;
+    const abilities = this.getAbilities(cardId);
+    if (abilityIndex < 0 || abilityIndex >= abilities.length) return false;
     // Stub: just return true for now
     return true;
   }
@@ -1744,8 +1771,8 @@ export class RiftboundTestEngine {
     abilityIndex: number,
   ): boolean {
     // TODO: Implement - check timing, costs, etc.
-    const _abilities = this.getAbilities(cardId);
-    if (abilityIndex < 0) return false;
+    const abilities = this.getAbilities(cardId);
+    if (abilityIndex < 0 || abilityIndex >= abilities.length) return false;
     return true;
   }
 
@@ -1760,6 +1787,10 @@ export class RiftboundTestEngine {
     const unit = this._units.get(unitId);
     if (!unit) return false;
     if (unit.meta.exhausted) return false; // Standard move requires exhausting
+
+    // Validate destination battlefield exists
+    const battlefield = this._battlefields.get(destination);
+    if (!battlefield) return false;
 
     // Exhaust the unit as cost
     unit.meta.exhausted = true;

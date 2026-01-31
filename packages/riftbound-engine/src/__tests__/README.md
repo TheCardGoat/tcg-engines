@@ -629,6 +629,7 @@ it.skip("Rule 503 - should advance through phases in order", () => {
 |------|-------|-------------|
 | `turn-structure.test.ts` | 500-526 | Turn phases, states, priority, focus, cleanups |
 | `game-actions.test.ts` | 586-619 | Actions, movement, recalls |
+| `resources-and-deck-construction.test.ts` | 100-127, 156-161, 606 | Resources, runes, deck construction |
 
 ### Planned Test Files
 
