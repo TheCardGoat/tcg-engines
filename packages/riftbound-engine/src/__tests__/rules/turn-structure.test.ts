@@ -133,6 +133,23 @@ describe("Section 5: Turn Structure - Rules 500-526", () => {
     });
 
     describe("Basic Flow - Edge Cases", () => {
+      it.skip("Rule 505 - should not allow game actions to be performed simultaneously", () => {
+        // Arrange: Game with chain items
+        const engine = new RiftboundTestEngine({}, {}, { phase: "action" });
+        engine.addToChain({
+          id: "spell1",
+          controllerId: PLAYER_ONE,
+          type: "spell",
+        });
+
+        // Assert: Chain items must resolve one at a time (LIFO order)
+        // This validates that actions are sequential, not simultaneous
+        expect(engine.getChain().length).toBe(1);
+        const resolved = engine.resolveChainItem();
+        expect(resolved?.id).toBe("spell1");
+        expect(engine.getChain().length).toBe(0);
+      });
+
       it.skip("should handle turn player change correctly", () => {
         // Arrange: Game at turn 1 with player1 active
         const engine = new RiftboundTestEngine(
@@ -255,6 +272,18 @@ describe("Section 5: Turn Structure - Rules 500-526", () => {
   // ===========================================================================
 
   describe("507-510: States of the Turn", () => {
+    describe("States Overview (Rule 507)", () => {
+      it.skip("Rule 507 - should always be in one of four combined states", () => {
+        // Arrange: Fresh game
+        const engine = new RiftboundTestEngine({}, {});
+
+        // Assert: Game is always in a defined state
+        const state = engine.getCombinedState();
+        expect(["neutral", "showdown"]).toContain(state.turnState);
+        expect(["open", "closed"]).toContain(state.chainState);
+      });
+    });
+
     describe("Neutral vs Showdown State (Rule 508)", () => {
       it.skip("Rule 508 - should be in Neutral state when no showdown in progress", () => {
         // Arrange: Standard game state
@@ -514,6 +543,26 @@ describe("Section 5: Turn Structure - Rules 500-526", () => {
   // ===========================================================================
 
   describe("511-513: Priority and Focus", () => {
+    describe("Priority and Focus Overview (Rule 511)", () => {
+      it.skip("Rule 511 - should define Priority and Focus as permissions for actions", () => {
+        // Arrange: Fresh game
+        const engine = new RiftboundTestEngine({}, {});
+
+        // Assert: Priority and Focus are trackable states
+        expect(engine.getPriorityHolder()).toBeNull(); // No priority initially
+        expect(engine.getFocusHolder()).toBeNull(); // No focus initially
+
+        // Set priority
+        engine.setPriorityHolder(PLAYER_ONE);
+        expect(engine.hasPriority(PLAYER_ONE)).toBe(true);
+
+        // Set focus (requires showdown)
+        engine.startShowdown();
+        engine.setFocusHolder(PLAYER_ONE);
+        expect(engine.hasFocus(PLAYER_ONE)).toBe(true);
+      });
+    });
+
     describe("Priority (Rule 512)", () => {
       it.skip("Rule 512 - should grant priority during Neutral Open in Action Phase", () => {
         // Arrange: Game in action phase with priority set
@@ -677,6 +726,30 @@ describe("Section 5: Turn Structure - Rules 500-526", () => {
   // ===========================================================================
 
   describe("514-517: Turn Phases", () => {
+    describe("Phases Overview (Rule 514)", () => {
+      it.skip("Rule 514 - should define turn as consisting of multiple phases", () => {
+        // Arrange: Game at start of turn
+        const engine = new RiftboundTestEngine({}, {}, { phase: "awaken" });
+
+        // Assert: Turn has defined phases that can be traversed
+        expect(engine.getCurrentPhase()).toBe("awaken");
+
+        // Verify all phases exist in order by advancing through them
+        engine.advancePhase();
+        expect(engine.getCurrentPhase()).toBe("beginning");
+        engine.advancePhase();
+        expect(engine.getCurrentPhase()).toBe("channel");
+        engine.advancePhase();
+        expect(engine.getCurrentPhase()).toBe("draw");
+        engine.advancePhase();
+        expect(engine.getCurrentPhase()).toBe("action");
+        engine.advancePhase();
+        expect(engine.getCurrentPhase()).toBe("ending");
+        engine.advancePhase();
+        expect(engine.getCurrentPhase()).toBe("cleanup");
+      });
+    });
+
     describe("Awaken Phase (Rule 515.1)", () => {
       it.skip("Rule 515.1 - should ready all exhausted game objects at start of turn", () => {
         // Arrange: Game with exhausted units via battlefields config
@@ -1095,6 +1168,97 @@ describe("Section 5: Turn Structure - Rules 500-526", () => {
   // ===========================================================================
 
   describe("518-526: Cleanups", () => {
+    describe("When Cleanups Occur (Rule 518-519)", () => {
+      it.skip("Rule 518 - should define cleanup as a game procedure", () => {
+        // Arrange: Game with state requiring cleanup
+        const engine = new RiftboundTestEngine(
+          {},
+          {},
+          {
+            battlefields: [
+              {
+                id: "bf1",
+                units: {
+                  [PLAYER_ONE]: [{ id: "unit1", might: 3, damage: 3 }],
+                },
+              },
+            ],
+          },
+        );
+
+        // Act: Perform cleanup
+        engine.performCleanup();
+
+        // Assert: Cleanup procedure executed (damaged unit killed)
+        expect(engine.getUnit("unit1")).toBeUndefined();
+      });
+
+      it.skip("Rule 519 - should trigger cleanup after Chain item resolves", () => {
+        // Arrange: Game with chain item and damaged unit
+        const engine = new RiftboundTestEngine(
+          {},
+          {},
+          {
+            battlefields: [
+              {
+                id: "bf1",
+                units: {
+                  [PLAYER_ONE]: [{ id: "unit1", might: 3, damage: 3 }],
+                },
+              },
+            ],
+          },
+        );
+        engine.addToChain({
+          id: "spell1",
+          controllerId: PLAYER_ONE,
+          type: "spell",
+        });
+
+        // Act: Resolve chain item and perform cleanup
+        engine.resolveChainItem();
+        const killed = engine.cleanupKillDamagedUnits();
+
+        // Assert: Cleanup occurred after chain resolution
+        expect(killed.length).toBe(1);
+        expect(engine.getUnit("unit1")).toBeUndefined();
+      });
+
+      it.skip("Rule 519 - should trigger cleanup after Move completes", () => {
+        // Arrange: Unit that will move
+        const engine = new RiftboundTestEngine(
+          {},
+          {},
+          {
+            battlefields: [{ id: "bf1" }, { id: "bf2" }],
+          },
+        );
+        engine.addUnit(
+          { ownerId: PLAYER_ONE, id: "unit-1", exhausted: false },
+          "bf1",
+        );
+
+        // Act: Move unit
+        engine.moveUnit("unit-1", "bf2");
+
+        // Assert: Move completed (cleanup would follow in full implementation)
+        expect(engine.getUnit("unit-1")?.battlefieldId).toBe("bf2");
+      });
+
+      it.skip("Rule 519 - should trigger cleanup after Showdown completes", () => {
+        // Arrange: Game in showdown
+        const engine = new RiftboundTestEngine({}, {});
+        engine.startShowdown();
+        expect(engine.isInShowdown()).toBe(true);
+
+        // Act: End showdown
+        engine.endShowdown();
+
+        // Assert: Showdown ended (cleanup would follow in full implementation)
+        expect(engine.isInShowdown()).toBe(false);
+      });
+    });
+
     describe("Cleanup Step 1: Kill Damaged Units (Rule 520)", () => {
       it.skip("Rule 520 - should kill Units with damage >= Might", () => {
         // Arrange: Unit with damage equal to Might

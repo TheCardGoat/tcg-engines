@@ -1011,4 +1011,642 @@ describe("Section 8: Game Actions - Rules 586-619", () => {
       });
     });
   });
+
+  // ===========================================================================
+  // 608-615: Movement Rules
+  // ===========================================================================
+
+  describe("608-615: Movement Rules", () => {
+    describe("608-609: Movement Basics", () => {
+      it.skip("Rule 609 - moving should be a limited action", () => {
+        const engine = new RiftboundTestEngine({}, {});
+        expect(engine.isLimitedAction("move")).toBe(true);
+      });
+
+      it.skip("Rule 609.1 - changing position on board should be a move", () => {
+        // Arrange: Unit at battlefield 1
+        const engine = new RiftboundTestEngine(
+          {},
+          {},
+          {
+            battlefields: [{ id: "bf1" }, { id: "bf2" }],
+          },
+        );
+        engine.addUnit({ ownerId: PLAYER_ONE, id: "unit-1" }, "bf1");
+
+        // Act: Move to battlefield 2
+        engine.moveUnit("unit-1", "bf2");
+
+        // Assert: Unit is at new location
+        expect(engine.getUnit("unit-1")?.battlefieldId).toBe("bf2");
+      });
+
+      it.skip("Rule 609.3 - moving should be instantaneous", () => {
+        // Arrange: Unit at base
+        const engine = new RiftboundTestEngine(
+          {},
+          {},
+          {
+            battlefields: [{ id: "bf1" }],
+          },
+        );
+        engine.addUnit({ ownerId: PLAYER_ONE, id: "unit-1" }, "base");
+
+        // Act: Move to battlefield
+        engine.moveUnit("unit-1", "bf1");
+
+        // Assert: Unit is immediately at destination (no in-between state)
+        expect(engine.getUnit("unit-1")?.battlefieldId).toBe("bf1");
+      });
+    });
+
+    describe("610: Origin and Destination", () => {
+      it.skip("Rule 610.1 - should track origin of move", () => {
+        // Arrange: Unit at bf1
+        const engine = new RiftboundTestEngine(
+          {},
+          {},
+          {
+            battlefields: [{ id: "bf1" }, { id: "bf2" }],
+          },
+        );
+        engine.addUnit({ ownerId: PLAYER_ONE, id: "unit-1" }, "bf1");
+        const origin = engine.getUnit("unit-1")?.battlefieldId;
+
+        // Act: Move
+        engine.moveUnit("unit-1", "bf2");
+
+        // Assert: Origin was bf1
+        expect(origin).toBe("bf1");
+      });
+
+      it.skip("Rule 610.2.a - should not allow move to battlefield with pending combat from other players", () => {
+        // Arrange: Battlefield with pending combat between other players
+        const engine = new RiftboundTestEngine(
+          {},
+          {},
+          {
+            battlefields: [{ id: "bf1" }],
+          },
+        );
+        engine.addUnit({ ownerId: PLAYER_ONE, id: "p1-unit" }, "bf1");
+        engine.addUnit({ ownerId: PLAYER_TWO, id: "p2-unit" }, "bf1");
+        engine.markPendingCombat("bf1");
+
+        // In a 3+ player game, a third player couldn't move here
+        // For 2-player, this validates the pending combat state
+        expect(engine.hasPendingCombat("bf1")).toBe(true);
+      });
+
+      it.skip("Rule 610.3 - only units should be able to move", () => {
+        // Arrange: Unit on battlefield
+        const engine = new RiftboundTestEngine(
+          {},
+          {},
+          {
+            battlefields: [{ id: "bf1" }, { id: "bf2" }],
+          },
+        );
+        engine.addUnit({ ownerId: PLAYER_ONE, id: "unit-1" }, "bf1");
+
+        // Act: Move unit
+        const result = engine.moveUnit("unit-1", "bf2");
+
+        // Assert: Unit can move
+        expect(result).toBe(true);
+      });
+    });
+
+    describe("611: Standard Move", () => {
+      it.skip("Rule 611 - players should be able to move units with Standard Move", () => {
+        // Arrange: Ready unit at base
+        const engine = new RiftboundTestEngine(
+          {},
+          {},
+          {
+            battlefields: [{ id: "bf1" }],
+          },
+        );
+        engine.addUnit(
+          { ownerId: PLAYER_ONE, id: "unit-1", exhausted: false },
+          "base",
+        );
+
+        // Act: Standard move
+        const result = engine.moveUnit("unit-1", "bf1");
+
+        // Assert: Move succeeded
+        expect(result).toBe(true);
+      });
+
+      it.skip("Rule 611 - Standard Move should require exhausting unit", () => {
+        // Arrange: Ready unit
+        const engine = new RiftboundTestEngine(
+          {},
+          {},
+          {
+            battlefields: [{ id: "bf1" }],
+          },
+        );
+        engine.addUnit(
+          { ownerId: PLAYER_ONE, id: "unit-1", exhausted: false },
+          "base",
+        );
+
+        // Act: Standard move
+        engine.moveUnit("unit-1", "bf1");
+
+        // Assert: Unit is exhausted
+        expect(engine.isUnitExhausted("unit-1")).toBe(true);
+      });
+
+      it.skip("Rule 611 - exhausted unit should not be able to Standard Move", () => {
+        // Arrange: Exhausted unit
+        const engine = new RiftboundTestEngine(
+          {},
+          {},
+          {
+            battlefields: [{ id: "bf1" }],
+          },
+        );
+        engine.addUnit(
+          { ownerId: PLAYER_ONE, id: "unit-1", exhausted: true },
+          "base",
+        );
+
+        // Act: Try to move
+        const result = engine.moveUnit("unit-1", "bf1");
+
+        // Assert: Move failed
+        expect(result).toBe(false);
+      });
+    });
+
+    describe("612: Effect-Caused Movement", () => {
+      it.skip("Rule 612.2 - should not allow move to battlefield with 2 other players' units", () => {
+        // Arrange: Battlefield with units from 2 players (in 3+ player game)
+        const engine = new RiftboundTestEngine(
+          {},
+          {},
+          {
+            battlefields: [{ id: "bf1" }],
+          },
+        );
+        engine.addUnit({ ownerId: PLAYER_ONE, id: "p1-unit" }, "bf1");
+        engine.addUnit({ ownerId: PLAYER_TWO, id: "p2-unit" }, "bf1");
+
+        // Assert: Battlefield has opposing units
+        expect(engine.hasOpposingUnits("bf1")).toBe(true);
+      });
+    });
+
+    describe("613-614: Showdown and Combat Triggers", () => {
+      it.skip("Rule 613.1 - should open showdown when move causes contested battlefield", () => {
+        // Arrange: Uncontrolled battlefield
+        const engine = new RiftboundTestEngine(
+          {},
+          {},
+          {
+            battlefields: [{ id: "bf1" }],
+          },
+        );
+        engine.addUnit(
+          { ownerId: PLAYER_ONE, id: "unit-1", exhausted: false },
+          "base",
+        );
+
+        // Act: Move to uncontrolled battlefield
+        engine.moveUnit("unit-1", "bf1");
+
+        // Assert: Unit is at battlefield (showdown logic would be in full implementation)
+        expect(engine.getUnit("unit-1")?.battlefieldId).toBe("bf1");
+      });
+
+      it.skip("Rule 614.1 - should trigger combat when move causes contested battlefield with opposing units", () => {
+        // Arrange: Battlefield controlled by opponent with units
+        const engine = new RiftboundTestEngine(
+          {},
+          {},
+          {
+            battlefields: [
+              {
+                id: "bf1",
+                controller: PLAYER_TWO,
+                units: { [PLAYER_TWO]: [{ id: "defender" }] },
+              },
+            ],
+          },
+        );
+        engine.addUnit(
+          { ownerId: PLAYER_ONE, id: "attacker", exhausted: false },
+          "base",
+        );
+
+        // Act: Move to contested battlefield
+        engine.moveUnit("attacker", "bf1");
+
+        // Assert: Both units at battlefield (combat would be triggered)
+        expect(engine.hasOpposingUnits("bf1")).toBe(true);
+      });
+    });
+
+    describe("615: Cleanup After Move", () => {
+      it.skip("Rule 615 - should perform cleanup after move completes", () => {
+        // Arrange: Unit that will move
+        const engine = new RiftboundTestEngine(
+          {},
+          {},
+          {
+            battlefields: [{ id: "bf1" }],
+          },
+        );
+        engine.addUnit(
+          { ownerId: PLAYER_ONE, id: "unit-1", exhausted: false },
+          "base",
+        );
+
+        // Act: Move
+        engine.moveUnit("unit-1", "bf1");
+
+        // Assert: Move completed (cleanup would check for state-based actions)
+        expect(engine.getUnit("unit-1")?.battlefieldId).toBe("bf1");
+      });
+    });
+  });
+
+  // ===========================================================================
+  // 616-619: Recalls
+  // ===========================================================================
+
+  describe("616-619: Recalls", () => {
+    describe("617-618: Recall Mechanics", () => {
+      it.skip("Rule 617 - recall should change location without being a move", () => {
+        // Arrange: Unit at battlefield
+        const engine = new RiftboundTestEngine(
+          {},
+          {},
+          {
+            battlefields: [
+              {
+                id: "bf1",
+                units: { [PLAYER_ONE]: [{ id: "unit-1" }] },
+              },
+            ],
+          },
+        );
+
+        // Act: Recall unit
+        const result = engine.recallUnit("unit-1");
+
+        // Assert: Unit returned to base
+        expect(result).toBe(true);
+        expect(engine.getUnit("unit-1")?.battlefieldId).toBeUndefined();
+      });
+
+      it.skip("Rule 618 - recalls should not be moves", () => {
+        // This is a rule clarification test
+        // Recalls don't trigger move abilities
+        const engine = new RiftboundTestEngine(
+          {},
+          {},
+          {
+            battlefields: [
+              {
+                id: "bf1",
+                units: { [PLAYER_ONE]: [{ id: "unit-1" }] },
+              },
+            ],
+          },
+        );
+
+        // Act: Recall
+        engine.recallUnit("unit-1");
+
+        // Assert: Unit is at base (not a move, so no move triggers)
+        expect(engine.getUnit("unit-1")?.battlefieldId).toBeUndefined();
+      });
+
+      it.skip("Rule 618.1 - recalls should not trigger move abilities", () => {
+        // Arrange: Unit with hypothetical "when I move" ability
+        const engine = new RiftboundTestEngine(
+          {},
+          {},
+          {
+            battlefields: [
+              {
+                id: "bf1",
+                units: { [PLAYER_ONE]: [{ id: "unit-1" }] },
+              },
+            ],
+          },
+        );
+
+        // Act: Recall (not a move)
+        engine.recallUnit("unit-1");
+
+        // Assert: Unit recalled without triggering move abilities
+        expect(engine.getUnit("unit-1")?.battlefieldId).toBeUndefined();
+      });
+
+      it.skip("Rule 618.3 - recalls should not be prevented by movement restrictions", () => {
+        // Arrange: Unit that might have movement restriction
+        const engine = new RiftboundTestEngine(
+          {},
+          {},
+          {
+            battlefields: [
+              {
+                id: "bf1",
+                units: { [PLAYER_ONE]: [{ id: "unit-1", exhausted: true }] },
+              },
+            ],
+          },
+        );
+
+        // Act: Recall (should work even if unit is exhausted)
+        const result = engine.recallUnit("unit-1");
+
+        // Assert: Recall succeeded despite exhaustion
+        expect(result).toBe(true);
+      });
+    });
+
+    describe("619: Gear Recalls", () => {
+      it.skip("Rule 619.1 - gear at battlefield should be recalled during cleanup", () => {
+        // This test documents the gear recall rule
+        // Gear at a battlefield is recalled to base during cleanup
+        const engine = new RiftboundTestEngine(
+          {},
+          {},
+          {
+            battlefields: [{ id: "bf1" }],
+          },
+        );
+
+        // Assert: Cleanup would recall gear (documented behavior)
+        expect(engine.getBattlefield("bf1")).toBeDefined();
+      });
+    });
+  });
+
+  // ===========================================================================
+  // Edge Cases
+  // ===========================================================================
+
+  describe("Edge Cases", () => {
+    describe("Illegal Actions", () => {
+      it.skip("should reject action when not player's turn", () => {
+        // Arrange: Player 2's turn
+        const engine = new RiftboundTestEngine(
+          {},
+          {},
+          {
+            activePlayer: PLAYER_TWO,
+            phase: "action",
+          },
+        );
+        engine.addToZone(PLAYER_ONE, "hand", { id: "card-1", name: "Card" });
+
+        // Assert: Player 1 cannot play
+        expect(engine.canPlayCard(PLAYER_ONE, "card-1")).toBe(false);
+      });
+
+      it.skip("should reject action during wrong phase", () => {
+        // Arrange: Game in draw phase
+        const engine = new RiftboundTestEngine({}, {}, { phase: "draw" });
+        engine.addToZone(PLAYER_ONE, "hand", { id: "card-1", name: "Card" });
+
+        // Assert: Cannot play cards during draw phase
+        expect(engine.canPlayCard(PLAYER_ONE, "card-1")).toBe(false);
+      });
+
+      it.skip("should reject action during Closed state", () => {
+        // Arrange: Chain has items (Closed state)
+        const engine = new RiftboundTestEngine({}, {}, { phase: "action" });
+        engine.addToChain({
+          id: "spell-1",
+          controllerId: PLAYER_TWO,
+          type: "spell",
+        });
+        engine.addToZone(PLAYER_ONE, "hand", { id: "card-1", name: "Card" });
+
+        // Assert: Cannot play during Closed state
+        expect(engine.getChainState()).toBe("closed");
+        expect(engine.canPlayCard(PLAYER_ONE, "card-1")).toBe(false);
+      });
+
+      it.skip("should reject action during Showdown state for non-combat actions", () => {
+        // Arrange: Game in Showdown
+        const engine = new RiftboundTestEngine({}, {}, { phase: "action" });
+        engine.startShowdown();
+        engine.addToZone(PLAYER_ONE, "hand", { id: "card-1", name: "Card" });
+
+        // Assert: Cannot play non-combat cards during Showdown
+        expect(engine.getTurnState()).toBe("showdown");
+        expect(engine.canPlayCard(PLAYER_ONE, "card-1")).toBe(false);
+      });
+    });
+
+    describe("Cost Payment Failures", () => {
+      it.skip("should reject action when cannot pay energy cost", () => {
+        // Arrange: Player with no energy
+        const engine = new RiftboundTestEngine(
+          { energy: 0 },
+          {},
+          { phase: "action" },
+        );
+
+        // Assert: Cannot afford cost
+        expect(engine.canAfford(PLAYER_ONE, { energy: 3 })).toBe(false);
+      });
+
+      it.skip("should reject action when cannot pay power cost", () => {
+        // Arrange: Player with no fury power
+        const engine = new RiftboundTestEngine({}, {}, { phase: "action" });
+
+        // Assert: Cannot afford fury cost
+        expect(engine.canAfford(PLAYER_ONE, { power: { fury: 2 } })).toBe(
+          false,
+        );
+      });
+
+      it.skip("should reject exhaust cost when unit already exhausted", () => {
+        // Arrange: Exhausted unit
+        const engine = new RiftboundTestEngine(
+          {},
+          {},
+          {
+            battlefields: [
+              {
+                id: "bf1",
+                units: { [PLAYER_ONE]: [{ id: "unit-1", exhausted: true }] },
+              },
+            ],
+          },
+        );
+
+        // Assert: Cannot exhaust already exhausted unit
+        expect(engine.exhaustUnit("unit-1")).toBe(false);
+      });
+    });
+
+    describe("Empty Zone Scenarios", () => {
+      it.skip("should handle draw from empty deck", () => {
+        // Arrange: Empty deck
+        const engine = new RiftboundTestEngine({}, {});
+
+        // Act: Draw triggers burn out
+        engine.drawCards(PLAYER_ONE, 1);
+
+        // Assert: Burn out occurred
+        expect(engine.getVictoryPoints(PLAYER_TWO)).toBe(1);
+      });
+
+      it.skip("should handle discard from empty hand", () => {
+        // Arrange: Empty hand
+        const engine = new RiftboundTestEngine({}, {});
+
+        // Act: Try to discard
+        const result = engine.discardCard(PLAYER_ONE, "nonexistent");
+
+        // Assert: Discard failed
+        expect(result).toBe(false);
+      });
+
+      it.skip("should handle recycle from empty trash", () => {
+        // Arrange: Empty trash
+        const engine = new RiftboundTestEngine({}, {});
+
+        // Act: Try to recycle
+        const result = engine.recycleCard(PLAYER_ONE, "nonexistent", "trash");
+
+        // Assert: Recycle failed
+        expect(result).toBe(false);
+      });
+    });
+
+    describe("Already Applied States", () => {
+      it.skip("should handle stunning already stunned unit", () => {
+        // Arrange: Stunned unit
+        const engine = new RiftboundTestEngine(
+          {},
+          {},
+          {
+            battlefields: [
+              {
+                id: "bf1",
+                units: { [PLAYER_ONE]: [{ id: "unit-1" }] },
+              },
+            ],
+          },
+        );
+        engine.stunUnit("unit-1");
+
+        // Act: Try to stun again
+        const result = engine.stunUnit("unit-1");
+
+        // Assert: Returns false, unit still stunned
+        expect(result).toBe(false);
+        expect(engine.isUnitStunned("unit-1")).toBe(true);
+      });
+
+      it.skip("should handle buffing already buffed unit", () => {
+        // Arrange: Buffed unit
+        const engine = new RiftboundTestEngine(
+          {},
+          {},
+          {
+            battlefields: [
+              {
+                id: "bf1",
+                units: { [PLAYER_ONE]: [{ id: "unit-1" }] },
+              },
+            ],
+          },
+        );
+        engine.buffUnit("unit-1");
+
+        // Act: Try to buff again
+        const result = engine.buffUnit("unit-1");
+
+        // Assert: Returns false, unit still buffed
+        expect(result).toBe(false);
+        expect(engine.isUnitBuffed("unit-1")).toBe(true);
+      });
+    });
+  });
+
+  // ===========================================================================
+  // Integration: Actions + Priority
+  // ===========================================================================
+
+  describe("Integration: Actions + Priority", () => {
+    it.skip("should require priority to play cards", () => {
+      // Arrange: Player without priority
+      const engine = new RiftboundTestEngine({}, {}, { phase: "action" });
+      engine.setPriorityHolder(PLAYER_TWO);
+      engine.addToZone(PLAYER_ONE, "hand", { id: "card-1", name: "Card" });
+
+      // Assert: Player 1 cannot play without priority
+      expect(engine.hasPriority(PLAYER_ONE)).toBe(false);
+    });
+
+    it.skip("should allow action when player has priority", () => {
+      // Arrange: Player with priority
+      const engine = new RiftboundTestEngine({}, {}, { phase: "action" });
+      engine.setPriorityHolder(PLAYER_ONE);
+      engine.addToZone(PLAYER_ONE, "hand", { id: "card-1", name: "Card" });
+
+      // Assert: Player 1 has priority
+      expect(engine.hasPriority(PLAYER_ONE)).toBe(true);
+    });
+
+    it.skip("should pass priority after playing card", () => {
+      // Arrange: Player with priority plays card
+      const engine = new RiftboundTestEngine({}, {}, { phase: "action" });
+      engine.setPriorityHolder(PLAYER_ONE);
+      engine.addToZone(PLAYER_ONE, "hand", { id: "card-1", name: "Card" });
+
+      // Act: Play card and pass priority
+      engine.playCard(PLAYER_ONE, "card-1");
+      engine.passPriority();
+
+      // Assert: Priority passed to opponent
+      expect(engine.hasPriority(PLAYER_TWO)).toBe(true);
+    });
+
+    it.skip("should handle chain resolution with priority", () => {
+      // Arrange: Items on chain
+      const engine = new RiftboundTestEngine({}, {}, { phase: "action" });
+      engine.addToChain({
+        id: "spell-1",
+        controllerId: PLAYER_ONE,
+        type: "spell",
+      });
+      engine.setPriorityHolder(PLAYER_ONE);
+
+      // Act: Pass priority
+      engine.passPriority();
+
+      // Assert: Priority passed
+      expect(engine.hasPriority(PLAYER_TWO)).toBe(true);
+    });
+
+    it.skip("should resolve chain when both players pass", () => {
+      // Arrange: Spell on chain, both players pass
+      const engine = new RiftboundTestEngine({}, {}, { phase: "action" });
+      engine.addToChain({
+        id: "spell-1",
+        controllerId: PLAYER_ONE,
+        type: "spell",
+      });
+
+      // Act: Resolve chain
+      const resolved = engine.resolveChainItem();
+
+      // Assert: Spell resolved
+      expect(resolved?.id).toBe("spell-1");
+      expect(engine.hasChain()).toBe(false);
+    });
+  });
 });

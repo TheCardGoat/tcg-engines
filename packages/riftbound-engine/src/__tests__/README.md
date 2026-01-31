@@ -1,559 +1,144 @@
 # Riftbound Engine Test Suite
 
-This directory contains comprehensive test specifications for the Riftbound game engine, organized by rule categories from the official Riftbound Core Rules.
+Comprehensive TDD test specifications for the Riftbound game engine, organized by rule sections from the official Riftbound Core Rules (effective June 2, 2025).
 
-## Table of Contents
+## Overview
 
-1. [Test File Structure](#test-file-structure)
-2. [Arrange-Act-Assert Pattern](#arrange-act-assert-pattern)
-3. [Using RiftboundTestEngine API](#using-riftboundtestengine-api)
-4. [Test Naming Conventions](#test-naming-conventions)
-5. [Edge Case Identification](#edge-case-identification)
-6. [Integration Test Patterns](#integration-test-patterns)
-7. [When to Use `.skip()`](#when-to-use-skip)
-8. [TestCardBuilder Usage](#testcardbuilder-usage)
-9. [Examples from Test Files](#examples-from-test-files)
+This test suite serves dual purposes:
 
----
+1. **Specification** - Tests define expected behavior before implementation
+2. **Validation** - Tests verify implementation correctness
+
+All tests follow a TDD (Test-Driven Development) approach where tests are written first as specifications using `it.skip()`, then unskipped one at a time during implementation.
+
+### Relationship to Official Rules
+
+Tests reference the official Riftbound Core Rules documented in `.claude/skills/riftbound-rules/`. Rule numbers in test names (e.g., "Rule 503") correspond directly to the official rules document, ensuring traceability and correctness.
 
 ## Test File Structure
 
-Tests are organized by rule category, with each file covering a specific section of the Riftbound Core Rules:
+### File Naming Convention
 
-```
-__tests__/
-└── rules/
-    ├── turn-structure.test.ts      # Rules 500-526
-    ├── zones-and-card-movement.test.ts  # Rules 105-183
-    ├── combat-and-scoring.test.ts  # Rules 620-633
-    ├── chains-and-showdowns.test.ts # Rules 527-563
-    ├── abilities.test.ts           # Rules 564-585
-    ├── game-actions.test.ts        # Rules 586-619
-    ├── keywords.test.ts            # Rules 712-729
-    └── resources-and-deck.test.ts  # Rules 200-250, 101-103
-```
+Test files follow the pattern `{category}.test.ts`:
 
-### File Organization Pattern
+- `turn-structure.test.ts` - Rules 500-526
+- `game-actions.test.ts` - Rules 586-619
 
-Each test file follows this structure:
+### File Header Format
+
+Each test file begins with a documentation header:
 
 ```typescript
 /**
- * [Category] Tests - Rules XXX-YYY
+ * {Category} Tests - Rules XXX-YYY
  *
- * Comprehensive test specifications for Riftbound [category] rules.
+ * Comprehensive test specifications for Riftbound {category} rules.
  * Tests are organized by rule sections following TDD approach.
  *
  * NOTE: All tests are skipped pending TestEngine implementation.
  * Each test creates its own game instance via constructor parameters.
+ *
+ * Rule Sections:
+ * - XXX-YYY: Subcategory 1
+ * - XXX-YYY: Subcategory 2
  */
+```
 
-import { describe, it, expect } from "bun:test";
-import { RiftboundTestEngine, PLAYER_ONE, PLAYER_TWO } from "../../testing";
+### Organizational Structure
 
-describe("Section X: [Category] - Rules XXX-YYY", () => {
-  // ===========================================================================
-  // XXX-YYY: [Subsection Name]
-  // ===========================================================================
+Tests use nested `describe` blocks for organization:
 
-  describe("XXX-YYY: [Subsection Name]", () => {
-    describe("[Specific Topic] (Rule XXX)", () => {
-      it.skip("Rule XXX - should [expected behavior]", () => {
+```
+Section X: Category Name - Rules XXX-YYY
+├── XXX-YYY: Subcategory
+│   ├── Topic Name (Rules XXX-YYY)
+│   │   ├── Rule XXX - should...
+│   │   └── Rule YYY - should...
+│   └── Topic Name - Edge Cases
+│       └── Rule XXX - should handle...
+├── Integration: Category + Related Category
+│   └── should test cross-category behavior
+└── Edge Cases
+    └── should handle boundary conditions
+```
+
+### Example Structure
+
+```typescript
+describe("Section 5: Turn Structure - Rules 500-526", () => {
+  describe("501-506: The Turn", () => {
+    describe("Basic Flow (Rules 502-506)", () => {
+      it.skip("Rule 502 - should continue play cyclically until victory", () => {
         // Test implementation
       });
     });
 
-    describe("[Specific Topic] - Edge Cases", () => {
-      it.skip("should handle [edge case description]", () => {
+    describe("Basic Flow - Edge Cases", () => {
+      it.skip("Rule 502 - should detect victory when both players reach victory score simultaneously", () => {
         // Edge case test
       });
     });
   });
 
-  // ===========================================================================
-  // Integration Tests
-  // ===========================================================================
-
-  describe("Integration: [Category] + [Other Category]", () => {
-    it.skip("should [integration behavior]", () => {
-      // Cross-ref: Rule YYY ([related rule])
+  describe("Integration: Full Turn Cycle", () => {
+    it.skip("should complete a full turn cycle through all phases", () => {
       // Integration test
     });
   });
 });
 ```
 
----
-
-## Arrange-Act-Assert Pattern
-
-All tests follow the **Arrange-Act-Assert (AAA)** pattern for clarity and consistency:
-
-```typescript
-it.skip("Rule 520 - should kill Units with damage >= Might", () => {
-  // Arrange: Set up initial game state
-  const engine = new RiftboundTestEngine({}, {}, {
-    battlefields: [{
-      id: "bf1",
-      units: {
-        [PLAYER_ONE]: [{ id: "unit1", might: 3, damage: 3 }],
-      },
-    }],
-  });
-
-  // Act: Execute the action being tested
-  const killed = engine.cleanupKillDamagedUnits();
-
-  // Assert: Verify the expected outcome
-  expect(killed.length).toBe(1);
-  expect(killed[0]?.id).toBe("unit1");
-  expect(engine.getUnit("unit1")).toBeUndefined();
-});
-```
-
-### Guidelines
-
-- **Arrange**: Set up all preconditions and inputs
-- **Act**: Execute the single action being tested
-- **Assert**: Verify the expected outcomes
-- Use comments to clearly separate each section
-- Keep each section focused and minimal
-
----
-
-## Using RiftboundTestEngine API
-
-The `RiftboundTestEngine` provides a test-friendly API for setting up game states and verifying outcomes.
-
-### Constructor
-
-```typescript
-const engine = new RiftboundTestEngine(
-  playerOneState: TestPlayerState,
-  playerTwoState: TestPlayerState,
-  options: TestEngineOptions
-);
-```
-
-### Player State Configuration
-
-```typescript
-interface TestPlayerState {
-  victoryPoints?: number;  // Victory points (default: 0)
-  energy?: number;         // Rune pool energy (default: 0)
-  power?: Partial<Record<Domain, number>>;  // Power by domain
-}
-
-// Example
-const engine = new RiftboundTestEngine(
-  { victoryPoints: 5, energy: 3, power: { fury: 2 } },
-  { victoryPoints: 2 },
-  {}
-);
-```
-
-### Game Options Configuration
-
-```typescript
-interface TestEngineOptions {
-  victoryScore?: number;   // Points needed to win (default: 8)
-  phase?: GamePhase;       // Current phase (default: "action")
-  turnNumber?: number;     // Current turn (default: 1)
-  activePlayer?: PlayerId; // Active player (default: PLAYER_ONE)
-  battlefields?: TestBattlefieldConfig[];  // Battlefield setup
-}
-
-// Example
-const engine = new RiftboundTestEngine({}, {}, {
-  phase: "action",
-  turnNumber: 3,
-  activePlayer: PLAYER_TWO,
-  victoryScore: 8,
-});
-```
-
-### Battlefield Configuration
-
-```typescript
-interface TestBattlefieldConfig {
-  id: string;
-  controller?: PlayerId | null;
-  contested?: boolean;
-  contestedBy?: PlayerId;
-  units?: Record<PlayerId, TestUnitConfig[]>;
-}
-
-interface TestUnitConfig {
-  id?: string;
-  might?: number;
-  damage?: number;
-  exhausted?: boolean;
-  combatRole?: CombatRole;
-  hidden?: boolean;
-}
-
-// Example
-const engine = new RiftboundTestEngine({}, {}, {
-  battlefields: [{
-    id: "bf1",
-    controller: PLAYER_ONE,
-    units: {
-      [PLAYER_ONE]: [
-        { id: "unit1", might: 4, damage: 2, exhausted: true },
-        { id: "unit2", might: 3 },
-      ],
-      [PLAYER_TWO]: [
-        { id: "unit3", might: 5, combatRole: "defender" },
-      ],
-    },
-  }],
-});
-```
-
-### Key Getter Methods
-
-Always use getter methods for assertions - never access internal state directly:
-
-```typescript
-// Player state
-engine.getVictoryPoints(playerId)
-engine.getEnergy(playerId)
-engine.getPower(playerId, domain)
-engine.getRunePool(playerId)
-
-// Turn state
-engine.getCurrentPhase()
-engine.getActivePlayer()
-engine.getTurnNumber()
-engine.isGameOver()
-engine.getWinner()
-
-// Game state
-engine.getTurnState()      // "neutral" | "showdown"
-engine.getChainState()     // "open" | "closed"
-engine.getCombinedState()  // { turnState, chainState }
-engine.isInShowdown()
-engine.hasChain()
-engine.getChain()
-
-// Priority and Focus
-engine.getPriorityHolder()
-engine.hasPriority(playerId)
-engine.getFocusHolder()
-engine.hasFocus(playerId)
-
-// Units
-engine.getUnit(unitId)
-engine.getAllUnits()
-engine.getUnitsAtBattlefield(battlefieldId)
-engine.getUnitsOwnedBy(playerId)
-engine.getExhaustedUnits(playerId)
-
-// Battlefields
-engine.getBattlefield(battlefieldId)
-engine.getAllBattlefields()
-engine.hasOpposingUnits(battlefieldId)
-engine.getBattlefieldController(battlefieldId)
-engine.isBattlefieldContested(battlefieldId)
-engine.hasPendingCombat(battlefieldId)
-
-// Zones
-engine.getZoneContents(playerId, zone)
-engine.getHandSize(playerId)
-engine.getDeckSize(playerId)
-engine.getTrashSize(playerId)
-
-// Scoring
-engine.wasScoredThisTurn(playerId, battlefieldId)
-```
-
-### Key Action Methods
-
-```typescript
-// Turn management
-engine.advancePhase()
-engine.endTurn()
-
-// State management
-engine.startShowdown()
-engine.endShowdown()
-
-// Chain management
-engine.addToChain(item)
-engine.resolveChainItem()
-engine.clearChain()
-
-// Priority and Focus
-engine.setPriorityHolder(playerId)
-engine.passPriority()
-engine.setFocusHolder(playerId)
-
-// Resources
-engine.addVictoryPoints(playerId, points)
-engine.setEnergy(playerId, energy)
-engine.setPower(playerId, domain, power)
-engine.emptyRunePool(playerId)
-
-// Units
-engine.readyAllUnits(playerId)
-engine.clearAllDamage()
-
-// Cleanup
-engine.cleanupKillDamagedUnits()
-engine.cleanupRemoveCombatStatus()
-engine.cleanupMarkPendingCombats()
-engine.performCleanup()
-
-// Zones
-engine.addToZone(playerId, zone, card)
-engine.removeFromZone(playerId, zone, cardId)
-engine.moveCard(playerId, fromZone, toZone, cardId)
-
-// Scoring
-engine.markAsScored(playerId, battlefieldId)
-engine.markPendingCombat(battlefieldId)
-engine.clearPendingCombat(battlefieldId)
-```
-
----
-
 ## Test Naming Conventions
 
-### Rule Number Citations
+### Rule Number Prefix
 
-Always include the rule number in test names for traceability:
+Always include the rule number at the start of the test name:
 
 ```typescript
-// Good - includes rule number
-it.skip("Rule 520 - should kill Units with damage >= Might", () => {});
-it.skip("Rule 515.1 - should ready all exhausted game objects at start of turn", () => {});
+// Good
+it.skip("Rule 503 - should advance through phases in order", () => {});
+it.skip("Rule 512 - should grant priority during Neutral Open in Action Phase", () => {});
 
-// Bad - missing rule number
-it.skip("should kill damaged units", () => {});
+// Bad
+it.skip("should advance through phases in order", () => {});
+it.skip("phases should be in order", () => {});
 ```
 
-### Descriptive Names
+### Descriptive Behavior
 
-Test names should clearly describe the expected behavior:
+Use clear, specific descriptions of the expected behavior:
 
 ```typescript
-// Good - clear expected behavior
-it.skip("Rule 508 - should be in Showdown state during combat", () => {});
-it.skip("Rule 513 - should retain Focus when passing Priority", () => {});
+// Good - specific about conditions and outcomes
+it.skip("Rule 520 - should kill Units with damage >= Might", () => {});
+it.skip("Rule 503 - should not allow advancing past cleanup phase", () => {});
 
 // Bad - vague or unclear
-it.skip("Rule 508 - showdown test", () => {});
-it.skip("focus works", () => {});
+it.skip("Rule 520 - should handle damage", () => {});
+it.skip("Rule 503 - phase test", () => {});
 ```
 
 ### Edge Case Naming
 
-Edge cases should describe the specific scenario:
+Edge case tests should describe the specific scenario:
 
 ```typescript
-// Good - specific edge case
-it.skip("Rule 520 - should handle simultaneous deaths", () => {});
-it.skip("should not allow advancing past cleanup phase", () => {});
+// Good
+it.skip("Rule 502 - should detect victory when both players reach victory score simultaneously", () => {});
+it.skip("Rule 509 - should transition from Closed to Open when chain resolves completely", () => {});
 
-// Bad - generic
-it.skip("edge case 1", () => {});
+// Bad
+it.skip("Rule 502 - edge case", () => {});
+it.skip("Rule 509 - special scenario", () => {});
 ```
 
----
+## Arrange-Act-Assert Pattern
 
-## Edge Case Identification
+All tests follow the three-phase AAA structure with explicit comments.
 
-When writing tests, identify edge cases by considering:
+### Arrange Phase
 
-### Boundary Conditions
-
-- Zero values (0 damage, 0 energy, 0 units)
-- Maximum values (victory score reached, full hand)
-- Exactly at threshold (damage = might, not damage > might)
-
-### State Transitions
-
-- Entering/exiting states (Neutral ↔ Showdown, Open ↔ Closed)
-- Phase boundaries (end of phase, start of phase)
-- Turn boundaries (turn end, turn start)
-
-### Multiple Entities
-
-- Simultaneous effects (multiple units dying)
-- Multiple players affected
-- Multiple battlefields involved
-
-### Error Conditions
-
-- Invalid operations (advancing past cleanup)
-- Missing prerequisites (no priority holder)
-- Game over state
-
-### Example Edge Cases by Category
-
-```typescript
-// Turn Structure
-- Turn cycling back to first player
-- Game ending mid-turn
-- Phase advancement at cleanup
-
-// States
-- Nested state changes
-- State during chain resolution
-- Multiple chain items
-
-// Priority/Focus
-- Priority cycling
-- Focus transfer
-- No priority holder
-
-// Cleanup
-- Simultaneous deaths
-- Overkill damage
-- Empty battlefields after cleanup
-```
-
----
-
-## Integration Test Patterns
-
-Integration tests verify that multiple rule systems work together correctly.
-
-### Cross-Reference Pattern
-
-Always include cross-references to related rules:
-
-```typescript
-describe("Integration: Turn Structure + Combat", () => {
-  it.skip("should transition to Showdown state when combat begins", () => {
-    // Cross-ref: Rule 620 (Combat initiation)
-    const engine = new RiftboundTestEngine({}, {}, {
-      phase: "action",
-      battlefields: [{
-        id: "bf1",
-        units: {
-          [PLAYER_ONE]: [{ id: "p1unit" }],
-          [PLAYER_TWO]: [{ id: "p2unit" }],
-        },
-      }],
-    });
-
-    engine.startShowdown();
-
-    expect(engine.getTurnState()).toBe("showdown");
-  });
-});
-```
-
-### Common Integration Scenarios
-
-1. **Turn Structure + Combat**: State transitions during combat
-2. **Turn Structure + Scoring**: Victory point accumulation
-3. **Turn Structure + Chain**: Chain resolution timing
-4. **Turn Structure + Zones**: Card movement during phases
-5. **Turn Structure + Resources**: Rune pool management
-6. **Combat + Cleanup**: Damage resolution and unit death
-7. **Chain + Priority**: Priority passing during resolution
-
----
-
-## When to Use `.skip()`
-
-### TDD Workflow
-
-This project follows Test-Driven Development (TDD):
-
-1. **Write failing tests first** - All new tests start as `.skip()`
-2. **Implement to pass** - Unskip tests one at a time during implementation
-3. **Refactor** - Clean up code while keeping tests passing
-
-### When to Skip
-
-```typescript
-// Skip: Test defines behavior not yet implemented
-it.skip("Rule 520 - should kill Units with damage >= Might", () => {});
-
-// Don't skip: Test verifies existing behavior
-it("Rule 503 - should define phases in rigid order", () => {
-  expect(PHASE_ORDER).toEqual([...]);
-});
-```
-
-### Unskipping Tests
-
-When implementing a feature:
-
-1. Find the relevant skipped test
-2. Remove `.skip` from the test
-3. Run the test (it should fail - "red")
-4. Implement the feature
-5. Run the test (it should pass - "green")
-6. Refactor if needed
-7. Repeat for next test
-
----
-
-## TestCardBuilder Usage
-
-For tests requiring specific card configurations, use `TestCardBuilder`:
-
-```typescript
-import { TestCardBuilder, testCardBuilder } from "../../testing";
-
-// Using the default instance
-const unit = testCardBuilder.createTestUnit({
-  might: 4,
-  domain: "fury",
-  keywords: ["Assault 2", "Tank"],
-});
-
-// Creating a new builder instance
-const builder = new TestCardBuilder();
-
-// Create a unit
-const warrior = builder.createTestUnit({
-  id: "custom-unit",
-  name: "Test Warrior",
-  might: 5,
-  energyCost: 3,
-  domain: "fury",
-  powerCost: ["fury", "fury"],
-  keywords: ["Assault 2", "Tank"],
-  abilities: ["When I attack, draw 1"],
-  tags: ["Warrior", "Human"],
-});
-
-// Create a spell
-const bolt = builder.createTestSpell({
-  id: "custom-spell",
-  name: "Lightning Bolt",
-  cost: { energy: 2, power: ["fury"] },
-  timing: "action",
-  effect: "Deal 3 damage to a unit",
-});
-
-// Create a battlefield
-const ruins = builder.createTestBattlefield({
-  id: "custom-bf",
-  name: "Ancient Ruins",
-  abilities: ["When you conquer, draw 1"],
-});
-
-// Reset counters for consistent IDs
-builder.reset();
-```
-
-### When to Use TestCardBuilder
-
-- **Use TestCardBuilder** when you need specific card properties for a test
-- **Prefer real cards** from `@tcg/riftbound-cards` when available
-- **Use minimal configuration** - only specify what the test needs
-
----
-
-## Examples from Test Files
-
-### Basic Test Example
+Set up the initial state with a descriptive comment:
 
 ```typescript
 it.skip("Rule 502 - should continue play cyclically until victory", () => {
@@ -564,133 +149,659 @@ it.skip("Rule 502 - should continue play cyclically until victory", () => {
     { victoryScore: 8 },
   );
 
-  // Act: Add final point to trigger victory
-  engine.addVictoryPoints(PLAYER_ONE, 1);
-
-  // Assert: Game should detect victory condition
-  expect(engine.isGameOver()).toBe(true);
-  expect(engine.getVictoryPoints(PLAYER_ONE)).toBe(8);
+  // ...
 });
 ```
 
-### Complex Setup Example
+Common arrange patterns:
 
 ```typescript
-it.skip("Rule 520 - should handle simultaneous deaths", () => {
-  // Arrange: Multiple units with lethal damage
-  const engine = new RiftboundTestEngine({}, {}, {
-    battlefields: [{
-      id: "bf1",
-      units: {
-        [PLAYER_ONE]: [{ id: "unit1", might: 3, damage: 3 }],
-        [PLAYER_TWO]: [{ id: "unit2", might: 2, damage: 4 }],
-      },
-    }],
-  });
+// Basic game setup
+const engine = new RiftboundTestEngine({}, {});
 
-  // Act: Perform cleanup
-  const killed = engine.cleanupKillDamagedUnits();
+// Player state configuration
+const engine = new RiftboundTestEngine(
+  { victoryPoints: 5, energy: 3 },  // Player 1
+  { victoryPoints: 2 },              // Player 2
+);
 
-  // Assert: All units die simultaneously
-  expect(killed.length).toBe(2);
-  expect(engine.getUnit("unit1")).toBeUndefined();
-  expect(engine.getUnit("unit2")).toBeUndefined();
+// Game options
+const engine = new RiftboundTestEngine({}, {}, {
+  phase: "action",
+  turnNumber: 1,
+  activePlayer: PLAYER_ONE,
 });
-```
 
-### Integration Test Example
-
-```typescript
-it.skip("should score Hold during Beginning Phase", () => {
-  // Arrange: Player controls battlefield at start of turn
-  // Cross-ref: Rule 630 (Hold scoring)
-  const engine = new RiftboundTestEngine(
-    { victoryPoints: 0 },
-    { victoryPoints: 0 },
+// Battlefield with units
+const engine = new RiftboundTestEngine({}, {}, {
+  battlefields: [
     {
-      phase: "beginning",
-      activePlayer: PLAYER_ONE,
-      battlefields: [{
-        id: "bf1",
-        controller: PLAYER_ONE,
-      }],
+      id: "bf1",
+      controller: PLAYER_ONE,
+      units: {
+        [PLAYER_ONE]: [{ id: "unit1", might: 3, damage: 1 }],
+        [PLAYER_TWO]: [{ id: "unit2", might: 2 }],
+      },
     },
-  );
-
-  // Act: Score for holding
-  engine.addVictoryPoints(PLAYER_ONE, 1);
-  engine.markAsScored(PLAYER_ONE, "bf1");
-
-  // Assert: Victory point gained
-  expect(engine.getVictoryPoints(PLAYER_ONE)).toBe(1);
-  expect(engine.wasScoredThisTurn(PLAYER_ONE, "bf1")).toBe(true);
+  ],
 });
 ```
 
-### State Transition Example
+### Act Phase
+
+Execute the action being tested:
+
+```typescript
+// Explicit action
+// Act: Add final point to trigger victory
+engine.addVictoryPoints(PLAYER_ONE, 1);
+
+// Multiple sequential actions
+// Act: Advance through each phase
+engine.advancePhase();
+engine.advancePhase();
+engine.advancePhase();
+
+// Implicit action (testing initial state)
+// No Act phase needed - testing initial state
+```
+
+### Assert Phase
+
+Verify the expected outcomes using getter methods:
+
+```typescript
+// Assert: Game should detect victory condition
+expect(engine.isGameOver()).toBe(true);
+expect(engine.getVictoryPoints(PLAYER_ONE)).toBe(8);
+
+// Multiple assertions for complex behaviors
+// Assert: Player 2 becomes active player, phase resets
+expect(engine.getActivePlayer()).toBe(PLAYER_TWO);
+expect(engine.getCurrentPhase()).toBe("awaken");
+```
+
+## Using RiftboundTestEngine API
+
+The `RiftboundTestEngine` class provides a test-friendly wrapper for game state manipulation and inspection.
+
+### Constructor Patterns
+
+```typescript
+import { PLAYER_ONE, PLAYER_TWO, RiftboundTestEngine } from "../../testing";
+
+// Basic setup (defaults)
+const engine = new RiftboundTestEngine({}, {});
+
+// Player state configuration
+const engine = new RiftboundTestEngine(
+  { victoryPoints: 5, energy: 3, power: { fury: 2 } },  // Player 1
+  { victoryPoints: 2 },                                  // Player 2
+);
+
+// Game options
+const engine = new RiftboundTestEngine({}, {}, {
+  phase: "action",
+  turnNumber: 1,
+  activePlayer: PLAYER_ONE,
+  victoryScore: 8,
+});
+
+// Full battlefield setup
+const engine = new RiftboundTestEngine({}, {}, {
+  battlefields: [
+    {
+      id: "bf1",
+      controller: PLAYER_ONE,
+      contested: false,
+      units: {
+        [PLAYER_ONE]: [
+          { id: "unit1", might: 3, damage: 1, exhausted: false },
+          { id: "unit2", might: 5, combatRole: "attacker" },
+        ],
+        [PLAYER_TWO]: [
+          { id: "unit3", might: 4, damage: 2 },
+        ],
+      },
+    },
+  ],
+});
+```
+
+### State Inspection (Getters)
+
+Use getter methods exclusively for assertions - never access internal state directly.
+
+**Player State:**
+```typescript
+engine.getVictoryPoints(PLAYER_ONE)  // number
+engine.getEnergy(PLAYER_ONE)         // number
+engine.getPower(PLAYER_ONE, "fury")  // number
+engine.getRunePool(PLAYER_ONE)       // RunePool object
+```
+
+**Turn State:**
+```typescript
+engine.getCurrentPhase()    // GamePhase
+engine.getActivePlayer()    // PlayerId
+engine.getTurnNumber()      // number
+engine.isGameOver()         // boolean
+engine.getWinner()          // PlayerId | undefined
+```
+
+**Game State:**
+```typescript
+engine.getTurnState()       // "neutral" | "showdown"
+engine.getChainState()      // "open" | "closed"
+engine.getCombinedState()   // { turnState, chainState }
+engine.isInShowdown()       // boolean
+engine.hasChain()           // boolean
+engine.getChain()           // readonly ChainItem[]
+```
+
+**Units:**
+```typescript
+engine.getUnit("unit1")                    // TestUnit | undefined
+engine.getAllUnits()                       // TestUnit[]
+engine.getUnitsAtBattlefield("bf1")        // TestUnit[]
+engine.getUnitsOwnedBy(PLAYER_ONE)         // TestUnit[]
+engine.getExhaustedUnits(PLAYER_ONE)       // TestUnit[]
+engine.isUnitExhausted("unit1")            // boolean
+engine.isUnitStunned("unit1")              // boolean
+engine.isUnitBuffed("unit1")               // boolean
+engine.getUnitMight("unit1")               // number
+engine.getEffectiveMight("unit1")          // number (0 if stunned)
+engine.getDamage("unit1")                  // number
+engine.shouldUnitDie("unit1")              // boolean
+```
+
+**Battlefields:**
+```typescript
+engine.getBattlefield("bf1")               // BattlefieldState | undefined
+engine.getAllBattlefields()                // BattlefieldState[]
+engine.hasOpposingUnits("bf1")             // boolean
+engine.getBattlefieldController("bf1")     // PlayerId | null
+engine.isBattlefieldContested("bf1")       // boolean
+engine.hasPendingCombat("bf1")             // boolean
+```
+
+**Priority/Focus:**
+```typescript
+engine.getPriorityHolder()     // PlayerId | null
+engine.getFocusHolder()        // PlayerId | null
+engine.hasPriority(PLAYER_ONE) // boolean
+engine.hasFocus(PLAYER_ONE)    // boolean
+```
+
+**Zones:**
+```typescript
+engine.getZoneContents(PLAYER_ONE, "hand")  // CardObject[]
+engine.getHandSize(PLAYER_ONE)              // number
+engine.getDeckSize(PLAYER_ONE)              // number
+engine.getTrashSize(PLAYER_ONE)             // number
+```
+
+### State Manipulation (Actions)
+
+**Phase Management:**
+```typescript
+engine.advancePhase()  // GamePhase | null
+engine.endTurn()       // void
+```
+
+**Turn State:**
+```typescript
+engine.startShowdown()  // void
+engine.endShowdown()    // void
+```
+
+**Chain:**
+```typescript
+engine.addToChain({ id: "spell1", controllerId: PLAYER_ONE, type: "spell" })
+engine.resolveChainItem()  // ChainItem | undefined
+engine.clearChain()        // void
+```
+
+**Priority:**
+```typescript
+engine.setPriorityHolder(PLAYER_ONE)  // void
+engine.passPriority()                 // void
+```
+
+**Resources:**
+```typescript
+engine.addEnergy(PLAYER_ONE, 3)           // void
+engine.addPower(PLAYER_ONE, "fury", 2)    // void
+engine.spendEnergy(PLAYER_ONE, 2)         // boolean
+engine.spendPower(PLAYER_ONE, "fury", 1)  // boolean
+engine.emptyRunePool(PLAYER_ONE)          // void
+engine.canAfford(PLAYER_ONE, { energy: 3, power: { fury: 1 } })  // boolean
+```
+
+**Units:**
+```typescript
+engine.readyAllUnits(PLAYER_ONE)  // void
+engine.clearAllDamage()           // void
+engine.exhaustUnit("unit1")       // boolean
+engine.readyUnit("unit1")         // boolean
+engine.stunUnit("unit1")          // boolean
+engine.unstunUnit("unit1")        // boolean
+engine.buffUnit("unit1")          // boolean
+engine.unbuffUnit("unit1")        // boolean
+engine.killUnit("unit1")          // boolean
+engine.addDamage("unit1", 2)      // number
+engine.moveUnit("unit1", "bf2")   // boolean
+engine.recallUnit("unit1")        // boolean
+```
+
+**Cleanup:**
+```typescript
+engine.performCleanup()              // void
+engine.cleanupKillDamagedUnits()     // TestUnit[]
+engine.cleanupRemoveCombatStatus()   // void
+engine.cleanupMarkPendingCombats()   // void
+```
+
+**Scoring:**
+```typescript
+engine.addVictoryPoints(PLAYER_ONE, 1)       // void
+engine.markAsScored(PLAYER_ONE, "bf1")       // void
+engine.wasScoredThisTurn(PLAYER_ONE, "bf1")  // boolean
+```
+
+**Zones:**
+```typescript
+engine.addToZone(PLAYER_ONE, "hand", { id: "card1", name: "Test Card" })
+engine.removeFromZone(PLAYER_ONE, "hand", "card1")  // CardObject | undefined
+engine.moveCard(PLAYER_ONE, "hand", "trash", "card1")  // boolean
+engine.clearZone(PLAYER_ONE, "hand")  // void
+```
+
+## Edge Case Identification
+
+When writing tests, consider these categories of edge cases:
+
+### Boundary Conditions
+- Phase transitions (first/last phase)
+- Empty/full states (empty deck, full hand)
+- Zero values (0 damage, 0 energy)
+- Maximum values (victory score reached)
+
+```typescript
+it.skip("Rule 503 - should not allow advancing past cleanup phase", () => {
+  const engine = new RiftboundTestEngine({}, {}, { phase: "cleanup" });
+  const result = engine.advancePhase();
+  expect(result).toBeNull();
+  expect(engine.getCurrentPhase()).toBe("cleanup");
+});
+```
+
+### Invalid Operations
+- Actions during wrong phase
+- Actions without priority
+- Actions on opponent's turn
+- Actions in wrong game state
+
+```typescript
+it.skip("Rule 504 - should not allow game actions during game over state", () => {
+  const engine = new RiftboundTestEngine(
+    { victoryPoints: 8 },
+    { victoryPoints: 0 },
+    { victoryScore: 8 },
+  );
+  expect(engine.isGameOver()).toBe(true);
+  // Game state should be frozen
+});
+```
+
+### Simultaneous Effects
+- Both players reaching victory score
+- Multiple units dying at once
+- Multiple triggers at same time
+
+```typescript
+it.skip("Rule 502 - should detect victory when both players reach victory score simultaneously", () => {
+  const engine = new RiftboundTestEngine(
+    { victoryPoints: 7 },
+    { victoryPoints: 7 },
+    { victoryScore: 8 },
+  );
+  engine.addVictoryPoints(PLAYER_ONE, 1);
+  engine.addVictoryPoints(PLAYER_TWO, 1);
+  expect(engine.isGameOver()).toBe(true);
+});
+```
+
+### State Combinations
+- Neutral Open, Neutral Closed, Showdown Open, Showdown Closed
+- Exhausted + Stunned units
+- Contested + Controlled battlefields
 
 ```typescript
 it.skip("Rule 510 - should correctly identify all four combined states", () => {
   const engine = new RiftboundTestEngine({}, {});
-
-  // Neutral Open (default)
+  
+  // Test all four state combinations
   let state = engine.getCombinedState();
   expect(state.turnState).toBe("neutral");
   expect(state.chainState).toBe("open");
-
-  // Neutral Closed
+  
   engine.addToChain({ id: "spell1", controllerId: PLAYER_ONE, type: "spell" });
   state = engine.getCombinedState();
   expect(state.turnState).toBe("neutral");
   expect(state.chainState).toBe("closed");
-
-  // Clear chain and start showdown
-  engine.clearChain();
-  engine.startShowdown();
-
-  // Showdown Open
-  state = engine.getCombinedState();
-  expect(state.turnState).toBe("showdown");
-  expect(state.chainState).toBe("open");
-
-  // Showdown Closed
-  engine.addToChain({ id: "ability1", controllerId: PLAYER_ONE, type: "ability" });
-  state = engine.getCombinedState();
-  expect(state.turnState).toBe("showdown");
-  expect(state.chainState).toBe("closed");
+  
+  // ... continue for all combinations
 });
 ```
 
----
+### Rule Interactions
+- Priority during chain resolution
+- Focus retention when passing priority
+- Cleanup after chain item resolves
 
-## Contributing New Tests
+```typescript
+it.skip("Rule 513 - should retain Focus when passing Priority", () => {
+  const engine = new RiftboundTestEngine({}, {});
+  engine.startShowdown();
+  engine.setFocusHolder(PLAYER_ONE);
+  engine.setPriorityHolder(PLAYER_ONE);
+  
+  engine.passPriority();
+  
+  expect(engine.hasFocus(PLAYER_ONE)).toBe(true);
+  expect(engine.hasPriority(PLAYER_TWO)).toBe(true);
+});
+```
 
-When adding new tests:
+## Integration Test Patterns
 
-1. **Identify the rule** - Find the specific rule number in the Core Rules
-2. **Choose the right file** - Add to the appropriate category file
-3. **Follow the pattern** - Use AAA pattern with rule citations
-4. **Add edge cases** - Consider boundary conditions and error states
-5. **Include integration tests** - Test interactions with other systems
-6. **Use `.skip()`** - New tests should be skipped until implemented
-7. **Document cross-references** - Note related rules in comments
+Integration tests verify behavior across multiple rule categories.
 
-### Checklist for New Tests
+### Placement
 
-- [ ] Rule number in test name
-- [ ] Clear Arrange-Act-Assert structure
-- [ ] Uses RiftboundTestEngine API (no direct state access)
-- [ ] Edge cases identified and tested
-- [ ] Integration tests for cross-system behavior
-- [ ] Test is marked with `.skip()`
-- [ ] Cross-references documented in comments
+Place integration tests at the end of the relevant test file:
 
----
+```typescript
+describe("Section 5: Turn Structure - Rules 500-526", () => {
+  // ... rule-specific tests ...
 
-## Resources
+  describe("Integration: Full Turn Cycle", () => {
+    it.skip("should complete a full turn cycle through all phases", () => {
+      // Test complete workflow
+    });
+  });
 
-- **Riftbound Core Rules**: `.claude/skills/riftbound-rules/`
-- **Test Engine Source**: `src/testing/riftbound-test-engine.ts`
-- **Card Builder Source**: `src/testing/test-card-builder.ts`
-- **Type Definitions**: `@tcg/riftbound-types`
-- **Card Definitions**: `@tcg/riftbound-cards`
+  describe("Integration: Turn Structure + Combat", () => {
+    it.skip("should transition to Showdown state when combat begins", () => {
+      // Cross-ref: Rule 620 (Combat initiation)
+    });
+  });
+});
+```
+
+### Cross-References
+
+Include comments referencing related rule categories:
+
+```typescript
+it.skip("should transition to Showdown state when combat begins", () => {
+  // Arrange: Battlefield with opposing units during Action Phase
+  // Cross-ref: Rule 620 (Combat initiation)
+  const engine = new RiftboundTestEngine({}, {}, {
+    phase: "action",
+    battlefields: [
+      {
+        id: "bf1",
+        units: {
+          [PLAYER_ONE]: [{ id: "p1unit" }],
+          [PLAYER_TWO]: [{ id: "p2unit" }],
+        },
+      },
+    ],
+  });
+
+  engine.startShowdown();
+
+  expect(engine.getTurnState()).toBe("showdown");
+  expect(engine.isInShowdown()).toBe(true);
+});
+```
+
+### Realistic Scenarios
+
+Test complete game workflows:
+
+```typescript
+it.skip("should handle multiple complete turns", () => {
+  const engine = new RiftboundTestEngine({}, {}, {
+    phase: "awaken",
+    turnNumber: 1,
+    activePlayer: PLAYER_ONE,
+  });
+
+  // Complete two full turns
+  for (let turn = 0; turn < 2; turn++) {
+    for (let i = 0; i < 7; i++) {
+      engine.advancePhase();
+    }
+    engine.endTurn();
+  }
+
+  expect(engine.getTurnNumber()).toBe(3);
+  expect(engine.getActivePlayer()).toBe(PLAYER_ONE);
+  expect(engine.getCurrentPhase()).toBe("awaken");
+});
+```
+
+## Using .skip() for TDD
+
+### Purpose
+
+All tests start with `it.skip()` to define requirements without running them:
+
+```typescript
+it.skip("Rule 503 - should advance through phases in order", () => {
+  // Test defines expected behavior
+  // Will be unskipped during implementation
+});
+```
+
+### TDD Workflow
+
+1. **Write Test** - Create test with `it.skip()` defining expected behavior
+2. **Unskip** - Remove `.skip()` when ready to implement
+3. **Red** - Run test, verify it fails (no implementation yet)
+4. **Green** - Implement minimum code to pass
+5. **Refactor** - Clean up while keeping tests green
+6. **Repeat** - Move to next test
+
+### Benefits
+
+- Tests serve as executable specifications
+- Full test suite provides implementation roadmap
+- Prevents accidental test execution before implementation
+- Clear visibility of remaining work
+
+## Test Organization by Rule Category
+
+| File | Rules | Description |
+|------|-------|-------------|
+| `turn-structure.test.ts` | 500-526 | Turn phases, states, priority, focus, cleanups |
+| `game-actions.test.ts` | 586-619 | Actions, movement, recalls |
+
+### Planned Test Files
+
+Additional test files may be created for:
+
+- `combat-and-scoring.test.ts` - Rules 620-633
+- `abilities.test.ts` - Rules 564-585
+- `keywords.test.ts` - Rules 712-729
+- `chains-and-showdowns.test.ts` - Rules 527-563
+- `zones-and-movement.test.ts` - Rules 105-183
+- `resources.test.ts` - Rune and resource rules
+- `deck-construction.test.ts` - Rules 100-127
+
+## Contributor Guide
+
+### Step-by-Step: Writing New Tests
+
+1. **Choose Rule Category**
+   - Identify the rule section you're testing
+   - Create or open the appropriate test file
+
+2. **Add File Header** (if new file)
+   ```typescript
+   /**
+    * {Category} Tests - Rules XXX-YYY
+    *
+    * Comprehensive test specifications for Riftbound {category} rules.
+    * Tests are organized by rule sections following TDD approach.
+    *
+    * NOTE: All tests are skipped pending TestEngine implementation.
+    */
+   ```
+
+3. **Create Describe Blocks**
+   ```typescript
+   describe("Section X: Category - Rules XXX-YYY", () => {
+     describe("XXX-YYY: Subcategory", () => {
+       describe("Topic (Rules XXX-YYY)", () => {
+         // Tests go here
+       });
+     });
+   });
+   ```
+
+4. **Write Test with Rule Number**
+   ```typescript
+   it.skip("Rule XXX - should {expected behavior}", () => {
+     // Arrange: {description}
+     const engine = new RiftboundTestEngine({}, {});
+
+     // Act: {action}
+     engine.someAction();
+
+     // Assert: {expected outcome}
+     expect(engine.someGetter()).toBe(expectedValue);
+   });
+   ```
+
+5. **Add Edge Cases**
+   ```typescript
+   describe("Topic - Edge Cases", () => {
+     it.skip("Rule XXX - should handle {edge case}", () => {
+       // Test edge case
+     });
+   });
+   ```
+
+6. **Add Integration Tests**
+   ```typescript
+   describe("Integration: Category + Related Category", () => {
+     it.skip("should {cross-category behavior}", () => {
+       // Cross-ref: Rule YYY (related rule)
+       // Test integration
+     });
+   });
+   ```
+
+7. **Use `it.skip()` for All Tests**
+   - All new tests must use `it.skip()`
+   - Tests are unskipped during implementation
+
+8. **Reference Official Rules**
+   - Consult `.claude/skills/riftbound-rules/` for rule details
+   - Include rule numbers in test names
+   - Add cross-references for related rules
+
+## Examples from Turn Structure Tests
+
+### Basic Flow Test
+
+```typescript
+it.skip("Rule 503 - should advance through phases in order", () => {
+  // Arrange: Game starting at awaken phase
+  const engine = new RiftboundTestEngine({}, {}, { phase: "awaken" });
+
+  // Act & Assert: Advance through each phase
+  expect(engine.getCurrentPhase()).toBe("awaken");
+  engine.advancePhase();
+  expect(engine.getCurrentPhase()).toBe("beginning");
+  engine.advancePhase();
+  expect(engine.getCurrentPhase()).toBe("channel");
+  engine.advancePhase();
+  expect(engine.getCurrentPhase()).toBe("draw");
+  engine.advancePhase();
+  expect(engine.getCurrentPhase()).toBe("action");
+  engine.advancePhase();
+  expect(engine.getCurrentPhase()).toBe("ending");
+  engine.advancePhase();
+  expect(engine.getCurrentPhase()).toBe("cleanup");
+});
+```
+
+### Edge Case Test
+
+```typescript
+it.skip("Rule 502 - should detect victory when both players reach victory score simultaneously", () => {
+  // Arrange: Both players at 7 victory points
+  const engine = new RiftboundTestEngine(
+    { victoryPoints: 7 },
+    { victoryPoints: 7 },
+    { victoryScore: 8 },
+  );
+
+  // Act: Both players gain a point (simulating simultaneous scoring)
+  engine.addVictoryPoints(PLAYER_ONE, 1);
+  engine.addVictoryPoints(PLAYER_TWO, 1);
+
+  // Assert: Game is over (first to reach wins per turn order)
+  expect(engine.isGameOver()).toBe(true);
+  expect(engine.getVictoryPoints(PLAYER_ONE)).toBe(8);
+  expect(engine.getVictoryPoints(PLAYER_TWO)).toBe(8);
+});
+```
+
+### Integration Test
+
+```typescript
+it.skip("should complete a full turn cycle through all phases", () => {
+  // Arrange: Game starting at awaken
+  const engine = new RiftboundTestEngine({}, {}, {
+    phase: "awaken",
+    turnNumber: 1,
+    activePlayer: PLAYER_ONE,
+  });
+
+  // Act: Advance through all phases
+  expect(engine.getCurrentPhase()).toBe("awaken");
+  engine.advancePhase();
+  expect(engine.getCurrentPhase()).toBe("beginning");
+  engine.advancePhase();
+  expect(engine.getCurrentPhase()).toBe("channel");
+  engine.advancePhase();
+  expect(engine.getCurrentPhase()).toBe("draw");
+  engine.advancePhase();
+  expect(engine.getCurrentPhase()).toBe("action");
+  engine.advancePhase();
+  expect(engine.getCurrentPhase()).toBe("ending");
+  engine.advancePhase();
+  expect(engine.getCurrentPhase()).toBe("cleanup");
+
+  // End turn
+  engine.endTurn();
+
+  // Assert: Turn completes, next player becomes active
+  expect(engine.getActivePlayer()).toBe(PLAYER_TWO);
+  expect(engine.getCurrentPhase()).toBe("awaken");
+  expect(engine.getTurnNumber()).toBe(2);
+});
+```
+
+## References
+
+- **Official Rules**: `.claude/skills/riftbound-rules/`
+- **Test Engine API**: `packages/riftbound-engine/src/testing/riftbound-test-engine.ts`
+- **Turn Structure Tests**: `packages/riftbound-engine/src/__tests__/rules/turn-structure.test.ts`
+- **Game Actions Tests**: `packages/riftbound-engine/src/__tests__/rules/game-actions.test.ts`
