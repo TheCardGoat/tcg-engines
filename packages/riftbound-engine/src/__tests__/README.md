@@ -630,18 +630,16 @@ it.skip("Rule 503 - should advance through phases in order", () => {
 | `turn-structure.test.ts` | 500-526 | Turn phases, states, priority, focus, cleanups |
 | `game-actions.test.ts` | 586-619 | Actions, movement, recalls |
 | `resources-and-deck-construction.test.ts` | 100-127, 156-161, 606 | Resources, runes, deck construction |
+| `chains-and-showdowns.test.ts` | 527-563 | Chains, showdowns, playing cards |
+| `combat-and-scoring.test.ts` | 620-633 | Combat resolution, damage assignment, scoring |
 
 ### Planned Test Files
 
 Additional test files may be created for:
 
-- `combat-and-scoring.test.ts` - Rules 620-633
 - `abilities.test.ts` - Rules 564-585
 - `keywords.test.ts` - Rules 712-729
-- `chains-and-showdowns.test.ts` - Rules 527-563
 - `zones-and-movement.test.ts` - Rules 105-183
-- `resources.test.ts` - Rune and resource rules
-- `deck-construction.test.ts` - Rules 100-127
 
 ## Contributor Guide
 
@@ -807,6 +805,8 @@ it.skip("should complete a full turn cycle through all phases", () => {
 - **Turn Structure Tests**: `packages/riftbound-engine/src/__tests__/rules/turn-structure.test.ts`
 - **Game Actions Tests**: `packages/riftbound-engine/src/__tests__/rules/game-actions.test.ts`
 - **Resources Tests**: `packages/riftbound-engine/src/__tests__/rules/resources-and-deck-construction.test.ts`
+- **Chains & Showdowns Tests**: `packages/riftbound-engine/src/__tests__/rules/chains-and-showdowns.test.ts`
+- **Combat & Scoring Tests**: `packages/riftbound-engine/src/__tests__/rules/combat-and-scoring.test.ts`
 
 ## Cross-Category Integration Tests
 
@@ -861,15 +861,15 @@ it.skip("should clear damage at end of turn after combat", () => {
 | `turn-structure.test.ts` | 500-526 | Complete |
 | `game-actions.test.ts` | 586-619 | Complete |
 | `resources-and-deck-construction.test.ts` | 100-127, 156-161, 606 | Complete |
+| `chains-and-showdowns.test.ts` | 527-563 | Complete |
+| `abilities.test.ts` | 564-585 | Complete |
 
 ### Planned Test Files
 
 | File | Rules | Description |
 |------|-------|-------------|
 | `combat-and-scoring.test.ts` | 620-633 | Combat resolution and victory |
-| `abilities.test.ts` | 564-585 | Ability types and triggers |
 | `keywords.test.ts` | 712-729 | Keyword mechanics |
-| `chains-and-showdowns.test.ts` | 527-563 | Chain and showdown rules |
 | `zones-and-movement.test.ts` | 105-183 | Zone management |
 
 ## Test Coverage Goals
