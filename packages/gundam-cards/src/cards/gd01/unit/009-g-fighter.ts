@@ -1,0 +1,22 @@
+import type { UnitCardDefinition } from "@tcg/gundam-types";
+
+export const Gfighter: UnitCardDefinition = {
+  id: "gd01-009",
+  name: "G-Fighter",
+  cardNumber: "GD01-009",
+  setCode: "GD01",
+  cardType: "UNIT",
+  rarity: "uncommon",
+  color: "blue",
+  level: 3,
+  cost: 2,
+  text: "【Deploy】Choose 1 of your (White Base Team) Units. It gains <High-Maneuver> during this turn.\n\n (This Unit can&#039;t be blocked.)",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-009.webp?26013001",
+  sourceTitle: "Mobile Suit Gundam",
+  ap: 3,
+  hp: 2,
+  zones: ["space", "earth"],
+  traits: ["earth", "federation", "white", "base", "team"],
+  linkRequirements: ["(white-base-team)-trait"],
+};

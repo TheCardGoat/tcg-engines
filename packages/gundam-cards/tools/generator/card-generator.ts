@@ -44,8 +44,6 @@ export function createCardDefinition(
         zones: parseZones(scraped.zone),
         traits: parseTraits(scraped.trait),
         linkRequirements: parseLinkRequirements(scraped.link),
-        keywords: parsed.keywords.length > 0 ? parsed.keywords : undefined,
-        effects: parsed.effects.length > 0 ? parsed.effects : undefined,
       };
 
     case "PILOT":
@@ -55,7 +53,6 @@ export function createCardDefinition(
         traits: parseTraits(scraped.trait),
         apModifier: parseModifier(scraped.ap),
         hpModifier: parseModifier(scraped.hp),
-        effects: parsed.effects.length > 0 ? parsed.effects : undefined,
       };
 
     case "COMMAND":
@@ -64,7 +61,6 @@ export function createCardDefinition(
         cardType: "COMMAND",
         timing: detectCommandTiming(scraped.effectText),
         pilotProperties: detectPilotProperties(scraped),
-        effects: parsed.effects.length > 0 ? parsed.effects : undefined,
       };
 
     case "BASE":
@@ -75,7 +71,6 @@ export function createCardDefinition(
         hp: Number.parseInt(scraped.hp || "0", 10),
         zones: parseZones(scraped.zone),
         traits: parseTraits(scraped.trait),
-        effects: parsed.effects.length > 0 ? parsed.effects : undefined,
       };
 
     case "RESOURCE":

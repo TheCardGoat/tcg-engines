@@ -1,322 +1,8 @@
-/**
- * Card Type Definitions for Gundam Card Game
- *
- * These types define the structure of card definitions in the @tcg/gundam engine.
- * All cards are plain data objects following @tcg/core patterns.
- */
-
-import type { TargetQuery } from "../targeting/gundam-target-dsl";
-
-// ============================================================================
-// EFFECT TYPES
-// ============================================================================
-
-/**
- * Effect restrictions that limit how often an effect can be used
- */
-export interface EffectRestriction {
-  type: "ONCE_PER_TURN" | "ONCE_PER_GAME" | "MAX_PER_TURN";
-  value?: number; // For MAX_PER_TURN
-}
-
-export type EffectConditions = "DURING_PAIR" | "DURING_LINK";
-
-export interface EffectCondition {
-  type:
-    | "STATE_CHECK"
-    | "LOCATION_CHECK"
-    | "COMPARISON"
-    | "HAS_UNIT"
-    | "HAS_CARD";
-  // Add more as needed
-  [key: string]: unknown;
-}
-
-export interface EffectCost {
-  type:
-    | "ENERGY"
-    | "DISCARD"
-    | "REST_SELF"
-    | "RETURN_TO_HAND"
-    | "DESTROY_SELF"
-    | "REMOVE_FROM_GRAVEYARD";
-  amount?: number;
-  target?: TargetQuery;
-}
-
-// --- Actions ---
-
-export type EffectActionType =
-  | "DRAW"
-  | "DAMAGE"
-  | "HEAL"
-  | "REST"
-  | "STAND"
-  | "DESTROY"
-  | "SEARCH"
-  | "ADD_TO_HAND"
-  | "DISCARD"
-  | "MODIFY_STATS"
-  | "GAIN_KEYWORDS"
-  | "REMOVE_KEYWORDS"
-  | "SWITCH_CONTROL"
-  | "PREVENT_DAMAGE"
-  | "DEPLOY"
-  | "CREATE_TOKEN"
-  | "SEQUENCE"
-  | "CONDITIONAL"
-  | "CUSTOM";
-
-export interface BaseAction {
-  type: EffectActionType;
-}
-
-export interface HealAction extends BaseAction {
-  type: "HEAL";
-  amount: number;
-  target?: TargetQuery | TargetQuery[];
-}
-
-export interface DamageAction extends BaseAction {
-  type: "DAMAGE";
-  value: number;
-  target?: TargetQuery | TargetQuery[];
-}
-
-export interface DrawAction extends BaseAction {
-  type: "DRAW";
-  value: number;
-  target?: TargetQuery;
-}
-
-export interface SearchAction extends BaseAction {
-  type: "SEARCH";
-  filter?: Record<string, unknown>; // Should use proper filter type eventually
-  destination: "hand" | "deck" | "discard" | "field";
-  count: number;
-}
-
-export interface ModifyStatsAction extends BaseAction {
-  type: "MODIFY_STATS";
-  attribute: "AP" | "HP" | "BOTH";
-  value: number;
-  duration: "TURN" | "PERMANENT";
-  target?: TargetQuery | TargetQuery[];
-}
-
-export interface GainKeywordsAction extends BaseAction {
-  type: "GAIN_KEYWORDS";
-  keywords: string[];
-  duration: "TURN" | "PERMANENT";
-  target?: TargetQuery | TargetQuery[];
-}
-
-export interface CustomAction extends BaseAction {
-  type: "CUSTOM";
-  text: string;
-}
-
-export interface SequenceAction extends BaseAction {
-  type: "SEQUENCE";
-  actions: Action[];
-}
-
-export interface ConditionalAction extends BaseAction {
-  type: "CONDITIONAL";
-  conditions: EffectCondition[];
-  trueAction: Action;
-  falseAction?: Action;
-}
-
-// Generic Action for now to cover all cases without huge boilerplate
-// Or I can define a union of specific actions + GenericAction
-export interface GenericAction extends BaseAction {
-  type: Exclude<
-    EffectActionType,
-    | "HEAL"
-    | "DAMAGE"
-    | "DRAW"
-    | "SEARCH"
-    | "MODIFY_STATS"
-    | "CUSTOM"
-    | "SEQUENCE"
-    | "CONDITIONAL"
-    | "GAIN_KEYWORDS"
-  >;
-  target?: TargetQuery | TargetQuery[];
-  value?: number;
-  parameters?: Record<string, unknown>;
-  text?: string;
-}
-
-export type Action =
-  | HealAction
-  | DamageAction
-  | DrawAction
-  | SearchAction
-  | ModifyStatsAction
-  | GainKeywordsAction
-  | CustomAction
-  | SequenceAction
-  | ConditionalAction
-  | GenericAction;
-
-// Compatibility alias
-export type EffectAction = Action;
-
-// --- Effects ---
-
-/**
- * Base effect structure
- */
-export interface BaseEffect {
-  /** Unique identifier for this effect */
-  id: string;
-
-  /** Human-readable description (original card text) */
-  description: string;
-
-  /** Whether this effect is mandatory or optional */
-  optional?: boolean;
-
-  /** Target location where effect can be activated (default: field only) */
-  targetLocation?: "field" | "hand" | "deck" | "discard" | "any";
-
-  /** Effect restrictions that limit usage */
-  restrictions?: EffectRestriction[];
-
-  /** Activation costs */
-  costs?: EffectCost[];
-
-  /** Conditions for usage */
-  conditions?: EffectCondition[];
-
-  /** The action to perform */
-  action: Action;
-}
-
-/**
- * Constant Effect
- */
-export interface ConstantEffect extends BaseEffect {
-  type: "CONSTANT";
-  // conditions field in BaseEffect covers usage conditions
-
-  /** Whether effect has conditional targets applied when conditions appear */
-  hasConditionalTargets?: boolean;
-
-  /** Whether this effect takes precedence over conflicting effects */
-  precedence?: boolean;
-}
-
-/**
- * Triggered Effect
- */
-export interface TriggeredEffect extends BaseEffect {
-  type: "TRIGGERED";
-  timing:
-    | "DEPLOY"
-    | "ATTACK"
-    | "DESTROYED"
-    | "WHEN_PAIRED"
-    | "WHEN_LINKED"
-    | "BURST";
-  customTrigger?: string;
-  persistsAfterLeaving?: boolean;
-}
-
-/**
- * Activated Effect
- */
-export interface ActivatedEffect extends BaseEffect {
-  type: "ACTIVATED";
-  timing: "MAIN" | "ACTION";
-  requiresDeclaration?: boolean;
-}
-
-/**
- * Command Effect
- */
-export interface CommandEffect extends BaseEffect {
-  type: "COMMAND";
-  timing: "MAIN" | "ACTION" | "BURST";
-  requiresTarget?: boolean;
-  targetRequirements?: string[];
-}
-
-/**
- * Substitution Effect
- */
-export interface SubstitutionEffect extends BaseEffect {
-  type: "SUBSTITUTION";
-  originalEvent: string;
-  replacementEvent: string;
-}
-
-export type Effect =
-  | ConstantEffect
-  | TriggeredEffect
-  | ActivatedEffect
-  | CommandEffect
-  | SubstitutionEffect;
-
-// ============================================================================
-// ABILITY TYPES
-// ============================================================================
-
-export type KeywordAbility = {
-  keyword:
-    | "Repair"
-    | "Breach"
-    | "Support"
-    | "Blocker"
-    | "First-Strike"
-    | "High-Maneuver"
-    | "Suppression";
-  value?: number;
-};
-
-// Condition types (prerequisites for triggers)
-export type ConditionType = "DURING_LINK" | "DURING_PAIR";
-
-// Trigger types (actual events that can fire)
-export type TriggerType =
-  | "ON_DEPLOY"
-  | "ON_ATTACK"
-  | "ON_DESTROYED"
-  | "WHEN_PAIRED"
-  | "WHEN_LINKED"
-  | "ON_BURST";
-
-export type ParsedAbility = {
-  // Timing/trigger information
-  optional?: boolean;
-
-  // Conditional trigger support
-  condition?: ConditionType;
-  trigger?: TriggerType;
-
-  // Activated ability information
-  activated?: {
-    timing: "MAIN" | "ACTION";
-    cost?: string;
-  };
-
-  // Human-readable description (original card text)
-  description: string;
-
-  // Structured effect data
-  effect: {
-    type: string; // "DRAW", "DAMAGE", "SEARCH", "MODIFY_STATS", etc.
-    [key: string]: unknown; // Effect-specific parameters
-  };
-};
-
 // ============================================================================
 // BASE CARD DEFINITION
 // ============================================================================
 
-export type BaseCardDefinition = {
+export type RawCardDefinition = {
   /** Unique identifier (e.g., "st01-001") */
   id: string;
 
@@ -352,23 +38,13 @@ export type BaseCardDefinition = {
 
   /** Source title (e.g., "Mobile Suit Gundam") */
   sourceTitle?: string;
-
-  /**
-   * Effects defined on this card according to rules 5-1 and 10-1
-   * An effect is text that is printed within a defined region of a card
-   * and consists of a directive and related compensation
-   */
-  effects?: Effect[];
-
-  /** Keyword abilities */
-  keywords?: KeywordAbility[];
 };
 
 // ============================================================================
 // UNIT CARD
 // ============================================================================
 
-export type UnitCardDefinition = BaseCardDefinition & {
+export type UnitCardDefinition = RawCardDefinition & {
   cardType: "UNIT";
 
   /** Attack points */
@@ -391,7 +67,7 @@ export type UnitCardDefinition = BaseCardDefinition & {
 // PILOT CARD
 // ============================================================================
 
-export type PilotCardDefinition = BaseCardDefinition & {
+export type PilotCardDefinition = RawCardDefinition & {
   cardType: "PILOT";
 
   /** Traits */
@@ -408,7 +84,7 @@ export type PilotCardDefinition = BaseCardDefinition & {
 // COMMAND CARD
 // ============================================================================
 
-export type CommandCardDefinition = BaseCardDefinition & {
+export type CommandCardDefinition = RawCardDefinition & {
   cardType: "COMMAND";
 
   /** Timing when card can be played */
@@ -427,7 +103,7 @@ export type CommandCardDefinition = BaseCardDefinition & {
 // BASE CARD
 // ============================================================================
 
-export type BaseCardDefinition_Structure = BaseCardDefinition & {
+export type BaseCardDefinition = RawCardDefinition & {
   cardType: "BASE";
 
   /** Attack points */
@@ -448,7 +124,7 @@ export type BaseCardDefinition_Structure = BaseCardDefinition & {
 // ============================================================================
 
 export type ResourceCardDefinition = Omit<
-  BaseCardDefinition,
+  RawCardDefinition,
   "cost" | "level" | "color"
 > & {
   cardType: "RESOURCE";
@@ -465,7 +141,7 @@ export type CardDefinition =
   | UnitCardDefinition
   | PilotCardDefinition
   | CommandCardDefinition
-  | BaseCardDefinition_Structure
+  | BaseCardDefinition
   | ResourceCardDefinition;
 
 // ============================================================================
