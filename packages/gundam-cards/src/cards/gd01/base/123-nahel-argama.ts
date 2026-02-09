@@ -1,6 +1,6 @@
-import type { BaseCardDefinition_Structure } from "@tcg/gundam-types";
+import type { BaseCardDefinition } from "@tcg/gundam-types";
 
-export const NahelArgama: BaseCardDefinition_Structure = {
+export const NahelArgama: BaseCardDefinition = {
   id: "gd01-123",
   name: "Nahel Argama",
   cardNumber: "GD01-123",
@@ -14,7 +14,7 @@ export const NahelArgama: BaseCardDefinition_Structure = {
   imageUrl:
     "https://www.gundam-gcg.com/en/images/cards/card/GD01-123.webp?26013001",
   sourceTitle: "Mobile Suit Gundam Unicorn",
-  ap: Number.NaN,
+  ap: 0,
   hp: 5,
   zones: ["space", "earth"],
   traits: ["earth", "federation", "warship"],

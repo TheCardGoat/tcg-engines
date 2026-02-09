@@ -1,6 +1,6 @@
-import type { BaseCardDefinition_Structure } from "@tcg/gundam-types";
+import type { BaseCardDefinition } from "@tcg/gundam-types";
 
-export const Falmel: BaseCardDefinition_Structure = {
+export const Falmel: BaseCardDefinition = {
   id: "st03-016",
   name: "Falmel",
   cardNumber: "ST03-016",
@@ -14,7 +14,7 @@ export const Falmel: BaseCardDefinition_Structure = {
   imageUrl:
     "https://www.gundam-gcg.com/en/images/cards/card/ST03-016.webp?26013001",
   sourceTitle: "Mobile Suit Gundam",
-  ap: Number.NaN,
+  ap: 0,
   hp: 5,
   zones: ["space"],
   traits: ["zeon", "warship"],

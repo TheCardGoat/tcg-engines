@@ -1,6 +1,6 @@
-import type { BaseCardDefinition_Structure } from "@tcg/gundam-types";
+import type { BaseCardDefinition } from "@tcg/gundam-types";
 
-export const The13thTacticalTestingSector: BaseCardDefinition_Structure = {
+export const The13thTacticalTestingSector: BaseCardDefinition = {
   id: "gd01-130",
   name: "13th Tactical Testing Sector",
   cardNumber: "GD01-130",
@@ -14,7 +14,7 @@ export const The13thTacticalTestingSector: BaseCardDefinition_Structure = {
   imageUrl:
     "https://www.gundam-gcg.com/en/images/cards/card/GD01-130.webp?26013001",
   sourceTitle: "Mobile Suit Gundam the Witch from Mercury",
-  ap: Number.NaN,
+  ap: 0,
   hp: 5,
   zones: ["space"],
   traits: ["academy", "stronghold"],

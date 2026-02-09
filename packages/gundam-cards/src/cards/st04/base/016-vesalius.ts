@@ -1,6 +1,6 @@
-import type { BaseCardDefinition_Structure } from "@tcg/gundam-types";
+import type { BaseCardDefinition } from "@tcg/gundam-types";
 
-export const Vesalius: BaseCardDefinition_Structure = {
+export const Vesalius: BaseCardDefinition = {
   id: "st04-016",
   name: "Vesalius",
   cardNumber: "ST04-016",
@@ -14,7 +14,7 @@ export const Vesalius: BaseCardDefinition_Structure = {
   imageUrl:
     "https://www.gundam-gcg.com/en/images/cards/card/ST04-016.webp?26013001",
   sourceTitle: "Mobile Suit Gundam SEED",
-  ap: Number.NaN,
+  ap: 0,
   hp: 5,
   zones: ["space"],
   traits: ["zaft", "warship"],

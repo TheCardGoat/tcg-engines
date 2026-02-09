@@ -1,6 +1,6 @@
-import type { BaseCardDefinition_Structure } from "@tcg/gundam-types";
+import type { BaseCardDefinition } from "@tcg/gundam-types";
 
-export const WhiteBase: BaseCardDefinition_Structure = {
+export const WhiteBase: BaseCardDefinition = {
   id: "st01-015",
   name: "White Base",
   cardNumber: "ST01-015",
@@ -14,7 +14,7 @@ export const WhiteBase: BaseCardDefinition_Structure = {
   imageUrl:
     "https://www.gundam-gcg.com/en/images/cards/card/ST01-015.webp?26013001",
   sourceTitle: "Mobile Suit Gundam",
-  ap: Number.NaN,
+  ap: 0,
   hp: 5,
   zones: ["space", "earth"],
   traits: ["earth", "federation", "white", "base", "team", "warship"],

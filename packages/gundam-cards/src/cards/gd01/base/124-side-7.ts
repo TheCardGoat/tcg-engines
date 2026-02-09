@@ -1,6 +1,6 @@
-import type { BaseCardDefinition_Structure } from "@tcg/gundam-types";
+import type { BaseCardDefinition } from "@tcg/gundam-types";
 
-export const Side7: BaseCardDefinition_Structure = {
+export const Side7: BaseCardDefinition = {
   id: "gd01-124",
   name: "Side 7",
   cardNumber: "GD01-124",
@@ -14,7 +14,7 @@ export const Side7: BaseCardDefinition_Structure = {
   imageUrl:
     "https://www.gundam-gcg.com/en/images/cards/card/GD01-124.webp?26013001",
   sourceTitle: "Mobile Suit Gundam",
-  ap: Number.NaN,
+  ap: 0,
   hp: 4,
   zones: ["space"],
   traits: ["earth", "federation", "stronghold"],

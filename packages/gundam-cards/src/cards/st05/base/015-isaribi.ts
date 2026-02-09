@@ -1,6 +1,6 @@
-import type { BaseCardDefinition_Structure } from "@tcg/gundam-types";
+import type { BaseCardDefinition } from "@tcg/gundam-types";
 
-export const Isaribi: BaseCardDefinition_Structure = {
+export const Isaribi: BaseCardDefinition = {
   id: "st05-015",
   name: "Isaribi",
   cardNumber: "ST05-015",
@@ -13,7 +13,7 @@ export const Isaribi: BaseCardDefinition_Structure = {
   imageUrl:
     "https://www.gundam-gcg.com/en/images/cards/card/ST05-015.webp?26013001",
   sourceTitle: "Mobile Suit Gundam IRON-BLOODED ORPHANS",
-  ap: Number.NaN,
+  ap: 0,
   hp: 5,
   zones: ["space"],
   traits: ["tekkadan", "warship"],

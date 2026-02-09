@@ -1,6 +1,6 @@
-import type { BaseCardDefinition_Structure } from "@tcg/gundam-types";
+import type { BaseCardDefinition } from "@tcg/gundam-types";
 
-export const Archangel: BaseCardDefinition_Structure = {
+export const Archangel: BaseCardDefinition = {
   id: "st04-015",
   name: "Archangel",
   cardNumber: "ST04-015",
@@ -14,7 +14,7 @@ export const Archangel: BaseCardDefinition_Structure = {
   imageUrl:
     "https://www.gundam-gcg.com/en/images/cards/card/ST04-015.webp?26013001",
   sourceTitle: "Mobile Suit Gundam SEED",
-  ap: Number.NaN,
+  ap: 0,
   hp: 5,
   zones: ["space", "earth"],
   traits: ["earth", "alliance", "warship"],

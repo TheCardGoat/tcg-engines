@@ -1,6 +1,6 @@
-import type { BaseCardDefinition_Structure } from "@tcg/gundam-types";
+import type { BaseCardDefinition } from "@tcg/gundam-types";
 
-export const MiningAsteroidPalau: BaseCardDefinition_Structure = {
+export const MiningAsteroidPalau: BaseCardDefinition = {
   id: "gd01-128",
   name: "Mining Asteroid Palau",
   cardNumber: "GD01-128",
@@ -14,7 +14,7 @@ export const MiningAsteroidPalau: BaseCardDefinition_Structure = {
   imageUrl:
     "https://www.gundam-gcg.com/en/images/cards/card/GD01-128.webp?26013001",
   sourceTitle: "Mobile Suit Gundam Unicorn",
-  ap: Number.NaN,
+  ap: 0,
   hp: 6,
   zones: ["space"],
   traits: ["neo", "zeon", "stronghold"],

@@ -1,6 +1,6 @@
-import type { BaseCardDefinition_Structure } from "@tcg/gundam-types";
+import type { BaseCardDefinition } from "@tcg/gundam-types";
 
-export const SaintGabrielInstitute: BaseCardDefinition_Structure = {
+export const SaintGabrielInstitute: BaseCardDefinition = {
   id: "st02-015",
   name: "Saint Gabriel Institute",
   cardNumber: "ST02-015",
@@ -14,7 +14,7 @@ export const SaintGabrielInstitute: BaseCardDefinition_Structure = {
   imageUrl:
     "https://www.gundam-gcg.com/en/images/cards/card/ST02-015.webp?26013001",
   sourceTitle: "Mobile Suit Gundam Wing",
-  ap: Number.NaN,
+  ap: 0,
   hp: 5,
   zones: ["earth"],
   traits: ["academy", "stronghold"],

@@ -1,6 +1,6 @@
-import type { BaseCardDefinition_Structure } from "@tcg/gundam-types";
+import type { BaseCardDefinition } from "@tcg/gundam-types";
 
-export const CorsicaBase: BaseCardDefinition_Structure = {
+export const CorsicaBase: BaseCardDefinition = {
   id: "st02-016",
   name: "Corsica Base",
   cardNumber: "ST02-016",
@@ -14,7 +14,7 @@ export const CorsicaBase: BaseCardDefinition_Structure = {
   imageUrl:
     "https://www.gundam-gcg.com/en/images/cards/card/ST02-016.webp?26013001",
   sourceTitle: "Mobile Suit Gundam Wing",
-  ap: Number.NaN,
+  ap: 0,
   hp: 5,
   zones: ["earth"],
   traits: ["oz", "stronghold"],

@@ -1,6 +1,6 @@
-import type { BaseCardDefinition_Structure } from "@tcg/gundam-types";
+import type { BaseCardDefinition } from "@tcg/gundam-types";
 
-export const Kusanagi: BaseCardDefinition_Structure = {
+export const Kusanagi: BaseCardDefinition = {
   id: "gd01-129",
   name: "Kusanagi",
   cardNumber: "GD01-129",
@@ -14,7 +14,7 @@ export const Kusanagi: BaseCardDefinition_Structure = {
   imageUrl:
     "https://www.gundam-gcg.com/en/images/cards/card/GD01-129.webp?26013001",
   sourceTitle: "Mobile Suit Gundam SEED",
-  ap: Number.NaN,
+  ap: 0,
   hp: 4,
   zones: ["space"],
   traits: ["triple", "ship", "alliance", "warship"],

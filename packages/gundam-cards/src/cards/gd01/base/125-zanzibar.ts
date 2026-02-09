@@ -1,6 +1,6 @@
-import type { BaseCardDefinition_Structure } from "@tcg/gundam-types";
+import type { BaseCardDefinition } from "@tcg/gundam-types";
 
-export const Zanzibar: BaseCardDefinition_Structure = {
+export const Zanzibar: BaseCardDefinition = {
   id: "gd01-125",
   name: "Zanzibar",
   cardNumber: "GD01-125",
@@ -14,7 +14,7 @@ export const Zanzibar: BaseCardDefinition_Structure = {
   imageUrl:
     "https://www.gundam-gcg.com/en/images/cards/card/GD01-125.webp?26013001",
   sourceTitle: "Mobile Suit Gundam",
-  ap: Number.NaN,
+  ap: 0,
   hp: 5,
   zones: ["space", "earth"],
   traits: ["zeon", "warship"],

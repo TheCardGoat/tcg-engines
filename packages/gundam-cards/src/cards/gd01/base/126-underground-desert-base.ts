@@ -1,6 +1,6 @@
-import type { BaseCardDefinition_Structure } from "@tcg/gundam-types";
+import type { BaseCardDefinition } from "@tcg/gundam-types";
 
-export const UndergroundDesertBase: BaseCardDefinition_Structure = {
+export const UndergroundDesertBase: BaseCardDefinition = {
   id: "gd01-126",
   name: "Underground Desert Base",
   cardNumber: "GD01-126",
@@ -14,7 +14,7 @@ export const UndergroundDesertBase: BaseCardDefinition_Structure = {
   imageUrl:
     "https://www.gundam-gcg.com/en/images/cards/card/GD01-126.webp?26013001",
   sourceTitle: "Mobile Suit Gundam Wing",
-  ap: Number.NaN,
+  ap: 0,
   hp: 6,
   zones: ["earth"],
   traits: ["maganac", "corps", "stronghold"],
