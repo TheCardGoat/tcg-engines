@@ -1,4 +1,11 @@
 import { createPlayerId, type FlowDefinition } from "@tcg/core";
+import type { Draft } from "immer";
+import { enqueueBatchEffects } from "../../effects/effect-stack";
+import {
+  detectEndOfTurnTriggers,
+  detectStartOfTurnTriggers,
+  orderTriggeredEffects,
+} from "../../effects/trigger-detection";
 import type { GundamCardMeta, GundamGameState } from "../../types";
 
 /**
@@ -149,6 +156,7 @@ export const gundamFlow: FlowDefinition<GundamGameState, GundamCardMeta> = {
            * Beginning Phase
            * - Ready all exhausted cards
            * - Draw a card (if not first turn)
+           * - Detect and enqueue start of turn triggers
            * - Automatically advances to Main phase
            */
           beginning: {
@@ -175,6 +183,11 @@ export const gundamFlow: FlowDefinition<GundamGameState, GundamCardMeta> = {
                   });
                 }
               }
+
+              // Detect and enqueue start of turn triggers
+              // This is handled via game state modifications, not here
+              // The actual trigger detection will be in a move that handles
+              // turn transitions
 
               // TODO: Draw a card (if not first turn)
               // This requires checking if it's turn 1 and drawing from deck

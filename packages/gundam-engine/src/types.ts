@@ -6,6 +6,11 @@
  */
 
 import type { CardId, PlayerId, Zone } from "@tcg/core";
+import type {
+  EffectStackState,
+  KeywordEffect,
+  TemporaryModifier,
+} from "./types/effects";
 
 /**
  * Gundam Game State
@@ -54,6 +59,9 @@ export type GundamGameState = {
 
     /** Removal area - public, removed from game */
     removal: Record<PlayerId, Zone>;
+
+    /** Limbo - temporary holding zone for COMMAND cards during effect resolution */
+    limbo: Record<PlayerId, Zone>;
   };
 
   /** Gundam-specific game state */
@@ -69,6 +77,59 @@ export type GundamGameState = {
 
     /** Players who have played a resource this turn */
     hasPlayedResourceThisTurn: Record<PlayerId, boolean>;
+
+    /**
+     * Effect Stack
+     *
+     * Manages the stack of pending effects waiting to resolve.
+     * Effects resolve in LIFO (Last-In, First-Out) order per
+     * Official Rules Section 11-3: Effect Resolution.
+     *
+     * The stack tracks:
+     * - Effect instances currently waiting to resolve
+     * - Current action being resolved for each effect
+     * - Targets selected for each effect
+     * - Resolution state (pending/resolving/resolved/fizzled)
+     */
+    effectStack: EffectStackState;
+
+    /**
+     * Temporary Modifiers
+     *
+     * Tracks temporary stat changes and keyword grants on cards.
+     * These modifiers expire at specific timing points:
+     * - end_of_turn: Removed during end phase cleanup
+     * - end_of_combat: Removed after combat resolution
+     * - permanent: Never expires (though card removal clears them)
+     * - while_condition: Expires when the specified condition becomes false
+     *
+     * Each card can have multiple modifiers active simultaneously.
+     * Keyed by CardId mapping to an array of modifiers for that card.
+     * Each modifier has a unique id for tracking and individual removal.
+     */
+    temporaryModifiers: Record<CardId, TemporaryModifier[]>;
+
+    /**
+     * Damage Tracking
+     *
+     * Tracks damage counters on cards.
+     * Damage is tracked for units, bases, and shields.
+     * When damage >= HP, the card is destroyed.
+     *
+     * Keyed by CardId mapping to current damage amount.
+     */
+    cardDamage: Record<CardId, number>;
+
+    /**
+     * Revealed Cards Tracking
+     *
+     * Tracks cards that have been revealed to all players via effects.
+     * Used by SEARCH effects with reveal=true.
+     *
+     * Array of card IDs that are currently revealed.
+     * Cleared after each effect resolution.
+     */
+    revealedCards: CardId[];
 
     /** Win/loss tracking */
     winner?: PlayerId;
@@ -111,6 +172,35 @@ export type GundamMoves = {
 
   /** Concede the game */
   concede: {
+    playerId: PlayerId;
+  };
+
+  /** Play COMMAND card from hand */
+  playCommand: {
+    playerId: PlayerId;
+    cardId: CardId;
+  };
+
+  /** Resolve next effect from stack */
+  resolveEffectStack: {
+    playerId: PlayerId;
+    targets?: CardId[]; // Optional targets for the effect
+  };
+
+  /** Execute effect actions (internal, called by resolveEffectStack) */
+  executeEffect: {
+    playerId: PlayerId;
+    effectInstanceId: string;
+    targets?: CardId[];
+  };
+
+  /** Handle turn start (internal, detects start of turn triggers) */
+  handleTurnStart: {
+    playerId: PlayerId;
+  };
+
+  /** Handle turn end (internal, detects end of turn triggers) */
+  handleTurnEnd: {
     playerId: PlayerId;
   };
 };

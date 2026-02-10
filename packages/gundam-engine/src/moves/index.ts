@@ -46,9 +46,14 @@
  * - Resource Management: playResource
  * - Combat: attack
  * - Phase Control: pass
+ * - Command Cards: playCommand, resolveEffectStack, executeEffect
  * - Special: concede
  */
 
+export { executeEffectMove } from "../game-definition/moves/core/execute-effect";
+// Command card effect resolution moves (from game-definition/moves/core)
+export { playCommandMove } from "../game-definition/moves/core/play-command";
+export { resolveEffectStackMove } from "../game-definition/moves/core/resolve-effect-stack";
 export { attackMove } from "./attack";
 export { deployBaseMove } from "./deploy-base";
 export { deployUnitMove } from "./deploy-unit";

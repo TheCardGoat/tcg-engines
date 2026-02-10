@@ -88,4 +88,13 @@ export const gundamZones: Record<string, CardZoneConfig> = {
     faceDown: false,
     maxSize: undefined,
   },
+  limbo: {
+    id: "limbo" as ZoneId,
+    name: "zones.limbo",
+    visibility: "public",
+    ordered: true,
+    owner: undefined,
+    faceDown: false,
+    maxSize: undefined,
+  },
 };

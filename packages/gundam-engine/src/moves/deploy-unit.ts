@@ -7,16 +7,20 @@
  * - Zone capacity validation (max 6 units)
  * - Card movement from hand to battle area
  * - Setting unit position to active
+ * - Detecting and enqueuing 【Deploy】 triggered effects
  *
  * Rule References:
  * - Rule 5-1: Deploy units during main phase
  * - Rule 5-2: Pay resource cost to deploy
  * - Rule 5-3: Battle area capacity is 6 units maximum
+ * - Rule 11-2: Triggered effects activate when specific conditions occur
+ * - Rule 11-3: Multiple simultaneous triggers are ordered by active player
  */
 
 import type { CardId, GameMoveDefinition, MoveContext } from "@tcg/core";
 import { getZoneSize, isCardInZone, moveCard } from "@tcg/core";
 import type { Draft } from "immer";
+import { detectAndEnqueueDeployTriggers } from "../effects/trigger-integration";
 import type { GundamGameState } from "../types";
 
 /**
@@ -194,6 +198,9 @@ export const deployUnitMove: GameMoveDefinition<GundamGameState> = {
 
     // Set unit position to active (ready)
     draft.gundam.cardPositions[cardId] = "active";
+
+    // Detect and enqueue 【Deploy】 triggered effects
+    detectAndEnqueueDeployTriggers(draft, cardId, playerId);
   },
 
   metadata: {
