@@ -7,17 +7,24 @@
  * - Target validation (must be opponent's unit or direct attack)
  * - Resting (exhausting) the attacking unit
  * - Setting up battle state for resolution
+ * - Detecting and enqueuing 【Attack】 triggered effects
  *
  * Rule References:
  * - Rule 6-1: Units attack during main phase
  * - Rule 6-2: Attacking unit becomes rested (exhausted)
  * - Rule 6-3: Can target opponent's units or attack directly
  * - Rule 6-4: Rested units cannot attack
+ * - Rule 11-3: Attack triggers are detected and enqueued
  */
 
 import type { CardId, GameMoveDefinition, MoveContext } from "@tcg/core";
 import { isCardInZone } from "@tcg/core";
 import type { Draft } from "immer";
+import { enqueueBatchEffects } from "../../../effects/effect-stack";
+import {
+  detectAttackTriggers,
+  orderTriggeredEffects,
+} from "../../../effects/trigger-detection";
 import type { GundamGameState } from "../../../types";
 
 /**
@@ -160,6 +167,7 @@ export const attackMove: GameMoveDefinition<GundamGameState> = {
    * Reducer: Execute the attack
    *
    * Rests the attacking unit and sets up battle state.
+   * Detects and enqueues 【Attack】 triggered effects.
    * Actual damage calculation happens in battle resolution phase.
    */
   reducer: (draft: Draft<GundamGameState>, context: MoveContext): void => {
@@ -189,12 +197,39 @@ export const attackMove: GameMoveDefinition<GundamGameState> = {
       draft.gundam.attackedThisTurn.push(attackerId);
     }
 
+    // Detect and enqueue 【Attack】 triggered effects
+    const triggerResult = detectAttackTriggers(
+      draft,
+      attackerId,
+      targetId,
+      playerId,
+    );
+
+    if (triggerResult.hasTriggers) {
+      // Order effects: active player's effects first
+      const orderResult = orderTriggeredEffects(
+        triggerResult.effects,
+        draft.currentPlayer,
+      );
+
+      // Enqueue effects in the determined order
+      enqueueBatchEffects(
+        draft,
+        [...triggerResult.effects],
+        [...orderResult.order],
+      );
+
+      console.log(
+        `[ATTACK] Detected ${triggerResult.effects.length} attack triggers, enqueued in order: ${orderResult.order.join(", ")}`,
+      );
+    }
+
     // TODO: Set up battle state for resolution
     // This would involve:
     // - Creating a battle state object
     // - Recording attacker and defender
     // - Triggering battle resolution sequence
-    // For now, we just rest the attacker as a placeholder
+    // For now, we just rest the attacker and handle triggers as a placeholder
 
     // If there's a target, validate it exists
     if (targetId !== undefined) {

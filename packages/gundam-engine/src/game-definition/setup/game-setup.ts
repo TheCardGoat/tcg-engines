@@ -5,6 +5,7 @@ import {
   createBattleAreaZone,
   createDeckZone,
   createHandZone,
+  createLimboZone,
   createRemovalZone,
   createResourceAreaZone,
   createResourceDeckZone,
@@ -57,6 +58,10 @@ export function createInitialGundamState(
       [player1Id]: createRemovalZone(player1Id, []),
       [player2Id]: createRemovalZone(player2Id, []),
     },
+    limbo: {
+      [player1Id]: createLimboZone(player1Id, []),
+      [player2Id]: createLimboZone(player2Id, []),
+    },
   };
   return {
     players: [player1Id, player2Id],
@@ -75,6 +80,13 @@ export function createInitialGundamState(
         [player1Id]: false,
         [player2Id]: false,
       },
+      effectStack: {
+        stack: [],
+        nextInstanceId: 0,
+      },
+      temporaryModifiers: {},
+      cardDamage: {},
+      revealedCards: [],
       winner: undefined,
       loser: undefined,
       gameEndReason: undefined,

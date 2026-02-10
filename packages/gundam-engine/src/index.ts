@@ -21,15 +21,15 @@ export type {
   RuleEngine,
   RuleEngineOptions,
 } from "@tcg/core";
+// Effect system exports
+export * from "./effects";
 // Targeting DSL
 // Types should be imported directly from @tcg/gundam-types
 // export * from "@tcg/gundam-types";
 // Engine exports
 export { GundamEngine } from "./engine/gundam-engine";
-
 // Type exports
 export * from "./types";
-
 // Move enumeration type exports
 export type {
   AvailableMoveInfo,

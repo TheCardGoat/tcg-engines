@@ -235,6 +235,28 @@ export function createRemovalZone(
 }
 
 /**
+ * Creates a limbo zone for a player
+ * @param playerId - Owner of the limbo zone
+ * @param cards - Initial cards in limbo
+ * @returns Configured limbo zone
+ */
+export function createLimboZone(
+  playerId: PlayerId,
+  cards: CardId[] = [],
+): Zone {
+  return createZone(
+    {
+      id: createZoneId(`limbo-${playerId}`),
+      name: "Limbo",
+      visibility: "public",
+      ordered: true,
+      owner: playerId,
+    },
+    cards,
+  );
+}
+
+/**
  * Creates all zones for a player
  * @param playerId - Player to create zones for
  * @returns Object containing all player zones
@@ -250,6 +272,7 @@ export function createPlayerZones(playerId: PlayerId) {
     resourceArea: createResourceAreaZone(playerId),
     trash: createTrashZone(playerId),
     removal: createRemovalZone(playerId),
+    limbo: createLimboZone(playerId),
   };
 }
 

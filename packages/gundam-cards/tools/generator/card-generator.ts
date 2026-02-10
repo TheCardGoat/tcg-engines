@@ -30,6 +30,8 @@ export function createCardDefinition(
     level: scraped.level ? Number.parseInt(scraped.level, 10) : undefined,
     cost: scraped.cost ? Number.parseInt(scraped.cost, 10) : undefined,
     text: scraped.effectText,
+    keywords: parsed.keywords,
+    effects: parsed.effects,
     imageUrl: scraped.imageUrl,
     sourceTitle: scraped.sourceTitle,
   };
@@ -39,13 +41,11 @@ export function createCardDefinition(
       return {
         ...baseCard,
         cardType: "UNIT",
-        ap: Number.parseInt(scraped.ap || "0", 10),
-        hp: Number.parseInt(scraped.hp || "0", 10),
+        ap: parseStat(scraped.ap),
+        hp: parseStat(scraped.hp),
         zones: parseZones(scraped.zone),
         traits: parseTraits(scraped.trait),
         linkRequirements: parseLinkRequirements(scraped.link),
-        keywords: parsed.keywords.length > 0 ? parsed.keywords : undefined,
-        effects: parsed.effects.length > 0 ? parsed.effects : undefined,
       };
 
     case "PILOT":
@@ -55,7 +55,6 @@ export function createCardDefinition(
         traits: parseTraits(scraped.trait),
         apModifier: parseModifier(scraped.ap),
         hpModifier: parseModifier(scraped.hp),
-        effects: parsed.effects.length > 0 ? parsed.effects : undefined,
       };
 
     case "COMMAND":
@@ -64,18 +63,16 @@ export function createCardDefinition(
         cardType: "COMMAND",
         timing: detectCommandTiming(scraped.effectText),
         pilotProperties: detectPilotProperties(scraped),
-        effects: parsed.effects.length > 0 ? parsed.effects : undefined,
       };
 
     case "BASE":
       return {
         ...baseCard,
         cardType: "BASE",
-        ap: Number.parseInt(scraped.ap || "0", 10),
-        hp: Number.parseInt(scraped.hp || "0", 10),
+        ap: parseStat(scraped.ap),
+        hp: parseStat(scraped.hp),
         zones: parseZones(scraped.zone),
         traits: parseTraits(scraped.trait),
-        effects: parsed.effects.length > 0 ? parsed.effects : undefined,
       };
 
     case "RESOURCE":
@@ -86,6 +83,8 @@ export function createCardDefinition(
         setCode,
         cardType: "RESOURCE",
         rarity: normalizeRarity(scraped.rarity),
+        keywords: parsed.keywords,
+        effects: parsed.effects,
         imageUrl: scraped.imageUrl,
         sourceTitle: scraped.sourceTitle,
       };
@@ -228,6 +227,12 @@ function parseModifier(modText?: string): number {
   return Number.parseInt(modText.replace("+", ""), 10) || 0;
 }
 
+function parseStat(value?: string): number {
+  if (!value) return 0;
+  const parsed = Number.parseInt(value, 10);
+  return Number.isNaN(parsed) ? 0 : parsed;
+}
+
 function detectCommandTiming(effectText: string): "MAIN" | "ACTION" | "BURST" {
   if (effectText.includes("【Main】")) return "MAIN";
   if (effectText.includes("【Action】")) return "ACTION";
@@ -282,7 +287,7 @@ function getTypeImportName(cardType: string): string {
     UNIT: "UnitCardDefinition",
     PILOT: "PilotCardDefinition",
     COMMAND: "CommandCardDefinition",
-    BASE: "BaseCardDefinition_Structure",
+    BASE: "BaseCardDefinition",
     RESOURCE: "ResourceCardDefinition",
   };
   return map[cardType] || "CardDefinition";

@@ -25,7 +25,7 @@ export function extractHeaders(text: string): Headers {
 
   for (const { pattern, type, value } of restrictionPatterns) {
     if (processing.includes(pattern)) {
-      restrictions.push({ type, value });
+      restrictions.push(value !== undefined ? { type, value } : { type });
       processing = processing.replace(pattern, "");
     }
   }
