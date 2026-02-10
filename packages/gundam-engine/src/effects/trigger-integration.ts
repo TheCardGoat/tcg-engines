@@ -9,7 +9,6 @@
  */
 
 import type { CardId, PlayerId } from "@tcg/core";
-import type { Draft } from "immer";
 import type { GundamGameState } from "../types";
 import { enqueueBatchEffects } from "./effect-stack";
 import {
@@ -60,7 +59,11 @@ export function detectAndEnqueueDeployTriggers(
     );
 
     // Enqueue effects in the determined order
-    enqueueBatchEffects(draft, triggerResult.effects, orderResult.order);
+    enqueueBatchEffects(
+      draft,
+      [...triggerResult.effects],
+      [...orderResult.order],
+    );
 
     console.log(
       `[DEPLOY] Detected ${triggerResult.effects.length} deploy triggers for ${deployedCardId}, enqueued in order: ${orderResult.order.join(", ")}`,
@@ -110,7 +113,11 @@ export function detectAndEnqueueAttackTriggers(
     );
 
     // Enqueue effects in the determined order
-    enqueueBatchEffects(draft, triggerResult.effects, orderResult.order);
+    enqueueBatchEffects(
+      draft,
+      [...triggerResult.effects],
+      [...orderResult.order],
+    );
 
     console.log(
       `[ATTACK] Detected ${triggerResult.effects.length} attack triggers, enqueued in order: ${orderResult.order.join(", ")}`,
@@ -157,7 +164,11 @@ export function detectAndEnqueueDestroyedTriggers(
     );
 
     // Enqueue effects in the determined order
-    enqueueBatchEffects(draft, triggerResult.effects, orderResult.order);
+    enqueueBatchEffects(
+      draft,
+      [...triggerResult.effects],
+      [...orderResult.order],
+    );
 
     console.log(
       `[DESTROYED] Detected ${triggerResult.effects.length} destroyed triggers for ${destroyedCardId}, enqueued in order: ${orderResult.order.join(", ")}`,
@@ -198,7 +209,11 @@ export function detectAndEnqueueStartOfTurnTriggers(
     );
 
     // Enqueue effects in the determined order
-    enqueueBatchEffects(draft, triggerResult.effects, orderResult.order);
+    enqueueBatchEffects(
+      draft,
+      [...triggerResult.effects],
+      [...orderResult.order],
+    );
 
     console.log(
       `[TURN_START] Detected ${triggerResult.effects.length} start of turn triggers for ${playerId}, enqueued in order: ${orderResult.order.join(", ")}`,
@@ -235,7 +250,11 @@ export function detectAndEnqueueEndOfTurnTriggers(
     );
 
     // Enqueue effects in the determined order
-    enqueueBatchEffects(draft, triggerResult.effects, orderResult.order);
+    enqueueBatchEffects(
+      draft,
+      [...triggerResult.effects],
+      [...orderResult.order],
+    );
 
     console.log(
       `[TURN_END] Detected ${triggerResult.effects.length} end of turn triggers, enqueued in order: ${orderResult.order.join(", ")}`,

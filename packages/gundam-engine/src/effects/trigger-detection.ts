@@ -15,11 +15,7 @@
 
 import type { CardId, PlayerId } from "@tcg/core";
 import type { GundamGameState } from "../types";
-import type {
-  EffectDefinition,
-  EffectTiming,
-  TriggeredEffect,
-} from "../types/effects";
+import type { EffectDefinition, EffectTiming } from "../types/effects";
 import { getCardDefinition } from "./action-handlers";
 
 // ============================================================================

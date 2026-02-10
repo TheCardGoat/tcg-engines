@@ -66,7 +66,11 @@ export const handleTurnEndMove: GameMoveDefinition<GundamGameState> = {
       );
 
       // Enqueue effects in the determined order
-      enqueueBatchEffects(draft, triggerResult.effects, orderResult.order);
+      enqueueBatchEffects(
+        draft,
+        [...triggerResult.effects],
+        [...orderResult.order],
+      );
 
       console.log(
         `[TURN_END] Detected ${triggerResult.effects.length} end of turn triggers, enqueued in order: ${orderResult.order.join(", ")}`,

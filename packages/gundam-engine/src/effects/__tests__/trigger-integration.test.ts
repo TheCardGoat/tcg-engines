@@ -13,8 +13,12 @@ import type { CardId, PlayerId } from "@tcg/core";
 import { attackMove } from "../../game-definition/moves/core/attack";
 import { deployUnitMove } from "../../moves/deploy-unit";
 import type { GundamGameState } from "../../types";
-import type { EffectDefinition, TargetingSpec } from "../../types/effects";
-import type { ActionContext, DestroyAction } from "../action-handlers";
+import type {
+  DestroyAction,
+  EffectDefinition,
+  TargetingSpec,
+} from "../../types/effects";
+import type { ActionContext } from "../action-handlers";
 import {
   clearCardDefinitions,
   handleDestroyAction,
@@ -54,6 +58,8 @@ function createMockGameState(players: PlayerId[]): GundamGameState {
         nextInstanceId: 0,
       },
       temporaryModifiers: {},
+      revealedCards: [],
+      hasPlayedResourceThisTurn: {},
     },
   } as GundamGameState;
 
@@ -76,7 +82,7 @@ function createMockGameState(players: PlayerId[]): GundamGameState {
       if (!state.zones[zoneType][player]) {
         state.zones[zoneType][player] = {
           cards: [],
-          config: { owner: player, hidden: false, ordered: false },
+          config: { owner: player } as any,
         };
       }
     }
@@ -94,13 +100,13 @@ function setupPlayerZones(
   if (cardIds.hand) {
     state.zones.hand[playerId] = {
       cards: [...cardIds.hand],
-      config: { owner: playerId, hidden: false, ordered: false },
+      config: { owner: playerId } as any,
     };
   }
   if (cardIds.battleArea) {
     state.zones.battleArea[playerId] = {
       cards: [...cardIds.battleArea],
-      config: { owner: playerId, hidden: false, ordered: false },
+      config: { owner: playerId } as any,
     };
     // Set all battle area cards to active position
     for (const cardId of cardIds.battleArea) {
@@ -111,7 +117,7 @@ function setupPlayerZones(
   if (!state.zones.trash[playerId]) {
     state.zones.trash[playerId] = {
       cards: [],
-      config: { owner: playerId, hidden: false, ordered: false },
+      config: { owner: playerId } as any,
     };
   }
 }
@@ -218,8 +224,7 @@ describe("Trigger Integration", () => {
       deployUnitMove.reducer(state, {
         playerId: player1,
         params: { cardId },
-        moveId: "deploy",
-      });
+      } as any);
 
       // Verify effect was enqueued
       expect(getEffectStackSize(state)).toBe(initialStackSize + 1);
@@ -264,8 +269,7 @@ describe("Trigger Integration", () => {
       deployUnitMove.reducer(state, {
         playerId: player1,
         params: { cardId: deployingCard },
-        moveId: "deploy",
-      });
+      } as any);
 
       // Both effects should be enqueued
       expect(getEffectStackSize(state)).toBe(initialStackSize + 2);
@@ -311,8 +315,7 @@ describe("Trigger Integration", () => {
       deployUnitMove.reducer(state, {
         playerId: player1,
         params: { cardId: deployingCard },
-        moveId: "deploy",
-      });
+      } as any);
 
       // Both effects should be enqueued
       expect(getEffectStackSize(state)).toBe(initialStackSize + 2);
@@ -347,8 +350,7 @@ describe("Trigger Integration", () => {
       attackMove.reducer(state, {
         playerId: player1,
         params: { attackerId },
-        moveId: "attack",
-      });
+      } as any);
 
       // Verify effect was enqueued
       expect(getEffectStackSize(state)).toBe(initialStackSize + 1);
@@ -388,11 +390,9 @@ describe("Trigger Integration", () => {
         },
       };
       const actionContext: ActionContext = {
-        sourcePlayer: player1,
-        sourceCard: destroyedCard,
+        sourceCardId: destroyedCard,
         controllerId: player1,
         targets: [destroyedCard],
-        variables: {},
       };
       handleDestroyAction(state, destroyAction, actionContext);
 
@@ -446,11 +446,9 @@ describe("Trigger Integration", () => {
         },
       };
       const actionContext: ActionContext = {
-        sourcePlayer: player1,
-        sourceCard: destroyedCard,
+        sourceCardId: destroyedCard,
         controllerId: player1,
         targets: [destroyedCard],
-        variables: {},
       };
       handleDestroyAction(state, destroyAction, actionContext);
 
@@ -499,8 +497,7 @@ describe("Trigger Integration", () => {
       deployUnitMove.reducer(state, {
         playerId: player1,
         params: { cardId: deployingCard },
-        moveId: "deploy",
-      });
+      } as any);
 
       // Both effects should be enqueued
       const effectStack = state.gundam.effectStack.stack;

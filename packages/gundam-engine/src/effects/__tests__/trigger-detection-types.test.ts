@@ -16,7 +16,7 @@ import type {
   TriggerDetectionResult,
   TriggerEvent,
   TriggeredEffectRef,
-} from "../../types/effects";
+} from "../trigger-detection";
 import {
   detectAttackTriggers,
   detectDeployTriggers,

@@ -214,10 +214,10 @@ describe("Effect Builders - Resources", () => {
 
 describe("Effect Builders - Pilot and Pairing", () => {
   it("should create a pair pilot effect", () => {
-    const effect = pairPilot("chosen-pilot", "this");
+    const effect = pairPilot("chosen-unit", "this");
     expect(effect).toEqual({
       type: "pair-pilot",
-      pilot: "chosen-pilot",
+      pilot: "chosen-unit",
       unit: "this",
     });
   });

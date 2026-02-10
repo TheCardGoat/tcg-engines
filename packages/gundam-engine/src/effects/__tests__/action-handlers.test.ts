@@ -1846,14 +1846,14 @@ describe("createModifierId", () => {
     const id1 = createModifierId("test");
     const id2 = createModifierId("test");
 
-    expect(id1).toBe("test-0");
-    expect(id2).toBe("test-1");
+    expect(id1).toBe("test-0" as any);
+    expect(id2).toBe("test-1" as any);
     expect(id1).not.toBe(id2);
   });
 
   it("should use default prefix when not provided", () => {
     const id = createModifierId();
-    expect(id).toBe("mod-0");
+    expect(id).toBe("mod-0" as any);
   });
 });
 

@@ -338,7 +338,7 @@ describe("Activated Abilities", () => {
         ...mockState.gundam,
         cardPositions: { [card1]: "rested" },
       },
-    };
+    } as unknown as GundamGameState;
 
     const abilities = getAbilities(card1);
     const ability = abilities[0] as ActivatedAbility;

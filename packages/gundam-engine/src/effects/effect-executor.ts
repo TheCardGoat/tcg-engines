@@ -529,7 +529,7 @@ function getExecutor(type: Effect["type"]): EffectExecutor {
     "lose-ability": executeLoseAbilityEffect,
   };
 
-  return executors[type] ?? (() => context.state);
+  return executors[type] ?? ((_effect, ctx) => ctx.state);
 }
 
 /**
@@ -553,11 +553,14 @@ function executeDrawEffect(
   const drawEffect = effect as Extract<Effect, { type: "draw" }>;
   const amount = resolveAmount(drawEffect.amount, context);
 
+  const opponent = getOpponent(context.state, context.sourcePlayer);
   const players: PlayerId[] =
     drawEffect.player === "self"
       ? [context.sourcePlayer]
       : drawEffect.player === "opponent"
-        ? ([getOpponent(context.state, context.sourcePlayer)] ?? [])
+        ? opponent
+          ? [opponent]
+          : []
         : drawEffect.player === "each"
           ? context.state.players
           : [context.sourcePlayer];

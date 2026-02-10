@@ -64,7 +64,11 @@ export const handleTurnStartMove: GameMoveDefinition<GundamGameState> = {
       );
 
       // Enqueue effects in the determined order
-      enqueueBatchEffects(draft, triggerResult.effects, orderResult.order);
+      enqueueBatchEffects(
+        draft,
+        [...triggerResult.effects],
+        [...orderResult.order],
+      );
 
       console.log(
         `[TURN_START] Detected ${triggerResult.effects.length} start of turn triggers for ${playerId}, enqueued in order: ${orderResult.order.join(", ")}`,

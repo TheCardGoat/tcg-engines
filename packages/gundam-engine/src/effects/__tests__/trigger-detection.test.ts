@@ -8,11 +8,7 @@
 import { afterEach, beforeEach, describe, expect, it } from "bun:test";
 import type { CardId, PlayerId } from "@tcg/core";
 import type { GundamGameState } from "../../types";
-import type {
-  EffectDefinition,
-  EffectTiming,
-  TriggeredEffectRef,
-} from "../../types/effects";
+import type { EffectDefinition, EffectTiming } from "../../types/effects";
 import {
   clearCardDefinitions,
   registerCardDefinition,
@@ -31,6 +27,7 @@ import {
   orderTriggeredEffects,
   type StartOfTurnTriggerEvent,
   type TriggerEvent,
+  type TriggeredEffectRef,
 } from "../trigger-detection";
 
 // Helper function to create a mock card definition with effects
@@ -76,6 +73,9 @@ function createMockGameState(players: PlayerId[]): GundamGameState {
         stack: [],
         nextInstanceId: 0,
       },
+      temporaryModifiers: {},
+      revealedCards: [],
+      hasPlayedResourceThisTurn: {},
     },
   } as GundamGameState;
 }
@@ -88,7 +88,7 @@ function setupPlayerZones(
 ): void {
   state.zones.battleArea[playerId] = {
     cards: [...cardIds],
-    config: { owner: playerId, hidden: false, ordered: false },
+    config: { owner: playerId } as any,
   };
 
   // Set all cards to active position

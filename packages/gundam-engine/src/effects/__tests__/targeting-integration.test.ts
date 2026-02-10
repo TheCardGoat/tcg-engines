@@ -4,6 +4,7 @@
  */
 
 import { describe, expect, it } from "bun:test";
+import type { CardId, PlayerId } from "@tcg/core";
 import { createCardId, createPlayerId } from "@tcg/core";
 import type { GundamGameState } from "../../types";
 import type {
@@ -25,8 +26,8 @@ function createGameState(
     temporaryModifiers?: Record<string, unknown[]>;
   } = {},
 ): GundamGameState {
-  const player1 = "player-1" as const;
-  const player2 = "player-2" as const;
+  const player1 = "player-1" as PlayerId;
+  const player2 = "player-2" as PlayerId;
 
   return {
     players: [player1, player2],
@@ -45,7 +46,7 @@ function createGameState(
             faceDown: true,
             maxSize: 50,
           },
-          cards: config.player1Cards?.deck ?? [],
+          cards: (config.player1Cards?.deck ?? []) as CardId[],
         },
         [player2]: {
           config: {
@@ -57,9 +58,9 @@ function createGameState(
             faceDown: true,
             maxSize: 50,
           },
-          cards: config.player2Cards?.deck ?? [],
+          cards: (config.player2Cards?.deck ?? []) as CardId[],
         },
-      },
+      } as any,
       resourceDeck: {
         [player1]: {
           config: {
@@ -71,7 +72,7 @@ function createGameState(
             faceDown: true,
             maxSize: 10,
           },
-          cards: [],
+          cards: [] as CardId[],
         },
         [player2]: {
           config: {
@@ -83,9 +84,9 @@ function createGameState(
             faceDown: true,
             maxSize: 10,
           },
-          cards: [],
+          cards: [] as CardId[],
         },
-      },
+      } as any,
       hand: {
         [player1]: {
           config: {
@@ -96,7 +97,7 @@ function createGameState(
             owner: player1,
             maxSize: 10,
           },
-          cards: config.player1Cards?.hand ?? [],
+          cards: (config.player1Cards?.hand ?? []) as CardId[],
         },
         [player2]: {
           config: {
@@ -107,9 +108,9 @@ function createGameState(
             owner: player2,
             maxSize: 10,
           },
-          cards: config.player2Cards?.hand ?? [],
+          cards: (config.player2Cards?.hand ?? []) as CardId[],
         },
-      },
+      } as any,
       battleArea: {
         [player1]: {
           config: {
@@ -120,7 +121,7 @@ function createGameState(
             owner: player1,
             maxSize: 6,
           },
-          cards: config.player1Cards?.battleArea ?? [],
+          cards: (config.player1Cards?.battleArea ?? []) as CardId[],
         },
         [player2]: {
           config: {
@@ -131,9 +132,9 @@ function createGameState(
             owner: player2,
             maxSize: 6,
           },
-          cards: config.player2Cards?.battleArea ?? [],
+          cards: (config.player2Cards?.battleArea ?? []) as CardId[],
         },
-      },
+      } as any,
       shieldSection: {
         [player1]: {
           config: {
@@ -145,7 +146,7 @@ function createGameState(
             faceDown: true,
             maxSize: 6,
           },
-          cards: [],
+          cards: [] as CardId[],
         },
         [player2]: {
           config: {
@@ -157,9 +158,9 @@ function createGameState(
             faceDown: true,
             maxSize: 6,
           },
-          cards: [],
+          cards: [] as CardId[],
         },
-      },
+      } as any,
       baseSection: {
         [player1]: {
           config: {
@@ -170,7 +171,7 @@ function createGameState(
             owner: player1,
             maxSize: 1,
           },
-          cards: [],
+          cards: [] as CardId[],
         },
         [player2]: {
           config: {
@@ -181,9 +182,9 @@ function createGameState(
             owner: player2,
             maxSize: 1,
           },
-          cards: [],
+          cards: [] as CardId[],
         },
-      },
+      } as any,
       resourceArea: {
         [player1]: {
           config: {
@@ -194,7 +195,7 @@ function createGameState(
             owner: player1,
             maxSize: 15,
           },
-          cards: [],
+          cards: [] as CardId[],
         },
         [player2]: {
           config: {
@@ -205,9 +206,9 @@ function createGameState(
             owner: player2,
             maxSize: 15,
           },
-          cards: [],
+          cards: [] as CardId[],
         },
-      },
+      } as any,
       trash: {
         [player1]: {
           config: {
@@ -218,7 +219,7 @@ function createGameState(
             owner: player1,
             maxSize: 0,
           },
-          cards: [],
+          cards: [] as CardId[],
         },
         [player2]: {
           config: {
@@ -229,9 +230,9 @@ function createGameState(
             owner: player2,
             maxSize: 0,
           },
-          cards: [],
+          cards: [] as CardId[],
         },
-      },
+      } as any,
       removal: {
         [player1]: {
           config: {
@@ -239,10 +240,10 @@ function createGameState(
             name: "Removal",
             visibility: "public" as const,
             ordered: false,
-            owner: player1,
+            owner: player1 as PlayerId,
             maxSize: 0,
           },
-          cards: [],
+          cards: [] as CardId[],
         },
         [player2]: {
           config: {
@@ -250,25 +251,60 @@ function createGameState(
             name: "Removal",
             visibility: "public" as const,
             ordered: false,
-            owner: player2,
+            owner: player2 as PlayerId,
             maxSize: 0,
           },
-          cards: [],
+          cards: [] as CardId[],
         },
-      },
+      } as any,
+      limbo: {
+        [player1]: {
+          config: {
+            id: "limbo-p1",
+            name: "Limbo",
+            visibility: "public" as const,
+            ordered: false,
+            owner: player1 as PlayerId,
+            maxSize: 0,
+          },
+          cards: [] as CardId[],
+        },
+        [player2]: {
+          config: {
+            id: "limbo-p2",
+            name: "Limbo",
+            visibility: "public" as const,
+            ordered: false,
+            owner: player2 as PlayerId,
+            maxSize: 0,
+          },
+          cards: [] as CardId[],
+        },
+      } as any,
     },
     gundam: {
-      activeResources: { [player1]: 3, [player2]: 2 },
-      cardPositions: config.cardPositions ?? {},
-      attackedThisTurn: [],
-      hasPlayedResourceThisTurn: { [player1]: true, [player2]: false },
+      activeResources: {
+        [player1]: 3,
+        [player2]: 2,
+      } as Record<PlayerId, number>,
+      cardPositions: (config.cardPositions ?? {}) as Record<
+        CardId,
+        "active" | "rested"
+      >,
+      attackedThisTurn: [] as CardId[],
+      hasPlayedResourceThisTurn: {
+        [player1]: true,
+        [player2]: false,
+      } as Record<PlayerId, boolean>,
       effectStack: {
         stack: [],
         nextInstanceId: 0,
       },
       temporaryModifiers:
-        config.temporaryModifiers ??
+        (config.temporaryModifiers as any) ??
         ({} as GundamGameState["gundam"]["temporaryModifiers"]),
+      cardDamage: {} as Record<CardId, number>,
+      revealedCards: [] as CardId[],
     },
   };
 }
@@ -284,11 +320,11 @@ function createCardDefinitions(
     color?: string;
     traits?: string[];
   }>,
-): Record<string, BaseEffectCardDefinition> {
-  const result: Record<string, BaseEffectCardDefinition> = {};
+): Record<CardId, BaseEffectCardDefinition> {
+  const result: Record<CardId, BaseEffectCardDefinition> = {};
 
   for (const card of cards) {
-    result[card.id] = {
+    result[card.id as CardId] = {
       id: card.id,
       name: card.name,
       cardType: card.cardType,
@@ -296,9 +332,9 @@ function createCardDefinitions(
       lv: card.lv,
       text: "",
       effects: [],
-      ...(card.color ? { color: card.color as const } : {}),
+      ...(card.color ? { color: card.color as any } : {}),
       ...(card.traits ? { traits: card.traits } : {}),
-    };
+    } as any;
   }
 
   return result;
@@ -308,24 +344,24 @@ function createCardDefinitions(
 function createContext(
   controllerId: string,
   sourceCardId: string,
-  cardDefinitions: Record<string, BaseEffectCardDefinition>,
+  cardDefinitions: Record<CardId, BaseEffectCardDefinition>,
 ): TargetingContext {
   return {
-    controllerId,
-    sourceCardId,
+    controllerId: controllerId as PlayerId,
+    sourceCardId: sourceCardId as CardId,
     cardDefinitions,
   };
 }
 
-const PLAYER_1 = "player-1" as const;
-const PLAYER_2 = "player-2" as const;
+const PLAYER_1 = "player-1" as PlayerId;
+const PLAYER_2 = "player-2" as PlayerId;
 
 // Sample cards
-const RX78 = "rx-78-2" as const;
-const ZAKU = "zaku-ii" as const;
-const GM = "gm" as const;
-const DOM = "dom" as const;
-const GOUF = "gouf" as const;
+const RX78 = "rx-78-2" as CardId;
+const ZAKU = "zaku-ii" as CardId;
+const GM = "gm" as CardId;
+const DOM = "dom" as CardId;
+const GOUF = "gouf" as CardId;
 
 describe("targeting integration with actual effect definitions", () => {
   describe("destroy effect - destroy unit with cost 2 or less", () => {

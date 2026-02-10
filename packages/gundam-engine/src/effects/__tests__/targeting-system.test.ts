@@ -3,6 +3,7 @@
  */
 
 import { describe, expect, it } from "bun:test";
+import type { CardId, PlayerId } from "@tcg/core";
 import { createCardId, createPlayerId } from "@tcg/core";
 import type { GundamGameState } from "../../types";
 import type { BaseEffectCardDefinition } from "../../types/effects";
@@ -37,6 +38,7 @@ function createMockGameState(
   zones: Record<string, Record<string, { cards: string[] }>>,
   cardPositions: Record<string, "active" | "rested"> = {},
   temporaryModifiers: Record<string, unknown[]> = {},
+  cardDamage: Record<string, number> = {},
 ): GundamGameState {
   // Transform the simplified zone structure to proper Zone structure
   const transformedZones: Record<
@@ -89,24 +91,25 @@ function createMockGameState(
   }
 
   return {
-    players: players as [string, ...string[]],
-    currentPlayer: players[0] as string,
+    players: players as any,
+    currentPlayer: players[0] as any,
     turn: 1,
     phase: "main",
-    zones: transformedZones as GundamGameState["zones"],
+    zones: transformedZones as any,
     gundam: {
       activeResources: {},
-      cardPositions,
+      cardPositions: cardPositions as any,
       attackedThisTurn: [],
       hasPlayedResourceThisTurn: {},
       effectStack: {
         stack: [],
         nextInstanceId: 0,
       },
-      temporaryModifiers:
-        temporaryModifiers as GundamGameState["gundam"]["temporaryModifiers"],
+      temporaryModifiers: temporaryModifiers as any,
+      cardDamage: cardDamage as any,
+      revealedCards: [],
     },
-  };
+  } as GundamGameState;
 }
 
 // Helper to create a mock card definition
@@ -114,7 +117,7 @@ function createMockCardDefinition(
   overrides: Partial<BaseEffectCardDefinition> = {},
 ): BaseEffectCardDefinition {
   return {
-    id: "card-001",
+    id: "card-001" as any,
     name: "Test Unit",
     cardType: "UNIT",
     lv: 2,
@@ -132,19 +135,19 @@ function createContext(
   cardDefinitions?: Record<string, BaseEffectCardDefinition>,
 ): TargetingContext {
   return {
-    controllerId,
-    sourceCardId,
-    cardDefinitions,
+    controllerId: controllerId as any,
+    sourceCardId: sourceCardId as any,
+    cardDefinitions: cardDefinitions as any,
   };
 }
 
-const PLAYER_1 = "player-1" as const;
-const PLAYER_2 = "player-2" as const;
-const UNIT_1 = "unit-1" as const;
-const UNIT_2 = "unit-2" as const;
-const UNIT_3 = "unit-3" as const;
-const BASE_1 = "base-1" as const;
-const SHIELD_1 = "shield-1" as const;
+const PLAYER_1 = "player-1" as any;
+const PLAYER_2 = "player-2" as any;
+const UNIT_1 = "unit-1" as any;
+const UNIT_2 = "unit-2" as any;
+const UNIT_3 = "unit-3" as any;
+const BASE_1 = "base-1" as any;
+const SHIELD_1 = "shield-1" as any;
 
 describe("matchesFilter", () => {
   describe("zone filtering", () => {
@@ -329,7 +332,10 @@ describe("matchesFilter", () => {
       });
 
       const cardDefs: Record<string, BaseEffectCardDefinition> = {
-        [UNIT_1]: { ...createMockCardDefinition(), color: "Red" as const },
+        [UNIT_1]: {
+          ...createMockCardDefinition(),
+          color: "Red" as const,
+        } as any,
       };
 
       const context = createContext(PLAYER_1, UNIT_1, cardDefs);
@@ -356,7 +362,7 @@ describe("matchesFilter", () => {
         [UNIT_1]: {
           ...createMockCardDefinition(),
           traits: ["Zeon", "Mobile Suit"],
-        },
+        } as any,
       };
 
       const context = createContext(PLAYER_1, UNIT_1, cardDefs);
@@ -383,7 +389,7 @@ describe("matchesFilter", () => {
         [UNIT_1]: {
           ...createMockCardDefinition(),
           traits: ["Zeon", "Mobile Suit"],
-        },
+        } as any,
       };
 
       const context = createContext(PLAYER_1, UNIT_1, cardDefs);
@@ -598,7 +604,11 @@ describe("enumerateValidTargets", () => {
 
       const context = createContext(PLAYER_1, UNIT_1);
 
-      const result = enumerateValidTargets(state, targetingSpec, context);
+      const result = enumerateValidTargets(
+        state,
+        targetingSpec as any,
+        context,
+      );
 
       expect(result).toHaveLength(2);
       expect(result).toContain(UNIT_1);
@@ -632,7 +642,11 @@ describe("enumerateValidTargets", () => {
 
       const context = createContext(PLAYER_1, UNIT_1);
 
-      const result = enumerateValidTargets(state, targetingSpec, context);
+      const result = enumerateValidTargets(
+        state,
+        targetingSpec as any,
+        context,
+      );
 
       expect(result).toHaveLength(2);
       expect(result).toContain(UNIT_1);
@@ -668,7 +682,11 @@ describe("enumerateValidTargets", () => {
 
       const context = createContext(PLAYER_1, UNIT_1);
 
-      const result = enumerateValidTargets(state, targetingSpec, context);
+      const result = enumerateValidTargets(
+        state,
+        targetingSpec as any,
+        context,
+      );
 
       expect(result).toHaveLength(1);
       expect(result[0]).toBe(UNIT_1);
@@ -693,7 +711,11 @@ describe("enumerateValidTargets", () => {
 
       const context = createContext(PLAYER_1, UNIT_1);
 
-      const result = enumerateValidTargets(state, targetingSpec, context);
+      const result = enumerateValidTargets(
+        state,
+        targetingSpec as any,
+        context,
+      );
 
       expect(result).toHaveLength(0);
     });
@@ -721,13 +743,13 @@ describe("validateTargets", () => {
 
       // Correct count
       expect(
-        validateTargets(state, targetingSpec, [UNIT_1, UNIT_2], context),
+        validateTargets(state, targetingSpec as any, [UNIT_1, UNIT_2], context),
       ).toBe(true);
 
       // Wrong count
-      expect(validateTargets(state, targetingSpec, [UNIT_1], context)).toBe(
-        false,
-      );
+      expect(
+        validateTargets(state, targetingSpec as any, [UNIT_1], context),
+      ).toBe(false);
     });
 
     it("should validate count range", () => {
@@ -748,15 +770,15 @@ describe("validateTargets", () => {
       const context = createContext(PLAYER_1, UNIT_1);
 
       // Valid: min count
-      expect(validateTargets(state, targetingSpec, [UNIT_1], context)).toBe(
-        true,
-      );
+      expect(
+        validateTargets(state, targetingSpec as any, [UNIT_1], context),
+      ).toBe(true);
 
       // Valid: max count
       expect(
         validateTargets(
           state,
-          targetingSpec,
+          targetingSpec as any,
           [UNIT_1, UNIT_2, UNIT_3],
           context,
         ),
@@ -764,17 +786,19 @@ describe("validateTargets", () => {
 
       // Valid: between min and max
       expect(
-        validateTargets(state, targetingSpec, [UNIT_1, UNIT_2], context),
+        validateTargets(state, targetingSpec as any, [UNIT_1, UNIT_2], context),
       ).toBe(true);
 
       // Invalid: below min
-      expect(validateTargets(state, targetingSpec, [], context)).toBe(false);
+      expect(validateTargets(state, targetingSpec as any, [], context)).toBe(
+        false,
+      );
 
       // Invalid: above max
       expect(
         validateTargets(
           state,
-          targetingSpec,
+          targetingSpec as any,
           [UNIT_1, UNIT_2, UNIT_3, "invalid"],
           context,
         ),
@@ -801,14 +825,14 @@ describe("validateTargets", () => {
       const context = createContext(PLAYER_1, UNIT_1);
 
       // Valid target
-      expect(validateTargets(state, targetingSpec, [UNIT_1], context)).toBe(
-        true,
-      );
+      expect(
+        validateTargets(state, targetingSpec as any, [UNIT_1], context),
+      ).toBe(true);
 
       // Invalid target (opponent's card)
-      expect(validateTargets(state, targetingSpec, [UNIT_2], context)).toBe(
-        false,
-      );
+      expect(
+        validateTargets(state, targetingSpec as any, [UNIT_2], context),
+      ).toBe(false);
     });
   });
 
@@ -832,7 +856,7 @@ describe("validateTargets", () => {
 
       // Duplicate targets
       expect(
-        validateTargets(state, targetingSpec, [UNIT_1, UNIT_1], context),
+        validateTargets(state, targetingSpec as any, [UNIT_1, UNIT_1], context),
       ).toBe(false);
     });
   });
@@ -972,6 +996,7 @@ describe("state helpers", () => {
             },
           ],
         },
+        { [UNIT_1]: 1 },
       );
 
       expect(
@@ -1129,7 +1154,7 @@ describe("matchesCardFilter", () => {
       [UNIT_1]: {
         ...createMockCardDefinition(),
         keywordEffects: ["Repair", "Breach"],
-      },
+      } as any,
     };
 
     expect(

@@ -48,7 +48,6 @@ export {
   processTriggerEvents,
   registerAbilities,
   type StaticAbility,
-  type TriggerEvent,
   type TriggeredAbility,
   type TriggerType,
 } from "./ability-system";

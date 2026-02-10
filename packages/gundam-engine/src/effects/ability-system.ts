@@ -12,13 +12,13 @@
 
 import type { CardId, PlayerId } from "@tcg/core";
 import type { GundamGameState } from "../types";
-import { createEffectContext, executeEffect } from "./effect-executor";
-import type {
-  AbilityDefinition,
-  Effect,
-  EffectContext,
-  EffectResult,
-} from "./effect-types";
+import {
+  createEffectContext,
+  type EffectContext,
+  type EffectResult,
+  executeEffect,
+} from "./effect-executor";
+import type { AbilityDefinition, Effect } from "./effect-types";
 
 // ============================================================================
 // Ability Types
@@ -166,9 +166,9 @@ export function findMatchingAbilities(
   // Check all cards in play
   for (const player of state.players) {
     const battleArea = state.zones.battleArea[player];
-    if (!battleArea?.cardIds) continue;
+    if (!battleArea?.cards) continue;
 
-    for (const cardId of battleArea.cardIds) {
+    for (const cardId of battleArea.cards) {
       const abilities = getAbilities(cardId);
 
       for (const ability of abilities) {
@@ -267,7 +267,7 @@ function canPayCost(
   }
 
   if (cost.discard !== undefined) {
-    const handSize = state.zones.hand[player]?.cardIds.length ?? 0;
+    const handSize = state.zones.hand[player]?.cards.length ?? 0;
     if (handSize < cost.discard) return false;
   }
 
@@ -307,9 +307,9 @@ export function getStaticAbilities(
 
   for (const player of state.players) {
     const battleArea = state.zones.battleArea[player];
-    if (!battleArea?.cardIds) continue;
+    if (!battleArea?.cards) continue;
 
-    for (const cardId of battleArea.cardIds) {
+    for (const cardId of battleArea.cards) {
       const abilities = getAbilities(cardId);
 
       for (const ability of abilities) {
@@ -366,8 +366,8 @@ function isCardInPlay(
   const baseSection = state.zones.baseSection[player];
 
   return (
-    (battleArea?.cardIds?.includes(cardId) ?? false) ||
-    (baseSection?.cardIds?.includes(cardId) ?? false)
+    (battleArea?.cards?.includes(cardId) ?? false) ||
+    (baseSection?.cards?.includes(cardId) ?? false)
   );
 }
 
@@ -479,9 +479,9 @@ export function getActivatableAbilities(
   const activatable: Array<{ cardId: CardId; ability: ActivatedAbility }> = [];
 
   const battleArea = state.zones.battleArea[player];
-  if (!battleArea?.cardIds) return activatable;
+  if (!battleArea?.cards) return activatable;
 
-  for (const cardId of battleArea.cardIds) {
+  for (const cardId of battleArea.cards) {
     const abilities = getAbilities(cardId);
 
     for (const ability of abilities) {

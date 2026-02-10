@@ -213,7 +213,11 @@ export const attackMove: GameMoveDefinition<GundamGameState> = {
       );
 
       // Enqueue effects in the determined order
-      enqueueBatchEffects(draft, triggerResult.effects, orderResult.order);
+      enqueueBatchEffects(
+        draft,
+        [...triggerResult.effects],
+        [...orderResult.order],
+      );
 
       console.log(
         `[ATTACK] Detected ${triggerResult.effects.length} attack triggers, enqueued in order: ${orderResult.order.join(", ")}`,

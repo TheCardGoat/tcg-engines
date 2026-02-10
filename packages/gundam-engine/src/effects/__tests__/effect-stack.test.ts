@@ -133,9 +133,9 @@ describe("Effect Stack - Enqueue", () => {
     // Verify the effect was created correctly
     const effect = state.gundam.effectStack.stack[0];
     expect(effect?.instanceId).toBe("effect-0");
-    expect(effect?.sourceCardId).toBe("card-1");
+    expect(effect?.sourceCardId).toBe("card-1" as any);
     expect(effect?.effectRef.effectId).toBe("draw-2");
-    expect(effect?.controllerId).toBe("player-1");
+    expect(effect?.controllerId).toBe("player-1" as any);
     expect(effect?.currentActionIndex).toBe(0);
     expect(effect?.state).toBe("pending");
   });

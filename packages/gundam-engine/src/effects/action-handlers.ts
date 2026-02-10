@@ -23,6 +23,7 @@ import type {
   DiscardAction,
   DrawAction,
   EffectAction,
+  EffectDefinition,
   GrantKeywordAction,
   KeywordEffect,
   ModifierId,
@@ -64,6 +65,8 @@ export interface CardDefinition {
   readonly hp?: number;
   /** Keywords inherent to this card */
   readonly keywords?: readonly KeywordEffect[];
+  /** Effects defined on this card */
+  readonly effects?: readonly EffectDefinition[];
 }
 
 /**
