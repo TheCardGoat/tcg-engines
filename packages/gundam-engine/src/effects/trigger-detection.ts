@@ -358,8 +358,9 @@ export function detectDestroyedTriggers(
 /**
  * Detects start-of-turn-triggered effects
  *
- * Scans all players' battle areas for start-of-turn timing effects.
+ * Scans the current player's battle area for start-of-turn timing effects.
  * Only cards in play (on the battlefield) are checked for triggers.
+ * Only the player whose turn is starting will have their triggers detected.
  *
  * @param state - Current game state
  * @param event - Start of turn trigger event
@@ -371,25 +372,28 @@ export function detectStartOfTurnTriggers(
 ): TriggerDetectionResult {
   const effects: TriggeredEffectRef[] = [];
 
-  // Scan all players' battle areas for cards with start of turn triggers
-  for (const player of state.players) {
-    const battleArea = state.zones.battleArea[player];
+  // Only scan the current player's battle area for start of turn triggers
+  const battleArea = state.zones.battleArea[event.playerId];
 
-    if (!battleArea?.cards) continue;
+  if (!battleArea?.cards) {
+    return {
+      effects,
+      hasTriggers: false,
+    };
+  }
 
-    for (const cardId of battleArea.cards) {
-      const cardDef = getCardDefinition(cardId);
-      if (!cardDef) continue;
+  for (const cardId of battleArea.cards) {
+    const cardDef = getCardDefinition(cardId);
+    if (!cardDef) continue;
 
-      // Check each effect on the card
-      for (const effect of cardDef.effects ?? []) {
-        if (matchesStartOfTurnTiming(effect.timing)) {
-          effects.push({
-            sourceCardId: cardId,
-            effectRef: { effectId: effect.id },
-            controllerId: player,
-          });
-        }
+    // Check each effect on the card
+    for (const effect of cardDef.effects ?? []) {
+      if (matchesStartOfTurnTiming(effect.timing)) {
+        effects.push({
+          sourceCardId: cardId,
+          effectRef: { effectId: effect.id },
+          controllerId: event.playerId,
+        });
       }
     }
   }
@@ -538,11 +542,9 @@ export function orderTriggeredEffects(
     }
   }
 
-  // Build order array (defaults to natural order)
-  const order: number[] = [];
-  for (let i = 0; i < effects.length; i++) {
-    order.push(i);
-  }
+  // Build order array: active player effects first, then opponent effects
+  // This maintains relative order within each group
+  const order = [...activePlayerEffects, ...opponentEffects];
 
   return {
     order,
