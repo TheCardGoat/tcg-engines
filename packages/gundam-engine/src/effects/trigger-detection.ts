@@ -14,8 +14,8 @@
  */
 
 import type { CardId, PlayerId } from "@tcg/core";
+import type { EffectTiming } from "@tcg/gundam-types/effects";
 import type { GundamGameState } from "../types";
-import type { EffectDefinition, EffectTiming } from "../types/effects";
 import { getCardDefinition } from "./action-handlers";
 
 // ============================================================================
@@ -41,6 +41,7 @@ export type TriggerEvent =
 interface BaseTriggerEvent {
   /** Type of trigger event */
   readonly type: string;
+
   /** Player associated with the event */
   readonly playerId: PlayerId;
 }
@@ -48,11 +49,12 @@ interface BaseTriggerEvent {
 /**
  * Deploy Trigger Event
  *
- * Fired when a unit is deployed to the battle area.
+ * Fired when a unit is deployed to battle area.
  */
 export interface DeployTriggerEvent extends BaseTriggerEvent {
   readonly type: "DEPLOY";
-  /** ID of the deployed unit */
+
+  /** ID of deployed unit */
   readonly cardId: CardId;
 }
 
@@ -63,10 +65,13 @@ export interface DeployTriggerEvent extends BaseTriggerEvent {
  */
 export interface AttackTriggerEvent extends BaseTriggerEvent {
   readonly type: "ATTACK";
-  /** ID of the attacking unit */
+
+  /** ID of attacking unit */
   readonly attackerId: CardId;
-  /** ID of the target (if any) */
+
+  /** ID of target (if any) */
   readonly targetId?: CardId;
+
   /** Attack step for more precise timing */
   readonly step?: "declaration" | "damage" | "end";
 }
@@ -78,7 +83,8 @@ export interface AttackTriggerEvent extends BaseTriggerEvent {
  */
 export interface DestroyedTriggerEvent extends BaseTriggerEvent {
   readonly type: "DESTROYED";
-  /** ID of the destroyed card */
+
+  /** ID of destroyed card */
   readonly cardId: CardId;
 }
 
@@ -89,6 +95,9 @@ export interface DestroyedTriggerEvent extends BaseTriggerEvent {
  */
 export interface StartOfTurnTriggerEvent extends BaseTriggerEvent {
   readonly type: "START_OF_TURN";
+
+  /** Player whose turn is starting */
+  readonly playerId: PlayerId;
 }
 
 /**
@@ -98,26 +107,37 @@ export interface StartOfTurnTriggerEvent extends BaseTriggerEvent {
  */
 export interface EndOfTurnTriggerEvent extends BaseTriggerEvent {
   readonly type: "END_OF_TURN";
+
+  /** Player whose turn is ending */
+  readonly playerId: PlayerId;
 }
 
 // ============================================================================
-// TRIGGER DETECTION RESULTS
+// TRIGGERED EFFECT REFERENCE
 // ============================================================================
 
 /**
  * Triggered Effect Reference
  *
  * Represents a triggered effect ready to be enqueued.
- * Contains the minimal information needed to create an effect instance.
+ * Contains minimal information needed to create an effect instance.
  */
 export interface TriggeredEffectRef {
   /** Card that generated this effect */
   readonly sourceCardId: CardId;
+
   /** Reference to the effect definition */
-  readonly effectRef: { effectId: string };
-  /** Player controlling this effect (owner of the source card) */
+  readonly effectRef: {
+    readonly effectId: string;
+  };
+
+  /** Player controlling this effect (owner of source card) */
   readonly controllerId: PlayerId;
 }
+
+// ============================================================================
+// TRIGGER DETECTION RESULT
+// ============================================================================
 
 /**
  * Trigger Detection Result
@@ -128,8 +148,30 @@ export interface TriggeredEffectRef {
 export interface TriggerDetectionResult {
   /** All detected triggered effects */
   readonly effects: readonly TriggeredEffectRef[];
+
   /** Whether any effects were detected */
   readonly hasTriggers: boolean;
+}
+
+// ============================================================================
+// ACTIVE PLAYER ORDER RESULT
+// ============================================================================
+
+/**
+ * Active Player Order Result
+ *
+ * Result of ordering triggered effects by active player choice.
+ * Contains the ordered indices and which effects belong to each player.
+ */
+export interface ActivePlayerOrderResult {
+  /** The order in which effects should resolve (indices into effects array) */
+  readonly order: readonly number[];
+
+  /** Indices of effects controlled by the active player */
+  readonly activePlayerEffects: readonly number[];
+
+  /** Indices of effects controlled by the opponent */
+  readonly opponentEffects: readonly number[];
 }
 
 // ============================================================================
@@ -140,7 +182,7 @@ export interface TriggerDetectionResult {
  * Detects all triggered effects for a given trigger event
  *
  * This is the main entry point for trigger detection. It dispatches
- * to specialized detection functions based on the event type.
+ * to specialized detection functions based on event type.
  *
  * @param state - Current game state
  * @param event - Trigger event to detect effects for
@@ -150,12 +192,13 @@ export interface TriggerDetectionResult {
  * ```typescript
  * const event: DeployTriggerEvent = {
  *   type: "DEPLOY",
- *   playerId: "p1",
- *   cardId: "unit-123",
+ *   cardId: "unit-123" as CardId,
+ *   playerId: "player-1" as PlayerId,
  * };
+ *
  * const result = detectTriggeredEffects(state, event);
  * if (result.hasTriggers) {
- *   // Enqueue effects in order chosen by active player
+ *   // Enqueue detected effects in order chosen by active player
  * }
  * ```
  */
@@ -165,56 +208,42 @@ export function detectTriggeredEffects(
 ): TriggerDetectionResult {
   switch (event.type) {
     case "DEPLOY":
-      return detectDeployTriggers(state, event.cardId, event.playerId);
+      return detectDeployTriggers(state, event);
     case "ATTACK":
-      return detectAttackTriggers(
-        state,
-        event.attackerId,
-        event.targetId,
-        event.playerId,
-      );
+      return detectAttackTriggers(state, event);
     case "DESTROYED":
-      return detectDestroyedTriggers(state, event.cardId, event.playerId);
+      return detectDestroyedTriggers(state, event);
     case "START_OF_TURN":
-      return detectStartOfTurnTriggers(state, event.playerId);
+      return detectStartOfTurnTriggers(state, event);
     case "END_OF_TURN":
-      return detectEndOfTurnTriggers(state, event.playerId);
-    default:
-      return { effects: [], hasTriggers: false };
+      return detectEndOfTurnTriggers(state, event);
   }
 }
 
 /**
- * Detects 【Deploy】 triggered effects
+ * Detects deploy-triggered effects
  *
- * Scans all cards in play for effects with DEPLOY timing.
- * These effects trigger when a unit enters the battle area.
+ * Scans all players' battle areas for cards with deploy timing effects.
  *
  * @param state - Current game state
- * @param deployedCardId - ID of the deployed unit
- * @param playerId - Player who deployed the unit
- * @returns Detection result with all matching effects
- *
- * @example
- * ```typescript
- * // Unit with "When you deploy a unit, draw a card" triggers
- * // Unit with "When this unit deploys, deal 1 damage" triggers
- * ```
+ * @param event - Deploy trigger event
+ * @returns Detection result with matching effects
  */
 export function detectDeployTriggers(
   state: GundamGameState,
-  deployedCardId: CardId,
-  playerId: PlayerId,
+  event: DeployTriggerEvent,
 ): TriggerDetectionResult {
   const effects: TriggeredEffectRef[] = [];
 
   // Scan all players' battle areas for cards with deploy triggers
   for (const player of state.players) {
     const battleArea = state.zones.battleArea[player];
+
     if (!battleArea?.cards) continue;
 
     for (const cardId of battleArea.cards) {
       const cardDef = getCardDefinition(cardId);
+
       if (!cardDef) continue;
 
       // Check each effect on the card
@@ -237,38 +266,29 @@ export function detectDeployTriggers(
 }
 
 /**
- * Detects 【Attack】 triggered effects
+ * Detects attack-triggered effects
  *
- * Scans all cards in play for effects with ATTACK timing.
- * These effects trigger when a unit declares an attack.
+ * Scans all players' battle areas for cards with attack timing effects.
  *
  * @param state - Current game state
- * @param attackerId - ID of the attacking unit
- * @param targetId - ID of the target (if any)
- * @param playerId - Player controlling the attacker
- * @returns Detection result with all matching effects
- *
- * @example
- * ```typescript
- * // Unit with "When this unit attacks, draw a card" triggers
- * // Unit with "When a unit you control attacks, gain 1 life" triggers
- * ```
+ * @param event - Attack trigger event
+ * @returns Detection result with matching effects
  */
 export function detectAttackTriggers(
   state: GundamGameState,
-  attackerId: CardId,
-  targetId: CardId | undefined,
-  playerId: PlayerId,
+  event: AttackTriggerEvent,
 ): TriggerDetectionResult {
   const effects: TriggeredEffectRef[] = [];
 
   // Scan all players' battle areas for cards with attack triggers
   for (const player of state.players) {
     const battleArea = state.zones.battleArea[player];
+
     if (!battleArea?.cards) continue;
 
     for (const cardId of battleArea.cards) {
       const cardDef = getCardDefinition(cardId);
+
       if (!cardDef) continue;
 
       // Check each effect on the card
@@ -291,36 +311,29 @@ export function detectAttackTriggers(
 }
 
 /**
- * Detects 【Destroyed】 triggered effects
+ * Detects destroyed-triggered effects
  *
- * Scans all cards in play for effects with DESTROYED timing.
- * These effects trigger when a unit/base is destroyed.
+ * Scans all players' battle areas for cards with destroyed timing effects.
  *
  * @param state - Current game state
- * @param destroyedCardId - ID of the destroyed card
- * @param playerId - Player who owned the destroyed card
- * @returns Detection result with all matching effects
- *
- * @example
- * ```typescript
- * // Unit with "When this unit is destroyed, draw a card" triggers
- * // Unit with "When a unit is destroyed, deal 1 damage" triggers
- * ```
+ * @param event - Destroyed trigger event
+ * @returns Detection result with matching effects
  */
 export function detectDestroyedTriggers(
   state: GundamGameState,
-  destroyedCardId: CardId,
-  playerId: PlayerId,
+  event: DestroyedTriggerEvent,
 ): TriggerDetectionResult {
   const effects: TriggeredEffectRef[] = [];
 
   // Scan all players' battle areas for cards with destroyed triggers
   for (const player of state.players) {
     const battleArea = state.zones.battleArea[player];
+
     if (!battleArea?.cards) continue;
 
     for (const cardId of battleArea.cards) {
       const cardDef = getCardDefinition(cardId);
+
       if (!cardDef) continue;
 
       // Check each effect on the card
@@ -343,29 +356,27 @@ export function detectDestroyedTriggers(
 }
 
 /**
- * Detects Start of Turn triggered effects
+ * Detects start-of-turn-triggered effects
  *
- * Scans all cards in play for effects with START_OF_TURN timing.
- * These effects trigger at the beginning of a player's turn.
+ * Scans all players' battle areas for start-of-turn timing effects.
+ * Only cards in play (on the battlefield) are checked for triggers.
  *
  * @param state - Current game state
- * @param playerId - Player whose turn is starting
- * @returns Detection result with all matching effects
- *
- * @example
- * ```typescript
- * // Unit with "At start of your turn, draw a card" triggers
- * ```
+ * @param event - Start of turn trigger event
+ * @returns Detection result with matching effects
  */
 export function detectStartOfTurnTriggers(
   state: GundamGameState,
-  playerId: PlayerId,
+  event: StartOfTurnTriggerEvent,
 ): TriggerDetectionResult {
   const effects: TriggeredEffectRef[] = [];
 
-  // Scan current player's cards for start of turn triggers
-  const battleArea = state.zones.battleArea[playerId];
-  if (battleArea?.cards) {
+  // Scan all players' battle areas for cards with start of turn triggers
+  for (const player of state.players) {
+    const battleArea = state.zones.battleArea[player];
+
+    if (!battleArea?.cards) continue;
+
     for (const cardId of battleArea.cards) {
       const cardDef = getCardDefinition(cardId);
       if (!cardDef) continue;
@@ -376,7 +387,7 @@ export function detectStartOfTurnTriggers(
           effects.push({
             sourceCardId: cardId,
             effectRef: { effectId: effect.id },
-            controllerId: playerId,
+            controllerId: player,
           });
         }
       }
@@ -390,29 +401,25 @@ export function detectStartOfTurnTriggers(
 }
 
 /**
- * Detects End of Turn triggered effects
+ * Detects end-of-turn-triggered effects
  *
- * Scans all cards in play for effects with END_OF_TURN timing.
- * These effects trigger at the end of a player's turn.
+ * Scans all players' battle areas for end-of-turn timing effects.
+ * Only cards in play (on the battlefield) are checked for triggers.
  *
  * @param state - Current game state
- * @param playerId - Player whose turn is ending
- * @returns Detection result with all matching effects
- *
- * @example
- * ```typescript
- * // Unit with "At end of turn, heal 1 damage" triggers
- * ```
+ * @param event - End of turn trigger event
+ * @returns Detection result with matching effects
  */
 export function detectEndOfTurnTriggers(
   state: GundamGameState,
-  playerId: PlayerId,
+  event: EndOfTurnTriggerEvent,
 ): TriggerDetectionResult {
   const effects: TriggeredEffectRef[] = [];
 
-  // Scan all players' battle areas for end of turn triggers
+  // Scan all players' battle areas for cards with end of turn triggers
   for (const player of state.players) {
     const battleArea = state.zones.battleArea[player];
+
     if (!battleArea?.cards) continue;
 
     for (const cardId of battleArea.cards) {
@@ -444,6 +451,9 @@ export function detectEndOfTurnTriggers(
 
 /**
  * Checks if an effect timing matches DEPLOY trigger
+ *
+ * @param timing - Effect timing to check
+ * @returns Whether timing matches deploy trigger
  */
 function matchesDeployTiming(timing: EffectTiming): boolean {
   return timing.type === "DEPLOY";
@@ -451,6 +461,9 @@ function matchesDeployTiming(timing: EffectTiming): boolean {
 
 /**
  * Checks if an effect timing matches ATTACK trigger
+ *
+ * @param timing - Effect timing to check
+ * @returns Whether timing matches attack trigger
  */
 function matchesAttackTiming(timing: EffectTiming): boolean {
   return timing.type === "ATTACK";
@@ -458,6 +471,9 @@ function matchesAttackTiming(timing: EffectTiming): boolean {
 
 /**
  * Checks if an effect timing matches DESTROYED trigger
+ *
+ * @param timing - Effect timing to check
+ * @returns Whether timing matches destroyed trigger
  */
 function matchesDestroyedTiming(timing: EffectTiming): boolean {
   return timing.type === "DESTROYED";
@@ -465,6 +481,9 @@ function matchesDestroyedTiming(timing: EffectTiming): boolean {
 
 /**
  * Checks if an effect timing matches START_OF_TURN trigger
+ *
+ * @param timing - Effect timing to check
+ * @returns Whether timing matches start of turn trigger
  */
 function matchesStartOfTurnTiming(timing: EffectTiming): boolean {
   return timing.type === "START_OF_TURN";
@@ -472,6 +491,9 @@ function matchesStartOfTurnTiming(timing: EffectTiming): boolean {
 
 /**
  * Checks if an effect timing matches END_OF_TURN trigger
+ *
+ * @param timing - Effect timing to check
+ * @returns Whether timing matches end of turn trigger
  */
 function matchesEndOfTurnTiming(timing: EffectTiming): boolean {
   return timing.type === "END_OF_TURN";
@@ -482,154 +504,49 @@ function matchesEndOfTurnTiming(timing: EffectTiming): boolean {
 // ============================================================================
 
 /**
- * Active Player Ordering Result
+ * Orders triggered effects by active player choice
  *
- * Contains the ordering array for batch enqueueing.
- * The order array contains indices into the effects array.
- */
-export interface ActivePlayerOrderResult {
-  /** Order array for enqueueBatchEffects */
-  readonly order: readonly number[];
-  /** Active player's effects (indices) */
-  readonly activePlayerEffects: readonly number[];
-  /** Opponent's effects (indices) */
-  readonly opponentEffects: readonly number[];
-}
-
-/**
- * Creates an ordering for simultaneous triggered effects
+ * When multiple effects trigger simultaneously, the active player chooses
+ * the resolution order. This function builds the order structure that
+ * separates active player's effects from opponent's effects.
  *
- * When multiple effects trigger simultaneously, the active player
- * chooses the resolution order. Active player's effects are ordered
- * first, then opponent's effects.
- *
- * Per Rule 11-3: When multiple effects trigger simultaneously,
- * the active player chooses the resolution order.
- *
- * @param effects - Detected triggered effects
- * @param activePlayerId - Player who is currently active
- * @returns Ordering result with order array
+ * @param effects - Array of triggered effects to order
+ * @param activePlayerId - Player ID of the active player
+ * @returns Order result with effect indices
  *
  * @example
  * ```typescript
- * const effects = [
- *   { sourceCardId: "card-1", controllerId: "p1", ... },
- *   { sourceCardId: "card-2", controllerId: "p2", ... },
- *   { sourceCardId: "card-3", controllerId: "p1", ... },
- * ];
- * // If p1 is active player:
- * // Active player effects: [0, 2] (card-1, card-3)
- * // Opponent effects: [1] (card-2)
- * // Default order: [0, 2, 1] - active player's effects first
+ * const result = orderTriggeredEffects(effects, "player-1");
+ * // result.order contains indices in resolution order
+ * // result.activePlayerEffects are indices of player-1's effects
+ * // result.opponentEffects are indices of other players' effects
  * ```
  */
 export function orderTriggeredEffects(
   effects: readonly TriggeredEffectRef[],
   activePlayerId: PlayerId,
 ): ActivePlayerOrderResult {
-  // Group effects by controller
+  // Separate effects by controller
   const activePlayerEffects: number[] = [];
   const opponentEffects: number[] = [];
 
   for (let i = 0; i < effects.length; i++) {
-    const effect = effects[i]!;
-    if (effect.controllerId === activePlayerId) {
+    if (effects[i]!.controllerId === activePlayerId) {
       activePlayerEffects.push(i);
     } else {
       opponentEffects.push(i);
     }
   }
 
-  // Default order: active player's effects first, then opponent's
-  // The player would typically customize this order via UI
-  const order = [...activePlayerEffects, ...opponentEffects];
+  // Build order array (defaults to natural order)
+  const order: number[] = [];
+  for (let i = 0; i < effects.length; i++) {
+    order.push(i);
+  }
 
   return {
     order,
     activePlayerEffects,
     opponentEffects,
   };
-}
-
-/**
- * Creates a custom ordering for triggered effects
- *
- * Allows specifying a custom order when the default (active player first)
- * is not desired. Used when players make choices via UI.
- *
- * @param effects - Detected triggered effects
- * @param customOrder - Custom order array
- * @returns Ordering result
- *
- * @example
- * ```typescript
- * // Player chooses to resolve effect 2, then 0, then 1
- * const result = orderTriggeredEffectsCustom(effects, [2, 0, 1]);
- * ```
- */
-export function orderTriggeredEffectsCustom(
-  effects: readonly TriggeredEffectRef[],
-  customOrder: number[],
-): ActivePlayerOrderResult {
-  // Validate order indices
-  for (const index of customOrder) {
-    if (index < 0 || index >= effects.length) {
-      throw new Error(
-        `Invalid order index ${index}: must be between 0 and ${effects.length - 1}`,
-      );
-    }
-  }
-
-  // Determine which effects belong to active player
-  // (This would need activePlayerId parameter, omitting for simplicity)
-  const activePlayerEffects: number[] = [];
-  const opponentEffects: number[] = [];
-
-  return {
-    order: customOrder,
-    activePlayerEffects,
-    opponentEffects,
-  };
-}
-
-// ============================================================================
-// TRIGGER DETECTION CONTEXT
-// ============================================================================
-
-/**
- * Trigger Detection Context
- *
- * Context passed to trigger detection functions for additional
- * filtering or validation of triggered effects.
- */
-export interface TriggerDetectionContext {
-  /** Player who is currently active */
-  readonly activePlayerId: PlayerId;
-  /** Current phase */
-  readonly phase: string;
-  /** Current turn number */
-  readonly turn: number;
-  /** Optional card definitions for effect lookup */
-  readonly cardDefinitions?: Record<CardId, EffectDefinition[]>;
-}
-
-/**
- * Enhanced trigger detection with context
- *
- * Future enhancement for more sophisticated trigger detection
- * that considers game state context beyond just the event.
- *
- * @param state - Current game state
- * @param event - Trigger event
- * @param context - Detection context
- * @returns Detection result
- */
-export function detectTriggeredEffectsWithContext(
-  state: GundamGameState,
-  event: TriggerEvent,
-  context: TriggerDetectionContext,
-): TriggerDetectionResult {
-  // For now, delegate to basic detection
-  // Future: Use context for additional filtering
-  return detectTriggeredEffects(state, event);
 }

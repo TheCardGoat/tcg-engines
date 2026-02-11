@@ -20,12 +20,13 @@
 
 import type { CardId, GameMoveDefinition, MoveContext } from "@tcg/core";
 import { isCardInZone } from "@tcg/core";
+import type { EffectAction, TargetingSpec } from "@tcg/gundam-types/effects";
 import type { Draft } from "immer";
 import { findCardZone } from "../../../effects/action-handlers";
 import {
   dequeueEffect,
   findEffectInstance,
-  getEffectDefinition,
+  getEffect,
   isEffectStackEmpty,
   markEffectFizzled,
   markEffectResolved,
@@ -34,7 +35,6 @@ import {
   updateEffectInstance,
 } from "../../../effects/effect-stack";
 import type { GundamGameState } from "../../../types";
-import type { EffectAction, TargetingSpec } from "../../../types/effects";
 import { executeEffectMove } from "./execute-effect";
 
 /**
@@ -241,7 +241,7 @@ export const resolveEffectStackMove: GameMoveDefinition<GundamGameState> = {
     }
 
     // Load effect definition from source card
-    const effectDefinition = getEffectDefinition(
+    const effectDefinition = getEffect(
       draft,
       sourceCardId,
       nextEffect.effectRef.effectId,

@@ -6,11 +6,11 @@
  */
 
 import type { CardId, PlayerId, Zone } from "@tcg/core";
+import type { KeywordEffect } from "@tcg/gundam-types/effects";
 import type {
   EffectStackState,
-  KeywordEffect,
   TemporaryModifier,
-} from "./types/effects";
+} from "./effects/effect-runtime";
 
 /**
  * Gundam Game State

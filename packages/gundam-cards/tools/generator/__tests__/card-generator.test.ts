@@ -3,7 +3,7 @@
  */
 
 import { describe, expect, it } from "bun:test";
-import type { TriggeredEffect } from "@tcg/gundam-types";
+import type { BaseEffect } from "@tcg/gundam-types";
 import type { ParseResult } from "../../parser/text-parser";
 import type { ScrapedCardData } from "../../scraper/card-scraper";
 import {
@@ -39,13 +39,14 @@ describe("Card Generator", () => {
         type: "TRIGGERED",
         timing: "DEPLOY",
         description: "【Deploy】Search your deck for a Pilot.",
+        restrictions: [],
         action: {
           type: "SEARCH",
           destination: "hand",
           count: 1,
           filter: { cardType: "PILOT" },
         },
-      } as TriggeredEffect,
+      } as BaseEffect,
     ],
     warnings: [],
   };

@@ -10,14 +10,14 @@
 
 import { afterEach, beforeEach, describe, expect, it } from "bun:test";
 import type { CardId, PlayerId } from "@tcg/core";
+import type {
+  DestroyAction,
+  Effect,
+  TargetingSpec,
+} from "@tcg/gundam-types/effects";
 import { attackMove } from "../../game-definition/moves/core/attack";
 import { deployUnitMove } from "../../moves/deploy-unit";
 import type { GundamGameState } from "../../types";
-import type {
-  DestroyAction,
-  EffectDefinition,
-  TargetingSpec,
-} from "../../types/effects";
 import type { ActionContext } from "../action-handlers";
 import {
   clearCardDefinitions,
@@ -135,7 +135,7 @@ function setupResources(
 function createDeployTriggerCard(
   cardId: CardId,
   cost: number,
-  effects: EffectDefinition[],
+  effects: Effect[],
 ): void {
   registerCardDefinition(cardId, {
     id: cardId,
@@ -148,10 +148,7 @@ function createDeployTriggerCard(
 }
 
 /** Creates a card with attack trigger effect */
-function createAttackTriggerCard(
-  cardId: CardId,
-  effects: EffectDefinition[],
-): void {
+function createAttackTriggerCard(cardId: CardId, effects: Effect[]): void {
   registerCardDefinition(cardId, {
     id: cardId,
     name: `Attack Trigger Unit ${cardId}`,
@@ -163,10 +160,7 @@ function createAttackTriggerCard(
 }
 
 /** Creates a card with destroyed trigger effect */
-function createDestroyedTriggerCard(
-  cardId: CardId,
-  effects: EffectDefinition[],
-): void {
+function createDestroyedTriggerCard(cardId: CardId, effects: Effect[]): void {
   registerCardDefinition(cardId, {
     id: cardId,
     name: `Destroyed Trigger Unit ${cardId}`,
@@ -210,7 +204,7 @@ describe("Trigger Integration", () => {
       setupResources(state, player1, 3);
 
       // Create a unit with deploy trigger
-      const deployEffect: EffectDefinition = {
+      const deployEffect: Effect = {
         id: "deploy-effect",
         category: "triggered",
         timing: { type: "DEPLOY" },
@@ -247,14 +241,14 @@ describe("Trigger Integration", () => {
       setupResources(state, player1, 5);
 
       // Both cards have deploy triggers
-      const deployEffect1: EffectDefinition = {
+      const deployEffect1: Effect = {
         id: "deploy-effect-1",
         category: "triggered",
         timing: { type: "DEPLOY" },
         actions: [],
         text: "Deploy effect 1",
       };
-      const deployEffect2: EffectDefinition = {
+      const deployEffect2: Effect = {
         id: "deploy-effect-2",
         category: "triggered",
         timing: { type: "DEPLOY" },
@@ -293,14 +287,14 @@ describe("Trigger Integration", () => {
       setupResources(state, player1, 3);
 
       // Both cards have deploy triggers
-      const deployEffect1: EffectDefinition = {
+      const deployEffect1: Effect = {
         id: "deploy-effect-1",
         category: "triggered",
         timing: { type: "DEPLOY" },
         actions: [],
         text: "Deploy effect 1",
       };
-      const deployEffect2: EffectDefinition = {
+      const deployEffect2: Effect = {
         id: "deploy-effect-2",
         category: "triggered",
         timing: { type: "DEPLOY" },
@@ -337,7 +331,7 @@ describe("Trigger Integration", () => {
       });
 
       // Create attacker with attack trigger
-      const attackEffect: EffectDefinition = {
+      const attackEffect: Effect = {
         id: "attack-effect",
         category: "triggered",
         timing: { type: "ATTACK" },
@@ -368,7 +362,7 @@ describe("Trigger Integration", () => {
       });
 
       // Create card with destroyed trigger
-      const destroyedEffect: EffectDefinition = {
+      const destroyedEffect: Effect = {
         id: "destroyed-effect",
         category: "triggered",
         timing: { type: "DESTROYED" },
@@ -415,14 +409,14 @@ describe("Trigger Integration", () => {
       });
 
       // Both cards have destroyed triggers
-      const destroyedEffect1: EffectDefinition = {
+      const destroyedEffect1: Effect = {
         id: "destroyed-effect-1",
         category: "triggered",
         timing: { type: "DESTROYED" },
         actions: [],
         text: "Destroyed effect 1",
       };
-      const destroyedEffect2: EffectDefinition = {
+      const destroyedEffect2: Effect = {
         id: "destroyed-effect-2",
         category: "triggered",
         timing: { type: "DESTROYED" },
@@ -476,14 +470,14 @@ describe("Trigger Integration", () => {
       setupResources(state, player1, 3);
 
       // Both cards have deploy triggers
-      const deployEffect1: EffectDefinition = {
+      const deployEffect1: Effect = {
         id: "deploy-effect-1",
         category: "triggered",
         timing: { type: "DEPLOY" },
         actions: [],
         text: "Deploy effect 1",
       };
-      const deployEffect2: EffectDefinition = {
+      const deployEffect2: Effect = {
         id: "deploy-effect-2",
         category: "triggered",
         timing: { type: "DEPLOY" },

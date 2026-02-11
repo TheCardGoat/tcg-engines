@@ -12,12 +12,17 @@ import type { CardId, PlayerId } from "@tcg/core";
 import type { GundamGameState } from "../types";
 import { enqueueBatchEffects } from "./effect-stack";
 import {
+  type AttackTriggerEvent,
+  type DeployTriggerEvent,
+  type DestroyedTriggerEvent,
   detectAttackTriggers,
   detectDeployTriggers,
   detectDestroyedTriggers,
   detectEndOfTurnTriggers,
   detectStartOfTurnTriggers,
+  type EndOfTurnTriggerEvent,
   orderTriggeredEffects,
+  type StartOfTurnTriggerEvent,
 } from "./trigger-detection";
 
 // ============================================================================
@@ -31,7 +36,7 @@ import {
  * 【Deploy】 triggered effects.
  *
  * @param draft - Immer draft state
- * @param deployedCardId - ID of the deployed unit
+ * @param deployedCardId - ID of deployed unit
  * @param deployingPlayerId - Player who deployed the unit
  *
  * @example
@@ -45,11 +50,13 @@ export function detectAndEnqueueDeployTriggers(
   deployedCardId: CardId,
   deployingPlayerId: PlayerId,
 ): void {
-  const triggerResult = detectDeployTriggers(
-    draft,
-    deployedCardId,
-    deployingPlayerId,
-  );
+  const event: DeployTriggerEvent = {
+    type: "DEPLOY",
+    cardId: deployedCardId,
+    playerId: deployingPlayerId,
+  };
+
+  const triggerResult = detectDeployTriggers(draft, event);
 
   if (triggerResult.hasTriggers) {
     // Order effects: active player's effects first
@@ -58,7 +65,7 @@ export function detectAndEnqueueDeployTriggers(
       draft.currentPlayer,
     );
 
-    // Enqueue effects in the determined order
+    // Enqueue effects in determined order
     enqueueBatchEffects(
       draft,
       [...triggerResult.effects],
@@ -82,8 +89,8 @@ export function detectAndEnqueueDeployTriggers(
  * 【Attack】 triggered effects.
  *
  * @param draft - Immer draft state
- * @param attackerId - ID of the attacking unit
- * @param targetId - ID of the target (if any)
+ * @param attackerId - ID of attacking unit
+ * @param targetId - ID of target (if any)
  * @param attackingPlayerId - Player controlling the attacker
  *
  * @example
@@ -98,12 +105,14 @@ export function detectAndEnqueueAttackTriggers(
   targetId: CardId | undefined,
   attackingPlayerId: PlayerId,
 ): void {
-  const triggerResult = detectAttackTriggers(
-    draft,
+  const event: AttackTriggerEvent = {
+    type: "ATTACK",
     attackerId,
     targetId,
-    attackingPlayerId,
-  );
+    playerId: attackingPlayerId,
+  };
+
+  const triggerResult = detectAttackTriggers(draft, event);
 
   if (triggerResult.hasTriggers) {
     // Order effects: active player's effects first
@@ -112,7 +121,7 @@ export function detectAndEnqueueAttackTriggers(
       draft.currentPlayer,
     );
 
-    // Enqueue effects in the determined order
+    // Enqueue effects in determined order
     enqueueBatchEffects(
       draft,
       [...triggerResult.effects],
@@ -136,7 +145,7 @@ export function detectAndEnqueueAttackTriggers(
  * 【Destroyed】 triggered effects.
  *
  * @param draft - Immer draft state
- * @param destroyedCardId - ID of the destroyed card
+ * @param destroyedCardId - ID of destroyed card
  * @param ownerPlayerId - Player who owned the destroyed card
  *
  * @example
@@ -150,11 +159,13 @@ export function detectAndEnqueueDestroyedTriggers(
   destroyedCardId: CardId,
   ownerPlayerId: PlayerId,
 ): void {
-  const triggerResult = detectDestroyedTriggers(
-    draft,
-    destroyedCardId,
-    ownerPlayerId,
-  );
+  const event: DestroyedTriggerEvent = {
+    type: "DESTROYED",
+    cardId: destroyedCardId,
+    playerId: ownerPlayerId,
+  };
+
+  const triggerResult = detectDestroyedTriggers(draft, event);
 
   if (triggerResult.hasTriggers) {
     // Order effects: active player's effects first
@@ -163,7 +174,7 @@ export function detectAndEnqueueDestroyedTriggers(
       draft.currentPlayer,
     );
 
-    // Enqueue effects in the determined order
+    // Enqueue effects in determined order
     enqueueBatchEffects(
       draft,
       [...triggerResult.effects],
@@ -199,7 +210,12 @@ export function detectAndEnqueueStartOfTurnTriggers(
   draft: GundamGameState,
   playerId: PlayerId,
 ): void {
-  const triggerResult = detectStartOfTurnTriggers(draft, playerId);
+  const event: StartOfTurnTriggerEvent = {
+    type: "START_OF_TURN",
+    playerId,
+  };
+
+  const triggerResult = detectStartOfTurnTriggers(draft, event);
 
   if (triggerResult.hasTriggers) {
     // Order effects: active player's effects first
@@ -208,7 +224,7 @@ export function detectAndEnqueueStartOfTurnTriggers(
       draft.currentPlayer,
     );
 
-    // Enqueue effects in the determined order
+    // Enqueue effects in determined order
     enqueueBatchEffects(
       draft,
       [...triggerResult.effects],
@@ -240,7 +256,12 @@ export function detectAndEnqueueEndOfTurnTriggers(
   draft: GundamGameState,
   playerId: PlayerId,
 ): void {
-  const triggerResult = detectEndOfTurnTriggers(draft, playerId);
+  const event: EndOfTurnTriggerEvent = {
+    type: "END_OF_TURN",
+    playerId,
+  };
+
+  const triggerResult = detectEndOfTurnTriggers(draft, event);
 
   if (triggerResult.hasTriggers) {
     // Order effects: active player's effects first
@@ -249,7 +270,7 @@ export function detectAndEnqueueEndOfTurnTriggers(
       draft.currentPlayer,
     );
 
-    // Enqueue effects in the determined order
+    // Enqueue effects in determined order
     enqueueBatchEffects(
       draft,
       [...triggerResult.effects],

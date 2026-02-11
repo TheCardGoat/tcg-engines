@@ -3,7 +3,7 @@
  */
 
 import { describe, expect, it } from "bun:test";
-import type { ActivatedEffect, TriggeredEffect } from "@tcg/gundam-types";
+import type { BaseEffect } from "@tcg/gundam-types";
 import { cleanCardText, extractKeywords, parseCardText } from "../text-parser";
 
 describe("Text Parser", () => {
@@ -59,7 +59,7 @@ describe("Text Parser", () => {
       const result = parseCardText(text);
 
       expect(result.effects).toHaveLength(1);
-      const ability = result.effects[0] as TriggeredEffect;
+      const ability = result.effects[0] as BaseEffect;
       expect(ability.type).toBe("TRIGGERED");
       expect(ability.timing).toBe("DEPLOY");
       expect(ability.action.type).toBe("DRAW");
@@ -71,7 +71,7 @@ describe("Text Parser", () => {
       const result = parseCardText(text);
 
       expect(result.effects).toHaveLength(1);
-      const ability = result.effects[0] as TriggeredEffect;
+      const ability = result.effects[0] as BaseEffect;
       expect(ability.type).toBe("TRIGGERED");
       expect(ability.timing).toBe("ATTACK");
       expect(ability.action.type).toBe("DAMAGE");
@@ -84,7 +84,7 @@ describe("Text Parser", () => {
       const result = parseCardText(text);
 
       expect(result.effects).toHaveLength(1);
-      const ability = result.effects[0] as TriggeredEffect;
+      const ability = result.effects[0] as BaseEffect;
       expect(ability.type).toBe("TRIGGERED");
       expect(ability.timing).toBe("DEPLOY");
       expect(ability.action.type).toBe("SEARCH");
@@ -95,7 +95,7 @@ describe("Text Parser", () => {
       const result = parseCardText(text);
 
       expect(result.effects).toHaveLength(1);
-      const ability = result.effects[0] as ActivatedEffect;
+      const ability = result.effects[0] as BaseEffect;
       expect(ability.type).toBe("ACTIVATED");
       expect(ability.timing).toBe("MAIN");
       // Cost parsing might vary depending on implementation detail (number vs string)
@@ -119,8 +119,8 @@ describe("Text Parser", () => {
       const result = parseCardText(text);
 
       expect(result.effects).toHaveLength(2);
-      expect((result.effects[0] as TriggeredEffect).timing).toBe("DEPLOY");
-      expect((result.effects[1] as TriggeredEffect).timing).toBe("ATTACK");
+      expect((result.effects[0] as BaseEffect).timing).toBe("DEPLOY");
+      expect((result.effects[1] as BaseEffect).timing).toBe("ATTACK");
     });
   });
 });
