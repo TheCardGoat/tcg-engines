@@ -3,55 +3,55 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { hiroHamadaRoboticsProdigy } from "@lorcanito/lorcana-engine/cards/006";
-// import {
-//   hiroHamadaArmorDesigner,
-//   hiroHamadaFutureChampion,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { hiroHamadaRoboticsProdigy } from "@lorcanito/lorcana-engine/cards/006";
+// Import {
+//   HiroHamadaArmorDesigner,
+//   HiroHamadaFutureChampion,
 // } from "@lorcanito/lorcana-engine/cards/007";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Hiro Hamada - Future Champion", () => {
-//   it("ORIGIN STORY When you play a Floodborn character on this card, draw a card.", async () => {
-//     const testEngine = new TestEngine({
-//       deck: 3,
-//       inkwell: hiroHamadaArmorDesigner.cost,
-//       play: [hiroHamadaFutureChampion],
-//       hand: [hiroHamadaArmorDesigner],
+// Describe("Hiro Hamada - Future Champion", () => {
+//   It("ORIGIN STORY When you play a Floodborn character on this card, draw a card.", async () => {
+//     Const testEngine = new TestEngine({
+//       Deck: 3,
+//       Inkwell: hiroHamadaArmorDesigner.cost,
+//       Play: [hiroHamadaFutureChampion],
+//       Hand: [hiroHamadaArmorDesigner],
 //     });
 //
-//     await testEngine.shiftCard({
-//       shifted: hiroHamadaFutureChampion,
-//       shifter: hiroHamadaArmorDesigner,
+//     Await testEngine.shiftCard({
+//       Shifted: hiroHamadaFutureChampion,
+//       Shifter: hiroHamadaArmorDesigner,
 //     });
 //
-//     expect(testEngine.getZonesCardCount()).toEqual(
-//       expect.objectContaining({
-//         hand: 1,
-//         deck: 2,
+//     Expect(testEngine.getZonesCardCount()).toEqual(
+//       Expect.objectContaining({
+//         Hand: 1,
+//         Deck: 2,
 //       }),
 //     );
 //   });
 // });
 //
-// describe("Regression", () => {
-//   it("should not trigger when Hiro is not the target", async () => {
-//     const testEngine = new TestEngine({
-//       deck: 3,
-//       inkwell: hiroHamadaArmorDesigner.cost,
-//       play: [hiroHamadaFutureChampion, hiroHamadaRoboticsProdigy],
-//       hand: [hiroHamadaArmorDesigner],
+// Describe("Regression", () => {
+//   It("should not trigger when Hiro is not the target", async () => {
+//     Const testEngine = new TestEngine({
+//       Deck: 3,
+//       Inkwell: hiroHamadaArmorDesigner.cost,
+//       Play: [hiroHamadaFutureChampion, hiroHamadaRoboticsProdigy],
+//       Hand: [hiroHamadaArmorDesigner],
 //     });
 //
-//     await testEngine.shiftCard({
-//       shifted: hiroHamadaRoboticsProdigy,
-//       shifter: hiroHamadaArmorDesigner,
+//     Await testEngine.shiftCard({
+//       Shifted: hiroHamadaRoboticsProdigy,
+//       Shifter: hiroHamadaArmorDesigner,
 //     });
 //
-//     expect(testEngine.getZonesCardCount()).toEqual(
-//       expect.objectContaining({
-//         hand: 0,
-//         deck: 3,
+//     Expect(testEngine.getZonesCardCount()).toEqual(
+//       Expect.objectContaining({
+//         Hand: 0,
+//         Deck: 3,
 //       }),
 //     );
 //   });

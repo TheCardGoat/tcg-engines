@@ -3,41 +3,41 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   drFacilierSavvyOpportunist,
-//   jafarRoyalVizier,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   DrFacilierSavvyOpportunist,
+//   JafarRoyalVizier,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { peterPansDagger } from "@lorcanito/lorcana-engine/cards/002/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { peterPansDagger } from "@lorcanito/lorcana-engine/cards/002/items/items";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Peter Pan's Dagger", () => {
-//   it("[Native ability] Your characters with **Evasive** get +1 {S}.", () => {
-//     const testStore = new TestStore({
-//       play: [peterPansDagger, drFacilierSavvyOpportunist],
+// Describe("Peter Pan's Dagger", () => {
+//   It("[Native ability] Your characters with **Evasive** get +1 {S}.", () => {
+//     Const testStore = new TestStore({
+//       Play: [peterPansDagger, drFacilierSavvyOpportunist],
 //     });
 //
-//     const target2 = testStore.getByZoneAndId(
+//     Const target2 = testStore.getByZoneAndId(
 //       "play",
-//       drFacilierSavvyOpportunist.id,
+//       DrFacilierSavvyOpportunist.id,
 //     );
 //
 //     [target2].forEach((card) => {
-//       expect(card.hasEvasive).toEqual(true);
-//       expect(card.strength).toEqual((card.lorcanitoCard?.strength || 0) + 1);
+//       Expect(card.hasEvasive).toEqual(true);
+//       Expect(card.strength).toEqual((card.lorcanitoCard?.strength || 0) + 1);
 //     });
 //   });
 //
-//   it("[Gained ability] Your characters with **Evasive** get +1 {S}.", () => {
-//     const testStore = new TestStore({
-//       play: [peterPansDagger, jafarRoyalVizier],
+//   It("[Gained ability] Your characters with **Evasive** get +1 {S}.", () => {
+//     Const testStore = new TestStore({
+//       Play: [peterPansDagger, jafarRoyalVizier],
 //     });
 //
-//     const target = testStore.getByZoneAndId("play", jafarRoyalVizier.id);
+//     Const target = testStore.getByZoneAndId("play", jafarRoyalVizier.id);
 //
 //     [target].forEach((card) => {
-//       expect(card.hasEvasive).toEqual(true);
-//       expect(target.strength).toEqual((card.lorcanitoCard?.strength || 0) + 1);
+//       Expect(card.hasEvasive).toEqual(true);
+//       Expect(target.strength).toEqual((card.lorcanitoCard?.strength || 0) + 1);
 //     });
 //   });
 // });

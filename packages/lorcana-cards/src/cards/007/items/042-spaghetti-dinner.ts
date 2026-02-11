@@ -1,24 +1,8 @@
 import type { ItemCard } from "@tcg/lorcana-types";
 
 export const spaghettiDinner: ItemCard = {
-  id: "1bi",
-  cardType: "item",
-  name: "Spaghetti Dinner",
-  inkType: ["amber"],
-  franchise: "Lady and the Tramp",
-  set: "007",
-  text: "FINE DINING {E}, 1 {I} — If you have 2 or more characters in play, gain 1 lore.",
-  cost: 2,
-  cardNumber: 42,
-  inkable: false,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "a9a9ca2c6a1c80726daf8f1358630264d440c24b",
-  },
   abilities: [
     {
-      id: "1bi-1",
-      type: "activated",
       cost: { exert: true },
       effect: {
         type: "conditional",
@@ -31,7 +15,23 @@ export const spaghettiDinner: ItemCard = {
           amount: 1,
         },
       },
+      id: "1bi-1",
       text: "FINE DINING {E}, 1 {I} — If you have 2 or more characters in play, gain 1 lore.",
+      type: "activated",
     },
   ],
+  cardNumber: 42,
+  cardType: "item",
+  cost: 2,
+  externalIds: {
+    ravensburger: "a9a9ca2c6a1c80726daf8f1358630264d440c24b",
+  },
+  franchise: "Lady and the Tramp",
+  id: "1bi",
+  inkType: ["amber"],
+  inkable: false,
+  missingTests: true,
+  name: "Spaghetti Dinner",
+  set: "007",
+  text: "FINE DINING {E}, 1 {I} — If you have 2 or more characters in play, gain 1 lore.",
 };

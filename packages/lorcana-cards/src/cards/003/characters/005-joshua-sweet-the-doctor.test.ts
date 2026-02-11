@@ -18,21 +18,21 @@ describe("Joshua Sweet - The Doctor", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { joshuaSweetTheDoctor } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { joshuaSweetTheDoctor } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Joshua Sweet - The Doctor", () => {
-//   it.skip("**Bodyguard** _(This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)_", () => {
-//     const testStore = new TestStore({
-//       play: [joshuaSweetTheDoctor],
+// Describe("Joshua Sweet - The Doctor", () => {
+//   It.skip("**Bodyguard** _(This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)_", () => {
+//     Const testStore = new TestStore({
+//       Play: [joshuaSweetTheDoctor],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       joshuaSweetTheDoctor.id,
+//       JoshuaSweetTheDoctor.id,
 //     );
-//     expect(cardUnderTest.hasBodyguard).toBe(true);
+//     Expect(cardUnderTest.hasBodyguard).toBe(true);
 //   });
 // });
 //

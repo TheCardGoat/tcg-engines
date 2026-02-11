@@ -1,91 +1,91 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const jafarKeeperOfSecrets: CharacterCard = {
-  id: "rau",
-  cardType: "character",
-  name: "Jafar",
-  version: "Keeper of Secrets",
-  fullName: "Jafar - Keeper of Secrets",
-  inkType: ["amethyst"],
-  franchise: "Disney",
-  set: "001",
-  text: "**HIDDEN WONDERS** This character gets +1 {S} for each card in your hand.",
-  cost: 4,
-  strength: 0,
-  willpower: 5,
-  lore: 2,
-  cardNumber: 44,
-  inkable: true,
-  externalIds: {
-    ravensburger: "",
-  },
   abilities: [
     {
-      type: "action",
-      text: "**HIDDEN WONDERS** This character gets +1 {S} for each card in your hand.",
-      id: "rau-1",
       effect: {
         type: "modify-stat",
         stat: "strength",
         modifier: 1,
         target: "SELF",
       },
+      id: "rau-1",
+      text: "**HIDDEN WONDERS** This character gets +1 {S} for each card in your hand.",
+      type: "action",
     },
   ],
+  cardNumber: 44,
+  cardType: "character",
   classifications: ["Dreamborn", "Sorcerer", "Villain"],
+  cost: 4,
+  externalIds: {
+    ravensburger: "",
+  },
+  franchise: "Disney",
+  fullName: "Jafar - Keeper of Secrets",
+  id: "rau",
+  inkType: ["amethyst"],
+  inkable: true,
+  lore: 2,
+  name: "Jafar",
+  set: "001",
+  strength: 0,
+  text: "**HIDDEN WONDERS** This character gets +1 {S} for each card in your hand.",
+  version: "Keeper of Secrets",
+  willpower: 5,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const jafarKeeperOfSecrets: LorcanitoCharacterCard = {
-//   id: "rau",
-//   reprints: ["f6f"],
-//   name: "Jafar",
-//   title: "Keeper of Secrets",
-//   characteristics: ["dreamborn", "sorcerer", "villain"],
-//   text: "**HIDDEN WONDERS** This character gets +1 {S} for each card in your hand.",
-//   type: "character",
-//   abilities: [
+// Export const jafarKeeperOfSecrets: LorcanitoCharacterCard = {
+//   Id: "rau",
+//   Reprints: ["f6f"],
+//   Name: "Jafar",
+//   Title: "Keeper of Secrets",
+//   Characteristics: ["dreamborn", "sorcerer", "villain"],
+//   Text: "**HIDDEN WONDERS** This character gets +1 {S} for each card in your hand.",
+//   Type: "character",
+//   Abilities: [
 //     {
-//       type: "static",
-//       ability: "effects",
-//       name: "Hidden Wonders",
-//       text: "This character gets +1 {S} for each card in your hand.",
-//       effects: [
+//       Type: "static",
+//       Ability: "effects",
+//       Name: "Hidden Wonders",
+//       Text: "This character gets +1 {S} for each card in your hand.",
+//       Effects: [
 //         {
-//           type: "attribute",
-//           attribute: "strength",
-//           amount: {
-//             dynamic: true,
-//             filters: [
+//           Type: "attribute",
+//           Attribute: "strength",
+//           Amount: {
+//             Dynamic: true,
+//             Filters: [
 //               { filter: "zone", value: "hand" },
 //               { filter: "owner", value: "self" },
 //             ],
 //           },
-//           modifier: "add",
-//           target: {
-//             type: "card",
-//             value: "all",
-//             filters: [{ filter: "source", value: "self" }],
+//           Modifier: "add",
+//           Target: {
+//             Type: "card",
+//             Value: "all",
+//             Filters: [{ filter: "source", value: "self" }],
 //           },
 //         },
 //       ],
 //     },
 //   ],
-//   flavour: "There's more than one way to bury secrets.",
-//   inkwell: true,
-//   colors: ["amethyst"],
-//   cost: 4,
-//   willpower: 5,
-//   strength: 0,
-//   lore: 2,
-//   illustrator: "Marcel Berg",
-//   number: 44,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 507719,
+//   Flavour: "There's more than one way to bury secrets.",
+//   Inkwell: true,
+//   Colors: ["amethyst"],
+//   Cost: 4,
+//   Willpower: 5,
+//   Strength: 0,
+//   Lore: 2,
+//   Illustrator: "Marcel Berg",
+//   Number: 44,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 507719,
 //   },
-//   rarity: "rare",
+//   Rarity: "rare",
 // };
 //

@@ -3,34 +3,34 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { sisuEmboldenedWarrior } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { sisuEmboldenedWarrior } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Sisu - Emboldened Warrior", () => {
-//   it("**SURGE OF POWER** This character gets +1 {S} for each card in opponent's hands.", () => {
-//     const testStore = new TestStore(
+// Describe("Sisu - Emboldened Warrior", () => {
+//   It("**SURGE OF POWER** This character gets +1 {S} for each card in opponent's hands.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: sisuEmboldenedWarrior.cost,
-//         play: [sisuEmboldenedWarrior],
+//         Inkwell: sisuEmboldenedWarrior.cost,
+//         Play: [sisuEmboldenedWarrior],
 //       },
 //       {
-//         hand: [
-//           sisuEmboldenedWarrior,
-//           sisuEmboldenedWarrior,
-//           sisuEmboldenedWarrior,
+//         Hand: [
+//           SisuEmboldenedWarrior,
+//           SisuEmboldenedWarrior,
+//           SisuEmboldenedWarrior,
 //         ],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       sisuEmboldenedWarrior.id,
+//       SisuEmboldenedWarrior.id,
 //     );
 //
-//     expect(cardUnderTest.strength).toEqual(
-//       sisuEmboldenedWarrior.strength +
-//         testStore.getZonesCardCount("player_two").hand,
+//     Expect(cardUnderTest.strength).toEqual(
+//       SisuEmboldenedWarrior.strength +
+//         TestStore.getZonesCardCount("player_two").hand,
 //     );
 //   });
 // });

@@ -5,9 +5,9 @@ import { tamatoaSoShiny } from "./159-tamatoa-so-shiny";
 describe("Tamatoa - So Shiny!", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [tamatoaSoShiny] });
-  //   expect(testEngine.getCardModel(tamatoaSoShiny).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [tamatoaSoShiny] });
+  //   Expect(testEngine.getCardModel(tamatoaSoShiny).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,87 +17,87 @@ describe("Tamatoa - So Shiny!", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { tamatoaSoShiny } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import {
-//   coconutbasket,
-//   dingleHopper,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { tamatoaSoShiny } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import {
+//   Coconutbasket,
+//   DingleHopper,
 // } from "@lorcanito/lorcana-engine/cards/001/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Tamatoa - So Shiny!", () => {
-//   it("Glam - This character gets +1 {L} for each item you have in play.", () => {
-//     const testStore = new TestStore({
-//       inkwell: dingleHopper.cost + coconutbasket.cost,
-//       hand: [dingleHopper, coconutbasket],
-//       play: [tamatoaSoShiny],
+// Describe("Tamatoa - So Shiny!", () => {
+//   It("Glam - This character gets +1 {L} for each item you have in play.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: dingleHopper.cost + coconutbasket.cost,
+//       Hand: [dingleHopper, coconutbasket],
+//       Play: [tamatoaSoShiny],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("play", tamatoaSoShiny.id);
-//     const aTarget = testStore.getByZoneAndId("hand", dingleHopper.id);
-//     const anotherTarget = testStore.getByZoneAndId("hand", coconutbasket.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("play", tamatoaSoShiny.id);
+//     Const aTarget = testStore.getByZoneAndId("hand", dingleHopper.id);
+//     Const anotherTarget = testStore.getByZoneAndId("hand", coconutbasket.id);
 //
-//     expect(cardUnderTest.lore).toBe(1);
-//     aTarget.playFromHand();
-//     expect(cardUnderTest.lore).toBe(2);
-//     anotherTarget.playFromHand();
-//     expect(cardUnderTest.lore).toBe(3);
+//     Expect(cardUnderTest.lore).toBe(1);
+//     ATarget.playFromHand();
+//     Expect(cardUnderTest.lore).toBe(2);
+//     AnotherTarget.playFromHand();
+//     Expect(cardUnderTest.lore).toBe(3);
 //   });
 //
-//   describe("WHAT HAVE WE HERE? - When you play this character and whenever he quests, you may return an item card from your discard to your hand.", () => {
-//     it("On play", () => {
-//       const testStore = new TestStore({
-//         inkwell: tamatoaSoShiny.cost,
-//         hand: [tamatoaSoShiny],
-//         discard: [dingleHopper],
+//   Describe("WHAT HAVE WE HERE? - When you play this character and whenever he quests, you may return an item card from your discard to your hand.", () => {
+//     It("On play", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: tamatoaSoShiny.cost,
+//         Hand: [tamatoaSoShiny],
+//         Discard: [dingleHopper],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId("hand", tamatoaSoShiny.id);
-//       const aTarget = testStore.getByZoneAndId("discard", dingleHopper.id);
+//       Const cardUnderTest = testStore.getByZoneAndId("hand", tamatoaSoShiny.id);
+//       Const aTarget = testStore.getByZoneAndId("discard", dingleHopper.id);
 //
-//       expect(aTarget.zone).toBe("discard");
+//       Expect(aTarget.zone).toBe("discard");
 //
-//       cardUnderTest.playFromHand();
-//       testStore.resolveOptionalAbility();
-//       testStore.resolveTopOfStack({ targetId: aTarget.instanceId });
-//       expect(aTarget.zone).toBe("hand");
+//       CardUnderTest.playFromHand();
+//       TestStore.resolveOptionalAbility();
+//       TestStore.resolveTopOfStack({ targetId: aTarget.instanceId });
+//       Expect(aTarget.zone).toBe("hand");
 //     });
 //
-//     it("On quest", () => {
-//       const testStore = new TestStore({
-//         inkwell: tamatoaSoShiny.cost,
-//         play: [tamatoaSoShiny],
-//         discard: [coconutbasket],
+//     It("On quest", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: tamatoaSoShiny.cost,
+//         Play: [tamatoaSoShiny],
+//         Discard: [coconutbasket],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId("play", tamatoaSoShiny.id);
-//       const anotherTarget = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId("play", tamatoaSoShiny.id);
+//       Const anotherTarget = testStore.getByZoneAndId(
 //         "discard",
-//         coconutbasket.id,
+//         Coconutbasket.id,
 //       );
 //
-//       cardUnderTest.quest();
-//       testStore.resolveOptionalAbility();
-//       testStore.resolveTopOfStack({ targetId: anotherTarget.instanceId });
-//       expect(anotherTarget.zone).toBe("hand");
+//       CardUnderTest.quest();
+//       TestStore.resolveOptionalAbility();
+//       TestStore.resolveTopOfStack({ targetId: anotherTarget.instanceId });
+//       Expect(anotherTarget.zone).toBe("hand");
 //     });
 //
-//     it("Can skip the effect.", () => {
-//       const testStore = new TestStore({
-//         inkwell: tamatoaSoShiny.cost,
-//         hand: [tamatoaSoShiny],
-//         discard: [dingleHopper],
+//     It("Can skip the effect.", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: tamatoaSoShiny.cost,
+//         Hand: [tamatoaSoShiny],
+//         Discard: [dingleHopper],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId("hand", tamatoaSoShiny.id);
-//       const aTarget = testStore.getByZoneAndId("discard", dingleHopper.id);
+//       Const cardUnderTest = testStore.getByZoneAndId("hand", tamatoaSoShiny.id);
+//       Const aTarget = testStore.getByZoneAndId("discard", dingleHopper.id);
 //
-//       expect(aTarget.zone).toBe("discard");
+//       Expect(aTarget.zone).toBe("discard");
 //
-//       cardUnderTest.playFromHand();
-//       testStore.resolveTopOfStack({ skip: true });
-//       expect(aTarget.zone).toBe("discard");
-//       expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
+//       CardUnderTest.playFromHand();
+//       TestStore.resolveTopOfStack({ skip: true });
+//       Expect(aTarget.zone).toBe("discard");
+//       Expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
 //     });
 //   });
 // });

@@ -3,27 +3,27 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   theQueenCrownOfTheCouncil,
-//   theQueenCruelestOfAll,
-//   theQueenFairestOfAll,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   TheQueenCrownOfTheCouncil,
+//   TheQueenCruelestOfAll,
+//   TheQueenFairestOfAll,
 // } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("The Queen - Fairest of All", () => {
-//   it("**REFLECTIONS OF VANITY** For each other character named The Queen you have in play, this character gets +1 {L}.", () => {
-//     const testStore = new TestStore({
-//       inkwell: theQueenFairestOfAll.cost,
-//       play: [
-//         theQueenFairestOfAll,
-//         theQueenCrownOfTheCouncil,
-//         theQueenCruelestOfAll,
+// Describe("The Queen - Fairest of All", () => {
+//   It("**REFLECTIONS OF VANITY** For each other character named The Queen you have in play, this character gets +1 {L}.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: theQueenFairestOfAll.cost,
+//       Play: [
+//         TheQueenFairestOfAll,
+//         TheQueenCrownOfTheCouncil,
+//         TheQueenCruelestOfAll,
 //       ],
 //     });
 //
-//     expect(testStore.getCard(theQueenFairestOfAll).lore).toEqual(
-//       theQueenFairestOfAll.lore + 2,
+//     Expect(testStore.getCard(theQueenFairestOfAll).lore).toEqual(
+//       TheQueenFairestOfAll.lore + 2,
 //     );
 //   });
 // });

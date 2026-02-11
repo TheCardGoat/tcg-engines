@@ -1,33 +1,33 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import {
-//   bodyguardAbility,
-//   shiftAbility,
-//   supportAbility,
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import {
+//   BodyguardAbility,
+//   ShiftAbility,
+//   SupportAbility,
 // } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { drawXCards } from "@lorcanito/lorcana-engine/effects/effects";
+// Import { drawXCards } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const mickeyMouseMusketeerCaptain: LorcanitoCharacterCard = {
-//   id: "pjf",
-//   missingTestCase: true,
-//   name: "Mickey Mouse",
-//   title: "Musketeer Captain",
-//   characteristics: ["hero", "floodborn", "captain", "musketeer"],
-//   text: "**Shift** 5 _You may pay 5 {I} to play this on top of one of your characters named Mickey Mouse.)_\n\n**Bodyguard**, **Support**\n\n\n**MUSKETEERS UNITED** When you play this character, if you used **Shift** to play him, you may draw a chard for each character with **Bodyguard** you have in play.",
-//   type: "character",
-//   abilities: [
-//     shiftAbility(5, "mickey mouse"),
-//     bodyguardAbility,
-//     supportAbility,
+// Export const mickeyMouseMusketeerCaptain: LorcanitoCharacterCard = {
+//   Id: "pjf",
+//   MissingTestCase: true,
+//   Name: "Mickey Mouse",
+//   Title: "Musketeer Captain",
+//   Characteristics: ["hero", "floodborn", "captain", "musketeer"],
+//   Text: "**Shift** 5 _You may pay 5 {I} to play this on top of one of your characters named Mickey Mouse.)_\n\n**Bodyguard**, **Support**\n\n\n**MUSKETEERS UNITED** When you play this character, if you used **Shift** to play him, you may draw a chard for each character with **Bodyguard** you have in play.",
+//   Type: "character",
+//   Abilities: [
+//     ShiftAbility(5, "mickey mouse"),
+//     BodyguardAbility,
+//     SupportAbility,
 //     {
-//       type: "resolution",
-//       resolutionConditions: [{ type: "resolution", value: "shift" }],
-//       name: "Musketeers United",
-//       text: "When you play this character, if you used **Shift** to play him, you may draw a chard for each character with **Bodyguard** you have in play.",
-//       effects: [
-//         drawXCards({
-//           dynamic: true,
-//           filters: [
+//       Type: "resolution",
+//       ResolutionConditions: [{ type: "resolution", value: "shift" }],
+//       Name: "Musketeers United",
+//       Text: "When you play this character, if you used **Shift** to play him, you may draw a chard for each character with **Bodyguard** you have in play.",
+//       Effects: [
+//         DrawXCards({
+//           Dynamic: true,
+//           Filters: [
 //             { filter: "type", value: "character" },
 //             { filter: "ability", value: "bodyguard" },
 //             { filter: "zone", value: "play" },
@@ -37,17 +37,17 @@
 //       ],
 //     },
 //   ],
-//   colors: ["amber"],
-//   cost: 7,
-//   strength: 3,
-//   willpower: 6,
-//   lore: 2,
-//   illustrator: "Jochem van Gool",
-//   number: 16,
-//   set: "URR",
-//   externalIds: {
-//     tcgPlayer: 549534,
+//   Colors: ["amber"],
+//   Cost: 7,
+//   Strength: 3,
+//   Willpower: 6,
+//   Lore: 2,
+//   Illustrator: "Jochem van Gool",
+//   Number: 16,
+//   Set: "URR",
+//   ExternalIds: {
+//     TcgPlayer: 549534,
 //   },
-//   rarity: "legendary",
+//   Rarity: "legendary",
 // };
 //

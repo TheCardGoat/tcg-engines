@@ -1,30 +1,15 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const goliathGuardianOfCastleWyvern: CharacterCard = {
-  id: "153",
-  cardType: "character",
-  name: "Goliath",
-  version: "Guardian of Castle Wyvern",
-  fullName: "Goliath - Guardian of Castle Wyvern",
-  inkType: ["ruby"],
-  franchise: "Gargoyles",
-  set: "010",
-  text: "BE CAREFUL, ALL OF YOU Whenever one of your Gargoyle characters challenges another character, gain 1 lore.\nSTONE BY DAY If you have 3 or more cards in your hand, this character can't ready.",
-  cost: 4,
-  strength: 5,
-  willpower: 5,
-  lore: 1,
-  cardNumber: 119,
-  inkable: true,
-  externalIds: {
-    ravensburger: "94203dcc3d9e5f0c52702076c16672e3178043be",
-  },
   abilities: [
     {
+      effect: {
+        type: "gain-lore",
+        amount: 3,
+      },
       id: "153-1",
-      text: "BE CAREFUL, ALL OF YOU Whenever one of your Gargoyle characters challenges another character, gain 1 lore.",
       name: "BE CAREFUL, ALL OF YOU",
-      type: "triggered",
+      text: "BE CAREFUL, ALL OF YOU Whenever one of your Gargoyle characters challenges another character, gain 1 lore.",
       trigger: {
         event: "challenge",
         timing: "whenever",
@@ -33,21 +18,9 @@ export const goliathGuardianOfCastleWyvern: CharacterCard = {
           classification: "Gargoyle",
         },
       },
-      effect: {
-        type: "gain-lore",
-        amount: 3,
-      },
+      type: "triggered",
     },
     {
-      id: "153-2",
-      text: "STONE BY DAY If you have {d} or more cards in your hand, this character can't ready.",
-      name: "STONE BY DAY",
-      type: "static",
-      effect: {
-        type: "restriction",
-        restriction: "cant-ready",
-        target: "SELF",
-      },
       condition: {
         type: "resource-count",
         what: "cards-in-hand",
@@ -55,7 +28,34 @@ export const goliathGuardianOfCastleWyvern: CharacterCard = {
         comparison: "greater-or-equal",
         value: 0,
       },
+      effect: {
+        type: "restriction",
+        restriction: "cant-ready",
+        target: "SELF",
+      },
+      id: "153-2",
+      name: "STONE BY DAY",
+      text: "STONE BY DAY If you have {d} or more cards in your hand, this character can't ready.",
+      type: "static",
     },
   ],
+  cardNumber: 119,
+  cardType: "character",
   classifications: ["Storyborn", "Hero", "Gargoyle"],
+  cost: 4,
+  externalIds: {
+    ravensburger: "94203dcc3d9e5f0c52702076c16672e3178043be",
+  },
+  franchise: "Gargoyles",
+  fullName: "Goliath - Guardian of Castle Wyvern",
+  id: "153",
+  inkType: ["ruby"],
+  inkable: true,
+  lore: 1,
+  name: "Goliath",
+  set: "010",
+  strength: 5,
+  text: "BE CAREFUL, ALL OF YOU Whenever one of your Gargoyle characters challenges another character, gain 1 lore.\nSTONE BY DAY If you have 3 or more cards in your hand, this character can't ready.",
+  version: "Guardian of Castle Wyvern",
+  willpower: 5,
 };

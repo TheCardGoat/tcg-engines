@@ -3,116 +3,116 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   mickeyBraveLittleTailor,
-//   mickeyMouseDetective,
-//   mickeyMouseTrueFriend,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   MickeyBraveLittleTailor,
+//   MickeyMouseDetective,
+//   MickeyMouseTrueFriend,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import {
-//   mickeyMouseFriendlyFace,
-//   princeCharmingHeirToTheThrone,
-//   princeJohnGreediestOfAll,
+// Import {
+//   MickeyMouseFriendlyFace,
+//   PrinceCharmingHeirToTheThrone,
+//   PrinceJohnGreediestOfAll,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { princeJohnsMirror } from "@lorcanito/lorcana-engine/cards/005/items/items";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { princeJohnsMirror } from "@lorcanito/lorcana-engine/cards/005/items/items";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Prince John's Mirror", () => {
-//   it("**YOU LOOK REGAL** If you have a character named Prince John in play, you pay 1 {I} less to play this item.", () => {
-//     const testStore = new TestStore({
-//       inkwell: princeJohnsMirror.cost - 1,
-//       hand: [princeJohnsMirror],
-//       play: [princeJohnGreediestOfAll],
+// Describe("Prince John's Mirror", () => {
+//   It("**YOU LOOK REGAL** If you have a character named Prince John in play, you pay 1 {I} less to play this item.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: princeJohnsMirror.cost - 1,
+//       Hand: [princeJohnsMirror],
+//       Play: [princeJohnGreediestOfAll],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(princeJohnsMirror);
+//     Const cardUnderTest = testStore.getCard(princeJohnsMirror);
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     expect(cardUnderTest.zone).toEqual("play");
+//     Expect(cardUnderTest.zone).toEqual("play");
 //   });
 //
-//   describe("**A FEELING OF POWER** At the end of each opponent’s turn, if they have more than 3 cards in their hand, they discard until they have 3 cards in their hand.", () => {
-//     it("Opponent owns the mirror", async () => {
-//       const testStore = new TestEngine(
+//   Describe("**A FEELING OF POWER** At the end of each opponent’s turn, if they have more than 3 cards in their hand, they discard until they have 3 cards in their hand.", () => {
+//     It("Opponent owns the mirror", async () => {
+//       Const testStore = new TestEngine(
 //         {
-//           hand: [
-//             mickeyMouseTrueFriend,
-//             mickeyBraveLittleTailor,
-//             mickeyMouseDetective,
-//             mickeyMouseFriendlyFace,
-//             princeCharmingHeirToTheThrone,
+//           Hand: [
+//             MickeyMouseTrueFriend,
+//             MickeyBraveLittleTailor,
+//             MickeyMouseDetective,
+//             MickeyMouseFriendlyFace,
+//             PrinceCharmingHeirToTheThrone,
 //           ],
-//           deck: 5,
+//           Deck: 5,
 //         },
 //         {
-//           play: [princeJohnsMirror],
-//           deck: 5,
+//           Play: [princeJohnsMirror],
+//           Deck: 5,
 //         },
 //       );
 //
-//       await testStore.passTurn();
-//       expect(testStore.store.turnCount).toBe(0);
-//       expect(testStore.stackLayers).toHaveLength(1);
+//       Await testStore.passTurn();
+//       Expect(testStore.store.turnCount).toBe(0);
+//       Expect(testStore.stackLayers).toHaveLength(1);
 //
-//       expect(testStore.getZonesCardCount("player_one").hand).toBe(5);
+//       Expect(testStore.getZonesCardCount("player_one").hand).toBe(5);
 //
-//       testStore.changeActivePlayer("player_one");
-//       await testStore.resolveTopOfStack({
-//         targets: [mickeyMouseFriendlyFace, mickeyMouseDetective],
+//       TestStore.changeActivePlayer("player_one");
+//       Await testStore.resolveTopOfStack({
+//         Targets: [mickeyMouseFriendlyFace, mickeyMouseDetective],
 //       });
 //
-//       expect(testStore.stackLayers).toHaveLength(0);
-//       expect(testStore.store.turnCount).toBe(1);
+//       Expect(testStore.stackLayers).toHaveLength(0);
+//       Expect(testStore.store.turnCount).toBe(1);
 //
-//       expect(testStore.getCardModel(mickeyMouseFriendlyFace).zone).toEqual(
+//       Expect(testStore.getCardModel(mickeyMouseFriendlyFace).zone).toEqual(
 //         "discard",
 //       );
-//       expect(testStore.getCardModel(mickeyMouseDetective).zone).toEqual(
+//       Expect(testStore.getCardModel(mickeyMouseDetective).zone).toEqual(
 //         "discard",
 //       );
 //     });
 //
-//     it("Player owns the mirror", () => {
-//       const testStore = new TestStore(
+//     It("Player owns the mirror", () => {
+//       Const testStore = new TestStore(
 //         {
-//           hand: [princeJohnGreediestOfAll],
-//           play: [princeJohnsMirror],
-//           deck: 5,
+//           Hand: [princeJohnGreediestOfAll],
+//           Play: [princeJohnsMirror],
+//           Deck: 5,
 //         },
 //         {
-//           hand: [
-//             mickeyMouseTrueFriend,
-//             mickeyBraveLittleTailor,
-//             mickeyMouseDetective,
-//             mickeyMouseFriendlyFace,
+//           Hand: [
+//             MickeyMouseTrueFriend,
+//             MickeyBraveLittleTailor,
+//             MickeyMouseDetective,
+//             MickeyMouseFriendlyFace,
 //           ],
-//           deck: 5,
+//           Deck: 5,
 //         },
 //       );
 //
-//       const cardToDiscard = testStore.getCard(mickeyMouseFriendlyFace);
-//       const anotherCardToDiscard = testStore.getCard(mickeyMouseDetective);
+//       Const cardToDiscard = testStore.getCard(mickeyMouseFriendlyFace);
+//       Const anotherCardToDiscard = testStore.getCard(mickeyMouseDetective);
 //
-//       testStore.passTurn();
-//       expect(testStore.store.turnCount).toBe(1);
-//       expect(testStore.stackLayers).toHaveLength(0);
+//       TestStore.passTurn();
+//       Expect(testStore.store.turnCount).toBe(1);
+//       Expect(testStore.stackLayers).toHaveLength(0);
 //
-//       testStore.passTurn();
-//       expect(testStore.store.turnCount).toBe(1);
-//       expect(testStore.stackLayers).toHaveLength(1);
+//       TestStore.passTurn();
+//       Expect(testStore.store.turnCount).toBe(1);
+//       Expect(testStore.stackLayers).toHaveLength(1);
 //
-//       testStore.changePlayer("player_two");
-//       testStore.resolveTopOfStack({
-//         targets: [cardToDiscard, anotherCardToDiscard],
+//       TestStore.changePlayer("player_two");
+//       TestStore.resolveTopOfStack({
+//         Targets: [cardToDiscard, anotherCardToDiscard],
 //       });
 //
-//       expect(testStore.stackLayers).toHaveLength(0);
-//       expect(testStore.store.turnCount).toBe(2);
+//       Expect(testStore.stackLayers).toHaveLength(0);
+//       Expect(testStore.store.turnCount).toBe(2);
 //
-//       expect(cardToDiscard.zone).toEqual("discard");
-//       expect(anotherCardToDiscard.zone).toEqual("discard");
+//       Expect(cardToDiscard.zone).toEqual("discard");
+//       Expect(anotherCardToDiscard.zone).toEqual("discard");
 //     });
 //   });
 // });

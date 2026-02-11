@@ -1,9 +1,5 @@
 import type { GameMoveDefinitions } from "@tcg/core";
-import type {
-  LorcanaCardMeta,
-  LorcanaGameState,
-  LorcanaMoveParams,
-} from "../../types";
+import type { LorcanaCardMeta, LorcanaGameState, LorcanaMoveParams } from "../../types";
 // Ability moves
 import { activateAbility } from "./abilities/activate-ability";
 import { challenge } from "./core/challenge";

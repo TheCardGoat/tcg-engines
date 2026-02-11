@@ -3,20 +3,20 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { jujuMamaOdiesCompanion } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { jujuMamaOdiesCompanion } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Juju - Mama Odie's Companion", () => {
-//   it.skip("BEES' KNEES When you play this character, move 1 damage counter from chosen character to chosen opposing character.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: jujuMamaOdiesCompanion.cost,
-//       hand: [jujuMamaOdiesCompanion],
+// Describe("Juju - Mama Odie's Companion", () => {
+//   It.skip("BEES' KNEES When you play this character, move 1 damage counter from chosen character to chosen opposing character.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: jujuMamaOdiesCompanion.cost,
+//       Hand: [jujuMamaOdiesCompanion],
 //     });
 //
-//     await testEngine.playCard(jujuMamaOdiesCompanion);
-//     await testEngine.acceptOptionalLayer();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.playCard(jujuMamaOdiesCompanion);
+//     Await testEngine.acceptOptionalLayer();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

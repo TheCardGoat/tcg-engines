@@ -35,8 +35,8 @@ export const Abilities = {
    * Create a simple keyword ability (no parameters)
    */
   simpleKeyword: (keyword: SimpleKeyword): SimpleKeywordAbility => ({
-    type: "keyword",
     keyword,
+    type: "keyword",
   }),
 
   /**
@@ -48,8 +48,8 @@ export const Abilities = {
     condition?: Condition,
   ): ValueKeywordAbility =>
     condition
-      ? { type: "keyword", keyword, value, condition }
-      : { type: "keyword", keyword, value },
+      ? { condition, keyword, type: "keyword", value }
+      : { keyword, type: "keyword", value },
 
   /**
    * Create an Assault keyword ability
@@ -72,32 +72,26 @@ export const Abilities = {
   /**
    * Create a cost keyword ability (Accelerate, Equip, Repeat)
    */
-  costKeyword: (
-    keyword: "Accelerate" | "Equip" | "Repeat",
-    cost: Cost,
-  ): CostKeywordAbility => ({
-    type: "keyword",
-    keyword,
+  costKeyword: (keyword: "Accelerate" | "Equip" | "Repeat", cost: Cost): CostKeywordAbility => ({
     cost,
+    keyword,
+    type: "keyword",
   }),
 
   /**
    * Create an Accelerate keyword ability
    */
-  accelerate: (cost: Cost): CostKeywordAbility =>
-    Abilities.costKeyword("Accelerate", cost),
+  accelerate: (cost: Cost): CostKeywordAbility => Abilities.costKeyword("Accelerate", cost),
 
   /**
    * Create an Equip keyword ability
    */
-  equip: (cost: Cost): CostKeywordAbility =>
-    Abilities.costKeyword("Equip", cost),
+  equip: (cost: Cost): CostKeywordAbility => Abilities.costKeyword("Equip", cost),
 
   /**
    * Create a Repeat keyword ability
    */
-  repeat: (cost: Cost): CostKeywordAbility =>
-    Abilities.costKeyword("Repeat", cost),
+  repeat: (cost: Cost): CostKeywordAbility => Abilities.costKeyword("Repeat", cost),
 
   /**
    * Create an effect keyword ability (Deathknell, Legion, Vision)
@@ -108,8 +102,8 @@ export const Abilities = {
     condition?: Condition,
   ): EffectKeywordAbility =>
     condition
-      ? { type: "keyword", keyword, effect, condition }
-      : { type: "keyword", keyword, effect },
+      ? { condition, effect, keyword, type: "keyword" }
+      : { effect, keyword, type: "keyword" },
 
   /**
    * Create a Deathknell keyword ability
@@ -126,8 +120,7 @@ export const Abilities = {
   /**
    * Create a Vision keyword ability
    */
-  vision: (effect: Effect): EffectKeywordAbility =>
-    Abilities.effectKeyword("Vision", effect),
+  vision: (effect: Effect): EffectKeywordAbility => Abilities.effectKeyword("Vision", effect),
 
   /**
    * Create a Tank keyword ability
@@ -157,8 +150,7 @@ export const Abilities = {
   /**
    * Create a Weaponmaster keyword ability
    */
-  weaponmaster: (): SimpleKeywordAbility =>
-    Abilities.simpleKeyword("Weaponmaster"),
+  weaponmaster: (): SimpleKeywordAbility => Abilities.simpleKeyword("Weaponmaster"),
 
   /**
    * Create a Quick-Draw keyword ability

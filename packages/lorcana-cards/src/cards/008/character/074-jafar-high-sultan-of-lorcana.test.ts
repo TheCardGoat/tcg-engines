@@ -3,29 +3,29 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   jafarHighSultanOfLorcana,
-//   palaceGuardSpectralSentry,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   JafarHighSultanOfLorcana,
+//   PalaceGuardSpectralSentry,
 // } from "@lorcanito/lorcana-engine/cards/008";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Jafar - High Sultan of Lorcana", () => {
-//   it("DARK POWER Whenever this character quests, you may draw a card, then choose and discard a card. If an Illusion character card is discarded this way, you may play that character for free.", async () => {
-//     const testEngine = new TestEngine({
-//       play: [jafarHighSultanOfLorcana],
-//       hand: [palaceGuardSpectralSentry],
+// Describe("Jafar - High Sultan of Lorcana", () => {
+//   It("DARK POWER Whenever this character quests, you may draw a card, then choose and discard a card. If an Illusion character card is discarded this way, you may play that character for free.", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [jafarHighSultanOfLorcana],
+//       Hand: [palaceGuardSpectralSentry],
 //     });
 //
-//     await testEngine.questCard(jafarHighSultanOfLorcana);
-//     await testEngine.acceptOptionalLayer();
+//     Await testEngine.questCard(jafarHighSultanOfLorcana);
+//     Await testEngine.acceptOptionalLayer();
 //
-//     expect(testEngine.getZonesCardCount().hand).toEqual(2);
-//     await testEngine.resolveTopOfStack({
-//       targets: [palaceGuardSpectralSentry],
+//     Expect(testEngine.getZonesCardCount().hand).toEqual(2);
+//     Await testEngine.resolveTopOfStack({
+//       Targets: [palaceGuardSpectralSentry],
 //     });
 //
-//     expect(testEngine.getCardModel(palaceGuardSpectralSentry).zone).toEqual(
+//     Expect(testEngine.getCardModel(palaceGuardSpectralSentry).zone).toEqual(
 //       "play",
 //     );
 //   });

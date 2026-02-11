@@ -9,8 +9,8 @@
   ],
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "format": "oxfmt --write ./src",
-    "lint": "oxlint --fix ./src",
+    "format": "bun x oxfmt --write ./src",
+    "lint": "bun x oxlint --fix ./src",
     "check-types": "tsc --noEmit"
   },
   "dependencies": {

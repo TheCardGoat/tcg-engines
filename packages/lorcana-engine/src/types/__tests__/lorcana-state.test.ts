@@ -37,21 +37,21 @@ function createBaseLorcanaState(
   }
 
   return {
-    players: playerIds,
     currentPlayerIndex: 0,
-    turnNumber: 1,
-    phase: "beginning",
     lorcana: {
-      lore,
+      characterStates: {},
       ink: { available, total },
+      lore,
+      permanentStates: {},
       turnMetadata: {
         cardsPlayedThisTurn: [],
         charactersQuesting: [],
         inkedThisTurn: false,
       },
-      characterStates: {},
-      permanentStates: {},
     },
+    phase: "beginning",
+    players: playerIds,
+    turnNumber: 1,
     ...overrides,
   };
 }
@@ -133,8 +133,8 @@ describe("LorcanaState Type Structure", () => {
 
     state.lorcana.challengeState = {
       attacker,
-      defender,
       attackerDamage: 5,
+      defender,
       defenderDamage: 3,
     };
 

@@ -1,36 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const jimHawkinsSpaceTraveler: CharacterCard = {
-  id: "tdh",
-  cardType: "character",
-  name: "Jim Hawkins",
-  version: "Space Traveler",
-  fullName: "Jim Hawkins - Space Traveler",
-  inkType: ["ruby"],
-  franchise: "Treasure Planet",
-  set: "003",
-  text: "THIS IS IT! When you play this character, you may play a location with cost 4 or less for free.\nTAKE THE HELM Whenever you play a location, this character may move there for free.",
-  cost: 5,
-  strength: 4,
-  willpower: 4,
-  lore: 2,
-  cardNumber: 109,
-  inkable: true,
-  missingImplementation: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "69de13009dc28237f575685f6879507f0b8a9a5e",
-  },
   abilities: [
     {
-      id: "tdh-1",
-      type: "triggered",
-      name: "THIS IS IT!",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -44,8 +16,36 @@ export const jimHawkinsSpaceTraveler: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "tdh-1",
+      name: "THIS IS IT!",
       text: "THIS IS IT! When you play this character, you may play a location with cost 4 or less for free.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 109,
+  cardType: "character",
   classifications: ["Storyborn", "Hero"],
+  cost: 5,
+  externalIds: {
+    ravensburger: "69de13009dc28237f575685f6879507f0b8a9a5e",
+  },
+  franchise: "Treasure Planet",
+  fullName: "Jim Hawkins - Space Traveler",
+  id: "tdh",
+  inkType: ["ruby"],
+  inkable: true,
+  lore: 2,
+  missingImplementation: true,
+  missingTests: true,
+  name: "Jim Hawkins",
+  set: "003",
+  strength: 4,
+  text: "THIS IS IT! When you play this character, you may play a location with cost 4 or less for free.\nTAKE THE HELM Whenever you play a location, this character may move there for free.",
+  version: "Space Traveler",
+  willpower: 4,
 };

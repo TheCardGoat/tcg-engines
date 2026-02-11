@@ -3,72 +3,72 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { voyage } from "@lorcanito/lorcana-engine/cards/003/actions/actions";
-// import {
-//   vanellopeVonSchweetzSugarRushChamp,
-//   vanellopeVonSchweetzSugarRushPrincess,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { voyage } from "@lorcanito/lorcana-engine/cards/003/actions/actions";
+// Import {
+//   VanellopeVonSchweetzSugarRushChamp,
+//   VanellopeVonSchweetzSugarRushPrincess,
 // } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { sugarRushSpeedwayFinishLine } from "@lorcanito/lorcana-engine/cards/006";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { sugarRushSpeedwayFinishLine } from "@lorcanito/lorcana-engine/cards/006";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Voyage", () => {
-//   describe("Move up to 2 characters of yours to the same location for free.", () => {
-//     it("Moving two characters", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: voyage.cost,
-//         hand: [voyage],
-//         play: [
-//           sugarRushSpeedwayFinishLine,
-//           vanellopeVonSchweetzSugarRushPrincess,
-//           vanellopeVonSchweetzSugarRushChamp,
+// Describe("Voyage", () => {
+//   Describe("Move up to 2 characters of yours to the same location for free.", () => {
+//     It("Moving two characters", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: voyage.cost,
+//         Hand: [voyage],
+//         Play: [
+//           SugarRushSpeedwayFinishLine,
+//           VanellopeVonSchweetzSugarRushPrincess,
+//           VanellopeVonSchweetzSugarRushChamp,
 //         ],
 //       });
 //
-//       await testEngine.playCard(
-//         voyage,
+//       Await testEngine.playCard(
+//         Voyage,
 //         {
-//           targets: [
-//             vanellopeVonSchweetzSugarRushPrincess,
-//             vanellopeVonSchweetzSugarRushChamp,
+//           Targets: [
+//             VanellopeVonSchweetzSugarRushPrincess,
+//             VanellopeVonSchweetzSugarRushChamp,
 //           ],
 //         },
-//         true,
+//         True,
 //       );
-//       await testEngine.resolveTopOfStack({
-//         targets: [sugarRushSpeedwayFinishLine],
+//       Await testEngine.resolveTopOfStack({
+//         Targets: [sugarRushSpeedwayFinishLine],
 //       });
 //
-//       expect(
-//         testEngine.getCardModel(sugarRushSpeedwayFinishLine)
+//       Expect(
+//         TestEngine.getCardModel(sugarRushSpeedwayFinishLine)
 //           .charactersAtLocation,
 //       ).toHaveLength(2);
 //     });
 //
-//     it("Moving one character", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: voyage.cost,
-//         hand: [voyage],
-//         play: [
-//           sugarRushSpeedwayFinishLine,
-//           vanellopeVonSchweetzSugarRushPrincess,
-//           vanellopeVonSchweetzSugarRushChamp,
+//     It("Moving one character", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: voyage.cost,
+//         Hand: [voyage],
+//         Play: [
+//           SugarRushSpeedwayFinishLine,
+//           VanellopeVonSchweetzSugarRushPrincess,
+//           VanellopeVonSchweetzSugarRushChamp,
 //         ],
 //       });
 //
-//       await testEngine.playCard(
-//         voyage,
+//       Await testEngine.playCard(
+//         Voyage,
 //         {
-//           targets: [vanellopeVonSchweetzSugarRushChamp],
+//           Targets: [vanellopeVonSchweetzSugarRushChamp],
 //         },
-//         true,
+//         True,
 //       );
-//       await testEngine.resolveTopOfStack({
-//         targets: [sugarRushSpeedwayFinishLine],
+//       Await testEngine.resolveTopOfStack({
+//         Targets: [sugarRushSpeedwayFinishLine],
 //       });
 //
-//       expect(
-//         testEngine.getCardModel(sugarRushSpeedwayFinishLine)
+//       Expect(
+//         TestEngine.getCardModel(sugarRushSpeedwayFinishLine)
 //           .charactersAtLocation,
 //       ).toHaveLength(1);
 //     });

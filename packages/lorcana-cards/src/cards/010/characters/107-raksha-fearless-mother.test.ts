@@ -3,23 +3,23 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import {
-//   duckburgFunsosFunzone,
-//   rakshaFearlessMother,
+// Import { describe, it } from "@jest/globals";
+// Import {
+//   DuckburgFunsosFunzone,
+//   RakshaFearlessMother,
 // } from "@lorcanito/lorcana-engine/cards/010";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Raksha - Fearless Mother", () => {
-//   it("ON PATROL Once during your turn, you may pay 1 less to move this character to a location.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: duckburgFunsosFunzone.moveCost - 1,
-//       play: [rakshaFearlessMother, duckburgFunsosFunzone],
+// Describe("Raksha - Fearless Mother", () => {
+//   It("ON PATROL Once during your turn, you may pay 1 less to move this character to a location.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: duckburgFunsosFunzone.moveCost - 1,
+//       Play: [rakshaFearlessMother, duckburgFunsosFunzone],
 //     });
 //
-//     await testEngine.moveToLocation({
-//       character: rakshaFearlessMother,
-//       location: duckburgFunsosFunzone,
+//     Await testEngine.moveToLocation({
+//       Character: rakshaFearlessMother,
+//       Location: duckburgFunsosFunzone,
 //     });
 //   });
 // });

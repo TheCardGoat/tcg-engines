@@ -1,25 +1,25 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { shiftAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { wheneverQuests } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-// import { opponentRevealHand } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { shiftAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import { wheneverQuests } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// Import { opponentRevealHand } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const ursulaEricsBride: LorcanitoCharacterCard = {
-//   id: "hvg",
-//   missingTestCase: true,
-//   name: "Ursula",
-//   title: "Eric's Bride",
-//   characteristics: ["floodborn", "sorcerer", "villain", "princess"],
-//   text: "**Shift: Discard a song card** _(You may discard a song card to play this on top of one of your characters named Ursula.)_\n\n**VANESSA'S DESIGN** Whenever this character quests, chosen opponent reveals their hand and discards a non-character card of your choice.",
-//   type: "character",
-//   abilities: [
-//     shiftAbility(
+// Export const ursulaEricsBride: LorcanitoCharacterCard = {
+//   Id: "hvg",
+//   MissingTestCase: true,
+//   Name: "Ursula",
+//   Title: "Eric's Bride",
+//   Characteristics: ["floodborn", "sorcerer", "villain", "princess"],
+//   Text: "**Shift: Discard a song card** _(You may discard a song card to play this on top of one of your characters named Ursula.)_\n\n**VANESSA'S DESIGN** Whenever this character quests, chosen opponent reveals their hand and discards a non-character card of your choice.",
+//   Type: "character",
+//   Abilities: [
+//     ShiftAbility(
 //       [
 //         {
-//           type: "card",
-//           action: "discard",
-//           amount: 1,
-//           filters: [
+//           Type: "card",
+//           Action: "discard",
+//           Amount: 1,
+//           Filters: [
 //             { filter: "zone", value: "hand" },
 //             { filter: "owner", value: "self" },
 //             { filter: "type", value: "action" },
@@ -30,39 +30,39 @@
 //       "ursula",
 //       "**Shift: Discard a song card**",
 //     ),
-//     wheneverQuests({
-//       name: "VANESSA'S DESIGN",
-//       text: "Whenever this character quests, chosen opponent reveals their hand and discards a non-character card of your choice.",
-//       resolveEffectsIndividually: true,
-//       effects: [
+//     WheneverQuests({
+//       Name: "VANESSA'S DESIGN",
+//       Text: "Whenever this character quests, chosen opponent reveals their hand and discards a non-character card of your choice.",
+//       ResolveEffectsIndividually: true,
+//       Effects: [
 //         {
-//           type: "discard",
-//           amount: 1,
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
+//           Type: "discard",
+//           Amount: 1,
+//           Target: {
+//             Type: "card",
+//             Value: 1,
+//             Filters: [
 //               { filter: "type", value: ["location", "item", "action"] },
 //               { filter: "zone", value: "hand" },
 //               { filter: "owner", value: "opponent" },
 //             ],
 //           },
 //         },
-//         opponentRevealHand,
+//         OpponentRevealHand,
 //       ],
 //     }),
 //   ],
-//   colors: ["amber"],
-//   cost: 4,
-//   strength: 2,
-//   willpower: 4,
-//   lore: 2,
-//   illustrator: "Lisanne Koeteeuw",
-//   number: 24,
-//   set: "URR",
-//   externalIds: {
-//     tcgPlayer: 547763,
+//   Colors: ["amber"],
+//   Cost: 4,
+//   Strength: 2,
+//   Willpower: 4,
+//   Lore: 2,
+//   Illustrator: "Lisanne Koeteeuw",
+//   Number: 24,
+//   Set: "URR",
+//   ExternalIds: {
+//     TcgPlayer: 547763,
 //   },
-//   rarity: "rare",
+//   Rarity: "rare",
 // };
 //

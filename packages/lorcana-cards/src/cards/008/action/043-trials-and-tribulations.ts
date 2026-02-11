@@ -1,29 +1,29 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { chosenCharacterGetsStrength } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+// Import { chosenCharacterGetsStrength } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const trialsAndTribulations: LorcanitoActionCard = {
-//   id: "rky",
-//   missingTestCase: true,
-//   name: "Trials And Tribulations",
-//   characteristics: ["action", "song"],
-//   text: "Chosen character gets -4 {S} until the start of your next turn.",
-//   type: "action",
-//   abilities: [
+// Export const trialsAndTribulations: LorcanitoActionCard = {
+//   Id: "rky",
+//   MissingTestCase: true,
+//   Name: "Trials And Tribulations",
+//   Characteristics: ["action", "song"],
+//   Text: "Chosen character gets -4 {S} until the start of your next turn.",
+//   Type: "action",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       effects: [chosenCharacterGetsStrength(-4, "next_turn")],
+//       Type: "resolution",
+//       Effects: [chosenCharacterGetsStrength(-4, "next_turn")],
 //     },
 //   ],
-//   inkwell: true,
-//   colors: ["amber"],
-//   cost: 2,
-//   illustrator: "Pauline Voss",
-//   number: 43,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631381,
+//   Inkwell: true,
+//   Colors: ["amber"],
+//   Cost: 2,
+//   Illustrator: "Pauline Voss",
+//   Number: 43,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631381,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

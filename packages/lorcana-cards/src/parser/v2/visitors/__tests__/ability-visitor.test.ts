@@ -28,7 +28,7 @@ describe.skip("AbilityVisitor", () => {
   function parseAndVisit(text: string, rule: keyof LorcanaAbilityParser) {
     const lexResult = LorcanaLexer.tokenize(text);
     parser.input = lexResult.tokens;
-    // biome-ignore lint/suspicious/noExplicitAny: Dynamic rule access for testing
+    // Biome-ignore lint/suspicious/noExplicitAny: Dynamic rule access for testing
     const cst = (parser as any)[rule]();
 
     if (parser.errors.length > 0) {
@@ -84,8 +84,8 @@ describe.skip("AbilityVisitor", () => {
     it("throws for unknown ability type", () => {
       // Create a malformed CST manually
       const malformedCst: CstNode = {
-        name: "ability",
         children: {},
+        name: "ability",
       };
 
       expect(() => visitor.visit(malformedCst)).toThrow("Unknown ability type");
@@ -198,8 +198,8 @@ describe.skip("AbilityVisitor", () => {
     it("throws for unknown effect phrase type", () => {
       // Create malformed CST
       const malformedCst: CstNode = {
-        name: "effectPhrase",
         children: {},
+        name: "effectPhrase",
       };
 
       expect(() => visitor.visit(malformedCst)).toThrow(
@@ -228,8 +228,8 @@ describe.skip("AbilityVisitor", () => {
     it("throws for unknown atomic effect type", () => {
       // Create malformed CST
       const malformedCst: CstNode = {
-        name: "atomicEffect",
         children: {},
+        name: "atomicEffect",
       };
 
       expect(() => visitor.visit(malformedCst)).toThrow(
@@ -265,12 +265,12 @@ describe.skip("AbilityVisitor", () => {
       parser.input = lexResult.tokens;
 
       // This will fail parsing, but we test visitor's defensive handling
-      // biome-ignore lint/suspicious/noExplicitAny: Creating mock CST for testing
+      // Biome-ignore lint/suspicious/noExplicitAny: Creating mock CST for testing
       const cst: CstNode = {
-        name: "drawEffect",
         children: {
-          Draw: [{ image: "draw", startOffset: 0, endOffset: 4 } as any],
+          Draw: [{ endOffset: 4, image: "draw", startOffset: 0 } as any],
         },
+        name: "drawEffect",
       };
 
       const result = visitor.visit(cst);
@@ -283,14 +283,14 @@ describe.skip("AbilityVisitor", () => {
       const result = parseAndVisit("when you play, draw 2", "triggeredAbility");
 
       expect(result).toEqual({
-        type: "triggered",
+        effect: expect.objectContaining({
+          amount: 2,
+          type: "draw",
+        }),
         trigger: expect.objectContaining({
           triggerWord: "when",
         }),
-        effect: expect.objectContaining({
-          type: "draw",
-          amount: 2,
-        }),
+        type: "triggered",
       });
     });
 
@@ -310,8 +310,8 @@ describe.skip("AbilityVisitor", () => {
   describe("visitor error handling", () => {
     it("handles malformed CST gracefully", () => {
       const malformedCst: CstNode = {
-        name: "unknown",
         children: {},
+        name: "unknown",
       };
 
       // Should throw or return null depending on implementation
@@ -319,12 +319,12 @@ describe.skip("AbilityVisitor", () => {
     });
 
     it("handles missing children properties", () => {
-      // biome-ignore lint/suspicious/noExplicitAny: Creating mock CST for testing
+      // Biome-ignore lint/suspicious/noExplicitAny: Creating mock CST for testing
       const cst: CstNode = {
-        name: "ability",
         children: {
           triggeredAbility: undefined as any,
         },
+        name: "ability",
       };
 
       expect(() => visitor.visit(cst)).toThrow();
@@ -333,8 +333,8 @@ describe.skip("AbilityVisitor", () => {
     it("handles null/undefined context", () => {
       // This tests defensive programming
       const emptyAbility = {
-        name: "ability",
         children: {},
+        name: "ability",
       };
 
       expect(() => visitor.visit(emptyAbility)).toThrow("Unknown ability type");

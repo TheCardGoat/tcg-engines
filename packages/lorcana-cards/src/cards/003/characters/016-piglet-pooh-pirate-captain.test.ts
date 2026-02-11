@@ -3,38 +3,38 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   eeyoreOverstuffedDonkey,
-//   pigletPoohPirateCaptain,
-//   wendyDarlingAuthorityOnPeterPan,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   EeyoreOverstuffedDonkey,
+//   PigletPoohPirateCaptain,
+//   WendyDarlingAuthorityOnPeterPan,
 // } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Piglet - Pooh Pirate Captain", () => {
-//   it("**AND I'M THE CAPTAIN!** While you have 2 or more other characters in play, this characters gets +2 {L}.", () => {
-//     const testStore = new TestStore({
-//       inkwell: eeyoreOverstuffedDonkey.cost,
-//       hand: [eeyoreOverstuffedDonkey],
-//       play: [pigletPoohPirateCaptain, wendyDarlingAuthorityOnPeterPan],
+// Describe("Piglet - Pooh Pirate Captain", () => {
+//   It("**AND I'M THE CAPTAIN!** While you have 2 or more other characters in play, this characters gets +2 {L}.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: eeyoreOverstuffedDonkey.cost,
+//       Hand: [eeyoreOverstuffedDonkey],
+//       Play: [pigletPoohPirateCaptain, wendyDarlingAuthorityOnPeterPan],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       pigletPoohPirateCaptain.id,
+//       PigletPoohPirateCaptain.id,
 //     );
-//     const secondChar = testStore.getByZoneAndId(
+//     Const secondChar = testStore.getByZoneAndId(
 //       "hand",
-//       eeyoreOverstuffedDonkey.id,
+//       EeyoreOverstuffedDonkey.id,
 //     );
-//     const thirdChar = testStore.getCard(wendyDarlingAuthorityOnPeterPan);
+//     Const thirdChar = testStore.getCard(wendyDarlingAuthorityOnPeterPan);
 //
-//     expect(cardUnderTest.lore).toEqual(pigletPoohPirateCaptain.lore);
-//     secondChar.playFromHand();
-//     expect(cardUnderTest.lore).toEqual(pigletPoohPirateCaptain.lore + 2);
+//     Expect(cardUnderTest.lore).toEqual(pigletPoohPirateCaptain.lore);
+//     SecondChar.playFromHand();
+//     Expect(cardUnderTest.lore).toEqual(pigletPoohPirateCaptain.lore + 2);
 //
-//     expect(secondChar.lore).toEqual(eeyoreOverstuffedDonkey.lore);
-//     expect(thirdChar.lore).toEqual(wendyDarlingAuthorityOnPeterPan.lore);
+//     Expect(secondChar.lore).toEqual(eeyoreOverstuffedDonkey.lore);
+//     Expect(thirdChar.lore).toEqual(wendyDarlingAuthorityOnPeterPan.lore);
 //   });
 // });
 //

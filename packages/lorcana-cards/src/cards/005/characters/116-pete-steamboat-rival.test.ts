@@ -3,59 +3,59 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { peterPansShadowNotSewnOn } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import {
-//   peteSteamboatRival,
-//   peteWrestlingChamp,
-//   simbaAdventurousSuccessor,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { peterPansShadowNotSewnOn } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import {
+//   PeteSteamboatRival,
+//   PeteWrestlingChamp,
+//   SimbaAdventurousSuccessor,
 // } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Pete - Steamboat Rival", () => {
-//   describe("**SCRAM!** When you play this character, if you have another character named Pete in play, you may banish chosen opposing character.", () => {
-//     it("Pete in play", () => {
-//       const testStore = new TestStore(
+// Describe("Pete - Steamboat Rival", () => {
+//   Describe("**SCRAM!** When you play this character, if you have another character named Pete in play, you may banish chosen opposing character.", () => {
+//     It("Pete in play", () => {
+//       Const testStore = new TestStore(
 //         {
-//           inkwell: peteSteamboatRival.cost,
-//           hand: [peteSteamboatRival],
-//           play: [peteWrestlingChamp],
+//           Inkwell: peteSteamboatRival.cost,
+//           Hand: [peteSteamboatRival],
+//           Play: [peteWrestlingChamp],
 //         },
 //         {
-//           play: [simbaAdventurousSuccessor],
+//           Play: [simbaAdventurousSuccessor],
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getCard(peteSteamboatRival);
-//       const target = testStore.getCard(simbaAdventurousSuccessor);
+//       Const cardUnderTest = testStore.getCard(peteSteamboatRival);
+//       Const target = testStore.getCard(simbaAdventurousSuccessor);
 //
-//       cardUnderTest.playFromHand();
-//       testStore.resolveOptionalAbility();
+//       CardUnderTest.playFromHand();
+//       TestStore.resolveOptionalAbility();
 //
-//       testStore.resolveTopOfStack({ targets: [target] });
+//       TestStore.resolveTopOfStack({ targets: [target] });
 //
-//       expect(target.zone).toEqual("discard");
+//       Expect(target.zone).toEqual("discard");
 //     });
 //
-//     it("No Pete in play", () => {
-//       const testStore = new TestStore(
+//     It("No Pete in play", () => {
+//       Const testStore = new TestStore(
 //         {
-//           inkwell: peteSteamboatRival.cost,
-//           hand: [peteSteamboatRival],
-//           play: [peterPansShadowNotSewnOn],
+//           Inkwell: peteSteamboatRival.cost,
+//           Hand: [peteSteamboatRival],
+//           Play: [peterPansShadowNotSewnOn],
 //         },
 //         {
-//           play: [simbaAdventurousSuccessor],
+//           Play: [simbaAdventurousSuccessor],
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getCard(peteSteamboatRival);
-//       const target = testStore.getCard(simbaAdventurousSuccessor);
+//       Const cardUnderTest = testStore.getCard(peteSteamboatRival);
+//       Const target = testStore.getCard(simbaAdventurousSuccessor);
 //
-//       cardUnderTest.playFromHand();
+//       CardUnderTest.playFromHand();
 //
-//       expect(testStore.stackLayers.length).toEqual(0);
-//       expect(target.zone).toEqual("play");
+//       Expect(testStore.stackLayers.length).toEqual(0);
+//       Expect(target.zone).toEqual("play");
 //     });
 //   });
 // });

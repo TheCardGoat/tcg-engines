@@ -3,78 +3,78 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { mufasaBetrayedLeader } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { gastonDespicableDealer } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { mufasaBetrayedLeader } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { gastonDespicableDealer } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Gaston - Despicable Dealer", () => {
-//   describe("**DUBIOUS RECRUITMENT**  {E} − You pay 2 {I} less for the next character you play this turn.", () => {
-//     it("should reduce the cost of the next character played by 2", () => {
-//       const testStore = new TestStore({
-//         inkwell: mufasaBetrayedLeader.cost - 2,
-//         play: [gastonDespicableDealer],
-//         hand: [mufasaBetrayedLeader],
+// Describe("Gaston - Despicable Dealer", () => {
+//   Describe("**DUBIOUS RECRUITMENT**  {E} − You pay 2 {I} less for the next character you play this turn.", () => {
+//     It("should reduce the cost of the next character played by 2", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: mufasaBetrayedLeader.cost - 2,
+//         Play: [gastonDespicableDealer],
+//         Hand: [mufasaBetrayedLeader],
 //       });
 //
-//       expect(
-//         testStore.store.continuousEffectStore.continuousEffects,
+//       Expect(
+//         TestStore.store.continuousEffectStore.continuousEffects,
 //       ).toHaveLength(0);
 //
-//       const target = testStore.getCard(mufasaBetrayedLeader);
+//       Const target = testStore.getCard(mufasaBetrayedLeader);
 //
-//       target.playFromHand();
-//       expect(target.cost).toBe(5);
-//       expect(target.zone).toBe("hand");
+//       Target.playFromHand();
+//       Expect(target.cost).toBe(5);
+//       Expect(target.zone).toBe("hand");
 //
-//       const cardUnderTest = testStore.getCard(gastonDespicableDealer);
-//       cardUnderTest.activate();
+//       Const cardUnderTest = testStore.getCard(gastonDespicableDealer);
+//       CardUnderTest.activate();
 //
-//       target.playFromHand();
-//       expect(target.zone).toBe("play");
-//       expect(
-//         testStore.store.continuousEffectStore.continuousEffects,
+//       Target.playFromHand();
+//       Expect(target.zone).toBe("play");
+//       Expect(
+//         TestStore.store.continuousEffectStore.continuousEffects,
 //       ).toHaveLength(0);
 //     });
 //
-//     it("Effect should last only for the turn", () => {
-//       const testStore = new TestStore(
+//     It("Effect should last only for the turn", () => {
+//       Const testStore = new TestStore(
 //         {
-//           inkwell: mufasaBetrayedLeader.cost - 2,
-//           play: [gastonDespicableDealer],
-//           hand: [mufasaBetrayedLeader],
+//           Inkwell: mufasaBetrayedLeader.cost - 2,
+//           Play: [gastonDespicableDealer],
+//           Hand: [mufasaBetrayedLeader],
 //         },
 //         {
-//           deck: 1,
+//           Deck: 1,
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getCard(gastonDespicableDealer);
+//       Const cardUnderTest = testStore.getCard(gastonDespicableDealer);
 //
-//       cardUnderTest.activate();
-//       expect(
-//         testStore.store.continuousEffectStore.continuousEffects,
+//       CardUnderTest.activate();
+//       Expect(
+//         TestStore.store.continuousEffectStore.continuousEffects,
 //       ).toHaveLength(1);
-//       testStore.passTurn();
-//       expect(
-//         testStore.store.continuousEffectStore.continuousEffects,
+//       TestStore.passTurn();
+//       Expect(
+//         TestStore.store.continuousEffectStore.continuousEffects,
 //       ).toHaveLength(0);
 //     });
 //   });
 // });
 //
-// describe("Regression", () => {
-//   it("should cost 3 lore", () => {
-//     const testStore = new TestStore({
-//       inkwell: 3,
-//       hand: [gastonDespicableDealer],
+// Describe("Regression", () => {
+//   It("should cost 3 lore", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: 3,
+//       Hand: [gastonDespicableDealer],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(gastonDespicableDealer);
+//     Const cardUnderTest = testStore.getCard(gastonDespicableDealer);
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     expect(testStore.getAvailableInkwellCardCount("player_one")).toBe(0);
+//     Expect(testStore.getAvailableInkwellCardCount("player_one")).toBe(0);
 //   });
 // });
 //

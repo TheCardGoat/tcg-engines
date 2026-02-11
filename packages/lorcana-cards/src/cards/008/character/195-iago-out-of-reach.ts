@@ -1,52 +1,52 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { whileConditionThisCharacterGets } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import { whileConditionThisCharacterGets } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
 //
-// export const iagoOutOfReach: LorcanitoCharacterCard = {
-//   id: "z25",
-//   name: "Iago",
-//   title: "Out of Reach",
-//   characteristics: ["storyborn", "ally"],
-//   text: "SELF-PRESERVATION While you have another exerted character in play, this character can't be challenged.",
-//   type: "character",
-//   abilities: [
-//     whileConditionThisCharacterGets({
-//       name: "Self-Preservation",
-//       text: "While you have another exerted character in play, this character can't be challenged.",
-//       conditions: [
+// Export const iagoOutOfReach: LorcanitoCharacterCard = {
+//   Id: "z25",
+//   Name: "Iago",
+//   Title: "Out of Reach",
+//   Characteristics: ["storyborn", "ally"],
+//   Text: "SELF-PRESERVATION While you have another exerted character in play, this character can't be challenged.",
+//   Type: "character",
+//   Abilities: [
+//     WhileConditionThisCharacterGets({
+//       Name: "Self-Preservation",
+//       Text: "While you have another exerted character in play, this character can't be challenged.",
+//       Conditions: [
 //         {
-//           type: "filter",
-//           filters: [
+//           Type: "filter",
+//           Filters: [
 //             { filter: "owner", value: "self" },
 //             { filter: "zone", value: "play" },
 //             { filter: "status", value: "exerted" },
 //           ],
-//           comparison: { operator: "gte", value: 1 },
-//           excludeSelf: true,
+//           Comparison: { operator: "gte", value: 1 },
+//           ExcludeSelf: true,
 //         },
 //       ],
-//       effects: [
+//       Effects: [
 //         {
-//           type: "restriction" as const,
-//           restriction: "be-challenged" as const,
-//           target: thisCharacter,
+//           Type: "restriction" as const,
+//           Restriction: "be-challenged" as const,
+//           Target: thisCharacter,
 //         },
 //       ],
 //     }),
 //   ],
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 4,
-//   strength: 3,
-//   willpower: 3,
-//   illustrator: "Carlos Luzzi",
-//   number: 195,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631480,
+//   Inkwell: true,
+//   Colors: ["steel"],
+//   Cost: 4,
+//   Strength: 3,
+//   Willpower: 3,
+//   Illustrator: "Carlos Luzzi",
+//   Number: 195,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631480,
 //   },
-//   rarity: "rare",
-//   lore: 2,
+//   Rarity: "rare",
+//   Lore: 2,
 // };
 //

@@ -1,65 +1,65 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { duringYourTurn } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
-// import { self } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { wheneverOneOfYourCharactersSings } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { duringYourTurn } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
+// Import { self } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import { wheneverOneOfYourCharactersSings } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
 //
-// export const antonioMadrigalFriendToAll: LorcanitoCharacterCard = {
-//   id: "i29",
-//   name: "Antonio Madrigal",
-//   title: "Friend to All",
-//   characteristics: ["storyborn", "ally", "madrigal"],
-//   text: "OF COURSE THEY CAN COME Once during your turn, whenever one of your characters sings a song, you may search your deck for a character card with cost 3 or less and reveal that card to all players. Put that card into your hand and shuffle your deck.",
-//   type: "character",
-//   abilities: [
-//     wheneverOneOfYourCharactersSings({
-//       name: "OF COURSE THEY CAN COME",
-//       text: "Once during your turn, whenever one of your characters sings a song, you may search your deck for a character card with cost 3 or less and reveal that card to all players. Put that card into your hand and shuffle your deck.",
-//       optional: true,
-//       oncePerTurn: true,
-//       conditions: [duringYourTurn],
-//       effects: [
+// Export const antonioMadrigalFriendToAll: LorcanitoCharacterCard = {
+//   Id: "i29",
+//   Name: "Antonio Madrigal",
+//   Title: "Friend to All",
+//   Characteristics: ["storyborn", "ally", "madrigal"],
+//   Text: "OF COURSE THEY CAN COME Once during your turn, whenever one of your characters sings a song, you may search your deck for a character card with cost 3 or less and reveal that card to all players. Put that card into your hand and shuffle your deck.",
+//   Type: "character",
+//   Abilities: [
+//     WheneverOneOfYourCharactersSings({
+//       Name: "OF COURSE THEY CAN COME",
+//       Text: "Once during your turn, whenever one of your characters sings a song, you may search your deck for a character card with cost 3 or less and reveal that card to all players. Put that card into your hand and shuffle your deck.",
+//       Optional: true,
+//       OncePerTurn: true,
+//       Conditions: [duringYourTurn],
+//       Effects: [
 //         {
-//           type: "move",
-//           to: "hand",
-//           shouldRevealMoved: true,
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
+//           Type: "move",
+//           To: "hand",
+//           ShouldRevealMoved: true,
+//           Target: {
+//             Type: "card",
+//             Value: 1,
+//             Filters: [
 //               { filter: "zone", value: "deck" },
 //               { filter: "owner", value: "self" },
 //               { filter: "type", value: "character" },
 //               {
-//                 filter: "attribute",
-//                 value: "cost",
-//                 comparison: {
-//                   operator: "lte",
-//                   value: 3,
+//                 Filter: "attribute",
+//                 Value: "cost",
+//                 Comparison: {
+//                   Operator: "lte",
+//                   Value: 3,
 //                 },
 //               },
 //             ],
 //           },
 //         },
 //         {
-//           type: "shuffle-deck",
-//           target: self,
+//           Type: "shuffle-deck",
+//           Target: self,
 //         },
 //       ],
 //     }),
 //   ],
-//   inkwell: true,
-//   colors: ["amber", "amethyst"],
-//   cost: 4,
-//   strength: 2,
-//   willpower: 2,
-//   illustrator: "Valerio Buonfantino",
-//   number: 5,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631703,
+//   Inkwell: true,
+//   Colors: ["amber", "amethyst"],
+//   Cost: 4,
+//   Strength: 2,
+//   Willpower: 2,
+//   Illustrator: "Valerio Buonfantino",
+//   Number: 5,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631703,
 //   },
-//   rarity: "rare",
-//   lore: 1,
+//   Rarity: "rare",
+//   Lore: 1,
 // };
 //

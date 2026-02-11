@@ -3,53 +3,53 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   amethystCoil,
-//   emeraldCoil,
-//   scroogeMcduckResourcefulMiser,
-//   spaghettiDinner,
-//   theGlassSlipper,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   AmethystCoil,
+//   EmeraldCoil,
+//   ScroogeMcduckResourcefulMiser,
+//   SpaghettiDinner,
+//   TheGlassSlipper,
 // } from "@lorcanito/lorcana-engine/cards/007";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Scrooge Mcduck - Resourceful Miser", () => {
-//   const items = [spaghettiDinner, emeraldCoil, theGlassSlipper, amethystCoil];
-//   it("PUT IT TO GOOD USE You may exert 4 items of yours to play this character for free.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: 0,
-//       play: items,
-//       hand: [scroogeMcduckResourcefulMiser],
+// Describe("Scrooge Mcduck - Resourceful Miser", () => {
+//   Const items = [spaghettiDinner, emeraldCoil, theGlassSlipper, amethystCoil];
+//   It("PUT IT TO GOOD USE You may exert 4 items of yours to play this character for free.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: 0,
+//       Play: items,
+//       Hand: [scroogeMcduckResourcefulMiser],
 //     });
 //
-//     await testEngine.playCard(scroogeMcduckResourcefulMiser, {
-//       alternativeCosts: items,
+//     Await testEngine.playCard(scroogeMcduckResourcefulMiser, {
+//       AlternativeCosts: items,
 //     });
 //
-//     expect(testEngine.getCardModel(scroogeMcduckResourcefulMiser).zone).toBe(
+//     Expect(testEngine.getCardModel(scroogeMcduckResourcefulMiser).zone).toBe(
 //       "play",
 //     );
 //
-//     for (const item of items) {
-//       expect(testEngine.getCardModel(item).exerted).toBe(true);
+//     For (const item of items) {
+//       Expect(testEngine.getCardModel(item).exerted).toBe(true);
 //     }
 //   });
 //
-//   it("FORTUNE HUNTER When you play this character, look at the top 4 cards of your deck. You may reveal an item card and put it into your hand. Put the rest on the bottom of your deck in any order.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: scroogeMcduckResourcefulMiser.cost,
-//       hand: [scroogeMcduckResourcefulMiser],
-//       deck: items,
+//   It("FORTUNE HUNTER When you play this character, look at the top 4 cards of your deck. You may reveal an item card and put it into your hand. Put the rest on the bottom of your deck in any order.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: scroogeMcduckResourcefulMiser.cost,
+//       Hand: [scroogeMcduckResourcefulMiser],
+//       Deck: items,
 //     });
 //
-//     await testEngine.playCard(scroogeMcduckResourcefulMiser, {
-//       scry: {
-//         hand: [theGlassSlipper],
-//         bottom: [spaghettiDinner, emeraldCoil, amethystCoil],
+//     Await testEngine.playCard(scroogeMcduckResourcefulMiser, {
+//       Scry: {
+//         Hand: [theGlassSlipper],
+//         Bottom: [spaghettiDinner, emeraldCoil, amethystCoil],
 //       },
 //     });
 //
-//     expect(testEngine.getCardModel(theGlassSlipper).zone).toBe("hand");
+//     Expect(testEngine.getCardModel(theGlassSlipper).zone).toBe("hand");
 //   });
 // });
 //

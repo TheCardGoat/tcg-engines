@@ -1,28 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const goldenHarpEnchanterOfTheLand: CharacterCard = {
-  id: "1vy",
-  cardType: "character",
-  name: "Golden Harp",
-  version: "Enchanter of the Land",
-  fullName: "Golden Harp - Enchanter of the Land",
-  inkType: ["amber"],
-  set: "004",
-  text: "STOLEN AWAY At the end of your turn, if you didn't play a song this turn, banish this character.",
-  cost: 1,
-  strength: 1,
-  willpower: 4,
-  lore: 2,
-  cardNumber: 11,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "f4f450832cdc1e0cb2bf7a119554af0e031d4a98",
-  },
   abilities: [
     {
-      id: "1vy-1",
-      type: "action",
       effect: {
         type: "conditional",
         condition: {
@@ -40,8 +20,28 @@ export const goldenHarpEnchanterOfTheLand: CharacterCard = {
           },
         },
       },
+      id: "1vy-1",
       text: "STOLEN AWAY At the end of your turn, if you didn't play a song this turn, banish this character.",
+      type: "action",
     },
   ],
+  cardNumber: 11,
+  cardType: "character",
   classifications: ["Storyborn", "Ally"],
+  cost: 1,
+  externalIds: {
+    ravensburger: "f4f450832cdc1e0cb2bf7a119554af0e031d4a98",
+  },
+  fullName: "Golden Harp - Enchanter of the Land",
+  id: "1vy",
+  inkType: ["amber"],
+  inkable: true,
+  lore: 2,
+  missingTests: true,
+  name: "Golden Harp",
+  set: "004",
+  strength: 1,
+  text: "STOLEN AWAY At the end of your turn, if you didn't play a song this turn, banish this character.",
+  version: "Enchanter of the Land",
+  willpower: 4,
 };

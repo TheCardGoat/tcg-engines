@@ -1,39 +1,39 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
-// import { wheneverYouPlayACharacter } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// Import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
+// Import { wheneverYouPlayACharacter } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
 //
-// export const chemPurse: LorcanitoItemCard = {
-//   id: "xcs",
-//   name: "Chem Purse",
-//   characteristics: ["item"],
-//   text: "HERE'S THE BEST PART Whenever you play a character, if you used Shift to play them, they get +4 {S} this turn.",
-//   type: "item",
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 2,
-//   illustrator: "Jared Nickel",
-//   number: 119,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631428,
+// Export const chemPurse: LorcanitoItemCard = {
+//   Id: "xcs",
+//   Name: "Chem Purse",
+//   Characteristics: ["item"],
+//   Text: "HERE'S THE BEST PART Whenever you play a character, if you used Shift to play them, they get +4 {S} this turn.",
+//   Type: "item",
+//   Inkwell: true,
+//   Colors: ["emerald"],
+//   Cost: 2,
+//   Illustrator: "Jared Nickel",
+//   Number: 119,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631428,
 //   },
-//   rarity: "common",
-//   abilities: [
-//     wheneverYouPlayACharacter({
-//       name: "HERE'S THE BEST PART",
-//       text: "Whenever you play a character, if you used Shift to play them, they get +4 {S} this turn.",
-//       hasShifted: true,
-//       effects: [
+//   Rarity: "common",
+//   Abilities: [
+//     WheneverYouPlayACharacter({
+//       Name: "HERE'S THE BEST PART",
+//       Text: "Whenever you play a character, if you used Shift to play them, they get +4 {S} this turn.",
+//       HasShifted: true,
+//       Effects: [
 //         {
-//           type: "attribute",
-//           attribute: "strength",
-//           amount: 4,
-//           modifier: "add",
-//           duration: "turn",
-//           target: {
-//             type: "card",
-//             value: "all",
-//             filters: [{ filter: "source", value: "trigger" }],
+//           Type: "attribute",
+//           Attribute: "strength",
+//           Amount: 4,
+//           Modifier: "add",
+//           Duration: "turn",
+//           Target: {
+//             Type: "card",
+//             Value: "all",
+//             Filters: [{ filter: "source", value: "trigger" }],
 //           },
 //         },
 //       ],

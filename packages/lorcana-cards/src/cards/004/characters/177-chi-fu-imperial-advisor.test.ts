@@ -3,25 +3,25 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { chiFuImperialAdvisor } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { chiFuImperialAdvisor } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Chi-Fu - Imperial Advisor", () => {
-//   it.skip("**OVERLY CAUTIOUS** While this character has no damage, he gets +2 {L}.", () => {
-//     const testStore = new TestStore({
-//       inkwell: chiFuImperialAdvisor.cost,
-//       play: [chiFuImperialAdvisor],
+// Describe("Chi-Fu - Imperial Advisor", () => {
+//   It.skip("**OVERLY CAUTIOUS** While this character has no damage, he gets +2 {L}.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: chiFuImperialAdvisor.cost,
+//       Play: [chiFuImperialAdvisor],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       chiFuImperialAdvisor.id,
+//       ChiFuImperialAdvisor.id,
 //     );
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

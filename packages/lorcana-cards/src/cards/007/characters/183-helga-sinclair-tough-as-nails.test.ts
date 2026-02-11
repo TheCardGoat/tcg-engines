@@ -3,31 +3,31 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { helgaSinclairToughAsNails } from "@lorcanito/lorcana-engine/cards/007/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { helgaSinclairToughAsNails } from "@lorcanito/lorcana-engine/cards/007/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Helga Sinclair - Tough as Nails", () => {
-//   it.skip("Challenger +3 (While challenging, this character gets +3 {S}).", async () => {
-//     const testEngine = new TestEngine({
-//       play: [helgaSinclairToughAsNails],
+// Describe("Helga Sinclair - Tough as Nails", () => {
+//   It.skip("Challenger +3 (While challenging, this character gets +3 {S}).", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [helgaSinclairToughAsNails],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(helgaSinclairToughAsNails);
-//     expect(cardUnderTest.hasChallenger).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(helgaSinclairToughAsNails);
+//     Expect(cardUnderTest.hasChallenger).toBe(true);
 //   });
 //
-//   it.skip("QUICK REFLEXES During your turn, this character gains Evasive. (They can challenge characters with Evasive.)", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: helgaSinclairToughAsNails.cost,
-//       play: [helgaSinclairToughAsNails],
-//       hand: [helgaSinclairToughAsNails],
+//   It.skip("QUICK REFLEXES During your turn, this character gains Evasive. (They can challenge characters with Evasive.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: helgaSinclairToughAsNails.cost,
+//       Play: [helgaSinclairToughAsNails],
+//       Hand: [helgaSinclairToughAsNails],
 //     });
 //
-//     await testEngine.playCard(helgaSinclairToughAsNails);
+//     Await testEngine.playCard(helgaSinclairToughAsNails);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

@@ -39,10 +39,10 @@ function parseFromCst(
   logger.info("Parsed discard effect from CST", { amount });
 
   return {
-    type: "discard",
     amount,
-    target: "CONTROLLER",
     chosen: true,
+    target: "CONTROLLER",
+    type: "discard",
   };
 }
 
@@ -73,10 +73,10 @@ function parseFromText(text: string): DiscardEffect | null {
       },
     );
     return {
-      type: "discard",
       amount: 1,
-      target,
       chosen: true,
+      target,
+      type: "discard",
     };
   }
 
@@ -101,10 +101,10 @@ function parseFromText(text: string): DiscardEffect | null {
   logger.info("Parsed discard effect from text", { amount });
 
   return {
-    type: "discard",
     amount,
+    chosen: false,
     target: "CONTROLLER",
-    chosen: false, // Default to false, only "choose and discard" sets to true
+    type: "discard", // Default to false, only "choose and discard" sets to true
   };
 }
 
@@ -112,13 +112,13 @@ function parseFromText(text: string): DiscardEffect | null {
  * Discard effect parser implementation
  */
 export const discardEffectParser: EffectParser = {
-  pattern: /discard\s+(\d+)\s+cards?/i,
   description: "Parses discard card effects (e.g., 'discard 1 card')",
-
   parse: (input: CstNode | string): DiscardEffect | null => {
     if (typeof input === "string") {
       return parseFromText(input);
     }
     return parseFromCst(input as { NumberToken?: IToken[] } | null | undefined);
   },
+
+  pattern: /discard\s+(\d+)\s+cards?/i,
 };

@@ -1,20 +1,20 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
 export const mostEveryonesMadHere: ActionCard = {
-  id: "18w",
-  cardType: "action",
-  name: "Most Everyone's Mad Here",
-  inkType: ["ruby"],
-  franchise: "Alice in Wonderland",
-  set: "008",
-  text: "Gain lore equal to the damage on chosen character, then banish them.",
-  cost: 7,
+  abilities: [],
   cardNumber: 151,
-  inkable: false,
-  missingImplementation: true,
-  missingTests: true,
+  cardType: "action",
+  cost: 7,
   externalIds: {
     ravensburger: "a1d5d89821229e4e2c3b32b95243c59a1f985409",
   },
-  abilities: [],
+  franchise: "Alice in Wonderland",
+  id: "18w",
+  inkType: ["ruby"],
+  inkable: false,
+  missingImplementation: true,
+  missingTests: true,
+  name: "Most Everyone's Mad Here",
+  set: "008",
+  text: "Gain lore equal to the damage on chosen character, then banish them.",
 };

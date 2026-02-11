@@ -31,10 +31,10 @@ function convertToCharacterTarget(simpleTarget: {
 
   // Map card type to proper name
   const cardTypeMap: Record<string, string> = {
+    card: "card",
     character: "character",
     item: "item",
     location: "location",
-    card: "card",
   };
 
   const cardType = cardTypeMap[type.toLowerCase()] || type;
@@ -44,18 +44,18 @@ function convertToCharacterTarget(simpleTarget: {
     string,
     { selector: string; owner: string; count: number | "all" }
   > = {
-    chosen: { selector: "chosen", owner: "any", count: 1 },
-    "chosen opposing": { selector: "chosen", owner: "opponent", count: 1 },
-    this: { selector: "self", owner: "any", count: 1 },
-    your: { selector: "all", owner: "you", count: "all" },
-    opponent: { selector: "all", owner: "opponent", count: "all" },
-    "opponent's": { selector: "all", owner: "opponent", count: "all" },
-    opposing: { selector: "all", owner: "opponent", count: "all" },
-    another: { selector: "chosen", owner: "any", count: 1 },
-    an: { selector: "chosen", owner: "any", count: 1 },
-    each: { selector: "all", owner: "any", count: "all" },
-    all: { selector: "all", owner: "any", count: "all" },
-    other: { selector: "all", owner: "any", count: "all" },
+    all: { count: "all", owner: "any", selector: "all" },
+    an: { count: 1, owner: "any", selector: "chosen" },
+    another: { count: 1, owner: "any", selector: "chosen" },
+    chosen: { count: 1, owner: "any", selector: "chosen" },
+    "chosen opposing": { count: 1, owner: "opponent", selector: "chosen" },
+    each: { count: "all", owner: "any", selector: "all" },
+    opponent: { count: "all", owner: "opponent", selector: "all" },
+    "opponent's": { count: "all", owner: "opponent", selector: "all" },
+    opposing: { count: "all", owner: "opponent", selector: "all" },
+    other: { count: "all", owner: "any", selector: "all" },
+    this: { count: 1, owner: "any", selector: "self" },
+    your: { count: "all", owner: "you", selector: "all" },
   };
 
   const mapping = modifier
@@ -67,11 +67,11 @@ function convertToCharacterTarget(simpleTarget: {
   const { selector, owner, count } = mapping || modifierMap.chosen;
 
   return {
-    selector: selector as "chosen" | "all" | "self",
+    cardTypes: [cardType],
     count,
     owner: owner as "you" | "opponent" | "any",
+    selector: selector as "chosen" | "all" | "self",
     zones: ["play"],
-    cardTypes: [cardType],
   } as CharacterTarget;
 }
 
@@ -102,8 +102,8 @@ function parseFromText(text: string): Effect | null {
       logger.info("Parsed return from discard effect", { cardType });
 
       const effect: ReturnFromDiscardEffect = {
-        type: "return-from-discard",
         target: "CONTROLLER",
+        type: "return-from-discard",
       };
       // Only assign valid card types for ReturnFromDiscardEffect
       if (cardType) {
@@ -136,9 +136,9 @@ function parseFromText(text: string): Effect | null {
     logger.info("Parsed shuffle into deck effect", { target });
 
     const effect: ShuffleIntoDeckEffect = {
-      type: "shuffle-into-deck",
-      target,
       intoDeck: "owner",
+      target,
+      type: "shuffle-into-deck",
     };
     return effect;
   }
@@ -163,8 +163,8 @@ function parseFromText(text: string): Effect | null {
     logger.info("Parsed put on bottom effect", { target });
 
     const effect: PutOnBottomEffect = {
-      type: "put-on-bottom",
       target,
+      type: "put-on-bottom",
     };
     return effect;
   }
@@ -192,8 +192,8 @@ function parseFromText(text: string): Effect | null {
     logger.info("Parsed return to hand effect", { target });
 
     const effect: ReturnToHandEffect = {
-      type: "return-to-hand",
       target: target as CardTarget,
+      type: "return-to-hand",
     };
     return effect;
   }
@@ -206,10 +206,8 @@ function parseFromText(text: string): Effect | null {
  * Return effect parser implementation
  */
 export const returnEffectParser: EffectParser = {
-  pattern: /return.*?to\s+(?:hand|deck)|shuffle.*?into\s+deck/i,
   description:
     "Parses return effects (e.g., 'return to hand', 'shuffle into deck')",
-
   parse: (input: CstNode | string): Effect | null => {
     if (typeof input === "string") {
       return parseFromText(input);
@@ -218,4 +216,6 @@ export const returnEffectParser: EffectParser = {
     logger.warn("CST parsing not implemented for return effects");
     return null;
   },
+
+  pattern: /return.*?to\s+(?:hand|deck)|shuffle.*?into\s+deck/i,
 };

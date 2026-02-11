@@ -1,34 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const madHatterUnrulyEccentric: CharacterCard = {
-  id: "11o",
-  cardType: "character",
-  name: "Mad Hatter",
-  version: "Unruly Eccentric",
-  fullName: "Mad Hatter - Unruly Eccentric",
-  inkType: ["emerald", "ruby"],
-  franchise: "Alice in Wonderland",
-  set: "007",
-  text: "UNBIRTHDAY PRESENT Whenever a damaged character challenges another character, you may draw a card.",
-  cost: 6,
-  strength: 3,
-  willpower: 5,
-  lore: 2,
-  cardNumber: 94,
-  inkable: true,
-  externalIds: {
-    ravensburger: "87d0afe0cc27daae68ff3640462f927eefae05ef",
-  },
   abilities: [
     {
-      id: "11o-1",
-      type: "triggered",
-      name: "UNBIRTHDAY PRESENT",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -38,8 +12,34 @@ export const madHatterUnrulyEccentric: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "11o-1",
+      name: "UNBIRTHDAY PRESENT",
       text: "UNBIRTHDAY PRESENT Whenever a damaged character challenges another character, you may draw a card.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 94,
+  cardType: "character",
   classifications: ["Storyborn"],
+  cost: 6,
+  externalIds: {
+    ravensburger: "87d0afe0cc27daae68ff3640462f927eefae05ef",
+  },
+  franchise: "Alice in Wonderland",
+  fullName: "Mad Hatter - Unruly Eccentric",
+  id: "11o",
+  inkType: ["emerald", "ruby"],
+  inkable: true,
+  lore: 2,
+  name: "Mad Hatter",
+  set: "007",
+  strength: 3,
+  text: "UNBIRTHDAY PRESENT Whenever a damaged character challenges another character, you may draw a card.",
+  version: "Unruly Eccentric",
+  willpower: 5,
 };

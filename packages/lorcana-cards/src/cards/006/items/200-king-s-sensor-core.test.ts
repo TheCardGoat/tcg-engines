@@ -1,41 +1,41 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { describe, expect, it } from "@jest/globals";
-// import { goonsMaleficent } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { kingCandySovereignOfSugar } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { kingsSensorCore } from "@lorcanito/lorcana-engine/cards/006";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { goonsMaleficent } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { kingCandySovereignOfSugar } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { kingsSensorCore } from "@lorcanito/lorcana-engine/cards/006";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("King's Sensor Core - Item", () => {
-//   describe("**SYMBOL OF NOBILITY** At the start of your turn, if you have a Princess or Queen character in play, gain 1 lore.", () => {
-//     it("Should give resist to your Prince and King characters in play", () => {
-//       const testEngine = new TestEngine({
-//         play: [kingCandySovereignOfSugar, goonsMaleficent, kingsSensorCore],
+// Describe("King's Sensor Core - Item", () => {
+//   Describe("**SYMBOL OF NOBILITY** At the start of your turn, if you have a Princess or Queen character in play, gain 1 lore.", () => {
+//     It("Should give resist to your Prince and King characters in play", () => {
+//       Const testEngine = new TestEngine({
+//         Play: [kingCandySovereignOfSugar, goonsMaleficent, kingsSensorCore],
 //       });
-//       const cardThatShouldHaveResist = testEngine.getCardModel(
-//         kingCandySovereignOfSugar,
+//       Const cardThatShouldHaveResist = testEngine.getCardModel(
+//         KingCandySovereignOfSugar,
 //       );
-//       const cardThatShouldNotHaveResist =
-//         testEngine.getCardModel(goonsMaleficent);
+//       Const cardThatShouldNotHaveResist =
+//         TestEngine.getCardModel(goonsMaleficent);
 //
-//       expect(cardThatShouldHaveResist.hasResist).toEqual(true);
-//       expect(cardThatShouldNotHaveResist.hasResist).toEqual(false);
+//       Expect(cardThatShouldHaveResist.hasResist).toEqual(true);
+//       Expect(cardThatShouldNotHaveResist.hasResist).toEqual(false);
 //     });
 //   });
-//   it("**ROYAL SEARCH** {E}, 2 {I} – Reveal the top card of your deck. If it’s a Prince or King character card, you may put it into your hand. Otherwise, put it on the top of your deck.", () => {
-//     const testEngine = new TestEngine({
-//       inkwell: 2,
-//       play: [kingsSensorCore],
-//       deck: [kingCandySovereignOfSugar],
+//   It("**ROYAL SEARCH** {E}, 2 {I} – Reveal the top card of your deck. If it’s a Prince or King character card, you may put it into your hand. Otherwise, put it on the top of your deck.", () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: 2,
+//       Play: [kingsSensorCore],
+//       Deck: [kingCandySovereignOfSugar],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(kingsSensorCore);
-//     const topCard = testEngine.getCardModel(kingCandySovereignOfSugar);
+//     Const cardUnderTest = testEngine.getCardModel(kingsSensorCore);
+//     Const topCard = testEngine.getCardModel(kingCandySovereignOfSugar);
 //
-//     cardUnderTest.activate();
-//     testEngine.resolveTopOfStack({ scry: { hand: [topCard] } });
+//     CardUnderTest.activate();
+//     TestEngine.resolveTopOfStack({ scry: { hand: [topCard] } });
 //
-//     expect(cardUnderTest.meta.exerted).toBe(true);
-//     expect(topCard.zone).toBe("hand");
+//     Expect(cardUnderTest.meta.exerted).toBe(true);
+//     Expect(topCard.zone).toBe("hand");
 //   });
 // });
 //

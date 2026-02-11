@@ -3,40 +3,40 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { tipoGrowingSon } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { liShangNewlyPromoted } from "@lorcanito/lorcana-engine/cards/007/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { tipoGrowingSon } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { liShangNewlyPromoted } from "@lorcanito/lorcana-engine/cards/007/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Li Shang - Newly Promoted", () => {
-//   it("I WON'T LET YOU DOWN This character can challenge ready characters.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Li Shang - Newly Promoted", () => {
+//   It("I WON'T LET YOU DOWN This character can challenge ready characters.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         play: [liShangNewlyPromoted],
+//         Play: [liShangNewlyPromoted],
 //       },
 //       {
-//         play: [tipoGrowingSon],
+//         Play: [tipoGrowingSon],
 //       },
 //     );
 //
-//     const cardUnderTest = testEngine.getCardModel(liShangNewlyPromoted);
-//     const target = testEngine.getCardModel(tipoGrowingSon);
+//     Const cardUnderTest = testEngine.getCardModel(liShangNewlyPromoted);
+//     Const target = testEngine.getCardModel(tipoGrowingSon);
 //
-//     target.updateCardMeta({ exerted: true });
-//     cardUnderTest.challenge(target);
+//     Target.updateCardMeta({ exerted: true });
+//     CardUnderTest.challenge(target);
 //
-//     expect(testEngine.getCardZone(target)).toBe("discard");
+//     Expect(testEngine.getCardZone(target)).toBe("discard");
 //   });
 //
-//   it("BIG RESPONSIBILITY While this character is damaged, he gets +2 {S}.", async () => {
-//     const testEngine = new TestEngine({
-//       play: [liShangNewlyPromoted],
+//   It("BIG RESPONSIBILITY While this character is damaged, he gets +2 {S}.", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [liShangNewlyPromoted],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(liShangNewlyPromoted);
-//     expect(cardUnderTest.strength).toBe(2);
-//     await testEngine.setCardDamage(cardUnderTest, 1);
-//     expect(cardUnderTest.strength).toBe(4);
+//     Const cardUnderTest = testEngine.getCardModel(liShangNewlyPromoted);
+//     Expect(cardUnderTest.strength).toBe(2);
+//     Await testEngine.setCardDamage(cardUnderTest, 1);
+//     Expect(cardUnderTest.strength).toBe(4);
 //   });
 // });
 //

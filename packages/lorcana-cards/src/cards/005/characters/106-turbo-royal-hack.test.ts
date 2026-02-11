@@ -3,35 +3,35 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { turboRoyalHack } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { turboRoyalHack } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Turbo - Royal Hack", () => {
-//   it.skip("", () => {
-//     const testStore = new TestStore({
-//       inkwell: turboRoyalHack.cost,
-//       play: [turboRoyalHack],
+// Describe("Turbo - Royal Hack", () => {
+//   It.skip("", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: turboRoyalHack.cost,
+//       Play: [turboRoyalHack],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(turboRoyalHack);
+//     Const cardUnderTest = testStore.getCard(turboRoyalHack);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 //
-//   it.skip("**GAME JUMP** This character also counts as being named King Candy for **Shift**.", () => {
-//     const testStore = new TestStore({
-//       inkwell: turboRoyalHack.cost,
-//       play: [turboRoyalHack],
+//   It.skip("**GAME JUMP** This character also counts as being named King Candy for **Shift**.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: turboRoyalHack.cost,
+//       Play: [turboRoyalHack],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(turboRoyalHack);
+//     Const cardUnderTest = testStore.getCard(turboRoyalHack);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

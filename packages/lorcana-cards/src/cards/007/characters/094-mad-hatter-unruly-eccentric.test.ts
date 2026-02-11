@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { madHatterUnrulyEccentric } from "@lorcanito/lorcana-engine/cards/007/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { madHatterUnrulyEccentric } from "@lorcanito/lorcana-engine/cards/007/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Mad Hatter - Unruly Eccentric", () => {
-//   it.skip("UNBIRTHDAY PRESENT Whenever a damaged character challenges another character, you may draw a card.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: madHatterUnrulyEccentric.cost,
-//       play: [madHatterUnrulyEccentric],
-//       hand: [madHatterUnrulyEccentric],
+// Describe("Mad Hatter - Unruly Eccentric", () => {
+//   It.skip("UNBIRTHDAY PRESENT Whenever a damaged character challenges another character, you may draw a card.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: madHatterUnrulyEccentric.cost,
+//       Play: [madHatterUnrulyEccentric],
+//       Hand: [madHatterUnrulyEccentric],
 //     });
 //
-//     await testEngine.playCard(madHatterUnrulyEccentric);
+//     Await testEngine.playCard(madHatterUnrulyEccentric);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

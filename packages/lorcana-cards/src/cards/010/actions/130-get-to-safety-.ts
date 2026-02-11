@@ -1,74 +1,74 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { thisCard } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+// Import { thisCard } from "@lorcanito/lorcana-engine/abilities/targets";
 //
-// export const getToSafety: LorcanitoActionCard = {
-//   id: "e4i",
-//   name: "Get to Safety!",
-//   characteristics: ["action"],
-//   text: "Play a location with cost 3 or less from your discard for free. Then, if you have a location named Sleepy Hollow in play, draw a card.",
-//   type: "action",
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 1,
-//   illustrator: "Sebastian Pinson",
-//   number: 130,
-//   set: "010",
-//   externalIds: {
-//     tcgPlayer: 660023,
+// Export const getToSafety: LorcanitoActionCard = {
+//   Id: "e4i",
+//   Name: "Get to Safety!",
+//   Characteristics: ["action"],
+//   Text: "Play a location with cost 3 or less from your discard for free. Then, if you have a location named Sleepy Hollow in play, draw a card.",
+//   Type: "action",
+//   Inkwell: true,
+//   Colors: ["ruby"],
+//   Cost: 1,
+//   Illustrator: "Sebastian Pinson",
+//   Number: 130,
+//   Set: "010",
+//   ExternalIds: {
+//     TcgPlayer: 660023,
 //   },
-//   rarity: "rare",
-//   abilities: [
+//   Rarity: "rare",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       resolveEffectsIndividually: true,
-//       dependentEffects: false,
-//       text: "Play a location with cost 3 or less from your discard for free. Then, if you have a location named Sleepy Hollow in play, draw a card.",
-//       effects: [
+//       Type: "resolution",
+//       ResolveEffectsIndividually: true,
+//       DependentEffects: false,
+//       Text: "Play a location with cost 3 or less from your discard for free. Then, if you have a location named Sleepy Hollow in play, draw a card.",
+//       Effects: [
 //         {
-//           type: "play",
-//           forFree: true,
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
+//           Type: "play",
+//           ForFree: true,
+//           Target: {
+//             Type: "card",
+//             Value: 1,
+//             Filters: [
 //               { filter: "owner", value: "self" },
 //               { filter: "zone", value: "discard" },
 //               { filter: "type", value: "location" },
 //               {
-//                 filter: "attribute",
-//                 value: "cost",
-//                 comparison: { operator: "lte", value: 3 },
+//                 Filter: "attribute",
+//                 Value: "cost",
+//                 Comparison: { operator: "lte", value: 3 },
 //               },
 //             ],
 //           },
-//           afterEffect: [
+//           AfterEffect: [
 //             {
-//               type: "create-layer-based-on-target",
-//               responder: "self",
-//               target: thisCard,
-//               effects: [
+//               Type: "create-layer-based-on-target",
+//               Responder: "self",
+//               Target: thisCard,
+//               Effects: [
 //                 {
-//                   type: "draw",
-//                   amount: 1,
-//                   target: {
-//                     type: "player",
-//                     value: "self",
+//                   Type: "draw",
+//                   Amount: 1,
+//                   Target: {
+//                     Type: "player",
+//                     Value: "self",
 //                   },
-//                   conditions: [
+//                   Conditions: [
 //                     {
-//                       type: "filter",
-//                       comparison: { operator: "gte", value: 1 },
-//                       filters: [
+//                       Type: "filter",
+//                       Comparison: { operator: "gte", value: 1 },
+//                       Filters: [
 //                         { filter: "owner", value: "self" },
 //                         { filter: "zone", value: "play" },
 //                         { filter: "type", value: "location" },
 //                         {
-//                           filter: "attribute",
-//                           value: "name",
-//                           comparison: {
-//                             operator: "eq",
-//                             value: "Sleepy Hollow",
+//                           Filter: "attribute",
+//                           Value: "name",
+//                           Comparison: {
+//                             Operator: "eq",
+//                             Value: "Sleepy Hollow",
 //                           },
 //                         },
 //                       ],

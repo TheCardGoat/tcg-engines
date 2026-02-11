@@ -1,28 +1,28 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { wardAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { wardAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
 //
-// export const princePhillipWardenOfTheWoods: LorcanitoCharacterCard = {
-//   id: "xq2",
-//   reprints: ["l8f"],
-//   missingTestCase: true,
-//   name: "Prince Phillip",
-//   title: "Warden of the Woods",
-//   characteristics: ["hero", "dreamborn", "prince"],
-//   text: "**SHINING BEACON** Your other Hero characters gain **Ward**. _(Opponents can't chose them except to challenge.)_",
-//   type: "character",
-//   abilities: [
+// Export const princePhillipWardenOfTheWoods: LorcanitoCharacterCard = {
+//   Id: "xq2",
+//   Reprints: ["l8f"],
+//   MissingTestCase: true,
+//   Name: "Prince Phillip",
+//   Title: "Warden of the Woods",
+//   Characteristics: ["hero", "dreamborn", "prince"],
+//   Text: "**SHINING BEACON** Your other Hero characters gain **Ward**. _(Opponents can't chose them except to challenge.)_",
+//   Type: "character",
+//   Abilities: [
 //     {
-//       type: "static",
-//       ability: "gain-ability",
-//       name: "Shining Beacon",
-//       text: "Your other Hero characters gain **Ward**. _(Opponents can't chose them except to challenge.)_",
-//       gainedAbility: wardAbility,
-//       target: {
-//         type: "card",
-//         value: "all",
-//         excludeSelf: true,
-//         filters: [
+//       Type: "static",
+//       Ability: "gain-ability",
+//       Name: "Shining Beacon",
+//       Text: "Your other Hero characters gain **Ward**. _(Opponents can't chose them except to challenge.)_",
+//       GainedAbility: wardAbility,
+//       Target: {
+//         Type: "card",
+//         Value: "all",
+//         ExcludeSelf: true,
+//         Filters: [
 //           { filter: "zone", value: "play" },
 //           { filter: "owner", value: "self" },
 //           { filter: "characteristics", value: ["hero"] },
@@ -30,18 +30,18 @@
 //       },
 //     },
 //   ],
-//   flavour: "He stands ready to protect his friends from any threat.",
-//   colors: ["emerald"],
-//   cost: 4,
-//   strength: 3,
-//   willpower: 4,
-//   lore: 2,
-//   illustrator: "Mike Parker",
-//   number: 88,
-//   set: "URR",
-//   externalIds: {
-//     tcgPlayer: 548550,
+//   Flavour: "He stands ready to protect his friends from any threat.",
+//   Colors: ["emerald"],
+//   Cost: 4,
+//   Strength: 3,
+//   Willpower: 4,
+//   Lore: 2,
+//   Illustrator: "Mike Parker",
+//   Number: 88,
+//   Set: "URR",
+//   ExternalIds: {
+//     TcgPlayer: 548550,
 //   },
-//   rarity: "rare",
+//   Rarity: "rare",
 // };
 //

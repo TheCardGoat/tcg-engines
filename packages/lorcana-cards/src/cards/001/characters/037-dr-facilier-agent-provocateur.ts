@@ -1,29 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const drFacilierAgentProvocateur: CharacterCard = {
-  id: "pyt",
-  cardType: "character",
-  name: "Dr. Facilier",
-  version: "Agent Provocateur",
-  fullName: "Dr. Facilier - Agent Provocateur",
-  inkType: ["amethyst"],
-  franchise: "Disney",
-  set: "001",
-  text: "**Shift** 5 _(You may pay 5 {I} to play this on top of one of your characters named Dr. Facilier.)_\n\n**INTO THE SHADOWS** Whenever one of your other characters is banished in a challenge, you may return that card to your hand.",
-  cost: 7,
-  strength: 4,
-  willpower: 5,
-  lore: 3,
-  cardNumber: 37,
-  inkable: true,
-  externalIds: {
-    ravensburger: "",
-  },
   abilities: [
     {
-      type: "action",
-      id: "c3l-1",
-      text: "**SLEIGHT OF HAND** When you play this character, you may return target character to their player's hand.",
       effect: {
         type: "optional",
         effect: {
@@ -38,59 +17,80 @@ export const drFacilierAgentProvocateur: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "c3l-1",
+      text: "**SLEIGHT OF HAND** When you play this character, you may return target character to their player's hand.",
+      type: "action",
     },
   ],
+  cardNumber: 37,
+  cardType: "character",
   classifications: ["Floodborn", "Sorcerer", "Villain"],
+  cost: 7,
+  externalIds: {
+    ravensburger: "",
+  },
+  franchise: "Disney",
+  fullName: "Dr. Facilier - Agent Provocateur",
+  id: "pyt",
+  inkType: ["amethyst"],
+  inkable: true,
+  lore: 3,
+  name: "Dr. Facilier",
+  set: "001",
+  strength: 4,
+  text: "**Shift** 5 _(You may pay 5 {I} to play this on top of one of your characters named Dr. Facilier.)_\n\n**INTO THE SHADOWS** Whenever one of your other characters is banished in a challenge, you may return that card to your hand.",
+  version: "Agent Provocateur",
+  willpower: 5,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { shiftAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { wheneverOneOfYourCharactersIsBanishedInAChallenge } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import { shiftAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import { wheneverOneOfYourCharactersIsBanishedInAChallenge } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const drFacilierAgentProvocateur: LorcanitoCharacterCard = {
-//   id: "pyt",
+// Export const drFacilierAgentProvocateur: LorcanitoCharacterCard = {
+//   Id: "pyt",
 //
-//   name: "Dr. Facilier",
-//   title: "Agent Provocateur",
-//   characteristics: ["floodborn", "sorcerer", "villain"],
-//   text: "**Shift** 5 _(You may pay 5 {I} to play this on top of one of your characters named Dr. Facilier.)_\n\n**INTO THE SHADOWS** Whenever one of your other characters is banished in a challenge, you may return that card to your hand.",
-//   type: "character",
-//   abilities: [
-//     wheneverOneOfYourCharactersIsBanishedInAChallenge({
-//       name: "Into the Shadows",
-//       text: "Whenever one of your other characters is banished in a challenge, you may return that card to your hand.",
-//       optional: true,
-//       triggerFilter: [
+//   Name: "Dr. Facilier",
+//   Title: "Agent Provocateur",
+//   Characteristics: ["floodborn", "sorcerer", "villain"],
+//   Text: "**Shift** 5 _(You may pay 5 {I} to play this on top of one of your characters named Dr. Facilier.)_\n\n**INTO THE SHADOWS** Whenever one of your other characters is banished in a challenge, you may return that card to your hand.",
+//   Type: "character",
+//   Abilities: [
+//     WheneverOneOfYourCharactersIsBanishedInAChallenge({
+//       Name: "Into the Shadows",
+//       Text: "Whenever one of your other characters is banished in a challenge, you may return that card to your hand.",
+//       Optional: true,
+//       TriggerFilter: [
 //         { filter: "owner", value: "self" },
 //         { filter: "type", value: "character" },
 //         { filter: "source", value: "other" },
 //       ],
-//       effects: [
+//       Effects: [
 //         {
-//           type: "move",
-//           to: "hand",
-//           target: {
-//             type: "card",
-//             value: "all",
-//             filters: [{ filter: "source", value: "trigger" }],
+//           Type: "move",
+//           To: "hand",
+//           Target: {
+//             Type: "card",
+//             Value: "all",
+//             Filters: [{ filter: "source", value: "trigger" }],
 //           },
 //         },
 //       ],
 //     }),
-//     shiftAbility(5, "Dr. Facilier"),
+//     ShiftAbility(5, "Dr. Facilier"),
 //   ],
-//   colors: ["amethyst"],
-//   cost: 7,
-//   strength: 4,
-//   willpower: 5,
-//   lore: 3,
-//   illustrator: "Isaiah Mesq",
-//   number: 37,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 508723,
+//   Colors: ["amethyst"],
+//   Cost: 7,
+//   Strength: 4,
+//   Willpower: 5,
+//   Lore: 3,
+//   Illustrator: "Isaiah Mesq",
+//   Number: 37,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 508723,
 //   },
-//   rarity: "rare",
+//   Rarity: "rare",
 // };
 //

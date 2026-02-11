@@ -1,44 +1,44 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 //
-// export const plutoRescueDog: LorcanitoCharacterCard = {
-//   id: "rrk",
-//   reprints: ["baa"],
-//   missingTestCase: true,
-//   name: "Pluto",
-//   title: "Rescue Dog",
-//   characteristics: ["storyborn", "ally"],
-//   text: "**TO THE RESCUE** When you play this character, you may remove up to 3 damage from chosen character.",
-//   type: "character",
-//   abilities: [
+// Export const plutoRescueDog: LorcanitoCharacterCard = {
+//   Id: "rrk",
+//   Reprints: ["baa"],
+//   MissingTestCase: true,
+//   Name: "Pluto",
+//   Title: "Rescue Dog",
+//   Characteristics: ["storyborn", "ally"],
+//   Text: "**TO THE RESCUE** When you play this character, you may remove up to 3 damage from chosen character.",
+//   Type: "character",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       name: "TO THE RESCUE",
-//       text: "When you play this character, you may remove up to 3 damage from chosen character.",
-//       effects: [
+//       Type: "resolution",
+//       Name: "TO THE RESCUE",
+//       Text: "When you play this character, you may remove up to 3 damage from chosen character.",
+//       Effects: [
 //         {
-//           type: "heal",
-//           amount: 3,
-//           upTo: true,
-//           target: chosenCharacter,
+//           Type: "heal",
+//           Amount: 3,
+//           UpTo: true,
+//           Target: chosenCharacter,
 //         },
 //       ],
 //     },
 //   ],
-//   flavour: "When you need help, it's his face you want to see first.",
-//   inkwell: true,
-//   colors: ["amber"],
-//   cost: 5,
-//   strength: 4,
-//   willpower: 5,
-//   lore: 2,
-//   illustrator: "Kenneth Anderson",
-//   number: 20,
-//   set: "URR",
-//   externalIds: {
-//     tcgPlayer: 550559,
+//   Flavour: "When you need help, it's his face you want to see first.",
+//   Inkwell: true,
+//   Colors: ["amber"],
+//   Cost: 5,
+//   Strength: 4,
+//   Willpower: 5,
+//   Lore: 2,
+//   Illustrator: "Kenneth Anderson",
+//   Number: 20,
+//   Set: "URR",
+//   ExternalIds: {
+//     TcgPlayer: 550559,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

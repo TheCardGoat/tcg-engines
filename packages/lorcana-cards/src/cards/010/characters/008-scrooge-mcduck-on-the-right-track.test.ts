@@ -3,69 +3,69 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { scroogeMcduckOnTheRightTrack } from "@lorcanito/lorcana-engine/cards/010/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { scroogeMcduckOnTheRightTrack } from "@lorcanito/lorcana-engine/cards/010/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe.skip("Scrooge McDuck - On the Right Track", () => {
-//   describe.skip("FABULOUS WEALTH", () => {
-//     it("should have FABULOUS WEALTH ability defined", () => {
-//       const ability = scroogeMcduckOnTheRightTrack.abilities?.find(
+// Describe.skip("Scrooge McDuck - On the Right Track", () => {
+//   Describe.skip("FABULOUS WEALTH", () => {
+//     It("should have FABULOUS WEALTH ability defined", () => {
+//       Const ability = scroogeMcduckOnTheRightTrack.abilities?.find(
 //         (ability) => "name" in ability && ability.name === "FABULOUS WEALTH",
 //       );
-//       expect(ability).toBeDefined();
-//       if (ability && "type" in ability) {
-//         expect(ability.type).toBe("resolution");
+//       Expect(ability).toBeDefined();
+//       If (ability && "type" in ability) {
+//         Expect(ability.type).toBe("resolution");
 //       }
 //     });
 //
-//     it("When you play this character, chosen character with a card under them gets +1 this turn", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: scroogeMcduckOnTheRightTrack.cost,
-//         hand: [scroogeMcduckOnTheRightTrack],
+//     It("When you play this character, chosen character with a card under them gets +1 this turn", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: scroogeMcduckOnTheRightTrack.cost,
+//         Hand: [scroogeMcduckOnTheRightTrack],
 //       });
 //
-//       await testEngine.playCard(scroogeMcduckOnTheRightTrack);
+//       Await testEngine.playCard(scroogeMcduckOnTheRightTrack);
 //
 //       // Should trigger the optional ability
-//       await testEngine.acceptOptionalLayer();
-//       await testEngine.resolveTopOfStack({});
+//       Await testEngine.acceptOptionalLayer();
+//       Await testEngine.resolveTopOfStack({});
 //     });
 //   });
 //
-//   describe("Stats and basic properties", () => {
-//     it("should have correct stats", () => {
-//       const testEngine = new TestEngine({
-//         play: [scroogeMcduckOnTheRightTrack],
+//   Describe("Stats and basic properties", () => {
+//     It("should have correct stats", () => {
+//       Const testEngine = new TestEngine({
+//         Play: [scroogeMcduckOnTheRightTrack],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(
-//         scroogeMcduckOnTheRightTrack,
+//       Const cardUnderTest = testEngine.getCardModel(
+//         ScroogeMcduckOnTheRightTrack,
 //       );
 //
-//       expect(cardUnderTest.strength).toBe(4);
-//       expect(cardUnderTest.willpower).toBe(3);
-//       expect(cardUnderTest.lore).toBe(1);
-//       expect(cardUnderTest.cost).toBe(3);
+//       Expect(cardUnderTest.strength).toBe(4);
+//       Expect(cardUnderTest.willpower).toBe(3);
+//       Expect(cardUnderTest.lore).toBe(1);
+//       Expect(cardUnderTest.cost).toBe(3);
 //     });
 //
-//     it("should be inkwell card", () => {
-//       expect(scroogeMcduckOnTheRightTrack.inkwell).toBe(true);
+//     It("should be inkwell card", () => {
+//       Expect(scroogeMcduckOnTheRightTrack.inkwell).toBe(true);
 //     });
 //
-//     it("should have correct characteristics", () => {
-//       expect(scroogeMcduckOnTheRightTrack.characteristics).toEqual([
+//     It("should have correct characteristics", () => {
+//       Expect(scroogeMcduckOnTheRightTrack.characteristics).toEqual([
 //         "storyborn",
 //         "hero",
 //       ]);
 //     });
 //
-//     it("should be amber color", () => {
-//       expect(scroogeMcduckOnTheRightTrack.colors).toEqual(["amber"]);
+//     It("should be amber color", () => {
+//       Expect(scroogeMcduckOnTheRightTrack.colors).toEqual(["amber"]);
 //     });
 //
-//     it("should be uncommon rarity", () => {
-//       expect(scroogeMcduckOnTheRightTrack.rarity).toBe("uncommon");
+//     It("should be uncommon rarity", () => {
+//       Expect(scroogeMcduckOnTheRightTrack.rarity).toBe("uncommon");
 //     });
 //   });
 // });

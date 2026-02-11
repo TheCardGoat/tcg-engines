@@ -16,8 +16,8 @@ import {
   RESIST_PATTERN,
   SHIFT_PATTERN,
   SIMPLE_KEYWORD_PATTERN,
-  SING_TOGETHER_PATTERN,
   SINGER_PATTERN,
+  SING_TOGETHER_PATTERN,
 } from "./patterns/keywords";
 
 type SimpleKeywordType =
@@ -72,8 +72,8 @@ export function parseKeywordAbility(text: string): KeywordAbility | null {
   if (simpleMatch) {
     logger.info("Parsed simple keyword", { keyword: simpleMatch[1] });
     return {
-      type: "keyword",
       keyword: simpleMatch[1] as SimpleKeywordType,
+      type: "keyword",
     };
   }
 
@@ -90,12 +90,12 @@ export function parseKeywordAbility(text: string): KeywordAbility | null {
       }
     }
     const condition = challengerMatch[2]?.trim();
-    logger.info("Parsed Challenger keyword", { value, condition });
+    logger.info("Parsed Challenger keyword", { condition, value });
     return {
-      type: "keyword",
-      keyword: "Challenger",
-      value,
       condition: condition || undefined,
+      keyword: "Challenger",
+      type: "keyword",
+      value,
     };
   }
 
@@ -112,12 +112,12 @@ export function parseKeywordAbility(text: string): KeywordAbility | null {
       }
     }
     const condition = resistMatch[2]?.trim();
-    logger.info("Parsed Resist keyword", { value, condition });
+    logger.info("Parsed Resist keyword", { condition, value });
     return {
-      type: "keyword",
-      keyword: "Resist",
-      value,
       condition: condition || undefined,
+      keyword: "Resist",
+      type: "keyword",
+      value,
     };
   }
 
@@ -135,8 +135,8 @@ export function parseKeywordAbility(text: string): KeywordAbility | null {
     }
     logger.info("Parsed Singer keyword", { value });
     return {
-      type: "keyword",
       keyword: "Singer",
+      type: "keyword",
       value,
     };
   }
@@ -155,8 +155,8 @@ export function parseKeywordAbility(text: string): KeywordAbility | null {
     }
     logger.info("Parsed Sing Together keyword", { value });
     return {
-      type: "keyword",
       keyword: "SingTogether",
+      type: "keyword",
       value,
     };
   }
@@ -175,8 +175,8 @@ export function parseKeywordAbility(text: string): KeywordAbility | null {
     }
     logger.info("Parsed Boost keyword", { value });
     return {
-      type: "keyword",
       keyword: "Boost",
+      type: "keyword",
       value,
     };
   }
@@ -192,9 +192,9 @@ export function parseKeywordAbility(text: string): KeywordAbility | null {
     logger.info("Parsed Shift keyword", { keywordType, value });
     // Normalize all Shift variants to just "Shift" with cost property
     return {
-      type: "keyword",
-      keyword: "Shift",
       cost: { ink: value },
+      keyword: "Shift",
+      type: "keyword",
     };
   }
 

@@ -1,52 +1,52 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const teKaTheBurningOne: CharacterCard = {
-  id: "cs8",
-  cardType: "character",
-  name: "Te Ka",
-  version: "The Burning One",
-  fullName: "Te Ka - The Burning One",
-  inkType: ["ruby"],
-  franchise: "Disney",
-  set: "001",
-  text: "**Reckless** _(This character can",
-  cost: 6,
-  strength: 8,
-  willpower: 6,
-  lore: 0,
+  abilities: [],
   cardNumber: 126,
-  inkable: true,
+  cardType: "character",
+  classifications: ["Storyborn", "Villain", "Deity"],
+  cost: 6,
   externalIds: {
     ravensburger: "",
   },
-  abilities: [],
-  classifications: ["Storyborn", "Villain", "Deity"],
+  franchise: "Disney",
+  fullName: "Te Ka - The Burning One",
+  id: "cs8",
+  inkType: ["ruby"],
+  inkable: true,
+  lore: 0,
+  name: "Te Ka",
+  set: "001",
+  strength: 8,
+  text: "**Reckless** _(This character can",
+  version: "The Burning One",
+  willpower: 6,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { recklessAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import { recklessAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const teKaTheBurningOne: LorcanitoCharacterCard = {
-//   id: "cs8",
-//   name: "Te Ka",
-//   title: "The Burning One",
-//   characteristics: ["storyborn", "villain", "deity"],
-//   text: "**Reckless** _(This character can't quest and must challenge each turn if able.)_",
-//   type: "character",
-//   abilities: [recklessAbility],
-//   flavour: "She burns for that which was stolen from her.",
-//   colors: ["ruby"],
-//   cost: 6,
-//   strength: 8,
-//   willpower: 6,
-//   lore: 0,
-//   illustrator: "Kamil Murzyn",
-//   number: 126,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 508803,
+// Export const teKaTheBurningOne: LorcanitoCharacterCard = {
+//   Id: "cs8",
+//   Name: "Te Ka",
+//   Title: "The Burning One",
+//   Characteristics: ["storyborn", "villain", "deity"],
+//   Text: "**Reckless** _(This character can't quest and must challenge each turn if able.)_",
+//   Type: "character",
+//   Abilities: [recklessAbility],
+//   Flavour: "She burns for that which was stolen from her.",
+//   Colors: ["ruby"],
+//   Cost: 6,
+//   Strength: 8,
+//   Willpower: 6,
+//   Lore: 0,
+//   Illustrator: "Kamil Murzyn",
+//   Number: 126,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 508803,
 //   },
-//   rarity: "super_rare",
+//   Rarity: "super_rare",
 // };
 //

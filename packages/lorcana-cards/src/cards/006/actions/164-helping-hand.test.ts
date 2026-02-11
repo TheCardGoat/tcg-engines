@@ -3,23 +3,23 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { mickeyBraveLittleTailor } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { helpingHand } from "@lorcanito/lorcana-engine/cards/006/actions/actions";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { mickeyBraveLittleTailor } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { helpingHand } from "@lorcanito/lorcana-engine/cards/006/actions/actions";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Helping Hand", () => {
-//   it("Chosen character gains Support this turn. Draw a card.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: helpingHand.cost,
-//       play: [mickeyBraveLittleTailor],
-//       hand: [helpingHand],
+// Describe("Helping Hand", () => {
+//   It("Chosen character gains Support this turn. Draw a card.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: helpingHand.cost,
+//       Play: [mickeyBraveLittleTailor],
+//       Hand: [helpingHand],
 //     });
 //
-//     await testEngine.playCard(helpingHand);
-//     await testEngine.resolveTopOfStack({ targets: [mickeyBraveLittleTailor] });
+//     Await testEngine.playCard(helpingHand);
+//     Await testEngine.resolveTopOfStack({ targets: [mickeyBraveLittleTailor] });
 //
-//     expect(testEngine.getZonesCardCount().hand).toBe(1);
+//     Expect(testEngine.getZonesCardCount().hand).toBe(1);
 //   });
 // });
 //

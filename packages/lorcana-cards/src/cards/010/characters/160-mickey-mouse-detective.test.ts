@@ -3,90 +3,90 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { mickeyMouseDetective } from "@lorcanito/lorcana-engine/cards/010/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { mickeyMouseDetective } from "@lorcanito/lorcana-engine/cards/010/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Mickey Mouse - Detective", () => {
-//   describe("GET A CLUE", () => {
-//     it("should have the ability defined with correct structure", () => {
-//       const ability = mickeyMouseDetective.abilities?.find(
+// Describe("Mickey Mouse - Detective", () => {
+//   Describe("GET A CLUE", () => {
+//     It("should have the ability defined with correct structure", () => {
+//       Const ability = mickeyMouseDetective.abilities?.find(
 //         (a) => "name" in a && a.name === "GET A CLUE",
 //       );
 //
-//       expect(ability).toBeDefined();
+//       Expect(ability).toBeDefined();
 //
-//       if (ability && "effects" in ability && Array.isArray(ability.effects)) {
-//         const moveEffect = ability.effects[0] as any;
-//         expect(moveEffect.type).toBe("move");
-//         expect(moveEffect.to).toBe("inkwell");
-//         expect(moveEffect.exerted).toBe(true);
+//       If (ability && "effects" in ability && Array.isArray(ability.effects)) {
+//         Const moveEffect = ability.effects[0] as any;
+//         Expect(moveEffect.type).toBe("move");
+//         Expect(moveEffect.to).toBe("inkwell");
+//         Expect(moveEffect.exerted).toBe(true);
 //       }
 //     });
 //
-//     it("should be optional ability", () => {
-//       const ability = mickeyMouseDetective.abilities?.find(
+//     It("should be optional ability", () => {
+//       Const ability = mickeyMouseDetective.abilities?.find(
 //         (a) => "name" in a && a.name === "GET A CLUE",
 //       );
 //
-//       expect(ability).toBeDefined();
+//       Expect(ability).toBeDefined();
 //
-//       if (ability && "optional" in ability) {
-//         expect(ability.optional).toBe(true);
+//       If (ability && "optional" in ability) {
+//         Expect(ability.optional).toBe(true);
 //       }
 //     });
 //
-//     it("should trigger when you play this character", () => {
-//       const ability = mickeyMouseDetective.abilities?.find(
+//     It("should trigger when you play this character", () => {
+//       Const ability = mickeyMouseDetective.abilities?.find(
 //         (a) => "name" in a && a.name === "GET A CLUE",
 //       );
 //
-//       expect(ability).toBeDefined();
+//       Expect(ability).toBeDefined();
 //
-//       if (
-//         ability &&
+//       If (
+//         Ability &&
 //         "trigger" in ability &&
-//         ability.trigger &&
-//         typeof ability.trigger === "object" &&
+//         Ability.trigger &&
+//         Typeof ability.trigger === "object" &&
 //         "on" in ability.trigger
 //       ) {
-//         expect(ability.trigger.on).toBe("play");
+//         Expect(ability.trigger.on).toBe("play");
 //       }
 //     });
 //   });
 //
-//   describe("Stats and basic properties", () => {
-//     it("should have correct stats", () => {
-//       const testEngine = new TestEngine({
-//         play: [mickeyMouseDetective],
+//   Describe("Stats and basic properties", () => {
+//     It("should have correct stats", () => {
+//       Const testEngine = new TestEngine({
+//         Play: [mickeyMouseDetective],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(mickeyMouseDetective);
+//       Const cardUnderTest = testEngine.getCardModel(mickeyMouseDetective);
 //
-//       expect(cardUnderTest.strength).toBe(1);
-//       expect(cardUnderTest.willpower).toBe(3);
-//       expect(cardUnderTest.lore).toBe(1);
-//       expect(cardUnderTest.cost).toBe(3);
+//       Expect(cardUnderTest.strength).toBe(1);
+//       Expect(cardUnderTest.willpower).toBe(3);
+//       Expect(cardUnderTest.lore).toBe(1);
+//       Expect(cardUnderTest.cost).toBe(3);
 //     });
 //
-//     it("should not be inkwell card", () => {
-//       expect(mickeyMouseDetective.inkwell).toBe(false);
+//     It("should not be inkwell card", () => {
+//       Expect(mickeyMouseDetective.inkwell).toBe(false);
 //     });
 //
-//     it("should have correct characteristics for Detective synergy", () => {
-//       expect(mickeyMouseDetective.characteristics).toEqual([
+//     It("should have correct characteristics for Detective synergy", () => {
+//       Expect(mickeyMouseDetective.characteristics).toEqual([
 //         "dreamborn",
 //         "hero",
 //         "detective",
 //       ]);
 //     });
 //
-//     it("should be sapphire color", () => {
-//       expect(mickeyMouseDetective.colors).toEqual(["sapphire"]);
+//     It("should be sapphire color", () => {
+//       Expect(mickeyMouseDetective.colors).toEqual(["sapphire"]);
 //     });
 //
-//     it("should be common rarity", () => {
-//       expect(mickeyMouseDetective.rarity).toBe("common");
+//     It("should be common rarity", () => {
+//       Expect(mickeyMouseDetective.rarity).toBe("common");
 //     });
 //   });
 // });

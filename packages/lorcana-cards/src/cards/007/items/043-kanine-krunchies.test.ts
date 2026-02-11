@@ -3,25 +3,25 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   kanineKrunchies,
-//   kashekimAncientRuler,
-//   luckyRuntOfTheLitter,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   KanineKrunchies,
+//   KashekimAncientRuler,
+//   LuckyRuntOfTheLitter,
 // } from "@lorcanito/lorcana-engine/cards/007";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Kanine Krunchies", () => {
-//   it("YOU CAN BE A CHAMPION, TOO Your Puppy characters get +1 {W}.", async () => {
-//     const testEngine = new TestEngine({
-//       play: [kanineKrunchies, kashekimAncientRuler, luckyRuntOfTheLitter],
+// Describe("Kanine Krunchies", () => {
+//   It("YOU CAN BE A CHAMPION, TOO Your Puppy characters get +1 {W}.", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [kanineKrunchies, kashekimAncientRuler, luckyRuntOfTheLitter],
 //     });
 //
-//     expect(testEngine.getCardModel(luckyRuntOfTheLitter).willpower).toBe(
-//       luckyRuntOfTheLitter.willpower + 1,
+//     Expect(testEngine.getCardModel(luckyRuntOfTheLitter).willpower).toBe(
+//       LuckyRuntOfTheLitter.willpower + 1,
 //     );
-//     expect(testEngine.getCardModel(kashekimAncientRuler).willpower).toBe(
-//       luckyRuntOfTheLitter.willpower,
+//     Expect(testEngine.getCardModel(kashekimAncientRuler).willpower).toBe(
+//       LuckyRuntOfTheLitter.willpower,
 //     );
 //   });
 // });

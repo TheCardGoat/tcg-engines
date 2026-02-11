@@ -1,35 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const ladyFamilyDog: CharacterCard = {
-  id: "ri7",
-  cardType: "character",
-  name: "Lady",
-  version: "Family Dog",
-  fullName: "Lady - Family Dog",
-  inkType: ["amber"],
-  franchise: "Lady and the Tramp",
-  set: "008",
-  text: "SOMEONE TO CARE FOR When you play this character, you may play a character with cost 2 or less for free.",
-  cost: 3,
-  strength: 2,
-  willpower: 2,
-  lore: 2,
-  cardNumber: 11,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "6321f91ab33afe4ddca12636c0eb4a49d69bf917",
-  },
   abilities: [
     {
-      id: "ri7-1",
-      type: "triggered",
-      name: "SOMEONE TO CARE FOR",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -43,8 +16,35 @@ export const ladyFamilyDog: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "ri7-1",
+      name: "SOMEONE TO CARE FOR",
       text: "SOMEONE TO CARE FOR When you play this character, you may play a character with cost 2 or less for free.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 11,
+  cardType: "character",
   classifications: ["Storyborn", "Hero"],
+  cost: 3,
+  externalIds: {
+    ravensburger: "6321f91ab33afe4ddca12636c0eb4a49d69bf917",
+  },
+  franchise: "Lady and the Tramp",
+  fullName: "Lady - Family Dog",
+  id: "ri7",
+  inkType: ["amber"],
+  inkable: true,
+  lore: 2,
+  missingTests: true,
+  name: "Lady",
+  set: "008",
+  strength: 2,
+  text: "SOMEONE TO CARE FOR When you play this character, you may play a character with cost 2 or less for free.",
+  version: "Family Dog",
+  willpower: 2,
 };

@@ -19,11 +19,7 @@ import type {
   StunEffect,
   TokenDefinition,
 } from "@tcg/riftbound-types/abilities/effect-types";
-import type {
-  AnyTarget,
-  Location,
-  Target,
-} from "@tcg/riftbound-types/targeting";
+import type { AnyTarget, Location, Target } from "@tcg/riftbound-types/targeting";
 import {
   COUNTER_PATTERN,
   CREATE_TOKEN_PATTERN,
@@ -35,10 +31,10 @@ import {
   MOVE_BASIC_PATTERN,
   MOVE_FROM_TO_PATTERN,
   PREVENT_DAMAGE_PATTERN,
-  parseLocationString,
   RECALL_PATTERN,
   RETURN_TO_HAND_PATTERN,
   STUN_PATTERN,
+  parseLocationString,
 } from "../patterns/effects";
 import { parseQuantity, parseTarget } from "./target-parser";
 
@@ -70,15 +66,15 @@ export function parseRecallEffect(text: string): RecallEffect | undefined {
 
   if (exhausted) {
     return {
-      type: "recall",
-      target,
       exhausted: true,
+      target,
+      type: "recall",
     };
   }
 
   return {
-    type: "recall",
     target,
+    type: "recall",
   };
 }
 
@@ -96,7 +92,7 @@ export function parseMoveEffect(text: string): MoveEffect | undefined {
   // Try from/to pattern first (more specific)
   const fromToMatch = MOVE_FROM_TO_PATTERN.exec(text);
   if (fromToMatch) {
-    // fromToMatch[2] is "unit" or "units" - not used since we always target units
+    // FromToMatch[2] is "unit" or "units" - not used since we always target units
     const fromStr = fromToMatch[3];
     const toStr = fromToMatch[4];
 
@@ -108,10 +104,10 @@ export function parseMoveEffect(text: string): MoveEffect | undefined {
     };
 
     return {
-      type: "move",
+      from,
       target,
       to,
-      from,
+      type: "move",
     };
   }
 
@@ -120,7 +116,7 @@ export function parseMoveEffect(text: string): MoveEffect | undefined {
   if (basicMatch) {
     const quantityStr = basicMatch[1]; // "a", "an", "up to 2"
     const controllerStr = basicMatch[2]?.trim(); // "friendly", "enemy", or undefined
-    // basicMatch[3] is "unit" or "units" - not used since we always target units
+    // BasicMatch[3] is "unit" or "units" - not used since we always target units
     const destinationStr = basicMatch[4]; // "to base", "to here", etc. or undefined
 
     const quantity = parseQuantity(quantityStr);
@@ -146,9 +142,9 @@ export function parseMoveEffect(text: string): MoveEffect | undefined {
       : "base";
 
     return {
-      type: "move",
       target,
       to,
+      type: "move",
     };
   }
 
@@ -161,9 +157,7 @@ export function parseMoveEffect(text: string): MoveEffect | undefined {
  * @param text - The text to parse
  * @returns MoveEffect or RecallEffect if matched, undefined otherwise
  */
-export function parseMovementEffect(
-  text: string,
-): MoveEffect | RecallEffect | undefined {
+export function parseMovementEffect(text: string): MoveEffect | RecallEffect | undefined {
   // Try recall first
   const recallEffect = parseRecallEffect(text);
   if (recallEffect) {
@@ -188,14 +182,14 @@ export function parseMovementEffect(
  */
 function wordToNumber(word: string): number {
   const wordMap: Record<string, number> = {
-    one: 1,
-    two: 2,
-    three: 3,
-    four: 4,
-    five: 5,
-    six: 6,
     a: 1,
     an: 1,
+    five: 5,
+    four: 4,
+    one: 1,
+    six: 6,
+    three: 3,
+    two: 2,
   };
   const lower = word.toLowerCase();
   return wordMap[lower] ?? (Number.parseInt(lower, 10) || 1);
@@ -211,9 +205,7 @@ function wordToNumber(word: string): number {
  * parseModifyMightEffect("Give a unit +5 :rb_might: this turn.")
  * // Returns: { type: "modify-might", amount: 5, target: { type: "unit" }, duration: "turn" }
  */
-export function parseModifyMightEffect(
-  text: string,
-): ModifyMightEffect | undefined {
+export function parseModifyMightEffect(text: string): ModifyMightEffect | undefined {
   const match = MODIFY_MIGHT_PATTERN.exec(text);
   if (!match) {
     return undefined;
@@ -230,9 +222,9 @@ export function parseModifyMightEffect(
   const minimum = minimumStr ? Number.parseInt(minimumStr, 10) : undefined;
 
   const effect: ModifyMightEffect = {
-    type: "modify-might",
     amount,
     target,
+    type: "modify-might",
   };
 
   if (duration) {
@@ -266,8 +258,8 @@ export function parseKillEffect(text: string): KillEffect | undefined {
   const target = parseTarget(targetStr);
 
   return {
-    type: "kill",
     target,
+    type: "kill",
   };
 }
 
@@ -312,8 +304,8 @@ export function parseStunEffect(text: string): StunEffect | undefined {
   const target = parseTarget(targetStr);
 
   return {
-    type: "stun",
     target,
+    type: "stun",
   };
 }
 
@@ -327,9 +319,7 @@ export function parseStunEffect(text: string): StunEffect | undefined {
  * @param text - The text to parse (e.g., "Return a gear to its owner's hand.")
  * @returns ReturnToHandEffect if matched, undefined otherwise
  */
-export function parseReturnToHandEffect(
-  text: string,
-): ReturnToHandEffect | undefined {
+export function parseReturnToHandEffect(text: string): ReturnToHandEffect | undefined {
   const match = RETURN_TO_HAND_PATTERN.exec(text);
   if (!match) {
     return undefined;
@@ -339,8 +329,8 @@ export function parseReturnToHandEffect(
   const target = parseTarget(targetStr);
 
   return {
-    type: "return-to-hand",
     target,
+    type: "return-to-hand",
   };
 }
 
@@ -354,9 +344,7 @@ export function parseReturnToHandEffect(
  * @param text - The text to parse (e.g., "Play four 1 :rb_might: Recruit unit tokens.")
  * @returns CreateTokenEffect if matched, undefined otherwise
  */
-export function parseCreateTokenEffect(
-  text: string,
-): CreateTokenEffect | undefined {
+export function parseCreateTokenEffect(text: string): CreateTokenEffect | undefined {
   const match = CREATE_TOKEN_PATTERN.exec(text);
   if (!match) {
     return undefined;
@@ -371,15 +359,15 @@ export function parseCreateTokenEffect(
   const might = Number.parseInt(mightStr, 10);
 
   const token: TokenDefinition = {
+    might,
     name: tokenName,
     type: tokenType,
-    might,
   };
 
   return {
-    type: "create-token",
-    token,
     amount,
+    token,
+    type: "create-token",
   };
 }
 
@@ -403,13 +391,12 @@ export function parseLookEffect(text: string): LookEffect | undefined {
   const deckType = match[2];
 
   const amount = Number.parseInt(amountStr, 10);
-  const from =
-    deckType.toLowerCase() === "rune deck" ? "rune-deck" : ("deck" as const);
+  const from = deckType.toLowerCase() === "rune deck" ? "rune-deck" : ("deck" as const);
 
   return {
-    type: "look",
     amount,
     from,
+    type: "look",
   };
 }
 
@@ -431,13 +418,13 @@ export function parseFightEffect(text: string): FightEffect | undefined {
 
   // Fight effects typically involve two targets that were chosen earlier
   // We use placeholder targets that will be resolved at runtime
-  const attacker: AnyTarget = { type: "unit", controller: "friendly" };
-  const defender: AnyTarget = { type: "unit", controller: "enemy" };
+  const attacker: AnyTarget = { controller: "friendly", type: "unit" };
+  const defender: AnyTarget = { controller: "enemy", type: "unit" };
 
   return {
-    type: "fight",
     attacker,
     defender,
+    type: "fight",
   };
 }
 
@@ -451,9 +438,7 @@ export function parseFightEffect(text: string): FightEffect | undefined {
  * @param text - The text to parse (e.g., "Prevent all spell and ability damage this turn.")
  * @returns PreventDamageEffect if matched, undefined otherwise
  */
-export function parsePreventDamageEffect(
-  text: string,
-): PreventDamageEffect | undefined {
+export function parsePreventDamageEffect(text: string): PreventDamageEffect | undefined {
   const match = PREVENT_DAMAGE_PATTERN.exec(text);
   if (!match) {
     return undefined;
@@ -488,21 +473,19 @@ export function parsePreventDamageEffect(
  * @param text - The text to parse (e.g., "Gain control of a spell. You may make new choices for it.")
  * @returns GainControlOfSpellEffect if matched, undefined otherwise
  */
-export function parseGainControlOfSpellEffect(
-  text: string,
-): GainControlOfSpellEffect | undefined {
+export function parseGainControlOfSpellEffect(text: string): GainControlOfSpellEffect | undefined {
   const match = GAIN_CONTROL_OF_SPELL_PATTERN.exec(text);
   if (!match) {
     return undefined;
   }
 
   const newChoicesClause = match[1];
-  const newChoices = !!newChoicesClause;
+  const newChoices = Boolean(newChoicesClause);
 
   if (newChoices) {
     return {
-      type: "gain-control-of-spell",
       newChoices: true,
+      type: "gain-control-of-spell",
     };
   }
 

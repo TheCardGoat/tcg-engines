@@ -5,9 +5,9 @@ import { plasmaBlaster } from "./204-plasma-blaster";
 describe("Quick Shot - undefined", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [plasmaBlaster] });
-  //   expect(testEngine.getCardModel(plasmaBlaster).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [plasmaBlaster] });
+  //   Expect(testEngine.getCardModel(plasmaBlaster).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,43 +17,43 @@ describe("Quick Shot - undefined", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { mickeyMouseTrueFriend } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import {
-//   dingleHopper,
-//   plasmaBlaster,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { mickeyMouseTrueFriend } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import {
+//   DingleHopper,
+//   PlasmaBlaster,
 // } from "@lorcanito/lorcana-engine/cards/001/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Plasma Blaster", () => {
-//   it("Quick shot - Deal 1 damage to chosen character.", () => {
-//     const testStore = new TestStore({
-//       play: [plasmaBlaster, mickeyMouseTrueFriend],
-//       inkwell: [dingleHopper, dingleHopper],
+// Describe("Plasma Blaster", () => {
+//   It("Quick shot - Deal 1 damage to chosen character.", () => {
+//     Const testStore = new TestStore({
+//       Play: [plasmaBlaster, mickeyMouseTrueFriend],
+//       Inkwell: [dingleHopper, dingleHopper],
 //     });
 //
-//     const damagedChar = testStore.getByZoneAndId(
+//     Const damagedChar = testStore.getByZoneAndId(
 //       "play",
-//       mickeyMouseTrueFriend.id,
+//       MickeyMouseTrueFriend.id,
 //     );
-//     damagedChar.updateCardMeta({ damage: 1 });
-//     expect(damagedChar.meta).toEqual(expect.objectContaining({ damage: 1 }));
+//     DamagedChar.updateCardMeta({ damage: 1 });
+//     Expect(damagedChar.meta).toEqual(expect.objectContaining({ damage: 1 }));
 //
-//     const cardUnderTest = testStore.getByZoneAndId("play", plasmaBlaster.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("play", plasmaBlaster.id);
 //
-//     expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
-//     cardUnderTest.activate();
-//     expect(testStore.store.stackLayerStore.layers).toHaveLength(1);
+//     Expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
+//     CardUnderTest.activate();
+//     Expect(testStore.store.stackLayerStore.layers).toHaveLength(1);
 //
-//     const effect = testStore.store.stackLayerStore.layers[0];
-//     if (effect) {
-//       testStore.resolveTopOfStack({
-//         targets: [damagedChar],
+//     Const effect = testStore.store.stackLayerStore.layers[0];
+//     If (effect) {
+//       TestStore.resolveTopOfStack({
+//         Targets: [damagedChar],
 //       });
 //     }
 //
-//     expect(damagedChar.meta).toEqual(expect.objectContaining({ damage: 2 }));
-//     expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
+//     Expect(damagedChar.meta).toEqual(expect.objectContaining({ damage: 2 }));
+//     Expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
 //   });
 // });
 //

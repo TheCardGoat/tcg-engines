@@ -1,39 +1,39 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/target";
-// import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+// Import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/target";
+// Import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const quickShot: LorcanitoActionCard = {
-//   id: "xuh",
-//   name: "Quick Shot",
-//   characteristics: ["action"],
-//   text: "Deal 1 damage to chosen character. Draw a card.",
-//   type: "action",
-//   abilities: [
+// Export const quickShot: LorcanitoActionCard = {
+//   Id: "xuh",
+//   Name: "Quick Shot",
+//   Characteristics: ["action"],
+//   Text: "Deal 1 damage to chosen character. Draw a card.",
+//   Type: "action",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       name: "Quick Shot",
-//       text: "Deal 1 damage to chosen character. Draw a card.",
-//       resolveEffectsIndividually: true,
-//       effects: [
+//       Type: "resolution",
+//       Name: "Quick Shot",
+//       Text: "Deal 1 damage to chosen character. Draw a card.",
+//       ResolveEffectsIndividually: true,
+//       Effects: [
 //         {
-//           type: "damage",
-//           amount: 1,
-//           target: chosenCharacter,
+//           Type: "damage",
+//           Amount: 1,
+//           Target: chosenCharacter,
 //         },
-//         drawACard,
+//         DrawACard,
 //       ],
 //     },
 //   ],
-//   inkwell: false,
-//   colors: ["steel"],
-//   cost: 2,
-//   illustrator: "Diego Machuca",
-//   number: 203,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631484,
+//   Inkwell: false,
+//   Colors: ["steel"],
+//   Cost: 2,
+//   Illustrator: "Diego Machuca",
+//   Number: 203,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631484,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

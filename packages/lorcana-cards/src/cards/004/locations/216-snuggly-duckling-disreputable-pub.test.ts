@@ -3,9 +3,9 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
+// Import { describe, it } from "@jest/globals";
 //
-// describe("Snuggly Duckling - Disreputable Pub", () => {
-//   it("TODO", () => {});
+// Describe("Snuggly Duckling - Disreputable Pub", () => {
+//   It("TODO", () => {});
 // });
 //

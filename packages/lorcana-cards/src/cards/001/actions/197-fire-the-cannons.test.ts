@@ -5,9 +5,9 @@ import { fireTheCannonsundefined } from "./197-fire-the-cannons";
 describe("Fire the Cannons! - undefined", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [fireTheCannons] });
-  //   expect(testEngine.getCardModel(fireTheCannons).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [fireTheCannons] });
+  //   Expect(testEngine.getCardModel(fireTheCannons).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,31 +17,31 @@ describe("Fire the Cannons! - undefined", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { fireTheCannons } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
-// import { moanaOfMotunui } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { fireTheCannons } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
+// Import { moanaOfMotunui } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Fire The Cannons!", () => {
-//   it("Deal 2 damage to chosen character", () => {
-//     const testStore = new TestStore({
-//       inkwell: fireTheCannons.cost,
-//       hand: [fireTheCannons],
-//       play: [moanaOfMotunui],
+// Describe("Fire The Cannons!", () => {
+//   It("Deal 2 damage to chosen character", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: fireTheCannons.cost,
+//       Hand: [fireTheCannons],
+//       Play: [moanaOfMotunui],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", fireTheCannons.id);
-//     const target = testStore.getByZoneAndId("play", moanaOfMotunui.id);
-//     target.updateCardMeta({ damage: 0 });
-//     expect(target.meta).toEqual(expect.objectContaining({ damage: 0 }));
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", fireTheCannons.id);
+//     Const target = testStore.getByZoneAndId("play", moanaOfMotunui.id);
+//     Target.updateCardMeta({ damage: 0 });
+//     Expect(target.meta).toEqual(expect.objectContaining({ damage: 0 }));
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     testStore.resolveTopOfStack({
-//       targetId: target.instanceId,
+//     TestStore.resolveTopOfStack({
+//       TargetId: target.instanceId,
 //     });
 //
-//     expect(target.meta).toEqual(expect.objectContaining({ damage: 2 }));
+//     Expect(target.meta).toEqual(expect.objectContaining({ damage: 2 }));
 //   });
 // });
 //

@@ -11,12 +11,7 @@
 
 import type { CardType } from "../../cards/card-types";
 import type { Condition } from "../condition-types";
-import type {
-  CardTarget,
-  CharacterTarget,
-  LocationTarget,
-  PlayerTarget,
-} from "../target-types";
+import type { CardTarget, CharacterTarget, LocationTarget, PlayerTarget } from "../target-types";
 import type { Amount, EffectDuration } from "./amount-types";
 
 // ============================================================================
@@ -192,7 +187,7 @@ export interface DrawUntilHandSizeEffect {
 export interface EntersPlayEffect {
   type: "enters-play-modification";
   modification: "exerted" | "damaged";
-  amount?: number; // for damaged
+  amount?: number; // For damaged
   target: CharacterTarget;
 }
 

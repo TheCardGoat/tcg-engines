@@ -1,35 +1,35 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
 // // TODO: Once the set is released, we organize the cards by set and type
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { youGainLore } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { youGainLore } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const theWhiteRoseGemOfTheGarden: LorcanitoCharacterCard = {
-//   id: "xng",
-//   name: "The White Rose",
-//   title: "Jewel of the Garden",
-//   characteristics: ["storyborn"],
-//   text: "THE BEAUTY OF THE WORLD When you play this character, gain 1 lore.",
-//   type: "character",
-//   abilities: [
+// Export const theWhiteRoseGemOfTheGarden: LorcanitoCharacterCard = {
+//   Id: "xng",
+//   Name: "The White Rose",
+//   Title: "Jewel of the Garden",
+//   Characteristics: ["storyborn"],
+//   Text: "THE BEAUTY OF THE WORLD When you play this character, gain 1 lore.",
+//   Type: "character",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       name: "A Wealth of Happiness",
-//       text: "When you play this character, gain 1 lore.",
-//       effects: [youGainLore(1)],
+//       Type: "resolution",
+//       Name: "A Wealth of Happiness",
+//       Text: "When you play this character, gain 1 lore.",
+//       Effects: [youGainLore(1)],
 //     },
 //   ],
-//   inkwell: true,
-//   colors: ["amethyst"],
-//   cost: 3,
-//   strength: 3,
-//   willpower: 3,
-//   lore: 1,
-//   illustrator: "Cory Godbey",
-//   number: 40,
-//   set: "006",
-//   externalIds: {
-//     tcgPlayer: 593043,
+//   Inkwell: true,
+//   Colors: ["amethyst"],
+//   Cost: 3,
+//   Strength: 3,
+//   Willpower: 3,
+//   Lore: 1,
+//   Illustrator: "Cory Godbey",
+//   Number: 40,
+//   Set: "006",
+//   ExternalIds: {
+//     TcgPlayer: 593043,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

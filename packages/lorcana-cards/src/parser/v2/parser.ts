@@ -5,8 +5,8 @@
 
 import { parserV2 } from "./index";
 import {
-  getManualEntries,
   MANUAL_ENTRIES_BY_NAME,
+  getManualEntries,
   tooComplexText,
 } from "./manual-overrides";
 import { normalizeText } from "./preprocessor";
@@ -86,7 +86,7 @@ export function parseAbilityText(
   // Check for manual override by card name
   if (options?.cardName && MANUAL_ENTRIES_BY_NAME[options.cardName]) {
     const entry = MANUAL_ENTRIES_BY_NAME[options.cardName];
-    // entry can be AbilityWithText or AbilityWithText[]
+    // Entry can be AbilityWithText or AbilityWithText[]
     const singleEntry = Array.isArray(entry) ? entry[0] : entry;
     // Ensure we return the entry as AbilityWithText structure
     // Preserve existing id from manual entry if present
@@ -100,8 +100,8 @@ export function parseAbilityText(
       ...(entryText && entryText.trim() && { text: entryText }),
     } as AbilityWithText;
     return {
-      success: true,
       ability: addAbilityIdIfEnabled(ability, options, 1),
+      success: true,
       warnings: [],
     };
   }
@@ -112,8 +112,8 @@ export function parseAbilityText(
     const manualEntries = getManualEntries(normalizedText, options?.cardName);
     if (manualEntries && manualEntries.length > 0) {
       return {
-        success: true,
         ability: addAbilityIdIfEnabled(manualEntries[0], options, 1),
+        success: true,
         warnings: [],
       };
     }
@@ -122,26 +122,26 @@ export function parseAbilityText(
   const ability = parserV2.parseAbility(text);
   if (ability) {
     // Extract name from ability if present (for named abilities)
-    const name = (ability as { name?: string }).name;
+    const {name} = (ability as { name?: string });
     const abilityWithText: AbilityWithText = {
       ability: ability as AbilityWithText["ability"],
       // TODO: Type assertion needed because @tcg/lorcana-engine and @tcg/lorcana-types
-      // have incompatible Ability, Trigger, and Target types. This is a broader
-      // architectural issue that needs to be resolved by re-exporting all ability
-      // types from lorcana-types in the engine, similar to what was done for Condition.
+      // Have incompatible Ability, Trigger, and Target types. This is a broader
+      // Architectural issue that needs to be resolved by re-exporting all ability
+      // Types from lorcana-types in the engine, similar to what was done for Condition.
       // See: packages/lorcana-engine/src/cards/abilities/types/condition-types.ts
       ...(name && name.trim() && { name: name }),
       ...(text && text.trim() && { text: text }),
     };
     return {
-      success: true,
       ability: addAbilityIdIfEnabled(abilityWithText, options, 1),
+      success: true,
       warnings: [],
     };
   }
   return {
-    success: false,
     ability: null,
+    success: false,
     warnings: ["Failed to parse ability"],
   };
 }
@@ -165,10 +165,10 @@ export function parseAbilityTexts(
   const failed = results.filter((r) => !r.success).length;
 
   return {
-    results,
-    total: texts.length,
-    successful,
     failed,
+    results,
+    successful,
+    total: texts.length,
   };
 }
 
@@ -199,9 +199,9 @@ export function parseAbilityTextMulti(
 ): MultiParseResult {
   if (!(text && text.trim())) {
     return {
-      success: false,
       abilities: [],
       error: "Empty ability text",
+      success: false,
     };
   }
 
@@ -214,8 +214,8 @@ export function parseAbilityTextMulti(
       addAbilityIdIfEnabled(ability as AbilityWithText, options, index + 1),
     );
     return {
-      success: true,
       abilities: abilitiesWithIds,
+      success: true,
     };
   }
 
@@ -229,14 +229,14 @@ export function parseAbilityTextMulti(
         addAbilityIdIfEnabled(ability, options, index + 1),
       );
       return {
-        success: true,
         abilities: abilitiesWithIds,
+        success: true,
       };
     }
     return {
-      success: false,
       abilities: [],
       error: `Text marked as complex but no manual entry found: "${normalizedText}"${options?.cardName ? ` (Card: ${options.cardName})` : ""}. Please add an entry to MANUAL_ENTRIES in manual-overrides.ts`,
+      success: false,
     };
   }
 
@@ -253,16 +253,16 @@ export function parseAbilityTextMulti(
     if (singleResult.success && singleResult.ability) {
       // ID is already added in parseAbilityText with index 1
       return {
-        success: true,
         abilities: [singleResult.ability],
+        success: true,
         warnings: singleResult.warnings,
       };
     }
 
     return {
-      success: false,
       abilities: [],
       error: singleResult.error || singleResult.warnings?.join(", "),
+      success: false,
       warnings: singleResult.warnings,
     };
   }
@@ -279,7 +279,7 @@ export function parseAbilityTextMulti(
 
     if (result.success && result.ability) {
       // Add ID if generation is enabled (parseAbilityText already adds it with index 1,
-      // but we need to override with the correct index for multi-ability parsing)
+      // But we need to override with the correct index for multi-ability parsing)
       const abilityWithId = addAbilityIdIfEnabled(
         result.ability,
         options,
@@ -295,16 +295,16 @@ export function parseAbilityTextMulti(
   // Success if at least one ability parsed
   if (abilities.length > 0) {
     return {
-      success: true,
       abilities,
+      success: true,
       warnings: warnings.length > 0 ? warnings : undefined,
     };
   }
 
   return {
-    success: false,
     abilities: [],
     error: "Failed to parse any abilities",
+    success: false,
     warnings,
   };
 }

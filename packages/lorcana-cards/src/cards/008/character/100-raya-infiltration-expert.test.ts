@@ -3,31 +3,31 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   deweyLovableShowoff,
-//   rayaInfiltrationExpert,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   DeweyLovableShowoff,
+//   RayaInfiltrationExpert,
 // } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Raya - Infiltration Expert", () => {
-//   it("UNCONVENTIONAL TACTICS Whenever this character quests, you may pay 2 {I} to ready another chosen character.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: rayaInfiltrationExpert.cost,
-//       play: [rayaInfiltrationExpert, deweyLovableShowoff],
+// Describe("Raya - Infiltration Expert", () => {
+//   It("UNCONVENTIONAL TACTICS Whenever this character quests, you may pay 2 {I} to ready another chosen character.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: rayaInfiltrationExpert.cost,
+//       Play: [rayaInfiltrationExpert, deweyLovableShowoff],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(rayaInfiltrationExpert);
-//     const target = testEngine.getCardModel(deweyLovableShowoff);
-//     target.exert();
-//     expect(target.ready).toEqual(false);
+//     Const cardUnderTest = testEngine.getCardModel(rayaInfiltrationExpert);
+//     Const target = testEngine.getCardModel(deweyLovableShowoff);
+//     Target.exert();
+//     Expect(target.ready).toEqual(false);
 //
-//     await testEngine.questCard(cardUnderTest);
-//     await testEngine.resolveOptionalAbility();
+//     Await testEngine.questCard(cardUnderTest);
+//     Await testEngine.resolveOptionalAbility();
 //
-//     await testEngine.resolveTopOfStack({ targets: [target] });
+//     Await testEngine.resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.ready).toEqual(true);
+//     Expect(target.ready).toEqual(true);
 //   });
 // });
 //

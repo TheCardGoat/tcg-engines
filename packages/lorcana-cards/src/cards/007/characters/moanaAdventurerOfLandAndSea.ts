@@ -1,24 +1,24 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const moanaAdventurerOfLandAndSea: LorcanitoCharacterCard = {
-//   id: "nde",
-//   name: "Moana",
-//   title: "Adventurer of Land and Sea",
-//   characteristics: ["storyborn", "hero", "princess"],
-//   type: "character",
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 3,
-//   strength: 1,
-//   willpower: 6,
-//   illustrator: "Anna Stosik",
-//   number: 156,
-//   set: "007",
-//   externalIds: {
-//     tcgPlayer: 618357,
+// Export const moanaAdventurerOfLandAndSea: LorcanitoCharacterCard = {
+//   Id: "nde",
+//   Name: "Moana",
+//   Title: "Adventurer of Land and Sea",
+//   Characteristics: ["storyborn", "hero", "princess"],
+//   Type: "character",
+//   Inkwell: true,
+//   Colors: ["sapphire"],
+//   Cost: 3,
+//   Strength: 1,
+//   Willpower: 6,
+//   Illustrator: "Anna Stosik",
+//   Number: 156,
+//   Set: "007",
+//   ExternalIds: {
+//     TcgPlayer: 618357,
 //   },
-//   rarity: "common",
-//   lore: 1,
+//   Rarity: "common",
+//   Lore: 1,
 // };
 //

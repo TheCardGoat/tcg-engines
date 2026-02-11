@@ -19,16 +19,16 @@ describe("Tribal: Dragon", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "static",
           effect: expect.objectContaining({
-            type: "grant-keyword",
             keyword: "Assault",
             target: expect.objectContaining({
               filter: expect.objectContaining({
                 tag: "Dragon",
               }),
             }),
+            type: "grant-keyword",
           }),
+          type: "static",
         }),
       );
     });
@@ -45,9 +45,7 @@ describe("Tribal: Dragon", () => {
 
   describe("dragon conditional", () => {
     it.skip("should parse 'I enter ready if you control another Dragon.'", () => {
-      const result = parseAbilities(
-        "I enter ready if you control another Dragon.",
-      );
+      const result = parseAbilities("I enter ready if you control another Dragon.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);

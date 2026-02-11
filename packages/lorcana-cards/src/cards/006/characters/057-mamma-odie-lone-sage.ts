@@ -1,46 +1,46 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
 // // TODO: Once the set is released, we organize the cards by set and type
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import {
-//   chosenCharacter,
-//   chosenOpposingCharacter,
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import {
+//   ChosenCharacter,
+//   ChosenOpposingCharacter,
 // } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { wheneverYouPlayASong } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-// import { moveDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
+// Import { wheneverYouPlayASong } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// Import { moveDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const mammaOdieLoneSage: LorcanitoCharacterCard = {
-//   id: "dhe",
-//   missingTestCase: true,
-//   name: "Mama Odie",
-//   title: "Solitary Sage",
-//   characteristics: ["storyborn", "ally", "sorcerer"],
-//   text: "I HAVE TO DO EVERYTHING AROUND HERE Whenever you play a song, you may move up to 2 damage counters from chosen character to chosen opposing character.",
-//   type: "character",
-//   abilities: [
-//     wheneverYouPlayASong({
-//       name: "I Have To Do Everything Around Here",
-//       text: "Whenever you play a song, you may move up to 2 damage counters from chosen character to chosen opposing character.",
-//       effects: [
-//         moveDamageEffect({
-//           amount: 2,
-//           from: chosenCharacter,
-//           to: chosenOpposingCharacter,
+// Export const mammaOdieLoneSage: LorcanitoCharacterCard = {
+//   Id: "dhe",
+//   MissingTestCase: true,
+//   Name: "Mama Odie",
+//   Title: "Solitary Sage",
+//   Characteristics: ["storyborn", "ally", "sorcerer"],
+//   Text: "I HAVE TO DO EVERYTHING AROUND HERE Whenever you play a song, you may move up to 2 damage counters from chosen character to chosen opposing character.",
+//   Type: "character",
+//   Abilities: [
+//     WheneverYouPlayASong({
+//       Name: "I Have To Do Everything Around Here",
+//       Text: "Whenever you play a song, you may move up to 2 damage counters from chosen character to chosen opposing character.",
+//       Effects: [
+//         MoveDamageEffect({
+//           Amount: 2,
+//           From: chosenCharacter,
+//           To: chosenOpposingCharacter,
 //         }),
 //       ],
 //     }),
 //   ],
-//   inkwell: false,
-//   colors: ["amethyst"],
-//   cost: 5,
-//   strength: 4,
-//   willpower: 5,
-//   lore: 1,
-//   illustrator: "Mel Milton",
-//   number: 57,
-//   set: "006",
-//   externalIds: {
-//     tcgPlayer: 591113,
+//   Inkwell: false,
+//   Colors: ["amethyst"],
+//   Cost: 5,
+//   Strength: 4,
+//   Willpower: 5,
+//   Lore: 1,
+//   Illustrator: "Mel Milton",
+//   Number: 57,
+//   Set: "006",
+//   ExternalIds: {
+//     TcgPlayer: 591113,
 //   },
-//   rarity: "rare",
+//   Rarity: "rare",
 // };
 //

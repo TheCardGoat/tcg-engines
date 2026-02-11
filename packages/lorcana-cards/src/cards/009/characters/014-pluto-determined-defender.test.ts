@@ -3,40 +3,40 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { plutoDeterminedDefender } from "@lorcanito/lorcana-engine/cards/009/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { plutoDeterminedDefender } from "@lorcanito/lorcana-engine/cards/009/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Pluto - Determined Defender", () => {
-//   it.skip("**Shift** 5 _(You may pay 5 {I} to play this on top of one of your characters named Pluto.)_", async () => {
-//     const testEngine = new TestEngine({
-//       play: [plutoDeterminedDefender],
+// Describe("Pluto - Determined Defender", () => {
+//   It.skip("**Shift** 5 _(You may pay 5 {I} to play this on top of one of your characters named Pluto.)_", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [plutoDeterminedDefender],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(plutoDeterminedDefender);
-//     expect(cardUnderTest.hasShift).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(plutoDeterminedDefender);
+//     Expect(cardUnderTest.hasShift).toBe(true);
 //   });
 //
-//   it.skip("**Bodyguard** _(This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)_", async () => {
-//     const testEngine = new TestEngine({
-//       play: [plutoDeterminedDefender],
+//   It.skip("**Bodyguard** _(This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)_", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [plutoDeterminedDefender],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(plutoDeterminedDefender);
-//     expect(cardUnderTest.hasBodyguard).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(plutoDeterminedDefender);
+//     Expect(cardUnderTest.hasBodyguard).toBe(true);
 //   });
 //
-//   it.skip("**GUARD DOG** At the start of your turn, remove up to 3 damage from this character.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: plutoDeterminedDefender.cost,
-//       play: [plutoDeterminedDefender],
-//       hand: [plutoDeterminedDefender],
+//   It.skip("**GUARD DOG** At the start of your turn, remove up to 3 damage from this character.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: plutoDeterminedDefender.cost,
+//       Play: [plutoDeterminedDefender],
+//       Hand: [plutoDeterminedDefender],
 //     });
 //
-//     await testEngine.playCard(plutoDeterminedDefender);
+//     Await testEngine.playCard(plutoDeterminedDefender);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

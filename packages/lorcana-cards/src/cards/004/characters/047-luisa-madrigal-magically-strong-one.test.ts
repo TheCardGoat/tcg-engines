@@ -3,21 +3,21 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { luisaMadrigalMagicallyStrongOne } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { luisaMadrigalMagicallyStrongOne } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Luisa Madrigal - Magically Strong One", () => {
-//   it.skip("**Rush** _(This character can challenge the turn they're played.)_", () => {
-//     const testStore = new TestStore({
-//       play: [luisaMadrigalMagicallyStrongOne],
+// Describe("Luisa Madrigal - Magically Strong One", () => {
+//   It.skip("**Rush** _(This character can challenge the turn they're played.)_", () => {
+//     Const testStore = new TestStore({
+//       Play: [luisaMadrigalMagicallyStrongOne],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       luisaMadrigalMagicallyStrongOne.id,
+//       LuisaMadrigalMagicallyStrongOne.id,
 //     );
-//     expect(cardUnderTest.hasRush).toBe(true);
+//     Expect(cardUnderTest.hasRush).toBe(true);
 //   });
 // });
 //

@@ -3,145 +3,145 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { castleOfTheHornedKingBastionOfEvil } from "@lorcanito/lorcana-engine/cards/010/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { castleOfTheHornedKingBastionOfEvil } from "@lorcanito/lorcana-engine/cards/010/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe.skip("Castle of the Horned King - Bastion of Evil", () => {
-//   describe("Basic card properties", () => {
-//     it("should have correct basic stats", () => {
-//       expect(castleOfTheHornedKingBastionOfEvil.cost).toBe(1);
-//       expect(castleOfTheHornedKingBastionOfEvil.name).toBe(
+// Describe.skip("Castle of the Horned King - Bastion of Evil", () => {
+//   Describe("Basic card properties", () => {
+//     It("should have correct basic stats", () => {
+//       Expect(castleOfTheHornedKingBastionOfEvil.cost).toBe(1);
+//       Expect(castleOfTheHornedKingBastionOfEvil.name).toBe(
 //         "Castle of the Horned King",
 //       );
-//       expect(castleOfTheHornedKingBastionOfEvil.type).toBe("location");
-//       expect(castleOfTheHornedKingBastionOfEvil.title).toBe("Bastion of Evil");
-//       expect(castleOfTheHornedKingBastionOfEvil.willpower).toBe(5);
-//       expect(castleOfTheHornedKingBastionOfEvil.moveCost).toBe(1);
-//       expect(castleOfTheHornedKingBastionOfEvil.lore).toBe(0);
+//       Expect(castleOfTheHornedKingBastionOfEvil.type).toBe("location");
+//       Expect(castleOfTheHornedKingBastionOfEvil.title).toBe("Bastion of Evil");
+//       Expect(castleOfTheHornedKingBastionOfEvil.willpower).toBe(5);
+//       Expect(castleOfTheHornedKingBastionOfEvil.moveCost).toBe(1);
+//       Expect(castleOfTheHornedKingBastionOfEvil.lore).toBe(0);
 //     });
 //
-//     it("should be emerald location card", () => {
-//       expect(castleOfTheHornedKingBastionOfEvil.colors).toEqual(["emerald"]);
-//       expect(castleOfTheHornedKingBastionOfEvil.characteristics).toContain(
+//     It("should be emerald location card", () => {
+//       Expect(castleOfTheHornedKingBastionOfEvil.colors).toEqual(["emerald"]);
+//       Expect(castleOfTheHornedKingBastionOfEvil.characteristics).toContain(
 //         "location",
 //       );
 //     });
 //
-//     it("should be inkwell card", () => {
-//       expect(castleOfTheHornedKingBastionOfEvil.inkwell).toBe(true);
+//     It("should be inkwell card", () => {
+//       Expect(castleOfTheHornedKingBastionOfEvil.inkwell).toBe(true);
 //     });
 //
-//     it("should be rare rarity", () => {
-//       expect(castleOfTheHornedKingBastionOfEvil.rarity).toBe("rare");
+//     It("should be rare rarity", () => {
+//       Expect(castleOfTheHornedKingBastionOfEvil.rarity).toBe("rare");
 //     });
 //
-//     it("should have correct set and number", () => {
-//       expect(castleOfTheHornedKingBastionOfEvil.set).toBe("010");
-//       expect(castleOfTheHornedKingBastionOfEvil.number).toBe(170);
+//     It("should have correct set and number", () => {
+//       Expect(castleOfTheHornedKingBastionOfEvil.set).toBe("010");
+//       Expect(castleOfTheHornedKingBastionOfEvil.number).toBe(170);
 //     });
 //
-//     it("should have the correct ability text", () => {
-//       expect(castleOfTheHornedKingBastionOfEvil.text).toContain(
+//     It("should have the correct ability text", () => {
+//       Expect(castleOfTheHornedKingBastionOfEvil.text).toContain(
 //         "INTO THE GLOOM Once during your turn, whenever a character quests while here, you may ready chosen item.",
 //       );
 //     });
 //   });
 //
-//   describe("INTO THE GLOOM ability", () => {
-//     it("should be playable from hand with correct ink cost", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: castleOfTheHornedKingBastionOfEvil.cost,
-//         hand: [castleOfTheHornedKingBastionOfEvil],
+//   Describe("INTO THE GLOOM ability", () => {
+//     It("should be playable from hand with correct ink cost", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: castleOfTheHornedKingBastionOfEvil.cost,
+//         Hand: [castleOfTheHornedKingBastionOfEvil],
 //       });
 //
-//       const cardModel = testEngine.getCardModel(
-//         castleOfTheHornedKingBastionOfEvil,
+//       Const cardModel = testEngine.getCardModel(
+//         CastleOfTheHornedKingBastionOfEvil,
 //       );
 //
-//       expect(cardModel.zone).toBe("hand");
+//       Expect(cardModel.zone).toBe("hand");
 //
-//       await testEngine.playCard(castleOfTheHornedKingBastionOfEvil);
+//       Await testEngine.playCard(castleOfTheHornedKingBastionOfEvil);
 //
-//       expect(cardModel.zone).toBe("play");
-//       expect(
-//         testEngine.store.tableStore.getTable("player_one").inkAvailable(),
+//       Expect(cardModel.zone).toBe("play");
+//       Expect(
+//         TestEngine.store.tableStore.getTable("player_one").inkAvailable(),
 //       ).toBe(0);
 //     });
 //
-//     it("should be able to be used as ink", async () => {
-//       const testEngine = new TestEngine({
-//         hand: [castleOfTheHornedKingBastionOfEvil],
+//     It("should be able to be used as ink", async () => {
+//       Const testEngine = new TestEngine({
+//         Hand: [castleOfTheHornedKingBastionOfEvil],
 //       });
 //
-//       const cardModel = testEngine.getCardModel(
-//         castleOfTheHornedKingBastionOfEvil,
+//       Const cardModel = testEngine.getCardModel(
+//         CastleOfTheHornedKingBastionOfEvil,
 //       );
 //
-//       expect(cardModel.zone).toBe("hand");
-//       expect(cardModel.lorcanitoCard.inkwell).toBe(true);
+//       Expect(cardModel.zone).toBe("hand");
+//       Expect(cardModel.lorcanitoCard.inkwell).toBe(true);
 //
-//       const initialInkwellSize =
-//         testEngine.store.tableStore.getTable("player_one").zones.inkwell.cards
+//       Const initialInkwellSize =
+//         TestEngine.store.tableStore.getTable("player_one").zones.inkwell.cards
 //           .length;
 //
-//       cardModel.addToInkwell();
+//       CardModel.addToInkwell();
 //
-//       expect(cardModel.zone).toBe("inkwell");
-//       expect(
-//         testEngine.store.tableStore.getTable("player_one").zones.inkwell.cards
+//       Expect(cardModel.zone).toBe("inkwell");
+//       Expect(
+//         TestEngine.store.tableStore.getTable("player_one").zones.inkwell.cards
 //           .length,
 //       ).toBe(initialInkwellSize + 1);
 //     });
 //
-//     it("should have the INTO THE GLOOM ability properly implemented", () => {
-//       const testEngine = new TestEngine({
-//         play: [castleOfTheHornedKingBastionOfEvil],
+//     It("should have the INTO THE GLOOM ability properly implemented", () => {
+//       Const testEngine = new TestEngine({
+//         Play: [castleOfTheHornedKingBastionOfEvil],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(
-//         castleOfTheHornedKingBastionOfEvil,
+//       Const cardUnderTest = testEngine.getCardModel(
+//         CastleOfTheHornedKingBastionOfEvil,
 //       );
 //
 //       // Verify the ability is now implemented
-//       expect(cardUnderTest.lorcanitoCard.abilities?.length).toBeGreaterThan(0);
-//       expect(cardUnderTest.lorcanitoCard.notImplemented).toBeUndefined();
-//       expect(cardUnderTest.lorcanitoCard.missingTestCase).toBeUndefined();
+//       Expect(cardUnderTest.lorcanitoCard.abilities?.length).toBeGreaterThan(0);
+//       Expect(cardUnderTest.lorcanitoCard.notImplemented).toBeUndefined();
+//       Expect(cardUnderTest.lorcanitoCard.missingTestCase).toBeUndefined();
 //     });
 //
-//     it("should have correct ability structure", () => {
-//       const testEngine = new TestEngine({
-//         play: [castleOfTheHornedKingBastionOfEvil],
+//     It("should have correct ability structure", () => {
+//       Const testEngine = new TestEngine({
+//         Play: [castleOfTheHornedKingBastionOfEvil],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(
-//         castleOfTheHornedKingBastionOfEvil,
+//       Const cardUnderTest = testEngine.getCardModel(
+//         CastleOfTheHornedKingBastionOfEvil,
 //       );
-//       const ability = cardUnderTest.lorcanitoCard.abilities?.[0];
+//       Const ability = cardUnderTest.lorcanitoCard.abilities?.[0];
 //
 //       // Verify ability exists and has correct structure
-//       expect(ability).toBeDefined();
-//       if (!ability) return;
+//       Expect(ability).toBeDefined();
+//       If (!ability) return;
 //
 //       // Verify it's a static ability that grants a triggered ability while here
-//       expect((ability as any).type).toBe("static");
-//       expect((ability as any).ability).toBe("gain-ability");
-//       expect((ability as any).name).toBe("INTO THE GLOOM");
+//       Expect((ability as any).type).toBe("static");
+//       Expect((ability as any).ability).toBe("gain-ability");
+//       Expect((ability as any).name).toBe("INTO THE GLOOM");
 //
 //       // Verify the gained ability is a triggered ability
-//       const gainedAbility = (ability as any).gainedAbility;
-//       expect(gainedAbility.type).toBe("static-triggered");
+//       Const gainedAbility = (ability as any).gainedAbility;
+//       Expect(gainedAbility.type).toBe("static-triggered");
 //
 //       // Verify it's optional (may ready)
-//       expect(gainedAbility.layer.optional).toBe(true);
+//       Expect(gainedAbility.layer.optional).toBe(true);
 //
 //       // Verify the trigger is about characters questing
-//       expect(gainedAbility.trigger.on).toBe("quest");
+//       Expect(gainedAbility.trigger.on).toBe("quest");
 //
 //       // Verify the effects include readying an item (exert with false = ready)
-//       expect(gainedAbility.layer.effects).toHaveLength(1);
-//       expect(gainedAbility.layer.effects[0].type).toBe("exert");
-//       expect(gainedAbility.layer.effects[0].exert).toBe(false);
+//       Expect(gainedAbility.layer.effects).toHaveLength(1);
+//       Expect(gainedAbility.layer.effects[0].type).toBe("exert");
+//       Expect(gainedAbility.layer.effects[0].exert).toBe(false);
 //     });
 //   });
 // });

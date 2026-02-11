@@ -1,9 +1,5 @@
 import { createMove } from "@tcg/core";
-import type {
-  LorcanaCardMeta,
-  LorcanaGameState,
-  LorcanaMoveParams,
-} from "../../../types";
+import type { LorcanaCardMeta, LorcanaGameState, LorcanaMoveParams } from "../../../types";
 
 /**
  * Resolve Bag Effect
@@ -24,10 +20,7 @@ export const resolveBag = createMove<
   "resolveBag",
   LorcanaCardMeta
 >({
-  condition: (state, _context) => {
-    // Only available when there are bags to resolve
-    return state.external.bag && state.external.bag.length > 0;
-  },
+  condition: (state, _context) => state.external.bag && state.external.bag.length > 0,
   reducer: (draft, context) => {
     const { bagId } = context.params;
     draft.external.bag = draft.external.bag.filter((b) => b.id !== bagId);

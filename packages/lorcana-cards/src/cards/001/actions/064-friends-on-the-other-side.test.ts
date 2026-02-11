@@ -3,27 +3,27 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { friendsOnTheOtherSide } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { friendsOnTheOtherSide } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Friends On The Other Side", () => {
-//   it("Draw 2 cards", () => {
-//     const testStore = new TestStore({
-//       deck: 2,
-//       hand: [friendsOnTheOtherSide],
-//       inkwell: friendsOnTheOtherSide.cost,
+// Describe("Friends On The Other Side", () => {
+//   It("Draw 2 cards", () => {
+//     Const testStore = new TestStore({
+//       Deck: 2,
+//       Hand: [friendsOnTheOtherSide],
+//       Inkwell: friendsOnTheOtherSide.cost,
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "hand",
-//       friendsOnTheOtherSide.id,
+//       FriendsOnTheOtherSide.id,
 //     );
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     expect(testStore.getZonesCardCount()).toEqual(
-//       expect.objectContaining({ hand: 2, deck: 0, discard: 1 }),
+//     Expect(testStore.getZonesCardCount()).toEqual(
+//       Expect.objectContaining({ hand: 2, deck: 0, discard: 1 }),
 //     );
 //   });
 // });

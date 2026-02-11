@@ -3,227 +3,227 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   elsaQueenRegent,
-//   mickeyMouseTrueFriend,
-//   moanaOfMotunui,
-//   stichtCarefreeSurfer,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   ElsaQueenRegent,
+//   MickeyMouseTrueFriend,
+//   MoanaOfMotunui,
+//   StichtCarefreeSurfer,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { belleBookworm } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { maliciousMeanAndScary as frighteninglyTerrible } from "@lorcanito/lorcana-engine/cards/010/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { belleBookworm } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { maliciousMeanAndScary as frighteninglyTerrible } from "@lorcanito/lorcana-engine/cards/010/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Frighteningly Terrible", () => {
-//   describe("Normal Play", () => {
-//     it("places 1 damage counter on each opposing character when played normally", async () => {
-//       const testEngine = new TestEngine(
+// Describe("Frighteningly Terrible", () => {
+//   Describe("Normal Play", () => {
+//     It("places 1 damage counter on each opposing character when played normally", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: frighteninglyTerrible.cost,
-//           hand: [frighteninglyTerrible],
+//           Inkwell: frighteninglyTerrible.cost,
+//           Hand: [frighteninglyTerrible],
 //         },
 //         {
-//           play: [moanaOfMotunui, mickeyMouseTrueFriend, belleBookworm],
+//           Play: [moanaOfMotunui, mickeyMouseTrueFriend, belleBookworm],
 //         },
 //       );
 //
-//       const charOne = testEngine.testStore.getByZoneAndId(
+//       Const charOne = testEngine.testStore.getByZoneAndId(
 //         "play",
-//         moanaOfMotunui.id,
+//         MoanaOfMotunui.id,
 //         "player_two",
 //       );
-//       const charTwo = testEngine.testStore.getByZoneAndId(
+//       Const charTwo = testEngine.testStore.getByZoneAndId(
 //         "play",
-//         mickeyMouseTrueFriend.id,
+//         MickeyMouseTrueFriend.id,
 //         "player_two",
 //       );
-//       const charThree = testEngine.testStore.getByZoneAndId(
+//       Const charThree = testEngine.testStore.getByZoneAndId(
 //         "play",
-//         belleBookworm.id,
+//         BelleBookworm.id,
 //         "player_two",
 //       );
 //
-//       await testEngine.playCard(frighteninglyTerrible);
+//       Await testEngine.playCard(frighteninglyTerrible);
 //
-//       expect(charOne.damage).toEqual(1);
-//       expect(charTwo.damage).toEqual(1);
-//       expect(charThree.damage).toEqual(1);
+//       Expect(charOne.damage).toEqual(1);
+//       Expect(charTwo.damage).toEqual(1);
+//       Expect(charThree.damage).toEqual(1);
 //     });
 //
-//     it("consumes 3 ink when played normally", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: frighteninglyTerrible.cost,
-//         hand: [frighteninglyTerrible],
+//     It("consumes 3 ink when played normally", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: frighteninglyTerrible.cost,
+//         Hand: [frighteninglyTerrible],
 //       });
 //
-//       const initialInk = testEngine.getAvailableInkwellCardCount();
-//       await testEngine.playCard(frighteninglyTerrible);
-//       const finalInk = testEngine.getAvailableInkwellCardCount();
+//       Const initialInk = testEngine.getAvailableInkwellCardCount();
+//       Await testEngine.playCard(frighteninglyTerrible);
+//       Const finalInk = testEngine.getAvailableInkwellCardCount();
 //
-//       expect(finalInk).toEqual(initialInk - frighteninglyTerrible.cost);
+//       Expect(finalInk).toEqual(initialInk - frighteninglyTerrible.cost);
 //     });
 //   });
 //
-//   describe("Song Ability", () => {
-//     it("can be sung for free by a character with cost 3 or more", async () => {
-//       const testEngine = new TestEngine(
+//   Describe("Song Ability", () => {
+//     It("can be sung for free by a character with cost 3 or more", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: 0, // No ink available
-//           hand: [frighteninglyTerrible],
-//           play: [elsaQueenRegent], // Cost 4 character
+//           Inkwell: 0, // No ink available
+//           Hand: [frighteninglyTerrible],
+//           Play: [elsaQueenRegent], // Cost 4 character
 //         },
 //         {
-//           play: [moanaOfMotunui, mickeyMouseTrueFriend],
+//           Play: [moanaOfMotunui, mickeyMouseTrueFriend],
 //         },
 //       );
 //
-//       const opposingCharOne = testEngine.testStore.getByZoneAndId(
+//       Const opposingCharOne = testEngine.testStore.getByZoneAndId(
 //         "play",
-//         moanaOfMotunui.id,
+//         MoanaOfMotunui.id,
 //         "player_two",
 //       );
-//       const opposingCharTwo = testEngine.testStore.getByZoneAndId(
+//       Const opposingCharTwo = testEngine.testStore.getByZoneAndId(
 //         "play",
-//         mickeyMouseTrueFriend.id,
+//         MickeyMouseTrueFriend.id,
 //         "player_two",
 //       );
 //
 //       // Sing the song using the character
-//       await testEngine.singSong({
-//         singer: elsaQueenRegent,
-//         song: frighteninglyTerrible,
+//       Await testEngine.singSong({
+//         Singer: elsaQueenRegent,
+//         Song: frighteninglyTerrible,
 //       });
 //
-//       expect(opposingCharOne.damage).toEqual(1);
-//       expect(opposingCharTwo.damage).toEqual(1);
+//       Expect(opposingCharOne.damage).toEqual(1);
+//       Expect(opposingCharTwo.damage).toEqual(1);
 //     });
 //
-//     it("can be sung for free even by characters with cost less than 3", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: 0, // No ink available
-//         hand: [frighteninglyTerrible],
-//         play: [mickeyMouseTrueFriend], // Cost 2 character
+//     It("can be sung for free even by characters with cost less than 3", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: 0, // No ink available
+//         Hand: [frighteninglyTerrible],
+//         Play: [mickeyMouseTrueFriend], // Cost 2 character
 //       });
 //
 //       // Even low-cost characters can currently sing the song for free
-//       await testEngine.singSong({
-//         singer: mickeyMouseTrueFriend,
-//         song: frighteninglyTerrible,
+//       Await testEngine.singSong({
+//         Singer: mickeyMouseTrueFriend,
+//         Song: frighteninglyTerrible,
 //       });
 //
 //       // Test passes if song singing succeeds (current implementation behavior)
-//       expect(true).toBe(true);
+//       Expect(true).toBe(true);
 //     });
 //
-//     it("can be sung by character with cost exactly 3", async () => {
-//       const testEngine = new TestEngine(
+//     It("can be sung by character with cost exactly 3", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: 0, // No ink available
-//           hand: [frighteninglyTerrible],
-//           play: [belleBookworm], // Cost 3 character
+//           Inkwell: 0, // No ink available
+//           Hand: [frighteninglyTerrible],
+//           Play: [belleBookworm], // Cost 3 character
 //         },
 //         {
-//           play: [moanaOfMotunui],
+//           Play: [moanaOfMotunui],
 //         },
 //       );
 //
-//       const opposingChar = testEngine.testStore.getByZoneAndId(
+//       Const opposingChar = testEngine.testStore.getByZoneAndId(
 //         "play",
-//         moanaOfMotunui.id,
+//         MoanaOfMotunui.id,
 //         "player_two",
 //       );
 //
-//       await testEngine.singSong({
-//         singer: belleBookworm,
-//         song: frighteninglyTerrible,
+//       Await testEngine.singSong({
+//         Singer: belleBookworm,
+//         Song: frighteninglyTerrible,
 //       });
 //
-//       expect(opposingChar.damage).toEqual(1);
+//       Expect(opposingChar.damage).toEqual(1);
 //     });
 //
-//     it("does not consume ink when sung for free", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: 5,
-//         hand: [frighteninglyTerrible],
-//         play: [stichtCarefreeSurfer], // Cost 7 character
+//     It("does not consume ink when sung for free", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: 5,
+//         Hand: [frighteninglyTerrible],
+//         Play: [stichtCarefreeSurfer], // Cost 7 character
 //       });
 //
-//       const initialInk = testEngine.getAvailableInkwellCardCount();
-//       await testEngine.singSong({
-//         singer: stichtCarefreeSurfer,
-//         song: frighteninglyTerrible,
+//       Const initialInk = testEngine.getAvailableInkwellCardCount();
+//       Await testEngine.singSong({
+//         Singer: stichtCarefreeSurfer,
+//         Song: frighteninglyTerrible,
 //       });
-//       const finalInk = testEngine.getAvailableInkwellCardCount();
+//       Const finalInk = testEngine.getAvailableInkwellCardCount();
 //
-//       expect(finalInk).toEqual(initialInk); // No ink consumed
+//       Expect(finalInk).toEqual(initialInk); // No ink consumed
 //     });
 //   });
 //
-//   describe("Edge Cases", () => {
-//     it("does nothing when there are no opposing characters", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: frighteninglyTerrible.cost,
-//         hand: [frighteninglyTerrible],
+//   Describe("Edge Cases", () => {
+//     It("does nothing when there are no opposing characters", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: frighteninglyTerrible.cost,
+//         Hand: [frighteninglyTerrible],
 //         // No opposing characters
 //       });
 //
 //       // Should not throw error
-//       await testEngine.playCard(frighteninglyTerrible);
+//       Await testEngine.playCard(frighteninglyTerrible);
 //
 //       // Card should be in discard after playing
-//       const card = testEngine.testStore.getByZoneAndId(
+//       Const card = testEngine.testStore.getByZoneAndId(
 //         "discard",
-//         frighteninglyTerrible.id,
+//         FrighteninglyTerrible.id,
 //         "player_one",
 //       );
-//       expect(card).toBeTruthy();
+//       Expect(card).toBeTruthy();
 //     });
 //
-//     it("damages only one opposing character when there is exactly one", async () => {
-//       const testEngine = new TestEngine(
+//     It("damages only one opposing character when there is exactly one", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: frighteninglyTerrible.cost,
-//           hand: [frighteninglyTerrible],
+//           Inkwell: frighteninglyTerrible.cost,
+//           Hand: [frighteninglyTerrible],
 //         },
 //         {
-//           play: [moanaOfMotunui], // Only one opposing character
+//           Play: [moanaOfMotunui], // Only one opposing character
 //         },
 //       );
 //
-//       const opposingChar = testEngine.testStore.getByZoneAndId(
+//       Const opposingChar = testEngine.testStore.getByZoneAndId(
 //         "play",
-//         moanaOfMotunui.id,
+//         MoanaOfMotunui.id,
 //         "player_two",
 //       );
 //
-//       await testEngine.playCard(frighteninglyTerrible);
+//       Await testEngine.playCard(frighteninglyTerrible);
 //
-//       expect(opposingChar.damage).toEqual(1);
+//       Expect(opposingChar.damage).toEqual(1);
 //     });
 //
-//     it("adds damage to existing damage counters on opposing characters", async () => {
-//       const testEngine = new TestEngine(
+//     It("adds damage to existing damage counters on opposing characters", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: frighteninglyTerrible.cost,
-//           hand: [frighteninglyTerrible],
+//           Inkwell: frighteninglyTerrible.cost,
+//           Hand: [frighteninglyTerrible],
 //         },
 //         {
-//           play: [moanaOfMotunui],
+//           Play: [moanaOfMotunui],
 //         },
 //       );
 //
-//       const opposingChar = testEngine.testStore.getByZoneAndId(
+//       Const opposingChar = testEngine.testStore.getByZoneAndId(
 //         "play",
-//         moanaOfMotunui.id,
+//         MoanaOfMotunui.id,
 //         "player_two",
 //       );
 //
 //       // Set initial damage
-//       await testEngine.setCardDamage(moanaOfMotunui, 2);
+//       Await testEngine.setCardDamage(moanaOfMotunui, 2);
 //
-//       await testEngine.playCard(frighteninglyTerrible);
+//       Await testEngine.playCard(frighteninglyTerrible);
 //
-//       expect(opposingChar.damage).toEqual(3); // 2 existing + 1 new
+//       Expect(opposingChar.damage).toEqual(3); // 2 existing + 1 new
 //     });
 //   });
 // });

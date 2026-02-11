@@ -1,24 +1,8 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
 export const heWhoStealsAndRunsAway: ActionCard = {
-  id: "h00",
-  cardType: "action",
-  name: "He Who Steals and Runs Away",
-  inkType: ["emerald"],
-  franchise: "Talespin",
-  set: "008",
-  text: "Banish chosen item. Draw a card.",
-  cost: 3,
-  cardNumber: 114,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "3d45421a0885dfede8dd05b57fef4f66b00074e9",
-  },
   abilities: [
     {
-      id: "h00-1",
-      type: "action",
       effect: {
         type: "sequence",
         steps: [
@@ -39,7 +23,23 @@ export const heWhoStealsAndRunsAway: ActionCard = {
           },
         ],
       },
+      id: "h00-1",
       text: "Banish chosen item. Draw a card.",
+      type: "action",
     },
   ],
+  cardNumber: 114,
+  cardType: "action",
+  cost: 3,
+  externalIds: {
+    ravensburger: "3d45421a0885dfede8dd05b57fef4f66b00074e9",
+  },
+  franchise: "Talespin",
+  id: "h00",
+  inkType: ["emerald"],
+  inkable: true,
+  missingTests: true,
+  name: "He Who Steals and Runs Away",
+  set: "008",
+  text: "Banish chosen item. Draw a card.",
 };

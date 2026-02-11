@@ -1,27 +1,27 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { challengerAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { challengerAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
 //
-// export const iagoFurious: LorcanitoCharacterCard = {
-//   id: "snp",
-//   name: "Iago",
-//   title: "Stompin' Mad",
-//   characteristics: ["storyborn", "ally"],
-//   text: "Challenger +5",
-//   type: "character",
-//   inkwell: true,
-//   colors: ["amethyst"],
-//   cost: 2,
-//   strength: 0,
-//   willpower: 2,
-//   illustrator: "Renée Chio",
-//   number: 43,
-//   set: "010",
-//   externalIds: {
-//     tcgPlayer: 659181,
+// Export const iagoFurious: LorcanitoCharacterCard = {
+//   Id: "snp",
+//   Name: "Iago",
+//   Title: "Stompin' Mad",
+//   Characteristics: ["storyborn", "ally"],
+//   Text: "Challenger +5",
+//   Type: "character",
+//   Inkwell: true,
+//   Colors: ["amethyst"],
+//   Cost: 2,
+//   Strength: 0,
+//   Willpower: 2,
+//   Illustrator: "Renée Chio",
+//   Number: 43,
+//   Set: "010",
+//   ExternalIds: {
+//     TcgPlayer: 659181,
 //   },
-//   rarity: "uncommon",
-//   abilities: [challengerAbility(5)],
-//   lore: 1,
+//   Rarity: "uncommon",
+//   Abilities: [challengerAbility(5)],
+//   Lore: 1,
 // };
 //

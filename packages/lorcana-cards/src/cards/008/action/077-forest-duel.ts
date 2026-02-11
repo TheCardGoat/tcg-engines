@@ -1,62 +1,62 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type {
+// Import type {
 //   AbilityEffect,
 //   LorcanitoActionCard,
 // } from "@lorcanito/lorcana-engine";
-// import { yourCharacters } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { whenThisCharacterBanishedInAChallenge } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import { yourCharacters } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import { whenThisCharacterBanishedInAChallenge } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 //
-// const gainsChallenger: AbilityEffect = {
-//   type: "ability",
-//   ability: "challenger",
-//   amount: 2,
-//   modifier: "add",
-//   duration: "turn",
-//   target: yourCharacters,
+// Const gainsChallenger: AbilityEffect = {
+//   Type: "ability",
+//   Ability: "challenger",
+//   Amount: 2,
+//   Modifier: "add",
+//   Duration: "turn",
+//   Target: yourCharacters,
 // };
 //
-// const gainsReturnToHand: AbilityEffect = {
-//   type: "ability",
-//   ability: "custom",
-//   modifier: "add",
-//   duration: "turn",
-//   customAbility: whenThisCharacterBanishedInAChallenge({
-//     effects: [
+// Const gainsReturnToHand: AbilityEffect = {
+//   Type: "ability",
+//   Ability: "custom",
+//   Modifier: "add",
+//   Duration: "turn",
+//   CustomAbility: whenThisCharacterBanishedInAChallenge({
+//     Effects: [
 //       {
-//         type: "move",
-//         to: "hand",
-//         target: {
-//           type: "card",
-//           value: "all",
-//           filters: [{ filter: "source", value: "self" }],
+//         Type: "move",
+//         To: "hand",
+//         Target: {
+//           Type: "card",
+//           Value: "all",
+//           Filters: [{ filter: "source", value: "self" }],
 //         },
 //       },
 //     ],
 //   }),
-//   target: yourCharacters,
+//   Target: yourCharacters,
 // };
 //
-// export const forestDuel: LorcanitoActionCard = {
-//   id: "m3x",
-//   name: "Forest Duel",
-//   characteristics: ["action"],
-//   text: "Your characters gain Challenger +2 and 'When this character is banished in a challenge, return this card to your hand' this turn.",
-//   type: "action",
-//   abilities: [
+// Export const forestDuel: LorcanitoActionCard = {
+//   Id: "m3x",
+//   Name: "Forest Duel",
+//   Characteristics: ["action"],
+//   Text: "Your characters gain Challenger +2 and 'When this character is banished in a challenge, return this card to your hand' this turn.",
+//   Type: "action",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       effects: [gainsChallenger, gainsReturnToHand],
+//       Type: "resolution",
+//       Effects: [gainsChallenger, gainsReturnToHand],
 //     },
 //   ],
-//   inkwell: true,
-//   colors: ["amethyst"],
-//   cost: 5,
-//   illustrator: "Yr Tanner",
-//   number: 77,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631343,
+//   Inkwell: true,
+//   Colors: ["amethyst"],
+//   Cost: 5,
+//   Illustrator: "Yr Tanner",
+//   Number: 77,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631343,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

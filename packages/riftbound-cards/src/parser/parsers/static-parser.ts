@@ -5,13 +5,7 @@
  * Static abilities are always active and include keyword grants, restrictions, etc.
  */
 
-import type {
-  AnyTarget,
-  Condition,
-  Effect,
-  StaticAbility,
-  Target,
-} from "@tcg/riftbound-types";
+import type { AnyTarget, Condition, Effect, StaticAbility, Target } from "@tcg/riftbound-types";
 import { parseConditionFromText } from "./condition-parser";
 
 // ============================================================================
@@ -66,14 +60,12 @@ const LOCATION_GRANT_PATTERN = /^Units here have\s+\[(\w+(?:-\w+)?)\]\.?/i;
 /**
  * Pattern for "Your Equipment each give [KEYWORD]"
  */
-const EQUIPMENT_GIVE_PATTERN =
-  /^Your Equipment each give\s+\[(\w+(?:-\w+)?)\]\.?/i;
+const EQUIPMENT_GIVE_PATTERN = /^Your Equipment each give\s+\[(\w+(?:-\w+)?)\]\.?/i;
 
 /**
  * Pattern for "Each TYPE in ZONE has [KEYWORD]"
  */
-const EACH_TYPE_HAS_PATTERN =
-  /^Each (\w+) in your (\w+) has\s+\[(\w+(?:-\w+)?)\]\.?/i;
+const EACH_TYPE_HAS_PATTERN = /^Each (\w+) in your (\w+) has\s+\[(\w+(?:-\w+)?)\]\.?/i;
 
 /**
  * Pattern for restriction abilities
@@ -81,8 +73,7 @@ const EACH_TYPE_HAS_PATTERN =
  * - "While I'm at a battlefield, opponents can't score points"
  * - "You may play me to an open battlefield"
  */
-const RESTRICTION_PATTERN =
-  /^(While .+?),\s*(opponents can't .+|.+ can't .+)\.?$/i;
+const RESTRICTION_PATTERN = /^(While .+?),\s*(opponents can't .+|.+ can't .+)\.?$/i;
 
 /**
  * Pattern for play location abilities
@@ -146,11 +137,7 @@ function parseGrantTarget(text: string): Target {
   }
 
   // Check for controller
-  if (
-    normalized.includes("friendly") ||
-    normalized.includes("your") ||
-    normalized.includes("my")
-  ) {
+  if (normalized.includes("friendly") || normalized.includes("your") || normalized.includes("my")) {
     target.controller = "friendly";
   } else if (normalized.includes("enemy")) {
     target.controller = "enemy";
@@ -196,9 +183,7 @@ export function isStaticAbility(text: string): boolean {
 /**
  * Parse a static ability from text
  */
-export function parseStaticAbility(
-  text: string,
-): StaticAbilityParseResult | undefined {
+export function parseStaticAbility(text: string): StaticAbilityParseResult | undefined {
   const cleanText = removeReminderText(text);
 
   // Try conditional self-grant: "While I'm [Mighty], I have [Deflect]..."
@@ -216,24 +201,24 @@ export function parseStaticAbility(
       const effect: Effect =
         keywords.length === 1
           ? {
-              type: "grant-keyword",
               keyword: keywords[0],
               target: { type: "self" } as AnyTarget,
+              type: "grant-keyword",
             }
           : {
-              type: "grant-keywords",
               keywords,
               target: { type: "self" } as AnyTarget,
+              type: "grant-keywords",
             };
 
       return {
         ability: {
-          type: "static",
           condition,
           effect,
+          type: "static",
         },
-        startIndex: 0,
         endIndex: text.length,
+        startIndex: 0,
       };
     }
   }
@@ -253,24 +238,24 @@ export function parseStaticAbility(
       const effect: Effect =
         keywords.length === 1
           ? {
-              type: "grant-keyword",
               keyword: keywords[0],
               target: { type: "self" } as AnyTarget,
+              type: "grant-keyword",
             }
           : {
-              type: "grant-keywords",
               keywords,
               target: { type: "self" } as AnyTarget,
+              type: "grant-keywords",
             };
 
       return {
         ability: {
-          type: "static",
           condition,
           effect,
+          type: "static",
         },
-        startIndex: 0,
         endIndex: text.length,
+        startIndex: 0,
       };
     }
   }
@@ -282,24 +267,24 @@ export function parseStaticAbility(
     const keywords: string[] = [];
 
     // Collect all keywords from the match groups
-    if (grantMatch[2]) keywords.push(grantMatch[2]);
-    if (grantMatch[3]) keywords.push(grantMatch[3]);
-    if (grantMatch[4]) keywords.push(grantMatch[4]);
+    if (grantMatch[2]) {keywords.push(grantMatch[2]);}
+    if (grantMatch[3]) {keywords.push(grantMatch[3]);}
+    if (grantMatch[4]) {keywords.push(grantMatch[4]);}
 
     const target = parseGrantTarget(targetText);
 
     const effect: Effect =
       keywords.length === 1
-        ? { type: "grant-keyword", keyword: keywords[0], target }
-        : { type: "grant-keywords", keywords, target };
+        ? { keyword: keywords[0], target, type: "grant-keyword" }
+        : { keywords, target, type: "grant-keywords" };
 
     return {
       ability: {
-        type: "static",
         effect,
+        type: "static",
       },
-      startIndex: 0,
       endIndex: text.length,
+      startIndex: 0,
     };
   }
 
@@ -307,15 +292,15 @@ export function parseStaticAbility(
   const locationGrantMatch = LOCATION_GRANT_PATTERN.exec(cleanText);
   if (locationGrantMatch) {
     const keyword = locationGrantMatch[1];
-    const target: Target = { type: "unit", location: "here" } as Target;
+    const target: Target = { location: "here", type: "unit" } as Target;
 
     return {
       ability: {
-        type: "static",
         effect: { type: "grant-keyword", keyword, target },
+        type: "static",
       },
-      startIndex: 0,
       endIndex: text.length,
+      startIndex: 0,
     };
   }
 
@@ -326,15 +311,15 @@ export function parseStaticAbility(
 
     return {
       ability: {
-        type: "static",
         effect: {
           type: "grant-keyword",
           keyword,
           target: { type: "gear", controller: "friendly" } as Target,
         },
+        type: "static",
       },
-      startIndex: 0,
       endIndex: text.length,
+      startIndex: 0,
     };
   }
 
@@ -347,7 +332,6 @@ export function parseStaticAbility(
 
     return {
       ability: {
-        type: "static",
         effect: {
           type: "grant-keyword",
           keyword,
@@ -356,9 +340,10 @@ export function parseStaticAbility(
             location: zone.toLowerCase(),
           } as Target,
         },
+        type: "static",
       },
-      startIndex: 0,
       endIndex: text.length,
+      startIndex: 0,
     };
   }
 
@@ -374,15 +359,15 @@ export function parseStaticAbility(
     if (condition) {
       return {
         ability: {
-          type: "static",
           condition,
           effect: {
             type: "restriction",
             restriction: restrictionText,
           } as unknown as Effect,
+          type: "static",
         },
-        startIndex: 0,
         endIndex: text.length,
+        startIndex: 0,
       };
     }
   }
@@ -394,14 +379,14 @@ export function parseStaticAbility(
 
     return {
       ability: {
-        type: "static",
         effect: {
           type: "play-restriction",
           allowedLocation: locationText,
         } as unknown as Effect,
+        type: "static",
       },
-      startIndex: 0,
       endIndex: text.length,
+      startIndex: 0,
     };
   }
 
@@ -411,9 +396,7 @@ export function parseStaticAbility(
 /**
  * Parse static abilities from text with positions
  */
-export function parseStaticAbilitiesWithPositions(
-  text: string,
-): StaticAbilityParseResult[] {
+export function parseStaticAbilitiesWithPositions(text: string): StaticAbilityParseResult[] {
   const result = parseStaticAbility(text);
   return result ? [result] : [];
 }

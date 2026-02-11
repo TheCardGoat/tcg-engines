@@ -3,36 +3,36 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { liloMakingAWish } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { megaraCaptivatingCynic } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { liloMakingAWish } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { megaraCaptivatingCynic } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Megara - Captivating Cynic", () => {
-//   describe("**SHADY DEAL** When you play this character, chose and discard a card or banish this character.", () => {
-//     it("skipping the effect banishes her", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: megaraCaptivatingCynic.cost,
-//         hand: [megaraCaptivatingCynic, liloMakingAWish],
+// Describe("Megara - Captivating Cynic", () => {
+//   Describe("**SHADY DEAL** When you play this character, chose and discard a card or banish this character.", () => {
+//     It("skipping the effect banishes her", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: megaraCaptivatingCynic.cost,
+//         Hand: [megaraCaptivatingCynic, liloMakingAWish],
 //       });
 //
-//       const cardUnderTest = await testEngine.playCard(megaraCaptivatingCynic);
-//       await testEngine.skipTopOfStack();
-//       expect(cardUnderTest.zone).toEqual("discard");
+//       Const cardUnderTest = await testEngine.playCard(megaraCaptivatingCynic);
+//       Await testEngine.skipTopOfStack();
+//       Expect(cardUnderTest.zone).toEqual("discard");
 //     });
 //
-//     it("discarding chosen card of yours", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: megaraCaptivatingCynic.cost,
-//         hand: [megaraCaptivatingCynic, liloMakingAWish],
+//     It("discarding chosen card of yours", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: megaraCaptivatingCynic.cost,
+//         Hand: [megaraCaptivatingCynic, liloMakingAWish],
 //       });
 //
-//       const cardUnderTest = await testEngine.playCard(megaraCaptivatingCynic);
-//       await testEngine.acceptOptionalLayer();
-//       await testEngine.resolveTopOfStack({ targets: [liloMakingAWish] });
+//       Const cardUnderTest = await testEngine.playCard(megaraCaptivatingCynic);
+//       Await testEngine.acceptOptionalLayer();
+//       Await testEngine.resolveTopOfStack({ targets: [liloMakingAWish] });
 //
-//       expect(cardUnderTest.zone).toEqual("play");
-//       expect(testEngine.getCardZone(liloMakingAWish)).toEqual("discard");
+//       Expect(cardUnderTest.zone).toEqual("play");
+//       Expect(testEngine.getCardZone(liloMakingAWish)).toEqual("discard");
 //     });
 //   });
 // });

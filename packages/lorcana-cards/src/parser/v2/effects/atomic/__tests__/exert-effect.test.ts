@@ -151,7 +151,7 @@ describe("exertEffectParser", () => {
     it("parses 'exert chosen' without 'character' - parseFromText is lenient", () => {
       const result = exertEffectParser.parse("exert chosen");
 
-      // parseFromText pattern /exert\s+(.+?)(?:\.|,|$)/i matches anything after "exert"
+      // ParseFromText pattern /exert\s+(.+?)(?:\.|,|$)/i matches anything after "exert"
       // Only the pattern property requires "character"
       expect(result).not.toBeNull();
       expect(result?.type).toBe("exert");
@@ -172,7 +172,7 @@ describe("exertEffectParser", () => {
     it("parses 'exert character' without explicit target - parseFromText is lenient", () => {
       const result = exertEffectParser.parse("exert character");
 
-      // parseFromText pattern /exert\s+(.+?)(?:\.|,|$)/i matches "character"
+      // ParseFromText pattern /exert\s+(.+?)(?:\.|,|$)/i matches "character"
       expect(result).not.toBeNull();
       expect(result?.type).toBe("exert");
     });

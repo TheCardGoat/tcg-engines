@@ -1,52 +1,52 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import {
-//   anotherChosenCharacterOfYours,
-//   thisCharacter,
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import {
+//   AnotherChosenCharacterOfYours,
+//   ThisCharacter,
 // } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { whenYouPlayThis } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import { returnChosenCharacterWithCostLess } from "@lorcanito/lorcana-engine/effects/effects";
+// Import { whenYouPlayThis } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import { returnChosenCharacterWithCostLess } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// const doubleCross = whenYouPlayThis({
-//   name: "DOUBLE-CROSS",
-//   text: "When you play this character, you may deal 2 damage to another chosen character of yours to return chosen character with cost 2 or less to their player's hand.",
-//   optional: true,
-//   effects: [
+// Const doubleCross = whenYouPlayThis({
+//   Name: "DOUBLE-CROSS",
+//   Text: "When you play this character, you may deal 2 damage to another chosen character of yours to return chosen character with cost 2 or less to their player's hand.",
+//   Optional: true,
+//   Effects: [
 //     {
-//       type: "damage",
-//       amount: 2,
-//       target: anotherChosenCharacterOfYours,
-//       afterEffect: [
+//       Type: "damage",
+//       Amount: 2,
+//       Target: anotherChosenCharacterOfYours,
+//       AfterEffect: [
 //         {
-//           type: "create-layer-based-on-target",
-//           target: thisCharacter,
-//           effects: [returnChosenCharacterWithCostLess(2)],
+//           Type: "create-layer-based-on-target",
+//           Target: thisCharacter,
+//           Effects: [returnChosenCharacterWithCostLess(2)],
 //         },
 //       ],
 //     },
 //   ],
 // });
 //
-// export const madameMedusaDeceivingPartner: LorcanitoCharacterCard = {
-//   id: "mzj",
-//   name: "Madame Medusa",
-//   title: "Deceiving Partner",
-//   characteristics: ["storyborn", "villain"],
-//   text: "DOUBLE-CROSS When you play this character, you may deal 2 damage to another chosen character of yours to return chosen character with cost 2 or less to their player's hand.",
-//   type: "character",
-//   abilities: [doubleCross],
-//   inkwell: true,
-//   colors: ["amethyst", "ruby"],
-//   cost: 3,
-//   strength: 3,
-//   willpower: 3,
-//   illustrator: "Heidi Neuhofter",
-//   number: 47,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631382,
+// Export const madameMedusaDeceivingPartner: LorcanitoCharacterCard = {
+//   Id: "mzj",
+//   Name: "Madame Medusa",
+//   Title: "Deceiving Partner",
+//   Characteristics: ["storyborn", "villain"],
+//   Text: "DOUBLE-CROSS When you play this character, you may deal 2 damage to another chosen character of yours to return chosen character with cost 2 or less to their player's hand.",
+//   Type: "character",
+//   Abilities: [doubleCross],
+//   Inkwell: true,
+//   Colors: ["amethyst", "ruby"],
+//   Cost: 3,
+//   Strength: 3,
+//   Willpower: 3,
+//   Illustrator: "Heidi Neuhofter",
+//   Number: 47,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631382,
 //   },
-//   rarity: "uncommon",
-//   lore: 1,
+//   Rarity: "uncommon",
+//   Lore: 1,
 // };
 //

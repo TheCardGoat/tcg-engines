@@ -1,36 +1,36 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { youPayXLessToPlayNextCharThisTurn } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { youPayXLessToPlayNextCharThisTurn } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const gastonDespicableDealer: LorcanitoCharacterCard = {
-//   id: "fzz",
-//   name: "Gaston",
-//   title: "Despicable Dealer",
-//   characteristics: ["storyborn", "villain"],
-//   text: "DUBIOUS RECRUITMENT  {E} − You pay 2 {I} less for the next character you play this turn.",
-//   type: "character",
-//   abilities: [
+// Export const gastonDespicableDealer: LorcanitoCharacterCard = {
+//   Id: "fzz",
+//   Name: "Gaston",
+//   Title: "Despicable Dealer",
+//   Characteristics: ["storyborn", "villain"],
+//   Text: "DUBIOUS RECRUITMENT  {E} − You pay 2 {I} less for the next character you play this turn.",
+//   Type: "character",
+//   Abilities: [
 //     {
-//       type: "activated",
-//       name: "DUBIOUS RECRUITMENT",
-//       costs: [{ type: "exert" }],
-//       text: " {E} – You pay 2 {I} less for the next character you play this turn.",
-//       effects: [youPayXLessToPlayNextCharThisTurn(2)],
+//       Type: "activated",
+//       Name: "DUBIOUS RECRUITMENT",
+//       Costs: [{ type: "exert" }],
+//       Text: " {E} – You pay 2 {I} less for the next character you play this turn.",
+//       Effects: [youPayXLessToPlayNextCharThisTurn(2)],
 //     },
 //   ],
-//   flavour:
+//   Flavour:
 //     "Yes, yes, everything will be ready. Just make sure you do your part.",
-//   colors: ["amber"],
-//   cost: 3,
-//   strength: 2,
-//   willpower: 4,
-//   lore: 1,
-//   illustrator: "Brian Kesinger",
-//   number: 10,
-//   set: "URR",
-//   externalIds: {
-//     tcgPlayer: 550557,
+//   Colors: ["amber"],
+//   Cost: 3,
+//   Strength: 2,
+//   Willpower: 4,
+//   Lore: 1,
+//   Illustrator: "Brian Kesinger",
+//   Number: 10,
+//   Set: "URR",
+//   ExternalIds: {
+//     TcgPlayer: 550557,
 //   },
-//   rarity: "super_rare",
+//   Rarity: "super_rare",
 // };
 //

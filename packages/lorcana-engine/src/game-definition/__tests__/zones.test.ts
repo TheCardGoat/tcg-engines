@@ -123,41 +123,28 @@ describe("Lorcana Zone Configurations", () => {
       const privateZones = Object.values(lorcanaZones).filter(
         (zone) => zone.visibility === "owner",
       );
-      expect(privateZones).toHaveLength(4); // deck, hand, inkwell, limbo
+      expect(privateZones).toHaveLength(4); // Deck, hand, inkwell, limbo
     });
 
     it("should have exactly 2 public zones", () => {
-      const publicZones = Object.values(lorcanaZones).filter(
-        (zone) => zone.visibility === "all",
-      );
-      expect(publicZones).toHaveLength(2); // play, discard
+      const publicZones = Object.values(lorcanaZones).filter((zone) => zone.visibility === "all");
+      expect(publicZones).toHaveLength(2); // Play, discard
     });
 
     it("should have exactly 2 facedown zones", () => {
-      const facedownZones = Object.values(lorcanaZones).filter(
-        (zone) => zone.facedown === true,
-      );
-      expect(facedownZones).toHaveLength(2); // deck, inkwell
+      const facedownZones = Object.values(lorcanaZones).filter((zone) => zone.facedown === true);
+      expect(facedownZones).toHaveLength(2); // Deck, inkwell
     });
 
     it("should have exactly 3 ordered zones", () => {
-      const orderedZones = Object.values(lorcanaZones).filter(
-        (zone) => zone.ordered === true,
-      );
-      expect(orderedZones).toHaveLength(3); // deck, discard, limbo
+      const orderedZones = Object.values(lorcanaZones).filter((zone) => zone.ordered === true);
+      expect(orderedZones).toHaveLength(3); // Deck, discard, limbo
     });
   });
 
   describe("Zone Type Safety", () => {
     it("should type-check valid zone IDs", () => {
-      const validIds: LorcanaZoneId[] = [
-        "deck",
-        "hand",
-        "play",
-        "discard",
-        "inkwell",
-        "limbo",
-      ];
+      const validIds: LorcanaZoneId[] = ["deck", "hand", "play", "discard", "inkwell", "limbo"];
 
       for (const id of validIds) {
         expect(lorcanaZones[id]).toBeDefined();
@@ -170,7 +157,7 @@ describe("Lorcana Zone Configurations", () => {
       expect(zoneId).toBe("deck");
 
       // TypeScript should prevent this:
-      // const invalid: LorcanaZoneId = "invalid"; // Type error
+      // Const invalid: LorcanaZoneId = "invalid"; // Type error
     });
   });
 });

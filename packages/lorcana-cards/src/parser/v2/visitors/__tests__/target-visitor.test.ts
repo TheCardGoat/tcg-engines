@@ -14,9 +14,9 @@ import { describe, expect, it } from "bun:test";
 import { LorcanaAbilityParser } from "../../grammar";
 import { LorcanaLexer } from "../../lexer";
 import {
+  type Target,
   parseTargetFromCst,
   parseTargetFromText,
-  type Target,
 } from "../target-visitor";
 
 describe("Target Visitor", () => {
@@ -28,7 +28,7 @@ describe("Target Visitor", () => {
   function parseTargetClause(text: string) {
     const lexResult = LorcanaLexer.tokenize(text);
     parser.input = lexResult.tokens;
-    // biome-ignore lint/suspicious/noExplicitAny: Dynamic rule access for testing
+    // Biome-ignore lint/suspicious/noExplicitAny: Dynamic rule access for testing
     const cst = (parser as any).targetClause();
 
     if (parser.errors.length > 0) {
@@ -370,9 +370,9 @@ describe("Target Visitor", () => {
 
     it("matches target based on pattern order, not text position", () => {
       // Note: The implementation tries patterns in a specific order and returns
-      // the first match found by regex, which may not be the textually first target.
+      // The first match found by regex, which may not be the textually first target.
       // In "move chosen character to another location", the "another" pattern
-      // matches before the "chosen" pattern because of how patterns are ordered.
+      // Matches before the "chosen" pattern because of how patterns are ordered.
       const target = parseTargetFromText(
         "move chosen character to another location",
       );
@@ -385,7 +385,7 @@ describe("Target Visitor", () => {
 
     it("handles words containing target substrings", () => {
       // Note: The regex pattern (?:^|\s)(character|item|location|card)s?
-      // does NOT use word boundaries (\b), so "characterize" WILL match "character"
+      // Does NOT use word boundaries (\b), so "characterize" WILL match "character"
       // This documents current behavior - consider adding \b if this is undesired
       const target = parseTargetFromText("characterize");
 

@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { mysticalRose } from "@lorcanito/lorcana-engine/cards/004/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { mysticalRose } from "@lorcanito/lorcana-engine/cards/004/items/items";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Mystical Rose", () => {
-//   it.skip("**DISPEL THE ENTANGLEMENT** Banish this item − Chosen character named Beast gets +2 {L} this turn. If you have a character named Belle in play, move up to 3 damage counters from chosen character to chosen opposing character.", () => {
-//     const testStore = new TestStore({
-//       inkwell: mysticalRose.cost,
-//       play: [mysticalRose],
+// Describe("Mystical Rose", () => {
+//   It.skip("**DISPEL THE ENTANGLEMENT** Banish this item − Chosen character named Beast gets +2 {L} this turn. If you have a character named Belle in play, move up to 3 damage counters from chosen character to chosen opposing character.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: mysticalRose.cost,
+//       Play: [mysticalRose],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("play", mysticalRose.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("play", mysticalRose.id);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

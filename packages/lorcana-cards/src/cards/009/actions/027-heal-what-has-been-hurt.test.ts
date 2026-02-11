@@ -3,35 +3,35 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { healWhatHasBeenHurt } from "@lorcanito/lorcana-engine/cards/009/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { healWhatHasBeenHurt } from "@lorcanito/lorcana-engine/cards/009/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Heal What Has Been Hurt", () => {
-//   it.skip("(A character with cost 3 or more can {E} to sing this song for free.)", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: healWhatHasBeenHurt.cost,
-//       play: [healWhatHasBeenHurt],
-//       hand: [healWhatHasBeenHurt],
+// Describe("Heal What Has Been Hurt", () => {
+//   It.skip("(A character with cost 3 or more can {E} to sing this song for free.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: healWhatHasBeenHurt.cost,
+//       Play: [healWhatHasBeenHurt],
+//       Hand: [healWhatHasBeenHurt],
 //     });
 //
-//     await testEngine.playCard(healWhatHasBeenHurt);
+//     Await testEngine.playCard(healWhatHasBeenHurt);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 //
-//   it.skip("Remove up to 3 damage from chosen character. Draw a card.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: healWhatHasBeenHurt.cost,
-//       play: [healWhatHasBeenHurt],
-//       hand: [healWhatHasBeenHurt],
+//   It.skip("Remove up to 3 damage from chosen character. Draw a card.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: healWhatHasBeenHurt.cost,
+//       Play: [healWhatHasBeenHurt],
+//       Hand: [healWhatHasBeenHurt],
 //     });
 //
-//     await testEngine.playCard(healWhatHasBeenHurt);
+//     Await testEngine.playCard(healWhatHasBeenHurt);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

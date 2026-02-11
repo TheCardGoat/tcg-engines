@@ -1,53 +1,53 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
 export const ifItsNotBaroque: ActionCard = {
-  id: "v94",
-  cardType: "action",
-  name: "If it’s Not Baroque",
-  inkType: ["sapphire"],
-  franchise: "Beauty and the Beast",
-  set: "001",
-  text: "Return an item card from your discard to your hand.",
-  cost: 3,
-  cardNumber: 162,
-  inkable: false,
-  externalIds: {
-    ravensburger: "70a3ce5be1d7585ab65ae97f23db433fa975768b",
-  },
   abilities: [
     {
-      id: "v94-1",
-      text: "Return an item card from your discard to your hand.",
-      type: "action",
       effect: {
         type: "return-from-discard",
         cardType: "item",
         target: "CONTROLLER",
       },
+      id: "v94-1",
+      text: "Return an item card from your discard to your hand.",
+      type: "action",
     },
   ],
+  cardNumber: 162,
+  cardType: "action",
+  cost: 3,
+  externalIds: {
+    ravensburger: "70a3ce5be1d7585ab65ae97f23db433fa975768b",
+  },
+  franchise: "Beauty and the Beast",
+  id: "v94",
+  inkType: ["sapphire"],
+  inkable: false,
+  name: "If it’s Not Baroque",
+  set: "001",
+  text: "Return an item card from your discard to your hand.",
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const ifItsNotBaroque: LorcanitoActionCard = {
-//   id: "m65",
-//   name: "If It's Not Baroque",
-//   characteristics: ["action"],
-//   text: "Return an item card from your discard to your hand.",
-//   type: "action",
-//   abilities: [
+// Export const ifItsNotBaroque: LorcanitoActionCard = {
+//   Id: "m65",
+//   Name: "If It's Not Baroque",
+//   Characteristics: ["action"],
+//   Text: "Return an item card from your discard to your hand.",
+//   Type: "action",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       effects: [
+//       Type: "resolution",
+//       Effects: [
 //         {
-//           type: "move",
-//           to: "hand",
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
+//           Type: "move",
+//           To: "hand",
+//           Target: {
+//             Type: "card",
+//             Value: 1,
+//             Filters: [
 //               { filter: "type", value: "item" },
 //               { filter: "owner", value: "self" },
 //               { filter: "zone", value: "discard" },
@@ -57,15 +57,15 @@ export const ifItsNotBaroque: ActionCard = {
 //       ],
 //     },
 //   ],
-//   flavour: ". . . Don't fix it.",
-//   colors: ["sapphire"],
-//   cost: 3,
-//   illustrator: "Kenneth Anderson",
-//   number: 162,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 505980,
+//   Flavour: ". . . Don't fix it.",
+//   Colors: ["sapphire"],
+//   Cost: 3,
+//   Illustrator: "Kenneth Anderson",
+//   Number: 162,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 505980,
 //   },
-//   rarity: "rare",
+//   Rarity: "rare",
 // };
 //

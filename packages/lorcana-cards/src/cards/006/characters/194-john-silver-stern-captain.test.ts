@@ -3,40 +3,40 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { johnSilverSternCaptain } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { johnSilverSternCaptain } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("John Silver - Stern Captain", () => {
-//   it.skip("Shift 5 (You may pay 5 {I} to play this on top of one of your characters named John Silver.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [johnSilverSternCaptain],
+// Describe("John Silver - Stern Captain", () => {
+//   It.skip("Shift 5 (You may pay 5 {I} to play this on top of one of your characters named John Silver.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [johnSilverSternCaptain],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(johnSilverSternCaptain);
-//     expect(cardUnderTest.hasShift).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(johnSilverSternCaptain);
+//     Expect(cardUnderTest.hasShift).toBe(true);
 //   });
 //
-//   it.skip("Resist +2 (Damage dealt to this character is reduced by 2.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [johnSilverSternCaptain],
+//   It.skip("Resist +2 (Damage dealt to this character is reduced by 2.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [johnSilverSternCaptain],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(johnSilverSternCaptain);
-//     expect(cardUnderTest.hasResist).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(johnSilverSternCaptain);
+//     Expect(cardUnderTest.hasResist).toBe(true);
 //   });
 //
-//   it.skip("DON'T JUST SIT THERE! At the start of your turn, deal 1 damage to each opposing ready character.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: johnSilverSternCaptain.cost,
-//       play: [johnSilverSternCaptain],
-//       hand: [johnSilverSternCaptain],
+//   It.skip("DON'T JUST SIT THERE! At the start of your turn, deal 1 damage to each opposing ready character.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: johnSilverSternCaptain.cost,
+//       Play: [johnSilverSternCaptain],
+//       Hand: [johnSilverSternCaptain],
 //     });
 //
-//     await testEngine.playCard(johnSilverSternCaptain);
+//     Await testEngine.playCard(johnSilverSternCaptain);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

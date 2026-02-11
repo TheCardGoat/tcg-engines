@@ -1,59 +1,59 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const chienpoImperialSoldier: CharacterCard = {
-  id: "1m9",
-  cardType: "character",
-  name: "Chien-Po",
-  version: "Imperial Soldier",
-  fullName: "Chien-Po - Imperial Soldier",
-  inkType: ["steel"],
-  franchise: "Mulan",
-  set: "004",
-  text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
-  cost: 5,
-  strength: 4,
-  willpower: 7,
-  lore: 1,
-  cardNumber: 178,
-  inkable: true,
-  externalIds: {
-    ravensburger: "d1fd5839ad177cf9b28ff3c6336c8cb568683243",
-  },
   abilities: [
     {
       id: "1m9-1",
+      keyword: "Bodyguard",
       text: "Bodyguard",
       type: "keyword",
-      keyword: "Bodyguard",
     },
   ],
+  cardNumber: 178,
+  cardType: "character",
   classifications: ["Storyborn", "Ally"],
+  cost: 5,
+  externalIds: {
+    ravensburger: "d1fd5839ad177cf9b28ff3c6336c8cb568683243",
+  },
+  franchise: "Mulan",
+  fullName: "Chien-Po - Imperial Soldier",
+  id: "1m9",
+  inkType: ["steel"],
+  inkable: true,
+  lore: 1,
+  name: "Chien-Po",
+  set: "004",
+  strength: 4,
+  text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
+  version: "Imperial Soldier",
+  willpower: 7,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { bodyguardAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { bodyguardAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
 //
-// export const chienPoImperialSoldier: LorcanitoCharacterCard = {
-//   id: "ml5",
-//   name: "Chien-Po",
-//   title: "Imperial Soldier",
-//   characteristics: ["storyborn", "ally"],
-//   text: "**Bodyguard** _(This character may enter play exerted. An opposing character who challenges one of your characters must chose one with Bodyguard if able.)_",
-//   type: "character",
-//   abilities: [bodyguardAbility],
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 5,
-//   strength: 4,
-//   willpower: 7,
-//   lore: 1,
-//   illustrator: "Michela Cacciatore / Giulia Priori",
-//   number: 178,
-//   set: "URR",
-//   externalIds: {
-//     tcgPlayer: 548194,
+// Export const chienPoImperialSoldier: LorcanitoCharacterCard = {
+//   Id: "ml5",
+//   Name: "Chien-Po",
+//   Title: "Imperial Soldier",
+//   Characteristics: ["storyborn", "ally"],
+//   Text: "**Bodyguard** _(This character may enter play exerted. An opposing character who challenges one of your characters must chose one with Bodyguard if able.)_",
+//   Type: "character",
+//   Abilities: [bodyguardAbility],
+//   Inkwell: true,
+//   Colors: ["steel"],
+//   Cost: 5,
+//   Strength: 4,
+//   Willpower: 7,
+//   Lore: 1,
+//   Illustrator: "Michela Cacciatore / Giulia Priori",
+//   Number: 178,
+//   Set: "URR",
+//   ExternalIds: {
+//     TcgPlayer: 548194,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

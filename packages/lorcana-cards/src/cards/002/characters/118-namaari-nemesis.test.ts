@@ -3,36 +3,36 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   goofyKnightForADay,
-//   namaariNemesis,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   GoofyKnightForADay,
+//   NamaariNemesis,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Namaari - Nemesis", () => {
-//   it("**THIS SHOULDN'T TAKE LONG** {E}, Banish this character − Banish chosen character.", () => {
-//     const testStore = new TestStore(
+// Describe("Namaari - Nemesis", () => {
+//   It("**THIS SHOULDN'T TAKE LONG** {E}, Banish this character − Banish chosen character.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         play: [namaariNemesis],
+//         Play: [namaariNemesis],
 //       },
 //       {
-//         play: [goofyKnightForADay],
+//         Play: [goofyKnightForADay],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId("play", namaariNemesis.id);
-//     const target = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId("play", namaariNemesis.id);
+//     Const target = testStore.getByZoneAndId(
 //       "play",
-//       goofyKnightForADay.id,
+//       GoofyKnightForADay.id,
 //       "player_two",
 //     );
 //
-//     cardUnderTest.activate();
+//     CardUnderTest.activate();
 //
-//     testStore.resolveTopOfStack({ targets: [target] });
-//     expect(target.zone).toBe("discard");
-//     expect(cardUnderTest.zone).toBe("discard");
+//     TestStore.resolveTopOfStack({ targets: [target] });
+//     Expect(target.zone).toBe("discard");
+//     Expect(cardUnderTest.zone).toBe("discard");
 //   });
 // });
 //

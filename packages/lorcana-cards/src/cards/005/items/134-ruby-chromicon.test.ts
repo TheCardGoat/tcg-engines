@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { rubyChromicon } from "@lorcanito/lorcana-engine/cards/005/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { rubyChromicon } from "@lorcanito/lorcana-engine/cards/005/items/items";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Ruby Chromicon", () => {
-//   it.skip("**RUBY LIGHT** {E} − Chosen character gets +1 {S} this turn.", () => {
-//     const testStore = new TestStore({
-//       inkwell: rubyChromicon.cost,
-//       play: [rubyChromicon],
+// Describe("Ruby Chromicon", () => {
+//   It.skip("**RUBY LIGHT** {E} − Chosen character gets +1 {S} this turn.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: rubyChromicon.cost,
+//       Play: [rubyChromicon],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(rubyChromicon);
+//     Const cardUnderTest = testStore.getCard(rubyChromicon);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

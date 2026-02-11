@@ -1,36 +1,36 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { whenYouPlayThis } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import { dealDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import { whenYouPlayThis } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import { dealDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const dumptruckKarnagesSecondMate: LorcanitoCharacterCard = {
-//   id: "dn9",
-//   name: "Dumptruck",
-//   title: "Karnage's Second Mate",
-//   characteristics: ["storyborn", "ally", "pirate"],
-//   text: "LET ME AT 'EM When you play this character, you may deal 1 damage to chosen character.",
-//   type: "character",
-//   abilities: [
-//     whenYouPlayThis({
-//       name: "LET ME AT 'EM",
-//       text: "When you play this character, you may deal 1 damage to chosen character.",
-//       optional: true,
-//       effects: [dealDamageEffect(1, chosenCharacter)],
+// Export const dumptruckKarnagesSecondMate: LorcanitoCharacterCard = {
+//   Id: "dn9",
+//   Name: "Dumptruck",
+//   Title: "Karnage's Second Mate",
+//   Characteristics: ["storyborn", "ally", "pirate"],
+//   Text: "LET ME AT 'EM When you play this character, you may deal 1 damage to chosen character.",
+//   Type: "character",
+//   Abilities: [
+//     WhenYouPlayThis({
+//       Name: "LET ME AT 'EM",
+//       Text: "When you play this character, you may deal 1 damage to chosen character.",
+//       Optional: true,
+//       Effects: [dealDamageEffect(1, chosenCharacter)],
 //     }),
 //   ],
-//   inkwell: false,
-//   colors: ["steel"],
-//   cost: 1,
-//   strength: 0,
-//   willpower: 1,
-//   illustrator: "Adam Fenton",
-//   number: 185,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631770,
+//   Inkwell: false,
+//   Colors: ["steel"],
+//   Cost: 1,
+//   Strength: 0,
+//   Willpower: 1,
+//   Illustrator: "Adam Fenton",
+//   Number: 185,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631770,
 //   },
-//   rarity: "common",
-//   lore: 1,
+//   Rarity: "common",
+//   Lore: 1,
 // };
 //

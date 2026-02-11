@@ -1,9 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it } from "bun:test";
-import {
-  LorcanaTestEngine,
-  PLAYER_ONE,
-  PLAYER_TWO,
-} from "../../testing/lorcana-test-engine";
+import { LorcanaTestEngine, PLAYER_ONE, PLAYER_TWO } from "../../testing/lorcana-test-engine";
 
 describe("Move Enumeration Integration", () => {
   describe("Phase Transition Integration", () => {
@@ -11,8 +7,8 @@ describe("Move Enumeration Integration", () => {
 
     beforeEach(() => {
       testEngine = new LorcanaTestEngine(
-        { hand: 7, deck: 10 },
-        { hand: 7, deck: 10 },
+        { deck: 10, hand: 7 },
+        { deck: 10, hand: 7 },
         { skipPreGame: false },
       );
     });
@@ -26,9 +22,7 @@ describe("Move Enumeration Integration", () => {
       expect(testEngine.getGamePhase()).toBe("chooseFirstPlayer");
 
       const choosingPlayer = testEngine.getCtx().choosingFirstPlayer;
-      let availableMoves = testEngine.getAvailableMoves(
-        choosingPlayer || PLAYER_ONE,
-      );
+      let availableMoves = testEngine.getAvailableMoves(choosingPlayer || PLAYER_ONE);
 
       // Should have chooseWhoGoesFirstMove available
       expect(availableMoves).toContain("chooseWhoGoesFirstMove");
@@ -63,13 +57,10 @@ describe("Move Enumeration Integration", () => {
 
     it("should show different available moves for different players", () => {
       const choosingPlayer = testEngine.getCtx().choosingFirstPlayer;
-      const otherPlayer =
-        choosingPlayer === PLAYER_ONE ? PLAYER_TWO : PLAYER_ONE;
+      const otherPlayer = choosingPlayer === PLAYER_ONE ? PLAYER_TWO : PLAYER_ONE;
 
       // Choosing player should see chooseWhoGoesFirstMove
-      const chooserMoves = testEngine.getAvailableMoves(
-        choosingPlayer || PLAYER_ONE,
-      );
+      const chooserMoves = testEngine.getAvailableMoves(choosingPlayer || PLAYER_ONE);
       expect(chooserMoves).toContain("chooseWhoGoesFirstMove");
 
       // Other player should see no moves
@@ -81,9 +72,7 @@ describe("Move Enumeration Integration", () => {
       const choosingPlayer = testEngine.getCtx().choosingFirstPlayer;
 
       // Before choosing - only chooser has moves
-      const chooserMoves = testEngine.getAvailableMoves(
-        choosingPlayer || PLAYER_ONE,
-      );
+      const chooserMoves = testEngine.getAvailableMoves(choosingPlayer || PLAYER_ONE);
       expect(chooserMoves.length).toBeGreaterThan(0);
 
       // Choose first player
@@ -105,8 +94,8 @@ describe("Move Enumeration Integration", () => {
 
     beforeEach(() => {
       testEngine = new LorcanaTestEngine(
-        { hand: 7, deck: 10 },
-        { hand: 7, deck: 10 },
+        { deck: 10, hand: 7 },
+        { deck: 10, hand: 7 },
         { skipPreGame: false },
       );
     });
@@ -117,13 +106,10 @@ describe("Move Enumeration Integration", () => {
 
     it("should enumerate different moves for each player simultaneously", () => {
       const choosingPlayer = testEngine.getCtx().choosingFirstPlayer;
-      const otherPlayer =
-        choosingPlayer === PLAYER_ONE ? PLAYER_TWO : PLAYER_ONE;
+      const otherPlayer = choosingPlayer === PLAYER_ONE ? PLAYER_TWO : PLAYER_ONE;
 
       // Get moves for both players at the same time
-      const chooserMoves = testEngine.getAvailableMoves(
-        choosingPlayer || PLAYER_ONE,
-      );
+      const chooserMoves = testEngine.getAvailableMoves(choosingPlayer || PLAYER_ONE);
       const otherPlayerMoves = testEngine.getAvailableMoves(otherPlayer);
 
       // Chooser has moves, other doesn't
@@ -140,9 +126,7 @@ describe("Move Enumeration Integration", () => {
 
       // Call enumeration multiple times rapidly
       for (let i = 0; i < 10; i++) {
-        const moves = testEngine.getAvailableMoves(
-          choosingPlayer || PLAYER_ONE,
-        );
+        const moves = testEngine.getAvailableMoves(choosingPlayer || PLAYER_ONE);
         expect(moves).toContain("chooseWhoGoesFirstMove");
       }
 
@@ -156,8 +140,8 @@ describe("Move Enumeration Integration", () => {
 
     beforeEach(() => {
       testEngine = new LorcanaTestEngine(
-        { hand: 7, deck: 10 },
-        { hand: 7, deck: 10 },
+        { deck: 10, hand: 7 },
+        { deck: 10, hand: 7 },
         { skipPreGame: false },
       );
     });
@@ -168,8 +152,7 @@ describe("Move Enumeration Integration", () => {
 
     it("should handle enumeration for player with no available moves", () => {
       const choosingPlayer = testEngine.getCtx().choosingFirstPlayer;
-      const otherPlayer =
-        choosingPlayer === PLAYER_ONE ? PLAYER_TWO : PLAYER_ONE;
+      const otherPlayer = choosingPlayer === PLAYER_ONE ? PLAYER_TWO : PLAYER_ONE;
 
       // Other player has no moves during chooseFirstPlayer phase
       const moves = testEngine.getAvailableMoves(otherPlayer);
@@ -222,8 +205,8 @@ describe("Move Enumeration Integration", () => {
 
     beforeEach(() => {
       testEngine = new LorcanaTestEngine(
-        { hand: 7, deck: 10 },
-        { hand: 7, deck: 10 },
+        { deck: 10, hand: 7 },
+        { deck: 10, hand: 7 },
         { skipPreGame: false },
       );
     });

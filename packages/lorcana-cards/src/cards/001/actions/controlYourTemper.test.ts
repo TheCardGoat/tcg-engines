@@ -5,9 +5,9 @@ import { controlYourTemperundefined } from "./controlYourTemper";
 describe("Control Your Temper! - undefined", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [controlYourTemper] });
-  //   expect(testEngine.getCardModel(controlYourTemper).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [controlYourTemper] });
+  //   Expect(testEngine.getCardModel(controlYourTemper).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });

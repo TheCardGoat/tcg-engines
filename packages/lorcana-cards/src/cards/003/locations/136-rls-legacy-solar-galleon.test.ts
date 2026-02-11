@@ -3,49 +3,49 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   liloMakingAWish,
-//   stichtNewDog,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   LiloMakingAWish,
+//   StichtNewDog,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { rlsLegacySolarGalleon } from "@lorcanito/lorcana-engine/cards/003/locations/locations";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { rlsLegacySolarGalleon } from "@lorcanito/lorcana-engine/cards/003/locations/locations";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("RLS Legacy - Solar Galleon", () => {
-//   it("**THIS IS OUR SHIP** Characters gain **Evasive** while here. _(Only characters with Evasive can challenge them.)_", () => {
-//     const testStore = new TestStore({
-//       inkwell: rlsLegacySolarGalleon.moveCost,
-//       play: [rlsLegacySolarGalleon, liloMakingAWish],
+// Describe("RLS Legacy - Solar Galleon", () => {
+//   It("**THIS IS OUR SHIP** Characters gain **Evasive** while here. _(Only characters with Evasive can challenge them.)_", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: rlsLegacySolarGalleon.moveCost,
+//       Play: [rlsLegacySolarGalleon, liloMakingAWish],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(rlsLegacySolarGalleon);
-//     const lilo = testStore.getCard(liloMakingAWish);
+//     Const cardUnderTest = testStore.getCard(rlsLegacySolarGalleon);
+//     Const lilo = testStore.getCard(liloMakingAWish);
 //
-//     expect(lilo.hasEvasive).toBe(false);
+//     Expect(lilo.hasEvasive).toBe(false);
 //
-//     lilo.enterLocation(cardUnderTest);
+//     Lilo.enterLocation(cardUnderTest);
 //
-//     expect(lilo.hasEvasive).toBe(true);
+//     Expect(lilo.hasEvasive).toBe(true);
 //   });
 //
-//   it("**HEAVE TOGETHER NOW** If you have a character here, you pay 2 {I} less to move a character of yours here.", () => {
-//     const testStore = new TestStore({
-//       inkwell: rlsLegacySolarGalleon.moveCost + 1,
-//       play: [rlsLegacySolarGalleon, liloMakingAWish, stichtNewDog],
+//   It("**HEAVE TOGETHER NOW** If you have a character here, you pay 2 {I} less to move a character of yours here.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: rlsLegacySolarGalleon.moveCost + 1,
+//       Play: [rlsLegacySolarGalleon, liloMakingAWish, stichtNewDog],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(rlsLegacySolarGalleon);
-//     const lilo = testStore.getCard(liloMakingAWish);
-//     const sticht = testStore.getCard(stichtNewDog);
+//     Const cardUnderTest = testStore.getCard(rlsLegacySolarGalleon);
+//     Const lilo = testStore.getCard(liloMakingAWish);
+//     Const sticht = testStore.getCard(stichtNewDog);
 //
-//     expect(cardUnderTest.moveCost).toBe(rlsLegacySolarGalleon.moveCost);
+//     Expect(cardUnderTest.moveCost).toBe(rlsLegacySolarGalleon.moveCost);
 //
-//     lilo.enterLocation(cardUnderTest);
-//     sticht.enterLocation(cardUnderTest);
+//     Lilo.enterLocation(cardUnderTest);
+//     Sticht.enterLocation(cardUnderTest);
 //
-//     expect(lilo.isAtLocation(cardUnderTest)).toBe(true);
-//     expect(cardUnderTest.moveCost).toBe(rlsLegacySolarGalleon.moveCost - 2);
-//     expect(sticht.isAtLocation(cardUnderTest)).toBe(true);
+//     Expect(lilo.isAtLocation(cardUnderTest)).toBe(true);
+//     Expect(cardUnderTest.moveCost).toBe(rlsLegacySolarGalleon.moveCost - 2);
+//     Expect(sticht.isAtLocation(cardUnderTest)).toBe(true);
 //   });
 // });
 //

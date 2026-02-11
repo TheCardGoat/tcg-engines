@@ -3,31 +3,31 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   vanellopeVonSchweetzSpunkySpeedster,
-//   wreckitRalphBackSeatDriver,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   VanellopeVonSchweetzSpunkySpeedster,
+//   WreckitRalphBackSeatDriver,
 // } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Wreck-it Ralph - Back Seat Driver", () => {
-//   it("CHARGED UP When you play this character, chosen Racer character gets +4 {S} this turn.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: wreckitRalphBackSeatDriver.cost,
-//       hand: [wreckitRalphBackSeatDriver],
-//       play: [vanellopeVonSchweetzSpunkySpeedster],
+// Describe("Wreck-it Ralph - Back Seat Driver", () => {
+//   It("CHARGED UP When you play this character, chosen Racer character gets +4 {S} this turn.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: wreckitRalphBackSeatDriver.cost,
+//       Hand: [wreckitRalphBackSeatDriver],
+//       Play: [vanellopeVonSchweetzSpunkySpeedster],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(wreckitRalphBackSeatDriver);
-//     const targetCard = testEngine.getCardModel(
-//       vanellopeVonSchweetzSpunkySpeedster,
+//     Const cardUnderTest = testEngine.getCardModel(wreckitRalphBackSeatDriver);
+//     Const targetCard = testEngine.getCardModel(
+//       VanellopeVonSchweetzSpunkySpeedster,
 //     );
 //
-//     await testEngine.playCard(cardUnderTest);
-//     await testEngine.resolveTopOfStack({ targets: [targetCard] });
+//     Await testEngine.playCard(cardUnderTest);
+//     Await testEngine.resolveTopOfStack({ targets: [targetCard] });
 //
-//     expect(targetCard.strength).toEqual(
-//       vanellopeVonSchweetzSpunkySpeedster?.strength + 4,
+//     Expect(targetCard.strength).toEqual(
+//       VanellopeVonSchweetzSpunkySpeedster?.strength + 4,
 //     );
 //   });
 // });

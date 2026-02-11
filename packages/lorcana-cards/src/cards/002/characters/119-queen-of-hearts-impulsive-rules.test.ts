@@ -3,26 +3,26 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { queenOfHeartsImpulsiveRuler } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { queenOfHeartsImpulsiveRuler } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Queen of Hearts - Impulsive Rules", () => {
-//   it.skip("", () => {
-//     const testStore = new TestStore({
-//       inkwell: queenOfHeartsImpulsiveRuler.cost,
+// Describe("Queen of Hearts - Impulsive Rules", () => {
+//   It.skip("", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: queenOfHeartsImpulsiveRuler.cost,
 //
-//       play: [queenOfHeartsImpulsiveRuler],
+//       Play: [queenOfHeartsImpulsiveRuler],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       queenOfHeartsImpulsiveRuler.id,
+//       QueenOfHeartsImpulsiveRuler.id,
 //     );
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

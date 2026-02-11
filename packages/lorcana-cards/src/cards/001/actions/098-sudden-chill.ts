@@ -1,61 +1,61 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
 export const suddenChill: ActionCard = {
-  id: "pz4",
-  cardType: "action",
-  name: "Sudden Chill",
-  inkType: ["emerald"],
-  franchise: "Disney",
-  set: "001",
-  text: "Each opponent chooses and discards a card.",
-  cost: 2,
-  actionSubtype: "song",
-  cardNumber: 98,
-  inkable: true,
-  externalIds: {
-    ravensburger: "",
-  },
   abilities: [
     {
-      type: "action",
-      text: "Each opponent chooses and discards a card.",
-      id: "pz4-1",
       effect: {
         type: "discard",
         amount: 1,
         target: "EACH_OPPONENT",
         chosen: true,
       },
+      id: "pz4-1",
+      text: "Each opponent chooses and discards a card.",
+      type: "action",
     },
   ],
+  actionSubtype: "song",
+  cardNumber: 98,
+  cardType: "action",
+  cost: 2,
+  externalIds: {
+    ravensburger: "",
+  },
+  franchise: "Disney",
+  id: "pz4",
+  inkType: ["emerald"],
+  inkable: true,
+  name: "Sudden Chill",
+  set: "001",
+  text: "Each opponent chooses and discards a card.",
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const suddenChill: LorcanitoActionCard = {
-//   id: "pz4",
-//   reprints: ["f3l"],
-//   name: "Sudden Chill",
-//   characteristics: ["action", "song"],
-//   text: "Each opponent chooses and discards a card.",
-//   type: "action",
-//   abilities: [
+// Export const suddenChill: LorcanitoActionCard = {
+//   Id: "pz4",
+//   Reprints: ["f3l"],
+//   Name: "Sudden Chill",
+//   Characteristics: ["action", "song"],
+//   Text: "Each opponent chooses and discards a card.",
+//   Type: "action",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       name: "Sudden Chill",
-//       text: "Each opponent chooses and discards a card.",
-//       optional: false,
-//       responder: "opponent",
-//       resolveImmediately: true,
-//       effects: [
+//       Type: "resolution",
+//       Name: "Sudden Chill",
+//       Text: "Each opponent chooses and discards a card.",
+//       Optional: false,
+//       Responder: "opponent",
+//       ResolveImmediately: true,
+//       Effects: [
 //         {
-//           type: "discard",
-//           amount: 1,
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
+//           Type: "discard",
+//           Amount: 1,
+//           Target: {
+//             Type: "card",
+//             Value: 1,
+//             Filters: [
 //               { filter: "zone", value: "hand" },
 //               { filter: "owner", value: "self" },
 //             ],
@@ -64,17 +64,17 @@ export const suddenChill: ActionCard = {
 //       ],
 //     },
 //   ],
-//   flavour:
+//   Flavour:
 //     "Cruella De Vil, Cruella De Vil \nIf she doesn't scare you, no evil thing will",
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 2,
-//   illustrator: "Giulia Riva",
-//   number: 98,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 508346,
+//   Inkwell: true,
+//   Colors: ["emerald"],
+//   Cost: 2,
+//   Illustrator: "Giulia Riva",
+//   Number: 98,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 508346,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

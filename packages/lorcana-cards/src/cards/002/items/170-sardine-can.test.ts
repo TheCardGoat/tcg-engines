@@ -3,40 +3,40 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   cruellaDeVilPerfectlyWretched,
-//   gastonIntellectualPowerhouse,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   CruellaDeVilPerfectlyWretched,
+//   GastonIntellectualPowerhouse,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { sardineCan } from "@lorcanito/lorcana-engine/cards/002/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { sardineCan } from "@lorcanito/lorcana-engine/cards/002/items/items";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Sardine Can", () => {
-//   it("**FLIGHT CABIN** Your exerted characters gain **Ward**. _(Opponents can’t choose them except to challenge.)_", () => {
-//     const testStore = new TestStore({
-//       play: [
-//         sardineCan,
-//         gastonIntellectualPowerhouse,
-//         cruellaDeVilPerfectlyWretched,
+// Describe("Sardine Can", () => {
+//   It("**FLIGHT CABIN** Your exerted characters gain **Ward**. _(Opponents can’t choose them except to challenge.)_", () => {
+//     Const testStore = new TestStore({
+//       Play: [
+//         SardineCan,
+//         GastonIntellectualPowerhouse,
+//         CruellaDeVilPerfectlyWretched,
 //       ],
 //     });
 //
-//     const target = testStore.getByZoneAndId(
+//     Const target = testStore.getByZoneAndId(
 //       "play",
-//       gastonIntellectualPowerhouse.id,
+//       GastonIntellectualPowerhouse.id,
 //     );
-//     const anotherTarget = testStore.getByZoneAndId(
+//     Const anotherTarget = testStore.getByZoneAndId(
 //       "play",
-//       cruellaDeVilPerfectlyWretched.id,
+//       CruellaDeVilPerfectlyWretched.id,
 //     );
 //
 //     [target, anotherTarget].forEach((character) => {
-//       expect(character.hasWard).toBe(false);
+//       Expect(character.hasWard).toBe(false);
 //     });
 //
 //     [target, anotherTarget].forEach((character) => {
-//       character.updateCardMeta({ exerted: true });
-//       expect(character.hasWard).toBe(true);
+//       Character.updateCardMeta({ exerted: true });
+//       Expect(character.hasWard).toBe(true);
 //     });
 //   });
 // });

@@ -77,30 +77,21 @@ export const Targets = {
   }),
 
   // Controller-specific targets
-  friendly: (
-    cardType: CardType,
-    opts?: Partial<Omit<Target, "type" | "controller">>,
-  ): Target => ({
-    type: cardType,
+  friendly: (cardType: CardType, opts?: Partial<Omit<Target, "type" | "controller">>): Target => ({
     controller: "friendly",
+    type: cardType,
     ...opts,
   }),
 
-  enemy: (
-    cardType: CardType,
-    opts?: Partial<Omit<Target, "type" | "controller">>,
-  ): Target => ({
-    type: cardType,
+  enemy: (cardType: CardType, opts?: Partial<Omit<Target, "type" | "controller">>): Target => ({
     controller: "enemy",
+    type: cardType,
     ...opts,
   }),
 
-  any: (
-    cardType: CardType,
-    opts?: Partial<Omit<Target, "type" | "controller">>,
-  ): Target => ({
-    type: cardType,
+  any: (cardType: CardType, opts?: Partial<Omit<Target, "type" | "controller">>): Target => ({
     controller: "any",
+    type: cardType,
     ...opts,
   }),
 
@@ -115,35 +106,33 @@ export const Targets = {
     Targets.any("unit", opts),
 
   // Location-specific targets
-  unitAtBattlefield: (
-    opts?: Partial<Omit<Target, "type" | "location">>,
-  ): Target => ({
-    type: "unit",
+  unitAtBattlefield: (opts?: Partial<Omit<Target, "type" | "location">>): Target => ({
     location: "battlefield",
+    type: "unit",
     ...opts,
   }),
 
   unitHere: (opts?: Partial<Omit<Target, "type" | "location">>): Target => ({
-    type: "unit",
     location: "here",
+    type: "unit",
     ...opts,
   }),
 
   unitInBase: (opts?: Partial<Omit<Target, "type" | "location">>): Target => ({
-    type: "unit",
     location: "base",
+    type: "unit",
     ...opts,
   }),
 
   unitInTrash: (opts?: Partial<Omit<Target, "type" | "location">>): Target => ({
-    type: "unit",
     location: "trash",
+    type: "unit",
     ...opts,
   }),
 
   gearInTrash: (opts?: Partial<Omit<Target, "type" | "location">>): Target => ({
-    type: "gear",
     location: "trash",
+    type: "gear",
     ...opts,
   }),
 

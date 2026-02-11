@@ -3,35 +3,35 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { seekingTheHalfCrown } from "@lorcanito/lorcana-engine/cards/006/actions/actions";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { seekingTheHalfCrown } from "@lorcanito/lorcana-engine/cards/006/actions/actions";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Seeking The Half Crown", () => {
-//   it.skip("For each Sorcerer character you have in play, you pay 1 {I} less to play this action.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: seekingTheHalfCrown.cost,
-//       play: [seekingTheHalfCrown],
-//       hand: [seekingTheHalfCrown],
+// Describe("Seeking The Half Crown", () => {
+//   It.skip("For each Sorcerer character you have in play, you pay 1 {I} less to play this action.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: seekingTheHalfCrown.cost,
+//       Play: [seekingTheHalfCrown],
+//       Hand: [seekingTheHalfCrown],
 //     });
 //
-//     await testEngine.playCard(seekingTheHalfCrown);
+//     Await testEngine.playCard(seekingTheHalfCrown);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 //
-//   it.skip("Draw 2 cards.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: seekingTheHalfCrown.cost,
-//       play: [seekingTheHalfCrown],
-//       hand: [seekingTheHalfCrown],
+//   It.skip("Draw 2 cards.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: seekingTheHalfCrown.cost,
+//       Play: [seekingTheHalfCrown],
+//       Hand: [seekingTheHalfCrown],
 //     });
 //
-//     await testEngine.playCard(seekingTheHalfCrown);
+//     Await testEngine.playCard(seekingTheHalfCrown);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

@@ -28,9 +28,7 @@ import { type ZodObject, type ZodRawShape, z } from "zod";
  * type Card = z.infer<typeof cardSchema>;
  * ```
  */
-export function createCardSchema<T extends ZodRawShape>(
-  shape: T,
-): ZodObject<T> {
+export function createCardSchema<T extends ZodRawShape>(shape: T): ZodObject<T> {
   return z.object(shape);
 }
 
@@ -87,23 +85,18 @@ export function mergeSchemas<T extends ZodRawShape, U extends ZodRawShape>(
   schema2: ZodObject<U>,
 ): any;
 
-export function mergeSchemas<
-  T extends ZodRawShape,
-  U extends ZodRawShape,
-  V extends ZodRawShape,
->(schema1: ZodObject<T>, schema2: ZodObject<U>, schema3: ZodObject<V>): any;
+export function mergeSchemas<T extends ZodRawShape, U extends ZodRawShape, V extends ZodRawShape>(
+  schema1: ZodObject<T>,
+  schema2: ZodObject<U>,
+  schema3: ZodObject<V>,
+): any;
 
 export function mergeSchemas<
   T extends ZodRawShape,
   U extends ZodRawShape,
   V extends ZodRawShape,
   W extends ZodRawShape,
->(
-  schema1: ZodObject<T>,
-  schema2: ZodObject<U>,
-  schema3: ZodObject<V>,
-  schema4: ZodObject<W>,
-): any;
+>(schema1: ZodObject<T>, schema2: ZodObject<U>, schema3: ZodObject<V>, schema4: ZodObject<W>): any;
 
 export function mergeSchemas(...schemas: ZodObject<ZodRawShape>[]): any {
   if (schemas.length < 2) {
@@ -170,9 +163,7 @@ export function composeSchemas(schemas: z.ZodType[]): any {
  * // Now id, name, and type are all optional
  * ```
  */
-export function createOptionalSchema<T extends ZodRawShape>(
-  schema: ZodObject<T>,
-): any {
+export function createOptionalSchema<T extends ZodRawShape>(schema: ZodObject<T>): any {
   return schema.partial();
 }
 
@@ -322,10 +313,10 @@ export function createRefinedSchema<T extends z.ZodTypeAny>(
  */
 export function createMultiRefinedSchema<T extends z.ZodTypeAny>(
   baseSchema: T,
-  refinements: Array<{
+  refinements: {
     check: (val: z.infer<T>) => boolean;
     message: string;
-  }>,
+  }[],
 ): any {
   let schema: any = baseSchema;
 

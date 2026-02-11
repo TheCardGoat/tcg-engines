@@ -3,37 +3,37 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { lefouInstigator } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import {
-//   argesTheCyclops,
-//   lefouOpportunisticFlunky,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { lefouInstigator } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import {
+//   ArgesTheCyclops,
+//   LefouOpportunisticFlunky,
 // } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Lefou - Opportunistic Flunky", () => {
-//   it("**I LEARNED FROM THE BEST** During your turn, you may play this character for free if an opposing character was banished in a challenge this turn.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Lefou - Opportunistic Flunky", () => {
+//   It("**I LEARNED FROM THE BEST** During your turn, you may play this character for free if an opposing character was banished in a challenge this turn.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         play: [lefouOpportunisticFlunky, lefouInstigator],
+//         Play: [lefouOpportunisticFlunky, lefouInstigator],
 //       },
 //       {
-//         play: [argesTheCyclops],
+//         Play: [argesTheCyclops],
 //       },
 //     );
 //
-//     await testEngine.tapCard(argesTheCyclops);
+//     Await testEngine.tapCard(argesTheCyclops);
 //
-//     const cardUnderTest = testEngine.getCardModel(lefouOpportunisticFlunky);
+//     Const cardUnderTest = testEngine.getCardModel(lefouOpportunisticFlunky);
 //
-//     expect(cardUnderTest.cost).toEqual(lefouOpportunisticFlunky.cost);
+//     Expect(cardUnderTest.cost).toEqual(lefouOpportunisticFlunky.cost);
 //
-//     await testEngine.challenge({
-//       attacker: lefouInstigator,
-//       defender: argesTheCyclops,
+//     Await testEngine.challenge({
+//       Attacker: lefouInstigator,
+//       Defender: argesTheCyclops,
 //     });
 //
-//     expect(cardUnderTest.cost).toEqual(0);
+//     Expect(cardUnderTest.cost).toEqual(0);
 //   });
 // });
 //

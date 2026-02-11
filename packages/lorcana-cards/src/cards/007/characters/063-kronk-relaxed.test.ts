@@ -3,39 +3,39 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { moanaOfMotunui } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { suddenChill } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
-// import { kronkRelaxed } from "@lorcanito/lorcana-engine/cards/007";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { moanaOfMotunui } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { suddenChill } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
+// Import { kronkRelaxed } from "@lorcanito/lorcana-engine/cards/007";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Kronk - Relaxed", () => {
-//   it("Ward", async () => {
-//     const testEngine = new TestEngine({
-//       play: [kronkRelaxed],
+// Describe("Kronk - Relaxed", () => {
+//   It("Ward", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [kronkRelaxed],
 //     });
 //
-//     expect(testEngine.getCardModel(kronkRelaxed).hasWard).toBe(true);
+//     Expect(testEngine.getCardModel(kronkRelaxed).hasWard).toBe(true);
 //   });
 //
-//   it("I LOVE IT If an effect would make you discard one or more cards, don't discard any.", async () => {
-//     const testEngine = new TestEngine(
+//   It("I LOVE IT If an effect would make you discard one or more cards, don't discard any.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: suddenChill.cost,
-//         hand: [suddenChill],
+//         Inkwell: suddenChill.cost,
+//         Hand: [suddenChill],
 //       },
 //       {
-//         hand: [moanaOfMotunui],
-//         play: [kronkRelaxed],
+//         Hand: [moanaOfMotunui],
+//         Play: [kronkRelaxed],
 //       },
 //     );
 //
-//     await testEngine.playCard(suddenChill);
+//     Await testEngine.playCard(suddenChill);
 //
-//     testEngine.changeActivePlayer("player_two");
-//     await testEngine.resolveTopOfStack({ targets: [moanaOfMotunui] });
+//     TestEngine.changeActivePlayer("player_two");
+//     Await testEngine.resolveTopOfStack({ targets: [moanaOfMotunui] });
 //
-//     expect(testEngine.getCardModel(moanaOfMotunui).zone).toBe("hand");
+//     Expect(testEngine.getCardModel(moanaOfMotunui).zone).toBe("hand");
 //   });
 // });
 //

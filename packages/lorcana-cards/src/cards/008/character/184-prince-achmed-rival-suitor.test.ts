@@ -3,29 +3,29 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { jasmineDesertWarrior } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { princeAchmedRivalSuitor } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { jasmineDesertWarrior } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { princeAchmedRivalSuitor } from "@lorcanito/lorcana-engine/cards/008/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Prince Achmed - Rival Suitor", () => {
-//   it("UNWELCOME PROPOSAL When you play this character, you may exert chosen Princess character.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Prince Achmed - Rival Suitor", () => {
+//   It("UNWELCOME PROPOSAL When you play this character, you may exert chosen Princess character.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: princeAchmedRivalSuitor.cost,
-//         hand: [princeAchmedRivalSuitor],
+//         Inkwell: princeAchmedRivalSuitor.cost,
+//         Hand: [princeAchmedRivalSuitor],
 //       },
 //       {
-//         play: [jasmineDesertWarrior],
-//         hand: [],
+//         Play: [jasmineDesertWarrior],
+//         Hand: [],
 //       },
 //     );
 //
-//     await testEngine.playCard(princeAchmedRivalSuitor, {
-//       acceptOptionalLayer: true,
-//       targets: [jasmineDesertWarrior],
+//     Await testEngine.playCard(princeAchmedRivalSuitor, {
+//       AcceptOptionalLayer: true,
+//       Targets: [jasmineDesertWarrior],
 //     });
-//     expect(testEngine.getCardModel(jasmineDesertWarrior).exerted).toBe(true);
+//     Expect(testEngine.getCardModel(jasmineDesertWarrior).exerted).toBe(true);
 //   });
 // });
 //

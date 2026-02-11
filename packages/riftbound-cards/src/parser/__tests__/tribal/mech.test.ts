@@ -19,16 +19,16 @@ describe("Tribal: Mech", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "static",
           effect: expect.objectContaining({
-            type: "grant-keyword",
             keyword: "Shield",
             target: expect.objectContaining({
               filter: expect.objectContaining({
                 tag: "Mech",
               }),
             }),
+            type: "grant-keyword",
           }),
+          type: "static",
         }),
       );
     });
@@ -70,23 +70,21 @@ describe("Tribal: Mech", () => {
 
   describe("mech conditional", () => {
     it.skip("should parse 'I enter ready if you control another Mech.'", () => {
-      const result = parseAbilities(
-        "I enter ready if you control another Mech.",
-      );
+      const result = parseAbilities("I enter ready if you control another Mech.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "static",
           condition: expect.objectContaining({
-            type: "control",
             target: expect.objectContaining({
               filter: expect.objectContaining({
                 tag: "Mech",
               }),
             }),
+            type: "control",
           }),
+          type: "static",
         }),
       );
     });
@@ -94,24 +92,22 @@ describe("Tribal: Mech", () => {
 
   describe("mech tokens", () => {
     it.skip("should parse 'Play two 3 :rb_might: Mech unit tokens to your base.'", () => {
-      const result = parseAbilities(
-        "Play two 3 :rb_might: Mech unit tokens to your base.",
-      );
+      const result = parseAbilities("Play two 3 :rb_might: Mech unit tokens to your base.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "spell",
           effect: expect.objectContaining({
-            type: "create-token",
             amount: 2,
             token: expect.objectContaining({
               name: "Mech",
               type: "unit",
               might: 3,
             }),
+            type: "create-token",
           }),
+          type: "spell",
         }),
       );
     });

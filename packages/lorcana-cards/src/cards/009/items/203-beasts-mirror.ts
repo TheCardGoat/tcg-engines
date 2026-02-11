@@ -1,23 +1,8 @@
 import type { ItemCard } from "@tcg/lorcana-types";
 
 export const beastsMirror: ItemCard = {
-  id: "6wc",
-  cardType: "item",
-  name: "Beast’s Mirror",
-  inkType: ["steel"],
-  franchise: "Beauty and the Beast",
-  set: "009",
-  text: "SHOW ME {E}, 3 {I} — If you have no cards in your hand, draw a card.",
-  cost: 2,
-  cardNumber: 203,
-  inkable: true,
-  externalIds: {
-    ravensburger: "18dcabfdfb43e19ba99de9e95d9530bce929e93e",
-  },
   abilities: [
     {
-      id: "6wc-1",
-      type: "activated",
       cost: {
         exert: true,
       },
@@ -33,7 +18,22 @@ export const beastsMirror: ItemCard = {
           target: "CONTROLLER",
         },
       },
+      id: "6wc-1",
       text: "SHOW ME {E}, 3 {I} — If you have no cards in your hand, draw a card.",
+      type: "activated",
     },
   ],
+  cardNumber: 203,
+  cardType: "item",
+  cost: 2,
+  externalIds: {
+    ravensburger: "18dcabfdfb43e19ba99de9e95d9530bce929e93e",
+  },
+  franchise: "Beauty and the Beast",
+  id: "6wc",
+  inkType: ["steel"],
+  inkable: true,
+  name: "Beast’s Mirror",
+  set: "009",
+  text: "SHOW ME {E}, 3 {I} — If you have no cards in your hand, draw a card.",
 };

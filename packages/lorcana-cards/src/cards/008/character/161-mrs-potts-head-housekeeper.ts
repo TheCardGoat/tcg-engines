@@ -1,31 +1,31 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const mrsPottsHeadHousekeeper: LorcanitoCharacterCard = {
-//   id: "wue",
-//   name: "Mrs. Potts",
-//   title: "Head Housekeeper",
-//   characteristics: ["storyborn", "ally"],
-//   text: "CLEAN UP {E}, Banish one of your items – Draw a card.",
-//   type: "character",
-//   abilities: [
+// Export const mrsPottsHeadHousekeeper: LorcanitoCharacterCard = {
+//   Id: "wue",
+//   Name: "Mrs. Potts",
+//   Title: "Head Housekeeper",
+//   Characteristics: ["storyborn", "ally"],
+//   Text: "CLEAN UP {E}, Banish one of your items – Draw a card.",
+//   Type: "character",
+//   Abilities: [
 //     {
-//       type: "activated",
-//       name: "CLEAN UP",
-//       text: "{E}, Banish one of your items – Draw a card.",
-//       costs: [{ type: "exert" }],
-//       resolveEffectsIndividually: true,
-//       dependentEffects: true,
-//       effects: [
-//         drawACard,
+//       Type: "activated",
+//       Name: "CLEAN UP",
+//       Text: "{E}, Banish one of your items – Draw a card.",
+//       Costs: [{ type: "exert" }],
+//       ResolveEffectsIndividually: true,
+//       DependentEffects: true,
+//       Effects: [
+//         DrawACard,
 //         {
-//           type: "banish",
-//           amount: 1,
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
+//           Type: "banish",
+//           Amount: 1,
+//           Target: {
+//             Type: "card",
+//             Value: 1,
+//             Filters: [
 //               { filter: "owner", value: "self" },
 //               { filter: "type", value: "item" },
 //               { filter: "zone", value: "play" },
@@ -35,18 +35,18 @@
 //       ],
 //     },
 //   ],
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 3,
-//   strength: 2,
-//   willpower: 4,
-//   illustrator: "Julie Vu",
-//   number: 161,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631458,
+//   Inkwell: true,
+//   Colors: ["sapphire"],
+//   Cost: 3,
+//   Strength: 2,
+//   Willpower: 4,
+//   Illustrator: "Julie Vu",
+//   Number: 161,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631458,
 //   },
-//   rarity: "common",
-//   lore: 1,
+//   Rarity: "common",
+//   Lore: 1,
 // };
 //

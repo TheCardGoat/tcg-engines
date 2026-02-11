@@ -3,44 +3,44 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { hakunaMatata } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
-// import {
-//   brunoMadrigalSingingSeer,
-//   deweyLovableShowoff,
-//   lafayetteSleepyDachshund,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { hakunaMatata } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
+// Import {
+//   BrunoMadrigalSingingSeer,
+//   DeweyLovableShowoff,
+//   LafayetteSleepyDachshund,
 // } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Bruno Madrigal - Singing Seer", () => {
-//   it("Shift 5 (You may pay 5 {I} to play this on top of one of your characters named Bruno Madrigal.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [brunoMadrigalSingingSeer],
+// Describe("Bruno Madrigal - Singing Seer", () => {
+//   It("Shift 5 (You may pay 5 {I} to play this on top of one of your characters named Bruno Madrigal.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [brunoMadrigalSingingSeer],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(brunoMadrigalSingingSeer);
-//     expect(cardUnderTest.hasShift).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(brunoMadrigalSingingSeer);
+//     Expect(cardUnderTest.hasShift).toBe(true);
 //   });
 //
-//   it("BRIGHT FUTURE Whenever this character sings a song, you may draw a card for each character you have in play.", async () => {
-//     const testEngine = new TestEngine({
-//       play: [
-//         brunoMadrigalSingingSeer,
-//         lafayetteSleepyDachshund,
-//         deweyLovableShowoff,
+//   It("BRIGHT FUTURE Whenever this character sings a song, you may draw a card for each character you have in play.", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [
+//         BrunoMadrigalSingingSeer,
+//         LafayetteSleepyDachshund,
+//         DeweyLovableShowoff,
 //       ],
-//       hand: [hakunaMatata],
+//       Hand: [hakunaMatata],
 //     });
 //
-//     await testEngine.singSong({
-//       singer: testEngine.getCardModel(brunoMadrigalSingingSeer),
-//       song: hakunaMatata,
+//     Await testEngine.singSong({
+//       Singer: testEngine.getCardModel(brunoMadrigalSingingSeer),
+//       Song: hakunaMatata,
 //     });
 //
-//     await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveOptionalAbility();
 //
-//     expect(testEngine.getCardsByZone("hand").length).toBe(
-//       testEngine.getCardsByZone("play").length,
+//     Expect(testEngine.getCardsByZone("hand").length).toBe(
+//       TestEngine.getCardsByZone("play").length,
 //     );
 //   });
 // });

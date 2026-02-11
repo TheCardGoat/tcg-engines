@@ -5,9 +5,9 @@ import { hadesInfernalSchemer } from "./147-hades-infernal-schemer";
 describe("Hades - Infernal Schemer", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [hadesInfernalSchemer] });
-  //   expect(testEngine.getCardModel(hadesInfernalSchemer).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [hadesInfernalSchemer] });
+  //   Expect(testEngine.getCardModel(hadesInfernalSchemer).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,35 +17,35 @@ describe("Hades - Infernal Schemer", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   hadesInfernalSchemer,
-//   mauriceWorldFamousInventor,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   HadesInfernalSchemer,
+//   MauriceWorldFamousInventor,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Hades - Infernal Schemer", () => {
-//   it("**IS THERE A DOWNSIDE TO THIS?** When you play this character, you may put chosen opposing character into their player's inkwell facedown.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Hades - Infernal Schemer", () => {
+//   It("**IS THERE A DOWNSIDE TO THIS?** When you play this character, you may put chosen opposing character into their player's inkwell facedown.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: hadesInfernalSchemer.cost,
-//         hand: [hadesInfernalSchemer],
+//         Inkwell: hadesInfernalSchemer.cost,
+//         Hand: [hadesInfernalSchemer],
 //       },
 //       {
-//         play: [mauriceWorldFamousInventor],
+//         Play: [mauriceWorldFamousInventor],
 //       },
 //     );
 //
-//     await testEngine.playCard(hadesInfernalSchemer);
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({
-//       targets: [mauriceWorldFamousInventor],
+//     Await testEngine.playCard(hadesInfernalSchemer);
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({
+//       Targets: [mauriceWorldFamousInventor],
 //     });
 //
-//     const target = testEngine.getCardModel(mauriceWorldFamousInventor);
+//     Const target = testEngine.getCardModel(mauriceWorldFamousInventor);
 //
-//     expect(target.zone).toEqual("inkwell");
-//     expect(target.ready).toEqual(false);
+//     Expect(target.zone).toEqual("inkwell");
+//     Expect(target.ready).toEqual(false);
 //   });
 // });
 //

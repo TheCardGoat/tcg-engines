@@ -2,51 +2,51 @@
 // /**
 //  * @jest-environment node
 //  */
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   megaraPullingTheStrings,
-//   mickeyMouseArtfulRogue,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   MegaraPullingTheStrings,
+//   MickeyMouseArtfulRogue,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { hakunaMatata } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { hakunaMatata } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Mickey Mouse - Artful Rogue", () => {
-//   it("**MISDIRECTION** Whenever you play an action, chosen opposing character can't quest during their next turn.", () => {
-//     const testStore = new TestStore(
+// Describe("Mickey Mouse - Artful Rogue", () => {
+//   It("**MISDIRECTION** Whenever you play an action, chosen opposing character can't quest during their next turn.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: hakunaMatata.cost,
-//         hand: [hakunaMatata],
-//         play: [mickeyMouseArtfulRogue],
+//         Inkwell: hakunaMatata.cost,
+//         Hand: [hakunaMatata],
+//         Play: [mickeyMouseArtfulRogue],
 //       },
 //       {
-//         play: [megaraPullingTheStrings],
+//         Play: [megaraPullingTheStrings],
 //       },
 //     );
 //
-//     const actionCard = testStore.getByZoneAndId("hand", hakunaMatata.id);
-//     const target = testStore.getByZoneAndId(
+//     Const actionCard = testStore.getByZoneAndId("hand", hakunaMatata.id);
+//     Const target = testStore.getByZoneAndId(
 //       "play",
-//       megaraPullingTheStrings.id,
+//       MegaraPullingTheStrings.id,
 //       "player_two",
 //     );
 //
-//     actionCard.playFromHand();
-//     testStore.resolveTopOfStack({ targets: [target] });
+//     ActionCard.playFromHand();
+//     TestStore.resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.hasQuestRestriction).toEqual(true);
+//     Expect(target.hasQuestRestriction).toEqual(true);
 //   });
 //
-//   it("Shift", () => {
-//     const testStore = new TestStore({
-//       play: [mickeyMouseArtfulRogue],
+//   It("Shift", () => {
+//     Const testStore = new TestStore({
+//       Play: [mickeyMouseArtfulRogue],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       mickeyMouseArtfulRogue.id,
+//       MickeyMouseArtfulRogue.id,
 //     );
 //
-//     expect(cardUnderTest.hasShift).toEqual(true);
+//     Expect(cardUnderTest.hasShift).toEqual(true);
 //   });
 // });
 //

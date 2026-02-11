@@ -3,48 +3,48 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   liloGalacticHero,
-//   liloMakingAWish,
-//   stichtNewDog,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   LiloGalacticHero,
+//   LiloMakingAWish,
+//   StichtNewDog,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { kingLouieJungleVip } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { kingLouieJungleVip } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("King Louie - Jungle VIP", () => {
-//   it("**LAY IT ON THE LINE** Whenever another character is banished, you may remove up to 2 damage from this character.", () => {
-//     const testStore = new TestStore(
+// Describe("King Louie - Jungle VIP", () => {
+//   It("**LAY IT ON THE LINE** Whenever another character is banished, you may remove up to 2 damage from this character.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         play: [kingLouieJungleVip, liloGalacticHero, liloMakingAWish],
+//         Play: [kingLouieJungleVip, liloGalacticHero, liloMakingAWish],
 //       },
 //       {
-//         play: [stichtNewDog],
+//         Play: [stichtNewDog],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       kingLouieJungleVip.id,
+//       KingLouieJungleVip.id,
 //     );
-//     const targetOne = testStore.getByZoneAndId("play", liloGalacticHero.id);
-//     const targetTwo = testStore.getByZoneAndId("play", liloMakingAWish.id);
-//     const targetThree = testStore.getByZoneAndId(
+//     Const targetOne = testStore.getByZoneAndId("play", liloGalacticHero.id);
+//     Const targetTwo = testStore.getByZoneAndId("play", liloMakingAWish.id);
+//     Const targetThree = testStore.getByZoneAndId(
 //       "play",
-//       stichtNewDog.id,
+//       StichtNewDog.id,
 //       "player_two",
 //     );
 //
-//     cardUnderTest.updateCardDamage(5);
+//     CardUnderTest.updateCardDamage(5);
 //
-//     targetOne.banish();
-//     expect(cardUnderTest.damage).toBe(5 - 2);
+//     TargetOne.banish();
+//     Expect(cardUnderTest.damage).toBe(5 - 2);
 //
-//     targetTwo.banish();
-//     expect(cardUnderTest.damage).toBe(5 - 4);
+//     TargetTwo.banish();
+//     Expect(cardUnderTest.damage).toBe(5 - 4);
 //
-//     targetThree.banish();
-//     expect(cardUnderTest.damage).toBe(0);
+//     TargetThree.banish();
+//     Expect(cardUnderTest.damage).toBe(0);
 //   });
 // });
 //

@@ -3,36 +3,36 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   montereyJackDefiantProtector,
-//   zipperFlyingRanger,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   MontereyJackDefiantProtector,
+//   ZipperFlyingRanger,
 // } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Zipper - Flying Ranger", () => {
-//   it("BEST MATES If you have a character named Monterey Jack in play, you pay 1 {I} less to play this character.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: zipperFlyingRanger.cost - 1,
-//       play: [montereyJackDefiantProtector],
-//       hand: [zipperFlyingRanger],
+// Describe("Zipper - Flying Ranger", () => {
+//   It("BEST MATES If you have a character named Monterey Jack in play, you pay 1 {I} less to play this character.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: zipperFlyingRanger.cost - 1,
+//       Play: [montereyJackDefiantProtector],
+//       Hand: [zipperFlyingRanger],
 //     });
 //
-//     await testEngine.playCard(zipperFlyingRanger);
+//     Await testEngine.playCard(zipperFlyingRanger);
 //
-//     expect(testEngine.getCardModel(zipperFlyingRanger).zone).toBe("play");
+//     Expect(testEngine.getCardModel(zipperFlyingRanger).zone).toBe("play");
 //   });
 //
-//   it("BURST OF SPEED During your turn, this character gains Evasive. (They can challenge characters with Evasive.)", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: zipperFlyingRanger.cost,
-//       play: [zipperFlyingRanger],
-//       hand: [],
+//   It("BURST OF SPEED During your turn, this character gains Evasive. (They can challenge characters with Evasive.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: zipperFlyingRanger.cost,
+//       Play: [zipperFlyingRanger],
+//       Hand: [],
 //     });
 //
-//     expect(testEngine.getCardModel(zipperFlyingRanger).hasEvasive).toBe(true);
-//     await testEngine.passTurn();
-//     expect(testEngine.getCardModel(zipperFlyingRanger).hasEvasive).toBe(false);
+//     Expect(testEngine.getCardModel(zipperFlyingRanger).hasEvasive).toBe(true);
+//     Await testEngine.passTurn();
+//     Expect(testEngine.getCardModel(zipperFlyingRanger).hasEvasive).toBe(false);
 //   });
 // });
 //

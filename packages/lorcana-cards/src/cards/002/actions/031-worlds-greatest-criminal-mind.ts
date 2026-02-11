@@ -1,33 +1,33 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-// import type { BanishEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { BanishEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
 //
-// export const worldsGreatestCriminalMind: LorcanitoActionCard = {
-//   id: "c97",
-//   reprints: ["qp7"],
+// Export const worldsGreatestCriminalMind: LorcanitoActionCard = {
+//   Id: "c97",
+//   Reprints: ["qp7"],
 //
-//   name: "World's Greatest Criminal Mind",
-//   characteristics: ["action", "song"],
-//   text: "_A character with cost 3 or more can {E} to sing this song for free.)_\n\nBanish chosen character with 5 {S} or more.",
-//   type: "action",
-//   abilities: [
+//   Name: "World's Greatest Criminal Mind",
+//   Characteristics: ["action", "song"],
+//   Text: "_A character with cost 3 or more can {E} to sing this song for free.)_\n\nBanish chosen character with 5 {S} or more.",
+//   Type: "action",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       name: "World's Greatest Criminal Mind",
-//       text: "Banish chosen character with 5 {S} or more.",
-//       effects: [
+//       Type: "resolution",
+//       Name: "World's Greatest Criminal Mind",
+//       Text: "Banish chosen character with 5 {S} or more.",
+//       Effects: [
 //         {
-//           type: "banish",
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
+//           Type: "banish",
+//           Target: {
+//             Type: "card",
+//             Value: 1,
+//             Filters: [
 //               { filter: "type", value: "character" },
 //               { filter: "zone", value: "play" },
 //               {
-//                 filter: "attribute",
-//                 value: "strength",
-//                 comparison: { operator: "gte", value: 5 },
+//                 Filter: "attribute",
+//                 Value: "strength",
+//                 Comparison: { operator: "gte", value: 5 },
 //               },
 //             ],
 //           },
@@ -35,15 +35,15 @@
 //       ],
 //     },
 //   ],
-//   inkwell: true,
-//   colors: ["amber"],
-//   cost: 3,
-//   illustrator: "Giulia Riva",
-//   number: 31,
-//   set: "ROF",
-//   externalIds: {
-//     tcgPlayer: 526209,
+//   Inkwell: true,
+//   Colors: ["amber"],
+//   Cost: 3,
+//   Illustrator: "Giulia Riva",
+//   Number: 31,
+//   Set: "ROF",
+//   ExternalIds: {
+//     TcgPlayer: 526209,
 //   },
-//   rarity: "rare",
+//   Rarity: "rare",
 // };
 //

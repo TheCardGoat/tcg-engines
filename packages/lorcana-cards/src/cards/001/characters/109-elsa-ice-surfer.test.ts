@@ -5,9 +5,9 @@ import { elsaIceSurfer } from "./109-elsa-ice-surfer";
 describe("Elsa - Ice Surfer", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [elsaIceSurfer] });
-  //   expect(testEngine.getCardModel(elsaIceSurfer).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [elsaIceSurfer] });
+  //   Expect(testEngine.getCardModel(elsaIceSurfer).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,32 +17,32 @@ describe("Elsa - Ice Surfer", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   annaHeirToArendelle,
-//   elsaIceSurfer,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   AnnaHeirToArendelle,
+//   ElsaIceSurfer,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Elsa Ice Surfer", () => {
-//   it("THAT'S NO BLIZZARD effect - Whenever you play a character named Anna, ready this character. This character can't quest for the rest of this turn.", () => {
-//     const testStore = new TestStore({
-//       inkwell: annaHeirToArendelle.cost,
-//       play: [elsaIceSurfer],
-//       hand: [annaHeirToArendelle],
+// Describe("Elsa Ice Surfer", () => {
+//   It("THAT'S NO BLIZZARD effect - Whenever you play a character named Anna, ready this character. This character can't quest for the rest of this turn.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: annaHeirToArendelle.cost,
+//       Play: [elsaIceSurfer],
+//       Hand: [annaHeirToArendelle],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("play", elsaIceSurfer.id);
-//     const targetTrigger = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId("play", elsaIceSurfer.id);
+//     Const targetTrigger = testStore.getByZoneAndId(
 //       "hand",
-//       annaHeirToArendelle.id,
+//       AnnaHeirToArendelle.id,
 //     );
-//     cardUnderTest.updateCardMeta({ exerted: true });
+//     CardUnderTest.updateCardMeta({ exerted: true });
 //
-//     targetTrigger.playFromHand();
+//     TargetTrigger.playFromHand();
 //
-//     expect(cardUnderTest.meta).toEqual(
-//       expect.objectContaining({ exerted: false }),
+//     Expect(cardUnderTest.meta).toEqual(
+//       Expect.objectContaining({ exerted: false }),
 //     );
 //   });
 // });

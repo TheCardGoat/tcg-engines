@@ -5,9 +5,9 @@ import { developYourBrain } from "./161-develop-your-brain";
 describe("Develop Your Brain", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [developYourBrain] });
-  //   expect(testEngine.getCardModel(developYourBrain).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [developYourBrain] });
+  //   Expect(testEngine.getCardModel(developYourBrain).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,46 +17,46 @@ describe("Develop Your Brain", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { developYourBrain } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
-// import {
-//   chiefTui,
-//   heiheiBoatSnack,
-//   moanaOfMotunui,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { developYourBrain } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
+// Import {
+//   ChiefTui,
+//   HeiheiBoatSnack,
+//   MoanaOfMotunui,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { shieldOfVirtue } from "@lorcanito/lorcana-engine/cards/001/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
-// import type { CardModel } from "@lorcanito/lorcana-engine/store/models/CardModel";
+// Import { shieldOfVirtue } from "@lorcanito/lorcana-engine/cards/001/items/items";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import type { CardModel } from "@lorcanito/lorcana-engine/store/models/CardModel";
 //
-// describe("Develop Your Brain", () => {
-//   it("Look at the top 2 cards of your deck. Put one into your hand and the other on the bottom of the deck.", () => {
-//     const testStore = new TestStore({
-//       inkwell: developYourBrain.cost,
-//       hand: [developYourBrain],
-//       deck: [shieldOfVirtue, heiheiBoatSnack, chiefTui, moanaOfMotunui],
+// Describe("Develop Your Brain", () => {
+//   It("Look at the top 2 cards of your deck. Put one into your hand and the other on the bottom of the deck.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: developYourBrain.cost,
+//       Hand: [developYourBrain],
+//       Deck: [shieldOfVirtue, heiheiBoatSnack, chiefTui, moanaOfMotunui],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", developYourBrain.id);
-//     const first = testStore.getByZoneAndId("deck", moanaOfMotunui.id);
-//     const second = testStore.getByZoneAndId("deck", chiefTui.id);
-//     const third = testStore.getByZoneAndId("deck", heiheiBoatSnack.id);
-//     const fourth = testStore.getByZoneAndId("deck", shieldOfVirtue.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", developYourBrain.id);
+//     Const first = testStore.getByZoneAndId("deck", moanaOfMotunui.id);
+//     Const second = testStore.getByZoneAndId("deck", chiefTui.id);
+//     Const third = testStore.getByZoneAndId("deck", heiheiBoatSnack.id);
+//     Const fourth = testStore.getByZoneAndId("deck", shieldOfVirtue.id);
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     const bottom: CardModel[] = [first];
+//     Const bottom: CardModel[] = [first];
 //
-//     testStore.resolveTopOfStack({ scry: { bottom, hand: [second] } });
+//     TestStore.resolveTopOfStack({ scry: { bottom, hand: [second] } });
 //
-//     const deck = testStore.store.tableStore
+//     Const deck = testStore.store.tableStore
 //       .getPlayerZoneCards("player_one", "deck")
 //       .map((card) => card.lorcanitoCard?.name);
 //
-//     expect(second.zone).toEqual("hand");
-//     expect(deck).toEqual([
-//       first.lorcanitoCard?.name,
-//       fourth.lorcanitoCard?.name,
-//       third.lorcanitoCard?.name,
+//     Expect(second.zone).toEqual("hand");
+//     Expect(deck).toEqual([
+//       First.lorcanitoCard?.name,
+//       Fourth.lorcanitoCard?.name,
+//       Third.lorcanitoCard?.name,
 //     ]);
 //   });
 // });

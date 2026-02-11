@@ -1,24 +1,24 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
 //
-// export const daleBumbler: LorcanitoCharacterCard = {
-//   id: "tep",
-//   name: "Dale",
-//   title: "Bumbler",
-//   characteristics: ["storyborn", "hero"],
-//   type: "character",
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 1,
-//   strength: 1,
-//   willpower: 3,
-//   illustrator: "Wouter Bruneel",
-//   number: 94,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631347,
+// Export const daleBumbler: LorcanitoCharacterCard = {
+//   Id: "tep",
+//   Name: "Dale",
+//   Title: "Bumbler",
+//   Characteristics: ["storyborn", "hero"],
+//   Type: "character",
+//   Inkwell: true,
+//   Colors: ["emerald"],
+//   Cost: 1,
+//   Strength: 1,
+//   Willpower: 3,
+//   Illustrator: "Wouter Bruneel",
+//   Number: 94,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631347,
 //   },
-//   rarity: "common",
-//   lore: 1,
+//   Rarity: "common",
+//   Lore: 1,
 // };
 //

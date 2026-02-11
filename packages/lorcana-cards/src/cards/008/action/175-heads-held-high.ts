@@ -1,51 +1,51 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { singerTogetherAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import {
-//   allOpposingCharacters,
-//   anyNumberOfChosenCharacters,
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+// Import { singerTogetherAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import {
+//   AllOpposingCharacters,
+//   AnyNumberOfChosenCharacters,
 // } from "@lorcanito/lorcana-engine/abilities/targets";
 //
-// export const headsHeldHigh: LorcanitoActionCard = {
-//   id: "tfh",
-//   missingTestCase: true,
-//   name: "Heads Held High",
-//   characteristics: ["action", "song"],
-//   text: "Sing Together 6\nRemove up to 3 damage from any number of chosen characters. All opposing characters get -3 {S} this turn.",
-//   type: "action",
-//   abilities: [
-//     singerTogetherAbility(6),
+// Export const headsHeldHigh: LorcanitoActionCard = {
+//   Id: "tfh",
+//   MissingTestCase: true,
+//   Name: "Heads Held High",
+//   Characteristics: ["action", "song"],
+//   Text: "Sing Together 6\nRemove up to 3 damage from any number of chosen characters. All opposing characters get -3 {S} this turn.",
+//   Type: "action",
+//   Abilities: [
+//     SingerTogetherAbility(6),
 //     {
-//       type: "resolution",
-//       resolveEffectsIndividually: true,
-//       effects: [
+//       Type: "resolution",
+//       ResolveEffectsIndividually: true,
+//       Effects: [
 //         {
-//           type: "heal",
-//           amount: 3,
-//           upTo: true,
-//           target: anyNumberOfChosenCharacters,
+//           Type: "heal",
+//           Amount: 3,
+//           UpTo: true,
+//           Target: anyNumberOfChosenCharacters,
 //         },
 //         {
-//           type: "attribute",
-//           attribute: "strength",
-//           amount: 3,
-//           modifier: "subtract",
-//           duration: "turn",
-//           until: true,
-//           target: allOpposingCharacters,
+//           Type: "attribute",
+//           Attribute: "strength",
+//           Amount: 3,
+//           Modifier: "subtract",
+//           Duration: "turn",
+//           Until: true,
+//           Target: allOpposingCharacters,
 //         },
 //       ],
 //     },
 //   ],
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 6,
-//   illustrator: "Lorenza Pigliamosche / Livio Cacciatore",
-//   number: 175,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631348,
+//   Inkwell: true,
+//   Colors: ["sapphire"],
+//   Cost: 6,
+//   Illustrator: "Lorenza Pigliamosche / Livio Cacciatore",
+//   Number: 175,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631348,
 //   },
-//   rarity: "rare",
+//   Rarity: "rare",
 // };
 //

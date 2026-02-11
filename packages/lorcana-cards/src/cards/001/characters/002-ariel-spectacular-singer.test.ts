@@ -3,93 +3,93 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   arielSpectacularSinger,
-//   chiefTui,
-//   heiheiBoatSnack,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   ArielSpectacularSinger,
+//   ChiefTui,
+//   HeiheiBoatSnack,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { shieldOfVirtue } from "@lorcanito/lorcana-engine/cards/001/items/items";
-// import { friendsOnTheOtherSide } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
-// import { hiramFlavershamToymaker } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { tipoGrowingSon } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { shieldOfVirtue } from "@lorcanito/lorcana-engine/cards/001/items/items";
+// Import { friendsOnTheOtherSide } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
+// Import { hiramFlavershamToymaker } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { tipoGrowingSon } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Ariel - Spectacular Singer", () => {
-//   it("MUSICAL DEBUT effect - Song Tutored", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: arielSpectacularSinger.cost,
-//       hand: [arielSpectacularSinger],
-//       deck: [
-//         shieldOfVirtue,
-//         chiefTui,
-//         heiheiBoatSnack,
-//         friendsOnTheOtherSide,
-//         tipoGrowingSon,
-//         hiramFlavershamToymaker,
+// Describe("Ariel - Spectacular Singer", () => {
+//   It("MUSICAL DEBUT effect - Song Tutored", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: arielSpectacularSinger.cost,
+//       Hand: [arielSpectacularSinger],
+//       Deck: [
+//         ShieldOfVirtue,
+//         ChiefTui,
+//         HeiheiBoatSnack,
+//         FriendsOnTheOtherSide,
+//         TipoGrowingSon,
+//         HiramFlavershamToymaker,
 //       ],
 //     });
 //
-//     await testEngine.playCard(arielSpectacularSinger);
+//     Await testEngine.playCard(arielSpectacularSinger);
 //
-//     await testEngine.resolveTopOfStack({
-//       scry: {
-//         bottom: [hiramFlavershamToymaker, tipoGrowingSon, heiheiBoatSnack],
-//         hand: [friendsOnTheOtherSide],
+//     Await testEngine.resolveTopOfStack({
+//       Scry: {
+//         Bottom: [hiramFlavershamToymaker, tipoGrowingSon, heiheiBoatSnack],
+//         Hand: [friendsOnTheOtherSide],
 //       },
 //     });
 //
-//     expect(testEngine.getCardZone(friendsOnTheOtherSide)).toEqual("hand");
+//     Expect(testEngine.getCardZone(friendsOnTheOtherSide)).toEqual("hand");
 //
-//     const bottomCard = testEngine.testStore.getZonesCards().deck[0];
-//     const secondBottomCard = testEngine.testStore.getZonesCards().deck[1];
-//     const thirdBottomCard = testEngine.testStore.getZonesCards().deck[2];
+//     Const bottomCard = testEngine.testStore.getZonesCards().deck[0];
+//     Const secondBottomCard = testEngine.testStore.getZonesCards().deck[1];
+//     Const thirdBottomCard = testEngine.testStore.getZonesCards().deck[2];
 //
-//     expect(bottomCard?.lorcanitoCard?.name).toEqual(
-//       hiramFlavershamToymaker.name,
+//     Expect(bottomCard?.lorcanitoCard?.name).toEqual(
+//       HiramFlavershamToymaker.name,
 //     );
-//     expect(secondBottomCard?.lorcanitoCard?.name).toEqual(tipoGrowingSon.name);
-//     expect(thirdBottomCard?.lorcanitoCard?.name).toEqual(heiheiBoatSnack.name);
+//     Expect(secondBottomCard?.lorcanitoCard?.name).toEqual(tipoGrowingSon.name);
+//     Expect(thirdBottomCard?.lorcanitoCard?.name).toEqual(heiheiBoatSnack.name);
 //   });
-//   it("MUSICAL DEBUT effect - Missed song", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: arielSpectacularSinger.cost,
-//       hand: [arielSpectacularSinger],
-//       deck: [
-//         shieldOfVirtue,
-//         friendsOnTheOtherSide,
-//         chiefTui,
-//         heiheiBoatSnack,
-//         tipoGrowingSon,
-//         hiramFlavershamToymaker,
+//   It("MUSICAL DEBUT effect - Missed song", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: arielSpectacularSinger.cost,
+//       Hand: [arielSpectacularSinger],
+//       Deck: [
+//         ShieldOfVirtue,
+//         FriendsOnTheOtherSide,
+//         ChiefTui,
+//         HeiheiBoatSnack,
+//         TipoGrowingSon,
+//         HiramFlavershamToymaker,
 //       ],
 //     });
 //
-//     await testEngine.playCard(arielSpectacularSinger);
+//     Await testEngine.playCard(arielSpectacularSinger);
 //
-//     await testEngine.resolveTopOfStack({
-//       scry: {
-//         bottom: [
-//           hiramFlavershamToymaker,
-//           tipoGrowingSon,
-//           heiheiBoatSnack,
-//           chiefTui,
+//     Await testEngine.resolveTopOfStack({
+//       Scry: {
+//         Bottom: [
+//           HiramFlavershamToymaker,
+//           TipoGrowingSon,
+//           HeiheiBoatSnack,
+//           ChiefTui,
 //         ],
-//         hand: [],
+//         Hand: [],
 //       },
 //     });
 //
-//     const bottomCard = testEngine.testStore.getZonesCards().deck[0];
-//     const secondBottomCard = testEngine.testStore.getZonesCards().deck[1];
-//     const thirdBottomCard = testEngine.testStore.getZonesCards().deck[2];
-//     const fourthBottomCard = testEngine.testStore.getZonesCards().deck[3];
+//     Const bottomCard = testEngine.testStore.getZonesCards().deck[0];
+//     Const secondBottomCard = testEngine.testStore.getZonesCards().deck[1];
+//     Const thirdBottomCard = testEngine.testStore.getZonesCards().deck[2];
+//     Const fourthBottomCard = testEngine.testStore.getZonesCards().deck[3];
 //
-//     expect(bottomCard?.lorcanitoCard?.name).toEqual(
-//       hiramFlavershamToymaker.name,
+//     Expect(bottomCard?.lorcanitoCard?.name).toEqual(
+//       HiramFlavershamToymaker.name,
 //     );
-//     expect(secondBottomCard?.lorcanitoCard?.name).toEqual(tipoGrowingSon.name);
-//     expect(thirdBottomCard?.lorcanitoCard?.name).toEqual(heiheiBoatSnack.name);
-//     expect(fourthBottomCard?.lorcanitoCard?.name).toEqual(chiefTui.name);
+//     Expect(secondBottomCard?.lorcanitoCard?.name).toEqual(tipoGrowingSon.name);
+//     Expect(thirdBottomCard?.lorcanitoCard?.name).toEqual(heiheiBoatSnack.name);
+//     Expect(fourthBottomCard?.lorcanitoCard?.name).toEqual(chiefTui.name);
 //   });
 // });
 //

@@ -1,26 +1,8 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
 export const dragonFireundefined: ActionCard = {
-  id: "buy",
-  cardType: "action",
-  name: "Dragon Fire",
-  version: "undefined",
-  fullName: "Dragon Fire - undefined",
-  inkType: ["ruby"],
-  franchise: "Disney",
-  set: "001",
-  text: "Banish chosen character.",
-  cost: 5,
-  cardNumber: 130,
-  inkable: true,
-  externalIds: {
-    ravensburger: "",
-  },
   abilities: [
     {
-      type: "action",
-      id: "buy-1",
-      text: "Banish chosen character.",
       effect: {
         type: "banish",
         target: {
@@ -31,39 +13,57 @@ export const dragonFireundefined: ActionCard = {
           cardTypes: ["character"],
         },
       },
+      id: "buy-1",
+      text: "Banish chosen character.",
+      type: "action",
     },
   ],
+  cardNumber: 130,
+  cardType: "action",
+  cost: 5,
+  externalIds: {
+    ravensburger: "",
+  },
+  franchise: "Disney",
+  fullName: "Dragon Fire - undefined",
+  id: "buy",
+  inkType: ["ruby"],
+  inkable: true,
+  name: "Dragon Fire",
+  set: "001",
+  text: "Banish chosen character.",
+  version: "undefined",
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-// import { mayBanish } from "@lorcanito/lorcana-engine/effects/effects";
+// Import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import { mayBanish } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const dragonFire: LorcanitoActionCard = {
-//   id: "buy",
-//   reprints: ["nns"],
-//   name: "Dragon Fire",
-//   characteristics: ["action"],
-//   text: "Banish chosen character.",
-//   type: "action",
-//   abilities: [
+// Export const dragonFire: LorcanitoActionCard = {
+//   Id: "buy",
+//   Reprints: ["nns"],
+//   Name: "Dragon Fire",
+//   Characteristics: ["action"],
+//   Text: "Banish chosen character.",
+//   Type: "action",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       name: "Dragon Fire",
-//       text: "Banish chosen character.",
-//       effects: [mayBanish(chosenCharacter)],
+//       Type: "resolution",
+//       Name: "Dragon Fire",
+//       Text: "Banish chosen character.",
+//       Effects: [mayBanish(chosenCharacter)],
 //     },
 //   ],
-//   flavour: "Rare is the hero who can withstand a dragon's wrath.",
-//   colors: ["ruby"],
-//   cost: 5,
-//   illustrator: "Luis Huerta",
-//   number: 130,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 492710,
+//   Flavour: "Rare is the hero who can withstand a dragon's wrath.",
+//   Colors: ["ruby"],
+//   Cost: 5,
+//   Illustrator: "Luis Huerta",
+//   Number: 130,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 492710,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

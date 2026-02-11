@@ -3,25 +3,25 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { theBayouMysteriousSwamp } from "@lorcanito/lorcana-engine/cards/003/locations/locations";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { theBayouMysteriousSwamp } from "@lorcanito/lorcana-engine/cards/003/locations/locations";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("The Bayou - Mysterious Swamp", () => {
-//   it.skip("**SHOW ME THE WAY** Whenever a character quests while here, you may draw a card, then choose and discard a card.", () => {
-//     const testStore = new TestStore({
-//       inkwell: theBayouMysteriousSwamp.cost,
-//       play: [theBayouMysteriousSwamp],
+// Describe("The Bayou - Mysterious Swamp", () => {
+//   It.skip("**SHOW ME THE WAY** Whenever a character quests while here, you may draw a card, then choose and discard a card.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: theBayouMysteriousSwamp.cost,
+//       Play: [theBayouMysteriousSwamp],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       theBayouMysteriousSwamp.id,
+//       TheBayouMysteriousSwamp.id,
 //     );
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

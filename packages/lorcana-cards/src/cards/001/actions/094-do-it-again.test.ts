@@ -5,9 +5,9 @@ import { doItAgain } from "./094-do-it-again";
 describe("Do It Again! - undefined", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [doItAgain] });
-  //   expect(testEngine.getCardModel(doItAgain).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [doItAgain] });
+  //   Expect(testEngine.getCardModel(doItAgain).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,33 +17,33 @@ describe("Do It Again! - undefined", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   befuddle,
-//   doItAgain,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   Befuddle,
+//   DoItAgain,
 // } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Do It Again", () => {
-//   it("Return an action card from your discard to your hand.", () => {
-//     const testStore = new TestStore({
-//       inkwell: doItAgain.cost,
-//       hand: [doItAgain],
-//       discard: [befuddle],
+// Describe("Do It Again", () => {
+//   It("Return an action card from your discard to your hand.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: doItAgain.cost,
+//       Hand: [doItAgain],
+//       Discard: [befuddle],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", doItAgain.id);
-//     const target = testStore.getByZoneAndId("discard", befuddle.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", doItAgain.id);
+//     Const target = testStore.getByZoneAndId("discard", befuddle.id);
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     testStore.resolveTopOfStack({
-//       targetId: target.instanceId,
+//     TestStore.resolveTopOfStack({
+//       TargetId: target.instanceId,
 //     });
 //
-//     expect(target.zone).toEqual("hand");
-//     expect(testStore.getZonesCardCount()).toEqual(
-//       expect.objectContaining({ hand: 1, deck: 0, discard: 1, play: 0 }),
+//     Expect(target.zone).toEqual("hand");
+//     Expect(testStore.getZonesCardCount()).toEqual(
+//       Expect.objectContaining({ hand: 1, deck: 0, discard: 1, play: 0 }),
 //     );
 //   });
 // });

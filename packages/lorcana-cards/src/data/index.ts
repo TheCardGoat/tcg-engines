@@ -121,7 +121,7 @@ export const idMapping = idMappingData as unknown as IdMapping;
 // Internal-only: allCanonicalCards should not be exported - use allCards from @tcg/lorcana-cards/cards instead
 const allCanonicalCards: CanonicalCard[] = Object.values(canonicalCards);
 export const allPrintings: CardPrinting[] = Object.values(printings);
-export const allSets: SetDefinition[] = Object.values(sets).sort(
+export const allSets: SetDefinition[] = Object.values(sets).toSorted(
   (a, b) => a.sortNumber - b.sortNumber,
 );
 
@@ -143,7 +143,7 @@ export function getCanonicalCardByDeckBuildingId(
   deckBuildingId: string,
 ): CanonicalCard | undefined {
   const shortId = idMapping.byDeckBuildingId[deckBuildingId];
-  if (!shortId) return undefined;
+  if (!shortId) {return undefined;}
   return canonicalCards[shortId];
 }
 
@@ -159,7 +159,7 @@ export function getPrinting(printingId: string): CardPrinting | undefined {
  */
 export function getPrintingsForCard(shortId: string): CardPrinting[] {
   const card = canonicalCards[shortId];
-  if (!card) return [];
+  if (!card) {return [];}
 
   return card.printings
     .map((id) => printings[id])
@@ -173,7 +173,7 @@ export function getCardForPrinting(
   printingId: string,
 ): CanonicalCard | undefined {
   const printing = printings[printingId];
-  if (!printing) return undefined;
+  if (!printing) {return undefined;}
 
   return canonicalCards[printing.gameCardId];
 }
@@ -197,7 +197,7 @@ export function getCardsInSet(setId: string): CardPrinting[] {
  */
 export function getReprintIds(shortId: string): string[] {
   const card = canonicalCards[shortId];
-  if (!card || card.printings.length <= 1) return [];
+  if (!card || card.printings.length <= 1) {return [];}
 
   return card.printings;
 }

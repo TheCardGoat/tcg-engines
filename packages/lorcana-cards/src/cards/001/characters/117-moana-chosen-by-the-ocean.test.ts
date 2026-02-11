@@ -5,9 +5,9 @@ import { moanaChosenByTheOcean } from "./117-moana-chosen-by-the-ocean";
 describe("Moana - Chosen by the Ocean", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [moanChosenByTheOcean] });
-  //   expect(testEngine.getCardModel(moanChosenByTheOcean).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [moanChosenByTheOcean] });
+  //   Expect(testEngine.getCardModel(moanChosenByTheOcean).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,83 +17,83 @@ describe("Moana - Chosen by the Ocean", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   mauiHeroToAll,
-//   moanChosenByTheOcean,
-//   teKaHeartless,
-//   teKaTheBurningOne,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   MauiHeroToAll,
+//   MoanChosenByTheOcean,
+//   TeKaHeartless,
+//   TeKaTheBurningOne,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Moana Chosen By The Ocean", () => {
-//   describe("**THIS IS NOT WHO YOU ARE** When you play this character, you may banish chosen character named Te Ka.", () => {
-//     it("banishes Te Ka The Burning One", () => {
-//       const testStore = new TestStore({
-//         inkwell: moanChosenByTheOcean.cost,
-//         hand: [moanChosenByTheOcean],
-//         play: [teKaTheBurningOne],
+// Describe("Moana Chosen By The Ocean", () => {
+//   Describe("**THIS IS NOT WHO YOU ARE** When you play this character, you may banish chosen character named Te Ka.", () => {
+//     It("banishes Te Ka The Burning One", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: moanChosenByTheOcean.cost,
+//         Hand: [moanChosenByTheOcean],
+//         Play: [teKaTheBurningOne],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "hand",
-//         moanChosenByTheOcean.id,
+//         MoanChosenByTheOcean.id,
 //       );
-//       const target = testStore.getByZoneAndId("play", teKaTheBurningOne.id);
+//       Const target = testStore.getByZoneAndId("play", teKaTheBurningOne.id);
 //
-//       cardUnderTest.playFromHand();
-//       testStore.resolveOptionalAbility();
-//       testStore.resolveTopOfStack({
-//         targetId: target.instanceId,
+//       CardUnderTest.playFromHand();
+//       TestStore.resolveOptionalAbility();
+//       TestStore.resolveTopOfStack({
+//         TargetId: target.instanceId,
 //       });
 //
-//       expect(target.zone).toEqual("discard");
+//       Expect(target.zone).toEqual("discard");
 //     });
 //
-//     it("banishes Te Ka Heartless", () => {
-//       const testStore = new TestStore({
-//         inkwell: moanChosenByTheOcean.cost,
-//         hand: [moanChosenByTheOcean],
-//         play: [teKaHeartless],
+//     It("banishes Te Ka Heartless", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: moanChosenByTheOcean.cost,
+//         Hand: [moanChosenByTheOcean],
+//         Play: [teKaHeartless],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "hand",
-//         moanChosenByTheOcean.id,
+//         MoanChosenByTheOcean.id,
 //       );
-//       const target = testStore.getByZoneAndId("play", teKaHeartless.id);
+//       Const target = testStore.getByZoneAndId("play", teKaHeartless.id);
 //
-//       cardUnderTest.playFromHand();
-//       testStore.resolveOptionalAbility();
+//       CardUnderTest.playFromHand();
+//       TestStore.resolveOptionalAbility();
 //
-//       testStore.resolveTopOfStack({
-//         targetId: target.instanceId,
+//       TestStore.resolveTopOfStack({
+//         TargetId: target.instanceId,
 //       });
 //
-//       expect(target.zone).toEqual("discard");
+//       Expect(target.zone).toEqual("discard");
 //     });
 //
-//     it("does not banishes non Teka character", () => {
-//       const testStore = new TestStore({
-//         inkwell: moanChosenByTheOcean.cost,
-//         hand: [moanChosenByTheOcean],
-//         play: [mauiHeroToAll],
+//     It("does not banishes non Teka character", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: moanChosenByTheOcean.cost,
+//         Hand: [moanChosenByTheOcean],
+//         Play: [mauiHeroToAll],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "hand",
-//         moanChosenByTheOcean.id,
+//         MoanChosenByTheOcean.id,
 //       );
-//       const shouldNotBeTarget = testStore.getByZoneAndId(
+//       Const shouldNotBeTarget = testStore.getByZoneAndId(
 //         "play",
-//         mauiHeroToAll.id,
+//         MauiHeroToAll.id,
 //       );
 //
-//       cardUnderTest.playFromHand();
+//       CardUnderTest.playFromHand();
 //
-//       testStore.resolveTopOfStack();
+//       TestStore.resolveTopOfStack();
 //
-//       expect(shouldNotBeTarget.zone).toEqual("play");
+//       Expect(shouldNotBeTarget.zone).toEqual("play");
 //     });
 //   });
 // });

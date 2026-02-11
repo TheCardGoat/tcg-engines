@@ -3,63 +3,63 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { bePrepared } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
-// import {
-//   mauiHalfshark,
-//   sailTheAzuriteSea,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { bePrepared } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
+// Import {
+//   MauiHalfshark,
+//   SailTheAzuriteSea,
 // } from "@lorcanito/lorcana-engine/cards/006";
-// import { ludwigVonDrakeAllaroundExpert } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { ludwigVonDrakeAllaroundExpert } from "@lorcanito/lorcana-engine/cards/008/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Ludwig Von Drake - All-Around Expert", () => {
-//   it("SUPERIOR MIND When you play this character, chosen opponent reveals their hand and discards a non-character card of your choice.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Ludwig Von Drake - All-Around Expert", () => {
+//   It("SUPERIOR MIND When you play this character, chosen opponent reveals their hand and discards a non-character card of your choice.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: ludwigVonDrakeAllaroundExpert.cost,
-//         hand: [ludwigVonDrakeAllaroundExpert],
+//         Inkwell: ludwigVonDrakeAllaroundExpert.cost,
+//         Hand: [ludwigVonDrakeAllaroundExpert],
 //       },
 //       {
-//         hand: [bePrepared, sailTheAzuriteSea, mauiHalfshark],
+//         Hand: [bePrepared, sailTheAzuriteSea, mauiHalfshark],
 //       },
 //     );
 //
-//     const cardUnderTest = testEngine.getCardModel(
-//       ludwigVonDrakeAllaroundExpert,
+//     Const cardUnderTest = testEngine.getCardModel(
+//       LudwigVonDrakeAllaroundExpert,
 //     );
-//     const target = testEngine.getCardModel(bePrepared);
-//     const opponentsHand = testEngine.getCardsByZone("hand", "player_two");
+//     Const target = testEngine.getCardModel(bePrepared);
+//     Const opponentsHand = testEngine.getCardsByZone("hand", "player_two");
 //
-//     await testEngine.playCard(ludwigVonDrakeAllaroundExpert);
-//     await testEngine.resolveTopOfStack({ targets: [target] });
+//     Await testEngine.playCard(ludwigVonDrakeAllaroundExpert);
+//     Await testEngine.resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.zone).toEqual("discard");
-//     expect(opponentsHand.every((card) => card.meta.revealed)).toEqual(true);
+//     Expect(target.zone).toEqual("discard");
+//     Expect(opponentsHand.every((card) => card.meta.revealed)).toEqual(true);
 //   });
 //
-//   it("LASTING LEGACY When this character is banished, you may put this card into your inkwell facedown and exerted.", async () => {
-//     const testEngine = new TestEngine(
+//   It("LASTING LEGACY When this character is banished, you may put this card into your inkwell facedown and exerted.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: ludwigVonDrakeAllaroundExpert.cost,
-//         play: [ludwigVonDrakeAllaroundExpert],
+//         Inkwell: ludwigVonDrakeAllaroundExpert.cost,
+//         Play: [ludwigVonDrakeAllaroundExpert],
 //       },
 //       {
-//         play: [mauiHalfshark],
+//         Play: [mauiHalfshark],
 //       },
 //     );
 //
-//     const cardUnderTest = testEngine.getCardModel(
-//       ludwigVonDrakeAllaroundExpert,
+//     Const cardUnderTest = testEngine.getCardModel(
+//       LudwigVonDrakeAllaroundExpert,
 //     );
-//     cardUnderTest.updateCardMeta({ exerted: true });
+//     CardUnderTest.updateCardMeta({ exerted: true });
 //
-//     const attacker = testEngine.getCardModel(mauiHalfshark);
-//     attacker.challenge(cardUnderTest);
+//     Const attacker = testEngine.getCardModel(mauiHalfshark);
+//     Attacker.challenge(cardUnderTest);
 //
-//     testEngine.resolveOptionalAbility();
+//     TestEngine.resolveOptionalAbility();
 //
-//     expect(cardUnderTest.zone).toEqual("inkwell");
-//     expect(cardUnderTest.ready).toEqual(false);
+//     Expect(cardUnderTest.zone).toEqual("inkwell");
+//     Expect(cardUnderTest.ready).toEqual(false);
 //   });
 // });
 //

@@ -3,153 +3,153 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   aladdinStreetRat,
-//   genieOnTheJob,
-//   hadesLordOfUnderworld,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   AladdinStreetRat,
+//   GenieOnTheJob,
+//   HadesLordOfUnderworld,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { jafarDreadnought } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { theLamp } from "@lorcanito/lorcana-engine/cards/003/items/items";
-// import { genieWishFulfilled } from "@lorcanito/lorcana-engine/cards/006";
-// import {
-//   tobyDoggedCompanion,
-//   trampStreetSmartDog,
+// Import { jafarDreadnought } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { theLamp } from "@lorcanito/lorcana-engine/cards/003/items/items";
+// Import { genieWishFulfilled } from "@lorcanito/lorcana-engine/cards/006";
+// Import {
+//   TobyDoggedCompanion,
+//   TrampStreetSmartDog,
 // } from "@lorcanito/lorcana-engine/cards/007";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("The Lamp", () => {
-//   describe("**GOOD OR EVIL** Banish this item – If you have a character named Jafar in play, draw 2 cards. If you have a character named Genie in play, return chosen character with cost 4 or less to their player's hand.", () => {
-//     it("should draw 2 cards if you have a character named Jafar in play", () => {
-//       const testStore = new TestStore({
-//         inkwell: theLamp.cost,
-//         play: [theLamp, jafarDreadnought],
-//         deck: 4,
+// Describe("The Lamp", () => {
+//   Describe("**GOOD OR EVIL** Banish this item – If you have a character named Jafar in play, draw 2 cards. If you have a character named Genie in play, return chosen character with cost 4 or less to their player's hand.", () => {
+//     It("should draw 2 cards if you have a character named Jafar in play", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: theLamp.cost,
+//         Play: [theLamp, jafarDreadnought],
+//         Deck: 4,
 //       });
 //
-//       const cardUnderTest = testStore.getCard(theLamp);
+//       Const cardUnderTest = testStore.getCard(theLamp);
 //
-//       cardUnderTest.activate();
+//       CardUnderTest.activate();
 //
-//       expect(cardUnderTest.zone).toBe("discard");
-//       expect(testStore.getZonesCardCount()).toEqual(
-//         expect.objectContaining({
-//           deck: 2,
-//           hand: 2,
+//       Expect(cardUnderTest.zone).toBe("discard");
+//       Expect(testStore.getZonesCardCount()).toEqual(
+//         Expect.objectContaining({
+//           Deck: 2,
+//           Hand: 2,
 //         }),
 //       );
-//       expect(testStore.stackLayers).toHaveLength(0);
+//       Expect(testStore.stackLayers).toHaveLength(0);
 //     });
 //
-//     it("should return a character with cost 4 or less to their player's hand if you have a character named Genie in play", () => {
-//       const testStore = new TestStore(
+//     It("should return a character with cost 4 or less to their player's hand if you have a character named Genie in play", () => {
+//       Const testStore = new TestStore(
 //         {
-//           inkwell: theLamp.cost,
-//           play: [theLamp, genieOnTheJob],
-//           deck: 4,
+//           Inkwell: theLamp.cost,
+//           Play: [theLamp, genieOnTheJob],
+//           Deck: 4,
 //         },
 //         {
-//           play: [hadesLordOfUnderworld],
+//           Play: [hadesLordOfUnderworld],
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getCard(theLamp);
-//       const target = testStore.getCard(hadesLordOfUnderworld);
+//       Const cardUnderTest = testStore.getCard(theLamp);
+//       Const target = testStore.getCard(hadesLordOfUnderworld);
 //
-//       cardUnderTest.activate();
-//       testStore.resolveTopOfStack({ targets: [target] });
+//       CardUnderTest.activate();
+//       TestStore.resolveTopOfStack({ targets: [target] });
 //
-//       expect(cardUnderTest.zone).toBe("discard");
-//       expect(target.zone).toBe("hand");
-//       expect(testStore.getZonesCardCount()).toEqual(
-//         expect.objectContaining({
-//           deck: 4,
+//       Expect(cardUnderTest.zone).toBe("discard");
+//       Expect(target.zone).toBe("hand");
+//       Expect(testStore.getZonesCardCount()).toEqual(
+//         Expect.objectContaining({
+//           Deck: 4,
 //         }),
 //       );
-//       expect(testStore.stackLayers).toHaveLength(0);
+//       Expect(testStore.stackLayers).toHaveLength(0);
 //     });
 //
-//     it("should do both if you have both characters in play", () => {
-//       const testStore = new TestStore(
+//     It("should do both if you have both characters in play", () => {
+//       Const testStore = new TestStore(
 //         {
-//           inkwell: theLamp.cost,
-//           play: [theLamp, genieOnTheJob, jafarDreadnought],
-//           deck: 4,
+//           Inkwell: theLamp.cost,
+//           Play: [theLamp, genieOnTheJob, jafarDreadnought],
+//           Deck: 4,
 //         },
 //         {
-//           play: [hadesLordOfUnderworld],
+//           Play: [hadesLordOfUnderworld],
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getCard(theLamp);
-//       const target = testStore.getCard(hadesLordOfUnderworld);
+//       Const cardUnderTest = testStore.getCard(theLamp);
+//       Const target = testStore.getCard(hadesLordOfUnderworld);
 //
-//       cardUnderTest.activate();
-//       expect(cardUnderTest.zone).toBe("discard");
+//       CardUnderTest.activate();
+//       Expect(cardUnderTest.zone).toBe("discard");
 //
 //       // Draws before deciding who to return
-//       expect(target.zone).toBe("play");
-//       expect(testStore.getZonesCardCount()).toEqual(
-//         expect.objectContaining({
-//           deck: 2,
-//           hand: 2,
+//       Expect(target.zone).toBe("play");
+//       Expect(testStore.getZonesCardCount()).toEqual(
+//         Expect.objectContaining({
+//           Deck: 2,
+//           Hand: 2,
 //         }),
 //       );
 //
-//       testStore.resolveTopOfStack({ targets: [target] });
-//       expect(target.zone).toBe("hand");
+//       TestStore.resolveTopOfStack({ targets: [target] });
+//       Expect(target.zone).toBe("hand");
 //
-//       expect(testStore.stackLayers).toHaveLength(0);
+//       Expect(testStore.stackLayers).toHaveLength(0);
 //     });
 //
-//     it("should do nothing if you don't have a character named Jafar or Genie in play", () => {
-//       const testStore = new TestStore(
+//     It("should do nothing if you don't have a character named Jafar or Genie in play", () => {
+//       Const testStore = new TestStore(
 //         {
-//           inkwell: theLamp.cost,
-//           play: [theLamp, aladdinStreetRat],
-//           deck: 4,
+//           Inkwell: theLamp.cost,
+//           Play: [theLamp, aladdinStreetRat],
+//           Deck: 4,
 //         },
 //         {
-//           play: [hadesLordOfUnderworld],
+//           Play: [hadesLordOfUnderworld],
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getCard(theLamp);
-//       const target = testStore.getCard(hadesLordOfUnderworld);
+//       Const cardUnderTest = testStore.getCard(theLamp);
+//       Const target = testStore.getCard(hadesLordOfUnderworld);
 //
-//       cardUnderTest.activate();
-//       expect(cardUnderTest.zone).toBe("discard");
-//       expect(testStore.stackLayers).toHaveLength(0);
+//       CardUnderTest.activate();
+//       Expect(cardUnderTest.zone).toBe("discard");
+//       Expect(testStore.stackLayers).toHaveLength(0);
 //
-//       expect(target.zone).toBe("play");
-//       expect(testStore.getZonesCardCount()).toEqual(
-//         expect.objectContaining({
-//           deck: 4,
+//       Expect(target.zone).toBe("play");
+//       Expect(testStore.getZonesCardCount()).toEqual(
+//         Expect.objectContaining({
+//           Deck: 4,
 //         }),
 //       );
 //     });
 //   });
 // });
 //
-// describe("The Lamp - Regression", () => {
-//   it("Cost reduction should not be applied to the Lamp's effect", async () => {
-//     const testEngine = new TestEngine(
+// Describe("The Lamp - Regression", () => {
+//   It("Cost reduction should not be applied to the Lamp's effect", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         play: [theLamp, genieWishFulfilled],
+//         Play: [theLamp, genieWishFulfilled],
 //       },
 //       {
-//         play: [trampStreetSmartDog, hadesLordOfUnderworld, tobyDoggedCompanion],
+//         Play: [trampStreetSmartDog, hadesLordOfUnderworld, tobyDoggedCompanion],
 //       },
 //     );
 //
-//     await testEngine.activateCard(
-//       theLamp,
+//     Await testEngine.activateCard(
+//       TheLamp,
 //       { targets: [trampStreetSmartDog] },
-//       true,
+//       True,
 //     );
 //
-//     expect(testEngine.getCardModel(trampStreetSmartDog).zone).toEqual("play");
+//     Expect(testEngine.getCardModel(trampStreetSmartDog).zone).toEqual("play");
 //   });
 // });
 //

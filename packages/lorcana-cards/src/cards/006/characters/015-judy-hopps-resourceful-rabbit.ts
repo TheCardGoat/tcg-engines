@@ -1,35 +1,14 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const judyHoppsResourcefulRabbit: CharacterCard = {
-  id: "1r5",
-  cardType: "character",
-  name: "Judy Hopps",
-  version: "Resourceful Rabbit",
-  fullName: "Judy Hopps - Resourceful Rabbit",
-  inkType: ["amber"],
-  franchise: "Zootropolis",
-  set: "006",
-  text: "Support (Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)\n\nNEED SOME HELP? At the end of your turn, you may ready another chosen character of yours.",
-  cost: 6,
-  strength: 3,
-  willpower: 6,
-  lore: 2,
-  cardNumber: 15,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "064fed608ce47eeb3e4ae4b15e6fc7f3e58763e1",
-  },
   abilities: [
     {
       id: "1r5-1",
-      type: "keyword",
       keyword: "Support",
       text: "Support",
+      type: "keyword",
     },
     {
-      id: "1r5-2",
-      type: "action",
       effect: {
         type: "optional",
         effect: {
@@ -44,8 +23,29 @@ export const judyHoppsResourcefulRabbit: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "1r5-2",
       text: "NEED SOME HELP? At the end of your turn, you may ready another chosen character of yours.",
+      type: "action",
     },
   ],
+  cardNumber: 15,
+  cardType: "character",
   classifications: ["Storyborn", "Hero"],
+  cost: 6,
+  externalIds: {
+    ravensburger: "064fed608ce47eeb3e4ae4b15e6fc7f3e58763e1",
+  },
+  franchise: "Zootropolis",
+  fullName: "Judy Hopps - Resourceful Rabbit",
+  id: "1r5",
+  inkType: ["amber"],
+  inkable: true,
+  lore: 2,
+  missingTests: true,
+  name: "Judy Hopps",
+  set: "006",
+  strength: 3,
+  text: "Support (Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)\n\nNEED SOME HELP? At the end of your turn, you may ready another chosen character of yours.",
+  version: "Resourceful Rabbit",
+  willpower: 6,
 };

@@ -3,28 +3,28 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { rapunzelLettingHerHairDown } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { rapunzelLettingHerHairDown } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Rapunzel - Letting Down Her Hair", () => {
-//   describe("**TANGLE** When you play this character, each opponent loses 1 lore.", () => {
-//     it("Opponent loses lore", () => {
-//       const testStore = new TestStore({
-//         inkwell: rapunzelLettingHerHairDown.cost,
-//         hand: [rapunzelLettingHerHairDown],
+// Describe("Rapunzel - Letting Down Her Hair", () => {
+//   Describe("**TANGLE** When you play this character, each opponent loses 1 lore.", () => {
+//     It("Opponent loses lore", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: rapunzelLettingHerHairDown.cost,
+//         Hand: [rapunzelLettingHerHairDown],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "hand",
-//         rapunzelLettingHerHairDown.id,
+//         RapunzelLettingHerHairDown.id,
 //       );
 //
-//       testStore.store.tableStore.getTable("player_two").lore = 5;
+//       TestStore.store.tableStore.getTable("player_two").lore = 5;
 //
-//       cardUnderTest.playFromHand();
+//       CardUnderTest.playFromHand();
 //
-//       expect(testStore.store.tableStore.getTable("player_two").lore).toBe(4);
+//       Expect(testStore.store.tableStore.getTable("player_two").lore).toBe(4);
 //     });
 //   });
 // });

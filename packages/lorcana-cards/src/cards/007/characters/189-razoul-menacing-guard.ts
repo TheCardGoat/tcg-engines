@@ -1,35 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const razoulMenacingGuard: CharacterCard = {
-  id: "1gi",
-  cardType: "character",
-  name: "Razoul",
-  version: "Menacing Guard",
-  fullName: "Razoul - Menacing Guard",
-  inkType: ["steel"],
-  franchise: "Aladdin",
-  set: "007",
-  text: "MY ORDERS COME FROM JAFAR When you play this character, if you have a character named Jafar in play, you may banish chosen item.",
-  cost: 2,
-  strength: 1,
-  willpower: 3,
-  lore: 1,
-  cardNumber: 189,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "bd4556b415c9d59ebf5ce6f7e363998afd05e091",
-  },
   abilities: [
     {
-      id: "1gi-1",
-      type: "triggered",
-      name: "MY ORDERS COME FROM JAFAR",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -44,8 +17,35 @@ export const razoulMenacingGuard: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "1gi-1",
+      name: "MY ORDERS COME FROM JAFAR",
       text: "MY ORDERS COME FROM JAFAR When you play this character, if you have a character named Jafar in play, you may banish chosen item.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 189,
+  cardType: "character",
   classifications: ["Dreamborn", "Ally", "Captain"],
+  cost: 2,
+  externalIds: {
+    ravensburger: "bd4556b415c9d59ebf5ce6f7e363998afd05e091",
+  },
+  franchise: "Aladdin",
+  fullName: "Razoul - Menacing Guard",
+  id: "1gi",
+  inkType: ["steel"],
+  inkable: true,
+  lore: 1,
+  missingTests: true,
+  name: "Razoul",
+  set: "007",
+  strength: 1,
+  text: "MY ORDERS COME FROM JAFAR When you play this character, if you have a character named Jafar in play, you may banish chosen item.",
+  version: "Menacing Guard",
+  willpower: 3,
 };

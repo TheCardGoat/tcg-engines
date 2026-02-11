@@ -17,9 +17,7 @@ describe("Keyword: Weaponmaster", () => {
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
-      expect(result.abilities?.[0]).toEqual(
-        expect.objectContaining(Abilities.weaponmaster()),
-      );
+      expect(result.abilities?.[0]).toEqual(expect.objectContaining(Abilities.weaponmaster()));
     });
   });
 
@@ -31,15 +29,13 @@ describe("Keyword: Weaponmaster", () => {
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(2);
-      expect(result.abilities?.[0]).toEqual(
-        expect.objectContaining(Abilities.weaponmaster()),
-      );
+      expect(result.abilities?.[0]).toEqual(expect.objectContaining(Abilities.weaponmaster()));
       expect(result.abilities?.[1]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           trigger: expect.objectContaining({
             event: "conquer",
           }),
+          type: "triggered",
         }),
       );
     });
@@ -53,10 +49,10 @@ describe("Keyword: Weaponmaster", () => {
       expect(result.abilities).toHaveLength(2);
       expect(result.abilities?.[1]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           effect: expect.objectContaining({
             type: "damage",
           }),
+          type: "triggered",
         }),
       );
     });
@@ -70,8 +66,8 @@ describe("Keyword: Weaponmaster", () => {
       expect(result.abilities).toHaveLength(2);
       expect(result.abilities?.[1]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           optional: true,
+          type: "triggered",
         }),
       );
     });
@@ -98,13 +94,11 @@ describe("Keyword: Weaponmaster", () => {
       expect(result.abilities).toHaveLength(2);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "keyword",
           keyword: "Accelerate",
+          type: "keyword",
         }),
       );
-      expect(result.abilities?.[1]).toEqual(
-        expect.objectContaining(Abilities.weaponmaster()),
-      );
+      expect(result.abilities?.[1]).toEqual(expect.objectContaining(Abilities.weaponmaster()));
     });
   });
 
@@ -116,12 +110,8 @@ describe("Keyword: Weaponmaster", () => {
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(3);
-      expect(result.abilities?.[0]).toEqual(
-        expect.objectContaining(Abilities.deflect(2)),
-      );
-      expect(result.abilities?.[1]).toEqual(
-        expect.objectContaining(Abilities.weaponmaster()),
-      );
+      expect(result.abilities?.[0]).toEqual(expect.objectContaining(Abilities.deflect(2)));
+      expect(result.abilities?.[1]).toEqual(expect.objectContaining(Abilities.weaponmaster()));
     });
   });
 
@@ -135,11 +125,11 @@ describe("Keyword: Weaponmaster", () => {
       expect(result.abilities).toHaveLength(2);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "static",
           effect: expect.objectContaining({
-            type: "grant-keyword",
             keyword: "Weaponmaster",
+            type: "grant-keyword",
           }),
+          type: "static",
         }),
       );
     });

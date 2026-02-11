@@ -3,32 +3,32 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { vanellopeVonSchweetzRandomRosterRacer } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { vanellopeVonSchweetzRandomRosterRacer } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Vanellope von Schweetz - Random Roster Racer", () => {
-//   it("**PIXLEXIA** When you play this character, she gains **Evasive** until the start of your next turn. _(Only characters with Evasive can challenge them.)_", () => {
-//     const testStore = new TestStore({
-//       inkwell: vanellopeVonSchweetzRandomRosterRacer.cost,
-//       hand: [vanellopeVonSchweetzRandomRosterRacer],
+// Describe("Vanellope von Schweetz - Random Roster Racer", () => {
+//   It("**PIXLEXIA** When you play this character, she gains **Evasive** until the start of your next turn. _(Only characters with Evasive can challenge them.)_", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: vanellopeVonSchweetzRandomRosterRacer.cost,
+//       Hand: [vanellopeVonSchweetzRandomRosterRacer],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(
-//       vanellopeVonSchweetzRandomRosterRacer,
+//     Const cardUnderTest = testStore.getCard(
+//       VanellopeVonSchweetzRandomRosterRacer,
 //     );
-//     cardUnderTest.playFromHand();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveTopOfStack({});
 //
-//     expect(cardUnderTest.hasEvasive).toEqual(true);
+//     Expect(cardUnderTest.hasEvasive).toEqual(true);
 //
-//     testStore.passTurn();
+//     TestStore.passTurn();
 //
-//     expect(cardUnderTest.hasEvasive).toEqual(true);
+//     Expect(cardUnderTest.hasEvasive).toEqual(true);
 //
-//     testStore.passTurn();
+//     TestStore.passTurn();
 //
-//     expect(cardUnderTest.hasEvasive).toEqual(false);
+//     Expect(cardUnderTest.hasEvasive).toEqual(false);
 //   });
 // });
 //

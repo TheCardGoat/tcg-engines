@@ -1,45 +1,45 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-// import {
-//   mayBanish,
-//   youGainLore,
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+// Import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import {
+//   MayBanish,
+//   YouGainLore,
 // } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const mostEveryonesMadHere: LorcanitoActionCard = {
-//   id: "isu",
-//   name: "Most Everyone's Mad Here",
-//   characteristics: ["action"],
-//   text: "Gain lore equal to the damage on chosen character, then banish them.",
-//   type: "action",
-//   inkwell: false,
-//   colors: ["ruby"],
-//   cost: 7,
-//   illustrator: "Leonardo Giammichele",
-//   number: 151,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631451,
+// Export const mostEveryonesMadHere: LorcanitoActionCard = {
+//   Id: "isu",
+//   Name: "Most Everyone's Mad Here",
+//   Characteristics: ["action"],
+//   Text: "Gain lore equal to the damage on chosen character, then banish them.",
+//   Type: "action",
+//   Inkwell: false,
+//   Colors: ["ruby"],
+//   Cost: 7,
+//   Illustrator: "Leonardo Giammichele",
+//   Number: 151,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631451,
 //   },
-//   rarity: "rare",
-//   abilities: [
+//   Rarity: "rare",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       dependentEffects: true,
-//       effects: [
+//       Type: "resolution",
+//       DependentEffects: true,
+//       Effects: [
 //         {
-//           type: "create-layer-based-on-target",
-//           target: chosenCharacter,
-//           resolveAmountBeforeCreatingLayer: true,
-//           effects: [
-//             youGainLore({
-//               dynamic: true,
-//               target: { attribute: "damage" },
+//           Type: "create-layer-based-on-target",
+//           Target: chosenCharacter,
+//           ResolveAmountBeforeCreatingLayer: true,
+//           Effects: [
+//             YouGainLore({
+//               Dynamic: true,
+//               Target: { attribute: "damage" },
 //             }),
 //           ],
 //         },
 //
-//         mayBanish(chosenCharacter),
+//         MayBanish(chosenCharacter),
 //       ],
 //     },
 //   ],

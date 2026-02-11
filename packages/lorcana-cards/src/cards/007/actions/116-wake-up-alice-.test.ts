@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { wakeUpAlice } from "@lorcanito/lorcana-engine/cards/007/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { wakeUpAlice } from "@lorcanito/lorcana-engine/cards/007/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Wake Up, Alice!", () => {
-//   it.skip("Return chosen damaged character to their player's hand.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: wakeUpAlice.cost,
-//       play: [wakeUpAlice],
-//       hand: [wakeUpAlice],
+// Describe("Wake Up, Alice!", () => {
+//   It.skip("Return chosen damaged character to their player's hand.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: wakeUpAlice.cost,
+//       Play: [wakeUpAlice],
+//       Hand: [wakeUpAlice],
 //     });
 //
-//     await testEngine.playCard(wakeUpAlice);
+//     Await testEngine.playCard(wakeUpAlice);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

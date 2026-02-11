@@ -1,24 +1,24 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
 //
-// export const ariannaQueenOfCorona: LorcanitoCharacterCard = {
-//   id: "ihs",
-//   name: "Arianna",
-//   title: "Queen of Corona",
-//   characteristics: ["storyborn", "queen"],
-//   type: "character",
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 5,
-//   strength: 5,
-//   willpower: 5,
-//   illustrator: "Carmine Pucci",
-//   number: 191,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631475,
+// Export const ariannaQueenOfCorona: LorcanitoCharacterCard = {
+//   Id: "ihs",
+//   Name: "Arianna",
+//   Title: "Queen of Corona",
+//   Characteristics: ["storyborn", "queen"],
+//   Type: "character",
+//   Inkwell: true,
+//   Colors: ["steel"],
+//   Cost: 5,
+//   Strength: 5,
+//   Willpower: 5,
+//   Illustrator: "Carmine Pucci",
+//   Number: 191,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631475,
 //   },
-//   rarity: "common",
-//   lore: 2,
+//   Rarity: "common",
+//   Lore: 2,
 // };
 //

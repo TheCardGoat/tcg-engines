@@ -3,123 +3,123 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { deweyShowyNephew } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { yzmaUnjustlyTreated } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import {
-//   charlotteLaBouffMardiGrasPrincess,
-//   deweyLovableShowoff,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { deweyShowyNephew } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { yzmaUnjustlyTreated } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import {
+//   CharlotteLaBouffMardiGrasPrincess,
+//   DeweyLovableShowoff,
 // } from "@lorcanito/lorcana-engine/cards/008";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Yzma - Unjustly Treated", () => {
-//   it("**I'M WARNING YOU!** During your turn, whenever one of your characters banishes a character in a challenge, you may deal 1 damage to chosen character.", () => {
-//     const testEngine = new TestEngine(
+// Describe("Yzma - Unjustly Treated", () => {
+//   It("**I'M WARNING YOU!** During your turn, whenever one of your characters banishes a character in a challenge, you may deal 1 damage to chosen character.", () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: yzmaUnjustlyTreated.cost,
-//         play: [yzmaUnjustlyTreated, deweyLovableShowoff],
+//         Inkwell: yzmaUnjustlyTreated.cost,
+//         Play: [yzmaUnjustlyTreated, deweyLovableShowoff],
 //       },
 //       {
-//         play: [deweyShowyNephew, charlotteLaBouffMardiGrasPrincess],
+//         Play: [deweyShowyNephew, charlotteLaBouffMardiGrasPrincess],
 //       },
 //     );
 //
-//     const cardUnderTest = testEngine.getCardModel(yzmaUnjustlyTreated);
-//     const oppoChalleng = testEngine.getCardModel(deweyShowyNephew);
-//     const targetEffect = testEngine.getCardModel(
-//       charlotteLaBouffMardiGrasPrincess,
+//     Const cardUnderTest = testEngine.getCardModel(yzmaUnjustlyTreated);
+//     Const oppoChalleng = testEngine.getCardModel(deweyShowyNephew);
+//     Const targetEffect = testEngine.getCardModel(
+//       CharlotteLaBouffMardiGrasPrincess,
 //     );
-//     const attacker = testEngine.getCardModel(deweyLovableShowoff);
+//     Const attacker = testEngine.getCardModel(deweyLovableShowoff);
 //
-//     oppoChalleng.exert();
+//     OppoChalleng.exert();
 //
-//     testEngine.challenge({
-//       attacker: attacker,
-//       defender: oppoChalleng,
+//     TestEngine.challenge({
+//       Attacker: attacker,
+//       Defender: oppoChalleng,
 //     });
 //
 //     // Verify the opponent's character is banished
-//     expect(oppoChalleng.zone).toEqual("discard");
+//     Expect(oppoChalleng.zone).toEqual("discard");
 //
 //     // Resolve Yzma's triggered ability
-//     testEngine.resolveOptionalAbility();
-//     testEngine.resolveTopOfStack({ targets: [targetEffect] });
+//     TestEngine.resolveOptionalAbility();
+//     TestEngine.resolveTopOfStack({ targets: [targetEffect] });
 //
 //     // Target should receive 1 damage
-//     expect(targetEffect.damage).toEqual(1);
+//     Expect(targetEffect.damage).toEqual(1);
 //   });
 //
-//   it("**I'M WARNING YOU!** Does not trigger when your character is banished", () => {
-//     const testEngine = new TestEngine(
+//   It("**I'M WARNING YOU!** Does not trigger when your character is banished", () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: yzmaUnjustlyTreated.cost,
-//         play: [yzmaUnjustlyTreated, deweyShowyNephew],
+//         Inkwell: yzmaUnjustlyTreated.cost,
+//         Play: [yzmaUnjustlyTreated, deweyShowyNephew],
 //       },
 //       {
-//         play: [deweyLovableShowoff, charlotteLaBouffMardiGrasPrincess],
+//         Play: [deweyLovableShowoff, charlotteLaBouffMardiGrasPrincess],
 //       },
 //     );
 //
-//     const cardUnderTest = testEngine.getCardModel(yzmaUnjustlyTreated);
-//     const oppoChalleng = testEngine.getCardModel(deweyLovableShowoff);
-//     const targetEffect = testEngine.getCardModel(
-//       charlotteLaBouffMardiGrasPrincess,
+//     Const cardUnderTest = testEngine.getCardModel(yzmaUnjustlyTreated);
+//     Const oppoChalleng = testEngine.getCardModel(deweyLovableShowoff);
+//     Const targetEffect = testEngine.getCardModel(
+//       CharlotteLaBouffMardiGrasPrincess,
 //     );
-//     const attacker = testEngine.getCardModel(deweyShowyNephew);
+//     Const attacker = testEngine.getCardModel(deweyShowyNephew);
 //
-//     oppoChalleng.exert();
+//     OppoChalleng.exert();
 //
-//     testEngine.challenge({
-//       attacker: attacker,
-//       defender: oppoChalleng,
+//     TestEngine.challenge({
+//       Attacker: attacker,
+//       Defender: oppoChalleng,
 //     });
 //
 //     // Verify our character is banished instead of opponent's
-//     expect(attacker.zone).toEqual("discard");
+//     Expect(attacker.zone).toEqual("discard");
 //
 //     // No ability should trigger, stack should be empty
-//     expect(testEngine.stackLayers.length).toEqual(0);
+//     Expect(testEngine.stackLayers.length).toEqual(0);
 //
 //     // Target should not receive damage
-//     expect(targetEffect.damage).toEqual(0);
+//     Expect(targetEffect.damage).toEqual(0);
 //   });
 //
-//   it("**I'M WARNING YOU!** Does not trigger during opponent's turn", () => {
-//     const testEngine = new TestEngine(
+//   It("**I'M WARNING YOU!** Does not trigger during opponent's turn", () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: yzmaUnjustlyTreated.cost,
-//         play: [yzmaUnjustlyTreated, deweyShowyNephew],
+//         Inkwell: yzmaUnjustlyTreated.cost,
+//         Play: [yzmaUnjustlyTreated, deweyShowyNephew],
 //       },
 //       {
-//         play: [deweyLovableShowoff, charlotteLaBouffMardiGrasPrincess],
+//         Play: [deweyLovableShowoff, charlotteLaBouffMardiGrasPrincess],
 //       },
 //     );
 //
-//     const cardUnderTest = testEngine.getCardModel(yzmaUnjustlyTreated);
-//     const oppoChalleng = testEngine.getCardModel(deweyShowyNephew);
-//     const targetEffect = testEngine.getCardModel(
-//       charlotteLaBouffMardiGrasPrincess,
+//     Const cardUnderTest = testEngine.getCardModel(yzmaUnjustlyTreated);
+//     Const oppoChalleng = testEngine.getCardModel(deweyShowyNephew);
+//     Const targetEffect = testEngine.getCardModel(
+//       CharlotteLaBouffMardiGrasPrincess,
 //     );
-//     const attacker = testEngine.getCardModel(deweyLovableShowoff);
+//     Const attacker = testEngine.getCardModel(deweyLovableShowoff);
 //
 //     // Pass turn to opponent
-//     testEngine.passTurn();
+//     TestEngine.passTurn();
 //
-//     oppoChalleng.exert();
+//     OppoChalleng.exert();
 //
-//     testEngine.challenge({
-//       attacker: attacker,
-//       defender: oppoChalleng,
+//     TestEngine.challenge({
+//       Attacker: attacker,
+//       Defender: oppoChalleng,
 //     });
 //
 //     // Verify opponent's attack banishes our character
-//     expect(oppoChalleng.zone).toEqual("discard");
+//     Expect(oppoChalleng.zone).toEqual("discard");
 //
 //     // No ability should trigger, stack should be empty
-//     expect(testEngine.stackLayers.length).toEqual(0);
+//     Expect(testEngine.stackLayers.length).toEqual(0);
 //
 //     // Target should not receive damage
-//     expect(targetEffect.damage).toEqual(0);
+//     Expect(targetEffect.damage).toEqual(0);
 //   });
 // });
 //

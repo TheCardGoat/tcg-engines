@@ -1,29 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const mrSmeeBumblingMate: CharacterCard = {
-  id: "16t",
-  cardType: "character",
-  name: "Mr. Smee",
-  version: "Bumbling Mate",
-  fullName: "Mr. Smee - Bumbling Mate",
-  inkType: ["steel"],
-  franchise: "Peter Pan",
-  set: "003",
-  text: "OH DEAR, DEAR, DEAR At the end of your turn, if this character is exerted and you don't have a Captain character in play, deal 1 damage to this character.",
-  cost: 2,
-  strength: 3,
-  willpower: 3,
-  lore: 2,
-  cardNumber: 184,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "9a550d6d1adb8c9c50c770cd0354b54e62316cdd",
-  },
   abilities: [
     {
-      id: "16t-1",
-      type: "action",
       effect: {
         type: "conditional",
         condition: {
@@ -43,8 +22,29 @@ export const mrSmeeBumblingMate: CharacterCard = {
           },
         },
       },
+      id: "16t-1",
       text: "OH DEAR, DEAR, DEAR At the end of your turn, if this character is exerted and you don't have a Captain character in play, deal 1 damage to this character.",
+      type: "action",
     },
   ],
+  cardNumber: 184,
+  cardType: "character",
   classifications: ["Storyborn", "Ally", "Pirate"],
+  cost: 2,
+  externalIds: {
+    ravensburger: "9a550d6d1adb8c9c50c770cd0354b54e62316cdd",
+  },
+  franchise: "Peter Pan",
+  fullName: "Mr. Smee - Bumbling Mate",
+  id: "16t",
+  inkType: ["steel"],
+  inkable: true,
+  lore: 2,
+  missingTests: true,
+  name: "Mr. Smee",
+  set: "003",
+  strength: 3,
+  text: "OH DEAR, DEAR, DEAR At the end of your turn, if this character is exerted and you don't have a Captain character in play, deal 1 damage to this character.",
+  version: "Bumbling Mate",
+  willpower: 3,
 };

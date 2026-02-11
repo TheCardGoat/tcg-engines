@@ -1,24 +1,8 @@
 import type { ItemCard } from "@tcg/lorcana-types";
 
 export const enigmaticInkcaster: ItemCard = {
-  id: "pr8",
-  cardType: "item",
-  name: "Enigmatic Inkcaster",
-  inkType: ["emerald"],
-  franchise: "Lorcana",
-  set: "010",
-  text: "ITS OWN REWARD {E} — If you've played 2 or more cards this turn, gain 1 lore.",
-  cost: 2,
-  cardNumber: 100,
-  inkable: false,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "5cd409752d10d79e8a7c33b9a22eb0f82c1850a3",
-  },
   abilities: [
     {
-      id: "pr8-1",
-      type: "activated",
       cost: { exert: true },
       effect: {
         type: "conditional",
@@ -31,7 +15,23 @@ export const enigmaticInkcaster: ItemCard = {
           amount: 1,
         },
       },
+      id: "pr8-1",
       text: "ITS OWN REWARD {E} — If you've played 2 or more cards this turn, gain 1 lore.",
+      type: "activated",
     },
   ],
+  cardNumber: 100,
+  cardType: "item",
+  cost: 2,
+  externalIds: {
+    ravensburger: "5cd409752d10d79e8a7c33b9a22eb0f82c1850a3",
+  },
+  franchise: "Lorcana",
+  id: "pr8",
+  inkType: ["emerald"],
+  inkable: false,
+  missingTests: true,
+  name: "Enigmatic Inkcaster",
+  set: "010",
+  text: "ITS OWN REWARD {E} — If you've played 2 or more cards this turn, gain 1 lore.",
 };

@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { casaMadrigalCasita } from "@lorcanito/lorcana-engine/cards/009/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { casaMadrigalCasita } from "@lorcanito/lorcana-engine/cards/009/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Casa Madrigal - Casita", () => {
-//   it.skip("**OUR HOME** At the start of your turn, if you have a character here, gain 1 lore.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: casaMadrigalCasita.cost,
-//       play: [casaMadrigalCasita],
-//       hand: [casaMadrigalCasita],
+// Describe("Casa Madrigal - Casita", () => {
+//   It.skip("**OUR HOME** At the start of your turn, if you have a character here, gain 1 lore.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: casaMadrigalCasita.cost,
+//       Play: [casaMadrigalCasita],
+//       Hand: [casaMadrigalCasita],
 //     });
 //
-//     await testEngine.playCard(casaMadrigalCasita);
+//     Await testEngine.playCard(casaMadrigalCasita);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

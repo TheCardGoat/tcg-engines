@@ -1,35 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const auroraBriarRose: CharacterCard = {
-  id: "v54",
-  cardType: "character",
-  name: "Aurora",
-  version: "Briar Rose",
-  fullName: "Aurora - Briar Rose",
-  inkType: ["sapphire"],
-  franchise: "Sleeping Beauty",
-  set: "001",
-  text: "DISARMING BEAUTY When you play this character, chosen character gets -2 {S} this turn.",
-  cost: 4,
-  strength: 2,
-  willpower: 5,
-  lore: 1,
-  cardNumber: 138,
-  inkable: true,
-  externalIds: {
-    ravensburger: "703d2d0c9e63fb69fed427dac99aa1f1f589898f",
-  },
   abilities: [
     {
-      id: "v54-1",
-      text: "DISARMING BEAUTY When you play this character, chosen character gets -2 {S} this turn.",
-      name: "DISARMING BEAUTY",
-      type: "triggered",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "modify-stat",
         stat: "strength",
@@ -37,38 +10,65 @@ export const auroraBriarRose: CharacterCard = {
         target: "CHOSEN_CHARACTER",
         duration: "this-turn",
       },
+      id: "v54-1",
+      name: "DISARMING BEAUTY",
+      text: "DISARMING BEAUTY When you play this character, chosen character gets -2 {S} this turn.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 138,
+  cardType: "character",
   classifications: ["Storyborn", "Hero", "Princess"],
+  cost: 4,
+  externalIds: {
+    ravensburger: "703d2d0c9e63fb69fed427dac99aa1f1f589898f",
+  },
+  franchise: "Sleeping Beauty",
+  fullName: "Aurora - Briar Rose",
+  id: "v54",
+  inkType: ["sapphire"],
+  inkable: true,
+  lore: 1,
+  name: "Aurora",
+  set: "001",
+  strength: 2,
+  text: "DISARMING BEAUTY When you play this character, chosen character gets -2 {S} this turn.",
+  version: "Briar Rose",
+  willpower: 5,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const auroraBriarRose: LorcanitoCharacterCard = {
-//   id: "du8",
+// Export const auroraBriarRose: LorcanitoCharacterCard = {
+//   Id: "du8",
 //
-//   name: "Aurora",
-//   title: "Briar Rose",
-//   characteristics: ["hero", "storyborn", "princess"],
-//   text: "**DISTURBING BEAUTY** When you play this character, chosen character gets -2 {S} this turn.",
-//   type: "character",
-//   abilities: [
-//     whenYouPlayThisCharAbility({
-//       type: "resolution",
-//       name: "DISTURBING BEAUTY",
-//       text: "When you play this character, chosen character gets -2 {S} this turn.",
-//       effects: [
+//   Name: "Aurora",
+//   Title: "Briar Rose",
+//   Characteristics: ["hero", "storyborn", "princess"],
+//   Text: "**DISTURBING BEAUTY** When you play this character, chosen character gets -2 {S} this turn.",
+//   Type: "character",
+//   Abilities: [
+//     WhenYouPlayThisCharAbility({
+//       Type: "resolution",
+//       Name: "DISTURBING BEAUTY",
+//       Text: "When you play this character, chosen character gets -2 {S} this turn.",
+//       Effects: [
 //         {
-//           type: "attribute",
-//           attribute: "strength",
-//           amount: 2,
-//           modifier: "subtract",
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
+//           Type: "attribute",
+//           Attribute: "strength",
+//           Amount: 2,
+//           Modifier: "subtract",
+//           Target: {
+//             Type: "card",
+//             Value: 1,
+//             Filters: [
 //               { filter: "type", value: "character" },
 //               { filter: "zone", value: "play" },
 //             ],
@@ -77,20 +77,20 @@ export const auroraBriarRose: CharacterCard = {
 //       ],
 //     }),
 //   ],
-//   flavour:
+//   Flavour:
 //     "There was something strange about that voice. Too beautiful to be real . . .",
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 4,
-//   strength: 2,
-//   willpower: 5,
-//   lore: 1,
-//   illustrator: "Rosalia Radosti",
-//   number: 138,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 508809,
+//   Inkwell: true,
+//   Colors: ["sapphire"],
+//   Cost: 4,
+//   Strength: 2,
+//   Willpower: 5,
+//   Lore: 1,
+//   Illustrator: "Rosalia Radosti",
+//   Number: 138,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 508809,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

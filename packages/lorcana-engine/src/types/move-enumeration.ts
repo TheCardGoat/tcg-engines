@@ -11,7 +11,7 @@
  * Describes a single parameter field for a move, including its type,
  * description, and valid values.
  */
-export type ParamFieldSchema = {
+export interface ParamFieldSchema {
   /** Parameter name */
   name: string;
 
@@ -26,7 +26,7 @@ export type ParamFieldSchema = {
 
   /** For enum types: valid enum values */
   enumValues?: string[];
-};
+}
 
 /**
  * Move parameter schema
@@ -34,13 +34,13 @@ export type ParamFieldSchema = {
  * Defines the structure of parameters a move accepts, including
  * required and optional fields.
  */
-export type MoveParamSchema = {
+export interface MoveParamSchema {
   /** Required parameters */
   required: ParamFieldSchema[];
 
   /** Optional parameters */
   optional?: ParamFieldSchema[];
-};
+}
 
 /**
  * Available move information
@@ -48,7 +48,7 @@ export type MoveParamSchema = {
  * Metadata about a move that is available to execute, including
  * display information and parameter schema.
  */
-export type AvailableMoveInfo = {
+export interface AvailableMoveInfo {
   /** Unique move identifier */
   moveId: string;
 
@@ -63,7 +63,7 @@ export type AvailableMoveInfo = {
 
   /** Parameter schema (undefined if move has no parameters) */
   paramSchema?: MoveParamSchema;
-};
+}
 
 /**
  * Parameter information
@@ -71,7 +71,7 @@ export type AvailableMoveInfo = {
  * Detailed information about a specific parameter, including
  * type, description, and constraints.
  */
-export type ParameterInfo = {
+export interface ParameterInfo {
   /** Parameter type */
   type: "cardId" | "playerId" | "number" | "boolean" | "object" | "string";
 
@@ -86,7 +86,7 @@ export type ParameterInfo = {
 
   /** Maximum value (for number types) */
   max?: number;
-};
+}
 
 /**
  * Move parameter options
@@ -94,13 +94,13 @@ export type ParameterInfo = {
  * All valid parameter combinations for a specific move, along with
  * metadata about each parameter field.
  */
-export type MoveParameterOptions = {
+export interface MoveParameterOptions {
   /** All valid parameter combinations for this move */
   validCombinations: Record<string, any>[];
 
   /** Information about each parameter */
   parameterInfo: Record<string, ParameterInfo>;
-};
+}
 
 /**
  * Move validation error
@@ -108,7 +108,7 @@ export type MoveParameterOptions = {
  * Detailed information about why a move cannot be executed,
  * including error code, reason, context, and suggestions.
  */
-export type MoveValidationError = {
+export interface MoveValidationError {
   /** Move that was attempted */
   moveId: string;
 
@@ -123,4 +123,4 @@ export type MoveValidationError = {
 
   /** Suggested actions to make the move valid */
   suggestions?: string[];
-};
+}

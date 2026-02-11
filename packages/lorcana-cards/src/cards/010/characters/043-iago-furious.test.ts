@@ -3,38 +3,38 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { iagoFurious } from "@lorcanito/lorcana-engine/cards/010/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { iagoFurious } from "@lorcanito/lorcana-engine/cards/010/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Iago - Furious", () => {
-//   it("should have Challenger +5 ability", () => {
-//     const testEngine = new TestEngine({
-//       play: [iagoFurious],
+// Describe("Iago - Furious", () => {
+//   It("should have Challenger +5 ability", () => {
+//     Const testEngine = new TestEngine({
+//       Play: [iagoFurious],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(iagoFurious);
-//     expect(cardUnderTest.hasChallenger).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(iagoFurious);
+//     Expect(cardUnderTest.hasChallenger).toBe(true);
 //   });
 //
-//   it("should have challenger value of 5", () => {
-//     const testEngine = new TestEngine({
-//       play: [iagoFurious],
+//   It("should have challenger value of 5", () => {
+//     Const testEngine = new TestEngine({
+//       Play: [iagoFurious],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(iagoFurious);
+//     Const cardUnderTest = testEngine.getCardModel(iagoFurious);
 //
 //     // Check the card definition directly
-//     const challengerAbility = iagoFurious.abilities?.find(
+//     Const challengerAbility = iagoFurious.abilities?.find(
 //       (ability: any) =>
-//         ability.type === "static" &&
+//         Ability.type === "static" &&
 //         "ability" in ability &&
-//         ability.ability === "challenger",
+//         Ability.ability === "challenger",
 //     );
 //
-//     expect(challengerAbility).toBeDefined();
-//     if (challengerAbility && "value" in challengerAbility) {
-//       expect(challengerAbility.value).toBe(5);
+//     Expect(challengerAbility).toBeDefined();
+//     If (challengerAbility && "value" in challengerAbility) {
+//       Expect(challengerAbility.value).toBe(5);
 //     }
 //   });
 // });

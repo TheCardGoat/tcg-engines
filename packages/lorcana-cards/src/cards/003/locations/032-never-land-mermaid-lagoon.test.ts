@@ -3,9 +3,9 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
+// Import { describe, it } from "@jest/globals";
 //
-// describe("Never Land - Mermaid Lagoon", () => {
-//   it("TODO", () => {});
+// Describe("Never Land - Mermaid Lagoon", () => {
+//   It("TODO", () => {});
 // });
 //

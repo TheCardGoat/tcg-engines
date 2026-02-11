@@ -3,35 +3,35 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { oneLastHope } from "@lorcanito/lorcana-engine/cards/009/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { oneLastHope } from "@lorcanito/lorcana-engine/cards/009/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("One Last Hope", () => {
-//   it.skip("_(A character with cost 3 or more can {E} to sing this song for free.)_", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: oneLastHope.cost,
-//       play: [oneLastHope],
-//       hand: [oneLastHope],
+// Describe("One Last Hope", () => {
+//   It.skip("_(A character with cost 3 or more can {E} to sing this song for free.)_", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: oneLastHope.cost,
+//       Play: [oneLastHope],
+//       Hand: [oneLastHope],
 //     });
 //
-//     await testEngine.playCard(oneLastHope);
+//     Await testEngine.playCard(oneLastHope);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 //
-//   it.skip("Chosen character gains **Resist** +2 until the start of your next turn. If a Hero character is chosen, they may also challenge ready characters this turn. _(Damage dealt to them is reduced by 2.)_", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: oneLastHope.cost,
-//       play: [oneLastHope],
-//       hand: [oneLastHope],
+//   It.skip("Chosen character gains **Resist** +2 until the start of your next turn. If a Hero character is chosen, they may also challenge ready characters this turn. _(Damage dealt to them is reduced by 2.)_", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: oneLastHope.cost,
+//       Play: [oneLastHope],
+//       Hand: [oneLastHope],
 //     });
 //
-//     await testEngine.playCard(oneLastHope);
+//     Await testEngine.playCard(oneLastHope);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

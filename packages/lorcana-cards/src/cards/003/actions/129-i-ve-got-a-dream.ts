@@ -1,51 +1,51 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import {
-//   allYourCharacters,
-//   chosenCharacterOfYoursAtLocation,
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+// Import {
+//   AllYourCharacters,
+//   ChosenCharacterOfYoursAtLocation,
 // } from "@lorcanito/lorcana-engine/abilities/targets";
-// import {
-//   readyAndCantQuest,
-//   youGainLore,
+// Import {
+//   ReadyAndCantQuest,
+//   YouGainLore,
 // } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const iveGotADream: LorcanitoActionCard = {
-//   id: "ntx",
-//   name: "I've Got a Dream",
-//   characteristics: ["action", "song"],
-//   text: "Ready chosen character of yours at a location. They can't quest for the rest of this turn. Gain lore equal to that location {L}.",
-//   type: "action",
-//   abilities: [
+// Export const iveGotADream: LorcanitoActionCard = {
+//   Id: "ntx",
+//   Name: "I've Got a Dream",
+//   Characteristics: ["action", "song"],
+//   Text: "Ready chosen character of yours at a location. They can't quest for the rest of this turn. Gain lore equal to that location {L}.",
+//   Type: "action",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       effects: [
+//       Type: "resolution",
+//       Effects: [
 //         ...readyAndCantQuest(chosenCharacterOfYoursAtLocation),
 //         {
-//           type: "create-layer-based-on-target",
-//           resolveAmountBeforeCreatingLayer: true,
-//           effects: [
-//             youGainLore({
-//               dynamic: true,
-//               targetLocation: { attribute: "lore" },
+//           Type: "create-layer-based-on-target",
+//           ResolveAmountBeforeCreatingLayer: true,
+//           Effects: [
+//             YouGainLore({
+//               Dynamic: true,
+//               TargetLocation: { attribute: "lore" },
 //             }),
 //           ],
 //           // TODO: Get rid of target
-//           target: allYourCharacters,
+//           Target: allYourCharacters,
 //         },
 //       ],
 //     },
 //   ],
-//   flavour:
+//   Flavour:
 //     "Tor would like to quit and be a florist \nGunther does interior design",
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 2,
-//   illustrator: "Cacciatore Michaela",
-//   number: 129,
-//   set: "ITI",
-//   externalIds: {
-//     tcgPlayer: 531825,
+//   Inkwell: true,
+//   Colors: ["ruby"],
+//   Cost: 2,
+//   Illustrator: "Cacciatore Michaela",
+//   Number: 129,
+//   Set: "ITI",
+//   ExternalIds: {
+//     TcgPlayer: 531825,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

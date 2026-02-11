@@ -1,35 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const boltHeadstrongDog: CharacterCard = {
-  id: "131",
-  cardType: "character",
-  name: "Bolt",
-  version: "Headstrong Dog",
-  fullName: "Bolt - Headstrong Dog",
-  inkType: ["steel"],
-  franchise: "Bolt",
-  set: "007",
-  text: "THERE'S NO TURNING BACK Whenever this character quests, if he has no damage, you may draw a card, then choose and discard a card.",
-  cost: 2,
-  strength: 1,
-  willpower: 3,
-  lore: 1,
-  cardNumber: 184,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "8e6b0a691fd08092d8dcbaaa348d77b450f4795e",
-  },
   abilities: [
     {
-      id: "131-1",
-      type: "triggered",
-      name: "THERE'S NO TURNING BACK",
-      trigger: {
-        event: "quest",
-        timing: "whenever",
-        on: "SELF",
-      },
       effect: {
         type: "conditional",
         condition: {
@@ -43,8 +16,35 @@ export const boltHeadstrongDog: CharacterCard = {
           chosen: true,
         },
       },
+      id: "131-1",
+      name: "THERE'S NO TURNING BACK",
       text: "THERE'S NO TURNING BACK Whenever this character quests, if he has no damage, you may draw a card, then choose and discard a card.",
+      trigger: {
+        event: "quest",
+        timing: "whenever",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 184,
+  cardType: "character",
   classifications: ["Storyborn", "Hero"],
+  cost: 2,
+  externalIds: {
+    ravensburger: "8e6b0a691fd08092d8dcbaaa348d77b450f4795e",
+  },
+  franchise: "Bolt",
+  fullName: "Bolt - Headstrong Dog",
+  id: "131",
+  inkType: ["steel"],
+  inkable: true,
+  lore: 1,
+  missingTests: true,
+  name: "Bolt",
+  set: "007",
+  strength: 1,
+  text: "THERE'S NO TURNING BACK Whenever this character quests, if he has no damage, you may draw a card, then choose and discard a card.",
+  version: "Headstrong Dog",
+  willpower: 3,
 };

@@ -1,26 +1,8 @@
 import type { ItemCard } from "@tcg/lorcana-types";
 
 export const beastundefined: ItemCard = {
-  id: "ysg",
-  cardType: "item",
-  name: "Beast",
-  version: "undefined",
-  fullName: "Beast - undefined",
-  inkType: ["steel"],
-  franchise: "Disney",
-  set: "001",
-  text: "**SHOW ME** {E}, 3 {I} - If you have no cards in your hand, draw a card.",
-  cost: 2,
-  cardNumber: 201,
-  inkable: true,
-  externalIds: {
-    ravensburger: "",
-  },
   abilities: [
     {
-      type: "action",
-      text: "**SHOW ME** {E}, 3 {I} - If you have no cards in your hand, draw a card.",
-      id: "ysg-1",
       effect: {
         type: "conditional",
         condition: {
@@ -33,58 +15,76 @@ export const beastundefined: ItemCard = {
           target: "CONTROLLER",
         },
       },
+      id: "ysg-1",
+      text: "**SHOW ME** {E}, 3 {I} - If you have no cards in your hand, draw a card.",
+      type: "action",
     },
   ],
+  cardNumber: 201,
+  cardType: "item",
+  cost: 2,
+  externalIds: {
+    ravensburger: "",
+  },
+  franchise: "Disney",
+  fullName: "Beast - undefined",
+  id: "ysg",
+  inkType: ["steel"],
+  inkable: true,
+  name: "Beast",
+  set: "001",
+  text: "**SHOW ME** {E}, 3 {I} - If you have no cards in your hand, draw a card.",
+  version: "undefined",
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { ActivatedAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-// import type { EffectTargets } from "@lorcanito/lorcana-engine/effects/effectTargets";
+// Import type { ActivatedAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { EffectTargets } from "@lorcanito/lorcana-engine/effects/effectTargets";
 //
-// export const beastMirror: LorcanitoItemCard = {
-//   characteristics: ["item"],
-//   id: "ysg",
-//   reprints: ["ysy"],
+// Export const beastMirror: LorcanitoItemCard = {
+//   Characteristics: ["item"],
+//   Id: "ysg",
+//   Reprints: ["ysy"],
 //
-//   name: "Beast's Mirror",
-//   text: "**SHOW ME** {E}, 3 {I} - If you have no cards in your hand, draw a card.",
-//   type: "item",
-//   abilities: [
+//   Name: "Beast's Mirror",
+//   Text: "**SHOW ME** {E}, 3 {I} - If you have no cards in your hand, draw a card.",
+//   Type: "item",
+//   Abilities: [
 //     {
-//       type: "activated",
-//       name: "Show Me",
-//       text: "If you have no cards in your hand, draw a card.",
-//       costs: [{ type: "exert" }, { type: "ink", amount: 3 }],
-//       effects: [
+//       Type: "activated",
+//       Name: "Show Me",
+//       Text: "If you have no cards in your hand, draw a card.",
+//       Costs: [{ type: "exert" }, { type: "ink", amount: 3 }],
+//       Effects: [
 //         {
-//           type: "draw",
-//           amount: 1,
-//           target: {
-//             type: "player",
-//             value: "self",
+//           Type: "draw",
+//           Amount: 1,
+//           Target: {
+//             Type: "player",
+//             Value: "self",
 //           } as EffectTargets,
 //         },
 //       ],
-//       conditions: [
+//       Conditions: [
 //         {
-//           type: "hand",
-//           amount: 0,
+//           Type: "hand",
+//           Amount: 0,
 //         },
 //       ],
 //     } as ActivatedAbility,
 //   ],
-//   flavour:
+//   Flavour:
 //     "Ashamed of his monstrous form, the Beast concealed himself inside his castle, with a magic mirror as his only window to the outside world.",
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 2,
-//   illustrator: "Samanta Erdini",
-//   number: 201,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 493486,
+//   Inkwell: true,
+//   Colors: ["steel"],
+//   Cost: 2,
+//   Illustrator: "Samanta Erdini",
+//   Number: 201,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 493486,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

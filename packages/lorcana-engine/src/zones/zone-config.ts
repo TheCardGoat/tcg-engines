@@ -33,10 +33,10 @@ export const LORCANA_ZONES: Record<LorcanaZoneId, ZoneConfig> = {
    * - Face down
    */
   deck: {
-    id: "deck",
-    visibility: "private",
-    ordered: true,
     faceDown: true,
+    id: "deck",
+    ordered: true,
+    visibility: "private",
   },
 
   /**
@@ -46,10 +46,10 @@ export const LORCANA_ZONES: Record<LorcanaZoneId, ZoneConfig> = {
    * - Face down to opponents
    */
   hand: {
-    id: "hand",
-    visibility: "private",
-    ordered: false,
     faceDown: false,
+    id: "hand",
+    ordered: false,
+    visibility: "private",
   },
 
   /**
@@ -59,10 +59,10 @@ export const LORCANA_ZONES: Record<LorcanaZoneId, ZoneConfig> = {
    * - Face up
    */
   play: {
-    id: "play",
-    visibility: "public",
-    ordered: false,
     faceDown: false,
+    id: "play",
+    ordered: false,
+    visibility: "public",
   },
 
   /**
@@ -72,10 +72,10 @@ export const LORCANA_ZONES: Record<LorcanaZoneId, ZoneConfig> = {
    * - Unordered
    */
   inkwell: {
-    id: "inkwell",
-    visibility: "hidden_identity",
-    ordered: false,
     faceDown: true,
+    id: "inkwell",
+    ordered: false,
+    visibility: "hidden_identity",
   },
 
   /**
@@ -85,10 +85,10 @@ export const LORCANA_ZONES: Record<LorcanaZoneId, ZoneConfig> = {
    * - Face up
    */
   discard: {
-    id: "discard",
-    visibility: "public",
-    ordered: false,
     faceDown: false,
+    id: "discard",
+    ordered: false,
+    visibility: "public",
   },
 };
 
@@ -124,7 +124,7 @@ export function isZoneVisibleTo(
     return zoneOwnerId === viewerId;
   }
 
-  // hidden_identity - count is public, but not the cards themselves
+  // Hidden_identity - count is public, but not the cards themselves
   return false;
 }
 

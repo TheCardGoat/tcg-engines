@@ -5,9 +5,9 @@ import { elsaSnowQueen } from "./041-elsa-snow-queen";
 describe("Elsa - Snow Queen", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [elsaSnowQueen] });
-  //   expect(testEngine.getCardModel(elsaSnowQueen).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [elsaSnowQueen] });
+  //   Expect(testEngine.getCardModel(elsaSnowQueen).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,40 +17,40 @@ describe("Elsa - Snow Queen", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   elsaSnowQueen,
-//   moanaOfMotunui,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   ElsaSnowQueen,
+//   MoanaOfMotunui,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Elsa - Snow Queen", () => {
-//   it("**Freeze** {E} - Exert chosen opposing character.", () => {
-//     const testStore = new TestStore(
+// Describe("Elsa - Snow Queen", () => {
+//   It("**Freeze** {E} - Exert chosen opposing character.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         play: [elsaSnowQueen],
+//         Play: [elsaSnowQueen],
 //       },
 //       {
-//         play: [moanaOfMotunui],
+//         Play: [moanaOfMotunui],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId("play", elsaSnowQueen.id);
-//     const target = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId("play", elsaSnowQueen.id);
+//     Const target = testStore.getByZoneAndId(
 //       "play",
-//       moanaOfMotunui.id,
+//       MoanaOfMotunui.id,
 //       "player_two",
 //     );
 //
-//     expect(target.ready).toEqual(true);
+//     Expect(target.ready).toEqual(true);
 //
-//     cardUnderTest.activate();
+//     CardUnderTest.activate();
 //
-//     testStore.resolveTopOfStack({
-//       targetId: target.instanceId,
+//     TestStore.resolveTopOfStack({
+//       TargetId: target.instanceId,
 //     });
 //
-//     expect(target.ready).toEqual(false);
+//     Expect(target.ready).toEqual(false);
 //   });
 // });
 //

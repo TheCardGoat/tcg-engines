@@ -1,24 +1,8 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
 export const wakeUpAlice: ActionCard = {
-  id: "7tg",
-  cardType: "action",
-  name: "Wake Up, Alice!",
-  inkType: ["emerald"],
-  franchise: "Alice in Wonderland",
-  set: "007",
-  text: "Return chosen damaged character to their player's hand.",
-  cost: 1,
-  cardNumber: 116,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "1c2d6362749cb836c4d2e5f90fe707296e30c1fc",
-  },
   abilities: [
     {
-      id: "7tg-1",
-      type: "action",
       effect: {
         type: "return-to-hand",
         target: {
@@ -29,7 +13,23 @@ export const wakeUpAlice: ActionCard = {
           cardTypes: ["character"],
         },
       },
+      id: "7tg-1",
       text: "Return chosen damaged character to their player's hand.",
+      type: "action",
     },
   ],
+  cardNumber: 116,
+  cardType: "action",
+  cost: 1,
+  externalIds: {
+    ravensburger: "1c2d6362749cb836c4d2e5f90fe707296e30c1fc",
+  },
+  franchise: "Alice in Wonderland",
+  id: "7tg",
+  inkType: ["emerald"],
+  inkable: true,
+  missingTests: true,
+  name: "Wake Up, Alice!",
+  set: "007",
+  text: "Return chosen damaged character to their player's hand.",
 };

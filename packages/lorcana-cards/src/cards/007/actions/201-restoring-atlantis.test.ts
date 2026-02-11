@@ -3,42 +3,42 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   anastasiaBossyStepsister,
-//   elsaTrustedSister,
-//   mufasaRespectedKing,
-//   restoringAtlantis,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   AnastasiaBossyStepsister,
+//   ElsaTrustedSister,
+//   MufasaRespectedKing,
+//   RestoringAtlantis,
 // } from "@lorcanito/lorcana-engine/cards/007";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Restoring Atlantis", () => {
-//   it("Your characters can't be challenged until the start of your next turn.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Restoring Atlantis", () => {
+//   It("Your characters can't be challenged until the start of your next turn.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: restoringAtlantis.cost,
-//         play: [anastasiaBossyStepsister, elsaTrustedSister],
-//         hand: [restoringAtlantis],
+//         Inkwell: restoringAtlantis.cost,
+//         Play: [anastasiaBossyStepsister, elsaTrustedSister],
+//         Hand: [restoringAtlantis],
 //       },
 //       {
-//         deck: 3,
-//         play: [mufasaRespectedKing],
+//         Deck: 3,
+//         Play: [mufasaRespectedKing],
 //       },
 //     );
 //
-//     await testEngine.playCard(restoringAtlantis);
+//     Await testEngine.playCard(restoringAtlantis);
 //
-//     await testEngine.passTurn();
+//     Await testEngine.passTurn();
 //
-//     await testEngine.tapCard(anastasiaBossyStepsister);
-//     await testEngine.tapCard(elsaTrustedSister);
+//     Await testEngine.tapCard(anastasiaBossyStepsister);
+//     Await testEngine.tapCard(elsaTrustedSister);
 //
-//     const attacker = testEngine.getCardModel(mufasaRespectedKing);
-//     expect(
-//       attacker.canChallenge(testEngine.getCardModel(anastasiaBossyStepsister)),
+//     Const attacker = testEngine.getCardModel(mufasaRespectedKing);
+//     Expect(
+//       Attacker.canChallenge(testEngine.getCardModel(anastasiaBossyStepsister)),
 //     ).toBe(false);
-//     expect(
-//       attacker.canChallenge(testEngine.getCardModel(elsaTrustedSister)),
+//     Expect(
+//       Attacker.canChallenge(testEngine.getCardModel(elsaTrustedSister)),
 //     ).toBe(false);
 //   });
 // });

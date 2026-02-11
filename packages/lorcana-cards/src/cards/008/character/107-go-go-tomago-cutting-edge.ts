@@ -1,50 +1,50 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import {
-//   evasiveAbility,
-//   shiftAbility,
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import {
+//   EvasiveAbility,
+//   ShiftAbility,
 // } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { whenYouPlayThisCharacter } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import { whenYouPlayThisCharacter } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 //
-// export const goGoTomagoCuttingEdge: LorcanitoCharacterCard = {
-//   id: "j8q",
-//   name: "Go Go Tomago",
-//   title: "Cutting Edge",
-//   characteristics: ["floodborn", "hero", "inventor"],
-//   text: "Shift 4\nEvasive (Only characters with Evasive can challenge this character.)\nZERO RESISTANCE When you play this character, if you used Shift to play her, you may put chosen character into their player's inkwell facedown and exerted.",
-//   type: "character",
-//   abilities: [
-//     shiftAbility(4, "Go Go Tomago"),
-//     evasiveAbility,
-//     whenYouPlayThisCharacter({
-//       name: "ZERO RESISTANCE",
-//       text: "When you play this character, if you used Shift to play her, you may put chosen character into their player's inkwell facedown and exerted.",
-//       conditions: [{ type: "resolution", value: "shift" }],
-//       optional: true,
-//       effects: [
+// Export const goGoTomagoCuttingEdge: LorcanitoCharacterCard = {
+//   Id: "j8q",
+//   Name: "Go Go Tomago",
+//   Title: "Cutting Edge",
+//   Characteristics: ["floodborn", "hero", "inventor"],
+//   Text: "Shift 4\nEvasive (Only characters with Evasive can challenge this character.)\nZERO RESISTANCE When you play this character, if you used Shift to play her, you may put chosen character into their player's inkwell facedown and exerted.",
+//   Type: "character",
+//   Abilities: [
+//     ShiftAbility(4, "Go Go Tomago"),
+//     EvasiveAbility,
+//     WhenYouPlayThisCharacter({
+//       Name: "ZERO RESISTANCE",
+//       Text: "When you play this character, if you used Shift to play her, you may put chosen character into their player's inkwell facedown and exerted.",
+//       Conditions: [{ type: "resolution", value: "shift" }],
+//       Optional: true,
+//       Effects: [
 //         {
-//           type: "move",
-//           to: "inkwell",
-//           target: chosenCharacter,
-//           isPrivate: false,
-//           exerted: true,
+//           Type: "move",
+//           To: "inkwell",
+//           Target: chosenCharacter,
+//           IsPrivate: false,
+//           Exerted: true,
 //         },
 //       ],
 //     }),
 //   ],
-//   inkwell: false,
-//   colors: ["emerald", "sapphire"],
-//   cost: 4,
-//   strength: 3,
-//   willpower: 3,
-//   illustrator: "Beno Mel",
-//   number: 107,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631687,
+//   Inkwell: false,
+//   Colors: ["emerald", "sapphire"],
+//   Cost: 4,
+//   Strength: 3,
+//   Willpower: 3,
+//   Illustrator: "Beno Mel",
+//   Number: 107,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631687,
 //   },
-//   rarity: "super_rare",
-//   lore: 2,
+//   Rarity: "super_rare",
+//   Lore: 2,
 // };
 //

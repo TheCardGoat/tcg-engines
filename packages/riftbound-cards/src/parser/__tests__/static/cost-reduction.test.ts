@@ -64,10 +64,10 @@ describe("Static: Cost Reduction", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "static",
           condition: expect.objectContaining({
             type: "control-battlefield",
           }),
+          type: "static",
         }),
       );
     });

@@ -1,36 +1,36 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { chosenItem } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+// Import { chosenItem } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const heWhoStealsAndRunsAway: LorcanitoActionCard = {
-//   id: "s8j",
-//   name: "He Who Steals And Runs Away",
-//   characteristics: ["action"],
-//   text: "Banish chosen item. Draw a card.",
-//   type: "action",
-//   abilities: [
+// Export const heWhoStealsAndRunsAway: LorcanitoActionCard = {
+//   Id: "s8j",
+//   Name: "He Who Steals And Runs Away",
+//   Characteristics: ["action"],
+//   Text: "Banish chosen item. Draw a card.",
+//   Type: "action",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       resolveEffectsIndividually: true,
-//       effects: [
+//       Type: "resolution",
+//       ResolveEffectsIndividually: true,
+//       Effects: [
 //         {
-//           type: "banish",
-//           target: chosenItem,
+//           Type: "banish",
+//           Target: chosenItem,
 //         },
-//         drawACard,
+//         DrawACard,
 //       ],
 //     },
 //   ],
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 3,
-//   illustrator: "Luis Huerta",
-//   number: 114,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631683,
+//   Inkwell: true,
+//   Colors: ["emerald"],
+//   Cost: 3,
+//   Illustrator: "Luis Huerta",
+//   Number: 114,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631683,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

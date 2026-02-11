@@ -3,79 +3,79 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   arthurTrainedSwordsman,
-//   pinocchioOnTheRun,
-//   yzmaWithoutBeautySleep,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   ArthurTrainedSwordsman,
+//   PinocchioOnTheRun,
+//   YzmaWithoutBeautySleep,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { theSorcerersSpellbook } from "@lorcanito/lorcana-engine/cards/002/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { theSorcerersSpellbook } from "@lorcanito/lorcana-engine/cards/002/items/items";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Pinocchio - On the Run", () => {
-//   describe("**LISTEN TO YOUR CONSCIENCE** When you play this character, you may return chosen character or item with cost 3 or less to their player's hand.", () => {
-//     it("return target item to owners hand", () => {
-//       const testStore = new TestStore({
-//         inkwell: pinocchioOnTheRun.cost,
-//         hand: [pinocchioOnTheRun],
-//         play: [yzmaWithoutBeautySleep, theSorcerersSpellbook],
+// Describe("Pinocchio - On the Run", () => {
+//   Describe("**LISTEN TO YOUR CONSCIENCE** When you play this character, you may return chosen character or item with cost 3 or less to their player's hand.", () => {
+//     It("return target item to owners hand", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: pinocchioOnTheRun.cost,
+//         Hand: [pinocchioOnTheRun],
+//         Play: [yzmaWithoutBeautySleep, theSorcerersSpellbook],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "hand",
-//         pinocchioOnTheRun.id,
+//         PinocchioOnTheRun.id,
 //       );
 //
-//       const target = testStore.getByZoneAndId("play", theSorcerersSpellbook.id);
+//       Const target = testStore.getByZoneAndId("play", theSorcerersSpellbook.id);
 //
-//       cardUnderTest.playFromHand();
-//       testStore.resolveOptionalAbility();
-//       testStore.resolveTopOfStack({ targets: [target] });
-//       expect(
-//         testStore.getByZoneAndId("hand", theSorcerersSpellbook.id),
+//       CardUnderTest.playFromHand();
+//       TestStore.resolveOptionalAbility();
+//       TestStore.resolveTopOfStack({ targets: [target] });
+//       Expect(
+//         TestStore.getByZoneAndId("hand", theSorcerersSpellbook.id),
 //       ).toBeTruthy();
 //     });
-//     it("return target character to owners hand", () => {
-//       const testStore = new TestStore({
-//         inkwell: pinocchioOnTheRun.cost,
-//         hand: [pinocchioOnTheRun],
-//         play: [yzmaWithoutBeautySleep, theSorcerersSpellbook],
+//     It("return target character to owners hand", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: pinocchioOnTheRun.cost,
+//         Hand: [pinocchioOnTheRun],
+//         Play: [yzmaWithoutBeautySleep, theSorcerersSpellbook],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "hand",
-//         pinocchioOnTheRun.id,
+//         PinocchioOnTheRun.id,
 //       );
 //
-//       const target = testStore.getByZoneAndId(
+//       Const target = testStore.getByZoneAndId(
 //         "play",
-//         yzmaWithoutBeautySleep.id,
+//         YzmaWithoutBeautySleep.id,
 //       );
 //
-//       cardUnderTest.playFromHand();
-//       testStore.resolveOptionalAbility();
-//       testStore.resolveTopOfStack({ targets: [target] });
-//       expect(
-//         testStore.getByZoneAndId("hand", yzmaWithoutBeautySleep.id),
+//       CardUnderTest.playFromHand();
+//       TestStore.resolveOptionalAbility();
+//       TestStore.resolveTopOfStack({ targets: [target] });
+//       Expect(
+//         TestStore.getByZoneAndId("hand", yzmaWithoutBeautySleep.id),
 //       ).toBeTruthy();
 //     });
-//     it("skip for invalid targets", () => {
-//       const testStore = new TestStore({
-//         inkwell: pinocchioOnTheRun.cost,
-//         hand: [pinocchioOnTheRun],
-//         play: [arthurTrainedSwordsman],
+//     It("skip for invalid targets", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: pinocchioOnTheRun.cost,
+//         Hand: [pinocchioOnTheRun],
+//         Play: [arthurTrainedSwordsman],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "hand",
-//         pinocchioOnTheRun.id,
+//         PinocchioOnTheRun.id,
 //       );
 //
-//       cardUnderTest.playFromHand();
-//       testStore.resolveOptionalAbility();
-//       testStore.resolveTopOfStack({});
-//       expect(
-//         testStore.getByZoneAndId("play", arthurTrainedSwordsman.id),
+//       CardUnderTest.playFromHand();
+//       TestStore.resolveOptionalAbility();
+//       TestStore.resolveTopOfStack({});
+//       Expect(
+//         TestStore.getByZoneAndId("play", arthurTrainedSwordsman.id),
 //       ).toBeTruthy();
 //     });
 //   });

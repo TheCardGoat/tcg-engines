@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { swingIntoAction } from "@lorcanito/lorcana-engine/cards/004/actions/actions";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { swingIntoAction } from "@lorcanito/lorcana-engine/cards/004/actions/actions";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Swing Into Action", () => {
-//   it.skip("Chosen character gains **Rush** this turn. _(They can challenge the turn they're played.)_", () => {
-//     const testStore = new TestStore({
-//       inkwell: swingIntoAction.cost,
-//       hand: [swingIntoAction],
+// Describe("Swing Into Action", () => {
+//   It.skip("Chosen character gains **Rush** this turn. _(They can challenge the turn they're played.)_", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: swingIntoAction.cost,
+//       Hand: [swingIntoAction],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", swingIntoAction.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", swingIntoAction.id);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

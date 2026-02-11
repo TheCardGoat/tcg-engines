@@ -5,9 +5,9 @@ import { ladyTremaineWickedStepmother } from "./085-lady-tremaine-wicked-stepmot
 describe("Lady Tremaine - Wicked Stepmother", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [ladyTremaine] });
-  //   expect(testEngine.getCardModel(ladyTremaine).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [ladyTremaine] });
+  //   Expect(testEngine.getCardModel(ladyTremaine).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });

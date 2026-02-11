@@ -3,21 +3,21 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { stitchTeamUnderdog } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { stitchTeamUnderdog } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Stitch - Team Underdog", () => {
-//   it.skip("**HEAVE HO!** When you play this character, you may deal 2 damage to chosen character.", () => {
-//     const testStore = new TestStore({
-//       inkwell: stitchTeamUnderdog.cost,
-//       hand: [stitchTeamUnderdog],
+// Describe("Stitch - Team Underdog", () => {
+//   It.skip("**HEAVE HO!** When you play this character, you may deal 2 damage to chosen character.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: stitchTeamUnderdog.cost,
+//       Hand: [stitchTeamUnderdog],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(stitchTeamUnderdog);
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     Const cardUnderTest = testStore.getCard(stitchTeamUnderdog);
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

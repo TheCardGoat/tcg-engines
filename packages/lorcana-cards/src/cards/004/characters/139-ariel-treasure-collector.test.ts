@@ -3,31 +3,31 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   arielTreasureCollector,
-//   peteRottenGuy,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   ArielTreasureCollector,
+//   PeteRottenGuy,
 // } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { fortisphere } from "@lorcanito/lorcana-engine/cards/004/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { fortisphere } from "@lorcanito/lorcana-engine/cards/004/items/items";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Ariel - Treasure Collector", () => {
-//   describe("** THE GIRLS WHO HAS EVERYTHING** While you have more items in play than each opponent, this character gets +2 {L}.", () => {
-//     it("should give +2 {L} when you have more items in play than each opponent", () => {
-//       const testStore = new TestStore(
+// Describe("Ariel - Treasure Collector", () => {
+//   Describe("** THE GIRLS WHO HAS EVERYTHING** While you have more items in play than each opponent, this character gets +2 {L}.", () => {
+//     It("should give +2 {L} when you have more items in play than each opponent", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [arielTreasureCollector, fortisphere],
+//           Play: [arielTreasureCollector, fortisphere],
 //         },
 //         {
-//           play: [peteRottenGuy],
+//           Play: [peteRottenGuy],
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         arielTreasureCollector.id,
+//         ArielTreasureCollector.id,
 //       );
-//       expect(cardUnderTest.lore).toBe(arielTreasureCollector.lore + 2);
+//       Expect(cardUnderTest.lore).toBe(arielTreasureCollector.lore + 2);
 //     });
 //   });
 // });

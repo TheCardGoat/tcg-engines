@@ -3,30 +3,30 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { scarEerilyPrepared } from "@lorcanito/lorcana-engine/cards/010/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { scarEerilyPrepared } from "@lorcanito/lorcana-engine/cards/010/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Scar - Eerily Prepared", () => {
-//   it("Boost 2 ", async () => {
-//     const testEngine = new TestEngine({
-//       play: [scarEerilyPrepared],
+// Describe("Scar - Eerily Prepared", () => {
+//   It("Boost 2 ", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [scarEerilyPrepared],
 //     });
 //
-//     expect(testEngine.getCardModel(scarEerilyPrepared).hasBoost).toBe(true);
+//     Expect(testEngine.getCardModel(scarEerilyPrepared).hasBoost).toBe(true);
 //   });
 //
-//   it.skip(" SURVIVAL OF THE FITTEST Whenever you put a card under this character, chosen opposing character gets -5 this turn.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: scarEerilyPrepared.cost,
-//       play: [scarEerilyPrepared],
-//       hand: [scarEerilyPrepared],
+//   It.skip(" SURVIVAL OF THE FITTEST Whenever you put a card under this character, chosen opposing character gets -5 this turn.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: scarEerilyPrepared.cost,
+//       Play: [scarEerilyPrepared],
+//       Hand: [scarEerilyPrepared],
 //     });
 //
-//     await testEngine.playCard(scarEerilyPrepared);
+//     Await testEngine.playCard(scarEerilyPrepared);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

@@ -71,11 +71,7 @@ export type ValueKeywordType = "Singer" | "SingTogether" | "Boost";
 /**
  * All keyword types
  */
-export type KeywordType =
-  | SimpleKeywordType
-  | ParameterizedKeywordType
-  | ValueKeywordType
-  | "Shift";
+export type KeywordType = SimpleKeywordType | ParameterizedKeywordType | ValueKeywordType | "Shift";
 
 // ============================================================================
 // Keyword Ability Variants (Strict Discriminated Unions)
@@ -463,18 +459,14 @@ export function isKeywordAbility(ability: Ability): ability is KeywordAbility {
 /**
  * Check if ability is a triggered ability
  */
-export function isTriggeredAbility(
-  ability: Ability,
-): ability is TriggeredAbility {
+export function isTriggeredAbility(ability: Ability): ability is TriggeredAbility {
   return ability.type === "triggered";
 }
 
 /**
  * Check if ability is an activated ability
  */
-export function isActivatedAbility(
-  ability: Ability,
-): ability is ActivatedAbility {
+export function isActivatedAbility(ability: Ability): ability is ActivatedAbility {
   return ability.type === "activated";
 }
 
@@ -495,18 +487,14 @@ export function isActionAbility(ability: Ability): ability is ActionAbility {
 /**
  * Check if ability is a replacement ability
  */
-export function isReplacementAbility(
-  ability: Ability,
-): ability is ReplacementAbility {
+export function isReplacementAbility(ability: Ability): ability is ReplacementAbility {
   return ability.type === "replacement";
 }
 
 /**
  * Check if keyword is a simple keyword (no parameters)
  */
-export function isSimpleKeyword(
-  keyword: KeywordType,
-): keyword is SimpleKeywordType {
+export function isSimpleKeyword(keyword: KeywordType): keyword is SimpleKeywordType {
   return [
     "Rush",
     "Ward",
@@ -522,21 +510,15 @@ export function isSimpleKeyword(
 /**
  * Check if keyword is parameterized (Challenger, Resist - has value, may have condition)
  */
-export function isParameterizedKeyword(
-  keyword: KeywordType,
-): keyword is ParameterizedKeywordType {
+export function isParameterizedKeyword(keyword: KeywordType): keyword is ParameterizedKeywordType {
   return keyword === "Challenger" || keyword === "Resist";
 }
 
 /**
  * Check if keyword is value-based (Singer, SingTogether, Boost)
  */
-export function isValueKeyword(
-  keyword: KeywordType,
-): keyword is ValueKeywordType {
-  return (
-    keyword === "Singer" || keyword === "SingTogether" || keyword === "Boost"
-  );
+export function isValueKeyword(keyword: KeywordType): keyword is ValueKeywordType {
+  return keyword === "Singer" || keyword === "SingTogether" || keyword === "Boost";
 }
 
 /**
@@ -550,9 +532,7 @@ export function isShiftKeyword(keyword: KeywordType): keyword is "Shift" {
  * Check if keyword is complex (Shift, Singer, etc.)
  * @deprecated Use isValueKeyword or isShiftKeyword instead
  */
-export function isComplexKeyword(
-  keyword: KeywordType,
-): keyword is ComplexKeywordType {
+export function isComplexKeyword(keyword: KeywordType): keyword is ComplexKeywordType {
   return ["Shift", "Singer", "SingTogether", "Boost"].includes(keyword);
 }
 
@@ -563,9 +543,7 @@ export function isComplexKeyword(
 /**
  * Check if a keyword ability is a simple keyword ability
  */
-export function isSimpleKeywordAbility(
-  ability: KeywordAbility,
-): ability is SimpleKeywordAbility {
+export function isSimpleKeywordAbility(ability: KeywordAbility): ability is SimpleKeywordAbility {
   return isSimpleKeyword(ability.keyword);
 }
 
@@ -581,18 +559,14 @@ export function isParameterizedKeywordAbility(
 /**
  * Check if a keyword ability is a value keyword ability
  */
-export function isValueKeywordAbility(
-  ability: KeywordAbility,
-): ability is ValueKeywordAbility {
+export function isValueKeywordAbility(ability: KeywordAbility): ability is ValueKeywordAbility {
   return isValueKeyword(ability.keyword);
 }
 
 /**
  * Check if a keyword ability is a Shift ability
  */
-export function isShiftKeywordAbility(
-  ability: KeywordAbility,
-): ability is ShiftKeywordAbility {
+export function isShiftKeywordAbility(ability: KeywordAbility): ability is ShiftKeywordAbility {
   return ability.keyword === "Shift";
 }
 
@@ -601,12 +575,9 @@ export function isShiftKeywordAbility(
  */
 export function isNamedAbility(
   ability: Ability,
-): ability is (
-  | TriggeredAbility
-  | ActivatedAbility
-  | StaticAbility
-  | ReplacementAbility
-) & { name: string } {
+): ability is (TriggeredAbility | ActivatedAbility | StaticAbility | ReplacementAbility) & {
+  name: string;
+} {
   return (
     ability.type !== "keyword" &&
     ability.type !== "action" &&
@@ -623,7 +594,7 @@ export function isNamedAbility(
  * Create a simple keyword ability
  */
 export function keyword(kw: SimpleKeywordType): SimpleKeywordAbility {
-  return { type: "keyword", keyword: kw };
+  return { keyword: kw, type: "keyword" };
 }
 
 /**
@@ -632,13 +603,10 @@ export function keyword(kw: SimpleKeywordType): SimpleKeywordAbility {
  * @example challenger(3)
  * @example challenger(2, { type: "while-damaged" }) // Challenger +2 while damaged
  */
-export function challenger(
-  value: number,
-  condition?: Condition,
-): ParameterizedKeywordAbility {
+export function challenger(value: number, condition?: Condition): ParameterizedKeywordAbility {
   return condition
-    ? { type: "keyword", keyword: "Challenger", value, condition }
-    : { type: "keyword", keyword: "Challenger", value };
+    ? { condition, keyword: "Challenger", type: "keyword", value }
+    : { keyword: "Challenger", type: "keyword", value };
 }
 
 /**
@@ -647,13 +615,10 @@ export function challenger(
  * @example resist(2)
  * @example resist(2, { type: "in-challenge" }) // Resist +2 while challenging
  */
-export function resist(
-  value: number,
-  condition?: Condition,
-): ParameterizedKeywordAbility {
+export function resist(value: number, condition?: Condition): ParameterizedKeywordAbility {
   return condition
-    ? { type: "keyword", keyword: "Resist", value, condition }
-    : { type: "keyword", keyword: "Resist", value };
+    ? { condition, keyword: "Resist", type: "keyword", value }
+    : { keyword: "Resist", type: "keyword", value };
 }
 
 /**
@@ -662,13 +627,10 @@ export function resist(
  * @example shift({ ink: 5 }) - Standard Shift 5
  * @example shift({ ink: 5 }, "Elsa") - Shift 5 onto Elsa
  */
-export function shift(
-  cost: AbilityCost,
-  shiftTarget?: string,
-): ShiftKeywordAbility {
+export function shift(cost: AbilityCost, shiftTarget?: string): ShiftKeywordAbility {
   return shiftTarget
-    ? { type: "keyword", keyword: "Shift", cost, shiftTarget }
-    : { type: "keyword", keyword: "Shift", cost };
+    ? { cost, keyword: "Shift", shiftTarget, type: "keyword" }
+    : { cost, keyword: "Shift", type: "keyword" };
 }
 
 /**
@@ -677,10 +639,7 @@ export function shift(
  * @example shiftInk(5) - Standard Shift 5
  * @example shiftInk(5, "Elsa") - Shift 5 onto Elsa
  */
-export function shiftInk(
-  inkCost: number,
-  shiftTarget?: string,
-): ShiftKeywordAbility {
+export function shiftInk(inkCost: number, shiftTarget?: string): ShiftKeywordAbility {
   return shift({ ink: inkCost }, shiftTarget);
 }
 
@@ -688,21 +647,21 @@ export function shiftInk(
  * Create a Singer ability
  */
 export function singer(value: number): ValueKeywordAbility {
-  return { type: "keyword", keyword: "Singer", value };
+  return { keyword: "Singer", type: "keyword", value };
 }
 
 /**
  * Create a SingTogether ability
  */
 export function singTogether(value: number): ValueKeywordAbility {
-  return { type: "keyword", keyword: "SingTogether", value };
+  return { keyword: "SingTogether", type: "keyword", value };
 }
 
 /**
  * Create a Boost ability
  */
 export function boost(value: number): ValueKeywordAbility {
-  return { type: "keyword", keyword: "Boost", value };
+  return { keyword: "Boost", type: "keyword", value };
 }
 
 /**
@@ -714,9 +673,9 @@ export function triggered(
   options?: { name?: string; condition?: Condition },
 ): TriggeredAbility {
   return {
-    type: "triggered",
-    trigger,
     effect,
+    trigger,
+    type: "triggered",
     ...options,
   };
 }
@@ -734,9 +693,9 @@ export function activated(
   },
 ): ActivatedAbility {
   return {
-    type: "activated",
     cost,
     effect,
+    type: "activated",
     ...options,
   };
 }
@@ -749,8 +708,8 @@ export function staticAbility(
   options?: { name?: string; condition?: Condition; affects?: StaticAffects },
 ): StaticAbility {
   return {
-    type: "static",
     effect,
+    type: "static",
     ...options,
   };
 }
@@ -760,7 +719,7 @@ export function staticAbility(
  */
 export function actionAbility(effect: Effect): ActionAbility {
   return {
-    type: "action",
     effect,
+    type: "action",
   };
 }

@@ -3,28 +3,28 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { liloGalacticHero } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { perplexingSignposts } from "@lorcanito/lorcana-engine/cards/002/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { liloGalacticHero } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { perplexingSignposts } from "@lorcanito/lorcana-engine/cards/002/items/items";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Perplexing Signposts", () => {
-//   it("**TO WONDERLAND** Banish this item – Return chosen character of yours to your hand.", () => {
-//     const testStore = new TestStore({
-//       play: [perplexingSignposts, liloGalacticHero],
+// Describe("Perplexing Signposts", () => {
+//   It("**TO WONDERLAND** Banish this item – Return chosen character of yours to your hand.", () => {
+//     Const testStore = new TestStore({
+//       Play: [perplexingSignposts, liloGalacticHero],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       perplexingSignposts.id,
+//       PerplexingSignposts.id,
 //     );
-//     const target = testStore.getByZoneAndId("play", liloGalacticHero.id);
+//     Const target = testStore.getByZoneAndId("play", liloGalacticHero.id);
 //
-//     cardUnderTest.activate();
-//     testStore.resolveTopOfStack({ targets: [target] });
+//     CardUnderTest.activate();
+//     TestStore.resolveTopOfStack({ targets: [target] });
 //
-//     expect(cardUnderTest.zone).toEqual("discard");
-//     expect(target.zone).toEqual("hand");
+//     Expect(cardUnderTest.zone).toEqual("discard");
+//     Expect(target.zone).toEqual("hand");
 //   });
 // });
 //

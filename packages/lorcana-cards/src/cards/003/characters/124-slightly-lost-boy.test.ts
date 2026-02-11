@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { slightlyLostBoy } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { slightlyLostBoy } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Slightly - Lost Boy", () => {
-//   it.skip("**THE FOX** If you have a character named Peter Pan in play, you pay 1 {I} less to play this character.**Evasive** _(Only characters with Evasive can challenge this character.)_", () => {
-//     const testStore = new TestStore({
-//       inkwell: slightlyLostBoy.cost,
-//       play: [slightlyLostBoy],
+// Describe("Slightly - Lost Boy", () => {
+//   It.skip("**THE FOX** If you have a character named Peter Pan in play, you pay 1 {I} less to play this character.**Evasive** _(Only characters with Evasive can challenge this character.)_", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: slightlyLostBoy.cost,
+//       Play: [slightlyLostBoy],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("play", slightlyLostBoy.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("play", slightlyLostBoy.id);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

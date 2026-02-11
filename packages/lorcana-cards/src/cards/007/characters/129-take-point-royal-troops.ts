@@ -1,47 +1,47 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { StaticAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { whileADamagedCharacterIsInPlay } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
-// import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { StaticAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import { whileADamagedCharacterIsInPlay } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
+// Import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// const takePoint: StaticAbility = {
-//   type: "static",
-//   name: "TAKE POINT",
-//   text: "While a damaged character is in play, this character gets +2 {S}.",
-//   conditions: [whileADamagedCharacterIsInPlay],
-//   ability: "effects",
-//   effects: [
+// Const takePoint: StaticAbility = {
+//   Type: "static",
+//   Name: "TAKE POINT",
+//   Text: "While a damaged character is in play, this character gets +2 {S}.",
+//   Conditions: [whileADamagedCharacterIsInPlay],
+//   Ability: "effects",
+//   Effects: [
 //     {
-//       type: "attribute",
-//       attribute: "strength",
-//       amount: 2,
-//       modifier: "add",
-//       target: thisCharacter,
-//       duration: "static",
+//       Type: "attribute",
+//       Attribute: "strength",
+//       Amount: 2,
+//       Modifier: "add",
+//       Target: thisCharacter,
+//       Duration: "static",
 //     },
 //   ],
 // };
 //
-// export const cardSoldiersRoyalTroops: LorcanitoCharacterCard = {
-//   id: "z86",
-//   name: "Card Soldiers",
-//   title: "Royal Troops",
-//   characteristics: ["storyborn", "ally"],
-//   text: "TAKE POINT While a damaged character is in play, this character gets +2 {S}.",
-//   type: "character",
-//   abilities: [takePoint],
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 1,
-//   strength: 1,
-//   willpower: 2,
-//   illustrator: "Kamil Murzyn",
-//   number: 129,
-//   set: "007",
-//   externalIds: {
-//     tcgPlayer: 618707,
+// Export const cardSoldiersRoyalTroops: LorcanitoCharacterCard = {
+//   Id: "z86",
+//   Name: "Card Soldiers",
+//   Title: "Royal Troops",
+//   Characteristics: ["storyborn", "ally"],
+//   Text: "TAKE POINT While a damaged character is in play, this character gets +2 {S}.",
+//   Type: "character",
+//   Abilities: [takePoint],
+//   Inkwell: true,
+//   Colors: ["ruby"],
+//   Cost: 1,
+//   Strength: 1,
+//   Willpower: 2,
+//   Illustrator: "Kamil Murzyn",
+//   Number: 129,
+//   Set: "007",
+//   ExternalIds: {
+//     TcgPlayer: 618707,
 //   },
-//   rarity: "common",
-//   lore: 1,
+//   Rarity: "common",
+//   Lore: 1,
 // };
 //

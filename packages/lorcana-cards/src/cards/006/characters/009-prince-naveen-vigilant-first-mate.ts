@@ -1,72 +1,72 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const princeNaveenVigilantFirstMate: CharacterCard = {
-  id: "1hg",
-  cardType: "character",
-  name: "Prince Naveen",
-  version: "Vigilant First Mate",
-  fullName: "Prince Naveen - Vigilant First Mate",
-  inkType: ["amber"],
-  franchise: "Princess and the Frog",
-  set: "006",
-  text: "Shift 3 (You may pay 3 {I} to play this on top of one of your characters named Prince Naveen.)\nBodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
-  cost: 5,
-  strength: 2,
-  willpower: 6,
-  lore: 2,
-  cardNumber: 9,
-  inkable: true,
-  externalIds: {
-    ravensburger: "c0abf4ad2073b023e3021c1547836aab812568ff",
-  },
   abilities: [
     {
-      id: "1hg-1",
-      text: "Shift 3",
-      type: "keyword",
-      keyword: "Shift",
       cost: {
         ink: 3,
       },
+      id: "1hg-1",
+      keyword: "Shift",
+      text: "Shift 3",
+      type: "keyword",
     },
     {
       id: "1hg-2",
+      keyword: "Bodyguard",
       text: "Bodyguard",
       type: "keyword",
-      keyword: "Bodyguard",
     },
   ],
+  cardNumber: 9,
+  cardType: "character",
   classifications: ["Floodborn", "Hero", "Prince"],
+  cost: 5,
+  externalIds: {
+    ravensburger: "c0abf4ad2073b023e3021c1547836aab812568ff",
+  },
+  franchise: "Princess and the Frog",
+  fullName: "Prince Naveen - Vigilant First Mate",
+  id: "1hg",
+  inkType: ["amber"],
+  inkable: true,
+  lore: 2,
+  name: "Prince Naveen",
+  set: "006",
+  strength: 2,
+  text: "Shift 3 (You may pay 3 {I} to play this on top of one of your characters named Prince Naveen.)\nBodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
+  version: "Vigilant First Mate",
+  willpower: 6,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
 // // TODO: Once the set is released, we organize the cards by set and type
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import {
-//   bodyguardAbility,
-//   shiftAbility,
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import {
+//   BodyguardAbility,
+//   ShiftAbility,
 // } from "@lorcanito/lorcana-engine/abilities/abilities";
 //
-// export const princeNaveenVigilantFirstMate: LorcanitoCharacterCard = {
-//   id: "o4d",
-//   name: "Prince Naveen",
-//   title: "Vigilant First Mate",
-//   characteristics: ["floodborn", "hero", "prince"],
-//   text: "Shift 3 (You may pay 3 {I} to play this on top of one of your characters named Prince Naveen.)\nBodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
-//   type: "character",
-//   abilities: [shiftAbility(3, "Prince Naveen"), bodyguardAbility],
-//   inkwell: true,
-//   colors: ["amber"],
-//   cost: 5,
-//   strength: 2,
-//   willpower: 6,
-//   lore: 2,
-//   illustrator: "Francesco Colucci",
-//   number: 9,
-//   set: "006",
-//   externalIds: {
-//     tcgPlayer: 592016,
+// Export const princeNaveenVigilantFirstMate: LorcanitoCharacterCard = {
+//   Id: "o4d",
+//   Name: "Prince Naveen",
+//   Title: "Vigilant First Mate",
+//   Characteristics: ["floodborn", "hero", "prince"],
+//   Text: "Shift 3 (You may pay 3 {I} to play this on top of one of your characters named Prince Naveen.)\nBodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
+//   Type: "character",
+//   Abilities: [shiftAbility(3, "Prince Naveen"), bodyguardAbility],
+//   Inkwell: true,
+//   Colors: ["amber"],
+//   Cost: 5,
+//   Strength: 2,
+//   Willpower: 6,
+//   Lore: 2,
+//   Illustrator: "Francesco Colucci",
+//   Number: 9,
+//   Set: "006",
+//   ExternalIds: {
+//     TcgPlayer: 592016,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

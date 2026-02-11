@@ -3,50 +3,50 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   genieSupportiveFriend,
-//   hydrosIceTitan,
-//   iagoPrettyPolly,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   GenieSupportiveFriend,
+//   HydrosIceTitan,
+//   IagoPrettyPolly,
 // } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { tianasPalaceJazzRestaurant } from "@lorcanito/lorcana-engine/cards/003/locations/locations";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { tianasPalaceJazzRestaurant } from "@lorcanito/lorcana-engine/cards/003/locations/locations";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Tiana's Palace - Jazz Restaurant", () => {
-//   it("**NIGHT OUT** Characters can't be challenged while here.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Tiana's Palace - Jazz Restaurant", () => {
+//   It("**NIGHT OUT** Characters can't be challenged while here.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: tianasPalaceJazzRestaurant.moveCost * 2,
-//         play: [
-//           tianasPalaceJazzRestaurant,
-//           genieSupportiveFriend,
-//           hydrosIceTitan,
+//         Inkwell: tianasPalaceJazzRestaurant.moveCost * 2,
+//         Play: [
+//           TianasPalaceJazzRestaurant,
+//           GenieSupportiveFriend,
+//           HydrosIceTitan,
 //         ],
 //       },
 //       {
-//         play: [iagoPrettyPolly],
-//         deck: 3,
+//         Play: [iagoPrettyPolly],
+//         Deck: 3,
 //       },
 //     );
 //
-//     await testEngine.tapCard(hydrosIceTitan);
-//     await testEngine.tapCard(genieSupportiveFriend);
+//     Await testEngine.tapCard(hydrosIceTitan);
+//     Await testEngine.tapCard(genieSupportiveFriend);
 //
-//     const attacker = testEngine.getCardModel(iagoPrettyPolly);
-//     const notAtLocation = testEngine.getCardModel(hydrosIceTitan);
-//     const atLocation = testEngine.getCardModel(genieSupportiveFriend);
+//     Const attacker = testEngine.getCardModel(iagoPrettyPolly);
+//     Const notAtLocation = testEngine.getCardModel(hydrosIceTitan);
+//     Const atLocation = testEngine.getCardModel(genieSupportiveFriend);
 //
-//     expect(attacker.canChallenge(atLocation)).toBe(true);
+//     Expect(attacker.canChallenge(atLocation)).toBe(true);
 //
-//     await testEngine.moveToLocation({
-//       location: tianasPalaceJazzRestaurant,
-//       character: genieSupportiveFriend,
+//     Await testEngine.moveToLocation({
+//       Location: tianasPalaceJazzRestaurant,
+//       Character: genieSupportiveFriend,
 //     });
 //
-//     await testEngine.passTurn();
+//     Await testEngine.passTurn();
 //
-//     expect(attacker.canChallenge(notAtLocation)).toBe(true);
-//     expect(attacker.canChallenge(atLocation)).toBe(false);
+//     Expect(attacker.canChallenge(notAtLocation)).toBe(true);
+//     Expect(attacker.canChallenge(atLocation)).toBe(false);
 //   });
 // });
 //

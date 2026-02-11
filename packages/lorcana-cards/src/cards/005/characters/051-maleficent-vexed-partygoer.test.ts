@@ -3,36 +3,36 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { maleficentVexedPartygoer } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
-// import {
-//   charlotteLaBouffMardiGrasPrincess,
-//   deweyLovableShowoff,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { maleficentVexedPartygoer } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import {
+//   CharlotteLaBouffMardiGrasPrincess,
+//   DeweyLovableShowoff,
 // } from "../../008";
 //
-// describe("Maleficent - Vexed Partygoer", () => {
-//   it("**WHAT AN AWKWARD SITUATION** Whenever this character quests, you may choose and discard a card to return chosen character, item, or location with cost 3 or less to their player’s hand.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: maleficentVexedPartygoer.cost,
-//       play: [maleficentVexedPartygoer, charlotteLaBouffMardiGrasPrincess],
-//       hand: [deweyLovableShowoff],
+// Describe("Maleficent - Vexed Partygoer", () => {
+//   It("**WHAT AN AWKWARD SITUATION** Whenever this character quests, you may choose and discard a card to return chosen character, item, or location with cost 3 or less to their player’s hand.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: maleficentVexedPartygoer.cost,
+//       Play: [maleficentVexedPartygoer, charlotteLaBouffMardiGrasPrincess],
+//       Hand: [deweyLovableShowoff],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(maleficentVexedPartygoer);
-//     const cardTODiscard = testEngine.getCardModel(deweyLovableShowoff);
-//     const cardToBounce = testEngine.getCardModel(
-//       charlotteLaBouffMardiGrasPrincess,
+//     Const cardUnderTest = testEngine.getCardModel(maleficentVexedPartygoer);
+//     Const cardTODiscard = testEngine.getCardModel(deweyLovableShowoff);
+//     Const cardToBounce = testEngine.getCardModel(
+//       CharlotteLaBouffMardiGrasPrincess,
 //     );
 //
-//     await testEngine.questCard(cardUnderTest);
+//     Await testEngine.questCard(cardUnderTest);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({ targets: [cardTODiscard] }, true);
-//     await testEngine.resolveTopOfStack({ targets: [cardToBounce] });
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({ targets: [cardTODiscard] }, true);
+//     Await testEngine.resolveTopOfStack({ targets: [cardToBounce] });
 //
-//     expect(cardTODiscard.zone).toBe("discard");
-//     expect(cardToBounce.zone).toBe("hand");
+//     Expect(cardTODiscard.zone).toBe("discard");
+//     Expect(cardToBounce.zone).toBe("hand");
 //   });
 // });
 //

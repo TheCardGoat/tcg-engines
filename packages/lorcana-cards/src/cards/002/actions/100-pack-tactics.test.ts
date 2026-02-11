@@ -3,56 +3,56 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { packTactics } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
-// import {
-//   cinderellaBallroomSensation,
-//   eudoraAccomplishedSeamstress,
-//   gastonBaritoneBully,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { packTactics } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
+// Import {
+//   CinderellaBallroomSensation,
+//   EudoraAccomplishedSeamstress,
+//   GastonBaritoneBully,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Pack Tactics", () => {
-//   it("Gain 1 lore for each damaged character opponents have in play.", () => {
-//     const testStore = new TestStore(
+// Describe("Pack Tactics", () => {
+//   It("Gain 1 lore for each damaged character opponents have in play.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: packTactics.cost,
-//         hand: [packTactics],
+//         Inkwell: packTactics.cost,
+//         Hand: [packTactics],
 //       },
 //       {
-//         play: [
-//           gastonBaritoneBully,
-//           eudoraAccomplishedSeamstress,
-//           cinderellaBallroomSensation,
+//         Play: [
+//           GastonBaritoneBully,
+//           EudoraAccomplishedSeamstress,
+//           CinderellaBallroomSensation,
 //         ],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", packTactics.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", packTactics.id);
 //
-//     const target = testStore.getByZoneAndId(
+//     Const target = testStore.getByZoneAndId(
 //       "play",
-//       gastonBaritoneBully.id,
+//       GastonBaritoneBully.id,
 //       "player_two",
 //     );
-//     const target2 = testStore.getByZoneAndId(
+//     Const target2 = testStore.getByZoneAndId(
 //       "play",
-//       eudoraAccomplishedSeamstress.id,
+//       EudoraAccomplishedSeamstress.id,
 //       "player_two",
 //     );
-//     const target3 = testStore.getByZoneAndId(
+//     Const target3 = testStore.getByZoneAndId(
 //       "play",
-//       cinderellaBallroomSensation.id,
+//       CinderellaBallroomSensation.id,
 //       "player_two",
 //     );
 //
 //     [target3, target2, target].forEach((target) => {
-//       target.updateCardDamage(1);
+//       Target.updateCardDamage(1);
 //     });
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     expect(testStore.getPlayerLore()).toBe(3);
+//     Expect(testStore.getPlayerLore()).toBe(3);
 //   });
 // });
 //

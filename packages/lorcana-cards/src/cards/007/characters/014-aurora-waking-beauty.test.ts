@@ -3,147 +3,147 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   mrSmee,
-//   rapunzelGiftedWithHealing,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   MrSmee,
+//   RapunzelGiftedWithHealing,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { pawpsicle } from "@lorcanito/lorcana-engine/cards/002/items/items";
-// import { chienPoImperialSoldier } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import {
-//   auroraWakingBeauty,
-//   theFamilyMadrigal,
+// Import { pawpsicle } from "@lorcanito/lorcana-engine/cards/002/items/items";
+// Import { chienPoImperialSoldier } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import {
+//   AuroraWakingBeauty,
+//   TheFamilyMadrigal,
 // } from "@lorcanito/lorcana-engine/cards/007";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Aurora - Waking Beauty", () => {
-//   describe("SWEET DREAMS", () => {
-//     it("should ready the character when you heal your character", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: 5,
-//         play: [auroraWakingBeauty, chienPoImperialSoldier],
-//         hand: [rapunzelGiftedWithHealing],
-//         deck: [mrSmee, mrSmee, mrSmee],
+// Describe("Aurora - Waking Beauty", () => {
+//   Describe("SWEET DREAMS", () => {
+//     It("should ready the character when you heal your character", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: 5,
+//         Play: [auroraWakingBeauty, chienPoImperialSoldier],
+//         Hand: [rapunzelGiftedWithHealing],
+//         Deck: [mrSmee, mrSmee, mrSmee],
 //       });
 //
-//       const auroraModel = testEngine.getCardModel(auroraWakingBeauty);
-//       const chienModel = testEngine.getCardModel(chienPoImperialSoldier);
+//       Const auroraModel = testEngine.getCardModel(auroraWakingBeauty);
+//       Const chienModel = testEngine.getCardModel(chienPoImperialSoldier);
 //
-//       await testEngine.questCard(auroraWakingBeauty);
+//       Await testEngine.questCard(auroraWakingBeauty);
 //
-//       await chienModel.updateCardDamage(1);
+//       Await chienModel.updateCardDamage(1);
 //
-//       await testEngine.playCard(rapunzelGiftedWithHealing);
+//       Await testEngine.playCard(rapunzelGiftedWithHealing);
 //
-//       await testEngine.resolveTopOfStack({ targets: [chienModel] });
+//       Await testEngine.resolveTopOfStack({ targets: [chienModel] });
 //
-//       expect(auroraModel.ready).toBe(true);
-//       expect(auroraModel.hasQuestRestriction).toBe(true);
-//       expect(auroraModel.hasChallengeRestriction).toBe(true);
+//       Expect(auroraModel.ready).toBe(true);
+//       Expect(auroraModel.hasQuestRestriction).toBe(true);
+//       Expect(auroraModel.hasChallengeRestriction).toBe(true);
 //     });
 //
-//     it("should ready the character when you heal opponent's character", async () => {
-//       const testEngine = new TestEngine(
+//     It("should ready the character when you heal opponent's character", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: 5,
-//           play: [auroraWakingBeauty, pawpsicle],
+//           Inkwell: 5,
+//           Play: [auroraWakingBeauty, pawpsicle],
 //         },
 //         {
-//           play: [chienPoImperialSoldier],
+//           Play: [chienPoImperialSoldier],
 //         },
 //       );
 //
-//       const auroraModel = testEngine.getCardModel(auroraWakingBeauty);
-//       const chienModel = testEngine.getCardModel(chienPoImperialSoldier);
+//       Const auroraModel = testEngine.getCardModel(auroraWakingBeauty);
+//       Const chienModel = testEngine.getCardModel(chienPoImperialSoldier);
 //
-//       await testEngine.questCard(auroraWakingBeauty);
+//       Await testEngine.questCard(auroraWakingBeauty);
 //
-//       await chienModel.updateCardDamage(1);
+//       Await chienModel.updateCardDamage(1);
 //
-//       await testEngine.activateCard(pawpsicle);
+//       Await testEngine.activateCard(pawpsicle);
 //
-//       await testEngine.acceptOptionalLayer();
-//       await testEngine.resolveTopOfStack({ targets: [chienModel] }, true);
+//       Await testEngine.acceptOptionalLayer();
+//       Await testEngine.resolveTopOfStack({ targets: [chienModel] }, true);
 //
-//       expect(auroraModel.ready).toBe(true);
-//       expect(auroraModel.hasQuestRestriction).toBe(true);
-//       expect(auroraModel.hasChallengeRestriction).toBe(true);
+//       Expect(auroraModel.ready).toBe(true);
+//       Expect(auroraModel.hasQuestRestriction).toBe(true);
+//       Expect(auroraModel.hasChallengeRestriction).toBe(true);
 //     });
 //
-//     it("should not ready the character when you don't heal any damage", async () => {
-//       const testEngine = new TestEngine(
+//     It("should not ready the character when you don't heal any damage", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: 5,
-//           play: [auroraWakingBeauty, pawpsicle],
+//           Inkwell: 5,
+//           Play: [auroraWakingBeauty, pawpsicle],
 //         },
 //         {
-//           play: [chienPoImperialSoldier],
+//           Play: [chienPoImperialSoldier],
 //         },
 //       );
 //
-//       const auroraModel = testEngine.getCardModel(auroraWakingBeauty);
-//       const chienModel = testEngine.getCardModel(chienPoImperialSoldier);
+//       Const auroraModel = testEngine.getCardModel(auroraWakingBeauty);
+//       Const chienModel = testEngine.getCardModel(chienPoImperialSoldier);
 //
-//       await testEngine.questCard(auroraWakingBeauty);
+//       Await testEngine.questCard(auroraWakingBeauty);
 //
-//       await testEngine.activateCard(pawpsicle);
+//       Await testEngine.activateCard(pawpsicle);
 //
-//       await testEngine.acceptOptionalLayer();
-//       await testEngine.resolveTopOfStack({ targets: [chienModel] }, true);
+//       Await testEngine.acceptOptionalLayer();
+//       Await testEngine.resolveTopOfStack({ targets: [chienModel] }, true);
 //
-//       expect(auroraModel.ready).toBe(false);
-//       expect(auroraModel.hasQuestRestriction).toBe(false);
-//       expect(auroraModel.hasChallengeRestriction).toBe(false);
+//       Expect(auroraModel.ready).toBe(false);
+//       Expect(auroraModel.hasQuestRestriction).toBe(false);
+//       Expect(auroraModel.hasChallengeRestriction).toBe(false);
 //     });
 //
-//     it("should not ready when opponents heal a character", async () => {
-//       const testEngine = new TestEngine(
+//     It("should not ready when opponents heal a character", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: 5,
-//           play: [chienPoImperialSoldier, pawpsicle],
+//           Inkwell: 5,
+//           Play: [chienPoImperialSoldier, pawpsicle],
 //         },
 //         {
-//           play: [auroraWakingBeauty],
+//           Play: [auroraWakingBeauty],
 //         },
 //       );
 //
-//       const auroraModel = testEngine.getCardModel(auroraWakingBeauty);
-//       const chienModel = testEngine.getCardModel(chienPoImperialSoldier);
+//       Const auroraModel = testEngine.getCardModel(auroraWakingBeauty);
+//       Const chienModel = testEngine.getCardModel(chienPoImperialSoldier);
 //
-//       await testEngine.tapCard(auroraWakingBeauty);
-//       await testEngine.setCardDamage(chienModel, 1);
+//       Await testEngine.tapCard(auroraWakingBeauty);
+//       Await testEngine.setCardDamage(chienModel, 1);
 //
-//       await testEngine.activateCard(
-//         pawpsicle,
+//       Await testEngine.activateCard(
+//         Pawpsicle,
 //         {
-//           acceptOptionalLayer: true,
-//           targets: [chienModel],
+//           AcceptOptionalLayer: true,
+//           Targets: [chienModel],
 //         },
-//         true,
+//         True,
 //       );
 //
-//       expect(auroraModel.ready).toBe(false);
-//       expect(auroraModel.hasQuestRestriction).toBe(false);
-//       expect(auroraModel.hasChallengeRestriction).toBe(false);
+//       Expect(auroraModel.ready).toBe(false);
+//       Expect(auroraModel.hasQuestRestriction).toBe(false);
+//       Expect(auroraModel.hasChallengeRestriction).toBe(false);
 //     });
 //
-//     it("Singer 5 (This character counts as cost 5 to sing songs.)", async () => {
-//       const testEngine = new TestEngine({
-//         play: [auroraWakingBeauty],
-//         hand: [theFamilyMadrigal],
+//     It("Singer 5 (This character counts as cost 5 to sing songs.)", async () => {
+//       Const testEngine = new TestEngine({
+//         Play: [auroraWakingBeauty],
+//         Hand: [theFamilyMadrigal],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(auroraWakingBeauty);
-//       const song = testEngine.getCardModel(theFamilyMadrigal);
-//       expect(cardUnderTest.hasSinger).toBe(true);
+//       Const cardUnderTest = testEngine.getCardModel(auroraWakingBeauty);
+//       Const song = testEngine.getCardModel(theFamilyMadrigal);
+//       Expect(cardUnderTest.hasSinger).toBe(true);
 //
-//       await testEngine.singSong({
-//         singer: auroraWakingBeauty,
-//         song: theFamilyMadrigal,
+//       Await testEngine.singSong({
+//         Singer: auroraWakingBeauty,
+//         Song: theFamilyMadrigal,
 //       });
 //
-//       expect(cardUnderTest.exerted).toBe(true);
-//       expect(song.zone).toEqual("discard");
+//       Expect(cardUnderTest.exerted).toBe(true);
+//       Expect(song.zone).toEqual("discard");
 //     });
 //   });
 // });

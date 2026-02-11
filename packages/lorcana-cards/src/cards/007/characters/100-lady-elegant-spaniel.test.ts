@@ -3,31 +3,31 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   ladyElegantSpaniel,
-//   trampEnterprisingDog,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   LadyElegantSpaniel,
+//   TrampEnterprisingDog,
 // } from "@lorcanito/lorcana-engine/cards/007/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("A DOG'S LIFE While you have a character named Tramp in play, this character gets +1 {L}.", () => {
-//   it("should have +1 {L} with Tramp in play", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: 10,
-//       play: [ladyElegantSpaniel, trampEnterprisingDog],
-//       hand: [],
+// Describe("A DOG'S LIFE While you have a character named Tramp in play, this character gets +1 {L}.", () => {
+//   It("should have +1 {L} with Tramp in play", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: 10,
+//       Play: [ladyElegantSpaniel, trampEnterprisingDog],
+//       Hand: [],
 //     });
 //
-//     expect(testEngine.getCardModel(ladyElegantSpaniel).lore).toEqual(2);
+//     Expect(testEngine.getCardModel(ladyElegantSpaniel).lore).toEqual(2);
 //   });
-//   it("should 1 {L} without Tramp in play", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: 10,
-//       play: [ladyElegantSpaniel],
-//       hand: [],
+//   It("should 1 {L} without Tramp in play", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: 10,
+//       Play: [ladyElegantSpaniel],
+//       Hand: [],
 //     });
 //
-//     expect(testEngine.getCardModel(ladyElegantSpaniel).lore).toEqual(1);
+//     Expect(testEngine.getCardModel(ladyElegantSpaniel).lore).toEqual(1);
 //   });
 // });
 //

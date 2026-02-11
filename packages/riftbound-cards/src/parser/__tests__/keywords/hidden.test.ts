@@ -17,9 +17,7 @@ describe("Keyword: Hidden", () => {
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
-      expect(result.abilities?.[0]).toEqual(
-        expect.objectContaining(Abilities.hidden()),
-      );
+      expect(result.abilities?.[0]).toEqual(expect.objectContaining(Abilities.hidden()));
     });
   });
 
@@ -31,13 +29,11 @@ describe("Keyword: Hidden", () => {
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(2);
-      expect(result.abilities?.[0]).toEqual(
-        expect.objectContaining(Abilities.hidden()),
-      );
+      expect(result.abilities?.[0]).toEqual(expect.objectContaining(Abilities.hidden()));
       expect(result.abilities?.[1]).toEqual(
         expect.objectContaining({
-          type: "spell",
           timing: "action",
+          type: "spell",
         }),
       );
     });
@@ -78,11 +74,11 @@ describe("Keyword: Hidden", () => {
       expect(result.abilities).toHaveLength(2);
       expect(result.abilities?.[1]).toEqual(
         expect.objectContaining({
-          type: "spell",
-          timing: "action",
           effect: expect.objectContaining({
             type: "create-token",
           }),
+          timing: "action",
+          type: "spell",
         }),
       );
     });
@@ -105,17 +101,15 @@ describe("Keyword: Hidden", () => {
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(2);
-      expect(result.abilities?.[0]).toEqual(
-        expect.objectContaining(Abilities.hidden()),
-      );
+      expect(result.abilities?.[0]).toEqual(expect.objectContaining(Abilities.hidden()));
       expect(result.abilities?.[1]).toEqual(
         expect.objectContaining({
-          type: "spell",
-          timing: "reaction",
           effect: expect.objectContaining({
-            type: "draw",
             amount: 2,
+            type: "draw",
           }),
+          timing: "reaction",
+          type: "spell",
         }),
       );
     });
@@ -131,10 +125,10 @@ describe("Keyword: Hidden", () => {
       expect(result.abilities).toHaveLength(2);
       expect(result.abilities?.[1]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           trigger: expect.objectContaining({
             event: "play-self",
           }),
+          type: "triggered",
         }),
       );
     });
@@ -179,8 +173,8 @@ describe("Keyword: Hidden", () => {
       expect(result.abilities).toHaveLength(2);
       expect(result.abilities?.[1]).toEqual(
         expect.objectContaining({
-          type: "replacement",
           replaces: "die",
+          type: "replacement",
         }),
       );
     });

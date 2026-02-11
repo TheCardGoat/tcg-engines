@@ -1,40 +1,14 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const goofyMusketeer: CharacterCard = {
-  id: "11w",
-  cardType: "character",
-  name: "Goofy",
-  version: "Musketeer",
-  fullName: "Goofy - Musketeer",
-  inkType: ["amber"],
-  set: "001",
-  text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)\nAND TWO FOR TEA! When you play this character, you may remove up to 2 damage from each of your Musketeer characters.",
-  cost: 5,
-  strength: 3,
-  willpower: 6,
-  lore: 1,
-  cardNumber: 4,
-  inkable: true,
-  externalIds: {
-    ravensburger: "88974b7ccdf603a29b402df56365c9ac1c82289f",
-  },
   abilities: [
     {
       id: "11w-1",
+      keyword: "Bodyguard",
       text: "Bodyguard",
       type: "keyword",
-      keyword: "Bodyguard",
     },
     {
-      id: "11w-2",
-      text: "AND TWO FOR TEA! When you play this character, you may remove up to 2 damage from each of your Musketeer characters.",
-      name: "AND TWO FOR TEA!",
-      type: "triggered",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -45,39 +19,65 @@ export const goofyMusketeer: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "11w-2",
+      name: "AND TWO FOR TEA!",
+      text: "AND TWO FOR TEA! When you play this character, you may remove up to 2 damage from each of your Musketeer characters.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 4,
+  cardType: "character",
   classifications: ["Dreamborn", "Hero", "Musketeer"],
+  cost: 5,
+  externalIds: {
+    ravensburger: "88974b7ccdf603a29b402df56365c9ac1c82289f",
+  },
+  fullName: "Goofy - Musketeer",
+  id: "11w",
+  inkType: ["amber"],
+  inkable: true,
+  lore: 1,
+  name: "Goofy",
+  set: "001",
+  strength: 3,
+  text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)\nAND TWO FOR TEA! When you play this character, you may remove up to 2 damage from each of your Musketeer characters.",
+  version: "Musketeer",
+  willpower: 6,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { bodyguardAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import { bodyguardAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const goofyMusketeer: LorcanitoCharacterCard = {
-//   id: "vf3",
-//   name: "Goofy",
-//   title: "Musketeer",
-//   characteristics: ["hero", "dreamborn", "musketeer"],
-//   text: "**Bodyguard** _(This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)_\n**AND TWO FOR TEA!** When you play this character, you may remove up to 2 damage from each of your Musketeer characters.",
-//   type: "character",
-//   abilities: [
-//     bodyguardAbility,
-//     whenYouPlayThisCharAbility({
-//       type: "resolution",
-//       name: "AND TWO FOR TEA",
-//       text: "When you play this character, you may remove up to 2 damage from each of your Musketeer characters.",
-//       optional: true,
-//       effects: [
+// Export const goofyMusketeer: LorcanitoCharacterCard = {
+//   Id: "vf3",
+//   Name: "Goofy",
+//   Title: "Musketeer",
+//   Characteristics: ["hero", "dreamborn", "musketeer"],
+//   Text: "**Bodyguard** _(This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)_\n**AND TWO FOR TEA!** When you play this character, you may remove up to 2 damage from each of your Musketeer characters.",
+//   Type: "character",
+//   Abilities: [
+//     BodyguardAbility,
+//     WhenYouPlayThisCharAbility({
+//       Type: "resolution",
+//       Name: "AND TWO FOR TEA",
+//       Text: "When you play this character, you may remove up to 2 damage from each of your Musketeer characters.",
+//       Optional: true,
+//       Effects: [
 //         {
-//           type: "heal",
-//           amount: 2,
-//           upTo: true,
-//           target: {
-//             type: "card",
-//             value: "all",
-//             filters: [
+//           Type: "heal",
+//           Amount: 2,
+//           UpTo: true,
+//           Target: {
+//             Type: "card",
+//             Value: "all",
+//             Filters: [
 //               { filter: "zone", value: "play" },
 //               { filter: "owner", value: "self" },
 //               { filter: "type", value: "character" },
@@ -88,19 +88,19 @@ export const goofyMusketeer: CharacterCard = {
 //       ],
 //     }),
 //   ],
-//   flavour: "„En gawrsh!",
-//   inkwell: true,
-//   colors: ["amber"],
-//   cost: 5,
-//   strength: 3,
-//   willpower: 6,
-//   lore: 1,
-//   illustrator: "Jochem Van Gool",
-//   number: 4,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 501751,
+//   Flavour: "„En gawrsh!",
+//   Inkwell: true,
+//   Colors: ["amber"],
+//   Cost: 5,
+//   Strength: 3,
+//   Willpower: 6,
+//   Lore: 1,
+//   Illustrator: "Jochem Van Gool",
+//   Number: 4,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 501751,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

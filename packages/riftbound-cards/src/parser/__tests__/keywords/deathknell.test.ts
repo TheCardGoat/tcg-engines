@@ -11,9 +11,7 @@ import { Abilities, Effects, Tokens } from "../helpers";
 describe("Keyword: Deathknell", () => {
   describe("deathknell with draw", () => {
     it.skip("should parse '[Deathknell] — Draw 1. (When I die, get the effect.)'", () => {
-      const result = parseAbilities(
-        "[Deathknell] — Draw 1. (When I die, get the effect.)",
-      );
+      const result = parseAbilities("[Deathknell] — Draw 1. (When I die, get the effect.)");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
@@ -31,11 +29,11 @@ describe("Keyword: Deathknell", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "keyword",
-          keyword: "Deathknell",
           condition: expect.objectContaining({
             type: "while-mighty",
           }),
+          keyword: "Deathknell",
+          type: "keyword",
         }),
       );
     });
@@ -49,11 +47,11 @@ describe("Keyword: Deathknell", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "keyword",
-          keyword: "Deathknell",
           condition: expect.objectContaining({
             type: "while-alone",
           }),
+          keyword: "Deathknell",
+          type: "keyword",
         }),
       );
     });
@@ -81,14 +79,14 @@ describe("Keyword: Deathknell", () => {
       expect(result.abilities).toHaveLength(2);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "keyword",
           keyword: "Accelerate",
+          type: "keyword",
         }),
       );
       expect(result.abilities?.[1]).toEqual(
         expect.objectContaining({
-          type: "keyword",
           keyword: "Deathknell",
+          type: "keyword",
         }),
       );
     });
@@ -104,12 +102,12 @@ describe("Keyword: Deathknell", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "keyword",
-          keyword: "Deathknell",
           effect: expect.objectContaining({
-            type: "damage",
             amount: 4,
+            type: "damage",
           }),
+          keyword: "Deathknell",
+          type: "keyword",
         }),
       );
     });
@@ -125,11 +123,11 @@ describe("Keyword: Deathknell", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "keyword",
-          keyword: "Deathknell",
           effect: expect.objectContaining({
             type: "sequence",
           }),
+          keyword: "Deathknell",
+          type: "keyword",
         }),
       );
     });
@@ -145,11 +143,11 @@ describe("Keyword: Deathknell", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "keyword",
-          keyword: "Deathknell",
           effect: expect.objectContaining({
             type: "create-token",
           }),
+          keyword: "Deathknell",
+          type: "keyword",
         }),
       );
     });
@@ -163,12 +161,12 @@ describe("Keyword: Deathknell", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "keyword",
-          keyword: "Deathknell",
           effect: expect.objectContaining({
-            type: "create-token",
             amount: 3,
+            type: "create-token",
           }),
+          keyword: "Deathknell",
+          type: "keyword",
         }),
       );
     });
@@ -182,12 +180,12 @@ describe("Keyword: Deathknell", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "keyword",
-          keyword: "Deathknell",
           effect: expect.objectContaining({
-            type: "create-token",
             amount: 2,
+            type: "create-token",
           }),
+          keyword: "Deathknell",
+          type: "keyword",
         }),
       );
     });
@@ -203,11 +201,11 @@ describe("Keyword: Deathknell", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "keyword",
-          keyword: "Deathknell",
           effect: expect.objectContaining({
             type: "play",
           }),
+          keyword: "Deathknell",
+          type: "keyword",
         }),
       );
     });
@@ -226,9 +224,7 @@ describe("Keyword: Deathknell", () => {
 
   describe("deathknell trigger doubling", () => {
     it.skip("should parse 'Your [Deathknell] effects trigger an additional time.'", () => {
-      const result = parseAbilities(
-        "Your [Deathknell] effects trigger an additional time.",
-      );
+      const result = parseAbilities("Your [Deathknell] effects trigger an additional time.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);

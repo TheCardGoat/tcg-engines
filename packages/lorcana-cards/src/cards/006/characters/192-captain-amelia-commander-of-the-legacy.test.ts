@@ -3,85 +3,85 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   captainAmeliaCommanderOfTheLegacy,
-//   chipRangerLeader,
-//   honeyLemonChemicalGenius,
-//   jafarPowerhungryVizier,
-//   jimHawkinsHonorablePirate,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   CaptainAmeliaCommanderOfTheLegacy,
+//   ChipRangerLeader,
+//   HoneyLemonChemicalGenius,
+//   JafarPowerhungryVizier,
+//   JimHawkinsHonorablePirate,
 // } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Captain Amelia - Commander of the Legacy", () => {
-//   it("DRIVELING GALOOTS This character can't be challenged by Pirate characters.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Captain Amelia - Commander of the Legacy", () => {
+//   It("DRIVELING GALOOTS This character can't be challenged by Pirate characters.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         play: [captainAmeliaCommanderOfTheLegacy],
+//         Play: [captainAmeliaCommanderOfTheLegacy],
 //       },
 //       {
-//         play: [jimHawkinsHonorablePirate, honeyLemonChemicalGenius],
+//         Play: [jimHawkinsHonorablePirate, honeyLemonChemicalGenius],
 //       },
 //     );
 //
-//     const pirate = testEngine.getCardModel(jimHawkinsHonorablePirate);
-//     const nonPirate = testEngine.getCardModel(honeyLemonChemicalGenius);
-//     const cardUnderTest = testEngine.getCardModel(
-//       captainAmeliaCommanderOfTheLegacy,
+//     Const pirate = testEngine.getCardModel(jimHawkinsHonorablePirate);
+//     Const nonPirate = testEngine.getCardModel(honeyLemonChemicalGenius);
+//     Const cardUnderTest = testEngine.getCardModel(
+//       CaptainAmeliaCommanderOfTheLegacy,
 //     );
 //
-//     await testEngine.tapCard(captainAmeliaCommanderOfTheLegacy);
+//     Await testEngine.tapCard(captainAmeliaCommanderOfTheLegacy);
 //
-//     expect(nonPirate.canChallenge(cardUnderTest)).toBe(true);
-//     expect(cardUnderTest.canBeChallenged(nonPirate)).toBe(true);
+//     Expect(nonPirate.canChallenge(cardUnderTest)).toBe(true);
+//     Expect(cardUnderTest.canBeChallenged(nonPirate)).toBe(true);
 //
-//     expect(pirate.canChallenge(cardUnderTest)).toBe(false);
-//     expect(cardUnderTest.canBeChallenged(pirate)).toBe(false);
+//     Expect(pirate.canChallenge(cardUnderTest)).toBe(false);
+//     Expect(cardUnderTest.canBeChallenged(pirate)).toBe(false);
 //   });
 //
-//   it("EVERYTHING SHIPSHAPE While being challenged, your other characters gain Resist +1. (Damage dealt to them is reduced by 1.)", async () => {
-//     const testEngine = new TestEngine(
+//   It("EVERYTHING SHIPSHAPE While being challenged, your other characters gain Resist +1. (Damage dealt to them is reduced by 1.)", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         play: [chipRangerLeader],
+//         Play: [chipRangerLeader],
 //       },
 //       {
-//         play: [captainAmeliaCommanderOfTheLegacy, jafarPowerhungryVizier],
+//         Play: [captainAmeliaCommanderOfTheLegacy, jafarPowerhungryVizier],
 //       },
 //     );
 //
-//     const challenged = await testEngine.tapCard(jafarPowerhungryVizier);
+//     Const challenged = await testEngine.tapCard(jafarPowerhungryVizier);
 //
-//     expect(challenged.hasResist).toBe(false);
+//     Expect(challenged.hasResist).toBe(false);
 //
-//     await testEngine.challenge({
-//       attacker: chipRangerLeader,
-//       defender: jafarPowerhungryVizier,
+//     Await testEngine.challenge({
+//       Attacker: chipRangerLeader,
+//       Defender: jafarPowerhungryVizier,
 //     });
 //
-//     expect(challenged.damage).toBe(chipRangerLeader.strength - 1);
+//     Expect(challenged.damage).toBe(chipRangerLeader.strength - 1);
 //   });
 //
-//   it("EVERYTHING SHIPSHAPE Does not trigger when challenging", async () => {
-//     const testEngine = new TestEngine(
+//   It("EVERYTHING SHIPSHAPE Does not trigger when challenging", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         play: [captainAmeliaCommanderOfTheLegacy, jafarPowerhungryVizier],
+//         Play: [captainAmeliaCommanderOfTheLegacy, jafarPowerhungryVizier],
 //       },
 //       {
-//         play: [chipRangerLeader],
+//         Play: [chipRangerLeader],
 //       },
 //     );
 //
-//     const defender = await testEngine.tapCard(chipRangerLeader);
-//     const challenger = await testEngine.getCardModel(jafarPowerhungryVizier);
+//     Const defender = await testEngine.tapCard(chipRangerLeader);
+//     Const challenger = await testEngine.getCardModel(jafarPowerhungryVizier);
 //
-//     expect(defender.hasResist).toBe(false);
+//     Expect(defender.hasResist).toBe(false);
 //
-//     await testEngine.challenge({
-//       attacker: jafarPowerhungryVizier,
-//       defender: chipRangerLeader,
+//     Await testEngine.challenge({
+//       Attacker: jafarPowerhungryVizier,
+//       Defender: chipRangerLeader,
 //     });
 //
-//     expect(challenger.damage).toBe(defender.strength);
+//     Expect(challenger.damage).toBe(defender.strength);
 //   });
 // });
 //

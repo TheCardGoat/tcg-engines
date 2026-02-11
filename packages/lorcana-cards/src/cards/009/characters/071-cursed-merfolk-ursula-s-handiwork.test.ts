@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { cursedMerfolkUrsulasHandiwork } from "@lorcanito/lorcana-engine/cards/009/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { cursedMerfolkUrsulasHandiwork } from "@lorcanito/lorcana-engine/cards/009/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Cursed Merfolk - Ursula's Handiwork", () => {
-//   it.skip("**POOR SOULS** Whenever this character is challenged, each opponent chooses and discards a card.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: cursedMerfolkUrsulasHandiwork.cost,
-//       play: [cursedMerfolkUrsulasHandiwork],
-//       hand: [cursedMerfolkUrsulasHandiwork],
+// Describe("Cursed Merfolk - Ursula's Handiwork", () => {
+//   It.skip("**POOR SOULS** Whenever this character is challenged, each opponent chooses and discards a card.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: cursedMerfolkUrsulasHandiwork.cost,
+//       Play: [cursedMerfolkUrsulasHandiwork],
+//       Hand: [cursedMerfolkUrsulasHandiwork],
 //     });
 //
-//     await testEngine.playCard(cursedMerfolkUrsulasHandiwork);
+//     Await testEngine.playCard(cursedMerfolkUrsulasHandiwork);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

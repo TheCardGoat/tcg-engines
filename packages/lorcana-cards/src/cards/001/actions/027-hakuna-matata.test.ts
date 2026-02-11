@@ -3,40 +3,40 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   magicBroomBucketBrigade,
-//   moanaOfMotunui,
-//   teKaTheBurningOne,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   MagicBroomBucketBrigade,
+//   MoanaOfMotunui,
+//   TeKaTheBurningOne,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { hakunaMatata } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { hakunaMatata } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Hakuna Matata", () => {
-//   it("Heals all characters", () => {
-//     const cardsInHand = [
-//       magicBroomBucketBrigade,
-//       teKaTheBurningOne,
-//       moanaOfMotunui,
+// Describe("Hakuna Matata", () => {
+//   It("Heals all characters", () => {
+//     Const cardsInHand = [
+//       MagicBroomBucketBrigade,
+//       TeKaTheBurningOne,
+//       MoanaOfMotunui,
 //     ];
-//     const testStore = new TestStore({
-//       play: cardsInHand,
-//       inkwell: hakunaMatata.cost,
-//       hand: [hakunaMatata],
+//     Const testStore = new TestStore({
+//       Play: cardsInHand,
+//       Inkwell: hakunaMatata.cost,
+//       Hand: [hakunaMatata],
 //     });
-//     cardsInHand.forEach((card, index) => {
-//       const cardModel = testStore.getByZoneAndId("play", card.id);
-//       cardModel.updateCardMeta({ damage: 3 });
-//       expect(cardModel.meta).toEqual(expect.objectContaining({ damage: 3 }));
+//     CardsInHand.forEach((card, index) => {
+//       Const cardModel = testStore.getByZoneAndId("play", card.id);
+//       CardModel.updateCardMeta({ damage: 3 });
+//       Expect(cardModel.meta).toEqual(expect.objectContaining({ damage: 3 }));
 //     });
 //
-//     testStore.store.playCardFromHand(
-//       testStore.getByZoneAndId("hand", hakunaMatata.id).instanceId,
+//     TestStore.store.playCardFromHand(
+//       TestStore.getByZoneAndId("hand", hakunaMatata.id).instanceId,
 //     );
 //
-//     cardsInHand.forEach((card) => {
-//       const cardModel = testStore.getByZoneAndId("play", card.id);
-//       expect(cardModel.meta.damage).toBeFalsy();
+//     CardsInHand.forEach((card) => {
+//       Const cardModel = testStore.getByZoneAndId("play", card.id);
+//       Expect(cardModel.meta.damage).toBeFalsy();
 //     });
 //   });
 // });

@@ -1,53 +1,53 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import {
-//   chosenCharacter,
-//   self,
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import {
+//   ChosenCharacter,
+//   Self,
 // } from "@lorcanito/lorcana-engine/abilities/targets";
 //
-// export const julietaMadrigalExcellentCook: LorcanitoCharacterCard = {
-//   id: "ig1",
-//   reprints: ["gxo"],
-//   missingTestCase: true,
-//   name: "Julieta Madrigal",
-//   title: "Excellent Cook",
-//   characteristics: ["storyborn", "mentor", "madrigal"],
-//   text: "**SIGNATURE RECIPE** When you play this character, you may remove up to 2 damage from chosen character. If you removed damage this way, you may draw a card.",
-//   type: "character",
-//   abilities: [
+// Export const julietaMadrigalExcellentCook: LorcanitoCharacterCard = {
+//   Id: "ig1",
+//   Reprints: ["gxo"],
+//   MissingTestCase: true,
+//   Name: "Julieta Madrigal",
+//   Title: "Excellent Cook",
+//   Characteristics: ["storyborn", "mentor", "madrigal"],
+//   Text: "**SIGNATURE RECIPE** When you play this character, you may remove up to 2 damage from chosen character. If you removed damage this way, you may draw a card.",
+//   Type: "character",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       name: "SIGNATURE RECIPE",
-//       text: "When you play this character, you may remove up to 2 damage from chosen character. If you removed damage this way, you may draw a card.",
-//       optional: true,
-//       effects: [
+//       Type: "resolution",
+//       Name: "SIGNATURE RECIPE",
+//       Text: "When you play this character, you may remove up to 2 damage from chosen character. If you removed damage this way, you may draw a card.",
+//       Optional: true,
+//       Effects: [
 //         {
-//           type: "heal",
-//           amount: 2,
-//           upTo: true,
-//           subEffect: {
-//             type: "draw",
-//             amount: 1,
-//             target: self,
+//           Type: "heal",
+//           Amount: 2,
+//           UpTo: true,
+//           SubEffect: {
+//             Type: "draw",
+//             Amount: 1,
+//             Target: self,
 //           },
-//           target: chosenCharacter,
+//           Target: chosenCharacter,
 //         },
 //       ],
 //     },
 //   ],
-//   flavour: '"Eat this, mi amor."',
-//   inkwell: true,
-//   colors: ["amber"],
-//   cost: 3,
-//   strength: 1,
-//   willpower: 4,
-//   lore: 1,
-//   illustrator: "Cristian Romero",
-//   number: 13,
-//   set: "URR",
-//   externalIds: {
-//     tcgPlayer: 543897,
+//   Flavour: '"Eat this, mi amor."',
+//   Inkwell: true,
+//   Colors: ["amber"],
+//   Cost: 3,
+//   Strength: 1,
+//   Willpower: 4,
+//   Lore: 1,
+//   Illustrator: "Cristian Romero",
+//   Number: 13,
+//   Set: "URR",
+//   ExternalIds: {
+//     TcgPlayer: 543897,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

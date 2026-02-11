@@ -1,45 +1,45 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import {
-//   chosenCharacter,
-//   chosenOpposingCharacter,
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+// Import {
+//   ChosenCharacter,
+//   ChosenOpposingCharacter,
 // } from "@lorcanito/lorcana-engine/abilities/targets";
-// import {
-//   drawACard,
-//   moveDamageEffect,
+// Import {
+//   DrawACard,
+//   MoveDamageEffect,
 // } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const makeSomeMagic: LorcanitoActionCard = {
-//   id: "nle",
-//   missingTestCase: true,
-//   name: "Making Magic",
-//   characteristics: ["action"],
-//   text: "Move 1 damage counter from chosen character to chosen opposing character. Draw a card.",
-//   type: "action",
-//   abilities: [
+// Export const makeSomeMagic: LorcanitoActionCard = {
+//   Id: "nle",
+//   MissingTestCase: true,
+//   Name: "Making Magic",
+//   Characteristics: ["action"],
+//   Text: "Move 1 damage counter from chosen character to chosen opposing character. Draw a card.",
+//   Type: "action",
+//   Abilities: [
 //     {
-//       type: "resolution",
+//       Type: "resolution",
 //
-//       resolveEffectsIndividually: true,
-//       effects: [
-//         moveDamageEffect({
-//           amount: 1,
-//           from: chosenCharacter,
-//           to: chosenOpposingCharacter,
+//       ResolveEffectsIndividually: true,
+//       Effects: [
+//         MoveDamageEffect({
+//           Amount: 1,
+//           From: chosenCharacter,
+//           To: chosenOpposingCharacter,
 //         }),
-//         drawACard,
+//         DrawACard,
 //       ],
 //     },
 //   ],
-//   inkwell: true,
-//   colors: ["amethyst"],
-//   cost: 3,
-//   illustrator: "Mario Oscar Gabriele",
-//   number: 62,
-//   set: "006",
-//   externalIds: {
-//     tcgPlayer: 593024,
+//   Inkwell: true,
+//   Colors: ["amethyst"],
+//   Cost: 3,
+//   Illustrator: "Mario Oscar Gabriele",
+//   Number: 62,
+//   Set: "006",
+//   ExternalIds: {
+//     TcgPlayer: 593024,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

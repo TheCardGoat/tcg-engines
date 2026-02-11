@@ -7,19 +7,15 @@
 
 import { afterEach, beforeEach, describe, expect, test } from "bun:test";
 import { createPlayerId } from "@tcg/core";
-import {
-  LorcanaTestEngine,
-  PLAYER_ONE,
-  PLAYER_TWO,
-} from "../../testing/lorcana-test-engine";
+import { LorcanaTestEngine, PLAYER_ONE, PLAYER_TWO } from "../../testing/lorcana-test-engine";
 
 describe("Section 4: Turn Structure", () => {
   let testEngine: LorcanaTestEngine;
 
   beforeEach(() => {
     testEngine = new LorcanaTestEngine(
-      { hand: 7, deck: 53, inkwell: 3 },
-      { hand: 7, deck: 53, inkwell: 3 },
+      { deck: 53, hand: 7, inkwell: 3 },
+      { deck: 53, hand: 7, inkwell: 3 },
       { skipPreGame: true },
     );
   });
@@ -263,8 +259,8 @@ describe("Section 4: Turn Structure", () => {
         // Try to ink again - should fail
         const hand2 = testEngine.getZone("hand", PLAYER_ONE);
         const result = testEngine.engine.executeMove("putACardIntoTheInkwell", {
-          playerId: createPlayerId(PLAYER_ONE),
           params: { cardId: hand2[0] },
+          playerId: createPlayerId(PLAYER_ONE),
         });
 
         // Assert: Second ink should fail
@@ -436,9 +432,9 @@ describe("Section 4: Turn Structure", () => {
       test.failing("Rule 4.3.5.8 - Gain lore equal to character's lore value", () => {
         // Arrange: Character with lore value 2
         const character = testEngine.createCharacterInPlay(PLAYER_ONE, {
+          lore: 2,
           strength: 2,
           willpower: 3,
-          lore: 2,
         });
 
         const initialLore = testEngine.getLore(PLAYER_ONE);
@@ -497,11 +493,11 @@ describe("Section 4: Turn Structure", () => {
 
         // Act: Try to challenge ready defender
         const result = testEngine.engine.executeMove("challenge", {
-          playerId: createPlayerId(PLAYER_ONE),
           params: {
             attackerId: attacker,
             defenderId: readyDefender,
           },
+          playerId: createPlayerId(PLAYER_ONE),
         });
 
         // Assert: Should fail - can't challenge ready character

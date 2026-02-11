@@ -1,55 +1,55 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
 export const doItAgain: ActionCard = {
-  id: "8s5",
-  cardType: "action",
-  name: "Do It Again!",
-  inkType: ["emerald"],
-  franchise: "Cinderella",
-  set: "001",
-  text: "Return an action card from your discard to your hand.",
-  cost: 3,
-  cardNumber: 94,
-  inkable: false,
-  externalIds: {
-    ravensburger: "1fa692d71466897743f12f7dbceee65c69c5d6a5",
-  },
   abilities: [
     {
-      id: "8s5-1",
-      text: "Return an action card from your discard to your hand.",
-      type: "action",
       effect: {
         type: "return-from-discard",
         cardType: "action",
         target: "CONTROLLER",
       },
+      id: "8s5-1",
+      text: "Return an action card from your discard to your hand.",
+      type: "action",
     },
   ],
+  cardNumber: 94,
+  cardType: "action",
+  cost: 3,
+  externalIds: {
+    ravensburger: "1fa692d71466897743f12f7dbceee65c69c5d6a5",
+  },
+  franchise: "Cinderella",
+  id: "8s5",
+  inkType: ["emerald"],
+  inkable: false,
+  name: "Do It Again!",
+  set: "001",
+  text: "Return an action card from your discard to your hand.",
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const doItAgain: LorcanitoActionCard = {
-//   id: "yld",
-//   name: "Do It Again!",
-//   characteristics: ["action"],
-//   text: "Return an action card from your discard to your hand.",
-//   type: "action",
-//   abilities: [
+// Export const doItAgain: LorcanitoActionCard = {
+//   Id: "yld",
+//   Name: "Do It Again!",
+//   Characteristics: ["action"],
+//   Text: "Return an action card from your discard to your hand.",
+//   Type: "action",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       name: "Do It Again!",
-//       text: "Return an action card from your discard to your hand.",
-//       effects: [
+//       Type: "resolution",
+//       Name: "Do It Again!",
+//       Text: "Return an action card from your discard to your hand.",
+//       Effects: [
 //         {
-//           type: "move",
-//           to: "hand",
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
+//           Type: "move",
+//           To: "hand",
+//           Target: {
+//             Type: "card",
+//             Value: 1,
+//             Filters: [
 //               { filter: "owner", value: "self" },
 //               { filter: "type", value: ["action"] },
 //               { filter: "zone", value: "discard" },
@@ -59,16 +59,16 @@ export const doItAgain: ActionCard = {
 //       ],
 //     },
 //   ],
-//   flavour:
+//   Flavour:
 //     ". . . Then scrub the terrace, sweep the halls and the stairs, clean the chimneys. And of course there's the mending, and the sewing, and the laundry . . . −Lady Tremaine",
-//   colors: ["emerald"],
-//   cost: 3,
-//   illustrator: "Ellie Horie",
-//   number: 94,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 506830,
+//   Colors: ["emerald"],
+//   Cost: 3,
+//   Illustrator: "Ellie Horie",
+//   Number: 94,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 506830,
 //   },
-//   rarity: "rare",
+//   Rarity: "rare",
 // };
 //

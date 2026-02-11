@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { dopeyAlwaysPlayful } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { dopeyKnightApprentice } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { dopeyAlwaysPlayful } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { dopeyKnightApprentice } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Dopey - Knight Apprentice", () => {
-//   describe("**STRONGER TOGETHER** When you play this character, if you have another Knight character in play, you may deal 1 damage to chosen character or location.", () => {
-//     it("Doesn't trigger when he's the only knight in play", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: dopeyKnightApprentice.cost,
-//         hand: [dopeyKnightApprentice],
-//         play: [dopeyAlwaysPlayful],
+// Describe("Dopey - Knight Apprentice", () => {
+//   Describe("**STRONGER TOGETHER** When you play this character, if you have another Knight character in play, you may deal 1 damage to chosen character or location.", () => {
+//     It("Doesn't trigger when he's the only knight in play", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: dopeyKnightApprentice.cost,
+//         Hand: [dopeyKnightApprentice],
+//         Play: [dopeyAlwaysPlayful],
 //       });
 //
-//       await testEngine.playCard(dopeyKnightApprentice);
-//       expect(testEngine.stackLayers).toHaveLength(0);
+//       Await testEngine.playCard(dopeyKnightApprentice);
+//       Expect(testEngine.stackLayers).toHaveLength(0);
 //     });
 //   });
 // });

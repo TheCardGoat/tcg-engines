@@ -3,136 +3,136 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   mickeyMouseDetective,
-//   webbyVanderquackMysteryEnthusiast,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   MickeyMouseDetective,
+//   WebbyVanderquackMysteryEnthusiast,
 // } from "@lorcanito/lorcana-engine/cards/010/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Webby Vanderquack - Mystery Enthusiast", () => {
-//   it("CONTAGIOUS ENERGY - Character should have correct base stats", async () => {
-//     const testEngine = new TestEngine({
-//       hand: [webbyVanderquackMysteryEnthusiast],
+// Describe("Webby Vanderquack - Mystery Enthusiast", () => {
+//   It("CONTAGIOUS ENERGY - Character should have correct base stats", async () => {
+//     Const testEngine = new TestEngine({
+//       Hand: [webbyVanderquackMysteryEnthusiast],
 //     });
 //
-//     const cardUnderTest = testEngine.getByZoneAndId(
+//     Const cardUnderTest = testEngine.getByZoneAndId(
 //       "hand",
-//       webbyVanderquackMysteryEnthusiast.id,
+//       WebbyVanderquackMysteryEnthusiast.id,
 //     );
 //
 //     // Check base stats
-//     expect(cardUnderTest.cost).toBe(1);
-//     expect(cardUnderTest.strength).toBe(1);
-//     expect(cardUnderTest.willpower).toBe(2);
-//     expect(cardUnderTest.lore).toBe(1);
-//     expect(cardUnderTest.characteristics).toEqual(["storyborn", "ally"]);
+//     Expect(cardUnderTest.cost).toBe(1);
+//     Expect(cardUnderTest.strength).toBe(1);
+//     Expect(cardUnderTest.willpower).toBe(2);
+//     Expect(cardUnderTest.lore).toBe(1);
+//     Expect(cardUnderTest.characteristics).toEqual(["storyborn", "ally"]);
 //   });
 //
-//   it("CONTAGIOUS ENERGY - Character can be played with correct cost", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: webbyVanderquackMysteryEnthusiast.cost,
-//       hand: [webbyVanderquackMysteryEnthusiast],
+//   It("CONTAGIOUS ENERGY - Character can be played with correct cost", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: webbyVanderquackMysteryEnthusiast.cost,
+//       Hand: [webbyVanderquackMysteryEnthusiast],
 //     });
 //
-//     const cardUnderTest = testEngine.getByZoneAndId(
+//     Const cardUnderTest = testEngine.getByZoneAndId(
 //       "hand",
-//       webbyVanderquackMysteryEnthusiast.id,
+//       WebbyVanderquackMysteryEnthusiast.id,
 //     );
 //
-//     await testEngine.playCard(cardUnderTest);
-//     const webbyInPlay = testEngine.getByZoneAndId(
+//     Await testEngine.playCard(cardUnderTest);
+//     Const webbyInPlay = testEngine.getByZoneAndId(
 //       "play",
-//       webbyVanderquackMysteryEnthusiast.id,
+//       WebbyVanderquackMysteryEnthusiast.id,
 //     );
-//     expect(webbyInPlay.zone).toBe("play");
+//     Expect(webbyInPlay.zone).toBe("play");
 //   });
 //
-//   it("CONTAGIOUS ENERGY - When you play this character, chosen character gets +1 {S} this turn", async () => {
-//     const testEngine = new TestEngine(
+//   It("CONTAGIOUS ENERGY - When you play this character, chosen character gets +1 {S} this turn", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: webbyVanderquackMysteryEnthusiast.cost,
-//         hand: [webbyVanderquackMysteryEnthusiast],
+//         Inkwell: webbyVanderquackMysteryEnthusiast.cost,
+//         Hand: [webbyVanderquackMysteryEnthusiast],
 //       },
 //       {
-//         play: [mickeyMouseDetective],
+//         Play: [mickeyMouseDetective],
 //       },
 //     );
 //
-//     const mickey = testEngine.getCardModel(mickeyMouseDetective);
+//     Const mickey = testEngine.getCardModel(mickeyMouseDetective);
 //
 //     // Verify Mickey's base strength
-//     expect(mickey.strength).toBe(mickeyMouseDetective.strength);
+//     Expect(mickey.strength).toBe(mickeyMouseDetective.strength);
 //
 //     // Play Webby
-//     await testEngine.playCard(webbyVanderquackMysteryEnthusiast);
+//     Await testEngine.playCard(webbyVanderquackMysteryEnthusiast);
 //
 //     // Target Mickey for the +1 strength bonus
-//     await testEngine.resolveTopOfStack({ targets: [mickey] });
+//     Await testEngine.resolveTopOfStack({ targets: [mickey] });
 //
 //     // Mickey should have +1 strength this turn
-//     expect(mickey.strength).toBe(mickeyMouseDetective.strength + 1);
+//     Expect(mickey.strength).toBe(mickeyMouseDetective.strength + 1);
 //
 //     // Pass turn and verify the bonus expires
-//     testEngine.passTurn();
-//     expect(mickey.strength).toBe(mickeyMouseDetective.strength);
+//     TestEngine.passTurn();
+//     Expect(mickey.strength).toBe(mickeyMouseDetective.strength);
 //   });
 //
-//   it("CONTAGIOUS ENERGY - Can target herself for the +1 {S} bonus", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: webbyVanderquackMysteryEnthusiast.cost,
-//       hand: [webbyVanderquackMysteryEnthusiast],
+//   It("CONTAGIOUS ENERGY - Can target herself for the +1 {S} bonus", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: webbyVanderquackMysteryEnthusiast.cost,
+//       Hand: [webbyVanderquackMysteryEnthusiast],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(
-//       webbyVanderquackMysteryEnthusiast,
+//     Const cardUnderTest = testEngine.getCardModel(
+//       WebbyVanderquackMysteryEnthusiast,
 //     );
 //
 //     // Play Webby
-//     await testEngine.playCard(webbyVanderquackMysteryEnthusiast);
+//     Await testEngine.playCard(webbyVanderquackMysteryEnthusiast);
 //
 //     // Target herself for the +1 strength bonus
-//     await testEngine.resolveTopOfStack({ targets: [cardUnderTest] });
+//     Await testEngine.resolveTopOfStack({ targets: [cardUnderTest] });
 //
 //     // Webby should have +1 strength this turn
-//     expect(cardUnderTest.strength).toBe(
-//       webbyVanderquackMysteryEnthusiast.strength + 1,
+//     Expect(cardUnderTest.strength).toBe(
+//       WebbyVanderquackMysteryEnthusiast.strength + 1,
 //     );
 //
 //     // Pass turn and verify the bonus expires
-//     testEngine.passTurn();
-//     expect(cardUnderTest.strength).toBe(
-//       webbyVanderquackMysteryEnthusiast.strength,
+//     TestEngine.passTurn();
+//     Expect(cardUnderTest.strength).toBe(
+//       WebbyVanderquackMysteryEnthusiast.strength,
 //     );
 //   });
 //
-//   it("CONTAGIOUS ENERGY - Ability should be present and functional", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: webbyVanderquackMysteryEnthusiast.cost,
-//       hand: [webbyVanderquackMysteryEnthusiast],
+//   It("CONTAGIOUS ENERGY - Ability should be present and functional", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: webbyVanderquackMysteryEnthusiast.cost,
+//       Hand: [webbyVanderquackMysteryEnthusiast],
 //     });
 //
-//     const cardUnderTest = testEngine.getByZoneAndId(
+//     Const cardUnderTest = testEngine.getByZoneAndId(
 //       "hand",
-//       webbyVanderquackMysteryEnthusiast.id,
+//       WebbyVanderquackMysteryEnthusiast.id,
 //     );
 //
 //     // Check that the ability is present
-//     expect(webbyVanderquackMysteryEnthusiast.abilities).toBeDefined();
-//     expect(webbyVanderquackMysteryEnthusiast.abilities?.length).toBeGreaterThan(
+//     Expect(webbyVanderquackMysteryEnthusiast.abilities).toBeDefined();
+//     Expect(webbyVanderquackMysteryEnthusiast.abilities?.length).toBeGreaterThan(
 //       0,
 //     );
-//     expect(webbyVanderquackMysteryEnthusiast.abilities?.[0]?.name).toBe(
+//     Expect(webbyVanderquackMysteryEnthusiast.abilities?.[0]?.name).toBe(
 //       "CONTAGIOUS ENERGY",
 //     );
 //
 //     // Check that the character is playable
-//     await testEngine.playCard(cardUnderTest);
-//     const webbyInPlay = testEngine.getByZoneAndId(
+//     Await testEngine.playCard(cardUnderTest);
+//     Const webbyInPlay = testEngine.getByZoneAndId(
 //       "play",
-//       webbyVanderquackMysteryEnthusiast.id,
+//       WebbyVanderquackMysteryEnthusiast.id,
 //     );
-//     expect(webbyInPlay.zone).toBe("play");
+//     Expect(webbyInPlay.zone).toBe("play");
 //   });
 // });
 //

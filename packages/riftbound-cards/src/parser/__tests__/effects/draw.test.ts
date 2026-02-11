@@ -17,11 +17,11 @@ describe("Effect: Draw", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "spell",
           effect: expect.objectContaining({
-            type: "draw",
             amount: 1,
+            type: "draw",
           }),
+          type: "spell",
         }),
       );
     });
@@ -51,21 +51,19 @@ describe("Effect: Draw", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "spell",
           effect: expect.objectContaining({
-            type: "draw",
             amount: expect.objectContaining({
               type: "count",
             }),
+            type: "draw",
           }),
+          type: "spell",
         }),
       );
     });
 
     it.skip("should parse 'Draw 1 for each other friendly unit here.'", () => {
-      const result = parseAbilities(
-        "Draw 1 for each other friendly unit here.",
-      );
+      const result = parseAbilities("Draw 1 for each other friendly unit here.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
@@ -74,9 +72,7 @@ describe("Effect: Draw", () => {
 
   describe("opponent draw", () => {
     it.skip("should parse 'Its controller draws 2.'", () => {
-      const result = parseAbilities(
-        "Kill a unit at a battlefield. Its controller draws 2.",
-      );
+      const result = parseAbilities("Kill a unit at a battlefield. Its controller draws 2.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);

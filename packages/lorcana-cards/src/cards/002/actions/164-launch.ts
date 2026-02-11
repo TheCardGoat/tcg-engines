@@ -1,24 +1,8 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
 export const launch: ActionCard = {
-  id: "1wz",
-  cardType: "action",
-  name: "Launch",
-  inkType: ["sapphire"],
-  franchise: "Lorcana",
-  set: "002",
-  text: "Banish chosen item of yours to deal 5 damage to chosen character.",
-  cost: 3,
-  cardNumber: 164,
-  inkable: false,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "f7c91fefc9c39de1eb3c3dbcd95ef44db5e47f38",
-  },
   abilities: [
     {
-      id: "1wz-1",
-      type: "action",
       effect: {
         type: "deal-damage",
         amount: 5,
@@ -30,7 +14,23 @@ export const launch: ActionCard = {
           cardTypes: ["character"],
         },
       },
+      id: "1wz-1",
       text: "Banish chosen item of yours to deal 5 damage to chosen character.",
+      type: "action",
     },
   ],
+  cardNumber: 164,
+  cardType: "action",
+  cost: 3,
+  externalIds: {
+    ravensburger: "f7c91fefc9c39de1eb3c3dbcd95ef44db5e47f38",
+  },
+  franchise: "Lorcana",
+  id: "1wz",
+  inkType: ["sapphire"],
+  inkable: false,
+  missingTests: true,
+  name: "Launch",
+  set: "002",
+  text: "Banish chosen item of yours to deal 5 damage to chosen character.",
 };

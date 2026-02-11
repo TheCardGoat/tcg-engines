@@ -20,7 +20,7 @@ describe("playEffectParser", () => {
       expect((result as Effect & { cardType?: string }).cardType).toBe(
         "character",
       );
-      // cost is only set when it's "free"
+      // Cost is only set when it's "free"
       expect((result as Effect & { cost?: string }).cost).toBeUndefined();
     });
 
@@ -80,7 +80,7 @@ describe("playEffectParser", () => {
       expect((result as Effect & { cardType?: string }).cardType).toBe(
         "character",
       );
-      // cost is only set when it's "free"
+      // Cost is only set when it's "free"
       expect((result as Effect & { cost?: string }).cost).toBeUndefined();
     });
 
@@ -117,11 +117,11 @@ describe("playEffectParser", () => {
       expect(result?.type).toBe("play-card");
       expect((result as Effect & { cost?: string }).cost).toBe("free");
       // Implementation uses costRestriction instead of filter
-      const costRestriction = (
+      const {costRestriction} = (
         result as Effect & {
           costRestriction?: { comparison: string; value: number };
         }
-      ).costRestriction;
+      );
       expect(costRestriction?.value).toBe(3);
       expect(costRestriction?.comparison).toBe("less-or-equal");
     });
@@ -133,11 +133,11 @@ describe("playEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("play-card");
-      const costRestriction = (
+      const {costRestriction} = (
         result as Effect & {
           costRestriction?: { comparison: string; value: number };
         }
-      ).costRestriction;
+      );
       expect(costRestriction?.value).toBe(5);
     });
 
@@ -146,11 +146,11 @@ describe("playEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("play-card");
-      const costRestriction = (
+      const {costRestriction} = (
         result as Effect & {
           costRestriction?: { comparison: string; value: number };
         }
-      ).costRestriction;
+      );
       expect(costRestriction?.value).toBe(2);
     });
   });
@@ -175,7 +175,7 @@ describe("playEffectParser", () => {
       expect((result as Effect & { cardType?: string }).cardType).toBe(
         "character",
       );
-      // text.includes("for free") is case-sensitive, so "For Free" doesn't match
+      // Text.includes("for free") is case-sensitive, so "For Free" doesn't match
       expect((result as Effect & { cost?: string }).cost).toBeUndefined();
     });
 
@@ -277,11 +277,11 @@ describe("playEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("play-card");
-      const costRestriction = (
+      const {costRestriction} = (
         result as Effect & {
           costRestriction?: { comparison: string; value: number };
         }
-      ).costRestriction;
+      );
       expect(costRestriction?.value).toBe(0);
     });
 
@@ -291,11 +291,11 @@ describe("playEffectParser", () => {
       );
 
       expect(result).not.toBeNull();
-      const costRestriction = (
+      const {costRestriction} = (
         result as Effect & {
           costRestriction?: { comparison: string; value: number };
         }
-      ).costRestriction;
+      );
       expect(costRestriction?.value).toBe(10);
     });
   });
@@ -314,11 +314,11 @@ describe("playEffectParser", () => {
       const result = playEffectParser.parse("play that costs 3 for free");
 
       expect(result).not.toBeNull();
-      const costRestriction = (
+      const {costRestriction} = (
         result as Effect & {
           costRestriction?: { comparison: string; value: number };
         }
-      ).costRestriction;
+      );
       expect(costRestriction?.value).toBe(3);
     });
   });

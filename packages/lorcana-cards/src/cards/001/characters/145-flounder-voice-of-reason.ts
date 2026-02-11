@@ -1,53 +1,53 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const flounderVoiceOfReason: CharacterCard = {
-  id: "yxl",
-  cardType: "character",
-  name: "Flounder",
-  version: "Voice of Reason",
-  fullName: "Flounder - Voice of Reason",
-  inkType: ["sapphire"],
-  franchise: "Disney",
-  set: "001",
-  text: "",
-  cost: 1,
-  strength: 2,
-  willpower: 2,
-  lore: 1,
+  abilities: [],
   cardNumber: 145,
-  inkable: true,
+  cardType: "character",
+  classifications: ["Storyborn", "Ally"],
+  cost: 1,
   externalIds: {
     ravensburger: "",
   },
-  abilities: [],
-  classifications: ["Storyborn", "Ally"],
+  franchise: "Disney",
+  fullName: "Flounder - Voice of Reason",
+  id: "yxl",
+  inkType: ["sapphire"],
+  inkable: true,
+  lore: 1,
+  name: "Flounder",
+  set: "001",
+  strength: 2,
+  text: "",
+  version: "Voice of Reason",
+  willpower: 2,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const flounderVoiceOfReason: LorcanitoCharacterCard = {
-//   id: "yxl",
-//   reprints: ["yyq"],
+// Export const flounderVoiceOfReason: LorcanitoCharacterCard = {
+//   Id: "yxl",
+//   Reprints: ["yyq"],
 //
-//   name: "Flounder",
-//   title: "Voice of Reason",
-//   characteristics: ["storyborn", "ally"],
-//   type: "character",
-//   flavour:
+//   Name: "Flounder",
+//   Title: "Voice of Reason",
+//   Characteristics: ["storyborn", "ally"],
+//   Type: "character",
+//   Flavour:
 //     "„Excitment... adventure... danger lurking around every cor- AAAAAGGH!",
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 1,
-//   strength: 2,
-//   willpower: 2,
-//   lore: 1,
-//   illustrator: "Brian Weisz",
-//   number: 145,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 493496,
+//   Inkwell: true,
+//   Colors: ["sapphire"],
+//   Cost: 1,
+//   Strength: 2,
+//   Willpower: 2,
+//   Lore: 1,
+//   Illustrator: "Brian Weisz",
+//   Number: 145,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 493496,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

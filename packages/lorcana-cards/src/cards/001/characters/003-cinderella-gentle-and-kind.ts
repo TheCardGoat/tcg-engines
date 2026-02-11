@@ -1,29 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const cinderellaGentleAndKind: CharacterCard = {
-  id: "qil",
-  cardType: "character",
-  name: "Cinderella",
-  version: "Gentle and Kind",
-  fullName: "Cinderella - Gentle and Kind",
-  inkType: ["amber"],
-  franchise: "Disney",
-  set: "001",
-  text: "**Singer** 5 _(This character counts as cost 5 to sing songs.)_\n\n**A WONDERFUL DREAM** {E}− Remove up to 3 damage from chosen Princess character.",
-  cost: 4,
-  strength: 2,
-  willpower: 5,
-  lore: 2,
-  cardNumber: 3,
-  inkable: true,
-  externalIds: {
-    ravensburger: "",
-  },
   abilities: [
     {
-      type: "action",
-      id: "qil-1",
-      text: "**Singer** 5 _(This character counts as cost 5 to sing songs.)_\n\n**A WONDERFUL DREAM** {E}− Remove up to 3 damage from chosen Princess character.",
       effect: {
         type: "remove-damage",
         amount: 3,
@@ -36,38 +15,59 @@ export const cinderellaGentleAndKind: CharacterCard = {
           cardTypes: ["character"],
         },
       },
+      id: "qil-1",
+      text: "**Singer** 5 _(This character counts as cost 5 to sing songs.)_\n\n**A WONDERFUL DREAM** {E}− Remove up to 3 damage from chosen Princess character.",
+      type: "action",
     },
   ],
+  cardNumber: 3,
+  cardType: "character",
   classifications: ["Hero", "Storyborn", "Princess"],
+  cost: 4,
+  externalIds: {
+    ravensburger: "",
+  },
+  franchise: "Disney",
+  fullName: "Cinderella - Gentle and Kind",
+  id: "qil",
+  inkType: ["amber"],
+  inkable: true,
+  lore: 2,
+  name: "Cinderella",
+  set: "001",
+  strength: 2,
+  text: "**Singer** 5 _(This character counts as cost 5 to sing songs.)_\n\n**A WONDERFUL DREAM** {E}− Remove up to 3 damage from chosen Princess character.",
+  version: "Gentle and Kind",
+  willpower: 5,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const cinderellaGentleAndKind: LorcanitoCharacterCard = {
-//   id: "qil",
-//   reprints: ["xks"],
-//   name: "Cinderella",
-//   title: "Gentle and Kind",
-//   characteristics: ["hero", "storyborn", "princess"],
-//   text: "**Singer** 5 _(This character counts as cost 5 to sing songs.)_\n\n**A WONDERFUL DREAM** {E}− Remove up to 3 damage from chosen Princess character.",
-//   type: "character",
-//   illustrator: "Javier Salas",
-//   abilities: [
+// Export const cinderellaGentleAndKind: LorcanitoCharacterCard = {
+//   Id: "qil",
+//   Reprints: ["xks"],
+//   Name: "Cinderella",
+//   Title: "Gentle and Kind",
+//   Characteristics: ["hero", "storyborn", "princess"],
+//   Text: "**Singer** 5 _(This character counts as cost 5 to sing songs.)_\n\n**A WONDERFUL DREAM** {E}− Remove up to 3 damage from chosen Princess character.",
+//   Type: "character",
+//   Illustrator: "Javier Salas",
+//   Abilities: [
 //     {
-//       type: "activated",
-//       name: "A WONDERFUL DREAM",
-//       text: "{E}− Remove up to 3 damage from chosen Princess character.",
-//       costs: [{ type: "exert" }],
-//       effects: [
+//       Type: "activated",
+//       Name: "A WONDERFUL DREAM",
+//       Text: "{E}− Remove up to 3 damage from chosen Princess character.",
+//       Costs: [{ type: "exert" }],
+//       Effects: [
 //         {
-//           type: "heal",
-//           amount: 3,
-//           upTo: true,
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
+//           Type: "heal",
+//           Amount: 3,
+//           UpTo: true,
+//           Target: {
+//             Type: "card",
+//             Value: 1,
+//             Filters: [
 //               { filter: "zone", value: "play" },
 //               { filter: "type", value: "character" },
 //               { filter: "characteristics", value: ["princess"] },
@@ -77,23 +77,23 @@ export const cinderellaGentleAndKind: CharacterCard = {
 //       ],
 //     },
 //     {
-//       type: "static",
-//       ability: "singer",
-//       value: 5,
-//       text: "**Singer** 5 _(This character counts as cost 4 to sing songs.)_",
+//       Type: "static",
+//       Ability: "singer",
+//       Value: 5,
+//       Text: "**Singer** 5 _(This character counts as cost 4 to sing songs.)_",
 //     },
 //   ],
-//   inkwell: true,
-//   colors: ["amber"],
-//   cost: 4,
-//   strength: 2,
-//   willpower: 5,
-//   lore: 2,
-//   number: 3,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 508692,
+//   Inkwell: true,
+//   Colors: ["amber"],
+//   Cost: 4,
+//   Strength: 2,
+//   Willpower: 5,
+//   Lore: 2,
+//   Number: 3,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 508692,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

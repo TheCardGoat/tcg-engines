@@ -1,31 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const merlinCrab: CharacterCard = {
-  id: "1ih",
-  cardType: "character",
-  name: "Merlin",
-  version: "Crab",
-  fullName: "Merlin - Crab",
-  inkType: ["amethyst"],
-  franchise: "Sword in the Stone",
-  set: "002",
-  text: "READY OR NOT! When you play this character and when he leaves play, chosen character gains Challenger +3 this turn. (They get +3 {S} while challenging.)",
-  cost: 3,
-  strength: 3,
-  willpower: 3,
-  lore: 1,
-  cardNumber: 50,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "c432eb95dc74c15e1c3ca51d73030c05e9924344",
-  },
   abilities: [
     {
-      id: "1ih-1",
-      type: "triggered",
-      name: "READY OR NOT! When you play this character and",
-      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "sequence",
         steps: [
@@ -54,8 +31,31 @@ export const merlinCrab: CharacterCard = {
           },
         ],
       },
+      id: "1ih-1",
+      name: "READY OR NOT! When you play this character and",
       text: "READY OR NOT! When you play this character and when he leaves play, chosen character gains Challenger +3 this turn.",
+      trigger: { event: "play", timing: "when", on: "SELF" },
+      type: "triggered",
     },
   ],
+  cardNumber: 50,
+  cardType: "character",
   classifications: ["Storyborn", "Mentor", "Sorcerer"],
+  cost: 3,
+  externalIds: {
+    ravensburger: "c432eb95dc74c15e1c3ca51d73030c05e9924344",
+  },
+  franchise: "Sword in the Stone",
+  fullName: "Merlin - Crab",
+  id: "1ih",
+  inkType: ["amethyst"],
+  inkable: true,
+  lore: 1,
+  missingTests: true,
+  name: "Merlin",
+  set: "002",
+  strength: 3,
+  text: "READY OR NOT! When you play this character and when he leaves play, chosen character gains Challenger +3 this turn. (They get +3 {S} while challenging.)",
+  version: "Crab",
+  willpower: 3,
 };

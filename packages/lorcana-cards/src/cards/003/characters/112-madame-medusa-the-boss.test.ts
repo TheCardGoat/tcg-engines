@@ -3,39 +3,39 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   madameMedusaTheBoss,
-//   webbyVanderquackEnthusiasticDuck,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   MadameMedusaTheBoss,
+//   WebbyVanderquackEnthusiasticDuck,
 // } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Madame Medusa - The Boss", () => {
-//   it("**THAT TERRIBLE WOMAN** When you play this character, banish chosen opposing character with 3 {S} or less.", () => {
-//     const testStore = new TestStore(
+// Describe("Madame Medusa - The Boss", () => {
+//   It("**THAT TERRIBLE WOMAN** When you play this character, banish chosen opposing character with 3 {S} or less.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: madameMedusaTheBoss.cost,
-//         hand: [madameMedusaTheBoss],
+//         Inkwell: madameMedusaTheBoss.cost,
+//         Hand: [madameMedusaTheBoss],
 //       },
 //       {
-//         play: [webbyVanderquackEnthusiasticDuck],
+//         Play: [webbyVanderquackEnthusiasticDuck],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "hand",
-//       madameMedusaTheBoss.id,
+//       MadameMedusaTheBoss.id,
 //     );
-//     const target = testStore.getByZoneAndId(
+//     Const target = testStore.getByZoneAndId(
 //       "play",
-//       webbyVanderquackEnthusiasticDuck.id,
+//       WebbyVanderquackEnthusiasticDuck.id,
 //       "player_two",
 //     );
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveTopOfStack({ targets: [target] });
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.zone).toEqual("discard");
+//     Expect(target.zone).toEqual("discard");
 //   });
 // });
 //

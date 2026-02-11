@@ -17,9 +17,7 @@ describe("Keyword: Temporary", () => {
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
-      expect(result.abilities?.[0]).toEqual(
-        expect.objectContaining(Abilities.temporary()),
-      );
+      expect(result.abilities?.[0]).toEqual(expect.objectContaining(Abilities.temporary()));
     });
   });
 
@@ -31,16 +29,14 @@ describe("Keyword: Temporary", () => {
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(2);
-      expect(result.abilities?.[0]).toEqual(
-        expect.objectContaining(Abilities.temporary()),
-      );
+      expect(result.abilities?.[0]).toEqual(expect.objectContaining(Abilities.temporary()));
       expect(result.abilities?.[1]).toEqual(
         expect.objectContaining({
-          type: "static",
           effect: expect.objectContaining({
-            type: "grant-keyword",
             keyword: "Deflect",
+            type: "grant-keyword",
           }),
+          type: "static",
         }),
       );
     });
@@ -56,11 +52,11 @@ describe("Keyword: Temporary", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "spell",
           effect: expect.objectContaining({
-            type: "grant-keyword",
             keyword: "Temporary",
+            type: "grant-keyword",
           }),
+          type: "spell",
         }),
       );
     });
@@ -74,13 +70,13 @@ describe("Keyword: Temporary", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           effect: expect.objectContaining({
-            type: "create-token",
             token: expect.objectContaining({
               keywords: expect.arrayContaining(["Temporary"]),
             }),
+            type: "create-token",
           }),
+          type: "triggered",
         }),
       );
     });
@@ -96,8 +92,8 @@ describe("Keyword: Temporary", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "spell",
           timing: "action",
+          type: "spell",
         }),
       );
     });
@@ -120,9 +116,7 @@ describe("Keyword: Temporary", () => {
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(3);
-      expect(result.abilities?.[2]).toEqual(
-        expect.objectContaining(Abilities.temporary()),
-      );
+      expect(result.abilities?.[2]).toEqual(expect.objectContaining(Abilities.temporary()));
     });
   });
 });

@@ -3,37 +3,37 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { scroogeMcduckRichestDuckInTheWorld } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { luckyDime } from "@lorcanito/lorcana-engine/cards/003/items/items";
-// import { tipoGrowingSon } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { scroogeMcduckRichestDuckInTheWorld } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { luckyDime } from "@lorcanito/lorcana-engine/cards/003/items/items";
+// Import { tipoGrowingSon } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Scrooge McDuck - Richest Duck in the World", () => {
-//   it("**I DIDN'T GET RICH BY BEING STUPID** During your turn, whenever this character banishes another character in a challenge, you may play an item for free.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Scrooge McDuck - Richest Duck in the World", () => {
+//   It("**I DIDN'T GET RICH BY BEING STUPID** During your turn, whenever this character banishes another character in a challenge, you may play an item for free.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: scroogeMcduckRichestDuckInTheWorld.cost,
-//         play: [scroogeMcduckRichestDuckInTheWorld],
-//         hand: [luckyDime],
+//         Inkwell: scroogeMcduckRichestDuckInTheWorld.cost,
+//         Play: [scroogeMcduckRichestDuckInTheWorld],
+//         Hand: [luckyDime],
 //       },
 //       {
-//         play: [tipoGrowingSon],
+//         Play: [tipoGrowingSon],
 //       },
 //     );
 //
-//     const scrooge = testEngine.getCardModel(scroogeMcduckRichestDuckInTheWorld);
-//     const tipo = testEngine.getCardModel(tipoGrowingSon);
-//     const dime = testEngine.getCardModel(luckyDime);
+//     Const scrooge = testEngine.getCardModel(scroogeMcduckRichestDuckInTheWorld);
+//     Const tipo = testEngine.getCardModel(tipoGrowingSon);
+//     Const dime = testEngine.getCardModel(luckyDime);
 //
-//     tipo.updateCardMeta({ exerted: true });
-//     scrooge.challenge(tipo);
-//     expect(testEngine.stackLayers).toHaveLength(1);
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({ targets: [dime] });
+//     Tipo.updateCardMeta({ exerted: true });
+//     Scrooge.challenge(tipo);
+//     Expect(testEngine.stackLayers).toHaveLength(1);
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({ targets: [dime] });
 //
-//     expect(testEngine.getZonesCardCount().hand).toEqual(0);
-//     expect(testEngine.getCardZone(luckyDime)).toBe("play");
+//     Expect(testEngine.getZonesCardCount().hand).toEqual(0);
+//     Expect(testEngine.getCardZone(luckyDime)).toBe("play");
 //   });
 // });
 //

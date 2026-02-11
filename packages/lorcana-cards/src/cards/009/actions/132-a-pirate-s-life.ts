@@ -1,15 +1,15 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { aPiratesLife as ogAPiratesLife } from "@lorcanito/lorcana-engine/cards/004/actions/128-a-pirates-life";
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+// Import { aPiratesLife as ogAPiratesLife } from "@lorcanito/lorcana-engine/cards/004/actions/128-a-pirates-life";
 //
-// export const aPiratesLife: LorcanitoActionCard = {
+// Export const aPiratesLife: LorcanitoActionCard = {
 //   ...ogAPiratesLife,
-//   id: "t0s",
-//   reprints: [ogAPiratesLife.id],
-//   number: 132,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650067,
+//   Id: "t0s",
+//   Reprints: [ogAPiratesLife.id],
+//   Number: 132,
+//   Set: "009",
+//   ExternalIds: {
+//     TcgPlayer: 650067,
 //   },
 // };
 //

@@ -3,77 +3,77 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it, test } from "@jest/globals";
-// import {
-//   madamMimSnake,
-//   pinocchioStarAttraction,
+// Import { describe, expect, it, test } from "@jest/globals";
+// Import {
+//   MadamMimSnake,
+//   PinocchioStarAttraction,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { magicBroomIlluminaryKeeper } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { magicBroomIlluminaryKeeper } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Madam Mim - Snake", () => {
-//   describe("**JUST YOU WAIT** When you play this character, banish her or return another chosen character of yours to your hand.", () => {
-//     it("skipping the effect banishes her", () => {
-//       const testStore = new TestStore({
-//         inkwell: madamMimSnake.cost,
-//         hand: [madamMimSnake],
-//         play: [pinocchioStarAttraction],
+// Describe("Madam Mim - Snake", () => {
+//   Describe("**JUST YOU WAIT** When you play this character, banish her or return another chosen character of yours to your hand.", () => {
+//     It("skipping the effect banishes her", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: madamMimSnake.cost,
+//         Hand: [madamMimSnake],
+//         Play: [pinocchioStarAttraction],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId("hand", madamMimSnake.id);
-//       const target = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId("hand", madamMimSnake.id);
+//       Const target = testStore.getByZoneAndId(
 //         "play",
-//         pinocchioStarAttraction.id,
+//         PinocchioStarAttraction.id,
 //       );
 //
-//       cardUnderTest.playFromHand();
-//       testStore.resolveTopOfStack({ skip: true });
+//       CardUnderTest.playFromHand();
+//       TestStore.resolveTopOfStack({ skip: true });
 //
-//       expect(target.zone).toEqual("play");
-//       expect(cardUnderTest.zone).toEqual("discard");
-//       expect(testStore.stackLayers).toHaveLength(0);
+//       Expect(target.zone).toEqual("play");
+//       Expect(cardUnderTest.zone).toEqual("discard");
+//       Expect(testStore.stackLayers).toHaveLength(0);
 //     });
 //
-//     it("return another chosen character of yours to your hand.", () => {
-//       const testStore = new TestStore({
-//         inkwell: madamMimSnake.cost,
-//         hand: [madamMimSnake],
-//         play: [pinocchioStarAttraction],
+//     It("return another chosen character of yours to your hand.", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: madamMimSnake.cost,
+//         Hand: [madamMimSnake],
+//         Play: [pinocchioStarAttraction],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId("hand", madamMimSnake.id);
-//       const target = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId("hand", madamMimSnake.id);
+//       Const target = testStore.getByZoneAndId(
 //         "play",
-//         pinocchioStarAttraction.id,
+//         PinocchioStarAttraction.id,
 //       );
 //
-//       cardUnderTest.playFromHand();
-//       testStore.resolveOptionalAbility();
-//       testStore.resolveTopOfStack({ targets: [target] });
+//       CardUnderTest.playFromHand();
+//       TestStore.resolveOptionalAbility();
+//       TestStore.resolveTopOfStack({ targets: [target] });
 //
-//       expect(target.zone).toEqual("hand");
-//       expect(cardUnderTest.zone).toEqual("play");
-//       expect(testStore.stackLayers).toHaveLength(0);
+//       Expect(target.zone).toEqual("hand");
+//       Expect(cardUnderTest.zone).toEqual("play");
+//       Expect(testStore.stackLayers).toHaveLength(0);
 //     });
 //   });
 // });
 //
-// describe("Regression", () => {
-//   test("skipping the effect banishes her", async () => {
-//     const testEngine = new TestEngine({
-//       play: [magicBroomIlluminaryKeeper],
-//       inkwell: madamMimSnake.cost,
-//       hand: [madamMimSnake],
+// Describe("Regression", () => {
+//   Test("skipping the effect banishes her", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [magicBroomIlluminaryKeeper],
+//       Inkwell: madamMimSnake.cost,
+//       Hand: [madamMimSnake],
 //     });
 //
-//     await testEngine.playCard(madamMimSnake);
+//     Await testEngine.playCard(madamMimSnake);
 //
-//     await testEngine.skipTopOfStack();
-//     await testEngine.skipTopOfStack();
+//     Await testEngine.skipTopOfStack();
+//     Await testEngine.skipTopOfStack();
 //
-//     expect(testEngine.stackLayers).toHaveLength(0);
-//     expect(testEngine.getCardModel(madamMimSnake).zone).toEqual("discard");
+//     Expect(testEngine.stackLayers).toHaveLength(0);
+//     Expect(testEngine.getCardModel(madamMimSnake).zone).toEqual("discard");
 //   });
 // });
 //

@@ -3,27 +3,27 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   belleApprenticeInventor,
-//   spaghettiDinner,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   BelleApprenticeInventor,
+//   SpaghettiDinner,
 // } from "@lorcanito/lorcana-engine/cards/007";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Belle - Apprentice Inventor", () => {
-//   it("WHAT A MESS During your turn, you may banish chosen item of yours to play this character for free.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: 0,
-//       play: [spaghettiDinner],
-//       hand: [belleApprenticeInventor],
+// Describe("Belle - Apprentice Inventor", () => {
+//   It("WHAT A MESS During your turn, you may banish chosen item of yours to play this character for free.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: 0,
+//       Play: [spaghettiDinner],
+//       Hand: [belleApprenticeInventor],
 //     });
 //
-//     await testEngine.playCard(belleApprenticeInventor, {
-//       alternativeCosts: [spaghettiDinner],
+//     Await testEngine.playCard(belleApprenticeInventor, {
+//       AlternativeCosts: [spaghettiDinner],
 //     });
 //
-//     expect(testEngine.getCardModel(spaghettiDinner).zone).toBe("discard");
-//     expect(testEngine.getCardModel(belleApprenticeInventor).zone).toBe("play");
+//     Expect(testEngine.getCardModel(spaghettiDinner).zone).toBe("discard");
+//     Expect(testEngine.getCardModel(belleApprenticeInventor).zone).toBe("play");
 //   });
 // });
 //

@@ -3,38 +3,38 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   captainHookUnderhanded,
-//   donaldDuckFirstMate,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   CaptainHookUnderhanded,
+//   DonaldDuckFirstMate,
 // } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Donald Duck - First Mate", () => {
-//   it("CAPTAIN ON DECK While you have a Captain character in play, this character gets +2 {L}.", async () => {
+// Describe("Donald Duck - First Mate", () => {
+//   It("CAPTAIN ON DECK While you have a Captain character in play, this character gets +2 {L}.", async () => {
 //     // Test with no Captain in play
-//     const testEngine = new TestEngine({
-//       inkwell: donaldDuckFirstMate.cost,
-//       hand: [donaldDuckFirstMate],
+//     Const testEngine = new TestEngine({
+//       Inkwell: donaldDuckFirstMate.cost,
+//       Hand: [donaldDuckFirstMate],
 //     });
 //
-//     await testEngine.playCard(donaldDuckFirstMate);
+//     Await testEngine.playCard(donaldDuckFirstMate);
 //
-//     const donaldCard = testEngine.getCardModel(donaldDuckFirstMate);
-//     expect(donaldCard.lore).toEqual(donaldDuckFirstMate.lore);
+//     Const donaldCard = testEngine.getCardModel(donaldDuckFirstMate);
+//     Expect(donaldCard.lore).toEqual(donaldDuckFirstMate.lore);
 //
 //     // Test with a Captain in play
-//     const testEngineWithCaptain = new TestEngine({
-//       inkwell: donaldDuckFirstMate.cost + captainHookUnderhanded.cost,
-//       play: [captainHookUnderhanded],
-//       hand: [donaldDuckFirstMate],
+//     Const testEngineWithCaptain = new TestEngine({
+//       Inkwell: donaldDuckFirstMate.cost + captainHookUnderhanded.cost,
+//       Play: [captainHookUnderhanded],
+//       Hand: [donaldDuckFirstMate],
 //     });
 //
-//     await testEngineWithCaptain.playCard(donaldDuckFirstMate);
+//     Await testEngineWithCaptain.playCard(donaldDuckFirstMate);
 //
-//     const donaldCardWithCaptain =
-//       testEngineWithCaptain.getCardModel(donaldDuckFirstMate);
-//     expect(donaldCardWithCaptain.lore).toEqual(donaldDuckFirstMate.lore + 2);
+//     Const donaldCardWithCaptain =
+//       TestEngineWithCaptain.getCardModel(donaldDuckFirstMate);
+//     Expect(donaldCardWithCaptain.lore).toEqual(donaldDuckFirstMate.lore + 2);
 //   });
 // });
 //

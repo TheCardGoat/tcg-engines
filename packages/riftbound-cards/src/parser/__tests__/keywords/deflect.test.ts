@@ -17,9 +17,7 @@ describe("Keyword: Deflect", () => {
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
-      expect(result.abilities?.[0]).toEqual(
-        expect.objectContaining(Abilities.deflect(1)),
-      );
+      expect(result.abilities?.[0]).toEqual(expect.objectContaining(Abilities.deflect(1)));
     });
   });
 
@@ -31,9 +29,7 @@ describe("Keyword: Deflect", () => {
 
       expect(result.success).toBe(true);
       expect(result.abilities?.length).toBeGreaterThanOrEqual(2);
-      expect(result.abilities?.[0]).toEqual(
-        expect.objectContaining(Abilities.deflect(2)),
-      );
+      expect(result.abilities?.[0]).toEqual(expect.objectContaining(Abilities.deflect(2)));
     });
   });
 
@@ -45,9 +41,7 @@ describe("Keyword: Deflect", () => {
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(2);
-      expect(result.abilities?.[0]).toEqual(
-        expect.objectContaining(Abilities.deflect(1)),
-      );
+      expect(result.abilities?.[0]).toEqual(expect.objectContaining(Abilities.deflect(1)));
       expect(result.abilities?.[1]).toEqual(
         expect.objectContaining({
           type: "triggered",
@@ -118,10 +112,10 @@ describe("Keyword: Deflect", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "static",
           condition: expect.objectContaining({
             type: "while-mighty",
           }),
+          type: "static",
         }),
       );
     });
@@ -175,12 +169,8 @@ describe("Keyword: Deflect", () => {
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(3);
-      expect(result.abilities?.[0]).toEqual(
-        expect.objectContaining(Abilities.deflect(2)),
-      );
-      expect(result.abilities?.[1]).toEqual(
-        expect.objectContaining(Abilities.weaponmaster()),
-      );
+      expect(result.abilities?.[0]).toEqual(expect.objectContaining(Abilities.deflect(2)));
+      expect(result.abilities?.[1]).toEqual(expect.objectContaining(Abilities.weaponmaster()));
     });
   });
 });

@@ -3,88 +3,88 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   belleMechanicExtraordinaire,
-//   cybugInvasiveEnemy,
-//   honeyLemonChemistryWhiz,
-//   pepperQuickthinkingPuppy,
-//   robinHoodEyeForDetail,
-//   yzmaAboveItAll,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   BelleMechanicExtraordinaire,
+//   CybugInvasiveEnemy,
+//   HoneyLemonChemistryWhiz,
+//   PepperQuickthinkingPuppy,
+//   RobinHoodEyeForDetail,
+//   YzmaAboveItAll,
 // } from "@lorcanito/lorcana-engine/cards/007";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Yzma - Above It All", () => {
-//   it("Shift 5 (You may pay 5 {I} to play this on top of one of your characters named Yzma.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [yzmaAboveItAll],
+// Describe("Yzma - Above It All", () => {
+//   It("Shift 5 (You may pay 5 {I} to play this on top of one of your characters named Yzma.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [yzmaAboveItAll],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(yzmaAboveItAll);
-//     expect(cardUnderTest.hasShift).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(yzmaAboveItAll);
+//     Expect(cardUnderTest.hasShift).toBe(true);
 //   });
 //
-//   it("Evasive (Only characters with Evasive can challenge this character.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [yzmaAboveItAll],
+//   It("Evasive (Only characters with Evasive can challenge this character.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [yzmaAboveItAll],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(yzmaAboveItAll);
-//     expect(cardUnderTest.hasEvasive).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(yzmaAboveItAll);
+//     Expect(cardUnderTest.hasEvasive).toBe(true);
 //   });
 //
 //   // Flaky test
-//   describe.skip("BACK TO WORK Whenever another character is banished in a challenge, return that card to its player's hand, then that player discards a card at random.", () => {
-//     it("Your character is banished", async () => {
-//       const testEngine = new TestEngine(
+//   Describe.skip("BACK TO WORK Whenever another character is banished in a challenge, return that card to its player's hand, then that player discards a card at random.", () => {
+//     It("Your character is banished", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           play: [yzmaAboveItAll, cybugInvasiveEnemy],
-//           hand: [
-//             pepperQuickthinkingPuppy,
-//             honeyLemonChemistryWhiz,
-//             robinHoodEyeForDetail,
+//           Play: [yzmaAboveItAll, cybugInvasiveEnemy],
+//           Hand: [
+//             PepperQuickthinkingPuppy,
+//             HoneyLemonChemistryWhiz,
+//             RobinHoodEyeForDetail,
 //           ],
 //         },
 //         {
-//           play: [belleMechanicExtraordinaire],
+//           Play: [belleMechanicExtraordinaire],
 //         },
 //       );
 //
-//       await testEngine.challenge({
-//         attacker: cybugInvasiveEnemy,
-//         defender: belleMechanicExtraordinaire,
-//         exertDefender: true,
+//       Await testEngine.challenge({
+//         Attacker: cybugInvasiveEnemy,
+//         Defender: belleMechanicExtraordinaire,
+//         ExertDefender: true,
 //       });
 //
-//       expect(testEngine.getCardModel(cybugInvasiveEnemy).zone).toBe("hand");
-//       expect(testEngine.getCardModel(pepperQuickthinkingPuppy).zone).toBe(
+//       Expect(testEngine.getCardModel(cybugInvasiveEnemy).zone).toBe("hand");
+//       Expect(testEngine.getCardModel(pepperQuickthinkingPuppy).zone).toBe(
 //         "discard",
 //       );
 //     });
 //
-//     it("Opponent's character is banished", async () => {
-//       const testEngine = new TestEngine(
+//     It("Opponent's character is banished", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           play: [yzmaAboveItAll, belleMechanicExtraordinaire],
+//           Play: [yzmaAboveItAll, belleMechanicExtraordinaire],
 //         },
 //         {
-//           play: [cybugInvasiveEnemy],
-//           hand: [
-//             pepperQuickthinkingPuppy,
-//             honeyLemonChemistryWhiz,
-//             robinHoodEyeForDetail,
+//           Play: [cybugInvasiveEnemy],
+//           Hand: [
+//             PepperQuickthinkingPuppy,
+//             HoneyLemonChemistryWhiz,
+//             RobinHoodEyeForDetail,
 //           ],
 //         },
 //       );
 //
-//       await testEngine.challenge({
-//         attacker: belleMechanicExtraordinaire,
-//         defender: cybugInvasiveEnemy,
-//         exertDefender: true,
+//       Await testEngine.challenge({
+//         Attacker: belleMechanicExtraordinaire,
+//         Defender: cybugInvasiveEnemy,
+//         ExertDefender: true,
 //       });
 //
-//       expect(testEngine.getCardModel(cybugInvasiveEnemy).zone).toBe("hand");
-//       expect(testEngine.getCardModel(pepperQuickthinkingPuppy).zone).toBe(
+//       Expect(testEngine.getCardModel(cybugInvasiveEnemy).zone).toBe("hand");
+//       Expect(testEngine.getCardModel(pepperQuickthinkingPuppy).zone).toBe(
 //         "discard",
 //       );
 //     });

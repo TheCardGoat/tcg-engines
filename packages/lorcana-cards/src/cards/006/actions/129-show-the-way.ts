@@ -1,40 +1,40 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { yourCharacters } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+// Import { yourCharacters } from "@lorcanito/lorcana-engine/abilities/targets";
 //
-// export const showTheWay: LorcanitoActionCard = {
-//   id: "lfi",
-//   missingTestCase: true,
-//   name: "Lead The Way",
-//   characteristics: ["action"],
-//   text: "Your characters get +2 {S} this turn.",
-//   type: "action",
-//   abilities: [
+// Export const showTheWay: LorcanitoActionCard = {
+//   Id: "lfi",
+//   MissingTestCase: true,
+//   Name: "Lead The Way",
+//   Characteristics: ["action"],
+//   Text: "Your characters get +2 {S} this turn.",
+//   Type: "action",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       effects: [
+//       Type: "resolution",
+//       Effects: [
 //         {
-//           type: "attribute",
-//           attribute: "strength",
-//           amount: 2,
-//           modifier: "add",
-//           duration: "turn",
-//           target: yourCharacters,
-//           until: true,
+//           Type: "attribute",
+//           Attribute: "strength",
+//           Amount: 2,
+//           Modifier: "add",
+//           Duration: "turn",
+//           Target: yourCharacters,
+//           Until: true,
 //         },
 //       ],
 //     },
 //   ],
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 2,
-//   strength: 0,
-//   illustrator: "Amanda MacFarlane",
-//   number: 129,
-//   set: "006",
-//   externalIds: {
-//     tcgPlayer: 593020,
+//   Inkwell: true,
+//   Colors: ["ruby"],
+//   Cost: 2,
+//   Strength: 0,
+//   Illustrator: "Amanda MacFarlane",
+//   Number: 129,
+//   Set: "006",
+//   ExternalIds: {
+//     TcgPlayer: 593020,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

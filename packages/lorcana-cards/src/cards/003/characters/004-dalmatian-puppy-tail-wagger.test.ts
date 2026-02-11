@@ -3,25 +3,25 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { dalmatianPuppyTailWagger } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { dalmatianPuppyTailWagger } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Dalmatian Puppy - Tail Wagger", () => {
-//   it.skip("**WHERE DID THEY ALL COME FROM?** You may have up to 99 copies of Dalmatian Puppy - Tail Wagger in your deck.", () => {
-//     const testStore = new TestStore({
-//       inkwell: dalmatianPuppyTailWagger.cost,
-//       play: [dalmatianPuppyTailWagger],
+// Describe("Dalmatian Puppy - Tail Wagger", () => {
+//   It.skip("**WHERE DID THEY ALL COME FROM?** You may have up to 99 copies of Dalmatian Puppy - Tail Wagger in your deck.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: dalmatianPuppyTailWagger.cost,
+//       Play: [dalmatianPuppyTailWagger],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       dalmatianPuppyTailWagger.id,
+//       DalmatianPuppyTailWagger.id,
 //     );
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

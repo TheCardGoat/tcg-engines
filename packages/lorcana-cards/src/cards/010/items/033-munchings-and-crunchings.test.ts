@@ -3,252 +3,252 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   gurgiAppleLover,
-//   mickeyMouseAmberChampion,
-//   munchingsAndCrunchings,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   GurgiAppleLover,
+//   MickeyMouseAmberChampion,
+//   MunchingsAndCrunchings,
 // } from "@lorcanito/lorcana-engine/cards/010/index";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Munchings And Crunchings", () => {
-//   describe("WHAT A JUICY APPLE - Remove up to 2 damage from chosen character", () => {
-//     it("removes exactly 2 damage from a damaged character", () => {
-//       const testStore = new TestStore({
-//         inkwell: munchingsAndCrunchings.cost + mickeyMouseAmberChampion.cost,
-//         hand: [munchingsAndCrunchings, mickeyMouseAmberChampion],
+// Describe("Munchings And Crunchings", () => {
+//   Describe("WHAT A JUICY APPLE - Remove up to 2 damage from chosen character", () => {
+//     It("removes exactly 2 damage from a damaged character", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: munchingsAndCrunchings.cost + mickeyMouseAmberChampion.cost,
+//         Hand: [munchingsAndCrunchings, mickeyMouseAmberChampion],
 //       });
 //
-//       const munchingsCard = testStore.getByZoneAndId(
+//       Const munchingsCard = testStore.getByZoneAndId(
 //         "hand",
-//         munchingsAndCrunchings.id,
+//         MunchingsAndCrunchings.id,
 //       );
-//       const targetCharacter = testStore.getByZoneAndId(
+//       Const targetCharacter = testStore.getByZoneAndId(
 //         "hand",
-//         mickeyMouseAmberChampion.id,
+//         MickeyMouseAmberChampion.id,
 //       );
 //
 //       // Play both cards
-//       munchingsCard.playFromHand();
-//       targetCharacter.playFromHand();
+//       MunchingsCard.playFromHand();
+//       TargetCharacter.playFromHand();
 //
 //       // Deal 3 damage to the character
-//       targetCharacter.updateCardMeta({ damage: 3 });
-//       expect(targetCharacter.damage).toBe(3);
+//       TargetCharacter.updateCardMeta({ damage: 3 });
+//       Expect(targetCharacter.damage).toBe(3);
 //
 //       // Activate the healing ability
-//       munchingsCard.activate();
-//       testStore.resolveTopOfStack({ targets: [targetCharacter] });
+//       MunchingsCard.activate();
+//       TestStore.resolveTopOfStack({ targets: [targetCharacter] });
 //
-//       expect(targetCharacter.damage).toBe(1); // 3 - 2 = 1 damage remaining
-//       expect(munchingsCard.meta.exerted).toBe(true);
+//       Expect(targetCharacter.damage).toBe(1); // 3 - 2 = 1 damage remaining
+//       Expect(munchingsCard.meta.exerted).toBe(true);
 //     });
 //
-//     it("removes exactly 1 damage from a character with 1 damage", () => {
-//       const testStore = new TestStore({
-//         inkwell: munchingsAndCrunchings.cost + mickeyMouseAmberChampion.cost,
-//         hand: [munchingsAndCrunchings, mickeyMouseAmberChampion],
+//     It("removes exactly 1 damage from a character with 1 damage", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: munchingsAndCrunchings.cost + mickeyMouseAmberChampion.cost,
+//         Hand: [munchingsAndCrunchings, mickeyMouseAmberChampion],
 //       });
 //
-//       const munchingsCard = testStore.getByZoneAndId(
+//       Const munchingsCard = testStore.getByZoneAndId(
 //         "hand",
-//         munchingsAndCrunchings.id,
+//         MunchingsAndCrunchings.id,
 //       );
-//       const targetCharacter = testStore.getByZoneAndId(
+//       Const targetCharacter = testStore.getByZoneAndId(
 //         "hand",
-//         mickeyMouseAmberChampion.id,
+//         MickeyMouseAmberChampion.id,
 //       );
 //
 //       // Play both cards
-//       munchingsCard.playFromHand();
-//       targetCharacter.playFromHand();
+//       MunchingsCard.playFromHand();
+//       TargetCharacter.playFromHand();
 //
 //       // Deal 1 damage to the character
-//       targetCharacter.updateCardMeta({ damage: 1 });
-//       expect(targetCharacter.damage).toBe(1);
+//       TargetCharacter.updateCardMeta({ damage: 1 });
+//       Expect(targetCharacter.damage).toBe(1);
 //
 //       // Activate the healing ability
-//       munchingsCard.activate();
-//       testStore.resolveTopOfStack({ targets: [targetCharacter] });
+//       MunchingsCard.activate();
+//       TestStore.resolveTopOfStack({ targets: [targetCharacter] });
 //
-//       expect(targetCharacter.damage).toBe(0); // All damage removed
-//       expect(munchingsCard.meta.exerted).toBe(true);
+//       Expect(targetCharacter.damage).toBe(0); // All damage removed
+//       Expect(munchingsCard.meta.exerted).toBe(true);
 //     });
 //
-//     it("does not heal a character with no damage", () => {
-//       const testStore = new TestStore({
-//         inkwell: munchingsAndCrunchings.cost + mickeyMouseAmberChampion.cost,
-//         hand: [munchingsAndCrunchings, mickeyMouseAmberChampion],
+//     It("does not heal a character with no damage", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: munchingsAndCrunchings.cost + mickeyMouseAmberChampion.cost,
+//         Hand: [munchingsAndCrunchings, mickeyMouseAmberChampion],
 //       });
 //
-//       const munchingsCard = testStore.getByZoneAndId(
+//       Const munchingsCard = testStore.getByZoneAndId(
 //         "hand",
-//         munchingsAndCrunchings.id,
+//         MunchingsAndCrunchings.id,
 //       );
-//       const targetCharacter = testStore.getByZoneAndId(
+//       Const targetCharacter = testStore.getByZoneAndId(
 //         "hand",
-//         mickeyMouseAmberChampion.id,
+//         MickeyMouseAmberChampion.id,
 //       );
 //
 //       // Play both cards
-//       munchingsCard.playFromHand();
-//       targetCharacter.playFromHand();
+//       MunchingsCard.playFromHand();
+//       TargetCharacter.playFromHand();
 //
-//       expect(targetCharacter.damage).toBe(0);
+//       Expect(targetCharacter.damage).toBe(0);
 //
 //       // Activate the healing ability
-//       munchingsCard.activate();
-//       testStore.resolveTopOfStack({ targets: [targetCharacter] });
+//       MunchingsCard.activate();
+//       TestStore.resolveTopOfStack({ targets: [targetCharacter] });
 //
-//       expect(targetCharacter.damage).toBe(0); // Still no damage
-//       expect(munchingsCard.meta.exerted).toBe(true);
+//       Expect(targetCharacter.damage).toBe(0); // Still no damage
+//       Expect(munchingsCard.meta.exerted).toBe(true);
 //     });
 //
-//     it("can heal any character in play", () => {
-//       const testStore = new TestStore(
+//     It("can heal any character in play", () => {
+//       Const testStore = new TestStore(
 //         {
-//           inkwell: munchingsAndCrunchings.cost,
-//           hand: [munchingsAndCrunchings],
+//           Inkwell: munchingsAndCrunchings.cost,
+//           Hand: [munchingsAndCrunchings],
 //         },
 //         {
-//           inkwell: mickeyMouseAmberChampion.cost,
-//           hand: [mickeyMouseAmberChampion],
+//           Inkwell: mickeyMouseAmberChampion.cost,
+//           Hand: [mickeyMouseAmberChampion],
 //         },
 //       );
 //
-//       const munchingsCard = testStore.getByZoneAndId(
+//       Const munchingsCard = testStore.getByZoneAndId(
 //         "hand",
-//         munchingsAndCrunchings.id,
+//         MunchingsAndCrunchings.id,
 //       );
 //
 //       // Play Munchings And Crunchings
-//       munchingsCard.playFromHand();
+//       MunchingsCard.playFromHand();
 //
 //       // Opponent plays their character
-//       const opponentCharacter = testStore.getByZoneAndId(
+//       Const opponentCharacter = testStore.getByZoneAndId(
 //         "hand",
-//         mickeyMouseAmberChampion.id,
+//         MickeyMouseAmberChampion.id,
 //         "player_two",
 //       );
-//       opponentCharacter.playFromHand();
+//       OpponentCharacter.playFromHand();
 //
 //       // Deal damage to opponent's character
-//       opponentCharacter.updateCardMeta({ damage: 2 });
-//       expect(opponentCharacter.damage).toBe(2);
+//       OpponentCharacter.updateCardMeta({ damage: 2 });
+//       Expect(opponentCharacter.damage).toBe(2);
 //
 //       // Activate the healing ability on opponent's character
-//       munchingsCard.activate();
-//       testStore.resolveTopOfStack({ targets: [opponentCharacter] });
+//       MunchingsCard.activate();
+//       TestStore.resolveTopOfStack({ targets: [opponentCharacter] });
 //
-//       expect(opponentCharacter.damage).toBe(0); // All damage removed
-//       expect(munchingsCard.meta.exerted).toBe(true);
+//       Expect(opponentCharacter.damage).toBe(0); // All damage removed
+//       Expect(munchingsCard.meta.exerted).toBe(true);
 //     });
 //
-//     it("exerts the card when activated", () => {
-//       const testStore = new TestStore({
-//         play: [munchingsAndCrunchings, mickeyMouseAmberChampion],
+//     It("exerts the card when activated", () => {
+//       Const testStore = new TestStore({
+//         Play: [munchingsAndCrunchings, mickeyMouseAmberChampion],
 //       });
 //
-//       const munchingsCard = testStore.getByZoneAndId(
+//       Const munchingsCard = testStore.getByZoneAndId(
 //         "play",
-//         munchingsAndCrunchings.id,
+//         MunchingsAndCrunchings.id,
 //       );
-//       const targetCharacter = testStore.getByZoneAndId(
+//       Const targetCharacter = testStore.getByZoneAndId(
 //         "play",
-//         mickeyMouseAmberChampion.id,
+//         MickeyMouseAmberChampion.id,
 //       );
 //
 //       // Deal 1 damage to the character
-//       targetCharacter.updateCardMeta({ damage: 1 });
-//       expect(targetCharacter.damage).toBe(1);
+//       TargetCharacter.updateCardMeta({ damage: 1 });
+//       Expect(targetCharacter.damage).toBe(1);
 //
 //       // Activate the healing ability
-//       munchingsCard.activate();
-//       testStore.resolveTopOfStack({ targets: [targetCharacter] });
+//       MunchingsCard.activate();
+//       TestStore.resolveTopOfStack({ targets: [targetCharacter] });
 //
-//       expect(targetCharacter.damage).toBe(0); // All damage removed
-//       expect(munchingsCard.meta.exerted).toBe(true);
+//       Expect(targetCharacter.damage).toBe(0); // All damage removed
+//       Expect(munchingsCard.meta.exerted).toBe(true);
 //     });
 //   });
 //
-//   describe("COME ON OUT - You pay 1 {I} less to play characters named Gurgi", () => {
-//     it("reduces Gurgi's cost by 1 ink when Munchings And Crunchings is in play", () => {
-//       const testStore = new TestStore({
-//         inkwell: gurgiAppleLover.cost - 1, // 1 ink (Gurgi normally costs 2)
-//         play: [munchingsAndCrunchings],
-//         hand: [gurgiAppleLover],
+//   Describe("COME ON OUT - You pay 1 {I} less to play characters named Gurgi", () => {
+//     It("reduces Gurgi's cost by 1 ink when Munchings And Crunchings is in play", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: gurgiAppleLover.cost - 1, // 1 ink (Gurgi normally costs 2)
+//         Play: [munchingsAndCrunchings],
+//         Hand: [gurgiAppleLover],
 //       });
 //
-//       const gurgiCard = testStore.getByZoneAndId("hand", gurgiAppleLover.id);
+//       Const gurgiCard = testStore.getByZoneAndId("hand", gurgiAppleLover.id);
 //
 //       // With Munchings And Crunchings in play, Gurgi should cost 1 ink
-//       expect(gurgiCard.cost).toBe(1);
+//       Expect(gurgiCard.cost).toBe(1);
 //
 //       // Player should be able to play Gurgi with only 1 ink available
-//       gurgiCard.playFromHand();
+//       GurgiCard.playFromHand();
 //
-//       expect(gurgiCard.zone).toBe("play");
-//       expect(testStore.store.tableStore.getTable().inkAvailable()).toBe(0);
+//       Expect(gurgiCard.zone).toBe("play");
+//       Expect(testStore.store.tableStore.getTable().inkAvailable()).toBe(0);
 //     });
 //
-//     it("Gurgi costs normal 2 ink without Munchings And Crunchings", () => {
-//       const testStore = new TestStore({
-//         inkwell: gurgiAppleLover.cost - 1, // 1 ink
-//         hand: [gurgiAppleLover],
+//     It("Gurgi costs normal 2 ink without Munchings And Crunchings", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: gurgiAppleLover.cost - 1, // 1 ink
+//         Hand: [gurgiAppleLover],
 //       });
 //
-//       const gurgiCard = testStore.getByZoneAndId("hand", gurgiAppleLover.id);
+//       Const gurgiCard = testStore.getByZoneAndId("hand", gurgiAppleLover.id);
 //
 //       // Without Munchings And Crunchings, Gurgi costs 2 ink
-//       expect(gurgiCard.cost).toBe(2);
+//       Expect(gurgiCard.cost).toBe(2);
 //
 //       // Cannot play with only 1 ink
-//       gurgiCard.playFromHand();
+//       GurgiCard.playFromHand();
 //
-//       expect(gurgiCard.zone).toBe("hand");
+//       Expect(gurgiCard.zone).toBe("hand");
 //     });
 //
-//     it("does not affect other characters' costs", () => {
-//       const testStore = new TestStore({
-//         inkwell: mickeyMouseAmberChampion.cost - 1, // 1 ink
-//         play: [munchingsAndCrunchings],
-//         hand: [mickeyMouseAmberChampion],
+//     It("does not affect other characters' costs", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: mickeyMouseAmberChampion.cost - 1, // 1 ink
+//         Play: [munchingsAndCrunchings],
+//         Hand: [mickeyMouseAmberChampion],
 //       });
 //
-//       const mickeyCard = testStore.getByZoneAndId(
+//       Const mickeyCard = testStore.getByZoneAndId(
 //         "hand",
-//         mickeyMouseAmberChampion.id,
+//         MickeyMouseAmberChampion.id,
 //       );
 //
 //       // Other characters should not be affected by the cost reduction
-//       expect(mickeyCard.cost).toBe(mickeyMouseAmberChampion.cost);
+//       Expect(mickeyCard.cost).toBe(mickeyMouseAmberChampion.cost);
 //
 //       // Cannot play with insufficient ink
-//       mickeyCard.playFromHand();
+//       MickeyCard.playFromHand();
 //
-//       expect(mickeyCard.zone).toBe("hand");
+//       Expect(mickeyCard.zone).toBe("hand");
 //     });
 //
-//     it("cost reduction only applies while Munchings And Crunchings is in play", () => {
-//       const testStore = new TestStore({
-//         inkwell: gurgiAppleLover.cost,
-//         hand: [munchingsAndCrunchings, gurgiAppleLover],
+//     It("cost reduction only applies while Munchings And Crunchings is in play", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: gurgiAppleLover.cost,
+//         Hand: [munchingsAndCrunchings, gurgiAppleLover],
 //       });
 //
-//       const munchingsCard = testStore.getByZoneAndId(
+//       Const munchingsCard = testStore.getByZoneAndId(
 //         "hand",
-//         munchingsAndCrunchings.id,
+//         MunchingsAndCrunchings.id,
 //       );
-//       const gurgiCard = testStore.getByZoneAndId("hand", gurgiAppleLover.id);
+//       Const gurgiCard = testStore.getByZoneAndId("hand", gurgiAppleLover.id);
 //
 //       // Gurgi costs 2 ink initially
-//       expect(gurgiCard.cost).toBe(2);
+//       Expect(gurgiCard.cost).toBe(2);
 //
 //       // Play Munchings And Crunchings
-//       munchingsCard.playFromHand();
+//       MunchingsCard.playFromHand();
 //
 //       // Now Gurgi costs 1 ink
-//       expect(gurgiCard.cost).toBe(1);
+//       Expect(gurgiCard.cost).toBe(1);
 //     });
 //   });
 // });

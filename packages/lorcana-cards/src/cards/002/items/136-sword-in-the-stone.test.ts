@@ -3,27 +3,27 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { swordInTheStone } from "@lorcanito/lorcana-engine/cards/002/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { swordInTheStone } from "@lorcanito/lorcana-engine/cards/002/items/items";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Sword In The Stone", () => {
-//   it("{E}, 2 {I} - Chosen character gets +1 {S} this turn for each 1 damage on them.", () => {
-//     const testStore = new TestStore({
-//       inkwell: 2,
-//       play: [swordInTheStone, goofyKnightForADay],
+// Describe("Sword In The Stone", () => {
+//   It("{E}, 2 {I} - Chosen character gets +1 {S} this turn for each 1 damage on them.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: 2,
+//       Play: [swordInTheStone, goofyKnightForADay],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("play", swordInTheStone.id);
-//     const target = testStore.getByZoneAndId("play", goofyKnightForADay.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("play", swordInTheStone.id);
+//     Const target = testStore.getByZoneAndId("play", goofyKnightForADay.id);
 //
-//     target.updateCardDamage(5);
+//     Target.updateCardDamage(5);
 //
-//     cardUnderTest.activate();
-//     testStore.resolveTopOfStack({ targets: [target] });
+//     CardUnderTest.activate();
+//     TestStore.resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.strength).toEqual(goofyKnightForADay.strength + 5);
+//     Expect(target.strength).toEqual(goofyKnightForADay.strength + 5);
 //   });
 // });
 //

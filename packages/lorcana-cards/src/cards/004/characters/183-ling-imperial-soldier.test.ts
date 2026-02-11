@@ -3,25 +3,25 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { lingImperialSoldier } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { lingImperialSoldier } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Ling - Imperial Soldier", () => {
-//   it.skip("**FULL OF SPIRIT** Your Hero characters get +1 {S}.", () => {
-//     const testStore = new TestStore({
-//       inkwell: lingImperialSoldier.cost,
-//       play: [lingImperialSoldier],
+// Describe("Ling - Imperial Soldier", () => {
+//   It.skip("**FULL OF SPIRIT** Your Hero characters get +1 {S}.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: lingImperialSoldier.cost,
+//       Play: [lingImperialSoldier],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       lingImperialSoldier.id,
+//       LingImperialSoldier.id,
 //     );
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

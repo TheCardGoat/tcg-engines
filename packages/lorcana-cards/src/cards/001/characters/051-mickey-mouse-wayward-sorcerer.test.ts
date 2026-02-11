@@ -5,9 +5,9 @@ import { mickeyMouseWaywardSorcerer } from "./051-mickey-mouse-wayward-sorcerer"
 describe("Mickey Mouse - Wayward Sorcerer", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [mickeyMouseWaywardSorcerer] });
-  //   expect(testEngine.getCardModel(mickeyMouseWaywardSorcerer).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [mickeyMouseWaywardSorcerer] });
+  //   Expect(testEngine.getCardModel(mickeyMouseWaywardSorcerer).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,157 +17,157 @@ describe("Mickey Mouse - Wayward Sorcerer", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   liloMakingAWish,
-//   magicBroomBucketBrigade,
-//   mickeyMouseWaywardSorcerer,
-//   simbaProtectiveCub,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   LiloMakingAWish,
+//   MagicBroomBucketBrigade,
+//   MickeyMouseWaywardSorcerer,
+//   SimbaProtectiveCub,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Mickey Mouse - Wayward Sorcerer", () => {
-//   describe("**ANIMATE BROOM** You pay 1 {I} less to play Broom characters.", () => {
-//     it("should reduce the cost of Broom characters by 1", () => {
-//       const testStore = new TestStore({
-//         inkwell: magicBroomBucketBrigade.cost - 1,
-//         play: [mickeyMouseWaywardSorcerer],
-//         hand: [magicBroomBucketBrigade],
+// Describe("Mickey Mouse - Wayward Sorcerer", () => {
+//   Describe("**ANIMATE BROOM** You pay 1 {I} less to play Broom characters.", () => {
+//     It("should reduce the cost of Broom characters by 1", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: magicBroomBucketBrigade.cost - 1,
+//         Play: [mickeyMouseWaywardSorcerer],
+//         Hand: [magicBroomBucketBrigade],
 //       });
 //
-//       const target = testStore.getByZoneAndId(
+//       Const target = testStore.getByZoneAndId(
 //         "hand",
-//         magicBroomBucketBrigade.id,
+//         MagicBroomBucketBrigade.id,
 //       );
 //
-//       target.playFromHand();
-//       testStore.resolveTopOfStack({ skip: true });
+//       Target.playFromHand();
+//       TestStore.resolveTopOfStack({ skip: true });
 //
-//       expect(target.zone).toEqual("play");
+//       Expect(target.zone).toEqual("play");
 //     });
 //
-//     it("Two Mickeys should reduce the cost of Broom characters by 2", () => {
-//       const testStore = new TestStore({
-//         inkwell: magicBroomBucketBrigade.cost - 2,
-//         play: [mickeyMouseWaywardSorcerer, mickeyMouseWaywardSorcerer],
-//         hand: [magicBroomBucketBrigade],
+//     It("Two Mickeys should reduce the cost of Broom characters by 2", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: magicBroomBucketBrigade.cost - 2,
+//         Play: [mickeyMouseWaywardSorcerer, mickeyMouseWaywardSorcerer],
+//         Hand: [magicBroomBucketBrigade],
 //       });
 //
-//       const target = testStore.getByZoneAndId(
+//       Const target = testStore.getByZoneAndId(
 //         "hand",
-//         magicBroomBucketBrigade.id,
+//         MagicBroomBucketBrigade.id,
 //       );
 //
-//       target.playFromHand();
-//       testStore.resolveTopOfStack({ skip: true });
+//       Target.playFromHand();
+//       TestStore.resolveTopOfStack({ skip: true });
 //
-//       expect(target.zone).toEqual("play");
+//       Expect(target.zone).toEqual("play");
 //     });
 //   });
 //
-//   describe("**CEASELESS WORKER** Whenever one of your Broom characters is banished in a challenge, you may return that card to your hand.", () => {
-//     it("as attacker", () => {
-//       const testStore = new TestStore(
+//   Describe("**CEASELESS WORKER** Whenever one of your Broom characters is banished in a challenge, you may return that card to your hand.", () => {
+//     It("as attacker", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [mickeyMouseWaywardSorcerer, magicBroomBucketBrigade],
+//           Play: [mickeyMouseWaywardSorcerer, magicBroomBucketBrigade],
 //         },
 //         {
-//           play: [simbaProtectiveCub],
+//           Play: [simbaProtectiveCub],
 //         },
 //       );
 //
-//       const defender = testStore.getByZoneAndId(
+//       Const defender = testStore.getByZoneAndId(
 //         "play",
-//         simbaProtectiveCub.id,
+//         SimbaProtectiveCub.id,
 //         "player_two",
 //       );
-//       const attacker = testStore.getByZoneAndId(
+//       Const attacker = testStore.getByZoneAndId(
 //         "play",
-//         magicBroomBucketBrigade.id,
+//         MagicBroomBucketBrigade.id,
 //       );
 //
-//       defender.updateCardMeta({ exerted: true });
+//       Defender.updateCardMeta({ exerted: true });
 //
-//       attacker.challenge(defender);
-//       testStore.resolveOptionalAbility();
-//       expect(testStore.stackLayers).toHaveLength(0);
-//       expect(attacker.zone).toEqual("hand");
+//       Attacker.challenge(defender);
+//       TestStore.resolveOptionalAbility();
+//       Expect(testStore.stackLayers).toHaveLength(0);
+//       Expect(attacker.zone).toEqual("hand");
 //     });
 //
-//     it("as defender", () => {
-//       const testStore = new TestStore(
+//     It("as defender", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [simbaProtectiveCub],
+//           Play: [simbaProtectiveCub],
 //         },
 //         {
-//           play: [mickeyMouseWaywardSorcerer, magicBroomBucketBrigade],
+//           Play: [mickeyMouseWaywardSorcerer, magicBroomBucketBrigade],
 //         },
 //       );
 //
-//       const attacker = testStore.getByZoneAndId("play", simbaProtectiveCub.id);
-//       const defender = testStore.getByZoneAndId(
+//       Const attacker = testStore.getByZoneAndId("play", simbaProtectiveCub.id);
+//       Const defender = testStore.getByZoneAndId(
 //         "play",
-//         magicBroomBucketBrigade.id,
+//         MagicBroomBucketBrigade.id,
 //         "player_two",
 //       );
 //
-//       defender.updateCardMeta({ exerted: true });
+//       Defender.updateCardMeta({ exerted: true });
 //
-//       attacker.challenge(defender);
-//       testStore.changePlayer("player_two");
-//       testStore.resolveTopOfStack();
+//       Attacker.challenge(defender);
+//       TestStore.changePlayer("player_two");
+//       TestStore.resolveTopOfStack();
 //
-//       expect(defender.zone).toEqual("hand");
+//       Expect(defender.zone).toEqual("hand");
 //     });
 //
-//     it("opponent's brooms don't get affected by the ability", () => {
-//       const testStore = new TestStore(
+//     It("opponent's brooms don't get affected by the ability", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [mickeyMouseWaywardSorcerer, simbaProtectiveCub],
+//           Play: [mickeyMouseWaywardSorcerer, simbaProtectiveCub],
 //         },
 //         {
-//           play: [magicBroomBucketBrigade],
+//           Play: [magicBroomBucketBrigade],
 //         },
 //       );
 //
-//       const attacker = testStore.getByZoneAndId("play", simbaProtectiveCub.id);
-//       const defender = testStore.getByZoneAndId(
+//       Const attacker = testStore.getByZoneAndId("play", simbaProtectiveCub.id);
+//       Const defender = testStore.getByZoneAndId(
 //         "play",
-//         magicBroomBucketBrigade.id,
+//         MagicBroomBucketBrigade.id,
 //         "player_two",
 //       );
 //
-//       defender.updateCardMeta({ exerted: true });
+//       Defender.updateCardMeta({ exerted: true });
 //
-//       attacker.challenge(defender);
+//       Attacker.challenge(defender);
 //
-//       expect(defender.zone).toEqual("discard");
-//       expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
+//       Expect(defender.zone).toEqual("discard");
+//       Expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
 //     });
 //
-//     it("non-brooms don't get affected by the skill", () => {
-//       const testStore = new TestStore(
+//     It("non-brooms don't get affected by the skill", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [mickeyMouseWaywardSorcerer, liloMakingAWish],
+//           Play: [mickeyMouseWaywardSorcerer, liloMakingAWish],
 //         },
 //         {
-//           play: [simbaProtectiveCub],
+//           Play: [simbaProtectiveCub],
 //         },
 //       );
 //
-//       const defender = testStore.getByZoneAndId(
+//       Const defender = testStore.getByZoneAndId(
 //         "play",
-//         simbaProtectiveCub.id,
+//         SimbaProtectiveCub.id,
 //         "player_two",
 //       );
-//       const attacker = testStore.getByZoneAndId("play", liloMakingAWish.id);
+//       Const attacker = testStore.getByZoneAndId("play", liloMakingAWish.id);
 //
-//       defender.updateCardMeta({ exerted: true });
+//       Defender.updateCardMeta({ exerted: true });
 //
-//       attacker.challenge(defender);
+//       Attacker.challenge(defender);
 //
-//       expect(attacker.zone).toEqual("discard");
-//       expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
+//       Expect(attacker.zone).toEqual("discard");
+//       Expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
 //     });
 //   });
 // });

@@ -6,19 +6,15 @@
  */
 
 import { afterEach, beforeEach, describe, expect, test } from "bun:test";
-import {
-  LorcanaTestEngine,
-  PLAYER_ONE,
-  PLAYER_TWO,
-} from "../../testing/lorcana-test-engine";
+import { LorcanaTestEngine, PLAYER_ONE, PLAYER_TWO } from "../../testing/lorcana-test-engine";
 
 describe("Section 1: Concepts", () => {
   let testEngine: LorcanaTestEngine;
 
   beforeEach(() => {
     testEngine = new LorcanaTestEngine(
-      { hand: 7, deck: 53, inkwell: 0 },
-      { hand: 7, deck: 53, inkwell: 0 },
+      { deck: 53, hand: 7, inkwell: 0 },
+      { deck: 53, hand: 7, inkwell: 0 },
       { skipPreGame: true },
     );
   });
@@ -61,7 +57,7 @@ describe("Section 1: Concepts", () => {
      */
     test.failing("Rule 1.1.6 - Reminder text is not rules text", () => {
       // This is a card definition/parsing rule - test that reminder text
-      // is stripped from ability resolution
+      // Is stripped from ability resolution
       expect(true).toBe(false); // Will fail until implemented
     });
   });
@@ -104,7 +100,7 @@ describe("Section 1: Concepts", () => {
      */
     test.failing("Rule 1.2.2 - Can't beats can", () => {
       // Arrange: Set up a scenario where one effect prevents actions
-      // and another allows playing actions for free
+      // And another allows playing actions for free
 
       // Act: Try to play an action while prevented
 
@@ -121,7 +117,7 @@ describe("Section 1: Concepts", () => {
      */
     test.failing("Rule 1.2.3 - Do as much as you can", () => {
       // Arrange: Set up effect that draws cards and discards
-      // with draw being prevented
+      // With draw being prevented
 
       // Act: Execute the effect
 
@@ -222,7 +218,7 @@ describe("Section 1: Concepts", () => {
      */
     test.failing("Rule 1.6.1.2 - Triggered abilities fire on condition", () => {
       // Arrange: Create character with triggered ability
-      // e.g., "When this character quests, draw a card"
+      // E.g., "When this character quests, draw a card"
 
       // Act: Quest with the character
 
@@ -236,7 +232,7 @@ describe("Section 1: Concepts", () => {
      */
     test.failing("Rule 1.6.1.3 - Activated abilities require cost payment", () => {
       // Arrange: Create character with activated ability
-      // e.g., "{exert}, 2 ink: Draw 2 cards"
+      // E.g., "{exert}, 2 ink: Draw 2 cards"
 
       // Act: Pay cost and use ability
 
@@ -251,7 +247,7 @@ describe("Section 1: Concepts", () => {
      */
     test.failing("Rule 1.6.1.4 - Static abilities continuously active", () => {
       // Arrange: Create character with static ability
-      // e.g., "Your other characters get +1 strength"
+      // E.g., "Your other characters get +1 strength"
 
       // Assert: Effect should apply to other characters while card is in play
       expect(true).toBe(false); // Will fail until static abilities implemented
@@ -263,7 +259,7 @@ describe("Section 1: Concepts", () => {
      */
     test.failing("Rule 1.6.1.5 - Replacement effects replace other effects", () => {
       // Arrange: Set up replacement effect
-      // e.g., "If this character would be banished, return it to hand instead"
+      // E.g., "If this character would be banished, return it to hand instead"
 
       // Act: Trigger the original effect (banish)
 
@@ -278,7 +274,7 @@ describe("Section 1: Concepts", () => {
      */
     test.failing("Rule 1.6.2 - Multi-player effects resolve in turn order", () => {
       // Arrange: Set up effect that affects all players
-      // e.g., "Each player draws a card"
+      // E.g., "Each player draws a card"
 
       // Act: Resolve the effect
 
@@ -417,7 +413,7 @@ describe("Section 1: Concepts", () => {
      */
     test.failing("Rule 1.9.2.1 - Win/lose simultaneously means win", () => {
       // Arrange: Set up scenario where player wins and loses at same time
-      // e.g., reach 20 lore same time as deck empties
+      // E.g., reach 20 lore same time as deck empties
 
       // Assert: Player should win
       expect(true).toBe(false); // Will fail until win/lose resolution implemented

@@ -3,9 +3,9 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
+// Import { describe, it } from "@jest/globals";
 //
-// describe("Ursula's Lair - Eye of the Storm", () => {
-//   it("TODO", () => {});
+// Describe("Ursula's Lair - Eye of the Storm", () => {
+//   It("TODO", () => {});
 // });
 //

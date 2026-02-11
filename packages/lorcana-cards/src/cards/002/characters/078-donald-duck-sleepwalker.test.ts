@@ -3,34 +3,34 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   nothingToHide,
-//   zeroToHero,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   NothingToHide,
+//   ZeroToHero,
 // } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
-// import { donaldDuckSleepwalker } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { donaldDuckSleepwalker } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Donald Duck - Sleepwalker", () => {
-//   it("**STARTLED AWAKE** Whenever you play an action, this character gets +2 {S} this turn.", () => {
-//     const testStore = new TestStore({
-//       inkwell: nothingToHide.cost + zeroToHero.cost,
-//       hand: [nothingToHide, zeroToHero],
-//       play: [donaldDuckSleepwalker],
+// Describe("Donald Duck - Sleepwalker", () => {
+//   It("**STARTLED AWAKE** Whenever you play an action, this character gets +2 {S} this turn.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: nothingToHide.cost + zeroToHero.cost,
+//       Hand: [nothingToHide, zeroToHero],
+//       Play: [donaldDuckSleepwalker],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       donaldDuckSleepwalker.id,
+//       DonaldDuckSleepwalker.id,
 //     );
 //
-//     const actionOne = testStore.getByZoneAndId("hand", nothingToHide.id);
-//     actionOne.playFromHand();
-//     expect(cardUnderTest.strength).toBe(donaldDuckSleepwalker.strength + 2);
+//     Const actionOne = testStore.getByZoneAndId("hand", nothingToHide.id);
+//     ActionOne.playFromHand();
+//     Expect(cardUnderTest.strength).toBe(donaldDuckSleepwalker.strength + 2);
 //
-//     const actionTwo = testStore.getByZoneAndId("hand", zeroToHero.id);
-//     actionTwo.playFromHand();
-//     expect(cardUnderTest.strength).toBe(donaldDuckSleepwalker.strength + 4);
+//     Const actionTwo = testStore.getByZoneAndId("hand", zeroToHero.id);
+//     ActionTwo.playFromHand();
+//     Expect(cardUnderTest.strength).toBe(donaldDuckSleepwalker.strength + 4);
 //   });
 // });
 //

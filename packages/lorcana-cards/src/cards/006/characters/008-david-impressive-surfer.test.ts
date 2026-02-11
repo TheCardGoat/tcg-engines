@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { davidImpressiveSurfer } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { davidImpressiveSurfer } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("David - Impressive Surfer", () => {
-//   it.skip("SHOWING OFF While you have a character named Nani in play, this character gets +2 {L}.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: davidImpressiveSurfer.cost,
-//       play: [davidImpressiveSurfer],
-//       hand: [davidImpressiveSurfer],
+// Describe("David - Impressive Surfer", () => {
+//   It.skip("SHOWING OFF While you have a character named Nani in play, this character gets +2 {L}.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: davidImpressiveSurfer.cost,
+//       Play: [davidImpressiveSurfer],
+//       Hand: [davidImpressiveSurfer],
 //     });
 //
-//     await testEngine.playCard(davidImpressiveSurfer);
+//     Await testEngine.playCard(davidImpressiveSurfer);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

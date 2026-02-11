@@ -3,24 +3,24 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { mickeyBraveLittleTailor } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { thievery } from "@lorcanito/lorcana-engine/cards/006";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { mickeyBraveLittleTailor } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { thievery } from "@lorcanito/lorcana-engine/cards/006";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe.skip("Thievery", () => {
-//   it("Chosen opponent loses 1 lore. Gain 1 lore.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: 10,
-//       play: [mickeyBraveLittleTailor],
-//       hand: [thievery],
+// Describe.skip("Thievery", () => {
+//   It("Chosen opponent loses 1 lore. Gain 1 lore.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: 10,
+//       Play: [mickeyBraveLittleTailor],
+//       Hand: [thievery],
 //     });
 //
-//     await testEngine.playCard(thievery);
-//     await testEngine.resolveTopOfStack({ targets: [mickeyBraveLittleTailor] });
+//     Await testEngine.playCard(thievery);
+//     Await testEngine.resolveTopOfStack({ targets: [mickeyBraveLittleTailor] });
 //
-//     expect(testEngine.getPlayerLore("opponent")).toBe(0);
-//     expect(testEngine.getPlayerLore()).toBe(1);
+//     Expect(testEngine.getPlayerLore("opponent")).toBe(0);
+//     Expect(testEngine.getPlayerLore()).toBe(1);
 //   });
 // });
 //

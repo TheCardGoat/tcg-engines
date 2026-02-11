@@ -6,11 +6,7 @@
  */
 
 import { afterEach, beforeEach, describe, expect, test } from "bun:test";
-import {
-  LorcanaTestEngine,
-  PLAYER_ONE,
-  PLAYER_TWO,
-} from "../../testing/lorcana-test-engine";
+import { LorcanaTestEngine, PLAYER_ONE, PLAYER_TWO } from "../../testing/lorcana-test-engine";
 
 describe("Section 3: Gameplay", () => {
   describe("3.1. Starting a Game", () => {
@@ -21,8 +17,8 @@ describe("Section 3: Gameplay", () => {
     test.failing("Rule 3.1.1 - Game start requires completing all setup steps", () => {
       // Arrange: Create engine without skipping pre-game
       const testEngine = new LorcanaTestEngine(
-        { hand: 0, deck: 60 },
-        { hand: 0, deck: 60 },
+        { deck: 60, hand: 0 },
+        { deck: 60, hand: 0 },
         { skipPreGame: false },
       );
 
@@ -43,8 +39,8 @@ describe("Section 3: Gameplay", () => {
      */
     test.failing("Rule 3.1.2 - Random determination of starting player chooser", () => {
       const testEngine = new LorcanaTestEngine(
-        { hand: 0, deck: 60 },
-        { hand: 0, deck: 60 },
+        { deck: 60, hand: 0 },
+        { deck: 60, hand: 0 },
         { skipPreGame: false },
       );
 
@@ -65,9 +61,9 @@ describe("Section 3: Gameplay", () => {
     test.failing("Rule 3.1.3 - Decks must be shuffled at game start", () => {
       // Arrange: Create two games with same seed to verify shuffle occurs
       const testEngine = new LorcanaTestEngine(
-        { hand: 0, deck: 60 },
-        { hand: 0, deck: 60 },
-        { skipPreGame: false, seed: "test-seed" },
+        { deck: 60, hand: 0 },
+        { deck: 60, hand: 0 },
+        { seed: "test-seed", skipPreGame: false },
       );
 
       try {
@@ -84,8 +80,8 @@ describe("Section 3: Gameplay", () => {
      */
     test.failing("Rule 3.1.4 - Players start with 0 lore", () => {
       const testEngine = new LorcanaTestEngine(
-        { hand: 7, deck: 53 },
-        { hand: 7, deck: 53 },
+        { deck: 53, hand: 7 },
+        { deck: 53, hand: 7 },
         { skipPreGame: true },
       );
 
@@ -105,8 +101,8 @@ describe("Section 3: Gameplay", () => {
      */
     test.failing("Rule 3.1.5 - Players draw 7 cards at start", () => {
       const testEngine = new LorcanaTestEngine(
-        { hand: 0, deck: 60 },
-        { hand: 0, deck: 60 },
+        { deck: 60, hand: 0 },
+        { deck: 60, hand: 0 },
         { skipPreGame: false },
       );
 
@@ -125,8 +121,8 @@ describe("Section 3: Gameplay", () => {
      */
     test.failing("Rule 3.1.6 - Mulligan in starting player order", () => {
       const testEngine = new LorcanaTestEngine(
-        { hand: 7, deck: 53 },
-        { hand: 7, deck: 53 },
+        { deck: 53, hand: 7 },
+        { deck: 53, hand: 7 },
         { skipPreGame: false },
       );
 
@@ -150,8 +146,8 @@ describe("Section 3: Gameplay", () => {
      */
     test.failing("Rule 3.1.6.1 - Mulligan puts cards on bottom of deck", () => {
       const testEngine = new LorcanaTestEngine(
-        { hand: 7, deck: 53 },
-        { hand: 7, deck: 53 },
+        { deck: 53, hand: 7 },
+        { deck: 53, hand: 7 },
         { skipPreGame: false },
       );
 
@@ -181,8 +177,8 @@ describe("Section 3: Gameplay", () => {
      */
     test.failing("Rule 3.1.6.2 - Draw back up to 7 after mulligan", () => {
       const testEngine = new LorcanaTestEngine(
-        { hand: 7, deck: 53 },
-        { hand: 7, deck: 53 },
+        { deck: 53, hand: 7 },
+        { deck: 53, hand: 7 },
         { skipPreGame: false },
       );
 
@@ -220,8 +216,8 @@ describe("Section 3: Gameplay", () => {
      */
     test.failing("Rule 3.1.7 - Game starts after all mulligans complete", () => {
       const testEngine = new LorcanaTestEngine(
-        { hand: 7, deck: 53 },
-        { hand: 7, deck: 53 },
+        { deck: 53, hand: 7 },
+        { deck: 53, hand: 7 },
         { skipPreGame: false },
       );
 
@@ -250,8 +246,8 @@ describe("Section 3: Gameplay", () => {
 
     beforeEach(() => {
       testEngine = new LorcanaTestEngine(
-        { hand: 7, deck: 53, inkwell: 0 },
-        { hand: 7, deck: 53, inkwell: 0 },
+        { deck: 53, hand: 7, inkwell: 0 },
+        { deck: 53, hand: 7, inkwell: 0 },
         { skipPreGame: true },
       );
     });

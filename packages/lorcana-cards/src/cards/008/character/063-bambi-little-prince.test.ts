@@ -3,73 +3,73 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { sisuDaringVisitor } from "@lorcanito/lorcana-engine/cards/004/characters/123-sisu-daring-visitor";
-// import {
-//   bambiLittlePrince,
-//   deweyLovableShowoff,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { sisuDaringVisitor } from "@lorcanito/lorcana-engine/cards/004/characters/123-sisu-daring-visitor";
+// Import {
+//   BambiLittlePrince,
+//   DeweyLovableShowoff,
 // } from "@lorcanito/lorcana-engine/cards/008";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Bambi - Little Prince", () => {
-//   it("SAY HELLO When you play this character, gain 1 lore.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: bambiLittlePrince.cost,
-//       hand: [bambiLittlePrince],
+// Describe("Bambi - Little Prince", () => {
+//   It("SAY HELLO When you play this character, gain 1 lore.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: bambiLittlePrince.cost,
+//       Hand: [bambiLittlePrince],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(bambiLittlePrince);
+//     Const cardUnderTest = testEngine.getCardModel(bambiLittlePrince);
 //
-//     cardUnderTest.play();
+//     CardUnderTest.play();
 //
-//     expect(testEngine.getPlayerLore()).toEqual(1);
+//     Expect(testEngine.getPlayerLore()).toEqual(1);
 //   });
 //
-//   it("KIND OF BASHFUL When an opponent plays a character, return this character to your hand.", async () => {
-//     const testEngine = new TestEngine(
+//   It("KIND OF BASHFUL When an opponent plays a character, return this character to your hand.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: bambiLittlePrince.cost,
-//         play: [bambiLittlePrince],
+//         Inkwell: bambiLittlePrince.cost,
+//         Play: [bambiLittlePrince],
 //       },
 //       {
-//         inkwell: deweyLovableShowoff.cost,
-//         hand: [deweyLovableShowoff],
+//         Inkwell: deweyLovableShowoff.cost,
+//         Hand: [deweyLovableShowoff],
 //       },
 //     );
 //
-//     const cardUnderTest = testEngine.getCardModel(bambiLittlePrince);
-//     const cardOppo = testEngine.getCardModel(deweyLovableShowoff);
+//     Const cardUnderTest = testEngine.getCardModel(bambiLittlePrince);
+//     Const cardOppo = testEngine.getCardModel(deweyLovableShowoff);
 //
-//     testEngine.passTurn();
+//     TestEngine.passTurn();
 //
-//     await testEngine.playCard(cardOppo);
+//     Await testEngine.playCard(cardOppo);
 //
-//     expect(cardUnderTest.zone).toEqual("hand");
+//     Expect(cardUnderTest.zone).toEqual("hand");
 //   });
 //
-//   describe("Regression tests", () => {
-//     it("Sisu Interaction, banish should happen first.", async () => {
-//       const testEngine = new TestEngine(
+//   Describe("Regression tests", () => {
+//     It("Sisu Interaction, banish should happen first.", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: sisuDaringVisitor.cost,
-//           hand: [sisuDaringVisitor],
+//           Inkwell: sisuDaringVisitor.cost,
+//           Hand: [sisuDaringVisitor],
 //         },
 //         {
-//           play: [bambiLittlePrince],
+//           Play: [bambiLittlePrince],
 //         },
 //       );
 //
-//       await testEngine.playCard(sisuDaringVisitor);
+//       Await testEngine.playCard(sisuDaringVisitor);
 //       // While the trigger is not resolved, bambi should still be in play
-//       expect(testEngine.getCardModel(bambiLittlePrince).zone).toEqual("play");
+//       Expect(testEngine.getCardModel(bambiLittlePrince).zone).toEqual("play");
 //
-//       await testEngine.resolveTopOfStack(
+//       Await testEngine.resolveTopOfStack(
 //         { targets: [bambiLittlePrince] },
-//         true,
+//         True,
 //       );
 //
 //       // Active player trigger should happen first, so bambi should be banished, not returned to hand
-//       expect(testEngine.getCardModel(bambiLittlePrince).zone).toEqual(
+//       Expect(testEngine.getCardModel(bambiLittlePrince).zone).toEqual(
 //         "discard",
 //       );
 //     });

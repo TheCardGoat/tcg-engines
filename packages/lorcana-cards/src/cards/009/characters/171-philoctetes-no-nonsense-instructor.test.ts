@@ -3,35 +3,35 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { philoctetesNononsenseInstructor } from "@lorcanito/lorcana-engine/cards/009/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { philoctetesNononsenseInstructor } from "@lorcanito/lorcana-engine/cards/009/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Philoctetes - No-Nonsense Instructor", () => {
-//   it.skip("**YOU GOTTA STAY FOCUSED** Your Hero characters gain **Challenger** +1. _(They get +1 {S} while challenging.)_", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: philoctetesNononsenseInstructor.cost,
-//       play: [philoctetesNononsenseInstructor],
-//       hand: [philoctetesNononsenseInstructor],
+// Describe("Philoctetes - No-Nonsense Instructor", () => {
+//   It.skip("**YOU GOTTA STAY FOCUSED** Your Hero characters gain **Challenger** +1. _(They get +1 {S} while challenging.)_", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: philoctetesNononsenseInstructor.cost,
+//       Play: [philoctetesNononsenseInstructor],
+//       Hand: [philoctetesNononsenseInstructor],
 //     });
 //
-//     await testEngine.playCard(philoctetesNononsenseInstructor);
+//     Await testEngine.playCard(philoctetesNononsenseInstructor);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 //
-//   it.skip("**SHAMELESS PROMOTER** Whenever you play a Hero character, gain 1 lore.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: philoctetesNononsenseInstructor.cost,
-//       play: [philoctetesNononsenseInstructor],
-//       hand: [philoctetesNononsenseInstructor],
+//   It.skip("**SHAMELESS PROMOTER** Whenever you play a Hero character, gain 1 lore.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: philoctetesNononsenseInstructor.cost,
+//       Play: [philoctetesNononsenseInstructor],
+//       Hand: [philoctetesNononsenseInstructor],
 //     });
 //
-//     await testEngine.playCard(philoctetesNononsenseInstructor);
+//     Await testEngine.playCard(philoctetesNononsenseInstructor);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

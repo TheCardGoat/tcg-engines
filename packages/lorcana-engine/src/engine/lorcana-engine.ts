@@ -1,9 +1,5 @@
 import { type PlayerId, RuleEngine } from "@tcg/core";
-import type {
-  LorcanaCardMeta,
-  LorcanaGameState,
-  LorcanaMoveParams,
-} from "../types";
+import type { LorcanaCardMeta, LorcanaGameState, LorcanaMoveParams } from "../types";
 import type {
   AvailableMoveInfo,
   MoveParameterOptions,
@@ -68,22 +64,19 @@ export class LorcanaEngine extends RuleEngine<
     // Check each registered move
     for (const moveId of Object.keys(this.gameDefinition.moves)) {
       // Special case: For moves that require parameters to be valid,
-      // try to enumerate and check if we have any valid combinations
+      // Try to enumerate and check if we have any valid combinations
       if (this.moveRequiresParameters(moveId)) {
-        const params = this.enumerateMoveParameters(
-          moveId as keyof LorcanaMoveParams,
-          playerId,
-        );
+        const params = this.enumerateMoveParameters(moveId as keyof LorcanaMoveParams, playerId);
 
         if (params !== null && params.validCombinations.length > 0) {
           validMoves.push(moveId);
         }
       } else {
         // For moves that work with empty params or are parameterless,
-        // use simple condition check
+        // Use simple condition check
         const canExecute = this.canExecuteMove(moveId, {
-          playerId,
           params: {},
+          playerId,
         });
 
         if (canExecute) {
@@ -111,7 +104,7 @@ export class LorcanaEngine extends RuleEngine<
       "chooseWhoGoesFirstMove",
       "alterHand", // Has enumerator and requires cardsToMulligan parameter
       // Note: Other moves like playCard, quest, challenge, putACardIntoTheInkwell
-      // are NOT in this list because their enumeration returns null (not yet implemented).
+      // Are NOT in this list because their enumeration returns null (not yet implemented).
       // They will be checked with empty params and conditions will handle validation.
     ]);
 
@@ -179,33 +172,37 @@ export class LorcanaEngine extends RuleEngine<
    * // }
    * ```
    */
-  enumerateMoveParameters(
-    moveId: string,
-    playerId: PlayerId,
-  ): MoveParameterOptions | null {
+  enumerateMoveParameters(moveId: string, playerId: PlayerId): MoveParameterOptions | null {
     // Switch statement with exhaustive check for each move type
     switch (moveId) {
-      case "chooseWhoGoesFirstMove":
+      case "chooseWhoGoesFirstMove": {
         return this.enumerateChooseFirstPlayerParams(playerId);
+      }
 
-      case "playCard":
+      case "playCard": {
         return this.enumeratePlayCardParams(playerId);
+      }
 
-      case "quest":
+      case "quest": {
         return this.enumerateQuestParams(playerId);
+      }
 
-      case "challenge":
+      case "challenge": {
         return this.enumerateChallengeParams(playerId);
+      }
 
-      case "alterHand":
+      case "alterHand": {
         return this.enumerateAlterHandParams(playerId);
+      }
 
-      case "putACardIntoTheInkwell":
+      case "putACardIntoTheInkwell": {
         return this.enumerateInkwellParams(playerId);
+      }
 
-      default:
+      default: {
         // For moves not yet implemented or parameterless moves, return null
         return null;
+      }
     }
   }
 
@@ -239,10 +236,7 @@ export class LorcanaEngine extends RuleEngine<
    * // }
    * ```
    */
-  whyCannotExecuteMove(
-    moveId: string,
-    params: any,
-  ): MoveValidationError | null {
+  whyCannotExecuteMove(moveId: string, params: any): MoveValidationError | null {
     // Attempt to execute the move to get detailed error information
     // Safe: Failed executions are rolled back by Immer (no side effects)
     const result = this.executeMove(moveId, params);
@@ -254,15 +248,11 @@ export class LorcanaEngine extends RuleEngine<
 
     // Parse error result and generate helpful error object
     return {
-      moveId,
-      errorCode: result.errorCode || "UNKNOWN_ERROR",
-      reason: result.error || "Move cannot be executed",
       context: result.errorContext,
-      suggestions: this.generateSuggestions(
-        moveId,
-        result.errorCode,
-        result.errorContext,
-      ),
+      errorCode: result.errorCode || "UNKNOWN_ERROR",
+      moveId,
+      reason: result.error || "Move cannot be executed",
+      suggestions: this.generateSuggestions(moveId, result.errorCode, result.errorContext),
     };
   }
 
@@ -283,60 +273,59 @@ export class LorcanaEngine extends RuleEngine<
     const suggestions: string[] = [];
 
     switch (errorCode) {
-      case "NOT_CHOOSING_PLAYER":
+      case "NOT_CHOOSING_PLAYER": {
         if (errorContext?.choosingPlayer) {
-          suggestions.push(
-            `Wait for ${errorContext.choosingPlayer} to choose the first player`,
-          );
+          suggestions.push(`Wait for ${errorContext.choosingPlayer} to choose the first player`);
         }
         break;
+      }
 
-      case "INVALID_PLAYER_ID":
+      case "INVALID_PLAYER_ID": {
         if (errorContext?.validPlayers) {
           suggestions.push(
             `Choose one of the valid players: ${errorContext.validPlayers.join(", ")}`,
           );
         }
         break;
+      }
 
-      case "WRONG_PHASE":
+      case "WRONG_PHASE": {
         if (errorContext?.requiredPhase) {
-          suggestions.push(
-            `Wait until ${errorContext.requiredPhase} phase to use this move`,
-          );
+          suggestions.push(`Wait until ${errorContext.requiredPhase} phase to use this move`);
         }
         break;
+      }
 
-      case "FIRST_PLAYER_ALREADY_CHOSEN":
+      case "FIRST_PLAYER_ALREADY_CHOSEN": {
         suggestions.push("The first player has already been selected");
         break;
+      }
 
-      case "INSUFFICIENT_INK":
-        if (
-          errorContext?.required !== undefined &&
-          errorContext?.available !== undefined
-        ) {
+      case "INSUFFICIENT_INK": {
+        if (errorContext?.required !== undefined && errorContext?.available !== undefined) {
           const needed = errorContext.required - errorContext.available;
           suggestions.push(`Add ${needed} more cards to your inkwell`);
         }
         break;
+      }
 
-      case "NOT_YOUR_TURN":
+      case "NOT_YOUR_TURN": {
         suggestions.push("Wait for your turn");
         break;
+      }
 
-      case "CONDITION_FAILED":
-        suggestions.push(
-          `The conditions for ${moveId} are not met at this time`,
-        );
+      case "CONDITION_FAILED": {
+        suggestions.push(`The conditions for ${moveId} are not met at this time`);
         break;
+      }
 
-      default:
+      default: {
         // Generic suggestion if no specific one available
         if (errorCode) {
           suggestions.push(`Check the requirements for ${moveId}`);
         }
         break;
+      }
     }
 
     return suggestions;
@@ -355,12 +344,12 @@ export class LorcanaEngine extends RuleEngine<
     // Move metadata mapping
     // This provides display names, descriptions, and parameter schemas for moves
     switch (moveId) {
-      case "chooseWhoGoesFirstMove":
+      case "chooseWhoGoesFirstMove": {
         return {
-          moveId,
-          displayName: "Choose First Player",
           description: "Select which player will take the first turn",
+          displayName: "Choose First Player",
           icon: "dice",
+          moveId,
           paramSchema: {
             required: [
               {
@@ -371,14 +360,14 @@ export class LorcanaEngine extends RuleEngine<
             ],
           },
         };
+      }
 
-      case "alterHand":
+      case "alterHand": {
         return {
-          moveId,
+          description: "Choose cards to put on bottom of deck and draw new ones",
           displayName: "Mulligan",
-          description:
-            "Choose cards to put on bottom of deck and draw new ones",
           icon: "hand",
+          moveId,
           paramSchema: {
             required: [
               {
@@ -394,25 +383,28 @@ export class LorcanaEngine extends RuleEngine<
             ],
           },
         };
+      }
 
-      case "passTurn":
+      case "passTurn": {
         return {
-          moveId,
-          displayName: "Pass Turn",
           description: "End your turn and pass priority to the next player",
+          displayName: "Pass Turn",
           icon: "forward",
+          moveId,
         };
+      }
 
       // Default fallback for moves without explicit metadata
-      default:
+      default: {
         return {
-          moveId,
+          description: `Execute ${moveId} move`,
           displayName: moveId
             .replace(/([A-Z])/g, " $1")
             .replace(/^./, (str) => str.toUpperCase())
             .trim(),
-          description: `Execute ${moveId} move`,
+          moveId,
         };
+      }
     }
   }
 
@@ -423,19 +415,17 @@ export class LorcanaEngine extends RuleEngine<
    * @returns Valid parameter combinations or null if move not available
    * @private
    */
-  private enumerateChooseFirstPlayerParams(
-    playerId: PlayerId,
-  ): MoveParameterOptions | null {
+  private enumerateChooseFirstPlayerParams(playerId: PlayerId): MoveParameterOptions | null {
     // Get all valid player IDs from game state
     const state = this.getState();
     const validPlayers = Object.keys(state.external.loreScores) as PlayerId[];
 
     // For each valid player choice, check if the move can be executed
-    const validCombinations: Array<{ playerId: PlayerId }> = [];
+    const validCombinations: { playerId: PlayerId }[] = [];
     for (const targetPlayerId of validPlayers) {
       const canExecute = this.canExecuteMove("chooseWhoGoesFirstMove", {
-        playerId,
         params: { playerId: targetPlayerId },
+        playerId,
       });
 
       if (canExecute) {
@@ -450,14 +440,14 @@ export class LorcanaEngine extends RuleEngine<
 
     // Return valid player choices
     return {
-      validCombinations,
       parameterInfo: {
         playerId: {
-          type: "playerId",
           description: "Player who will go first",
+          type: "playerId",
           validValues: validPlayers,
         },
       },
+      validCombinations,
     };
   }
 
@@ -468,9 +458,7 @@ export class LorcanaEngine extends RuleEngine<
    * @returns Valid parameter combinations or null if move not available
    * @private
    */
-  private enumeratePlayCardParams(
-    _playerId: PlayerId,
-  ): MoveParameterOptions | null {
+  private enumeratePlayCardParams(_playerId: PlayerId): MoveParameterOptions | null {
     // TODO: Implement full enumeration with access to internal zone state
     // Current limitation: Cannot access RuleEngine's internal zone state directly
     //
@@ -491,9 +479,7 @@ export class LorcanaEngine extends RuleEngine<
    * @returns Valid parameter combinations or null if move not available
    * @private
    */
-  private enumerateQuestParams(
-    _playerId: PlayerId,
-  ): MoveParameterOptions | null {
+  private enumerateQuestParams(_playerId: PlayerId): MoveParameterOptions | null {
     // TODO: Implement full enumeration with access to internal zone and card state
     // Current limitation: Cannot access RuleEngine's internal zone state directly
     //
@@ -515,9 +501,7 @@ export class LorcanaEngine extends RuleEngine<
    * @returns Valid parameter combinations or null if move not available
    * @private
    */
-  private enumerateChallengeParams(
-    _playerId: PlayerId,
-  ): MoveParameterOptions | null {
+  private enumerateChallengeParams(_playerId: PlayerId): MoveParameterOptions | null {
     // TODO: Implement full enumeration with access to internal zone and card state
     // Current limitation: Cannot access RuleEngine's internal zone state directly
     //
@@ -539,13 +523,11 @@ export class LorcanaEngine extends RuleEngine<
    * @returns Valid parameter combinations or null if move not available
    * @private
    */
-  private enumerateAlterHandParams(
-    playerId: PlayerId,
-  ): MoveParameterOptions | null {
+  private enumerateAlterHandParams(playerId: PlayerId): MoveParameterOptions | null {
     // Check if move is available (validates phase, pending mulligan status, etc.)
     const canExecute = this.canExecuteMove("alterHand", {
-      playerId,
-      params: { playerId, cardsToMulligan: [] }, // Empty array = keep all cards
+      params: { cardsToMulligan: [], playerId },
+      playerId, // Empty array = keep all cards
     });
 
     if (!canExecute) {
@@ -554,17 +536,17 @@ export class LorcanaEngine extends RuleEngine<
 
     // Get cards in hand to enumerate mulligan options
     // Access internal state to get hand cards (testing backdoor similar to LorcanaTestEngine)
-    const internalState = (this as any).internalState;
+    const { internalState } = this as any;
     if (!internalState) {
       // Fallback to simple keep-all option if we can't access internal state
       return {
+        parameterInfo: {},
         validCombinations: [
           {
-            playerId,
             cardsToMulligan: [],
+            playerId,
           },
         ],
-        parameterInfo: {},
       };
     }
 
@@ -579,24 +561,24 @@ export class LorcanaEngine extends RuleEngine<
     // Full power-set enumeration (2^n combinations) would be too expensive for large hands
     const validCombinations = [
       {
-        playerId,
-        cardsToMulligan: [], // Keep all cards
+        cardsToMulligan: [],
+        playerId, // Keep all cards
       },
       {
-        playerId,
-        cardsToMulligan: handCards, // Mulligan all cards
+        cardsToMulligan: handCards,
+        playerId, // Mulligan all cards
       },
     ];
 
     return {
-      validCombinations,
       parameterInfo: {
         cardsToMulligan: {
-          type: "cardId",
           description: "Cards to mulligan (put on bottom of deck)",
+          type: "cardId",
           validValues: handCards,
         },
       },
+      validCombinations,
     };
   }
 
@@ -607,9 +589,7 @@ export class LorcanaEngine extends RuleEngine<
    * @returns Valid parameter combinations or null if move not available
    * @private
    */
-  private enumerateInkwellParams(
-    _playerId: PlayerId,
-  ): MoveParameterOptions | null {
+  private enumerateInkwellParams(_playerId: PlayerId): MoveParameterOptions | null {
     // TODO: Implement full enumeration with access to internal zone state
     // Current limitation: Cannot access RuleEngine's internal zone state directly
     //

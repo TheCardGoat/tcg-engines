@@ -1,35 +1,35 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { whenYouPlayThisCharacter } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import { exertChosenCharacterWithCharacteristics } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { whenYouPlayThisCharacter } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import { exertChosenCharacterWithCharacteristics } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const princeAchmedRivalSuitor: LorcanitoCharacterCard = {
-//   id: "ue3",
-//   name: "Prince Achmed",
-//   title: "Rival Suitor",
-//   characteristics: ["storyborn", "prince"],
-//   text: "UNWELCOME PROPOSAL When you play this character, you may exert chosen Princess character.",
-//   type: "character",
-//   abilities: [
-//     whenYouPlayThisCharacter({
-//       name: "UNWELCOME PROPOSAL",
-//       text: "When you play this character, you may exert chosen Princess character.",
-//       optional: true,
-//       effects: [exertChosenCharacterWithCharacteristics("princess")],
+// Export const princeAchmedRivalSuitor: LorcanitoCharacterCard = {
+//   Id: "ue3",
+//   Name: "Prince Achmed",
+//   Title: "Rival Suitor",
+//   Characteristics: ["storyborn", "prince"],
+//   Text: "UNWELCOME PROPOSAL When you play this character, you may exert chosen Princess character.",
+//   Type: "character",
+//   Abilities: [
+//     WhenYouPlayThisCharacter({
+//       Name: "UNWELCOME PROPOSAL",
+//       Text: "When you play this character, you may exert chosen Princess character.",
+//       Optional: true,
+//       Effects: [exertChosenCharacterWithCharacteristics("princess")],
 //     }),
 //   ],
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 2,
-//   strength: 2,
-//   willpower: 2,
-//   illustrator: "Jake Murphy",
-//   number: 184,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631684,
+//   Inkwell: true,
+//   Colors: ["steel"],
+//   Cost: 2,
+//   Strength: 2,
+//   Willpower: 2,
+//   Illustrator: "Jake Murphy",
+//   Number: 184,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631684,
 //   },
-//   rarity: "common",
-//   lore: 1,
+//   Rarity: "common",
+//   Lore: 1,
 // };
 //

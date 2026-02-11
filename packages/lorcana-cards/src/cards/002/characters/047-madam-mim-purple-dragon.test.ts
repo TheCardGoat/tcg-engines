@@ -3,75 +3,75 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it, test } from "@jest/globals";
-// import {
-//   madamMimPurpleDragon,
-//   pinocchioStarAttraction,
-//   winnieThePoohHunnyWizard,
+// Import { describe, expect, it, test } from "@jest/globals";
+// Import {
+//   MadamMimPurpleDragon,
+//   PinocchioStarAttraction,
+//   WinnieThePoohHunnyWizard,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Madam Mim - Purple Dragon", () => {
-//   test("Evasive", () => {
-//     const testStore = new TestStore({
-//       play: [madamMimPurpleDragon],
+// Describe("Madam Mim - Purple Dragon", () => {
+//   Test("Evasive", () => {
+//     Const testStore = new TestStore({
+//       Play: [madamMimPurpleDragon],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       madamMimPurpleDragon.id,
+//       MadamMimPurpleDragon.id,
 //     );
 //
-//     expect(cardUnderTest.hasEvasive).toEqual(true);
+//     Expect(cardUnderTest.hasEvasive).toEqual(true);
 //   });
 //
-//   describe("**I WIN, I WIN!** When you play this character, banish her or return another 2 chosen characters of yours to your hand.", () => {
-//     it("skipping the effect banishes her", () => {
-//       const testStore = new TestStore({
-//         inkwell: madamMimPurpleDragon.cost,
-//         hand: [madamMimPurpleDragon],
+//   Describe("**I WIN, I WIN!** When you play this character, banish her or return another 2 chosen characters of yours to your hand.", () => {
+//     It("skipping the effect banishes her", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: madamMimPurpleDragon.cost,
+//         Hand: [madamMimPurpleDragon],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "hand",
-//         madamMimPurpleDragon.id,
+//         MadamMimPurpleDragon.id,
 //       );
 //
-//       cardUnderTest.playFromHand();
-//       testStore.resolveTopOfStack({ skip: true });
+//       CardUnderTest.playFromHand();
+//       TestStore.resolveTopOfStack({ skip: true });
 //
-//       expect(cardUnderTest.zone).toEqual("discard");
-//       expect(testStore.stackLayers).toHaveLength(0);
+//       Expect(cardUnderTest.zone).toEqual("discard");
+//       Expect(testStore.stackLayers).toHaveLength(0);
 //     });
 //
-//     it("return another chosen character of yours to your hand.", () => {
-//       const testStore = new TestStore({
-//         inkwell: madamMimPurpleDragon.cost,
-//         hand: [madamMimPurpleDragon],
-//         play: [pinocchioStarAttraction, winnieThePoohHunnyWizard],
+//     It("return another chosen character of yours to your hand.", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: madamMimPurpleDragon.cost,
+//         Hand: [madamMimPurpleDragon],
+//         Play: [pinocchioStarAttraction, winnieThePoohHunnyWizard],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "hand",
-//         madamMimPurpleDragon.id,
+//         MadamMimPurpleDragon.id,
 //       );
-//       const target = testStore.getByZoneAndId(
+//       Const target = testStore.getByZoneAndId(
 //         "play",
-//         pinocchioStarAttraction.id,
+//         PinocchioStarAttraction.id,
 //       );
-//       const anotherTarget = testStore.getByZoneAndId(
+//       Const anotherTarget = testStore.getByZoneAndId(
 //         "play",
-//         winnieThePoohHunnyWizard.id,
+//         WinnieThePoohHunnyWizard.id,
 //       );
 //
-//       cardUnderTest.playFromHand();
-//       testStore.resolveOptionalAbility();
-//       testStore.resolveTopOfStack({ targets: [target, anotherTarget] });
+//       CardUnderTest.playFromHand();
+//       TestStore.resolveOptionalAbility();
+//       TestStore.resolveTopOfStack({ targets: [target, anotherTarget] });
 //
-//       expect(target.zone).toEqual("hand");
-//       expect(anotherTarget.zone).toEqual("hand");
-//       expect(cardUnderTest.zone).toEqual("play");
-//       expect(testStore.stackLayers).toHaveLength(0);
+//       Expect(target.zone).toEqual("hand");
+//       Expect(anotherTarget.zone).toEqual("hand");
+//       Expect(cardUnderTest.zone).toEqual("play");
+//       Expect(testStore.stackLayers).toHaveLength(0);
 //     });
 //   });
 // });

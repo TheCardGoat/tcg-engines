@@ -3,38 +3,38 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { belleBookworm } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import {
-//   baymaxsChargingStation,
-//   belleMechanicExtraordinaire,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { belleBookworm } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import {
+//   BaymaxsChargingStation,
+//   BelleMechanicExtraordinaire,
 // } from "@lorcanito/lorcana-engine/cards/007";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Baymax's Charging Station", () => {
-//   it("ENERGY CONVERTER Whenever you play a Floodborn character, if you used Shift to play them, you may draw a card.", async () => {
-//     const testEngine = new TestEngine({
-//       deck: 2,
-//       inkwell: belleMechanicExtraordinaire.cost + belleBookworm.cost,
-//       play: [baymaxsChargingStation],
-//       hand: [belleMechanicExtraordinaire, belleBookworm],
+// Describe("Baymax's Charging Station", () => {
+//   It("ENERGY CONVERTER Whenever you play a Floodborn character, if you used Shift to play them, you may draw a card.", async () => {
+//     Const testEngine = new TestEngine({
+//       Deck: 2,
+//       Inkwell: belleMechanicExtraordinaire.cost + belleBookworm.cost,
+//       Play: [baymaxsChargingStation],
+//       Hand: [belleMechanicExtraordinaire, belleBookworm],
 //     });
 //
-//     await testEngine.playCard(belleBookworm);
-//     expect(testEngine.stackLayers.length).toBe(0);
+//     Await testEngine.playCard(belleBookworm);
+//     Expect(testEngine.stackLayers.length).toBe(0);
 //
-//     await testEngine.shiftCard({
-//       shifter: belleMechanicExtraordinaire,
-//       shifted: belleBookworm,
+//     Await testEngine.shiftCard({
+//       Shifter: belleMechanicExtraordinaire,
+//       Shifted: belleBookworm,
 //     });
-//     expect(testEngine.stackLayers.length).toBe(1);
+//     Expect(testEngine.stackLayers.length).toBe(1);
 //
-//     await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveOptionalAbility();
 //
-//     expect(testEngine.getZonesCardCount()).toEqual(
-//       expect.objectContaining({
-//         hand: 1,
-//         deck: 1,
+//     Expect(testEngine.getZonesCardCount()).toEqual(
+//       Expect.objectContaining({
+//         Hand: 1,
+//         Deck: 1,
 //       }),
 //     );
 //   });

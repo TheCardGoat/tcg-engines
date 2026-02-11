@@ -1,61 +1,61 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const cheshireCatNotAllThere: CharacterCard = {
-  id: "mmz",
-  cardType: "character",
-  name: "Cheshire Cat",
-  version: "Not All There",
-  fullName: "Cheshire Cat - Not All There",
-  inkType: ["emerald"],
-  franchise: "Disney",
-  set: "001",
-  text: "**Lose something?** When this character is challenged and banished, banish the challenging character.",
-  cost: 3,
-  strength: 0,
-  willpower: 3,
-  lore: 2,
+  abilities: [],
   cardNumber: 71,
-  inkable: true,
+  cardType: "character",
+  classifications: ["Storyborn"],
+  cost: 3,
   externalIds: {
     ravensburger: "",
   },
-  abilities: [],
-  classifications: ["Storyborn"],
+  franchise: "Disney",
+  fullName: "Cheshire Cat - Not All There",
+  id: "mmz",
+  inkType: ["emerald"],
+  inkable: true,
+  lore: 2,
+  name: "Cheshire Cat",
+  set: "001",
+  strength: 0,
+  text: "**Lose something?** When this character is challenged and banished, banish the challenging character.",
+  version: "Not All There",
+  willpower: 3,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { whenChallengedAndBanished } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-// import { banishChallengingCharacter } from "@lorcanito/lorcana-engine/effects/effects";
+// Import { whenChallengedAndBanished } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import { banishChallengingCharacter } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const cheshireCat: LorcanitoCharacterCard = {
-//   id: "mmz",
+// Export const cheshireCat: LorcanitoCharacterCard = {
+//   Id: "mmz",
 //
-//   name: "Cheshire Cat",
-//   title: "Not All There",
-//   characteristics: ["storyborn"],
-//   text: "**Lose something?** When this character is challenged and banished, banish the challenging character.",
-//   type: "character",
-//   abilities: [
-//     whenChallengedAndBanished({
-//       name: "Lose Something?",
-//       text: "When this character is challenged and banished, banish the challenging character.",
-//       effects: [banishChallengingCharacter],
+//   Name: "Cheshire Cat",
+//   Title: "Not All There",
+//   Characteristics: ["storyborn"],
+//   Text: "**Lose something?** When this character is challenged and banished, banish the challenging character.",
+//   Type: "character",
+//   Abilities: [
+//     WhenChallengedAndBanished({
+//       Name: "Lose Something?",
+//       Text: "When this character is challenged and banished, banish the challenging character.",
+//       Effects: [banishChallengingCharacter],
 //     }),
 //   ],
-//   flavour: '"You may have noticed that I\'m not all there myself."',
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 3,
-//   willpower: 3,
-//   strength: 0,
-//   lore: 2,
-//   illustrator: "Caner Soylu",
-//   number: 71,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 492122,
+//   Flavour: '"You may have noticed that I\'m not all there myself."',
+//   Inkwell: true,
+//   Colors: ["emerald"],
+//   Cost: 3,
+//   Willpower: 3,
+//   Strength: 0,
+//   Lore: 2,
+//   Illustrator: "Caner Soylu",
+//   Number: 71,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 492122,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

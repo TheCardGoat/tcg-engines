@@ -1,24 +1,8 @@
 import type { ItemCard } from "@tcg/lorcana-types";
 
 export const theSwordOfShanyu: ItemCard = {
-  id: "1wb",
-  cardType: "item",
-  name: "The Sword of Shan-Yu",
-  inkType: ["ruby"],
-  franchise: "Mulan",
-  set: "008",
-  text: "WORTHY WEAPON {E}, {E} one of your characters — Ready chosen character. They can't quest for the rest of this turn.",
-  cost: 1,
-  cardNumber: 152,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "f53cefd9fc2611fc223d96dff8640a4eeaf9068d",
-  },
   abilities: [
     {
-      id: "1wb-1",
-      type: "activated",
       cost: { exert: true },
       effect: {
         type: "restriction",
@@ -26,7 +10,23 @@ export const theSwordOfShanyu: ItemCard = {
         target: "SELF",
         duration: "this-turn",
       },
+      id: "1wb-1",
       text: "WORTHY WEAPON {E}, {E} one of your characters — Ready chosen character. They can't quest for the rest of this turn.",
+      type: "activated",
     },
   ],
+  cardNumber: 152,
+  cardType: "item",
+  cost: 1,
+  externalIds: {
+    ravensburger: "f53cefd9fc2611fc223d96dff8640a4eeaf9068d",
+  },
+  franchise: "Mulan",
+  id: "1wb",
+  inkType: ["ruby"],
+  inkable: true,
+  missingTests: true,
+  name: "The Sword of Shan-Yu",
+  set: "008",
+  text: "WORTHY WEAPON {E}, {E} one of your characters — Ready chosen character. They can't quest for the rest of this turn.",
 };

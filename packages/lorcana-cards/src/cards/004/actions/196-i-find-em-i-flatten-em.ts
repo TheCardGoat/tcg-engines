@@ -1,23 +1,23 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 //
-// export const iFindEmIFlattenEm: LorcanitoActionCard = {
-//   id: "h30",
-//   reprints: ["eok"],
-//   name: "I Find 'Em, I Flatten 'Em",
-//   characteristics: ["action", "song"],
-//   text: "_(A character with cost 4 or more can {E} to sing this song for free.)_\n\n\nBanish all items.",
-//   type: "action",
-//   abilities: [
+// Export const iFindEmIFlattenEm: LorcanitoActionCard = {
+//   Id: "h30",
+//   Reprints: ["eok"],
+//   Name: "I Find 'Em, I Flatten 'Em",
+//   Characteristics: ["action", "song"],
+//   Text: "_(A character with cost 4 or more can {E} to sing this song for free.)_\n\n\nBanish all items.",
+//   Type: "action",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       effects: [
+//       Type: "resolution",
+//       Effects: [
 //         {
-//           type: "banish",
-//           target: {
-//             type: "card",
-//             value: "all",
-//             filters: [
+//           Type: "banish",
+//           Target: {
+//             Type: "card",
+//             Value: "all",
+//             Filters: [
 //               { filter: "zone", value: "play" },
 //               { filter: "type", value: "item" },
 //             ],
@@ -26,17 +26,17 @@
 //       ],
 //     },
 //   ],
-//   flavour:
+//   Flavour:
 //     "All the most difficult missions are for me, because I am indestructible.",
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 4,
-//   illustrator: "Jennifer Park",
-//   number: 196,
-//   set: "URR",
-//   externalIds: {
-//     tcgPlayer: 550624,
+//   Inkwell: true,
+//   Colors: ["steel"],
+//   Cost: 4,
+//   Illustrator: "Jennifer Park",
+//   Number: 196,
+//   Set: "URR",
+//   ExternalIds: {
+//     TcgPlayer: 550624,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

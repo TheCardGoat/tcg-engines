@@ -11,18 +11,16 @@ import { Effects } from "../helpers";
 describe("Effect: Stun", () => {
   describe("stun target", () => {
     it.skip("should parse 'Stun a unit.'", () => {
-      const result = parseAbilities(
-        "Stun a unit. (It doesn't deal combat damage this turn.)",
-      );
+      const result = parseAbilities("Stun a unit. (It doesn't deal combat damage this turn.)");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "spell",
           effect: expect.objectContaining({
             type: "stun",
           }),
+          type: "spell",
         }),
       );
     });

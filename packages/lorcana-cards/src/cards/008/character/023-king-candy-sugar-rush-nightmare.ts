@@ -1,24 +1,24 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { whenThisCharacterBanished } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import { returnFromDiscardToHand } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { whenThisCharacterBanished } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import { returnFromDiscardToHand } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const kingCandySugarRushNightmare: LorcanitoCharacterCard = {
-//   id: "sg3",
-//   name: "King Candy",
-//   title: "Sugar Rush Nightmare",
-//   characteristics: ["storyborn", "villain", "king", "racer"],
-//   text: "A NEW ROSTER When this character is banished, you may return another Racer character card from your discard to your hand.",
-//   type: "character",
-//   abilities: [
-//     whenThisCharacterBanished({
-//       name: "A NEW ROSTER",
-//       text: "When this character is banished, you may return another Racer character card from your discard to your hand.",
-//       optional: true,
-//       effects: [
-//         returnFromDiscardToHand({
-//           excludeSelf: true,
-//           filters: [
+// Export const kingCandySugarRushNightmare: LorcanitoCharacterCard = {
+//   Id: "sg3",
+//   Name: "King Candy",
+//   Title: "Sugar Rush Nightmare",
+//   Characteristics: ["storyborn", "villain", "king", "racer"],
+//   Text: "A NEW ROSTER When this character is banished, you may return another Racer character card from your discard to your hand.",
+//   Type: "character",
+//   Abilities: [
+//     WhenThisCharacterBanished({
+//       Name: "A NEW ROSTER",
+//       Text: "When this character is banished, you may return another Racer character card from your discard to your hand.",
+//       Optional: true,
+//       Effects: [
+//         ReturnFromDiscardToHand({
+//           ExcludeSelf: true,
+//           Filters: [
 //             { filter: "type", value: "character" },
 //             { filter: "owner", value: "self" },
 //             { filter: "characteristics", value: ["racer"] },
@@ -27,18 +27,18 @@
 //       ],
 //     }),
 //   ],
-//   inkwell: true,
-//   colors: ["amber", "ruby"],
-//   cost: 3,
-//   strength: 3,
-//   willpower: 2,
-//   illustrator: "Joseph Buening",
-//   number: 23,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631367,
+//   Inkwell: true,
+//   Colors: ["amber", "ruby"],
+//   Cost: 3,
+//   Strength: 3,
+//   Willpower: 2,
+//   Illustrator: "Joseph Buening",
+//   Number: 23,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631367,
 //   },
-//   rarity: "uncommon",
-//   lore: 1,
+//   Rarity: "uncommon",
+//   Lore: 1,
 // };
 //

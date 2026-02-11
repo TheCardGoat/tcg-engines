@@ -3,20 +3,20 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { judyHoppsUncoveringClues } from "@lorcanito/lorcana-engine/cards/010/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { judyHoppsUncoveringClues } from "@lorcanito/lorcana-engine/cards/010/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Judy Hopps - Uncovering Clues", () => {
-//   it.skip("THOROUGH INVESTIGATION When you play this character and whenever she quests, look at the top 3 cards of your deck. You may reveal a Detective character card and put it into your hand. Put the rest on the bottom of your deck in any order.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: judyHoppsUncoveringClues.cost,
-//       hand: [judyHoppsUncoveringClues],
+// Describe("Judy Hopps - Uncovering Clues", () => {
+//   It.skip("THOROUGH INVESTIGATION When you play this character and whenever she quests, look at the top 3 cards of your deck. You may reveal a Detective character card and put it into your hand. Put the rest on the bottom of your deck in any order.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: judyHoppsUncoveringClues.cost,
+//       Hand: [judyHoppsUncoveringClues],
 //     });
 //
-//     await testEngine.playCard(judyHoppsUncoveringClues);
-//     await testEngine.acceptOptionalLayer();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.playCard(judyHoppsUncoveringClues);
+//     Await testEngine.acceptOptionalLayer();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

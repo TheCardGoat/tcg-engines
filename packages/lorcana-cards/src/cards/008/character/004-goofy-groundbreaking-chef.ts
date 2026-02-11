@@ -1,17 +1,17 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type {
+// Import type {
 //   CardEffectTarget,
 //   ExertEffect,
 //   HealEffect,
 //   LorcanitoCharacterCard,
 // } from "@lorcanito/lorcana-engine";
-// import { atTheEndOfYourTurn } from "@lorcanito/lorcana-engine/abilities/atTheAbilities";
+// Import { atTheEndOfYourTurn } from "@lorcanito/lorcana-engine/abilities/atTheAbilities";
 //
-// const yourOtherDamageChars: CardEffectTarget = {
-//   type: "card",
-//   value: "all",
-//   excludeSelf: true,
-//   filters: [
+// Const yourOtherDamageChars: CardEffectTarget = {
+//   Type: "card",
+//   Value: "all",
+//   ExcludeSelf: true,
+//   Filters: [
 //     { filter: "owner", value: "self" },
 //     { filter: "zone", value: "play" },
 //     { filter: "type", value: "character" },
@@ -19,49 +19,49 @@
 //   ],
 // };
 //
-// const readyYourOtherDamagedCharacters: ExertEffect = {
-//   type: "exert",
-//   exert: false,
-//   target: yourOtherDamageChars,
+// Const readyYourOtherDamagedCharacters: ExertEffect = {
+//   Type: "exert",
+//   Exert: false,
+//   Target: yourOtherDamageChars,
 // };
 //
-// const removeOneDamageFromYourOtherCharacters: HealEffect = {
-//   type: "heal",
-//   amount: 1,
-//   upTo: true,
-//   target: yourOtherDamageChars,
+// Const removeOneDamageFromYourOtherCharacters: HealEffect = {
+//   Type: "heal",
+//   Amount: 1,
+//   UpTo: true,
+//   Target: yourOtherDamageChars,
 // };
 //
-// export const goofyGroundbreakingChef: LorcanitoCharacterCard = {
-//   id: "a5y",
-//   name: "Goofy",
-//   title: "Groundbreaking Chef",
-//   characteristics: ["storyborn", "hero"],
-//   text: "PLENTY TO GO AROUND At the end of your turn, you may remove up to 1 damage from each of your other characters. Ready each character you removed damage from this way.",
-//   type: "character",
-//   abilities: [
-//     atTheEndOfYourTurn({
-//       name: "PLENTY TO GO AROUND",
-//       text: "At the end of your turn, you may remove up to 1 damage from each of your other characters. Ready each character you removed damage from this way.",
-//       optional: true,
-//       effects: [
-//         readyYourOtherDamagedCharacters,
-//         removeOneDamageFromYourOtherCharacters,
+// Export const goofyGroundbreakingChef: LorcanitoCharacterCard = {
+//   Id: "a5y",
+//   Name: "Goofy",
+//   Title: "Groundbreaking Chef",
+//   Characteristics: ["storyborn", "hero"],
+//   Text: "PLENTY TO GO AROUND At the end of your turn, you may remove up to 1 damage from each of your other characters. Ready each character you removed damage from this way.",
+//   Type: "character",
+//   Abilities: [
+//     AtTheEndOfYourTurn({
+//       Name: "PLENTY TO GO AROUND",
+//       Text: "At the end of your turn, you may remove up to 1 damage from each of your other characters. Ready each character you removed damage from this way.",
+//       Optional: true,
+//       Effects: [
+//         ReadyYourOtherDamagedCharacters,
+//         RemoveOneDamageFromYourOtherCharacters,
 //       ],
 //     }),
 //   ],
-//   inkwell: true,
-//   colors: ["amber"],
-//   cost: 4,
-//   strength: 3,
-//   willpower: 4,
-//   illustrator: "Carlos Luzzi",
-//   number: 4,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 632719,
+//   Inkwell: true,
+//   Colors: ["amber"],
+//   Cost: 4,
+//   Strength: 3,
+//   Willpower: 4,
+//   Illustrator: "Carlos Luzzi",
+//   Number: 4,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 632719,
 //   },
-//   rarity: "legendary",
-//   lore: 2,
+//   Rarity: "legendary",
+//   Lore: 2,
 // };
 //

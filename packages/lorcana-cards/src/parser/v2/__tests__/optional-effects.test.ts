@@ -18,13 +18,13 @@ describe("Optional Effect Parser", () => {
       const effect = parseEffect("You may draw a card");
 
       expect(effect).toEqual({
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "draw",
           amount: 1,
           target: "CONTROLLER",
+          type: "draw",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       });
     });
 
@@ -32,13 +32,13 @@ describe("Optional Effect Parser", () => {
       const effect = parseEffect("you may draw a card");
 
       expect(effect).toEqual({
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "draw",
           amount: 1,
           target: "CONTROLLER",
+          type: "draw",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       });
     });
 
@@ -46,9 +46,8 @@ describe("Optional Effect Parser", () => {
       const effect = parseEffect("You may deal 2 damage to chosen character");
 
       expect(effect).toEqual({
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "deal-damage",
           amount: 2,
           target: {
             selector: "chosen",
@@ -57,8 +56,9 @@ describe("Optional Effect Parser", () => {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "deal-damage",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       });
     });
 
@@ -68,9 +68,8 @@ describe("Optional Effect Parser", () => {
       );
 
       expect(effect).toEqual({
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "return-to-hand",
           target: {
             selector: "chosen",
             count: 1,
@@ -78,8 +77,9 @@ describe("Optional Effect Parser", () => {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "return-to-hand",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       });
     });
 
@@ -87,19 +87,19 @@ describe("Optional Effect Parser", () => {
       const effect = parseEffect("You may banish chosen item");
 
       expect(effect).toEqual({
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
           type: "banish",
           // Note: "item" is correctly parsed
           target: {
-            selector: "chosen",
+            cardTypes: ["item"],
             count: 1,
             owner: "any",
+            selector: "chosen",
             zones: ["play"],
-            cardTypes: ["item"],
           },
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       });
     });
 
@@ -107,12 +107,12 @@ describe("Optional Effect Parser", () => {
       const effect = parseEffect("You may gain 1 lore");
 
       expect(effect).toEqual({
-        type: "optional",
-        effect: {
-          type: "gain-lore",
-          amount: 1,
-        },
         chooser: "CONTROLLER",
+        effect: {
+          amount: 1,
+          type: "gain-lore",
+        },
+        type: "optional",
       });
     });
 
@@ -120,9 +120,8 @@ describe("Optional Effect Parser", () => {
       const effect = parseEffect("You may exert chosen character");
 
       expect(effect).toEqual({
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "exert",
           target: {
             selector: "chosen",
             count: 1,
@@ -130,8 +129,9 @@ describe("Optional Effect Parser", () => {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "exert",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       });
     });
 
@@ -139,9 +139,8 @@ describe("Optional Effect Parser", () => {
       const effect = parseEffect("You may ready chosen character");
 
       expect(effect).toEqual({
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "ready",
           target: {
             selector: "chosen",
             count: 1,
@@ -149,8 +148,9 @@ describe("Optional Effect Parser", () => {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "ready",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       });
     });
   });
@@ -170,9 +170,8 @@ describe("Optional Effect Parser", () => {
 
       // First step should be optional exert
       expect(sequenceEffect.steps![0]).toEqual({
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "exert",
           target: {
             selector: "chosen",
             count: 1,
@@ -180,15 +179,16 @@ describe("Optional Effect Parser", () => {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "exert",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       });
 
       // Second step should be draw
       expect(sequenceEffect.steps![1]).toEqual({
-        type: "draw",
         amount: 1,
         target: "CONTROLLER",
+        type: "draw",
       });
     });
 
@@ -205,25 +205,25 @@ describe("Optional Effect Parser", () => {
       expect(sequenceEffect.steps).toHaveLength(2);
 
       expect(sequenceEffect.steps![0]).toEqual({
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
           type: "banish",
           // Note: "item" is correctly parsed
           target: {
-            selector: "chosen",
+            cardTypes: ["item"],
             count: 1,
             owner: "any",
+            selector: "chosen",
             zones: ["play"],
-            cardTypes: ["item"],
           },
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       });
 
       expect(sequenceEffect.steps![1]).toEqual({
-        type: "draw",
         amount: 2,
         target: "CONTROLLER",
+        type: "draw",
       });
     });
 
@@ -240,9 +240,8 @@ describe("Optional Effect Parser", () => {
       expect(sequenceEffect.steps).toHaveLength(2);
 
       expect(sequenceEffect.steps![0]).toEqual({
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "deal-damage",
           amount: 2,
           target: {
             selector: "chosen",
@@ -251,13 +250,14 @@ describe("Optional Effect Parser", () => {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "deal-damage",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       });
 
       expect(sequenceEffect.steps![1]).toEqual({
-        type: "gain-lore",
         amount: 1,
+        type: "gain-lore",
       });
     });
 
@@ -274,9 +274,8 @@ describe("Optional Effect Parser", () => {
       expect(sequenceEffect.steps).toHaveLength(2);
 
       expect(sequenceEffect.steps![0]).toEqual({
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "return-to-hand",
           target: {
             selector: "chosen",
             count: 1,
@@ -284,14 +283,15 @@ describe("Optional Effect Parser", () => {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "return-to-hand",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       });
 
       expect(sequenceEffect.steps![1]).toEqual({
-        type: "draw",
         amount: 1,
         target: "CONTROLLER",
+        type: "draw",
       });
     });
 
@@ -308,9 +308,8 @@ describe("Optional Effect Parser", () => {
       expect(sequenceEffect.steps).toHaveLength(2);
 
       expect(sequenceEffect.steps![0]).toEqual({
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "exert",
           target: {
             selector: "chosen",
             count: 1,
@@ -318,20 +317,21 @@ describe("Optional Effect Parser", () => {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "exert",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       });
 
       expect(sequenceEffect.steps![1]).toEqual({
-        type: "deal-damage",
         amount: 2,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "deal-damage",
       });
     });
   });
@@ -341,13 +341,13 @@ describe("Optional Effect Parser", () => {
       const effect = parseEffect("YOU MAY draw a card");
 
       expect(effect).toEqual({
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "draw",
           amount: 1,
           target: "CONTROLLER",
+          type: "draw",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       });
     });
 
@@ -355,13 +355,13 @@ describe("Optional Effect Parser", () => {
       const effect = parseEffect("You May draw a card");
 
       expect(effect).toEqual({
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "draw",
           amount: 1,
           target: "CONTROLLER",
+          type: "draw",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       });
     });
 
@@ -397,9 +397,8 @@ describe("Optional Effect Parser", () => {
       const effect = parseEffect("You may deal 3 damage to chosen character");
 
       expect(effect).toEqual({
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "deal-damage",
           amount: 3,
           target: {
             selector: "chosen",
@@ -408,8 +407,9 @@ describe("Optional Effect Parser", () => {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "deal-damage",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       });
     });
 
@@ -417,12 +417,12 @@ describe("Optional Effect Parser", () => {
       const effect = parseEffect("You may gain 2 lore");
 
       expect(effect).toEqual({
-        type: "optional",
-        effect: {
-          type: "gain-lore",
-          amount: 2,
-        },
         chooser: "CONTROLLER",
+        effect: {
+          amount: 2,
+          type: "gain-lore",
+        },
+        type: "optional",
       });
     });
 
@@ -439,25 +439,25 @@ describe("Optional Effect Parser", () => {
       expect(sequenceEffect.steps).toHaveLength(2);
 
       expect(sequenceEffect.steps![0]).toEqual({
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "draw",
           amount: 1,
           target: "CONTROLLER",
+          type: "draw",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       });
 
       expect(sequenceEffect.steps![1]).toEqual({
-        type: "deal-damage",
         amount: 2,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "deal-damage",
       });
     });
   });
@@ -468,9 +468,9 @@ describe("Optional Effect Parser", () => {
       const effect = parseEffect("draw a card");
 
       expect(effect).toEqual({
-        type: "draw",
         amount: 1,
         target: "CONTROLLER",
+        type: "draw",
       });
     });
 
@@ -501,13 +501,13 @@ describe("Optional Effect Parser", () => {
       const effect = parseEffect("you may draw a card");
 
       expect(effect).toEqual({
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "draw",
           amount: 1,
           target: "CONTROLLER",
+          type: "draw",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       });
     });
 
@@ -524,9 +524,8 @@ describe("Optional Effect Parser", () => {
       expect(sequenceEffect.steps).toHaveLength(2);
 
       expect(sequenceEffect.steps![0]).toEqual({
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "exert",
           target: {
             selector: "chosen",
             count: 1,
@@ -534,20 +533,21 @@ describe("Optional Effect Parser", () => {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "exert",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       });
 
       expect(sequenceEffect.steps![1]).toEqual({
-        type: "deal-damage",
         amount: 1,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "deal-damage",
       });
     });
   });

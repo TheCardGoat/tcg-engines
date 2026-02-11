@@ -1,59 +1,59 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// const chosenCharacter = {
-//   type: "card" as const,
-//   value: 1,
-//   filters: [
+// Const chosenCharacter = {
+//   Type: "card" as const,
+//   Value: 1,
+//   Filters: [
 //     { filter: "zone" as const, value: "play" as const },
 //     { filter: "type" as const, value: "character" as const },
 //   ],
 // };
-// const self = {
-//   type: "player" as const,
-//   value: "self" as const,
+// Const self = {
+//   Type: "player" as const,
+//   Value: "self" as const,
 // };
 //
-// export const improvise: LorcanitoActionCard = {
-//   id: "m0h",
-//   reprints: ["tdy"],
+// Export const improvise: LorcanitoActionCard = {
+//   Id: "m0h",
+//   Reprints: ["tdy"],
 //
-//   name: "Improvise",
-//   characteristics: ["action"],
-//   text: "Chosen character gets +1 {S} this turn. Draw a card.",
-//   type: "action",
-//   abilities: [
+//   Name: "Improvise",
+//   Characteristics: ["action"],
+//   Text: "Chosen character gets +1 {S} this turn. Draw a card.",
+//   Type: "action",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       text: "Chosen character gets +1 {S} this turn. Draw a card.",
-//       resolveEffectsIndividually: true,
-//       effects: [
+//       Type: "resolution",
+//       Text: "Chosen character gets +1 {S} this turn. Draw a card.",
+//       ResolveEffectsIndividually: true,
+//       Effects: [
 //         {
-//           type: "attribute",
-//           attribute: "strength",
-//           amount: 1,
-//           modifier: "add",
-//           duration: "turn",
-//           target: chosenCharacter,
+//           Type: "attribute",
+//           Attribute: "strength",
+//           Amount: 1,
+//           Modifier: "add",
+//           Duration: "turn",
+//           Target: chosenCharacter,
 //         },
 //         {
-//           type: "draw",
-//           amount: 1,
-//           target: self,
+//           Type: "draw",
+//           Amount: 1,
+//           Target: self,
 //         },
 //       ],
 //     },
 //   ],
-//   flavour: "Shan-Yu: It looks like you're out of ideas. \nMulan: Not quite!",
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 1,
-//   illustrator: "Mane Kandalyan",
-//   number: 99,
-//   set: "ROF",
-//   externalIds: {
-//     tcgPlayer: 520863,
+//   Flavour: "Shan-Yu: It looks like you're out of ideas. \nMulan: Not quite!",
+//   Inkwell: true,
+//   Colors: ["emerald"],
+//   Cost: 1,
+//   Illustrator: "Mane Kandalyan",
+//   Number: 99,
+//   Set: "ROF",
+//   ExternalIds: {
+//     TcgPlayer: 520863,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

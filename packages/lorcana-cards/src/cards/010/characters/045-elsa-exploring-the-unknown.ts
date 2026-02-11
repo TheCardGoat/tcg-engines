@@ -1,34 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const elsaExploringTheUnknown: CharacterCard = {
-  id: "744",
-  cardType: "character",
-  name: "Elsa",
-  version: "Exploring the Unknown",
-  fullName: "Elsa - Exploring the Unknown",
-  inkType: ["amethyst"],
-  franchise: "Frozen",
-  set: "010",
-  text: "CLOSER LOOK When you play this character, you may draw a card.",
-  cost: 3,
-  strength: 1,
-  willpower: 3,
-  lore: 1,
-  cardNumber: 45,
-  inkable: true,
-  externalIds: {
-    ravensburger: "19a46ebcde9538732365e630c3cd5a56fd6ec603",
-  },
   abilities: [
     {
-      id: "744-1",
-      type: "triggered",
-      name: "CLOSER LOOK",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -38,8 +12,34 @@ export const elsaExploringTheUnknown: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "744-1",
+      name: "CLOSER LOOK",
       text: "CLOSER LOOK When you play this character, you may draw a card.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 45,
+  cardType: "character",
   classifications: ["Dreamborn", "Hero", "Queen", "Sorcerer"],
+  cost: 3,
+  externalIds: {
+    ravensburger: "19a46ebcde9538732365e630c3cd5a56fd6ec603",
+  },
+  franchise: "Frozen",
+  fullName: "Elsa - Exploring the Unknown",
+  id: "744",
+  inkType: ["amethyst"],
+  inkable: true,
+  lore: 1,
+  name: "Elsa",
+  set: "010",
+  strength: 1,
+  text: "CLOSER LOOK When you play this character, you may draw a card.",
+  version: "Exploring the Unknown",
+  willpower: 3,
 };

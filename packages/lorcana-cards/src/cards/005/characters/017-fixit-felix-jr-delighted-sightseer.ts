@@ -1,37 +1,37 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { youHaveLocationInPlay } from "@lorcanito/lorcana-engine/abilities/conditions";
-// import { whenYouPlayThis } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { youHaveLocationInPlay } from "@lorcanito/lorcana-engine/abilities/conditions";
+// Import { whenYouPlayThis } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const fixitFelixJrDelightedSightseer: LorcanitoCharacterCard = {
-//   id: "m45",
-//   name: "Fix‐It Felix, Jr.",
-//   title: "Delighted Sightseer",
-//   characteristics: ["hero", "storyborn"],
-//   text: "**OH, MY LAND!** When you play this character, if you have a location in play, draw a card.",
-//   type: "character",
-//   abilities: [
-//     whenYouPlayThis({
-//       name: "OH, MY LAND!",
-//       text: "When you play this character, if you have a location in play, draw a card.",
-//       conditions: [youHaveLocationInPlay],
-//       effects: [drawACard],
+// Export const fixitFelixJrDelightedSightseer: LorcanitoCharacterCard = {
+//   Id: "m45",
+//   Name: "Fix‐It Felix, Jr.",
+//   Title: "Delighted Sightseer",
+//   Characteristics: ["hero", "storyborn"],
+//   Text: "**OH, MY LAND!** When you play this character, if you have a location in play, draw a card.",
+//   Type: "character",
+//   Abilities: [
+//     WhenYouPlayThis({
+//       Name: "OH, MY LAND!",
+//       Text: "When you play this character, if you have a location in play, draw a card.",
+//       Conditions: [youHaveLocationInPlay],
+//       Effects: [drawACard],
 //     }),
 //   ],
-//   flavour: "I don't think I've ever seen anything as sweet as this.",
-//   inkwell: true,
-//   colors: ["amber"],
-//   cost: 2,
-//   strength: 1,
-//   willpower: 3,
-//   lore: 1,
-//   illustrator: "Cristian Romero",
-//   number: 17,
-//   set: "SSK",
-//   externalIds: {
-//     tcgPlayer: 559778,
+//   Flavour: "I don't think I've ever seen anything as sweet as this.",
+//   Inkwell: true,
+//   Colors: ["amber"],
+//   Cost: 2,
+//   Strength: 1,
+//   Willpower: 3,
+//   Lore: 1,
+//   Illustrator: "Cristian Romero",
+//   Number: 17,
+//   Set: "SSK",
+//   ExternalIds: {
+//     TcgPlayer: 559778,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

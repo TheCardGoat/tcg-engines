@@ -3,98 +3,98 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { hiramFlavershamToymaker } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { hydrosIceTitan } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import {
-//   demonaScourgeOfTheWyvernClan,
-//   grimorumArcanorum,
-//   mickeyMouseAmberChampion,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { hiramFlavershamToymaker } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { hydrosIceTitan } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import {
+//   DemonaScourgeOfTheWyvernClan,
+//   GrimorumArcanorum,
+//   MickeyMouseAmberChampion,
 // } from "@lorcanito/lorcana-engine/cards/010";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Grimorum Arcanorum", () => {
-//   describe("DOCTRINA ADDUCERE - During your turn, whenever an opposing character becomes exerted, gain 1 lore.", () => {
-//     it("Gains 1 Lore", async () => {
-//       const testStore = new TestEngine(
+// Describe("Grimorum Arcanorum", () => {
+//   Describe("DOCTRINA ADDUCERE - During your turn, whenever an opposing character becomes exerted, gain 1 lore.", () => {
+//     It("Gains 1 Lore", async () => {
+//       Const testStore = new TestEngine(
 //         {
-//           inkwell: 3,
-//           play: [grimorumArcanorum, hydrosIceTitan],
+//           Inkwell: 3,
+//           Play: [grimorumArcanorum, hydrosIceTitan],
 //         },
 //         {
-//           play: [hiramFlavershamToymaker],
+//           Play: [hiramFlavershamToymaker],
 //         },
 //       );
 //
-//       const opponentCharacter = testStore.getCardModel(hiramFlavershamToymaker);
-//       await testStore.activateCard(hydrosIceTitan, {
-//         targets: [opponentCharacter],
+//       Const opponentCharacter = testStore.getCardModel(hiramFlavershamToymaker);
+//       Await testStore.activateCard(hydrosIceTitan, {
+//         Targets: [opponentCharacter],
 //       });
 //
-//       expect(opponentCharacter.exerted).toBe(true);
+//       Expect(opponentCharacter.exerted).toBe(true);
 //
-//       expect(testStore.getPlayerLore("player_one")).toBe(1);
+//       Expect(testStore.getPlayerLore("player_one")).toBe(1);
 //     });
 //
-//     it("does NOT gain lore when an opposing character is exerted during opponent's turn", async () => {
-//       const testStore = new TestEngine(
+//     It("does NOT gain lore when an opposing character is exerted during opponent's turn", async () => {
+//       Const testStore = new TestEngine(
 //         {
-//           play: [grimorumArcanorum],
+//           Play: [grimorumArcanorum],
 //         },
 //         {
-//           play: [hiramFlavershamToymaker],
+//           Play: [hiramFlavershamToymaker],
 //         },
 //       );
 //
-//       const opponentCharacter = testStore.getCardModel(hiramFlavershamToymaker);
+//       Const opponentCharacter = testStore.getCardModel(hiramFlavershamToymaker);
 //
 //       // Switch to opponent's turn
-//       await testStore.passTurn();
+//       Await testStore.passTurn();
 //
 //       // Opponent quests - should NOT trigger during opponent's turn
-//       opponentCharacter.quest();
+//       OpponentCharacter.quest();
 //
 //       // Player one should not have gained lore
-//       expect(testStore.getPlayerLore("player_two")).toBe(
-//         opponentCharacter.lore,
+//       Expect(testStore.getPlayerLore("player_two")).toBe(
+//         OpponentCharacter.lore,
 //       );
-//       expect(testStore.getPlayerLore("player_one")).toBe(0);
+//       Expect(testStore.getPlayerLore("player_one")).toBe(0);
 //     });
 //
-//     it("does not gain lore when your own character is exerted", async () => {
-//       const testStore = new TestEngine({
-//         play: [grimorumArcanorum, mickeyMouseAmberChampion],
+//     It("does not gain lore when your own character is exerted", async () => {
+//       Const testStore = new TestEngine({
+//         Play: [grimorumArcanorum, mickeyMouseAmberChampion],
 //       });
 //
-//       const ownCharacter = testStore.getCardModel(mickeyMouseAmberChampion);
+//       Const ownCharacter = testStore.getCardModel(mickeyMouseAmberChampion);
 //
 //       // Quest with own character
-//       ownCharacter.quest();
+//       OwnCharacter.quest();
 //
 //       // Should gain 1 lore from quest but NOT 1 extra from Grimorum
-//       expect(testStore.getPlayerLore("player_one")).toBe(ownCharacter.lore);
+//       Expect(testStore.getPlayerLore("player_one")).toBe(ownCharacter.lore);
 //     });
 //   });
 //
-//   describe("CELERITAS - Your characters named Demona gain Rush.", () => {
-//     it("grants Rush to characters named Demona", () => {
-//       const testStore = new TestEngine({
-//         play: [grimorumArcanorum, demonaScourgeOfTheWyvernClan],
+//   Describe("CELERITAS - Your characters named Demona gain Rush.", () => {
+//     It("grants Rush to characters named Demona", () => {
+//       Const testStore = new TestEngine({
+//         Play: [grimorumArcanorum, demonaScourgeOfTheWyvernClan],
 //       });
 //
-//       const demona = testStore.getCardModel(demonaScourgeOfTheWyvernClan);
+//       Const demona = testStore.getCardModel(demonaScourgeOfTheWyvernClan);
 //
-//       expect(demona.hasRush).toBe(true);
+//       Expect(demona.hasRush).toBe(true);
 //     });
 //
-//     it("does not grant Rush to other characters", () => {
-//       const testStore = new TestEngine({
-//         play: [grimorumArcanorum, mickeyMouseAmberChampion],
+//     It("does not grant Rush to other characters", () => {
+//       Const testStore = new TestEngine({
+//         Play: [grimorumArcanorum, mickeyMouseAmberChampion],
 //       });
 //
-//       const mickey = testStore.getCardModel(mickeyMouseAmberChampion);
+//       Const mickey = testStore.getCardModel(mickeyMouseAmberChampion);
 //
-//       expect(mickey.hasRush).toBe(false);
+//       Expect(mickey.hasRush).toBe(false);
 //     });
 //   });
 // });

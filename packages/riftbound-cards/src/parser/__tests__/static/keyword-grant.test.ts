@@ -19,11 +19,11 @@ describe("Static: Keyword Grant", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "static",
           effect: expect.objectContaining({
-            type: "grant-keyword",
             keyword: "Assault",
+            type: "grant-keyword",
           }),
+          type: "static",
         }),
       );
     });
@@ -57,11 +57,11 @@ describe("Static: Keyword Grant", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "static",
           effect: expect.objectContaining({
-            type: "grant-keyword",
             keyword: "Shield",
+            type: "grant-keyword",
           }),
+          type: "static",
         }),
       );
     });
@@ -95,11 +95,11 @@ describe("Static: Keyword Grant", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "static",
           effect: expect.objectContaining({
-            type: "grant-keyword",
             keyword: "Quick-Draw",
+            type: "grant-keyword",
           }),
+          type: "static",
         }),
       );
     });
@@ -124,10 +124,10 @@ describe("Static: Keyword Grant", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "static",
           condition: expect.objectContaining({
             type: "while-mighty",
           }),
+          type: "static",
         }),
       );
     });
@@ -141,10 +141,10 @@ describe("Static: Keyword Grant", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "static",
           condition: expect.objectContaining({
             type: "while-buffed",
           }),
+          type: "static",
         }),
       );
     });

@@ -1,48 +1,48 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { whenYouPlayThisForEachYouPayLess } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { whenYouPlayThisForEachYouPayLess } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 //
-// export const madDogKarnagesFirstMate: LorcanitoCharacterCard = {
-//   id: "a0y",
-//   name: "Mad Dog",
-//   title: "Karnage's First Mate",
-//   characteristics: ["storyborn", "ally", "pirate"],
-//   text: "ARE YOU SURE THIS IS SAFE, CAPTAIN? If you have a character named Don Karnage in play, you pay 1 {I} less to play this character.",
-//   type: "character",
-//   abilities: [
-//     whenYouPlayThisForEachYouPayLess({
-//       name: "ARE YOU SURE THIS IS SAFE, CAPTAIN?",
-//       text: "If you have a character named Don Karnage in play, you pay 1 {I} less to play this character.",
-//       amount: {
-//         dynamic: true,
-//         filterMultiplier: 1,
-//         filters: [
+// Export const madDogKarnagesFirstMate: LorcanitoCharacterCard = {
+//   Id: "a0y",
+//   Name: "Mad Dog",
+//   Title: "Karnage's First Mate",
+//   Characteristics: ["storyborn", "ally", "pirate"],
+//   Text: "ARE YOU SURE THIS IS SAFE, CAPTAIN? If you have a character named Don Karnage in play, you pay 1 {I} less to play this character.",
+//   Type: "character",
+//   Abilities: [
+//     WhenYouPlayThisForEachYouPayLess({
+//       Name: "ARE YOU SURE THIS IS SAFE, CAPTAIN?",
+//       Text: "If you have a character named Don Karnage in play, you pay 1 {I} less to play this character.",
+//       Amount: {
+//         Dynamic: true,
+//         FilterMultiplier: 1,
+//         Filters: [
 //           { filter: "owner", value: "self" },
 //           { filter: "zone", value: "play" },
 //           {
-//             filter: "attribute",
-//             value: "name",
-//             comparison: {
-//               operator: "eq",
-//               value: "Don Karnage",
+//             Filter: "attribute",
+//             Value: "name",
+//             Comparison: {
+//               Operator: "eq",
+//               Value: "Don Karnage",
 //             },
 //           },
 //         ],
 //       },
 //     }),
 //   ],
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 4,
-//   strength: 4,
-//   willpower: 4,
-//   illustrator: "Luis Huerta",
-//   number: 93,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631680,
+//   Inkwell: true,
+//   Colors: ["emerald"],
+//   Cost: 4,
+//   Strength: 4,
+//   Willpower: 4,
+//   Illustrator: "Luis Huerta",
+//   Number: 93,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631680,
 //   },
-//   rarity: "uncommon",
-//   lore: 1,
+//   Rarity: "uncommon",
+//   Lore: 1,
 // };
 //

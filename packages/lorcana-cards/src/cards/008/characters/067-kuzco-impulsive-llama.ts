@@ -1,44 +1,17 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const kuzcoImpulsiveLlama: CharacterCard = {
-  id: "1p1",
-  cardType: "character",
-  name: "Kuzco",
-  version: "Impulsive Llama",
-  fullName: "Kuzco - Impulsive Llama",
-  inkType: ["amethyst", "emerald"],
-  franchise: "Emperors New Groove",
-  set: "008",
-  text: "Shift 4 (You may pay 4 {I} to play this on top of one of your characters named Kuzco.)\nWHAT DOES THIS DO? When you play this character, each opponent chooses one of their characters and puts that card on the bottom of their deck. Then, each opponent may draw a card.",
-  cost: 7,
-  strength: 5,
-  willpower: 5,
-  lore: 2,
-  cardNumber: 67,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "ddaa75cc532753bc20bf3bb664f604e1eb978781",
-  },
   abilities: [
     {
-      id: "1p1-1",
-      type: "keyword",
-      keyword: "Shift",
       cost: {
         ink: 4,
       },
+      id: "1p1-1",
+      keyword: "Shift",
       text: "Shift 4",
+      type: "keyword",
     },
     {
-      id: "1p1-2",
-      type: "triggered",
-      name: "WHAT DOES THIS DO?",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "sequence",
         steps: [
@@ -53,8 +26,35 @@ export const kuzcoImpulsiveLlama: CharacterCard = {
           },
         ],
       },
+      id: "1p1-2",
+      name: "WHAT DOES THIS DO?",
       text: "WHAT DOES THIS DO? When you play this character, each opponent chooses one of their characters and puts that card on the bottom of their deck. Then, each opponent may draw a card.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 67,
+  cardType: "character",
   classifications: ["Floodborn", "King"],
+  cost: 7,
+  externalIds: {
+    ravensburger: "ddaa75cc532753bc20bf3bb664f604e1eb978781",
+  },
+  franchise: "Emperors New Groove",
+  fullName: "Kuzco - Impulsive Llama",
+  id: "1p1",
+  inkType: ["amethyst", "emerald"],
+  inkable: true,
+  lore: 2,
+  missingTests: true,
+  name: "Kuzco",
+  set: "008",
+  strength: 5,
+  text: "Shift 4 (You may pay 4 {I} to play this on top of one of your characters named Kuzco.)\nWHAT DOES THIS DO? When you play this character, each opponent chooses one of their characters and puts that card on the bottom of their deck. Then, each opponent may draw a card.",
+  version: "Impulsive Llama",
+  willpower: 5,
 };

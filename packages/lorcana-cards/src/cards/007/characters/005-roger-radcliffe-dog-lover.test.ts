@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { rogerRadcliffeDogLover } from "@lorcanito/lorcana-engine/cards/007/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { rogerRadcliffeDogLover } from "@lorcanito/lorcana-engine/cards/007/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Roger Radcliffe - Dog Lover", () => {
-//   it.skip("THERE YOU GO Whenever this character quests, you may remove up to 1 damage from each of your Puppy characters.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: rogerRadcliffeDogLover.cost,
-//       play: [rogerRadcliffeDogLover],
-//       hand: [rogerRadcliffeDogLover],
+// Describe("Roger Radcliffe - Dog Lover", () => {
+//   It.skip("THERE YOU GO Whenever this character quests, you may remove up to 1 damage from each of your Puppy characters.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: rogerRadcliffeDogLover.cost,
+//       Play: [rogerRadcliffeDogLover],
+//       Hand: [rogerRadcliffeDogLover],
 //     });
 //
-//     await testEngine.playCard(rogerRadcliffeDogLover);
+//     Await testEngine.playCard(rogerRadcliffeDogLover);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

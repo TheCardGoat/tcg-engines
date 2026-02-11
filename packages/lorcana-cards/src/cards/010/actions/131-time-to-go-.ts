@@ -1,58 +1,58 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type {
+// Import type {
 //   CardEffectTarget,
 //   LorcanitoActionCard,
 // } from "@lorcanito/lorcana-engine";
-// import { chosenCharacterOfYours } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import { chosenCharacterOfYours } from "@lorcanito/lorcana-engine/abilities/targets";
 //
-// import { drawXCards } from "@lorcanito/lorcana-engine/effects/effects";
+// Import { drawXCards } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// const characterOfYoursWithACardUnderThem: CardEffectTarget = {
-//   type: "card",
-//   value: 1,
-//   filters: [
+// Const characterOfYoursWithACardUnderThem: CardEffectTarget = {
+//   Type: "card",
+//   Value: 1,
+//   Filters: [
 //     { filter: "has_card_under_them" },
 //     { filter: "owner", value: "self" },
 //     { filter: "type", value: "character" },
 //   ],
 // };
 //
-// export const timeToGo: LorcanitoActionCard = {
-//   id: "or3",
-//   name: "Time to Go!",
-//   characteristics: ["action"],
-//   text: "Banish chosen character of yours to draw 2 cards. If that character had a card under them, draw 3 cards instead.",
-//   type: "action",
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 3,
-//   illustrator: "Matthew Robert Davies",
-//   number: 131,
-//   set: "010",
-//   externalIds: {
-//     tcgPlayer: 660003,
+// Export const timeToGo: LorcanitoActionCard = {
+//   Id: "or3",
+//   Name: "Time to Go!",
+//   Characteristics: ["action"],
+//   Text: "Banish chosen character of yours to draw 2 cards. If that character had a card under them, draw 3 cards instead.",
+//   Type: "action",
+//   Inkwell: true,
+//   Colors: ["ruby"],
+//   Cost: 3,
+//   Illustrator: "Matthew Robert Davies",
+//   Number: 131,
+//   Set: "010",
+//   ExternalIds: {
+//     TcgPlayer: 660003,
 //   },
-//   rarity: "uncommon",
-//   abilities: [
+//   Rarity: "uncommon",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       effects: [
+//       Type: "resolution",
+//       Effects: [
 //         {
-//           type: "target-conditional",
-//           target: chosenCharacterOfYours,
-//           effects: [
+//           Type: "target-conditional",
+//           Target: chosenCharacterOfYours,
+//           Effects: [
 //             {
-//               type: "banish",
-//               target: characterOfYoursWithACardUnderThem,
+//               Type: "banish",
+//               Target: characterOfYoursWithACardUnderThem,
 //             },
-//             drawXCards(3),
+//             DrawXCards(3),
 //           ],
-//           fallback: [
+//           Fallback: [
 //             {
-//               type: "banish",
-//               target: chosenCharacterOfYours,
+//               Type: "banish",
+//               Target: chosenCharacterOfYours,
 //             },
-//             drawXCards(2),
+//             DrawXCards(2),
 //           ],
 //         },
 //       ],

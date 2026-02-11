@@ -1,43 +1,43 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+// Import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const theyNeverComeBack: LorcanitoActionCard = {
-//   id: "dtw",
-//   name: "They Never Come Back",
-//   characteristics: ["action"],
-//   text: "Up to 2 chosen characters can't ready at the start of their next turn. Draw a card.",
-//   type: "action",
-//   abilities: [
+// Export const theyNeverComeBack: LorcanitoActionCard = {
+//   Id: "dtw",
+//   Name: "They Never Come Back",
+//   Characteristics: ["action"],
+//   Text: "Up to 2 chosen characters can't ready at the start of their next turn. Draw a card.",
+//   Type: "action",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       resolveEffectsIndividually: true,
-//       effects: [
-//         drawACard,
+//       Type: "resolution",
+//       ResolveEffectsIndividually: true,
+//       Effects: [
+//         DrawACard,
 //         {
-//           type: "restriction",
-//           restriction: "ready-at-start-of-turn",
-//           duration: "next_turn",
-//           target: {
-//             type: "card",
-//             value: 2,
-//             upTo: true,
-//             filters: chosenCharacter.filters,
+//           Type: "restriction",
+//           Restriction: "ready-at-start-of-turn",
+//           Duration: "next_turn",
+//           Target: {
+//             Type: "card",
+//             Value: 2,
+//             UpTo: true,
+//             Filters: chosenCharacter.filters,
 //           },
 //         },
 //       ],
 //     },
 //   ],
-//   inkwell: true,
-//   colors: ["amethyst"],
-//   cost: 3,
-//   illustrator: "Saulo Nate",
-//   number: 78,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631694,
+//   Inkwell: true,
+//   Colors: ["amethyst"],
+//   Cost: 3,
+//   Illustrator: "Saulo Nate",
+//   Number: 78,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631694,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

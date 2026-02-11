@@ -3,68 +3,68 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   grumpySkepticalKnight,
-//   happyLivelyKnight,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   GrumpySkepticalKnight,
+//   HappyLivelyKnight,
 // } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
-// import { cursedMerfolkUrsulasHandiwork } from "../../003/characters/characters";
-// import { sevenDwarfsMineSecureFortress } from "../locations/204-seven-dwarfs-mine-secure-fortress";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { cursedMerfolkUrsulasHandiwork } from "../../003/characters/characters";
+// Import { sevenDwarfsMineSecureFortress } from "../locations/204-seven-dwarfs-mine-secure-fortress";
 //
-// describe("Grumpy - Skeptical Knight", () => {
-//   it("**BOON OF RESILIENCE** While one of your Knight characters is at a location, that character gains Resist +2. _(Damage dealt to them is reduced by 2)._", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: 8,
-//       play: [
-//         grumpySkepticalKnight,
-//         happyLivelyKnight,
-//         sevenDwarfsMineSecureFortress,
-//         cursedMerfolkUrsulasHandiwork,
+// Describe("Grumpy - Skeptical Knight", () => {
+//   It("**BOON OF RESILIENCE** While one of your Knight characters is at a location, that character gains Resist +2. _(Damage dealt to them is reduced by 2)._", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: 8,
+//       Play: [
+//         GrumpySkepticalKnight,
+//         HappyLivelyKnight,
+//         SevenDwarfsMineSecureFortress,
+//         CursedMerfolkUrsulasHandiwork,
 //       ],
 //     });
 //
-//     expect(testEngine.getCardModel(grumpySkepticalKnight).hasResist).toBe(
-//       false,
+//     Expect(testEngine.getCardModel(grumpySkepticalKnight).hasResist).toBe(
+//       False,
 //     );
 //
-//     await testEngine.moveToLocation({
-//       location: sevenDwarfsMineSecureFortress,
-//       character: happyLivelyKnight,
+//     Await testEngine.moveToLocation({
+//       Location: sevenDwarfsMineSecureFortress,
+//       Character: happyLivelyKnight,
 //     });
-//     await testEngine.skipTopOfStack();
+//     Await testEngine.skipTopOfStack();
 //
-//     expect(testEngine.getCardModel(happyLivelyKnight).hasResist).toBe(true);
+//     Expect(testEngine.getCardModel(happyLivelyKnight).hasResist).toBe(true);
 //
-//     await testEngine.moveToLocation({
-//       location: sevenDwarfsMineSecureFortress,
-//       character: grumpySkepticalKnight,
-//     });
-//
-//     expect(testEngine.getCardModel(grumpySkepticalKnight).hasResist).toBe(true);
-//
-//     await testEngine.moveToLocation({
-//       location: sevenDwarfsMineSecureFortress,
-//       character: cursedMerfolkUrsulasHandiwork,
+//     Await testEngine.moveToLocation({
+//       Location: sevenDwarfsMineSecureFortress,
+//       Character: grumpySkepticalKnight,
 //     });
 //
-//     expect(
-//       testEngine.getCardModel(cursedMerfolkUrsulasHandiwork).hasResist,
+//     Expect(testEngine.getCardModel(grumpySkepticalKnight).hasResist).toBe(true);
+//
+//     Await testEngine.moveToLocation({
+//       Location: sevenDwarfsMineSecureFortress,
+//       Character: cursedMerfolkUrsulasHandiwork,
+//     });
+//
+//     Expect(
+//       TestEngine.getCardModel(cursedMerfolkUrsulasHandiwork).hasResist,
 //     ).toBe(false);
 //   });
 //
-//   it("**BURST OF SPEED** During your turn, this character gains Evasive. _(They can challenge characters with Evasive.)_", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: grumpySkepticalKnight.cost,
-//       play: [grumpySkepticalKnight],
+//   It("**BURST OF SPEED** During your turn, this character gains Evasive. _(They can challenge characters with Evasive.)_", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: grumpySkepticalKnight.cost,
+//       Play: [grumpySkepticalKnight],
 //     });
 //
-//     expect(testEngine.getCardModel(grumpySkepticalKnight).hasEvasive).toBe(
-//       true,
+//     Expect(testEngine.getCardModel(grumpySkepticalKnight).hasEvasive).toBe(
+//       True,
 //     );
-//     await testEngine.passTurn();
-//     expect(testEngine.getCardModel(grumpySkepticalKnight).hasEvasive).toBe(
-//       false,
+//     Await testEngine.passTurn();
+//     Expect(testEngine.getCardModel(grumpySkepticalKnight).hasEvasive).toBe(
+//       False,
 //     );
 //   });
 // });

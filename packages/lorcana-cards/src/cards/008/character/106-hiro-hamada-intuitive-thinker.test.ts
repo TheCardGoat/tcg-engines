@@ -3,30 +3,30 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   hiroHamadaIntuitiveThinker,
-//   lumiereFiredUp,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   HiroHamadaIntuitiveThinker,
+//   LumiereFiredUp,
 // } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Hiro Hamada - Intuitive Thinker", () => {
-//   it("LOOK FOR A NEW ANGLE {E} - Ready chosen Floodborn character.", async () => {
-//     const testEngine = new TestEngine({
-//       play: [hiroHamadaIntuitiveThinker, lumiereFiredUp],
+// Describe("Hiro Hamada - Intuitive Thinker", () => {
+//   It("LOOK FOR A NEW ANGLE {E} - Ready chosen Floodborn character.", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [hiroHamadaIntuitiveThinker, lumiereFiredUp],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(hiroHamadaIntuitiveThinker);
-//     const target = testEngine.getCardModel(lumiereFiredUp);
+//     Const cardUnderTest = testEngine.getCardModel(hiroHamadaIntuitiveThinker);
+//     Const target = testEngine.getCardModel(lumiereFiredUp);
 //
-//     target.exert();
+//     Target.exert();
 //
-//     await testEngine.activateCard(cardUnderTest, {
-//       ability: "LOOK FOR A NEW ANGLE",
-//       targets: [target],
+//     Await testEngine.activateCard(cardUnderTest, {
+//       Ability: "LOOK FOR A NEW ANGLE",
+//       Targets: [target],
 //     });
 //
-//     expect(target.exerted).toBe(false);
+//     Expect(target.exerted).toBe(false);
 //   });
 // });
 //

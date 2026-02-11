@@ -1,24 +1,8 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
 export const undermine: ActionCard = {
-  id: "z6k",
-  cardType: "action",
-  name: "Undermine",
-  inkType: ["emerald", "ruby"],
-  franchise: "Atlantis",
-  set: "008",
-  text: "Chosen opponent chooses and discards a card. Chosen character gets +2 {S} this turn.",
-  cost: 2,
-  cardNumber: 117,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "7ecd02fc2b52fa45baec4adfd9a638d543b1d8de",
-  },
   abilities: [
     {
-      id: "z6k-1",
-      type: "action",
       effect: {
         type: "sequence",
         steps: [
@@ -43,7 +27,23 @@ export const undermine: ActionCard = {
           },
         ],
       },
+      id: "z6k-1",
       text: "Chosen opponent chooses and discards a card. Chosen character gets +2 {S} this turn.",
+      type: "action",
     },
   ],
+  cardNumber: 117,
+  cardType: "action",
+  cost: 2,
+  externalIds: {
+    ravensburger: "7ecd02fc2b52fa45baec4adfd9a638d543b1d8de",
+  },
+  franchise: "Atlantis",
+  id: "z6k",
+  inkType: ["emerald", "ruby"],
+  inkable: true,
+  missingTests: true,
+  name: "Undermine",
+  set: "008",
+  text: "Chosen opponent chooses and discards a card. Chosen character gets +2 {S} this turn.",
 };

@@ -1,35 +1,35 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import type { PlayConditionAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { youHaveDealtDamageToOpposingCharacterThisTurn } from "@lorcanito/lorcana-engine/abilities/conditions";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import type { PlayConditionAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import { youHaveDealtDamageToOpposingCharacterThisTurn } from "@lorcanito/lorcana-engine/abilities/conditions";
 //
-// export const nathanielFlintNotoriousPirate: LorcanitoCharacterCard = {
-//   id: "dns",
-//   name: "Nathaniel Flint",
-//   title: "Notorious Pirate",
-//   characteristics: ["storyborn", "villain", "alien", "pirate", "captain"],
-//   text: "PREDATORY INSTINCT You can't play this character unless an opposing character was damaged this turn.",
-//   type: "character",
-//   abilities: [
+// Export const nathanielFlintNotoriousPirate: LorcanitoCharacterCard = {
+//   Id: "dns",
+//   Name: "Nathaniel Flint",
+//   Title: "Notorious Pirate",
+//   Characteristics: ["storyborn", "villain", "alien", "pirate", "captain"],
+//   Text: "PREDATORY INSTINCT You can't play this character unless an opposing character was damaged this turn.",
+//   Type: "character",
+//   Abilities: [
 //     {
-//       type: "play-condition",
-//       name: "PREDATORY INSTINCT",
-//       text: "You can't play this character unless an opposing character was damaged this turn.",
-//       conditions: [youHaveDealtDamageToOpposingCharacterThisTurn],
+//       Type: "play-condition",
+//       Name: "PREDATORY INSTINCT",
+//       Text: "You can't play this character unless an opposing character was damaged this turn.",
+//       Conditions: [youHaveDealtDamageToOpposingCharacterThisTurn],
 //     } as PlayConditionAbility,
 //   ],
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 2,
-//   strength: 3,
-//   willpower: 3,
-//   illustrator: "Edu Francisco",
-//   number: 196,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631836,
+//   Inkwell: true,
+//   Colors: ["steel"],
+//   Cost: 2,
+//   Strength: 3,
+//   Willpower: 3,
+//   Illustrator: "Edu Francisco",
+//   Number: 196,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631836,
 //   },
-//   rarity: "rare",
-//   lore: 2,
+//   Rarity: "rare",
+//   Lore: 2,
 // };
 //

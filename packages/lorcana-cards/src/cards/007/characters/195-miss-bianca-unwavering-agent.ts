@@ -1,29 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const missBiancaUnwaveringAgent: CharacterCard = {
-  id: "jeo",
-  cardType: "character",
-  name: "Miss Bianca",
-  version: "Unwavering Agent",
-  fullName: "Miss Bianca - Unwavering Agent",
-  inkType: ["steel"],
-  franchise: "Rescuers",
-  set: "007",
-  text: "HAVE A LITTLE FAITH If you have an Ally character in play, you pay 2 {I} less to play this character.",
-  cost: 6,
-  strength: 5,
-  willpower: 5,
-  lore: 1,
-  cardNumber: 195,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "45f268b2214fbccf3540a2e7412282b75f6885a1",
-  },
   abilities: [
     {
-      id: "jeo-1",
-      type: "action",
       effect: {
         type: "conditional",
         condition: {
@@ -35,8 +14,29 @@ export const missBiancaUnwaveringAgent: CharacterCard = {
           from: "hand",
         },
       },
+      id: "jeo-1",
       text: "HAVE A LITTLE FAITH If you have an Ally character in play, you pay 2 {I} less to play this character.",
+      type: "action",
     },
   ],
+  cardNumber: 195,
+  cardType: "character",
   classifications: ["Dreamborn", "Hero"],
+  cost: 6,
+  externalIds: {
+    ravensburger: "45f268b2214fbccf3540a2e7412282b75f6885a1",
+  },
+  franchise: "Rescuers",
+  fullName: "Miss Bianca - Unwavering Agent",
+  id: "jeo",
+  inkType: ["steel"],
+  inkable: true,
+  lore: 1,
+  missingTests: true,
+  name: "Miss Bianca",
+  set: "007",
+  strength: 5,
+  text: "HAVE A LITTLE FAITH If you have an Ally character in play, you pay 2 {I} less to play this character.",
+  version: "Unwavering Agent",
+  willpower: 5,
 };

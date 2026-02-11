@@ -3,39 +3,39 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { mulanInjuredSoldier } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { herculesMightyLeader } from "@lorcanito/lorcana-engine/cards/010";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { mulanInjuredSoldier } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { herculesMightyLeader } from "@lorcanito/lorcana-engine/cards/010";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Mulan - Injured Soldier", () => {
-//   it("**BLESSURE AU COMBAT** This character enters play with 2 damage.", () => {
-//     const testStore = new TestStore({
-//       inkwell: mulanInjuredSoldier.cost,
-//       hand: [mulanInjuredSoldier],
+// Describe("Mulan - Injured Soldier", () => {
+//   It("**BLESSURE AU COMBAT** This character enters play with 2 damage.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: mulanInjuredSoldier.cost,
+//       Hand: [mulanInjuredSoldier],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(mulanInjuredSoldier);
+//     Const cardUnderTest = testStore.getCard(mulanInjuredSoldier);
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     expect(cardUnderTest.damage).toEqual(2);
+//     Expect(cardUnderTest.damage).toEqual(2);
 //   });
 // });
 //
-// describe("Regression", () => {
-//   it("Mulan + Hercules interaction", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: mulanInjuredSoldier.cost,
-//       hand: [mulanInjuredSoldier],
-//       play: [herculesMightyLeader],
+// Describe("Regression", () => {
+//   It("Mulan + Hercules interaction", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: mulanInjuredSoldier.cost,
+//       Hand: [mulanInjuredSoldier],
+//       Play: [herculesMightyLeader],
 //     });
 //
-//     await testEngine.exertCard(herculesMightyLeader);
-//     await testEngine.playCard(mulanInjuredSoldier);
+//     Await testEngine.exertCard(herculesMightyLeader);
+//     Await testEngine.playCard(mulanInjuredSoldier);
 //
-//     expect(testEngine.getCardModel(mulanInjuredSoldier).damage).toEqual(2);
+//     Expect(testEngine.getCardModel(mulanInjuredSoldier).damage).toEqual(2);
 //   });
 // });
 //

@@ -3,30 +3,30 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   charlotteLaBouffMardiGrasPrincess,
-//   darlingDearBelovedWife,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   CharlotteLaBouffMardiGrasPrincess,
+//   DarlingDearBelovedWife,
 // } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Darling Dear - Beloved Wife", () => {
-//   it("HOW SWEET When you play this character, chosen character gets +2 {L} this turn.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: darlingDearBelovedWife.cost,
-//       hand: [darlingDearBelovedWife],
-//       play: [charlotteLaBouffMardiGrasPrincess],
+// Describe("Darling Dear - Beloved Wife", () => {
+//   It("HOW SWEET When you play this character, chosen character gets +2 {L} this turn.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: darlingDearBelovedWife.cost,
+//       Hand: [darlingDearBelovedWife],
+//       Play: [charlotteLaBouffMardiGrasPrincess],
 //     });
 //
-//     const cardToTest = testEngine.getCardModel(darlingDearBelovedWife);
-//     const targetCard = testEngine.getCardModel(
-//       charlotteLaBouffMardiGrasPrincess,
+//     Const cardToTest = testEngine.getCardModel(darlingDearBelovedWife);
+//     Const targetCard = testEngine.getCardModel(
+//       CharlotteLaBouffMardiGrasPrincess,
 //     );
 //
-//     await testEngine.playCard(cardToTest);
-//     await testEngine.resolveTopOfStack({ targets: [targetCard] });
+//     Await testEngine.playCard(cardToTest);
+//     Await testEngine.resolveTopOfStack({ targets: [targetCard] });
 //
-//     expect(targetCard.lore).toBe(targetCard.strength + 2);
+//     Expect(targetCard.lore).toBe(targetCard.strength + 2);
 //   });
 // });
 //

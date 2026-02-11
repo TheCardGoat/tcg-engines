@@ -5,9 +5,9 @@ import { scarMastermind } from "./158-scar-mastermind";
 describe("Scar - Mastermind", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [scarMastermind] });
-  //   expect(testEngine.getCardModel(scarMastermind).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [scarMastermind] });
+  //   Expect(testEngine.getCardModel(scarMastermind).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -16,36 +16,36 @@ describe("Scar - Mastermind", () => {
 // /**
 //  * @jest-environment node
 //  */
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   scarMastermind,
-//   tamatoaSoShiny,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   ScarMastermind,
+//   TamatoaSoShiny,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Scar Mastermind", () => {
-//   it("DISARMING Beauty effect - Chosen characters gets -2 {S} this turn.", () => {
-//     const testStore = new TestStore(
+// Describe("Scar Mastermind", () => {
+//   It("DISARMING Beauty effect - Chosen characters gets -2 {S} this turn.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: scarMastermind.cost,
-//         hand: [scarMastermind],
+//         Inkwell: scarMastermind.cost,
+//         Hand: [scarMastermind],
 //       },
 //       {
-//         play: [tamatoaSoShiny],
+//         Play: [tamatoaSoShiny],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", scarMastermind.id);
-//     const target = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", scarMastermind.id);
+//     Const target = testStore.getByZoneAndId(
 //       "play",
-//       tamatoaSoShiny.id,
+//       TamatoaSoShiny.id,
 //       "player_two",
 //     );
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveTopOfStack({ targetId: target.instanceId });
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveTopOfStack({ targetId: target.instanceId });
 //
-//     expect(target.strength).toEqual((target.lorcanitoCard.strength || 0) - 5);
+//     Expect(target.strength).toEqual((target.lorcanitoCard.strength || 0) - 5);
 //   });
 // });
 //

@@ -3,25 +3,25 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { princeEricExpertHelmsman } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { princeEricExpertHelmsman } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Prince Eric - Expert Helmsman", () => {
-//   it.skip("**SURPRISE MANEUVER** When this character is banished, you may banish chosen character.", () => {
-//     const testStore = new TestStore({
-//       inkwell: princeEricExpertHelmsman.cost,
-//       play: [princeEricExpertHelmsman],
+// Describe("Prince Eric - Expert Helmsman", () => {
+//   It.skip("**SURPRISE MANEUVER** When this character is banished, you may banish chosen character.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: princeEricExpertHelmsman.cost,
+//       Play: [princeEricExpertHelmsman],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       princeEricExpertHelmsman.id,
+//       PrinceEricExpertHelmsman.id,
 //     );
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

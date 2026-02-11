@@ -3,84 +3,84 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { healingGlow } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
-// import { magicBroomBucketBrigade } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { healingGlow } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
+// Import { magicBroomBucketBrigade } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("HealingGlow", () => {
-//   it("healing 2 damage", () => {
-//     const testStore = new TestStore({
-//       inkwell: healingGlow.cost,
-//       hand: [healingGlow],
-//       play: [magicBroomBucketBrigade],
+// Describe("HealingGlow", () => {
+//   It("healing 2 damage", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: healingGlow.cost,
+//       Hand: [healingGlow],
+//       Play: [magicBroomBucketBrigade],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", healingGlow.id);
-//     const target = testStore.getByZoneAndId("play", magicBroomBucketBrigade.id);
-//     target.updateCardMeta({ damage: 2 });
-//     expect(
-//       testStore.getByZoneAndId("play", magicBroomBucketBrigade.id).meta,
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", healingGlow.id);
+//     Const target = testStore.getByZoneAndId("play", magicBroomBucketBrigade.id);
+//     Target.updateCardMeta({ damage: 2 });
+//     Expect(
+//       TestStore.getByZoneAndId("play", magicBroomBucketBrigade.id).meta,
 //     ).toEqual(expect.objectContaining({ damage: 2 }));
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     testStore.resolveTopOfStack({
-//       targetId: target.instanceId,
+//     TestStore.resolveTopOfStack({
+//       TargetId: target.instanceId,
 //     });
 //
-//     expect(
-//       testStore.getByZoneAndId("play", magicBroomBucketBrigade.id).meta,
+//     Expect(
+//       TestStore.getByZoneAndId("play", magicBroomBucketBrigade.id).meta,
 //     ).toEqual(expect.objectContaining({ damage: 0 }));
 //   });
 //
-//   it("healing 1 damage", () => {
-//     const testStore = new TestStore({
-//       inkwell: healingGlow.cost,
-//       hand: [healingGlow],
-//       play: [magicBroomBucketBrigade],
+//   It("healing 1 damage", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: healingGlow.cost,
+//       Hand: [healingGlow],
+//       Play: [magicBroomBucketBrigade],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", healingGlow.id);
-//     const target = testStore.getByZoneAndId("play", magicBroomBucketBrigade.id);
-//     target.updateCardMeta({ damage: 1 });
-//     expect(
-//       testStore.getByZoneAndId("play", magicBroomBucketBrigade.id).meta,
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", healingGlow.id);
+//     Const target = testStore.getByZoneAndId("play", magicBroomBucketBrigade.id);
+//     Target.updateCardMeta({ damage: 1 });
+//     Expect(
+//       TestStore.getByZoneAndId("play", magicBroomBucketBrigade.id).meta,
 //     ).toEqual(expect.objectContaining({ damage: 1 }));
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     testStore.resolveTopOfStack({
-//       targetId: target.instanceId,
+//     TestStore.resolveTopOfStack({
+//       TargetId: target.instanceId,
 //     });
 //
-//     expect(
-//       testStore.getByZoneAndId("play", magicBroomBucketBrigade.id).meta,
+//     Expect(
+//       TestStore.getByZoneAndId("play", magicBroomBucketBrigade.id).meta,
 //     ).toEqual(expect.objectContaining({ damage: 0 }));
 //   });
 //
-//   it("healing 0 damage", () => {
-//     const testStore = new TestStore({
-//       inkwell: healingGlow.cost,
-//       hand: [healingGlow],
-//       play: [magicBroomBucketBrigade],
+//   It("healing 0 damage", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: healingGlow.cost,
+//       Hand: [healingGlow],
+//       Play: [magicBroomBucketBrigade],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", healingGlow.id);
-//     const target = testStore.getByZoneAndId("play", magicBroomBucketBrigade.id);
-//     target.updateCardMeta({ damage: 0 });
-//     expect(
-//       testStore.getByZoneAndId("play", magicBroomBucketBrigade.id).meta,
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", healingGlow.id);
+//     Const target = testStore.getByZoneAndId("play", magicBroomBucketBrigade.id);
+//     Target.updateCardMeta({ damage: 0 });
+//     Expect(
+//       TestStore.getByZoneAndId("play", magicBroomBucketBrigade.id).meta,
 //     ).toEqual(expect.objectContaining({ damage: 0 }));
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     testStore.resolveTopOfStack({
-//       targetId: target.instanceId,
+//     TestStore.resolveTopOfStack({
+//       TargetId: target.instanceId,
 //     });
 //
-//     expect(
-//       testStore.getByZoneAndId("play", magicBroomBucketBrigade.id).meta,
+//     Expect(
+//       TestStore.getByZoneAndId("play", magicBroomBucketBrigade.id).meta,
 //     ).toEqual(expect.objectContaining({ damage: 0 }));
 //   });
 // });

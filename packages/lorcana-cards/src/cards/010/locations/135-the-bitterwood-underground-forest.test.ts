@@ -3,103 +3,103 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   mickeyMouseDetective,
-//   simbaKingInTheMaking,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   MickeyMouseDetective,
+//   SimbaKingInTheMaking,
 // } from "@lorcanito/lorcana-engine/cards/010/characters/characters";
-// import { theBitterwoodUndergroundForest } from "@lorcanito/lorcana-engine/cards/010/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { theBitterwoodUndergroundForest } from "@lorcanito/lorcana-engine/cards/010/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("The Bitterwood - Underground Forest", () => {
-//   describe("GATHER RESOURCES - Once during your turn, whenever you move a character with 5 {S} or more here, you may draw a card", () => {
-//     it("should trigger and draw a card when moving a character with 5+ strength to the location", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: theBitterwoodUndergroundForest.moveCost + 1,
-//         play: [theBitterwoodUndergroundForest, simbaKingInTheMaking],
+// Describe("The Bitterwood - Underground Forest", () => {
+//   Describe("GATHER RESOURCES - Once during your turn, whenever you move a character with 5 {S} or more here, you may draw a card", () => {
+//     It("should trigger and draw a card when moving a character with 5+ strength to the location", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: theBitterwoodUndergroundForest.moveCost + 1,
+//         Play: [theBitterwoodUndergroundForest, simbaKingInTheMaking],
 //       });
 //
-//       const location = testEngine.getCardModel(theBitterwoodUndergroundForest);
-//       const initialHandSize = testEngine.getZonesCardCount().hand;
+//       Const location = testEngine.getCardModel(theBitterwoodUndergroundForest);
+//       Const initialHandSize = testEngine.getZonesCardCount().hand;
 //
-//       await testEngine.moveToLocation({
-//         location: theBitterwoodUndergroundForest,
-//         character: simbaKingInTheMaking,
+//       Await testEngine.moveToLocation({
+//         Location: theBitterwoodUndergroundForest,
+//         Character: simbaKingInTheMaking,
 //       });
 //
-//       await testEngine.acceptOptionalLayer();
+//       Await testEngine.acceptOptionalLayer();
 //
-//       expect(testEngine.getZonesCardCount().hand).toBe(initialHandSize + 1);
-//       expect(testEngine.stackLayers).toHaveLength(0);
+//       Expect(testEngine.getZonesCardCount().hand).toBe(initialHandSize + 1);
+//       Expect(testEngine.stackLayers).toHaveLength(0);
 //     });
 //
-//     it("should not trigger when moving a character with less than 5 strength", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: theBitterwoodUndergroundForest.moveCost + 1,
-//         play: [theBitterwoodUndergroundForest, mickeyMouseDetective],
+//     It("should not trigger when moving a character with less than 5 strength", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: theBitterwoodUndergroundForest.moveCost + 1,
+//         Play: [theBitterwoodUndergroundForest, mickeyMouseDetective],
 //       });
 //
-//       await testEngine.moveToLocation({
-//         location: theBitterwoodUndergroundForest,
-//         character: mickeyMouseDetective,
+//       Await testEngine.moveToLocation({
+//         Location: theBitterwoodUndergroundForest,
+//         Character: mickeyMouseDetective,
 //       });
 //
-//       expect(testEngine.stackLayers).toHaveLength(0);
+//       Expect(testEngine.stackLayers).toHaveLength(0);
 //     });
 //
-//     it("should only trigger once per turn", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: theBitterwoodUndergroundForest.moveCost * 2 + 2,
-//         play: [
-//           theBitterwoodUndergroundForest,
-//           simbaKingInTheMaking,
-//           mickeyMouseDetective,
+//     It("should only trigger once per turn", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: theBitterwoodUndergroundForest.moveCost * 2 + 2,
+//         Play: [
+//           TheBitterwoodUndergroundForest,
+//           SimbaKingInTheMaking,
+//           MickeyMouseDetective,
 //         ],
 //       });
 //
-//       const initialHandSize = testEngine.getZonesCardCount().hand;
+//       Const initialHandSize = testEngine.getZonesCardCount().hand;
 //
 //       // First move - should trigger
-//       await testEngine.moveToLocation({
-//         location: theBitterwoodUndergroundForest,
-//         character: simbaKingInTheMaking,
+//       Await testEngine.moveToLocation({
+//         Location: theBitterwoodUndergroundForest,
+//         Character: simbaKingInTheMaking,
 //       });
 //
-//       await testEngine.acceptOptionalLayer();
+//       Await testEngine.acceptOptionalLayer();
 //
-//       expect(testEngine.getZonesCardCount().hand).toBe(initialHandSize + 1);
+//       Expect(testEngine.getZonesCardCount().hand).toBe(initialHandSize + 1);
 //
 //       // Move character away from location
-//       const simbaModel = testEngine.getCardModel(simbaKingInTheMaking);
-//       simbaModel.leaveLocation();
+//       Const simbaModel = testEngine.getCardModel(simbaKingInTheMaking);
+//       SimbaModel.leaveLocation();
 //
 //       // Second move - should not trigger (once per turn)
-//       await testEngine.moveToLocation({
-//         location: theBitterwoodUndergroundForest,
-//         character: simbaKingInTheMaking,
+//       Await testEngine.moveToLocation({
+//         Location: theBitterwoodUndergroundForest,
+//         Character: simbaKingInTheMaking,
 //       });
 //
-//       expect(testEngine.stackLayers).toHaveLength(0);
-//       expect(testEngine.getZonesCardCount().hand).toBe(initialHandSize + 1);
+//       Expect(testEngine.stackLayers).toHaveLength(0);
+//       Expect(testEngine.getZonesCardCount().hand).toBe(initialHandSize + 1);
 //     });
 //
-//     it("should be optional - ability is triggered but can be declined", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: theBitterwoodUndergroundForest.moveCost + 1,
-//         play: [theBitterwoodUndergroundForest, simbaKingInTheMaking],
+//     It("should be optional - ability is triggered but can be declined", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: theBitterwoodUndergroundForest.moveCost + 1,
+//         Play: [theBitterwoodUndergroundForest, simbaKingInTheMaking],
 //       });
 //
-//       await testEngine.moveToLocation({
-//         location: theBitterwoodUndergroundForest,
-//         character: simbaKingInTheMaking,
+//       Await testEngine.moveToLocation({
+//         Location: theBitterwoodUndergroundForest,
+//         Character: simbaKingInTheMaking,
 //       });
 //
 //       // Verify the optional ability was triggered
-//       expect(testEngine.stackLayers.length).toBeGreaterThan(0);
-//       const topLayer =
-//         testEngine.stackLayers[testEngine.stackLayers.length - 1];
-//       expect(topLayer).toBeDefined();
-//       expect(topLayer?.ability.optional).toBe(true);
+//       Expect(testEngine.stackLayers.length).toBeGreaterThan(0);
+//       Const topLayer =
+//         TestEngine.stackLayers[testEngine.stackLayers.length - 1];
+//       Expect(topLayer).toBeDefined();
+//       Expect(topLayer?.ability.optional).toBe(true);
 //     });
 //   });
 // });

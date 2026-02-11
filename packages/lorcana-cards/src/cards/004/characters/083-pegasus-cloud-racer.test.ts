@@ -3,68 +3,68 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   stichtCarefreeSurfer,
-//   stichtNewDog,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   StichtCarefreeSurfer,
+//   StichtNewDog,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import {
-//   aladdinBraveRescuer,
-//   pegasusCloudRacer,
-//   pegasusGiftForHercules,
+// Import {
+//   AladdinBraveRescuer,
+//   PegasusCloudRacer,
+//   PegasusGiftForHercules,
 // } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import {
-//   kronkHeadOfSecurity,
-//   liloJuniorCakeDecorator,
+// Import {
+//   KronkHeadOfSecurity,
+//   LiloJuniorCakeDecorator,
 // } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Pegasus - Cloud Racer", () => {
-//   describe("Regression", () => {
-//     it("Playing a new character should not cancel the effect on existing characters", async () => {
-//       const cardsInPlay = [aladdinBraveRescuer, kronkHeadOfSecurity];
-//       const testEngine = new TestEngine(
+// Describe("Pegasus - Cloud Racer", () => {
+//   Describe("Regression", () => {
+//     It("Playing a new character should not cancel the effect on existing characters", async () => {
+//       Const cardsInPlay = [aladdinBraveRescuer, kronkHeadOfSecurity];
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: pegasusCloudRacer.cost + liloJuniorCakeDecorator.cost,
-//           hand: [pegasusCloudRacer, liloJuniorCakeDecorator],
-//           play: [...cardsInPlay, pegasusGiftForHercules],
+//           Inkwell: pegasusCloudRacer.cost + liloJuniorCakeDecorator.cost,
+//           Hand: [pegasusCloudRacer, liloJuniorCakeDecorator],
+//           Play: [...cardsInPlay, pegasusGiftForHercules],
 //         },
 //         {
-//           inkwell: stichtNewDog.cost,
-//           hand: [stichtNewDog, stichtCarefreeSurfer],
+//           Inkwell: stichtNewDog.cost,
+//           Hand: [stichtNewDog, stichtCarefreeSurfer],
 //         },
 //       );
 //
-//       cardsInPlay.forEach((card) => {
-//         expect(testEngine.getCardModel(card).hasEvasive).toBe(false);
+//       CardsInPlay.forEach((card) => {
+//         Expect(testEngine.getCardModel(card).hasEvasive).toBe(false);
 //       });
 //
-//       await testEngine.shiftCard({
-//         shifter: pegasusCloudRacer,
-//         shifted: pegasusGiftForHercules,
+//       Await testEngine.shiftCard({
+//         Shifter: pegasusCloudRacer,
+//         Shifted: pegasusGiftForHercules,
 //       });
 //
-//       cardsInPlay.forEach((card) => {
-//         expect(testEngine.getCardModel(card).hasEvasive).toBe(true);
+//       CardsInPlay.forEach((card) => {
+//         Expect(testEngine.getCardModel(card).hasEvasive).toBe(true);
 //       });
 //
-//       await testEngine.playCard(liloJuniorCakeDecorator);
+//       Await testEngine.playCard(liloJuniorCakeDecorator);
 //
-//       cardsInPlay.forEach((card) => {
-//         expect(testEngine.getCardModel(card).hasEvasive).toBe(true);
+//       CardsInPlay.forEach((card) => {
+//         Expect(testEngine.getCardModel(card).hasEvasive).toBe(true);
 //       });
 //
-//       await testEngine.passTurn();
+//       Await testEngine.passTurn();
 //
-//       cardsInPlay.forEach((card) => {
-//         expect(testEngine.getCardModel(card).hasEvasive).toBe(true);
+//       CardsInPlay.forEach((card) => {
+//         Expect(testEngine.getCardModel(card).hasEvasive).toBe(true);
 //       });
 //
-//       await testEngine.playCard(stichtNewDog);
-//       await testEngine.putIntoInkwell(stichtCarefreeSurfer);
+//       Await testEngine.playCard(stichtNewDog);
+//       Await testEngine.putIntoInkwell(stichtCarefreeSurfer);
 //
-//       cardsInPlay.forEach((card) => {
-//         expect(testEngine.getCardModel(card).hasEvasive).toBe(true);
+//       CardsInPlay.forEach((card) => {
+//         Expect(testEngine.getCardModel(card).hasEvasive).toBe(true);
 //       });
 //     });
 //   });

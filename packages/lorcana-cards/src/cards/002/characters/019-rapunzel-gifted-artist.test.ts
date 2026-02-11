@@ -3,147 +3,147 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   goofyKnightForADay,
-//   rapunzelGiftedArtist,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   GoofyKnightForADay,
+//   RapunzelGiftedArtist,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { maleficentMistressOfEvil } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { maleficentMistressOfEvil } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Rapunzel - Gifted Artist", () => {
-//   it("**LET YOUR POWER SHINE** Whenever you remove 1 or more damage from one of your characters, you may draw a card.", () => {
-//     const testStore = new TestStore({
-//       play: [rapunzelGiftedArtist, goofyKnightForADay],
-//       deck: 5,
+// Describe("Rapunzel - Gifted Artist", () => {
+//   It("**LET YOUR POWER SHINE** Whenever you remove 1 or more damage from one of your characters, you may draw a card.", () => {
+//     Const testStore = new TestStore({
+//       Play: [rapunzelGiftedArtist, goofyKnightForADay],
+//       Deck: 5,
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       rapunzelGiftedArtist.id,
+//       RapunzelGiftedArtist.id,
 //     );
-//     const anotherCharacter = testStore.getByZoneAndId(
+//     Const anotherCharacter = testStore.getByZoneAndId(
 //       "play",
-//       goofyKnightForADay.id,
+//       GoofyKnightForADay.id,
 //     );
 //
-//     cardUnderTest.updateCardDamage(4);
-//     anotherCharacter.updateCardDamage(4);
+//     CardUnderTest.updateCardDamage(4);
+//     AnotherCharacter.updateCardDamage(4);
 //
-//     cardUnderTest.updateCardDamage(2, "remove");
-//     testStore.resolveOptionalAbility();
-//     expect(testStore.getZonesCardCount()).toEqual(
-//       expect.objectContaining({
-//         deck: 4,
-//         hand: 1,
+//     CardUnderTest.updateCardDamage(2, "remove");
+//     TestStore.resolveOptionalAbility();
+//     Expect(testStore.getZonesCardCount()).toEqual(
+//       Expect.objectContaining({
+//         Deck: 4,
+//         Hand: 1,
 //       }),
 //     );
 //
-//     anotherCharacter.updateCardDamage(2, "remove");
-//     testStore.resolveOptionalAbility();
-//     expect(testStore.getZonesCardCount()).toEqual(
-//       expect.objectContaining({
-//         deck: 3,
-//         hand: 2,
+//     AnotherCharacter.updateCardDamage(2, "remove");
+//     TestStore.resolveOptionalAbility();
+//     Expect(testStore.getZonesCardCount()).toEqual(
+//       Expect.objectContaining({
+//         Deck: 3,
+//         Hand: 2,
 //       }),
 //     );
 //   });
 //
-//   it("Shift", () => {
-//     const testStore = new TestStore({
-//       play: [rapunzelGiftedArtist],
+//   It("Shift", () => {
+//     Const testStore = new TestStore({
+//       Play: [rapunzelGiftedArtist],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       rapunzelGiftedArtist.id,
+//       RapunzelGiftedArtist.id,
 //     );
 //
-//     expect(cardUnderTest.hasShift).toEqual(true);
+//     Expect(cardUnderTest.hasShift).toEqual(true);
 //   });
 // });
 //
-// describe("Regression", () => {
-//   it("Rapunzel, Maleficent COMBO WOMBO", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Regression", () => {
+//   It("Rapunzel, Maleficent COMBO WOMBO", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         play: [rapunzelGiftedArtist, maleficentMistressOfEvil],
-//         deck: 20,
+//         Play: [rapunzelGiftedArtist, maleficentMistressOfEvil],
+//         Deck: 20,
 //       },
 //       {
-//         play: [goofyKnightForADay],
+//         Play: [goofyKnightForADay],
 //       },
 //     );
 //
-//     const target = testEngine.getCardModel(goofyKnightForADay);
-//     const rapunzel = await testEngine.setCardDamage(
-//       rapunzelGiftedArtist,
-//       rapunzelGiftedArtist.willpower - 1,
+//     Const target = testEngine.getCardModel(goofyKnightForADay);
+//     Const rapunzel = await testEngine.setCardDamage(
+//       RapunzelGiftedArtist,
+//       RapunzelGiftedArtist.willpower - 1,
 //     );
-//     const maleficent = await testEngine.setCardDamage(
-//       maleficentMistressOfEvil,
-//       maleficentMistressOfEvil.willpower - 1,
+//     Const maleficent = await testEngine.setCardDamage(
+//       MaleficentMistressOfEvil,
+//       MaleficentMistressOfEvil.willpower - 1,
 //     );
 //
 //     // Questing with Maleficent will draw you a card
-//     await testEngine.questCard(maleficent);
-//     await testEngine.resolveOptionalAbility();
-//     expect(testEngine.getZonesCardCount()).toEqual(
-//       expect.objectContaining({ deck: 19, hand: 1 }),
+//     Await testEngine.questCard(maleficent);
+//     Await testEngine.resolveOptionalAbility();
+//     Expect(testEngine.getZonesCardCount()).toEqual(
+//       Expect.objectContaining({ deck: 19, hand: 1 }),
 //     );
 //
 //     // COMBO STARTS - Moving all damage from Maleficent to Goofy
-//     for (let i = 2; i < 4; i++) {
+//     For (let i = 2; i < 4; i++) {
 //       // Drawing a card, will let you move damage
-//       await testEngine.resolveOptionalAbility();
-//       await testEngine.resolveTopOfStack({ targets: [maleficent] }, true);
-//       await testEngine.resolveTopOfStack(
+//       Await testEngine.resolveOptionalAbility();
+//       Await testEngine.resolveTopOfStack({ targets: [maleficent] }, true);
+//       Await testEngine.resolveTopOfStack(
 //         { targets: [goofyKnightForADay] },
-//         true,
+//         True,
 //       );
-//       expect(maleficent.damage).toEqual(maleficentMistressOfEvil.willpower - i);
-//       expect(target.damage).toEqual(i - 1);
+//       Expect(maleficent.damage).toEqual(maleficentMistressOfEvil.willpower - i);
+//       Expect(target.damage).toEqual(i - 1);
 //
 //       // Moving damage will let you draw a card from Rapunzel
-//       await testEngine.resolveOptionalAbility();
-//       expect(testEngine.getZonesCardCount()).toEqual(
-//         expect.objectContaining({ deck: 20 - i, hand: i }),
+//       Await testEngine.resolveOptionalAbility();
+//       Expect(testEngine.getZonesCardCount()).toEqual(
+//         Expect.objectContaining({ deck: 20 - i, hand: i }),
 //       );
 //     }
 //
 //     // COMBO Continues - Moving all damage from Rapunzel to Goofy
-//     for (let i = 2; i < 7; i++) {
+//     For (let i = 2; i < 7; i++) {
 //       // Drawing a card, will let you move damage
-//       await testEngine.resolveOptionalAbility();
-//       await testEngine.resolveTopOfStack({ targets: [rapunzel] }, true);
-//       await testEngine.resolveTopOfStack(
+//       Await testEngine.resolveOptionalAbility();
+//       Await testEngine.resolveTopOfStack({ targets: [rapunzel] }, true);
+//       Await testEngine.resolveTopOfStack(
 //         { targets: [goofyKnightForADay] },
-//         true,
+//         True,
 //       );
-//       expect(rapunzel.damage).toEqual(rapunzel.willpower - i);
-//       expect(target.damage).toEqual(i + 1);
+//       Expect(rapunzel.damage).toEqual(rapunzel.willpower - i);
+//       Expect(target.damage).toEqual(i + 1);
 //
 //       // Moving damage will let you draw a card from Rapunzel
-//       await testEngine.resolveOptionalAbility();
-//       expect(testEngine.getZonesCardCount()).toEqual(
-//         expect.objectContaining({ deck: 18 - i, hand: 2 + i }),
+//       Await testEngine.resolveOptionalAbility();
+//       Expect(testEngine.getZonesCardCount()).toEqual(
+//         Expect.objectContaining({ deck: 18 - i, hand: 2 + i }),
 //       );
 //     }
 //
-//     const totalDamageMoved =
-//       maleficentMistressOfEvil.willpower -
+//     Const totalDamageMoved =
+//       MaleficentMistressOfEvil.willpower -
 //       1 +
-//       rapunzelGiftedArtist.willpower -
+//       RapunzelGiftedArtist.willpower -
 //       1;
-//     expect(rapunzel.damage).toEqual(0);
-//     expect(maleficent.damage).toEqual(0);
-//     expect(target.damage).toEqual(totalDamageMoved);
+//     Expect(rapunzel.damage).toEqual(0);
+//     Expect(maleficent.damage).toEqual(0);
+//     Expect(target.damage).toEqual(totalDamageMoved);
 //
-//     expect(testEngine.getZonesCardCount()).toEqual(
-//       expect.objectContaining({
-//         deck: 20 - totalDamageMoved - 1,
-//         hand: totalDamageMoved + 1,
+//     Expect(testEngine.getZonesCardCount()).toEqual(
+//       Expect.objectContaining({
+//         Deck: 20 - totalDamageMoved - 1,
+//         Hand: totalDamageMoved + 1,
 //       }),
 //     );
 //   });

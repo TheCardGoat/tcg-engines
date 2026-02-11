@@ -14,8 +14,8 @@ describe("Ability UID Generation", () => {
   describe("parseAbilityText", () => {
     it("should not generate ID when generateAbilityUids is false", () => {
       const result = parseAbilityText("Rush", {
-        generateAbilityUids: false,
         cardId: "17t",
+        generateAbilityUids: false,
       });
 
       expect(result.success).toBe(true);
@@ -45,8 +45,8 @@ describe("Ability UID Generation", () => {
 
     it("should generate ID when both generateAbilityUids and cardId are provided", () => {
       const result = parseAbilityText("Rush", {
-        generateAbilityUids: true,
         cardId: "17t",
+        generateAbilityUids: true,
       });
 
       expect(result.success).toBe(true);
@@ -56,8 +56,8 @@ describe("Ability UID Generation", () => {
 
     it("should generate correct ID format for Shift keyword", () => {
       const result = parseAbilityText("Shift 3 {I}", {
-        generateAbilityUids: true,
         cardId: "17t",
+        generateAbilityUids: true,
       });
 
       expect(result.success).toBe(true);
@@ -72,8 +72,8 @@ describe("Ability UID Generation", () => {
   describe("parseAbilityTextMulti", () => {
     it("should not generate IDs when generateAbilityUids is false", () => {
       const result = parseAbilityTextMulti("Rush\nWard", {
-        generateAbilityUids: false,
         cardId: "17t",
+        generateAbilityUids: false,
       });
 
       expect(result.success).toBe(true);
@@ -106,8 +106,8 @@ describe("Ability UID Generation", () => {
 
     it("should generate sequential IDs for multiple abilities", () => {
       const result = parseAbilityTextMulti("Rush\nWard", {
-        generateAbilityUids: true,
         cardId: "17t",
+        generateAbilityUids: true,
       });
 
       expect(result.success).toBe(true);
@@ -120,8 +120,8 @@ describe("Ability UID Generation", () => {
       const text =
         "Shift 3 {I}\nCASE CLOSED During your turn, whenever one of your Detective characters banishes another character in a challenge, draw a card.";
       const result = parseAbilityTextMulti(text, {
-        generateAbilityUids: true,
         cardId: "17t",
+        generateAbilityUids: true,
       });
 
       expect(result.success).toBe(true);
@@ -136,8 +136,8 @@ describe("Ability UID Generation", () => {
 
     it("should generate ID for single ability", () => {
       const result = parseAbilityTextMulti("Rush", {
-        generateAbilityUids: true,
         cardId: "17t",
+        generateAbilityUids: true,
       });
 
       expect(result.success).toBe(true);
@@ -147,13 +147,13 @@ describe("Ability UID Generation", () => {
 
     it("should generate IDs with different cardId prefixes", () => {
       const result1 = parseAbilityTextMulti("Rush", {
-        generateAbilityUids: true,
         cardId: "17t",
+        generateAbilityUids: true,
       });
 
       const result2 = parseAbilityTextMulti("Ward", {
-        generateAbilityUids: true,
         cardId: "18a",
+        generateAbilityUids: true,
       });
 
       expect(result1.success).toBe(true);

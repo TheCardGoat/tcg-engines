@@ -1,24 +1,8 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
 export const ransack: ActionCard = {
-  id: "1ux",
-  cardType: "action",
-  name: "Ransack",
-  inkType: ["steel"],
-  franchise: "Emperors New Groove",
-  set: "001",
-  text: "Draw 2 cards, then choose and discard 2 cards.",
-  cost: 2,
-  cardNumber: 199,
-  inkable: true,
-  externalIds: {
-    ravensburger: "f13778c7e4f55190ce7ec9958fcbfbbd0879d0e0",
-  },
   abilities: [
     {
-      id: "1ux-1",
-      text: "Draw 2 cards, then choose and discard 2 cards.",
-      type: "action",
       effect: {
         type: "sequence",
         steps: [
@@ -35,40 +19,56 @@ export const ransack: ActionCard = {
           },
         ],
       },
+      id: "1ux-1",
+      text: "Draw 2 cards, then choose and discard 2 cards.",
+      type: "action",
     },
   ],
+  cardNumber: 199,
+  cardType: "action",
+  cost: 2,
+  externalIds: {
+    ravensburger: "f13778c7e4f55190ce7ec9958fcbfbbd0879d0e0",
+  },
+  franchise: "Emperors New Groove",
+  id: "1ux",
+  inkType: ["steel"],
+  inkable: true,
+  name: "Ransack",
+  set: "001",
+  text: "Draw 2 cards, then choose and discard 2 cards.",
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-// import type { DiscardEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { DiscardEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
 //
-// export const ransack: LorcanitoActionCard = {
-//   id: "cfx",
-//   name: "Ransack",
-//   characteristics: ["action"],
-//   text: "Draw 2 cards, then choose and discard 2 cards.",
-//   type: "action",
-//   abilities: [
+// Export const ransack: LorcanitoActionCard = {
+//   Id: "cfx",
+//   Name: "Ransack",
+//   Characteristics: ["action"],
+//   Text: "Draw 2 cards, then choose and discard 2 cards.",
+//   Type: "action",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       resolveEffectsIndividually: true,
-//       effects: [
+//       Type: "resolution",
+//       ResolveEffectsIndividually: true,
+//       Effects: [
 //         {
-//           type: "draw",
-//           amount: 2,
-//           target: {
-//             type: "player",
-//             value: "self",
+//           Type: "draw",
+//           Amount: 2,
+//           Target: {
+//             Type: "player",
+//             Value: "self",
 //           },
 //         },
 //         {
-//           type: "discard",
-//           amount: 2,
-//           target: {
-//             type: "card",
-//             value: 2,
-//             filters: [
+//           Type: "discard",
+//           Amount: 2,
+//           Target: {
+//             Type: "card",
+//             Value: 2,
+//             Filters: [
 //               { filter: "owner", value: "self" },
 //               { filter: "zone", value: "hand" },
 //             ],
@@ -77,16 +77,16 @@ export const ransack: ActionCard = {
 //       ],
 //     },
 //   ],
-//   flavour: "Who has time to read labels?",
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 2,
-//   illustrator: "Amber Kommavongsa",
-//   number: 199,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 508937,
+//   Flavour: "Who has time to read labels?",
+//   Inkwell: true,
+//   Colors: ["steel"],
+//   Cost: 2,
+//   Illustrator: "Amber Kommavongsa",
+//   Number: 199,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 508937,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

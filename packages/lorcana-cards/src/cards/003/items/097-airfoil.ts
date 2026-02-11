@@ -1,23 +1,8 @@
 import type { ItemCard } from "@tcg/lorcana-types";
 
 export const airfoil: ItemCard = {
-  id: "1kp",
-  cardType: "item",
-  name: "Airfoil",
-  inkType: ["emerald"],
-  franchise: "Talespin",
-  set: "003",
-  text: "I GOT TO BE GOING {E} — If you've played 2 or more actions this turn, draw a card.",
-  cost: 2,
-  cardNumber: 97,
-  inkable: true,
-  externalIds: {
-    ravensburger: "cc66d741f2606521d3e52b9282371857f133830f",
-  },
   abilities: [
     {
-      id: "1kp-1",
-      type: "activated",
       cost: {
         exert: true,
       },
@@ -33,7 +18,22 @@ export const airfoil: ItemCard = {
           target: "CONTROLLER",
         },
       },
+      id: "1kp-1",
       text: "I GOT TO BE GOING {E} — If you've played 2 or more actions this turn, draw a card.",
+      type: "activated",
     },
   ],
+  cardNumber: 97,
+  cardType: "item",
+  cost: 2,
+  externalIds: {
+    ravensburger: "cc66d741f2606521d3e52b9282371857f133830f",
+  },
+  franchise: "Talespin",
+  id: "1kp",
+  inkType: ["emerald"],
+  inkable: true,
+  name: "Airfoil",
+  set: "003",
+  text: "I GOT TO BE GOING {E} — If you've played 2 or more actions this turn, draw a card.",
 };

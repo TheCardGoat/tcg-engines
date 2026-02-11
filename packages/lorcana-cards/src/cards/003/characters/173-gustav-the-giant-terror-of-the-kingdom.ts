@@ -1,28 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const gustavTheGiantTerrorOfTheKingdom: CharacterCard = {
-  id: "5zz",
-  cardType: "character",
-  name: "Gustav the Giant",
-  version: "Terror of the Kingdom",
-  fullName: "Gustav the Giant - Terror of the Kingdom",
-  inkType: ["steel"],
-  set: "003",
-  text: "ALL TIED UP This character enters play exerted and can't ready at the start of your turn.\nBREAK FREE During your turn, whenever one of your other characters banishes another character in a challenge, you may ready this character.",
-  cost: 3,
-  strength: 6,
-  willpower: 6,
-  lore: 1,
-  cardNumber: 173,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "159f4fcc6c094491eec5963594b65da8fb42798f",
-  },
   abilities: [
     {
-      id: "5zz-1",
-      type: "static",
       effect: {
         type: "sequence",
         steps: [
@@ -38,18 +18,12 @@ export const gustavTheGiantTerrorOfTheKingdom: CharacterCard = {
           },
         ],
       },
+      id: "5zz-1",
       name: "ALL TIED UP",
       text: "ALL TIED UP This character enters play exerted and can't ready at the start of your turn.",
+      type: "static",
     },
     {
-      id: "5zz-2",
-      type: "triggered",
-      name: "BREAK FREE",
-      trigger: {
-        event: "banish",
-        timing: "whenever",
-        on: "YOUR_OTHER_CHARACTERS",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -64,8 +38,34 @@ export const gustavTheGiantTerrorOfTheKingdom: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "5zz-2",
+      name: "BREAK FREE",
       text: "BREAK FREE During your turn, whenever one of your other characters banishes another character in a challenge, you may ready this character.",
+      trigger: {
+        event: "banish",
+        timing: "whenever",
+        on: "YOUR_OTHER_CHARACTERS",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 173,
+  cardType: "character",
   classifications: ["Dreamborn", "Villain"],
+  cost: 3,
+  externalIds: {
+    ravensburger: "159f4fcc6c094491eec5963594b65da8fb42798f",
+  },
+  fullName: "Gustav the Giant - Terror of the Kingdom",
+  id: "5zz",
+  inkType: ["steel"],
+  inkable: true,
+  lore: 1,
+  missingTests: true,
+  name: "Gustav the Giant",
+  set: "003",
+  strength: 6,
+  text: "ALL TIED UP This character enters play exerted and can't ready at the start of your turn.\nBREAK FREE During your turn, whenever one of your other characters banishes another character in a challenge, you may ready this character.",
+  version: "Terror of the Kingdom",
+  willpower: 6,
 };

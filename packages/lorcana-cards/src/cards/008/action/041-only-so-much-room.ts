@@ -1,36 +1,36 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import {
-//   returnCharacterFromDiscardToHand,
-//   returnChosenCharacterWithCostLess,
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+// Import {
+//   ReturnCharacterFromDiscardToHand,
+//   ReturnChosenCharacterWithCostLess,
 // } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const onlySoMuchRoom: LorcanitoActionCard = {
-//   id: "o94",
-//   name: "Only So Much Room",
-//   characteristics: ["action"],
-//   text: "Return chosen character with 2 {S} or less to their player's hand. Return a character card from your discard to your hand.",
-//   type: "action",
-//   abilities: [
+// Export const onlySoMuchRoom: LorcanitoActionCard = {
+//   Id: "o94",
+//   Name: "Only So Much Room",
+//   Characteristics: ["action"],
+//   Text: "Return chosen character with 2 {S} or less to their player's hand. Return a character card from your discard to your hand.",
+//   Type: "action",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       dependentEffects: true,
-//       resolveEffectsIndividually: true,
-//       effects: [
-//         returnChosenCharacterWithCostLess(2),
-//         returnCharacterFromDiscardToHand,
+//       Type: "resolution",
+//       DependentEffects: true,
+//       ResolveEffectsIndividually: true,
+//       Effects: [
+//         ReturnChosenCharacterWithCostLess(2),
+//         ReturnCharacterFromDiscardToHand,
 //       ],
 //     },
 //   ],
-//   inkwell: true,
-//   colors: ["amber", "emerald"],
-//   cost: 4,
-//   illustrator: "Therese Widenfjall",
-//   number: 41,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631379,
+//   Inkwell: true,
+//   Colors: ["amber", "emerald"],
+//   Cost: 4,
+//   Illustrator: "Therese Widenfjall",
+//   Number: 41,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631379,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

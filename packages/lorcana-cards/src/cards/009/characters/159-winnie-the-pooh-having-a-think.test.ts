@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { winnieThePoohHavingAThink } from "@lorcanito/lorcana-engine/cards/009/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { winnieThePoohHavingAThink } from "@lorcanito/lorcana-engine/cards/009/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Winnie the Pooh - Having a Think", () => {
-//   it.skip("**HUNNY POT** Whenever this character quests, you may put a card from your hand into your inkwell facedown.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: winnieThePoohHavingAThink.cost,
-//       play: [winnieThePoohHavingAThink],
-//       hand: [winnieThePoohHavingAThink],
+// Describe("Winnie the Pooh - Having a Think", () => {
+//   It.skip("**HUNNY POT** Whenever this character quests, you may put a card from your hand into your inkwell facedown.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: winnieThePoohHavingAThink.cost,
+//       Play: [winnieThePoohHavingAThink],
+//       Hand: [winnieThePoohHavingAThink],
 //     });
 //
-//     await testEngine.playCard(winnieThePoohHavingAThink);
+//     Await testEngine.playCard(winnieThePoohHavingAThink);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

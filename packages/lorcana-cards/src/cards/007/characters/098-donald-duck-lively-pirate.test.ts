@@ -3,36 +3,36 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { hypnotize } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
-// import { mrSmeeBumblingMate } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { donaldDuckLivelyPirate } from "@lorcanito/lorcana-engine/cards/007/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { hypnotize } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
+// Import { mrSmeeBumblingMate } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { donaldDuckLivelyPirate } from "@lorcanito/lorcana-engine/cards/007/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("DUCK OF ACTION Whenever this character is challenged, you may return an action card that isn't a song from your discard to your hand.", () => {
-//   it.skip("should return an Action card that is not a song from discard to hand", async () => {
-//     const testEngine = new TestEngine(
+// Describe("DUCK OF ACTION Whenever this character is challenged, you may return an action card that isn't a song from your discard to your hand.", () => {
+//   It.skip("should return an Action card that is not a song from discard to hand", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: 10,
-//         play: [donaldDuckLivelyPirate],
-//         discard: [hypnotize],
+//         Inkwell: 10,
+//         Play: [donaldDuckLivelyPirate],
+//         Discard: [hypnotize],
 //       },
 //       {
-//         inkwell: 10,
-//         play: [mrSmeeBumblingMate],
+//         Inkwell: 10,
+//         Play: [mrSmeeBumblingMate],
 //       },
 //     );
 //
 //     //await testEngine.tapCard(donaldDuckLivelyPirate);
 //
-//     await testEngine.challenge({
-//       attacker: mrSmeeBumblingMate,
-//       defender: donaldDuckLivelyPirate,
+//     Await testEngine.challenge({
+//       Attacker: mrSmeeBumblingMate,
+//       Defender: donaldDuckLivelyPirate,
 //     });
 //
-//     expect(testEngine.stackLayers).toHaveLength(1);
-//     await testEngine.resolveTopOfStack({ targets: [hypnotize] });
-//     expect(testEngine.getCardModel(hypnotize).zone).toBe("hand");
+//     Expect(testEngine.stackLayers).toHaveLength(1);
+//     Await testEngine.resolveTopOfStack({ targets: [hypnotize] });
+//     Expect(testEngine.getCardModel(hypnotize).zone).toBe("hand");
 //   });
 // });
 //

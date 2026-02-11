@@ -3,40 +3,40 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   chipFriendIndeed,
-//   daleFriendInNeed,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   ChipFriendIndeed,
+//   DaleFriendInNeed,
 // } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Dale - Friend in Need", () => {
-//   describe("**CHIP'S PARTNER** This character enters play exerted unless you have a character named Chip in play.", () => {
-//     it("No Chip in play", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: daleFriendInNeed.cost,
-//         hand: [daleFriendInNeed],
+// Describe("Dale - Friend in Need", () => {
+//   Describe("**CHIP'S PARTNER** This character enters play exerted unless you have a character named Chip in play.", () => {
+//     It("No Chip in play", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: daleFriendInNeed.cost,
+//         Hand: [daleFriendInNeed],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(daleFriendInNeed);
+//       Const cardUnderTest = testEngine.getCardModel(daleFriendInNeed);
 //
-//       await testEngine.playCard(cardUnderTest);
+//       Await testEngine.playCard(cardUnderTest);
 //
-//       expect(cardUnderTest.exerted).toBe(true);
+//       Expect(cardUnderTest.exerted).toBe(true);
 //     });
 //
-//     it("Chip in play", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: daleFriendInNeed.cost,
-//         hand: [daleFriendInNeed],
-//         play: [chipFriendIndeed],
+//     It("Chip in play", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: daleFriendInNeed.cost,
+//         Hand: [daleFriendInNeed],
+//         Play: [chipFriendIndeed],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(daleFriendInNeed);
+//       Const cardUnderTest = testEngine.getCardModel(daleFriendInNeed);
 //
-//       await testEngine.playCard(cardUnderTest);
+//       Await testEngine.playCard(cardUnderTest);
 //
-//       expect(cardUnderTest.exerted).toBe(false);
+//       Expect(cardUnderTest.exerted).toBe(false);
 //     });
 //   });
 // });

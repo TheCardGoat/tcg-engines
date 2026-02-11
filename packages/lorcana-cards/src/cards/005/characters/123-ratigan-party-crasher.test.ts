@@ -3,48 +3,48 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { ratiganPartyCrasher } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { ratiganPartyCrasher } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Ratigan - Party Crasher", () => {
-//   it.skip("", () => {
-//     const testStore = new TestStore({
-//       inkwell: ratiganPartyCrasher.cost,
-//       play: [ratiganPartyCrasher],
+// Describe("Ratigan - Party Crasher", () => {
+//   It.skip("", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: ratiganPartyCrasher.cost,
+//       Play: [ratiganPartyCrasher],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(ratiganPartyCrasher);
+//     Const cardUnderTest = testStore.getCard(ratiganPartyCrasher);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 //
-//   it.skip("", () => {
-//     const testStore = new TestStore({
-//       inkwell: ratiganPartyCrasher.cost,
-//       play: [ratiganPartyCrasher],
+//   It.skip("", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: ratiganPartyCrasher.cost,
+//       Play: [ratiganPartyCrasher],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(ratiganPartyCrasher);
+//     Const cardUnderTest = testStore.getCard(ratiganPartyCrasher);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 //
-//   it.skip("**DELIGHTFULLY WICKED** Your damaged characters get -2 {S}.", () => {
-//     const testStore = new TestStore({
-//       inkwell: ratiganPartyCrasher.cost,
-//       play: [ratiganPartyCrasher],
+//   It.skip("**DELIGHTFULLY WICKED** Your damaged characters get -2 {S}.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: ratiganPartyCrasher.cost,
+//       Play: [ratiganPartyCrasher],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(ratiganPartyCrasher);
+//     Const cardUnderTest = testStore.getCard(ratiganPartyCrasher);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

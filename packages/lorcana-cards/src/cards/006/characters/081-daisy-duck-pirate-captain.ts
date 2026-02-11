@@ -1,64 +1,64 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const daisyDuckPirateCaptain: CharacterCard = {
-  id: "zzu",
-  cardType: "character",
-  name: "Daisy Duck",
-  version: "Pirate Captain",
-  fullName: "Daisy Duck - Pirate Captain",
-  inkType: ["emerald"],
-  set: "006",
-  text: "DISTANT SHORES Whenever one of your Pirate characters quests while at a location, draw a card.",
-  cost: 4,
-  strength: 3,
-  willpower: 3,
-  lore: 2,
-  cardNumber: 81,
-  inkable: true,
-  externalIds: {
-    ravensburger: "81bb233190edd5db1df45cfb55355201fc429a34",
-  },
   abilities: [
     {
-      id: "zzu-1",
-      text: "DISTANT SHORES Whenever one of your Pirate characters quests while at a location, draw a card.",
-      name: "DISTANT SHORES",
-      type: "triggered",
-      trigger: {
-        event: "banish",
-        timing: "whenever",
-        on: "YOUR_OTHER_CHARACTERS",
-      },
       effect: {
         type: "draw",
         amount: 1,
         target: "CONTROLLER",
       },
+      id: "zzu-1",
+      name: "DISTANT SHORES",
+      text: "DISTANT SHORES Whenever one of your Pirate characters quests while at a location, draw a card.",
+      trigger: {
+        event: "banish",
+        timing: "whenever",
+        on: "YOUR_OTHER_CHARACTERS",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 81,
+  cardType: "character",
   classifications: ["Dreamborn", "Hero", "Pirate", "Captain"],
+  cost: 4,
+  externalIds: {
+    ravensburger: "81bb233190edd5db1df45cfb55355201fc429a34",
+  },
+  fullName: "Daisy Duck - Pirate Captain",
+  id: "zzu",
+  inkType: ["emerald"],
+  inkable: true,
+  lore: 2,
+  name: "Daisy Duck",
+  set: "006",
+  strength: 3,
+  text: "DISTANT SHORES Whenever one of your Pirate characters quests while at a location, draw a card.",
+  version: "Pirate Captain",
+  willpower: 3,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
 // // TODO: Once the set is released, we organize the cards by set and type
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { wheneverACharacterQuests } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-// import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { wheneverACharacterQuests } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// Import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const daisyDuckPirateCaptain: LorcanitoCharacterCard = {
-//   id: "zbi",
-//   name: "Daisy Duck",
-//   title: "Pirate Captain",
-//   characteristics: ["dreamborn", "hero", "pirate", "captain"],
-//   text: "DISTANT SHORES Whenever one of your Pirate characters quests while at a location, draw a card.",
-//   type: "character",
-//   abilities: [
-//     wheneverACharacterQuests({
-//       name: "Distant Shores",
-//       text: "Whenever one of your Pirate characters quests while at a location, draw a card.",
-//       optional: false,
-//       effects: [drawACard],
-//       characterFilter: [
+// Export const daisyDuckPirateCaptain: LorcanitoCharacterCard = {
+//   Id: "zbi",
+//   Name: "Daisy Duck",
+//   Title: "Pirate Captain",
+//   Characteristics: ["dreamborn", "hero", "pirate", "captain"],
+//   Text: "DISTANT SHORES Whenever one of your Pirate characters quests while at a location, draw a card.",
+//   Type: "character",
+//   Abilities: [
+//     WheneverACharacterQuests({
+//       Name: "Distant Shores",
+//       Text: "Whenever one of your Pirate characters quests while at a location, draw a card.",
+//       Optional: false,
+//       Effects: [drawACard],
+//       CharacterFilter: [
 //         { filter: "characteristics", value: ["pirate"] },
 //         { filter: "type", value: "character" },
 //         { filter: "owner", value: "self" },
@@ -67,18 +67,18 @@ export const daisyDuckPirateCaptain: CharacterCard = {
 //       ],
 //     }),
 //   ],
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 4,
-//   strength: 3,
-//   willpower: 3,
-//   lore: 2,
-//   illustrator: "Jochem van Gool",
-//   number: 81,
-//   set: "006",
-//   externalIds: {
-//     tcgPlayer: 592039,
+//   Inkwell: true,
+//   Colors: ["emerald"],
+//   Cost: 4,
+//   Strength: 3,
+//   Willpower: 3,
+//   Lore: 2,
+//   Illustrator: "Jochem van Gool",
+//   Number: 81,
+//   Set: "006",
+//   ExternalIds: {
+//     TcgPlayer: 592039,
 //   },
-//   rarity: "super_rare",
+//   Rarity: "super_rare",
 // };
 //

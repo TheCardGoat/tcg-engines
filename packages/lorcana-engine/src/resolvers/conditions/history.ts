@@ -1,7 +1,4 @@
-import type {
-  ThisTurnCountCondition,
-  ThisTurnHappenedCondition,
-} from "@tcg/lorcana-types";
+import type { ThisTurnCountCondition, ThisTurnHappenedCondition } from "@tcg/lorcana-types";
 import { conditionRegistry } from "../condition-registry";
 
 conditionRegistry.register<ThisTurnHappenedCondition>("this-turn-happened", {
@@ -10,7 +7,9 @@ conditionRegistry.register<ThisTurnHappenedCondition>("this-turn-happened", {
     const events = state.external.turnHistory || [];
     // We need to filter by controller
     const matchedEvents = events.filter((e) => {
-      if (e.type !== condition.event) return false;
+      if (e.type !== condition.event) {
+        return false;
+      }
 
       if (condition.who === "you") {
         return e.controllerId === sourceCard.controller;
@@ -29,7 +28,9 @@ conditionRegistry.register<ThisTurnCountCondition>("this-turn-count", {
     const events = state.external.turnHistory || [];
 
     const count = events.reduce((acc, e) => {
-      if (e.type !== condition.event) return acc;
+      if (e.type !== condition.event) {
+        return acc;
+      }
 
       let matchesWho = false;
       if (condition.who === "you") {
@@ -38,31 +39,40 @@ conditionRegistry.register<ThisTurnCountCondition>("this-turn-count", {
         matchesWho = e.controllerId !== sourceCard.controller;
       }
 
-      if (matchesWho) return acc + e.count;
+      if (matchesWho) {
+        return acc + e.count;
+      }
       return acc;
     }, 0);
 
     switch (condition.comparison) {
       // @ts-expect-error - comparison operators mismatch
-      case "eq":
+      case "eq": {
         return count === condition.count;
+      }
       // @ts-expect-error - comparison operators mismatch
-      case "ne":
+      case "ne": {
         return count !== condition.count;
+      }
       // @ts-expect-error - comparison operators mismatch
-      case "gt":
+      case "gt": {
         return count > condition.count;
+      }
       // @ts-expect-error - comparison operators mismatch
-      case "gte":
+      case "gte": {
         return count >= condition.count;
+      }
       // @ts-expect-error - comparison operators mismatch in shared types
-      case "lt":
+      case "lt": {
         return count < condition.count;
+      }
       // @ts-expect-error - comparison operators mismatch in shared types
-      case "lte":
+      case "lte": {
         return count <= condition.count;
-      default:
+      }
+      default: {
         return false;
+      }
     }
   },
 });

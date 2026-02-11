@@ -1,34 +1,34 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
 //
-// export const dalmatianPuppyTailWagger: LorcanitoCharacterCard = {
-//   id: "xvo",
-//   reprints: ["n4q"],
-//   name: "Dalmatian Puppy",
-//   title: "Tail Wagger",
-//   characteristics: ["storyborn", "puppy"],
-//   text: "**WHERE DID THEY ALL COME FROM?** You may have up to 99 copies of Dalmatian Puppy - Tail Wagger in your deck.",
-//   type: "character",
-//   abilities: [
+// Export const dalmatianPuppyTailWagger: LorcanitoCharacterCard = {
+//   Id: "xvo",
+//   Reprints: ["n4q"],
+//   Name: "Dalmatian Puppy",
+//   Title: "Tail Wagger",
+//   Characteristics: ["storyborn", "puppy"],
+//   Text: "**WHERE DID THEY ALL COME FROM?** You may have up to 99 copies of Dalmatian Puppy - Tail Wagger in your deck.",
+//   Type: "character",
+//   Abilities: [
 //     // {
 //     //   name: "**WHERE DID THEY ALL COME FROM?** You may have up to 99 copies of Dalmatian Puppy - Tail Wagger in your deck.",
 //     // },
 //     // add this effect once we limit the number of cards in the deck
 //   ],
-//   flavour: "First they steal your heart. Then they steal your chair.",
-//   inkwell: true,
-//   colors: ["amber"],
-//   cost: 2,
-//   strength: 2,
-//   willpower: 3,
-//   lore: 1,
-//   illustrator: "Kapik",
-//   number: 4,
-//   set: "ITI",
-//   externalIds: {
-//     tcgPlayer: 532871,
+//   Flavour: "First they steal your heart. Then they steal your chair.",
+//   Inkwell: true,
+//   Colors: ["amber"],
+//   Cost: 2,
+//   Strength: 2,
+//   Willpower: 3,
+//   Lore: 1,
+//   Illustrator: "Kapik",
+//   Number: 4,
+//   Set: "ITI",
+//   ExternalIds: {
+//     TcgPlayer: 532871,
 //   },
-//   rarity: "common",
-//   cardCopyLimit: 99, // This is a special case for this card
+//   Rarity: "common",
+//   CardCopyLimit: 99, // This is a special case for this card
 // };
 //

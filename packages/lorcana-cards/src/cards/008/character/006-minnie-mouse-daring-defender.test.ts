@@ -3,29 +3,29 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { minnieMouseDaringDefender } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { minnieMouseDaringDefender } from "@lorcanito/lorcana-engine/cards/008/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Minnie Mouse - Daring Defender", () => {
-//   it("Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [minnieMouseDaringDefender],
+// Describe("Minnie Mouse - Daring Defender", () => {
+//   It("Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [minnieMouseDaringDefender],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(minnieMouseDaringDefender);
-//     expect(cardUnderTest.hasBodyguard).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(minnieMouseDaringDefender);
+//     Expect(cardUnderTest.hasBodyguard).toBe(true);
 //   });
 //
-//   it("TRUE VALOR This character gets +1 {S} for each 1 damage on her.", async () => {
-//     const testEngine = new TestEngine({
-//       play: [minnieMouseDaringDefender],
+//   It("TRUE VALOR This character gets +1 {S} for each 1 damage on her.", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [minnieMouseDaringDefender],
 //     });
 //
-//     const cardToTest = testEngine.getCardModel(minnieMouseDaringDefender);
-//     cardToTest.damage = 2;
+//     Const cardToTest = testEngine.getCardModel(minnieMouseDaringDefender);
+//     CardToTest.damage = 2;
 //
-//     expect(cardToTest.strength).toBe(2);
+//     Expect(cardToTest.strength).toBe(2);
 //   });
 // });
 //

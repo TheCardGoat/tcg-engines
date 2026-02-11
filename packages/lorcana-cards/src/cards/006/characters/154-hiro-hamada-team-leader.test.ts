@@ -3,67 +3,67 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   arielSpectacularSinger,
-//   heiheiBoatSnack,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   ArielSpectacularSinger,
+//   HeiheiBoatSnack,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { friendsOnTheOtherSide } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
-// import {
-//   hiroHamadaRoboticsProdigy,
-//   hiroHamadaTeamLeader,
-//   wasabiMethodicalEngineer,
+// Import { friendsOnTheOtherSide } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
+// Import {
+//   HiroHamadaRoboticsProdigy,
+//   HiroHamadaTeamLeader,
+//   WasabiMethodicalEngineer,
 // } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Hiro Hamada - Team Leader", () => {
-//   it("**I NEED TO UPGRADE ALL OF YOU** Your other Inventor characters gain **Resist** +1. _(Damage dealt to them is reduced by 1.)_**SHAPE THE FUTURE** 2 {I} − Look at the top card of your deck. Put it on either the top or the bottom of your deck.", () => {
-//     const testEngine = new TestEngine({
-//       play: [
-//         hiroHamadaTeamLeader,
-//         hiroHamadaRoboticsProdigy,
-//         wasabiMethodicalEngineer,
+// Describe("Hiro Hamada - Team Leader", () => {
+//   It("**I NEED TO UPGRADE ALL OF YOU** Your other Inventor characters gain **Resist** +1. _(Damage dealt to them is reduced by 1.)_**SHAPE THE FUTURE** 2 {I} − Look at the top card of your deck. Put it on either the top or the bottom of your deck.", () => {
+//     Const testEngine = new TestEngine({
+//       Play: [
+//         HiroHamadaTeamLeader,
+//         HiroHamadaRoboticsProdigy,
+//         WasabiMethodicalEngineer,
 //       ],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(hiroHamadaTeamLeader);
-//     const hiroHamadaRoboticsProdigyCard = testEngine.getCardModel(
-//       hiroHamadaRoboticsProdigy,
+//     Const cardUnderTest = testEngine.getCardModel(hiroHamadaTeamLeader);
+//     Const hiroHamadaRoboticsProdigyCard = testEngine.getCardModel(
+//       HiroHamadaRoboticsProdigy,
 //     );
-//     const wasabiMethodicalEngineerCard = testEngine.getCardModel(
-//       wasabiMethodicalEngineer,
+//     Const wasabiMethodicalEngineerCard = testEngine.getCardModel(
+//       WasabiMethodicalEngineer,
 //     );
 //
-//     expect(hiroHamadaRoboticsProdigyCard.hasResist).toBe(true);
-//     expect(wasabiMethodicalEngineerCard.hasResist).toBe(true);
-//     expect(cardUnderTest.hasResist).toBe(false);
+//     Expect(hiroHamadaRoboticsProdigyCard.hasResist).toBe(true);
+//     Expect(wasabiMethodicalEngineerCard.hasResist).toBe(true);
+//     Expect(cardUnderTest.hasResist).toBe(false);
 //   });
 //
-//   it("**SHAPE THE FUTURE** 2 {I} − Look at the top card of your deck. Put it on either the top or the bottom of your deck.", async () => {
-//     const testEngine = new TestEngine(
+//   It("**SHAPE THE FUTURE** 2 {I} − Look at the top card of your deck. Put it on either the top or the bottom of your deck.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: 2,
-//         play: [hiroHamadaTeamLeader],
-//         deck: [heiheiBoatSnack, friendsOnTheOtherSide, arielSpectacularSinger],
+//         Inkwell: 2,
+//         Play: [hiroHamadaTeamLeader],
+//         Deck: [heiheiBoatSnack, friendsOnTheOtherSide, arielSpectacularSinger],
 //       },
 //       {
-//         deck: 2,
+//         Deck: 2,
 //       },
 //     );
 //
-//     const cardUnderTest = testEngine.getCardModel(hiroHamadaTeamLeader);
-//     const first = testEngine.getCardModel(arielSpectacularSinger);
+//     Const cardUnderTest = testEngine.getCardModel(hiroHamadaTeamLeader);
+//     Const first = testEngine.getCardModel(arielSpectacularSinger);
 //
-//     await testEngine.activateCard(cardUnderTest, {
-//       ability: "SHAPE THE FUTURE",
+//     Await testEngine.activateCard(cardUnderTest, {
+//       Ability: "SHAPE THE FUTURE",
 //     });
 //
-//     await testEngine.resolveTopOfStack({ scry: { top: [first] } });
+//     Await testEngine.resolveTopOfStack({ scry: { top: [first] } });
 //
-//     await testEngine.passTurn();
-//     await testEngine.passTurn();
+//     Await testEngine.passTurn();
+//     Await testEngine.passTurn();
 //
-//     expect(first.zone).toBe("hand");
+//     Expect(first.zone).toBe("hand");
 //   });
 // });
 //

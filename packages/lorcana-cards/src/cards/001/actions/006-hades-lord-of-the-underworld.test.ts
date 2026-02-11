@@ -3,37 +3,37 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   hadesLordOfUnderworld,
-//   ladyTremaine,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   HadesLordOfUnderworld,
+//   LadyTremaine,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Hades Lord of the Underworld", () => {
-//   it("WELL OF SOULS effect - return a character card from your discard to your hand", () => {
-//     const testStore = new TestStore({
-//       inkwell: hadesLordOfUnderworld.cost,
-//       hand: [hadesLordOfUnderworld],
-//       discard: [ladyTremaine],
+// Describe("Hades Lord of the Underworld", () => {
+//   It("WELL OF SOULS effect - return a character card from your discard to your hand", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: hadesLordOfUnderworld.cost,
+//       Hand: [hadesLordOfUnderworld],
+//       Discard: [ladyTremaine],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "hand",
-//       hadesLordOfUnderworld.id,
+//       HadesLordOfUnderworld.id,
 //     );
-//     const target = testStore.getByZoneAndId("discard", ladyTremaine.id);
-//     expect(target.zone).toEqual("discard");
+//     Const target = testStore.getByZoneAndId("discard", ladyTremaine.id);
+//     Expect(target.zone).toEqual("discard");
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     testStore.resolveTopOfStack({
-//       targetId: target.instanceId,
+//     TestStore.resolveTopOfStack({
+//       TargetId: target.instanceId,
 //     });
 //
-//     expect(target.zone).toEqual("hand");
-//     expect(testStore.getZonesCardCount()).toEqual(
-//       expect.objectContaining({ hand: 1, deck: 0, discard: 0, play: 1 }),
+//     Expect(target.zone).toEqual("hand");
+//     Expect(testStore.getZonesCardCount()).toEqual(
+//       Expect.objectContaining({ hand: 1, deck: 0, discard: 0, play: 1 }),
 //     );
 //   });
 // });

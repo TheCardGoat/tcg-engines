@@ -3,27 +3,27 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   hadesRuthlessTyrant,
-//   megaraPartOfThePlan,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   HadesRuthlessTyrant,
+//   MegaraPartOfThePlan,
 // } from "@lorcanito/lorcana-engine/cards/008";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Megara - Part of the Plan", () => {
-//   it("CONTENTIOUS ALLIANCE While you have a character named Hades in play, this character gains Challenger +2. (They get +2 {S} while challenging.)", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: hadesRuthlessTyrant.cost,
-//       play: [megaraPartOfThePlan],
-//       hand: [hadesRuthlessTyrant],
+// Describe("Megara - Part of the Plan", () => {
+//   It("CONTENTIOUS ALLIANCE While you have a character named Hades in play, this character gains Challenger +2. (They get +2 {S} while challenging.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: hadesRuthlessTyrant.cost,
+//       Play: [megaraPartOfThePlan],
+//       Hand: [hadesRuthlessTyrant],
 //     });
 //
-//     expect(testEngine.getCardModel(megaraPartOfThePlan).hasChallenger).toBe(
-//       false,
+//     Expect(testEngine.getCardModel(megaraPartOfThePlan).hasChallenger).toBe(
+//       False,
 //     );
-//     await testEngine.playCard(hadesRuthlessTyrant);
-//     expect(testEngine.getCardModel(megaraPartOfThePlan).hasChallenger).toBe(
-//       true,
+//     Await testEngine.playCard(hadesRuthlessTyrant);
+//     Expect(testEngine.getCardModel(megaraPartOfThePlan).hasChallenger).toBe(
+//       True,
 //     );
 //   });
 // });

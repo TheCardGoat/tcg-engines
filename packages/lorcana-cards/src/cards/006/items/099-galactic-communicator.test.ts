@@ -3,51 +3,51 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { mrSmeeBumblingMate } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { tipoGrowingSon } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { galacticCommunicator } from "@lorcanito/lorcana-engine/cards/006/items/items";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { mrSmeeBumblingMate } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { tipoGrowingSon } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { galacticCommunicator } from "@lorcanito/lorcana-engine/cards/006/items/items";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Galactic Communicator", () => {
-//   it("RESOURCE ALLOCATION 1 {I}, Banish this item - Return chosen character with 2 {S} or less to their player's hand.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Galactic Communicator", () => {
+//   It("RESOURCE ALLOCATION 1 {I}, Banish this item - Return chosen character with 2 {S} or less to their player's hand.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: galacticCommunicator.cost,
-//         play: [galacticCommunicator],
+//         Inkwell: galacticCommunicator.cost,
+//         Play: [galacticCommunicator],
 //       },
 //       {
-//         play: [tipoGrowingSon],
+//         Play: [tipoGrowingSon],
 //       },
 //     );
 //
-//     const cardUnderTest = testEngine.getCardModel(galacticCommunicator);
-//     const target = testEngine.getCardModel(tipoGrowingSon);
+//     Const cardUnderTest = testEngine.getCardModel(galacticCommunicator);
+//     Const target = testEngine.getCardModel(tipoGrowingSon);
 //
-//     cardUnderTest.activate();
-//     await testEngine.resolveTopOfStack({ targets: [target] });
+//     CardUnderTest.activate();
+//     Await testEngine.resolveTopOfStack({ targets: [target] });
 //
-//     expect(testEngine.getCardZone(target)).toBe("hand");
+//     Expect(testEngine.getCardZone(target)).toBe("hand");
 //   });
 //
-//   it("regression check - cannot bounce targets with 3 attack or more.", async () => {
-//     const testEngine = new TestEngine(
+//   It("regression check - cannot bounce targets with 3 attack or more.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: galacticCommunicator.cost,
-//         play: [galacticCommunicator],
+//         Inkwell: galacticCommunicator.cost,
+//         Play: [galacticCommunicator],
 //       },
 //       {
-//         play: [mrSmeeBumblingMate],
+//         Play: [mrSmeeBumblingMate],
 //       },
 //     );
 //
-//     const cardUnderTest = testEngine.getCardModel(galacticCommunicator);
-//     const target = testEngine.getCardModel(mrSmeeBumblingMate);
+//     Const cardUnderTest = testEngine.getCardModel(galacticCommunicator);
+//     Const target = testEngine.getCardModel(mrSmeeBumblingMate);
 //
-//     cardUnderTest.activate();
+//     CardUnderTest.activate();
 //
-//     expect(testEngine.stackLayers).toHaveLength(0);
-//     expect(testEngine.getCardZone(target)).toBe("play");
+//     Expect(testEngine.stackLayers).toHaveLength(0);
+//     Expect(testEngine.getCardZone(target)).toBe("play");
 //   });
 // });
 //

@@ -1,27 +1,27 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { resistAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { resistAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
 //
-// export const generalLiHeadOfTheImperialArmy: LorcanitoCharacterCard = {
-//   id: "r6f",
-//   name: "General Li",
-//   title: "Head of the Imperial Army",
-//   characteristics: ["storyborn", "mentor"],
-//   text: "Resist +1 ",
-//   type: "character",
-//   abilities: [resistAbility(1)],
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 3,
-//   strength: 2,
-//   willpower: 4,
-//   illustrator: "Kendall Hale",
-//   number: 187,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631473,
+// Export const generalLiHeadOfTheImperialArmy: LorcanitoCharacterCard = {
+//   Id: "r6f",
+//   Name: "General Li",
+//   Title: "Head of the Imperial Army",
+//   Characteristics: ["storyborn", "mentor"],
+//   Text: "Resist +1 ",
+//   Type: "character",
+//   Abilities: [resistAbility(1)],
+//   Inkwell: true,
+//   Colors: ["steel"],
+//   Cost: 3,
+//   Strength: 2,
+//   Willpower: 4,
+//   Illustrator: "Kendall Hale",
+//   Number: 187,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631473,
 //   },
-//   rarity: "uncommon",
-//   lore: 1,
+//   Rarity: "uncommon",
+//   Lore: 1,
 // };
 //

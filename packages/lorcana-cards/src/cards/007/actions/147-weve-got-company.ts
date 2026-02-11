@@ -1,24 +1,8 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
 export const weveGotCompany: ActionCard = {
-  id: "inc",
-  cardType: "action",
-  name: "We've Got Company!",
-  inkType: ["ruby"],
-  franchise: "Atlantis",
-  set: "007",
-  text: "Ready all your characters. They gain Reckless this turn. (They can't quest and must challenge if able.)",
-  cost: 3,
-  cardNumber: 147,
-  inkable: false,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "43362114455febd0d8b29de9e69a7c4841fd2ec7",
-  },
   abilities: [
     {
-      id: "inc-1",
-      type: "action",
       effect: {
         type: "sequence",
         steps: [
@@ -34,7 +18,23 @@ export const weveGotCompany: ActionCard = {
           },
         ],
       },
+      id: "inc-1",
       text: "Ready all your characters. They gain Reckless this turn.",
+      type: "action",
     },
   ],
+  cardNumber: 147,
+  cardType: "action",
+  cost: 3,
+  externalIds: {
+    ravensburger: "43362114455febd0d8b29de9e69a7c4841fd2ec7",
+  },
+  franchise: "Atlantis",
+  id: "inc",
+  inkType: ["ruby"],
+  inkable: false,
+  missingTests: true,
+  name: "We've Got Company!",
+  set: "007",
+  text: "Ready all your characters. They gain Reckless this turn. (They can't quest and must challenge if able.)",
 };

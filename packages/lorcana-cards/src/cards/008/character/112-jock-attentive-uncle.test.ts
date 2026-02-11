@@ -3,42 +3,42 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { louieChillNephew } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import {
-//   deweyLovableShowoff,
-//   jockAttentiveUncle,
-//   trampDapperRascal,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { louieChillNephew } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import {
+//   DeweyLovableShowoff,
+//   JockAttentiveUncle,
+//   TrampDapperRascal,
 // } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Jock - Attentive Uncle", () => {
-//   it("VOICE OF EXPERIENCE When you play this character, if you have 3 or more other characters in play, gain 2 lore.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: jockAttentiveUncle.cost,
-//       hand: [jockAttentiveUncle],
-//       play: [deweyLovableShowoff, louieChillNephew, trampDapperRascal],
+// Describe("Jock - Attentive Uncle", () => {
+//   It("VOICE OF EXPERIENCE When you play this character, if you have 3 or more other characters in play, gain 2 lore.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: jockAttentiveUncle.cost,
+//       Hand: [jockAttentiveUncle],
+//       Play: [deweyLovableShowoff, louieChillNephew, trampDapperRascal],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(jockAttentiveUncle);
+//     Const cardUnderTest = testEngine.getCardModel(jockAttentiveUncle);
 //
-//     await testEngine.playCard(cardUnderTest);
+//     Await testEngine.playCard(cardUnderTest);
 //
-//     expect(testEngine.getLoreForPlayer()).toEqual(2);
+//     Expect(testEngine.getLoreForPlayer()).toEqual(2);
 //   });
 //
-//   it("VOICE OF EXPERIENCE When you play this character, if you have 3 total in play, do not gain 2 lore.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: jockAttentiveUncle.cost,
-//       hand: [jockAttentiveUncle],
-//       play: [deweyLovableShowoff, louieChillNephew],
+//   It("VOICE OF EXPERIENCE When you play this character, if you have 3 total in play, do not gain 2 lore.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: jockAttentiveUncle.cost,
+//       Hand: [jockAttentiveUncle],
+//       Play: [deweyLovableShowoff, louieChillNephew],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(jockAttentiveUncle);
+//     Const cardUnderTest = testEngine.getCardModel(jockAttentiveUncle);
 //
-//     await testEngine.playCard(cardUnderTest);
+//     Await testEngine.playCard(cardUnderTest);
 //
-//     expect(testEngine.getLoreForPlayer()).toEqual(0);
+//     Expect(testEngine.getLoreForPlayer()).toEqual(0);
 //   });
 // });
 //

@@ -3,80 +3,80 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   goofyKnightForADay,
-//   merlinRabbit,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   GoofyKnightForADay,
+//   MerlinRabbit,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Merlin - Rabbit", () => {
-//   describe("**HOPPITY HIP!** When you play this character and when he leaves play, you may draw a card.", () => {
-//     it("When you play", () => {
-//       const testStore = new TestStore({
-//         inkwell: merlinRabbit.cost,
-//         hand: [merlinRabbit],
-//         deck: 1,
+// Describe("Merlin - Rabbit", () => {
+//   Describe("**HOPPITY HIP!** When you play this character and when he leaves play, you may draw a card.", () => {
+//     It("When you play", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: merlinRabbit.cost,
+//         Hand: [merlinRabbit],
+//         Deck: 1,
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId("hand", merlinRabbit.id);
+//       Const cardUnderTest = testStore.getByZoneAndId("hand", merlinRabbit.id);
 //
-//       expect(testStore.getZonesCardCount()).toEqual(
-//         expect.objectContaining({
-//           deck: 1,
-//           hand: 1,
-//           play: 0,
+//       Expect(testStore.getZonesCardCount()).toEqual(
+//         Expect.objectContaining({
+//           Deck: 1,
+//           Hand: 1,
+//           Play: 0,
 //         }),
 //       );
 //
-//       cardUnderTest.playFromHand();
-//       testStore.resolveOptionalAbility();
+//       CardUnderTest.playFromHand();
+//       TestStore.resolveOptionalAbility();
 //
-//       expect(testStore.getZonesCardCount()).toEqual(
-//         expect.objectContaining({
-//           deck: 0,
-//           hand: 1,
-//           play: 1,
+//       Expect(testStore.getZonesCardCount()).toEqual(
+//         Expect.objectContaining({
+//           Deck: 0,
+//           Hand: 1,
+//           Play: 1,
 //         }),
 //       );
 //     });
 //
-//     it("When he leaves play", () => {
-//       const testStore = new TestStore(
+//     It("When he leaves play", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [merlinRabbit],
-//           deck: 1,
+//           Play: [merlinRabbit],
+//           Deck: 1,
 //         },
 //         { play: [goofyKnightForADay] },
 //       );
 //
-//       const defender = testStore.getByZoneAndId(
+//       Const defender = testStore.getByZoneAndId(
 //         "play",
-//         goofyKnightForADay.id,
+//         GoofyKnightForADay.id,
 //         "player_two",
 //       );
-//       const attacker = testStore.getByZoneAndId("play", merlinRabbit.id);
+//       Const attacker = testStore.getByZoneAndId("play", merlinRabbit.id);
 //
-//       defender.updateCardMeta({ exerted: true });
+//       Defender.updateCardMeta({ exerted: true });
 //
-//       expect(testStore.getZonesCardCount()).toEqual(
-//         expect.objectContaining({
-//           deck: 1,
-//           hand: 0,
-//           play: 1,
-//           discard: 0,
+//       Expect(testStore.getZonesCardCount()).toEqual(
+//         Expect.objectContaining({
+//           Deck: 1,
+//           Hand: 0,
+//           Play: 1,
+//           Discard: 0,
 //         }),
 //       );
 //
-//       attacker.challenge(defender);
-//       testStore.resolveOptionalAbility();
+//       Attacker.challenge(defender);
+//       TestStore.resolveOptionalAbility();
 //
-//       expect(testStore.getZonesCardCount()).toEqual(
-//         expect.objectContaining({
-//           deck: 0,
-//           hand: 1,
-//           play: 0,
-//           discard: 1,
+//       Expect(testStore.getZonesCardCount()).toEqual(
+//         Expect.objectContaining({
+//           Deck: 0,
+//           Hand: 1,
+//           Play: 0,
+//           Discard: 1,
 //         }),
 //       );
 //     });

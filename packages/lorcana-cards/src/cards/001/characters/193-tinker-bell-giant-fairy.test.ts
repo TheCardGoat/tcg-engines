@@ -5,9 +5,9 @@ import { tinkerBellGiantFairy } from "./193-tinker-bell-giant-fairy";
 describe("Tinker Bell - Giant Fairy", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [tinkerBellGiantFairy] });
-  //   expect(testEngine.getCardModel(tinkerBellGiantFairy).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [tinkerBellGiantFairy] });
+  //   Expect(testEngine.getCardModel(tinkerBellGiantFairy).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,189 +17,189 @@ describe("Tinker Bell - Giant Fairy", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   heiheiBoatSnack,
-//   liloMakingAWish,
-//   teKaHeartless,
-//   tinkerBellGiantFairy,
-//   tinkerBellTinyTactician,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   HeiheiBoatSnack,
+//   LiloMakingAWish,
+//   TeKaHeartless,
+//   TinkerBellGiantFairy,
+//   TinkerBellTinyTactician,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Tinker Bell - Giant Fairy", () => {
-//   describe("**PUNY PIRATE!** During your turn, whenever this character banishes another character in a challenge, you may deal 2 damage to chosen opposing character.", () => {
-//     it("should deal two damage", () => {
-//       const testStore = new TestStore(
+// Describe("Tinker Bell - Giant Fairy", () => {
+//   Describe("**PUNY PIRATE!** During your turn, whenever this character banishes another character in a challenge, you may deal 2 damage to chosen opposing character.", () => {
+//     It("should deal two damage", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [tinkerBellGiantFairy],
+//           Play: [tinkerBellGiantFairy],
 //         },
 //         {
-//           play: [heiheiBoatSnack, teKaHeartless],
+//           Play: [heiheiBoatSnack, teKaHeartless],
 //         },
 //       );
 //
-//       const attacker = testStore.getByZoneAndId(
+//       Const attacker = testStore.getByZoneAndId(
 //         "play",
-//         tinkerBellGiantFairy.id,
+//         TinkerBellGiantFairy.id,
 //       );
-//       const defender = testStore.getByZoneAndId(
+//       Const defender = testStore.getByZoneAndId(
 //         "play",
-//         heiheiBoatSnack.id,
+//         HeiheiBoatSnack.id,
 //         "player_two",
 //       );
-//       const target = testStore.getByZoneAndId(
+//       Const target = testStore.getByZoneAndId(
 //         "play",
-//         teKaHeartless.id,
+//         TeKaHeartless.id,
 //         "player_two",
 //       );
 //
-//       defender.updateCardMeta({ exerted: true });
-//       attacker.challenge(defender);
-//       expect(defender.isDead).toBeTruthy();
+//       Defender.updateCardMeta({ exerted: true });
+//       Attacker.challenge(defender);
+//       Expect(defender.isDead).toBeTruthy();
 //
-//       testStore.resolveOptionalAbility();
-//       testStore.resolveTopOfStack({ targetId: target.instanceId });
+//       TestStore.resolveOptionalAbility();
+//       TestStore.resolveTopOfStack({ targetId: target.instanceId });
 //
-//       expect(target.meta.damage).toEqual(2);
-//       expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
+//       Expect(target.meta.damage).toEqual(2);
+//       Expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
 //     });
 //
-//     it("skips effect", () => {
-//       const testStore = new TestStore(
+//     It("skips effect", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [tinkerBellGiantFairy],
+//           Play: [tinkerBellGiantFairy],
 //         },
 //         {
-//           play: [heiheiBoatSnack, teKaHeartless],
+//           Play: [heiheiBoatSnack, teKaHeartless],
 //         },
 //       );
 //
-//       const attacker = testStore.getByZoneAndId(
+//       Const attacker = testStore.getByZoneAndId(
 //         "play",
-//         tinkerBellGiantFairy.id,
+//         TinkerBellGiantFairy.id,
 //       );
-//       const defender = testStore.getByZoneAndId(
+//       Const defender = testStore.getByZoneAndId(
 //         "play",
-//         heiheiBoatSnack.id,
+//         HeiheiBoatSnack.id,
 //         "player_two",
 //       );
-//       const target = testStore.getByZoneAndId(
+//       Const target = testStore.getByZoneAndId(
 //         "play",
-//         teKaHeartless.id,
+//         TeKaHeartless.id,
 //         "player_two",
 //       );
 //
-//       defender.updateCardMeta({ exerted: true });
+//       Defender.updateCardMeta({ exerted: true });
 //
-//       attacker.challenge(defender);
-//       testStore.resolveTopOfStack({ skip: true });
+//       Attacker.challenge(defender);
+//       TestStore.resolveTopOfStack({ skip: true });
 //
-//       expect(target.meta.damage).toBeFalsy();
-//       expect(defender.isDead).toBeTruthy();
-//       expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
+//       Expect(target.meta.damage).toBeFalsy();
+//       Expect(defender.isDead).toBeTruthy();
+//       Expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
 //     });
 //   });
 //
-//   describe("**ROCK THE BOAT** When you play this character, deal 1 damage to each opposing character.", () => {
-//     it("Playing from hand", () => {
-//       const testStore = new TestStore(
+//   Describe("**ROCK THE BOAT** When you play this character, deal 1 damage to each opposing character.", () => {
+//     It("Playing from hand", () => {
+//       Const testStore = new TestStore(
 //         {
-//           inkwell: tinkerBellGiantFairy.cost,
-//           hand: [tinkerBellGiantFairy],
+//           Inkwell: tinkerBellGiantFairy.cost,
+//           Hand: [tinkerBellGiantFairy],
 //         },
 //         {
-//           play: [heiheiBoatSnack, teKaHeartless],
+//           Play: [heiheiBoatSnack, teKaHeartless],
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "hand",
-//         tinkerBellGiantFairy.id,
+//         TinkerBellGiantFairy.id,
 //       );
-//       const target = testStore.getByZoneAndId(
+//       Const target = testStore.getByZoneAndId(
 //         "play",
-//         teKaHeartless.id,
+//         TeKaHeartless.id,
 //         "player_two",
 //       );
-//       const anotherTarget = testStore.getByZoneAndId(
+//       Const anotherTarget = testStore.getByZoneAndId(
 //         "play",
-//         heiheiBoatSnack.id,
+//         HeiheiBoatSnack.id,
 //         "player_two",
 //       );
 //
-//       cardUnderTest.playFromHand();
+//       CardUnderTest.playFromHand();
 //
-//       expect(target.meta.damage).toEqual(1);
-//       expect(anotherTarget.meta.damage).toEqual(1);
+//       Expect(target.meta.damage).toEqual(1);
+//       Expect(anotherTarget.meta.damage).toEqual(1);
 //     });
 //
-//     it("Shifting", () => {
-//       const testStore = new TestStore(
+//     It("Shifting", () => {
+//       Const testStore = new TestStore(
 //         {
-//           inkwell: tinkerBellGiantFairy.cost,
-//           hand: [tinkerBellGiantFairy],
-//           play: [tinkerBellTinyTactician],
+//           Inkwell: tinkerBellGiantFairy.cost,
+//           Hand: [tinkerBellGiantFairy],
+//           Play: [tinkerBellTinyTactician],
 //         },
 //         {
-//           play: [heiheiBoatSnack, teKaHeartless],
+//           Play: [heiheiBoatSnack, teKaHeartless],
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "hand",
-//         tinkerBellGiantFairy.id,
+//         TinkerBellGiantFairy.id,
 //       );
-//       const shifted = testStore.getByZoneAndId(
+//       Const shifted = testStore.getByZoneAndId(
 //         "play",
-//         tinkerBellTinyTactician.id,
+//         TinkerBellTinyTactician.id,
 //       );
 //
-//       const target = testStore.getByZoneAndId(
+//       Const target = testStore.getByZoneAndId(
 //         "play",
-//         teKaHeartless.id,
+//         TeKaHeartless.id,
 //         "player_two",
 //       );
-//       const anotherTarget = testStore.getByZoneAndId(
+//       Const anotherTarget = testStore.getByZoneAndId(
 //         "play",
-//         heiheiBoatSnack.id,
+//         HeiheiBoatSnack.id,
 //         "player_two",
 //       );
 //
-//       testStore.store.shiftCard(cardUnderTest.instanceId, shifted.instanceId);
+//       TestStore.store.shiftCard(cardUnderTest.instanceId, shifted.instanceId);
 //
-//       expect(target.meta.damage).toEqual(1);
-//       expect(anotherTarget.meta.damage).toEqual(1);
+//       Expect(target.meta.damage).toEqual(1);
+//       Expect(anotherTarget.meta.damage).toEqual(1);
 //     });
 //   });
 // });
 //
-// describe("Regression tests", () => {
-//   it("Causing additional damage when banishing by her effect", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Regression tests", () => {
+//   It("Causing additional damage when banishing by her effect", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         play: [tinkerBellGiantFairy],
+//         Play: [tinkerBellGiantFairy],
 //       },
 //       {
-//         play: [heiheiBoatSnack, teKaHeartless, liloMakingAWish],
+//         Play: [heiheiBoatSnack, teKaHeartless, liloMakingAWish],
 //       },
 //     );
 //
-//     const attacker = testEngine.getCardModel(tinkerBellGiantFairy);
-//     const defender = testEngine.getCardModel(heiheiBoatSnack);
-//     const target = testEngine.getCardModel(liloMakingAWish);
+//     Const attacker = testEngine.getCardModel(tinkerBellGiantFairy);
+//     Const defender = testEngine.getCardModel(heiheiBoatSnack);
+//     Const target = testEngine.getCardModel(liloMakingAWish);
 //
-//     defender.updateCardMeta({ exerted: true });
+//     Defender.updateCardMeta({ exerted: true });
 //
-//     attacker.challenge(defender);
-//     expect(defender.isDead).toBeTruthy();
+//     Attacker.challenge(defender);
+//     Expect(defender.isDead).toBeTruthy();
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({ targets: [target] });
-//     expect(target.isDead).toBeTruthy();
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({ targets: [target] });
+//     Expect(target.isDead).toBeTruthy();
 //
-//     expect(testEngine.store.stackLayerStore.layers).toHaveLength(0);
+//     Expect(testEngine.store.stackLayerStore.layers).toHaveLength(0);
 //   });
 // });
 //

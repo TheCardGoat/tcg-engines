@@ -18,22 +18,22 @@ describe("Sleepy - Sluggish Knight", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { sleepySluggishKnight } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { sleepySluggishKnight } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Sleepy - Sluggish Knight", () => {
-//   it.skip("", () => {
-//     const testStore = new TestStore({
-//       inkwell: sleepySluggishKnight.cost,
-//       play: [sleepySluggishKnight],
+// Describe("Sleepy - Sluggish Knight", () => {
+//   It.skip("", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: sleepySluggishKnight.cost,
+//       Play: [sleepySluggishKnight],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(sleepySluggishKnight);
+//     Const cardUnderTest = testStore.getCard(sleepySluggishKnight);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

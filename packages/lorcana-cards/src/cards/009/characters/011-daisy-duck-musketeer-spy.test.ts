@@ -3,20 +3,20 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { daisyDuckMusketeerSpy } from "@lorcanito/lorcana-engine/cards/009/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { daisyDuckMusketeerSpy } from "@lorcanito/lorcana-engine/cards/009/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Daisy Duck - Musketeer Spy", () => {
-//   it.skip("INFILTRATION When you play this character, each opponent chooses and discards a card.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: daisyDuckMusketeerSpy.cost,
-//       hand: [daisyDuckMusketeerSpy],
+// Describe("Daisy Duck - Musketeer Spy", () => {
+//   It.skip("INFILTRATION When you play this character, each opponent chooses and discards a card.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: daisyDuckMusketeerSpy.cost,
+//       Hand: [daisyDuckMusketeerSpy],
 //     });
 //
-//     await testEngine.playCard(daisyDuckMusketeerSpy);
-//     await testEngine.acceptOptionalLayer();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.playCard(daisyDuckMusketeerSpy);
+//     Await testEngine.acceptOptionalLayer();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

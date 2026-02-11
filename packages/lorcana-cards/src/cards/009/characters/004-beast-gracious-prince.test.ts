@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { auroraTranquilPrincess } from "@lorcanito/lorcana-engine/cards/004/characters/141-aurora-tranquil-princess";
-// import { beastGraciousPrince } from "@lorcanito/lorcana-engine/cards/009/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { auroraTranquilPrincess } from "@lorcanito/lorcana-engine/cards/004/characters/141-aurora-tranquil-princess";
+// Import { beastGraciousPrince } from "@lorcanito/lorcana-engine/cards/009/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Beast - Gracious Prince", () => {
-//   it("FULL DANCE CARD Your Princess characters get +1 {S} and +1 {W}.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: beastGraciousPrince.cost,
-//       play: [beastGraciousPrince, auroraTranquilPrincess],
+// Describe("Beast - Gracious Prince", () => {
+//   It("FULL DANCE CARD Your Princess characters get +1 {S} and +1 {W}.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: beastGraciousPrince.cost,
+//       Play: [beastGraciousPrince, auroraTranquilPrincess],
 //     });
 //
-//     const target = testEngine.getCardModel(auroraTranquilPrincess);
+//     Const target = testEngine.getCardModel(auroraTranquilPrincess);
 //
-//     expect(target.willpower).toBe(auroraTranquilPrincess.willpower + 1);
-//     expect(target.strength).toBe(auroraTranquilPrincess.strength + 1);
+//     Expect(target.willpower).toBe(auroraTranquilPrincess.willpower + 1);
+//     Expect(target.strength).toBe(auroraTranquilPrincess.strength + 1);
 //   });
 // });
 //

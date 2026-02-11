@@ -1,35 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const annaHeirToArendelle: CharacterCard = {
-  id: "ibd",
-  cardType: "character",
-  name: "Anna",
-  version: "Heir to Arendelle",
-  fullName: "Anna - Heir to Arendelle",
-  inkType: ["amethyst"],
-  franchise: "Frozen",
-  set: "001",
-  text: "When you play this character, if you have a character named Elsa in play, choose an opposing character. The chosen character doesn't ready at the start of their next turn.",
-  cost: 4,
-  strength: 2,
-  willpower: 4,
-  lore: 2,
-  cardNumber: 35,
-  inkable: true,
-  externalIds: {
-    ravensburger: "",
-  },
   abilities: [
     {
-      id: "ibd-1",
-      type: "triggered",
-      name: "LOVING HEART",
-      text: "When you play this character, if you have a character named Elsa in play, choose an opposing character. The chosen character doesn't ready at the start of their next turn.",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       condition: {
         type: "has-named-character",
         name: "Elsa",
@@ -47,53 +20,80 @@ export const annaHeirToArendelle: CharacterCard = {
           cardTypes: ["character"],
         },
       },
+      id: "ibd-1",
+      name: "LOVING HEART",
+      text: "When you play this character, if you have a character named Elsa in play, choose an opposing character. The chosen character doesn't ready at the start of their next turn.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 35,
+  cardType: "character",
   classifications: ["Hero", "Queen", "Storyborn"],
+  cost: 4,
+  externalIds: {
+    ravensburger: "",
+  },
+  franchise: "Frozen",
+  fullName: "Anna - Heir to Arendelle",
+  id: "ibd",
+  inkType: ["amethyst"],
+  inkable: true,
+  lore: 2,
+  name: "Anna",
+  set: "001",
+  strength: 2,
+  text: "When you play this character, if you have a character named Elsa in play, choose an opposing character. The chosen character doesn't ready at the start of their next turn.",
+  version: "Heir to Arendelle",
+  willpower: 4,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { haveElsaInPlay } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
-// import { chosenOpposingCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import { haveElsaInPlay } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
+// Import { chosenOpposingCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const annaHeirToArendelle: LorcanitoCharacterCard = {
-//   id: "ibd",
-//   name: "Anna",
-//   title: "Heir to Arendelle",
-//   characteristics: ["hero", "queen", "storyborn"],
-//   text: "**LOVING HEART** When you play this character, if you have a character named Elsa in play, choose an opposing character. The chosen character doesn't ready at the start of their next turn.",
-//   type: "character",
-//   abilities: [
-//     whenYouPlayThisCharAbility({
-//       type: "resolution",
-//       resolutionConditions: [haveElsaInPlay],
-//       name: "Loving Heart",
-//       text: "When you play this character, if you have a character named Elsa in play, choose an opposing character. The chosen character doesn't ready at the start of their next turn.",
-//       effects: [
+// Export const annaHeirToArendelle: LorcanitoCharacterCard = {
+//   Id: "ibd",
+//   Name: "Anna",
+//   Title: "Heir to Arendelle",
+//   Characteristics: ["hero", "queen", "storyborn"],
+//   Text: "**LOVING HEART** When you play this character, if you have a character named Elsa in play, choose an opposing character. The chosen character doesn't ready at the start of their next turn.",
+//   Type: "character",
+//   Abilities: [
+//     WhenYouPlayThisCharAbility({
+//       Type: "resolution",
+//       ResolutionConditions: [haveElsaInPlay],
+//       Name: "Loving Heart",
+//       Text: "When you play this character, if you have a character named Elsa in play, choose an opposing character. The chosen character doesn't ready at the start of their next turn.",
+//       Effects: [
 //         {
-//           type: "restriction",
-//           restriction: "ready-at-start-of-turn",
-//           duration: "next_turn",
-//           target: chosenOpposingCharacter,
+//           Type: "restriction",
+//           Restriction: "ready-at-start-of-turn",
+//           Duration: "next_turn",
+//           Target: chosenOpposingCharacter,
 //         },
 //       ],
 //     }),
 //   ],
-//   flavour: "Two sisters, one mind.",
-//   inkwell: true,
-//   colors: ["amethyst"],
-//   cost: 4,
-//   strength: 2,
-//   willpower: 4,
-//   lore: 2,
-//   illustrator: "Valerio Buonfantino",
-//   number: 35,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 504444,
+//   Flavour: "Two sisters, one mind.",
+//   Inkwell: true,
+//   Colors: ["amethyst"],
+//   Cost: 4,
+//   Strength: 2,
+//   Willpower: 4,
+//   Lore: 2,
+//   Illustrator: "Valerio Buonfantino",
+//   Number: 35,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 504444,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

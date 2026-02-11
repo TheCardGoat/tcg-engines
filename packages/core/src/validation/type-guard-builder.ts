@@ -98,10 +98,7 @@ function deepEqual(a: unknown, b: unknown): boolean {
     }
 
     return keysA.every((key) =>
-      deepEqual(
-        (a as Record<string, unknown>)[key],
-        (b as Record<string, unknown>)[key],
-      ),
+      deepEqual((a as Record<string, unknown>)[key], (b as Record<string, unknown>)[key]),
     );
   }
 

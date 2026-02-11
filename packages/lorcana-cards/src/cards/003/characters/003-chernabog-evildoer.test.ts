@@ -3,91 +3,91 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { chernabogEvildoer } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import {
-//   arthurNoviceSparrow,
-//   chacaImpressiveDaughter,
-//   ludwigVonDrakeSelfproclaimedGenius,
-//   petePastryChomper,
-//   theQueenCruelestOfAll,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { chernabogEvildoer } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import {
+//   ArthurNoviceSparrow,
+//   ChacaImpressiveDaughter,
+//   LudwigVonDrakeSelfproclaimedGenius,
+//   PetePastryChomper,
+//   TheQueenCruelestOfAll,
 // } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Chernabog - Evildoer", () => {
-//   describe("**THE POWER OF EVIL** When you play this character, pay 1 {I} less for every character card in your discard.", () => {
-//     it("Playing full cost", () => {
-//       const testStore = new TestStore({
-//         inkwell: chernabogEvildoer.cost,
-//         hand: [chernabogEvildoer],
+// Describe("Chernabog - Evildoer", () => {
+//   Describe("**THE POWER OF EVIL** When you play this character, pay 1 {I} less for every character card in your discard.", () => {
+//     It("Playing full cost", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: chernabogEvildoer.cost,
+//         Hand: [chernabogEvildoer],
 //       });
 //
-//       const cardUnderTest = testStore.getCard(chernabogEvildoer);
+//       Const cardUnderTest = testStore.getCard(chernabogEvildoer);
 //
-//       cardUnderTest.playFromHand();
+//       CardUnderTest.playFromHand();
 //
-//       expect(testStore.getAvailableInkwellCardCount("player_one")).toBe(0);
-//       expect(cardUnderTest.zone).toBe("play");
+//       Expect(testStore.getAvailableInkwellCardCount("player_one")).toBe(0);
+//       Expect(cardUnderTest.zone).toBe("play");
 //     });
 //
-//     it("One damaged Character", () => {
-//       const testStore = new TestStore({
-//         inkwell: chernabogEvildoer.cost - 1,
-//         discard: [petePastryChomper],
-//         hand: [chernabogEvildoer],
+//     It("One damaged Character", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: chernabogEvildoer.cost - 1,
+//         Discard: [petePastryChomper],
+//         Hand: [chernabogEvildoer],
 //       });
 //
-//       const cardUnderTest = testStore.getCard(chernabogEvildoer);
+//       Const cardUnderTest = testStore.getCard(chernabogEvildoer);
 //
-//       cardUnderTest.playFromHand();
+//       CardUnderTest.playFromHand();
 //
-//       expect(testStore.getAvailableInkwellCardCount("player_one")).toBe(0);
-//       expect(cardUnderTest.zone).toBe("play");
+//       Expect(testStore.getAvailableInkwellCardCount("player_one")).toBe(0);
+//       Expect(cardUnderTest.zone).toBe("play");
 //     });
 //
-//     it("Five damaged Character", () => {
-//       const testStore = new TestStore({
-//         inkwell: 5,
-//         discard: [
-//           petePastryChomper,
-//           arthurNoviceSparrow,
-//           chacaImpressiveDaughter,
-//           theQueenCruelestOfAll,
-//           ludwigVonDrakeSelfproclaimedGenius,
+//     It("Five damaged Character", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: 5,
+//         Discard: [
+//           PetePastryChomper,
+//           ArthurNoviceSparrow,
+//           ChacaImpressiveDaughter,
+//           TheQueenCruelestOfAll,
+//           LudwigVonDrakeSelfproclaimedGenius,
 //         ],
-//         hand: [chernabogEvildoer],
+//         Hand: [chernabogEvildoer],
 //       });
 //
-//       const cardUnderTest = testStore.getCard(chernabogEvildoer);
+//       Const cardUnderTest = testStore.getCard(chernabogEvildoer);
 //
-//       cardUnderTest.playFromHand();
+//       CardUnderTest.playFromHand();
 //
-//       expect(testStore.getAvailableInkwellCardCount("player_one")).toBe(0);
-//       expect(cardUnderTest.zone).toBe("play");
+//       Expect(testStore.getAvailableInkwellCardCount("player_one")).toBe(0);
+//       Expect(cardUnderTest.zone).toBe("play");
 //     });
 //   });
 //
-//   it("**SUMMON THE SPIRITS** When you play this character, shuffle all character cards from your discard into your deck.", () => {
-//     const discard = [
-//       petePastryChomper,
-//       arthurNoviceSparrow,
-//       chacaImpressiveDaughter,
-//       theQueenCruelestOfAll,
-//       ludwigVonDrakeSelfproclaimedGenius,
+//   It("**SUMMON THE SPIRITS** When you play this character, shuffle all character cards from your discard into your deck.", () => {
+//     Const discard = [
+//       PetePastryChomper,
+//       ArthurNoviceSparrow,
+//       ChacaImpressiveDaughter,
+//       TheQueenCruelestOfAll,
+//       LudwigVonDrakeSelfproclaimedGenius,
 //     ];
-//     const testStore = new TestStore({
-//       inkwell: chernabogEvildoer.cost,
-//       discard: discard,
-//       hand: [chernabogEvildoer],
+//     Const testStore = new TestStore({
+//       Inkwell: chernabogEvildoer.cost,
+//       Discard: discard,
+//       Hand: [chernabogEvildoer],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(chernabogEvildoer);
+//     Const cardUnderTest = testStore.getCard(chernabogEvildoer);
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     expect(cardUnderTest.zone).toBe("play");
-//     discard.forEach((card) => {
-//       expect(testStore.getCard(card).zone).toBe("deck");
+//     Expect(cardUnderTest.zone).toBe("play");
+//     Discard.forEach((card) => {
+//       Expect(testStore.getCard(card).zone).toBe("deck");
 //     });
 //   });
 // });

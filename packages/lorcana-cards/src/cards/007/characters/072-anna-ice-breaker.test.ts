@@ -3,55 +3,55 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   annaIceBreaker,
-//   doloresMadrigalWithinEarshot,
-//   donaldDuckFlusteredSorcerer,
-//   theQueenJealousBeauty,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   AnnaIceBreaker,
+//   DoloresMadrigalWithinEarshot,
+//   DonaldDuckFlusteredSorcerer,
+//   TheQueenJealousBeauty,
 // } from "@lorcanito/lorcana-engine/cards/007";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Anna - Ice Breaker", () => {
-//   it("Support (Whenever this character quests, you may add their {S} to another chosen character’s {S} this turn.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [annaIceBreaker],
+// Describe("Anna - Ice Breaker", () => {
+//   It("Support (Whenever this character quests, you may add their {S} to another chosen character’s {S} this turn.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [annaIceBreaker],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(annaIceBreaker);
-//     expect(cardUnderTest.hasSupport).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(annaIceBreaker);
+//     Expect(cardUnderTest.hasSupport).toBe(true);
 //   });
 //
-//   it("WINTER AMBUSH When you play this character, chosen opposing character can’t ready at the start of their next turn.", async () => {
-//     const play = [
-//       donaldDuckFlusteredSorcerer,
-//       theQueenJealousBeauty,
-//       doloresMadrigalWithinEarshot,
+//   It("WINTER AMBUSH When you play this character, chosen opposing character can’t ready at the start of their next turn.", async () => {
+//     Const play = [
+//       DonaldDuckFlusteredSorcerer,
+//       TheQueenJealousBeauty,
+//       DoloresMadrigalWithinEarshot,
 //     ];
-//     const testEngine = new TestEngine(
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: annaIceBreaker.cost,
-//         hand: [annaIceBreaker],
-//         deck: 5,
+//         Inkwell: annaIceBreaker.cost,
+//         Hand: [annaIceBreaker],
+//         Deck: 5,
 //       },
 //       {
-//         play: play,
-//         deck: 5,
+//         Play: play,
+//         Deck: 5,
 //       },
 //     );
 //
-//     for (const card of play) {
-//       await testEngine.tapCard(card);
+//     For (const card of play) {
+//       Await testEngine.tapCard(card);
 //     }
 //
-//     await testEngine.playCard(annaIceBreaker, {
-//       targets: [doloresMadrigalWithinEarshot],
+//     Await testEngine.playCard(annaIceBreaker, {
+//       Targets: [doloresMadrigalWithinEarshot],
 //     });
 //
-//     await testEngine.passTurn();
+//     Await testEngine.passTurn();
 //
-//     expect(testEngine.getCardModel(doloresMadrigalWithinEarshot).exerted).toBe(
-//       true,
+//     Expect(testEngine.getCardModel(doloresMadrigalWithinEarshot).exerted).toBe(
+//       True,
 //     );
 //   });
 // });

@@ -167,8 +167,7 @@ export const CREATE_TOKEN_PATTERN =
  *
  * @example "Look at the top 3 cards of your Main Deck." -> ["3", "Main Deck"]
  */
-export const LOOK_PATTERN =
-  /^Look at the top (\d+) cards? of your (Main Deck|Rune Deck|deck)\.?/i;
+export const LOOK_PATTERN = /^Look at the top (\d+) cards? of your (Main Deck|Rune Deck|deck)\.?/i;
 
 // ============================================================================
 // Fight Effect Patterns
@@ -179,8 +178,7 @@ export const LOOK_PATTERN =
  *
  * @example "They deal damage equal to their Mights to each other."
  */
-export const FIGHT_PATTERN =
-  /deal damage equal to their Mights to each other\.?$/i;
+export const FIGHT_PATTERN = /deal damage equal to their Mights to each other\.?$/i;
 
 // ============================================================================
 // Prevent Damage Effect Patterns
@@ -304,9 +302,7 @@ export function isGainControlOfSpellEffect(text: string): boolean {
 /**
  * Parse location string to Location type
  */
-export function parseLocationString(
-  locationStr: string,
-): "base" | "battlefield" | "here" {
+export function parseLocationString(locationStr: string): "base" | "battlefield" | "here" {
   const normalized = locationStr.toLowerCase().trim();
 
   if (

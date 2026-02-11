@@ -8,19 +8,19 @@ import { logger } from "../../logging";
 import type { EffectParser } from "./index";
 
 // RestrictionEffect is not exported from types, define locally
-type RestrictionEffect = {
+interface RestrictionEffect {
   type: "restriction";
   restriction: string;
   target?: string;
   duration?: "this-turn" | "next-turn" | "their-next-turn";
-};
+}
 
 // GrantAbilityEffect for effects that grant abilities to characters
-type GrantAbilityEffect = {
+interface GrantAbilityEffect {
   type: "grant-ability";
   ability: string;
   target: string;
-};
+}
 
 /**
  * Parse restriction effect from text string (regex-based parsing)
@@ -36,9 +36,9 @@ function parseFromText(
   if (/[Cc]an'?t be challenged|cannot be challenged/.test(text)) {
     logger.info("Parsed 'can't be challenged' restriction");
     return {
-      type: "restriction",
       restriction: "cant-be-challenged",
       target: "SELF",
+      type: "restriction",
     };
   }
 
@@ -46,9 +46,9 @@ function parseFromText(
   if (/[Cc]an'?t challenge|cannot challenge/.test(text)) {
     logger.info("Parsed 'can't challenge' restriction");
     return {
-      type: "restriction",
       restriction: "cant-challenge",
       target: "SELF",
+      type: "restriction",
     };
   }
 
@@ -67,9 +67,9 @@ function parseFromText(
     }
 
     const effect: RestrictionEffect = {
-      type: "restriction",
       restriction: "cant-quest",
       target: "SELF",
+      type: "restriction",
     };
 
     if (duration) {
@@ -97,9 +97,9 @@ function parseFromText(
     }
 
     const effect: RestrictionEffect = {
-      type: "restriction",
       restriction: "cant-ready",
       target: "SELF",
+      type: "restriction",
     };
 
     if (duration) {
@@ -113,9 +113,9 @@ function parseFromText(
   if (/[Ee]nters? play exerted/.test(text)) {
     logger.info("Parsed 'enters play exerted' restriction");
     return {
-      type: "restriction",
       restriction: "enters-play-exerted",
       target: "SELF",
+      type: "restriction",
     };
   }
 
@@ -123,9 +123,9 @@ function parseFromText(
   if (/[Cc]an challenge ready characters/.test(text)) {
     logger.info("Parsed 'can challenge ready characters' grant ability");
     const grantEffect: GrantAbilityEffect = {
-      type: "grant-ability",
       ability: "can-challenge-ready",
       target: "SELF",
+      type: "grant-ability",
     };
     return grantEffect;
   }
@@ -138,9 +138,9 @@ function parseFromText(
   ) {
     logger.info("Parsed 'can't sing' restriction");
     return {
-      type: "restriction",
       restriction: "cant-sing",
       target: "SELF",
+      type: "restriction",
     };
   }
 
@@ -149,9 +149,9 @@ function parseFromText(
   if (/(?:[Cc]an'?t\s+sing|cannot\s+sing)(?!\s+songs)/i.test(text)) {
     logger.info("Parsed 'can't sing' restriction");
     return {
-      type: "restriction",
       restriction: "cant-sing",
       target: "SELF",
+      type: "restriction",
     };
   }
 
@@ -163,9 +163,9 @@ function parseFromText(
   ) {
     logger.info("Parsed 'can't be healed' restriction");
     return {
-      type: "restriction",
       restriction: "cant-be-healed",
       target: "OPPONENT",
+      type: "restriction",
     };
   }
 
@@ -173,8 +173,8 @@ function parseFromText(
   if (/[Cc]an'?t be healed/i.test(text)) {
     logger.info("Parsed 'can't be healed' restriction");
     const effect: RestrictionEffect = {
-      type: "restriction",
       restriction: "cant-be-healed",
+      type: "restriction",
     };
 
     // Determine target
@@ -193,10 +193,10 @@ function parseFromText(
   if (/[Cc]an'?t ready during their next turn/i.test(text)) {
     logger.info("Parsed 'can't ready during next turn' restriction");
     return {
-      type: "restriction",
+      duration: "their-next-turn",
       restriction: "cant-ready",
       target: "SELF",
-      duration: "their-next-turn",
+      type: "restriction",
     };
   }
 
@@ -221,15 +221,15 @@ function parseFromCst(
  * handles both restriction effects and ability-granting effects
  */
 export const restrictionEffectParser: EffectParser = {
-  pattern:
-    /(?:[Cc]an'?t be challenged|[Cc]an'?t challenge|[Cc]an'?t quest|[Cc]an'?t ready|[Cc]an'?t\s*\{E\}\s+to\s+sing|[Cc]an'?t\s+sing|[Cc]an'?t be healed|cannot challenge|cannot quest|cannot ready|cannot\s+sing|[Ee]nters? play exerted|[Cc]an challenge ready characters)/,
   description:
     "Parses restriction effects and ability-granting effects (e.g., 'can't be challenged', 'cannot challenge', 'can challenge ready characters', 'can't sing', 'can't be healed')",
-
   parse: (input: CstNode | string) => {
     if (typeof input === "string") {
       return parseFromText(input) as any;
     }
     return parseFromCst(input) as any;
   },
+
+  pattern:
+    /(?:[Cc]an'?t be challenged|[Cc]an'?t challenge|[Cc]an'?t quest|[Cc]an'?t ready|[Cc]an'?t\s*\{E\}\s+to\s+sing|[Cc]an'?t\s+sing|[Cc]an'?t be healed|cannot challenge|cannot quest|cannot ready|cannot\s+sing|[Ee]nters? play exerted|[Cc]an challenge ready characters)/,
 } as any; // Type mismatch due to local RestrictionEffect type definition

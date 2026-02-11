@@ -3,35 +3,35 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   maxLoyalSheepdog,
-//   princeEricSeafaringPrince,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   MaxLoyalSheepdog,
+//   PrinceEricSeafaringPrince,
 // } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Max - Loyal Sheepdog", () => {
-//   describe("**LOYAL**", () => {
-//     it("If you have a character named Prince Eric in play, you pay 1 {I} less to play this character.", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: maxLoyalSheepdog.cost,
-//         play: [princeEricSeafaringPrince],
-//         hand: [maxLoyalSheepdog],
+// Describe("Max - Loyal Sheepdog", () => {
+//   Describe("**LOYAL**", () => {
+//     It("If you have a character named Prince Eric in play, you pay 1 {I} less to play this character.", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: maxLoyalSheepdog.cost,
+//         Play: [princeEricSeafaringPrince],
+//         Hand: [maxLoyalSheepdog],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(maxLoyalSheepdog);
+//       Const cardUnderTest = testEngine.getCardModel(maxLoyalSheepdog);
 //
-//       expect(cardUnderTest.cost).toBe(maxLoyalSheepdog.cost - 1);
+//       Expect(cardUnderTest.cost).toBe(maxLoyalSheepdog.cost - 1);
 //     });
-//     it("Without Prince Eric in play, you pay full cost.", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: maxLoyalSheepdog.cost,
-//         hand: [maxLoyalSheepdog],
+//     It("Without Prince Eric in play, you pay full cost.", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: maxLoyalSheepdog.cost,
+//         Hand: [maxLoyalSheepdog],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(maxLoyalSheepdog);
+//       Const cardUnderTest = testEngine.getCardModel(maxLoyalSheepdog);
 //
-//       expect(cardUnderTest.cost).toBe(maxLoyalSheepdog.cost);
+//       Expect(cardUnderTest.cost).toBe(maxLoyalSheepdog.cost);
 //     });
 //   });
 // });

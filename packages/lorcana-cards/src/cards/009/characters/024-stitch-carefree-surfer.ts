@@ -1,34 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const stitchCarefreeSurfer: CharacterCard = {
-  id: "fir",
-  cardType: "character",
-  name: "Stitch",
-  version: "Carefree Surfer",
-  fullName: "Stitch - Carefree Surfer",
-  inkType: ["amber"],
-  franchise: "Lilo and Stitch",
-  set: "009",
-  text: "OHANA When you play this character, if you have 2 or more other characters in play, you may draw 2 cards.",
-  cost: 7,
-  strength: 4,
-  willpower: 8,
-  lore: 2,
-  cardNumber: 24,
-  inkable: true,
-  externalIds: {
-    ravensburger: "37f056db280fdfb5863b00cac14a30c155046633",
-  },
   abilities: [
     {
-      id: "fir-1",
-      type: "triggered",
-      name: "OHANA",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "conditional",
         condition: {
@@ -41,8 +15,34 @@ export const stitchCarefreeSurfer: CharacterCard = {
           target: "CONTROLLER",
         },
       },
+      id: "fir-1",
+      name: "OHANA",
       text: "OHANA When you play this character, if you have 2 or more other characters in play, you may draw 2 cards.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 24,
+  cardType: "character",
   classifications: ["Dreamborn", "Hero", "Alien"],
+  cost: 7,
+  externalIds: {
+    ravensburger: "37f056db280fdfb5863b00cac14a30c155046633",
+  },
+  franchise: "Lilo and Stitch",
+  fullName: "Stitch - Carefree Surfer",
+  id: "fir",
+  inkType: ["amber"],
+  inkable: true,
+  lore: 2,
+  name: "Stitch",
+  set: "009",
+  strength: 4,
+  text: "OHANA When you play this character, if you have 2 or more other characters in play, you may draw 2 cards.",
+  version: "Carefree Surfer",
+  willpower: 8,
 };

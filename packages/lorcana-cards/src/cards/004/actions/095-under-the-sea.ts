@@ -1,34 +1,34 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { singerTogetherAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+// Import { singerTogetherAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
 //
-// export const underTheSea: LorcanitoActionCard = {
-//   id: "s4i",
-//   reprints: ["wlg"],
-//   name: "Under The Sea",
-//   characteristics: ["action", "song"],
-//   text: "Put all opposing characters with 2 {S} or less on the bottom of their players' decks in any order.",
-//   type: "action",
-//   abilities: [
-//     singerTogetherAbility(8),
+// Export const underTheSea: LorcanitoActionCard = {
+//   Id: "s4i",
+//   Reprints: ["wlg"],
+//   Name: "Under The Sea",
+//   Characteristics: ["action", "song"],
+//   Text: "Put all opposing characters with 2 {S} or less on the bottom of their players' decks in any order.",
+//   Type: "action",
+//   Abilities: [
+//     SingerTogetherAbility(8),
 //     {
-//       type: "resolution",
-//       effects: [
+//       Type: "resolution",
+//       Effects: [
 //         {
-//           type: "move",
-//           to: "deck",
-//           bottom: true,
-//           target: {
-//             type: "card",
-//             value: "all",
-//             filters: [
+//           Type: "move",
+//           To: "deck",
+//           Bottom: true,
+//           Target: {
+//             Type: "card",
+//             Value: "all",
+//             Filters: [
 //               { filter: "type", value: "character" },
 //               { filter: "zone", value: "play" },
 //               { filter: "owner", value: "opponent" },
 //               {
-//                 filter: "attribute",
-//                 value: "strength",
-//                 comparison: { operator: "lte", value: 2 },
+//                 Filter: "attribute",
+//                 Value: "strength",
+//                 Comparison: { operator: "lte", value: 2 },
 //               },
 //             ],
 //           },
@@ -36,15 +36,15 @@
 //       ],
 //     },
 //   ],
-//   flavour: "Such wonderful things surround you",
-//   colors: ["emerald"],
-//   cost: 8,
-//   illustrator: "Dylan Bonner",
-//   number: 95,
-//   set: "URR",
-//   externalIds: {
-//     tcgPlayer: 547844,
+//   Flavour: "Such wonderful things surround you",
+//   Colors: ["emerald"],
+//   Cost: 8,
+//   Illustrator: "Dylan Bonner",
+//   Number: 95,
+//   Set: "URR",
+//   ExternalIds: {
+//     TcgPlayer: 547844,
 //   },
-//   rarity: "rare",
+//   Rarity: "rare",
 // };
 //

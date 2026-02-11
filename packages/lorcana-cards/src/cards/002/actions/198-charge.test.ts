@@ -3,32 +3,32 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { charge } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
-// import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { charge } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
+// Import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Charge", () => {
-//   it("Chosen character gains **Challenger** +2 and **Resist** +2 this turn. _(They get +2 {S} while challenging. Damage dealt to them is reduced by 2.)_", () => {
-//     const testStore = new TestStore({
-//       inkwell: charge.cost,
-//       hand: [charge],
-//       play: [goofyKnightForADay],
+// Describe("Charge", () => {
+//   It("Chosen character gains **Challenger** +2 and **Resist** +2 this turn. _(They get +2 {S} while challenging. Damage dealt to them is reduced by 2.)_", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: charge.cost,
+//       Hand: [charge],
+//       Play: [goofyKnightForADay],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", charge.id);
-//     const target = testStore.getByZoneAndId("play", goofyKnightForADay.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", charge.id);
+//     Const target = testStore.getByZoneAndId("play", goofyKnightForADay.id);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveTopOfStack({ targets: [target] });
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.hasChallenger).toBe(true);
-//     expect(target.hasResist).toBe(true);
+//     Expect(target.hasChallenger).toBe(true);
+//     Expect(target.hasResist).toBe(true);
 //
-//     testStore.passTurn();
+//     TestStore.passTurn();
 //
-//     expect(target.hasChallenger).toBe(false);
-//     expect(target.hasResist).toBe(false);
+//     Expect(target.hasChallenger).toBe(false);
+//     Expect(target.hasResist).toBe(false);
 //   });
 // });
 //

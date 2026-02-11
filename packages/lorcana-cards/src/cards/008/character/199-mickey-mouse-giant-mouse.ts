@@ -1,30 +1,30 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { bodyguardAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { bodyguardAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
 //
-// import { whenThisCharacterBanished } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import { dealDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
+// Import { whenThisCharacterBanished } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import { dealDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const mickeyMouseGiantMouse: LorcanitoCharacterCard = {
-//   id: "vyt",
-//   name: "Mickey Mouse",
-//   title: "Giant Mouse",
-//   characteristics: ["dreamborn", "hero"],
-//   text: "Bodyguard\nTHE BIGGEST STAR EVER When this character is banished, deal 5 damage to each opposing character.",
-//   type: "character",
-//   abilities: [
-//     bodyguardAbility,
-//     whenThisCharacterBanished({
-//       name: "THE BIGGEST STAR EVER",
-//       text: "When this character is banished, deal 5 damage to each opposing character.",
-//       effects: [
-//         dealDamageEffect(5, {
-//           type: "card",
-//           value: "all",
-//           filters: [
+// Export const mickeyMouseGiantMouse: LorcanitoCharacterCard = {
+//   Id: "vyt",
+//   Name: "Mickey Mouse",
+//   Title: "Giant Mouse",
+//   Characteristics: ["dreamborn", "hero"],
+//   Text: "Bodyguard\nTHE BIGGEST STAR EVER When this character is banished, deal 5 damage to each opposing character.",
+//   Type: "character",
+//   Abilities: [
+//     BodyguardAbility,
+//     WhenThisCharacterBanished({
+//       Name: "THE BIGGEST STAR EVER",
+//       Text: "When this character is banished, deal 5 damage to each opposing character.",
+//       Effects: [
+//         DealDamageEffect(5, {
+//           Type: "card",
+//           Value: "all",
+//           Filters: [
 //             {
-//               filter: "owner",
-//               value: "opponent",
+//               Filter: "owner",
+//               Value: "opponent",
 //             },
 //             { filter: "zone", value: "play" },
 //             { filter: "type", value: "character" },
@@ -33,18 +33,18 @@
 //       ],
 //     }),
 //   ],
-//   inkwell: false,
-//   colors: ["steel"],
-//   cost: 10,
-//   strength: 10,
-//   willpower: 10,
-//   illustrator: "Joy Ang / Giulia Riva",
-//   number: 199,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631331,
+//   Inkwell: false,
+//   Colors: ["steel"],
+//   Cost: 10,
+//   Strength: 10,
+//   Willpower: 10,
+//   Illustrator: "Joy Ang / Giulia Riva",
+//   Number: 199,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631331,
 //   },
-//   rarity: "legendary",
-//   lore: 5,
+//   Rarity: "legendary",
+//   Lore: 5,
 // };
 //

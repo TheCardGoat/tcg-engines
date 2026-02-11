@@ -1,29 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const chiefBogoCommandingOfficer: CharacterCard = {
-  id: "17e",
-  cardType: "character",
-  name: "Chief Bogo",
-  version: "Commanding Officer",
-  fullName: "Chief Bogo - Commanding Officer",
-  inkType: ["amber"],
-  franchise: "Zootropolis",
-  set: "008",
-  text: "SENDING BACKUP During an opponent's turn, whenever one of your characters with Bodyguard is banished, you may reveal the top card of your deck. If it's a character card with cost 5 or less, you may play that character for free. Otherwise, put it on the top of your deck.",
-  cost: 6,
-  strength: 5,
-  willpower: 5,
-  lore: 1,
-  cardNumber: 18,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "9c728cf42b8669fbff70c74afadcb565ef3b0e1a",
-  },
   abilities: [
     {
-      id: "17e-1",
-      type: "action",
       effect: {
         type: "conditional",
         condition: {
@@ -36,8 +15,29 @@ export const chiefBogoCommandingOfficer: CharacterCard = {
           cost: "free",
         },
       },
+      id: "17e-1",
       text: "SENDING BACKUP During an opponent's turn, whenever one of your characters with Bodyguard is banished, you may reveal the top card of your deck. If it's a character card with cost 5 or less, you may play that character for free. Otherwise, put it on the top of your deck.",
+      type: "action",
     },
   ],
+  cardNumber: 18,
+  cardType: "character",
   classifications: ["Storyborn"],
+  cost: 6,
+  externalIds: {
+    ravensburger: "9c728cf42b8669fbff70c74afadcb565ef3b0e1a",
+  },
+  franchise: "Zootropolis",
+  fullName: "Chief Bogo - Commanding Officer",
+  id: "17e",
+  inkType: ["amber"],
+  inkable: true,
+  lore: 1,
+  missingTests: true,
+  name: "Chief Bogo",
+  set: "008",
+  strength: 5,
+  text: "SENDING BACKUP During an opponent's turn, whenever one of your characters with Bodyguard is banished, you may reveal the top card of your deck. If it's a character card with cost 5 or less, you may play that character for free. Otherwise, put it on the top of your deck.",
+  version: "Commanding Officer",
+  willpower: 5,
 };

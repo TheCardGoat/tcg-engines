@@ -3,24 +3,24 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { genieSatisfiedDragon } from "@lorcanito/lorcana-engine/cards/008";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { genieSatisfiedDragon } from "@lorcanito/lorcana-engine/cards/008";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Genie - Satisfied Dragon", () => {
-//   it("BUG CATCHER During your turn, this character gains Evasive. (They can challenge characters with Evasive.)", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: genieSatisfiedDragon.cost,
-//       play: [genieSatisfiedDragon],
-//       hand: [],
+// Describe("Genie - Satisfied Dragon", () => {
+//   It("BUG CATCHER During your turn, this character gains Evasive. (They can challenge characters with Evasive.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: genieSatisfiedDragon.cost,
+//       Play: [genieSatisfiedDragon],
+//       Hand: [],
 //     });
 //
-//     expect(testEngine.getCardModel(genieSatisfiedDragon).hasEvasive).toBe(true);
+//     Expect(testEngine.getCardModel(genieSatisfiedDragon).hasEvasive).toBe(true);
 //
-//     await testEngine.passTurn();
+//     Await testEngine.passTurn();
 //
-//     expect(testEngine.getCardModel(genieSatisfiedDragon).hasEvasive).toBe(
-//       false,
+//     Expect(testEngine.getCardModel(genieSatisfiedDragon).hasEvasive).toBe(
+//       False,
 //     );
 //   });
 // });

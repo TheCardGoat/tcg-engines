@@ -1,35 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const fredMajorScienceEnthusiast: CharacterCard = {
-  id: "1pz",
-  cardType: "character",
-  name: "Fred",
-  version: "Major Science Enthusiast",
-  fullName: "Fred - Major Science Enthusiast",
-  inkType: ["emerald"],
-  franchise: "Big Hero 6",
-  set: "008",
-  text: "SPITTING FIRE! When you play this character, you may banish chosen item.",
-  cost: 3,
-  strength: 2,
-  willpower: 3,
-  lore: 2,
-  cardNumber: 92,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "df5a3f3c8627d10f208025273bc69c829954acda",
-  },
   abilities: [
     {
-      id: "1pz-1",
-      type: "triggered",
-      name: "SPITTING FIRE!",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -44,8 +17,35 @@ export const fredMajorScienceEnthusiast: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "1pz-1",
+      name: "SPITTING FIRE!",
       text: "SPITTING FIRE! When you play this character, you may banish chosen item.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 92,
+  cardType: "character",
   classifications: ["Storyborn", "Hero"],
+  cost: 3,
+  externalIds: {
+    ravensburger: "df5a3f3c8627d10f208025273bc69c829954acda",
+  },
+  franchise: "Big Hero 6",
+  fullName: "Fred - Major Science Enthusiast",
+  id: "1pz",
+  inkType: ["emerald"],
+  inkable: true,
+  lore: 2,
+  missingTests: true,
+  name: "Fred",
+  set: "008",
+  strength: 2,
+  text: "SPITTING FIRE! When you play this character, you may banish chosen item.",
+  version: "Major Science Enthusiast",
+  willpower: 3,
 };

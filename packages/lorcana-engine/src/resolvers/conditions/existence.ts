@@ -30,20 +30,27 @@ function countCards(
  */
 function compare(val: number, op: string, target: number): boolean {
   switch (op) {
-    case "eq":
+    case "eq": {
       return val === target;
-    case "ne":
+    }
+    case "ne": {
       return val !== target;
-    case "gt":
+    }
+    case "gt": {
       return val > target;
-    case "gte":
+    }
+    case "gte": {
       return val >= target;
-    case "lt":
+    }
+    case "lt": {
       return val < target;
-    case "lte":
+    }
+    case "lte": {
       return val <= target;
-    default:
+    }
+    default: {
       return false;
+    }
   }
 }
 
@@ -56,7 +63,9 @@ function getPlayZoneFilter(
 ): (card: CardInstance<LorcanaCardMeta>) => boolean {
   return (card) => {
     // Check Zone (must be in play)
-    if (card.zone !== "play") return false;
+    if (card.zone !== "play") {
+      return false;
+    }
 
     // Check Controller
     if (controller === "you") {
@@ -65,7 +74,7 @@ function getPlayZoneFilter(
     if (controller === "opponent") {
       return card.controller !== sourceCard.controller;
     }
-    return true; // any
+    return true; // Any
   };
 }
 
@@ -73,22 +82,21 @@ function getPlayZoneFilter(
 conditionRegistry.register<HasNamedCharacterCondition>("has-named-character", {
   complexity: 40,
   evaluate: (condition, sourceCard, { state, registry }) => {
-    const zoneFilter = getPlayZoneFilter(
-      condition.controller ?? "you",
-      sourceCard,
-    );
+    const zoneFilter = getPlayZoneFilter(condition.controller ?? "you", sourceCard);
 
     // Check if ANY card matches
     return Object.values(state.internal.cards).some((c) => {
       const card = c as CardInstance<LorcanaCardMeta>;
-      if (!zoneFilter(card)) return false;
-      if (card.definitionId === undefined) return false;
+      if (!zoneFilter(card)) {
+        return false;
+      }
+      if (card.definitionId === undefined) {
+        return false;
+      }
 
       const def = registry.getCard(card.definitionId);
       // Usually "named X" implies the name property.
-      return (
-        def && (def.name === condition.name || def.fullName === condition.name)
-      );
+      return def && (def.name === condition.name || def.fullName === condition.name);
     });
   },
 });
@@ -103,12 +111,16 @@ conditionRegistry.register<HasCharacterWithClassificationCondition>(
 
       return Object.values(state.internal.cards).some((c) => {
         const card = c as CardInstance<LorcanaCardMeta>;
-        if (!zoneFilter(card)) return false;
+        if (!zoneFilter(card)) {
+          return false;
+        }
 
         // This condition doesn't seem to have a dedicated filterResolver helper in DSL?
         // But we can construct one or manually check.
         const def = registry.getCard(card.definitionId);
-        if (def?.cardType !== "character") return false;
+        if (def?.cardType !== "character") {
+          return false;
+        }
 
         return def.classifications?.includes(condition.classification as any);
       });
@@ -120,10 +132,7 @@ conditionRegistry.register<HasCharacterWithClassificationCondition>(
 conditionRegistry.register<HasCharacterCountCondition>("has-character-count", {
   complexity: 50,
   evaluate: (condition, sourceCard, { state, registry }) => {
-    const zoneFilter = getPlayZoneFilter(
-      condition.controller ?? "you",
-      sourceCard,
-    );
+    const zoneFilter = getPlayZoneFilter(condition.controller ?? "you", sourceCard);
 
     let count = 0;
 
@@ -132,7 +141,9 @@ conditionRegistry.register<HasCharacterCountCondition>("has-character-count", {
     // Usually no extra filters unless specified.
 
     count = countCards(state, (c) => {
-      if (!zoneFilter(c)) return false;
+      if (!zoneFilter(c)) {
+        return false;
+      }
       const def = registry.getCard(c.definitionId);
       return def?.cardType === "character";
     });
@@ -149,69 +160,69 @@ conditionRegistry.register<ResourceCountCondition>("resource-count", {
     const targetOwnerId =
       condition.controller === "you"
         ? sourceCard.controller
-        : Object.keys(state.external.loreScores).find(
-            (id) => id !== sourceCard.controller,
-          );
+        : Object.keys(state.external.loreScores).find((id) => id !== sourceCard.controller);
 
-    if (!targetOwnerId) return false;
+    if (!targetOwnerId) {
+      return false;
+    }
 
     // Helper for specific resource type
     const isTargetController = (cId: string) => cId === targetOwnerId;
 
     let count = 0;
     switch (condition.what) {
-      case "cards-in-hand":
-        count = countCards(state, (c) => {
-          return c.zone === "hand" && isTargetController(c.controller);
-        });
+      case "cards-in-hand": {
+        count = countCards(state, (c) => c.zone === "hand" && isTargetController(c.controller));
         break;
+      }
 
-      case "cards-in-inkwell":
-        count = countCards(state, (c) => {
-          return c.zone === "inkwell" && isTargetController(c.controller);
-        });
+      case "cards-in-inkwell": {
+        count = countCards(state, (c) => c.zone === "inkwell" && isTargetController(c.controller));
         break;
+      }
 
-      case "characters":
+      case "characters": {
         // This duplicates has-character-count but under resource-count umbrella
         count = countCards(state, (c) => {
-          if (c.zone !== "play" || !isTargetController(c.controller))
-            return false;
+          if (c.zone !== "play" || !isTargetController(c.controller)) {return false;}
           const def = registry.getCard(c.definitionId);
           return def?.cardType === "character";
         });
         break;
+      }
 
-      case "items":
+      case "items": {
         count = countCards(state, (c) => {
-          if (c.zone !== "play" || !isTargetController(c.controller))
-            return false;
+          if (c.zone !== "play" || !isTargetController(c.controller)) {return false;}
           const def = registry.getCard(c.definitionId);
           return def?.cardType === "item";
         });
         break;
+      }
 
-      case "locations":
+      case "locations": {
         count = countCards(state, (c) => {
-          if (c.zone !== "play" || !isTargetController(c.controller))
-            return false;
+          if (c.zone !== "play" || !isTargetController(c.controller)) {return false;}
           const def = registry.getCard(c.definitionId);
           return def?.cardType === "location";
         });
         break;
+      }
 
-      case "damage-on-characters" as any:
+      case "damage-on-characters" as any: {
         // Special case: Total damage on ALL characters?
         // Condition usually is "damage-on-self".
         // If "resource-count" type "damage-on-characters" exists?
         // I don't think it's robustly defined yet.
         break;
+      }
 
-      default:
+      default: {
         console.warn(
           `Resource counting for ${condition.what} not fully implemented in existence.ts`,
         );
         return false;
+      }
     }
 
     return compare(count, condition.comparison, condition.value);

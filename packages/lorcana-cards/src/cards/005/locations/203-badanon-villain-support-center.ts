@@ -1,32 +1,32 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
-// import { gainAbilityWhileHere } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
+// Import { gainAbilityWhileHere } from "@lorcanito/lorcana-engine/abilities/abilities";
 //
-// export const badanonVillainSupportCenter: LorcanitoLocationCard = {
-//   id: "lvt",
-//   missingTestCase: true,
-//   name: "Bad-Anon",
-//   title: "Villain Support Center",
-//   characteristics: ["location"],
-//   text: "**THERE'S NO ONE I'D RATHER BE THAN ME** Villain characters gain {E}, 3 {I} - Play a character with the same name as this character for free\" while here.",
-//   type: "location",
-//   abilities: [
-//     gainAbilityWhileHere({
-//       name: "THERE'S NO ONE I'D RATHER BE THAN ME",
-//       text: 'Villain characters gain "{E}, 3 {I} - Play a character with the same name as this character for free" while here.',
-//       ability: {
-//         type: "activated",
-//         name: "THERE'S NO ONE I'D RATHER BE THAN ME",
-//         text: "{E}, 3 {I} - Play a character with the same name as this character for free",
-//         costs: [{ type: "exert" }, { type: "ink", amount: 3 }],
-//         effects: [
+// Export const badanonVillainSupportCenter: LorcanitoLocationCard = {
+//   Id: "lvt",
+//   MissingTestCase: true,
+//   Name: "Bad-Anon",
+//   Title: "Villain Support Center",
+//   Characteristics: ["location"],
+//   Text: "**THERE'S NO ONE I'D RATHER BE THAN ME** Villain characters gain {E}, 3 {I} - Play a character with the same name as this character for free\" while here.",
+//   Type: "location",
+//   Abilities: [
+//     GainAbilityWhileHere({
+//       Name: "THERE'S NO ONE I'D RATHER BE THAN ME",
+//       Text: 'Villain characters gain "{E}, 3 {I} - Play a character with the same name as this character for free" while here.',
+//       Ability: {
+//         Type: "activated",
+//         Name: "THERE'S NO ONE I'D RATHER BE THAN ME",
+//         Text: "{E}, 3 {I} - Play a character with the same name as this character for free",
+//         Costs: [{ type: "exert" }, { type: "ink", amount: 3 }],
+//         Effects: [
 //           {
-//             type: "play",
-//             forFree: true,
-//             target: {
-//               type: "card",
-//               value: 1,
-//               filters: [
+//             Type: "play",
+//             ForFree: true,
+//             Target: {
+//               Type: "card",
+//               Value: 1,
+//               Filters: [
 //                 { filter: "owner", value: "self" },
 //                 { filter: "zone", value: "hand" },
 //                 { filter: "type", value: "character" },
@@ -39,18 +39,18 @@
 //       },
 //     }),
 //   ],
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 2,
-//   willpower: 7,
-//   lore: 1,
-//   illustrator: "Saulo Nate",
-//   number: 203,
-//   set: "SSK",
-//   externalIds: {
-//     tcgPlayer: 555276,
+//   Inkwell: true,
+//   Colors: ["steel"],
+//   Cost: 2,
+//   Willpower: 7,
+//   Lore: 1,
+//   Illustrator: "Saulo Nate",
+//   Number: 203,
+//   Set: "SSK",
+//   ExternalIds: {
+//     TcgPlayer: 555276,
 //   },
-//   rarity: "rare",
-//   moveCost: 1,
+//   Rarity: "rare",
+//   MoveCost: 1,
 // };
 //

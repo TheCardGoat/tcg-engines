@@ -3,40 +3,40 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { deweyLovableShowoff } from "@lorcanito/lorcana-engine/cards/008";
-// import { circleOfLife } from "@lorcanito/lorcana-engine/cards/009/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { deweyLovableShowoff } from "@lorcanito/lorcana-engine/cards/008";
+// Import { circleOfLife } from "@lorcanito/lorcana-engine/cards/009/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Circle Of Life", () => {
-//   it.skip("Sing Together 8 (Any number of your or your teammates' characters with total cost 8 or more may {E} to sing this song for free.)", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: circleOfLife.cost,
-//       play: [circleOfLife],
-//       hand: [circleOfLife],
+// Describe("Circle Of Life", () => {
+//   It.skip("Sing Together 8 (Any number of your or your teammates' characters with total cost 8 or more may {E} to sing this song for free.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: circleOfLife.cost,
+//       Play: [circleOfLife],
+//       Hand: [circleOfLife],
 //     });
 //
-//     await testEngine.playCard(circleOfLife);
+//     Await testEngine.playCard(circleOfLife);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 //
-//   it("Play a character from your discard for free.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: circleOfLife.cost,
-//       discard: [deweyLovableShowoff],
-//       hand: [circleOfLife],
+//   It("Play a character from your discard for free.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: circleOfLife.cost,
+//       Discard: [deweyLovableShowoff],
+//       Hand: [circleOfLife],
 //     });
 //
-//     const targetCard = testEngine.getCardModel(deweyLovableShowoff);
-//     const cardUnderTest = testEngine.getCardModel(circleOfLife);
+//     Const targetCard = testEngine.getCardModel(deweyLovableShowoff);
+//     Const cardUnderTest = testEngine.getCardModel(circleOfLife);
 //
-//     await testEngine.playCard(cardUnderTest);
+//     Await testEngine.playCard(cardUnderTest);
 //
-//     await testEngine.resolveTopOfStack({ targets: [targetCard] });
+//     Await testEngine.resolveTopOfStack({ targets: [targetCard] });
 //
-//     expect(targetCard.zone).toEqual("play");
+//     Expect(targetCard.zone).toEqual("play");
 //   });
 // });
 //

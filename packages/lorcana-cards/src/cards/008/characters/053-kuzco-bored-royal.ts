@@ -1,35 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const kuzcoBoredRoyal: CharacterCard = {
-  id: "p9g",
-  cardType: "character",
-  name: "Kuzco",
-  version: "Bored Royal",
-  fullName: "Kuzco - Bored Royal",
-  inkType: ["amethyst"],
-  franchise: "Emperors New Groove",
-  set: "008",
-  text: "LLAMA BREATH When you play this character, you may return chosen character, item, or location with cost 2 or less to their player's hand.",
-  cost: 4,
-  strength: 1,
-  willpower: 3,
-  lore: 1,
-  cardNumber: 53,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "5b0c28646183ce47d445aeed071dfcb2ce90491c",
-  },
   abilities: [
     {
-      id: "p9g-1",
-      type: "triggered",
-      name: "LLAMA BREATH",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -44,8 +17,35 @@ export const kuzcoBoredRoyal: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "p9g-1",
+      name: "LLAMA BREATH",
       text: "LLAMA BREATH When you play this character, you may return chosen character, item, or location with cost 2 or less to their player's hand.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 53,
+  cardType: "character",
   classifications: ["Storyborn", "King"],
+  cost: 4,
+  externalIds: {
+    ravensburger: "5b0c28646183ce47d445aeed071dfcb2ce90491c",
+  },
+  franchise: "Emperors New Groove",
+  fullName: "Kuzco - Bored Royal",
+  id: "p9g",
+  inkType: ["amethyst"],
+  inkable: true,
+  lore: 1,
+  missingTests: true,
+  name: "Kuzco",
+  set: "008",
+  strength: 1,
+  text: "LLAMA BREATH When you play this character, you may return chosen character, item, or location with cost 2 or less to their player's hand.",
+  version: "Bored Royal",
+  willpower: 3,
 };

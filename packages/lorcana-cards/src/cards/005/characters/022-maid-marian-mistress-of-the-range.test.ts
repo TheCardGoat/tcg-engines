@@ -3,31 +3,31 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   maidMarianLadyOfTheLists,
-//   monstroWhaleOfAWhale,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   MaidMarianLadyOfTheLists,
+//   MonstroWhaleOfAWhale,
 // } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Maid Marian - Lady of the Lists", () => {
-//   it("**IF IT PLEASES HTE LADY** When you play this character, opposing character of your choice gets -5 {S} until the start of your next turn.", () => {
-//     const testStore = new TestStore(
+// Describe("Maid Marian - Lady of the Lists", () => {
+//   It("**IF IT PLEASES HTE LADY** When you play this character, opposing character of your choice gets -5 {S} until the start of your next turn.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: maidMarianLadyOfTheLists.cost,
-//         hand: [maidMarianLadyOfTheLists],
+//         Inkwell: maidMarianLadyOfTheLists.cost,
+//         Hand: [maidMarianLadyOfTheLists],
 //       },
 //       {
-//         play: [monstroWhaleOfAWhale],
+//         Play: [monstroWhaleOfAWhale],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getCard(maidMarianLadyOfTheLists);
-//     const target = testStore.getCard(monstroWhaleOfAWhale);
-//     cardUnderTest.playFromHand();
-//     testStore.resolveTopOfStack({ targets: [target] });
+//     Const cardUnderTest = testStore.getCard(maidMarianLadyOfTheLists);
+//     Const target = testStore.getCard(monstroWhaleOfAWhale);
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.strength).toEqual(monstroWhaleOfAWhale.strength - 5);
+//     Expect(target.strength).toEqual(monstroWhaleOfAWhale.strength - 5);
 //   });
 // });
 //

@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { theCarpenterDinnerCompanion } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { theCarpenterDinnerCompanion } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("The Carpenter - Dinner Companion", () => {
-//   it.skip("I'LL GET YOU! When this character is banished, you may exert chosen character.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: theCarpenterDinnerCompanion.cost,
-//       play: [theCarpenterDinnerCompanion],
-//       hand: [theCarpenterDinnerCompanion],
+// Describe("The Carpenter - Dinner Companion", () => {
+//   It.skip("I'LL GET YOU! When this character is banished, you may exert chosen character.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: theCarpenterDinnerCompanion.cost,
+//       Play: [theCarpenterDinnerCompanion],
+//       Hand: [theCarpenterDinnerCompanion],
 //     });
 //
-//     await testEngine.playCard(theCarpenterDinnerCompanion);
+//     Await testEngine.playCard(theCarpenterDinnerCompanion);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

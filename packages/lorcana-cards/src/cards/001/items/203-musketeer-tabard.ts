@@ -1,29 +1,8 @@
 import type { ItemCard } from "@tcg/lorcana-types";
 
 export const musketeerTabard: ItemCard = {
-  id: "8a5",
-  cardType: "item",
-  name: "Musketeer Tabard",
-  inkType: ["steel"],
-  set: "001",
-  text: "ALL FOR ONE AND ONE FOR ALL Whenever one of your characters with Bodyguard is banished, you may draw a card.",
-  cost: 4,
-  cardNumber: 203,
-  inkable: false,
-  externalIds: {
-    ravensburger: "1dd9513f5330b41950fea67f21d19e751b9551a2",
-  },
   abilities: [
     {
-      id: "8a5-1",
-      text: "ALL FOR ONE AND ONE FOR ALL Whenever one of your characters with Bodyguard is banished, you may draw a card.",
-      name: "ALL FOR ONE AND ONE FOR ALL",
-      type: "triggered",
-      trigger: {
-        event: "banish",
-        timing: "whenever",
-        on: "YOUR_OTHER_CHARACTERS",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -33,59 +12,80 @@ export const musketeerTabard: ItemCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "8a5-1",
+      name: "ALL FOR ONE AND ONE FOR ALL",
+      text: "ALL FOR ONE AND ONE FOR ALL Whenever one of your characters with Bodyguard is banished, you may draw a card.",
+      trigger: {
+        event: "banish",
+        timing: "whenever",
+        on: "YOUR_OTHER_CHARACTERS",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 203,
+  cardType: "item",
+  cost: 4,
+  externalIds: {
+    ravensburger: "1dd9513f5330b41950fea67f21d19e751b9551a2",
+  },
+  id: "8a5",
+  inkType: ["steel"],
+  inkable: false,
+  name: "Musketeer Tabard",
+  set: "001",
+  text: "ALL FOR ONE AND ONE FOR ALL Whenever one of your characters with Bodyguard is banished, you may draw a card.",
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { TriggeredAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import type { BanishTrigger } from "@lorcanito/lorcana-engine/abilities/triggers";
-// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { TriggeredAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import type { BanishTrigger } from "@lorcanito/lorcana-engine/abilities/triggers";
+// Import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const musketeerTabard: LorcanitoItemCard = {
-//   characteristics: ["item"],
-//   id: "j3v",
+// Export const musketeerTabard: LorcanitoItemCard = {
+//   Characteristics: ["item"],
+//   Id: "j3v",
 //
-//   name: "Musketeer Tabard",
-//   text: "**ALL FOR ONE AND ONE FOR ALL** Whenever one of your characters with **Bodyguard** is banished, you may draw a card.",
-//   type: "item",
-//   abilities: [
+//   Name: "Musketeer Tabard",
+//   Text: "**ALL FOR ONE AND ONE FOR ALL** Whenever one of your characters with **Bodyguard** is banished, you may draw a card.",
+//   Type: "item",
+//   Abilities: [
 //     {
-//       type: "static-triggered",
-//       optional: false,
-//       trigger: {
-//         on: "banish",
-//         filters: [
+//       Type: "static-triggered",
+//       Optional: false,
+//       Trigger: {
+//         On: "banish",
+//         Filters: [
 //           { filter: "owner", value: "self" },
 //           { filter: "type", value: "character" },
 //           { filter: "ability", value: "bodyguard" },
 //         ],
 //       } as BanishTrigger,
-//       layer: {
-//         type: "resolution",
-//         optional: true,
-//         effects: [
+//       Layer: {
+//         Type: "resolution",
+//         Optional: true,
+//         Effects: [
 //           {
-//             type: "draw",
-//             amount: 1,
-//             target: {
-//               type: "player",
-//               value: "self",
+//             Type: "draw",
+//             Amount: 1,
+//             Target: {
+//               Type: "player",
+//               Value: "self",
 //             },
 //           },
 //         ],
 //       },
 //     } as TriggeredAbility,
 //   ],
-//   flavour: "There's no such thing as a lone musketeer.",
-//   colors: ["steel"],
-//   cost: 4,
-//   illustrator: "Dav Augereau / Guykua Ruva",
-//   number: 203,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 505951,
+//   Flavour: "There's no such thing as a lone musketeer.",
+//   Colors: ["steel"],
+//   Cost: 4,
+//   Illustrator: "Dav Augereau / Guykua Ruva",
+//   Number: 203,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 505951,
 //   },
-//   rarity: "rare",
+//   Rarity: "rare",
 // };
 //

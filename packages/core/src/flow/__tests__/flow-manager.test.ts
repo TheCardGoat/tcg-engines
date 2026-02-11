@@ -13,14 +13,14 @@ import { FlowManager } from "../flow-manager";
  * - Event handling
  */
 
-type GameState = {
+interface GameState {
   currentPlayer: number;
   players: Array<{ id: string; ready: boolean }>;
   turnCount: number;
   phase?: string;
   step?: string;
   log: string[];
-};
+}
 
 describe("FlowManager - State Machine", () => {
   describe("Task 9.3, 9.4: Turn/Phase/Step State Machine", () => {
@@ -32,9 +32,9 @@ describe("FlowManager - State Machine", () => {
             order: 1,
             turn: {
               phases: {
-                ready: { order: 0, next: "draw" },
                 draw: { order: 1, next: "main" },
                 main: { order: 2, next: undefined },
+                ready: { order: 0, next: "draw" },
               },
             },
           },
@@ -43,9 +43,9 @@ describe("FlowManager - State Machine", () => {
 
       const initialState: GameState = {
         currentPlayer: 0,
+        log: [],
         players: [{ id: "p1", ready: false }],
         turnCount: 0,
-        log: [],
       };
 
       const manager = new FlowManager(flow, initialState);
@@ -61,9 +61,9 @@ describe("FlowManager - State Machine", () => {
             order: 1,
             turn: {
               phases: {
-                ready: { order: 0, next: "draw" },
                 draw: { order: 1, next: "main" },
                 main: { order: 2, next: undefined },
+                ready: { order: 0, next: "draw" },
               },
             },
           },
@@ -72,9 +72,9 @@ describe("FlowManager - State Machine", () => {
 
       const initialState: GameState = {
         currentPlayer: 0,
+        log: [],
         players: [{ id: "p1", ready: false }],
         turnCount: 0,
-        log: [],
       };
 
       const manager = new FlowManager(flow, initialState);
@@ -104,8 +104,8 @@ describe("FlowManager - State Machine", () => {
             turn: {
               phases: {
                 main: {
-                  order: 0,
                   next: undefined,
+                  order: 0,
                   steps: {
                     declare: { order: 0, next: "target" },
                     target: { order: 1, next: "damage" },
@@ -120,9 +120,9 @@ describe("FlowManager - State Machine", () => {
 
       const initialState: GameState = {
         currentPlayer: 0,
+        log: [],
         players: [{ id: "p1", ready: false }],
         turnCount: 0,
-        log: [],
       };
 
       const manager = new FlowManager(flow, initialState);
@@ -151,11 +151,11 @@ describe("FlowManager - State Machine", () => {
               },
               phases: {
                 ready: {
-                  order: 0,
                   next: undefined,
                   onBegin: (context) => {
                     context.state.log.push("ready-begin");
                   },
+                  order: 0,
                 },
               },
             },
@@ -165,9 +165,9 @@ describe("FlowManager - State Machine", () => {
 
       const initialState: GameState = {
         currentPlayer: 0,
+        log: [],
         players: [{ id: "p1", ready: false }],
         turnCount: 0,
-        log: [],
       };
 
       const manager = new FlowManager(flow, initialState);
@@ -185,16 +185,16 @@ describe("FlowManager - State Machine", () => {
             order: 1,
             turn: {
               phases: {
+                draw: {
+                  order: 1,
+                  next: undefined,
+                },
                 ready: {
                   order: 0,
                   next: "draw",
                   onEnd: (context) => {
                     context.state.log.push("ready-end");
                   },
-                },
-                draw: {
-                  order: 1,
-                  next: undefined,
                 },
               },
             },
@@ -204,9 +204,9 @@ describe("FlowManager - State Machine", () => {
 
       const initialState: GameState = {
         currentPlayer: 0,
+        log: [],
         players: [{ id: "p1", ready: false }],
         turnCount: 0,
-        log: [],
       };
 
       const manager = new FlowManager(flow, initialState);
@@ -226,8 +226,8 @@ describe("FlowManager - State Machine", () => {
             turn: {
               phases: {
                 main: {
-                  order: 0,
                   next: undefined,
+                  order: 0,
                   steps: {
                     declare: {
                       order: 0,
@@ -253,9 +253,9 @@ describe("FlowManager - State Machine", () => {
 
       const initialState: GameState = {
         currentPlayer: 0,
+        log: [],
         players: [{ id: "p1", ready: false }],
         turnCount: 0,
-        log: [],
       };
 
       const manager = new FlowManager(flow, initialState);
@@ -278,6 +278,10 @@ describe("FlowManager - State Machine", () => {
             order: 1,
             turn: {
               phases: {
+                draw: {
+                  order: 1,
+                  next: undefined,
+                },
                 ready: {
                   order: 0,
                   next: "draw",
@@ -285,10 +289,6 @@ describe("FlowManager - State Machine", () => {
                     // Auto-end when all players are ready
                     return context.state.players.every((p) => p.ready);
                   },
-                },
-                draw: {
-                  order: 1,
-                  next: undefined,
                 },
               },
             },
@@ -298,12 +298,12 @@ describe("FlowManager - State Machine", () => {
 
       const initialState: GameState = {
         currentPlayer: 0,
+        log: [],
         players: [
           { id: "p1", ready: false },
           { id: "p2", ready: false },
         ],
         turnCount: 0,
-        log: [],
       };
 
       const manager = new FlowManager(flow, initialState);
@@ -328,14 +328,14 @@ describe("FlowManager - State Machine", () => {
             order: 1,
             turn: {
               phases: {
+                end: {
+                  order: 1,
+                  next: undefined,
+                },
                 main: {
                   order: 0,
                   next: "end",
                   endIf: (context) => context.state.turnCount >= 5,
-                },
-                end: {
-                  order: 1,
-                  next: undefined,
                 },
               },
             },
@@ -345,9 +345,9 @@ describe("FlowManager - State Machine", () => {
 
       const initialState: GameState = {
         currentPlayer: 0,
+        log: [],
         players: [{ id: "p1", ready: false }],
         turnCount: 0,
-        log: [],
       };
 
       const manager = new FlowManager(flow, initialState);
@@ -372,6 +372,10 @@ describe("FlowManager - State Machine", () => {
             order: 1,
             turn: {
               phases: {
+                draw: {
+                  order: 1,
+                  next: undefined,
+                },
                 ready: {
                   order: 0,
                   next: "draw",
@@ -382,10 +386,6 @@ describe("FlowManager - State Machine", () => {
                     }
                   },
                 },
-                draw: {
-                  order: 1,
-                  next: undefined,
-                },
               },
             },
           },
@@ -394,9 +394,9 @@ describe("FlowManager - State Machine", () => {
 
       const initialState: GameState = {
         currentPlayer: 0,
+        log: [],
         players: [],
         turnCount: 0,
-        log: [],
       };
 
       const manager = new FlowManager(flow, initialState);
@@ -413,8 +413,8 @@ describe("FlowManager - State Machine", () => {
             turn: {
               phases: {
                 main: {
-                  order: 0,
                   next: undefined,
+                  order: 0,
                   steps: {
                     declare: {
                       order: 0,
@@ -439,9 +439,9 @@ describe("FlowManager - State Machine", () => {
 
       const initialState: GameState = {
         currentPlayer: 0,
+        log: [],
         players: [],
         turnCount: 0,
-        log: [],
       };
 
       const manager = new FlowManager(flow, initialState);
@@ -464,7 +464,7 @@ describe("FlowManager - State Machine", () => {
                 }
               },
               phases: {
-                main: { order: 0, next: undefined },
+                main: { next: undefined, order: 0 },
               },
             },
           },
@@ -495,7 +495,6 @@ describe("FlowManager - State Machine", () => {
             turn: {
               phases: {
                 main: {
-                  order: 0,
                   next: undefined,
                   onBegin: (context) => {
                     // For games that don't have special setup, we should set currentPlayer
@@ -513,6 +512,7 @@ describe("FlowManager - State Machine", () => {
                     expect(turn).toBeGreaterThan(0);
                     expect(player).toBeDefined();
                   },
+                  order: 0,
                 },
               },
             },
@@ -522,9 +522,9 @@ describe("FlowManager - State Machine", () => {
 
       const initialState: GameState = {
         currentPlayer: 0,
+        log: [],
         players: [{ id: "p1", ready: false }],
         turnCount: 0,
-        log: [],
       };
 
       const manager = new FlowManager(flow, initialState);
@@ -540,8 +540,8 @@ describe("FlowManager - State Machine", () => {
             order: 1,
             turn: {
               phases: {
-                ready: { order: 0, next: "draw" },
                 draw: { order: 1, next: undefined },
+                ready: { order: 0, next: "draw" },
               },
             },
           },
@@ -550,9 +550,9 @@ describe("FlowManager - State Machine", () => {
 
       const initialState: GameState = {
         currentPlayer: 0,
+        log: [],
         players: [{ id: "p1", ready: false }],
         turnCount: 0,
-        log: [],
       };
 
       const manager = new FlowManager(flow, initialState);
@@ -574,7 +574,7 @@ describe("FlowManager - State Machine", () => {
                 context.state.turnCount += 1;
               },
               phases: {
-                main: { order: 0, next: undefined },
+                main: { next: undefined, order: 0 },
               },
             },
           },
@@ -583,9 +583,9 @@ describe("FlowManager - State Machine", () => {
 
       const initialState: GameState = {
         currentPlayer: 0,
+        log: [],
         players: [{ id: "p1", ready: false }],
         turnCount: 0,
-        log: [],
       };
 
       const manager = new FlowManager(flow, initialState);
@@ -594,9 +594,7 @@ describe("FlowManager - State Machine", () => {
 
       manager.send({ type: "END_TURN" });
 
-      expect(manager.getGameState().turnCount).toBeGreaterThan(
-        initialTurnCount,
-      );
+      expect(manager.getGameState().turnCount).toBeGreaterThan(initialTurnCount);
     });
 
     it("should handle END_STEP event", () => {
@@ -607,8 +605,8 @@ describe("FlowManager - State Machine", () => {
             turn: {
               phases: {
                 main: {
-                  order: 0,
                   next: undefined,
+                  order: 0,
                   steps: {
                     declare: { order: 0, next: "target" },
                     target: { order: 1, next: undefined },
@@ -622,9 +620,9 @@ describe("FlowManager - State Machine", () => {
 
       const initialState: GameState = {
         currentPlayer: 0,
+        log: [],
         players: [{ id: "p1", ready: false }],
         turnCount: 0,
-        log: [],
       };
 
       const manager = new FlowManager(flow, initialState);
@@ -645,6 +643,10 @@ describe("FlowManager - State Machine", () => {
             order: 1,
             turn: {
               phases: {
+                end: {
+                  order: 1,
+                  next: undefined,
+                },
                 main: {
                   order: 0,
                   next: "end",
@@ -654,10 +656,6 @@ describe("FlowManager - State Machine", () => {
                     finish: { order: 2, next: undefined },
                   },
                 },
-                end: {
-                  order: 1,
-                  next: undefined,
-                },
               },
             },
           },
@@ -666,9 +664,9 @@ describe("FlowManager - State Machine", () => {
 
       const initialState: GameState = {
         currentPlayer: 0,
+        log: [],
         players: [{ id: "p1", ready: false }],
         turnCount: 0,
-        log: [],
       };
 
       const manager = new FlowManager(flow, initialState);
@@ -704,7 +702,6 @@ describe("FlowManager - State Machine", () => {
               },
               phases: {
                 main: {
-                  order: 0,
                   next: undefined,
                   onBegin: (context) => {
                     context.state.log.push("phase-begin");
@@ -712,6 +709,7 @@ describe("FlowManager - State Machine", () => {
                   onEnd: (context) => {
                     context.state.log.push("phase-end");
                   },
+                  order: 0,
                   steps: {
                     start: {
                       order: 0,
@@ -733,9 +731,9 @@ describe("FlowManager - State Machine", () => {
 
       const initialState: GameState = {
         currentPlayer: 0,
+        log: [],
         players: [{ id: "p1", ready: false }],
         turnCount: 0,
-        log: [],
       };
 
       const manager = new FlowManager(flow, initialState);

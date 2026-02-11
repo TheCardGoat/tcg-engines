@@ -3,9 +3,9 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
+// Import { describe, it } from "@jest/globals";
 //
-// describe("Agrabah - Marketplace", () => {
-//   it("TODO", () => {});
+// Describe("Agrabah - Marketplace", () => {
+//   It("TODO", () => {});
 // });
 //

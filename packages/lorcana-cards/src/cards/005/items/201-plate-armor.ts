@@ -1,24 +1,8 @@
 import type { ItemCard } from "@tcg/lorcana-types";
 
 export const plateArmor: ItemCard = {
-  id: "14f",
-  cardType: "item",
-  name: "Plate Armor",
-  inkType: ["steel"],
-  franchise: "Sword in the Stone",
-  set: "005",
-  text: "WELL CRAFTED {E} — Chosen character gains Resist +2 until the start of your next turn. (Damage dealt to them is reduced by 2.)",
-  cost: 4,
-  cardNumber: 201,
-  inkable: false,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "915ef4e692a5bc97a06aca3c141fd01f48a150b1",
-  },
   abilities: [
     {
-      id: "14f-1",
-      type: "activated",
       cost: { exert: true },
       effect: {
         type: "gain-keyword",
@@ -32,7 +16,23 @@ export const plateArmor: ItemCard = {
         },
         value: 2,
       },
+      id: "14f-1",
       text: "WELL CRAFTED {E} — Chosen character gains Resist +2 until the start of your next turn.",
+      type: "activated",
     },
   ],
+  cardNumber: 201,
+  cardType: "item",
+  cost: 4,
+  externalIds: {
+    ravensburger: "915ef4e692a5bc97a06aca3c141fd01f48a150b1",
+  },
+  franchise: "Sword in the Stone",
+  id: "14f",
+  inkType: ["steel"],
+  inkable: false,
+  missingTests: true,
+  name: "Plate Armor",
+  set: "005",
+  text: "WELL CRAFTED {E} — Chosen character gains Resist +2 until the start of your next turn. (Damage dealt to them is reduced by 2.)",
 };

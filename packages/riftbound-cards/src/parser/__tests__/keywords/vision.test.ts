@@ -19,8 +19,8 @@ describe("Keyword: Vision", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "keyword",
           keyword: "Vision",
+          type: "keyword",
         }),
       );
     });
@@ -36,11 +36,11 @@ describe("Keyword: Vision", () => {
       expect(result.abilities).toHaveLength(2);
       expect(result.abilities?.[1]).toEqual(
         expect.objectContaining({
-          type: "static",
           effect: expect.objectContaining({
-            type: "grant-keyword",
             keyword: "Vision",
+            type: "grant-keyword",
           }),
+          type: "static",
         }),
       );
     });
@@ -65,13 +65,13 @@ describe("Keyword: Vision", () => {
       expect(result.abilities).toHaveLength(2);
       expect(result.abilities?.[1]).toEqual(
         expect.objectContaining({
-          type: "triggered",
-          trigger: expect.objectContaining({
-            event: "recycle",
-          }),
           effect: expect.objectContaining({
             type: "buff",
           }),
+          trigger: expect.objectContaining({
+            event: "recycle",
+          }),
+          type: "triggered",
         }),
       );
     });
@@ -87,13 +87,11 @@ describe("Keyword: Vision", () => {
       expect(result.abilities).toHaveLength(2);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "keyword",
           keyword: "Vision",
+          type: "keyword",
         }),
       );
-      expect(result.abilities?.[1]).toEqual(
-        expect.objectContaining(Abilities.shield(1)),
-      );
+      expect(result.abilities?.[1]).toEqual(expect.objectContaining(Abilities.shield(1)));
     });
   });
 
@@ -107,11 +105,11 @@ describe("Keyword: Vision", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "static",
           effect: expect.objectContaining({
-            type: "grant-keyword",
             keyword: "Vision",
+            type: "grant-keyword",
           }),
+          type: "static",
         }),
       );
     });

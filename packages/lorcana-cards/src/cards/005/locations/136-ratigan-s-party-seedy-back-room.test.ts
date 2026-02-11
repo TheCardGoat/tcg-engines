@@ -3,50 +3,50 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { liloMakingAWish } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { monstroWhaleOfAWhale } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { ratigansPartySeedyBackRoom } from "@lorcanito/lorcana-engine/cards/005/locations/locations";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { liloMakingAWish } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { monstroWhaleOfAWhale } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { ratigansPartySeedyBackRoom } from "@lorcanito/lorcana-engine/cards/005/locations/locations";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Ratigan's Party - Seedy Back Room", () => {
-//   describe("**MISFITS’ REVELRY** While you have a damaged character here, this location gets +2 {L}.", () => {
-//     it("Should not get +2 lore if the character on location is not damaged.", () => {
-//       const testStore = new TestStore({
-//         inkwell: ratigansPartySeedyBackRoom.cost,
-//         play: [ratigansPartySeedyBackRoom, monstroWhaleOfAWhale],
+// Describe("Ratigan's Party - Seedy Back Room", () => {
+//   Describe("**MISFITS’ REVELRY** While you have a damaged character here, this location gets +2 {L}.", () => {
+//     It("Should not get +2 lore if the character on location is not damaged.", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: ratigansPartySeedyBackRoom.cost,
+//         Play: [ratigansPartySeedyBackRoom, monstroWhaleOfAWhale],
 //       });
 //
-//       const cardUnderTest = testStore.getCard(ratigansPartySeedyBackRoom);
-//       const target = testStore.getCard(monstroWhaleOfAWhale);
+//       Const cardUnderTest = testStore.getCard(ratigansPartySeedyBackRoom);
+//       Const target = testStore.getCard(monstroWhaleOfAWhale);
 //
-//       target.enterLocation(cardUnderTest);
-//       expect(cardUnderTest.lore).toBeFalsy();
-//       expect(target.lore).toBe(monstroWhaleOfAWhale.lore);
+//       Target.enterLocation(cardUnderTest);
+//       Expect(cardUnderTest.lore).toBeFalsy();
+//       Expect(target.lore).toBe(monstroWhaleOfAWhale.lore);
 //     });
 //
-//     it("Should give +2 lore to location, and only the location.", () => {
-//       const testStore = new TestStore(
+//     It("Should give +2 lore to location, and only the location.", () => {
+//       Const testStore = new TestStore(
 //         {
-//           inkwell: ratigansPartySeedyBackRoom.cost,
-//           play: [ratigansPartySeedyBackRoom, monstroWhaleOfAWhale],
+//           Inkwell: ratigansPartySeedyBackRoom.cost,
+//           Play: [ratigansPartySeedyBackRoom, monstroWhaleOfAWhale],
 //         },
 //         {
-//           play: [liloMakingAWish],
+//           Play: [liloMakingAWish],
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getCard(ratigansPartySeedyBackRoom);
-//       const target = testStore.getCard(monstroWhaleOfAWhale);
-//       const anotherTarget = testStore.getCard(liloMakingAWish);
+//       Const cardUnderTest = testStore.getCard(ratigansPartySeedyBackRoom);
+//       Const target = testStore.getCard(monstroWhaleOfAWhale);
+//       Const anotherTarget = testStore.getCard(liloMakingAWish);
 //
-//       target.enterLocation(cardUnderTest);
+//       Target.enterLocation(cardUnderTest);
 //
-//       target.updateCardDamage(1);
+//       Target.updateCardDamage(1);
 //
-//       expect(cardUnderTest.lore).toEqual(2);
-//       expect(target.lore).toBe(monstroWhaleOfAWhale.lore);
-//       expect(anotherTarget.lore).toBe(liloMakingAWish.lore);
+//       Expect(cardUnderTest.lore).toEqual(2);
+//       Expect(target.lore).toBe(monstroWhaleOfAWhale.lore);
+//       Expect(anotherTarget.lore).toBe(liloMakingAWish.lore);
 //     });
 //   });
 // });

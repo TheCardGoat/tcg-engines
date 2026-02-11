@@ -3,35 +3,35 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { poorUnfortunateSouls } from "@lorcanito/lorcana-engine/cards/009/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { poorUnfortunateSouls } from "@lorcanito/lorcana-engine/cards/009/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Poor Unfortunate Souls", () => {
-//   it.skip("(A character with cost 2 or more can {E} to sing this song for free.)", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: poorUnfortunateSouls.cost,
-//       play: [poorUnfortunateSouls],
-//       hand: [poorUnfortunateSouls],
+// Describe("Poor Unfortunate Souls", () => {
+//   It.skip("(A character with cost 2 or more can {E} to sing this song for free.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: poorUnfortunateSouls.cost,
+//       Play: [poorUnfortunateSouls],
+//       Hand: [poorUnfortunateSouls],
 //     });
 //
-//     await testEngine.playCard(poorUnfortunateSouls);
+//     Await testEngine.playCard(poorUnfortunateSouls);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 //
-//   it.skip("Return chosen character, item, or location with cost 2 or less to their player's hand.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: poorUnfortunateSouls.cost,
-//       play: [poorUnfortunateSouls],
-//       hand: [poorUnfortunateSouls],
+//   It.skip("Return chosen character, item, or location with cost 2 or less to their player's hand.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: poorUnfortunateSouls.cost,
+//       Play: [poorUnfortunateSouls],
+//       Hand: [poorUnfortunateSouls],
 //     });
 //
-//     await testEngine.playCard(poorUnfortunateSouls);
+//     Await testEngine.playCard(poorUnfortunateSouls);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

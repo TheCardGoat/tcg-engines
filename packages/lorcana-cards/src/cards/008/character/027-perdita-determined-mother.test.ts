@@ -3,59 +3,59 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { cruellaDeVilFashionableCruiser } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import {
-//   dalmatianPuppyTailWagger,
-//   patchPlayfulPup,
-//   perditaDeterminedMother,
-//   rollyChubbyPuppy,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { cruellaDeVilFashionableCruiser } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import {
+//   DalmatianPuppyTailWagger,
+//   PatchPlayfulPup,
+//   PerditaDeterminedMother,
+//   RollyChubbyPuppy,
 // } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Perdita - Determined Mother", () => {
-//   it("Shift 4 (You may pay 4 {I} to play this on top of one of your characters named Perdita.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [perditaDeterminedMother],
+// Describe("Perdita - Determined Mother", () => {
+//   It("Shift 4 (You may pay 4 {I} to play this on top of one of your characters named Perdita.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [perditaDeterminedMother],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(perditaDeterminedMother);
-//     expect(cardUnderTest.hasShift).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(perditaDeterminedMother);
+//     Expect(cardUnderTest.hasShift).toBe(true);
 //   });
 //
-//   it("QUICK, EVERYONE HIDE When you play this character, you may put all Puppy character cards from your discard into your inkwell facedown and exerted.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: perditaDeterminedMother.cost,
-//       hand: [perditaDeterminedMother],
-//       discard: [
-//         rollyChubbyPuppy,
-//         patchPlayfulPup,
-//         dalmatianPuppyTailWagger,
-//         cruellaDeVilFashionableCruiser,
+//   It("QUICK, EVERYONE HIDE When you play this character, you may put all Puppy character cards from your discard into your inkwell facedown and exerted.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: perditaDeterminedMother.cost,
+//       Hand: [perditaDeterminedMother],
+//       Discard: [
+//         RollyChubbyPuppy,
+//         PatchPlayfulPup,
+//         DalmatianPuppyTailWagger,
+//         CruellaDeVilFashionableCruiser,
 //       ],
 //     });
 //
-//     await testEngine.playCard(perditaDeterminedMother);
-//     await testEngine.resolveOptionalAbility();
+//     Await testEngine.playCard(perditaDeterminedMother);
+//     Await testEngine.resolveOptionalAbility();
 //
-//     expect(testEngine.getCardModel(rollyChubbyPuppy).zone).toBe("inkwell");
-//     expect(testEngine.getCardModel(rollyChubbyPuppy).meta.exerted).toBe(true);
+//     Expect(testEngine.getCardModel(rollyChubbyPuppy).zone).toBe("inkwell");
+//     Expect(testEngine.getCardModel(rollyChubbyPuppy).meta.exerted).toBe(true);
 //
-//     expect(testEngine.getCardModel(patchPlayfulPup).zone).toBe("inkwell");
-//     expect(testEngine.getCardModel(patchPlayfulPup).meta.exerted).toBe(true);
+//     Expect(testEngine.getCardModel(patchPlayfulPup).zone).toBe("inkwell");
+//     Expect(testEngine.getCardModel(patchPlayfulPup).meta.exerted).toBe(true);
 //
-//     expect(testEngine.getCardModel(dalmatianPuppyTailWagger).zone).toBe(
+//     Expect(testEngine.getCardModel(dalmatianPuppyTailWagger).zone).toBe(
 //       "inkwell",
 //     );
-//     expect(testEngine.getCardModel(dalmatianPuppyTailWagger).meta.exerted).toBe(
-//       true,
+//     Expect(testEngine.getCardModel(dalmatianPuppyTailWagger).meta.exerted).toBe(
+//       True,
 //     );
 //
-//     expect(testEngine.getCardModel(cruellaDeVilFashionableCruiser).zone).toBe(
+//     Expect(testEngine.getCardModel(cruellaDeVilFashionableCruiser).zone).toBe(
 //       "discard",
 //     );
-//     expect(
-//       testEngine.getCardModel(cruellaDeVilFashionableCruiser).meta.exerted,
+//     Expect(
+//       TestEngine.getCardModel(cruellaDeVilFashionableCruiser).meta.exerted,
 //     ).toBeFalsy();
 //   });
 // });

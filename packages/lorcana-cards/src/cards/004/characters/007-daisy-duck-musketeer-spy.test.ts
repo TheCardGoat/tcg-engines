@@ -3,24 +3,24 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { daisyDuckMusketeerSpy } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { daisyDuckMusketeerSpy } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Daisy Duck - Musketeer Spy", () => {
-//   it.skip("**INFILTRATION** When you play this character, each opponent chooses and discards a card.", () => {
-//     const testStore = new TestStore({
-//       inkwell: daisyDuckMusketeerSpy.cost,
-//       hand: [daisyDuckMusketeerSpy],
+// Describe("Daisy Duck - Musketeer Spy", () => {
+//   It.skip("**INFILTRATION** When you play this character, each opponent chooses and discards a card.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: daisyDuckMusketeerSpy.cost,
+//       Hand: [daisyDuckMusketeerSpy],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "hand",
-//       daisyDuckMusketeerSpy.id,
+//       DaisyDuckMusketeerSpy.id,
 //     );
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

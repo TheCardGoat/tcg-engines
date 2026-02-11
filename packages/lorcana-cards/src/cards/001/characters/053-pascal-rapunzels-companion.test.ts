@@ -5,9 +5,9 @@ import { pascalRapunzelsCompanion } from "./053-pascal-rapunzels-companion";
 describe("Pascal - Rapunzel’s Companion", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [pascalRapunzelCompanion] });
-  //   expect(testEngine.getCardModel(pascalRapunzelCompanion).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [pascalRapunzelCompanion] });
+  //   Expect(testEngine.getCardModel(pascalRapunzelCompanion).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });

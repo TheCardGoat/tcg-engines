@@ -1,31 +1,31 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
 // // TODO: Once the set is released, we organize the cards by set and type
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { resistAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { resistAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
 //
-// export const mickeyMouseNightWatchman: LorcanitoCharacterCard = {
-//   id: "tup",
-//   missingTestCase: true,
-//   name: "Mickey Mouse",
-//   title: "Night Watch",
-//   characteristics: ["storyborn", "hero"],
-//   text: "SUPPORT Your Pluto characters get Resist +1. (Damage dealt to them is reduced by 1.)",
-//   type: "character",
-//   abilities: [
+// Export const mickeyMouseNightWatchman: LorcanitoCharacterCard = {
+//   Id: "tup",
+//   MissingTestCase: true,
+//   Name: "Mickey Mouse",
+//   Title: "Night Watch",
+//   Characteristics: ["storyborn", "hero"],
+//   Text: "SUPPORT Your Pluto characters get Resist +1. (Damage dealt to them is reduced by 1.)",
+//   Type: "character",
+//   Abilities: [
 //     {
-//       type: "static",
-//       ability: "gain-ability",
-//       name: "Support",
-//       text: "Your Pluto characters get Resist +1. (Damage dealt to them is reduced by 1.)",
-//       gainedAbility: resistAbility(1),
-//       target: {
-//         type: "card",
-//         value: "all",
-//         filters: [
+//       Type: "static",
+//       Ability: "gain-ability",
+//       Name: "Support",
+//       Text: "Your Pluto characters get Resist +1. (Damage dealt to them is reduced by 1.)",
+//       GainedAbility: resistAbility(1),
+//       Target: {
+//         Type: "card",
+//         Value: "all",
+//         Filters: [
 //           {
-//             filter: "attribute",
-//             value: "name",
-//             comparison: { operator: "eq", value: "pluto" },
+//             Filter: "attribute",
+//             Value: "name",
+//             Comparison: { operator: "eq", value: "pluto" },
 //           },
 //           { filter: "type", value: "character" },
 //           { filter: "zone", value: "play" },
@@ -34,18 +34,18 @@
 //       },
 //     },
 //   ],
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 3,
-//   strength: 2,
-//   willpower: 3,
-//   lore: 2,
-//   illustrator: "Hedvig Heggman-Sund",
-//   number: 187,
-//   set: "006",
-//   externalIds: {
-//     tcgPlayer: 591144,
+//   Inkwell: true,
+//   Colors: ["steel"],
+//   Cost: 3,
+//   Strength: 2,
+//   Willpower: 3,
+//   Lore: 2,
+//   Illustrator: "Hedvig Heggman-Sund",
+//   Number: 187,
+//   Set: "006",
+//   ExternalIds: {
+//     TcgPlayer: 591144,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

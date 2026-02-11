@@ -144,9 +144,7 @@ describe("ValidatorBuilder", () => {
         .build();
 
       expect(validator.validate({ name: "Short" }).success).toBe(true);
-      expect(validator.validate({ name: "Very Long Name" }).success).toBe(
-        false,
-      );
+      expect(validator.validate({ name: "Very Long Name" }).success).toBe(false);
     });
   });
 
@@ -186,9 +184,7 @@ describe("ValidatorBuilder", () => {
 
       expect(validator.validate({ password: "Password1" }).success).toBe(true);
       expect(validator.validate({ password: "short" }).success).toBe(false);
-      expect(validator.validate({ password: "lowercase1" }).success).toBe(
-        false,
-      );
+      expect(validator.validate({ password: "lowercase1" }).success).toBe(false);
     });
   });
 
@@ -274,13 +270,13 @@ describe("ValidatorBuilder", () => {
 
   describe("complex object validation", () => {
     it("should validate nested object structures", () => {
-      type Card = {
+      interface Card {
         name: string;
         metadata: {
           version: number;
           category: string;
         };
-      };
+      }
 
       const validator = new ValidatorBuilder<Card>()
         .required("name", "Name is required")
@@ -292,16 +288,16 @@ describe("ValidatorBuilder", () => {
         .build();
 
       const validResult = validator.validate({
-        name: "Dragon",
         metadata: { version: 1, category: "creature" },
+        name: "Dragon",
       });
       expect(validResult.success).toBe(true);
     });
 
     it("should validate arrays", () => {
-      type Card = {
+      interface Card {
         abilities: string[];
-      };
+      }
 
       const validator = new ValidatorBuilder<Card>()
         .custom(
@@ -363,7 +359,7 @@ describe("ValidatorBuilder", () => {
       const card = { name: "Dragon", power: 5, type: "creature" };
 
       const startTime = performance.now();
-      for (let i = 0; i < 10000; i++) {
+      for (let i = 0; i < 10_000; i++) {
         validator.validate(card);
       }
       const endTime = performance.now();

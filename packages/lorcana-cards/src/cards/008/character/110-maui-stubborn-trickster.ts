@@ -1,45 +1,45 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import {
-//   allOpposingCharacters,
-//   allOpposingItems,
-//   allOpposingLocations,
-//   chosenCharacter,
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import {
+//   AllOpposingCharacters,
+//   AllOpposingItems,
+//   AllOpposingLocations,
+//   ChosenCharacter,
 // } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { whenThisCharacterBanished } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import { putDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
+// Import { whenThisCharacterBanished } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import { putDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// const imNotFinishedYet = whenThisCharacterBanished({
-//   name: "I'M NOT FINISHED YET",
-//   text: "When this character is banished, choose one:\n- Put 2 damage counters on all opposing characters.\n- Banish all opposing items.\n- Banish all opposing locations.",
-//   effects: [
+// Const imNotFinishedYet = whenThisCharacterBanished({
+//   Name: "I'M NOT FINISHED YET",
+//   Text: "When this character is banished, choose one:\n- Put 2 damage counters on all opposing characters.\n- Banish all opposing items.\n- Banish all opposing locations.",
+//   Effects: [
 //     {
-//       type: "modal",
+//       Type: "modal",
 //       // TODO: Get rid of target
-//       target: chosenCharacter,
-//       modes: [
+//       Target: chosenCharacter,
+//       Modes: [
 //         {
-//           id: "1",
-//           text: "Put 2 damage counters on all opposing characters.",
-//           effects: [putDamageEffect(2, allOpposingCharacters)],
+//           Id: "1",
+//           Text: "Put 2 damage counters on all opposing characters.",
+//           Effects: [putDamageEffect(2, allOpposingCharacters)],
 //         },
 //         {
-//           id: "2",
-//           text: "Banish all opposing items.",
-//           effects: [
+//           Id: "2",
+//           Text: "Banish all opposing items.",
+//           Effects: [
 //             {
-//               type: "banish",
-//               target: allOpposingItems,
+//               Type: "banish",
+//               Target: allOpposingItems,
 //             },
 //           ],
 //         },
 //         {
-//           id: "3",
-//           text: "Banish all opposing locations.",
-//           effects: [
+//           Id: "3",
+//           Text: "Banish all opposing locations.",
+//           Effects: [
 //             {
-//               type: "banish",
-//               target: allOpposingLocations,
+//               Type: "banish",
+//               Target: allOpposingLocations,
 //             },
 //           ],
 //         },
@@ -48,26 +48,26 @@
 //   ],
 // });
 //
-// export const mauiStubbornTrickster: LorcanitoCharacterCard = {
-//   id: "o9q",
-//   name: "Maui",
-//   title: "Stubborn Trickster",
-//   characteristics: ["storyborn", "hero", "deity"],
-//   text: "I'M NOT FINISHED YET When this character is banished, choose one:\n- Put 2 damage counters on all opposing characters.\n- Banish all opposing items.\n- Banish all opposing locations.",
-//   type: "character",
-//   abilities: [imNotFinishedYet],
-//   inkwell: true,
-//   colors: ["emerald", "steel"],
-//   cost: 6,
-//   strength: 4,
-//   willpower: 4,
-//   illustrator: "Natalie Dombois",
-//   number: 110,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 630062,
+// Export const mauiStubbornTrickster: LorcanitoCharacterCard = {
+//   Id: "o9q",
+//   Name: "Maui",
+//   Title: "Stubborn Trickster",
+//   Characteristics: ["storyborn", "hero", "deity"],
+//   Text: "I'M NOT FINISHED YET When this character is banished, choose one:\n- Put 2 damage counters on all opposing characters.\n- Banish all opposing items.\n- Banish all opposing locations.",
+//   Type: "character",
+//   Abilities: [imNotFinishedYet],
+//   Inkwell: true,
+//   Colors: ["emerald", "steel"],
+//   Cost: 6,
+//   Strength: 4,
+//   Willpower: 4,
+//   Illustrator: "Natalie Dombois",
+//   Number: 110,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 630062,
 //   },
-//   rarity: "super_rare",
-//   lore: 3,
+//   Rarity: "super_rare",
+//   Lore: 3,
 // };
 //

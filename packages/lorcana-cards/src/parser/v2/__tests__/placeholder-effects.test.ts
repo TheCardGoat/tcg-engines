@@ -17,8 +17,8 @@ describe.skip("{d} Placeholder Effects", () => {
       const effect = parseEffect("Gain {d} lore");
 
       expect(effect).toEqual({
-        type: "gain-lore",
-        amount: -1, // {d} placeholder converted to -1
+        amount: -1,
+        type: "gain-lore", // {d} placeholder converted to -1
       });
     });
 
@@ -26,8 +26,8 @@ describe.skip("{d} Placeholder Effects", () => {
       const effect = parseEffect("gain {d} lore");
 
       expect(effect).toEqual({
-        type: "gain-lore",
         amount: -1,
+        type: "gain-lore",
       });
     });
   });
@@ -40,11 +40,11 @@ describe.skip("{d} Placeholder Effects", () => {
         type: "deal-damage",
         amount: -1, // {d} placeholder converted to -1
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
       });
     });
@@ -55,15 +55,15 @@ describe.skip("{d} Placeholder Effects", () => {
       );
 
       expect(effect).toEqual({
-        type: "deal-damage",
         amount: -1,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "opponent",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "deal-damage",
       });
     });
   });
@@ -83,9 +83,9 @@ describe.skip("{d} Placeholder Effects", () => {
       const effect = parseEffect("draw {d} cards");
 
       expect(effect).toEqual({
-        type: "draw",
         amount: -1,
         target: "CONTROLLER",
+        type: "draw",
       });
     });
   });
@@ -98,11 +98,11 @@ describe.skip("{d} Placeholder Effects", () => {
         type: "remove-damage",
         amount: -1, // {d} placeholder converted to -1
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
         upTo: false,
       });
@@ -114,15 +114,15 @@ describe.skip("{d} Placeholder Effects", () => {
       );
 
       expect(effect).toEqual({
-        type: "remove-damage",
         amount: -1,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "remove-damage",
         upTo: true,
       });
     });
@@ -143,9 +143,9 @@ describe.skip("{d} Placeholder Effects", () => {
       const effect = parseEffect("loses {d} lore");
 
       expect(effect).toEqual({
-        type: "lose-lore",
         amount: -1,
         target: "OPPONENT",
+        type: "lose-lore",
       });
     });
   });
@@ -159,11 +159,11 @@ describe.skip("{d} Placeholder Effects", () => {
         stat: "strength",
         modifier: -1, // +{d} placeholder converted to -1
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
         duration: "this-turn",
       });
@@ -197,17 +197,17 @@ describe.skip("{d} Placeholder Effects", () => {
       const effect = parseEffect("Chosen character gets +{d} {W} this turn");
 
       expect(effect).toEqual({
-        type: "modify-stat",
-        stat: "willpower",
+        duration: "this-turn",
         modifier: -1,
+        stat: "willpower",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
-        duration: "this-turn",
+        type: "modify-stat",
       });
     });
 
@@ -215,11 +215,11 @@ describe.skip("{d} Placeholder Effects", () => {
       const effect = parseEffect("gets +{d} {L} this turn");
 
       expect(effect).toEqual({
-        type: "modify-stat",
-        stat: "lore",
-        modifier: -1,
-        target: "CHOSEN_CHARACTER",
         duration: "this-turn",
+        modifier: -1,
+        stat: "lore",
+        target: "CHOSEN_CHARACTER",
+        type: "modify-stat",
       });
     });
   });
@@ -232,11 +232,11 @@ describe.skip("{d} Placeholder Effects", () => {
         type: "put-damage",
         amount: -1, // {d} placeholder converted to -1
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
       });
     });
@@ -245,15 +245,15 @@ describe.skip("{d} Placeholder Effects", () => {
       const effect = parseEffect("Put {d} damage counter on chosen character");
 
       expect(effect).toEqual({
-        type: "put-damage",
         amount: -1,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "put-damage",
       });
     });
   });
@@ -263,8 +263,8 @@ describe.skip("{d} Placeholder Effects", () => {
       const effect = parseEffect("Gain 3 lore");
 
       expect(effect).toEqual({
-        type: "gain-lore",
-        amount: 3, // Numeric value stays as-is
+        amount: 3,
+        type: "gain-lore", // Numeric value stays as-is
       });
     });
 
@@ -272,8 +272,8 @@ describe.skip("{d} Placeholder Effects", () => {
       const effect = parseEffect("Gain {d} lore");
 
       expect(effect).toEqual({
-        type: "gain-lore",
-        amount: -1, // {d} converted to -1
+        amount: -1,
+        type: "gain-lore", // {d} converted to -1
       });
     });
 
@@ -282,13 +282,13 @@ describe.skip("{d} Placeholder Effects", () => {
       const effect2 = parseEffect("Gain {d} lore");
 
       expect(effect1).toEqual({
-        type: "gain-lore",
         amount: 2,
+        type: "gain-lore",
       });
 
       expect(effect2).toEqual({
-        type: "gain-lore",
         amount: -1,
+        type: "gain-lore",
       });
     });
   });
@@ -298,9 +298,8 @@ describe.skip("{d} Placeholder Effects", () => {
       const effect = parseEffect("you may deal {d} damage to chosen character");
 
       expect(effect).toEqual({
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "deal-damage",
           amount: -1,
           target: {
             selector: "chosen",
@@ -309,8 +308,9 @@ describe.skip("{d} Placeholder Effects", () => {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "deal-damage",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       });
     });
 
@@ -318,15 +318,15 @@ describe.skip("{d} Placeholder Effects", () => {
       const effect = parseEffect("Gain {d} lore for each character you have");
 
       expect(effect).toEqual({
-        type: "for-each",
         counter: {
-          type: "characters",
           controller: "you",
+          type: "characters",
         },
         effect: {
-          type: "gain-lore",
           amount: -1,
+          type: "gain-lore",
         },
+        type: "for-each",
       });
     });
   });

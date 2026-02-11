@@ -3,34 +3,34 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { magicBroomTheBigSweeper } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { forbiddenMountainMaleficentsCastle } from "@lorcanito/lorcana-engine/cards/003/locations/locations";
-// import { aladdinResoluteSwordsman } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { magicBroomTheBigSweeper } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { forbiddenMountainMaleficentsCastle } from "@lorcanito/lorcana-engine/cards/003/locations/locations";
+// Import { aladdinResoluteSwordsman } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Magic Broom - The Big Sweeper", () => {
-//   it("**CLEAN SWEEP** While this character is at a location, it gets +2 {S}.", () => {
-//     const testStore = new TestStore({
-//       inkwell: magicBroomTheBigSweeper.cost,
-//       play: [
-//         magicBroomTheBigSweeper,
-//         forbiddenMountainMaleficentsCastle,
-//         aladdinResoluteSwordsman,
+// Describe("Magic Broom - The Big Sweeper", () => {
+//   It("**CLEAN SWEEP** While this character is at a location, it gets +2 {S}.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: magicBroomTheBigSweeper.cost,
+//       Play: [
+//         MagicBroomTheBigSweeper,
+//         ForbiddenMountainMaleficentsCastle,
+//         AladdinResoluteSwordsman,
 //       ],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(magicBroomTheBigSweeper);
-//     const location = testStore.getCard(forbiddenMountainMaleficentsCastle);
-//     const anotherCard = testStore.getCard(aladdinResoluteSwordsman);
+//     Const cardUnderTest = testStore.getCard(magicBroomTheBigSweeper);
+//     Const location = testStore.getCard(forbiddenMountainMaleficentsCastle);
+//     Const anotherCard = testStore.getCard(aladdinResoluteSwordsman);
 //
-//     expect(cardUnderTest.strength).toEqual(magicBroomTheBigSweeper.strength);
-//     expect(anotherCard.strength).toEqual(aladdinResoluteSwordsman.strength);
-//     cardUnderTest.enterLocation(location);
-//     expect(anotherCard.strength).toEqual(aladdinResoluteSwordsman.strength);
+//     Expect(cardUnderTest.strength).toEqual(magicBroomTheBigSweeper.strength);
+//     Expect(anotherCard.strength).toEqual(aladdinResoluteSwordsman.strength);
+//     CardUnderTest.enterLocation(location);
+//     Expect(anotherCard.strength).toEqual(aladdinResoluteSwordsman.strength);
 //
-//     expect(cardUnderTest.strength).toEqual(
-//       magicBroomTheBigSweeper.strength + 2,
+//     Expect(cardUnderTest.strength).toEqual(
+//       MagicBroomTheBigSweeper.strength + 2,
 //     );
 //   });
 // });

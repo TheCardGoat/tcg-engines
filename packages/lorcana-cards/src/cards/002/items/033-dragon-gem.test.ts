@@ -3,49 +3,49 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   docLeaderOfTheSevenDwarfs,
-//   happyGoodNatured,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   DocLeaderOfTheSevenDwarfs,
+//   HappyGoodNatured,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { dragonGem } from "@lorcanito/lorcana-engine/cards/002/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { dragonGem } from "@lorcanito/lorcana-engine/cards/002/items/items";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Dragon Gem", () => {
-//   describe("**BRING BACK TO LIFE** {E}, 3 {I} − Return a character card with **Support** from your discard to your hand.", () => {
-//     it("Returns a character with Support", () => {
-//       const testStore = new TestStore({
-//         inkwell: 3,
-//         play: [dragonGem],
-//         discard: [happyGoodNatured],
+// Describe("Dragon Gem", () => {
+//   Describe("**BRING BACK TO LIFE** {E}, 3 {I} − Return a character card with **Support** from your discard to your hand.", () => {
+//     It("Returns a character with Support", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: 3,
+//         Play: [dragonGem],
+//         Discard: [happyGoodNatured],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId("play", dragonGem.id);
-//       const target = testStore.getByZoneAndId("discard", happyGoodNatured.id);
+//       Const cardUnderTest = testStore.getByZoneAndId("play", dragonGem.id);
+//       Const target = testStore.getByZoneAndId("discard", happyGoodNatured.id);
 //
-//       cardUnderTest.activate();
-//       testStore.resolveTopOfStack({ targets: [target] });
+//       CardUnderTest.activate();
+//       TestStore.resolveTopOfStack({ targets: [target] });
 //
-//       expect(target.zone).toEqual("hand");
+//       Expect(target.zone).toEqual("hand");
 //     });
 //
-//     it("Returns a character without Support", () => {
-//       const testStore = new TestStore({
-//         inkwell: 3,
-//         play: [dragonGem],
-//         discard: [docLeaderOfTheSevenDwarfs],
+//     It("Returns a character without Support", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: 3,
+//         Play: [dragonGem],
+//         Discard: [docLeaderOfTheSevenDwarfs],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId("play", dragonGem.id);
-//       const target = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId("play", dragonGem.id);
+//       Const target = testStore.getByZoneAndId(
 //         "discard",
-//         docLeaderOfTheSevenDwarfs.id,
+//         DocLeaderOfTheSevenDwarfs.id,
 //       );
 //
-//       cardUnderTest.activate();
-//       testStore.resolveTopOfStack({ targets: [target] }, true);
+//       CardUnderTest.activate();
+//       TestStore.resolveTopOfStack({ targets: [target] }, true);
 //
-//       expect(target.zone).toEqual("discard");
+//       Expect(target.zone).toEqual("discard");
 //     });
 //   });
 // });

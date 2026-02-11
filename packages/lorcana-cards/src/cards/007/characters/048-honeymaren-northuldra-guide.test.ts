@@ -3,95 +3,95 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   neverLandMermaidLagoon,
-//   prideLandsPrideRock,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   NeverLandMermaidLagoon,
+//   PrideLandsPrideRock,
 // } from "@lorcanito/lorcana-engine/cards/003/locations/locations";
-// import {
-//   belleApprenticeInventor,
-//   boltHeadstrongDog,
-//   honeymarenNorthuldraGuide,
+// Import {
+//   BelleApprenticeInventor,
+//   BoltHeadstrongDog,
+//   HoneymarenNorthuldraGuide,
 // } from "@lorcanito/lorcana-engine/cards/007";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Honeymaren - Northuldra Guide", () => {
-//   describe("TALE OF THE FIFTH SPIRIT When you play this character, if an opponent has an exerted character in play, gain 1 lore.", () => {
-//     it("gain 1 lore when the opponent has an exerted character in play", async () => {
-//       const testEngine = new TestEngine(
+// Describe("Honeymaren - Northuldra Guide", () => {
+//   Describe("TALE OF THE FIFTH SPIRIT When you play this character, if an opponent has an exerted character in play, gain 1 lore.", () => {
+//     It("gain 1 lore when the opponent has an exerted character in play", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: honeymarenNorthuldraGuide.cost,
-//           hand: [honeymarenNorthuldraGuide],
+//           Inkwell: honeymarenNorthuldraGuide.cost,
+//           Hand: [honeymarenNorthuldraGuide],
 //         },
 //         {
-//           play: [boltHeadstrongDog],
-//         },
-//       );
-//
-//       await testEngine.tapCard(boltHeadstrongDog);
-//       const initialLore = testEngine.getLoreForPlayer("player_one");
-//
-//       await testEngine.playCard(honeymarenNorthuldraGuide);
-//       const finalLore = testEngine.getLoreForPlayer("player_one");
-//
-//       expect(finalLore).toBe(initialLore + 1);
-//     });
-//
-//     it("does NOT gain 1 lore if the opponent has no exerted character in play", async () => {
-//       const testEngine = new TestEngine(
-//         {
-//           inkwell: honeymarenNorthuldraGuide.cost,
-//           hand: [honeymarenNorthuldraGuide],
-//         },
-//         {
-//           play: [boltHeadstrongDog],
+//           Play: [boltHeadstrongDog],
 //         },
 //       );
 //
-//       const initialLore = testEngine.getLoreForPlayer("player_one");
+//       Await testEngine.tapCard(boltHeadstrongDog);
+//       Const initialLore = testEngine.getLoreForPlayer("player_one");
 //
-//       await testEngine.playCard(honeymarenNorthuldraGuide);
-//       const finalLore = testEngine.getLoreForPlayer("player_one");
+//       Await testEngine.playCard(honeymarenNorthuldraGuide);
+//       Const finalLore = testEngine.getLoreForPlayer("player_one");
 //
-//       expect(finalLore).toBe(initialLore);
+//       Expect(finalLore).toBe(initialLore + 1);
 //     });
 //
-//     it("does NOT gain 1 lore if player own character is exerted", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: honeymarenNorthuldraGuide.cost,
-//         hand: [honeymarenNorthuldraGuide],
-//         play: [boltHeadstrongDog],
+//     It("does NOT gain 1 lore if the opponent has no exerted character in play", async () => {
+//       Const testEngine = new TestEngine(
+//         {
+//           Inkwell: honeymarenNorthuldraGuide.cost,
+//           Hand: [honeymarenNorthuldraGuide],
+//         },
+//         {
+//           Play: [boltHeadstrongDog],
+//         },
+//       );
+//
+//       Const initialLore = testEngine.getLoreForPlayer("player_one");
+//
+//       Await testEngine.playCard(honeymarenNorthuldraGuide);
+//       Const finalLore = testEngine.getLoreForPlayer("player_one");
+//
+//       Expect(finalLore).toBe(initialLore);
+//     });
+//
+//     It("does NOT gain 1 lore if player own character is exerted", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: honeymarenNorthuldraGuide.cost,
+//         Hand: [honeymarenNorthuldraGuide],
+//         Play: [boltHeadstrongDog],
 //       });
 //
-//       await testEngine.tapCard(boltHeadstrongDog);
-//       const initialLore = testEngine.getLoreForPlayer("player_one");
+//       Await testEngine.tapCard(boltHeadstrongDog);
+//       Const initialLore = testEngine.getLoreForPlayer("player_one");
 //
-//       await testEngine.playCard(honeymarenNorthuldraGuide);
-//       const finalLore = testEngine.getLoreForPlayer("player_one");
+//       Await testEngine.playCard(honeymarenNorthuldraGuide);
+//       Const finalLore = testEngine.getLoreForPlayer("player_one");
 //
-//       expect(finalLore).toBe(initialLore);
+//       Expect(finalLore).toBe(initialLore);
 //     });
 //   });
 // });
 //
-// describe("Regression tests", () => {
-//   it("does NOT gain 1 lore for location", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Regression tests", () => {
+//   It("does NOT gain 1 lore for location", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: honeymarenNorthuldraGuide.cost,
-//         hand: [honeymarenNorthuldraGuide],
-//         play: [boltHeadstrongDog, neverLandMermaidLagoon],
+//         Inkwell: honeymarenNorthuldraGuide.cost,
+//         Hand: [honeymarenNorthuldraGuide],
+//         Play: [boltHeadstrongDog, neverLandMermaidLagoon],
 //       },
 //       {
-//         play: [belleApprenticeInventor, prideLandsPrideRock],
+//         Play: [belleApprenticeInventor, prideLandsPrideRock],
 //       },
 //     );
 //
-//     const initialLore = testEngine.getLoreForPlayer("player_one");
-//     await testEngine.playCard(honeymarenNorthuldraGuide);
-//     const finalLore = testEngine.getLoreForPlayer("player_one");
+//     Const initialLore = testEngine.getLoreForPlayer("player_one");
+//     Await testEngine.playCard(honeymarenNorthuldraGuide);
+//     Const finalLore = testEngine.getLoreForPlayer("player_one");
 //
-//     expect(finalLore).toBe(initialLore);
+//     Expect(finalLore).toBe(initialLore);
 //   });
 // });
 //

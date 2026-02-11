@@ -1,35 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const merlinCleverClairvoyant: CharacterCard = {
-  id: "1c1",
-  cardType: "character",
-  name: "Merlin",
-  version: "Clever Clairvoyant",
-  fullName: "Merlin - Clever Clairvoyant",
-  inkType: ["amethyst", "sapphire"],
-  franchise: "Sword in the Stone",
-  set: "007",
-  text: "PRESTIDIGITONIUM Whenever this character quests, name a card, then reveal the top card of your deck. If it's the named card, put it into your inkwell facedown and exerted. Otherwise, put it on the top of your deck.",
-  cost: 1,
-  strength: 0,
-  willpower: 1,
-  lore: 1,
-  cardNumber: 67,
-  inkable: true,
-  externalIds: {
-    ravensburger: "ad1a7bee1bba63c46df4b6db68b78cba15608661",
-  },
   abilities: [
     {
-      id: "1c1-1",
-      text: "PRESTIDIGITONIUM Whenever this character quests, name a card, then reveal the top card of your deck. If it's the named card, put it into your inkwell facedown and exerted. Otherwise, put it on the top of your deck.",
-      name: "PRESTIDIGITONIUM",
-      type: "triggered",
-      trigger: {
-        event: "quest",
-        timing: "whenever",
-        on: "SELF",
-      },
       effect: {
         type: "sequence",
         steps: [
@@ -57,7 +30,34 @@ export const merlinCleverClairvoyant: CharacterCard = {
           },
         ],
       },
+      id: "1c1-1",
+      name: "PRESTIDIGITONIUM",
+      text: "PRESTIDIGITONIUM Whenever this character quests, name a card, then reveal the top card of your deck. If it's the named card, put it into your inkwell facedown and exerted. Otherwise, put it on the top of your deck.",
+      trigger: {
+        event: "quest",
+        timing: "whenever",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 67,
+  cardType: "character",
   classifications: ["Storyborn", "Mentor", "Sorcerer"],
+  cost: 1,
+  externalIds: {
+    ravensburger: "ad1a7bee1bba63c46df4b6db68b78cba15608661",
+  },
+  franchise: "Sword in the Stone",
+  fullName: "Merlin - Clever Clairvoyant",
+  id: "1c1",
+  inkType: ["amethyst", "sapphire"],
+  inkable: true,
+  lore: 1,
+  name: "Merlin",
+  set: "007",
+  strength: 0,
+  text: "PRESTIDIGITONIUM Whenever this character quests, name a card, then reveal the top card of your deck. If it's the named card, put it into your inkwell facedown and exerted. Otherwise, put it on the top of your deck.",
+  version: "Clever Clairvoyant",
+  willpower: 1,
 };

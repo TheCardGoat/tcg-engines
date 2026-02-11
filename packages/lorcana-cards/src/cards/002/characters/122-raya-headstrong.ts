@@ -1,43 +1,43 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { wheneverBanishesAnotherCharacterInChallenge } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-// import { readyAndCantQuest } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { wheneverBanishesAnotherCharacterInChallenge } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// Import { readyAndCantQuest } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const rayaHeadstrong: LorcanitoCharacterCard = {
-//   id: "a5t",
-//   reprints: ["g6t"],
-//   name: "Raya",
-//   title: "Headstrong",
-//   characteristics: ["hero", "storyborn", "princess"],
-//   text: "**NOTE TO SELF, DON’T DIE** During your turn, whenever this character banishes another character in a challenge, you may ready this character. She can’t quest for the rest of this turn.",
-//   type: "character",
-//   abilities: [
-//     wheneverBanishesAnotherCharacterInChallenge({
-//       name: "Note to Self, Don't Die",
-//       text: "During your turn, whenever this character banishes another character in a challenge, you may ready this character. She can’t quest for the rest of this turn.",
-//       effects: [
+// Export const rayaHeadstrong: LorcanitoCharacterCard = {
+//   Id: "a5t",
+//   Reprints: ["g6t"],
+//   Name: "Raya",
+//   Title: "Headstrong",
+//   Characteristics: ["hero", "storyborn", "princess"],
+//   Text: "**NOTE TO SELF, DON’T DIE** During your turn, whenever this character banishes another character in a challenge, you may ready this character. She can’t quest for the rest of this turn.",
+//   Type: "character",
+//   Abilities: [
+//     WheneverBanishesAnotherCharacterInChallenge({
+//       Name: "Note to Self, Don't Die",
+//       Text: "During your turn, whenever this character banishes another character in a challenge, you may ready this character. She can’t quest for the rest of this turn.",
+//       Effects: [
 //         ...readyAndCantQuest({
-//           type: "card",
-//           value: "all",
-//           filters: [{ filter: "source", value: "self" }],
+//           Type: "card",
+//           Value: "all",
+//           Filters: [{ filter: "source", value: "self" }],
 //         }),
 //       ],
 //     }),
 //   ],
-//   flavour:
+//   Flavour:
 //     "Two parts bravery, one part cleverness, and a whole lot of determination.",
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 3,
-//   strength: 2,
-//   willpower: 3,
-//   lore: 1,
-//   illustrator: "Amber Kommavongsa",
-//   number: 122,
-//   set: "ROF",
-//   externalIds: {
-//     tcgPlayer: 527183,
+//   Inkwell: true,
+//   Colors: ["ruby"],
+//   Cost: 3,
+//   Strength: 2,
+//   Willpower: 3,
+//   Lore: 1,
+//   Illustrator: "Amber Kommavongsa",
+//   Number: 122,
+//   Set: "ROF",
+//   ExternalIds: {
+//     TcgPlayer: 527183,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

@@ -1,41 +1,14 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const magicaDeSpellShadowForm: CharacterCard = {
-  id: "sma",
-  cardType: "character",
-  name: "Magica De Spell",
-  version: "Shadow Form",
-  fullName: "Magica De Spell - Shadow Form",
-  inkType: ["amethyst", "emerald"],
-  franchise: "Ducktales",
-  set: "008",
-  text: "Evasive (Only characters with Evasive can challenge this character.)\nDANCE OF DARKNESS When you play this character, you may return one of your other characters to your hand to draw a card.",
-  cost: 5,
-  strength: 3,
-  willpower: 3,
-  lore: 2,
-  cardNumber: 66,
-  inkable: false,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "67257d2a601938a9c43bb080208e5a3081a49939",
-  },
   abilities: [
     {
       id: "sma-1",
-      type: "keyword",
       keyword: "Evasive",
       text: "Evasive",
+      type: "keyword",
     },
     {
-      id: "sma-2",
-      type: "triggered",
-      name: "DANCE OF DARKNESS",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -50,8 +23,35 @@ export const magicaDeSpellShadowForm: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "sma-2",
+      name: "DANCE OF DARKNESS",
       text: "DANCE OF DARKNESS When you play this character, you may return one of your other characters to your hand to draw a card.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 66,
+  cardType: "character",
   classifications: ["Storyborn", "Villain", "Sorcerer"],
+  cost: 5,
+  externalIds: {
+    ravensburger: "67257d2a601938a9c43bb080208e5a3081a49939",
+  },
+  franchise: "Ducktales",
+  fullName: "Magica De Spell - Shadow Form",
+  id: "sma",
+  inkType: ["amethyst", "emerald"],
+  inkable: false,
+  lore: 2,
+  missingTests: true,
+  name: "Magica De Spell",
+  set: "008",
+  strength: 3,
+  text: "Evasive (Only characters with Evasive can challenge this character.)\nDANCE OF DARKNESS When you play this character, you may return one of your other characters to your hand to draw a card.",
+  version: "Shadow Form",
+  willpower: 3,
 };

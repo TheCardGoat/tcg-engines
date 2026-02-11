@@ -1,41 +1,14 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const aladdinVigilantGuard: CharacterCard = {
-  id: "fh8",
-  cardType: "character",
-  name: "Aladdin",
-  version: "Vigilant Guard",
-  fullName: "Aladdin - Vigilant Guard",
-  inkType: ["sapphire", "steel"],
-  franchise: "Aladdin",
-  set: "008",
-  text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)\nSAFE PASSAGE Whenever one of your Ally characters quests, you may remove up to 2 damage from this character.",
-  cost: 6,
-  strength: 1,
-  willpower: 9,
-  lore: 1,
-  cardNumber: 170,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "37c91d4c1e7468929e01ddc735e84693e87bfe36",
-  },
   abilities: [
     {
       id: "fh8-1",
-      type: "keyword",
       keyword: "Bodyguard",
       text: "Bodyguard",
+      type: "keyword",
     },
     {
-      id: "fh8-2",
-      type: "triggered",
-      name: "SAFE PASSAGE",
-      trigger: {
-        event: "banish",
-        timing: "whenever",
-        on: "YOUR_OTHER_CHARACTERS",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -52,8 +25,35 @@ export const aladdinVigilantGuard: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "fh8-2",
+      name: "SAFE PASSAGE",
       text: "SAFE PASSAGE Whenever one of your Ally characters quests, you may remove up to 2 damage from this character.",
+      trigger: {
+        event: "banish",
+        timing: "whenever",
+        on: "YOUR_OTHER_CHARACTERS",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 170,
+  cardType: "character",
   classifications: ["Dreamborn", "Hero", "Prince"],
+  cost: 6,
+  externalIds: {
+    ravensburger: "37c91d4c1e7468929e01ddc735e84693e87bfe36",
+  },
+  franchise: "Aladdin",
+  fullName: "Aladdin - Vigilant Guard",
+  id: "fh8",
+  inkType: ["sapphire", "steel"],
+  inkable: true,
+  lore: 1,
+  missingTests: true,
+  name: "Aladdin",
+  set: "008",
+  strength: 1,
+  text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)\nSAFE PASSAGE Whenever one of your Ally characters quests, you may remove up to 2 damage from this character.",
+  version: "Vigilant Guard",
+  willpower: 9,
 };

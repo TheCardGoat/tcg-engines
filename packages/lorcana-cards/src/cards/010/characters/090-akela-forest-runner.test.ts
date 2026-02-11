@@ -3,226 +3,226 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { akelaForestRunner } from "@lorcanito/lorcana-engine/cards/010/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { akelaForestRunner } from "@lorcanito/lorcana-engine/cards/010/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Akela - Forest Runner", () => {
-//   describe("AHEAD OF THE PACK - 1 {I} — This character gets +1 {S} this turn", () => {
-//     it("should have an activated ability that costs 1 ink", () => {
-//       const activatedAbility = akelaForestRunner.abilities?.find(
+// Describe("Akela - Forest Runner", () => {
+//   Describe("AHEAD OF THE PACK - 1 {I} — This character gets +1 {S} this turn", () => {
+//     It("should have an activated ability that costs 1 ink", () => {
+//       Const activatedAbility = akelaForestRunner.abilities?.find(
 //         (a) => "type" in a && a.type === "activated",
 //       );
 //
-//       expect(activatedAbility).toBeDefined();
+//       Expect(activatedAbility).toBeDefined();
 //
-//       if (activatedAbility && "costs" in activatedAbility) {
-//         expect(activatedAbility.costs).toEqual([{ type: "ink", amount: 1 }]);
+//       If (activatedAbility && "costs" in activatedAbility) {
+//         Expect(activatedAbility.costs).toEqual([{ type: "ink", amount: 1 }]);
 //       }
 //     });
 //
-//     it("should have base strength of 2", () => {
-//       const testEngine = new TestEngine({
-//         play: [akelaForestRunner],
+//     It("should have base strength of 2", () => {
+//       Const testEngine = new TestEngine({
+//         Play: [akelaForestRunner],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(akelaForestRunner);
+//       Const cardUnderTest = testEngine.getCardModel(akelaForestRunner);
 //
-//       expect(cardUnderTest.strength).toBe(2);
-//       expect(cardUnderTest.strength).toBe(akelaForestRunner.strength);
+//       Expect(cardUnderTest.strength).toBe(2);
+//       Expect(cardUnderTest.strength).toBe(akelaForestRunner.strength);
 //     });
 //
-//     it("should gain +1 strength this turn when activated", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: 1,
-//         play: [akelaForestRunner],
+//     It("should gain +1 strength this turn when activated", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: 1,
+//         Play: [akelaForestRunner],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(akelaForestRunner);
+//       Const cardUnderTest = testEngine.getCardModel(akelaForestRunner);
 //
 //       // Before activation
-//       expect(cardUnderTest.strength).toBe(2);
+//       Expect(cardUnderTest.strength).toBe(2);
 //
 //       // Activate the ability
-//       await testEngine.activateCard(akelaForestRunner);
+//       Await testEngine.activateCard(akelaForestRunner);
 //
 //       // After activation - should have +1 strength
-//       expect(cardUnderTest.strength).toBe(3); // 2 + 1
+//       Expect(cardUnderTest.strength).toBe(3); // 2 + 1
 //     });
 //
-//     it("should not be able to activate without enough ink", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: 0,
-//         play: [akelaForestRunner],
+//     It("should not be able to activate without enough ink", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: 0,
+//         Play: [akelaForestRunner],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(akelaForestRunner);
+//       Const cardUnderTest = testEngine.getCardModel(akelaForestRunner);
 //
 //       // With no ink, strength should remain at base
-//       expect(cardUnderTest.strength).toBe(2);
+//       Expect(cardUnderTest.strength).toBe(2);
 //
 //       // The ability exists but cannot be activated without ink
-//       const hasActivatedAbility = akelaForestRunner.abilities?.some(
+//       Const hasActivatedAbility = akelaForestRunner.abilities?.some(
 //         (a) => "type" in a && a.type === "activated",
 //       );
-//       expect(hasActivatedAbility).toBe(true);
+//       Expect(hasActivatedAbility).toBe(true);
 //     });
 //
-//     it("should be able to activate multiple times with enough ink", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: 3,
-//         play: [akelaForestRunner],
+//     It("should be able to activate multiple times with enough ink", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: 3,
+//         Play: [akelaForestRunner],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(akelaForestRunner);
+//       Const cardUnderTest = testEngine.getCardModel(akelaForestRunner);
 //
 //       // Before activation
-//       expect(cardUnderTest.strength).toBe(2);
+//       Expect(cardUnderTest.strength).toBe(2);
 //
 //       // First activation
-//       await testEngine.activateCard(akelaForestRunner);
-//       expect(cardUnderTest.strength).toBe(3); // 2 + 1
+//       Await testEngine.activateCard(akelaForestRunner);
+//       Expect(cardUnderTest.strength).toBe(3); // 2 + 1
 //
 //       // Second activation
-//       await testEngine.activateCard(akelaForestRunner);
-//       expect(cardUnderTest.strength).toBe(4); // 2 + 1 + 1
+//       Await testEngine.activateCard(akelaForestRunner);
+//       Expect(cardUnderTest.strength).toBe(4); // 2 + 1 + 1
 //
 //       // Third activation
-//       await testEngine.activateCard(akelaForestRunner);
-//       expect(cardUnderTest.strength).toBe(5); // 2 + 1 + 1 + 1
+//       Await testEngine.activateCard(akelaForestRunner);
+//       Expect(cardUnderTest.strength).toBe(5); // 2 + 1 + 1 + 1
 //     });
 //
-//     it("should lose the strength bonus at the end of the turn", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: 1,
-//         play: [akelaForestRunner],
+//     It("should lose the strength bonus at the end of the turn", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: 1,
+//         Play: [akelaForestRunner],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(akelaForestRunner);
+//       Const cardUnderTest = testEngine.getCardModel(akelaForestRunner);
 //
 //       // Activate the ability
-//       await testEngine.activateCard(akelaForestRunner);
-//       expect(cardUnderTest.strength).toBe(3); // 2 + 1
+//       Await testEngine.activateCard(akelaForestRunner);
+//       Expect(cardUnderTest.strength).toBe(3); // 2 + 1
 //
 //       // Pass turn to trigger end of turn cleanup
-//       await testEngine.passTurn();
+//       Await testEngine.passTurn();
 //
 //       // After turn ends, strength should be back to base
-//       expect(cardUnderTest.strength).toBe(2);
+//       Expect(cardUnderTest.strength).toBe(2);
 //     });
 //
-//     it("should maintain the strength bonus during the turn", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: 1,
-//         play: [akelaForestRunner],
+//     It("should maintain the strength bonus during the turn", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: 1,
+//         Play: [akelaForestRunner],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(akelaForestRunner);
+//       Const cardUnderTest = testEngine.getCardModel(akelaForestRunner);
 //
 //       // Activate the ability
-//       await testEngine.activateCard(akelaForestRunner);
-//       expect(cardUnderTest.strength).toBe(3);
+//       Await testEngine.activateCard(akelaForestRunner);
+//       Expect(cardUnderTest.strength).toBe(3);
 //
 //       // Check multiple times during the same turn
-//       expect(cardUnderTest.strength).toBe(3);
-//       expect(cardUnderTest.strength).toBe(3);
+//       Expect(cardUnderTest.strength).toBe(3);
+//       Expect(cardUnderTest.strength).toBe(3);
 //     });
 //
-//     it("should stack with other strength modifiers", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: 2,
-//         play: [akelaForestRunner],
+//     It("should stack with other strength modifiers", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: 2,
+//         Play: [akelaForestRunner],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(akelaForestRunner);
+//       Const cardUnderTest = testEngine.getCardModel(akelaForestRunner);
 //
 //       // Activate twice
-//       await testEngine.activateCard(akelaForestRunner);
-//       await testEngine.activateCard(akelaForestRunner);
+//       Await testEngine.activateCard(akelaForestRunner);
+//       Await testEngine.activateCard(akelaForestRunner);
 //
 //       // Should have +2 strength from two activations
-//       expect(cardUnderTest.strength).toBe(4); // 2 + 1 + 1
+//       Expect(cardUnderTest.strength).toBe(4); // 2 + 1 + 1
 //     });
 //   });
 //
-//   describe("Stats and basic properties", () => {
-//     it("should have correct stats", () => {
-//       const testEngine = new TestEngine({
-//         play: [akelaForestRunner],
+//   Describe("Stats and basic properties", () => {
+//     It("should have correct stats", () => {
+//       Const testEngine = new TestEngine({
+//         Play: [akelaForestRunner],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(akelaForestRunner);
+//       Const cardUnderTest = testEngine.getCardModel(akelaForestRunner);
 //
-//       expect(cardUnderTest.strength).toBe(2);
-//       expect(cardUnderTest.willpower).toBe(5);
-//       expect(cardUnderTest.lore).toBe(1);
-//       expect(cardUnderTest.cost).toBe(3);
+//       Expect(cardUnderTest.strength).toBe(2);
+//       Expect(cardUnderTest.willpower).toBe(5);
+//       Expect(cardUnderTest.lore).toBe(1);
+//       Expect(cardUnderTest.cost).toBe(3);
 //     });
 //
-//     it("should be inkwell card", () => {
-//       expect(akelaForestRunner.inkwell).toBe(true);
+//     It("should be inkwell card", () => {
+//       Expect(akelaForestRunner.inkwell).toBe(true);
 //     });
 //
-//     it("should have correct characteristics", () => {
-//       expect(akelaForestRunner.characteristics).toEqual(["storyborn", "ally"]);
+//     It("should have correct characteristics", () => {
+//       Expect(akelaForestRunner.characteristics).toEqual(["storyborn", "ally"]);
 //     });
 //
-//     it("should be emerald color", () => {
-//       expect(akelaForestRunner.colors).toEqual(["emerald"]);
+//     It("should be emerald color", () => {
+//       Expect(akelaForestRunner.colors).toEqual(["emerald"]);
 //     });
 //
-//     it("should be common rarity", () => {
-//       expect(akelaForestRunner.rarity).toBe("common");
+//     It("should be common rarity", () => {
+//       Expect(akelaForestRunner.rarity).toBe("common");
 //     });
 //   });
 //
-//   describe("Gameplay", () => {
-//     it("should be playable from hand", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: akelaForestRunner.cost,
-//         hand: [akelaForestRunner],
+//   Describe("Gameplay", () => {
+//     It("should be playable from hand", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: akelaForestRunner.cost,
+//         Hand: [akelaForestRunner],
 //       });
 //
-//       await testEngine.playCard(akelaForestRunner);
+//       Await testEngine.playCard(akelaForestRunner);
 //
-//       const cardUnderTest = testEngine.getCardModel(akelaForestRunner);
-//       expect(cardUnderTest.zone).toBe("play");
+//       Const cardUnderTest = testEngine.getCardModel(akelaForestRunner);
+//       Expect(cardUnderTest.zone).toBe("play");
 //     });
 //
-//     it("should be able to activate ability on the same turn it's played", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: akelaForestRunner.cost + 1,
-//         hand: [akelaForestRunner],
+//     It("should be able to activate ability on the same turn it's played", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: akelaForestRunner.cost + 1,
+//         Hand: [akelaForestRunner],
 //       });
 //
 //       // Play the card
-//       await testEngine.playCard(akelaForestRunner);
-//       const cardUnderTest = testEngine.getCardModel(akelaForestRunner);
-//       expect(cardUnderTest.zone).toBe("play");
+//       Await testEngine.playCard(akelaForestRunner);
+//       Const cardUnderTest = testEngine.getCardModel(akelaForestRunner);
+//       Expect(cardUnderTest.zone).toBe("play");
 //
 //       // Activate the ability on the same turn
-//       await testEngine.activateCard(akelaForestRunner);
+//       Await testEngine.activateCard(akelaForestRunner);
 //
 //       // Should have +1 strength
-//       expect(cardUnderTest.strength).toBe(3); // 2 + 1
+//       Expect(cardUnderTest.strength).toBe(3); // 2 + 1
 //     });
 //
-//     it("should be able to activate ability even when exerted", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: 1,
-//         play: [akelaForestRunner],
+//     It("should be able to activate ability even when exerted", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: 1,
+//         Play: [akelaForestRunner],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(akelaForestRunner);
+//       Const cardUnderTest = testEngine.getCardModel(akelaForestRunner);
 //
 //       // Exert the card (simulating it quested)
-//       cardUnderTest.updateCardMeta({ exerted: true });
-//       expect(cardUnderTest.ready).toBe(false);
-//       expect(cardUnderTest.strength).toBe(2);
+//       CardUnderTest.updateCardMeta({ exerted: true });
+//       Expect(cardUnderTest.ready).toBe(false);
+//       Expect(cardUnderTest.strength).toBe(2);
 //
 //       // Can still activate the ability after being exerted (doesn't require exerting)
-//       await testEngine.activateCard(akelaForestRunner);
-//       expect(cardUnderTest.strength).toBe(3); // 2 + 1
+//       Await testEngine.activateCard(akelaForestRunner);
+//       Expect(cardUnderTest.strength).toBe(3); // 2 + 1
 //     });
 //   });
 // });

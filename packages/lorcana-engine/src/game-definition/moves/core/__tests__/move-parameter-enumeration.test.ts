@@ -1,10 +1,6 @@
 import { beforeEach, describe, expect, it } from "bun:test";
 import { createPlayerId } from "@tcg/core";
-import {
-  LorcanaTestEngine,
-  PLAYER_ONE,
-  PLAYER_TWO,
-} from "../../../../testing/lorcana-test-engine";
+import { LorcanaTestEngine, PLAYER_ONE, PLAYER_TWO } from "../../../../testing/lorcana-test-engine";
 
 describe("Core Move Parameter Enumeration", () => {
   describe("playCard Parameter Enumeration", () => {
@@ -13,8 +9,8 @@ describe("Core Move Parameter Enumeration", () => {
     beforeEach(() => {
       // Start in main phase with cards in hand
       testEngine = new LorcanaTestEngine(
-        { hand: 3, deck: 10 },
-        { hand: 3, deck: 10 },
+        { deck: 10, hand: 3 },
+        { deck: 10, hand: 3 },
         { skipPreGame: true },
       );
     });
@@ -70,8 +66,8 @@ describe("Core Move Parameter Enumeration", () => {
 
     beforeEach(() => {
       testEngine = new LorcanaTestEngine(
-        { hand: 0, deck: 10 },
-        { hand: 0, deck: 10 },
+        { deck: 10, hand: 0 },
+        { deck: 10, hand: 0 },
         { skipPreGame: true },
       );
     });
@@ -110,17 +106,14 @@ describe("Core Move Parameter Enumeration", () => {
 
     beforeEach(() => {
       testEngine = new LorcanaTestEngine(
-        { hand: 0, deck: 10 },
-        { hand: 0, deck: 10 },
+        { deck: 10, hand: 0 },
+        { deck: 10, hand: 0 },
         { skipPreGame: true },
       );
     });
 
     it("should enumerate attacker-defender pairs", () => {
-      const params = testEngine.enumerateMoveParameters(
-        "challenge",
-        PLAYER_ONE,
-      );
+      const params = testEngine.enumerateMoveParameters("challenge", PLAYER_ONE);
 
       expect(params).toBeDefined();
       if (params) {
@@ -130,10 +123,7 @@ describe("Core Move Parameter Enumeration", () => {
     });
 
     it("should have attackerId and defenderId in parameter info", () => {
-      const params = testEngine.enumerateMoveParameters(
-        "challenge",
-        PLAYER_ONE,
-      );
+      const params = testEngine.enumerateMoveParameters("challenge", PLAYER_ONE);
 
       if (params) {
         expect(params.parameterInfo.attackerId.type).toBe("cardId");
@@ -142,10 +132,7 @@ describe("Core Move Parameter Enumeration", () => {
     });
 
     it("should return empty when no valid attackers or defenders", () => {
-      const params = testEngine.enumerateMoveParameters(
-        "challenge",
-        PLAYER_ONE,
-      );
+      const params = testEngine.enumerateMoveParameters("challenge", PLAYER_ONE);
 
       // With no characters in play, should have no valid combinations
       if (params) {
@@ -159,8 +146,8 @@ describe("Core Move Parameter Enumeration", () => {
 
     beforeEach(() => {
       testEngine = new LorcanaTestEngine(
-        { hand: 7, deck: 10 },
-        { hand: 7, deck: 10 },
+        { deck: 10, hand: 7 },
+        { deck: 10, hand: 7 },
         { skipPreGame: false },
       );
 
@@ -171,10 +158,7 @@ describe("Core Move Parameter Enumeration", () => {
     });
 
     it.todo("should enumerate cards in hand as mulligan options", () => {
-      const params = testEngine.enumerateMoveParameters(
-        "alterHand",
-        PLAYER_ONE,
-      );
+      const params = testEngine.enumerateMoveParameters("alterHand", PLAYER_ONE);
 
       expect(params).not.toBeNull();
       if (params) {
@@ -183,26 +167,19 @@ describe("Core Move Parameter Enumeration", () => {
     });
 
     it("should allow mulliganing 0 cards (keep all)", () => {
-      const params = testEngine.enumerateMoveParameters(
-        "alterHand",
-        PLAYER_ONE,
-      );
+      const params = testEngine.enumerateMoveParameters("alterHand", PLAYER_ONE);
 
       if (params) {
         // Should include option to mulligan no cards
         const keepAllOption = params.validCombinations.find(
-          (c: any) =>
-            Array.isArray(c.cardsToMulligan) && c.cardsToMulligan.length === 0,
+          (c: any) => Array.isArray(c.cardsToMulligan) && c.cardsToMulligan.length === 0,
         );
         expect(keepAllOption).toBeDefined();
       }
     });
 
     it("should allow mulliganing all cards", () => {
-      const params = testEngine.enumerateMoveParameters(
-        "alterHand",
-        PLAYER_ONE,
-      );
+      const params = testEngine.enumerateMoveParameters("alterHand", PLAYER_ONE);
 
       if (params) {
         const hand = testEngine.getZone("hand", PLAYER_ONE);
@@ -210,9 +187,7 @@ describe("Core Move Parameter Enumeration", () => {
 
         // Should include option to mulligan all cards
         const mulliganAllOption = params.validCombinations.find(
-          (c: any) =>
-            Array.isArray(c.cardsToMulligan) &&
-            c.cardsToMulligan.length === handSize,
+          (c: any) => Array.isArray(c.cardsToMulligan) && c.cardsToMulligan.length === handSize,
         );
         expect(mulliganAllOption).toBeDefined();
       }
@@ -224,17 +199,14 @@ describe("Core Move Parameter Enumeration", () => {
 
     beforeEach(() => {
       testEngine = new LorcanaTestEngine(
-        { hand: 5, deck: 10 },
-        { hand: 5, deck: 10 },
+        { deck: 10, hand: 5 },
+        { deck: 10, hand: 5 },
         { skipPreGame: true },
       );
     });
 
     it("should enumerate inkable cards in hand", () => {
-      const params = testEngine.enumerateMoveParameters(
-        "putACardIntoTheInkwell",
-        PLAYER_ONE,
-      );
+      const params = testEngine.enumerateMoveParameters("putACardIntoTheInkwell", PLAYER_ONE);
 
       expect(params).toBeDefined();
       if (params) {
@@ -244,10 +216,7 @@ describe("Core Move Parameter Enumeration", () => {
     });
 
     it("should only include cards with inkable property", () => {
-      const params = testEngine.enumerateMoveParameters(
-        "putACardIntoTheInkwell",
-        PLAYER_ONE,
-      );
+      const params = testEngine.enumerateMoveParameters("putACardIntoTheInkwell", PLAYER_ONE);
 
       // All returned cards should be inkable (this would be validated by move condition)
       if (params) {
@@ -263,10 +232,7 @@ describe("Core Move Parameter Enumeration", () => {
       }
 
       // Try to enumerate again - should return null (move not available)
-      const params = testEngine.enumerateMoveParameters(
-        "putACardIntoTheInkwell",
-        PLAYER_ONE,
-      );
+      const params = testEngine.enumerateMoveParameters("putACardIntoTheInkwell", PLAYER_ONE);
 
       // Move should no longer be available after using once per turn
       expect(params).toBeNull();
@@ -278,17 +244,14 @@ describe("Core Move Parameter Enumeration", () => {
 
     beforeEach(() => {
       testEngine = new LorcanaTestEngine(
-        { hand: 5, deck: 10 },
-        { hand: 5, deck: 10 },
+        { deck: 10, hand: 5 },
+        { deck: 10, hand: 5 },
         { skipPreGame: true },
       );
     });
 
     it("should enumerate parameters for multiple moves simultaneously", () => {
-      const playCardParams = testEngine.enumerateMoveParameters(
-        "playCard",
-        PLAYER_ONE,
-      );
+      const playCardParams = testEngine.enumerateMoveParameters("playCard", PLAYER_ONE);
       const inkwellParams = testEngine.enumerateMoveParameters(
         "putACardIntoTheInkwell",
         PLAYER_ONE,
@@ -300,14 +263,8 @@ describe("Core Move Parameter Enumeration", () => {
     });
 
     it("should return consistent results across multiple calls", () => {
-      const params1 = testEngine.enumerateMoveParameters(
-        "playCard",
-        PLAYER_ONE,
-      );
-      const params2 = testEngine.enumerateMoveParameters(
-        "playCard",
-        PLAYER_ONE,
-      );
+      const params1 = testEngine.enumerateMoveParameters("playCard", PLAYER_ONE);
+      const params2 = testEngine.enumerateMoveParameters("playCard", PLAYER_ONE);
 
       // Should be identical
       expect(params1).toEqual(params2);

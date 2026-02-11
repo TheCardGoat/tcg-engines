@@ -1,57 +1,57 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
-// import { allOpposingCharacters } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { whileYouHaveCharactersHere } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
+// Import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
+// Import { allOpposingCharacters } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import { whileYouHaveCharactersHere } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
 //
-// export const galacticCouncilChamber: LorcanitoLocationCard = {
-//   id: "yrd",
-//   name: "Galactic Council Chamber",
-//   title: "Courtroom",
-//   characteristics: ["location"],
-//   text: "**FEDERATION DECREE** While you have an Alien or Robot character here, this location can’t be challenged.",
-//   type: "location",
-//   abilities: [
-//     whileYouHaveCharactersHere({
-//       name: "Federation Decree",
-//       text: "While you have an Alien or Robot character here, this location can’t be challenged.",
-//       conditions: [
+// Export const galacticCouncilChamber: LorcanitoLocationCard = {
+//   Id: "yrd",
+//   Name: "Galactic Council Chamber",
+//   Title: "Courtroom",
+//   Characteristics: ["location"],
+//   Text: "**FEDERATION DECREE** While you have an Alien or Robot character here, this location can’t be challenged.",
+//   Type: "location",
+//   Abilities: [
+//     WhileYouHaveCharactersHere({
+//       Name: "Federation Decree",
+//       Text: "While you have an Alien or Robot character here, this location can’t be challenged.",
+//       Conditions: [
 //         {
-//           type: "chars-at-location",
-//           comparison: { operator: "gte", value: 1 },
-//           filters: [
+//           Type: "chars-at-location",
+//           Comparison: { operator: "gte", value: 1 },
+//           Filters: [
 //             {
-//               filter: "characteristics",
-//               value: ["alien", "robot"],
-//               conjunction: "or",
+//               Filter: "characteristics",
+//               Value: ["alien", "robot"],
+//               Conjunction: "or",
 //             },
 //           ],
 //         },
 //       ],
-//       ability: {
-//         type: "static",
-//         ability: "effects",
-//         effects: [
+//       Ability: {
+//         Type: "static",
+//         Ability: "effects",
+//         Effects: [
 //           {
-//             type: "protection",
-//             from: "challenge",
-//             target: allOpposingCharacters,
+//             Type: "protection",
+//             From: "challenge",
+//             Target: allOpposingCharacters,
 //           },
 //         ],
 //       },
 //     }),
 //   ],
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 3,
-//   willpower: 7,
-//   lore: 1,
-//   illustrator: "Kaitlin Cuthbertson",
-//   number: 204,
-//   set: "006",
-//   externalIds: {
-//     tcgPlayer: 578235,
+//   Inkwell: true,
+//   Colors: ["steel"],
+//   Cost: 3,
+//   Willpower: 7,
+//   Lore: 1,
+//   Illustrator: "Kaitlin Cuthbertson",
+//   Number: 204,
+//   Set: "006",
+//   ExternalIds: {
+//     TcgPlayer: 578235,
 //   },
-//   rarity: "common",
-//   moveCost: 1,
+//   Rarity: "common",
+//   MoveCost: 1,
 // };
 //

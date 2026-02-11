@@ -14,9 +14,9 @@ import { describe, expect, it } from "bun:test";
 import { LorcanaAbilityParser } from "../../grammar";
 import { LorcanaLexer } from "../../lexer";
 import {
+  type VisitorCondition,
   parseConditionFromCst,
   parseConditionFromText,
-  type VisitorCondition,
 } from "../condition-visitor";
 
 describe("VisitorCondition Visitor", () => {
@@ -28,7 +28,7 @@ describe("VisitorCondition Visitor", () => {
   function parseVisitorConditionClause(text: string) {
     const lexResult = LorcanaLexer.tokenize(text);
     parser.input = lexResult.tokens;
-    // biome-ignore lint/suspicious/noExplicitAny: Dynamic rule access for testing
+    // Biome-ignore lint/suspicious/noExplicitAny: Dynamic rule access for testing
     const cst = (parser as any).conditionClause();
 
     if (parser.errors.length > 0) {
@@ -226,11 +226,11 @@ describe("VisitorCondition Visitor", () => {
 
     it("handles all condition types", () => {
       const conditionTexts = [
-        { text: "if you have character", expectedType: "if" },
-        { text: "during your turn", expectedType: "during" },
-        { text: "at the start", expectedType: "at" },
-        { text: "with 5 lore", expectedType: "with" },
-        { text: "without abilities", expectedType: "without" },
+        { expectedType: "if", text: "if you have character" },
+        { expectedType: "during", text: "during your turn" },
+        { expectedType: "at", text: "at the start" },
+        { expectedType: "with", text: "with 5 lore" },
+        { expectedType: "without", text: "without abilities" },
       ];
 
       for (const { text, expectedType } of conditionTexts) {
@@ -400,7 +400,7 @@ describe("VisitorCondition Visitor", () => {
 
     it("returns null for non-matching text", () => {
       // Note: Text must not contain "if", "during", "at", "with", "without"
-      // as these are condition keywords that trigger pattern matching
+      // As these are condition keywords that trigger pattern matching
       const condition = parseConditionFromText(
         "invalid text for testing purposes",
       );
@@ -453,11 +453,11 @@ describe("VisitorCondition Visitor", () => {
   describe("condition variations", () => {
     it("handles all condition types", () => {
       const conditionTexts = [
-        { text: "if you have character", expectedType: "if" },
-        { text: "during your turn", expectedType: "during" },
-        { text: "at the start", expectedType: "at" },
-        { text: "with 5 lore", expectedType: "with" },
-        { text: "without abilities", expectedType: "without" },
+        { expectedType: "if", text: "if you have character" },
+        { expectedType: "during", text: "during your turn" },
+        { expectedType: "at", text: "at the start" },
+        { expectedType: "with", text: "with 5 lore" },
+        { expectedType: "without", text: "without abilities" },
       ];
 
       for (const { text, expectedType } of conditionTexts) {
@@ -537,21 +537,26 @@ describe("VisitorCondition Visitor", () => {
       for (const type of validTypes) {
         let testText = "";
         switch (type) {
-          case "if":
+          case "if": {
             testText = "if you have character";
             break;
-          case "during":
+          }
+          case "during": {
             testText = "during your turn";
             break;
-          case "at":
+          }
+          case "at": {
             testText = "at the start";
             break;
-          case "with":
+          }
+          case "with": {
             testText = "with 5 lore";
             break;
-          case "without":
+          }
+          case "without": {
             testText = "without abilities";
             break;
+          }
         }
 
         const condition = parseConditionFromText(testText);

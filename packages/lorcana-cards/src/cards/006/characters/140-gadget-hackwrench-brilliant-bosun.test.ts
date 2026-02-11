@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { donaldDuckStruttingHisStuff } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { pawpsicle } from "@lorcanito/lorcana-engine/cards/002/items/items";
-// import { gadgetHackwrenchBrilliantBosun } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { donaldDuckStruttingHisStuff } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { pawpsicle } from "@lorcanito/lorcana-engine/cards/002/items/items";
+// Import { gadgetHackwrenchBrilliantBosun } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Gadget Hackwrench - Brilliant Bosun", () => {
-//   it("**MECHANICALLY SAVVY** While you have 3 or more items in play, you pay 1 {I} less to play Inventor characters.", () => {
-//     const testStore = new TestEngine({
-//       play: [gadgetHackwrenchBrilliantBosun, pawpsicle, pawpsicle, pawpsicle],
-//       hand: [donaldDuckStruttingHisStuff],
+// Describe("Gadget Hackwrench - Brilliant Bosun", () => {
+//   It("**MECHANICALLY SAVVY** While you have 3 or more items in play, you pay 1 {I} less to play Inventor characters.", () => {
+//     Const testStore = new TestEngine({
+//       Play: [gadgetHackwrenchBrilliantBosun, pawpsicle, pawpsicle, pawpsicle],
+//       Hand: [donaldDuckStruttingHisStuff],
 //     });
 //
-//     const cardUnderTest = testStore.getCardModel(donaldDuckStruttingHisStuff);
+//     Const cardUnderTest = testStore.getCardModel(donaldDuckStruttingHisStuff);
 //
-//     expect(cardUnderTest.cost).toBe(donaldDuckStruttingHisStuff.cost - 1);
+//     Expect(cardUnderTest.cost).toBe(donaldDuckStruttingHisStuff.cost - 1);
 //   });
 // });
 //

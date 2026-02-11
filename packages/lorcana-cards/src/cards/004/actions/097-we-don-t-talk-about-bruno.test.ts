@@ -3,131 +3,131 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   brawl,
-//   weDontTalkAboutBruno,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   Brawl,
+//   WeDontTalkAboutBruno,
 // } from "@lorcanito/lorcana-engine/cards/004/actions/actions";
-// import {
-//   aladdinBraveRescuer,
-//   aladdinResoluteSwordsman,
-//   argesTheCyclops,
-//   herculesBelovedHero,
-//   sisuEmboldenedWarrior,
+// Import {
+//   AladdinBraveRescuer,
+//   AladdinResoluteSwordsman,
+//   ArgesTheCyclops,
+//   HerculesBelovedHero,
+//   SisuEmboldenedWarrior,
 // } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
 // // Flaky test
-// describe.skip("We Don't Talk About Bruno", () => {
-//   it("should return  opponent chosen character to their player's hand and discard opponent card", () => {
-//     const testStore = new TestStore(
+// Describe.skip("We Don't Talk About Bruno", () => {
+//   It("should return  opponent chosen character to their player's hand and discard opponent card", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: weDontTalkAboutBruno.cost,
-//         hand: [weDontTalkAboutBruno],
+//         Inkwell: weDontTalkAboutBruno.cost,
+//         Hand: [weDontTalkAboutBruno],
 //       },
 //       {
-//         hand: [
-//           herculesBelovedHero,
-//           brawl,
-//           aladdinResoluteSwordsman,
-//           argesTheCyclops,
+//         Hand: [
+//           HerculesBelovedHero,
+//           Brawl,
+//           AladdinResoluteSwordsman,
+//           ArgesTheCyclops,
 //         ],
-//         play: [aladdinBraveRescuer],
+//         Play: [aladdinBraveRescuer],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getCard(weDontTalkAboutBruno);
-//     const target = testStore.getCard(aladdinBraveRescuer);
+//     Const cardUnderTest = testStore.getCard(weDontTalkAboutBruno);
+//     Const target = testStore.getCard(aladdinBraveRescuer);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveTopOfStack({ targets: [target] }, true);
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveTopOfStack({ targets: [target] }, true);
 //
-//     expect(target.zone).toBe("hand");
+//     Expect(target.zone).toBe("hand");
 //
-//     expect(testStore.getZonesCardCount("player_two").hand).toBe(4);
-//     expect(testStore.getZonesCardCount("player_two").discard).toBe(1);
+//     Expect(testStore.getZonesCardCount("player_two").hand).toBe(4);
+//     Expect(testStore.getZonesCardCount("player_two").discard).toBe(1);
 //   });
 //
-//   it("should return  opponent chosen character to their player's hand and discard opponent card", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: weDontTalkAboutBruno.cost,
-//       play: [aladdinBraveRescuer],
-//       hand: [
-//         weDontTalkAboutBruno,
-//         herculesBelovedHero,
-//         brawl,
-//         aladdinResoluteSwordsman,
-//         argesTheCyclops,
+//   It("should return  opponent chosen character to their player's hand and discard opponent card", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: weDontTalkAboutBruno.cost,
+//       Play: [aladdinBraveRescuer],
+//       Hand: [
+//         WeDontTalkAboutBruno,
+//         HerculesBelovedHero,
+//         Brawl,
+//         AladdinResoluteSwordsman,
+//         ArgesTheCyclops,
 //       ],
 //     });
 //
-//     await testEngine.playCard(weDontTalkAboutBruno, {
-//       targets: [aladdinBraveRescuer],
+//     Await testEngine.playCard(weDontTalkAboutBruno, {
+//       Targets: [aladdinBraveRescuer],
 //     });
 //
-//     expect(testEngine.getCardModel(aladdinBraveRescuer).zone).not.toBe("play");
-//     expect(testEngine.getZonesCardCount().hand).toBe(4);
-//     expect(testEngine.getZonesCardCount().discard).toBe(2);
+//     Expect(testEngine.getCardModel(aladdinBraveRescuer).zone).not.toBe("play");
+//     Expect(testEngine.getZonesCardCount().hand).toBe(4);
+//     Expect(testEngine.getZonesCardCount().discard).toBe(2);
 //   });
 //
-//   it("Return chosen character to their player's hand, then that player discards a card at random.", () => {
-//     const testStore = new TestStore(
+//   It("Return chosen character to their player's hand, then that player discards a card at random.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: weDontTalkAboutBruno.cost,
-//         hand: [weDontTalkAboutBruno],
+//         Inkwell: weDontTalkAboutBruno.cost,
+//         Hand: [weDontTalkAboutBruno],
 //       },
 //       {
-//         play: [aladdinBraveRescuer],
-//         hand: [sisuEmboldenedWarrior],
+//         Play: [aladdinBraveRescuer],
+//         Hand: [sisuEmboldenedWarrior],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getCard(weDontTalkAboutBruno);
-//     const target = testStore.getCard(aladdinBraveRescuer);
+//     Const cardUnderTest = testStore.getCard(weDontTalkAboutBruno);
+//     Const target = testStore.getCard(aladdinBraveRescuer);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveTopOfStack({ targets: [target] });
-//     expect(testStore.getZonesCardCount("player_two").hand).toBe(1);
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveTopOfStack({ targets: [target] });
+//     Expect(testStore.getZonesCardCount("player_two").hand).toBe(1);
 //   });
 //
-//   it("No cards in hand and a single card in play", async () => {
-//     const testEngine = new TestEngine(
+//   It("No cards in hand and a single card in play", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: weDontTalkAboutBruno.cost,
-//         hand: [weDontTalkAboutBruno],
+//         Inkwell: weDontTalkAboutBruno.cost,
+//         Hand: [weDontTalkAboutBruno],
 //       },
 //       {
-//         play: [aladdinBraveRescuer],
+//         Play: [aladdinBraveRescuer],
 //       },
 //     );
 //
-//     await testEngine.playCard(weDontTalkAboutBruno);
+//     Await testEngine.playCard(weDontTalkAboutBruno);
 //
-//     expect(testEngine.store.stackLayerStore.topLayer?.id).toContain("_move");
+//     Expect(testEngine.store.stackLayerStore.topLayer?.id).toContain("_move");
 //
-//     await testEngine.resolveTopOfStack({ targets: [aladdinBraveRescuer] });
+//     Await testEngine.resolveTopOfStack({ targets: [aladdinBraveRescuer] });
 //
-//     expect(testEngine.getCardModel(aladdinBraveRescuer).zone).toBe("discard");
+//     Expect(testEngine.getCardModel(aladdinBraveRescuer).zone).toBe("discard");
 //   });
 // });
 //
-// describe("Regression", () => {
-//   it("Should not discard from hand if no valid target to return to hand", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Regression", () => {
+//   It("Should not discard from hand if no valid target to return to hand", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: weDontTalkAboutBruno.cost,
-//         hand: [weDontTalkAboutBruno],
+//         Inkwell: weDontTalkAboutBruno.cost,
+//         Hand: [weDontTalkAboutBruno],
 //       },
 //       {
-//         hand: [aladdinBraveRescuer],
+//         Hand: [aladdinBraveRescuer],
 //       },
 //     );
 //
-//     await testEngine.playCard(weDontTalkAboutBruno);
+//     Await testEngine.playCard(weDontTalkAboutBruno);
 //
-//     expect(testEngine.getCardModel(aladdinBraveRescuer).zone).toBe("hand");
-//     expect(testEngine.store.stackLayerStore.layers).toHaveLength(0);
+//     Expect(testEngine.getCardModel(aladdinBraveRescuer).zone).toBe("hand");
+//     Expect(testEngine.store.stackLayerStore.layers).toHaveLength(0);
 //   });
 // });
 //

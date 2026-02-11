@@ -1,24 +1,8 @@
 import type { ItemCard } from "@tcg/lorcana-types";
 
 export const lastCannon: ItemCard = {
-  id: "u1y",
-  cardType: "item",
-  name: "Last Cannon",
-  inkType: ["steel"],
-  franchise: "Mulan",
-  set: "002",
-  text: "ARM YOURSELF 1 {I}, Banish this item — Chosen character gains Challenger +3 this turn. (They get +3 {S} while challenging.)",
-  cost: 1,
-  cardNumber: 202,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "6c5152c3b21edb6a64d7891cda39fae29a7ee4e2",
-  },
   abilities: [
     {
-      id: "u1y-1",
-      type: "activated",
       cost: { exert: true },
       effect: {
         type: "gain-keyword",
@@ -33,7 +17,23 @@ export const lastCannon: ItemCard = {
         value: 3,
         duration: "this-turn",
       },
+      id: "u1y-1",
       text: "ARM YOURSELF 1 {I}, Banish this item — Chosen character gains Challenger +3 this turn.",
+      type: "activated",
     },
   ],
+  cardNumber: 202,
+  cardType: "item",
+  cost: 1,
+  externalIds: {
+    ravensburger: "6c5152c3b21edb6a64d7891cda39fae29a7ee4e2",
+  },
+  franchise: "Mulan",
+  id: "u1y",
+  inkType: ["steel"],
+  inkable: true,
+  missingTests: true,
+  name: "Last Cannon",
+  set: "002",
+  text: "ARM YOURSELF 1 {I}, Banish this item — Chosen character gains Challenger +3 this turn. (They get +3 {S} while challenging.)",
 };

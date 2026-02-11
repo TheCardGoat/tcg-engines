@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { ursulasTrickery } from "@lorcanito/lorcana-engine/cards/004/actions/actions";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { ursulasTrickery } from "@lorcanito/lorcana-engine/cards/004/actions/actions";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Ursula's Trickery", () => {
-//   it.skip("Each opponent may choose and discard a card. For each opponent who doesn't, you draw a card.", () => {
-//     const testStore = new TestStore({
-//       inkwell: ursulasTrickery.cost,
-//       hand: [ursulasTrickery],
+// Describe("Ursula's Trickery", () => {
+//   It.skip("Each opponent may choose and discard a card. For each opponent who doesn't, you draw a card.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: ursulasTrickery.cost,
+//       Hand: [ursulasTrickery],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", ursulasTrickery.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", ursulasTrickery.id);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

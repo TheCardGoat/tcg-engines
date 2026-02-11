@@ -3,79 +3,79 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   liloGalacticHero,
-//   liloMakingAWish,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   LiloGalacticHero,
+//   LiloMakingAWish,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { liloEscapeArtist } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { liloEscapeArtist } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Lilo - Escape Artist", () => {
-//   describe("NO PLACE I’D RATHER BE At the start of your turn, if this card is in your discard, you may play her and she enters play exerted.", () => {
-//     it("On discard", async () => {
-//       const testEngine = new TestEngine(
+// Describe("Lilo - Escape Artist", () => {
+//   Describe("NO PLACE I’D RATHER BE At the start of your turn, if this card is in your discard, you may play her and she enters play exerted.", () => {
+//     It("On discard", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: liloEscapeArtist.cost,
-//           discard: [liloEscapeArtist],
-//           deck: 2,
+//           Inkwell: liloEscapeArtist.cost,
+//           Discard: [liloEscapeArtist],
+//           Deck: 2,
 //         },
 //         {
-//           deck: 2,
+//           Deck: 2,
 //         },
 //       );
 //
-//       const cardUnderTest = testEngine.getCardModel(liloEscapeArtist);
+//       Const cardUnderTest = testEngine.getCardModel(liloEscapeArtist);
 //
-//       await testEngine.passTurn();
-//       await testEngine.passTurn();
+//       Await testEngine.passTurn();
+//       Await testEngine.passTurn();
 //
-//       await testEngine.resolveOptionalAbility();
+//       Await testEngine.resolveOptionalAbility();
 //
-//       expect(cardUnderTest.zone).toBe("play");
-//       expect(cardUnderTest.exerted).toBe(true);
-//       expect(testEngine.getAvailableInkwellCardCount()).toEqual(0);
+//       Expect(cardUnderTest.zone).toBe("play");
+//       Expect(cardUnderTest.exerted).toBe(true);
+//       Expect(testEngine.getAvailableInkwellCardCount()).toEqual(0);
 //     });
 //
-//     it("More than one lilo in discard", async () => {
-//       const testEngine = new TestEngine(
+//     It("More than one lilo in discard", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: 2,
-//           discard: [
-//             liloEscapeArtist,
-//             liloEscapeArtist,
-//             liloGalacticHero,
-//             liloMakingAWish,
+//           Inkwell: 2,
+//           Discard: [
+//             LiloEscapeArtist,
+//             LiloEscapeArtist,
+//             LiloGalacticHero,
+//             LiloMakingAWish,
 //           ],
-//           deck: 2,
+//           Deck: 2,
 //         },
 //         {
-//           deck: 2,
+//           Deck: 2,
 //         },
 //       );
 //
-//       await testEngine.passTurn();
-//       await testEngine.passTurn();
+//       Await testEngine.passTurn();
+//       Await testEngine.passTurn();
 //
-//       expect(testEngine.stackLayers.length).toEqual(2);
+//       Expect(testEngine.stackLayers.length).toEqual(2);
 //     });
 //
-//     it("On play", async () => {
-//       const testEngine = new TestEngine(
+//     It("On play", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: liloEscapeArtist.cost,
-//           play: [liloEscapeArtist],
-//           deck: 2,
+//           Inkwell: liloEscapeArtist.cost,
+//           Play: [liloEscapeArtist],
+//           Deck: 2,
 //         },
 //         {
-//           deck: 2,
+//           Deck: 2,
 //         },
 //       );
 //
-//       await testEngine.passTurn();
-//       expect(testEngine.stackLayers).toHaveLength(0);
-//       await testEngine.passTurn();
-//       expect(testEngine.stackLayers).toHaveLength(0);
+//       Await testEngine.passTurn();
+//       Expect(testEngine.stackLayers).toHaveLength(0);
+//       Await testEngine.passTurn();
+//       Expect(testEngine.stackLayers).toHaveLength(0);
 //     });
 //   });
 // });

@@ -1,55 +1,55 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const gastonArrogantHunter: CharacterCard = {
-  id: "j7q",
-  cardType: "character",
-  name: "Gaston",
-  version: "Arrogant Hunter",
-  fullName: "Gaston - Arrogant Hunter",
-  inkType: ["ruby"],
-  franchise: "Disney",
-  set: "001",
-  text: "**Reckless** _(This character can",
-  cost: 2,
-  strength: 4,
-  willpower: 2,
-  lore: 0,
+  abilities: [],
   cardNumber: 110,
-  inkable: true,
+  cardType: "character",
+  classifications: ["Storyborn", "Villain"],
+  cost: 2,
   externalIds: {
     ravensburger: "",
   },
-  abilities: [],
-  classifications: ["Storyborn", "Villain"],
+  franchise: "Disney",
+  fullName: "Gaston - Arrogant Hunter",
+  id: "j7q",
+  inkType: ["ruby"],
+  inkable: true,
+  lore: 0,
+  name: "Gaston",
+  set: "001",
+  strength: 4,
+  text: "**Reckless** _(This character can",
+  version: "Arrogant Hunter",
+  willpower: 2,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { recklessAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import { recklessAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const gastonArrogantHunter: LorcanitoCharacterCard = {
-//   id: "j7q",
-//   reprints: ["k2n"],
+// Export const gastonArrogantHunter: LorcanitoCharacterCard = {
+//   Id: "j7q",
+//   Reprints: ["k2n"],
 //
-//   name: "Gaston",
-//   title: "Arrogant Hunter",
-//   characteristics: ["storyborn", "villain"],
-//   text: "**Reckless** _(This character can't quest and must challenge each turn if able.)_",
-//   type: "character",
-//   abilities: [recklessAbility],
-//   flavour: "It's not arrogance when you really <b>are</b> the best.",
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 2,
-//   strength: 4,
-//   willpower: 2,
-//   lore: 0,
-//   illustrator: "Matthew Robert Davies",
-//   number: 110,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 504453,
+//   Name: "Gaston",
+//   Title: "Arrogant Hunter",
+//   Characteristics: ["storyborn", "villain"],
+//   Text: "**Reckless** _(This character can't quest and must challenge each turn if able.)_",
+//   Type: "character",
+//   Abilities: [recklessAbility],
+//   Flavour: "It's not arrogance when you really <b>are</b> the best.",
+//   Inkwell: true,
+//   Colors: ["ruby"],
+//   Cost: 2,
+//   Strength: 4,
+//   Willpower: 2,
+//   Lore: 0,
+//   Illustrator: "Matthew Robert Davies",
+//   Number: 110,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 504453,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

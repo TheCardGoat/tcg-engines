@@ -1,72 +1,72 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const gantuGalacticFederationCaptain: CharacterCard = {
-  id: "c3k",
-  cardType: "character",
-  name: "Gantu",
-  version: "Galactic Federation Captain",
-  fullName: "Gantu - Galactic Federation Captain",
-  inkType: ["steel"],
-  franchise: "Lilo and Stitch",
-  set: "001",
-  text: "UNDER ARREST Characters with cost 2 or less can't challenge your characters.",
-  cost: 8,
-  strength: 6,
-  willpower: 6,
-  lore: 2,
-  cardNumber: 178,
-  inkable: true,
-  externalIds: {
-    ravensburger: "2b9addfb94c8f45cfa1bb249ef2d1021ddee733e",
-  },
   abilities: [
     {
-      id: "c3k-1",
-      text: "UNDER ARREST Characters with cost 2 or less can't challenge your characters.",
-      name: "UNDER ARREST",
-      type: "static",
       effect: {
         type: "restriction",
         restriction: "cant-challenge",
         target: "SELF",
       },
+      id: "c3k-1",
+      name: "UNDER ARREST",
+      text: "UNDER ARREST Characters with cost 2 or less can't challenge your characters.",
+      type: "static",
     },
   ],
+  cardNumber: 178,
+  cardType: "character",
   classifications: ["Storyborn", "Alien", "Captain"],
+  cost: 8,
+  externalIds: {
+    ravensburger: "2b9addfb94c8f45cfa1bb249ef2d1021ddee733e",
+  },
+  franchise: "Lilo and Stitch",
+  fullName: "Gantu - Galactic Federation Captain",
+  id: "c3k",
+  inkType: ["steel"],
+  inkable: true,
+  lore: 2,
+  name: "Gantu",
+  set: "001",
+  strength: 6,
+  text: "UNDER ARREST Characters with cost 2 or less can't challenge your characters.",
+  version: "Galactic Federation Captain",
+  willpower: 6,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { charactersWithCostXorLessCantChallenge } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import { charactersWithCostXorLessCantChallenge } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const gantuGalacticFederationCaptain: LorcanitoCharacterCard = {
-//   id: "ucw",
+// Export const gantuGalacticFederationCaptain: LorcanitoCharacterCard = {
+//   Id: "ucw",
 //
-//   name: "Gantu",
-//   title: "Galactic Federation Captain",
-//   characteristics: ["alien", "storyborn", "captain"],
-//   text: "**Under arrest** Characters with cost 2 or less can't challenge your characters.",
-//   type: "character",
-//   abilities: [
-//     charactersWithCostXorLessCantChallenge({
-//       name: "Under arrest",
-//       text: "Characters with cost 2 or less can't challenge your characters.",
-//       cost: 2,
+//   Name: "Gantu",
+//   Title: "Galactic Federation Captain",
+//   Characteristics: ["alien", "storyborn", "captain"],
+//   Text: "**Under arrest** Characters with cost 2 or less can't challenge your characters.",
+//   Type: "character",
+//   Abilities: [
+//     CharactersWithCostXorLessCantChallenge({
+//       Name: "Under arrest",
+//       Text: "Characters with cost 2 or less can't challenge your characters.",
+//       Cost: 2,
 //     }),
 //   ],
-//   flavour: '"Relax, enjoy the trip... and don\'t get any ideas!"',
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 8,
-//   strength: 6,
-//   willpower: 6,
-//   lore: 2,
-//   illustrator: "Luis Huerta",
-//   number: 178,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 488097,
+//   Flavour: '"Relax, enjoy the trip... and don\'t get any ideas!"',
+//   Inkwell: true,
+//   Colors: ["steel"],
+//   Cost: 8,
+//   Strength: 6,
+//   Willpower: 6,
+//   Lore: 2,
+//   Illustrator: "Luis Huerta",
+//   Number: 178,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 488097,
 //   },
-//   rarity: "legendary",
+//   Rarity: "legendary",
 // };
 //

@@ -204,8 +204,8 @@ describe("ParserLogger", () => {
 
     it("includes multiple context properties", () => {
       logger.info("test", {
-        cardName: "Mickey Mouse",
         abilityText: "draw 2 cards",
+        cardName: "Mickey Mouse",
         stage: "parsing",
       });
 
@@ -345,7 +345,7 @@ describe("ParserLogger", () => {
 
   describe("edge cases", () => {
     it("handles very long messages", () => {
-      const longMessage = "a".repeat(10000);
+      const longMessage = "a".repeat(10_000);
       logger.info(longMessage);
 
       expect(consoleLogSpy).toHaveBeenCalled();
@@ -362,7 +362,7 @@ describe("ParserLogger", () => {
     });
 
     it("handles objects in context", () => {
-      logger.info("test", { obj: { nested: true }, arr: [1, 2, 3] });
+      logger.info("test", { arr: [1, 2, 3], obj: { nested: true } });
 
       expect(consoleLogSpy).toHaveBeenCalled();
       const logEntry = JSON.parse(consoleLogSpy.mock.calls[0][0]);

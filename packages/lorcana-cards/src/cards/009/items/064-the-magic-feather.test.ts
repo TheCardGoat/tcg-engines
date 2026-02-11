@@ -3,66 +3,66 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { deweyLovableShowoff } from "@lorcanito/lorcana-engine/cards/008";
-// import { theMagicFeather } from "@lorcanito/lorcana-engine/cards/009";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { deweyLovableShowoff } from "@lorcanito/lorcana-engine/cards/008";
+// Import { theMagicFeather } from "@lorcanito/lorcana-engine/cards/009";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("The Magic Feather", () => {
-//   it("NOW YOU CAN FLY! When you play this item, choose a character of yours. While this item is in play, that character gains Evasive. (Only characters with Evasive can challenge them.)", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: theMagicFeather.cost,
-//       play: [deweyLovableShowoff],
-//       hand: [theMagicFeather],
+// Describe("The Magic Feather", () => {
+//   It("NOW YOU CAN FLY! When you play this item, choose a character of yours. While this item is in play, that character gains Evasive. (Only characters with Evasive can challenge them.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: theMagicFeather.cost,
+//       Play: [deweyLovableShowoff],
+//       Hand: [theMagicFeather],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(theMagicFeather);
-//     const targetCard = testEngine.getCardModel(deweyLovableShowoff);
+//     Const cardUnderTest = testEngine.getCardModel(theMagicFeather);
+//     Const targetCard = testEngine.getCardModel(deweyLovableShowoff);
 //
-//     await testEngine.playCard(cardUnderTest);
+//     Await testEngine.playCard(cardUnderTest);
 //
-//     await testEngine.resolveTopOfStack({ targets: [targetCard] });
+//     Await testEngine.resolveTopOfStack({ targets: [targetCard] });
 //
-//     expect(targetCard.hasEvasive).toBe(true);
+//     Expect(targetCard.hasEvasive).toBe(true);
 //   });
 //
-//   it("GROUNDED 3 {I} – Return this item to your hand.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: 3,
-//       play: [theMagicFeather],
+//   It("GROUNDED 3 {I} – Return this item to your hand.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: 3,
+//       Play: [theMagicFeather],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(theMagicFeather);
+//     Const cardUnderTest = testEngine.getCardModel(theMagicFeather);
 //
-//     expect(cardUnderTest.zone).toBe("play");
+//     Expect(cardUnderTest.zone).toBe("play");
 //
-//     testEngine.activateCard(cardUnderTest);
+//     TestEngine.activateCard(cardUnderTest);
 //
-//     expect(cardUnderTest.zone).toBe("hand");
+//     Expect(cardUnderTest.zone).toBe("hand");
 //   });
 //
-//   it("Character loses Evasive when the item leaves play", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: theMagicFeather.cost + 3,
-//       play: [deweyLovableShowoff],
-//       hand: [theMagicFeather],
+//   It("Character loses Evasive when the item leaves play", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: theMagicFeather.cost + 3,
+//       Play: [deweyLovableShowoff],
+//       Hand: [theMagicFeather],
 //     });
 //
-//     const itemCard = testEngine.getCardModel(theMagicFeather);
-//     const characterCard = testEngine.getCardModel(deweyLovableShowoff);
+//     Const itemCard = testEngine.getCardModel(theMagicFeather);
+//     Const characterCard = testEngine.getCardModel(deweyLovableShowoff);
 //
 //     // Play the item and choose the character
-//     await testEngine.playCard(itemCard);
-//     await testEngine.resolveTopOfStack({ targets: [characterCard] });
+//     Await testEngine.playCard(itemCard);
+//     Await testEngine.resolveTopOfStack({ targets: [characterCard] });
 //
 //     // Verify character has Evasive
-//     expect(characterCard.hasEvasive).toBe(true);
+//     Expect(characterCard.hasEvasive).toBe(true);
 //
 //     // Use GROUNDED ability to return the item to hand
-//     testEngine.activateCard(itemCard);
+//     TestEngine.activateCard(itemCard);
 //
 //     // Verify character lost Evasive when item left play
-//     expect(characterCard.hasEvasive).toBe(false);
+//     Expect(characterCard.hasEvasive).toBe(false);
 //   });
 // });
 //

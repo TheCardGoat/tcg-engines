@@ -42,7 +42,7 @@ function parseCounter(text: string): ForEachCounter | null {
   // "characters that sang this turn" - no controller property
   if (/\bcharacters?\s+(?:that\s+)?sang\b/i.test(normalized)) {
     const thisTurn = /\bthis\s+turn\b/i.test(normalized);
-    return { type: "characters-that-sang", thisTurn };
+    return { thisTurn, type: "characters-that-sang" };
   }
 
   // "cards under this/that/chosen/it" - no controller property
@@ -98,9 +98,9 @@ function parseCounter(text: string): ForEachCounter | null {
       ) {
         controller = "you";
       }
-      // else: keep default "any" for damaged characters
+      // Else: keep default "any" for damaged characters
     }
-    return { type: "damaged-characters", controller };
+    return { controller, type: "damaged-characters" };
   }
 
   // Regular characters - default to "you" if no controller specified
@@ -118,7 +118,7 @@ function parseCounter(text: string): ForEachCounter | null {
         controller = "you";
       }
     }
-    return { type: "characters", controller };
+    return { controller, type: "characters" };
   }
 
   // Items
@@ -126,7 +126,7 @@ function parseCounter(text: string): ForEachCounter | null {
     if (controller === "any") {
       controller = /\bopponent\b/i.test(normalized) ? "opponent" : "you";
     }
-    return { type: "items", controller };
+    return { controller, type: "items" };
   }
 
   // Locations
@@ -134,7 +134,7 @@ function parseCounter(text: string): ForEachCounter | null {
     if (controller === "any") {
       controller = /\bopponent\b/i.test(normalized) ? "opponent" : "you";
     }
-    return { type: "locations", controller };
+    return { controller, type: "locations" };
   }
 
   // Cards in hand
@@ -142,7 +142,7 @@ function parseCounter(text: string): ForEachCounter | null {
     if (controller === "any") {
       controller = /\bopponent\b/i.test(normalized) ? "opponent" : "you";
     }
-    return { type: "cards-in-hand", controller };
+    return { controller, type: "cards-in-hand" };
   }
 
   // Cards in discard
@@ -150,7 +150,7 @@ function parseCounter(text: string): ForEachCounter | null {
     if (controller === "any") {
       controller = /\bopponent\b/i.test(normalized) ? "opponent" : "you";
     }
-    return { type: "cards-in-discard", controller };
+    return { controller, type: "cards-in-discard" };
   }
 
   // Damage - generic damage patterns (no controller property)
@@ -215,7 +215,7 @@ function parseFromText(text: string): ForEachEffect | null {
     }
   }
 
-  logger.debug("Found for-each pattern", { iteratorText, effectText });
+  logger.debug("Found for-each pattern", { effectText, iteratorText });
 
   // Parse the counter
   const counter = parseCounter(iteratorText);
@@ -254,14 +254,14 @@ function parseFromCst(_ctx: CstNode): ForEachEffect | null {
  * For-each effect parser implementation
  */
 export const forEachEffectParser: EffectParser = {
-  pattern: /for\s+each\s+/i,
   description:
     "Parses for-each effects that scale with a count (e.g., 'for each character you control, gain 1 lore')",
-
   parse: (input: CstNode | string): ForEachEffect | null => {
     if (typeof input === "string") {
       return parseFromText(input);
     }
     return parseFromCst(input);
   },
+
+  pattern: /for\s+each\s+/i,
 };

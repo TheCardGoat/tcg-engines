@@ -19,38 +19,23 @@ Provides type-safe, reusable functions for reading game state without modifying 
 
 ```typescript
 // Get all ready characters a player controls
-export const getReadyCharacters = (
-  state: LorcanaState,
-  playerId: PlayerId
-): CardId[] => {
-  return getCardsInZone(state, "play", playerId).filter(
-    cardId => !isExerted(state, cardId)
-  );
+export const getReadyCharacters = (state: LorcanaState, playerId: PlayerId): CardId[] => {
+  return getCardsInZone(state, "play", playerId).filter((cardId) => !isExerted(state, cardId));
 };
 
 // Check if player can afford to play a card
-export const canAffordCard = (
-  state: LorcanaState,
-  playerId: PlayerId,
-  cardId: CardId
-): boolean => {
+export const canAffordCard = (state: LorcanaState, playerId: PlayerId, cardId: CardId): boolean => {
   const cost = getCardCost(state, cardId);
   const available = getAvailableInk(state, playerId);
   return available >= cost;
 };
 
 // Get characters that can quest
-export const getQuestableCharacters = (
-  state: LorcanaState,
-  playerId: PlayerId
-): CardId[] => {
-  return getReadyCharacters(state, playerId).filter(
-    cardId => canQuest(state, cardId)
-  );
+export const getQuestableCharacters = (state: LorcanaState, playerId: PlayerId): CardId[] => {
+  return getReadyCharacters(state, playerId).filter((cardId) => canQuest(state, cardId));
 };
 ```
 
 ## References
 
 - See `@packages/core` for base query utilities
-

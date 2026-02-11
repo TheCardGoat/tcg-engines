@@ -3,59 +3,59 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { hiramFlavershamToymaker } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { goofySuperGoof } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { hiddenCoveTranquilHaven } from "@lorcanito/lorcana-engine/cards/004/locations/locations";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { hiramFlavershamToymaker } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { goofySuperGoof } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { hiddenCoveTranquilHaven } from "@lorcanito/lorcana-engine/cards/004/locations/locations";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Goofy - Super Goof", () => {
-//   it("**Rush** _(This character can challenge the turn they're played)_", () => {
-//     const testStore = new TestStore({
-//       play: [goofySuperGoof],
+// Describe("Goofy - Super Goof", () => {
+//   It("**Rush** _(This character can challenge the turn they're played)_", () => {
+//     Const testStore = new TestStore({
+//       Play: [goofySuperGoof],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("play", goofySuperGoof.id);
-//     expect(cardUnderTest.hasRush).toBe(true);
+//     Const cardUnderTest = testStore.getByZoneAndId("play", goofySuperGoof.id);
+//     Expect(cardUnderTest.hasRush).toBe(true);
 //   });
 //
-//   describe("**SUPER PEANUT POWERS** Whenever this character challenges another, gain 2 lore", () => {
-//     it("should gain lore when challenging another character", async () => {
-//       const testEngine = new TestEngine(
+//   Describe("**SUPER PEANUT POWERS** Whenever this character challenges another, gain 2 lore", () => {
+//     It("should gain lore when challenging another character", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           play: [goofySuperGoof],
+//           Play: [goofySuperGoof],
 //         },
 //         {
-//           play: [hiramFlavershamToymaker],
+//           Play: [hiramFlavershamToymaker],
 //         },
 //       );
 //
-//       await testEngine.tapCard(hiramFlavershamToymaker);
-//       await testEngine.challenge({
-//         attacker: goofySuperGoof,
-//         defender: hiramFlavershamToymaker,
+//       Await testEngine.tapCard(hiramFlavershamToymaker);
+//       Await testEngine.challenge({
+//         Attacker: goofySuperGoof,
+//         Defender: hiramFlavershamToymaker,
 //       });
 //
-//       expect(testEngine.getLoreForPlayer("player_one")).toBe(2);
+//       Expect(testEngine.getLoreForPlayer("player_one")).toBe(2);
 //     });
 //
-//     it("should NOT gain lore when challenging a location", async () => {
-//       const testEngine = new TestEngine(
+//     It("should NOT gain lore when challenging a location", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           play: [goofySuperGoof],
+//           Play: [goofySuperGoof],
 //         },
 //         {
-//           play: [hiddenCoveTranquilHaven],
+//           Play: [hiddenCoveTranquilHaven],
 //         },
 //       );
 //
-//       await testEngine.challenge({
-//         attacker: goofySuperGoof,
-//         defender: hiddenCoveTranquilHaven,
+//       Await testEngine.challenge({
+//         Attacker: goofySuperGoof,
+//         Defender: hiddenCoveTranquilHaven,
 //       });
 //
-//       expect(testEngine.getLoreForPlayer("player_one")).toBe(0);
+//       Expect(testEngine.getLoreForPlayer("player_one")).toBe(0);
 //     });
 //   });
 // });

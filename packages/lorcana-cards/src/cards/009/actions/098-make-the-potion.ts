@@ -1,24 +1,8 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
 export const makeThePotion: ActionCard = {
-  id: "db6",
-  cardType: "action",
-  name: "Make the Potion",
-  inkType: ["emerald"],
-  franchise: "Snow White",
-  set: "009",
-  text: "Choose one: • Banish chosen item. • Deal 2 damage to chosen damaged character.",
-  cost: 2,
-  cardNumber: 98,
-  inkable: false,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "2ff92870c51a6d0ed82d95f43850abf04ef72c3d",
-  },
   abilities: [
     {
-      id: "db6-1",
-      type: "action",
       effect: {
         type: "choice",
         options: [
@@ -49,7 +33,23 @@ export const makeThePotion: ActionCard = {
           "Deal 2 damage to chosen damaged character.",
         ],
       },
+      id: "db6-1",
       text: "Choose one: • Banish chosen item. • Deal 2 damage to chosen damaged character.",
+      type: "action",
     },
   ],
+  cardNumber: 98,
+  cardType: "action",
+  cost: 2,
+  externalIds: {
+    ravensburger: "2ff92870c51a6d0ed82d95f43850abf04ef72c3d",
+  },
+  franchise: "Snow White",
+  id: "db6",
+  inkType: ["emerald"],
+  inkable: false,
+  missingTests: true,
+  name: "Make the Potion",
+  set: "009",
+  text: "Choose one: • Banish chosen item. • Deal 2 damage to chosen damaged character.",
 };

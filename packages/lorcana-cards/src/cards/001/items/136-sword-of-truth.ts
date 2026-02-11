@@ -1,48 +1,48 @@
 import type { ItemCard } from "@tcg/lorcana-types";
 
 export const swordOfTruth: ItemCard = {
-  id: "jpg",
-  cardType: "item",
-  name: "Sword of Truth",
-  version: "undefined",
-  fullName: "Sword of Truth - undefined",
-  inkType: ["ruby"],
-  franchise: "Disney",
-  set: "001",
-  text: "**FINAL ENCHANTMENT** Banish this item − Banish chosen Villain character.",
-  cost: 4,
+  abilities: [],
   cardNumber: 136,
-  inkable: true,
+  cardType: "item",
+  cost: 4,
   externalIds: {
     ravensburger: "",
   },
-  abilities: [],
+  franchise: "Disney",
+  fullName: "Sword of Truth - undefined",
+  id: "jpg",
+  inkType: ["ruby"],
+  inkable: true,
+  name: "Sword of Truth",
+  set: "001",
+  text: "**FINAL ENCHANTMENT** Banish this item − Banish chosen Villain character.",
+  version: "undefined",
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { ActivatedAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { ActivatedAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const swordOfTruth: LorcanitoItemCard = {
-//   characteristics: ["item"],
-//   id: "jpg",
+// Export const swordOfTruth: LorcanitoItemCard = {
+//   Characteristics: ["item"],
+//   Id: "jpg",
 //
-//   name: "Sword of Truth",
-//   text: "**FINAL ENCHANTMENT** Banish this item − Banish chosen Villain character.",
-//   type: "item",
-//   abilities: [
+//   Name: "Sword of Truth",
+//   Text: "**FINAL ENCHANTMENT** Banish this item − Banish chosen Villain character.",
+//   Type: "item",
+//   Abilities: [
 //     {
-//       type: "activated",
-//       name: "Final Enchantment",
-//       text: "Banish this item − Banish chosen Villain character.",
-//       costs: [{ type: "banish" }],
-//       effects: [
+//       Type: "activated",
+//       Name: "Final Enchantment",
+//       Text: "Banish this item − Banish chosen Villain character.",
+//       Costs: [{ type: "banish" }],
+//       Effects: [
 //         {
-//           type: "banish",
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
+//           Type: "banish",
+//           Target: {
+//             Type: "card",
+//             Value: 1,
+//             Filters: [
 //               { filter: "zone", value: "play" },
 //               { filter: "type", value: "character" },
 //               { filter: "characteristics", value: ["villain"] },
@@ -52,15 +52,15 @@ export const swordOfTruth: ItemCard = {
 //       ],
 //     } as ActivatedAbility,
 //   ],
-//   flavour: "Almost as powerful as True Love's Kiss.",
-//   colors: ["ruby"],
-//   cost: 4,
-//   illustrator: "Andrew Trabbold",
-//   number: 136,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 508793,
+//   Flavour: "Almost as powerful as True Love's Kiss.",
+//   Colors: ["ruby"],
+//   Cost: 4,
+//   Illustrator: "Andrew Trabbold",
+//   Number: 136,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 508793,
 //   },
-//   rarity: "rare",
+//   Rarity: "rare",
 // };
 //

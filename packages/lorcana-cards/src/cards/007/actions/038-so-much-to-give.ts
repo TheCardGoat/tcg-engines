@@ -1,25 +1,8 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
 export const soMuchToGive: ActionCard = {
-  id: "jyr",
-  cardType: "action",
-  name: "So Much to Give",
-  inkType: ["amber"],
-  franchise: "Bolt",
-  set: "007",
-  text: "Draw a card. Chosen character gains Bodyguard until the start of your next turn. (An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
-  actionSubtype: "song",
-  cost: 2,
-  cardNumber: 38,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "47f551a402c331ac81e1b4f502c282a9cdb4dc34",
-  },
   abilities: [
     {
-      id: "jyr-1",
-      type: "action",
       effect: {
         type: "sequence",
         steps: [
@@ -41,7 +24,24 @@ export const soMuchToGive: ActionCard = {
           },
         ],
       },
+      id: "jyr-1",
       text: "Draw a card. Chosen character gains Bodyguard until the start of your next turn.",
+      type: "action",
     },
   ],
+  actionSubtype: "song",
+  cardNumber: 38,
+  cardType: "action",
+  cost: 2,
+  externalIds: {
+    ravensburger: "47f551a402c331ac81e1b4f502c282a9cdb4dc34",
+  },
+  franchise: "Bolt",
+  id: "jyr",
+  inkType: ["amber"],
+  inkable: true,
+  missingTests: true,
+  name: "So Much to Give",
+  set: "007",
+  text: "Draw a card. Chosen character gains Bodyguard until the start of your next turn. (An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
 };

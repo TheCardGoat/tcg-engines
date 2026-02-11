@@ -1,43 +1,43 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { duringYourTurn } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
-// import { wheneverOneOrMoreOfYourCharSingsASong } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { duringYourTurn } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
+// Import { wheneverOneOrMoreOfYourCharSingsASong } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
 //
-// export const almaMadrigalAcceptingGrandmother: LorcanitoCharacterCard = {
-//   id: "h1w",
-//   name: "Alma Madrigal",
-//   title: "Accepting Grandmother",
-//   characteristics: ["storyborn", "mentor", "madrigal"],
-//   text: "THE MIRACLE IS YOU Once during your turn, whenever one or more of your characters sings a song, you may ready those characters.",
-//   type: "character",
-//   inkwell: true,
-//   colors: ["amber", "amethyst"],
-//   cost: 6,
-//   strength: 5,
-//   willpower: 5,
-//   illustrator: "Simone Buonfantino",
-//   number: 34,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631374,
+// Export const almaMadrigalAcceptingGrandmother: LorcanitoCharacterCard = {
+//   Id: "h1w",
+//   Name: "Alma Madrigal",
+//   Title: "Accepting Grandmother",
+//   Characteristics: ["storyborn", "mentor", "madrigal"],
+//   Text: "THE MIRACLE IS YOU Once during your turn, whenever one or more of your characters sings a song, you may ready those characters.",
+//   Type: "character",
+//   Inkwell: true,
+//   Colors: ["amber", "amethyst"],
+//   Cost: 6,
+//   Strength: 5,
+//   Willpower: 5,
+//   Illustrator: "Simone Buonfantino",
+//   Number: 34,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631374,
 //   },
-//   rarity: "uncommon",
-//   lore: 2,
-//   abilities: [
-//     wheneverOneOrMoreOfYourCharSingsASong({
-//       name: "THE MIRACLE IS YOU",
-//       text: "Once during your turn, whenever one or more of your characters sings a song, you may ready those characters.",
-//       oncePerTurn: true,
-//       conditions: [duringYourTurn],
-//       optional: true,
-//       effects: [
+//   Rarity: "uncommon",
+//   Lore: 2,
+//   Abilities: [
+//     WheneverOneOrMoreOfYourCharSingsASong({
+//       Name: "THE MIRACLE IS YOU",
+//       Text: "Once during your turn, whenever one or more of your characters sings a song, you may ready those characters.",
+//       OncePerTurn: true,
+//       Conditions: [duringYourTurn],
+//       Optional: true,
+//       Effects: [
 //         {
-//           type: "exert",
-//           exert: false,
-//           target: {
-//             type: "card",
-//             value: "all",
-//             filters: [{ filter: "sing", value: "singer" }],
+//           Type: "exert",
+//           Exert: false,
+//           Target: {
+//             Type: "card",
+//             Value: "all",
+//             Filters: [{ filter: "sing", value: "singer" }],
 //           },
 //         },
 //       ],

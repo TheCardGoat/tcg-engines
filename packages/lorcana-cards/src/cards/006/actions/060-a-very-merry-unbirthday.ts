@@ -1,21 +1,21 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
 export const aVeryMerryUnbirthday: ActionCard = {
-  id: "1gn",
-  cardType: "action",
-  name: "A Very Merry Unbirthday",
-  inkType: ["amethyst"],
-  franchise: "Alice in Wonderland",
-  set: "006",
-  text: "Each opponent puts the top 2 cards of their deck into their discard.",
+  abilities: [],
   actionSubtype: "song",
-  cost: 1,
   cardNumber: 60,
-  inkable: true,
-  missingImplementation: true,
-  missingTests: true,
+  cardType: "action",
+  cost: 1,
   externalIds: {
     ravensburger: "bec1b79d300150cdb92902404916f10483de4dbd",
   },
-  abilities: [],
+  franchise: "Alice in Wonderland",
+  id: "1gn",
+  inkType: ["amethyst"],
+  inkable: true,
+  missingImplementation: true,
+  missingTests: true,
+  name: "A Very Merry Unbirthday",
+  set: "006",
+  text: "Each opponent puts the top 2 cards of their deck into their discard.",
 };

@@ -1,30 +1,30 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import {
-//   bodyguardAbility,
-//   singerAbility,
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import {
+//   BodyguardAbility,
+//   SingerAbility,
 // } from "@lorcanito/lorcana-engine/abilities/abilities";
 //
-// export const clawhauserFrontDeskOfficer: LorcanitoCharacterCard = {
-//   id: "he6",
-//   name: "Clawhauser",
-//   title: "Front Desk Officer",
-//   characteristics: ["storyborn", "ally", "detective"],
-//   text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)\nSinger 4 (This character counts as cost 4 to sing songs.)",
-//   type: "character",
-//   abilities: [bodyguardAbility, singerAbility(4)],
-//   inkwell: true,
-//   colors: ["amber"],
-//   cost: 3,
-//   strength: 1,
-//   willpower: 4,
-//   illustrator: "Denny Minonne",
-//   number: 35,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631375,
+// Export const clawhauserFrontDeskOfficer: LorcanitoCharacterCard = {
+//   Id: "he6",
+//   Name: "Clawhauser",
+//   Title: "Front Desk Officer",
+//   Characteristics: ["storyborn", "ally", "detective"],
+//   Text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)\nSinger 4 (This character counts as cost 4 to sing songs.)",
+//   Type: "character",
+//   Abilities: [bodyguardAbility, singerAbility(4)],
+//   Inkwell: true,
+//   Colors: ["amber"],
+//   Cost: 3,
+//   Strength: 1,
+//   Willpower: 4,
+//   Illustrator: "Denny Minonne",
+//   Number: 35,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631375,
 //   },
-//   rarity: "rare",
-//   lore: 2,
+//   Rarity: "rare",
+//   Lore: 2,
 // };
 //

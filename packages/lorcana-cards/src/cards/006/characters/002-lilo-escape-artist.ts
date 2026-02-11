@@ -1,29 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const liloEscapeArtist: CharacterCard = {
-  id: "105",
-  cardType: "character",
-  name: "Lilo",
-  version: "Escape Artist",
-  fullName: "Lilo - Escape Artist",
-  inkType: ["amber"],
-  franchise: "Lilo and Stitch",
-  set: "006",
-  text: "NO PLACE I’D RATHER BE At the start of your turn, if this card is in your discard, you may play her and she enters play exerted.",
-  cost: 2,
-  strength: 1,
-  willpower: 2,
-  lore: 2,
-  cardNumber: 2,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "84622499364f41f7265a750bae22792b349b212d",
-  },
   abilities: [
     {
-      id: "105-1",
-      type: "static",
       effect: {
         type: "conditional",
         condition: {
@@ -36,8 +15,29 @@ export const liloEscapeArtist: CharacterCard = {
           target: "SELF",
         },
       },
+      id: "105-1",
       text: "NO PLACE I’D RATHER BE At the start of your turn, if this card is in your discard, you may play her and she enters play exerted.",
+      type: "static",
     },
   ],
+  cardNumber: 2,
+  cardType: "character",
   classifications: ["Storyborn", "Hero"],
+  cost: 2,
+  externalIds: {
+    ravensburger: "84622499364f41f7265a750bae22792b349b212d",
+  },
+  franchise: "Lilo and Stitch",
+  fullName: "Lilo - Escape Artist",
+  id: "105",
+  inkType: ["amber"],
+  inkable: true,
+  lore: 2,
+  missingTests: true,
+  name: "Lilo",
+  set: "006",
+  strength: 1,
+  text: "NO PLACE I’D RATHER BE At the start of your turn, if this card is in your discard, you may play her and she enters play exerted.",
+  version: "Escape Artist",
+  willpower: 2,
 };

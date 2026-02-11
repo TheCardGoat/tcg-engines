@@ -40,9 +40,9 @@ function parseFromCst(
   logger.info("Parsed draw effect from CST", { amount });
 
   return {
-    type: "draw",
     amount,
     target: "CONTROLLER",
+    type: "draw",
   };
 }
 
@@ -103,9 +103,9 @@ function parseFromText(text: string): DrawEffect | null {
   logger.info("Parsed draw effect from text", { amount, target });
 
   return {
-    type: "draw",
     amount,
     target,
+    type: "draw",
   };
 }
 
@@ -113,15 +113,15 @@ function parseFromText(text: string): DrawEffect | null {
  * Draw effect parser implementation
  */
 export const drawEffectParser: EffectParser = {
-  pattern:
-    /(?:(?:each|all) (?:player|opponent) |chosen player )?[Dd]raw(?:s)? (?:\d+|\{d\}) cards?|draws?\s+(?:a|one|1)\s+card/i,
   description:
     "Parses draw card effects (e.g., 'draw 2 cards', 'draw a card', 'Each player draws a card', 'Each opponent draws 2 cards', 'draw {d} cards')",
-
   parse: (input: CstNode | string): DrawEffect | null => {
     if (typeof input === "string") {
       return parseFromText(input);
     }
     return parseFromCst(input as { NumberToken?: IToken[] } | null | undefined);
   },
+
+  pattern:
+    /(?:(?:each|all) (?:player|opponent) |chosen player )?[Dd]raw(?:s)? (?:\d+|\{d\}) cards?|draws?\s+(?:a|one|1)\s+card/i,
 };

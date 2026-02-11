@@ -16,7 +16,7 @@ describe("choiceEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("choice");
-      const options = (result as Effect & { options: Effect[] }).options;
+      const {options} = (result as Effect & { options: Effect[] });
       expect(options).toHaveLength(2);
       expect(options[0].type).toBe("deal-damage");
       expect(options[1].type).toBe("gain-lore");
@@ -29,7 +29,7 @@ describe("choiceEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("choice");
-      const options = (result as Effect & { options: Effect[] }).options;
+      const {options} = (result as Effect & { options: Effect[] });
       expect(options).toHaveLength(2);
     });
 
@@ -40,7 +40,7 @@ describe("choiceEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("choice");
-      const options = (result as Effect & { options: Effect[] }).options;
+      const {options} = (result as Effect & { options: Effect[] });
       expect(options).toHaveLength(3);
       expect(options[0].type).toBe("draw");
       expect(options[1].type).toBe("discard");
@@ -54,7 +54,7 @@ describe("choiceEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("choice");
-      const options = (result as Effect & { options: Effect[] }).options;
+      const {options} = (result as Effect & { options: Effect[] });
       expect(options).toHaveLength(2);
     });
 
@@ -65,7 +65,7 @@ describe("choiceEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("choice");
-      const options = (result as Effect & { options: Effect[] }).options;
+      const {options} = (result as Effect & { options: Effect[] });
       expect(options).toHaveLength(2);
       expect(options[0].type).toBe("deal-damage");
       expect(options[1].type).toBe("draw");
@@ -80,7 +80,7 @@ describe("choiceEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("choice");
-      const options = (result as Effect & { options: Effect[] }).options;
+      const {options} = (result as Effect & { options: Effect[] });
       expect(options).toHaveLength(2);
     });
 
@@ -100,7 +100,7 @@ describe("choiceEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("choice");
-      const options = (result as Effect & { options: Effect[] }).options;
+      const {options} = (result as Effect & { options: Effect[] });
       expect(options).toHaveLength(2);
     });
   });
@@ -150,7 +150,7 @@ describe("choiceEffectParser", () => {
 
       // 2 out of 3 parsed successfully
       expect(result).not.toBeNull();
-      const options = (result as Effect & { options: Effect[] }).options;
+      const {options} = (result as Effect & { options: Effect[] });
       expect(options).toHaveLength(2);
       expect(options[0].type).toBe("draw");
       expect(options[1].type).toBe("gain-lore");
@@ -173,7 +173,7 @@ describe("choiceEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("choice");
-      const options = (result as Effect & { options: Effect[] }).options;
+      const {options} = (result as Effect & { options: Effect[] });
       expect(options).toHaveLength(2);
     });
 
@@ -194,7 +194,7 @@ describe("choiceEffectParser", () => {
       );
 
       expect(result).not.toBeNull();
-      const options = (result as Effect & { options: Effect[] }).options;
+      const {options} = (result as Effect & { options: Effect[] });
       expect(options).toHaveLength(2);
     });
 
@@ -204,7 +204,7 @@ describe("choiceEffectParser", () => {
       );
 
       expect(result).not.toBeNull();
-      const options = (result as Effect & { options: Effect[] }).options;
+      const {options} = (result as Effect & { options: Effect[] });
       expect(options).toHaveLength(2);
     });
 
@@ -214,14 +214,14 @@ describe("choiceEffectParser", () => {
       );
 
       expect(result).not.toBeNull();
-      const options = (result as Effect & { options: Effect[] }).options;
+      const {options} = (result as Effect & { options: Effect[] });
       expect(options).toHaveLength(2);
     });
   });
 
   describe("CST parsing", () => {
     it("returns null for CST node input (not yet implemented)", () => {
-      const mockCstNode = { name: "test", children: {} } as any;
+      const mockCstNode = { children: {}, name: "test" } as any;
       const result = choiceEffectParser.parse(mockCstNode);
 
       expect(result).toBeNull();

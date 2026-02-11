@@ -1,30 +1,30 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { wheneverThisCharacterQuests } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { wheneverThisCharacterQuests } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
 //
-// export const sirPellinoreSeasonedKnight: LorcanitoCharacterCard = {
-//   id: "dfp",
-//   name: "Sir Pellinore",
-//   title: "Seasoned Knight",
-//   characteristics: ["storyborn", "knight"],
-//   text: "CODE OF HONOR Whenever this character quests, your other characters gain Support this turn. (Whenever they quest, you may add their {S} to another chosen character's {S} this turn.)",
-//   type: "character",
-//   abilities: [
-//     wheneverThisCharacterQuests({
-//       name: "CODE OF HONOR",
-//       text: "Whenever this character quests, your other characters gain Support this turn. (Whenever they quest, you may add their {S} to another chosen character's {S} this turn.)",
-//       effects: [
+// Export const sirPellinoreSeasonedKnight: LorcanitoCharacterCard = {
+//   Id: "dfp",
+//   Name: "Sir Pellinore",
+//   Title: "Seasoned Knight",
+//   Characteristics: ["storyborn", "knight"],
+//   Text: "CODE OF HONOR Whenever this character quests, your other characters gain Support this turn. (Whenever they quest, you may add their {S} to another chosen character's {S} this turn.)",
+//   Type: "character",
+//   Abilities: [
+//     WheneverThisCharacterQuests({
+//       Name: "CODE OF HONOR",
+//       Text: "Whenever this character quests, your other characters gain Support this turn. (Whenever they quest, you may add their {S} to another chosen character's {S} this turn.)",
+//       Effects: [
 //         {
-//           type: "ability",
-//           ability: "support",
-//           modifier: "add",
-//           duration: "turn",
-//           until: true,
-//           target: {
-//             type: "card",
-//             value: "all",
-//             excludeSelf: true,
-//             filters: [
+//           Type: "ability",
+//           Ability: "support",
+//           Modifier: "add",
+//           Duration: "turn",
+//           Until: true,
+//           Target: {
+//             Type: "card",
+//             Value: "all",
+//             ExcludeSelf: true,
+//             Filters: [
 //               { filter: "type", value: "character" },
 //               { filter: "owner", value: "self" },
 //               { filter: "zone", value: "play" },
@@ -34,18 +34,18 @@
 //       ],
 //     }),
 //   ],
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 3,
-//   strength: 1,
-//   willpower: 4,
-//   illustrator: "Rudy Hill",
-//   number: 154,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631829,
+//   Inkwell: true,
+//   Colors: ["sapphire"],
+//   Cost: 3,
+//   Strength: 1,
+//   Willpower: 4,
+//   Illustrator: "Rudy Hill",
+//   Number: 154,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631829,
 //   },
-//   rarity: "uncommon",
-//   lore: 1,
+//   Rarity: "uncommon",
+//   Lore: 1,
 // };
 //

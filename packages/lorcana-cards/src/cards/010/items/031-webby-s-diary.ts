@@ -1,47 +1,47 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
-// import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
+// Import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const webbysDiary: LorcanitoItemCard = {
-//   id: "tj4",
-//   name: "Webby's Diary",
-//   characteristics: ["item"],
-//   text: "LATEST ENTRY Whenever you put a card under one of your characters or locations, you may pay 1 {I} to draw a card.",
-//   type: "item",
-//   inkwell: true,
-//   colors: ["amber"],
-//   cost: 3,
-//   illustrator: "Julie Vu",
-//   number: 31,
-//   set: "010",
-//   externalIds: {
-//     tcgPlayer: 658789,
+// Export const webbysDiary: LorcanitoItemCard = {
+//   Id: "tj4",
+//   Name: "Webby's Diary",
+//   Characteristics: ["item"],
+//   Text: "LATEST ENTRY Whenever you put a card under one of your characters or locations, you may pay 1 {I} to draw a card.",
+//   Type: "item",
+//   Inkwell: true,
+//   Colors: ["amber"],
+//   Cost: 3,
+//   Illustrator: "Julie Vu",
+//   Number: 31,
+//   Set: "010",
+//   ExternalIds: {
+//     TcgPlayer: 658789,
 //   },
-//   rarity: "uncommon",
-//   abilities: [
+//   Rarity: "uncommon",
+//   Abilities: [
 //     {
-//       type: "static-triggered",
-//       trigger: {
-//         on: "put-a-card-under",
-//         target: {
-//           type: "card",
-//           value: "all",
-//           filters: [
+//       Type: "static-triggered",
+//       Trigger: {
+//         On: "put-a-card-under",
+//         Target: {
+//           Type: "card",
+//           Value: "all",
+//           Filters: [
 //             { filter: "owner", value: "self" },
 //             { filter: "type", value: ["character", "location"] },
 //             { filter: "zone", value: "play" },
 //           ],
 //         },
 //       },
-//       name: "LATEST ENTRY",
-//       text: "Whenever you put a card under one of your characters or locations, you may pay 1 {I} to draw a card.",
-//       layer: {
-//         type: "resolution",
-//         optional: true,
-//         name: "LATEST ENTRY",
-//         text: "you may pay 1 {I} to draw a card.",
-//         effects: [drawACard],
-//         costs: [{ type: "ink", amount: 1 }],
+//       Name: "LATEST ENTRY",
+//       Text: "Whenever you put a card under one of your characters or locations, you may pay 1 {I} to draw a card.",
+//       Layer: {
+//         Type: "resolution",
+//         Optional: true,
+//         Name: "LATEST ENTRY",
+//         Text: "you may pay 1 {I} to draw a card.",
+//         Effects: [drawACard],
+//         Costs: [{ type: "ink", amount: 1 }],
 //       },
 //     },
 //   ],

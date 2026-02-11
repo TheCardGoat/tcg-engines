@@ -1,85 +1,85 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const elsaIceSurfer: CharacterCard = {
-  id: "a9h",
-  cardType: "character",
-  name: "Elsa",
-  version: "Ice Surfer",
-  fullName: "Elsa - Ice Surfer",
-  inkType: ["ruby"],
-  franchise: "Disney",
-  set: "001",
-  text: "**THAT",
-  cost: 4,
-  strength: 3,
-  willpower: 4,
-  lore: 1,
+  abilities: [],
   cardNumber: 109,
-  inkable: true,
+  cardType: "character",
+  classifications: ["Hero", "Dreamborn", "Queen", "Sorcerer"],
+  cost: 4,
   externalIds: {
     ravensburger: "",
   },
-  abilities: [],
-  classifications: ["Hero", "Dreamborn", "Queen", "Sorcerer"],
+  franchise: "Disney",
+  fullName: "Elsa - Ice Surfer",
+  id: "a9h",
+  inkType: ["ruby"],
+  inkable: true,
+  lore: 1,
+  name: "Elsa",
+  set: "001",
+  strength: 3,
+  text: "**THAT",
+  version: "Ice Surfer",
+  willpower: 4,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { wheneverPlays } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-// import { readyAndCantQuest } from "@lorcanito/lorcana-engine/effects/effects";
+// Import { wheneverPlays } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import { readyAndCantQuest } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const elsaIceSurfer: LorcanitoCharacterCard = {
-//   id: "a9h",
-//   name: "Elsa",
-//   title: "Ice Surfer",
-//   characteristics: ["hero", "dreamborn", "queen", "sorcerer"],
-//   text: "**THAT'S NO BLIZZARD** Whenever you play a character named Anna, ready this character. This character can't quest for the rest of this turn.",
-//   type: "character",
-//   abilities: [
-//     wheneverPlays({
-//       name: "THAT'S NO BLIZZARD",
-//       text: "Whenever you play a character named Anna, ready this character. This character can't quest for the rest of this turn.",
-//       triggerTarget: {
-//         type: "card",
-//         value: 1,
-//         filters: [
+// Export const elsaIceSurfer: LorcanitoCharacterCard = {
+//   Id: "a9h",
+//   Name: "Elsa",
+//   Title: "Ice Surfer",
+//   Characteristics: ["hero", "dreamborn", "queen", "sorcerer"],
+//   Text: "**THAT'S NO BLIZZARD** Whenever you play a character named Anna, ready this character. This character can't quest for the rest of this turn.",
+//   Type: "character",
+//   Abilities: [
+//     WheneverPlays({
+//       Name: "THAT'S NO BLIZZARD",
+//       Text: "Whenever you play a character named Anna, ready this character. This character can't quest for the rest of this turn.",
+//       TriggerTarget: {
+//         Type: "card",
+//         Value: 1,
+//         Filters: [
 //           { filter: "owner", value: "self" },
 //           {
-//             filter: "attribute",
-//             value: "name",
-//             comparison: { operator: "eq", value: "Anna" },
+//             Filter: "attribute",
+//             Value: "name",
+//             Comparison: { operator: "eq", value: "Anna" },
 //           },
 //         ],
 //       },
-//       effects: readyAndCantQuest({
-//         type: "card",
-//         value: "all",
-//         filters: [
+//       Effects: readyAndCantQuest({
+//         Type: "card",
+//         Value: "all",
+//         Filters: [
 //           { filter: "owner", value: "self" },
 //           { filter: "zone", value: "play" },
 //           {
-//             filter: "attribute",
-//             value: "name",
-//             comparison: { operator: "eq", value: "Elsa" },
+//             Filter: "attribute",
+//             Value: "name",
+//             Comparison: { operator: "eq", value: "Elsa" },
 //           },
 //         ],
 //       }),
 //     }),
 //   ],
-//   flavour:
+//   Flavour:
 //     "My sister has always been there for me. I need to be there for her.",
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 4,
-//   strength: 3,
-//   willpower: 4,
-//   lore: 1,
-//   illustrator: "Alice Pisoni",
-//   number: 109,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 507482,
+//   Inkwell: true,
+//   Colors: ["ruby"],
+//   Cost: 4,
+//   Strength: 3,
+//   Willpower: 4,
+//   Lore: 1,
+//   Illustrator: "Alice Pisoni",
+//   Number: 109,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 507482,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

@@ -3,35 +3,35 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { queensSensorCoreItem } from "@lorcanito/lorcana-engine/cards/005/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { queensSensorCoreItem } from "@lorcanito/lorcana-engine/cards/005/items/items";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Queen's Sensor Core", () => {
-//   it.skip("SYMBOL OF NOBILITY", () => {
-//     const testStore = new TestStore({
-//       inkwell: queensSensorCoreItem.cost,
-//       play: [queensSensorCoreItem],
+// Describe("Queen's Sensor Core", () => {
+//   It.skip("SYMBOL OF NOBILITY", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: queensSensorCoreItem.cost,
+//       Play: [queensSensorCoreItem],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(queensSensorCoreItem);
+//     Const cardUnderTest = testStore.getCard(queensSensorCoreItem);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 //
-//   it.skip("Royal Search", () => {
-//     const testStore = new TestStore({
-//       inkwell: queensSensorCoreItem.cost,
-//       play: [queensSensorCoreItem],
+//   It.skip("Royal Search", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: queensSensorCoreItem.cost,
+//       Play: [queensSensorCoreItem],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(queensSensorCoreItem);
+//     Const cardUnderTest = testStore.getCard(queensSensorCoreItem);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

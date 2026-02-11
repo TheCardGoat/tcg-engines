@@ -3,42 +3,42 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   chiefTui,
-//   heiheiBoatSnack,
-//   liloMakingAWish,
-//   moanaOfMotunui,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   ChiefTui,
+//   HeiheiBoatSnack,
+//   LiloMakingAWish,
+//   MoanaOfMotunui,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { ursulaCaldron } from "@lorcanito/lorcana-engine/cards/001/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { ursulaCaldron } from "@lorcanito/lorcana-engine/cards/001/items/items";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Ursula's Cauldron", () => {
-//   describe("Peer Into The Depths", () => {
-//     it("Look at the top 2 cards of your deck. Put one on the top of your deck and the other on the bottom.", () => {
-//       const testStore = new TestStore({
-//         deck: [liloMakingAWish, moanaOfMotunui, chiefTui, heiheiBoatSnack],
-//         play: [ursulaCaldron],
-//         inkwell: ursulaCaldron.cost,
+// Describe("Ursula's Cauldron", () => {
+//   Describe("Peer Into The Depths", () => {
+//     It("Look at the top 2 cards of your deck. Put one on the top of your deck and the other on the bottom.", () => {
+//       Const testStore = new TestStore({
+//         Deck: [liloMakingAWish, moanaOfMotunui, chiefTui, heiheiBoatSnack],
+//         Play: [ursulaCaldron],
+//         Inkwell: ursulaCaldron.cost,
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId("play", ursulaCaldron.id);
-//       const heihei = testStore.getByZoneAndId("deck", heiheiBoatSnack.id);
-//       const tui = testStore.getByZoneAndId("deck", chiefTui.id);
+//       Const cardUnderTest = testStore.getByZoneAndId("play", ursulaCaldron.id);
+//       Const heihei = testStore.getByZoneAndId("deck", heiheiBoatSnack.id);
+//       Const tui = testStore.getByZoneAndId("deck", chiefTui.id);
 //
-//       cardUnderTest.activate();
+//       CardUnderTest.activate();
 //
-//       testStore.resolveTopOfStack({ scry: { top: [tui], bottom: [heihei] } });
+//       TestStore.resolveTopOfStack({ scry: { top: [tui], bottom: [heihei] } });
 //
-//       expect(
-//         testStore.store.tableStore
+//       Expect(
+//         TestStore.store.tableStore
 //           .getPlayerZoneCards("player_one", "deck")
 //           .map((card) => card.lorcanitoCard?.name),
 //       ).toEqual([
-//         heiheiBoatSnack.name,
-//         liloMakingAWish.name,
-//         moanaOfMotunui.name,
-//         chiefTui.name,
+//         HeiheiBoatSnack.name,
+//         LiloMakingAWish.name,
+//         MoanaOfMotunui.name,
+//         ChiefTui.name,
 //       ]);
 //     });
 //   });

@@ -3,77 +3,77 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { mrSmeeBumblingMate } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { calhounMarineSergeant } from "@lorcanito/lorcana-engine/cards/006";
-// import { mushuMajesticDragon } from "@lorcanito/lorcana-engine/cards/007";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { mrSmeeBumblingMate } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { calhounMarineSergeant } from "@lorcanito/lorcana-engine/cards/006";
+// Import { mushuMajesticDragon } from "@lorcanito/lorcana-engine/cards/007";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Mushu - Majestic Dragon", () => {
-//   it("INTIMIDATING AND AWE-INSPIRING Whenever one of your characters challenges, they gain Resist +2 during that challenge. (Damage dealt to them is reduced by 2.)", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Mushu - Majestic Dragon", () => {
+//   It("INTIMIDATING AND AWE-INSPIRING Whenever one of your characters challenges, they gain Resist +2 during that challenge. (Damage dealt to them is reduced by 2.)", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         play: [mushuMajesticDragon, mrSmeeBumblingMate],
+//         Play: [mushuMajesticDragon, mrSmeeBumblingMate],
 //       },
 //       {
-//         play: [calhounMarineSergeant],
+//         Play: [calhounMarineSergeant],
 //       },
 //     );
 //
-//     const cardUnderTest = testEngine.getCardModel(mrSmeeBumblingMate);
-//     const target = testEngine.getCardModel(calhounMarineSergeant);
+//     Const cardUnderTest = testEngine.getCardModel(mrSmeeBumblingMate);
+//     Const target = testEngine.getCardModel(calhounMarineSergeant);
 //
-//     target.updateCardMeta({ exerted: true });
-//     cardUnderTest.challenge(target);
+//     Target.updateCardMeta({ exerted: true });
+//     CardUnderTest.challenge(target);
 //
-//     expect(testEngine.getCardZone(cardUnderTest)).toBe("play");
-//     expect(testEngine.getCardZone(target)).toBe("discard");
-//     expect(cardUnderTest.meta.damage).toBe(1);
-//     expect(cardUnderTest.hasResist).toBe(false); // Once challenge ends, resist is removed
+//     Expect(testEngine.getCardZone(cardUnderTest)).toBe("play");
+//     Expect(testEngine.getCardZone(target)).toBe("discard");
+//     Expect(cardUnderTest.meta.damage).toBe(1);
+//     Expect(cardUnderTest.hasResist).toBe(false); // Once challenge ends, resist is removed
 //   });
 //
-//   it("GUARDIAN OF LOST SOULS During your turn, whenever one of your characters banishes another character in a challenge, gain 2 lore.", async () => {
-//     const testEngine = new TestEngine(
+//   It("GUARDIAN OF LOST SOULS During your turn, whenever one of your characters banishes another character in a challenge, gain 2 lore.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         play: [mushuMajesticDragon, mrSmeeBumblingMate],
+//         Play: [mushuMajesticDragon, mrSmeeBumblingMate],
 //       },
 //       {
-//         play: [calhounMarineSergeant],
+//         Play: [calhounMarineSergeant],
 //       },
 //     );
 //
-//     const cardUnderTest = testEngine.getCardModel(mrSmeeBumblingMate);
-//     const target = testEngine.getCardModel(calhounMarineSergeant);
+//     Const cardUnderTest = testEngine.getCardModel(mrSmeeBumblingMate);
+//     Const target = testEngine.getCardModel(calhounMarineSergeant);
 //
-//     target.updateCardMeta({ exerted: true });
+//     Target.updateCardMeta({ exerted: true });
 //
-//     expect(testEngine.getPlayerLore()).toBe(0);
-//     cardUnderTest.challenge(target);
-//     expect(testEngine.getPlayerLore()).toBe(2);
+//     Expect(testEngine.getPlayerLore()).toBe(0);
+//     CardUnderTest.challenge(target);
+//     Expect(testEngine.getPlayerLore()).toBe(2);
 //   });
 //
-//   it("Ensure lore is only gained during players turn", async () => {
-//     const testEngine = new TestEngine(
+//   It("Ensure lore is only gained during players turn", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         play: [mushuMajesticDragon, mrSmeeBumblingMate],
+//         Play: [mushuMajesticDragon, mrSmeeBumblingMate],
 //       },
 //       {
-//         play: [calhounMarineSergeant],
+//         Play: [calhounMarineSergeant],
 //       },
 //     );
 //
-//     const defender = testEngine.getCardModel(mrSmeeBumblingMate);
-//     const attacker = testEngine.getCardModel(calhounMarineSergeant);
+//     Const defender = testEngine.getCardModel(mrSmeeBumblingMate);
+//     Const attacker = testEngine.getCardModel(calhounMarineSergeant);
 //
-//     defender.updateCardMeta({ exerted: true });
+//     Defender.updateCardMeta({ exerted: true });
 //
-//     await testEngine.passTurn();
+//     Await testEngine.passTurn();
 //
-//     expect(testEngine.getCardModel(mrSmeeBumblingMate).damage).toBe(1);
+//     Expect(testEngine.getCardModel(mrSmeeBumblingMate).damage).toBe(1);
 //
-//     expect(testEngine.getPlayerLore()).toBe(0);
-//     attacker.challenge(defender);
-//     expect(testEngine.getPlayerLore()).toBe(0);
+//     Expect(testEngine.getPlayerLore()).toBe(0);
+//     Attacker.challenge(defender);
+//     Expect(testEngine.getPlayerLore()).toBe(0);
 //   });
 // });
 //

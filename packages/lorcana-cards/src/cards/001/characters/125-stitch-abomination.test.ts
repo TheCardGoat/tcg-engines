@@ -5,9 +5,9 @@ import { stitchAbomination } from "./125-stitch-abomination";
 describe("Stitch - Abomination", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [stitchAbomination] });
-  //   expect(testEngine.getCardModel(stitchAbomination).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [stitchAbomination] });
+  //   Expect(testEngine.getCardModel(stitchAbomination).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });

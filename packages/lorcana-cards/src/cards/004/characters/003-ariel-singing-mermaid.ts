@@ -1,29 +1,29 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { singerAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { singerAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
 //
-// export const arielSingingMermaid: LorcanitoCharacterCard = {
-//   id: "q8b",
-//   reprints: ["vqa"],
-//   name: "Ariel",
-//   title: "Singing Mermaid",
-//   characteristics: ["hero", "storyborn", "princess"],
-//   text: "**Singer** 7 _(This character counts as cost 7 to sing songs.)_",
-//   type: "character",
-//   abilities: [singerAbility(7)],
-//   flavour: "Watch and you'll see−some day l'Il be part of your world!",
-//   inkwell: true,
-//   colors: ["amber"],
-//   cost: 4,
-//   strength: 3,
-//   willpower: 3,
-//   lore: 2,
-//   illustrator: "Matthew Robert Davies",
-//   number: 3,
-//   set: "URR",
-//   externalIds: {
-//     tcgPlayer: 547773,
+// Export const arielSingingMermaid: LorcanitoCharacterCard = {
+//   Id: "q8b",
+//   Reprints: ["vqa"],
+//   Name: "Ariel",
+//   Title: "Singing Mermaid",
+//   Characteristics: ["hero", "storyborn", "princess"],
+//   Text: "**Singer** 7 _(This character counts as cost 7 to sing songs.)_",
+//   Type: "character",
+//   Abilities: [singerAbility(7)],
+//   Flavour: "Watch and you'll see−some day l'Il be part of your world!",
+//   Inkwell: true,
+//   Colors: ["amber"],
+//   Cost: 4,
+//   Strength: 3,
+//   Willpower: 3,
+//   Lore: 2,
+//   Illustrator: "Matthew Robert Davies",
+//   Number: 3,
+//   Set: "URR",
+//   ExternalIds: {
+//     TcgPlayer: 547773,
 //   },
-//   rarity: "rare",
+//   Rarity: "rare",
 // };
 //

@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { medalOfHeroes } from "@lorcanito/lorcana-engine/cards/005/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { medalOfHeroes } from "@lorcanito/lorcana-engine/cards/005/items/items";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Medal of Heroes", () => {
-//   it.skip("**CONGRATULATIONS, SOLDIER**{E}, 2 {I}, Banish this item − Chosen character of yours gets +2 {L} this turn.", () => {
-//     const testStore = new TestStore({
-//       inkwell: medalOfHeroes.cost,
-//       play: [medalOfHeroes],
+// Describe("Medal of Heroes", () => {
+//   It.skip("**CONGRATULATIONS, SOLDIER**{E}, 2 {I}, Banish this item − Chosen character of yours gets +2 {L} this turn.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: medalOfHeroes.cost,
+//       Play: [medalOfHeroes],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(medalOfHeroes);
+//     Const cardUnderTest = testStore.getCard(medalOfHeroes);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

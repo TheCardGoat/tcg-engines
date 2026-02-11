@@ -1,64 +1,64 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const johnSilverAlienPirate: CharacterCard = {
-  id: "a8j",
-  cardType: "character",
-  name: "John Silver",
-  version: "Alien Pirate",
-  fullName: "John Silver - Alien Pirate",
-  inkType: ["emerald"],
-  franchise: "Disney",
-  set: "001",
-  text: "**PICK YOUR FIGHTS** When you play this character and whenever he quests, chosen opposing character gains **Reckless** during their next turn. _(They can",
-  cost: 6,
-  strength: 5,
-  willpower: 5,
-  lore: 2,
-  cardNumber: 82,
-  inkable: true,
-  externalIds: {
-    ravensburger: "",
-  },
   abilities: [
     {
-      type: "action",
-      text: "**PICK YOUR FIGHTS** When you play this character and whenever he quests, chosen opposing character gains **Reckless** during their next turn. _(They can",
-      id: "a8j-1",
       effect: {
         type: "play-card",
         from: "hand",
       },
+      id: "a8j-1",
+      text: "**PICK YOUR FIGHTS** When you play this character and whenever he quests, chosen opposing character gains **Reckless** during their next turn. _(They can",
+      type: "action",
     },
   ],
+  cardNumber: 82,
+  cardType: "character",
   classifications: ["Alien", "Storyborn", "Villain", "Pirate", "Captain"],
+  cost: 6,
+  externalIds: {
+    ravensburger: "",
+  },
+  franchise: "Disney",
+  fullName: "John Silver - Alien Pirate",
+  id: "a8j",
+  inkType: ["emerald"],
+  inkable: true,
+  lore: 2,
+  name: "John Silver",
+  set: "001",
+  strength: 5,
+  text: "**PICK YOUR FIGHTS** When you play this character and whenever he quests, chosen opposing character gains **Reckless** during their next turn. _(They can",
+  version: "Alien Pirate",
+  willpower: 5,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { whenPlayAndWheneverQuests } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import { whenPlayAndWheneverQuests } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const johnSilverAlienPirate: LorcanitoCharacterCard = {
-//   id: "a8j",
-//   reprints: ["hsz"],
+// Export const johnSilverAlienPirate: LorcanitoCharacterCard = {
+//   Id: "a8j",
+//   Reprints: ["hsz"],
 //
-//   name: "John Silver",
-//   title: "Alien Pirate",
-//   characteristics: ["alien", "storyborn", "villain", "pirate", "captain"],
-//   text: "**PICK YOUR FIGHTS** When you play this character and whenever he quests, chosen opposing character gains **Reckless** during their next turn. _(They can't quest and must challenge if able.)_",
-//   type: "character",
-//   abilities: whenPlayAndWheneverQuests({
-//     name: "Pick Your Fights",
-//     text: "When you play this character and whenever he quests, chosen opposing character gains **Reckless** during their next turn. _(They can't quest and must challenge if able.)_",
-//     effects: [
+//   Name: "John Silver",
+//   Title: "Alien Pirate",
+//   Characteristics: ["alien", "storyborn", "villain", "pirate", "captain"],
+//   Text: "**PICK YOUR FIGHTS** When you play this character and whenever he quests, chosen opposing character gains **Reckless** during their next turn. _(They can't quest and must challenge if able.)_",
+//   Type: "character",
+//   Abilities: whenPlayAndWheneverQuests({
+//     Name: "Pick Your Fights",
+//     Text: "When you play this character and whenever he quests, chosen opposing character gains **Reckless** during their next turn. _(They can't quest and must challenge if able.)_",
+//     Effects: [
 //       {
-//         type: "ability",
-//         ability: "reckless",
-//         modifier: "add",
-//         duration: "next_turn",
-//         target: {
-//           type: "card",
-//           value: 1,
-//           filters: [
+//         Type: "ability",
+//         Ability: "reckless",
+//         Modifier: "add",
+//         Duration: "next_turn",
+//         Target: {
+//           Type: "card",
+//           Value: 1,
+//           Filters: [
 //             { filter: "zone", value: "play" },
 //             { filter: "owner", value: "opponent" },
 //             { filter: "type", value: "character" },
@@ -67,19 +67,19 @@ export const johnSilverAlienPirate: CharacterCard = {
 //       },
 //     ],
 //   }),
-//   flavour: "Don't be too put off by this . . . hunk of hardware.",
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 6,
-//   strength: 5,
-//   willpower: 5,
-//   lore: 2,
-//   illustrator: "Jared Nickerl",
-//   number: 82,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 507476,
+//   Flavour: "Don't be too put off by this . . . hunk of hardware.",
+//   Inkwell: true,
+//   Colors: ["emerald"],
+//   Cost: 6,
+//   Strength: 5,
+//   Willpower: 5,
+//   Lore: 2,
+//   Illustrator: "Jared Nickerl",
+//   Number: 82,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 507476,
 //   },
-//   rarity: "legendary",
+//   Rarity: "legendary",
 // };
 //

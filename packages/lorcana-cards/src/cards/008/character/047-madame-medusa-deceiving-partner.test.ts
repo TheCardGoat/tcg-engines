@@ -3,38 +3,38 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   dormouseEasilyAgitated,
-//   madameMedusaDeceivingPartner,
-//   mickeyMouseGiantMouse,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   DormouseEasilyAgitated,
+//   MadameMedusaDeceivingPartner,
+//   MickeyMouseGiantMouse,
 // } from "@lorcanito/lorcana-engine/cards/008";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Madame Medusa - Deceiving Partner", () => {
-//   it("DOUBLE-CROSS When you play this character, you may deal 2 damage to another chosen character of yours to return chosen character with cost 2 or less to their player's hand.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Madame Medusa - Deceiving Partner", () => {
+//   It("DOUBLE-CROSS When you play this character, you may deal 2 damage to another chosen character of yours to return chosen character with cost 2 or less to their player's hand.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: madameMedusaDeceivingPartner.cost,
-//         hand: [madameMedusaDeceivingPartner],
-//         play: [mickeyMouseGiantMouse],
+//         Inkwell: madameMedusaDeceivingPartner.cost,
+//         Hand: [madameMedusaDeceivingPartner],
+//         Play: [mickeyMouseGiantMouse],
 //       },
 //       {
-//         play: [dormouseEasilyAgitated],
+//         Play: [dormouseEasilyAgitated],
 //       },
 //     );
 //
-//     await testEngine.playCard(
-//       madameMedusaDeceivingPartner,
+//     Await testEngine.playCard(
+//       MadameMedusaDeceivingPartner,
 //       {
-//         targets: [mickeyMouseGiantMouse],
-//         acceptOptionalLayer: true,
+//         Targets: [mickeyMouseGiantMouse],
+//         AcceptOptionalLayer: true,
 //       },
-//       true,
+//       True,
 //     );
-//     await testEngine.resolveTopOfStack({ targets: [dormouseEasilyAgitated] });
+//     Await testEngine.resolveTopOfStack({ targets: [dormouseEasilyAgitated] });
 //
-//     expect(testEngine.getCardModel(dormouseEasilyAgitated).zone).toBe("hand");
+//     Expect(testEngine.getCardModel(dormouseEasilyAgitated).zone).toBe("hand");
 //   });
 // });
 //

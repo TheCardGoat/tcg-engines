@@ -70,9 +70,7 @@ export interface BattlefieldLocation {
 /**
  * Type guard for battlefield location
  */
-export function isBattlefieldLocation(
-  location: Location,
-): location is BattlefieldLocation {
+export function isBattlefieldLocation(location: Location): location is BattlefieldLocation {
   return typeof location === "object" && "battlefield" in location;
 }
 
@@ -101,7 +99,7 @@ export type SimpleFilter =
  * Tag filter - matches cards with specific tags
  */
 export interface TagFilter {
-  readonly tag: string; // e.g., "Mech", "Dragon", "Sand Soldier"
+  readonly tag: string; // E.g., "Mech", "Dragon", "Sand Soldier"
 }
 
 /**
@@ -333,9 +331,7 @@ export function isCardTarget(target: AnyTarget): target is Target {
  * Check if target is a player target
  */
 export function isPlayerTarget(target: AnyTarget): target is PlayerTarget {
-  return (
-    typeof target === "object" && "type" in target && target.type === "player"
-  );
+  return typeof target === "object" && "type" in target && target.type === "player";
 }
 
 /**
@@ -343,22 +339,15 @@ export function isPlayerTarget(target: AnyTarget): target is PlayerTarget {
  */
 export function isSelfTarget(target: AnyTarget): target is SelfTarget | "self" {
   return (
-    target === "self" ||
-    (typeof target === "object" && "type" in target && target.type === "self")
+    target === "self" || (typeof target === "object" && "type" in target && target.type === "self")
   );
 }
 
 /**
  * Check if target is trigger source
  */
-export function isTriggerSourceTarget(
-  target: AnyTarget,
-): target is TriggerSourceTarget {
-  return (
-    typeof target === "object" &&
-    "type" in target &&
-    target.type === "trigger-source"
-  );
+export function isTriggerSourceTarget(target: AnyTarget): target is TriggerSourceTarget {
+  return typeof target === "object" && "type" in target && target.type === "trigger-source";
 }
 
 // ============================================================================
@@ -389,35 +378,27 @@ export function equipment(options?: Partial<Omit<Target, "type">>): Target {
 /**
  * Create a friendly unit target
  */
-export function friendlyUnit(
-  options?: Partial<Omit<Target, "type" | "controller">>,
-): Target {
-  return { type: "unit", controller: "friendly", ...options };
+export function friendlyUnit(options?: Partial<Omit<Target, "type" | "controller">>): Target {
+  return { controller: "friendly", type: "unit", ...options };
 }
 
 /**
  * Create an enemy unit target
  */
-export function enemyUnit(
-  options?: Partial<Omit<Target, "type" | "controller">>,
-): Target {
-  return { type: "unit", controller: "enemy", ...options };
+export function enemyUnit(options?: Partial<Omit<Target, "type" | "controller">>): Target {
+  return { controller: "enemy", type: "unit", ...options };
 }
 
 /**
  * Create a unit at battlefield target
  */
-export function unitAtBattlefield(
-  options?: Partial<Omit<Target, "type" | "location">>,
-): Target {
-  return { type: "unit", location: "battlefield", ...options };
+export function unitAtBattlefield(options?: Partial<Omit<Target, "type" | "location">>): Target {
+  return { location: "battlefield", type: "unit", ...options };
 }
 
 /**
  * Create a unit here (same location) target
  */
-export function unitHere(
-  options?: Partial<Omit<Target, "type" | "location">>,
-): Target {
-  return { type: "unit", location: "here", ...options };
+export function unitHere(options?: Partial<Omit<Target, "type" | "location">>): Target {
+  return { location: "here", type: "unit", ...options };
 }

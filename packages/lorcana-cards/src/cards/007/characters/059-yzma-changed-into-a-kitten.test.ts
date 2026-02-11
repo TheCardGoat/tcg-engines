@@ -3,59 +3,59 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   outOfOrder,
-//   yzmaChangedIntoAKitten,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   OutOfOrder,
+//   YzmaChangedIntoAKitten,
 // } from "@lorcanito/lorcana-engine/cards/007/";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Yzma - Changed into a Kitten", () => {
-//   describe("I WON When this character is banished, if you have more cards in hand than any opponent, you may return this character to your hand.", () => {
-//     it("should NOT return to hand when banished if player does not have more cards in hand", async () => {
-//       const testEngine = new TestEngine(
+// Describe("Yzma - Changed into a Kitten", () => {
+//   Describe("I WON When this character is banished, if you have more cards in hand than any opponent, you may return this character to your hand.", () => {
+//     It("should NOT return to hand when banished if player does not have more cards in hand", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           hand: [outOfOrder],
-//           inkwell: outOfOrder.cost,
+//           Hand: [outOfOrder],
+//           Inkwell: outOfOrder.cost,
 //         },
 //         {
-//           play: [yzmaChangedIntoAKitten],
+//           Play: [yzmaChangedIntoAKitten],
 //         },
 //       );
 //
-//       await testEngine.playCard(outOfOrder, {
-//         targets: [yzmaChangedIntoAKitten],
+//       Await testEngine.playCard(outOfOrder, {
+//         Targets: [yzmaChangedIntoAKitten],
 //       });
 //
-//       expect(testEngine.stackLayers).toHaveLength(0);
-//       expect(testEngine.getCardModel(yzmaChangedIntoAKitten).zone).toBe(
+//       Expect(testEngine.stackLayers).toHaveLength(0);
+//       Expect(testEngine.getCardModel(yzmaChangedIntoAKitten).zone).toBe(
 //         "discard",
 //       );
 //     });
 //
-//     it("should return to hand when banished if player has more cards in hand", async () => {
-//       const testEngine = new TestEngine(
+//     It("should return to hand when banished if player has more cards in hand", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           hand: [outOfOrder],
-//           inkwell: outOfOrder.cost,
+//           Hand: [outOfOrder],
+//           Inkwell: outOfOrder.cost,
 //         },
 //         {
-//           play: [yzmaChangedIntoAKitten],
-//           hand: 3,
+//           Play: [yzmaChangedIntoAKitten],
+//           Hand: 3,
 //         },
 //       );
 //
-//       await testEngine.playCard(
-//         outOfOrder,
+//       Await testEngine.playCard(
+//         OutOfOrder,
 //         {
-//           targets: [yzmaChangedIntoAKitten],
+//           Targets: [yzmaChangedIntoAKitten],
 //         },
-//         true,
+//         True,
 //       );
 //
-//       testEngine.changeActivePlayer("player_two");
-//       await testEngine.resolveOptionalAbility();
-//       expect(testEngine.getCardModel(yzmaChangedIntoAKitten).zone).toBe("hand");
+//       TestEngine.changeActivePlayer("player_two");
+//       Await testEngine.resolveOptionalAbility();
+//       Expect(testEngine.getCardModel(yzmaChangedIntoAKitten).zone).toBe("hand");
 //     });
 //   });
 // });

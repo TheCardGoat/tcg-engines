@@ -5,9 +5,9 @@ import { robinHoodUnrivaledArcher } from "./157-robin-hood-unrivaled-archer";
 describe("Robin Hood - Unrivaled Archer", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [robinHoodUnrivaledArcher] });
-  //   expect(testEngine.getCardModel(robinHoodUnrivaledArcher).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [robinHoodUnrivaledArcher] });
+  //   Expect(testEngine.getCardModel(robinHoodUnrivaledArcher).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,96 +17,96 @@ describe("Robin Hood - Unrivaled Archer", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   ransack,
-//   youHaveForgottenMe,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   Ransack,
+//   YouHaveForgottenMe,
 // } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
-// import {
-//   magicBroomBucketBrigade,
-//   robinHoodUnrivaledArcher,
+// Import {
+//   MagicBroomBucketBrigade,
+//   RobinHoodUnrivaledArcher,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Robin Hood - Unrivaled Archer", () => {
-//   describe("Good Shot: During your turn, this character gains **Evasive**.", () => {
-//     it("During your turn.", () => {
-//       const testStore = new TestStore(
+// Describe("Robin Hood - Unrivaled Archer", () => {
+//   Describe("Good Shot: During your turn, this character gains **Evasive**.", () => {
+//     It("During your turn.", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [robinHoodUnrivaledArcher],
+//           Play: [robinHoodUnrivaledArcher],
 //         },
 //         {
-//           play: [robinHoodUnrivaledArcher],
+//           Play: [robinHoodUnrivaledArcher],
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         robinHoodUnrivaledArcher.id,
+//         RobinHoodUnrivaledArcher.id,
 //       );
 //
-//       expect(cardUnderTest.hasEvasive).toBeTruthy();
+//       Expect(cardUnderTest.hasEvasive).toBeTruthy();
 //     });
 //
-//     it("During opponent's turn.", () => {
-//       const testStore = new TestStore(
+//     It("During opponent's turn.", () => {
+//       Const testStore = new TestStore(
 //         {},
 //         {
-//           play: [robinHoodUnrivaledArcher],
+//           Play: [robinHoodUnrivaledArcher],
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         robinHoodUnrivaledArcher.id,
+//         RobinHoodUnrivaledArcher.id,
 //         "player_two",
 //       );
 //
-//       expect(cardUnderTest.hasEvasive).toBeFalsy();
+//       Expect(cardUnderTest.hasEvasive).toBeFalsy();
 //     });
 //   });
 //
-//   describe("Feed the Poor - When you play this character, if an opponent has more cards in their hand than you, draw a card.", () => {
-//     it("Player has less cards than opponent", () => {
-//       const testStore = new TestStore(
+//   Describe("Feed the Poor - When you play this character, if an opponent has more cards in their hand than you, draw a card.", () => {
+//     It("Player has less cards than opponent", () => {
+//       Const testStore = new TestStore(
 //         {
-//           deck: 1,
-//           inkwell: robinHoodUnrivaledArcher.cost,
-//           hand: [robinHoodUnrivaledArcher, ransack],
+//           Deck: 1,
+//           Inkwell: robinHoodUnrivaledArcher.cost,
+//           Hand: [robinHoodUnrivaledArcher, ransack],
 //         },
 //         {
-//           hand: [magicBroomBucketBrigade, youHaveForgottenMe],
+//           Hand: [magicBroomBucketBrigade, youHaveForgottenMe],
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "hand",
-//         robinHoodUnrivaledArcher.id,
+//         RobinHoodUnrivaledArcher.id,
 //       );
 //
-//       cardUnderTest.playFromHand();
+//       CardUnderTest.playFromHand();
 //
-//       expect(testStore.getZonesCardCount()).toEqual(
-//         expect.objectContaining({ hand: 1 + 1, deck: 0, play: 1 }),
+//       Expect(testStore.getZonesCardCount()).toEqual(
+//         Expect.objectContaining({ hand: 1 + 1, deck: 0, play: 1 }),
 //       );
 //     });
 //
-//     it("Player has more cards than opponent", () => {
-//       const testStore = new TestStore({
-//         deck: 1,
-//         inkwell: robinHoodUnrivaledArcher.cost,
-//         hand: [robinHoodUnrivaledArcher, ransack],
+//     It("Player has more cards than opponent", () => {
+//       Const testStore = new TestStore({
+//         Deck: 1,
+//         Inkwell: robinHoodUnrivaledArcher.cost,
+//         Hand: [robinHoodUnrivaledArcher, ransack],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "hand",
-//         robinHoodUnrivaledArcher.id,
+//         RobinHoodUnrivaledArcher.id,
 //       );
 //
-//       cardUnderTest.playFromHand();
+//       CardUnderTest.playFromHand();
 //
-//       expect(testStore.getZonesCardCount()).toEqual(
-//         expect.objectContaining({ hand: 1, deck: 1, play: 1 }),
+//       Expect(testStore.getZonesCardCount()).toEqual(
+//         Expect.objectContaining({ hand: 1, deck: 1, play: 1 }),
 //       );
 //     });
 //   });

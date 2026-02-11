@@ -3,51 +3,51 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { monstroWhaleOfAWhale } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import {
-//   deweyLovableShowoff,
-//   trampDapperRascal,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { monstroWhaleOfAWhale } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import {
+//   DeweyLovableShowoff,
+//   TrampDapperRascal,
 // } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Tramp - Dapper Rascal", () => {
-//   it.skip("Shift 4 (You may pay 4 {I} to play this on top of one of your characters named Tramp.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [trampDapperRascal],
+// Describe("Tramp - Dapper Rascal", () => {
+//   It.skip("Shift 4 (You may pay 4 {I} to play this on top of one of your characters named Tramp.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [trampDapperRascal],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(trampDapperRascal);
-//     expect(cardUnderTest.hasShift).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(trampDapperRascal);
+//     Expect(cardUnderTest.hasShift).toBe(true);
 //   });
 //
-//   it("PLAY IT COOL During an opponent’s turn, whenever one of your characters is banished, you may draw a card.", async () => {
-//     const testEngine = new TestEngine(
+//   It("PLAY IT COOL During an opponent’s turn, whenever one of your characters is banished, you may draw a card.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         play: [trampDapperRascal, deweyLovableShowoff],
+//         Play: [trampDapperRascal, deweyLovableShowoff],
 //       },
 //       {
-//         play: [monstroWhaleOfAWhale],
+//         Play: [monstroWhaleOfAWhale],
 //       },
 //     );
 //
-//     const attacker = testEngine.getCardModel(monstroWhaleOfAWhale);
+//     Const attacker = testEngine.getCardModel(monstroWhaleOfAWhale);
 //     // const cardUnderTest = testEngine.getCardModel(trampDapperRascal);
-//     const cardToBanish = testEngine.getCardModel(deweyLovableShowoff);
+//     Const cardToBanish = testEngine.getCardModel(deweyLovableShowoff);
 //
-//     testEngine.questCard(cardToBanish);
+//     TestEngine.questCard(cardToBanish);
 //
-//     await testEngine.passTurn();
+//     Await testEngine.passTurn();
 //
-//     await testEngine.challenge({
-//       attacker: attacker,
-//       defender: cardToBanish,
+//     Await testEngine.challenge({
+//       Attacker: attacker,
+//       Defender: cardToBanish,
 //     });
 //
-//     testEngine.changeActivePlayer();
-//     await testEngine.resolveOptionalAbility();
+//     TestEngine.changeActivePlayer();
+//     Await testEngine.resolveOptionalAbility();
 //
-//     testEngine.getCardsByZone("hand", "player_one");
+//     TestEngine.getCardsByZone("hand", "player_one");
 //     // await testEngine.resolveTopOfStack({});
 //   });
 // });

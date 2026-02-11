@@ -133,20 +133,16 @@ export interface TurnHistoryEvent {
  *
  * Combines framework-managed state (internal) with game-specific state (external).
  */
-export type LorcanaGameState = IState<
-  LorcanaExternalState,
-  LorcanaCardDefinition,
-  LorcanaCardMeta
->;
+export type LorcanaGameState = IState<LorcanaExternalState, LorcanaCardDefinition, LorcanaCardMeta>;
 
 /**
  * Default card meta state for new cards
  */
 export function createDefaultCardMeta(): LorcanaCardMeta {
   return {
-    state: "ready",
     damage: 0,
     isDrying: true,
+    state: "ready",
   };
 }
 
@@ -159,26 +155,26 @@ export function createInitialLorcanaState(
   startingPlayerId: PlayerId,
 ): LorcanaGameState {
   return {
-    internal: {
-      zones: {}, // Zones are initialized by the framework zone manager
-      cards: {}, // Cards are initialized by the framework
-      cardMetas: {}, // Card metas are initialized as cards are created
-    },
     external: {
+      activePlayerId: startingPlayerId,
+      bag: [],
+      currentPhase: "beginning",
+      currentStep: "ready",
+      effects: [],
+      hasInkedThisTurn: false,
+      isGameOver: false,
       loreScores: {
         [player1Id]: 0,
         [player2Id]: 0,
       },
-      bag: [],
-      effects: [],
-      turnNumber: 1,
-      activePlayerId: startingPlayerId,
-      hasInkedThisTurn: false,
-      turnHistory: [],
       startingPlayerId,
-      currentPhase: "beginning",
-      currentStep: "ready",
-      isGameOver: false,
+      turnHistory: [],
+      turnNumber: 1,
+    },
+    internal: {
+      zones: {}, // Zones are initialized by the framework zone manager
+      cards: {}, // Cards are initialized by the framework
+      cardMetas: {}, // Card metas are initialized as cards are created
     },
   };
 }

@@ -3,36 +3,36 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   hadesMeticulousPlotter,
-//   tukTukCuriousPartner,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   HadesMeticulousPlotter,
+//   TukTukCuriousPartner,
 // } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { ursulasGardenFullOfTheUnfortunate } from "@lorcanito/lorcana-engine/cards/004/locations/locations";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { ursulasGardenFullOfTheUnfortunate } from "@lorcanito/lorcana-engine/cards/004/locations/locations";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Ursula's Garden - Full of the Unfortunate", () => {
-//   it("**Abandon Hope** While you have an exerted character here, opposing characters get -1 {L}.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Ursula's Garden - Full of the Unfortunate", () => {
+//   It("**Abandon Hope** While you have an exerted character here, opposing characters get -1 {L}.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: ursulasGardenFullOfTheUnfortunate.moveCost,
-//         play: [ursulasGardenFullOfTheUnfortunate, tukTukCuriousPartner],
+//         Inkwell: ursulasGardenFullOfTheUnfortunate.moveCost,
+//         Play: [ursulasGardenFullOfTheUnfortunate, tukTukCuriousPartner],
 //       },
 //       {
-//         play: [hadesMeticulousPlotter],
+//         Play: [hadesMeticulousPlotter],
 //       },
 //     );
 //
-//     const targetCard = testEngine.getCardModel(hadesMeticulousPlotter);
+//     Const targetCard = testEngine.getCardModel(hadesMeticulousPlotter);
 //
-//     await testEngine.moveToLocation({
-//       location: ursulasGardenFullOfTheUnfortunate,
-//       character: tukTukCuriousPartner,
+//     Await testEngine.moveToLocation({
+//       Location: ursulasGardenFullOfTheUnfortunate,
+//       Character: tukTukCuriousPartner,
 //     });
 //
-//     expect(targetCard.lore).toEqual(hadesMeticulousPlotter.lore);
-//     await testEngine.tapCard(tukTukCuriousPartner);
-//     expect(targetCard.lore).toEqual(hadesMeticulousPlotter.lore - 1);
+//     Expect(targetCard.lore).toEqual(hadesMeticulousPlotter.lore);
+//     Await testEngine.tapCard(tukTukCuriousPartner);
+//     Expect(targetCard.lore).toEqual(hadesMeticulousPlotter.lore - 1);
 //   });
 // });
 //

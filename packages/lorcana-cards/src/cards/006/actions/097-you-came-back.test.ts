@@ -3,31 +3,31 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { goofyExpertShipwright } from "@lorcanito/lorcana-engine/cards/006";
-// import { youCameBack } from "@lorcanito/lorcana-engine/cards/006/actions/actions";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { goofyExpertShipwright } from "@lorcanito/lorcana-engine/cards/006";
+// Import { youCameBack } from "@lorcanito/lorcana-engine/cards/006/actions/actions";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("You Came Back", () => {
-//   it("Ready chosen character.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: youCameBack.cost,
+// Describe("You Came Back", () => {
+//   It("Ready chosen character.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: youCameBack.cost,
 //       // Goofy has Ward
-//       play: [goofyExpertShipwright],
-//       hand: [youCameBack],
+//       Play: [goofyExpertShipwright],
+//       Hand: [youCameBack],
 //     });
 //
-//     const cardTarget = testEngine.getCardModel(goofyExpertShipwright);
+//     Const cardTarget = testEngine.getCardModel(goofyExpertShipwright);
 //
-//     await testEngine.tapCard(goofyExpertShipwright);
+//     Await testEngine.tapCard(goofyExpertShipwright);
 //
-//     expect(cardTarget.exerted).toBe(true);
+//     Expect(cardTarget.exerted).toBe(true);
 //
-//     await testEngine.playCard(youCameBack, {
-//       targets: [goofyExpertShipwright],
+//     Await testEngine.playCard(youCameBack, {
+//       Targets: [goofyExpertShipwright],
 //     });
 //
-//     expect(cardTarget.exerted).toBe(false);
+//     Expect(cardTarget.exerted).toBe(false);
 //   });
 // });
 //

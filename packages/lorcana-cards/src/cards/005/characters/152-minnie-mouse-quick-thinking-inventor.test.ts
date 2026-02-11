@@ -3,21 +3,21 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { minnieMouseQuickthinkingInventor } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { minnieMouseQuickthinkingInventor } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Minnie Mouse - Quick-Thinking Inventor", () => {
-//   it.skip("**CAKE CATAPULT** When you play this character, chosen character gets -2 {S} this turn.", () => {
-//     const testStore = new TestStore({
-//       inkwell: minnieMouseQuickthinkingInventor.cost,
-//       hand: [minnieMouseQuickthinkingInventor],
+// Describe("Minnie Mouse - Quick-Thinking Inventor", () => {
+//   It.skip("**CAKE CATAPULT** When you play this character, chosen character gets -2 {S} this turn.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: minnieMouseQuickthinkingInventor.cost,
+//       Hand: [minnieMouseQuickthinkingInventor],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(minnieMouseQuickthinkingInventor);
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     Const cardUnderTest = testStore.getCard(minnieMouseQuickthinkingInventor);
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

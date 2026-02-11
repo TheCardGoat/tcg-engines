@@ -3,122 +3,122 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   kakamoraBandOfPirates,
-//   peteSpacePirate,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   KakamoraBandOfPirates,
+//   PeteSpacePirate,
 // } from "@lorcanito/lorcana-engine/cards/007";
-// import {
-//   mickeyMouseGiantMouse,
-//   nothingWeWontDo,
+// Import {
+//   MickeyMouseGiantMouse,
+//   NothingWeWontDo,
 // } from "@lorcanito/lorcana-engine/cards/008";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Pete - Space Pirate", () => {
-//   it("Shift 4 (You may pay 4 {I} to play this on top of one of your characters named Pete.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [peteSpacePirate],
+// Describe("Pete - Space Pirate", () => {
+//   It("Shift 4 (You may pay 4 {I} to play this on top of one of your characters named Pete.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [peteSpacePirate],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(peteSpacePirate);
-//     expect(cardUnderTest.hasShift).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(peteSpacePirate);
+//     Expect(cardUnderTest.hasShift).toBe(true);
 //   });
 //
-//   describe("FRIGHTFUL SCHEME While this character is exerted, opposing characters can't exert to sing songs and your Pirate characters gain Resist +1. (Damage dealt to them is reduced by 1.)", () => {
-//     it("While this character is exerted, opposing characters can't exert to sing songs.", async () => {
-//       const testEngine = new TestEngine(
+//   Describe("FRIGHTFUL SCHEME While this character is exerted, opposing characters can't exert to sing songs and your Pirate characters gain Resist +1. (Damage dealt to them is reduced by 1.)", () => {
+//     It("While this character is exerted, opposing characters can't exert to sing songs.", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           play: [peteSpacePirate],
+//           Play: [peteSpacePirate],
 //         },
 //         {
-//           play: [kakamoraBandOfPirates],
+//           Play: [kakamoraBandOfPirates],
 //         },
 //       );
 //
-//       expect(testEngine.getCardModel(kakamoraBandOfPirates).hasVoiceless).toBe(
-//         false,
+//       Expect(testEngine.getCardModel(kakamoraBandOfPirates).hasVoiceless).toBe(
+//         False,
 //       );
 //
-//       await testEngine.tapCard(peteSpacePirate);
+//       Await testEngine.tapCard(peteSpacePirate);
 //
-//       expect(testEngine.getCardModel(kakamoraBandOfPirates).hasVoiceless).toBe(
-//         true,
+//       Expect(testEngine.getCardModel(kakamoraBandOfPirates).hasVoiceless).toBe(
+//         True,
 //       );
 //     });
 //
-//     it("While this character is exerted, your Pirate characters gain Resist +1. (Damage dealt to them is reduced by 1.)", async () => {
-//       const testEngine = new TestEngine({
-//         play: [peteSpacePirate, kakamoraBandOfPirates],
+//     It("While this character is exerted, your Pirate characters gain Resist +1. (Damage dealt to them is reduced by 1.)", async () => {
+//       Const testEngine = new TestEngine({
+//         Play: [peteSpacePirate, kakamoraBandOfPirates],
 //       });
 //
-//       expect(testEngine.getCardModel(kakamoraBandOfPirates).hasResist).toBe(
-//         false,
+//       Expect(testEngine.getCardModel(kakamoraBandOfPirates).hasResist).toBe(
+//         False,
 //       );
-//       expect(testEngine.getCardModel(peteSpacePirate).hasResist).toBe(false);
+//       Expect(testEngine.getCardModel(peteSpacePirate).hasResist).toBe(false);
 //
-//       await testEngine.tapCard(peteSpacePirate);
+//       Await testEngine.tapCard(peteSpacePirate);
 //
-//       expect(testEngine.getCardModel(kakamoraBandOfPirates).hasResist).toBe(
-//         true,
+//       Expect(testEngine.getCardModel(kakamoraBandOfPirates).hasResist).toBe(
+//         True,
 //       );
-//       expect(testEngine.getCardModel(peteSpacePirate).hasResist).toBe(true);
+//       Expect(testEngine.getCardModel(peteSpacePirate).hasResist).toBe(true);
 //     });
 //   });
 // });
 //
-// describe("Regression", () => {
-//   it("should apply resist to itself while challenging", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Regression", () => {
+//   It("should apply resist to itself while challenging", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         play: [peteSpacePirate],
+//         Play: [peteSpacePirate],
 //       },
 //       {
-//         play: [kakamoraBandOfPirates],
+//         Play: [kakamoraBandOfPirates],
 //       },
 //     );
 //
-//     await testEngine.challenge({
-//       attacker: peteSpacePirate,
-//       defender: kakamoraBandOfPirates,
-//       exertDefender: true,
+//     Await testEngine.challenge({
+//       Attacker: peteSpacePirate,
+//       Defender: kakamoraBandOfPirates,
+//       ExertDefender: true,
 //     });
 //
-//     expect(testEngine.getCardModel(peteSpacePirate).hasResist).toBe(true);
-//     expect(testEngine.getCardModel(peteSpacePirate).damage).toBe(
-//       kakamoraBandOfPirates.strength - 1,
+//     Expect(testEngine.getCardModel(peteSpacePirate).hasResist).toBe(true);
+//     Expect(testEngine.getCardModel(peteSpacePirate).damage).toBe(
+//       KakamoraBandOfPirates.strength - 1,
 //     );
 //   });
 //
-//   it("Should prevent Singing Together", async () => {
-//     const singers = [kakamoraBandOfPirates, mickeyMouseGiantMouse];
-//     const testEngine = new TestEngine(
+//   It("Should prevent Singing Together", async () => {
+//     Const singers = [kakamoraBandOfPirates, mickeyMouseGiantMouse];
+//     Const testEngine = new TestEngine(
 //       {
-//         hand: [nothingWeWontDo],
-//         play: singers,
+//         Hand: [nothingWeWontDo],
+//         Play: singers,
 //       },
 //       {
-//         play: [peteSpacePirate],
+//         Play: [peteSpacePirate],
 //       },
 //     );
 //
-//     for (const singer of singers) {
-//       expect(testEngine.getCardModel(singer).hasVoiceless).toBe(false);
-//       expect(testEngine.getCardModel(singer).canSing).toBe(true);
+//     For (const singer of singers) {
+//       Expect(testEngine.getCardModel(singer).hasVoiceless).toBe(false);
+//       Expect(testEngine.getCardModel(singer).canSing).toBe(true);
 //     }
 //
-//     await testEngine.tapCard(peteSpacePirate);
+//     Await testEngine.tapCard(peteSpacePirate);
 //
-//     for (const singer of singers) {
-//       expect(testEngine.getCardModel(singer).hasVoiceless).toBe(true);
-//       expect(testEngine.getCardModel(singer).canSing).toBe(false);
+//     For (const singer of singers) {
+//       Expect(testEngine.getCardModel(singer).hasVoiceless).toBe(true);
+//       Expect(testEngine.getCardModel(singer).canSing).toBe(false);
 //     }
 //
-//     await testEngine.singSongTogether({
-//       song: nothingWeWontDo,
-//       singers: singers,
+//     Await testEngine.singSongTogether({
+//       Song: nothingWeWontDo,
+//       Singers: singers,
 //     });
 //
-//     expect(testEngine.getCardModel(nothingWeWontDo).zone).toBe("hand");
+//     Expect(testEngine.getCardModel(nothingWeWontDo).zone).toBe("hand");
 //   });
 // });
 //

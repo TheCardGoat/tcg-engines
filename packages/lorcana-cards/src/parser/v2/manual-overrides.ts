@@ -31,10 +31,10 @@ import type { AbilityWithText } from "./types";
 export type ManualEntry = AbilityWithText | AbilityWithText[];
 
 // We use a helper that bypasses type checking since many effect types
-// documented here are not yet implemented in the engine type system.
+// Documented here are not yet implemented in the engine type system.
 // This allows us to specify the intended structure as documentation.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-type UntypedAbilityWithText = { text: string; name?: string; ability: any };
+interface UntypedAbilityWithText { text: string; name?: string; ability: any }
 
 /**
  * Create a manual entry (bypasses type checking for unimplemented effect types)
@@ -64,26 +64,23 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
 
   // Hakuna Matata
   "Remove up to {d} damage from each of your characters.": manualEntry({
-    text: "Remove up to 3 damage from each of your characters.",
-    name: "Hakuna Matata",
     ability: {
-      type: "action",
       effect: {
         type: "remove-damage",
         amount: 3,
         target: { selector: "all", controller: "you", cardType: "character" },
         upTo: true,
       },
+      type: "action",
     },
+    name: "Hakuna Matata",
+    text: "Remove up to 3 damage from each of your characters.",
   }),
 
   // Be Our Guest
   "Look at the top {d} cards of your deck. You may reveal a character card and put it into your hand. Put the rest on the bottom of your deck in any order.":
     manualEntry({
-      text: "Look at the top 4 cards of your deck. You may reveal a character card and put it into your hand. Put the rest on the bottom of your deck in any order.",
-      name: "Be Our Guest",
       ability: {
-        type: "action",
         effect: {
           type: "look-at-cards",
           amount: 4,
@@ -95,7 +92,10 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
             reveal: true,
           },
         },
+        type: "action",
       },
+      name: "Be Our Guest",
+      text: "Look at the top 4 cards of your deck. You may reveal a character card and put it into your hand. Put the rest on the bottom of your deck in any order.",
     }),
 
   // ============================================================================
@@ -106,34 +106,24 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
   "YOU LOOK REGAL If you have a character named Prince John in play, you pay {d} {I} less to play this item. A FEELING OF POWER At the end of each opponent's turn, if they have more than {d} cards in their hand, they discard until they have {d} cards in their hand.":
     manualEntries([
       {
-        text: "YOU LOOK REGAL If you have a character named Prince John in play, you pay {d} {I} less to play this item.",
-        name: "YOU LOOK REGAL",
         ability: {
-          type: "static",
-          effect: {
-            type: "cost-reduction",
-            amount: 0, // {d} placeholder
-            cardType: "item",
-          },
           condition: {
             type: "has-named-character",
             name: "Prince John",
             controller: "you",
           },
+          effect: {
+            type: "cost-reduction",
+            amount: 0, // {d} placeholder
+            cardType: "item",
+          },
+          type: "static",
         },
+        name: "YOU LOOK REGAL",
+        text: "YOU LOOK REGAL If you have a character named Prince John in play, you pay {d} {I} less to play this item.",
       },
       {
-        text: "A FEELING OF POWER At the end of each opponent's turn, if they have more than {d} cards in their hand, they discard until they have {d} cards in their hand.",
-        name: "A FEELING OF POWER",
         ability: {
-          type: "triggered",
-          trigger: { event: "end-turn", timing: "at", on: "OPPONENT" },
-          effect: {
-            type: "discard",
-            amount: 0, // Until hand size
-            target: "OPPONENT",
-            chosen: true,
-          },
           condition: {
             type: "resource-count",
             what: "cards-in-hand",
@@ -141,20 +131,27 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
             comparison: "greater-than",
             value: 0, // {d} placeholder
           },
+          effect: {
+            type: "discard",
+            amount: 0, // Until hand size
+            target: "OPPONENT",
+            chosen: true,
+          },
+          trigger: { event: "end-turn", timing: "at", on: "OPPONENT" },
+          type: "triggered",
         },
+        name: "A FEELING OF POWER",
+        text: "A FEELING OF POWER At the end of each opponent's turn, if they have more than {d} cards in their hand, they discard until they have {d} cards in their hand.",
       },
     ]),
 
   // #2 - Score: 10.5 - Complex triggered: banish + opponent reveal/play
   "STUNNING TRANSFORMATION Whenever you put a card under this character, you may banish chosen opposing character. If you do, their player may reveal the top card of their deck. If that card is a character or item card, they may play it for free. Otherwise, they put it on the bottom of their deck.":
     manualEntry({
-      text: "STUNNING TRANSFORMATION Whenever you put a card under this character, you may banish chosen opposing character. If you do, their player may reveal the top card of their deck. If that card is a character or item card, they may play it for free. Otherwise, they put it on the bottom of their deck.",
-      name: "STUNNING TRANSFORMATION",
       ability: {
         type: "triggered",
-        trigger: { event: "ink", timing: "whenever", on: "SELF" }, // Proxy for put-card-under
+        trigger: { event: "ink", on: "SELF", timing: "whenever" }, // Proxy for put-card-under
         effect: {
-          type: "optional",
           effect: {
             type: "sequence",
             steps: [
@@ -174,30 +171,29 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
               },
             ],
           },
+          type: "optional",
         },
       },
+      name: "STUNNING TRANSFORMATION",
+      text: "STUNNING TRANSFORMATION Whenever you put a card under this character, you may banish chosen opposing character. If you do, their player may reveal the top card of their deck. If that card is a character or item card, they may play it for free. Otherwise, they put it on the bottom of their deck.",
     }),
 
   // #3 - Score: 10.0 - Cost reduction + triggered draw/discard
   "NOW IT'S A PARTY For each character you have in play, you pay {d} {I} less to play this character. HOW'S PICKINGS? When you play this character, you may draw a card for each other character you have in play, then choose and discard that many cards.":
     manualEntries([
       {
-        text: "NOW IT'S A PARTY For each character you have in play, you pay {d} {I} less to play this character.",
-        name: "NOW IT'S A PARTY",
         ability: {
-          type: "static",
           effect: {
             type: "cost-reduction",
             amount: { type: "characters-in-play", controller: "you" },
           },
+          type: "static",
         },
+        name: "NOW IT'S A PARTY",
+        text: "NOW IT'S A PARTY For each character you have in play, you pay {d} {I} less to play this character.",
       },
       {
-        text: "HOW'S PICKINGS? When you play this character, you may draw a card for each other character you have in play, then choose and discard that many cards.",
-        name: "HOW'S PICKINGS?",
         ability: {
-          type: "triggered",
-          trigger: { event: "play", timing: "when", on: "SELF" },
           effect: {
             type: "optional",
             effect: {
@@ -217,7 +213,11 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
               ],
             },
           },
+          trigger: { event: "play", timing: "when", on: "SELF" },
+          type: "triggered",
         },
+        name: "HOW'S PICKINGS?",
+        text: "HOW'S PICKINGS? When you play this character, you may draw a card for each other character you have in play, then choose and discard that many cards.",
       },
     ]),
 
@@ -225,11 +225,7 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
   "WHAT IS TO COME When you play this item, look at the top {d} cards of your deck. You may reveal a character card and put it into your hand. Put the rest on the bottom of your deck in any order. WHISPERED POWER {d} {I}, Banish this item — Put the top card of your deck facedown under one of your characters or locations with Boost.":
     manualEntries([
       {
-        text: "WHAT IS TO COME When you play this item, look at the top {d} cards of your deck. You may reveal a character card and put it into your hand. Put the rest on the bottom of your deck in any order.",
-        name: "WHAT IS TO COME",
         ability: {
-          type: "triggered",
-          trigger: { event: "play", timing: "when", on: "SELF" },
           effect: {
             type: "look-at-cards",
             amount: 0, // {d}
@@ -240,17 +236,19 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
               filter: { type: "card-type", cardType: "character" },
             },
           },
+          trigger: { event: "play", timing: "when", on: "SELF" },
+          type: "triggered",
         },
+        name: "WHAT IS TO COME",
+        text: "WHAT IS TO COME When you play this item, look at the top {d} cards of your deck. You may reveal a character card and put it into your hand. Put the rest on the bottom of your deck in any order.",
       },
       {
-        text: "WHISPERED POWER {d} {I}, Banish this item — Put the top card of your deck facedown under one of your characters or locations with Boost.",
-        name: "WHISPERED POWER",
         ability: {
           type: "activated",
-          cost: { ink: 0, banishSelf: true }, // {d}
+          cost: { banishSelf: true, ink: 0 }, // {d}
           effect: {
-            type: "put-under",
             source: "top-of-deck",
+            type: "put-under",
             under: {
               selector: "chosen",
               controller: "you",
@@ -258,6 +256,8 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
             },
           },
         },
+        name: "WHISPERED POWER",
+        text: "WHISPERED POWER {d} {I}, Banish this item — Put the top card of your deck facedown under one of your characters or locations with Boost.",
       },
     ]),
 
@@ -265,27 +265,27 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
   "SUBTERRANEAN NETWORK While you have a character here, this location gets +{d} {L} for each other location you have in play. LOCUS While you have a character here, you pay {d} {I} less to play locations.":
     manualEntries([
       {
-        text: "SUBTERRANEAN NETWORK While you have a character here, this location gets +{d} {L} for each other location you have in play.",
-        name: "SUBTERRANEAN NETWORK",
         ability: {
-          type: "static",
+          condition: { type: "has-character-here" },
           effect: {
             type: "modify-stat",
             stat: "lore",
             modifier: { type: "locations-in-play", controller: "you" },
             target: "SELF",
           },
-          condition: { type: "has-character-here" },
+          type: "static",
         },
+        name: "SUBTERRANEAN NETWORK",
+        text: "SUBTERRANEAN NETWORK While you have a character here, this location gets +{d} {L} for each other location you have in play.",
       },
       {
-        text: "LOCUS While you have a character here, you pay {d} {I} less to play locations.",
-        name: "LOCUS",
         ability: {
           type: "static",
-          effect: { type: "cost-reduction", amount: 0, cardType: "location" }, // {d}
+          effect: { amount: 0, cardType: "location", type: "cost-reduction" }, // {d}
           condition: { type: "has-character-here" },
         },
+        name: "LOCUS",
+        text: "LOCUS While you have a character here, you pay {d} {I} less to play locations.",
       },
     ]),
 
@@ -293,10 +293,7 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
   "STICK AROUND FOR DINNER This character gets +{d} {S} for each other Hyena character you have in play. WHAT HAVE WE GOT HERE? Whenever one of your Hyena characters challenges a damaged character, gain {d} lore.":
     manualEntries([
       {
-        text: "STICK AROUND FOR DINNER This character gets +{d} {S} for each other Hyena character you have in play.",
-        name: "STICK AROUND FOR DINNER",
         ability: {
-          type: "static",
           effect: {
             type: "modify-stat",
             stat: "strength",
@@ -307,21 +304,24 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
             },
             target: "SELF",
           },
+          type: "static",
         },
+        name: "STICK AROUND FOR DINNER",
+        text: "STICK AROUND FOR DINNER This character gets +{d} {S} for each other Hyena character you have in play.",
       },
       {
-        text: "WHAT HAVE WE GOT HERE? Whenever one of your Hyena characters challenges a damaged character, gain {d} lore.",
-        name: "WHAT HAVE WE GOT HERE?",
         ability: {
-          type: "triggered",
+          effect: { type: "gain-lore", amount: 0 },
           trigger: {
             event: "challenge",
             timing: "whenever",
             on: { controller: "you", classification: "Hyena" },
             challengeContext: { defenderState: "damaged" },
           },
-          effect: { type: "gain-lore", amount: 0 }, // {d}
+          type: "triggered", // {d}
         },
+        name: "WHAT HAVE WE GOT HERE?",
+        text: "WHAT HAVE WE GOT HERE? Whenever one of your Hyena characters challenges a damaged character, gain {d} lore.",
       },
     ]),
 
@@ -329,11 +329,7 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
   "AD SAXUM COMMUTATE When you play this character, exert all opposing characters. Then, each player with fewer than {d} cards in their hand draws until they have {d}. STONE BY DAY If you have {d} or more cards in your hand, this character can't ready.":
     manualEntries([
       {
-        text: "AD SAXUM COMMUTATE When you play this character, exert all opposing characters. Then, each player with fewer than {d} cards in their hand draws until they have {d}.",
-        name: "AD SAXUM COMMUTATE",
         ability: {
-          type: "triggered",
-          trigger: { event: "play", timing: "when", on: "SELF" },
           effect: {
             type: "sequence",
             steps: [
@@ -344,18 +340,14 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
               { type: "draw-until-hand-size", size: 0 }, // {d}
             ],
           },
+          trigger: { event: "play", timing: "when", on: "SELF" },
+          type: "triggered",
         },
+        name: "AD SAXUM COMMUTATE",
+        text: "AD SAXUM COMMUTATE When you play this character, exert all opposing characters. Then, each player with fewer than {d} cards in their hand draws until they have {d}.",
       },
       {
-        text: "STONE BY DAY If you have {d} or more cards in your hand, this character can't ready.",
-        name: "STONE BY DAY",
         ability: {
-          type: "static",
-          effect: {
-            type: "restriction",
-            restriction: "cant-ready",
-            target: "SELF",
-          },
           condition: {
             type: "resource-count",
             what: "cards-in-hand",
@@ -363,18 +355,29 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
             comparison: "greater-or-equal",
             value: 0, // {d}
           },
+          effect: {
+            type: "restriction",
+            restriction: "cant-ready",
+            target: "SELF",
+          },
+          type: "static",
         },
+        name: "STONE BY DAY",
+        text: "STONE BY DAY If you have {d} or more cards in your hand, this character can't ready.",
       },
     ]),
 
   // #8 - Score: 9.0 - Triggered search with discard condition
   "WHY DO WE EVEN HAVE THAT LEVER? When you play this character, if you have a card named Pull the Lever! in your discard, you may search your deck for a card named Wrong Lever! and reveal that card to all players. Put that card into your hand and shuffle your deck.":
     manualEntry({
-      text: "WHY DO WE EVEN HAVE THAT LEVER? When you play this character, if you have a card named Pull the Lever! in your discard, you may search your deck for a card named Wrong Lever! and reveal that card to all players. Put that card into your hand and shuffle your deck.",
-      name: "WHY DO WE EVEN HAVE THAT LEVER?",
       ability: {
-        type: "triggered",
-        trigger: { event: "play", timing: "when", on: "SELF" },
+        condition: {
+          type: "zone",
+          zone: "discard",
+          controller: "you",
+          cardName: "Pull the Lever!",
+          hasCards: true,
+        },
         effect: {
           type: "optional",
           effect: {
@@ -385,23 +388,17 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
             shuffle: true,
           },
         },
-        condition: {
-          type: "zone",
-          zone: "discard",
-          controller: "you",
-          cardName: "Pull the Lever!",
-          hasCards: true,
-        },
+        trigger: { event: "play", timing: "when", on: "SELF" },
+        type: "triggered",
       },
+      name: "WHY DO WE EVEN HAVE THAT LEVER?",
+      text: "WHY DO WE EVEN HAVE THAT LEVER? When you play this character, if you have a card named Pull the Lever! in your discard, you may search your deck for a card named Wrong Lever! and reveal that card to all players. Put that card into your hand and shuffle your deck.",
     }),
 
   // #9 - Score: 8.5 - Simple activated cost reduction (Scrooge's Top Hat)
   "BUSINESS EXPERTISE {E} — You pay {d} {I} less for the next item you play this turn.":
     manualEntry({
-      text: "BUSINESS EXPERTISE {E} — You pay 1 {I} less for the next item you play this turn.",
-      name: "BUSINESS EXPERTISE",
       ability: {
-        type: "activated",
         cost: { exert: true },
         effect: {
           type: "cost-reduction",
@@ -409,17 +406,17 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
           cardType: "item",
           duration: "next-play-this-turn",
         },
+        type: "activated",
       },
+      name: "BUSINESS EXPERTISE",
+      text: "BUSINESS EXPERTISE {E} — You pay 1 {I} less for the next item you play this turn.",
     }),
 
   // #10 - Score: 8.5 - Complex triggered with variable draw
   "STICK WITH ME At the end of your turn, if this character is exerted, you may draw cards equal to the {S} of chosen Ally character of yours. If you do, choose and discard {d} cards and banish that character.":
     manualEntry({
-      text: "STICK WITH ME At the end of your turn, if this character is exerted, you may draw cards equal to the {S} of chosen Ally character of yours. If you do, choose and discard {d} cards and banish that character.",
-      name: "STICK WITH ME",
       ability: {
-        type: "triggered",
-        trigger: { event: "end-turn", timing: "at", on: "YOU" },
+        condition: { type: "is-exerted" },
         effect: {
           type: "optional",
           effect: {
@@ -447,18 +444,17 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
             ],
           },
         },
-        condition: { type: "is-exerted" },
+        trigger: { event: "end-turn", timing: "at", on: "YOU" },
+        type: "triggered",
       },
+      name: "STICK WITH ME",
+      text: "STICK WITH ME At the end of your turn, if this character is exerted, you may draw cards equal to the {S} of chosen Ally character of yours. If you do, choose and discard {d} cards and banish that character.",
     }),
 
   // #11 - Score: 8.5 - Triggered name-a-card effect
   "PRESTIDIGITONIUM Whenever this character quests, name a card, then reveal the top card of your deck. If it's the named card, put it into your inkwell facedown and exerted. Otherwise, put it on the top of your deck.":
     manualEntry({
-      text: "PRESTIDIGITONIUM Whenever this character quests, name a card, then reveal the top card of your deck. If it's the named card, put it into your inkwell facedown and exerted. Otherwise, put it on the top of your deck.",
-      name: "PRESTIDIGITONIUM",
       ability: {
-        type: "triggered",
-        trigger: { event: "quest", timing: "whenever", on: "SELF" },
         effect: {
           type: "sequence",
           steps: [
@@ -476,16 +472,17 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
             },
           ],
         },
+        trigger: { event: "quest", timing: "whenever", on: "SELF" },
+        type: "triggered",
       },
+      name: "PRESTIDIGITONIUM",
+      text: "PRESTIDIGITONIUM Whenever this character quests, name a card, then reveal the top card of your deck. If it's the named card, put it into your inkwell facedown and exerted. Otherwise, put it on the top of your deck.",
     }),
 
   // #12 - Score: 8.5 - Activated with named character buff + conditional
   "DISPEL THE ENTANGLEMENT Banish this item — Chosen character named Beast gets +{d} {L} this turn. If you have a character named Belle in play, move up to {d} damage counters from chosen character to chosen opposing character.":
     manualEntry({
-      text: "DISPEL THE ENTANGLEMENT Banish this item — Chosen character named Beast gets +{d} {L} this turn. If you have a character named Belle in play, move up to {d} damage counters from chosen character to chosen opposing character.",
-      name: "DISPEL THE ENTANGLEMENT",
       ability: {
-        type: "activated",
         cost: { banishSelf: true },
         effect: {
           type: "sequence",
@@ -513,17 +510,16 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
             },
           ],
         },
+        type: "activated",
       },
+      name: "DISPEL THE ENTANGLEMENT",
+      text: "DISPEL THE ENTANGLEMENT Banish this item — Chosen character named Beast gets +{d} {L} this turn. If you have a character named Belle in play, move up to {d} damage counters from chosen character to chosen opposing character.",
     }),
 
   // #13 - Score: 8.5 - Triggered hand equalization
   "DUSK TO DAWN At the end of each player's turn, if they have more than {d} cards in their hand, they choose and discard cards until they have {d}. If they have fewer than {d} cards in their hand, they draw until they have {d}.":
     manualEntry({
-      text: "DUSK TO DAWN At the end of each player's turn, if they have more than {d} cards in their hand, they choose and discard cards until they have {d}. If they have fewer than {d} cards in their hand, they draw until they have {d}.",
-      name: "DUSK TO DAWN",
       ability: {
-        type: "triggered",
-        trigger: { event: "end-turn", timing: "at", on: "ANY_PLAYER" },
         effect: {
           type: "sequence",
           steps: [
@@ -551,17 +547,17 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
             },
           ],
         },
+        trigger: { event: "end-turn", timing: "at", on: "ANY_PLAYER" },
+        type: "triggered",
       },
+      name: "DUSK TO DAWN",
+      text: "DUSK TO DAWN At the end of each player's turn, if they have more than {d} cards in their hand, they choose and discard cards until they have {d}. If they have fewer than {d} cards in their hand, they draw until they have {d}.",
     }),
 
   // #14 - Score: 8.5 - Triggered search by name
   "GATHERER OF THE WICKED When you play this character, look at the top {d} cards of your deck. You may reveal any number of character cards named The Queen and put them into your hand. Put the rest on the bottom of your deck in any order.":
     manualEntry({
-      text: "GATHERER OF THE WICKED When you play this character, look at the top {d} cards of your deck. You may reveal any number of character cards named The Queen and put them into your hand. Put the rest on the bottom of your deck in any order.",
-      name: "GATHERER OF THE WICKED",
       ability: {
-        type: "triggered",
-        trigger: { event: "play", timing: "when", on: "SELF" },
         effect: {
           type: "look-at-cards",
           amount: 0, // {d}
@@ -572,17 +568,17 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
             filter: { type: "name", name: "The Queen" },
           },
         },
+        trigger: { event: "play", timing: "when", on: "SELF" },
+        type: "triggered",
       },
+      name: "GATHERER OF THE WICKED",
+      text: "GATHERER OF THE WICKED When you play this character, look at the top {d} cards of your deck. You may reveal any number of character cards named The Queen and put them into your hand. Put the rest on the bottom of your deck in any order.",
     }),
 
   // #15 - Score: 8.0 - Triggered return specific card from discard
   "DOUBLE THE POWDER! When you play this character, you may return an action card named Fire the Cannons! from your discard to your hand.":
     manualEntry({
-      text: "DOUBLE THE POWDER! When you play this character, you may return an action card named Fire the Cannons! from your discard to your hand.",
-      name: "DOUBLE THE POWDER!",
       ability: {
-        type: "triggered",
-        trigger: { event: "play", timing: "when", on: "SELF" },
         effect: {
           type: "optional",
           effect: {
@@ -592,14 +588,16 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
             target: "CONTROLLER",
           },
         },
+        trigger: { event: "play", timing: "when", on: "SELF" },
+        type: "triggered",
       },
+      name: "DOUBLE THE POWDER!",
+      text: "DOUBLE THE POWDER! When you play this character, you may return an action card named Fire the Cannons! from your discard to your hand.",
     }),
 
   // #16 - Score: 8.0 - Activated look-at + put-in-hand
   "FIND WHAT'S HIDDEN {E}, {d} {I} — Look at the top {d} cards of your deck. You may reveal an item card and put it into your hand. Put the rest on the bottom of your deck in any order.":
     manualEntry({
-      text: "FIND WHAT'S HIDDEN {E}, {d} {I} — Look at the top {d} cards of your deck. You may reveal an item card and put it into your hand. Put the rest on the bottom of your deck in any order.",
-      name: "FIND WHAT'S HIDDEN",
       ability: {
         type: "activated",
         cost: { exert: true, ink: 0 }, // {d}
@@ -610,31 +608,30 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
           target: "CONTROLLER",
           then: {
             action: "put-in-hand",
-            filter: { type: "card-type", cardType: "item" },
+            filter: { cardType: "item", type: "card-type" },
           },
         },
       },
+      name: "FIND WHAT'S HIDDEN",
+      text: "FIND WHAT'S HIDDEN {E}, {d} {I} — Look at the top {d} cards of your deck. You may reveal an item card and put it into your hand. Put the rest on the bottom of your deck in any order.",
     }),
 
   // #17 - Score: 8.0 - Two location static abilities
   "FOREST HOME Your characters named Robin Hood may move here for free. FAMILIAR TERRAIN Characters gain Ward and “{E}, {d} {I} — Deal {d} damage to chosen damaged character” while here.":
     manualEntries([
       {
-        text: "FOREST HOME Your characters named Robin Hood may move here for free.",
-        name: "FOREST HOME",
         ability: {
-          type: "static",
           effect: {
             type: "free-move-here",
             filter: { type: "name", name: "Robin Hood" },
           },
+          type: "static",
         },
+        name: "FOREST HOME",
+        text: "FOREST HOME Your characters named Robin Hood may move here for free.",
       },
       {
-        text: "FAMILIAR TERRAIN Characters gain Ward and “{E}, {d} {I} — Deal {d} damage to chosen damaged character” while here.",
-        name: "FAMILIAR TERRAIN",
         ability: {
-          type: "static",
           effect: {
             type: "grant-abilities-while-here",
             abilities: [
@@ -653,7 +650,10 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
               },
             ],
           },
+          type: "static",
         },
+        name: "FAMILIAR TERRAIN",
+        text: "FAMILIAR TERRAIN Characters gain Ward and “{E}, {d} {I} — Deal {d} damage to chosen damaged character” while here.",
       },
     ]),
 
@@ -661,31 +661,31 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
   "THE CAULDRON CALLS {E}, {d} {I} — Put a character card from your discard under this item faceup. RISE AND JOIN ME! {E}, {d} {I} – This turn, you may play characters from under this item.":
     manualEntries([
       {
-        text: "THE CAULDRON CALLS {E}, {d} {I} — Put a character card from your discard under this item faceup.",
-        name: "THE CAULDRON CALLS",
         ability: {
           type: "activated",
           cost: { exert: true, ink: 0 }, // {d}
           effect: {
-            type: "put-under",
-            source: "discard",
-            under: "self",
             cardType: "character",
+            source: "discard",
+            type: "put-under",
+            under: "self",
           },
         },
+        name: "THE CAULDRON CALLS",
+        text: "THE CAULDRON CALLS {E}, {d} {I} — Put a character card from your discard under this item faceup.",
       },
       {
-        text: "RISE AND JOIN ME! {E}, {d} {I} – This turn, you may play characters from under this item.",
-        name: "RISE AND JOIN ME!",
         ability: {
           type: "activated",
           cost: { exert: true, ink: 0 }, // {d}
           effect: {
-            type: "enable-play-from-under",
             cardType: "character",
             duration: "this-turn",
+            type: "enable-play-from-under",
           },
         },
+        name: "RISE AND JOIN ME!",
+        text: "RISE AND JOIN ME! {E}, {d} {I} – This turn, you may play characters from under this item.",
       },
     ]),
 
@@ -693,13 +693,10 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
   "SURPRISE PACKAGE {E}, {d} {I}, Banish this item — Draw a card, then choose and discard a card. TIME GROWS SHORT During your turn, when this item is banished, deal {d} damage to chosen character or location.":
     manualEntries([
       {
-        text: "SURPRISE PACKAGE {E}, 2 {I}, Banish this item — Draw a card, then choose and discard a card.",
-        name: "SURPRISE PACKAGE",
         ability: {
           type: "activated",
-          cost: { exert: true, ink: 2, banishSelf: true }, // Hardcoded 2
+          cost: { banishSelf: true, exert: true, ink: 2 }, // Hardcoded 2
           effect: {
-            type: "sequence",
             steps: [
               { type: "draw", amount: 1, target: "CONTROLLER" },
               {
@@ -709,15 +706,15 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
                 chosen: true,
               },
             ],
+            type: "sequence",
           },
         },
+        name: "SURPRISE PACKAGE",
+        text: "SURPRISE PACKAGE {E}, 2 {I}, Banish this item — Draw a card, then choose and discard a card.",
       },
       {
-        text: "TIME GROWS SHORT During your turn, when this item is banished, deal 3 damage to chosen character or location.",
-        name: "TIME GROWS SHORT",
         ability: {
-          type: "triggered",
-          trigger: { event: "banish", timing: "when", on: "SELF" },
+          condition: { type: "turn", whose: "your" },
           effect: {
             type: "deal-damage",
             amount: 3, // Hardcoded 3
@@ -726,17 +723,18 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
               cardTypes: ["character", "location"],
             },
           },
-          condition: { type: "turn", whose: "your" },
+          trigger: { event: "banish", timing: "when", on: "SELF" },
+          type: "triggered",
         },
+        name: "TIME GROWS SHORT",
+        text: "TIME GROWS SHORT During your turn, when this item is banished, deal 3 damage to chosen character or location.",
       },
     ]),
 
   // #20 - Score: 8.0 - Complex action with shuffle + reveal + conditional play
   "Shuffle chosen card from your discard into your deck. Reveal the top card of your deck. If it has the same name as the chosen card, you may play the revealed card for free. Otherwise, put it into your hand.":
     manualEntry({
-      text: "Shuffle chosen card from your discard into your deck. Reveal the top card of your deck. If it has the same name as the chosen card, you may play the revealed card for free. Otherwise, put it into your hand.",
       ability: {
-        type: "action",
         effect: {
           type: "sequence",
           steps: [
@@ -756,41 +754,43 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
             },
           ],
         },
+        type: "action",
       },
+      text: "Shuffle chosen card from your discard into your deck. Reveal the top card of your deck. If it has the same name as the chosen card, you may play the revealed card for free. Otherwise, put it into your hand.",
     }),
 
   // #21 - Score: 7.5 - Two triggered lore gain abilities
   "HELPFUL SUPPLIES At the start of your turn, if you have an item in play, gain {d} lore. PERFECT DIRECTIONS At the start of your turn, if you have a location in play, gain {d} lore.":
     manualEntries([
       {
-        text: "HELPFUL SUPPLIES At the start of your turn, if you have an item in play, gain {d} lore.",
-        name: "HELPFUL SUPPLIES",
         ability: {
           type: "triggered",
-          trigger: { event: "start-turn", timing: "at", on: "YOU" },
-          effect: { type: "gain-lore", amount: 0 }, // {d}
+          trigger: { event: "start-turn", on: "YOU", timing: "at" },
+          effect: { amount: 0, type: "gain-lore" }, // {d}
           condition: {
-            type: "has-item-count",
-            controller: "you",
             comparison: "greater-or-equal",
+            controller: "you",
             count: 1,
+            type: "has-item-count",
           },
         },
+        name: "HELPFUL SUPPLIES",
+        text: "HELPFUL SUPPLIES At the start of your turn, if you have an item in play, gain {d} lore.",
       },
       {
-        text: "PERFECT DIRECTIONS At the start of your turn, if you have a location in play, gain {d} lore.",
-        name: "PERFECT DIRECTIONS",
         ability: {
           type: "triggered",
-          trigger: { event: "start-turn", timing: "at", on: "YOU" },
-          effect: { type: "gain-lore", amount: 0 }, // {d}
+          trigger: { event: "start-turn", on: "YOU", timing: "at" },
+          effect: { amount: 0, type: "gain-lore" }, // {d}
           condition: {
-            type: "has-location-count",
-            controller: "you",
             comparison: "greater-or-equal",
+            controller: "you",
             count: 1,
+            type: "has-location-count",
           },
         },
+        name: "PERFECT DIRECTIONS",
+        text: "PERFECT DIRECTIONS At the start of your turn, if you have a location in play, gain {d} lore.",
       },
     ]),
 
@@ -798,36 +798,36 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
   "BE CAREFUL, ALL OF YOU Whenever one of your Gargoyle characters challenges another character, gain {d} lore. STONE BY DAY If you have {d} or more cards in your hand, this character can't ready.":
     manualEntries([
       {
-        text: "BE CAREFUL, ALL OF YOU Whenever one of your Gargoyle characters challenges another character, gain {d} lore.",
-        name: "BE CAREFUL, ALL OF YOU",
         ability: {
-          type: "triggered",
+          effect: { type: "gain-lore", amount: 0 },
           trigger: {
             event: "challenge",
             timing: "whenever",
             on: { controller: "you", classification: "Gargoyle" },
           },
-          effect: { type: "gain-lore", amount: 0 }, // {d}
+          type: "triggered", // {d}
         },
+        name: "BE CAREFUL, ALL OF YOU",
+        text: "BE CAREFUL, ALL OF YOU Whenever one of your Gargoyle characters challenges another character, gain {d} lore.",
       },
       {
-        text: "STONE BY DAY If you have {d} or more cards in your hand, this character can't ready.",
-        name: "STONE BY DAY",
         ability: {
-          type: "static",
-          effect: {
-            type: "restriction",
-            restriction: "cant-ready",
-            target: "SELF",
-          },
           condition: {
             type: "resource-count",
             what: "cards-in-hand",
             controller: "you",
             comparison: "greater-or-equal",
             value: 0,
-          }, // {d}
+          },
+          effect: {
+            type: "restriction",
+            restriction: "cant-ready",
+            target: "SELF",
+          },
+          type: "static", // {d}
         },
+        name: "STONE BY DAY",
+        text: "STONE BY DAY If you have {d} or more cards in your hand, this character can't ready.",
       },
     ]),
 
@@ -835,33 +835,33 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
   "Shift {d} HUMBLE PIE When you play this character, if you used Shift to play him, each opponent loses {d} lore. RAGING DUCK While an opponent has {d} or more lore, this character gets +{d} {S}.":
     manualEntries([
       {
-        text: "HUMBLE PIE When you play this character, if you used Shift to play him, each opponent loses {d} lore.",
-        name: "HUMBLE PIE",
         ability: {
           type: "triggered",
-          trigger: { event: "play", timing: "when", on: "SELF" },
-          effect: { type: "lose-lore", amount: 0, target: "EACH_OPPONENT" }, // {d}
+          trigger: { event: "play", on: "SELF", timing: "when" },
+          effect: { amount: 0, target: "EACH_OPPONENT", type: "lose-lore" }, // {d}
           condition: { type: "used-shift" },
         },
+        name: "HUMBLE PIE",
+        text: "HUMBLE PIE When you play this character, if you used Shift to play him, each opponent loses {d} lore.",
       },
       {
-        text: "RAGING DUCK While an opponent has {d} or more lore, this character gets +{d} {S}.",
-        name: "RAGING DUCK",
         ability: {
           type: "static",
           effect: {
-            type: "modify-stat",
-            stat: "strength",
             modifier: 0,
+            stat: "strength",
             target: "SELF",
+            type: "modify-stat",
           }, // {d}
           condition: {
-            type: "comparison",
-            left: { type: "lore", controller: "opponent" },
             comparison: "greater-or-equal",
+            left: { type: "lore", controller: "opponent" },
             right: { type: "constant", value: 0 },
+            type: "comparison",
           }, // {d}
         },
+        name: "RAGING DUCK",
+        text: "RAGING DUCK While an opponent has {d} or more lore, this character gets +{d} {S}.",
       },
     ]),
 
@@ -869,27 +869,27 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
   "EVEN THE SCORE Whenever one of your other Emerald characters is challenged and banished, banish the challenging character. PROVIDE COVER Your other Emerald characters gain Ward.":
     manualEntries([
       {
-        text: "EVEN THE SCORE Whenever one of your other Emerald characters is challenged and banished, banish the challenging character.",
-        name: "EVEN THE SCORE",
         ability: {
-          type: "triggered",
+          effect: { type: "banish", target: "challenging-character" },
           trigger: {
             event: "banish-in-challenge",
             timing: "whenever",
             on: { controller: "you", excludeSelf: true },
             challengeContext: { role: "defender" },
           },
-          effect: { type: "banish", target: "challenging-character" },
+          type: "triggered",
         },
+        name: "EVEN THE SCORE",
+        text: "EVEN THE SCORE Whenever one of your other Emerald characters is challenged and banished, banish the challenging character.",
       },
       {
-        text: "PROVIDE COVER Your other Emerald characters gain Ward.",
-        name: "PROVIDE COVER",
         ability: {
-          type: "static",
-          effect: { type: "gain-keyword", keyword: "Ward" },
           affects: { controller: "you", excludeSelf: true },
+          effect: { type: "gain-keyword", keyword: "Ward" },
+          type: "static",
         },
+        name: "PROVIDE COVER",
+        text: "PROVIDE COVER Your other Emerald characters gain Ward.",
       },
     ]),
 
@@ -897,11 +897,7 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
   "OUTPLACEMENT When you play this character, you may put chosen item or location into its player's inkwell facedown and exerted. BY INVITE ONLY {d} {I} — Your other characters gain Resist +{d} until the start of your next turn.":
     manualEntries([
       {
-        text: "OUTPLACEMENT When you play this character, you may put chosen item or location into its player's inkwell facedown and exerted.",
-        name: "OUTPLACEMENT",
         ability: {
-          type: "triggered",
-          trigger: { event: "play", timing: "when", on: "SELF" },
           effect: {
             type: "optional",
             effect: {
@@ -910,22 +906,26 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
               exerted: true,
             },
           },
+          trigger: { event: "play", timing: "when", on: "SELF" },
+          type: "triggered",
         },
+        name: "OUTPLACEMENT",
+        text: "OUTPLACEMENT When you play this character, you may put chosen item or location into its player's inkwell facedown and exerted.",
       },
       {
-        text: "BY INVITE ONLY {d} {I} — Your other characters gain Resist +{d} until the start of your next turn.",
-        name: "BY INVITE ONLY",
         ability: {
           type: "activated",
           cost: { ink: 0 }, // {d}
           effect: {
-            type: "gain-keyword",
-            keyword: "Resist",
-            value: 0,
-            target: { controller: "you", excludeSelf: true },
             duration: "until-start-of-next-turn",
+            keyword: "Resist",
+            target: { controller: "you", excludeSelf: true },
+            type: "gain-keyword",
+            value: 0,
           }, // {d}
         },
+        name: "BY INVITE ONLY",
+        text: "BY INVITE ONLY {d} {I} — Your other characters gain Resist +{d} until the start of your next turn.",
       },
     ]),
 
@@ -933,27 +933,27 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
   "HOIST THE FLAG Whenever a character of yours sings a song here, each opponent loses {d} lore. GATHERING YOUR FORCES While you have a character here, your songs cost {d} {I} less to play.":
     manualEntries([
       {
-        text: "HOIST THE FLAG Whenever a character of yours sings a song here, each opponent loses {d} lore.",
-        name: "HOIST THE FLAG",
         ability: {
-          type: "triggered",
+          effect: { type: "lose-lore", amount: 0, target: "EACH_OPPONENT" },
           trigger: {
             event: "sing",
             timing: "whenever",
             on: "YOUR_CHARACTERS",
             atLocation: "this",
           },
-          effect: { type: "lose-lore", amount: 0, target: "EACH_OPPONENT" }, // {d}
+          type: "triggered", // {d}
         },
+        name: "HOIST THE FLAG",
+        text: "HOIST THE FLAG Whenever a character of yours sings a song here, each opponent loses {d} lore.",
       },
       {
-        text: "GATHERING YOUR FORCES While you have a character here, your songs cost {d} {I} less to play.",
-        name: "GATHERING YOUR FORCES",
         ability: {
           type: "static",
-          effect: { type: "cost-reduction", amount: 0, cardType: "song" }, // {d}
+          effect: { amount: 0, cardType: "song", type: "cost-reduction" }, // {d}
           condition: { type: "has-character-here" },
         },
+        name: "GATHERING YOUR FORCES",
+        text: "GATHERING YOUR FORCES While you have a character here, your songs cost {d} {I} less to play.",
       },
     ]),
 
@@ -961,11 +961,7 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
   "ONCE UPON A TIME When you play this character, you may look at the top {d} cards of your deck. HAPPILY EVER AFTER When this character is banished, you may reveal the top card of your deck. If it's a character, you may play it for free.":
     manualEntries([
       {
-        text: "ONCE UPON A TIME When you play this character, you may look at the top {d} cards of your deck.",
-        name: "ONCE UPON A TIME",
         ability: {
-          type: "triggered",
-          trigger: { event: "play", timing: "when", on: "SELF" },
           effect: {
             type: "optional",
             effect: {
@@ -974,15 +970,15 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
               from: "top-of-deck",
               target: "CONTROLLER",
             },
-          }, // {d}
+          },
+          trigger: { event: "play", timing: "when", on: "SELF" },
+          type: "triggered", // {d}
         },
+        name: "ONCE UPON A TIME",
+        text: "ONCE UPON A TIME When you play this character, you may look at the top {d} cards of your deck.",
       },
       {
-        text: "HAPPILY EVER AFTER When this character is banished, you may reveal the top card of your deck. If it's a character, you may play it for free.",
-        name: "HAPPILY EVER AFTER",
         ability: {
-          type: "triggered",
-          trigger: { event: "banish", timing: "when", on: "SELF" },
           effect: {
             type: "optional",
             effect: {
@@ -1007,7 +1003,11 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
               ],
             },
           },
+          trigger: { event: "banish", timing: "when", on: "SELF" },
+          type: "triggered",
         },
+        name: "HAPPILY EVER AFTER",
+        text: "HAPPILY EVER AFTER When this character is banished, you may reveal the top card of your deck. If it's a character, you may play it for free.",
       },
     ]),
 
@@ -1015,26 +1015,23 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
   "WISDOM OF AGES This character gets +{d} {S} for each card in your hand. STUDY UP {E}, {d} {I} − Draw {d} cards, then choose and discard a card.":
     manualEntries([
       {
-        text: "WISDOM OF AGES This character gets +{d} {S} for each card in your hand.",
-        name: "WISDOM OF AGES",
         ability: {
-          type: "static",
           effect: {
             type: "modify-stat",
             stat: "strength",
             modifier: { type: "cards-in-hand", controller: "you" },
             target: "SELF",
           },
+          type: "static",
         },
+        name: "WISDOM OF AGES",
+        text: "WISDOM OF AGES This character gets +{d} {S} for each card in your hand.",
       },
       {
-        text: "STUDY UP {E}, {d} {I} − Draw {d} cards, then choose and discard a card.",
-        name: "STUDY UP",
         ability: {
           type: "activated",
           cost: { exert: true, ink: 0 }, // {d}
           effect: {
-            type: "sequence",
             steps: [
               { type: "draw", amount: 0, target: "CONTROLLER" }, // {d}
               {
@@ -1044,19 +1041,18 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
                 chosen: true,
               },
             ],
+            type: "sequence",
           },
         },
+        name: "STUDY UP",
+        text: "STUDY UP {E}, {d} {I} − Draw {d} cards, then choose and discard a card.",
       },
     ]),
 
   // #29 - Complex triggered with multiple effects
   "I'LL MAKE A MAN OUT OF YOU When you play this character, chosen character of yours gets +{d} {S} this turn. That character can challenge ready characters this turn.":
     manualEntry({
-      text: "I'LL MAKE A MAN OUT OF YOU When you play this character, chosen character of yours gets +{d} {S} this turn. That character can challenge ready characters this turn.",
-      name: "I'LL MAKE A MAN OUT OF YOU",
       ability: {
-        type: "triggered",
-        trigger: { event: "play", timing: "when", on: "SELF" },
         effect: {
           type: "sequence",
           steps: [
@@ -1075,15 +1071,17 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
             },
           ],
         },
+        trigger: { event: "play", timing: "when", on: "SELF" },
+        type: "triggered",
       },
+      name: "I'LL MAKE A MAN OUT OF YOU",
+      text: "I'LL MAKE A MAN OUT OF YOU When you play this character, chosen character of yours gets +{d} {S} this turn. That character can challenge ready characters this turn.",
     }),
 
   // #30 - Bounce + discard action
   "Return chosen character to their player's hand. That player chooses and discards a card.":
     manualEntry({
-      text: "Return chosen character to their player's hand. That player chooses and discards a card.",
       ability: {
-        type: "action",
         effect: {
           type: "sequence",
           steps: [
@@ -1091,7 +1089,9 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
             { type: "discard", amount: 1, target: "CARD_OWNER", chosen: true },
           ],
         },
+        type: "action",
       },
+      text: "Return chosen character to their player's hand. That player chooses and discards a card.",
     }),
 
   // #31-#50 - More complex abilities
@@ -1099,23 +1099,19 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
   "WHAT'S NEW? When you play this character, you may draw a card. WHAT'S THAT? Whenever this character quests, you may play a song with cost {d} or less for free.":
     manualEntries([
       {
-        text: "WHAT'S NEW? When you play this character, you may draw a card.",
-        name: "WHAT'S NEW?",
         ability: {
-          type: "triggered",
-          trigger: { event: "play", timing: "when", on: "SELF" },
           effect: {
             type: "optional",
             effect: { type: "draw", amount: 1, target: "CONTROLLER" },
           },
+          trigger: { event: "play", timing: "when", on: "SELF" },
+          type: "triggered",
         },
+        name: "WHAT'S NEW?",
+        text: "WHAT'S NEW? When you play this character, you may draw a card.",
       },
       {
-        text: "WHAT'S THAT? Whenever this character quests, you may play a song with cost {d} or less for free.",
-        name: "WHAT'S THAT?",
         ability: {
-          type: "triggered",
-          trigger: { event: "quest", timing: "whenever", on: "SELF" },
           effect: {
             type: "optional",
             effect: {
@@ -1126,92 +1122,88 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
               cost: "free",
             }, // {d}
           },
+          trigger: { event: "quest", timing: "whenever", on: "SELF" },
+          type: "triggered",
         },
+        name: "WHAT'S THAT?",
+        text: "WHAT'S THAT? Whenever this character quests, you may play a song with cost {d} or less for free.",
       },
     ]),
 
   "FEEDING TIME Your damaged characters have Resist +{d}. BAYING PACK Whenever this character challenges and banishes another character, gain {d} lore.":
     manualEntries([
       {
-        text: "FEEDING TIME Your damaged characters have Resist +{d}.",
-        name: "FEEDING TIME",
         ability: {
           type: "static",
-          effect: { type: "gain-keyword", keyword: "Resist", value: 0 }, // {d}
+          effect: { keyword: "Resist", type: "gain-keyword", value: 0 }, // {d}
           affects: { controller: "you", filters: [{ type: "damaged" }] },
         },
+        name: "FEEDING TIME",
+        text: "FEEDING TIME Your damaged characters have Resist +{d}.",
       },
       {
-        text: "BAYING PACK Whenever this character challenges and banishes another character, gain {d} lore.",
-        name: "BAYING PACK",
         ability: {
-          type: "triggered",
+          effect: { type: "gain-lore", amount: 0 },
           trigger: {
             event: "banish-in-challenge",
             timing: "whenever",
             on: "SELF",
             challengeContext: { role: "attacker" },
           },
-          effect: { type: "gain-lore", amount: 0 }, // {d}
+          type: "triggered", // {d}
         },
+        name: "BAYING PACK",
+        text: "BAYING PACK Whenever this character challenges and banishes another character, gain {d} lore.",
       },
     ]),
 
   "THE CIRCLE OF LIFE Whenever one of your characters is banished, ready this character. REMEMBER When you play this character, return a character card from your discard to your hand.":
     manualEntries([
       {
-        text: "THE CIRCLE OF LIFE Whenever one of your characters is banished, ready this character.",
-        name: "THE CIRCLE OF LIFE",
         ability: {
-          type: "triggered",
+          effect: { type: "ready", target: "SELF" },
           trigger: {
             event: "banish",
             timing: "whenever",
             on: "YOUR_CHARACTERS",
           },
-          effect: { type: "ready", target: "SELF" },
+          type: "triggered",
         },
+        name: "THE CIRCLE OF LIFE",
+        text: "THE CIRCLE OF LIFE Whenever one of your characters is banished, ready this character.",
       },
       {
-        text: "REMEMBER When you play this character, return a character card from your discard to your hand.",
-        name: "REMEMBER",
         ability: {
-          type: "triggered",
-          trigger: { event: "play", timing: "when", on: "SELF" },
           effect: {
             type: "return-from-discard",
             cardType: "character",
             target: "CONTROLLER",
           },
+          trigger: { event: "play", timing: "when", on: "SELF" },
+          type: "triggered",
         },
+        name: "REMEMBER",
+        text: "REMEMBER When you play this character, return a character card from your discard to your hand.",
       },
     ]),
 
   "PROTECT THE TOWN Your other characters with cost {d} or less gain Bodyguard. RALLYING CRY Whenever you play another character, you may exert that character to draw a card.":
     manualEntries([
       {
-        text: "PROTECT THE TOWN Your other characters with cost {d} or less gain Bodyguard.",
-        name: "PROTECT THE TOWN",
         ability: {
-          type: "static",
-          effect: { type: "gain-keyword", keyword: "Bodyguard" },
           affects: {
             controller: "you",
             excludeSelf: true,
             costRestriction: { comparison: "less-or-equal", value: 0 },
-          }, // {d}
+          },
+          effect: { type: "gain-keyword", keyword: "Bodyguard" },
+          type: "static", // {d}
         },
+        name: "PROTECT THE TOWN",
+        text: "PROTECT THE TOWN Your other characters with cost {d} or less gain Bodyguard.",
       },
       {
-        text: "RALLYING CRY Whenever you play another character, you may exert that character to draw a card.",
-        name: "RALLYING CRY",
         ability: {
-          type: "triggered",
-          trigger: {
-            event: "play",
-            timing: "whenever",
-            on: { controller: "you", cardType: "character", excludeSelf: true },
-          },
           effect: {
             type: "optional",
             effect: {
@@ -1222,69 +1214,73 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
               ],
             },
           },
+          trigger: {
+            event: "play",
+            timing: "whenever",
+            on: { controller: "you", cardType: "character", excludeSelf: true },
+          },
+          type: "triggered",
         },
+        name: "RALLYING CRY",
+        text: "RALLYING CRY Whenever you play another character, you may exert that character to draw a card.",
       },
     ]),
 
   "MOMENT'S PEACE Exert chosen character. HEALING WATERS Remove up to {d} damage from chosen character.":
     manualEntries([
       {
-        text: "MOMENT'S PEACE Exert chosen character.",
-        name: "MOMENT'S PEACE",
         ability: {
-          type: "action",
           effect: { type: "exert", target: { selector: "chosen" } },
+          type: "action",
         },
+        name: "MOMENT'S PEACE",
+        text: "MOMENT'S PEACE Exert chosen character.",
       },
       {
-        text: "HEALING WATERS Remove up to {d} damage from chosen character.",
-        name: "HEALING WATERS",
         ability: {
-          type: "action",
           effect: {
             type: "remove-damage",
             amount: 0,
             target: { selector: "chosen" },
             upTo: true,
-          }, // {d}
+          },
+          type: "action", // {d}
         },
+        name: "HEALING WATERS",
+        text: "HEALING WATERS Remove up to {d} damage from chosen character.",
       },
     ]),
 
   "UNBRIDLED WRATH Whenever this character challenges another character, deal {d} damage to all opposing characters. FRIGHTFUL PRESENCE Opposing characters can't be healed.":
     manualEntries([
       {
-        text: "UNBRIDLED WRATH Whenever this character challenges another character, deal {d} damage to all opposing characters.",
-        name: "UNBRIDLED WRATH",
         ability: {
-          type: "triggered",
-          trigger: { event: "challenge", timing: "whenever", on: "SELF" },
           effect: {
             type: "deal-damage",
             amount: 0,
             target: { selector: "all", controller: "opponent" },
-          }, // {d}
+          },
+          trigger: { event: "challenge", timing: "whenever", on: "SELF" },
+          type: "triggered", // {d}
         },
+        name: "UNBRIDLED WRATH",
+        text: "UNBRIDLED WRATH Whenever this character challenges another character, deal {d} damage to all opposing characters.",
       },
       {
-        text: "FRIGHTFUL PRESENCE Opposing characters can't be healed.",
-        name: "FRIGHTFUL PRESENCE",
         ability: {
-          type: "static",
-          effect: { type: "restriction", restriction: "cant-be-healed" },
           affects: { controller: "opponent" },
+          effect: { type: "restriction", restriction: "cant-be-healed" },
+          type: "static",
         },
+        name: "FRIGHTFUL PRESENCE",
+        text: "FRIGHTFUL PRESENCE Opposing characters can't be healed.",
       },
     ]),
 
   "TIME FOR GAMES At the start of your turn, you may exert this character to draw a card. WHAT NOW? When this character is banished, look at the top card of your deck. You may put it into your inkwell facedown and exerted.":
     manualEntries([
       {
-        text: "TIME FOR GAMES At the start of your turn, you may exert this character to draw a card.",
-        name: "TIME FOR GAMES",
         ability: {
-          type: "triggered",
-          trigger: { event: "start-turn", timing: "at", on: "YOU" },
           effect: {
             type: "optional",
             effect: {
@@ -1295,14 +1291,14 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
               ],
             },
           },
+          trigger: { event: "start-turn", timing: "at", on: "YOU" },
+          type: "triggered",
         },
+        name: "TIME FOR GAMES",
+        text: "TIME FOR GAMES At the start of your turn, you may exert this character to draw a card.",
       },
       {
-        text: "WHAT NOW? When this character is banished, look at the top card of your deck. You may put it into your inkwell facedown and exerted.",
-        name: "WHAT NOW?",
         ability: {
-          type: "triggered",
-          trigger: { event: "banish", timing: "when", on: "SELF" },
           effect: {
             type: "sequence",
             steps: [
@@ -1322,57 +1318,57 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
               },
             ],
           },
+          trigger: { event: "banish", timing: "when", on: "SELF" },
+          type: "triggered",
         },
+        name: "WHAT NOW?",
+        text: "WHAT NOW? When this character is banished, look at the top card of your deck. You may put it into your inkwell facedown and exerted.",
       },
     ]),
 
   "BEST OF BOTH WORLDS While you have {d} or more cards in your hand, this character gets +{d} {S}. UNDER THE SEA While you have {d} or fewer cards in your hand, this character gains Evasive.":
     manualEntries([
       {
-        text: "BEST OF BOTH WORLDS While you have {d} or more cards in your hand, this character gets +{d} {S}.",
-        name: "BEST OF BOTH WORLDS",
         ability: {
           type: "static",
           effect: {
-            type: "modify-stat",
-            stat: "strength",
             modifier: 0,
+            stat: "strength",
             target: "SELF",
+            type: "modify-stat",
           }, // {d}
           condition: {
-            type: "resource-count",
-            what: "cards-in-hand",
-            controller: "you",
             comparison: "greater-or-equal",
+            controller: "you",
+            type: "resource-count",
             value: 0,
+            what: "cards-in-hand",
           }, // {d}
         },
+        name: "BEST OF BOTH WORLDS",
+        text: "BEST OF BOTH WORLDS While you have {d} or more cards in your hand, this character gets +{d} {S}.",
       },
       {
-        text: "UNDER THE SEA While you have {d} or fewer cards in your hand, this character gains Evasive.",
-        name: "UNDER THE SEA",
         ability: {
-          type: "static",
-          effect: { type: "gain-keyword", keyword: "Evasive", target: "SELF" },
           condition: {
             type: "resource-count",
             what: "cards-in-hand",
             controller: "you",
             comparison: "less-or-equal",
             value: 0,
-          }, // {d}
+          },
+          effect: { type: "gain-keyword", keyword: "Evasive", target: "SELF" },
+          type: "static", // {d}
         },
+        name: "UNDER THE SEA",
+        text: "UNDER THE SEA While you have {d} or fewer cards in your hand, this character gains Evasive.",
       },
     ]),
 
   "POWER OF MUSIC When you play this character, you may draw a card for each song in your discard. STAGE PRESENCE Your songs cost {d} {I} less to play.":
     manualEntries([
       {
-        text: "POWER OF MUSIC When you play this character, you may draw a card for each song in your discard.",
-        name: "POWER OF MUSIC",
         ability: {
-          type: "triggered",
-          trigger: { event: "play", timing: "when", on: "SELF" },
           effect: {
             type: "optional",
             effect: {
@@ -1381,40 +1377,44 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
               effect: { type: "draw", amount: 1, target: "CONTROLLER" },
             },
           },
+          trigger: { event: "play", timing: "when", on: "SELF" },
+          type: "triggered",
         },
+        name: "POWER OF MUSIC",
+        text: "POWER OF MUSIC When you play this character, you may draw a card for each song in your discard.",
       },
       {
-        text: "STAGE PRESENCE Your songs cost {d} {I} less to play.",
-        name: "STAGE PRESENCE",
         ability: {
-          type: "static",
-          effect: { type: "cost-reduction", amount: 0, cardType: "song" }, // {d}
+          effect: { type: "cost-reduction", amount: 0, cardType: "song" },
+          type: "static", // {d}
         },
+        name: "STAGE PRESENCE",
+        text: "STAGE PRESENCE Your songs cost {d} {I} less to play.",
       },
     ]),
 
   "FOLLOW MY LEAD Your other characters gain Support. ONWARD! When you play this character, ready all your other characters.":
     manualEntries([
       {
-        text: "FOLLOW MY LEAD Your other characters gain Support.",
-        name: "FOLLOW MY LEAD",
         ability: {
-          type: "static",
-          effect: { type: "gain-keyword", keyword: "Support" },
           affects: { controller: "you", excludeSelf: true },
+          effect: { type: "gain-keyword", keyword: "Support" },
+          type: "static",
         },
+        name: "FOLLOW MY LEAD",
+        text: "FOLLOW MY LEAD Your other characters gain Support.",
       },
       {
-        text: "ONWARD! When you play this character, ready all your other characters.",
-        name: "ONWARD!",
         ability: {
-          type: "triggered",
-          trigger: { event: "play", timing: "when", on: "SELF" },
           effect: {
             type: "ready",
             target: { selector: "all", controller: "you", excludeSelf: true },
           },
+          trigger: { event: "play", timing: "when", on: "SELF" },
+          type: "triggered",
         },
+        name: "ONWARD!",
+        text: "ONWARD! When you play this character, ready all your other characters.",
       },
     ]),
 
@@ -1423,9 +1423,7 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
 
   "Deal {d} damage to each opposing character. Banish each character that was dealt damage this way and has {d} or less {W}.":
     manualEntry({
-      text: "Deal {d} damage to each opposing character. Banish each character that was dealt damage this way and has {d} or less {W}.",
       ability: {
-        type: "action",
         effect: {
           type: "sequence",
           steps: [
@@ -1443,14 +1441,14 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
             },
           ],
         },
+        type: "action",
       },
+      text: "Deal {d} damage to each opposing character. Banish each character that was dealt damage this way and has {d} or less {W}.",
     }),
 
   'Chosen character gains Challenger +{d} and "When this character banishes another character in a challenge, you may draw a card" this turn.':
     manualEntry({
-      text: 'Chosen character gains Challenger +{d} and "When this character banishes another character in a challenge, you may draw a card" this turn.',
       ability: {
-        type: "action",
         effect: {
           type: "sequence",
           steps: [
@@ -1481,14 +1479,14 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
             },
           ],
         },
+        type: "action",
       },
+      text: 'Chosen character gains Challenger +{d} and "When this character banishes another character in a challenge, you may draw a card" this turn.',
     }),
 
   "Return chosen character with {d} {S} or less to their player's hand. Draw a card for each character returned to your hand this way.":
     manualEntry({
-      text: "Return chosen character with {d} {S} or less to their player's hand. Draw a card for each character returned to your hand this way.",
       ability: {
-        type: "action",
         effect: {
           type: "sequence",
           steps: [
@@ -1506,14 +1504,14 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
             },
           ],
         },
+        type: "action",
       },
+      text: "Return chosen character with {d} {S} or less to their player's hand. Draw a card for each character returned to your hand this way.",
     }),
 
   "Each player chooses and discards a card. If they discarded a character, they draw a card.":
     manualEntry({
-      text: "Each player chooses and discards a card. If they discarded a character, they draw a card.",
       ability: {
-        type: "action",
         effect: {
           type: "sequence",
           steps: [
@@ -1531,14 +1529,14 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
             },
           ],
         },
+        type: "action",
       },
+      text: "Each player chooses and discards a card. If they discarded a character, they draw a card.",
     }),
 
   "Put chosen exerted character into their player's inkwell facedown and exerted.":
     manualEntry({
-      text: "Put chosen exerted character into their player's inkwell facedown and exerted.",
       ability: {
-        type: "action",
         effect: {
           type: "put-into-inkwell",
           source: "chosen-character",
@@ -1546,14 +1544,14 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
           exerted: true,
           targetFilters: [{ type: "is-exerted" }],
         },
+        type: "action",
       },
+      text: "Put chosen exerted character into their player's inkwell facedown and exerted.",
     }),
 
   'Your characters gain "Whenever this character quests, you may draw a card, then choose and discard a card" this turn.':
     manualEntry({
-      text: 'Your characters gain "Whenever this character quests, you may draw a card, then choose and discard a card" this turn.',
       ability: {
-        type: "action",
         effect: {
           type: "grant-ability",
           ability: {
@@ -1578,13 +1576,13 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
           target: { selector: "all", controller: "you" },
           duration: "this-turn",
         },
+        type: "action",
       },
+      text: 'Your characters gain "Whenever this character quests, you may draw a card, then choose and discard a card" this turn.',
     }),
 
   "Banish chosen character. Its controller draws {d} cards.": manualEntry({
-    text: "Banish chosen character. Its controller draws {d} cards.",
     ability: {
-      type: "action",
       effect: {
         type: "sequence",
         steps: [
@@ -1592,14 +1590,14 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
           { type: "draw", amount: 0, target: "card-controller" }, // {d}
         ],
       },
+      type: "action",
     },
+    text: "Banish chosen character. Its controller draws {d} cards.",
   }),
 
   "Deal {d} damage to chosen character. If a Villain dealt damage this way, deal {d} damage to another chosen character.":
     manualEntry({
-      text: "Deal {d} damage to chosen character. If a Villain dealt damage this way, deal {d} damage to another chosen character.",
       ability: {
-        type: "action",
         effect: {
           type: "sequence",
           steps: [
@@ -1618,14 +1616,14 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
             },
           ],
         },
+        type: "action",
       },
+      text: "Deal {d} damage to chosen character. If a Villain dealt damage this way, deal {d} damage to another chosen character.",
     }),
 
   "Reveal the top {d} cards of your deck. Put any number of character cards from among them into your hand. Put the rest on the bottom of your deck in any order.":
     manualEntry({
-      text: "Reveal the top {d} cards of your deck. Put any number of character cards from among them into your hand. Put the rest on the bottom of your deck in any order.",
       ability: {
-        type: "action",
         effect: {
           type: "look-at-cards",
           amount: 0, // {d}
@@ -1637,27 +1635,27 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
             filter: { type: "card-type", cardType: "character" },
           },
         },
+        type: "action",
       },
+      text: "Reveal the top {d} cards of your deck. Put any number of character cards from among them into your hand. Put the rest on the bottom of your deck in any order.",
     }),
 
   "Chosen character can't quest during their next turn.": manualEntry({
-    text: "Chosen character can't quest during their next turn.",
     ability: {
-      type: "action",
       effect: {
         type: "restriction",
         restriction: "cant-quest",
         target: { selector: "chosen" },
         duration: "next-turn",
       },
+      type: "action",
     },
+    text: "Chosen character can't quest during their next turn.",
   }),
 
   "Exert all characters. They can't ready during their next turn.": manualEntry(
     {
-      text: "Exert all characters. They can't ready during their next turn.",
       ability: {
-        type: "action",
         effect: {
           type: "sequence",
           steps: [
@@ -1670,15 +1668,15 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
             },
           ],
         },
+        type: "action",
       },
+      text: "Exert all characters. They can't ready during their next turn.",
     },
   ),
 
   "Banish all characters. Each player loses {d} lore for each of their characters banished this way.":
     manualEntry({
-      text: "Banish all characters. Each player loses {d} lore for each of their characters banished this way.",
       ability: {
-        type: "action",
         effect: {
           type: "sequence",
           steps: [
@@ -1696,7 +1694,9 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
             },
           ],
         },
+        type: "action",
       },
+      text: "Banish all characters. Each player loses {d} lore for each of their characters banished this way.",
     }),
 
   // ============================================================================
@@ -1707,27 +1707,27 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
   "MASTER TACTICIAN When you play this character, draw {d} cards. STRATEGIC PLANNING Whenever this character quests, chosen character can't challenge during their next turn.":
     manualEntries([
       {
-        text: "MASTER TACTICIAN When you play this character, draw {d} cards.",
-        name: "MASTER TACTICIAN",
         ability: {
-          type: "triggered",
-          trigger: { event: "play", timing: "when", on: "SELF" },
           effect: { type: "draw", amount: 0, target: "CONTROLLER" },
+          trigger: { event: "play", timing: "when", on: "SELF" },
+          type: "triggered",
         },
+        name: "MASTER TACTICIAN",
+        text: "MASTER TACTICIAN When you play this character, draw {d} cards.",
       },
       {
-        text: "STRATEGIC PLANNING Whenever this character quests, chosen character can't challenge during their next turn.",
-        name: "STRATEGIC PLANNING",
         ability: {
-          type: "triggered",
-          trigger: { event: "quest", timing: "whenever", on: "SELF" },
           effect: {
             type: "restriction",
             restriction: "cant-challenge",
             target: { selector: "chosen" },
             duration: "next-turn",
           },
+          trigger: { event: "quest", timing: "whenever", on: "SELF" },
+          type: "triggered",
         },
+        name: "STRATEGIC PLANNING",
+        text: "STRATEGIC PLANNING Whenever this character quests, chosen character can't challenge during their next turn.",
       },
     ]),
 
@@ -1735,47 +1735,45 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
   "MAGICAL BARRIER This character can't be challenged while you have a location in play. MYSTICAL INSIGHT Whenever you play a song, you may draw a card.":
     manualEntries([
       {
-        text: "MAGICAL BARRIER This character can't be challenged while you have a location in play.",
-        name: "MAGICAL BARRIER",
         ability: {
-          type: "static",
-          effect: {
-            type: "restriction",
-            restriction: "cant-be-challenged",
-            target: "SELF",
-          },
           condition: {
             type: "has-location-count",
             controller: "you",
             comparison: "greater-or-equal",
             count: 1,
           },
+          effect: {
+            type: "restriction",
+            restriction: "cant-be-challenged",
+            target: "SELF",
+          },
+          type: "static",
         },
+        name: "MAGICAL BARRIER",
+        text: "MAGICAL BARRIER This character can't be challenged while you have a location in play.",
       },
       {
-        text: "MYSTICAL INSIGHT Whenever you play a song, you may draw a card.",
-        name: "MYSTICAL INSIGHT",
         ability: {
-          type: "triggered",
+          effect: {
+            type: "optional",
+            effect: { type: "draw", amount: 1, target: "CONTROLLER" },
+          },
           trigger: {
             event: "play",
             timing: "whenever",
             on: { controller: "you", cardType: "song" },
           },
-          effect: {
-            type: "optional",
-            effect: { type: "draw", amount: 1, target: "CONTROLLER" },
-          },
+          type: "triggered",
         },
+        name: "MYSTICAL INSIGHT",
+        text: "MYSTICAL INSIGHT Whenever you play a song, you may draw a card.",
       },
     ]),
 
   // #57 - Complex ink manipulation
   "Put the top {d} cards of your deck into your inkwell facedown and exerted. Draw a card for each card put into your inkwell this way.":
     manualEntry({
-      text: "Put the top {d} cards of your deck into your inkwell facedown and exerted. Draw a card for each card put into your inkwell this way.",
       ability: {
-        type: "action",
         effect: {
           type: "sequence",
           steps: [
@@ -1792,15 +1790,15 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
             },
           ],
         },
+        type: "action",
       },
+      text: "Put the top {d} cards of your deck into your inkwell facedown and exerted. Draw a card for each card put into your inkwell this way.",
     }),
 
   // #58 - Mass ready with restriction
   "Ready all your characters. They can't quest for the rest of this turn.":
     manualEntry({
-      text: "Ready all your characters. They can't quest for the rest of this turn.",
       ability: {
-        type: "action",
         effect: {
           type: "sequence",
           steps: [
@@ -1813,15 +1811,15 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
             },
           ],
         },
+        type: "action",
       },
+      text: "Ready all your characters. They can't quest for the rest of this turn.",
     }),
 
   // #59 - Damage-based banish
   "Deal {d} damage to chosen character. If that character is banished this way, draw {d} cards.":
     manualEntry({
-      text: "Deal {d} damage to chosen character. If that character is banished this way, draw {d} cards.",
       ability: {
-        type: "action",
         effect: {
           type: "sequence",
           steps: [
@@ -1833,17 +1831,17 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
             },
           ],
         },
+        type: "action",
       },
+      text: "Deal {d} damage to chosen character. If that character is banished this way, draw {d} cards.",
     }),
 
   // #60 - Location lore manipulation
   "PRIME REAL ESTATE While you have a character here, your locations get +{d} {L}. LAND GRAB {E}, {d} {I} − Gain {d} lore.":
     manualEntries([
       {
-        text: "PRIME REAL ESTATE While you have a character here, your locations get +{d} {L}.",
-        name: "PRIME REAL ESTATE",
         ability: {
-          type: "static",
+          condition: { type: "has-character-here" },
           effect: {
             type: "modify-stat",
             stat: "lore",
@@ -1854,25 +1852,25 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
               cardType: "location",
             },
           },
-          condition: { type: "has-character-here" },
+          type: "static",
         },
+        name: "PRIME REAL ESTATE",
+        text: "PRIME REAL ESTATE While you have a character here, your locations get +{d} {L}.",
       },
       {
-        text: "LAND GRAB {E}, {d} {I} − Gain {d} lore.",
-        name: "LAND GRAB",
         ability: {
-          type: "activated",
           cost: { exert: true, ink: 0 },
           effect: { type: "gain-lore", amount: 0 },
+          type: "activated",
         },
+        name: "LAND GRAB",
+        text: "LAND GRAB {E}, {d} {I} − Gain {d} lore.",
       },
     ]),
 
   // #61 - Discard to draw
   "Each player discards their hand, then draws {d} cards.": manualEntry({
-    text: "Each player discards their hand, then draws {d} cards.",
     ability: {
-      type: "action",
       effect: {
         type: "sequence",
         steps: [
@@ -1880,15 +1878,15 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
           { type: "draw", amount: 0, target: "EACH_PLAYER" },
         ],
       },
+      type: "action",
     },
+    text: "Each player discards their hand, then draws {d} cards.",
   }),
 
   // #62 - Conditional damage based on character type
   "Deal {d} damage to chosen character. If that character is a Hero, deal {d} additional damage to it.":
     manualEntry({
-      text: "Deal {d} damage to chosen character. If that character is a Hero, deal {d} additional damage to it.",
       ability: {
-        type: "action",
         effect: {
           type: "sequence",
           steps: [
@@ -1907,15 +1905,15 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
             },
           ],
         },
+        type: "action",
       },
+      text: "Deal {d} damage to chosen character. If that character is a Hero, deal {d} additional damage to it.",
     }),
 
   // #63 - Location movement ability
   "Move chosen character of yours to this location for free. That character gets +{d} {S} this turn.":
     manualEntry({
-      text: "Move chosen character of yours to this location for free. That character gets +{d} {S} this turn.",
       ability: {
-        type: "action",
         effect: {
           type: "sequence",
           steps: [
@@ -1934,26 +1932,25 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
             },
           ],
         },
+        type: "action",
       },
+      text: "Move chosen character of yours to this location for free. That character gets +{d} {S} this turn.",
     }),
 
   // #64 - Double activated abilities
   "ANCIENT KNOWLEDGE {E} − Draw a card. FORBIDDEN SECRETS {E}, {d} {I} − Draw {d} cards, then choose and discard {d} cards.":
     manualEntries([
       {
-        text: "ANCIENT KNOWLEDGE {E} − Draw a card.",
-        name: "ANCIENT KNOWLEDGE",
         ability: {
-          type: "activated",
           cost: { exert: true },
           effect: { type: "draw", amount: 1, target: "CONTROLLER" },
+          type: "activated",
         },
+        name: "ANCIENT KNOWLEDGE",
+        text: "ANCIENT KNOWLEDGE {E} − Draw a card.",
       },
       {
-        text: "FORBIDDEN SECRETS {E}, {d} {I} − Draw {d} cards, then choose and discard {d} cards.",
-        name: "FORBIDDEN SECRETS",
         ability: {
-          type: "activated",
           cost: { exert: true, ink: 0 },
           effect: {
             type: "sequence",
@@ -1967,16 +1964,17 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
               },
             ],
           },
+          type: "activated",
         },
+        name: "FORBIDDEN SECRETS",
+        text: "FORBIDDEN SECRETS {E}, {d} {I} − Draw {d} cards, then choose and discard {d} cards.",
       },
     ]),
 
   // #65 - Sacrifice for effect
   "Banish chosen character of yours to banish chosen opposing character.":
     manualEntry({
-      text: "Banish chosen character of yours to banish chosen opposing character.",
       ability: {
-        type: "action",
         effect: {
           type: "sequence",
           steps: [
@@ -1990,15 +1988,15 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
             },
           ],
         },
+        type: "action",
       },
+      text: "Banish chosen character of yours to banish chosen opposing character.",
     }),
 
   // #66 - Willpower-based bounce
   "Return chosen character with {d} {W} or less to their player's hand.":
     manualEntry({
-      text: "Return chosen character with {d} {W} or less to their player's hand.",
       ability: {
-        type: "action",
         effect: {
           type: "return-to-hand",
           target: {
@@ -2006,14 +2004,14 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
             willpowerComparison: { comparison: "less-or-equal", value: 0 },
           },
         },
+        type: "action",
       },
+      text: "Return chosen character with {d} {W} or less to their player's hand.",
     }),
 
   // #67 - Item sacrifice for cards
   "Banish chosen item to draw {d} cards.": manualEntry({
-    text: "Banish chosen item to draw {d} cards.",
     ability: {
-      type: "action",
       effect: {
         type: "sequence",
         steps: [
@@ -2021,15 +2019,15 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
           { type: "draw", amount: 0, target: "CONTROLLER" },
         ],
       },
+      type: "action",
     },
+    text: "Banish chosen item to draw {d} cards.",
   }),
 
   // #68 - Opponent hand manipulation
   "Chosen opponent reveals their hand. You choose a non-character card from it and that player discards it.":
     manualEntry({
-      text: "Chosen opponent reveals their hand. You choose a non-character card from it and that player discards it.",
       ability: {
-        type: "action",
         effect: {
           type: "sequence",
           steps: [
@@ -2044,90 +2042,90 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
             },
           ],
         },
+        type: "action",
       },
+      text: "Chosen opponent reveals their hand. You choose a non-character card from it and that player discards it.",
     }),
 
   // #69 - Multi-target damage
   "Deal {d} damage to each of up to {d} chosen characters.": manualEntry({
-    text: "Deal {d} damage to each of up to {d} chosen characters.",
     ability: {
-      type: "action",
       effect: {
         type: "deal-damage",
         amount: 0,
         target: { selector: "up-to-chosen", count: 0 },
       },
+      type: "action",
     },
+    text: "Deal {d} damage to each of up to {d} chosen characters.",
   }),
 
   // #70 - Static lore reduction
   "DESPAIR Opponents need {d} more lore to win the game. ENDLESS GLOOM Your opponent's characters get -{d} {L}.":
     manualEntries([
       {
-        text: "DESPAIR Opponents need {d} more lore to win the game.",
-        name: "DESPAIR",
         ability: {
-          type: "static",
           effect: {
             type: "win-condition-modification",
             loreRequired: 25,
             target: "OPPONENT",
           },
+          type: "static",
         },
+        name: "DESPAIR",
+        text: "DESPAIR Opponents need {d} more lore to win the game.",
       },
       {
-        text: "ENDLESS GLOOM Your opponent's characters get -{d} {L}.",
-        name: "ENDLESS GLOOM",
         ability: {
-          type: "static",
           effect: {
             type: "modify-stat",
             stat: "lore",
             modifier: 0,
             target: { selector: "all", controller: "opponent" },
           },
+          type: "static",
         },
+        name: "ENDLESS GLOOM",
+        text: "ENDLESS GLOOM Your opponent's characters get -{d} {L}.",
       },
     ]),
 
   // #71 - Triggered on banish
   "LAST WORDS When this character is banished, each opponent discards a card.":
     manualEntry({
-      text: "LAST WORDS When this character is banished, each opponent discards a card.",
-      name: "LAST WORDS",
       ability: {
-        type: "triggered",
-        trigger: { event: "banish", timing: "when", on: "SELF" },
         effect: {
           type: "discard",
           amount: 1,
           target: "EACH_OPPONENT",
           chosen: true,
         },
+        trigger: { event: "banish", timing: "when", on: "SELF" },
+        type: "triggered",
       },
+      name: "LAST WORDS",
+      text: "LAST WORDS When this character is banished, each opponent discards a card.",
     }),
 
   // #72 - Copy effect
   "Chosen character gains all abilities of another chosen character this turn.":
     manualEntry({
-      text: "Chosen character gains all abilities of another chosen character this turn.",
       ability: {
-        type: "action",
         effect: {
           type: "copy-abilities",
           from: { selector: "another-chosen" },
           to: { selector: "chosen" },
           duration: "this-turn",
         },
+        type: "action",
       },
+      text: "Chosen character gains all abilities of another chosen character this turn.",
     }),
 
   // #73 - Search and play
   "Search your deck for a character card with cost {d} or less, reveal it, and put it into your hand. Shuffle your deck.":
     manualEntry({
-      text: "Search your deck for a character card with cost {d} or less, reveal it, and put it into your hand. Shuffle your deck.",
       ability: {
-        type: "action",
         effect: {
           type: "search-deck",
           cardType: "character",
@@ -2136,15 +2134,15 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
           reveal: true,
           shuffle: true,
         },
+        type: "action",
       },
+      text: "Search your deck for a character card with cost {d} or less, reveal it, and put it into your hand. Shuffle your deck.",
     }),
 
   // #74 - Conditional bounce
   "Return chosen character to their player's hand. If that character had Ward, draw a card.":
     manualEntry({
-      text: "Return chosen character to their player's hand. If that character had Ward, draw a card.",
       ability: {
-        type: "action",
         effect: {
           type: "sequence",
           steps: [
@@ -2156,37 +2154,37 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
             },
           ],
         },
+        type: "action",
       },
+      text: "Return chosen character to their player's hand. If that character had Ward, draw a card.",
     }),
 
   // #75 - Double static buffs
   "ENCOURAGING WORDS Your Floodborn characters get +{d} {S}. INSPIRING PRESENCE Your Storyborn characters get +{d} {W}.":
     manualEntries([
       {
-        text: "ENCOURAGING WORDS Your Floodborn characters get +{d} {S}.",
-        name: "ENCOURAGING WORDS",
         ability: {
-          type: "static",
-          effect: { type: "modify-stat", stat: "strength", modifier: 0 },
           affects: { controller: "you", classification: "Floodborn" },
+          effect: { type: "modify-stat", stat: "strength", modifier: 0 },
+          type: "static",
         },
+        name: "ENCOURAGING WORDS",
+        text: "ENCOURAGING WORDS Your Floodborn characters get +{d} {S}.",
       },
       {
-        text: "INSPIRING PRESENCE Your Storyborn characters get +{d} {W}.",
-        name: "INSPIRING PRESENCE",
         ability: {
-          type: "static",
-          effect: { type: "modify-stat", stat: "willpower", modifier: 0 },
           affects: { controller: "you", classification: "Storyborn" },
+          effect: { type: "modify-stat", stat: "willpower", modifier: 0 },
+          type: "static",
         },
+        name: "INSPIRING PRESENCE",
+        text: "INSPIRING PRESENCE Your Storyborn characters get +{d} {W}.",
       },
     ]),
 
   // #76 - Draw and exile action
   "Draw {d} cards. Banish the top {d} cards of your deck.": manualEntry({
-    text: "Draw {d} cards. Banish the top {d} cards of your deck.",
     ability: {
-      type: "action",
       effect: {
         type: "sequence",
         steps: [
@@ -2197,14 +2195,14 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
           },
         ],
       },
+      type: "action",
     },
+    text: "Draw {d} cards. Banish the top {d} cards of your deck.",
   }),
 
   // #77 - Evasive grant
   "Your characters gain Evasive this turn. Draw a card.": manualEntry({
-    text: "Your characters gain Evasive this turn. Draw a card.",
     ability: {
-      type: "action",
       effect: {
         type: "sequence",
         steps: [
@@ -2217,17 +2215,15 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
           { type: "draw", amount: 1, target: "CONTROLLER" },
         ],
       },
+      type: "action",
     },
+    text: "Your characters gain Evasive this turn. Draw a card.",
   }),
 
   // #78 - Triggered ramp
   "FERTILE GROUND Whenever a card is put into your inkwell, you may pay {d} {I}. If you do, draw a card.":
     manualEntry({
-      text: "FERTILE GROUND Whenever a card is put into your inkwell, you may pay {d} {I}. If you do, draw a card.",
-      name: "FERTILE GROUND",
       ability: {
-        type: "triggered",
-        trigger: { event: "ink", timing: "whenever", on: "YOU" },
         effect: {
           type: "optional",
           effect: {
@@ -2238,77 +2234,79 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
             ],
           },
         },
+        trigger: { event: "ink", timing: "whenever", on: "YOU" },
+        type: "triggered",
       },
+      name: "FERTILE GROUND",
+      text: "FERTILE GROUND Whenever a card is put into your inkwell, you may pay {d} {I}. If you do, draw a card.",
     }),
 
   // #79 - Replacement-style effect
   "If this character would be banished, you may return it to your hand instead.":
     manualEntry({
-      text: "If this character would be banished, you may return it to your hand instead.",
       ability: {
-        type: "replacement",
-        trigger: { event: "banish", timing: "would", on: "SELF" },
         replacement: {
           type: "optional",
           effect: { type: "return-to-hand", target: "SELF" },
         },
+        trigger: { event: "banish", timing: "would", on: "SELF" },
+        type: "replacement",
       },
+      text: "If this character would be banished, you may return it to your hand instead.",
     }),
 
   // #80 - Triggered on damage
   "RESILIENT Whenever this character takes damage, you may ready it.":
     manualEntry({
-      text: "RESILIENT Whenever this character takes damage, you may ready it.",
-      name: "RESILIENT",
       ability: {
-        type: "triggered",
-        trigger: { event: "damage", timing: "whenever", on: "SELF" },
         effect: { type: "optional", effect: { type: "ready", target: "SELF" } },
+        trigger: { event: "damage", timing: "whenever", on: "SELF" },
+        type: "triggered",
       },
+      name: "RESILIENT",
+      text: "RESILIENT Whenever this character takes damage, you may ready it.",
     }),
 
   // #81 - Location granting keywords
   "TRAINING GROUNDS Characters gain Challenger +{d} while here. BATTLE ARENA Characters can challenge ready characters while here.":
     manualEntries([
       {
-        text: "TRAINING GROUNDS Characters gain Challenger +{d} while here.",
-        name: "TRAINING GROUNDS",
         ability: {
-          type: "static",
-          effect: { type: "gain-keyword", keyword: "Challenger", value: 0 },
           affects: "characters-here",
+          effect: { type: "gain-keyword", keyword: "Challenger", value: 0 },
+          type: "static",
         },
+        name: "TRAINING GROUNDS",
+        text: "TRAINING GROUNDS Characters gain Challenger +{d} while here.",
       },
       {
-        text: "BATTLE ARENA Characters can challenge ready characters while here.",
-        name: "BATTLE ARENA",
         ability: {
-          type: "static",
-          effect: { type: "grant-ability", ability: "can-challenge-ready" },
           affects: "characters-here",
+          effect: { type: "grant-ability", ability: "can-challenge-ready" },
+          type: "static",
         },
+        name: "BATTLE ARENA",
+        text: "BATTLE ARENA Characters can challenge ready characters while here.",
       },
     ]),
 
   // #82 - Target switching
   "Chosen character challenges chosen other character this turn.": manualEntry({
-    text: "Chosen character challenges chosen other character this turn.",
     ability: {
-      type: "action",
       effect: {
         type: "force-challenge",
         attacker: { selector: "chosen" },
         defender: { selector: "another-chosen" },
       },
+      type: "action",
     },
+    text: "Chosen character challenges chosen other character this turn.",
   }),
 
   // #83 - Conditional play from discard
   "If you have {d} or more characters in play, you may play a character from your discard for free.":
     manualEntry({
-      text: "If you have {d} or more characters in play, you may play a character from your discard for free.",
       ability: {
-        type: "action",
         effect: {
           type: "conditional",
           condition: {
@@ -2327,93 +2325,93 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
             },
           },
         },
+        type: "action",
       },
+      text: "If you have {d} or more characters in play, you may play a character from your discard for free.",
     }),
 
   // #84 - Lore manipulation based on characters
   "Gain {d} lore for each character you have in play.": manualEntry({
-    text: "Gain {d} lore for each character you have in play.",
     ability: {
-      type: "action",
       effect: {
         type: "for-each",
         counter: { type: "characters", controller: "you" },
         effect: { type: "gain-lore", amount: 1 },
       },
+      type: "action",
     },
+    text: "Gain {d} lore for each character you have in play.",
   }),
 
   // #85 - Triggered protection
   "GUARDIAN ANGEL Whenever another character of yours would be banished, you may banish this character instead.":
     manualEntry({
-      text: "GUARDIAN ANGEL Whenever another character of yours would be banished, you may banish this character instead.",
-      name: "GUARDIAN ANGEL",
       ability: {
-        type: "triggered",
+        effect: {
+          type: "optional",
+          effect: { type: "banish-instead", target: "SELF" },
+        },
         trigger: {
           event: "banish",
           timing: "would",
           on: { controller: "you", excludeSelf: true },
         },
-        effect: {
-          type: "optional",
-          effect: { type: "banish-instead", target: "SELF" },
-        },
+        type: "triggered",
       },
+      name: "GUARDIAN ANGEL",
+      text: "GUARDIAN ANGEL Whenever another character of yours would be banished, you may banish this character instead.",
     }),
 
   // #86 - Board wipe with exception
   "Banish all characters except chosen character.": manualEntry({
-    text: "Banish all characters except chosen character.",
     ability: {
-      type: "action",
       effect: { type: "banish", target: { selector: "all", except: "chosen" } },
+      type: "action",
     },
+    text: "Banish all characters except chosen character.",
   }),
 
   // #87 - Static with classification requirement
   "PACK TACTICS This character gets +{d} {S} while you have another Wolf character in play.":
     manualEntry({
-      text: "PACK TACTICS This character gets +{d} {S} while you have another Wolf character in play.",
-      name: "PACK TACTICS",
       ability: {
-        type: "static",
+        condition: {
+          type: "has-character-with-classification",
+          classification: "Wolf",
+          controller: "you",
+        },
         effect: {
           type: "modify-stat",
           stat: "strength",
           modifier: 0,
           target: "SELF",
         },
-        condition: {
-          type: "has-character-with-classification",
-          classification: "Wolf",
-          controller: "you",
-        },
+        type: "static",
       },
+      name: "PACK TACTICS",
+      text: "PACK TACTICS This character gets +{d} {S} while you have another Wolf character in play.",
     }),
 
   // #88 - Triggered counter
   "COUNTERATTACK Whenever this character is challenged, deal {d} damage to the challenging character before the challenge.":
     manualEntry({
-      text: "COUNTERATTACK Whenever this character is challenged, deal {d} damage to the challenging character before the challenge.",
-      name: "COUNTERATTACK",
       ability: {
-        type: "triggered",
-        trigger: { event: "challenged", timing: "whenever", on: "SELF" },
         effect: {
           type: "deal-damage",
           amount: 0,
           target: "challenging-character",
         },
+        trigger: { event: "challenged", timing: "whenever", on: "SELF" },
+        type: "triggered",
       },
+      name: "COUNTERATTACK",
+      text: "COUNTERATTACK Whenever this character is challenged, deal {d} damage to the challenging character before the challenge.",
     }),
 
   // #89 - Mass exert with lore
   "Exert all opposing characters. Gain {d} lore for each character exerted this way.":
     manualEntry({
-      text: "Exert all opposing characters. Gain {d} lore for each character exerted this way.",
       ability: {
-        type: "action",
         effect: {
           type: "sequence",
           steps: [
@@ -2427,53 +2425,53 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
             },
           ],
         },
+        type: "action",
       },
+      text: "Exert all opposing characters. Gain {d} lore for each character exerted this way.",
     }),
 
   // #90 - Double keyword location
   "SAFE HAVEN Characters gain Ward while here. SANCTUARY Characters can't be challenged while here.":
     manualEntries([
       {
-        text: "SAFE HAVEN Characters gain Ward while here.",
-        name: "SAFE HAVEN",
         ability: {
-          type: "static",
-          effect: { type: "gain-keyword", keyword: "Ward" },
           affects: "characters-here",
+          effect: { type: "gain-keyword", keyword: "Ward" },
+          type: "static",
         },
+        name: "SAFE HAVEN",
+        text: "SAFE HAVEN Characters gain Ward while here.",
       },
       {
-        text: "SANCTUARY Characters can't be challenged while here.",
-        name: "SANCTUARY",
         ability: {
-          type: "static",
-          effect: { type: "restriction", restriction: "cant-be-challenged" },
           affects: "characters-here",
+          effect: { type: "restriction", restriction: "cant-be-challenged" },
+          type: "static",
         },
+        name: "SANCTUARY",
+        text: "SANCTUARY Characters can't be challenged while here.",
       },
     ]),
 
   // #91 - Draw for opponent hand
   "Draw cards equal to the number of cards in an opponent's hand.": manualEntry(
     {
-      text: "Draw cards equal to the number of cards in an opponent's hand.",
       ability: {
-        type: "action",
         effect: {
           type: "draw",
           amount: { type: "cards-in-hand", controller: "opponent" },
           target: "CONTROLLER",
         },
+        type: "action",
       },
+      text: "Draw cards equal to the number of cards in an opponent's hand.",
     },
   ),
 
   // #92 - Conditional strength boost
   "Chosen character gets +{d} {S} this turn. If that character has Rush, it gets +{d} {S} instead.":
     manualEntry({
-      text: "Chosen character gets +{d} {S} this turn. If that character has Rush, it gets +{d} {S} instead.",
       ability: {
-        type: "action",
         effect: {
           type: "conditional",
           condition: { type: "target-has-keyword", keyword: "Rush" },
@@ -2492,15 +2490,15 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
             duration: "this-turn",
           },
         },
+        type: "action",
       },
+      text: "Chosen character gets +{d} {S} this turn. If that character has Rush, it gets +{d} {S} instead.",
     }),
 
   // #93 - Item recursion
   "Return chosen item from your discard to your hand. You may play an item with cost {d} or less for free.":
     manualEntry({
-      text: "Return chosen item from your discard to your hand. You may play an item with cost {d} or less for free.",
       ability: {
-        type: "action",
         effect: {
           type: "sequence",
           steps: [
@@ -2521,32 +2519,32 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
             },
           ],
         },
+        type: "action",
       },
+      text: "Return chosen item from your discard to your hand. You may play an item with cost {d} or less for free.",
     }),
 
   // #94 - Triggered on shift
   "PERFECT TRANSFORMATION When you play this character using Shift, deal {d} damage to each opposing character.":
     manualEntry({
-      text: "PERFECT TRANSFORMATION When you play this character using Shift, deal {d} damage to each opposing character.",
-      name: "PERFECT TRANSFORMATION",
       ability: {
-        type: "triggered",
-        trigger: { event: "play", timing: "when", on: "SELF" },
+        condition: { type: "used-shift" },
         effect: {
           type: "deal-damage",
           amount: 0,
           target: { selector: "all", controller: "opponent" },
         },
-        condition: { type: "used-shift" },
+        trigger: { event: "play", timing: "when", on: "SELF" },
+        type: "triggered",
       },
+      name: "PERFECT TRANSFORMATION",
+      text: "PERFECT TRANSFORMATION When you play this character using Shift, deal {d} damage to each opposing character.",
     }),
 
   // #95 - Mass damage action
   "Deal {d} damage to each character. Each player draws a card for each of their characters banished this way.":
     manualEntry({
-      text: "Deal {d} damage to each character. Each player draws a card for each of their characters banished this way.",
       ability: {
-        type: "action",
         effect: {
           type: "sequence",
           steps: [
@@ -2564,56 +2562,58 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
             },
           ],
         },
+        type: "action",
       },
+      text: "Deal {d} damage to each character. Each player draws a card for each of their characters banished this way.",
     }),
 
   // #96 - Static willpower based on damage
   "BATTLE HARDENED This character gets +{d} {W} for each damage counter on it.":
     manualEntry({
-      text: "BATTLE HARDENED This character gets +{d} {W} for each damage counter on it.",
-      name: "BATTLE HARDENED",
       ability: {
-        type: "static",
         effect: {
           type: "modify-stat",
           stat: "willpower",
           modifier: { type: "damage-on-self" },
           target: "SELF",
         },
+        type: "static",
       },
+      name: "BATTLE HARDENED",
+      text: "BATTLE HARDENED This character gets +{d} {W} for each damage counter on it.",
     }),
 
   // #97 - Triggered card under manipulation
   "GATHER POWER Whenever you play a character, you may put the top card of your deck under this character. UNLEASH At the end of your turn, draw a card for each card under this character.":
     manualEntries([
       {
-        text: "GATHER POWER Whenever you play a character, you may put the top card of your deck under this character.",
-        name: "GATHER POWER",
         ability: {
-          type: "triggered",
+          effect: {
+            type: "optional",
+            effect: { type: "put-under", source: "top-of-deck", under: "self" },
+          },
           trigger: {
             event: "play",
             timing: "whenever",
             on: { controller: "you", cardType: "character" },
           },
-          effect: {
-            type: "optional",
-            effect: { type: "put-under", source: "top-of-deck", under: "self" },
-          },
+          type: "triggered",
         },
+        name: "GATHER POWER",
+        text: "GATHER POWER Whenever you play a character, you may put the top card of your deck under this character.",
       },
       {
-        text: "UNLEASH At the end of your turn, draw a card for each card under this character.",
-        name: "UNLEASH",
         ability: {
-          type: "triggered",
-          trigger: { event: "end-turn", timing: "at", on: "YOU" },
           effect: {
             type: "for-each",
             counter: { type: "cards-under-self" },
             effect: { type: "draw", amount: 1, target: "CONTROLLER" },
           },
+          trigger: { event: "end-turn", timing: "at", on: "YOU" },
+          type: "triggered",
         },
+        name: "UNLEASH",
+        text: "UNLEASH At the end of your turn, draw a card for each card under this character.",
       },
     ]),
 
@@ -2621,36 +2621,34 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
   "RALLY POINT Whenever a character of yours quests while here, gain {d} additional lore. STAGING AREA Move costs for your characters to move here are reduced by {d}.":
     manualEntries([
       {
-        text: "RALLY POINT Whenever a character of yours quests while here, gain {d} additional lore.",
-        name: "RALLY POINT",
         ability: {
-          type: "triggered",
+          effect: { type: "gain-lore", amount: 0 },
           trigger: {
             event: "quest",
             timing: "whenever",
             on: "YOUR_CHARACTERS",
             atLocation: "this",
           },
-          effect: { type: "gain-lore", amount: 0 },
+          type: "triggered",
         },
+        name: "RALLY POINT",
+        text: "RALLY POINT Whenever a character of yours quests while here, gain {d} additional lore.",
       },
       {
-        text: "STAGING AREA Move costs for your characters to move here are reduced by {d}.",
-        name: "STAGING AREA",
         ability: {
-          type: "static",
-          effect: { type: "reduce-move-cost", amount: 0 },
           affects: { controller: "you", movingTo: "this" },
+          effect: { type: "reduce-move-cost", amount: 0 },
+          type: "static",
         },
+        name: "STAGING AREA",
+        text: "STAGING AREA Move costs for your characters to move here are reduced by {d}.",
       },
     ]),
 
   // #99 - Cost manipulation
   "Chosen character costs {d} less to play this turn. You may play that character.":
     manualEntry({
-      text: "Chosen character costs {d} less to play this turn. You may play that character.",
       ability: {
-        type: "action",
         effect: {
           type: "sequence",
           steps: [
@@ -2670,15 +2668,15 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
             },
           ],
         },
+        type: "action",
       },
+      text: "Chosen character costs {d} less to play this turn. You may play that character.",
     }),
 
   // #100 - Complex lore race
   "If you have less lore than each opponent, draw {d} cards. Otherwise, each opponent draws a card.":
     manualEntry({
-      text: "If you have less lore than each opponent, draw {d} cards. Otherwise, each opponent draws a card.",
       ability: {
-        type: "action",
         effect: {
           type: "conditional",
           condition: {
@@ -2690,7 +2688,9 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
           then: { type: "draw", amount: 0, target: "CONTROLLER" },
           else: { type: "draw", amount: 1, target: "EACH_OPPONENT" },
         },
+        type: "action",
       },
+      text: "If you have less lore than each opponent, draw {d} cards. Otherwise, each opponent draws a card.",
     }),
 };
 
@@ -2747,7 +2747,7 @@ export function getManualEntries(
   cardName?: string,
 ): AbilityWithText[] | undefined {
   const entry = getManualEntry(text, cardName);
-  if (!entry) return undefined;
+  if (!entry) {return undefined;}
   return Array.isArray(entry) ? entry : [entry];
 }
 
@@ -2826,7 +2826,7 @@ export function resolveManualOverrideValues(
     for (const key in obj) {
       if (key !== "text" && !numericFields.includes(key)) {
         if (Array.isArray(obj[key])) {
-          for (const item of obj[key]) replacePlaceholders(item, depth + 1);
+          for (const item of obj[key]) {replacePlaceholders(item, depth + 1);}
         } else if (typeof obj[key] === "object") {
           replacePlaceholders(obj[key], depth + 1);
         }
@@ -2835,7 +2835,7 @@ export function resolveManualOverrideValues(
   }
 
   if (Array.isArray(resolved)) {
-    for (const item of resolved) replacePlaceholders(item);
+    for (const item of resolved) {replacePlaceholders(item);}
   } else {
     replacePlaceholders(resolved);
   }

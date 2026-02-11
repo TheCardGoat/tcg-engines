@@ -3,35 +3,35 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   brunoMadrigalSingleminded,
-//   camiloMadrigalAtTheCenterOfAttention,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   BrunoMadrigalSingleminded,
+//   CamiloMadrigalAtTheCenterOfAttention,
 // } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Bruno Madrigal - Single-Minded", () => {
-//   it("STANDING TALL When you play this character, chosen opposing character can’t ready at the start of their next turn.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Bruno Madrigal - Single-Minded", () => {
+//   It("STANDING TALL When you play this character, chosen opposing character can’t ready at the start of their next turn.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: brunoMadrigalSingleminded.cost,
-//         hand: [brunoMadrigalSingleminded],
+//         Inkwell: brunoMadrigalSingleminded.cost,
+//         Hand: [brunoMadrigalSingleminded],
 //       },
 //       {
-//         play: [camiloMadrigalAtTheCenterOfAttention],
+//         Play: [camiloMadrigalAtTheCenterOfAttention],
 //       },
 //     );
 //
-//     await testEngine.exertCard(camiloMadrigalAtTheCenterOfAttention);
+//     Await testEngine.exertCard(camiloMadrigalAtTheCenterOfAttention);
 //
-//     await testEngine.playCard(brunoMadrigalSingleminded, {
-//       targets: [camiloMadrigalAtTheCenterOfAttention],
+//     Await testEngine.playCard(brunoMadrigalSingleminded, {
+//       Targets: [camiloMadrigalAtTheCenterOfAttention],
 //     });
 //
-//     await testEngine.passTurn();
+//     Await testEngine.passTurn();
 //
-//     expect(
-//       testEngine.getCardModel(camiloMadrigalAtTheCenterOfAttention).exerted,
+//     Expect(
+//       TestEngine.getCardModel(camiloMadrigalAtTheCenterOfAttention).exerted,
 //     ).toBe(true);
 //   });
 // });

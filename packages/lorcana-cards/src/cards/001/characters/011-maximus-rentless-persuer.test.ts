@@ -2,31 +2,31 @@
 // /**
 //  * @jest-environment node
 //  */
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   maximusRentlessPersuer,
-//   mickeyMouseTrueFriend,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   MaximusRentlessPersuer,
+//   MickeyMouseTrueFriend,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Maximus Relentless Pursuer!", () => {
-//   it("HORSE KICK effect - Chosen characters gets -2 {S} this turn.", () => {
-//     const testStore = new TestStore({
-//       inkwell: maximusRentlessPersuer.cost,
-//       hand: [maximusRentlessPersuer],
-//       play: [mickeyMouseTrueFriend],
+// Describe("Maximus Relentless Pursuer!", () => {
+//   It("HORSE KICK effect - Chosen characters gets -2 {S} this turn.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: maximusRentlessPersuer.cost,
+//       Hand: [maximusRentlessPersuer],
+//       Play: [mickeyMouseTrueFriend],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "hand",
-//       maximusRentlessPersuer.id,
+//       MaximusRentlessPersuer.id,
 //     );
-//     const target = testStore.getByZoneAndId("play", mickeyMouseTrueFriend.id);
+//     Const target = testStore.getByZoneAndId("play", mickeyMouseTrueFriend.id);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveTopOfStack({ targetId: target.instanceId });
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveTopOfStack({ targetId: target.instanceId });
 //
-//     expect(target.strength).toEqual((target.lorcanitoCard.strength || 0) - 2);
+//     Expect(target.strength).toEqual((target.lorcanitoCard.strength || 0) - 2);
 //   });
 // });
 //

@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { edHystericalPartygoer } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { edHystericalPartygoer } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Ed - Hysterical Partygoer", () => {
-//   it.skip("**ROWDY GUEST** Damaged characters can’t challenge this character.", () => {
-//     const testStore = new TestStore({
-//       inkwell: edHystericalPartygoer.cost,
-//       play: [edHystericalPartygoer],
+// Describe("Ed - Hysterical Partygoer", () => {
+//   It.skip("**ROWDY GUEST** Damaged characters can’t challenge this character.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: edHystericalPartygoer.cost,
+//       Play: [edHystericalPartygoer],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(edHystericalPartygoer);
+//     Const cardUnderTest = testStore.getCard(edHystericalPartygoer);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

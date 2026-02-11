@@ -3,91 +3,91 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   genieInvestigativeMind,
-//   judyHoppsLeadDetective,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   GenieInvestigativeMind,
+//   JudyHoppsLeadDetective,
 // } from "@lorcanito/lorcana-engine/cards/010";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Judy Hopps - Lead Detective", () => {
-//   describe("Shift 4", () => {
-//     it("should have shift ability", () => {
-//       const testEngine = new TestEngine({
-//         play: [judyHoppsLeadDetective],
+// Describe("Judy Hopps - Lead Detective", () => {
+//   Describe("Shift 4", () => {
+//     It("should have shift ability", () => {
+//       Const testEngine = new TestEngine({
+//         Play: [judyHoppsLeadDetective],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(judyHoppsLeadDetective);
-//       expect(cardUnderTest.hasShift).toBe(true);
+//       Const cardUnderTest = testEngine.getCardModel(judyHoppsLeadDetective);
+//       Expect(cardUnderTest.hasShift).toBe(true);
 //     });
 //
-//     it("should have shift 4 in abilities array", () => {
-//       const shiftAbility = judyHoppsLeadDetective.abilities?.find(
+//     It("should have shift 4 in abilities array", () => {
+//       Const shiftAbility = judyHoppsLeadDetective.abilities?.find(
 //         (a) =>
 //           "type" in a &&
-//           a.type === "static" &&
+//           A.type === "static" &&
 //           "ability" in a &&
-//           a.ability === "shift",
+//           A.ability === "shift",
 //       );
-//       expect(shiftAbility).toBeDefined();
-//       if (
-//         shiftAbility &&
+//       Expect(shiftAbility).toBeDefined();
+//       If (
+//         ShiftAbility &&
 //         "type" in shiftAbility &&
-//         shiftAbility.type === "static" &&
+//         ShiftAbility.type === "static" &&
 //         "ability" in shiftAbility &&
-//         shiftAbility.ability === "shift" &&
+//         ShiftAbility.ability === "shift" &&
 //         "costs" in shiftAbility
 //       ) {
-//         expect(shiftAbility.costs).toEqual([{ type: "ink", amount: 4 }]);
+//         Expect(shiftAbility.costs).toEqual([{ type: "ink", amount: 4 }]);
 //       }
 //     });
 //   });
 //
-//   describe("LATERAL THINKING", () => {
-//     it("should grant Alert to Detective characters during your turn", () => {
-//       const testEngine = new TestEngine({
-//         play: [judyHoppsLeadDetective, genieInvestigativeMind],
+//   Describe("LATERAL THINKING", () => {
+//     It("should grant Alert to Detective characters during your turn", () => {
+//       Const testEngine = new TestEngine({
+//         Play: [judyHoppsLeadDetective, genieInvestigativeMind],
 //       });
 //
-//       const judy = testEngine.getCardModel(judyHoppsLeadDetective);
-//       const genie = testEngine.getCardModel(genieInvestigativeMind);
+//       Const judy = testEngine.getCardModel(judyHoppsLeadDetective);
+//       Const genie = testEngine.getCardModel(genieInvestigativeMind);
 //
 //       // Both are Detective characters
-//       expect(judy.characteristics).toContain("detective");
-//       expect(genie.characteristics).toContain("detective");
+//       Expect(judy.characteristics).toContain("detective");
+//       Expect(genie.characteristics).toContain("detective");
 //
 //       // During your turn, they should have Alert
-//       expect(judy.hasAlert).toBe(true);
-//       expect(genie.hasAlert).toBe(true);
+//       Expect(judy.hasAlert).toBe(true);
+//       Expect(genie.hasAlert).toBe(true);
 //     });
 //
-//     it("should grant Resist +2 to Detective characters during your turn", () => {
-//       const testEngine = new TestEngine({
-//         play: [judyHoppsLeadDetective, genieInvestigativeMind],
+//     It("should grant Resist +2 to Detective characters during your turn", () => {
+//       Const testEngine = new TestEngine({
+//         Play: [judyHoppsLeadDetective, genieInvestigativeMind],
 //       });
 //
-//       const judy = testEngine.getCardModel(judyHoppsLeadDetective);
-//       const genie = testEngine.getCardModel(genieInvestigativeMind);
+//       Const judy = testEngine.getCardModel(judyHoppsLeadDetective);
+//       Const genie = testEngine.getCardModel(genieInvestigativeMind);
 //
 //       // During your turn, they should have Resist +2
-//       expect(judy.hasResist).toBe(true);
-//       expect(judy.damageReduction()).toBe(2);
-//       expect(genie.hasResist).toBe(true);
-//       expect(genie.damageReduction()).toBe(2);
+//       Expect(judy.hasResist).toBe(true);
+//       Expect(judy.damageReduction()).toBe(2);
+//       Expect(genie.hasResist).toBe(true);
+//       Expect(genie.damageReduction()).toBe(2);
 //     });
 //
-//     it("should only apply to Detective characters (Judy herself)", () => {
-//       const testEngine = new TestEngine({
-//         play: [judyHoppsLeadDetective],
+//     It("should only apply to Detective characters (Judy herself)", () => {
+//       Const testEngine = new TestEngine({
+//         Play: [judyHoppsLeadDetective],
 //       });
 //
-//       const judy = testEngine.getCardModel(judyHoppsLeadDetective);
+//       Const judy = testEngine.getCardModel(judyHoppsLeadDetective);
 //
 //       // Judy is a Detective and should have both abilities
-//       expect(judy.characteristics).toContain("detective");
-//       expect(judy.hasAlert).toBe(true);
-//       expect(judy.hasResist).toBe(true);
-//       expect(judy.damageReduction()).toBe(2);
+//       Expect(judy.characteristics).toContain("detective");
+//       Expect(judy.hasAlert).toBe(true);
+//       Expect(judy.hasResist).toBe(true);
+//       Expect(judy.damageReduction()).toBe(2);
 //     });
 //   });
 // });

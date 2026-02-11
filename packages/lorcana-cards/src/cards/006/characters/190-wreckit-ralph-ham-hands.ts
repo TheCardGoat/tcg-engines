@@ -1,41 +1,41 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
 // // TODO: Once the set is released, we organize the cards by set and type
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { chosenItemOrLocation } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { wheneverQuests } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-// import {
-//   mayBanish,
-//   youGainLore,
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { chosenItemOrLocation } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import { wheneverQuests } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// Import {
+//   MayBanish,
+//   YouGainLore,
 // } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const wreckitRalphHamHands: LorcanitoCharacterCard = {
-//   id: "td0",
-//   missingTestCase: true,
-//   name: "Wreck-it Ralph",
-//   title: "Ham Hands",
-//   characteristics: ["dreamborn", "hero"],
-//   text: "I WRECK THINGS Whenever this character quests, you may banish chosen item or location to gain 2 lore.",
-//   type: "character",
-//   abilities: [
-//     wheneverQuests({
-//       name: "I Wreck Things",
-//       text: "Whenever this character quests, you may banish chosen item or location to gain 2 lore.",
-//       optional: true,
-//       effects: [mayBanish(chosenItemOrLocation), youGainLore(2)],
+// Export const wreckitRalphHamHands: LorcanitoCharacterCard = {
+//   Id: "td0",
+//   MissingTestCase: true,
+//   Name: "Wreck-it Ralph",
+//   Title: "Ham Hands",
+//   Characteristics: ["dreamborn", "hero"],
+//   Text: "I WRECK THINGS Whenever this character quests, you may banish chosen item or location to gain 2 lore.",
+//   Type: "character",
+//   Abilities: [
+//     WheneverQuests({
+//       Name: "I Wreck Things",
+//       Text: "Whenever this character quests, you may banish chosen item or location to gain 2 lore.",
+//       Optional: true,
+//       Effects: [mayBanish(chosenItemOrLocation), youGainLore(2)],
 //     }),
 //   ],
-//   inkwell: false,
-//   colors: ["steel"],
-//   cost: 6,
-//   strength: 4,
-//   willpower: 4,
-//   lore: 3,
-//   illustrator: "Justin Runfola",
-//   number: 190,
-//   set: "006",
-//   externalIds: {
-//     tcgPlayer: 590821,
+//   Inkwell: false,
+//   Colors: ["steel"],
+//   Cost: 6,
+//   Strength: 4,
+//   Willpower: 4,
+//   Lore: 3,
+//   Illustrator: "Justin Runfola",
+//   Number: 190,
+//   Set: "006",
+//   ExternalIds: {
+//     TcgPlayer: 590821,
 //   },
-//   rarity: "legendary",
+//   Rarity: "legendary",
 // };
 //

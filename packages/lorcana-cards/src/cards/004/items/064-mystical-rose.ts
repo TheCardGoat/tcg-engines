@@ -1,25 +1,8 @@
 import type { ItemCard } from "@tcg/lorcana-types";
 
 export const mysticalRose: ItemCard = {
-  id: "1il",
-  cardType: "item",
-  name: "Mystical Rose",
-  inkType: ["amethyst"],
-  franchise: "Beauty and the Beast",
-  set: "004",
-  text: "DISPEL THE ENTANGLEMENT Banish this item — Chosen character named Beast gets +2 {L} this turn. If you have a character named Belle in play, move up to 3 damage counters from chosen character to chosen opposing character.",
-  cost: 2,
-  cardNumber: 64,
-  inkable: true,
-  externalIds: {
-    ravensburger: "c4c4f0e3ace8d22946df975891f7711d501b13c5",
-  },
   abilities: [
     {
-      id: "1il-1",
-      text: "DISPEL THE ENTANGLEMENT Banish this item — Chosen character named Beast gets +2 {L} this turn. If you have a character named Belle in play, move up to 3 damage counters from chosen character to chosen opposing character.",
-      name: "DISPEL THE ENTANGLEMENT",
-      type: "activated",
       cost: {
         banishSelf: true,
       },
@@ -60,6 +43,23 @@ export const mysticalRose: ItemCard = {
           },
         ],
       },
+      id: "1il-1",
+      name: "DISPEL THE ENTANGLEMENT",
+      text: "DISPEL THE ENTANGLEMENT Banish this item — Chosen character named Beast gets +2 {L} this turn. If you have a character named Belle in play, move up to 3 damage counters from chosen character to chosen opposing character.",
+      type: "activated",
     },
   ],
+  cardNumber: 64,
+  cardType: "item",
+  cost: 2,
+  externalIds: {
+    ravensburger: "c4c4f0e3ace8d22946df975891f7711d501b13c5",
+  },
+  franchise: "Beauty and the Beast",
+  id: "1il",
+  inkType: ["amethyst"],
+  inkable: true,
+  name: "Mystical Rose",
+  set: "004",
+  text: "DISPEL THE ENTANGLEMENT Banish this item — Chosen character named Beast gets +2 {L} this turn. If you have a character named Belle in play, move up to 3 damage counters from chosen character to chosen opposing character.",
 };

@@ -3,60 +3,60 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   pinocchioStarAttraction,
-//   pinocchioTalkativePuppet,
-//   theHuntsmanReluctantEnforcer,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   PinocchioStarAttraction,
+//   PinocchioTalkativePuppet,
+//   TheHuntsmanReluctantEnforcer,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { captainHookMasterSwordsman } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { captainHookMasterSwordsman } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Captain Hook - Master Swordsman", () => {
-//   it("**NEMESIS** During your turn, whenever this character banishes another character in a challenge, ready this character. He can't quest for the rest of this turn.", () => {
-//     const testStore = new TestStore(
+// Describe("Captain Hook - Master Swordsman", () => {
+//   It("**NEMESIS** During your turn, whenever this character banishes another character in a challenge, ready this character. He can't quest for the rest of this turn.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         play: [captainHookMasterSwordsman],
+//         Play: [captainHookMasterSwordsman],
 //       },
 //       {
-//         play: [
-//           theHuntsmanReluctantEnforcer,
-//           pinocchioTalkativePuppet,
-//           pinocchioStarAttraction,
+//         Play: [
+//           TheHuntsmanReluctantEnforcer,
+//           PinocchioTalkativePuppet,
+//           PinocchioStarAttraction,
 //         ],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       captainHookMasterSwordsman.id,
+//       CaptainHookMasterSwordsman.id,
 //     );
 //
-//     const target = testStore.getByZoneAndId(
+//     Const target = testStore.getByZoneAndId(
 //       "play",
-//       theHuntsmanReluctantEnforcer.id,
+//       TheHuntsmanReluctantEnforcer.id,
 //       "player_two",
 //     );
-//     const target2 = testStore.getByZoneAndId(
+//     Const target2 = testStore.getByZoneAndId(
 //       "play",
-//       pinocchioTalkativePuppet.id,
+//       PinocchioTalkativePuppet.id,
 //       "player_two",
 //     );
-//     const target3 = testStore.getByZoneAndId(
+//     Const target3 = testStore.getByZoneAndId(
 //       "play",
-//       pinocchioStarAttraction.id,
+//       PinocchioStarAttraction.id,
 //       "player_two",
 //     );
 //
 //     [target, target2, target3].forEach((char) => {
-//       char.updateCardMeta({ exerted: true });
-//       cardUnderTest.challenge(char);
+//       Char.updateCardMeta({ exerted: true });
+//       CardUnderTest.challenge(char);
 //
-//       expect(char.zone).toBe("discard");
-//       expect(cardUnderTest.ready).toBe(true);
+//       Expect(char.zone).toBe("discard");
+//       Expect(cardUnderTest.ready).toBe(true);
 //     });
 //
-//     expect(cardUnderTest.hasQuestRestriction).toBe(true);
+//     Expect(cardUnderTest.hasQuestRestriction).toBe(true);
 //   });
 // });
 //

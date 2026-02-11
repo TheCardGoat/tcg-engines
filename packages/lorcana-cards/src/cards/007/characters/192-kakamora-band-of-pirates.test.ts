@@ -3,47 +3,47 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { mrSmeeBumblingMate } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { montereyJackGoodheartedRanger } from "@lorcanito/lorcana-engine/cards/006";
-// import { kakamoraBandOfPirates } from "@lorcanito/lorcana-engine/cards/007";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { mrSmeeBumblingMate } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { montereyJackGoodheartedRanger } from "@lorcanito/lorcana-engine/cards/006";
+// Import { kakamoraBandOfPirates } from "@lorcanito/lorcana-engine/cards/007";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Kakamora - Band of Pirates", () => {
-//   it("should not have challenger if you don't have another pirate", async () => {
-//     const testStore = new TestStore(
+// Describe("Kakamora - Band of Pirates", () => {
+//   It("should not have challenger if you don't have another pirate", async () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: kakamoraBandOfPirates.cost,
-//         play: [kakamoraBandOfPirates],
-//         hand: [],
+//         Inkwell: kakamoraBandOfPirates.cost,
+//         Play: [kakamoraBandOfPirates],
+//         Hand: [],
 //       },
 //       { play: [montereyJackGoodheartedRanger] },
 //     );
-//     const bigDummyCardToChallenge = testStore.getCard(
-//       montereyJackGoodheartedRanger,
+//     Const bigDummyCardToChallenge = testStore.getCard(
+//       MontereyJackGoodheartedRanger,
 //     );
-//     bigDummyCardToChallenge.updateCardMeta({ exerted: true });
-//     const cardUndertest = testStore.getCard(kakamoraBandOfPirates);
-//     cardUndertest.challenge(bigDummyCardToChallenge);
-//     expect(bigDummyCardToChallenge.damage).toBe(kakamoraBandOfPirates.strength);
+//     BigDummyCardToChallenge.updateCardMeta({ exerted: true });
+//     Const cardUndertest = testStore.getCard(kakamoraBandOfPirates);
+//     CardUndertest.challenge(bigDummyCardToChallenge);
+//     Expect(bigDummyCardToChallenge.damage).toBe(kakamoraBandOfPirates.strength);
 //   });
-//   it("should have challenger if you have another pirate", async () => {
-//     const testStore = new TestStore(
+//   It("should have challenger if you have another pirate", async () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: kakamoraBandOfPirates.cost,
-//         play: [kakamoraBandOfPirates, mrSmeeBumblingMate],
-//         hand: [],
+//         Inkwell: kakamoraBandOfPirates.cost,
+//         Play: [kakamoraBandOfPirates, mrSmeeBumblingMate],
+//         Hand: [],
 //       },
 //       { play: [montereyJackGoodheartedRanger] },
 //     );
-//     const bigDummyCardToChallenge = testStore.getCard(
-//       montereyJackGoodheartedRanger,
+//     Const bigDummyCardToChallenge = testStore.getCard(
+//       MontereyJackGoodheartedRanger,
 //     );
-//     bigDummyCardToChallenge.updateCardMeta({ exerted: true });
-//     const cardUndertest = testStore.getCard(kakamoraBandOfPirates);
-//     cardUndertest.challenge(bigDummyCardToChallenge);
-//     expect(bigDummyCardToChallenge.damage).toBe(
-//       kakamoraBandOfPirates.strength + 3,
+//     BigDummyCardToChallenge.updateCardMeta({ exerted: true });
+//     Const cardUndertest = testStore.getCard(kakamoraBandOfPirates);
+//     CardUndertest.challenge(bigDummyCardToChallenge);
+//     Expect(bigDummyCardToChallenge.damage).toBe(
+//       KakamoraBandOfPirates.strength + 3,
 //     );
 //   });
 // });

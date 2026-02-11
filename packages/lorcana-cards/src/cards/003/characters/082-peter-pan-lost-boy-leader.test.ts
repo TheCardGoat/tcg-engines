@@ -3,43 +3,43 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { peterPanLostBoyLeader } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import {
-//   forbiddenMountainMaleficentsCastle,
-//   neverLandMermaidLagoon,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { peterPanLostBoyLeader } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import {
+//   ForbiddenMountainMaleficentsCastle,
+//   NeverLandMermaidLagoon,
 // } from "@lorcanito/lorcana-engine/cards/003/locations/locations";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Peter Pan - Lost Boy Leader", () => {
-//   it("**I CAME TO LISTEN TO THE STORIES** Once per turn, when this character moves to a location, gain lore equal to that location's {L}.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell:
-//         forbiddenMountainMaleficentsCastle.moveCost +
-//         neverLandMermaidLagoon.moveCost,
-//       play: [
-//         peterPanLostBoyLeader,
-//         forbiddenMountainMaleficentsCastle,
-//         neverLandMermaidLagoon,
+// Describe("Peter Pan - Lost Boy Leader", () => {
+//   It("**I CAME TO LISTEN TO THE STORIES** Once per turn, when this character moves to a location, gain lore equal to that location's {L}.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell:
+//         ForbiddenMountainMaleficentsCastle.moveCost +
+//         NeverLandMermaidLagoon.moveCost,
+//       Play: [
+//         PeterPanLostBoyLeader,
+//         ForbiddenMountainMaleficentsCastle,
+//         NeverLandMermaidLagoon,
 //       ],
 //     });
 //
-//     await testEngine.moveToLocation({
-//       character: peterPanLostBoyLeader,
-//       location: forbiddenMountainMaleficentsCastle,
+//     Await testEngine.moveToLocation({
+//       Character: peterPanLostBoyLeader,
+//       Location: forbiddenMountainMaleficentsCastle,
 //     });
 //
-//     expect(testEngine.getPlayerLore()).toBe(
-//       forbiddenMountainMaleficentsCastle.lore,
+//     Expect(testEngine.getPlayerLore()).toBe(
+//       ForbiddenMountainMaleficentsCastle.lore,
 //     );
 //
-//     await testEngine.moveToLocation({
-//       character: peterPanLostBoyLeader,
-//       location: neverLandMermaidLagoon,
+//     Await testEngine.moveToLocation({
+//       Character: peterPanLostBoyLeader,
+//       Location: neverLandMermaidLagoon,
 //     });
 //
-//     expect(testEngine.getPlayerLore()).toBe(
-//       forbiddenMountainMaleficentsCastle.lore,
+//     Expect(testEngine.getPlayerLore()).toBe(
+//       ForbiddenMountainMaleficentsCastle.lore,
 //     );
 //   });
 // });

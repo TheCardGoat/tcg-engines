@@ -3,53 +3,53 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   chiefTui,
-//   heiheiBoatSnack,
-//   liloMakingAWish,
-//   moanaOfMotunui,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   ChiefTui,
+//   HeiheiBoatSnack,
+//   LiloMakingAWish,
+//   MoanaOfMotunui,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { gastonIntellectualPowerhouse } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { gastonIntellectualPowerhouse } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Gaston - Intellectual Powerhouse", () => {
-//   it("has shift", () => {
-//     const testStore = new TestStore({
-//       play: [gastonIntellectualPowerhouse],
+// Describe("Gaston - Intellectual Powerhouse", () => {
+//   It("has shift", () => {
+//     Const testStore = new TestStore({
+//       Play: [gastonIntellectualPowerhouse],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       gastonIntellectualPowerhouse.id,
+//       GastonIntellectualPowerhouse.id,
 //     );
 //
-//     expect(cardUnderTest.hasShift).toBe(true);
+//     Expect(cardUnderTest.hasShift).toBe(true);
 //   });
 //
-//   it("**DEVELOPED BRAIN** When you play this character, look at the top 3 cards of your deck. You may put one into your hand. Put the rest on the bottom of your deck in any order.", () => {
-//     const testStore = new TestStore({
-//       inkwell: gastonIntellectualPowerhouse.cost,
-//       deck: [liloMakingAWish, moanaOfMotunui, chiefTui, heiheiBoatSnack],
-//       hand: [gastonIntellectualPowerhouse],
+//   It("**DEVELOPED BRAIN** When you play this character, look at the top 3 cards of your deck. You may put one into your hand. Put the rest on the bottom of your deck in any order.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: gastonIntellectualPowerhouse.cost,
+//       Deck: [liloMakingAWish, moanaOfMotunui, chiefTui, heiheiBoatSnack],
+//       Hand: [gastonIntellectualPowerhouse],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "hand",
-//       gastonIntellectualPowerhouse.id,
+//       GastonIntellectualPowerhouse.id,
 //     );
-//     const lilo = testStore.getByZoneAndId("deck", liloMakingAWish.id);
-//     const tui = testStore.getByZoneAndId("deck", chiefTui.id);
-//     const moana = testStore.getByZoneAndId("deck", moanaOfMotunui.id);
+//     Const lilo = testStore.getByZoneAndId("deck", liloMakingAWish.id);
+//     Const tui = testStore.getByZoneAndId("deck", chiefTui.id);
+//     Const moana = testStore.getByZoneAndId("deck", moanaOfMotunui.id);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveTopOfStack({
-//       scry: { bottom: [lilo, tui], hand: [moana] },
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveTopOfStack({
+//       Scry: { bottom: [lilo, tui], hand: [moana] },
 //     });
 //
-//     expect(moana.zone).toBe("hand");
-//     expect(
-//       testStore.store.tableStore
+//     Expect(moana.zone).toBe("hand");
+//     Expect(
+//       TestStore.store.tableStore
 //         .getPlayerZoneCards("player_one", "deck")
 //         .map((card) => card.lorcanitoCard?.name),
 //     ).toEqual([liloMakingAWish.name, chiefTui.name, heiheiBoatSnack.name]);

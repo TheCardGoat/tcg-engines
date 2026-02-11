@@ -3,32 +3,32 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   atlanteanCrystal,
-//   heWhoStealsAndRunsAway,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   AtlanteanCrystal,
+//   HeWhoStealsAndRunsAway,
 // } from "@lorcanito/lorcana-engine/cards/008";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("He Who Steals And Runs Away", () => {
-//   it("Banish chosen item. Draw a card.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("He Who Steals And Runs Away", () => {
+//   It("Banish chosen item. Draw a card.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: heWhoStealsAndRunsAway.cost,
-//         hand: [heWhoStealsAndRunsAway],
-//         deck: 10,
+//         Inkwell: heWhoStealsAndRunsAway.cost,
+//         Hand: [heWhoStealsAndRunsAway],
+//         Deck: 10,
 //       },
 //       {
-//         play: [atlanteanCrystal],
+//         Play: [atlanteanCrystal],
 //       },
 //     );
 //
-//     await testEngine.playCard(heWhoStealsAndRunsAway, {
-//       targets: [atlanteanCrystal],
+//     Await testEngine.playCard(heWhoStealsAndRunsAway, {
+//       Targets: [atlanteanCrystal],
 //     });
 //
-//     expect(testEngine.getCardModel(atlanteanCrystal).zone).toBe("discard");
-//     expect(testEngine.getZonesCardCount().hand).toBe(1);
+//     Expect(testEngine.getCardModel(atlanteanCrystal).zone).toBe("discard");
+//     Expect(testEngine.getZonesCardCount().hand).toBe(1);
 //   });
 // });
 //

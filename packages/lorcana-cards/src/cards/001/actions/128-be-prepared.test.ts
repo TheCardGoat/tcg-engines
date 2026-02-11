@@ -3,39 +3,39 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   chiefTui,
-//   heiheiBoatSnack,
-//   mickeyMouseArtfulRogue,
-//   mickeyMouseTrueFriend,
-//   moanaOfMotunui,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   ChiefTui,
+//   HeiheiBoatSnack,
+//   MickeyMouseArtfulRogue,
+//   MickeyMouseTrueFriend,
+//   MoanaOfMotunui,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { bePrepared } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { bePrepared } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Be Prepared", () => {
-//   it("Board wipe", () => {
-//     const testStore = new TestStore(
+// Describe("Be Prepared", () => {
+//   It("Board wipe", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: bePrepared.cost,
-//         hand: [bePrepared],
-//         play: [chiefTui, moanaOfMotunui, heiheiBoatSnack],
+//         Inkwell: bePrepared.cost,
+//         Hand: [bePrepared],
+//         Play: [chiefTui, moanaOfMotunui, heiheiBoatSnack],
 //       },
 //       {
-//         play: [mickeyMouseTrueFriend, mickeyMouseArtfulRogue],
+//         Play: [mickeyMouseTrueFriend, mickeyMouseArtfulRogue],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", bePrepared.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", bePrepared.id);
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     expect(testStore.getZonesCardCount("player_one")).toEqual(
-//       expect.objectContaining({ play: 0 }),
+//     Expect(testStore.getZonesCardCount("player_one")).toEqual(
+//       Expect.objectContaining({ play: 0 }),
 //     );
-//     expect(testStore.getZonesCardCount("player_two")).toEqual(
-//       expect.objectContaining({ play: 0 }),
+//     Expect(testStore.getZonesCardCount("player_two")).toEqual(
+//       Expect.objectContaining({ play: 0 }),
 //     );
 //   });
 // });

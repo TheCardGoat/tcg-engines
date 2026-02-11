@@ -27,27 +27,27 @@ describe("Lady Kluck - Protective Confidant", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { ladyKluckProtectiveConfidant } from "@lorcanito/lorcana-engine/cards/007/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { ladyKluckProtectiveConfidant } from "@lorcanito/lorcana-engine/cards/007/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Lady Kluck - Protective Confidant", () => {
-//   it.skip("Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [ladyKluckProtectiveConfidant],
+// Describe("Lady Kluck - Protective Confidant", () => {
+//   It.skip("Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [ladyKluckProtectiveConfidant],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(ladyKluckProtectiveConfidant);
-//     expect(cardUnderTest.hasBodyguard).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(ladyKluckProtectiveConfidant);
+//     Expect(cardUnderTest.hasBodyguard).toBe(true);
 //   });
 //
-//   it.skip("Ward (Opponents can’t choose this character except to challenge.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [ladyKluckProtectiveConfidant],
+//   It.skip("Ward (Opponents can’t choose this character except to challenge.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [ladyKluckProtectiveConfidant],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(ladyKluckProtectiveConfidant);
-//     expect(cardUnderTest.hasWard).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(ladyKluckProtectiveConfidant);
+//     Expect(cardUnderTest.hasWard).toBe(true);
 //   });
 // });
 //

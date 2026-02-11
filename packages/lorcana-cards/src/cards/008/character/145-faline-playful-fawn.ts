@@ -1,37 +1,37 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { evasiveAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { whileConditionThisCharacterGets } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
-// import { thisCharacterGetsLore } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { evasiveAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import { whileConditionThisCharacterGets } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
+// Import { thisCharacterGetsLore } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const falinePlayfulFawn: LorcanitoCharacterCard = {
-//   id: "ld7",
-//   name: "Faline",
-//   title: "Playful Fawn",
-//   characteristics: ["storyborn", "ally"],
-//   text: "Evasive\nPRECOCIOUS FRIEND While you have a character in play with more {S} than each opposing character, this character gets +2 {L}.",
-//   type: "character",
-//   abilities: [
-//     evasiveAbility,
-//     whileConditionThisCharacterGets({
-//       name: "PRECOCIOUS FRIEND",
-//       text: "While you have a character in play with more {S} than each opposing character, this character gets +2 {L}.",
-//       conditions: [{ type: "have-strongest-character" }],
-//       effects: [thisCharacterGetsLore(2)],
+// Export const falinePlayfulFawn: LorcanitoCharacterCard = {
+//   Id: "ld7",
+//   Name: "Faline",
+//   Title: "Playful Fawn",
+//   Characteristics: ["storyborn", "ally"],
+//   Text: "Evasive\nPRECOCIOUS FRIEND While you have a character in play with more {S} than each opposing character, this character gets +2 {L}.",
+//   Type: "character",
+//   Abilities: [
+//     EvasiveAbility,
+//     WhileConditionThisCharacterGets({
+//       Name: "PRECOCIOUS FRIEND",
+//       Text: "While you have a character in play with more {S} than each opposing character, this character gets +2 {L}.",
+//       Conditions: [{ type: "have-strongest-character" }],
+//       Effects: [thisCharacterGetsLore(2)],
 //     }),
 //   ],
-//   inkwell: false,
-//   colors: ["ruby"],
-//   cost: 4,
-//   strength: 2,
-//   willpower: 4,
-//   illustrator: "Raquel Villanueva",
-//   number: 145,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631445,
+//   Inkwell: false,
+//   Colors: ["ruby"],
+//   Cost: 4,
+//   Strength: 2,
+//   Willpower: 4,
+//   Illustrator: "Raquel Villanueva",
+//   Number: 145,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631445,
 //   },
-//   rarity: "rare",
-//   lore: 1,
+//   Rarity: "rare",
+//   Lore: 1,
 // };
 //

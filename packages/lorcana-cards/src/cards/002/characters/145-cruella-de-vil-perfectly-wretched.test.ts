@@ -3,49 +3,49 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { mickeyMouseTrueFriend } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { cruellaDeVilPerfectlyWretched } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { mickeyMouseTrueFriend } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { cruellaDeVilPerfectlyWretched } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Cruella De Vil - Perfectly Wretched", () => {
-//   it("**OH, NO YOU DON'T** Whenever this character quests, chosen opposing character gets -2 {S} this turn.", () => {
-//     const testStore = new TestStore(
+// Describe("Cruella De Vil - Perfectly Wretched", () => {
+//   It("**OH, NO YOU DON'T** Whenever this character quests, chosen opposing character gets -2 {S} this turn.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         play: [cruellaDeVilPerfectlyWretched],
+//         Play: [cruellaDeVilPerfectlyWretched],
 //       },
 //       {
-//         play: [mickeyMouseTrueFriend],
+//         Play: [mickeyMouseTrueFriend],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       cruellaDeVilPerfectlyWretched.id,
+//       CruellaDeVilPerfectlyWretched.id,
 //     );
-//     const target = testStore.getByZoneAndId(
+//     Const target = testStore.getByZoneAndId(
 //       "play",
-//       mickeyMouseTrueFriend.id,
+//       MickeyMouseTrueFriend.id,
 //       "player_two",
 //     );
 //
-//     cardUnderTest.quest();
-//     testStore.resolveTopOfStack({ targets: [target] });
+//     CardUnderTest.quest();
+//     TestStore.resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.strength).toEqual((target.lorcanitoCard.strength || 0) - 2);
+//     Expect(target.strength).toEqual((target.lorcanitoCard.strength || 0) - 2);
 //   });
 //
-//   it("Shift", () => {
-//     const testStore = new TestStore({
-//       play: [cruellaDeVilPerfectlyWretched],
+//   It("Shift", () => {
+//     Const testStore = new TestStore({
+//       Play: [cruellaDeVilPerfectlyWretched],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       cruellaDeVilPerfectlyWretched.id,
+//       CruellaDeVilPerfectlyWretched.id,
 //     );
 //
-//     expect(cardUnderTest.hasShift).toBe(true);
+//     Expect(cardUnderTest.hasShift).toBe(true);
 //   });
 // });
 //

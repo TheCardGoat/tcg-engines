@@ -7,8 +7,8 @@ import { describe, expect, it } from "bun:test";
 import type { CstNode } from "chevrotain";
 import type { Effect } from "../../../types";
 import {
-  atomicEffectParsers,
   type EffectParser,
+  atomicEffectParsers,
   parseAtomicEffect,
 } from "../index";
 
@@ -318,7 +318,7 @@ describe("Effect Parser Registry", () => {
         "When you play this character, draw 2 cards",
       );
 
-      // playEffectParser matches because "play this character" is in the text
+      // PlayEffectParser matches because "play this character" is in the text
       expect(result).not.toBeNull();
       expect(result?.type).toBe("play-card");
     });

@@ -1,47 +1,47 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import {
-//   evasiveAbility,
-//   type StaticAbilityWithEffect,
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import {
+//   EvasiveAbility,
+//   Type StaticAbilityWithEffect,
 // } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { whileYouHaveTwoOrMoreCharactersExerted } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
-// import { thisCharacterGetsStrength } from "@lorcanito/lorcana-engine/effects/effects";
+// Import { whileYouHaveTwoOrMoreCharactersExerted } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
+// Import { thisCharacterGetsStrength } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// const recklessRun: StaticAbilityWithEffect = {
-//   type: "static",
-//   ability: "effects",
-//   name: "RECKLESS RUN",
-//   text: "While you have 2 or more characters exerted, this character gets +2 {S} and Evasive.",
-//   conditions: [whileYouHaveTwoOrMoreCharactersExerted],
-//   effects: [thisCharacterGetsStrength(2)],
+// Const recklessRun: StaticAbilityWithEffect = {
+//   Type: "static",
+//   Ability: "effects",
+//   Name: "RECKLESS RUN",
+//   Text: "While you have 2 or more characters exerted, this character gets +2 {S} and Evasive.",
+//   Conditions: [whileYouHaveTwoOrMoreCharactersExerted],
+//   Effects: [thisCharacterGetsStrength(2)],
 // };
 //
-// export const theCoachmanGreedyDeceiver: LorcanitoCharacterCard = {
-//   id: "q0h",
-//   name: "The Coachman",
-//   title: "Greedy Deceiver",
-//   characteristics: ["storyborn", "villain"],
-//   text: "RECKLESS RUN While you have 2 or more characters exerted, this character gets +2 {S} and Evasive. (Only characters with Evasive can challenge this character.)",
-//   type: "character",
-//   abilities: [
-//     recklessRun,
+// Export const theCoachmanGreedyDeceiver: LorcanitoCharacterCard = {
+//   Id: "q0h",
+//   Name: "The Coachman",
+//   Title: "Greedy Deceiver",
+//   Characteristics: ["storyborn", "villain"],
+//   Text: "RECKLESS RUN While you have 2 or more characters exerted, this character gets +2 {S} and Evasive. (Only characters with Evasive can challenge this character.)",
+//   Type: "character",
+//   Abilities: [
+//     RecklessRun,
 //     {
 //       ...evasiveAbility,
-//       conditions: [whileYouHaveTwoOrMoreCharactersExerted],
+//       Conditions: [whileYouHaveTwoOrMoreCharactersExerted],
 //     },
 //   ],
-//   inkwell: true,
-//   colors: ["ruby", "steel"],
-//   cost: 2,
-//   strength: 2,
-//   willpower: 2,
-//   illustrator: "Filipe Lourentino",
-//   number: 140,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631441,
+//   Inkwell: true,
+//   Colors: ["ruby", "steel"],
+//   Cost: 2,
+//   Strength: 2,
+//   Willpower: 2,
+//   Illustrator: "Filipe Lourentino",
+//   Number: 140,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631441,
 //   },
-//   rarity: "uncommon",
-//   lore: 1,
+//   Rarity: "uncommon",
+//   Lore: 1,
 // };
 //

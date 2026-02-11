@@ -1,45 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const plutoSteelChampion: CharacterCard = {
-  id: "1g1",
-  cardType: "character",
-  name: "Pluto",
-  version: "Steel Champion",
-  fullName: "Pluto - Steel Champion",
-  inkType: ["steel"],
-  set: "010",
-  text: "WINNER TAKE ALL During your turn, whenever one of your other Steel characters banishes another character in a challenge, gain 2 lore.\nMAKE ROOM Whenever you play another Steel character, you may banish chosen item.",
-  cost: 5,
-  strength: 5,
-  willpower: 5,
-  lore: 2,
-  cardNumber: 191,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "054d01b8c7262fc35deae953e21e415e967fe99b",
-  },
   abilities: [
     {
+      effect: {
+        type: "gain-lore",
+        amount: 2,
+      },
       id: "1g1-1",
-      type: "triggered",
       name: "WINNER TAKE ALL",
+      text: "WINNER TAKE ALL During your turn, whenever one of your other Steel characters banishes another character in a challenge, gain 2 lore.",
       trigger: {
         event: "banish",
         timing: "whenever",
         on: "YOUR_OTHER_CHARACTERS",
       },
-      effect: {
-        type: "gain-lore",
-        amount: 2,
-      },
-      text: "WINNER TAKE ALL During your turn, whenever one of your other Steel characters banishes another character in a challenge, gain 2 lore.",
+      type: "triggered",
     },
     {
-      id: "1g1-2",
-      type: "triggered",
-      name: "MAKE ROOM",
-      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "optional",
         effect: {
@@ -54,8 +32,30 @@ export const plutoSteelChampion: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "1g1-2",
+      name: "MAKE ROOM",
       text: "MAKE ROOM Whenever you play another Steel character, you may banish chosen item.",
+      trigger: { event: "play", timing: "when", on: "SELF" },
+      type: "triggered",
     },
   ],
+  cardNumber: 191,
+  cardType: "character",
   classifications: ["Dreamborn", "Ally"],
+  cost: 5,
+  externalIds: {
+    ravensburger: "054d01b8c7262fc35deae953e21e415e967fe99b",
+  },
+  fullName: "Pluto - Steel Champion",
+  id: "1g1",
+  inkType: ["steel"],
+  inkable: true,
+  lore: 2,
+  missingTests: true,
+  name: "Pluto",
+  set: "010",
+  strength: 5,
+  text: "WINNER TAKE ALL During your turn, whenever one of your other Steel characters banishes another character in a challenge, gain 2 lore.\nMAKE ROOM Whenever you play another Steel character, you may banish chosen item.",
+  version: "Steel Champion",
+  willpower: 5,
 };

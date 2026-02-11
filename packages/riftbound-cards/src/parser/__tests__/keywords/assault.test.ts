@@ -6,41 +6,26 @@
 
 import { describe, expect, it } from "bun:test";
 import { parseAbilities } from "../../index";
-import {
-  Abilities,
-  Conditions,
-  Costs,
-  Effects,
-  Targets,
-  Triggers,
-} from "../helpers";
+import { Abilities, Conditions, Costs, Effects, Targets, Triggers } from "../helpers";
 
 describe("Keyword: Assault", () => {
   describe("simple assault", () => {
     it.skip("should parse '[Assault] (+1 :rb_might: while I'm an attacker.)'", () => {
-      const result = parseAbilities(
-        "[Assault] (+1 :rb_might: while I'm an attacker.)",
-      );
+      const result = parseAbilities("[Assault] (+1 :rb_might: while I'm an attacker.)");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
-      expect(result.abilities?.[0]).toEqual(
-        expect.objectContaining(Abilities.assault(1)),
-      );
+      expect(result.abilities?.[0]).toEqual(expect.objectContaining(Abilities.assault(1)));
     });
   });
 
   describe("assault with value", () => {
     it.skip("should parse '[Assault 2] (+2 :rb_might: while I'm an attacker.)'", () => {
-      const result = parseAbilities(
-        "[Assault 2] (+2 :rb_might: while I'm an attacker.)",
-      );
+      const result = parseAbilities("[Assault 2] (+2 :rb_might: while I'm an attacker.)");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
-      expect(result.abilities?.[0]).toEqual(
-        expect.objectContaining(Abilities.assault(2)),
-      );
+      expect(result.abilities?.[0]).toEqual(expect.objectContaining(Abilities.assault(2)));
     });
 
     it.skip("should parse '[Assault 3]_ (+3 :rb_might: while I'm an attacker.)_If an opponent controls a battlefield, I enter ready.When I conquer, you may pay :rb_energy_1: to return me to my owner's hand.'", () => {
@@ -50,9 +35,7 @@ describe("Keyword: Assault", () => {
 
       expect(result.success).toBe(true);
       expect(result.abilities?.length).toBeGreaterThanOrEqual(3);
-      expect(result.abilities?.[0]).toEqual(
-        expect.objectContaining(Abilities.assault(3)),
-      );
+      expect(result.abilities?.[0]).toEqual(expect.objectContaining(Abilities.assault(3)));
     });
   });
 
@@ -64,12 +47,8 @@ describe("Keyword: Assault", () => {
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(2);
-      expect(result.abilities?.[0]).toEqual(
-        expect.objectContaining(Abilities.assault(2)),
-      );
-      expect(result.abilities?.[1]).toEqual(
-        expect.objectContaining(Abilities.shield(2)),
-      );
+      expect(result.abilities?.[0]).toEqual(expect.objectContaining(Abilities.assault(2)));
+      expect(result.abilities?.[1]).toEqual(expect.objectContaining(Abilities.shield(2)));
     });
   });
 
@@ -109,11 +88,11 @@ describe("Keyword: Assault", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "static",
           effect: expect.objectContaining({
-            type: "grant-keyword",
             keyword: "Assault",
+            type: "grant-keyword",
           }),
+          type: "static",
         }),
       );
     });
@@ -143,13 +122,13 @@ describe("Keyword: Assault", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "spell",
-          timing: "action",
           effect: expect.objectContaining({
-            type: "grant-keyword",
             keyword: "Assault",
+            type: "grant-keyword",
             value: 3,
           }),
+          timing: "action",
+          type: "spell",
         }),
       );
     });

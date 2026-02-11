@@ -3,31 +3,31 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { owlIslandSecludedEntrance } from "@lorcanito/lorcana-engine/cards/006";
-// import { jimHawkinsRiggerSpecialist } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { owlIslandSecludedEntrance } from "@lorcanito/lorcana-engine/cards/006";
+// Import { jimHawkinsRiggerSpecialist } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Jim Hawkins - Rigger Specialist", () => {
-//   it.skip("Shift 3 (You may pay 3 {I} to play this on top of one of your characters named Jim Hawkins.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [jimHawkinsRiggerSpecialist],
+// Describe("Jim Hawkins - Rigger Specialist", () => {
+//   It.skip("Shift 3 (You may pay 3 {I} to play this on top of one of your characters named Jim Hawkins.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [jimHawkinsRiggerSpecialist],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(jimHawkinsRiggerSpecialist);
-//     expect(cardUnderTest.hasShift).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(jimHawkinsRiggerSpecialist);
+//     Expect(cardUnderTest.hasShift).toBe(true);
 //   });
 //
-//   it.skip("BATTLE STATION When you play this character, you may deal 1 damage to chosen character or location.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: jimHawkinsRiggerSpecialist.cost,
-//       hand: [jimHawkinsRiggerSpecialist],
-//       play: [owlIslandSecludedEntrance],
+//   It.skip("BATTLE STATION When you play this character, you may deal 1 damage to chosen character or location.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: jimHawkinsRiggerSpecialist.cost,
+//       Hand: [jimHawkinsRiggerSpecialist],
+//       Play: [owlIslandSecludedEntrance],
 //     });
 //
-//     await testEngine.playCard(jimHawkinsRiggerSpecialist);
-//     await testEngine.acceptOptionalLayer();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.playCard(jimHawkinsRiggerSpecialist);
+//     Await testEngine.acceptOptionalLayer();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

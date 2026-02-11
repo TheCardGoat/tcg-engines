@@ -1,37 +1,37 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { whileThereAreXOrMoreDamagedCharacter } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
-// import { thisCharacterGetsLore } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { whileThereAreXOrMoreDamagedCharacter } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
+// Import { thisCharacterGetsLore } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const queenOfHeartsHaughtyMonarch: LorcanitoCharacterCard = {
-//   id: "jkc",
-//   name: "Queen Of Hearts",
-//   title: "Haughty Monarch",
-//   characteristics: ["storyborn", "villain", "queen"],
-//   text: "COUNT OFF! While there are 5 or more characters with damage in play, this character gets +3 {L}.",
-//   type: "character",
-//   abilities: [
+// Export const queenOfHeartsHaughtyMonarch: LorcanitoCharacterCard = {
+//   Id: "jkc",
+//   Name: "Queen Of Hearts",
+//   Title: "Haughty Monarch",
+//   Characteristics: ["storyborn", "villain", "queen"],
+//   Text: "COUNT OFF! While there are 5 or more characters with damage in play, this character gets +3 {L}.",
+//   Type: "character",
+//   Abilities: [
 //     {
-//       type: "static",
-//       ability: "effects",
-//       name: "COUNT OFF!",
-//       text: "While there are 5 or more characters with damage in play, this character gets +3 {L}.",
-//       conditions: [whileThereAreXOrMoreDamagedCharacter(5)],
-//       effects: [thisCharacterGetsLore(3)],
+//       Type: "static",
+//       Ability: "effects",
+//       Name: "COUNT OFF!",
+//       Text: "While there are 5 or more characters with damage in play, this character gets +3 {L}.",
+//       Conditions: [whileThereAreXOrMoreDamagedCharacter(5)],
+//       Effects: [thisCharacterGetsLore(3)],
 //     },
 //   ],
-//   inkwell: true,
-//   colors: ["emerald", "ruby"],
-//   cost: 4,
-//   strength: 2,
-//   willpower: 3,
-//   illustrator: "Gonzalo Kenny",
-//   number: 105,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631688,
+//   Inkwell: true,
+//   Colors: ["emerald", "ruby"],
+//   Cost: 4,
+//   Strength: 2,
+//   Willpower: 3,
+//   Illustrator: "Gonzalo Kenny",
+//   Number: 105,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631688,
 //   },
-//   rarity: "super_rare",
-//   lore: 3,
+//   Rarity: "super_rare",
+//   Lore: 3,
 // };
 //

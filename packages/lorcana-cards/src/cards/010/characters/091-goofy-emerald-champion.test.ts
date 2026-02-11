@@ -3,202 +3,202 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   chefLouisInOverHisHead,
-//   goofyEmeraldChampion,
-//   hadesLookingForADeal,
-//   scroogeMcduckShushAgent,
-//   webbyVanderquackMysteryEnthusiast,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   ChefLouisInOverHisHead,
+//   GoofyEmeraldChampion,
+//   HadesLookingForADeal,
+//   ScroogeMcduckShushAgent,
+//   WebbyVanderquackMysteryEnthusiast,
 // } from "@lorcanito/lorcana-engine/cards/010";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Goofy - Emerald Champion", () => {
-//   describe("Card Properties", () => {
-//     it("should have correct properties", async () => {
-//       const testEngine = new TestEngine({
-//         hand: [goofyEmeraldChampion],
+// Describe("Goofy - Emerald Champion", () => {
+//   Describe("Card Properties", () => {
+//     It("should have correct properties", async () => {
+//       Const testEngine = new TestEngine({
+//         Hand: [goofyEmeraldChampion],
 //       });
 //
-//       const card = testEngine.getCardModel(goofyEmeraldChampion);
+//       Const card = testEngine.getCardModel(goofyEmeraldChampion);
 //
-//       expect(card.name).toBe("Goofy");
-//       expect(card.title).toBe("Emerald Champion");
-//       expect(card.lorcanitoCard.colors).toEqual(["emerald"]);
-//       expect(card.lorcanitoCard.cost).toBe(5);
-//       expect(card.lorcanitoCard.strength).toBe(3);
-//       expect(card.lorcanitoCard.willpower).toBe(5);
-//       expect(card.lorcanitoCard.lore).toBe(2);
-//       expect(card.lorcanitoCard.inkwell).toBe(false);
-//       expect(card.lorcanitoCard.characteristics).toEqual(["dreamborn", "hero"]);
+//       Expect(card.name).toBe("Goofy");
+//       Expect(card.title).toBe("Emerald Champion");
+//       Expect(card.lorcanitoCard.colors).toEqual(["emerald"]);
+//       Expect(card.lorcanitoCard.cost).toBe(5);
+//       Expect(card.lorcanitoCard.strength).toBe(3);
+//       Expect(card.lorcanitoCard.willpower).toBe(5);
+//       Expect(card.lorcanitoCard.lore).toBe(2);
+//       Expect(card.lorcanitoCard.inkwell).toBe(false);
+//       Expect(card.lorcanitoCard.characteristics).toEqual(["dreamborn", "hero"]);
 //     });
 //   });
 //
-//   describe("PROVIDE COVER", () => {
-//     it("should grant Ward to other Emerald characters while Goofy is in play", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: goofyEmeraldChampion.cost + scroogeMcduckShushAgent.cost,
-//         play: [goofyEmeraldChampion, scroogeMcduckShushAgent],
+//   Describe("PROVIDE COVER", () => {
+//     It("should grant Ward to other Emerald characters while Goofy is in play", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: goofyEmeraldChampion.cost + scroogeMcduckShushAgent.cost,
+//         Play: [goofyEmeraldChampion, scroogeMcduckShushAgent],
 //       });
 //
-//       const goofy = testEngine.getCardModel(goofyEmeraldChampion);
-//       const scrooge = testEngine.getCardModel(scroogeMcduckShushAgent);
+//       Const goofy = testEngine.getCardModel(goofyEmeraldChampion);
+//       Const scrooge = testEngine.getCardModel(scroogeMcduckShushAgent);
 //
 //       // Other Emerald character should have Ward
-//       expect(scrooge.hasWard).toBe(true);
+//       Expect(scrooge.hasWard).toBe(true);
 //
 //       // Goofy himself should not have Ward from his own ability
-//       expect(goofy.hasWard).toBe(false);
+//       Expect(goofy.hasWard).toBe(false);
 //     });
 //
-//     it("should not grant Ward to non-Emerald characters", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: goofyEmeraldChampion.cost + chefLouisInOverHisHead.cost,
-//         play: [goofyEmeraldChampion, chefLouisInOverHisHead],
+//     It("should not grant Ward to non-Emerald characters", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: goofyEmeraldChampion.cost + chefLouisInOverHisHead.cost,
+//         Play: [goofyEmeraldChampion, chefLouisInOverHisHead],
 //       });
 //
-//       const goofy = testEngine.getCardModel(goofyEmeraldChampion);
-//       const chefLouis = testEngine.getCardModel(chefLouisInOverHisHead);
+//       Const goofy = testEngine.getCardModel(goofyEmeraldChampion);
+//       Const chefLouis = testEngine.getCardModel(chefLouisInOverHisHead);
 //
 //       // Non-Emerald character should not have Ward
-//       expect(chefLouis.hasWard).toBe(false);
+//       Expect(chefLouis.hasWard).toBe(false);
 //
 //       // Goofy himself should not have Ward
-//       expect(goofy.hasWard).toBe(false);
+//       Expect(goofy.hasWard).toBe(false);
 //     });
 //   });
 //
-//   describe("Abilities", () => {
-//     it("should have both EVEN THE SCORE and PROVIDE COVER abilities", async () => {
-//       const testEngine = new TestEngine({
-//         play: [goofyEmeraldChampion],
+//   Describe("Abilities", () => {
+//     It("should have both EVEN THE SCORE and PROVIDE COVER abilities", async () => {
+//       Const testEngine = new TestEngine({
+//         Play: [goofyEmeraldChampion],
 //       });
 //
-//       const goofy = testEngine.getCardModel(goofyEmeraldChampion);
+//       Const goofy = testEngine.getCardModel(goofyEmeraldChampion);
 //
 //       // Verify the card has the expected abilities
-//       expect(goofy.lorcanitoCard.abilities).toBeDefined();
-//       expect(goofy.lorcanitoCard.abilities).toHaveLength(2);
+//       Expect(goofy.lorcanitoCard.abilities).toBeDefined();
+//       Expect(goofy.lorcanitoCard.abilities).toHaveLength(2);
 //
-//       const abilities = goofy.lorcanitoCard.abilities!;
-//       const evenTheScoreAbility = abilities[0];
-//       const provideCoverAbility = abilities[1];
+//       Const abilities = goofy.lorcanitoCard.abilities!;
+//       Const evenTheScoreAbility = abilities[0];
+//       Const provideCoverAbility = abilities[1];
 //
 //       // Check names - these should exist on all ability types
-//       expect(
-//         evenTheScoreAbility &&
+//       Expect(
+//         EvenTheScoreAbility &&
 //           "name" in evenTheScoreAbility &&
-//           evenTheScoreAbility.name,
+//           EvenTheScoreAbility.name,
 //       ).toBe("EVEN THE SCORE");
-//       expect(
-//         provideCoverAbility &&
+//       Expect(
+//         ProvideCoverAbility &&
 //           "name" in provideCoverAbility &&
-//           provideCoverAbility.name,
+//           ProvideCoverAbility.name,
 //       ).toBe("PROVIDE COVER");
 //
 //       // Check that the PROVIDE COVER ability has the expected structure for a gain-ability
-//       if (
-//         provideCoverAbility &&
+//       If (
+//         ProvideCoverAbility &&
 //         "type" in provideCoverAbility &&
 //         "ability" in provideCoverAbility &&
-//         provideCoverAbility.type === "static" &&
-//         provideCoverAbility.ability === "gain-ability" &&
+//         ProvideCoverAbility.type === "static" &&
+//         ProvideCoverAbility.ability === "gain-ability" &&
 //         "target" in provideCoverAbility &&
-//         provideCoverAbility.target &&
-//         provideCoverAbility.target.type === "card" &&
+//         ProvideCoverAbility.target &&
+//         ProvideCoverAbility.target.type === "card" &&
 //         "excludeSelf" in provideCoverAbility.target
 //       ) {
-//         expect(provideCoverAbility.target.excludeSelf).toBe(true);
+//         Expect(provideCoverAbility.target.excludeSelf).toBe(true);
 //       }
 //     });
 //
-//     it("EVEN THE SCORE - banishes challenging character when one of your other Emerald characters is banished in a challenge", async () => {
-//       const testEngine = new TestEngine(
+//     It("EVEN THE SCORE - banishes challenging character when one of your other Emerald characters is banished in a challenge", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           play: [hadesLookingForADeal],
+//           Play: [hadesLookingForADeal],
 //         },
 //         {
-//           play: [goofyEmeraldChampion, webbyVanderquackMysteryEnthusiast],
+//           Play: [goofyEmeraldChampion, webbyVanderquackMysteryEnthusiast],
 //         },
 //       );
 //
-//       const attackerModel = testEngine.getCardModel(hadesLookingForADeal);
-//       const defenderModel = testEngine.getCardModel(
-//         webbyVanderquackMysteryEnthusiast,
+//       Const attackerModel = testEngine.getCardModel(hadesLookingForADeal);
+//       Const defenderModel = testEngine.getCardModel(
+//         WebbyVanderquackMysteryEnthusiast,
 //       );
 //
-//       defenderModel.exert();
+//       DefenderModel.exert();
 //
-//       testEngine.testStore.store.cardStore.challenge(
-//         attackerModel.instanceId,
-//         defenderModel.instanceId,
+//       TestEngine.testStore.store.cardStore.challenge(
+//         AttackerModel.instanceId,
+//         DefenderModel.instanceId,
 //       );
 //
 //       // The defender (Webby) should have been banished (moved to discard)
-//       expect(defenderModel.zone).toBe("discard");
+//       Expect(defenderModel.zone).toBe("discard");
 //
 //       // EVEN THE SCORE should banish the challenging character (Hades)
-//       expect(attackerModel.zone).toBe("discard");
+//       Expect(attackerModel.zone).toBe("discard");
 //
 //       // Goofy should remain in play
-//       expect(testEngine.getCardModel(goofyEmeraldChampion).zone).toBe("play");
+//       Expect(testEngine.getCardModel(goofyEmeraldChampion).zone).toBe("play");
 //     });
 //
-//     it("EVEN THE SCORE - doesn't banish challenging character when a non-Emerald characters is banished in a challenge", async () => {
-//       const testEngine = new TestEngine(
+//     It("EVEN THE SCORE - doesn't banish challenging character when a non-Emerald characters is banished in a challenge", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           play: [chefLouisInOverHisHead],
+//           Play: [chefLouisInOverHisHead],
 //         },
 //         {
-//           play: [goofyEmeraldChampion, hadesLookingForADeal],
+//           Play: [goofyEmeraldChampion, hadesLookingForADeal],
 //         },
 //       );
 //
-//       const attackerModel = testEngine.getCardModel(chefLouisInOverHisHead);
-//       const defenderModel = testEngine.getCardModel(hadesLookingForADeal);
+//       Const attackerModel = testEngine.getCardModel(chefLouisInOverHisHead);
+//       Const defenderModel = testEngine.getCardModel(hadesLookingForADeal);
 //
-//       defenderModel.exert();
+//       DefenderModel.exert();
 //
-//       testEngine.testStore.store.cardStore.challenge(
-//         attackerModel.instanceId,
-//         defenderModel.instanceId,
+//       TestEngine.testStore.store.cardStore.challenge(
+//         AttackerModel.instanceId,
+//         DefenderModel.instanceId,
 //       );
 //
 //       // The defender (Hades) should have been banished (moved to discard)
-//       expect(defenderModel.zone).toBe("discard");
+//       Expect(defenderModel.zone).toBe("discard");
 //
 //       // EVEN THE SCORE should banish the challenging character (Chef Louis)
-//       expect(attackerModel.zone).toBe("play");
+//       Expect(attackerModel.zone).toBe("play");
 //
 //       // Goofy should remain in play
-//       expect(testEngine.getCardModel(goofyEmeraldChampion).zone).toBe("play");
+//       Expect(testEngine.getCardModel(goofyEmeraldChampion).zone).toBe("play");
 //     });
 //
-//     it("EVEN THE SCORE - doesn't banish challenging character when Goofy is banished in a challenge", async () => {
-//       const testEngine = new TestEngine(
+//     It("EVEN THE SCORE - doesn't banish challenging character when Goofy is banished in a challenge", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           play: [chefLouisInOverHisHead],
+//           Play: [chefLouisInOverHisHead],
 //         },
 //         {
-//           play: [goofyEmeraldChampion, hadesLookingForADeal],
+//           Play: [goofyEmeraldChampion, hadesLookingForADeal],
 //         },
 //       );
 //
-//       const attackerModel = testEngine.getCardModel(chefLouisInOverHisHead);
-//       const defenderModel = testEngine.getCardModel(goofyEmeraldChampion);
+//       Const attackerModel = testEngine.getCardModel(chefLouisInOverHisHead);
+//       Const defenderModel = testEngine.getCardModel(goofyEmeraldChampion);
 //
-//       defenderModel.exert();
+//       DefenderModel.exert();
 //
-//       testEngine.testStore.store.cardStore.challenge(
-//         attackerModel.instanceId,
-//         defenderModel.instanceId,
+//       TestEngine.testStore.store.cardStore.challenge(
+//         AttackerModel.instanceId,
+//         DefenderModel.instanceId,
 //       );
 //
 //       // The defender (Goofy) should have been banished (moved to discard)
-//       expect(defenderModel.zone).toBe("discard");
+//       Expect(defenderModel.zone).toBe("discard");
 //
 //       // EVEN THE SCORE should not banish the challenging character (Chef Louis)
-//       expect(attackerModel.zone).toBe("play");
+//       Expect(attackerModel.zone).toBe("play");
 //     });
 //   });
 // });

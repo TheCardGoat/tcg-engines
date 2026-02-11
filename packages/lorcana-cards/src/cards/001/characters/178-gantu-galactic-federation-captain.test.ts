@@ -5,9 +5,9 @@ import { gantuGalacticFederationCaptain } from "./178-gantu-galactic-federation-
 describe("Gantu - Galactic Federation Captain", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [gantuGalacticFederationCaptain] });
-  //   expect(testEngine.getCardModel(gantuGalacticFederationCaptain).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [gantuGalacticFederationCaptain] });
+  //   Expect(testEngine.getCardModel(gantuGalacticFederationCaptain).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,107 +17,107 @@ describe("Gantu - Galactic Federation Captain", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   gantuGalacticFederationCaptain,
-//   horaceNoGood,
-//   jumbaJokibaaRenegadeScientist,
-//   tamatoaDrabLittleCrab,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   GantuGalacticFederationCaptain,
+//   HoraceNoGood,
+//   JumbaJokibaaRenegadeScientist,
+//   TamatoaDrabLittleCrab,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Gantu - Galactic Federation Captain", () => {
-//   describe("**Under arrest** Characters with cost 2 or less can't challenge your characters.", () => {
-//     it("Characters with cost 2 or less can't challenge your other characters.", () => {
-//       const testStore = new TestStore(
+// Describe("Gantu - Galactic Federation Captain", () => {
+//   Describe("**Under arrest** Characters with cost 2 or less can't challenge your characters.", () => {
+//     It("Characters with cost 2 or less can't challenge your other characters.", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [tamatoaDrabLittleCrab],
+//           Play: [tamatoaDrabLittleCrab],
 //         },
 //         {
-//           play: [gantuGalacticFederationCaptain, jumbaJokibaaRenegadeScientist],
+//           Play: [gantuGalacticFederationCaptain, jumbaJokibaaRenegadeScientist],
 //         },
 //       );
 //
-//       const attacker = testStore.getByZoneAndId(
+//       Const attacker = testStore.getByZoneAndId(
 //         "play",
-//         tamatoaDrabLittleCrab.id,
+//         TamatoaDrabLittleCrab.id,
 //       );
-//       const defender = testStore.getByZoneAndId(
+//       Const defender = testStore.getByZoneAndId(
 //         "play",
-//         jumbaJokibaaRenegadeScientist.id,
+//         JumbaJokibaaRenegadeScientist.id,
 //         "player_two",
 //       );
 //
-//       defender.updateCardMeta({ exerted: true });
+//       Defender.updateCardMeta({ exerted: true });
 //
-//       attacker.challenge(defender);
+//       Attacker.challenge(defender);
 //
-//       expect(defender.zone).toEqual("play");
-//       expect(defender.meta.damage).toBeFalsy();
+//       Expect(defender.zone).toEqual("play");
+//       Expect(defender.meta.damage).toBeFalsy();
 //
-//       expect(attacker.zone).toEqual("play");
-//       expect(attacker.meta.damage).toBeFalsy();
-//       expect(attacker.lorcanitoCard.cost).toEqual(2);
+//       Expect(attacker.zone).toEqual("play");
+//       Expect(attacker.meta.damage).toBeFalsy();
+//       Expect(attacker.lorcanitoCard.cost).toEqual(2);
 //     });
 //
-//     it("Characters with cost 2 or less can't challenge THIS character.", () => {
-//       const testStore = new TestStore(
+//     It("Characters with cost 2 or less can't challenge THIS character.", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [tamatoaDrabLittleCrab],
+//           Play: [tamatoaDrabLittleCrab],
 //         },
 //         {
-//           play: [gantuGalacticFederationCaptain],
+//           Play: [gantuGalacticFederationCaptain],
 //         },
 //       );
 //
-//       const attacker = testStore.getByZoneAndId(
+//       Const attacker = testStore.getByZoneAndId(
 //         "play",
-//         tamatoaDrabLittleCrab.id,
+//         TamatoaDrabLittleCrab.id,
 //       );
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         gantuGalacticFederationCaptain.id,
+//         GantuGalacticFederationCaptain.id,
 //         "player_two",
 //       );
 //
-//       cardUnderTest.updateCardMeta({ exerted: true });
+//       CardUnderTest.updateCardMeta({ exerted: true });
 //
-//       attacker.challenge(cardUnderTest);
+//       Attacker.challenge(cardUnderTest);
 //
-//       expect(cardUnderTest.zone).toEqual("play");
-//       expect(cardUnderTest.meta.damage).toBeFalsy();
+//       Expect(cardUnderTest.zone).toEqual("play");
+//       Expect(cardUnderTest.meta.damage).toBeFalsy();
 //
-//       expect(attacker.zone).toEqual("play");
-//       expect(attacker.meta.damage).toBeFalsy();
-//       expect(attacker.lorcanitoCard.cost).toEqual(2);
+//       Expect(attacker.zone).toEqual("play");
+//       Expect(attacker.meta.damage).toBeFalsy();
+//       Expect(attacker.lorcanitoCard.cost).toEqual(2);
 //     });
 //
-//     it("Characters with cost 3 or more can challenge this character.", () => {
-//       const testStore = new TestStore(
+//     It("Characters with cost 3 or more can challenge this character.", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [horaceNoGood],
+//           Play: [horaceNoGood],
 //         },
 //         {
-//           play: [gantuGalacticFederationCaptain],
+//           Play: [gantuGalacticFederationCaptain],
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         gantuGalacticFederationCaptain.id,
+//         GantuGalacticFederationCaptain.id,
 //         "player_two",
 //       );
-//       const attacker = testStore.getByZoneAndId("play", horaceNoGood.id);
+//       Const attacker = testStore.getByZoneAndId("play", horaceNoGood.id);
 //
-//       cardUnderTest.updateCardMeta({ exerted: true });
+//       CardUnderTest.updateCardMeta({ exerted: true });
 //
-//       attacker.challenge(cardUnderTest);
+//       Attacker.challenge(cardUnderTest);
 //
-//       expect(cardUnderTest.zone).toEqual("play");
-//       expect(cardUnderTest.meta.damage).toBeTruthy();
+//       Expect(cardUnderTest.zone).toEqual("play");
+//       Expect(cardUnderTest.meta.damage).toBeTruthy();
 //
-//       expect(attacker.zone).toEqual("discard");
-//       expect(attacker.lorcanitoCard.cost).toEqual(3);
+//       Expect(attacker.zone).toEqual("discard");
+//       Expect(attacker.lorcanitoCard.cost).toEqual(3);
 //     });
 //   });
 // });

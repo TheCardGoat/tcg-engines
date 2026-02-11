@@ -1,30 +1,8 @@
 import type { ItemCard } from "@tcg/lorcana-types";
 
 export const webbysDiary: ItemCard = {
-  id: "1fg",
-  cardType: "item",
-  name: "Webby's Diary",
-  inkType: ["amber"],
-  franchise: "Ducktales",
-  set: "010",
-  text: "LATEST ENTRY Whenever you put a card under one of your characters or locations, you may pay 1 {I} to draw a card.",
-  cost: 3,
-  cardNumber: 31,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "052178bee287258a40a9744fdd901e4b2bd11210",
-  },
   abilities: [
     {
-      id: "1fg-1",
-      type: "triggered",
-      name: "LATEST ENTRY",
-      trigger: {
-        event: "banish",
-        timing: "whenever",
-        on: "YOUR_OTHER_CHARACTERS",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -34,7 +12,29 @@ export const webbysDiary: ItemCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "1fg-1",
+      name: "LATEST ENTRY",
       text: "LATEST ENTRY Whenever you put a card under one of your characters or locations, you may pay 1 {I} to draw a card.",
+      trigger: {
+        event: "banish",
+        timing: "whenever",
+        on: "YOUR_OTHER_CHARACTERS",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 31,
+  cardType: "item",
+  cost: 3,
+  externalIds: {
+    ravensburger: "052178bee287258a40a9744fdd901e4b2bd11210",
+  },
+  franchise: "Ducktales",
+  id: "1fg",
+  inkType: ["amber"],
+  inkable: true,
+  missingTests: true,
+  name: "Webby's Diary",
+  set: "010",
+  text: "LATEST ENTRY Whenever you put a card under one of your characters or locations, you may pay 1 {I} to draw a card.",
 };

@@ -1,75 +1,75 @@
 import type { ItemCard } from "@tcg/lorcana-types";
 
 export const drFacilierundefined: ItemCard = {
-  id: "s8n",
-  cardType: "item",
-  name: "Dr. Facilier",
-  version: "undefined",
-  fullName: "Dr. Facilier - undefined",
-  inkType: ["emerald"],
-  franchise: "Disney",
-  set: "001",
-  text: "**THE CARDS WILL TELL** {E} − You pay 1 {I} less for the next action you play this turn.",
-  cost: 2,
-  cardNumber: 101,
-  inkable: true,
-  externalIds: {
-    ravensburger: "",
-  },
   abilities: [
     {
-      type: "action",
-      text: "**THE CARDS WILL TELL** {E} − You pay 1 {I} less for the next action you play this turn.",
-      id: "s8n-1",
       effect: {
         type: "play-card",
         from: "hand",
       },
+      id: "s8n-1",
+      text: "**THE CARDS WILL TELL** {E} − You pay 1 {I} less for the next action you play this turn.",
+      type: "action",
     },
   ],
+  cardNumber: 101,
+  cardType: "item",
+  cost: 2,
+  externalIds: {
+    ravensburger: "",
+  },
+  franchise: "Disney",
+  fullName: "Dr. Facilier - undefined",
+  id: "s8n",
+  inkType: ["emerald"],
+  inkable: true,
+  name: "Dr. Facilier",
+  set: "001",
+  text: "**THE CARDS WILL TELL** {E} − You pay 1 {I} less for the next action you play this turn.",
+  version: "undefined",
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { ActivatedAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { ActivatedAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const drFacilierCards: LorcanitoItemCard = {
-//   characteristics: ["item"],
-//   id: "s8n",
+// Export const drFacilierCards: LorcanitoItemCard = {
+//   Characteristics: ["item"],
+//   Id: "s8n",
 //
-//   name: "Dr. Facilier's Cards",
-//   text: "**THE CARDS WILL TELL** {E} − You pay 1 {I} less for the next action you play this turn.",
-//   type: "item",
-//   abilities: [
+//   Name: "Dr. Facilier's Cards",
+//   Text: "**THE CARDS WILL TELL** {E} − You pay 1 {I} less for the next action you play this turn.",
+//   Type: "item",
+//   Abilities: [
 //     {
-//       type: "activated",
-//       name: "The Cards Will Tell",
-//       text: "You pay 1 {I} less for the next action you play this turn.",
-//       costs: [{ type: "exert" }],
-//       effects: [
+//       Type: "activated",
+//       Name: "The Cards Will Tell",
+//       Text: "You pay 1 {I} less for the next action you play this turn.",
+//       Costs: [{ type: "exert" }],
+//       Effects: [
 //         {
-//           type: "replacement",
-//           replacement: "cost",
-//           duration: "next",
-//           amount: 1,
-//           target: {
-//             type: "card",
-//             value: "all",
-//             filters: [{ filter: "type", value: "action" }],
+//           Type: "replacement",
+//           Replacement: "cost",
+//           Duration: "next",
+//           Amount: 1,
+//           Target: {
+//             Type: "card",
+//             Value: "all",
+//             Filters: [{ filter: "type", value: "action" }],
 //           },
 //         },
 //       ],
 //     } as ActivatedAbility,
 //   ],
-//   flavour: "Take a little trip into your future with me! \n−Dr. Facilier",
-//   colors: ["emerald"],
-//   cost: 2,
-//   illustrator: "Koni",
-//   number: 101,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 508762,
+//   Flavour: "Take a little trip into your future with me! \n−Dr. Facilier",
+//   Colors: ["emerald"],
+//   Cost: 2,
+//   Illustrator: "Koni",
+//   Number: 101,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 508762,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

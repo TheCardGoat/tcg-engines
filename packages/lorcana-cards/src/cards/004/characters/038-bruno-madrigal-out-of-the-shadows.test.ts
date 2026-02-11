@@ -3,24 +3,24 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { brunoMadrigalOutOfTheShadows } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { brunoMadrigalOutOfTheShadows } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Bruno Madrigal - Out of the Shadows", () => {
-//   it.skip("**IT WAS YOUR VISION** When you play this character, chosen character gains 'When this character is banished in a challenge, you may return this card to your hand' this turn.", () => {
-//     const testStore = new TestStore({
-//       inkwell: brunoMadrigalOutOfTheShadows.cost,
-//       hand: [brunoMadrigalOutOfTheShadows],
+// Describe("Bruno Madrigal - Out of the Shadows", () => {
+//   It.skip("**IT WAS YOUR VISION** When you play this character, chosen character gains 'When this character is banished in a challenge, you may return this card to your hand' this turn.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: brunoMadrigalOutOfTheShadows.cost,
+//       Hand: [brunoMadrigalOutOfTheShadows],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "hand",
-//       brunoMadrigalOutOfTheShadows.id,
+//       BrunoMadrigalOutOfTheShadows.id,
 //     );
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

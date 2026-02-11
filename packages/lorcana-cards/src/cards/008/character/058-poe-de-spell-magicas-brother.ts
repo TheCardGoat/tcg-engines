@@ -1,24 +1,24 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
 //
-// export const poeDeSpellMagicasBrother: LorcanitoCharacterCard = {
-//   id: "ecw",
-//   name: "Poe De Spell",
-//   title: "Magica's Brother",
-//   characteristics: ["storyborn", "ally", "sorcerer"],
-//   type: "character",
-//   inkwell: true,
-//   colors: ["amethyst"],
-//   cost: 3,
-//   strength: 3,
-//   willpower: 4,
-//   illustrator: "Kamil Murzyn",
-//   number: 58,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631389,
+// Export const poeDeSpellMagicasBrother: LorcanitoCharacterCard = {
+//   Id: "ecw",
+//   Name: "Poe De Spell",
+//   Title: "Magica's Brother",
+//   Characteristics: ["storyborn", "ally", "sorcerer"],
+//   Type: "character",
+//   Inkwell: true,
+//   Colors: ["amethyst"],
+//   Cost: 3,
+//   Strength: 3,
+//   Willpower: 4,
+//   Illustrator: "Kamil Murzyn",
+//   Number: 58,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631389,
 //   },
-//   rarity: "common",
-//   lore: 1,
+//   Rarity: "common",
+//   Lore: 1,
 // };
 //

@@ -5,9 +5,9 @@ import { elsaSpiritOfWinter } from "./042-elsa-spirit-of-winter";
 describe("Elsa - Spirit of Winter", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [elsaSpiritOfWinter] });
-  //   expect(testEngine.getCardModel(elsaSpiritOfWinter).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [elsaSpiritOfWinter] });
+  //   Expect(testEngine.getCardModel(elsaSpiritOfWinter).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,118 +17,118 @@ describe("Elsa - Spirit of Winter", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   elsaSpiritOfWinter,
-//   johnSilverAlienPirate,
-//   pascalRapunzelCompanion,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   ElsaSpiritOfWinter,
+//   JohnSilverAlienPirate,
+//   PascalRapunzelCompanion,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// export function elsaSpiritOfWinterTargetingOneCharacterTestCase() {
-//   const testStore = new TestStore(
+// Export function elsaSpiritOfWinterTargetingOneCharacterTestCase() {
+//   Const testStore = new TestStore(
 //     {
-//       deck: 3,
-//       inkwell: elsaSpiritOfWinter.cost,
-//       hand: [elsaSpiritOfWinter],
+//       Deck: 3,
+//       Inkwell: elsaSpiritOfWinter.cost,
+//       Hand: [elsaSpiritOfWinter],
 //     },
 //     {
-//       deck: 3,
-//       play: [pascalRapunzelCompanion],
+//       Deck: 3,
+//       Play: [pascalRapunzelCompanion],
 //     },
 //   );
 //
-//   const cardUnderTest = testStore.getByZoneAndId("hand", elsaSpiritOfWinter.id);
-//   const target = testStore.getByZoneAndId(
+//   Const cardUnderTest = testStore.getByZoneAndId("hand", elsaSpiritOfWinter.id);
+//   Const target = testStore.getByZoneAndId(
 //     "play",
-//     pascalRapunzelCompanion.id,
+//     PascalRapunzelCompanion.id,
 //     "player_two",
 //   );
 //
-//   cardUnderTest.playFromHand();
-//   testStore.resolveOptionalAbility();
-//   testStore.resolveTopOfStack({ targetId: target.instanceId });
+//   CardUnderTest.playFromHand();
+//   TestStore.resolveOptionalAbility();
+//   TestStore.resolveTopOfStack({ targetId: target.instanceId });
 //
-//   expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
+//   Expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
 //
 //   // Characters are exerted on first player turn
-//   expect(target.meta).toEqual(expect.objectContaining({ exerted: true }));
-//   testStore.passTurn();
+//   Expect(target.meta).toEqual(expect.objectContaining({ exerted: true }));
+//   TestStore.passTurn();
 //
 //   // Character does not ready on their turn
-//   expect(target.meta).toEqual(expect.objectContaining({ exerted: true }));
+//   Expect(target.meta).toEqual(expect.objectContaining({ exerted: true }));
 //
 //   // Characters are still exerted on first player next  turn
-//   testStore.passTurn();
-//   expect(target.meta).toEqual(expect.objectContaining({ exerted: true }));
+//   TestStore.passTurn();
+//   Expect(target.meta).toEqual(expect.objectContaining({ exerted: true }));
 //
 //   // Characters are ready on opponents second turn
-//   testStore.passTurn();
-//   expect(target.meta).toEqual(expect.objectContaining({ exerted: false }));
+//   TestStore.passTurn();
+//   Expect(target.meta).toEqual(expect.objectContaining({ exerted: false }));
 // }
 //
-// describe("Elsa - Spirit of Winter", () => {
-//   describe("DEEP FREEZE - When you play this character, exert up to 2 chosen characters. They can't ready at the start of their next turn.", () => {
-//     it("exert 1 chosen characters", () => {
-//       elsaSpiritOfWinterTargetingOneCharacterTestCase();
+// Describe("Elsa - Spirit of Winter", () => {
+//   Describe("DEEP FREEZE - When you play this character, exert up to 2 chosen characters. They can't ready at the start of their next turn.", () => {
+//     It("exert 1 chosen characters", () => {
+//       ElsaSpiritOfWinterTargetingOneCharacterTestCase();
 //     });
 //
-//     it("exert 2 chosen characters", () => {
-//       const testStore = new TestStore(
+//     It("exert 2 chosen characters", () => {
+//       Const testStore = new TestStore(
 //         {
-//           inkwell: elsaSpiritOfWinter.cost,
-//           hand: [elsaSpiritOfWinter],
-//           deck: 3,
+//           Inkwell: elsaSpiritOfWinter.cost,
+//           Hand: [elsaSpiritOfWinter],
+//           Deck: 3,
 //         },
 //         {
-//           deck: 3,
-//           play: [pascalRapunzelCompanion, johnSilverAlienPirate],
+//           Deck: 3,
+//           Play: [pascalRapunzelCompanion, johnSilverAlienPirate],
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "hand",
-//         elsaSpiritOfWinter.id,
+//         ElsaSpiritOfWinter.id,
 //       );
-//       const targetOne = testStore.getByZoneAndId(
+//       Const targetOne = testStore.getByZoneAndId(
 //         "play",
-//         pascalRapunzelCompanion.id,
+//         PascalRapunzelCompanion.id,
 //         "player_two",
 //       );
-//       const targetTwo = testStore.getByZoneAndId(
+//       Const targetTwo = testStore.getByZoneAndId(
 //         "play",
-//         johnSilverAlienPirate.id,
+//         JohnSilverAlienPirate.id,
 //         "player_two",
 //       );
 //
-//       const targets = [targetOne, targetTwo];
-//       cardUnderTest.playFromHand();
-//       testStore.resolveOptionalAbility();
-//       testStore.resolveTopOfStack({ targets: [targetOne, targetTwo] });
+//       Const targets = [targetOne, targetTwo];
+//       CardUnderTest.playFromHand();
+//       TestStore.resolveOptionalAbility();
+//       TestStore.resolveTopOfStack({ targets: [targetOne, targetTwo] });
 //
 //       // Characters are exerted on first player turn
-//       targets.forEach((target) => {
-//         expect(target.meta).toEqual(expect.objectContaining({ exerted: true }));
+//       Targets.forEach((target) => {
+//         Expect(target.meta).toEqual(expect.objectContaining({ exerted: true }));
 //       });
 //
-//       testStore.passTurn();
+//       TestStore.passTurn();
 //
 //       // Character does not ready on their turn
-//       targets.forEach((target) => {
-//         expect(target.meta).toEqual(expect.objectContaining({ exerted: true }));
+//       Targets.forEach((target) => {
+//         Expect(target.meta).toEqual(expect.objectContaining({ exerted: true }));
 //       });
 //
 //       // Characters are still exerted on first player next  turn
-//       testStore.passTurn();
-//       targets.forEach((target) => {
-//         expect(target.meta).toEqual(expect.objectContaining({ exerted: true }));
+//       TestStore.passTurn();
+//       Targets.forEach((target) => {
+//         Expect(target.meta).toEqual(expect.objectContaining({ exerted: true }));
 //       });
 //
 //       // Characters are ready on opponents second turn
-//       testStore.passTurn();
-//       targets.forEach((target) => {
-//         expect(target.meta).toEqual(
-//           expect.objectContaining({ exerted: false }),
+//       TestStore.passTurn();
+//       Targets.forEach((target) => {
+//         Expect(target.meta).toEqual(
+//           Expect.objectContaining({ exerted: false }),
 //         );
 //       });
 //     });

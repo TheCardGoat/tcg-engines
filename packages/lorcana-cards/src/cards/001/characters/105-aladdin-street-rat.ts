@@ -1,87 +1,87 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const aladdinStreetRat: CharacterCard = {
-  id: "ec0",
-  cardType: "character",
-  name: "Aladdin",
-  version: "Street Rat",
-  fullName: "Aladdin - Street Rat",
-  inkType: ["ruby"],
-  franchise: "Aladdin",
-  set: "001",
-  text: "IMPROVISE When you play this character, each opponent loses 1 lore.",
-  cost: 3,
-  strength: 2,
-  willpower: 2,
-  lore: 1,
-  cardNumber: 105,
-  inkable: true,
-  externalIds: {
-    ravensburger: "33a8b4eedbcab6c827f3eb65178e48bf29d42142",
-  },
   abilities: [
     {
-      id: "ec0-1",
-      text: "IMPROVISE When you play this character, each opponent loses 1 lore.",
-      name: "IMPROVISE",
-      type: "triggered",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "lose-lore",
         amount: 1,
         target: "EACH_OPPONENT",
       },
+      id: "ec0-1",
+      name: "IMPROVISE",
+      text: "IMPROVISE When you play this character, each opponent loses 1 lore.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 105,
+  cardType: "character",
   classifications: ["Storyborn", "Hero"],
+  cost: 3,
+  externalIds: {
+    ravensburger: "33a8b4eedbcab6c827f3eb65178e48bf29d42142",
+  },
+  franchise: "Aladdin",
+  fullName: "Aladdin - Street Rat",
+  id: "ec0",
+  inkType: ["ruby"],
+  inkable: true,
+  lore: 1,
+  name: "Aladdin",
+  set: "001",
+  strength: 2,
+  text: "IMPROVISE When you play this character, each opponent loses 1 lore.",
+  version: "Street Rat",
+  willpower: 2,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { opponent } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import { opponent } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const aladdinStreetRat: LorcanitoCharacterCard = {
-//   id: "d9z",
+// Export const aladdinStreetRat: LorcanitoCharacterCard = {
+//   Id: "d9z",
 //
-//   name: "Aladdin",
-//   title: "Street Rat",
-//   characteristics: ["hero", "storyborn"],
-//   text: "**IMPROVISE** When you play this character each opponent loses 1 lore.",
-//   type: "character",
-//   abilities: [
-//     whenYouPlayThisCharAbility({
-//       type: "resolution",
-//       name: "IMPROVISE",
-//       text: "When you play this character each opponent loses 1 lore.",
-//       effects: [
+//   Name: "Aladdin",
+//   Title: "Street Rat",
+//   Characteristics: ["hero", "storyborn"],
+//   Text: "**IMPROVISE** When you play this character each opponent loses 1 lore.",
+//   Type: "character",
+//   Abilities: [
+//     WhenYouPlayThisCharAbility({
+//       Type: "resolution",
+//       Name: "IMPROVISE",
+//       Text: "When you play this character each opponent loses 1 lore.",
+//       Effects: [
 //         {
-//           type: "lore",
-//           modifier: "subtract",
-//           amount: 1,
-//           target: opponent,
+//           Type: "lore",
+//           Modifier: "subtract",
+//           Amount: 1,
+//           Target: opponent,
 //         },
 //       ],
 //     }),
 //   ],
-//   flavour:
+//   Flavour:
 //     "It can be hard to tell the difference between a diamond in the rough and someone who's just, well, rough.",
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 3,
-//   strength: 2,
-//   willpower: 2,
-//   lore: 1,
-//   illustrator: "Peter Brockhammer",
-//   number: 105,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 505947,
+//   Inkwell: true,
+//   Colors: ["ruby"],
+//   Cost: 3,
+//   Strength: 2,
+//   Willpower: 2,
+//   Lore: 1,
+//   Illustrator: "Peter Brockhammer",
+//   Number: 105,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 505947,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

@@ -19,11 +19,11 @@ describe("Keyword: Repeat", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "spell",
-          timing: "action",
           repeat: expect.objectContaining({
             energy: 1,
           }),
+          timing: "action",
+          type: "spell",
         }),
       );
     });
@@ -37,11 +37,11 @@ describe("Keyword: Repeat", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "spell",
-          timing: "action",
           repeat: expect.objectContaining({
             energy: 2,
           }),
+          timing: "action",
+          type: "spell",
         }),
       );
     });
@@ -55,10 +55,10 @@ describe("Keyword: Repeat", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "spell",
           repeat: expect.objectContaining({
             energy: 3,
           }),
+          type: "spell",
         }),
       );
     });
@@ -74,11 +74,11 @@ describe("Keyword: Repeat", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "spell",
           repeat: expect.objectContaining({
             energy: 1,
             power: expect.arrayContaining(["mind"]),
           }),
+          type: "spell",
         }),
       );
     });
@@ -92,12 +92,12 @@ describe("Keyword: Repeat", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "spell",
-          timing: "reaction",
           repeat: expect.objectContaining({
             energy: 1,
             power: expect.arrayContaining(["rainbow"]),
           }),
+          timing: "reaction",
+          type: "spell",
         }),
       );
     });
@@ -111,11 +111,11 @@ describe("Keyword: Repeat", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "spell",
           repeat: expect.objectContaining({
             energy: 2,
             power: expect.arrayContaining(["fury"]),
           }),
+          type: "spell",
         }),
       );
     });
@@ -129,14 +129,14 @@ describe("Keyword: Repeat", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "spell",
+          effect: expect.objectContaining({
+            type: "choice",
+          }),
           repeat: expect.objectContaining({
             energy: 4,
             power: expect.arrayContaining(["mind"]),
           }),
-          effect: expect.objectContaining({
-            type: "choice",
-          }),
+          type: "spell",
         }),
       );
     });
@@ -152,10 +152,10 @@ describe("Keyword: Repeat", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "spell",
           repeat: expect.objectContaining({
             power: expect.arrayContaining(["chaos"]),
           }),
+          type: "spell",
         }),
       );
     });
@@ -171,11 +171,11 @@ describe("Keyword: Repeat", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "spell",
-          timing: "reaction",
           effect: expect.objectContaining({
             type: "counter",
           }),
+          timing: "reaction",
+          type: "spell",
         }),
       );
     });
@@ -189,12 +189,12 @@ describe("Keyword: Repeat", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "spell",
-          timing: "reaction",
           effect: expect.objectContaining({
-            type: "modify-might",
             amount: 2,
+            type: "modify-might",
           }),
+          timing: "reaction",
+          type: "spell",
         }),
       );
     });
@@ -208,12 +208,12 @@ describe("Keyword: Repeat", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "spell",
-          timing: "reaction",
           effect: expect.objectContaining({
-            type: "modify-might",
             amount: -2,
+            type: "modify-might",
           }),
+          timing: "reaction",
+          type: "spell",
         }),
       );
     });
@@ -238,10 +238,10 @@ describe("Keyword: Repeat", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "spell",
           effect: expect.objectContaining({
             type: "move",
           }),
+          type: "spell",
         }),
       );
     });
@@ -255,10 +255,10 @@ describe("Keyword: Repeat", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "spell",
           effect: expect.objectContaining({
             type: "create-token",
           }),
+          type: "spell",
         }),
       );
     });

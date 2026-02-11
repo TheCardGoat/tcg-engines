@@ -1,5 +1,5 @@
 /**
- * v2 Parser Type Definitions
+ * V2 Parser Type Definitions
  *
  * Re-exports types from @tcg/lorcana-types for use in the parser.
  * This allows the parser to work with proper types without depending

@@ -3,97 +3,97 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { befuddle } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
-// import { tamatoaSoShiny } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { dingleHopper } from "@lorcanito/lorcana-engine/cards/001/items/items";
-// import { retrosphere } from "@lorcanito/lorcana-engine/cards/005/items/items";
-// import {
-//   flotillaCoconutArmada,
-//   maleficentsStaff,
-//   mertleEdmondsLilosRival,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { befuddle } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
+// Import { tamatoaSoShiny } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { dingleHopper } from "@lorcanito/lorcana-engine/cards/001/items/items";
+// Import { retrosphere } from "@lorcanito/lorcana-engine/cards/005/items/items";
+// Import {
+//   FlotillaCoconutArmada,
+//   MaleficentsStaff,
+//   MertleEdmondsLilosRival,
 // } from "@lorcanito/lorcana-engine/cards/006";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Maleficent's Staff", () => {
-//   describe("BACK, FOOLS! Whenever one of your opponents' characters, items, or locations is returned to their hand from play, gain 1 lore.", () => {
-//     it("should gain 1 lore when an opponent's ITEM is returned to their hand", async () => {
-//       const testEngine = new TestEngine(
+// Describe("Maleficent's Staff", () => {
+//   Describe("BACK, FOOLS! Whenever one of your opponents' characters, items, or locations is returned to their hand from play, gain 1 lore.", () => {
+//     It("should gain 1 lore when an opponent's ITEM is returned to their hand", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: befuddle.cost,
-//           play: [maleficentsStaff],
-//           hand: [befuddle],
+//           Inkwell: befuddle.cost,
+//           Play: [maleficentsStaff],
+//           Hand: [befuddle],
 //         },
 //         {
-//           play: [dingleHopper],
+//           Play: [dingleHopper],
 //         },
 //       );
 //
-//       await testEngine.playCard(befuddle, { targets: [dingleHopper] });
+//       Await testEngine.playCard(befuddle, { targets: [dingleHopper] });
 //
-//       expect(testEngine.getLoreForPlayer("player_one")).toBe(1);
+//       Expect(testEngine.getLoreForPlayer("player_one")).toBe(1);
 //     });
 //
-//     it("should gain 1 lore when an opponent's CHARACTER is returned to their hand", async () => {
-//       const testEngine = new TestEngine(
+//     It("should gain 1 lore when an opponent's CHARACTER is returned to their hand", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: 2,
-//           play: [maleficentsStaff, retrosphere],
-//           hand: [befuddle],
+//           Inkwell: 2,
+//           Play: [maleficentsStaff, retrosphere],
+//           Hand: [befuddle],
 //         },
 //         {
-//           play: [mertleEdmondsLilosRival],
+//           Play: [mertleEdmondsLilosRival],
 //         },
 //       );
 //
-//       await testEngine.activateCard(retrosphere, {
-//         targets: [mertleEdmondsLilosRival],
+//       Await testEngine.activateCard(retrosphere, {
+//         Targets: [mertleEdmondsLilosRival],
 //       });
 //
-//       expect(testEngine.getLoreForPlayer("player_one")).toBe(1);
+//       Expect(testEngine.getLoreForPlayer("player_one")).toBe(1);
 //     });
 //
-//     it("should gain 1 lore when an opponent's LOCATION is returned to their hand", async () => {
-//       const testEngine = new TestEngine(
+//     It("should gain 1 lore when an opponent's LOCATION is returned to their hand", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: 2,
-//           play: [maleficentsStaff, retrosphere],
-//           hand: [befuddle],
+//           Inkwell: 2,
+//           Play: [maleficentsStaff, retrosphere],
+//           Hand: [befuddle],
 //         },
 //         {
-//           play: [flotillaCoconutArmada],
+//           Play: [flotillaCoconutArmada],
 //         },
 //       );
 //
-//       await testEngine.activateCard(retrosphere, {
-//         targets: [flotillaCoconutArmada],
+//       Await testEngine.activateCard(retrosphere, {
+//         Targets: [flotillaCoconutArmada],
 //       });
 //
-//       expect(testEngine.getLoreForPlayer("player_one")).toBe(1);
+//       Expect(testEngine.getLoreForPlayer("player_one")).toBe(1);
 //     });
 //   });
 // });
 //
-// describe("Regression", () => {
-//   it("should not gain lore when a card is returned to hand from discard", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Regression", () => {
+//   It("should not gain lore when a card is returned to hand from discard", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: tamatoaSoShiny.cost,
-//         hand: [tamatoaSoShiny],
-//         discard: [dingleHopper],
+//         Inkwell: tamatoaSoShiny.cost,
+//         Hand: [tamatoaSoShiny],
+//         Discard: [dingleHopper],
 //       },
 //       {
-//         play: [maleficentsStaff],
+//         Play: [maleficentsStaff],
 //       },
 //     );
 //
-//     await testEngine.playCard(tamatoaSoShiny, {
-//       targets: [dingleHopper],
-//       acceptOptionalLayer: true,
+//     Await testEngine.playCard(tamatoaSoShiny, {
+//       Targets: [dingleHopper],
+//       AcceptOptionalLayer: true,
 //     });
 //
-//     expect(testEngine.getLoreForPlayer("player_two")).toBe(0);
-//     expect(testEngine.stackLayers).toHaveLength(0);
+//     Expect(testEngine.getLoreForPlayer("player_two")).toBe(0);
+//     Expect(testEngine.stackLayers).toHaveLength(0);
 //   });
 // });
 //

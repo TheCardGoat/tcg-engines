@@ -1,52 +1,52 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
 export const befuddle: ActionCard = {
-  id: "teb",
-  cardType: "action",
-  name: "Befuddle",
-  version: "undefined",
-  fullName: "Befuddle - undefined",
-  inkType: ["amethyst"],
-  franchise: "Disney",
-  set: "001",
-  text: "Return a character or item with cost 2 or less to their player",
-  cost: 1,
+  abilities: [],
   cardNumber: 62,
-  inkable: true,
+  cardType: "action",
+  cost: 1,
   externalIds: {
     ravensburger: "",
   },
-  abilities: [],
+  franchise: "Disney",
+  fullName: "Befuddle - undefined",
+  id: "teb",
+  inkType: ["amethyst"],
+  inkable: true,
+  name: "Befuddle",
+  set: "001",
+  text: "Return a character or item with cost 2 or less to their player",
+  version: "undefined",
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const befuddle: LorcanitoActionCard = {
-//   id: "teb",
-//   name: "Befuddle",
-//   characteristics: ["action"],
-//   text: "Return a character or item with cost 2 or less to their player's hand.",
-//   type: "action",
-//   abilities: [
+// Export const befuddle: LorcanitoActionCard = {
+//   Id: "teb",
+//   Name: "Befuddle",
+//   Characteristics: ["action"],
+//   Text: "Return a character or item with cost 2 or less to their player's hand.",
+//   Type: "action",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       name: "Befuddle",
-//       text: "Return a character or item with cost 2 or less to their player's hand.",
-//       effects: [
+//       Type: "resolution",
+//       Name: "Befuddle",
+//       Text: "Return a character or item with cost 2 or less to their player's hand.",
+//       Effects: [
 //         {
-//           type: "move",
-//           to: "hand",
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
+//           Type: "move",
+//           To: "hand",
+//           Target: {
+//             Type: "card",
+//             Value: 1,
+//             Filters: [
 //               { filter: "type", value: ["character", "item"] },
 //               { filter: "zone", value: "play" },
 //               {
-//                 filter: "attribute",
-//                 value: "cost",
-//                 comparison: { operator: "lte", value: 2 },
+//                 Filter: "attribute",
+//                 Value: "cost",
+//                 Comparison: { operator: "lte", value: 2 },
 //               },
 //             ],
 //           },
@@ -54,16 +54,16 @@ export const befuddle: ActionCard = {
 //       ],
 //     },
 //   ],
-//   flavour: "Never be afraid to have your mind boggled now and then.",
-//   inkwell: true,
-//   colors: ["amethyst"],
-//   cost: 1,
-//   illustrator: "Kendall Hale",
-//   number: 62,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 503355,
+//   Flavour: "Never be afraid to have your mind boggled now and then.",
+//   Inkwell: true,
+//   Colors: ["amethyst"],
+//   Cost: 1,
+//   Illustrator: "Kendall Hale",
+//   Number: 62,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 503355,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

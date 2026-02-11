@@ -3,189 +3,189 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { mickeyMouseTrueFriend } from "@lorcanito/lorcana-engine/cards/001/characters/012-mickey-mouse-true-friend";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
-// import { potionOfMalice } from "./098-potion-of-malice";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { mickeyMouseTrueFriend } from "@lorcanito/lorcana-engine/cards/001/characters/012-mickey-mouse-true-friend";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { potionOfMalice } from "./098-potion-of-malice";
 //
-// describe("Potion Of Malice", () => {
-//   describe("SUPPRESSED ANGER - {E}, 1 {I} – Put 1 damage counter on chosen character", () => {
-//     it("puts 1 damage counter on chosen character when activated", async () => {
-//       const testEngine = new TestEngine(
+// Describe("Potion Of Malice", () => {
+//   Describe("SUPPRESSED ANGER - {E}, 1 {I} – Put 1 damage counter on chosen character", () => {
+//     It("puts 1 damage counter on chosen character when activated", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: potionOfMalice.cost + 1,
-//           play: [potionOfMalice],
+//           Inkwell: potionOfMalice.cost + 1,
+//           Play: [potionOfMalice],
 //         },
 //         {
-//           play: [mickeyMouseTrueFriend],
+//           Play: [mickeyMouseTrueFriend],
 //         },
 //       );
 //
-//       const potion = testEngine.getCardModel(potionOfMalice);
-//       const target = testEngine.testStore.getByZoneAndId(
+//       Const potion = testEngine.getCardModel(potionOfMalice);
+//       Const target = testEngine.testStore.getByZoneAndId(
 //         "play",
-//         mickeyMouseTrueFriend.id,
+//         MickeyMouseTrueFriend.id,
 //         "player_two",
 //       );
 //
-//       expect(target.damage).toBe(0);
+//       Expect(target.damage).toBe(0);
 //
 //       // Activate SUPPRESSED ANGER ability
-//       await testEngine.activateCard(potion, {
-//         ability: "Suppressed Anger",
-//         targets: [target],
+//       Await testEngine.activateCard(potion, {
+//         Ability: "Suppressed Anger",
+//         Targets: [target],
 //       });
 //
-//       expect(target.damage).toBe(1);
-//       expect(potion.ready).toBe(false);
+//       Expect(target.damage).toBe(1);
+//       Expect(potion.ready).toBe(false);
 //     });
 //
-//     it("can target any character in play", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: potionOfMalice.cost + 1,
-//         play: [potionOfMalice, mickeyMouseTrueFriend],
+//     It("can target any character in play", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: potionOfMalice.cost + 1,
+//         Play: [potionOfMalice, mickeyMouseTrueFriend],
 //       });
 //
-//       const potion = testEngine.getCardModel(potionOfMalice);
-//       const target = testEngine.getCardModel(mickeyMouseTrueFriend);
+//       Const potion = testEngine.getCardModel(potionOfMalice);
+//       Const target = testEngine.getCardModel(mickeyMouseTrueFriend);
 //
-//       expect(target.damage).toBe(0);
+//       Expect(target.damage).toBe(0);
 //
 //       // Can target own character
-//       await testEngine.activateCard(potion, {
-//         ability: "Suppressed Anger",
-//         targets: [target],
+//       Await testEngine.activateCard(potion, {
+//         Ability: "Suppressed Anger",
+//         Targets: [target],
 //       });
 //
-//       expect(target.damage).toBe(1);
+//       Expect(target.damage).toBe(1);
 //     });
 //   });
 //
-//   describe("MINDLESS RAGE - {E}, Banish this item – Each opposing damaged character gains Reckless until the start of your next turn", () => {
-//     it("grants Reckless to all opposing damaged characters until start of next turn", async () => {
-//       const testEngine = new TestEngine(
+//   Describe("MINDLESS RAGE - {E}, Banish this item – Each opposing damaged character gains Reckless until the start of your next turn", () => {
+//     It("grants Reckless to all opposing damaged characters until start of next turn", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: potionOfMalice.cost,
-//           play: [potionOfMalice],
+//           Inkwell: potionOfMalice.cost,
+//           Play: [potionOfMalice],
 //         },
 //         {
-//           play: [
-//             mickeyMouseTrueFriend,
-//             mickeyMouseTrueFriend,
-//             mickeyMouseTrueFriend,
+//           Play: [
+//             MickeyMouseTrueFriend,
+//             MickeyMouseTrueFriend,
+//             MickeyMouseTrueFriend,
 //           ],
 //         },
 //       );
 //
-//       const potion = testEngine.getCardModel(potionOfMalice);
-//       const opponentCards = testEngine.store.tableStore.getPlayerZoneCards(
+//       Const potion = testEngine.getCardModel(potionOfMalice);
+//       Const opponentCards = testEngine.store.tableStore.getPlayerZoneCards(
 //         "player_two",
 //         "play",
 //       );
-//       const damagedChar1 = opponentCards[0]!;
-//       const damagedChar2 = opponentCards[1]!;
-//       const undamagedChar = opponentCards[2]!;
+//       Const damagedChar1 = opponentCards[0]!;
+//       Const damagedChar2 = opponentCards[1]!;
+//       Const undamagedChar = opponentCards[2]!;
 //
 //       // Manually damage two opposing characters
-//       await testEngine.setCardDamage(damagedChar1, 1);
-//       await testEngine.setCardDamage(damagedChar2, 2);
+//       Await testEngine.setCardDamage(damagedChar1, 1);
+//       Await testEngine.setCardDamage(damagedChar2, 2);
 //
-//       expect(damagedChar1.hasReckless).toBe(false);
-//       expect(damagedChar2.hasReckless).toBe(false);
-//       expect(undamagedChar.hasReckless).toBe(false);
+//       Expect(damagedChar1.hasReckless).toBe(false);
+//       Expect(damagedChar2.hasReckless).toBe(false);
+//       Expect(undamagedChar.hasReckless).toBe(false);
 //
 //       // Activate MINDLESS RAGE ability
-//       await testEngine.activateCard(potion, {
-//         ability: "Mindless Rage",
+//       Await testEngine.activateCard(potion, {
+//         Ability: "Mindless Rage",
 //       });
 //
 //       // Damaged opposing characters should have Reckless
-//       expect(damagedChar1.hasReckless).toBe(true);
-//       expect(damagedChar2.hasReckless).toBe(true);
+//       Expect(damagedChar1.hasReckless).toBe(true);
+//       Expect(damagedChar2.hasReckless).toBe(true);
 //       // Undamaged character should not have Reckless
-//       expect(undamagedChar.hasReckless).toBe(false);
+//       Expect(undamagedChar.hasReckless).toBe(false);
 //       // Potion should be banished
-//       expect(potion.zone).toBe("discard");
+//       Expect(potion.zone).toBe("discard");
 //
 //       // Pass turn to opponent
-//       await testEngine.passTurn();
+//       Await testEngine.passTurn();
 //
 //       // At start of player one's next turn, Reckless should be removed
-//       await testEngine.passTurn();
+//       Await testEngine.passTurn();
 //
-//       expect(damagedChar1.hasReckless).toBe(false);
-//       expect(damagedChar2.hasReckless).toBe(false);
+//       Expect(damagedChar1.hasReckless).toBe(false);
+//       Expect(damagedChar2.hasReckless).toBe(false);
 //     });
 //
-//     it("does not grant Reckless to own damaged characters", async () => {
-//       const testEngine = new TestEngine(
+//     It("does not grant Reckless to own damaged characters", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: potionOfMalice.cost,
-//           play: [potionOfMalice, mickeyMouseTrueFriend],
+//           Inkwell: potionOfMalice.cost,
+//           Play: [potionOfMalice, mickeyMouseTrueFriend],
 //         },
 //         {
-//           play: [mickeyMouseTrueFriend],
+//           Play: [mickeyMouseTrueFriend],
 //         },
 //       );
 //
-//       const potion = testEngine.getCardModel(potionOfMalice);
-//       const ownChar = testEngine.testStore.getByZoneAndId(
+//       Const potion = testEngine.getCardModel(potionOfMalice);
+//       Const ownChar = testEngine.testStore.getByZoneAndId(
 //         "play",
-//         mickeyMouseTrueFriend.id,
+//         MickeyMouseTrueFriend.id,
 //         "player_one",
 //       );
-//       const opponentChar = testEngine.testStore.getByZoneAndId(
+//       Const opponentChar = testEngine.testStore.getByZoneAndId(
 //         "play",
-//         mickeyMouseTrueFriend.id,
+//         MickeyMouseTrueFriend.id,
 //         "player_two",
 //       );
 //
 //       // Damage both characters
-//       await testEngine.setCardDamage(ownChar, 1);
-//       await testEngine.setCardDamage(opponentChar, 1);
+//       Await testEngine.setCardDamage(ownChar, 1);
+//       Await testEngine.setCardDamage(opponentChar, 1);
 //
 //       // Activate MINDLESS RAGE
-//       await testEngine.activateCard(potion, {
-//         ability: "Mindless Rage",
+//       Await testEngine.activateCard(potion, {
+//         Ability: "Mindless Rage",
 //       });
 //
 //       // Only opponent's damaged character should have Reckless
-//       expect(ownChar.hasReckless).toBe(false);
-//       expect(opponentChar.hasReckless).toBe(true);
+//       Expect(ownChar.hasReckless).toBe(false);
+//       Expect(opponentChar.hasReckless).toBe(true);
 //     });
 //
-//     it("does not affect characters if no opposing characters are damaged", async () => {
-//       const testEngine = new TestEngine(
+//     It("does not affect characters if no opposing characters are damaged", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: potionOfMalice.cost,
-//           play: [potionOfMalice],
+//           Inkwell: potionOfMalice.cost,
+//           Play: [potionOfMalice],
 //         },
 //         {
-//           play: [mickeyMouseTrueFriend, mickeyMouseTrueFriend],
+//           Play: [mickeyMouseTrueFriend, mickeyMouseTrueFriend],
 //         },
 //       );
 //
-//       const potion = testEngine.getCardModel(potionOfMalice);
-//       const opponentCards = testEngine.store.tableStore.getPlayerZoneCards(
+//       Const potion = testEngine.getCardModel(potionOfMalice);
+//       Const opponentCards = testEngine.store.tableStore.getPlayerZoneCards(
 //         "player_two",
 //         "play",
 //       );
-//       const char1 = opponentCards[0]!;
-//       const char2 = opponentCards[1]!;
+//       Const char1 = opponentCards[0]!;
+//       Const char2 = opponentCards[1]!;
 //
 //       // No damage on any character
-//       expect(char1.damage).toBe(0);
-//       expect(char2.damage).toBe(0);
+//       Expect(char1.damage).toBe(0);
+//       Expect(char2.damage).toBe(0);
 //
 //       // Activate MINDLESS RAGE
-//       await testEngine.activateCard(potion, {
-//         ability: "Mindless Rage",
+//       Await testEngine.activateCard(potion, {
+//         Ability: "Mindless Rage",
 //       });
 //
 //       // No characters should have Reckless
-//       expect(char1.hasReckless).toBe(false);
-//       expect(char2.hasReckless).toBe(false);
-//       expect(potion.zone).toBe("discard");
+//       Expect(char1.hasReckless).toBe(false);
+//       Expect(char2.hasReckless).toBe(false);
+//       Expect(potion.zone).toBe("discard");
 //     });
 //   });
 // });

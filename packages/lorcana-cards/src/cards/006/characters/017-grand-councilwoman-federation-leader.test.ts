@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { grandCouncilwomanFederationLeader } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { grandCouncilwomanFederationLeader } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Grand Councilwoman - Federation Leader", () => {
-//   it.skip("FIND IT! Whenever this character quests, your other Alien characters get +1 {L} this turn.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: grandCouncilwomanFederationLeader.cost,
-//       play: [grandCouncilwomanFederationLeader],
-//       hand: [grandCouncilwomanFederationLeader],
+// Describe("Grand Councilwoman - Federation Leader", () => {
+//   It.skip("FIND IT! Whenever this character quests, your other Alien characters get +1 {L} this turn.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: grandCouncilwomanFederationLeader.cost,
+//       Play: [grandCouncilwomanFederationLeader],
+//       Hand: [grandCouncilwomanFederationLeader],
 //     });
 //
-//     await testEngine.playCard(grandCouncilwomanFederationLeader);
+//     Await testEngine.playCard(grandCouncilwomanFederationLeader);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

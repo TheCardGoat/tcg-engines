@@ -3,60 +3,60 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { liloGalacticHero } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { friendsOnTheOtherSide } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
-// import { breakFree } from "@lorcanito/lorcana-engine/cards/005/actions/actions";
-// import {
-//   daisyDuckSpotlessFoodfighter,
-//   denahiAvengingBrother,
-//   petePastryChomper,
-//   robinHoodSharpshooter,
-//   simbaAdventurousSuccessor,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { liloGalacticHero } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { friendsOnTheOtherSide } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
+// Import { breakFree } from "@lorcanito/lorcana-engine/cards/005/actions/actions";
+// Import {
+//   DaisyDuckSpotlessFoodfighter,
+//   DenahiAvengingBrother,
+//   PetePastryChomper,
+//   RobinHoodSharpshooter,
+//   SimbaAdventurousSuccessor,
 // } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Robin Hood - Sharpshooter", () => {
-//   it("**MY GREATEST PERFORMANCE** Additional test with friends on the other side", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Robin Hood - Sharpshooter", () => {
+//   It("**MY GREATEST PERFORMANCE** Additional test with friends on the other side", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         play: [robinHoodSharpshooter],
-//         deck: [
-//           liloGalacticHero,
-//           simbaAdventurousSuccessor,
-//           breakFree,
-//           petePastryChomper,
-//           denahiAvengingBrother,
-//           daisyDuckSpotlessFoodfighter,
-//           friendsOnTheOtherSide,
+//         Play: [robinHoodSharpshooter],
+//         Deck: [
+//           LiloGalacticHero,
+//           SimbaAdventurousSuccessor,
+//           BreakFree,
+//           PetePastryChomper,
+//           DenahiAvengingBrother,
+//           DaisyDuckSpotlessFoodfighter,
+//           FriendsOnTheOtherSide,
 //         ],
 //       },
 //       { deck: 60 },
 //     );
 //
-//     const target = testEngine.getCardModel(friendsOnTheOtherSide);
-//     const otherCards = [
-//       testEngine.getCardModel(petePastryChomper),
-//       testEngine.getCardModel(denahiAvengingBrother),
-//       testEngine.getCardModel(daisyDuckSpotlessFoodfighter),
+//     Const target = testEngine.getCardModel(friendsOnTheOtherSide);
+//     Const otherCards = [
+//       TestEngine.getCardModel(petePastryChomper),
+//       TestEngine.getCardModel(denahiAvengingBrother),
+//       TestEngine.getCardModel(daisyDuckSpotlessFoodfighter),
 //     ];
 //
-//     await testEngine.questCard(robinHoodSharpshooter);
-//     await testEngine.resolveTopOfStack(
+//     Await testEngine.questCard(robinHoodSharpshooter);
+//     Await testEngine.resolveTopOfStack(
 //       {
-//         scry: {
-//           discard: otherCards,
-//           play: [target],
+//         Scry: {
+//           Discard: otherCards,
+//           Play: [target],
 //         },
 //       },
-//       true,
+//       True,
 //     );
 //
-//     expect(testEngine.getZonesCardCount("player_two")).toEqual(
-//       expect.objectContaining({ hand: 0, deck: 60, discard: 0 }),
+//     Expect(testEngine.getZonesCardCount("player_two")).toEqual(
+//       Expect.objectContaining({ hand: 0, deck: 60, discard: 0 }),
 //     );
-//     expect(testEngine.getZonesCardCount()).toEqual(
-//       expect.objectContaining({ hand: 2, deck: 1, discard: 4 }),
+//     Expect(testEngine.getZonesCardCount()).toEqual(
+//       Expect.objectContaining({ hand: 2, deck: 1, discard: 4 }),
 //     );
 //   });
 // });

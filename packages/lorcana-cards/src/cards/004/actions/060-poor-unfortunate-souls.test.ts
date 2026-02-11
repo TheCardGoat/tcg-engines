@@ -3,44 +3,44 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { simbaProtectiveCub } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { poorUnfortunateSouls } from "@lorcanito/lorcana-engine/cards/004/actions/actions";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { simbaProtectiveCub } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { poorUnfortunateSouls } from "@lorcanito/lorcana-engine/cards/004/actions/actions";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Poor Unfortunate Souls", () => {
-//   it("_(A character with cost 2 or more can {E} to sing this song for free.)_Return a character, item or location with cost 2 or less to their player's hand.", () => {
-//     const testStore = new TestStore(
+// Describe("Poor Unfortunate Souls", () => {
+//   It("_(A character with cost 2 or more can {E} to sing this song for free.)_Return a character, item or location with cost 2 or less to their player's hand.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: poorUnfortunateSouls.cost,
-//         hand: [poorUnfortunateSouls],
+//         Inkwell: poorUnfortunateSouls.cost,
+//         Hand: [poorUnfortunateSouls],
 //       },
 //       {
-//         play: [simbaProtectiveCub],
+//         Play: [simbaProtectiveCub],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "hand",
-//       poorUnfortunateSouls.id,
+//       PoorUnfortunateSouls.id,
 //     );
-//     const target = testStore.getByZoneAndId(
+//     Const target = testStore.getByZoneAndId(
 //       "play",
-//       simbaProtectiveCub.id,
+//       SimbaProtectiveCub.id,
 //       "player_two",
 //     );
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveTopOfStack({ targets: [target] });
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.zone).toBe("hand");
+//     Expect(target.zone).toBe("hand");
 //     // Character should be returned to their owner's hand
-//     const returnedCard = testStore.getByZoneAndId(
+//     Const returnedCard = testStore.getByZoneAndId(
 //       "hand",
-//       simbaProtectiveCub.id,
+//       SimbaProtectiveCub.id,
 //       "player_two",
 //     );
-//     expect(returnedCard).toBeDefined();
+//     Expect(returnedCard).toBeDefined();
 //   });
 // });
 //

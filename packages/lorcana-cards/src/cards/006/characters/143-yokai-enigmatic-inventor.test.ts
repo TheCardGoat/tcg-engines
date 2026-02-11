@@ -3,35 +3,35 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   pixieDust,
-//   poohPirateShip,
-//   yokaiEnigmaticInventor,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   PixieDust,
+//   PoohPirateShip,
+//   YokaiEnigmaticInventor,
 // } from "@lorcanito/lorcana-engine/cards/006";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Yokai - Enigmatic Inventor", () => {
-//   it("TIME TO UPGRADE Whenever this character quests, you may return one of your items to your hand to pay 2 {I} less for the next item you play this turn.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: pixieDust.cost - 2,
-//       play: [yokaiEnigmaticInventor, poohPirateShip],
-//       hand: [pixieDust],
+// Describe("Yokai - Enigmatic Inventor", () => {
+//   It("TIME TO UPGRADE Whenever this character quests, you may return one of your items to your hand to pay 2 {I} less for the next item you play this turn.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: pixieDust.cost - 2,
+//       Play: [yokaiEnigmaticInventor, poohPirateShip],
+//       Hand: [pixieDust],
 //     });
-//     const targetCard = testEngine.getCardModel(pixieDust);
+//     Const targetCard = testEngine.getCardModel(pixieDust);
 //
-//     await testEngine.questCard(yokaiEnigmaticInventor);
-//     await testEngine.resolveOptionalAbility();
+//     Await testEngine.questCard(yokaiEnigmaticInventor);
+//     Await testEngine.resolveOptionalAbility();
 //
-//     expect(targetCard.cost).toEqual(pixieDust.cost);
-//     await testEngine.resolveTopOfStack({ targets: [poohPirateShip] });
-//     expect(targetCard.cost).toEqual(pixieDust.cost - 2);
+//     Expect(targetCard.cost).toEqual(pixieDust.cost);
+//     Await testEngine.resolveTopOfStack({ targets: [poohPirateShip] });
+//     Expect(targetCard.cost).toEqual(pixieDust.cost - 2);
 //
-//     await testEngine.playCard(pixieDust);
+//     Await testEngine.playCard(pixieDust);
 //
-//     expect(targetCard.zone).toEqual("play");
-//     expect(
-//       testEngine.store.continuousEffectStore.continuousEffects,
+//     Expect(targetCard.zone).toEqual("play");
+//     Expect(
+//       TestEngine.store.continuousEffectStore.continuousEffects,
 //     ).toHaveLength(0);
 //   });
 // });

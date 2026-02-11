@@ -1,46 +1,46 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import {
-//   haveCardsInYourHand,
-//   haveNoCardsInYourHand,
+// Import {
+//   HaveCardsInYourHand,
+//   HaveNoCardsInYourHand,
 // } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
-// import { self } from "@lorcanito/lorcana-engine/abilities/targets";
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-// import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
-// import type { CreateLayerBasedOnCondition } from "@lorcanito/lorcana-engine/effects/effectTypes";
+// Import { self } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { CreateLayerBasedOnCondition } from "@lorcanito/lorcana-engine/effects/effectTypes";
 //
-// const conditionalEffects: CreateLayerBasedOnCondition = {
-//   type: "create-layer-based-on-condition",
+// Const conditionalEffects: CreateLayerBasedOnCondition = {
+//   Type: "create-layer-based-on-condition",
 //   // TODO: Target not needed
-//   target: self,
-//   conditionalEffects: [
+//   Target: self,
+//   ConditionalEffects: [
 //     {
-//       conditions: [haveCardsInYourHand],
-//       effects: [
+//       Conditions: [haveCardsInYourHand],
+//       Effects: [
 //         {
-//           type: "discard",
-//           amount: 1, // THIS IS A PLACEHOLDER, the actual value lives in the target
-//           target: {
-//             type: "card",
-//             value: 99,
-//             upTo: true,
-//             filters: [
+//           Type: "discard",
+//           Amount: 1, // THIS IS A PLACEHOLDER, the actual value lives in the target
+//           Target: {
+//             Type: "card",
+//             Value: 99,
+//             UpTo: true,
+//             Filters: [
 //               { filter: "zone", value: "hand" },
 //               { filter: "owner", value: "self" },
 //             ],
 //           },
-//           forEach: [drawACard],
+//           ForEach: [drawACard],
 //         },
 //       ],
 //     },
 //     {
-//       conditions: [haveNoCardsInYourHand],
-//       effects: [
+//       Conditions: [haveNoCardsInYourHand],
+//       Effects: [
 //         {
-//           type: "draw",
-//           amount: 3,
-//           target: {
-//             type: "player",
-//             value: "self",
+//           Type: "draw",
+//           Amount: 3,
+//           Target: {
+//             Type: "player",
+//             Value: "self",
 //           },
 //         },
 //       ],
@@ -48,26 +48,26 @@
 //   ],
 // };
 //
-// export const desperatePlan: LorcanitoActionCard = {
-//   id: "y5k",
-//   name: "Desperate Plan",
-//   characteristics: ["action"],
-//   text: "If you have no cards in your hand, draw until you have 3 cards in your hand. Otherwise, choose and discard any number of cards, then draw that many cards.",
-//   type: "action",
-//   inkwell: false,
-//   colors: ["steel"],
-//   cost: 3,
-//   illustrator: "Gianluca Barone",
-//   number: 201,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631482,
+// Export const desperatePlan: LorcanitoActionCard = {
+//   Id: "y5k",
+//   Name: "Desperate Plan",
+//   Characteristics: ["action"],
+//   Text: "If you have no cards in your hand, draw until you have 3 cards in your hand. Otherwise, choose and discard any number of cards, then draw that many cards.",
+//   Type: "action",
+//   Inkwell: false,
+//   Colors: ["steel"],
+//   Cost: 3,
+//   Illustrator: "Gianluca Barone",
+//   Number: 201,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631482,
 //   },
-//   rarity: "rare",
-//   abilities: [
+//   Rarity: "rare",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       effects: [conditionalEffects],
+//       Type: "resolution",
+//       Effects: [conditionalEffects],
 //     },
 //   ],
 // };

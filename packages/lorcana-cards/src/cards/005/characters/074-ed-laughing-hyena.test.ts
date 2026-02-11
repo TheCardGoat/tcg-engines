@@ -3,21 +3,21 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { edLaughingHyena } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { edLaughingHyena } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Ed - Laughing Hyena", () => {
-//   it.skip("**CAUSE A PANIC** When you play this character, you may deal 2 damage to chosen damaged character.", () => {
-//     const testStore = new TestStore({
-//       inkwell: edLaughingHyena.cost,
-//       hand: [edLaughingHyena],
+// Describe("Ed - Laughing Hyena", () => {
+//   It.skip("**CAUSE A PANIC** When you play this character, you may deal 2 damage to chosen damaged character.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: edLaughingHyena.cost,
+//       Hand: [edLaughingHyena],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(edLaughingHyena);
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     Const cardUnderTest = testStore.getCard(edLaughingHyena);
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

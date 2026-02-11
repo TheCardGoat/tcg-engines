@@ -593,10 +593,7 @@ export type CharacterTargetQuery =
 /**
  * Union type for all character targeting options
  */
-export type CharacterTarget =
-  | CharacterTargetEnum
-  | CharacterTargetQuery
-  | CardReference;
+export type CharacterTarget = CharacterTargetEnum | CharacterTargetQuery | CardReference;
 
 // ============================================================================
 // Location Targeting
@@ -659,10 +656,7 @@ export type LocationTargetQuery =
   | UpToCountLocationQuery
   | AllMatchingLocationQuery;
 
-export type LocationTarget =
-  | LocationTargetEnum
-  | LocationTargetQuery
-  | CardReference;
+export type LocationTarget = LocationTargetEnum | LocationTargetQuery | CardReference;
 
 // ============================================================================
 // Item Targeting
@@ -722,10 +716,7 @@ export interface AllMatchingItemQuery extends ItemQueryBase {
 /**
  * Complex item targeting with filters
  */
-export type ItemTargetQuery =
-  | ExactCountItemQuery
-  | UpToCountItemQuery
-  | AllMatchingItemQuery;
+export type ItemTargetQuery = ExactCountItemQuery | UpToCountItemQuery | AllMatchingItemQuery;
 
 export type ItemTarget = ItemTargetEnum | ItemTargetQuery | CardReference;
 
@@ -753,11 +744,7 @@ export type CardTargetEnum =
   | "CHARACTER_OR_ITEM" // Character or item card
   | "BANISHED_CHARACTER"; // The character that was banished
 
-export type CardTarget =
-  | CardTargetEnum
-  | CharacterTarget
-  | LocationTarget
-  | ItemTarget;
+export type CardTarget = CardTargetEnum | CharacterTarget | LocationTarget | ItemTarget;
 
 // ============================================================================
 // Type Guards
@@ -766,26 +753,20 @@ export type CardTarget =
 /**
  * Check if a character target is a query (vs enum)
  */
-export function isCharacterTargetQuery(
-  target: CharacterTarget,
-): target is CharacterTargetQuery {
+export function isCharacterTargetQuery(target: CharacterTarget): target is CharacterTargetQuery {
   return typeof target === "object"; // && (target as any).selector !== undefined;
 }
 
 /**
  * Check if a location target is a query (vs enum)
  */
-export function isLocationTargetQuery(
-  target: LocationTarget,
-): target is LocationTargetQuery {
+export function isLocationTargetQuery(target: LocationTarget): target is LocationTargetQuery {
   return typeof target === "object"; // && (target as any).selector !== undefined;
 }
 
 /**
  * Check if an item target is a query (vs enum)
  */
-export function isItemTargetQuery(
-  target: ItemTarget,
-): target is ItemTargetQuery {
+export function isItemTargetQuery(target: ItemTarget): target is ItemTargetQuery {
   return typeof target === "object"; // && (target as any).selector !== undefined;
 }

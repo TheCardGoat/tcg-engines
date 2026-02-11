@@ -389,15 +389,15 @@ describe("Integration: Effect Parsing Pipeline", () => {
     it("atomic parsers can parse their expected effect types", () => {
       // Test that parsers actually work
       const testCases = [
-        { text: "draw 2 cards", expectedType: "draw" as const },
-        { text: "discard 1 card", expectedType: "discard" as const },
+        { expectedType: "draw" as const, text: "draw 2 cards" },
+        { expectedType: "discard" as const, text: "discard 1 card" },
         {
-          text: "deal 2 damage to chosen character",
           expectedType: "deal-damage" as const,
+          text: "deal 2 damage to chosen character",
         },
-        { text: "gain 2 lore", expectedType: "gain-lore" as const },
-        { text: "exert chosen character", expectedType: "exert" as const },
-        { text: "banish chosen character", expectedType: "banish" as const },
+        { expectedType: "gain-lore" as const, text: "gain 2 lore" },
+        { expectedType: "exert" as const, text: "exert chosen character" },
+        { expectedType: "banish" as const, text: "banish chosen character" },
       ];
 
       for (const { text, expectedType } of testCases) {
@@ -410,23 +410,23 @@ describe("Integration: Effect Parsing Pipeline", () => {
     it("composite parsers can parse their expected effect types", () => {
       const testCases = [
         {
-          text: "draw 1 card, then discard 1 card",
           expectedType: "sequence" as const,
+          text: "draw 1 card, then discard 1 card",
         },
         {
-          text: "choose one: draw 1 card; or gain 1 lore",
           expectedType: "choice" as const,
+          text: "choose one: draw 1 card; or gain 1 lore",
         },
-        { text: "you may draw 1 card", expectedType: "optional" as const },
+        { expectedType: "optional" as const, text: "you may draw 1 card" },
         {
-          text: "for each character, gain 1 lore",
           expectedType: "for-each" as const,
+          text: "for each character, gain 1 lore",
         },
         {
-          text: "if you have another character, gain 1 lore",
           expectedType: "conditional" as const,
+          text: "if you have another character, gain 1 lore",
         },
-        { text: "draw 1 card, 2 times", expectedType: "repeat" as const }, // Requires comma
+        { expectedType: "repeat" as const, text: "draw 1 card, 2 times" }, // Requires comma
       ];
 
       for (const { text, expectedType } of testCases) {
@@ -517,9 +517,9 @@ describe("Integration: Effect Parsing Pipeline", () => {
 
     it("returns null for effects with missing components", () => {
       const invalidEffects = [
-        "draw", // missing amount and target
-        "2 cards", // missing action
-        "deal damage", // missing amount and target
+        "draw", // Missing amount and target
+        "2 cards", // Missing action
+        "deal damage", // Missing amount and target
       ];
 
       for (const text of invalidEffects) {

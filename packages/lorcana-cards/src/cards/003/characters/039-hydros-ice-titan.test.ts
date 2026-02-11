@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { hydrosIceTitan } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { hydrosIceTitan } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Hydros - Ice Titan", () => {
-//   it.skip("**BLIZZARD** {E} − Exert chosen character.", () => {
-//     const testStore = new TestStore({
-//       inkwell: hydrosIceTitan.cost,
-//       play: [hydrosIceTitan],
+// Describe("Hydros - Ice Titan", () => {
+//   It.skip("**BLIZZARD** {E} − Exert chosen character.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: hydrosIceTitan.cost,
+//       Play: [hydrosIceTitan],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("play", hydrosIceTitan.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("play", hydrosIceTitan.id);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

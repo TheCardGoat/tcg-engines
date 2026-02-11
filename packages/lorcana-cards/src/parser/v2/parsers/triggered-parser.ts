@@ -38,8 +38,8 @@ export function parseTriggeredAbility(text: string): ParseResult {
   const ability = parserV2.parseAbility(text);
   if (ability) {
     return {
+      ability: { ability, name, text },
       success: true,
-      ability: { name, ability, text },
       warnings: [],
     };
   }

@@ -3,35 +3,35 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   docLeaderOfTheSevenDwarfs,
-//   eudoraAccomplishedSeamstress,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   DocLeaderOfTheSevenDwarfs,
+//   EudoraAccomplishedSeamstress,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Doc - Leader of the Seven Dwarfs", () => {
-//   it("**SHARE AND SHARE ALIKE** Whenever this character quests, you pay 1 {I} less for the next character you play this turn.", () => {
-//     const testStore = new TestStore({
-//       inkwell: eudoraAccomplishedSeamstress.cost - 1,
-//       hand: [eudoraAccomplishedSeamstress],
-//       play: [docLeaderOfTheSevenDwarfs],
+// Describe("Doc - Leader of the Seven Dwarfs", () => {
+//   It("**SHARE AND SHARE ALIKE** Whenever this character quests, you pay 1 {I} less for the next character you play this turn.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: eudoraAccomplishedSeamstress.cost - 1,
+//       Hand: [eudoraAccomplishedSeamstress],
+//       Play: [docLeaderOfTheSevenDwarfs],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       docLeaderOfTheSevenDwarfs.id,
+//       DocLeaderOfTheSevenDwarfs.id,
 //     );
-//     const reducedCostChar = testStore.getByZoneAndId(
+//     Const reducedCostChar = testStore.getByZoneAndId(
 //       "hand",
-//       eudoraAccomplishedSeamstress.id,
+//       EudoraAccomplishedSeamstress.id,
 //     );
 //
-//     cardUnderTest.quest();
-//     reducedCostChar.playFromHand();
+//     CardUnderTest.quest();
+//     ReducedCostChar.playFromHand();
 //
-//     expect(testStore.store.tableStore.getTable().inkAvailable()).toEqual(0);
-//     expect(reducedCostChar.zone).toEqual("play");
+//     Expect(testStore.store.tableStore.getTable().inkAvailable()).toEqual(0);
+//     Expect(reducedCostChar.zone).toEqual("play");
 //   });
 // });
 //

@@ -3,88 +3,88 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   fairyGodmotherHereToHelp,
-//   happyGoodNatured,
-//   sneezyVeryAllergic,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   FairyGodmotherHereToHelp,
+//   HappyGoodNatured,
+//   SneezyVeryAllergic,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Sneezy - Very Allergic", () => {
-//   describe("**AH-CHOO!** Whenever you play this character or another Seven Dwarfs character, you may give chosen character -1 {S} this turn.", () => {
-//     it("playing Sneezy", () => {
-//       const testStore = new TestStore({
-//         inkwell: sneezyVeryAllergic.cost,
-//         hand: [sneezyVeryAllergic],
-//         play: [fairyGodmotherHereToHelp],
+// Describe("Sneezy - Very Allergic", () => {
+//   Describe("**AH-CHOO!** Whenever you play this character or another Seven Dwarfs character, you may give chosen character -1 {S} this turn.", () => {
+//     It("playing Sneezy", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: sneezyVeryAllergic.cost,
+//         Hand: [sneezyVeryAllergic],
+//         Play: [fairyGodmotherHereToHelp],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "hand",
-//         sneezyVeryAllergic.id,
+//         SneezyVeryAllergic.id,
 //       );
-//       const target = testStore.getByZoneAndId(
+//       Const target = testStore.getByZoneAndId(
 //         "play",
-//         fairyGodmotherHereToHelp.id,
+//         FairyGodmotherHereToHelp.id,
 //       );
 //
-//       cardUnderTest.playFromHand();
-//       testStore.resolveOptionalAbility();
-//       testStore.resolveTopOfStack({ targets: [target] });
+//       CardUnderTest.playFromHand();
+//       TestStore.resolveOptionalAbility();
+//       TestStore.resolveTopOfStack({ targets: [target] });
 //
-//       expect(target.strength).toBe(fairyGodmotherHereToHelp.strength - 1);
+//       Expect(target.strength).toBe(fairyGodmotherHereToHelp.strength - 1);
 //     });
 //
-//     it("playing another Seven Dwarfs character", () => {
-//       const testStore = new TestStore({
-//         inkwell: happyGoodNatured.cost,
-//         hand: [happyGoodNatured],
-//         play: [fairyGodmotherHereToHelp, sneezyVeryAllergic],
+//     It("playing another Seven Dwarfs character", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: happyGoodNatured.cost,
+//         Hand: [happyGoodNatured],
+//         Play: [fairyGodmotherHereToHelp, sneezyVeryAllergic],
 //       });
 //
-//       const dwarf = testStore.getByZoneAndId("hand", happyGoodNatured.id);
-//       const target = testStore.getByZoneAndId(
+//       Const dwarf = testStore.getByZoneAndId("hand", happyGoodNatured.id);
+//       Const target = testStore.getByZoneAndId(
 //         "play",
-//         fairyGodmotherHereToHelp.id,
+//         FairyGodmotherHereToHelp.id,
 //       );
 //
-//       dwarf.playFromHand();
-//       testStore.resolveOptionalAbility();
-//       testStore.resolveTopOfStack({ targets: [target] });
+//       Dwarf.playFromHand();
+//       TestStore.resolveOptionalAbility();
+//       TestStore.resolveTopOfStack({ targets: [target] });
 //
-//       expect(target.strength).toBe(fairyGodmotherHereToHelp.strength - 1);
+//       Expect(target.strength).toBe(fairyGodmotherHereToHelp.strength - 1);
 //     });
 //
-//     it("playing another character, Not a seven dwarfs char", () => {
-//       const testStore = new TestStore({
-//         inkwell: fairyGodmotherHereToHelp.cost,
-//         hand: [fairyGodmotherHereToHelp],
-//         play: [sneezyVeryAllergic],
+//     It("playing another character, Not a seven dwarfs char", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: fairyGodmotherHereToHelp.cost,
+//         Hand: [fairyGodmotherHereToHelp],
+//         Play: [sneezyVeryAllergic],
 //       });
 //
-//       const nonDwarf = testStore.getByZoneAndId(
+//       Const nonDwarf = testStore.getByZoneAndId(
 //         "hand",
-//         fairyGodmotherHereToHelp.id,
+//         FairyGodmotherHereToHelp.id,
 //       );
 //
-//       nonDwarf.playFromHand();
-//       expect(testStore.stackLayers).toHaveLength(0);
+//       NonDwarf.playFromHand();
+//       Expect(testStore.stackLayers).toHaveLength(0);
 //     });
 //
-//     it("opponent playing a seven dwarfs char", () => {
-//       const testStore = new TestStore(
+//     It("opponent playing a seven dwarfs char", () => {
+//       Const testStore = new TestStore(
 //         {
-//           inkwell: happyGoodNatured.cost,
-//           hand: [happyGoodNatured],
+//           Inkwell: happyGoodNatured.cost,
+//           Hand: [happyGoodNatured],
 //         },
 //         { play: [sneezyVeryAllergic] },
 //       );
 //
-//       const dwarf = testStore.getByZoneAndId("hand", happyGoodNatured.id);
+//       Const dwarf = testStore.getByZoneAndId("hand", happyGoodNatured.id);
 //
-//       dwarf.playFromHand();
-//       expect(testStore.stackLayers).toHaveLength(0);
+//       Dwarf.playFromHand();
+//       Expect(testStore.stackLayers).toHaveLength(0);
 //     });
 //   });
 // });

@@ -3,47 +3,47 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   kakamoraBoardingParty,
-//   sisuInHerElement,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   KakamoraBoardingParty,
+//   SisuInHerElement,
 // } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
-// import { treasureMountainAzuriteSeaIsland } from "@lorcanito/lorcana-engine/cards/006/locations/locations";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { treasureMountainAzuriteSeaIsland } from "@lorcanito/lorcana-engine/cards/006/locations/locations";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Treasure Mountain - Azurite Sea Island", () => {
-//   it("SECRET WEAPON At the start of your turn, deal damage to chosen character or location equal to the number of characters here.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Treasure Mountain - Azurite Sea Island", () => {
+//   It("SECRET WEAPON At the start of your turn, deal damage to chosen character or location equal to the number of characters here.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: treasureMountainAzuriteSeaIsland.moveCost * 2,
-//         play: [
-//           treasureMountainAzuriteSeaIsland,
-//           sisuInHerElement,
-//           kakamoraBoardingParty,
+//         Inkwell: treasureMountainAzuriteSeaIsland.moveCost * 2,
+//         Play: [
+//           TreasureMountainAzuriteSeaIsland,
+//           SisuInHerElement,
+//           KakamoraBoardingParty,
 //         ],
-//         deck: 2,
+//         Deck: 2,
 //       },
 //       {
-//         deck: 2,
+//         Deck: 2,
 //       },
 //     );
 //
-//     for (const card of [sisuInHerElement, kakamoraBoardingParty]) {
-//       await testEngine.moveToLocation({
-//         location: treasureMountainAzuriteSeaIsland,
-//         character: card,
+//     For (const card of [sisuInHerElement, kakamoraBoardingParty]) {
+//       Await testEngine.moveToLocation({
+//         Location: treasureMountainAzuriteSeaIsland,
+//         Character: card,
 //       });
 //     }
 //
-//     await testEngine.passTurn();
-//     await testEngine.passTurn();
+//     Await testEngine.passTurn();
+//     Await testEngine.passTurn();
 //
-//     await testEngine.resolveTopOfStack({
-//       targets: [treasureMountainAzuriteSeaIsland],
+//     Await testEngine.resolveTopOfStack({
+//       Targets: [treasureMountainAzuriteSeaIsland],
 //     });
 //
-//     expect(
-//       testEngine.getCardModel(treasureMountainAzuriteSeaIsland).damage,
+//     Expect(
+//       TestEngine.getCardModel(treasureMountainAzuriteSeaIsland).damage,
 //     ).toEqual(2);
 //   });
 // });

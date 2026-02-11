@@ -17,18 +17,16 @@ describe("Effect: Kill", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "spell",
           effect: expect.objectContaining({
             type: "kill",
           }),
+          type: "spell",
         }),
       );
     });
 
     it.skip("should parse 'Kill a unit at a battlefield with 2 :rb_might: or less.'", () => {
-      const result = parseAbilities(
-        "Kill a unit at a battlefield with 2 :rb_might: or less.",
-      );
+      const result = parseAbilities("Kill a unit at a battlefield with 2 :rb_might: or less.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
@@ -43,10 +41,10 @@ describe("Effect: Kill", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "spell",
           effect: expect.objectContaining({
             type: "kill",
           }),
+          type: "spell",
         }),
       );
     });

@@ -1,34 +1,8 @@
 import type { LocationCard } from "@tcg/lorcana-types";
 
 export const motunuiIslandParadise: LocationCard = {
-  id: "1ke",
-  cardType: "location",
-  name: "Motunui",
-  version: "Island Paradise",
-  fullName: "Motunui - Island Paradise",
-  inkType: ["sapphire"],
-  franchise: "Moana",
-  set: "009",
-  text: "REINCARNATION Whenever a character is banished while here, you may put that card into your inkwell facedown and exerted.",
-  cost: 2,
-  moveCost: 1,
-  lore: 0,
-  cardNumber: 170,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "ca779946f1d6ce99fca6248ffe6424994ad3ce8c",
-  },
   abilities: [
     {
-      id: "1ke-1",
-      type: "triggered",
-      name: "REINCARNATION",
-      trigger: {
-        event: "banish",
-        timing: "whenever",
-        on: "ANY_CHARACTER",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -40,7 +14,33 @@ export const motunuiIslandParadise: LocationCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "1ke-1",
+      name: "REINCARNATION",
       text: "REINCARNATION Whenever a character is banished while here, you may put that card into your inkwell facedown and exerted.",
+      trigger: {
+        event: "banish",
+        timing: "whenever",
+        on: "ANY_CHARACTER",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 170,
+  cardType: "location",
+  cost: 2,
+  externalIds: {
+    ravensburger: "ca779946f1d6ce99fca6248ffe6424994ad3ce8c",
+  },
+  franchise: "Moana",
+  fullName: "Motunui - Island Paradise",
+  id: "1ke",
+  inkType: ["sapphire"],
+  inkable: true,
+  lore: 0,
+  missingTests: true,
+  moveCost: 1,
+  name: "Motunui",
+  set: "009",
+  text: "REINCARNATION Whenever a character is banished while here, you may put that card into your inkwell facedown and exerted.",
+  version: "Island Paradise",
 };

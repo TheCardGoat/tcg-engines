@@ -5,9 +5,9 @@ import { flounderVoiceOfReason } from "./145-flounder-voice-of-reason";
 describe("Flounder - Voice of Reason", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [flounderVoiceOfReason] });
-  //   expect(testEngine.getCardModel(flounderVoiceOfReason).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [flounderVoiceOfReason] });
+  //   Expect(testEngine.getCardModel(flounderVoiceOfReason).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });

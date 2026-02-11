@@ -1,51 +1,51 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { wheneverThisCharacterQuests } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-// import { youGainLore } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { wheneverThisCharacterQuests } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// Import { youGainLore } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const geppettoSkilledCraftsman: LorcanitoCharacterCard = {
-//   id: "sp2",
-//   name: "Geppetto",
-//   title: "Skilled Craftsman",
-//   characteristics: ["storyborn", "ally", "inventor"],
-//   text: "SEEKING INSPIRATION Whenever this character quests, you may choose and discard any number of item cards to gain 1 lore for each item card discarded this way.",
-//   type: "character",
-//   abilities: [
-//     wheneverThisCharacterQuests({
-//       name: "SEEKING INSPIRATION",
-//       text: "Whenever this character quests, you may choose and discard any number of item cards to gain 1 lore for each item card discarded this way.",
-//       optional: true,
-//       effects: [
+// Export const geppettoSkilledCraftsman: LorcanitoCharacterCard = {
+//   Id: "sp2",
+//   Name: "Geppetto",
+//   Title: "Skilled Craftsman",
+//   Characteristics: ["storyborn", "ally", "inventor"],
+//   Text: "SEEKING INSPIRATION Whenever this character quests, you may choose and discard any number of item cards to gain 1 lore for each item card discarded this way.",
+//   Type: "character",
+//   Abilities: [
+//     WheneverThisCharacterQuests({
+//       Name: "SEEKING INSPIRATION",
+//       Text: "Whenever this character quests, you may choose and discard any number of item cards to gain 1 lore for each item card discarded this way.",
+//       Optional: true,
+//       Effects: [
 //         {
-//           type: "discard",
-//           amount: 1, // PLACEHOLDER: Amount lives on target
-//           target: {
-//             type: "card",
-//             value: 99,
-//             upTo: true,
-//             filters: [
+//           Type: "discard",
+//           Amount: 1, // PLACEHOLDER: Amount lives on target
+//           Target: {
+//             Type: "card",
+//             Value: 99,
+//             UpTo: true,
+//             Filters: [
 //               { filter: "type", value: "item" },
 //               { filter: "zone", value: "hand" },
 //               { filter: "owner", value: "self" },
 //             ],
 //           },
-//           forEach: [youGainLore(1)],
+//           ForEach: [youGainLore(1)],
 //         },
 //       ],
 //     }),
 //   ],
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 5,
-//   strength: 4,
-//   willpower: 4,
-//   illustrator: "Malia Ewart",
-//   number: 174,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 633102,
+//   Inkwell: true,
+//   Colors: ["sapphire"],
+//   Cost: 5,
+//   Strength: 4,
+//   Willpower: 4,
+//   Illustrator: "Malia Ewart",
+//   Number: 174,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 633102,
 //   },
-//   rarity: "rare",
-//   lore: 2,
+//   Rarity: "rare",
+//   Lore: 2,
 // };
 //

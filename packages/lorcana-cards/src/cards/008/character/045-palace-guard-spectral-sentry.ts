@@ -1,27 +1,27 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { vanishAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { vanishAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
 //
-// export const palaceGuardSpectralSentry: LorcanitoCharacterCard = {
-//   id: "wmq",
-//   name: "Palace Guard",
-//   title: "Spectral Sentry",
-//   characteristics: ["dreamborn", "ally", "illusion"],
-//   text: "Vanish",
-//   type: "character",
-//   abilities: [vanishAbility],
-//   inkwell: true,
-//   colors: ["amethyst"],
-//   cost: 1,
-//   strength: 1,
-//   willpower: 4,
-//   illustrator: "Eva Widermann",
-//   number: 45,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631336,
+// Export const palaceGuardSpectralSentry: LorcanitoCharacterCard = {
+//   Id: "wmq",
+//   Name: "Palace Guard",
+//   Title: "Spectral Sentry",
+//   Characteristics: ["dreamborn", "ally", "illusion"],
+//   Text: "Vanish",
+//   Type: "character",
+//   Abilities: [vanishAbility],
+//   Inkwell: true,
+//   Colors: ["amethyst"],
+//   Cost: 1,
+//   Strength: 1,
+//   Willpower: 4,
+//   Illustrator: "Eva Widermann",
+//   Number: 45,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631336,
 //   },
-//   rarity: "super_rare",
-//   lore: 1,
+//   Rarity: "super_rare",
+//   Lore: 1,
 // };
 //

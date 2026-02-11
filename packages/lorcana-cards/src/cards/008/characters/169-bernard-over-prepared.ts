@@ -1,34 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const bernardOverprepared: CharacterCard = {
-  id: "wn2",
-  cardType: "character",
-  name: "Bernard",
-  version: "Over-Prepared",
-  fullName: "Bernard - Over-Prepared",
-  inkType: ["sapphire", "steel"],
-  franchise: "Rescuers",
-  set: "008",
-  text: "GO DOWN THERE AND INVESTIGATE When you play this character, if you have an Ally character in play, you may draw a card.",
-  cost: 2,
-  strength: 2,
-  willpower: 2,
-  lore: 1,
-  cardNumber: 169,
-  inkable: false,
-  externalIds: {
-    ravensburger: "75a38e9bf91e99d60dc0c4257bda349a11ad414d",
-  },
   abilities: [
     {
-      id: "wn2-1",
-      type: "triggered",
-      name: "GO DOWN THERE AND INVESTIGATE",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "conditional",
         condition: {
@@ -41,8 +15,34 @@ export const bernardOverprepared: CharacterCard = {
           target: "CONTROLLER",
         },
       },
+      id: "wn2-1",
+      name: "GO DOWN THERE AND INVESTIGATE",
       text: "GO DOWN THERE AND INVESTIGATE When you play this character, if you have an Ally character in play, you may draw a card.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 169,
+  cardType: "character",
   classifications: ["Storyborn", "Hero"],
+  cost: 2,
+  externalIds: {
+    ravensburger: "75a38e9bf91e99d60dc0c4257bda349a11ad414d",
+  },
+  franchise: "Rescuers",
+  fullName: "Bernard - Over-Prepared",
+  id: "wn2",
+  inkType: ["sapphire", "steel"],
+  inkable: false,
+  lore: 1,
+  name: "Bernard",
+  set: "008",
+  strength: 2,
+  text: "GO DOWN THERE AND INVESTIGATE When you play this character, if you have an Ally character in play, you may draw a card.",
+  version: "Over-Prepared",
+  willpower: 2,
 };

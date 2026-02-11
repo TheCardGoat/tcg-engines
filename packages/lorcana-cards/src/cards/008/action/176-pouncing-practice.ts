@@ -1,51 +1,51 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import {
-//   chosenCharacter,
-//   chosenCharacterOfYours,
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+// Import {
+//   ChosenCharacter,
+//   ChosenCharacterOfYours,
 // } from "@lorcanito/lorcana-engine/abilities/targets";
 //
-// export const pouncingPractice: LorcanitoActionCard = {
-//   id: "bxz",
-//   name: "Pouncing Practice",
-//   characteristics: ["action"],
-//   text: "Chosen character gets -2 {S} this turn. Chosen character of yours gains Evasive this turn.",
-//   type: "action",
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 2,
-//   illustrator: "Moniek Schilder",
-//   number: 176,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631469,
+// Export const pouncingPractice: LorcanitoActionCard = {
+//   Id: "bxz",
+//   Name: "Pouncing Practice",
+//   Characteristics: ["action"],
+//   Text: "Chosen character gets -2 {S} this turn. Chosen character of yours gains Evasive this turn.",
+//   Type: "action",
+//   Inkwell: true,
+//   Colors: ["sapphire"],
+//   Cost: 2,
+//   Illustrator: "Moniek Schilder",
+//   Number: 176,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631469,
 //   },
-//   rarity: "uncommon",
-//   abilities: [
+//   Rarity: "uncommon",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       text: "Chosen character of yours gains Evasive this turn.",
-//       effects: [
+//       Type: "resolution",
+//       Text: "Chosen character of yours gains Evasive this turn.",
+//       Effects: [
 //         {
-//           type: "ability",
-//           ability: "evasive",
-//           duration: "turn",
-//           modifier: "add",
-//           target: chosenCharacterOfYours,
+//           Type: "ability",
+//           Ability: "evasive",
+//           Duration: "turn",
+//           Modifier: "add",
+//           Target: chosenCharacterOfYours,
 //         },
 //       ],
 //     },
 //     {
-//       type: "resolution",
-//       text: "Chosen character gets -2 {S} this turn.",
-//       effects: [
+//       Type: "resolution",
+//       Text: "Chosen character gets -2 {S} this turn.",
+//       Effects: [
 //         {
-//           type: "attribute",
-//           attribute: "strength",
-//           amount: 2,
-//           modifier: "subtract",
-//           duration: "turn",
-//           target: chosenCharacter,
+//           Type: "attribute",
+//           Attribute: "strength",
+//           Amount: 2,
+//           Modifier: "subtract",
+//           Duration: "turn",
+//           Target: chosenCharacter,
 //         },
 //       ],
 //     },

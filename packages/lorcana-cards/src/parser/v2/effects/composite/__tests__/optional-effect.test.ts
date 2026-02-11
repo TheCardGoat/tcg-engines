@@ -14,7 +14,7 @@ describe("optionalEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("optional");
-      const effect = (result as Effect & { effect: Effect }).effect;
+      const {effect} = (result as Effect & { effect: Effect });
       expect(effect).toBeDefined();
       expect(effect.type).toBe("draw");
     });
@@ -24,7 +24,7 @@ describe("optionalEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("optional");
-      const effect = (result as Effect & { effect: Effect }).effect;
+      const {effect} = (result as Effect & { effect: Effect });
       expect(effect.type).toBe("discard");
     });
 
@@ -33,7 +33,7 @@ describe("optionalEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("optional");
-      const effect = (result as Effect & { effect: Effect }).effect;
+      const {effect} = (result as Effect & { effect: Effect });
       expect(effect.type).toBe("gain-lore");
     });
 
@@ -44,7 +44,7 @@ describe("optionalEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("optional");
-      const effect = (result as Effect & { effect: Effect }).effect;
+      const {effect} = (result as Effect & { effect: Effect });
       expect(effect.type).toBe("deal-damage");
     });
 
@@ -55,7 +55,7 @@ describe("optionalEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("optional");
-      const effect = (result as Effect & { effect: Effect }).effect;
+      const {effect} = (result as Effect & { effect: Effect });
       expect(effect.type).toBe("exert");
     });
   });
@@ -66,7 +66,7 @@ describe("optionalEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("optional");
-      const effect = (result as Effect & { effect: Effect }).effect;
+      const {effect} = (result as Effect & { effect: Effect });
       expect(effect.type).toBe("draw");
     });
 
@@ -131,7 +131,7 @@ describe("optionalEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("optional");
-      const effect = (result as Effect & { effect: Effect }).effect;
+      const {effect} = (result as Effect & { effect: Effect });
       expect(effect.type).toBe("draw");
     });
 
@@ -158,7 +158,7 @@ describe("optionalEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("optional");
-      const effect = (result as Effect & { effect: Effect }).effect;
+      const {effect} = (result as Effect & { effect: Effect });
       expect(effect.type).toBe("banish");
     });
 
@@ -169,14 +169,14 @@ describe("optionalEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("optional");
-      const effect = (result as Effect & { effect: Effect }).effect;
+      const {effect} = (result as Effect & { effect: Effect });
       expect(effect.type).toBe("deal-damage");
     });
   });
 
   describe("CST parsing", () => {
     it("returns null for CST node input (not yet implemented)", () => {
-      const mockCstNode = { name: "test", children: {} } as any;
+      const mockCstNode = { children: {}, name: "test" } as any;
       const result = optionalEffectParser.parse(mockCstNode);
 
       expect(result).toBeNull();

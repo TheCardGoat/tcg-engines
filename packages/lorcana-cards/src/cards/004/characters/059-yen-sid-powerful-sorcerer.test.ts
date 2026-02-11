@@ -3,42 +3,42 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   cinderellaMelodyWeaver,
-//   magicBroomAerialCleaner,
-//   yenSidPowerfulSorcerer,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   CinderellaMelodyWeaver,
+//   MagicBroomAerialCleaner,
+//   YenSidPowerfulSorcerer,
 // } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Yen Sid - Powerful Sorcerer", () => {
-//   it("**TIMELY INTERVENTION** When you play this character, if you have a character named Magic Broom in play, you may draw a card.", () => {
-//     const testStore = new TestStore({
-//       inkwell: yenSidPowerfulSorcerer.cost,
-//       hand: [yenSidPowerfulSorcerer],
-//       play: [magicBroomAerialCleaner],
-//       deck: [cinderellaMelodyWeaver],
+// Describe("Yen Sid - Powerful Sorcerer", () => {
+//   It("**TIMELY INTERVENTION** When you play this character, if you have a character named Magic Broom in play, you may draw a card.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: yenSidPowerfulSorcerer.cost,
+//       Hand: [yenSidPowerfulSorcerer],
+//       Play: [magicBroomAerialCleaner],
+//       Deck: [cinderellaMelodyWeaver],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(yenSidPowerfulSorcerer);
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
+//     Const cardUnderTest = testStore.getCard(yenSidPowerfulSorcerer);
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
 //
-//     expect(testStore.getZonesCardCount().hand).toBe(1);
+//     Expect(testStore.getZonesCardCount().hand).toBe(1);
 //   });
 //
-//   it("**ARCANE STUDY** While you have 2 or more Broom characters in play, this character gets +2 {L}.", () => {
-//     const testStore = new TestStore({
-//       inkwell: yenSidPowerfulSorcerer.cost,
-//       play: [
-//         yenSidPowerfulSorcerer,
-//         magicBroomAerialCleaner,
-//         magicBroomAerialCleaner,
+//   It("**ARCANE STUDY** While you have 2 or more Broom characters in play, this character gets +2 {L}.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: yenSidPowerfulSorcerer.cost,
+//       Play: [
+//         YenSidPowerfulSorcerer,
+//         MagicBroomAerialCleaner,
+//         MagicBroomAerialCleaner,
 //       ],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(yenSidPowerfulSorcerer);
-//     expect(cardUnderTest.lore).toBe(yenSidPowerfulSorcerer.lore + 2);
+//     Const cardUnderTest = testStore.getCard(yenSidPowerfulSorcerer);
+//     Expect(cardUnderTest.lore).toBe(yenSidPowerfulSorcerer.lore + 2);
 //   });
 // });
 //

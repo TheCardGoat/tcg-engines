@@ -3,74 +3,74 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   madamMimPurpleDragon,
-//   theQueenRegalMonarch,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   MadamMimPurpleDragon,
+//   TheQueenRegalMonarch,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { fangCrossbow } from "@lorcanito/lorcana-engine/cards/002/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { fangCrossbow } from "@lorcanito/lorcana-engine/cards/002/items/items";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Fang Crossbow", () => {
-//   it("**CAREFUL AIM** {E}, 2 {I} – Chosen character gets -2 {S} this turn.", () => {
-//     const testStore = new TestStore(
+// Describe("Fang Crossbow", () => {
+//   It("**CAREFUL AIM** {E}, 2 {I} – Chosen character gets -2 {S} this turn.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: 2,
-//         play: [fangCrossbow, theQueenRegalMonarch],
+//         Inkwell: 2,
+//         Play: [fangCrossbow, theQueenRegalMonarch],
 //       },
 //       { deck: 1 },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId("play", fangCrossbow.id);
-//     const target = testStore.getByZoneAndId("play", theQueenRegalMonarch.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("play", fangCrossbow.id);
+//     Const target = testStore.getByZoneAndId("play", theQueenRegalMonarch.id);
 //
-//     expect(target.strength).toEqual(theQueenRegalMonarch.strength);
+//     Expect(target.strength).toEqual(theQueenRegalMonarch.strength);
 //
-//     cardUnderTest.activate("Careful Aim");
-//     testStore.resolveTopOfStack({ targets: [target] });
+//     CardUnderTest.activate("Careful Aim");
+//     TestStore.resolveTopOfStack({ targets: [target] });
 //
-//     expect(cardUnderTest.ready).toEqual(false);
-//     expect(target.strength).toEqual(theQueenRegalMonarch.strength - 2);
+//     Expect(cardUnderTest.ready).toEqual(false);
+//     Expect(target.strength).toEqual(theQueenRegalMonarch.strength - 2);
 //
-//     testStore.passTurn();
+//     TestStore.passTurn();
 //
-//     expect(target.strength).toEqual(theQueenRegalMonarch.strength);
+//     Expect(target.strength).toEqual(theQueenRegalMonarch.strength);
 //   });
 //
-//   describe("**STAY BACK!** {E}, Banish this item – Banish chosen Dragon character.", () => {
-//     it("should banish a dragon", () => {
-//       const testStore = new TestStore({
-//         inkwell: fangCrossbow.cost,
-//         play: [fangCrossbow, madamMimPurpleDragon],
+//   Describe("**STAY BACK!** {E}, Banish this item – Banish chosen Dragon character.", () => {
+//     It("should banish a dragon", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: fangCrossbow.cost,
+//         Play: [fangCrossbow, madamMimPurpleDragon],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId("play", fangCrossbow.id);
-//       const target = testStore.getByZoneAndId("play", madamMimPurpleDragon.id);
+//       Const cardUnderTest = testStore.getByZoneAndId("play", fangCrossbow.id);
+//       Const target = testStore.getByZoneAndId("play", madamMimPurpleDragon.id);
 //
-//       cardUnderTest.activate("Stay Back!");
-//       testStore.resolveTopOfStack({ targets: [target] });
+//       CardUnderTest.activate("Stay Back!");
+//       TestStore.resolveTopOfStack({ targets: [target] });
 //
-//       expect(cardUnderTest.zone).toEqual("discard");
-//       expect(target.zone).toEqual("discard");
+//       Expect(cardUnderTest.zone).toEqual("discard");
+//       Expect(target.zone).toEqual("discard");
 //     });
 //
-//     it("should NOT banish a NON-dragon", () => {
-//       const testStore = new TestStore({
-//         inkwell: fangCrossbow.cost,
-//         play: [fangCrossbow, theQueenRegalMonarch],
+//     It("should NOT banish a NON-dragon", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: fangCrossbow.cost,
+//         Play: [fangCrossbow, theQueenRegalMonarch],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId("play", fangCrossbow.id);
-//       const target = testStore.getByZoneAndId("play", theQueenRegalMonarch.id);
+//       Const cardUnderTest = testStore.getByZoneAndId("play", fangCrossbow.id);
+//       Const target = testStore.getByZoneAndId("play", theQueenRegalMonarch.id);
 //
-//       cardUnderTest.activate("Stay Back!");
-//       testStore.resolveTopOfStack({ targets: [target] }, true);
+//       CardUnderTest.activate("Stay Back!");
+//       TestStore.resolveTopOfStack({ targets: [target] }, true);
 //
-//       expect(cardUnderTest.zone).toEqual("discard");
-//       expect(target.zone).toEqual("play");
-//       expect(testStore.stackLayers).toHaveLength(0);
+//       Expect(cardUnderTest.zone).toEqual("discard");
+//       Expect(target.zone).toEqual("play");
+//       Expect(testStore.stackLayers).toHaveLength(0);
 //
-//       testStore.resolveTopOfStack({ skip: true });
+//       TestStore.resolveTopOfStack({ skip: true });
 //     });
 //   });
 // });

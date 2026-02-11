@@ -1,20 +1,20 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { EffectStaticAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { EffectStaticAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// const objectionableStateAbility: EffectStaticAbility = {
-//   name: "OBJECTIONABLE STATE",
-//   text: "Damaged characters can't challenge your characters.",
-//   type: "static",
-//   ability: "effects",
-//   effects: [
+// Const objectionableStateAbility: EffectStaticAbility = {
+//   Name: "OBJECTIONABLE STATE",
+//   Text: "Damaged characters can't challenge your characters.",
+//   Type: "static",
+//   Ability: "effects",
+//   Effects: [
 //     {
-//       type: "restriction",
-//       restriction: "challenge-characters",
-//       target: {
-//         type: "card",
-//         value: "all",
-//         filters: [
+//       Type: "restriction",
+//       Restriction: "challenge-characters",
+//       Target: {
+//         Type: "card",
+//         Value: "all",
+//         Filters: [
 //           { filter: "type", value: "character" },
 //           { filter: "zone", value: "play" },
 //           { filter: "owner", value: "opponent" },
@@ -25,26 +25,26 @@
 //   ],
 // };
 //
-// export const kingOfHeartsPickyRuler: LorcanitoCharacterCard = {
-//   id: "qim",
-//   name: "King Of Hearts",
-//   title: "Picky Ruler",
-//   characteristics: ["storyborn", "ally", "king"],
-//   text: "OBJECTIONABLE STATE Damaged characters can't challenge your characters.",
-//   type: "character",
-//   abilities: [objectionableStateAbility],
-//   inkwell: false,
-//   colors: ["emerald"],
-//   cost: 4,
-//   strength: 3,
-//   willpower: 3,
-//   illustrator: "Isiah Mesq",
-//   number: 111,
-//   set: "007",
-//   externalIds: {
-//     tcgPlayer: 618705,
+// Export const kingOfHeartsPickyRuler: LorcanitoCharacterCard = {
+//   Id: "qim",
+//   Name: "King Of Hearts",
+//   Title: "Picky Ruler",
+//   Characteristics: ["storyborn", "ally", "king"],
+//   Text: "OBJECTIONABLE STATE Damaged characters can't challenge your characters.",
+//   Type: "character",
+//   Abilities: [objectionableStateAbility],
+//   Inkwell: false,
+//   Colors: ["emerald"],
+//   Cost: 4,
+//   Strength: 3,
+//   Willpower: 3,
+//   Illustrator: "Isiah Mesq",
+//   Number: 111,
+//   Set: "007",
+//   ExternalIds: {
+//     TcgPlayer: 618705,
 //   },
-//   rarity: "rare",
-//   lore: 2,
+//   Rarity: "rare",
+//   Lore: 2,
 // };
 //

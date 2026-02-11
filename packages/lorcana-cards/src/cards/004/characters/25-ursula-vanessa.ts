@@ -1,29 +1,29 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { singerAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { singerAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
 //
-// export const ursulaVanessa: LorcanitoCharacterCard = {
-//   id: "se6",
-//   reprints: ["iye"],
-//   name: "Ursula",
-//   title: "Vanessa",
-//   characteristics: ["sorcerer", "storyborn", "villain"],
-//   text: "**Singer** 4 _(This character counts as cost 4 to sing songs.)_",
-//   type: "character",
-//   abilities: [singerAbility(4)],
-//   flavour: "This magic will certainly do the trick.",
-//   inkwell: true,
-//   colors: ["amber"],
-//   cost: 2,
-//   strength: 1,
-//   willpower: 4,
-//   lore: 1,
-//   illustrator: "Angela Simpson",
-//   number: 25,
-//   set: "URR",
-//   externalIds: {
-//     tcgPlayer: 549519,
+// Export const ursulaVanessa: LorcanitoCharacterCard = {
+//   Id: "se6",
+//   Reprints: ["iye"],
+//   Name: "Ursula",
+//   Title: "Vanessa",
+//   Characteristics: ["sorcerer", "storyborn", "villain"],
+//   Text: "**Singer** 4 _(This character counts as cost 4 to sing songs.)_",
+//   Type: "character",
+//   Abilities: [singerAbility(4)],
+//   Flavour: "This magic will certainly do the trick.",
+//   Inkwell: true,
+//   Colors: ["amber"],
+//   Cost: 2,
+//   Strength: 1,
+//   Willpower: 4,
+//   Lore: 1,
+//   Illustrator: "Angela Simpson",
+//   Number: 25,
+//   Set: "URR",
+//   ExternalIds: {
+//     TcgPlayer: 549519,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

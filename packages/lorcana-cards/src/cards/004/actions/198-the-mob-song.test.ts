@@ -3,48 +3,48 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   mickeyBraveLittleTailor,
-//   simbaProtectiveCub,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   MickeyBraveLittleTailor,
+//   SimbaProtectiveCub,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { theMobSong } from "@lorcanito/lorcana-engine/cards/004/actions/actions";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { theMobSong } from "@lorcanito/lorcana-engine/cards/004/actions/actions";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("The Mob Song", () => {
-//   it("**Sing Together** 10 _(Any number of your of your teammates' characters with total cost 10 or more may {E} to sing this song for free.)_Deal 3 damage to up to 3 chosen characters and/or locations.", () => {
-//     const testStore = new TestStore(
+// Describe("The Mob Song", () => {
+//   It("**Sing Together** 10 _(Any number of your of your teammates' characters with total cost 10 or more may {E} to sing this song for free.)_Deal 3 damage to up to 3 chosen characters and/or locations.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: theMobSong.cost,
-//         hand: [theMobSong],
+//         Inkwell: theMobSong.cost,
+//         Hand: [theMobSong],
 //       },
 //       {
-//         play: [mickeyBraveLittleTailor, simbaProtectiveCub],
+//         Play: [mickeyBraveLittleTailor, simbaProtectiveCub],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", theMobSong.id);
-//     const target1 = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", theMobSong.id);
+//     Const target1 = testStore.getByZoneAndId(
 //       "play",
-//       mickeyBraveLittleTailor.id,
+//       MickeyBraveLittleTailor.id,
 //       "player_two",
 //     );
-//     const target2 = testStore.getByZoneAndId(
+//     Const target2 = testStore.getByZoneAndId(
 //       "play",
-//       simbaProtectiveCub.id,
+//       SimbaProtectiveCub.id,
 //       "player_two",
 //     );
 //
-//     expect(target1.damage).toBe(0);
-//     expect(target2.damage).toBe(0);
+//     Expect(target1.damage).toBe(0);
+//     Expect(target2.damage).toBe(0);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveTopOfStack({ targets: [target1, target2] });
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveTopOfStack({ targets: [target1, target2] });
 //
 //     // Test that 3 damage was dealt to both targets
-//     expect(target1.damage).toBe(3);
-//     expect(target2.damage).toBe(3);
-//     expect(testStore.getZonesCardCount().discard).toBe(1); // The Mob Song goes to discard
+//     Expect(target1.damage).toBe(3);
+//     Expect(target2.damage).toBe(3);
+//     Expect(testStore.getZonesCardCount().discard).toBe(1); // The Mob Song goes to discard
 //   });
 // });
 //

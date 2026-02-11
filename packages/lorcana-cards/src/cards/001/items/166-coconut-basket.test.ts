@@ -5,9 +5,9 @@ import { coconutBasketundefined } from "./166-coconut-basket";
 describe("Coconut Basket - undefined", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [coconutbasket] });
-  //   expect(testEngine.getCardModel(coconutbasket).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [coconutbasket] });
+  //   Expect(testEngine.getCardModel(coconutbasket).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,61 +17,61 @@ describe("Coconut Basket - undefined", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   mauiHeroToAll,
-//   mickeyBraveLittleTailor,
-//   peterPanNeverLanding,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   MauiHeroToAll,
+//   MickeyBraveLittleTailor,
+//   PeterPanNeverLanding,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { coconutbasket } from "@lorcanito/lorcana-engine/cards/001/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { coconutbasket } from "@lorcanito/lorcana-engine/cards/001/items/items";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Coconut Basket", () => {
-//   it("Consider the Coconut - Whenever you play a character, you may remove up to 2 damage from chosen character.", () => {
-//     const testStore = new TestStore({
-//       inkwell: peterPanNeverLanding.cost + mickeyBraveLittleTailor.cost,
-//       hand: [peterPanNeverLanding, mickeyBraveLittleTailor],
-//       play: [coconutbasket, mauiHeroToAll],
+// Describe("Coconut Basket", () => {
+//   It("Consider the Coconut - Whenever you play a character, you may remove up to 2 damage from chosen character.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: peterPanNeverLanding.cost + mickeyBraveLittleTailor.cost,
+//       Hand: [peterPanNeverLanding, mickeyBraveLittleTailor],
+//       Play: [coconutbasket, mauiHeroToAll],
 //     });
 //
-//     const mauiu = testStore.getByZoneAndId("play", mauiHeroToAll.id);
-//     const peter = testStore.getByZoneAndId("hand", peterPanNeverLanding.id);
-//     const mickey = testStore.getByZoneAndId("hand", mickeyBraveLittleTailor.id);
+//     Const mauiu = testStore.getByZoneAndId("play", mauiHeroToAll.id);
+//     Const peter = testStore.getByZoneAndId("hand", peterPanNeverLanding.id);
+//     Const mickey = testStore.getByZoneAndId("hand", mickeyBraveLittleTailor.id);
 //
-//     mauiu.updateCardMeta({ damage: 4 });
+//     Mauiu.updateCardMeta({ damage: 4 });
 //
-//     peter.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({ targetId: mauiu.instanceId });
+//     Peter.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({ targetId: mauiu.instanceId });
 //
-//     expect(peter.zone).toEqual("play");
-//     expect(mauiu.meta.damage).toEqual(2);
+//     Expect(peter.zone).toEqual("play");
+//     Expect(mauiu.meta.damage).toEqual(2);
 //
-//     mickey.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({ targetId: mauiu.instanceId });
+//     Mickey.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({ targetId: mauiu.instanceId });
 //
-//     expect(mauiu.meta.damage).toEqual(0);
-//     expect(peter.zone).toEqual("play");
-//     expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
+//     Expect(mauiu.meta.damage).toEqual(0);
+//     Expect(peter.zone).toEqual("play");
+//     Expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
 //   });
 //
-//   it("it doesn't trigger when an opponent plays a character", () => {
-//     const testStore = new TestStore(
+//   It("it doesn't trigger when an opponent plays a character", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: peterPanNeverLanding.cost,
-//         hand: [peterPanNeverLanding],
+//         Inkwell: peterPanNeverLanding.cost,
+//         Hand: [peterPanNeverLanding],
 //       },
 //       {
-//         play: [coconutbasket, mauiHeroToAll],
+//         Play: [coconutbasket, mauiHeroToAll],
 //       },
 //     );
 //
-//     const peter = testStore.getByZoneAndId("hand", peterPanNeverLanding.id);
+//     Const peter = testStore.getByZoneAndId("hand", peterPanNeverLanding.id);
 //
-//     peter.playFromHand();
+//     Peter.playFromHand();
 //
-//     expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
+//     Expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
 //   });
 // });
 //

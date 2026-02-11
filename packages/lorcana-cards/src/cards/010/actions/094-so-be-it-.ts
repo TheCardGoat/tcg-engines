@@ -1,43 +1,43 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import {
-//   chosenItem,
-//   eachOfYourCharacters,
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+// Import {
+//   ChosenItem,
+//   EachOfYourCharacters,
 // } from "@lorcanito/lorcana-engine/abilities/targets";
 //
-// export const soBeIt: LorcanitoActionCard = {
-//   id: "o2o",
-//   name: "So Be It!",
-//   characteristics: ["action"],
-//   text: "Each of your characters gets +1 {S} this turn. You may banish chosen item.",
-//   type: "action",
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 2,
-//   illustrator: "Valentina Graziuso",
-//   number: 94,
-//   set: "010",
-//   externalIds: {
-//     tcgPlayer: 658462,
+// Export const soBeIt: LorcanitoActionCard = {
+//   Id: "o2o",
+//   Name: "So Be It!",
+//   Characteristics: ["action"],
+//   Text: "Each of your characters gets +1 {S} this turn. You may banish chosen item.",
+//   Type: "action",
+//   Inkwell: true,
+//   Colors: ["emerald"],
+//   Cost: 2,
+//   Illustrator: "Valentina Graziuso",
+//   Number: 94,
+//   Set: "010",
+//   ExternalIds: {
+//     TcgPlayer: 658462,
 //   },
-//   rarity: "common",
-//   abilities: [
+//   Rarity: "common",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       text: "Each of your characters gets +1 this turn. You may banish chosen item.",
-//       resolveEffectsIndividually: true,
-//       effects: [
+//       Type: "resolution",
+//       Text: "Each of your characters gets +1 this turn. You may banish chosen item.",
+//       ResolveEffectsIndividually: true,
+//       Effects: [
 //         {
-//           type: "attribute",
-//           attribute: "strength",
-//           modifier: "add",
-//           amount: 1,
-//           duration: "turn",
-//           target: eachOfYourCharacters,
+//           Type: "attribute",
+//           Attribute: "strength",
+//           Modifier: "add",
+//           Amount: 1,
+//           Duration: "turn",
+//           Target: eachOfYourCharacters,
 //         },
 //         {
-//           type: "banish",
-//           target: chosenItem,
+//           Type: "banish",
+//           Target: chosenItem,
 //         },
 //       ],
 //     },

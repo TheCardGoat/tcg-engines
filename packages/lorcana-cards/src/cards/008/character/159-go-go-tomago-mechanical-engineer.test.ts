@@ -3,65 +3,65 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   allCardsById,
-//   type LorcanitoCharacterCard,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   AllCardsById,
+//   Type LorcanitoCharacterCard,
 // } from "@lorcanito/lorcana-engine";
-// import { shiftAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import {
-//   goGoTomagoMechanicalEngineer,
-//   littleSisterResponsibleRabbit,
+// Import { shiftAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import {
+//   GoGoTomagoMechanicalEngineer,
+//   LittleSisterResponsibleRabbit,
 // } from "@lorcanito/lorcana-engine/cards/008";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// const testCard: LorcanitoCharacterCard = {
-//   id: "j8q1276827136",
-//   name: "Go Go Tomago",
-//   title: "TEST CARD",
-//   characteristics: ["floodborn", "hero", "inventor"],
-//   type: "character",
-//   abilities: [shiftAbility(4, "Go Go Tomago")],
-//   inkwell: false,
-//   colors: ["emerald", "sapphire"],
-//   cost: 4,
-//   strength: 3,
-//   willpower: 3,
-//   illustrator: "Beno Mel",
-//   number: 999,
-//   set: "008",
-//   rarity: "super_rare",
-//   lore: 2,
+// Const testCard: LorcanitoCharacterCard = {
+//   Id: "j8q1276827136",
+//   Name: "Go Go Tomago",
+//   Title: "TEST CARD",
+//   Characteristics: ["floodborn", "hero", "inventor"],
+//   Type: "character",
+//   Abilities: [shiftAbility(4, "Go Go Tomago")],
+//   Inkwell: false,
+//   Colors: ["emerald", "sapphire"],
+//   Cost: 4,
+//   Strength: 3,
+//   Willpower: 3,
+//   Illustrator: "Beno Mel",
+//   Number: 999,
+//   Set: "008",
+//   Rarity: "super_rare",
+//   Lore: 2,
 // };
 //
-// allCardsById[testCard.id] = testCard;
+// AllCardsById[testCard.id] = testCard;
 //
-// describe("Go Go Tomago - Mechanical Engineer", () => {
-//   it("NEED THIS! When you play a Floodborn character on this card, you may put the top card of your deck into your inkwell facedown and exerted.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: goGoTomagoMechanicalEngineer.cost + 4,
-//       play: [goGoTomagoMechanicalEngineer],
-//       hand: [testCard],
-//       deck: [littleSisterResponsibleRabbit],
+// Describe("Go Go Tomago - Mechanical Engineer", () => {
+//   It("NEED THIS! When you play a Floodborn character on this card, you may put the top card of your deck into your inkwell facedown and exerted.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: goGoTomagoMechanicalEngineer.cost + 4,
+//       Play: [goGoTomagoMechanicalEngineer],
+//       Hand: [testCard],
+//       Deck: [littleSisterResponsibleRabbit],
 //     });
-//     const initialInkwellCount = testEngine.getZonesCardCount().inkwell;
-//     const initialDeckCount = testEngine.getZonesCardCount().deck;
-//     await testEngine.shiftCard({
-//       shifter: testCard,
-//       shifted: goGoTomagoMechanicalEngineer,
+//     Const initialInkwellCount = testEngine.getZonesCardCount().inkwell;
+//     Const initialDeckCount = testEngine.getZonesCardCount().deck;
+//     Await testEngine.shiftCard({
+//       Shifter: testCard,
+//       Shifted: goGoTomagoMechanicalEngineer,
 //     });
-//     await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveOptionalAbility();
 //
-//     expect(testEngine.getZonesCardCount().inkwell).toBe(
-//       initialInkwellCount + 1,
+//     Expect(testEngine.getZonesCardCount().inkwell).toBe(
+//       InitialInkwellCount + 1,
 //     );
-//     expect(testEngine.getZonesCardCount().deck).toBe(initialDeckCount - 1);
-//     const inkwellCards = testEngine.getCardsByZone("inkwell");
-//     const topCardInInkwell = inkwellCards[inkwellCards.length - 1];
-//     expect(topCardInInkwell).toBeDefined();
-//     if (topCardInInkwell) {
-//       expect(topCardInInkwell.name).toBe(littleSisterResponsibleRabbit.name);
-//       expect(topCardInInkwell.meta?.exerted).toBe(true);
+//     Expect(testEngine.getZonesCardCount().deck).toBe(initialDeckCount - 1);
+//     Const inkwellCards = testEngine.getCardsByZone("inkwell");
+//     Const topCardInInkwell = inkwellCards[inkwellCards.length - 1];
+//     Expect(topCardInInkwell).toBeDefined();
+//     If (topCardInInkwell) {
+//       Expect(topCardInInkwell.name).toBe(littleSisterResponsibleRabbit.name);
+//       Expect(topCardInInkwell.meta?.exerted).toBe(true);
 //     }
 //   });
 // });

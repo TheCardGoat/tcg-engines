@@ -3,50 +3,50 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { moanaOfMotunui } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { ringTheBell } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { moanaOfMotunui } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { ringTheBell } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Ring The Bell", () => {
-//   it("Banish chosen damaged character.", () => {
-//     const testStore = new TestStore({
-//       inkwell: ringTheBell.cost,
-//       hand: [ringTheBell],
-//       play: [moanaOfMotunui],
+// Describe("Ring The Bell", () => {
+//   It("Banish chosen damaged character.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: ringTheBell.cost,
+//       Hand: [ringTheBell],
+//       Play: [moanaOfMotunui],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", ringTheBell.id);
-//     const target = testStore.getByZoneAndId("play", moanaOfMotunui.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", ringTheBell.id);
+//     Const target = testStore.getByZoneAndId("play", moanaOfMotunui.id);
 //
-//     target.updateCardDamage(1);
+//     Target.updateCardDamage(1);
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     testStore.resolveTopOfStack({
-//       targets: [target],
+//     TestStore.resolveTopOfStack({
+//       Targets: [target],
 //     });
 //
-//     expect(target.zone).toEqual("discard");
+//     Expect(target.zone).toEqual("discard");
 //   });
 //
-//   it("doest NOT Banish non damaged character", () => {
-//     const testStore = new TestStore({
-//       inkwell: ringTheBell.cost,
-//       hand: [ringTheBell],
-//       play: [moanaOfMotunui],
+//   It("doest NOT Banish non damaged character", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: ringTheBell.cost,
+//       Hand: [ringTheBell],
+//       Play: [moanaOfMotunui],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", ringTheBell.id);
-//     const target = testStore.getByZoneAndId("play", moanaOfMotunui.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", ringTheBell.id);
+//     Const target = testStore.getByZoneAndId("play", moanaOfMotunui.id);
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     testStore.resolveTopOfStack({
-//       targets: [target],
+//     TestStore.resolveTopOfStack({
+//       Targets: [target],
 //     });
 //
-//     expect(target.zone).toEqual("play");
+//     Expect(target.zone).toEqual("play");
 //   });
 // });
 //

@@ -1,38 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const princeJohnFraidycat: CharacterCard = {
-  id: "fa9",
-  cardType: "character",
-  name: "Prince John",
-  version: "Fraidy-Cat",
-  fullName: "Prince John - Fraidy-Cat",
-  inkType: ["ruby"],
-  franchise: "Robin Hood",
-  set: "008",
-  text: "HELP! HELP! Whenever an opponent plays a character, deal 1 damage to this character.",
-  cost: 3,
-  strength: 5,
-  willpower: 5,
-  lore: 1,
-  cardNumber: 146,
-  inkable: false,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "3716bbbbc0261b3fecc0b6ae8298ef4193facf52",
-  },
   abilities: [
     {
-      id: "fa9-1",
-      type: "triggered",
-      name: "HELP! HELP!",
-      trigger: {
-        event: "play",
-        timing: "whenever",
-        on: {
-          controller: "opponent",
-          cardType: "character",
-        },
-      },
       effect: {
         type: "deal-damage",
         amount: 1,
@@ -44,8 +14,38 @@ export const princeJohnFraidycat: CharacterCard = {
           cardTypes: ["character"],
         },
       },
+      id: "fa9-1",
+      name: "HELP! HELP!",
       text: "HELP! HELP! Whenever an opponent plays a character, deal 1 damage to this character.",
+      trigger: {
+        event: "play",
+        timing: "whenever",
+        on: {
+          controller: "opponent",
+          cardType: "character",
+        },
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 146,
+  cardType: "character",
   classifications: ["Storyborn", "Villain", "Prince"],
+  cost: 3,
+  externalIds: {
+    ravensburger: "3716bbbbc0261b3fecc0b6ae8298ef4193facf52",
+  },
+  franchise: "Robin Hood",
+  fullName: "Prince John - Fraidy-Cat",
+  id: "fa9",
+  inkType: ["ruby"],
+  inkable: false,
+  lore: 1,
+  missingTests: true,
+  name: "Prince John",
+  set: "008",
+  strength: 5,
+  text: "HELP! HELP! Whenever an opponent plays a character, deal 1 damage to this character.",
+  version: "Fraidy-Cat",
+  willpower: 5,
 };

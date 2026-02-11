@@ -33,11 +33,7 @@ export interface EffectKeywordParseResult {
 /**
  * Effect keywords that have attached effects
  */
-const EFFECT_KEYWORDS: readonly EffectKeyword[] = [
-  "Deathknell",
-  "Legion",
-  "Vision",
-] as const;
+const EFFECT_KEYWORDS: readonly EffectKeyword[] = ["Deathknell", "Legion", "Vision"] as const;
 
 /**
  * Pattern to match effect keywords with their effects
@@ -75,8 +71,7 @@ const BUFF_PATTERN = /^Buff (me|a friendly unit|a unit)\.?/i;
 /**
  * Pattern to match ready effects: "Ready TARGET."
  */
-const READY_PATTERN =
-  /^Ready (me|a unit|your units|your runes|a friendly unit)\.?/i;
+const READY_PATTERN = /^Ready (me|a unit|your units|your runes|a friendly unit)\.?/i;
 
 /**
  * Pattern to match damage effects: "Deal N to TARGET."
@@ -115,8 +110,8 @@ function parseSimpleEffect(text: string): Effect | undefined {
   const drawMatch = DRAW_PATTERN.exec(cleanText);
   if (drawMatch) {
     return {
-      type: "draw",
       amount: Number.parseInt(drawMatch[1], 10),
+      type: "draw",
     };
   }
 
@@ -125,9 +120,7 @@ function parseSimpleEffect(text: string): Effect | undefined {
   if (channelMatch) {
     const amount = Number.parseInt(channelMatch[1], 10);
     const exhausted = channelMatch[2] === "exhausted";
-    return exhausted
-      ? { type: "channel", amount, exhausted: true }
-      : { type: "channel", amount };
+    return exhausted ? { amount, exhausted: true, type: "channel" } : { amount, type: "channel" };
   }
 
   // Try buff effect
@@ -137,10 +130,10 @@ function parseSimpleEffect(text: string): Effect | undefined {
     const target =
       targetText === "me"
         ? { type: "self" as const }
-        : targetText === "a friendly unit"
-          ? { type: "unit" as const, controller: "friendly" as const }
-          : { type: "unit" as const };
-    return { type: "buff", target };
+        : (targetText === "a friendly unit"
+          ? { controller: "friendly" as const, type: "unit" as const }
+          : { type: "unit" as const });
+    return { target, type: "buff" };
   }
 
   // Try ready effect
@@ -152,22 +145,22 @@ function parseSimpleEffect(text: string): Effect | undefined {
       target = { type: "self" as const };
     } else if (targetText === "your runes") {
       target = {
-        type: "rune" as const,
         controller: "friendly" as const,
         quantity: "all" as const,
+        type: "rune" as const,
       };
     } else if (targetText === "your units") {
       target = {
-        type: "unit" as const,
         controller: "friendly" as const,
         quantity: "all" as const,
+        type: "unit" as const,
       };
     } else if (targetText === "a friendly unit") {
-      target = { type: "unit" as const, controller: "friendly" as const };
+      target = { controller: "friendly" as const, type: "unit" as const };
     } else {
       target = { type: "unit" as const };
     }
-    return { type: "ready", target };
+    return { target, type: "ready" };
   }
 
   // Try damage effect
@@ -198,7 +191,7 @@ function parseSimpleEffect(text: string): Effect | undefined {
       target.location = { battlefield: "controlled" };
     }
 
-    return { type: "damage", amount, target };
+    return { amount, target, type: "damage" };
   }
 
   return undefined;
@@ -269,9 +262,7 @@ export function hasEffectKeyword(text: string): boolean {
 /**
  * Parse effect keywords from text with positions
  */
-export function parseEffectKeywordsWithPositions(
-  text: string,
-): EffectKeywordParseResult[] {
+export function parseEffectKeywordsWithPositions(text: string): EffectKeywordParseResult[] {
   const results: EffectKeywordParseResult[] = [];
   const cleanText = removeReminderText(text);
 
@@ -313,10 +304,10 @@ export function parseEffectKeywordsWithPositions(
     if (keyword === "Vision") {
       // Vision has an implicit "look" effect
       effect = {
-        type: "look",
         amount: 1,
         from: "deck",
         then: { recycle: 1 },
+        type: "look",
       };
     } else {
       // Parse the effect text
@@ -326,13 +317,13 @@ export function parseEffectKeywordsWithPositions(
     // Only add if we have an effect (or it's Vision which has implicit effect)
     if (effect) {
       const ability: EffectKeywordAbility = condition
-        ? { type: "keyword", keyword, effect, condition }
-        : { type: "keyword", keyword, effect };
+        ? { condition, effect, keyword, type: "keyword" }
+        : { effect, keyword, type: "keyword" };
 
       results.push({
         ability,
-        startIndex,
         endIndex: effectEndIndex,
+        startIndex,
       });
     }
   }

@@ -1,29 +1,29 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { evasiveAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { evasiveAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
 //
-// export const pegasusGiftForHercules: LorcanitoCharacterCard = {
-//   id: "lp3",
-//   reprints: ["w64"],
-//   name: "Pegasus",
-//   title: "Gift for Hercules",
-//   characteristics: ["storyborn", "ally"],
-//   text: "**Evasive** _(Only characters with Evasive can challenge this character.)_",
-//   type: "character",
-//   abilities: [evasiveAbility],
-//   flavour: "His name is Pegasus. And he's all yours....\n— Zeus",
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 1,
-//   strength: 1,
-//   willpower: 1,
-//   lore: 1,
-//   illustrator: "Brian Weisz",
-//   number: 84,
-//   set: "URR",
-//   externalIds: {
-//     tcgPlayer: 545401,
+// Export const pegasusGiftForHercules: LorcanitoCharacterCard = {
+//   Id: "lp3",
+//   Reprints: ["w64"],
+//   Name: "Pegasus",
+//   Title: "Gift for Hercules",
+//   Characteristics: ["storyborn", "ally"],
+//   Text: "**Evasive** _(Only characters with Evasive can challenge this character.)_",
+//   Type: "character",
+//   Abilities: [evasiveAbility],
+//   Flavour: "His name is Pegasus. And he's all yours....\n— Zeus",
+//   Inkwell: true,
+//   Colors: ["emerald"],
+//   Cost: 1,
+//   Strength: 1,
+//   Willpower: 1,
+//   Lore: 1,
+//   Illustrator: "Brian Weisz",
+//   Number: 84,
+//   Set: "URR",
+//   ExternalIds: {
+//     TcgPlayer: 545401,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

@@ -48,8 +48,8 @@ export function parseActivatedAbility(text: string): ParseResult {
 
   if (!separatorMatch) {
     return {
-      success: false,
       error: "Could not find cost separator",
+      success: false,
     };
   }
 
@@ -63,8 +63,8 @@ export function parseActivatedAbility(text: string): ParseResult {
   const cost = parseCost(costText);
   if (!cost) {
     return {
-      success: false,
       error: "Could not parse cost",
+      success: false,
     };
   }
 
@@ -77,27 +77,27 @@ export function parseActivatedAbility(text: string): ParseResult {
     parseCompositeEffect(effectText) || parseAtomicEffect(effectText);
   if (!effect) {
     return {
-      success: false,
       error: "Could not parse effect",
+      success: false,
     };
   }
 
   const activatedAbility: ActivatedAbility = {
-    type: "activated",
-    name,
     cost,
     effect,
+    name,
+    type: "activated",
   };
 
   logger.info("Successfully parsed activated ability", {
-    name,
     cost,
     effect,
+    name,
   });
 
   return {
+    ability: { ability: activatedAbility, name, text },
     success: true,
-    ability: { name, text, ability: activatedAbility },
   };
 }
 

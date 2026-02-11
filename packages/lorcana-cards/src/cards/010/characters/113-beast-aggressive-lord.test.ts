@@ -3,112 +3,112 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   beastAggressiveLord,
-//   goliathGuardianOfCastleWyvern,
-//   hermesHarriedMessenger,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   BeastAggressiveLord,
+//   GoliathGuardianOfCastleWyvern,
+//   HermesHarriedMessenger,
 // } from "@lorcanito/lorcana-engine/cards/010/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Beast - Aggressive Lord", () => {
-//   describe("Boost 2 - Basic functionality", () => {
-//     it("should have Boost ability", () => {
-//       const testEngine = new TestEngine({
-//         play: [beastAggressiveLord],
+// Describe("Beast - Aggressive Lord", () => {
+//   Describe("Boost 2 - Basic functionality", () => {
+//     It("should have Boost ability", () => {
+//       Const testEngine = new TestEngine({
+//         Play: [beastAggressiveLord],
 //       });
 //
-//       expect(testEngine.getCardModel(beastAggressiveLord).hasBoost).toBe(true);
+//       Expect(testEngine.getCardModel(beastAggressiveLord).hasBoost).toBe(true);
 //     });
 //   });
 //
-//   describe("THAT'S MINE - Whenever he challenges another character, if there's a card under this character, each opponent loses 1 lore and you gain 1 lore", () => {
-//     it("should have the THAT'S MINE ability defined", () => {
-//       const thatsMine = beastAggressiveLord.abilities?.find(
+//   Describe("THAT'S MINE - Whenever he challenges another character, if there's a card under this character, each opponent loses 1 lore and you gain 1 lore", () => {
+//     It("should have the THAT'S MINE ability defined", () => {
+//       Const thatsMine = beastAggressiveLord.abilities?.find(
 //         (a) => "name" in a && a.name === "THAT'S MINE",
 //       );
 //
-//       expect(thatsMine).toBeDefined();
+//       Expect(thatsMine).toBeDefined();
 //
-//       if (
-//         thatsMine &&
+//       If (
+//         ThatsMine &&
 //         "effects" in thatsMine &&
 //         Array.isArray(thatsMine.effects)
 //       ) {
 //         // Should have 2 effects: opponent loses lore, you gain lore
-//         expect(thatsMine.effects).toHaveLength(2);
+//         Expect(thatsMine.effects).toHaveLength(2);
 //
-//         const loseEffect = thatsMine.effects[0] as any;
-//         expect(loseEffect.type).toBe("lore");
-//         expect(loseEffect.modifier).toBe("subtract");
-//         expect(loseEffect.amount).toBe(1);
+//         Const loseEffect = thatsMine.effects[0] as any;
+//         Expect(loseEffect.type).toBe("lore");
+//         Expect(loseEffect.modifier).toBe("subtract");
+//         Expect(loseEffect.amount).toBe(1);
 //
-//         const gainEffect = thatsMine.effects[1] as any;
-//         expect(gainEffect.type).toBe("lore");
-//         expect(gainEffect.modifier).toBe("add");
-//         expect(gainEffect.amount).toBe(1);
+//         Const gainEffect = thatsMine.effects[1] as any;
+//         Expect(gainEffect.type).toBe("lore");
+//         Expect(gainEffect.modifier).toBe("add");
+//         Expect(gainEffect.amount).toBe(1);
 //       }
 //     });
 //
-//     it.skip("should trigger when Beast challenges with a card under him", async () => {
-//       const testEngine = new TestEngine(
+//     It.skip("should trigger when Beast challenges with a card under him", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: beastAggressiveLord.cost + 2,
-//           play: [beastAggressiveLord],
-//           deck: [hermesHarriedMessenger],
+//           Inkwell: beastAggressiveLord.cost + 2,
+//           Play: [beastAggressiveLord],
+//           Deck: [hermesHarriedMessenger],
 //         },
 //         {
-//           play: [goliathGuardianOfCastleWyvern],
+//           Play: [goliathGuardianOfCastleWyvern],
 //         },
 //       );
 //
-//       const beast = testEngine.getCardModel(beastAggressiveLord);
-//       const defender = testEngine.getByZoneAndId(
+//       Const beast = testEngine.getCardModel(beastAggressiveLord);
+//       Const defender = testEngine.getByZoneAndId(
 //         "play",
-//         goliathGuardianOfCastleWyvern.id,
+//         GoliathGuardianOfCastleWyvern.id,
 //         "player_two",
 //       );
 //
 //       // Add card under Beast using boost ability
-//       await testEngine.activateCard(beastAggressiveLord);
-//       expect(beast.cardsUnder).toHaveLength(1);
+//       Await testEngine.activateCard(beastAggressiveLord);
+//       Expect(beast.cardsUnder).toHaveLength(1);
 //
-//       expect(testEngine.getPlayerLore("player_one")).toBe(0);
-//       expect(testEngine.getPlayerLore("player_two")).toBe(0);
+//       Expect(testEngine.getPlayerLore("player_one")).toBe(0);
+//       Expect(testEngine.getPlayerLore("player_two")).toBe(0);
 //
-//       await testEngine.tapCard(defender);
-//       await beast.challenge(defender);
+//       Await testEngine.tapCard(defender);
+//       Await beast.challenge(defender);
 //
-//       expect(testEngine.getPlayerLore("player_one")).toBe(1);
-//       expect(testEngine.getPlayerLore("player_two")).toBe(-1);
+//       Expect(testEngine.getPlayerLore("player_one")).toBe(1);
+//       Expect(testEngine.getPlayerLore("player_two")).toBe(-1);
 //     });
 //
-//     it("should NOT trigger when Beast challenges WITHOUT a card under him", async () => {
-//       const testEngine = new TestEngine(
+//     It("should NOT trigger when Beast challenges WITHOUT a card under him", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           play: [beastAggressiveLord],
+//           Play: [beastAggressiveLord],
 //         },
 //         {
-//           play: [goliathGuardianOfCastleWyvern],
+//           Play: [goliathGuardianOfCastleWyvern],
 //         },
 //       );
 //
-//       const beast = testEngine.getCardModel(beastAggressiveLord);
-//       const defender = testEngine.getByZoneAndId(
+//       Const beast = testEngine.getCardModel(beastAggressiveLord);
+//       Const defender = testEngine.getByZoneAndId(
 //         "play",
-//         goliathGuardianOfCastleWyvern.id,
+//         GoliathGuardianOfCastleWyvern.id,
 //         "player_two",
 //       );
 //
-//       expect(beast.cardsUnder).toHaveLength(0);
-//       expect(testEngine.getPlayerLore("player_one")).toBe(0);
-//       expect(testEngine.getPlayerLore("player_two")).toBe(0);
+//       Expect(beast.cardsUnder).toHaveLength(0);
+//       Expect(testEngine.getPlayerLore("player_one")).toBe(0);
+//       Expect(testEngine.getPlayerLore("player_two")).toBe(0);
 //
-//       await testEngine.tapCard(defender);
-//       await beast.challenge(defender);
+//       Await testEngine.tapCard(defender);
+//       Await beast.challenge(defender);
 //
-//       expect(testEngine.getPlayerLore("player_one")).toBe(0);
-//       expect(testEngine.getPlayerLore("player_two")).toBe(0);
+//       Expect(testEngine.getPlayerLore("player_one")).toBe(0);
+//       Expect(testEngine.getPlayerLore("player_two")).toBe(0);
 //     });
 //   });
 // });

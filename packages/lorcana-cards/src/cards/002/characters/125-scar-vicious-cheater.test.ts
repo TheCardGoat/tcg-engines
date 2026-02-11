@@ -3,102 +3,102 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   pinocchioStarAttraction,
-//   pinocchioTalkativePuppet,
-//   scarViciousCheater,
-//   theHuntsmanReluctantEnforcer,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   PinocchioStarAttraction,
+//   PinocchioTalkativePuppet,
+//   ScarViciousCheater,
+//   TheHuntsmanReluctantEnforcer,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { hiddenCoveTranquilHaven } from "@lorcanito/lorcana-engine/cards/004/locations/locations";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { hiddenCoveTranquilHaven } from "@lorcanito/lorcana-engine/cards/004/locations/locations";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Scar - Vicious Cheater", () => {
-//   it("Rush", () => {
-//     const testStore = new TestStore({
-//       play: [scarViciousCheater],
+// Describe("Scar - Vicious Cheater", () => {
+//   It("Rush", () => {
+//     Const testStore = new TestStore({
+//       Play: [scarViciousCheater],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       scarViciousCheater.id,
+//       ScarViciousCheater.id,
 //     );
 //
-//     expect(cardUnderTest.hasRush).toBe(true);
+//     Expect(cardUnderTest.hasRush).toBe(true);
 //   });
 //
-//   it("**DADDY ISN’T HERE TO SAVE YOU** During your turn, whenever this character banishes another character in a challenge, you may ready this character. He can't quest for the rest of this turn.", () => {
-//     const testStore = new TestStore(
+//   It("**DADDY ISN’T HERE TO SAVE YOU** During your turn, whenever this character banishes another character in a challenge, you may ready this character. He can't quest for the rest of this turn.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         play: [scarViciousCheater],
+//         Play: [scarViciousCheater],
 //       },
 //       {
-//         play: [
-//           theHuntsmanReluctantEnforcer,
-//           pinocchioTalkativePuppet,
-//           pinocchioStarAttraction,
+//         Play: [
+//           TheHuntsmanReluctantEnforcer,
+//           PinocchioTalkativePuppet,
+//           PinocchioStarAttraction,
 //         ],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       scarViciousCheater.id,
+//       ScarViciousCheater.id,
 //     );
 //
-//     const target = testStore.getByZoneAndId(
+//     Const target = testStore.getByZoneAndId(
 //       "play",
-//       theHuntsmanReluctantEnforcer.id,
+//       TheHuntsmanReluctantEnforcer.id,
 //       "player_two",
 //     );
-//     const target2 = testStore.getByZoneAndId(
+//     Const target2 = testStore.getByZoneAndId(
 //       "play",
-//       pinocchioTalkativePuppet.id,
+//       PinocchioTalkativePuppet.id,
 //       "player_two",
 //     );
-//     const target3 = testStore.getByZoneAndId(
+//     Const target3 = testStore.getByZoneAndId(
 //       "play",
-//       pinocchioStarAttraction.id,
+//       PinocchioStarAttraction.id,
 //       "player_two",
 //     );
 //
 //     [target, target2, target3].forEach((char) => {
-//       char.updateCardMeta({ exerted: true });
-//       cardUnderTest.challenge(char);
+//       Char.updateCardMeta({ exerted: true });
+//       CardUnderTest.challenge(char);
 //
-//       expect(char.zone).toBe("discard");
-//       expect(cardUnderTest.ready).toBe(true);
+//       Expect(char.zone).toBe("discard");
+//       Expect(cardUnderTest.ready).toBe(true);
 //     });
 //
-//     expect(cardUnderTest.hasQuestRestriction).toBe(true);
-//     expect(cardUnderTest.damage).toBe(
-//       target.strength + target2.strength + target3.strength,
+//     Expect(cardUnderTest.hasQuestRestriction).toBe(true);
+//     Expect(cardUnderTest.damage).toBe(
+//       Target.strength + target2.strength + target3.strength,
 //     );
 //   });
 // });
 //
-// describe("Regression Test", () => {
-//   const testStore = new TestStore(
+// Describe("Regression Test", () => {
+//   Const testStore = new TestStore(
 //     {
-//       play: [scarViciousCheater],
+//       Play: [scarViciousCheater],
 //     },
 //     {
-//       play: [hiddenCoveTranquilHaven],
+//       Play: [hiddenCoveTranquilHaven],
 //     },
 //   );
 //
-//   const cardUnderTest = testStore.getCard(scarViciousCheater);
-//   const target = testStore.getCard(hiddenCoveTranquilHaven);
+//   Const cardUnderTest = testStore.getCard(scarViciousCheater);
+//   Const target = testStore.getCard(hiddenCoveTranquilHaven);
 //
-//   target.updateCardMeta({
-//     exerted: true,
-//     damage: hiddenCoveTranquilHaven.willpower - 1,
+//   Target.updateCardMeta({
+//     Exerted: true,
+//     Damage: hiddenCoveTranquilHaven.willpower - 1,
 //   });
 //
-//   cardUnderTest.challenge(target);
+//   CardUnderTest.challenge(target);
 //
-//   expect(target.zone).toBe("discard");
-//   expect(cardUnderTest.ready).toBe(false);
-//   expect(cardUnderTest.hasQuestRestriction).toBe(false);
+//   Expect(target.zone).toBe("discard");
+//   Expect(cardUnderTest.ready).toBe(false);
+//   Expect(cardUnderTest.hasQuestRestriction).toBe(false);
 // });
 //

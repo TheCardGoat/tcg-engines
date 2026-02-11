@@ -1,46 +1,46 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { vanishAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { wheneverQuests } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-// import { exertChosenOpposingCharacter } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { vanishAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import { wheneverQuests } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// Import { exertChosenOpposingCharacter } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const theSultanRoyalApparition: LorcanitoCharacterCard = {
-//   id: "nrh",
-//   name: "The Sultan",
-//   title: "Royal Apparition",
-//   characteristics: ["dreamborn", "ally", "king", "illusion"],
-//   text: "Vanish (When an opponent chooses this character for an action, banish them.)\nCOMMANDING PRESENCE Whenever one of your Illusion characters quests, exert chosen opposing character.",
-//   type: "character",
-//   abilities: [
-//     vanishAbility,
-//     wheneverQuests({
-//       name: "COMMANDING PRESENCE",
-//       text: "Whenever one of your Illusion characters quests, exert chosen opposing character.",
-//       triggerTarget: {
-//         type: "card",
-//         value: "all",
-//         filters: [
+// Export const theSultanRoyalApparition: LorcanitoCharacterCard = {
+//   Id: "nrh",
+//   Name: "The Sultan",
+//   Title: "Royal Apparition",
+//   Characteristics: ["dreamborn", "ally", "king", "illusion"],
+//   Text: "Vanish (When an opponent chooses this character for an action, banish them.)\nCOMMANDING PRESENCE Whenever one of your Illusion characters quests, exert chosen opposing character.",
+//   Type: "character",
+//   Abilities: [
+//     VanishAbility,
+//     WheneverQuests({
+//       Name: "COMMANDING PRESENCE",
+//       Text: "Whenever one of your Illusion characters quests, exert chosen opposing character.",
+//       TriggerTarget: {
+//         Type: "card",
+//         Value: "all",
+//         Filters: [
 //           { filter: "type", value: "character" },
 //           { filter: "characteristics", value: ["illusion"] },
 //           { filter: "owner", value: "self" },
 //           { filter: "zone", value: "play" },
 //         ],
 //       },
-//       effects: [exertChosenOpposingCharacter],
+//       Effects: [exertChosenOpposingCharacter],
 //     }),
 //   ],
-//   inkwell: false,
-//   colors: ["amethyst", "steel"],
-//   cost: 5,
-//   strength: 5,
-//   willpower: 5,
-//   illustrator: "Max Ulichney",
-//   number: 73,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 633425,
+//   Inkwell: false,
+//   Colors: ["amethyst", "steel"],
+//   Cost: 5,
+//   Strength: 5,
+//   Willpower: 5,
+//   Illustrator: "Max Ulichney",
+//   Number: 73,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 633425,
 //   },
-//   rarity: "rare",
-//   lore: 2,
+//   Rarity: "rare",
+//   Lore: 2,
 // };
 //

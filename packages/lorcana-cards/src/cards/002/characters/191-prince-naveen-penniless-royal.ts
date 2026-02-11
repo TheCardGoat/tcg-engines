@@ -1,26 +1,26 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
 //
-// export const princeNaveenPennilessRoyal: LorcanitoCharacterCard = {
-//   id: "m7y",
-//   reprints: ["lx6"],
-//   name: "Prince Naveen",
-//   title: "Penniless Royal",
-//   characteristics: ["storyborn", "prince"],
-//   type: "character",
-//   flavour: "All he's got is his charm.",
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 3,
-//   strength: 4,
-//   willpower: 3,
-//   lore: 1,
-//   illustrator: "Gaku Kumatori",
-//   number: 191,
-//   set: "ROF",
-//   externalIds: {
-//     tcgPlayer: 525152,
+// Export const princeNaveenPennilessRoyal: LorcanitoCharacterCard = {
+//   Id: "m7y",
+//   Reprints: ["lx6"],
+//   Name: "Prince Naveen",
+//   Title: "Penniless Royal",
+//   Characteristics: ["storyborn", "prince"],
+//   Type: "character",
+//   Flavour: "All he's got is his charm.",
+//   Inkwell: true,
+//   Colors: ["steel"],
+//   Cost: 3,
+//   Strength: 4,
+//   Willpower: 3,
+//   Lore: 1,
+//   Illustrator: "Gaku Kumatori",
+//   Number: 191,
+//   Set: "ROF",
+//   ExternalIds: {
+//     TcgPlayer: 525152,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

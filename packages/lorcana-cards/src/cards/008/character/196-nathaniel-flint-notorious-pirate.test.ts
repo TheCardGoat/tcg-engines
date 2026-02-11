@@ -3,87 +3,87 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { fireTheCannons } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
-// import { hiramFlavershamToymaker } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import {
-//   jiminyCricketLevelheadedAndWise,
-//   nathanielFlintNotoriousPirate,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { fireTheCannons } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
+// Import { hiramFlavershamToymaker } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import {
+//   JiminyCricketLevelheadedAndWise,
+//   NathanielFlintNotoriousPirate,
 // } from "@lorcanito/lorcana-engine/cards/008";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Nathaniel Flint - Notorious Pirate", () => {
-//   it("PREDATORY INSTINCT You can't play this character unless an opposing character was damaged this turn.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: nathanielFlintNotoriousPirate.cost,
-//       play: [],
-//       hand: [nathanielFlintNotoriousPirate],
+// Describe("Nathaniel Flint - Notorious Pirate", () => {
+//   It("PREDATORY INSTINCT You can't play this character unless an opposing character was damaged this turn.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: nathanielFlintNotoriousPirate.cost,
+//       Play: [],
+//       Hand: [nathanielFlintNotoriousPirate],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(
-//       nathanielFlintNotoriousPirate,
+//     Const cardUnderTest = testEngine.getCardModel(
+//       NathanielFlintNotoriousPirate,
 //     );
-//     await testEngine.playCard(nathanielFlintNotoriousPirate);
+//     Await testEngine.playCard(nathanielFlintNotoriousPirate);
 //
-//     expect(cardUnderTest.zone).toBe("hand");
+//     Expect(cardUnderTest.zone).toBe("hand");
 //   });
 //
-//   it("PREDATORY INSTINCT When damage has been dealt to opposing character this turn, you can play this character.", async () => {
-//     const testEngine = new TestEngine(
+//   It("PREDATORY INSTINCT When damage has been dealt to opposing character this turn, you can play this character.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: nathanielFlintNotoriousPirate.cost + fireTheCannons.cost,
-//         play: [],
-//         hand: [nathanielFlintNotoriousPirate, fireTheCannons],
+//         Inkwell: nathanielFlintNotoriousPirate.cost + fireTheCannons.cost,
+//         Play: [],
+//         Hand: [nathanielFlintNotoriousPirate, fireTheCannons],
 //       },
 //       {
-//         play: [hiramFlavershamToymaker],
+//         Play: [hiramFlavershamToymaker],
 //       },
 //     );
 //
-//     await testEngine.playCard(fireTheCannons);
-//     await testEngine.resolveTopOfStack({ targets: [hiramFlavershamToymaker] });
-//     await testEngine.playCard(nathanielFlintNotoriousPirate);
+//     Await testEngine.playCard(fireTheCannons);
+//     Await testEngine.resolveTopOfStack({ targets: [hiramFlavershamToymaker] });
+//     Await testEngine.playCard(nathanielFlintNotoriousPirate);
 //
-//     expect(testEngine.getCardModel(nathanielFlintNotoriousPirate).zone).toBe(
+//     Expect(testEngine.getCardModel(nathanielFlintNotoriousPirate).zone).toBe(
 //       "play",
 //     );
 //   });
 //
-//   it("PREDATORY INSTINCT When damage has been dealt to owner's character this turn, you cannot play this character.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: nathanielFlintNotoriousPirate.cost + fireTheCannons.cost,
-//       play: [hiramFlavershamToymaker],
-//       hand: [nathanielFlintNotoriousPirate, fireTheCannons],
+//   It("PREDATORY INSTINCT When damage has been dealt to owner's character this turn, you cannot play this character.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: nathanielFlintNotoriousPirate.cost + fireTheCannons.cost,
+//       Play: [hiramFlavershamToymaker],
+//       Hand: [nathanielFlintNotoriousPirate, fireTheCannons],
 //     });
 //
-//     await testEngine.playCard(fireTheCannons);
-//     await testEngine.resolveTopOfStack({ targets: [hiramFlavershamToymaker] });
-//     await testEngine.playCard(nathanielFlintNotoriousPirate);
+//     Await testEngine.playCard(fireTheCannons);
+//     Await testEngine.resolveTopOfStack({ targets: [hiramFlavershamToymaker] });
+//     Await testEngine.playCard(nathanielFlintNotoriousPirate);
 //
-//     expect(testEngine.getCardModel(nathanielFlintNotoriousPirate).zone).toBe(
+//     Expect(testEngine.getCardModel(nathanielFlintNotoriousPirate).zone).toBe(
 //       "hand",
 //     );
 //   });
 //
-//   it("PREDATORY INSTINCT When opposing character is banished by the damage", async () => {
-//     const testEngine = new TestEngine(
+//   It("PREDATORY INSTINCT When opposing character is banished by the damage", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: nathanielFlintNotoriousPirate.cost + fireTheCannons.cost,
-//         play: [],
-//         hand: [nathanielFlintNotoriousPirate, fireTheCannons],
+//         Inkwell: nathanielFlintNotoriousPirate.cost + fireTheCannons.cost,
+//         Play: [],
+//         Hand: [nathanielFlintNotoriousPirate, fireTheCannons],
 //       },
 //       {
-//         play: [jiminyCricketLevelheadedAndWise],
+//         Play: [jiminyCricketLevelheadedAndWise],
 //       },
 //     );
 //
-//     await testEngine.playCard(fireTheCannons);
-//     await testEngine.resolveTopOfStack({
-//       targets: [jiminyCricketLevelheadedAndWise],
+//     Await testEngine.playCard(fireTheCannons);
+//     Await testEngine.resolveTopOfStack({
+//       Targets: [jiminyCricketLevelheadedAndWise],
 //     });
-//     await testEngine.playCard(nathanielFlintNotoriousPirate);
+//     Await testEngine.playCard(nathanielFlintNotoriousPirate);
 //
-//     expect(testEngine.getCardModel(nathanielFlintNotoriousPirate).zone).toBe(
+//     Expect(testEngine.getCardModel(nathanielFlintNotoriousPirate).zone).toBe(
 //       "play",
 //     );
 //   });

@@ -3,62 +3,62 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { snowWhiteWellWisher } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { dragonGem } from "@lorcanito/lorcana-engine/cards/002/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { snowWhiteWellWisher } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { dragonGem } from "@lorcanito/lorcana-engine/cards/002/items/items";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Snow White - Well Wisher", () => {
-//   describe("**WISHES COME TRUE** Whenever this character quests, you may return a character card from your discard to your hand.", () => {
-//     it("return character card to hand", () => {
-//       const testStore = new TestStore({
-//         inkwell: snowWhiteWellWisher.cost,
-//         discard: [snowWhiteWellWisher],
-//         hand: [],
-//         play: [snowWhiteWellWisher],
+// Describe("Snow White - Well Wisher", () => {
+//   Describe("**WISHES COME TRUE** Whenever this character quests, you may return a character card from your discard to your hand.", () => {
+//     It("return character card to hand", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: snowWhiteWellWisher.cost,
+//         Discard: [snowWhiteWellWisher],
+//         Hand: [],
+//         Play: [snowWhiteWellWisher],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         snowWhiteWellWisher.id,
+//         SnowWhiteWellWisher.id,
 //       );
-//       const target = testStore.getByZoneAndId(
+//       Const target = testStore.getByZoneAndId(
 //         "discard",
-//         snowWhiteWellWisher.id,
+//         SnowWhiteWellWisher.id,
 //       );
 //
-//       cardUnderTest.quest();
-//       testStore.resolveOptionalAbility();
-//       testStore.resolveTopOfStack({ targetId: target.instanceId });
-//       expect(testStore.getZonesCardCount()).toEqual(
-//         expect.objectContaining({
-//           discard: 0,
-//           hand: 1,
-//           play: 1,
+//       CardUnderTest.quest();
+//       TestStore.resolveOptionalAbility();
+//       TestStore.resolveTopOfStack({ targetId: target.instanceId });
+//       Expect(testStore.getZonesCardCount()).toEqual(
+//         Expect.objectContaining({
+//           Discard: 0,
+//           Hand: 1,
+//           Play: 1,
 //         }),
 //       );
 //     });
 //
-//     it("no valid target", () => {
-//       const testStore = new TestStore({
-//         inkwell: snowWhiteWellWisher.cost,
-//         discard: [dragonGem],
-//         hand: [],
-//         play: [snowWhiteWellWisher],
+//     It("no valid target", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: snowWhiteWellWisher.cost,
+//         Discard: [dragonGem],
+//         Hand: [],
+//         Play: [snowWhiteWellWisher],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         snowWhiteWellWisher.id,
+//         SnowWhiteWellWisher.id,
 //       );
 //
-//       cardUnderTest.quest();
-//       expect(testStore.stackLayers).toHaveLength(0);
-//       expect(testStore.getZonesCardCount()).toEqual(
-//         expect.objectContaining({
-//           discard: 1,
-//           hand: 0,
-//           play: 1,
+//       CardUnderTest.quest();
+//       Expect(testStore.stackLayers).toHaveLength(0);
+//       Expect(testStore.getZonesCardCount()).toEqual(
+//         Expect.objectContaining({
+//           Discard: 1,
+//           Hand: 0,
+//           Play: 1,
 //         }),
 //       );
 //     });

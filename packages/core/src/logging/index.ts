@@ -19,9 +19,4 @@
 
 export { createPinoFormatter, formatMessage } from "./log-formatter";
 export { Logger } from "./logger";
-export {
-  type LogContext,
-  type LoggerOptions,
-  LogLevel,
-  type VerbosityPreset,
-} from "./types";
+export { type LogContext, type LoggerOptions, LogLevel, type VerbosityPreset } from "./types";

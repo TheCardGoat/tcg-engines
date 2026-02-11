@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { nickWildeSoggyFox } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { nickWildeSoggyFox } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Nick Wilde - Soggy Fox", () => {
-//   it.skip("NICE TO HAVE A PARTNER While you have another character with Support in play, this character gets +2 {S}.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: nickWildeSoggyFox.cost,
-//       play: [nickWildeSoggyFox],
-//       hand: [nickWildeSoggyFox],
+// Describe("Nick Wilde - Soggy Fox", () => {
+//   It.skip("NICE TO HAVE A PARTNER While you have another character with Support in play, this character gets +2 {S}.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: nickWildeSoggyFox.cost,
+//       Play: [nickWildeSoggyFox],
+//       Hand: [nickWildeSoggyFox],
 //     });
 //
-//     await testEngine.playCard(nickWildeSoggyFox);
+//     Await testEngine.playCard(nickWildeSoggyFox);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

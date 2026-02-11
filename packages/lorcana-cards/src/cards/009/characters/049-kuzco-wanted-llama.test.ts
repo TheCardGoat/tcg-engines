@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { kuzcoWantedLlama } from "@lorcanito/lorcana-engine/cards/009/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { kuzcoWantedLlama } from "@lorcanito/lorcana-engine/cards/009/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Kuzco - Wanted Llama", () => {
-//   it.skip("**OK, WHERE AM I?** When this character is banished, you may draw a card.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: kuzcoWantedLlama.cost,
-//       play: [kuzcoWantedLlama],
-//       hand: [kuzcoWantedLlama],
+// Describe("Kuzco - Wanted Llama", () => {
+//   It.skip("**OK, WHERE AM I?** When this character is banished, you may draw a card.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: kuzcoWantedLlama.cost,
+//       Play: [kuzcoWantedLlama],
+//       Hand: [kuzcoWantedLlama],
 //     });
 //
-//     await testEngine.playCard(kuzcoWantedLlama);
+//     Await testEngine.playCard(kuzcoWantedLlama);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

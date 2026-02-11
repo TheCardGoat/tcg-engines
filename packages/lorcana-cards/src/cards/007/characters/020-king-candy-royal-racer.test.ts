@@ -3,41 +3,41 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   beastFrustratedDesigner,
-//   calhounCourageousRescuer,
-//   kingCandyRoyalRacer,
-//   liShangNewlyPromoted,
-//   outOfOrder,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   BeastFrustratedDesigner,
+//   CalhounCourageousRescuer,
+//   KingCandyRoyalRacer,
+//   LiShangNewlyPromoted,
+//   OutOfOrder,
 // } from "@lorcanito/lorcana-engine/cards/007";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("King Candy - Royal Racer", () => {
-//   it("SWEET REVENGE Whenever one of your other Racer characters is banished, each opponent chooses and banishes one of their characters.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("King Candy - Royal Racer", () => {
+//   It("SWEET REVENGE Whenever one of your other Racer characters is banished, each opponent chooses and banishes one of their characters.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: outOfOrder.cost,
-//         play: [kingCandyRoyalRacer, calhounCourageousRescuer],
-//         hand: [outOfOrder],
+//         Inkwell: outOfOrder.cost,
+//         Play: [kingCandyRoyalRacer, calhounCourageousRescuer],
+//         Hand: [outOfOrder],
 //       },
 //       {
-//         play: [liShangNewlyPromoted, beastFrustratedDesigner],
+//         Play: [liShangNewlyPromoted, beastFrustratedDesigner],
 //       },
 //     );
 //
-//     await testEngine.playCard(
-//       outOfOrder,
+//     Await testEngine.playCard(
+//       OutOfOrder,
 //       {
-//         targets: [calhounCourageousRescuer],
+//         Targets: [calhounCourageousRescuer],
 //       },
-//       true,
+//       True,
 //     );
 //
-//     testEngine.changeActivePlayer("player_two");
-//     await testEngine.resolveTopOfStack({ targets: [liShangNewlyPromoted] });
+//     TestEngine.changeActivePlayer("player_two");
+//     Await testEngine.resolveTopOfStack({ targets: [liShangNewlyPromoted] });
 //
-//     expect(testEngine.getCardModel(liShangNewlyPromoted).zone).toBe("discard");
+//     Expect(testEngine.getCardModel(liShangNewlyPromoted).zone).toBe("discard");
 //   });
 // });
 //

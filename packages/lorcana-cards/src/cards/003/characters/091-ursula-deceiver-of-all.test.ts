@@ -3,38 +3,38 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { friendsOnTheOtherSide } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
-// import { ursulaDeceiverOfAll } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { friendsOnTheOtherSide } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
+// Import { ursulaDeceiverOfAll } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Ursula - Deceiver of All", () => {
-//   it("**WHAT A DEAL** Whenever this character sings a song, you may play that song again from your discard for free, then put it on the bottom of your deck.", () => {
-//     const testStore = new TestStore({
-//       inkwell: friendsOnTheOtherSide.cost,
-//       play: [ursulaDeceiverOfAll],
-//       hand: [friendsOnTheOtherSide],
-//       deck: 6,
+// Describe("Ursula - Deceiver of All", () => {
+//   It("**WHAT A DEAL** Whenever this character sings a song, you may play that song again from your discard for free, then put it on the bottom of your deck.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: friendsOnTheOtherSide.cost,
+//       Play: [ursulaDeceiverOfAll],
+//       Hand: [friendsOnTheOtherSide],
+//       Deck: 6,
 //     });
 //
-//     const cardUnderTest = testStore.getCard(ursulaDeceiverOfAll);
-//     const target = testStore.getCard(friendsOnTheOtherSide);
+//     Const cardUnderTest = testStore.getCard(ursulaDeceiverOfAll);
+//     Const target = testStore.getCard(friendsOnTheOtherSide);
 //
-//     expect(testStore.getZonesCardCount()).toEqual(
-//       expect.objectContaining({
-//         hand: 1,
-//         deck: 6,
+//     Expect(testStore.getZonesCardCount()).toEqual(
+//       Expect.objectContaining({
+//         Hand: 1,
+//         Deck: 6,
 //       }),
 //     );
 //
-//     cardUnderTest.sing(target);
-//     testStore.resolveOptionalAbility();
+//     CardUnderTest.sing(target);
+//     TestStore.resolveOptionalAbility();
 //
-//     expect(target.zone).toBe("deck");
-//     expect(testStore.getZonesCardCount()).toEqual(
-//       expect.objectContaining({
-//         hand: 4,
-//         deck: 3,
+//     Expect(target.zone).toBe("deck");
+//     Expect(testStore.getZonesCardCount()).toEqual(
+//       Expect.objectContaining({
+//         Hand: 4,
+//         Deck: 3,
 //       }),
 //     );
 //   });

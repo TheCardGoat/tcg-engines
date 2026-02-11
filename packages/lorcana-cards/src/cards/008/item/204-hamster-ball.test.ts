@@ -3,26 +3,26 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   hamsterBall,
-//   jumbaJookibaCriticalScientist,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   HamsterBall,
+//   JumbaJookibaCriticalScientist,
 // } from "@lorcanito/lorcana-engine/cards/008";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Hamster Ball", () => {
-//   it("ROLL WITH THE PUNCHES {E}, 1 {I} – Chosen character with no damage gains Resist +2 until the start of your next turn. (Damage dealt to them is reduced by 2.)", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: 1,
-//       play: [hamsterBall, jumbaJookibaCriticalScientist],
+// Describe("Hamster Ball", () => {
+//   It("ROLL WITH THE PUNCHES {E}, 1 {I} – Chosen character with no damage gains Resist +2 until the start of your next turn. (Damage dealt to them is reduced by 2.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: 1,
+//       Play: [hamsterBall, jumbaJookibaCriticalScientist],
 //     });
 //
-//     await testEngine.activateCard(hamsterBall, {
-//       targets: [jumbaJookibaCriticalScientist],
+//     Await testEngine.activateCard(hamsterBall, {
+//       Targets: [jumbaJookibaCriticalScientist],
 //     });
 //
-//     expect(
-//       testEngine.getCardModel(jumbaJookibaCriticalScientist).hasResist,
+//     Expect(
+//       TestEngine.getCardModel(jumbaJookibaCriticalScientist).hasResist,
 //     ).toBe(true);
 //   });
 // });

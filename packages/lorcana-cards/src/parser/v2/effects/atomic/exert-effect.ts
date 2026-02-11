@@ -22,10 +22,10 @@ function convertToCharacterTarget(simpleTarget: {
 
   // Map card type to proper name
   const cardTypeMap: Record<string, string> = {
+    card: "card",
     character: "character",
     item: "item",
     location: "location",
-    card: "card",
   };
 
   const cardType = cardTypeMap[type.toLowerCase()] || type;
@@ -35,18 +35,18 @@ function convertToCharacterTarget(simpleTarget: {
     string,
     { selector: string; owner: string; count: number | "all" }
   > = {
-    chosen: { selector: "chosen", owner: "any", count: 1 },
-    "chosen opposing": { selector: "chosen", owner: "opponent", count: 1 },
-    this: { selector: "self", owner: "any", count: 1 },
-    your: { selector: "all", owner: "you", count: "all" as any },
-    opponent: { selector: "all", owner: "opponent", count: "all" as any },
-    "opponent's": { selector: "all", owner: "opponent", count: "all" as any },
-    opposing: { selector: "all", owner: "opponent", count: "all" as any },
-    another: { selector: "chosen", owner: "any", count: 1 },
-    an: { selector: "chosen", owner: "any", count: 1 },
-    each: { selector: "all", owner: "any", count: "all" as any },
-    all: { selector: "all", owner: "any", count: "all" as any },
-    other: { selector: "all", owner: "any", count: "all" as any },
+    all: { count: "all" as any, owner: "any", selector: "all" },
+    an: { count: 1, owner: "any", selector: "chosen" },
+    another: { count: 1, owner: "any", selector: "chosen" },
+    chosen: { count: 1, owner: "any", selector: "chosen" },
+    "chosen opposing": { count: 1, owner: "opponent", selector: "chosen" },
+    each: { count: "all" as any, owner: "any", selector: "all" },
+    opponent: { count: "all" as any, owner: "opponent", selector: "all" },
+    "opponent's": { count: "all" as any, owner: "opponent", selector: "all" },
+    opposing: { count: "all" as any, owner: "opponent", selector: "all" },
+    other: { count: "all" as any, owner: "any", selector: "all" },
+    this: { count: 1, owner: "any", selector: "self" },
+    your: { count: "all" as any, owner: "you", selector: "all" },
   };
 
   const mapping = modifier
@@ -58,11 +58,11 @@ function convertToCharacterTarget(simpleTarget: {
   const { selector, owner, count } = mapping || modifierMap.chosen;
 
   return {
-    selector: selector as any,
+    cardTypes: [cardType],
     count,
     owner: owner as any,
+    selector: selector as any,
     zones: ["play"],
-    cardTypes: [cardType],
   };
 }
 
@@ -106,13 +106,13 @@ function parseFromCst(
 
   if (isExert) {
     return {
-      type: "exert",
       target,
+      type: "exert",
     };
   }
   return {
-    type: "ready",
     target,
+    type: "ready",
   };
 }
 
@@ -126,8 +126,8 @@ function parseFromText(text: string): ExertEffect | ReadyEffect | null {
   if (/exert\s+all\s+(?:your\s+)?characters/i.test(text)) {
     logger.info("Parsed exert all characters effect");
     return {
-      type: "exert",
       target: "YOUR_CHARACTERS",
+      type: "exert",
     };
   }
 
@@ -135,8 +135,8 @@ function parseFromText(text: string): ExertEffect | ReadyEffect | null {
   if (/exert\s+each\s+character/i.test(text)) {
     logger.info("Parsed exert each character effect");
     return {
-      type: "exert",
       target: "ALL_CHARACTERS",
+      type: "exert",
     };
   }
 
@@ -144,8 +144,8 @@ function parseFromText(text: string): ExertEffect | ReadyEffect | null {
   if (/ready\s+all\s+(?:your\s+)?characters/i.test(text)) {
     logger.info("Parsed ready all characters effect");
     return {
-      type: "ready",
       target: "YOUR_CHARACTERS",
+      type: "ready",
     };
   }
 
@@ -181,13 +181,13 @@ function parseFromText(text: string): ExertEffect | ReadyEffect | null {
 
   if (isExert) {
     return {
-      type: "exert",
       target,
+      type: "exert",
     };
   }
   return {
-    type: "ready",
     target,
+    type: "ready",
   };
 }
 
@@ -195,11 +195,8 @@ function parseFromText(text: string): ExertEffect | ReadyEffect | null {
  * Exert effect parser implementation
  */
 export const exertEffectParser: EffectParser = {
-  pattern:
-    /(exert|ready)\s+(?:all\s+)?(?:your\s+)?(?:characters|chosen|this|another|an?)\s+character/i,
   description:
     "Parses exert/ready effects (e.g., 'exert chosen character', 'exert all your characters', 'ready all your characters')",
-
   parse: (input: CstNode | string): ExertEffect | ReadyEffect | null => {
     if (typeof input === "string") {
       return parseFromText(input);
@@ -215,4 +212,7 @@ export const exertEffectParser: EffectParser = {
         | undefined,
     );
   },
+
+  pattern:
+    /(exert|ready)\s+(?:all\s+)?(?:your\s+)?(?:characters|chosen|this|another|an?)\s+character/i,
 };

@@ -37,13 +37,7 @@ export function createCardId(id: string): CardId {
 /**
  * Card rarity levels
  */
-export type CardRarity =
-  | "common"
-  | "uncommon"
-  | "rare"
-  | "epic"
-  | "legendary"
-  | "champion";
+export type CardRarity = "common" | "uncommon" | "rare" | "epic" | "legendary" | "champion";
 
 // ============================================================================
 // Base Card Interface

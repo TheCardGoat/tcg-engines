@@ -5,9 +5,9 @@ import { shieldOfVirtue } from "./135-shield-of-virtue";
 describe("Shield of Virtue - undefined", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [shieldOfVirtue] });
-  //   expect(testEngine.getCardModel(shieldOfVirtue).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [shieldOfVirtue] });
+  //   Expect(testEngine.getCardModel(shieldOfVirtue).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,32 +17,32 @@ describe("Shield of Virtue - undefined", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { heiheiBoatSnack } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { shieldOfVirtue } from "@lorcanito/lorcana-engine/cards/001/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { heiheiBoatSnack } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { shieldOfVirtue } from "@lorcanito/lorcana-engine/cards/001/items/items";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Shield of Virtue", () => {
-//   it("Fireproof - Ready chosen character. They can't quest for the rest of this turn.", () => {
-//     const testStore = new TestStore({
-//       inkwell: 3,
-//       play: [shieldOfVirtue, heiheiBoatSnack],
+// Describe("Shield of Virtue", () => {
+//   It("Fireproof - Ready chosen character. They can't quest for the rest of this turn.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: 3,
+//       Play: [shieldOfVirtue, heiheiBoatSnack],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("play", shieldOfVirtue.id);
-//     const target = testStore.getByZoneAndId("play", heiheiBoatSnack.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("play", shieldOfVirtue.id);
+//     Const target = testStore.getByZoneAndId("play", heiheiBoatSnack.id);
 //
-//     target.updateCardMeta({ exerted: true });
+//     Target.updateCardMeta({ exerted: true });
 //
-//     cardUnderTest.activate();
+//     CardUnderTest.activate();
 //
-//     expect(target.meta.exerted).toBeTruthy();
-//     testStore.resolveTopOfStack({ targetId: target.instanceId });
-//     expect(target.meta.exerted).toBeFalsy();
+//     Expect(target.meta.exerted).toBeTruthy();
+//     TestStore.resolveTopOfStack({ targetId: target.instanceId });
+//     Expect(target.meta.exerted).toBeFalsy();
 //
-//     target.quest();
+//     Target.quest();
 //
-//     expect(testStore.store.tableStore.getTable("player_one").lore).toEqual(0);
+//     Expect(testStore.store.tableStore.getTable("player_one").lore).toEqual(0);
 //   });
 // });
 //

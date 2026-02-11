@@ -3,28 +3,28 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   figaroTuxedoCat,
-//   scarab,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   FigaroTuxedoCat,
+//   Scarab,
 // } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Figaro - Tuxedo Cat", () => {
-//   it("PLAYFULNESS Opposing items enter play exerted.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Figaro - Tuxedo Cat", () => {
+//   It("PLAYFULNESS Opposing items enter play exerted.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: scarab.cost,
-//         hand: [scarab],
+//         Inkwell: scarab.cost,
+//         Hand: [scarab],
 //       },
 //       {
-//         play: [figaroTuxedoCat],
+//         Play: [figaroTuxedoCat],
 //       },
 //     );
 //
-//     await testEngine.playCard(scarab);
+//     Await testEngine.playCard(scarab);
 //
-//     expect(testEngine.getCardModel(scarab).exerted).toEqual(true);
+//     Expect(testEngine.getCardModel(scarab).exerted).toEqual(true);
 //   });
 // });
 //

@@ -1,18 +1,14 @@
 import { afterEach, beforeEach, describe, expect, it } from "bun:test";
 import { createPlayerId } from "@tcg/core";
-import {
-  LorcanaTestEngine,
-  PLAYER_ONE,
-  PLAYER_TWO,
-} from "../../../testing/lorcana-test-engine";
+import { LorcanaTestEngine, PLAYER_ONE, PLAYER_TWO } from "../../../testing/lorcana-test-engine";
 
 describe("Move: Alter Hand (Mulligan)", () => {
   let testEngine: LorcanaTestEngine;
 
   beforeEach(() => {
     testEngine = new LorcanaTestEngine(
-      { hand: 7, deck: 10 },
-      { hand: 7, deck: 10 },
+      { deck: 10, hand: 7 },
+      { deck: 10, hand: 7 },
       { skipPreGame: false },
     );
 
@@ -157,7 +153,7 @@ describe("Move: Alter Hand (Mulligan)", () => {
       expect(ctx.pendingMulligan).toHaveLength(0);
 
       // Note: Segment transition happens via flow manager's endIf check
-      // which is triggered by endPhase(). This works in real gameplay.
+      // Which is triggered by endPhase(). This works in real gameplay.
     });
 
     it("should respect priority - can't mulligan out of turn", () => {
@@ -168,11 +164,11 @@ describe("Move: Alter Hand (Mulligan)", () => {
       testEngine.changeActivePlayer(PLAYER_TWO);
 
       const result = testEngine.engine.executeMove("alterHand", {
-        playerId: createPlayerId(PLAYER_TWO),
         params: {
-          playerId: createPlayerId(PLAYER_TWO),
           cardsToMulligan: [],
+          playerId: createPlayerId(PLAYER_TWO),
         },
+        playerId: createPlayerId(PLAYER_TWO),
       });
 
       expect(result.success).toBe(false);
@@ -190,11 +186,11 @@ describe("Move: Alter Hand (Mulligan)", () => {
       testEngine.changeActivePlayer(PLAYER_ONE);
 
       const result = testEngine.engine.executeMove("alterHand", {
-        playerId: createPlayerId(PLAYER_ONE),
         params: {
-          playerId: createPlayerId(PLAYER_ONE),
           cardsToMulligan: ["invalid-card-id-12345"],
+          playerId: createPlayerId(PLAYER_ONE),
         },
+        playerId: createPlayerId(PLAYER_ONE),
       });
 
       expect(result.success).toBe(false);
@@ -212,11 +208,11 @@ describe("Move: Alter Hand (Mulligan)", () => {
       const cardInDeck = deckCards[0];
 
       const result = testEngine.engine.executeMove("alterHand", {
-        playerId: createPlayerId(PLAYER_ONE),
         params: {
-          playerId: createPlayerId(PLAYER_ONE),
           cardsToMulligan: [cardInDeck],
+          playerId: createPlayerId(PLAYER_ONE),
         },
+        playerId: createPlayerId(PLAYER_ONE),
       });
 
       expect(result.success).toBe(false);
@@ -234,11 +230,11 @@ describe("Move: Alter Hand (Mulligan)", () => {
       const opponentCard = opponentHand[0];
 
       const result = testEngine.engine.executeMove("alterHand", {
-        playerId: createPlayerId(PLAYER_ONE),
         params: {
-          playerId: createPlayerId(PLAYER_ONE),
           cardsToMulligan: [opponentCard],
+          playerId: createPlayerId(PLAYER_ONE),
         },
+        playerId: createPlayerId(PLAYER_ONE),
       });
 
       expect(result.success).toBe(false);
@@ -255,11 +251,11 @@ describe("Move: Alter Hand (Mulligan)", () => {
       const tooManyCards = [...hand, ...hand]; // Duplicate to get 14 cards
 
       const result = testEngine.engine.executeMove("alterHand", {
-        playerId: createPlayerId(PLAYER_ONE),
         params: {
-          playerId: createPlayerId(PLAYER_ONE),
           cardsToMulligan: tooManyCards,
+          playerId: createPlayerId(PLAYER_ONE),
         },
+        playerId: createPlayerId(PLAYER_ONE),
       });
 
       expect(result.success).toBe(false);
@@ -287,11 +283,11 @@ describe("Move: Alter Hand (Mulligan)", () => {
       testEngine.changeActivePlayer(PLAYER_ONE);
 
       const result = testEngine.engine.executeMove("alterHand", {
-        playerId: createPlayerId(PLAYER_ONE),
         params: {
-          playerId: createPlayerId(PLAYER_ONE),
           cardsToMulligan: [],
+          playerId: createPlayerId(PLAYER_ONE),
         },
+        playerId: createPlayerId(PLAYER_ONE),
       });
 
       expect(result.success).toBe(false);
@@ -314,11 +310,11 @@ describe("Move: Alter Hand (Mulligan)", () => {
       // Try to mulligan again - should fail because not in pending list
       // (Priority has passed to PLAYER_TWO, so this will fail on priority check)
       const result = testEngine.engine.executeMove("alterHand", {
-        playerId: createPlayerId(PLAYER_ONE),
         params: {
-          playerId: createPlayerId(PLAYER_ONE),
           cardsToMulligan: [],
+          playerId: createPlayerId(PLAYER_ONE),
         },
+        playerId: createPlayerId(PLAYER_ONE),
       });
 
       expect(result.success).toBe(false);

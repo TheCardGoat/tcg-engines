@@ -1,26 +1,8 @@
 import type { ItemCard } from "@tcg/lorcana-types";
 
 export const coconutBasketundefined: ItemCard = {
-  id: "hoh",
-  cardType: "item",
-  name: "Coconut Basket",
-  version: "undefined",
-  fullName: "Coconut Basket - undefined",
-  inkType: ["sapphire"],
-  franchise: "Disney",
-  set: "001",
-  text: "**CONSIDER THE COCONUT** Whenever you play a character,\ryou may remove up to 2 damage from chosen character.",
-  cost: 2,
-  cardNumber: 166,
-  inkable: true,
-  externalIds: {
-    ravensburger: "",
-  },
   abilities: [
     {
-      type: "action",
-      id: "d2s-1",
-      text: "**TREAT** You may remove up to 3 damage from chosen character.",
       effect: {
         type: "optional",
         effect: {
@@ -37,41 +19,59 @@ export const coconutBasketundefined: ItemCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "d2s-1",
+      text: "**TREAT** You may remove up to 3 damage from chosen character.",
+      type: "action",
     },
   ],
+  cardNumber: 166,
+  cardType: "item",
+  cost: 2,
+  externalIds: {
+    ravensburger: "",
+  },
+  franchise: "Disney",
+  fullName: "Coconut Basket - undefined",
+  id: "hoh",
+  inkType: ["sapphire"],
+  inkable: true,
+  name: "Coconut Basket",
+  set: "001",
+  text: "**CONSIDER THE COCONUT** Whenever you play a character,\ryou may remove up to 2 damage from chosen character.",
+  version: "undefined",
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { wheneverTargetPlays } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import { wheneverTargetPlays } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// Import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const coconutbasket: LorcanitoItemCard = {
-//   characteristics: ["item"],
-//   id: "hoh",
-//   reprints: ["bxv"],
+// Export const coconutbasket: LorcanitoItemCard = {
+//   Characteristics: ["item"],
+//   Id: "hoh",
+//   Reprints: ["bxv"],
 //
-//   name: "Coconut Basket",
-//   text: "**CONSIDER THE COCONUT** Whenever you play a character,\ryou may remove up to 2 damage from chosen character.",
-//   type: "item",
-//   abilities: [
-//     wheneverTargetPlays({
-//       optional: true,
-//       name: "Consider the Coconut",
-//       text: "Whenever you play a character, you may remove up to 2 damage from chosen character.",
-//       triggerFilter: [
+//   Name: "Coconut Basket",
+//   Text: "**CONSIDER THE COCONUT** Whenever you play a character,\ryou may remove up to 2 damage from chosen character.",
+//   Type: "item",
+//   Abilities: [
+//     WheneverTargetPlays({
+//       Optional: true,
+//       Name: "Consider the Coconut",
+//       Text: "Whenever you play a character, you may remove up to 2 damage from chosen character.",
+//       TriggerFilter: [
 //         { filter: "owner", value: "self" },
 //         { filter: "type", value: "character" },
 //         { filter: "zone", value: "play" },
 //       ],
-//       effects: [
+//       Effects: [
 //         {
-//           type: "heal",
-//           amount: 2,
-//           upTo: true,
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
+//           Type: "heal",
+//           Amount: 2,
+//           UpTo: true,
+//           Target: {
+//             Type: "card",
+//             Value: 1,
+//             Filters: [
 //               { filter: "zone", value: "play" },
 //               { filter: "type", value: "character" },
 //             ],
@@ -80,17 +80,17 @@ export const coconutBasketundefined: ItemCard = {
 //       ],
 //     }),
 //   ],
-//   flavour:
+//   Flavour:
 //     "The coconut is a versatile gift from the gods, used to make nearly everything - including baskets to carry more coconuts.",
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 2,
-//   illustrator: "Milica Celikovic",
-//   number: 166,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 493482,
+//   Inkwell: true,
+//   Colors: ["sapphire"],
+//   Cost: 2,
+//   Illustrator: "Milica Celikovic",
+//   Number: 166,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 493482,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

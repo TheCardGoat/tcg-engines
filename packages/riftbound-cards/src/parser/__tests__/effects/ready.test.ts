@@ -17,10 +17,10 @@ describe("Effect: Ready", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "spell",
           effect: expect.objectContaining({
             type: "ready",
           }),
+          type: "spell",
         }),
       );
     });
@@ -62,9 +62,7 @@ describe("Effect: Ready", () => {
 
   describe("ready something else", () => {
     it.skip("should parse 'You may ready something else that's exhausted.'", () => {
-      const result = parseAbilities(
-        "You may ready something else that's exhausted.",
-      );
+      const result = parseAbilities("You may ready something else that's exhausted.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);

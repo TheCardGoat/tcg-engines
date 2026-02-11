@@ -1,24 +1,24 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const drizellaSpoiledStepsister: LorcanitoCharacterCard = {
-//   id: "b62",
-//   name: "Drizella",
-//   title: "Spoiled Stepsister",
-//   characteristics: ["storyborn", "ally"],
-//   type: "character",
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 4,
-//   strength: 4,
-//   willpower: 4,
-//   illustrator: "Rianri Hidayat",
-//   number: 85,
-//   set: "007",
-//   externalIds: {
-//     tcgPlayer: 619452,
+// Export const drizellaSpoiledStepsister: LorcanitoCharacterCard = {
+//   Id: "b62",
+//   Name: "Drizella",
+//   Title: "Spoiled Stepsister",
+//   Characteristics: ["storyborn", "ally"],
+//   Type: "character",
+//   Inkwell: true,
+//   Colors: ["emerald"],
+//   Cost: 4,
+//   Strength: 4,
+//   Willpower: 4,
+//   Illustrator: "Rianri Hidayat",
+//   Number: 85,
+//   Set: "007",
+//   ExternalIds: {
+//     TcgPlayer: 619452,
 //   },
-//   rarity: "common",
-//   lore: 1,
+//   Rarity: "common",
+//   Lore: 1,
 // };
 //

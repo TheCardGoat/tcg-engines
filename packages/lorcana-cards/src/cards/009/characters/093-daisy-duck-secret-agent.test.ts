@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { daisyDuckSecretAgent } from "@lorcanito/lorcana-engine/cards/009/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { daisyDuckSecretAgent } from "@lorcanito/lorcana-engine/cards/009/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Daisy Duck - Secret Agent", () => {
-//   it.skip("**THWART** Whenever this character quests, each opponent chooses and discards a card.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: daisyDuckSecretAgent.cost,
-//       play: [daisyDuckSecretAgent],
-//       hand: [daisyDuckSecretAgent],
+// Describe("Daisy Duck - Secret Agent", () => {
+//   It.skip("**THWART** Whenever this character quests, each opponent chooses and discards a card.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: daisyDuckSecretAgent.cost,
+//       Play: [daisyDuckSecretAgent],
+//       Hand: [daisyDuckSecretAgent],
 //     });
 //
-//     await testEngine.playCard(daisyDuckSecretAgent);
+//     Await testEngine.playCard(daisyDuckSecretAgent);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

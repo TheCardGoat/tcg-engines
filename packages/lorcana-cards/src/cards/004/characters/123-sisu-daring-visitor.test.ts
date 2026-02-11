@@ -3,42 +3,42 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { rafikiMysticalFighter } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { sisuDaringVisitor } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { rafikiMysticalFighter } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { sisuDaringVisitor } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Sisu - Daring Visitor", () => {
-//   it("**Evasive** _(Only characters with Evasive can challenge this character.)_", () => {
-//     const testStore = new TestStore({
-//       play: [sisuDaringVisitor],
+// Describe("Sisu - Daring Visitor", () => {
+//   It("**Evasive** _(Only characters with Evasive can challenge this character.)_", () => {
+//     Const testStore = new TestStore({
+//       Play: [sisuDaringVisitor],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       sisuDaringVisitor.id,
+//       SisuDaringVisitor.id,
 //     );
-//     expect(cardUnderTest.hasEvasive).toBe(true);
+//     Expect(cardUnderTest.hasEvasive).toBe(true);
 //   });
 //
-//   it("**BRING ON THE HEAT!** When you play this character, banish chosen opposing character with 1 {S} or less.", () => {
-//     const testStore = new TestStore(
+//   It("**BRING ON THE HEAT!** When you play this character, banish chosen opposing character with 1 {S} or less.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: sisuDaringVisitor.cost,
-//         hand: [sisuDaringVisitor],
+//         Inkwell: sisuDaringVisitor.cost,
+//         Hand: [sisuDaringVisitor],
 //       },
 //       {
-//         play: [rafikiMysticalFighter],
+//         Play: [rafikiMysticalFighter],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getCard(sisuDaringVisitor);
-//     const target = testStore.getCard(rafikiMysticalFighter);
+//     Const cardUnderTest = testStore.getCard(sisuDaringVisitor);
+//     Const target = testStore.getCard(rafikiMysticalFighter);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveTopOfStack({ targets: [target] });
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.zone).toBe("discard");
+//     Expect(target.zone).toBe("discard");
 //   });
 // });
 //

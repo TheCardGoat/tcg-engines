@@ -1,40 +1,40 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
-// import { eachOfYourCharacters } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
+// Import { eachOfYourCharacters } from "@lorcanito/lorcana-engine/abilities/targets";
 //
-// export const amberChromiconItem: LorcanitoItemCard = {
-//   id: "ny4",
-//   missingTestCase: true,
-//   name: "Amber Chromicon",
-//   characteristics: ["item"],
-//   text: "**AMBER LIGHT** {E} – Remove up to 1 damage from each of your characters.",
-//   type: "item",
-//   abilities: [
+// Export const amberChromiconItem: LorcanitoItemCard = {
+//   Id: "ny4",
+//   MissingTestCase: true,
+//   Name: "Amber Chromicon",
+//   Characteristics: ["item"],
+//   Text: "**AMBER LIGHT** {E} – Remove up to 1 damage from each of your characters.",
+//   Type: "item",
+//   Abilities: [
 //     {
-//       type: "activated",
-//       costs: [{ type: "exert" }],
-//       name: "AMBER LIGHT",
-//       text: "{E} – Remove up to 1 damage from each of your characters.",
-//       effects: [
+//       Type: "activated",
+//       Costs: [{ type: "exert" }],
+//       Name: "AMBER LIGHT",
+//       Text: "{E} – Remove up to 1 damage from each of your characters.",
+//       Effects: [
 //         {
-//           type: "heal",
-//           amount: 1,
-//           upTo: true,
-//           target: eachOfYourCharacters,
+//           Type: "heal",
+//           Amount: 1,
+//           UpTo: true,
+//           Target: eachOfYourCharacters,
 //         },
 //       ],
 //     },
 //   ],
-//   flavour: "Comfort the weak and weary.\n–Inscription",
-//   inkwell: true,
-//   colors: ["amber"],
-//   cost: 2,
-//   illustrator: "Dustin Panzino",
-//   number: 32,
-//   set: "SSK",
-//   externalIds: {
-//     tcgPlayer: 560093,
+//   Flavour: "Comfort the weak and weary.\n–Inscription",
+//   Inkwell: true,
+//   Colors: ["amber"],
+//   Cost: 2,
+//   Illustrator: "Dustin Panzino",
+//   Number: 32,
+//   Set: "SSK",
+//   ExternalIds: {
+//     TcgPlayer: 560093,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

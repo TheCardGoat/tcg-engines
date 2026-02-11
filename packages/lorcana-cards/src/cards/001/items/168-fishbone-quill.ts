@@ -1,63 +1,63 @@
 import type { ItemCard } from "@tcg/lorcana-types";
 
 export const fishboneQuill: ItemCard = {
-  id: "k4a",
-  cardType: "item",
-  name: "Fishbone Quill",
-  version: "undefined",
-  fullName: "Fishbone Quill - undefined",
-  inkType: ["sapphire"],
-  franchise: "Disney",
-  set: "001",
-  text: "**GO AHEAD AND SIGN** {E} − Put any card from your hand into your inkwell facedown.",
-  cost: 3,
-  cardNumber: 168,
-  inkable: true,
-  externalIds: {
-    ravensburger: "",
-  },
   abilities: [
     {
-      type: "action",
-      text: "**GO AHEAD AND SIGN** {E} − Put any card from your hand into your inkwell facedown.",
-      id: "k4a-1",
       effect: {
         type: "put-into-inkwell",
         source: "hand",
         target: "CONTROLLER",
         facedown: true,
       },
+      id: "k4a-1",
+      text: "**GO AHEAD AND SIGN** {E} − Put any card from your hand into your inkwell facedown.",
+      type: "action",
     },
   ],
+  cardNumber: 168,
+  cardType: "item",
+  cost: 3,
+  externalIds: {
+    ravensburger: "",
+  },
+  franchise: "Disney",
+  fullName: "Fishbone Quill - undefined",
+  id: "k4a",
+  inkType: ["sapphire"],
+  inkable: true,
+  name: "Fishbone Quill",
+  set: "001",
+  text: "**GO AHEAD AND SIGN** {E} − Put any card from your hand into your inkwell facedown.",
+  version: "undefined",
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { ActivatedAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { ActivatedAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const fishboneQuill: LorcanitoItemCard = {
-//   characteristics: ["item"],
-//   id: "k4a",
-//   name: "Fishbone Quill",
-//   text: "**GO AHEAD AND SIGN** {E} − Put any card from your hand into your inkwell facedown.",
-//   type: "item",
-//   abilities: [
+// Export const fishboneQuill: LorcanitoItemCard = {
+//   Characteristics: ["item"],
+//   Id: "k4a",
+//   Name: "Fishbone Quill",
+//   Text: "**GO AHEAD AND SIGN** {E} − Put any card from your hand into your inkwell facedown.",
+//   Type: "item",
+//   Abilities: [
 //     {
-//       type: "activated",
-//       name: "Go Ahead And Sign",
-//       text: "Put any card from your hand into your inkwell facedown.",
-//       costs: [{ type: "exert" }],
-//       isPrivate: true,
-//       effects: [
+//       Type: "activated",
+//       Name: "Go Ahead And Sign",
+//       Text: "Put any card from your hand into your inkwell facedown.",
+//       Costs: [{ type: "exert" }],
+//       IsPrivate: true,
+//       Effects: [
 //         {
-//           type: "move",
-//           to: "inkwell",
-//           exerted: false,
-//           isPrivate: true,
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
+//           Type: "move",
+//           To: "inkwell",
+//           Exerted: false,
+//           IsPrivate: true,
+//           Target: {
+//             Type: "card",
+//             Value: 1,
+//             Filters: [
 //               { filter: "owner", value: "self" },
 //               { filter: "zone", value: "hand" },
 //             ],
@@ -66,17 +66,17 @@ export const fishboneQuill: ItemCard = {
 //       ],
 //     } as ActivatedAbility,
 //   ],
-//   flavour:
+//   Flavour:
 //     "If you want to cross the bridge, my sweet, you've got to pay the toll. \n−Ursula",
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 3,
-//   number: 168,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 508830,
+//   Inkwell: true,
+//   Colors: ["sapphire"],
+//   Cost: 3,
+//   Number: 168,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 508830,
 //   },
-//   rarity: "rare",
-//   illustrator: "TBD",
+//   Rarity: "rare",
+//   Illustrator: "TBD",
 // };
 //

@@ -13,11 +13,7 @@ export { trackerConfig } from "./trackers/tracker-config";
 export { checkLoreVictory } from "./win-conditions/lore-victory";
 // Legacy exports (for backward compatibility)
 export * from "./zone-operations";
-export type {
-  LorcanaZoneConfig,
-  LorcanaZoneId,
-  LorcanaZoneVisibility,
-} from "./zones";
+export type { LorcanaZoneConfig, LorcanaZoneId, LorcanaZoneVisibility } from "./zones";
 export {
   getZoneConfig,
   isFacedownZone,

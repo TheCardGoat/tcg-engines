@@ -59,8 +59,8 @@ export class AbilityVisitor
 
     // For now, treat as activated ability (placeholder)
     return {
-      type: "activated",
       effect,
+      type: "activated",
     };
   }
 
@@ -77,9 +77,9 @@ export class AbilityVisitor
     const effect = ctx.effectPhrase ? this.visit(ctx.effectPhrase) : null;
 
     return {
-      type: "triggered",
-      trigger,
       effect,
+      trigger,
+      type: "triggered",
     };
   }
 
@@ -229,8 +229,8 @@ export class AbilityVisitor
     logger.info("Parsed draw effect from CST", { amount });
 
     return {
-      type: "draw",
       amount,
+      type: "draw",
     };
   }
 
@@ -248,8 +248,8 @@ export class AbilityVisitor
     logger.info("Parsed discard effect from CST", { amount });
 
     return {
-      type: "discard",
       amount,
+      type: "discard",
     };
   }
 
@@ -267,8 +267,8 @@ export class AbilityVisitor
     logger.info("Parsed damage effect from CST", { amount });
 
     return {
-      type: "damage",
       amount,
+      type: "damage",
     };
   }
 
@@ -291,8 +291,8 @@ export class AbilityVisitor
     logger.info("Parsed lore effect from CST", { amount, isGain });
 
     return {
-      type: "lore",
       amount: isGain ? amount : -amount,
+      type: "lore",
     };
   }
 
@@ -358,9 +358,9 @@ export class AbilityVisitor
     logger.info("Parsed stat modification effect from CST", { amount, stat });
 
     return {
-      type: "statModification",
       amount,
       stat,
+      type: "statModification",
     };
   }
 
@@ -377,8 +377,8 @@ export class AbilityVisitor
     logger.info("Parsed keyword effect from CST", { keyword });
 
     return {
-      type: "keyword",
       keyword,
+      type: "keyword",
     };
   }
 }

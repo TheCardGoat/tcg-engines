@@ -1,29 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const scarShamelessFirebrand: CharacterCard = {
-  id: "mm7",
-  cardType: "character",
-  name: "Scar",
-  version: "Shameless Firebrand",
-  fullName: "Scar - Shameless Firebrand",
-  inkType: ["ruby"],
-  franchise: "Disney",
-  set: "001",
-  text: "**Shift** 6 _(You may pay 6 {I} to play this on top of one of your characters named Scar.)_\n**ROUSING SPEECH** When you play this character, ready your characters with cost 3 or less. They can",
-  cost: 8,
-  strength: 6,
-  willpower: 6,
-  lore: 1,
-  cardNumber: 123,
-  inkable: true,
-  externalIds: {
-    ravensburger: "",
-  },
   abilities: [
     {
-      type: "action",
-      text: "**Shift** 6 _(You may pay 6 {I} to play this on top of one of your characters named Scar.)_\n**ROUSING SPEECH** When you play this character, ready your characters with cost 3 or less. They can",
-      id: "mm7-1",
       effect: {
         type: "optional",
         effect: {
@@ -32,57 +11,78 @@ export const scarShamelessFirebrand: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "mm7-1",
+      text: "**Shift** 6 _(You may pay 6 {I} to play this on top of one of your characters named Scar.)_\n**ROUSING SPEECH** When you play this character, ready your characters with cost 3 or less. They can",
+      type: "action",
     },
   ],
+  cardNumber: 123,
+  cardType: "character",
   classifications: ["Floodborn", "Villain", "King"],
+  cost: 8,
+  externalIds: {
+    ravensburger: "",
+  },
+  franchise: "Disney",
+  fullName: "Scar - Shameless Firebrand",
+  id: "mm7",
+  inkType: ["ruby"],
+  inkable: true,
+  lore: 1,
+  name: "Scar",
+  set: "001",
+  strength: 6,
+  text: "**Shift** 6 _(You may pay 6 {I} to play this on top of one of your characters named Scar.)_\n**ROUSING SPEECH** When you play this character, ready your characters with cost 3 or less. They can",
+  version: "Shameless Firebrand",
+  willpower: 6,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { shiftAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-// import { readyAndCantQuest } from "@lorcanito/lorcana-engine/effects/effects";
+// Import { shiftAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import { readyAndCantQuest } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const scarShamelessFirebrand: LorcanitoCharacterCard = {
-//   id: "mm7",
-//   name: "Scar",
-//   title: "Shameless Firebrand",
-//   characteristics: ["floodborn", "villain", "king"],
-//   text: "**Shift** 6 _(You may pay 6 {I} to play this on top of one of your characters named Scar.)_\n**ROUSING SPEECH** When you play this character, ready your characters with cost 3 or less. They can't quest for the rest of this turn.",
-//   type: "character",
-//   abilities: [
-//     shiftAbility(6, "Scar"),
-//     whenYouPlayThisCharAbility({
-//       type: "resolution",
-//       name: "ROUSING SPEECH",
-//       text: "When you play this character, ready your characters with cost 3 or less. They can't quest for the rest of this turn",
-//       effects: readyAndCantQuest({
-//         type: "card",
-//         value: "all",
-//         filters: [
+// Export const scarShamelessFirebrand: LorcanitoCharacterCard = {
+//   Id: "mm7",
+//   Name: "Scar",
+//   Title: "Shameless Firebrand",
+//   Characteristics: ["floodborn", "villain", "king"],
+//   Text: "**Shift** 6 _(You may pay 6 {I} to play this on top of one of your characters named Scar.)_\n**ROUSING SPEECH** When you play this character, ready your characters with cost 3 or less. They can't quest for the rest of this turn.",
+//   Type: "character",
+//   Abilities: [
+//     ShiftAbility(6, "Scar"),
+//     WhenYouPlayThisCharAbility({
+//       Type: "resolution",
+//       Name: "ROUSING SPEECH",
+//       Text: "When you play this character, ready your characters with cost 3 or less. They can't quest for the rest of this turn",
+//       Effects: readyAndCantQuest({
+//         Type: "card",
+//         Value: "all",
+//         Filters: [
 //           { filter: "type", value: "character" },
 //           { filter: "zone", value: "play" },
 //           { filter: "owner", value: "self" },
 //           {
-//             filter: "attribute",
-//             value: "cost",
-//             comparison: { operator: "lte", value: 3 },
+//             Filter: "attribute",
+//             Value: "cost",
+//             Comparison: { operator: "lte", value: 3 },
 //           },
 //         ],
 //       }),
 //     }),
 //   ],
-//   colors: ["ruby"],
-//   cost: 8,
-//   strength: 6,
-//   willpower: 6,
-//   lore: 1,
-//   illustrator: "Jenna Gray",
-//   number: 123,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 507467,
+//   Colors: ["ruby"],
+//   Cost: 8,
+//   Strength: 6,
+//   Willpower: 6,
+//   Lore: 1,
+//   Illustrator: "Jenna Gray",
+//   Number: 123,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 507467,
 //   },
-//   rarity: "rare",
+//   Rarity: "rare",
 // };
 //

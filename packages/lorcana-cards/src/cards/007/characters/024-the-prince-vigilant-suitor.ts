@@ -1,59 +1,59 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const thePrinceVigilantSuitor: CharacterCard = {
-  id: "ot0",
-  cardType: "character",
-  name: "The Prince",
-  version: "Vigilant Suitor",
-  fullName: "The Prince - Vigilant Suitor",
-  inkType: ["amber"],
-  franchise: "Snow White",
-  set: "007",
-  text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
-  cost: 2,
-  strength: 0,
-  willpower: 5,
-  lore: 1,
-  cardNumber: 24,
-  inkable: false,
-  externalIds: {
-    ravensburger: "5966f7b1df7bd6ef309aa7694d0a45d89624c970",
-  },
   abilities: [
     {
       id: "ot0-1",
+      keyword: "Bodyguard",
       text: "Bodyguard",
       type: "keyword",
-      keyword: "Bodyguard",
     },
   ],
+  cardNumber: 24,
+  cardType: "character",
   classifications: ["Storyborn", "Hero", "Prince"],
+  cost: 2,
+  externalIds: {
+    ravensburger: "5966f7b1df7bd6ef309aa7694d0a45d89624c970",
+  },
+  franchise: "Snow White",
+  fullName: "The Prince - Vigilant Suitor",
+  id: "ot0",
+  inkType: ["amber"],
+  inkable: false,
+  lore: 1,
+  name: "The Prince",
+  set: "007",
+  strength: 0,
+  text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
+  version: "Vigilant Suitor",
+  willpower: 5,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { bodyguardAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import { bodyguardAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const thePrinceChallengerOfTheRise: LorcanitoCharacterCard = {
-//   id: "yba",
-//   name: "The Prince",
-//   title: "Vigilant Suitor",
-//   characteristics: ["storyborn", "hero", "prince"],
-//   text: "Bodyguard ",
-//   type: "character",
-//   abilities: [bodyguardAbility],
-//   inkwell: false,
-//   colors: ["amber"],
-//   cost: 2,
-//   strength: 0,
-//   willpower: 5,
-//   illustrator: "João Moura",
-//   number: 24,
-//   set: "007",
-//   externalIds: {
-//     tcgPlayer: 619419,
+// Export const thePrinceChallengerOfTheRise: LorcanitoCharacterCard = {
+//   Id: "yba",
+//   Name: "The Prince",
+//   Title: "Vigilant Suitor",
+//   Characteristics: ["storyborn", "hero", "prince"],
+//   Text: "Bodyguard ",
+//   Type: "character",
+//   Abilities: [bodyguardAbility],
+//   Inkwell: false,
+//   Colors: ["amber"],
+//   Cost: 2,
+//   Strength: 0,
+//   Willpower: 5,
+//   Illustrator: "João Moura",
+//   Number: 24,
+//   Set: "007",
+//   ExternalIds: {
+//     TcgPlayer: 619419,
 //   },
-//   rarity: "uncommon",
-//   lore: 1,
+//   Rarity: "uncommon",
+//   Lore: 1,
 // };
 //

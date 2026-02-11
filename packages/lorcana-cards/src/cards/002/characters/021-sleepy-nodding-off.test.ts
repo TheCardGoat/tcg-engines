@@ -3,21 +3,21 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { sleepyNoddingOff } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { sleepyNoddingOff } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Sleepy - Nodding Off", () => {
-//   it("**YAWN!** This character enters play exerted.", () => {
-//     const testStore = new TestStore({
-//       inkwell: sleepyNoddingOff.cost,
-//       hand: [sleepyNoddingOff],
+// Describe("Sleepy - Nodding Off", () => {
+//   It("**YAWN!** This character enters play exerted.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: sleepyNoddingOff.cost,
+//       Hand: [sleepyNoddingOff],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", sleepyNoddingOff.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", sleepyNoddingOff.id);
 //
-//     cardUnderTest.playFromHand();
-//     expect(cardUnderTest.ready).toEqual(false);
+//     CardUnderTest.playFromHand();
+//     Expect(cardUnderTest.ready).toEqual(false);
 //   });
 // });
 //

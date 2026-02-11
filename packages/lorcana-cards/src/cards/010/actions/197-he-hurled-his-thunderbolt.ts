@@ -1,25 +1,8 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
 export const heHurledHisThunderbolt: ActionCard = {
-  id: "h6t",
-  cardType: "action",
-  name: "He Hurled His Thunderbolt",
-  inkType: ["steel"],
-  franchise: "Hercules",
-  set: "010",
-  text: "Deal 4 damage to chosen character. Your Deity characters gain Challenger +2 this turn. (They get +2 {S} while challenging.)",
-  actionSubtype: "song",
-  cost: 4,
-  cardNumber: 197,
-  inkable: false,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "3df3672475d3e1613abd59e34cc44da9380373b9",
-  },
   abilities: [
     {
-      id: "h6t-1",
-      type: "static",
       effect: {
         type: "sequence",
         steps: [
@@ -43,7 +26,24 @@ export const heHurledHisThunderbolt: ActionCard = {
           },
         ],
       },
+      id: "h6t-1",
       text: "Deal 4 damage to chosen character. Your Deity characters gain Challenger +2 this turn.",
+      type: "static",
     },
   ],
+  actionSubtype: "song",
+  cardNumber: 197,
+  cardType: "action",
+  cost: 4,
+  externalIds: {
+    ravensburger: "3df3672475d3e1613abd59e34cc44da9380373b9",
+  },
+  franchise: "Hercules",
+  id: "h6t",
+  inkType: ["steel"],
+  inkable: false,
+  missingTests: true,
+  name: "He Hurled His Thunderbolt",
+  set: "010",
+  text: "Deal 4 damage to chosen character. Your Deity characters gain Challenger +2 this turn. (They get +2 {S} while challenging.)",
 };

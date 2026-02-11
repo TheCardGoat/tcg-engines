@@ -1,35 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const idunaCaringMother: CharacterCard = {
-  id: "178",
-  cardType: "character",
-  name: "Iduna",
-  version: "Caring Mother",
-  fullName: "Iduna - Caring Mother",
-  inkType: ["sapphire"],
-  franchise: "Frozen",
-  set: "004",
-  text: "ENDURING LOVE When this character is banished, you may put this card into your inkwell facedown and exerted.",
-  cost: 4,
-  strength: 3,
-  willpower: 3,
-  lore: 1,
-  cardNumber: 147,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "9bd57fcb99a507768c2ed76d095a7b67706581f7",
-  },
   abilities: [
     {
-      id: "178-1",
-      type: "triggered",
-      name: "ENDURING LOVE",
-      trigger: {
-        event: "banish",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -41,8 +14,35 @@ export const idunaCaringMother: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "178-1",
+      name: "ENDURING LOVE",
       text: "ENDURING LOVE When this character is banished, you may put this card into your inkwell facedown and exerted.",
+      trigger: {
+        event: "banish",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 147,
+  cardType: "character",
   classifications: ["Storyborn", "Mentor", "Queen"],
+  cost: 4,
+  externalIds: {
+    ravensburger: "9bd57fcb99a507768c2ed76d095a7b67706581f7",
+  },
+  franchise: "Frozen",
+  fullName: "Iduna - Caring Mother",
+  id: "178",
+  inkType: ["sapphire"],
+  inkable: true,
+  lore: 1,
+  missingTests: true,
+  name: "Iduna",
+  set: "004",
+  strength: 3,
+  text: "ENDURING LOVE When this character is banished, you may put this card into your inkwell facedown and exerted.",
+  version: "Caring Mother",
+  willpower: 3,
 };

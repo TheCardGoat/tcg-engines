@@ -1,76 +1,76 @@
 import type { ItemCard } from "@tcg/lorcana-types";
 
 export const poisonedApple: ItemCard = {
-  id: "g0y",
-  cardType: "item",
-  name: "Poisoned Apple",
-  version: "undefined",
-  fullName: "Poisoned Apple - undefined",
-  inkType: ["ruby"],
-  franchise: "Disney",
-  set: "001",
-  text: "**TAKE A BITE . . . ** 1 {I}, Banish this item − Exert chosen character. If a Princess character is chosen, banish her instead.",
-  cost: 3,
+  abilities: [],
   cardNumber: 134,
-  inkable: true,
+  cardType: "item",
+  cost: 3,
   externalIds: {
     ravensburger: "",
   },
-  abilities: [],
+  franchise: "Disney",
+  fullName: "Poisoned Apple - undefined",
+  id: "g0y",
+  inkType: ["ruby"],
+  inkable: true,
+  name: "Poisoned Apple",
+  set: "001",
+  text: "**TAKE A BITE . . . ** 1 {I}, Banish this item − Exert chosen character. If a Princess character is chosen, banish her instead.",
+  version: "undefined",
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { ActivatedAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-// import type { CardEffectTarget } from "@lorcanito/lorcana-engine/effects/effectTargets";
-// import type {
+// Import type { ActivatedAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { CardEffectTarget } from "@lorcanito/lorcana-engine/effects/effectTargets";
+// Import type {
 //   ExertEffect,
 //   TargetConditionalEffect,
 // } from "@lorcanito/lorcana-engine/effects/effectTypes";
 //
-// const chosenCharacter: CardEffectTarget = {
-//   type: "card",
-//   value: 1,
-//   filters: [
+// Const chosenCharacter: CardEffectTarget = {
+//   Type: "card",
+//   Value: 1,
+//   Filters: [
 //     { filter: "type", value: "character" },
 //     { filter: "zone", value: "play" },
 //   ],
 // };
 //
-// export const poisonedApple: LorcanitoItemCard = {
-//   characteristics: ["item"],
-//   id: "g0y",
+// Export const poisonedApple: LorcanitoItemCard = {
+//   Characteristics: ["item"],
+//   Id: "g0y",
 //
-//   name: "Poisoned Apple",
-//   text: "**TAKE A BITE . . . ** 1 {I}, Banish this item − Exert chosen character. If a Princess character is chosen, banish her instead.",
-//   type: "item",
-//   abilities: [
+//   Name: "Poisoned Apple",
+//   Text: "**TAKE A BITE . . . ** 1 {I}, Banish this item − Exert chosen character. If a Princess character is chosen, banish her instead.",
+//   Type: "item",
+//   Abilities: [
 //     {
-//       type: "activated",
-//       name: "Poisoned Apple",
-//       text: "Banish this item − Exert chosen character. If a Princess character is chosen, banish her instead.",
-//       costs: [{ type: "banish" }, { type: "ink", amount: 1 }],
-//       effects: [
+//       Type: "activated",
+//       Name: "Poisoned Apple",
+//       Text: "Banish this item − Exert chosen character. If a Princess character is chosen, banish her instead.",
+//       Costs: [{ type: "banish" }, { type: "ink", amount: 1 }],
+//       Effects: [
 //         {
-//           type: "target-conditional",
-//           autoResolve: false,
+//           Type: "target-conditional",
+//           AutoResolve: false,
 //           // TODO: RE implement conditional target, this is not correct
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
+//           Target: {
+//             Type: "card",
+//             Value: 1,
+//             Filters: [
 //               { filter: "characteristics", value: ["princess"] },
 //               { filter: "type", value: "character" },
 //               { filter: "zone", value: "play" },
 //             ],
 //           },
-//           effects: [
+//           Effects: [
 //             {
-//               type: "banish",
-//               target: {
-//                 type: "card",
-//                 value: 1,
-//                 filters: [
+//               Type: "banish",
+//               Target: {
+//                 Type: "card",
+//                 Value: 1,
+//                 Filters: [
 //                   { filter: "characteristics", value: ["princess"] },
 //                   { filter: "type", value: "character" },
 //                   { filter: "zone", value: "play" },
@@ -78,27 +78,27 @@ export const poisonedApple: ItemCard = {
 //               },
 //             },
 //           ],
-//           fallback: [
+//           Fallback: [
 //             {
-//               type: "exert",
-//               exert: true,
-//               target: chosenCharacter,
+//               Type: "exert",
+//               Exert: true,
+//               Target: chosenCharacter,
 //             } as ExertEffect,
 //           ],
 //         } as TargetConditionalEffect,
 //       ],
 //     } as ActivatedAbility,
 //   ],
-//   flavour:
+//   Flavour:
 //     "One taste of the poisoned apple, and the victim's eyes will close forever. . . . \n−The Queen",
-//   colors: ["ruby"],
-//   cost: 3,
-//   illustrator: "Andrew Trabbold",
-//   number: 134,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 507862,
+//   Colors: ["ruby"],
+//   Cost: 3,
+//   Illustrator: "Andrew Trabbold",
+//   Number: 134,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 507862,
 //   },
-//   rarity: "rare",
+//   Rarity: "rare",
 // };
 //

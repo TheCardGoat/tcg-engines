@@ -3,31 +3,31 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   nothingToHide,
-//   zeroToHero,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   NothingToHide,
+//   ZeroToHero,
 // } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
-// import { tiggerOneOfAKind } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { tiggerOneOfAKind } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Tigger - One of a Kind", () => {
-//   it("**ENERGETIC** Whenever you play an action, this character gets +2 {S} this turn.", () => {
-//     const testStore = new TestStore({
-//       inkwell: nothingToHide.cost + zeroToHero.cost,
-//       hand: [nothingToHide, zeroToHero],
-//       play: [tiggerOneOfAKind],
+// Describe("Tigger - One of a Kind", () => {
+//   It("**ENERGETIC** Whenever you play an action, this character gets +2 {S} this turn.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: nothingToHide.cost + zeroToHero.cost,
+//       Hand: [nothingToHide, zeroToHero],
+//       Play: [tiggerOneOfAKind],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("play", tiggerOneOfAKind.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("play", tiggerOneOfAKind.id);
 //
-//     const actionOne = testStore.getByZoneAndId("hand", nothingToHide.id);
-//     actionOne.playFromHand();
-//     expect(cardUnderTest.strength).toBe(tiggerOneOfAKind.strength + 2);
+//     Const actionOne = testStore.getByZoneAndId("hand", nothingToHide.id);
+//     ActionOne.playFromHand();
+//     Expect(cardUnderTest.strength).toBe(tiggerOneOfAKind.strength + 2);
 //
-//     const actionTwo = testStore.getByZoneAndId("hand", zeroToHero.id);
-//     actionTwo.playFromHand();
-//     expect(cardUnderTest.strength).toBe(tiggerOneOfAKind.strength + 4);
+//     Const actionTwo = testStore.getByZoneAndId("hand", zeroToHero.id);
+//     ActionTwo.playFromHand();
+//     Expect(cardUnderTest.strength).toBe(tiggerOneOfAKind.strength + 4);
 //   });
 // });
 //

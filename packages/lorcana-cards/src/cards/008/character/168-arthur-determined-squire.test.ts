@@ -3,81 +3,81 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   arthurKingVictorious,
-//   merlinBackFromTheBermudas,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   ArthurKingVictorious,
+//   MerlinBackFromTheBermudas,
 // } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import {
-//   arthurDeterminedSquire,
-//   liloCausingAnUproar,
+// Import {
+//   ArthurDeterminedSquire,
+//   LiloCausingAnUproar,
 // } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Arthur - Determined Squire", () => {
-//   it("NO MORE BOOKS Skip your turn's Draw step.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: arthurDeterminedSquire.cost,
-//       play: [arthurDeterminedSquire],
-//       hand: [],
-//       deck: [liloCausingAnUproar],
+// Describe("Arthur - Determined Squire", () => {
+//   It("NO MORE BOOKS Skip your turn's Draw step.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: arthurDeterminedSquire.cost,
+//       Play: [arthurDeterminedSquire],
+//       Hand: [],
+//       Deck: [liloCausingAnUproar],
 //     });
 //
-//     await testEngine.passTurn();
-//     await testEngine.passTurn();
+//     Await testEngine.passTurn();
+//     Await testEngine.passTurn();
 //
-//     expect(testEngine.getCardsByZone("hand", "player_one")).toHaveLength(0);
+//     Expect(testEngine.getCardsByZone("hand", "player_one")).toHaveLength(0);
 //   });
 //
-//   it("NO MORE BOOKS Allows your opponent to draw.", async () => {
-//     const testEngine = new TestEngine(
+//   It("NO MORE BOOKS Allows your opponent to draw.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: arthurDeterminedSquire.cost,
-//         play: [arthurDeterminedSquire],
-//         hand: [],
-//         deck: [],
+//         Inkwell: arthurDeterminedSquire.cost,
+//         Play: [arthurDeterminedSquire],
+//         Hand: [],
+//         Deck: [],
 //       },
 //       {
-//         inkwell: arthurDeterminedSquire.cost,
-//         play: [],
-//         hand: [],
-//         deck: [liloCausingAnUproar],
+//         Inkwell: arthurDeterminedSquire.cost,
+//         Play: [],
+//         Hand: [],
+//         Deck: [liloCausingAnUproar],
 //       },
 //     );
 //
-//     await testEngine.passTurn();
+//     Await testEngine.passTurn();
 //
-//     expect(testEngine.getCardsByZone("hand", "player_two")).toHaveLength(1);
-//     expect(testEngine.getCardModel(liloCausingAnUproar).zone).toEqual("hand");
+//     Expect(testEngine.getCardsByZone("hand", "player_two")).toHaveLength(1);
+//     Expect(testEngine.getCardModel(liloCausingAnUproar).zone).toEqual("hand");
 //   });
 //
-//   it("NO MORE BOOKS Is no longer active when shifted.", async () => {
-//     const testEngine = new TestEngine(
+//   It("NO MORE BOOKS Is no longer active when shifted.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: arthurKingVictorious.cost,
-//         play: [arthurDeterminedSquire],
-//         hand: [arthurKingVictorious],
-//         deck: [merlinBackFromTheBermudas],
+//         Inkwell: arthurKingVictorious.cost,
+//         Play: [arthurDeterminedSquire],
+//         Hand: [arthurKingVictorious],
+//         Deck: [merlinBackFromTheBermudas],
 //       },
 //       {
-//         inkwell: arthurDeterminedSquire.cost,
-//         play: [],
-//         hand: [],
-//         deck: [liloCausingAnUproar],
+//         Inkwell: arthurDeterminedSquire.cost,
+//         Play: [],
+//         Hand: [],
+//         Deck: [liloCausingAnUproar],
 //       },
 //     );
 //
-//     await testEngine.shiftCard({
-//       shifted: arthurDeterminedSquire,
-//       shifter: arthurKingVictorious,
+//     Await testEngine.shiftCard({
+//       Shifted: arthurDeterminedSquire,
+//       Shifter: arthurKingVictorious,
 //     });
-//     await testEngine.skipTopOfStack();
+//     Await testEngine.skipTopOfStack();
 //
-//     await testEngine.passTurn();
-//     await testEngine.passTurn();
+//     Await testEngine.passTurn();
+//     Await testEngine.passTurn();
 //
-//     expect(testEngine.getCardsByZone("hand", "player_one")).toHaveLength(1);
-//     expect(testEngine.getCardModel(merlinBackFromTheBermudas).zone).toEqual(
+//     Expect(testEngine.getCardsByZone("hand", "player_one")).toHaveLength(1);
+//     Expect(testEngine.getCardModel(merlinBackFromTheBermudas).zone).toEqual(
 //       "hand",
 //     );
 //   });

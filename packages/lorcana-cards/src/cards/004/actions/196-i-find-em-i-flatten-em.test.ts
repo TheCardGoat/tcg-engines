@@ -3,25 +3,25 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { iFindEmIFlattenEm } from "@lorcanito/lorcana-engine/cards/004/actions/actions";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { iFindEmIFlattenEm } from "@lorcanito/lorcana-engine/cards/004/actions/actions";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("I Find 'Em, I Flatten 'Em", () => {
-//   it.skip("_(A character with cost 4 or more can {E} to sing this song for free.)_Banish all items.", () => {
-//     const testStore = new TestStore({
-//       inkwell: iFindEmIFlattenEm.cost,
-//       hand: [iFindEmIFlattenEm],
+// Describe("I Find 'Em, I Flatten 'Em", () => {
+//   It.skip("_(A character with cost 4 or more can {E} to sing this song for free.)_Banish all items.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: iFindEmIFlattenEm.cost,
+//       Hand: [iFindEmIFlattenEm],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "hand",
-//       iFindEmIFlattenEm.id,
+//       IFindEmIFlattenEm.id,
 //     );
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

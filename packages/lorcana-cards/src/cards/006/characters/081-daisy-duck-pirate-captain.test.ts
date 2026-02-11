@@ -3,66 +3,66 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { pigletPoohPirateCaptain } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { diabloDevotedHerald } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import {
-//   daisyDuckPirateCaptain,
-//   perilousMazeWateryLabyrinth,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { pigletPoohPirateCaptain } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { diabloDevotedHerald } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import {
+//   DaisyDuckPirateCaptain,
+//   PerilousMazeWateryLabyrinth,
 // } from "@lorcanito/lorcana-engine/cards/006";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Distant Shores", () => {
-//   it("Whenever one of your Pirate characters quests while at a location, draw a card.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: daisyDuckPirateCaptain.cost + pigletPoohPirateCaptain.cost + 1,
-//       play: [
-//         pigletPoohPirateCaptain,
-//         daisyDuckPirateCaptain,
-//         perilousMazeWateryLabyrinth,
+// Describe("Distant Shores", () => {
+//   It("Whenever one of your Pirate characters quests while at a location, draw a card.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: daisyDuckPirateCaptain.cost + pigletPoohPirateCaptain.cost + 1,
+//       Play: [
+//         PigletPoohPirateCaptain,
+//         DaisyDuckPirateCaptain,
+//         PerilousMazeWateryLabyrinth,
 //       ],
-//       hand: 0,
-//       deck: 1,
+//       Hand: 0,
+//       Deck: 1,
 //     });
 //
-//     const loc = testEngine.getCardModel(perilousMazeWateryLabyrinth);
-//     const piglet = testEngine.getCardModel(pigletPoohPirateCaptain);
+//     Const loc = testEngine.getCardModel(perilousMazeWateryLabyrinth);
+//     Const piglet = testEngine.getCardModel(pigletPoohPirateCaptain);
 //
-//     await testEngine.moveToLocation({
-//       character: piglet,
-//       location: loc,
+//     Await testEngine.moveToLocation({
+//       Character: piglet,
+//       Location: loc,
 //     });
 //
-//     piglet.quest();
+//     Piglet.quest();
 //
-//     expect(testEngine.getZonesCardCount().deck).toEqual(0);
-//     expect(testEngine.getZonesCardCount().hand).toEqual(1);
+//     Expect(testEngine.getZonesCardCount().deck).toEqual(0);
+//     Expect(testEngine.getZonesCardCount().hand).toEqual(1);
 //   });
 //
-//   it("Questing character is not a pirate", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: daisyDuckPirateCaptain.cost + diabloDevotedHerald.cost + 1,
-//       play: [
-//         diabloDevotedHerald,
-//         daisyDuckPirateCaptain,
-//         perilousMazeWateryLabyrinth,
+//   It("Questing character is not a pirate", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: daisyDuckPirateCaptain.cost + diabloDevotedHerald.cost + 1,
+//       Play: [
+//         DiabloDevotedHerald,
+//         DaisyDuckPirateCaptain,
+//         PerilousMazeWateryLabyrinth,
 //       ],
-//       hand: 0,
-//       deck: 1,
+//       Hand: 0,
+//       Deck: 1,
 //     });
 //
-//     const loc = testEngine.getCardModel(perilousMazeWateryLabyrinth);
-//     const diablo = testEngine.getCardModel(diabloDevotedHerald);
+//     Const loc = testEngine.getCardModel(perilousMazeWateryLabyrinth);
+//     Const diablo = testEngine.getCardModel(diabloDevotedHerald);
 //
-//     await testEngine.moveToLocation({
-//       character: diablo,
-//       location: loc,
+//     Await testEngine.moveToLocation({
+//       Character: diablo,
+//       Location: loc,
 //     });
 //
-//     diablo.quest();
+//     Diablo.quest();
 //
-//     expect(testEngine.getZonesCardCount().deck).toEqual(1);
-//     expect(testEngine.getZonesCardCount().hand).toEqual(0);
+//     Expect(testEngine.getZonesCardCount().deck).toEqual(1);
+//     Expect(testEngine.getZonesCardCount().hand).toEqual(0);
 //   });
 // });
 //

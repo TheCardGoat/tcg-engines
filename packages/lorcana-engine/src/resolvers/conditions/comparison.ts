@@ -8,7 +8,9 @@ conditionRegistry.register<ComparisonCondition>("comparison", {
   complexity: 40,
   evaluate: (condition, sourceCard, { state, registry }) => {
     const resolve = (v: ComparisonValue): number => {
-      if ("value" in v) return v.value;
+      if ("value" in v) {
+        return v.value;
+      }
 
       // Types that have controller
       let targetController: string | undefined;
@@ -17,15 +19,17 @@ conditionRegistry.register<ComparisonCondition>("comparison", {
           targetController = sourceCard.controller;
         } else if (v.controller === "opponent") {
           const playerIds = Object.keys(state.external.loreScores);
-          targetController = playerIds.find(
-            (id) => id !== sourceCard.controller,
-          );
+          targetController = playerIds.find((id) => id !== sourceCard.controller);
         }
       }
 
-      if (v.type === "damage-on-self") return sourceCard.damage || 0;
+      if (v.type === "damage-on-self") {
+        return sourceCard.damage || 0;
+      }
 
-      if (!targetController && v.type !== "strength-of-self") return 0;
+      if (!targetController && v.type !== "strength-of-self") {
+        return 0;
+      }
 
       // Needs definitions for Strength/Willpower/Type checks
       if (v.type === "strength-of-self") {
@@ -42,29 +46,36 @@ conditionRegistry.register<ComparisonCondition>("comparison", {
     const left = resolve(condition.left);
     const right = resolve(condition.right);
 
-    // console.log("Comparison:", { left, right, op: condition.comparison, sourceCtrl: sourceCard.controller, keys: Object.keys(sourceCard) });
+    // Console.log("Comparison:", { left, right, op: condition.comparison, sourceCtrl: sourceCard.controller, keys: Object.keys(sourceCard) });
 
     switch (condition.comparison) {
       // @ts-expect-error - comparison operators mismatch
-      case "eq":
+      case "eq": {
         return left === right;
+      }
       // @ts-expect-error - comparison operators mismatch
-      case "ne":
+      case "ne": {
         return left !== right;
+      }
       // @ts-expect-error - comparison operators mismatch
-      case "gt":
+      case "gt": {
         return left > right;
+      }
       // @ts-expect-error - comparison operators mismatch
-      case "gte":
+      case "gte": {
         return left >= right;
+      }
       // @ts-expect-error - comparison operators mismatch
-      case "lt":
+      case "lt": {
         return left < right;
+      }
       // @ts-expect-error - comparison operators mismatch
-      case "lte":
+      case "lte": {
         return left <= right;
-      default:
+      }
+      default: {
         return false;
+      }
     }
   },
 });
@@ -75,7 +86,9 @@ function resolveValueWithState(
   targetOwnerId: string,
   registry: any, // Typing as any to avoid circular deps or complex type logic for now
 ): number {
-  if ("value" in v) return v.value;
+  if ("value" in v) {
+    return v.value;
+  }
   if (v.type === "lore") {
     return state.external.loreScores[targetOwnerId as any] || 0;
   }
@@ -93,7 +106,9 @@ function resolveValueWithState(
   }
   if (v.type === "character-count") {
     return Object.values(state.internal.cards).filter((c) => {
-      if (c.zone !== "play" || c.controller !== targetOwnerId) return false;
+      if (c.zone !== "play" || c.controller !== targetOwnerId) {
+        return false;
+      }
       const def = registry.getCard(c.definitionId);
       return def?.cardType === "character";
     }).length;

@@ -1,26 +1,8 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
 export const controlYourTemperundefined: ActionCard = {
-  id: "eny",
-  cardType: "action",
-  name: "Control Your Temper!",
-  version: "undefined",
-  fullName: "Control Your Temper! - undefined",
-  inkType: ["amber"],
-  franchise: "Disney",
-  set: "001",
-  text: "Chosen character gets -2 {S} this turn.",
-  cost: 1,
-  cardNumber: 26,
-  inkable: true,
-  externalIds: {
-    ravensburger: "",
-  },
   abilities: [
     {
-      type: "action",
-      id: "eny-1",
-      text: "Chosen character gets -2 {S} this turn.",
       effect: {
         type: "modify-stat",
         stat: "strength",
@@ -34,6 +16,24 @@ export const controlYourTemperundefined: ActionCard = {
         },
         duration: "this-turn",
       },
+      id: "eny-1",
+      text: "Chosen character gets -2 {S} this turn.",
+      type: "action",
     },
   ],
+  cardNumber: 26,
+  cardType: "action",
+  cost: 1,
+  externalIds: {
+    ravensburger: "",
+  },
+  franchise: "Disney",
+  fullName: "Control Your Temper! - undefined",
+  id: "eny",
+  inkType: ["amber"],
+  inkable: true,
+  name: "Control Your Temper!",
+  set: "001",
+  text: "Chosen character gets -2 {S} this turn.",
+  version: "undefined",
 };

@@ -3,56 +3,56 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { bernardBrandNewAgent } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import {
-//   missBiancaIndefectibleAgent,
-//   orvilleAlbatrossAir,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { bernardBrandNewAgent } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import {
+//   MissBiancaIndefectibleAgent,
+//   OrvilleAlbatrossAir,
 // } from "@lorcanito/lorcana-engine/cards/007/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Orville - Albatross Air", () => {
-//   it("Should not have Evasive when no Miss Bianca or Bernard in play", async () => {
-//     const testEngine = new TestEngine({
-//       play: [orvilleAlbatrossAir],
+// Describe("Orville - Albatross Air", () => {
+//   It("Should not have Evasive when no Miss Bianca or Bernard in play", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [orvilleAlbatrossAir],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(orvilleAlbatrossAir);
-//     expect(cardUnderTest.hasEvasive).toBe(false);
+//     Const cardUnderTest = testEngine.getCardModel(orvilleAlbatrossAir);
+//     Expect(cardUnderTest.hasEvasive).toBe(false);
 //   });
 //
-//   it("Should gain Evasive during your turn when Miss Bianca is in play", async () => {
-//     const testEngine = new TestEngine({
-//       play: [orvilleAlbatrossAir, missBiancaIndefectibleAgent],
+//   It("Should gain Evasive during your turn when Miss Bianca is in play", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [orvilleAlbatrossAir, missBiancaIndefectibleAgent],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(orvilleAlbatrossAir);
-//     expect(cardUnderTest.hasEvasive).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(orvilleAlbatrossAir);
+//     Expect(cardUnderTest.hasEvasive).toBe(true);
 //
 //     // Test that it doesn't have Evasive during opponent's turn
-//     await testEngine.passTurn();
-//     expect(cardUnderTest.hasEvasive).toBe(false);
+//     Await testEngine.passTurn();
+//     Expect(cardUnderTest.hasEvasive).toBe(false);
 //
 //     // Back to player's turn
-//     await testEngine.passTurn();
-//     expect(cardUnderTest.hasEvasive).toBe(true);
+//     Await testEngine.passTurn();
+//     Expect(cardUnderTest.hasEvasive).toBe(true);
 //   });
 //
-//   it("Should gain Evasive during your turn when Bernard is in play", async () => {
-//     const testEngine = new TestEngine({
-//       play: [orvilleAlbatrossAir, bernardBrandNewAgent],
+//   It("Should gain Evasive during your turn when Bernard is in play", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [orvilleAlbatrossAir, bernardBrandNewAgent],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(orvilleAlbatrossAir);
-//     expect(cardUnderTest.hasEvasive).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(orvilleAlbatrossAir);
+//     Expect(cardUnderTest.hasEvasive).toBe(true);
 //
 //     // Test that it doesn't have Evasive during opponent's turn
-//     await testEngine.passTurn();
-//     expect(cardUnderTest.hasEvasive).toBe(false);
+//     Await testEngine.passTurn();
+//     Expect(cardUnderTest.hasEvasive).toBe(false);
 //
 //     // Back to player's turn
-//     await testEngine.passTurn();
-//     expect(cardUnderTest.hasEvasive).toBe(true);
+//     Await testEngine.passTurn();
+//     Expect(cardUnderTest.hasEvasive).toBe(true);
 //   });
 // });
 //

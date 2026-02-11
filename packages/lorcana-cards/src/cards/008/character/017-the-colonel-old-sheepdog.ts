@@ -1,52 +1,52 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { have3orMorePuppiesInPlay } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
-// import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { whileConditionThisCharacterGets } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { have3orMorePuppiesInPlay } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
+// Import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import { whileConditionThisCharacterGets } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
 //
-// export const theColonelOldSheepdog: LorcanitoCharacterCard = {
-//   id: "xi2",
-//   missingTestCase: true,
-//   name: "The Colonel",
-//   title: "Old Sheepdog",
-//   characteristics: ["storyborn", "ally"],
-//   text: "WE'VE GOT 'EM OUTNUMBERED While you have 3 or more Puppy characters in play, this character gets +2 {S} and +2 {L}.",
-//   type: "character",
-//   abilities: [
-//     whileConditionThisCharacterGets({
-//       name: "WE'VE GOT 'EM OUTNUMBERED",
-//       text: "While you have 3 or more Puppy characters in play, this character gets +2 {S} and +2 {L}.",
-//       conditions: [have3orMorePuppiesInPlay],
-//       effects: [
+// Export const theColonelOldSheepdog: LorcanitoCharacterCard = {
+//   Id: "xi2",
+//   MissingTestCase: true,
+//   Name: "The Colonel",
+//   Title: "Old Sheepdog",
+//   Characteristics: ["storyborn", "ally"],
+//   Text: "WE'VE GOT 'EM OUTNUMBERED While you have 3 or more Puppy characters in play, this character gets +2 {S} and +2 {L}.",
+//   Type: "character",
+//   Abilities: [
+//     WhileConditionThisCharacterGets({
+//       Name: "WE'VE GOT 'EM OUTNUMBERED",
+//       Text: "While you have 3 or more Puppy characters in play, this character gets +2 {S} and +2 {L}.",
+//       Conditions: [have3orMorePuppiesInPlay],
+//       Effects: [
 //         {
-//           type: "attribute" as const,
-//           attribute: "strength" as const,
-//           amount: 2,
-//           modifier: "add" as const,
-//           target: thisCharacter,
+//           Type: "attribute" as const,
+//           Attribute: "strength" as const,
+//           Amount: 2,
+//           Modifier: "add" as const,
+//           Target: thisCharacter,
 //         },
 //         {
-//           type: "attribute" as const,
-//           attribute: "lore" as const,
-//           amount: 2,
-//           modifier: "add" as const,
-//           target: thisCharacter,
+//           Type: "attribute" as const,
+//           Attribute: "lore" as const,
+//           Amount: 2,
+//           Modifier: "add" as const,
+//           Target: thisCharacter,
 //         },
 //       ],
 //     }),
 //   ],
-//   inkwell: true,
-//   colors: ["amber"],
-//   cost: 5,
-//   strength: 3,
-//   willpower: 6,
-//   illustrator: "Mariana Moreno",
-//   number: 17,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631361,
+//   Inkwell: true,
+//   Colors: ["amber"],
+//   Cost: 5,
+//   Strength: 3,
+//   Willpower: 6,
+//   Illustrator: "Mariana Moreno",
+//   Number: 17,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631361,
 //   },
-//   rarity: "rare",
-//   lore: 1,
+//   Rarity: "rare",
+//   Lore: 1,
 // };
 //

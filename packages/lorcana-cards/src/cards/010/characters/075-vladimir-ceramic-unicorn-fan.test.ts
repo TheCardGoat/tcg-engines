@@ -3,247 +3,247 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { pawpsicle } from "@lorcanito/lorcana-engine/cards/002/items/169-pawpsicle";
-// import { mouseArmor } from "@lorcanito/lorcana-engine/cards/002/items/items";
-// import { vladimirCeramicUnicornFan } from "@lorcanito/lorcana-engine/cards/010/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { pawpsicle } from "@lorcanito/lorcana-engine/cards/002/items/169-pawpsicle";
+// Import { mouseArmor } from "@lorcanito/lorcana-engine/cards/002/items/items";
+// Import { vladimirCeramicUnicornFan } from "@lorcanito/lorcana-engine/cards/010/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Vladimir - Ceramic Unicorn Fan", () => {
-//   describe("HIGH STANDARDS - Basic Functionality", () => {
-//     it("triggers when character quests and banishes chosen item", async () => {
-//       const testEngine = new TestEngine({
-//         play: [vladimirCeramicUnicornFan, pawpsicle],
+// Describe("Vladimir - Ceramic Unicorn Fan", () => {
+//   Describe("HIGH STANDARDS - Basic Functionality", () => {
+//     It("triggers when character quests and banishes chosen item", async () => {
+//       Const testEngine = new TestEngine({
+//         Play: [vladimirCeramicUnicornFan, pawpsicle],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(vladimirCeramicUnicornFan);
-//       const target = testEngine.getCardModel(pawpsicle);
+//       Const cardUnderTest = testEngine.getCardModel(vladimirCeramicUnicornFan);
+//       Const target = testEngine.getCardModel(pawpsicle);
 //
-//       expect(target.zone).toBe("play");
+//       Expect(target.zone).toBe("play");
 //
-//       await testEngine.questCard(cardUnderTest);
-//       await testEngine.resolveOptionalAbility();
-//       await testEngine.resolveTopOfStack({ targets: [target] });
+//       Await testEngine.questCard(cardUnderTest);
+//       Await testEngine.resolveOptionalAbility();
+//       Await testEngine.resolveTopOfStack({ targets: [target] });
 //
-//       expect(target.zone).toBe("discard");
+//       Expect(target.zone).toBe("discard");
 //     });
 //
-//     it("can banish any item in play", async () => {
-//       const testEngine = new TestEngine({
-//         play: [vladimirCeramicUnicornFan, mouseArmor],
+//     It("can banish any item in play", async () => {
+//       Const testEngine = new TestEngine({
+//         Play: [vladimirCeramicUnicornFan, mouseArmor],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(vladimirCeramicUnicornFan);
-//       const target = testEngine.getCardModel(mouseArmor);
+//       Const cardUnderTest = testEngine.getCardModel(vladimirCeramicUnicornFan);
+//       Const target = testEngine.getCardModel(mouseArmor);
 //
-//       expect(target.zone).toBe("play");
+//       Expect(target.zone).toBe("play");
 //
-//       await testEngine.questCard(cardUnderTest);
-//       await testEngine.resolveOptionalAbility();
-//       await testEngine.resolveTopOfStack({ targets: [target] });
+//       Await testEngine.questCard(cardUnderTest);
+//       Await testEngine.resolveOptionalAbility();
+//       Await testEngine.resolveTopOfStack({ targets: [target] });
 //
-//       expect(target.zone).toBe("discard");
+//       Expect(target.zone).toBe("discard");
 //     });
 //
-//     it("can banish opponent's items", async () => {
-//       const testEngine = new TestEngine(
+//     It("can banish opponent's items", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           play: [vladimirCeramicUnicornFan],
+//           Play: [vladimirCeramicUnicornFan],
 //         },
 //         {
-//           play: [pawpsicle],
+//           Play: [pawpsicle],
 //         },
 //       );
 //
-//       const cardUnderTest = testEngine.getCardModel(vladimirCeramicUnicornFan);
-//       const opponentItem = testEngine.getCardModel(pawpsicle);
+//       Const cardUnderTest = testEngine.getCardModel(vladimirCeramicUnicornFan);
+//       Const opponentItem = testEngine.getCardModel(pawpsicle);
 //
-//       expect(opponentItem.zone).toBe("play");
+//       Expect(opponentItem.zone).toBe("play");
 //
-//       await testEngine.questCard(cardUnderTest);
-//       await testEngine.resolveOptionalAbility();
-//       await testEngine.resolveTopOfStack({ targets: [opponentItem] });
+//       Await testEngine.questCard(cardUnderTest);
+//       Await testEngine.resolveOptionalAbility();
+//       Await testEngine.resolveTopOfStack({ targets: [opponentItem] });
 //
-//       expect(opponentItem.zone).toBe("discard");
+//       Expect(opponentItem.zone).toBe("discard");
 //     });
 //
-//     it("can banish own items", async () => {
-//       const testEngine = new TestEngine({
-//         play: [vladimirCeramicUnicornFan, pawpsicle],
+//     It("can banish own items", async () => {
+//       Const testEngine = new TestEngine({
+//         Play: [vladimirCeramicUnicornFan, pawpsicle],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(vladimirCeramicUnicornFan);
-//       const ownItem = testEngine.getCardModel(pawpsicle);
+//       Const cardUnderTest = testEngine.getCardModel(vladimirCeramicUnicornFan);
+//       Const ownItem = testEngine.getCardModel(pawpsicle);
 //
-//       expect(ownItem.zone).toBe("play");
+//       Expect(ownItem.zone).toBe("play");
 //
-//       await testEngine.questCard(cardUnderTest);
-//       await testEngine.resolveOptionalAbility();
-//       await testEngine.resolveTopOfStack({ targets: [ownItem] });
+//       Await testEngine.questCard(cardUnderTest);
+//       Await testEngine.resolveOptionalAbility();
+//       Await testEngine.resolveTopOfStack({ targets: [ownItem] });
 //
-//       expect(ownItem.zone).toBe("discard");
+//       Expect(ownItem.zone).toBe("discard");
 //     });
 //   });
 //
-//   describe("HIGH STANDARDS - Optional Ability", () => {
-//     it("ability is optional - can decline to banish", async () => {
-//       const testEngine = new TestEngine({
-//         play: [vladimirCeramicUnicornFan, pawpsicle],
+//   Describe("HIGH STANDARDS - Optional Ability", () => {
+//     It("ability is optional - can decline to banish", async () => {
+//       Const testEngine = new TestEngine({
+//         Play: [vladimirCeramicUnicornFan, pawpsicle],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(vladimirCeramicUnicornFan);
-//       const target = testEngine.getCardModel(pawpsicle);
+//       Const cardUnderTest = testEngine.getCardModel(vladimirCeramicUnicornFan);
+//       Const target = testEngine.getCardModel(pawpsicle);
 //
-//       await testEngine.questCard(cardUnderTest);
+//       Await testEngine.questCard(cardUnderTest);
 //
 //       // Decline the optional ability
-//       await testEngine.skipTopOfStack();
+//       Await testEngine.skipTopOfStack();
 //
 //       // Item should remain in play
-//       expect(target.zone).toBe("play");
+//       Expect(target.zone).toBe("play");
 //     });
 //   });
 //
-//   describe("HIGH STANDARDS - Trigger Conditions", () => {
-//     it("only triggers when Vladimir quests, not other characters", async () => {
-//       const testEngine = new TestEngine(
+//   Describe("HIGH STANDARDS - Trigger Conditions", () => {
+//     It("only triggers when Vladimir quests, not other characters", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           play: [vladimirCeramicUnicornFan, pawpsicle],
+//           Play: [vladimirCeramicUnicornFan, pawpsicle],
 //         },
 //         {
-//           play: [mouseArmor],
+//           Play: [mouseArmor],
 //         },
 //       );
 //
-//       const ownItem = testEngine.getCardModel(pawpsicle);
-//       const opponentItem = testEngine.getCardModel(mouseArmor);
+//       Const ownItem = testEngine.getCardModel(pawpsicle);
+//       Const opponentItem = testEngine.getCardModel(mouseArmor);
 //
-//       expect(ownItem.zone).toBe("play");
-//       expect(opponentItem.zone).toBe("play");
+//       Expect(ownItem.zone).toBe("play");
+//       Expect(opponentItem.zone).toBe("play");
 //
 //       // Quest with Vladimir
-//       await testEngine.questCard(vladimirCeramicUnicornFan);
+//       Await testEngine.questCard(vladimirCeramicUnicornFan);
 //
 //       // Should have ability on stack
-//       expect(testEngine.store.stackLayerStore.layers.length).toBeGreaterThan(0);
+//       Expect(testEngine.store.stackLayerStore.layers.length).toBeGreaterThan(0);
 //     });
 //
-//     it("does not trigger when character is played", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: vladimirCeramicUnicornFan.cost,
-//         hand: [vladimirCeramicUnicornFan],
-//         play: [pawpsicle],
+//     It("does not trigger when character is played", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: vladimirCeramicUnicornFan.cost,
+//         Hand: [vladimirCeramicUnicornFan],
+//         Play: [pawpsicle],
 //       });
 //
-//       const target = testEngine.getCardModel(pawpsicle);
+//       Const target = testEngine.getCardModel(pawpsicle);
 //
-//       await testEngine.playCard(vladimirCeramicUnicornFan);
+//       Await testEngine.playCard(vladimirCeramicUnicornFan);
 //
 //       // Should not have any ability on stack (no "when you play" trigger)
-//       expect(testEngine.store.stackLayerStore.layers.length).toBe(0);
-//       expect(target.zone).toBe("play");
+//       Expect(testEngine.store.stackLayerStore.layers.length).toBe(0);
+//       Expect(target.zone).toBe("play");
 //     });
 //
-//     it("triggers every time Vladimir quests", async () => {
-//       const testEngine = new TestEngine({
-//         play: [vladimirCeramicUnicornFan, pawpsicle],
+//     It("triggers every time Vladimir quests", async () => {
+//       Const testEngine = new TestEngine({
+//         Play: [vladimirCeramicUnicornFan, pawpsicle],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(vladimirCeramicUnicornFan);
-//       const firstItem = testEngine.getCardModel(pawpsicle);
+//       Const cardUnderTest = testEngine.getCardModel(vladimirCeramicUnicornFan);
+//       Const firstItem = testEngine.getCardModel(pawpsicle);
 //
 //       // First quest - banish item
-//       await testEngine.questCard(cardUnderTest);
-//       await testEngine.resolveOptionalAbility();
-//       await testEngine.resolveTopOfStack({ targets: [firstItem] });
+//       Await testEngine.questCard(cardUnderTest);
+//       Await testEngine.resolveOptionalAbility();
+//       Await testEngine.resolveTopOfStack({ targets: [firstItem] });
 //
-//       expect(firstItem.zone).toBe("discard");
+//       Expect(firstItem.zone).toBe("discard");
 //
 //       // Verify the ability actually triggered
-//       expect(cardUnderTest.ready).toBe(false);
+//       Expect(cardUnderTest.ready).toBe(false);
 //     });
 //   });
 //
-//   describe("HIGH STANDARDS - Edge Cases", () => {
-//     it("works when no items are in play", async () => {
-//       const testEngine = new TestEngine({
-//         play: [vladimirCeramicUnicornFan],
+//   Describe("HIGH STANDARDS - Edge Cases", () => {
+//     It("works when no items are in play", async () => {
+//       Const testEngine = new TestEngine({
+//         Play: [vladimirCeramicUnicornFan],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(vladimirCeramicUnicornFan);
+//       Const cardUnderTest = testEngine.getCardModel(vladimirCeramicUnicornFan);
 //
 //       // Should quest successfully even with no valid targets
-//       await testEngine.questCard(cardUnderTest);
+//       Await testEngine.questCard(cardUnderTest);
 //
 //       // Ability should still trigger but resolve without effect
-//       expect(cardUnderTest.ready).toBe(false);
+//       Expect(cardUnderTest.ready).toBe(false);
 //     });
 //
-//     it("only banishes one item per quest", async () => {
-//       const testEngine = new TestEngine({
-//         play: [vladimirCeramicUnicornFan, pawpsicle, mouseArmor],
+//     It("only banishes one item per quest", async () => {
+//       Const testEngine = new TestEngine({
+//         Play: [vladimirCeramicUnicornFan, pawpsicle, mouseArmor],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(vladimirCeramicUnicornFan);
-//       const firstItem = testEngine.getCardModel(pawpsicle);
-//       const secondItem = testEngine.getCardModel(mouseArmor);
+//       Const cardUnderTest = testEngine.getCardModel(vladimirCeramicUnicornFan);
+//       Const firstItem = testEngine.getCardModel(pawpsicle);
+//       Const secondItem = testEngine.getCardModel(mouseArmor);
 //
-//       await testEngine.questCard(cardUnderTest);
-//       await testEngine.resolveOptionalAbility();
-//       await testEngine.resolveTopOfStack({ targets: [firstItem] });
+//       Await testEngine.questCard(cardUnderTest);
+//       Await testEngine.resolveOptionalAbility();
+//       Await testEngine.resolveTopOfStack({ targets: [firstItem] });
 //
 //       // Only first item should be banished
-//       expect(firstItem.zone).toBe("discard");
-//       expect(secondItem.zone).toBe("play");
+//       Expect(firstItem.zone).toBe("discard");
+//       Expect(secondItem.zone).toBe("play");
 //     });
 //
-//     it("cannot target characters, only items", async () => {
-//       const testEngine = new TestEngine(
+//     It("cannot target characters, only items", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           play: [vladimirCeramicUnicornFan],
+//           Play: [vladimirCeramicUnicornFan],
 //         },
 //         {
-//           play: [vladimirCeramicUnicornFan], // Another character, not an item
+//           Play: [vladimirCeramicUnicornFan], // Another character, not an item
 //         },
 //       );
 //
-//       const cardUnderTest = testEngine.getCardModel(
-//         vladimirCeramicUnicornFan,
+//       Const cardUnderTest = testEngine.getCardModel(
+//         VladimirCeramicUnicornFan,
 //         0,
 //       );
 //
-//       await testEngine.questCard(cardUnderTest);
+//       Await testEngine.questCard(cardUnderTest);
 //
 //       // Ability triggers but has no valid targets (no items in play), so it's skipped
 //       // Both characters should still be in play
-//       expect(testEngine.getCardModel(vladimirCeramicUnicornFan, 0).zone).toBe(
+//       Expect(testEngine.getCardModel(vladimirCeramicUnicornFan, 0).zone).toBe(
 //         "play",
 //       );
-//       expect(testEngine.getCardModel(vladimirCeramicUnicornFan, 1).zone).toBe(
+//       Expect(testEngine.getCardModel(vladimirCeramicUnicornFan, 1).zone).toBe(
 //         "play",
 //       );
 //     });
 //   });
 //
-//   describe("HIGH STANDARDS - Multiple Items Scenario", () => {
-//     it("allows player to choose which item to banish when multiple are available", async () => {
-//       const testEngine = new TestEngine({
-//         play: [vladimirCeramicUnicornFan, pawpsicle, mouseArmor],
+//   Describe("HIGH STANDARDS - Multiple Items Scenario", () => {
+//     It("allows player to choose which item to banish when multiple are available", async () => {
+//       Const testEngine = new TestEngine({
+//         Play: [vladimirCeramicUnicornFan, pawpsicle, mouseArmor],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(vladimirCeramicUnicornFan);
-//       const item1 = testEngine.getCardModel(pawpsicle);
-//       const item2 = testEngine.getCardModel(mouseArmor);
+//       Const cardUnderTest = testEngine.getCardModel(vladimirCeramicUnicornFan);
+//       Const item1 = testEngine.getCardModel(pawpsicle);
+//       Const item2 = testEngine.getCardModel(mouseArmor);
 //
-//       await testEngine.questCard(cardUnderTest);
-//       await testEngine.resolveOptionalAbility();
+//       Await testEngine.questCard(cardUnderTest);
+//       Await testEngine.resolveOptionalAbility();
 //
 //       // Choose to banish the second item
-//       await testEngine.resolveTopOfStack({ targets: [item2] });
+//       Await testEngine.resolveTopOfStack({ targets: [item2] });
 //
 //       // Only the chosen item should be banished
-//       expect(item1.zone).toBe("play");
-//       expect(item2.zone).toBe("discard");
+//       Expect(item1.zone).toBe("play");
+//       Expect(item2.zone).toBe("discard");
 //     });
 //   });
 // });

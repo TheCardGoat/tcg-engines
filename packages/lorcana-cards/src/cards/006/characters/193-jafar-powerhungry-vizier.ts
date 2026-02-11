@@ -1,38 +1,38 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
 // // TODO: Once the set is released, we organize the cards by set and type
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { wheneverACardIsPutIntoYourInkwell } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-// import { dealDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import { wheneverACardIsPutIntoYourInkwell } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// Import { dealDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const jafarPowerhungryVizier: LorcanitoCharacterCard = {
-//   id: "psh",
-//   missingTestCase: true,
-//   name: "Jafar",
-//   title: "Power‐Hungry Vizier",
-//   characteristics: ["dreamborn", "villain", "sorcerer"],
-//   text: "YOU WILL BE PAID WHEN THE TIME COMES During your turn, whenever a card is put into your inkwell, deal 1 damage to chosen character.",
-//   type: "character",
-//   abilities: [
-//     wheneverACardIsPutIntoYourInkwell({
-//       name: "You Will Be Paid When The Time Comes",
-//       text: "During your turn, whenever a card is put into your inkwell, deal 1 damage to chosen character.",
-//       conditions: [{ type: "during-turn", value: "self" }],
-//       effects: [dealDamageEffect(1, chosenCharacter)],
+// Export const jafarPowerhungryVizier: LorcanitoCharacterCard = {
+//   Id: "psh",
+//   MissingTestCase: true,
+//   Name: "Jafar",
+//   Title: "Power‐Hungry Vizier",
+//   Characteristics: ["dreamborn", "villain", "sorcerer"],
+//   Text: "YOU WILL BE PAID WHEN THE TIME COMES During your turn, whenever a card is put into your inkwell, deal 1 damage to chosen character.",
+//   Type: "character",
+//   Abilities: [
+//     WheneverACardIsPutIntoYourInkwell({
+//       Name: "You Will Be Paid When The Time Comes",
+//       Text: "During your turn, whenever a card is put into your inkwell, deal 1 damage to chosen character.",
+//       Conditions: [{ type: "during-turn", value: "self" }],
+//       Effects: [dealDamageEffect(1, chosenCharacter)],
 //     }),
 //   ],
-//   inkwell: false,
-//   colors: ["steel"],
-//   cost: 5,
-//   strength: 3,
-//   willpower: 4,
-//   lore: 1,
-//   illustrator: "Federico Maria Cugliari",
-//   number: 193,
-//   set: "006",
-//   externalIds: {
-//     tcgPlayer: 591118,
+//   Inkwell: false,
+//   Colors: ["steel"],
+//   Cost: 5,
+//   Strength: 3,
+//   Willpower: 4,
+//   Lore: 1,
+//   Illustrator: "Federico Maria Cugliari",
+//   Number: 193,
+//   Set: "006",
+//   ExternalIds: {
+//     TcgPlayer: 591118,
 //   },
-//   rarity: "super_rare",
+//   Rarity: "super_rare",
 // };
 //

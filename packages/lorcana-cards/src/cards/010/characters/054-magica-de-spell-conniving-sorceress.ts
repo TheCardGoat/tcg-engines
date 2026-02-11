@@ -1,44 +1,17 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const magicaDeSpellConnivingSorceress: CharacterCard = {
-  id: "x7f",
-  cardType: "character",
-  name: "Magica De Spell",
-  version: "Conniving Sorceress",
-  fullName: "Magica De Spell - Conniving Sorceress",
-  inkType: ["amethyst"],
-  franchise: "Ducktales",
-  set: "010",
-  text: "Shift 7 {I} (You may pay 7 {I} to play this on top of one of your characters named Magica De Spell.)\nSHADOW'S GRASP When you play this character, if you used Shift to play her, you may draw 4 cards.",
-  cost: 7,
-  strength: 7,
-  willpower: 7,
-  lore: 1,
-  cardNumber: 54,
-  inkable: false,
-  externalIds: {
-    ravensburger: "77add645cd869348da0863c0ae18e4d8b4702127",
-  },
   abilities: [
     {
-      id: "x7f-1",
-      text: "Shift 7 {I}",
-      type: "keyword",
-      keyword: "Shift",
       cost: {
         ink: 7,
       },
+      id: "x7f-1",
+      keyword: "Shift",
+      text: "Shift 7 {I}",
+      type: "keyword",
     },
     {
-      id: "x7f-2",
-      text: "SHADOW'S GRASP When you play this character, if you used Shift to play her, you may draw 4 cards.",
-      name: "SHADOW'S GRASP",
-      type: "triggered",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "conditional",
         condition: {
@@ -50,59 +23,86 @@ export const magicaDeSpellConnivingSorceress: CharacterCard = {
           target: "CONTROLLER",
         },
       },
+      id: "x7f-2",
+      name: "SHADOW'S GRASP",
+      text: "SHADOW'S GRASP When you play this character, if you used Shift to play her, you may draw 4 cards.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 54,
+  cardType: "character",
   classifications: ["Floodborn", "Villain", "Sorcerer"],
+  cost: 7,
+  externalIds: {
+    ravensburger: "77add645cd869348da0863c0ae18e4d8b4702127",
+  },
+  franchise: "Ducktales",
+  fullName: "Magica De Spell - Conniving Sorceress",
+  id: "x7f",
+  inkType: ["amethyst"],
+  inkable: false,
+  lore: 1,
+  name: "Magica De Spell",
+  set: "010",
+  strength: 7,
+  text: "Shift 7 {I} (You may pay 7 {I} to play this on top of one of your characters named Magica De Spell.)\nSHADOW'S GRASP When you play this character, if you used Shift to play her, you may draw 4 cards.",
+  version: "Conniving Sorceress",
+  willpower: 7,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { shiftAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { wheneverPlays } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { shiftAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import { wheneverPlays } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
 //
-// export const magicaDeSpellConnivingSorceress: LorcanitoCharacterCard = {
-//   id: "q8t",
-//   name: "Magica De Spell",
-//   title: "Conniving Sorceress",
-//   characteristics: ["floodborn", "villain", "sorcerer"],
-//   text: "Shift 7 {I} (You may pay 7 {I} to play this on top of one of your characters named Magica De Spell.) SHADOW'S GRASP When you play this character, if you used Shift to play her, you may draw 4 cards.",
-//   type: "character",
-//   inkwell: false,
-//   colors: ["amethyst"],
-//   cost: 7,
-//   strength: 7,
-//   willpower: 7,
-//   illustrator: "Rebecka Helmersson",
-//   number: 54,
-//   set: "010",
-//   externalIds: {
-//     tcgPlayer: 659427,
+// Export const magicaDeSpellConnivingSorceress: LorcanitoCharacterCard = {
+//   Id: "q8t",
+//   Name: "Magica De Spell",
+//   Title: "Conniving Sorceress",
+//   Characteristics: ["floodborn", "villain", "sorcerer"],
+//   Text: "Shift 7 {I} (You may pay 7 {I} to play this on top of one of your characters named Magica De Spell.) SHADOW'S GRASP When you play this character, if you used Shift to play her, you may draw 4 cards.",
+//   Type: "character",
+//   Inkwell: false,
+//   Colors: ["amethyst"],
+//   Cost: 7,
+//   Strength: 7,
+//   Willpower: 7,
+//   Illustrator: "Rebecka Helmersson",
+//   Number: 54,
+//   Set: "010",
+//   ExternalIds: {
+//     TcgPlayer: 659427,
 //   },
-//   rarity: "super_rare",
-//   abilities: [
-//     shiftAbility(7, "Magica De Spell"),
-//     wheneverPlays({
-//       name: "SHADOW'S GRASP",
-//       text: "When you play this character, if you used Shift to play her, you may draw 4 cards.",
-//       optional: true,
-//       hasShifted: true,
-//       triggerTarget: {
-//         type: "card",
-//         value: "all",
-//         filters: [{ filter: "source", value: "self" }],
+//   Rarity: "super_rare",
+//   Abilities: [
+//     ShiftAbility(7, "Magica De Spell"),
+//     WheneverPlays({
+//       Name: "SHADOW'S GRASP",
+//       Text: "When you play this character, if you used Shift to play her, you may draw 4 cards.",
+//       Optional: true,
+//       HasShifted: true,
+//       TriggerTarget: {
+//         Type: "card",
+//         Value: "all",
+//         Filters: [{ filter: "source", value: "self" }],
 //       },
-//       effects: [
+//       Effects: [
 //         {
-//           type: "draw",
-//           amount: 4,
-//           target: {
-//             type: "player",
-//             value: "self",
+//           Type: "draw",
+//           Amount: 4,
+//           Target: {
+//             Type: "player",
+//             Value: "self",
 //           },
 //         },
 //       ],
 //     }),
 //   ],
-//   lore: 1,
+//   Lore: 1,
 // };
 //

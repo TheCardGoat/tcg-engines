@@ -12,11 +12,7 @@ import {
   parseAdditionalCostText,
   parseCost,
 } from "../../parsers/cost-parser";
-import {
-  extractCostStrings,
-  hasCostTokens,
-  isValidDomain,
-} from "../../patterns/costs";
+import { extractCostStrings, hasCostTokens, isValidDomain } from "../../patterns/costs";
 
 describe("Cost Parser", () => {
   describe("parseCost", () => {
@@ -104,12 +100,12 @@ describe("Cost Parser", () => {
 
       it("should parse :rb_rune_rainbow:, :rb_exhaust: -> { power: ['rainbow'], exhaust: true }", () => {
         const result = parseCost(":rb_rune_rainbow:, :rb_exhaust:");
-        expect(result).toEqual({ power: ["rainbow"], exhaust: true });
+        expect(result).toEqual({ exhaust: true, power: ["rainbow"] });
       });
 
       it("should parse :rb_energy_1::rb_rune_body:, :rb_exhaust: -> { energy: 1, power: ['body'], exhaust: true }", () => {
         const result = parseCost(":rb_energy_1::rb_rune_body:, :rb_exhaust:");
-        expect(result).toEqual({ energy: 1, power: ["body"], exhaust: true });
+        expect(result).toEqual({ energy: 1, exhaust: true, power: ["body"] });
       });
     });
 
@@ -199,8 +195,8 @@ describe("Cost Parser", () => {
       const result = parseAdditionalCostText("Kill a friendly unit");
       expect(result).toEqual({
         kill: {
-          type: "unit",
           controller: "friendly",
+          type: "unit",
         },
       });
     });

@@ -1,34 +1,8 @@
 import type { LocationCard } from "@tcg/lorcana-types";
 
 export const ursulasLairEyeOfTheStorm: LocationCard = {
-  id: "1ks",
-  cardType: "location",
-  name: "Ursula’s Lair",
-  version: "Eye of the Storm",
-  fullName: "Ursula’s Lair - Eye of the Storm",
-  inkType: ["amethyst"],
-  franchise: "Little Mermaid",
-  set: "004",
-  text: "SLIPPERY HALLS Whenever a character is banished in a challenge while here, you may return them to your hand.\nSEAT OF POWER Characters named Ursula get +1 {L} while here.",
-  cost: 3,
-  moveCost: 2,
-  lore: 0,
-  cardNumber: 68,
-  inkable: false,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "ccaa3f7bc222e079977804dc188974a4198a6eab",
-  },
   abilities: [
     {
-      id: "1ks-1",
-      type: "triggered",
-      name: "SLIPPERY HALLS",
-      trigger: {
-        event: "banish",
-        timing: "whenever",
-        on: "ANY_CHARACTER",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -37,18 +11,44 @@ export const ursulasLairEyeOfTheStorm: LocationCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "1ks-1",
+      name: "SLIPPERY HALLS",
       text: "SLIPPERY HALLS Whenever a character is banished in a challenge while here, you may return them to your hand.",
+      trigger: {
+        event: "banish",
+        timing: "whenever",
+        on: "ANY_CHARACTER",
+      },
+      type: "triggered",
     },
     {
-      id: "1ks-2",
-      type: "action",
       effect: {
         type: "modify-stat",
         stat: "lore",
         modifier: 1,
         target: "CHARACTERS_HERE",
       },
+      id: "1ks-2",
       text: "SEAT OF POWER Characters named Ursula get +1 {L} while here.",
+      type: "action",
     },
   ],
+  cardNumber: 68,
+  cardType: "location",
+  cost: 3,
+  externalIds: {
+    ravensburger: "ccaa3f7bc222e079977804dc188974a4198a6eab",
+  },
+  franchise: "Little Mermaid",
+  fullName: "Ursula’s Lair - Eye of the Storm",
+  id: "1ks",
+  inkType: ["amethyst"],
+  inkable: false,
+  lore: 0,
+  missingTests: true,
+  moveCost: 2,
+  name: "Ursula’s Lair",
+  set: "004",
+  text: "SLIPPERY HALLS Whenever a character is banished in a challenge while here, you may return them to your hand.\nSEAT OF POWER Characters named Ursula get +1 {L} while here.",
+  version: "Eye of the Storm",
 };

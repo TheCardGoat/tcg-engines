@@ -1,36 +1,36 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { chosenYourDamagedCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { whenYouPlayThisCharacter } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import { readyAndCantQuest } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { chosenYourDamagedCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import { whenYouPlayThisCharacter } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import { readyAndCantQuest } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const aliceCourageousKeyholder: LorcanitoCharacterCard = {
-//   id: "q7w",
-//   name: "Alice",
-//   title: "Courageous Keyholder",
-//   characteristics: ["storyborn", "hero"],
-//   text: "THIS WAY OUT When you play this character, you may ready chosen damaged character of yours. They can't quest for the rest of this turn.",
-//   type: "character",
-//   abilities: [
-//     whenYouPlayThisCharacter({
-//       name: "THIS WAY OUT",
-//       text: "When you play this character, you may ready chosen damaged character of yours. They can't quest for the rest of this turn.",
-//       optional: true,
-//       effects: readyAndCantQuest(chosenYourDamagedCharacter),
+// Export const aliceCourageousKeyholder: LorcanitoCharacterCard = {
+//   Id: "q7w",
+//   Name: "Alice",
+//   Title: "Courageous Keyholder",
+//   Characteristics: ["storyborn", "hero"],
+//   Text: "THIS WAY OUT When you play this character, you may ready chosen damaged character of yours. They can't quest for the rest of this turn.",
+//   Type: "character",
+//   Abilities: [
+//     WhenYouPlayThisCharacter({
+//       Name: "THIS WAY OUT",
+//       Text: "When you play this character, you may ready chosen damaged character of yours. They can't quest for the rest of this turn.",
+//       Optional: true,
+//       Effects: readyAndCantQuest(chosenYourDamagedCharacter),
 //     }),
 //   ],
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 4,
-//   strength: 2,
-//   willpower: 4,
-//   illustrator: "Filipe Laurentino",
-//   number: 127,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631433,
+//   Inkwell: true,
+//   Colors: ["ruby"],
+//   Cost: 4,
+//   Strength: 2,
+//   Willpower: 4,
+//   Illustrator: "Filipe Laurentino",
+//   Number: 127,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631433,
 //   },
-//   rarity: "uncommon",
-//   lore: 2,
+//   Rarity: "uncommon",
+//   Lore: 2,
 // };
 //

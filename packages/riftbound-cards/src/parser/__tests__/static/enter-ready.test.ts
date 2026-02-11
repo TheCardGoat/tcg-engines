@@ -23,18 +23,16 @@ describe("Static: Enter Ready", () => {
     });
 
     it.skip("should parse 'I enter ready if you control another Mech.'", () => {
-      const result = parseAbilities(
-        "I enter ready if you control another Mech.",
-      );
+      const result = parseAbilities("I enter ready if you control another Mech.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "static",
           condition: expect.objectContaining({
             type: "control",
           }),
+          type: "static",
         }),
       );
     });
@@ -49,18 +47,16 @@ describe("Static: Enter Ready", () => {
     });
 
     it.skip("should parse 'If an opponent controls a battlefield, I enter ready.'", () => {
-      const result = parseAbilities(
-        "If an opponent controls a battlefield, I enter ready.",
-      );
+      const result = parseAbilities("If an opponent controls a battlefield, I enter ready.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "static",
           condition: expect.objectContaining({
             type: "opponent-controls",
           }),
+          type: "static",
         }),
       );
     });
@@ -82,9 +78,7 @@ describe("Static: Enter Ready", () => {
     });
 
     it.skip("should parse 'The next unit you play this turn enters ready.'", () => {
-      const result = parseAbilities(
-        "The next unit you play this turn enters ready.",
-      );
+      const result = parseAbilities("The next unit you play this turn enters ready.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);

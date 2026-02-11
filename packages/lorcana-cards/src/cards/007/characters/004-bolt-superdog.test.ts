@@ -3,136 +3,136 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   arielSpectacularSinger,
-//   mickeyBraveLittleTailor,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   ArielSpectacularSinger,
+//   MickeyBraveLittleTailor,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { liloEscapeArtist } from "@lorcanito/lorcana-engine/cards/006";
-// import {
-//   boltSuperdog,
-//   giantCobraGhostlySerpent,
+// Import { liloEscapeArtist } from "@lorcanito/lorcana-engine/cards/006";
+// Import {
+//   BoltSuperdog,
+//   GiantCobraGhostlySerpent,
 // } from "@lorcanito/lorcana-engine/cards/007";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Bolt - Superdog", () => {
-//   it("Shift 3", async () => {
-//     const testEngine = new TestEngine({
-//       play: [boltSuperdog],
+// Describe("Bolt - Superdog", () => {
+//   It("Shift 3", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [boltSuperdog],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(boltSuperdog);
-//     expect(cardUnderTest.hasShift).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(boltSuperdog);
+//     Expect(cardUnderTest.hasShift).toBe(true);
 //   });
 //
-//   describe("MARK OF POWER", () => {
-//     it("When you ready this character, gain 1 lore for each other undamaged character you have in play.", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: boltSuperdog.cost,
-//         play: [boltSuperdog, arielSpectacularSinger, mickeyBraveLittleTailor],
+//   Describe("MARK OF POWER", () => {
+//     It("When you ready this character, gain 1 lore for each other undamaged character you have in play.", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: boltSuperdog.cost,
+//         Play: [boltSuperdog, arielSpectacularSinger, mickeyBraveLittleTailor],
 //       });
 //
-//       await testEngine.questCard(boltSuperdog);
-//       expect(testEngine.getPlayerLore()).toEqual(2);
+//       Await testEngine.questCard(boltSuperdog);
+//       Expect(testEngine.getPlayerLore()).toEqual(2);
 //
-//       await testEngine.tapCard(boltSuperdog, true);
+//       Await testEngine.tapCard(boltSuperdog, true);
 //
-//       await testEngine.acceptOptionalLayer();
+//       Await testEngine.acceptOptionalLayer();
 //
-//       expect(testEngine.getPlayerLore()).toEqual(4);
+//       Expect(testEngine.getPlayerLore()).toEqual(4);
 //     });
 //
-//     it("When you ready this character, gain 1 lore for each other undamaged character you have in play. (damaged characters not counted)", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: boltSuperdog.cost,
-//         play: [boltSuperdog, arielSpectacularSinger, mickeyBraveLittleTailor],
-//         hand: [],
+//     It("When you ready this character, gain 1 lore for each other undamaged character you have in play. (damaged characters not counted)", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: boltSuperdog.cost,
+//         Play: [boltSuperdog, arielSpectacularSinger, mickeyBraveLittleTailor],
+//         Hand: [],
 //       });
 //
-//       await testEngine.questCard(boltSuperdog);
-//       expect(testEngine.getPlayerLore()).toEqual(2);
+//       Await testEngine.questCard(boltSuperdog);
+//       Expect(testEngine.getPlayerLore()).toEqual(2);
 //
-//       await testEngine.setCardDamage(arielSpectacularSinger, 1);
-//       await testEngine.setCardDamage(mickeyBraveLittleTailor, 1);
+//       Await testEngine.setCardDamage(arielSpectacularSinger, 1);
+//       Await testEngine.setCardDamage(mickeyBraveLittleTailor, 1);
 //
-//       await testEngine.tapCard(boltSuperdog, true);
+//       Await testEngine.tapCard(boltSuperdog, true);
 //
-//       expect(testEngine.getPlayerLore()).toEqual(2);
+//       Expect(testEngine.getPlayerLore()).toEqual(2);
 //     });
 //   });
 //
-//   describe("BOLT STARE", () => {
-//     it("Banish chosen Illusion character.", async () => {
-//       const testEngine = new TestEngine(
+//   Describe("BOLT STARE", () => {
+//     It("Banish chosen Illusion character.", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: boltSuperdog.cost,
-//           play: [boltSuperdog],
+//           Inkwell: boltSuperdog.cost,
+//           Play: [boltSuperdog],
 //         },
 //         {
-//           play: [giantCobraGhostlySerpent],
+//           Play: [giantCobraGhostlySerpent],
 //         },
 //       );
 //
-//       await testEngine.activateCard(boltSuperdog);
-//       await testEngine.resolveTopOfStack({
-//         targets: [giantCobraGhostlySerpent],
+//       Await testEngine.activateCard(boltSuperdog);
+//       Await testEngine.resolveTopOfStack({
+//         Targets: [giantCobraGhostlySerpent],
 //       });
 //
-//       expect(testEngine.getCardZone(giantCobraGhostlySerpent)).toEqual(
+//       Expect(testEngine.getCardZone(giantCobraGhostlySerpent)).toEqual(
 //         "discard",
 //       );
 //     });
 //
-//     it("Cannot banish a character that is not an illusion.", async () => {
-//       const testEngine = new TestEngine(
+//     It("Cannot banish a character that is not an illusion.", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: boltSuperdog.cost,
-//           play: [boltSuperdog],
+//           Inkwell: boltSuperdog.cost,
+//           Play: [boltSuperdog],
 //         },
 //         {
-//           play: [arielSpectacularSinger],
+//           Play: [arielSpectacularSinger],
 //         },
 //       );
 //
-//       await testEngine.activateCard(boltSuperdog); // no valid targets
+//       Await testEngine.activateCard(boltSuperdog); // no valid targets
 //
-//       expect(testEngine.stackLayers.length).toEqual(0);
+//       Expect(testEngine.stackLayers.length).toEqual(0);
 //     });
 //   });
 // });
 //
-// describe("Regression tests", () => {
-//   it("We should add effect to the bag even when there's no undamaged character", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Regression tests", () => {
+//   It("We should add effect to the bag even when there's no undamaged character", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: liloEscapeArtist.cost,
-//         play: [boltSuperdog],
-//         discard: [liloEscapeArtist],
-//         deck: 2,
+//         Inkwell: liloEscapeArtist.cost,
+//         Play: [boltSuperdog],
+//         Discard: [liloEscapeArtist],
+//         Deck: 2,
 //       },
 //       {
-//         deck: 2,
+//         Deck: 2,
 //       },
 //     );
 //
-//     await testEngine.tapCard(boltSuperdog);
+//     Await testEngine.tapCard(boltSuperdog);
 //
-//     await testEngine.passTurn();
-//     await testEngine.passTurn();
+//     Await testEngine.passTurn();
+//     Await testEngine.passTurn();
 //
-//     expect(testEngine.stackLayers).toHaveLength(2);
-//     await testEngine.acceptOptionalLayerBySource({
-//       skipAssertion: true,
-//       source: liloEscapeArtist,
+//     Expect(testEngine.stackLayers).toHaveLength(2);
+//     Await testEngine.acceptOptionalLayerBySource({
+//       SkipAssertion: true,
+//       Source: liloEscapeArtist,
 //     });
-//     expect(testEngine.getCardModel(liloEscapeArtist).zone).toBe("play");
+//     Expect(testEngine.getCardModel(liloEscapeArtist).zone).toBe("play");
 //
-//     expect(testEngine.getPlayerLore()).toBe(0);
-//     await testEngine.acceptOptionalLayerBySource({
-//       source: boltSuperdog,
+//     Expect(testEngine.getPlayerLore()).toBe(0);
+//     Await testEngine.acceptOptionalLayerBySource({
+//       Source: boltSuperdog,
 //     });
 //
-//     expect(testEngine.getPlayerLore()).toBe(1);
+//     Expect(testEngine.getPlayerLore()).toBe(1);
 //   });
 // });
 //

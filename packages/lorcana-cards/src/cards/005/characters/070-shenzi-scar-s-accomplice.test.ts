@@ -3,35 +3,35 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { shenziScarsAccomplice } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { shenziScarsAccomplice } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Shenzi - Scar's Accomplice", () => {
-//   it.skip("", () => {
-//     const testStore = new TestStore({
-//       inkwell: shenziScarsAccomplice.cost,
-//       play: [shenziScarsAccomplice],
+// Describe("Shenzi - Scar's Accomplice", () => {
+//   It.skip("", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: shenziScarsAccomplice.cost,
+//       Play: [shenziScarsAccomplice],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(shenziScarsAccomplice);
+//     Const cardUnderTest = testStore.getCard(shenziScarsAccomplice);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 //
-//   it.skip("**EASY PICKINGS** While challenging a damaged character, this character gets +2 {S}.", () => {
-//     const testStore = new TestStore({
-//       inkwell: shenziScarsAccomplice.cost,
-//       play: [shenziScarsAccomplice],
+//   It.skip("**EASY PICKINGS** While challenging a damaged character, this character gets +2 {S}.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: shenziScarsAccomplice.cost,
+//       Play: [shenziScarsAccomplice],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(shenziScarsAccomplice);
+//     Const cardUnderTest = testStore.getCard(shenziScarsAccomplice);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

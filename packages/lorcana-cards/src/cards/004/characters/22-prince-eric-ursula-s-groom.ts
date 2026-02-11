@@ -1,58 +1,58 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import {
-//   bodyguardAbility,
-//   shiftAbility,
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import {
+//   BodyguardAbility,
+//   ShiftAbility,
 // } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-// import {
-//   whileYouHaveACharacterNamedThisCharGains,
-//   whileYouHaveACharacterNamedThisCharGets,
+// Import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import {
+//   WhileYouHaveACharacterNamedThisCharGains,
+//   WhileYouHaveACharacterNamedThisCharGets,
 // } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
 //
-// export const princeEricUrsulasGroom: LorcanitoCharacterCard = {
-//   id: "k1b",
-//   missingTestCase: true,
-//   name: "Prince Eric",
-//   title: "Ursula's Groom",
-//   characteristics: ["hero", "floodborn", "prince"],
-//   text: "**Shift 4** _(You may pay 4 {I} to play this on top of one of your characters named Prince Eric.)**\n\n\n**UNDER VANESSA'S SPELL** While you have a character named Ursula in play, this character gains **Bodyguard** and gets +2 {W}. _(An opposing character who challenges one of your characters must choose one with Bodyguard if able.)_",
-//   type: "character",
-//   abilities: [
-//     shiftAbility(4, "prince eric"),
-//     whileYouHaveACharacterNamedThisCharGains({
-//       name: "Under Vanessa's Spell",
-//       text: "While you have a character named Ursula in play, this character gains **Bodyguard**.",
-//       characterName: "Ursula",
-//       ability: bodyguardAbility,
+// Export const princeEricUrsulasGroom: LorcanitoCharacterCard = {
+//   Id: "k1b",
+//   MissingTestCase: true,
+//   Name: "Prince Eric",
+//   Title: "Ursula's Groom",
+//   Characteristics: ["hero", "floodborn", "prince"],
+//   Text: "**Shift 4** _(You may pay 4 {I} to play this on top of one of your characters named Prince Eric.)**\n\n\n**UNDER VANESSA'S SPELL** While you have a character named Ursula in play, this character gains **Bodyguard** and gets +2 {W}. _(An opposing character who challenges one of your characters must choose one with Bodyguard if able.)_",
+//   Type: "character",
+//   Abilities: [
+//     ShiftAbility(4, "prince eric"),
+//     WhileYouHaveACharacterNamedThisCharGains({
+//       Name: "Under Vanessa's Spell",
+//       Text: "While you have a character named Ursula in play, this character gains **Bodyguard**.",
+//       CharacterName: "Ursula",
+//       Ability: bodyguardAbility,
 //     }),
-//     whileYouHaveACharacterNamedThisCharGets({
-//       name: "Under Vanessa's Spell",
-//       text: "While you have a character named Ursula in play, this character gets +2 {W}.",
-//       characterName: "Ursula",
-//       effects: [
+//     WhileYouHaveACharacterNamedThisCharGets({
+//       Name: "Under Vanessa's Spell",
+//       Text: "While you have a character named Ursula in play, this character gets +2 {W}.",
+//       CharacterName: "Ursula",
+//       Effects: [
 //         {
-//           type: "attribute",
-//           attribute: "willpower",
-//           amount: 2,
-//           modifier: "add",
-//           target: thisCharacter,
+//           Type: "attribute",
+//           Attribute: "willpower",
+//           Amount: 2,
+//           Modifier: "add",
+//           Target: thisCharacter,
 //         },
 //       ],
 //     }),
 //   ],
-//   inkwell: true,
-//   colors: ["amber"],
-//   cost: 6,
-//   strength: 5,
-//   willpower: 5,
-//   lore: 2,
-//   illustrator: "Lisanne Koeteeuw",
-//   number: 22,
-//   set: "URR",
-//   externalIds: {
-//     tcgPlayer: 550561,
+//   Inkwell: true,
+//   Colors: ["amber"],
+//   Cost: 6,
+//   Strength: 5,
+//   Willpower: 5,
+//   Lore: 2,
+//   Illustrator: "Lisanne Koeteeuw",
+//   Number: 22,
+//   Set: "URR",
+//   ExternalIds: {
+//     TcgPlayer: 550561,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

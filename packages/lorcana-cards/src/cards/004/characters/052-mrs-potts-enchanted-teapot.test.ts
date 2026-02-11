@@ -3,24 +3,24 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { mrsPottsEnchantedTeapot } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { mrsPottsEnchantedTeapot } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Mrs. Potts - Enchanted Teapot", () => {
-//   it.skip("**IT'LL TURN OUT ALL RIGHT** When you play this characters, if you have a character named Lumiere or Cogsworth in play, you may draw a card.", () => {
-//     const testStore = new TestStore({
-//       inkwell: mrsPottsEnchantedTeapot.cost,
-//       hand: [mrsPottsEnchantedTeapot],
+// Describe("Mrs. Potts - Enchanted Teapot", () => {
+//   It.skip("**IT'LL TURN OUT ALL RIGHT** When you play this characters, if you have a character named Lumiere or Cogsworth in play, you may draw a card.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: mrsPottsEnchantedTeapot.cost,
+//       Hand: [mrsPottsEnchantedTeapot],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "hand",
-//       mrsPottsEnchantedTeapot.id,
+//       MrsPottsEnchantedTeapot.id,
 //     );
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

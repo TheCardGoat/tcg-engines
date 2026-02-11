@@ -3,35 +3,35 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { iFindEmIFlattenEm } from "@lorcanito/lorcana-engine/cards/009/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { iFindEmIFlattenEm } from "@lorcanito/lorcana-engine/cards/009/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("I Find 'Em, I Flatten 'Em", () => {
-//   it.skip("_(A character with cost 4 or more can {E} to sing this song for free.)_", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: iFindEmIFlattenEm.cost,
-//       play: [iFindEmIFlattenEm],
-//       hand: [iFindEmIFlattenEm],
+// Describe("I Find 'Em, I Flatten 'Em", () => {
+//   It.skip("_(A character with cost 4 or more can {E} to sing this song for free.)_", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: iFindEmIFlattenEm.cost,
+//       Play: [iFindEmIFlattenEm],
+//       Hand: [iFindEmIFlattenEm],
 //     });
 //
-//     await testEngine.playCard(iFindEmIFlattenEm);
+//     Await testEngine.playCard(iFindEmIFlattenEm);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 //
-//   it.skip("Banish all items.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: iFindEmIFlattenEm.cost,
-//       play: [iFindEmIFlattenEm],
-//       hand: [iFindEmIFlattenEm],
+//   It.skip("Banish all items.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: iFindEmIFlattenEm.cost,
+//       Play: [iFindEmIFlattenEm],
+//       Hand: [iFindEmIFlattenEm],
 //     });
 //
-//     await testEngine.playCard(iFindEmIFlattenEm);
+//     Await testEngine.playCard(iFindEmIFlattenEm);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

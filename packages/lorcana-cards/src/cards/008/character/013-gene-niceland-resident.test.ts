@@ -3,29 +3,29 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   deweyLovableShowoff,
-//   geneNicelandResident,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   DeweyLovableShowoff,
+//   GeneNicelandResident,
 // } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Gene - Niceland Resident", () => {
-//   it("I GUESS YOU EARNED THIS Whenever this character quests, you may remove up to 2 damage from chosen character.", async () => {
-//     const testEngine = new TestEngine({
-//       play: [geneNicelandResident, deweyLovableShowoff],
+// Describe("Gene - Niceland Resident", () => {
+//   It("I GUESS YOU EARNED THIS Whenever this character quests, you may remove up to 2 damage from chosen character.", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [geneNicelandResident, deweyLovableShowoff],
 //     });
 //
-//     const cardToTest = testEngine.getCardModel(geneNicelandResident);
-//     const cardTarget = testEngine.getCardModel(deweyLovableShowoff);
-//     cardTarget.damage = 2;
+//     Const cardToTest = testEngine.getCardModel(geneNicelandResident);
+//     Const cardTarget = testEngine.getCardModel(deweyLovableShowoff);
+//     CardTarget.damage = 2;
 //
-//     await cardToTest.quest();
+//     Await cardToTest.quest();
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({ targets: [cardTarget] });
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({ targets: [cardTarget] });
 //
-//     expect(cardTarget.damage).toEqual(0);
+//     Expect(cardTarget.damage).toEqual(0);
 //   });
 // });
 //

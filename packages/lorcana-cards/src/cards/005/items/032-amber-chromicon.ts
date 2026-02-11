@@ -1,24 +1,8 @@
 import type { ItemCard } from "@tcg/lorcana-types";
 
 export const amberChromicon: ItemCard = {
-  id: "1yv",
-  cardType: "item",
-  name: "Amber Chromicon",
-  inkType: ["amber"],
-  franchise: "Lorcana",
-  set: "005",
-  text: "AMBER LIGHT {E} — Remove up to 1 damage from each of your characters.",
-  cost: 2,
-  cardNumber: 32,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "ff6fa7884f48d5a7efc043dc128bbb578edad508",
-  },
   abilities: [
     {
-      id: "1yv-1",
-      type: "activated",
       cost: { exert: true },
       effect: {
         type: "remove-damage",
@@ -32,7 +16,23 @@ export const amberChromicon: ItemCard = {
           cardTypes: ["character"],
         },
       },
+      id: "1yv-1",
       text: "AMBER LIGHT {E} — Remove up to 1 damage from each of your characters.",
+      type: "activated",
     },
   ],
+  cardNumber: 32,
+  cardType: "item",
+  cost: 2,
+  externalIds: {
+    ravensburger: "ff6fa7884f48d5a7efc043dc128bbb578edad508",
+  },
+  franchise: "Lorcana",
+  id: "1yv",
+  inkType: ["amber"],
+  inkable: true,
+  missingTests: true,
+  name: "Amber Chromicon",
+  set: "005",
+  text: "AMBER LIGHT {E} — Remove up to 1 damage from each of your characters.",
 };

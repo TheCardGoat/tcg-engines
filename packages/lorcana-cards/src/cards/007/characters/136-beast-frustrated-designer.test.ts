@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { beastFrustratedDesigner } from "@lorcanito/lorcana-engine/cards/007/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { beastFrustratedDesigner } from "@lorcanito/lorcana-engine/cards/007/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Beast - Frustrated Designer", () => {
-//   it.skip("I'VE HAD IT! {E}, 2 {I}, Banish 2 of your items – Deal 5 damage to chosen character.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: beastFrustratedDesigner.cost,
-//       play: [beastFrustratedDesigner],
-//       hand: [beastFrustratedDesigner],
+// Describe("Beast - Frustrated Designer", () => {
+//   It.skip("I'VE HAD IT! {E}, 2 {I}, Banish 2 of your items – Deal 5 damage to chosen character.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: beastFrustratedDesigner.cost,
+//       Play: [beastFrustratedDesigner],
+//       Hand: [beastFrustratedDesigner],
 //     });
 //
-//     await testEngine.playCard(beastFrustratedDesigner);
+//     Await testEngine.playCard(beastFrustratedDesigner);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

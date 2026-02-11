@@ -3,97 +3,97 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { stichtCarefreeSurfer } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { vanellopeVonSchweetzSugarRushChamp } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import {
-//   rapunzelsTowerSecludedPrison,
-//   sugarRushSpeedwayStartingLine,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { stichtCarefreeSurfer } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { vanellopeVonSchweetzSugarRushChamp } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import {
+//   RapunzelsTowerSecludedPrison,
+//   SugarRushSpeedwayStartingLine,
 // } from "@lorcanito/lorcana-engine/cards/005/locations/locations";
-// import { sugarRushSpeedwayFinishLine } from "@lorcanito/lorcana-engine/cards/006";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { sugarRushSpeedwayFinishLine } from "@lorcanito/lorcana-engine/cards/006";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Sugar Rush Speedway - Starting Line", () => {
-//   it("**ON YOUR MARKS!** Once per turn, you may {E} chosen character here and deal them 1 damage to move them to another location for free.", () => {
-//     const testStore = new TestStore({
-//       inkwell: sugarRushSpeedwayStartingLine.moveCost,
-//       play: [
-//         sugarRushSpeedwayStartingLine,
-//         stichtCarefreeSurfer,
-//         rapunzelsTowerSecludedPrison,
+// Describe("Sugar Rush Speedway - Starting Line", () => {
+//   It("**ON YOUR MARKS!** Once per turn, you may {E} chosen character here and deal them 1 damage to move them to another location for free.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: sugarRushSpeedwayStartingLine.moveCost,
+//       Play: [
+//         SugarRushSpeedwayStartingLine,
+//         StichtCarefreeSurfer,
+//         RapunzelsTowerSecludedPrison,
 //       ],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(sugarRushSpeedwayStartingLine);
-//     const characterUnderTest = testStore.getCard(stichtCarefreeSurfer);
-//     const anotherLocation = testStore.getCard(rapunzelsTowerSecludedPrison);
+//     Const cardUnderTest = testStore.getCard(sugarRushSpeedwayStartingLine);
+//     Const characterUnderTest = testStore.getCard(stichtCarefreeSurfer);
+//     Const anotherLocation = testStore.getCard(rapunzelsTowerSecludedPrison);
 //
-//     characterUnderTest.updateCardMeta({ exerted: false, damage: 0 });
+//     CharacterUnderTest.updateCardMeta({ exerted: false, damage: 0 });
 //
-//     characterUnderTest.enterLocation(cardUnderTest);
+//     CharacterUnderTest.enterLocation(cardUnderTest);
 //
-//     expect(characterUnderTest.meta.exerted).toBe(false);
+//     Expect(characterUnderTest.meta.exerted).toBe(false);
 //
-//     cardUnderTest.activate();
-//     testStore.resolveTopOfStack({ targets: [characterUnderTest] }, true);
-//     testStore.resolveTopOfStack({ targets: [anotherLocation] });
+//     CardUnderTest.activate();
+//     TestStore.resolveTopOfStack({ targets: [characterUnderTest] }, true);
+//     TestStore.resolveTopOfStack({ targets: [anotherLocation] });
 //
-//     expect(characterUnderTest.meta.damage).toBe(1);
-//     expect(characterUnderTest.meta.exerted).toBe(true);
-//     expect(characterUnderTest.isAtLocation(anotherLocation)).toBe(true);
+//     Expect(characterUnderTest.meta.damage).toBe(1);
+//     Expect(characterUnderTest.meta.exerted).toBe(true);
+//     Expect(characterUnderTest.isAtLocation(anotherLocation)).toBe(true);
 //   });
 //
-//   describe("Regression test", () => {
-//     it("Character dying while moving from starting line", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell:
-//           sugarRushSpeedwayFinishLine.moveCost +
-//           sugarRushSpeedwayStartingLine.moveCost,
-//         play: [
-//           sugarRushSpeedwayFinishLine,
-//           sugarRushSpeedwayStartingLine,
-//           vanellopeVonSchweetzSugarRushChamp,
+//   Describe("Regression test", () => {
+//     It("Character dying while moving from starting line", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell:
+//           SugarRushSpeedwayFinishLine.moveCost +
+//           SugarRushSpeedwayStartingLine.moveCost,
+//         Play: [
+//           SugarRushSpeedwayFinishLine,
+//           SugarRushSpeedwayStartingLine,
+//           VanellopeVonSchweetzSugarRushChamp,
 //         ],
-//         deck: 5,
+//         Deck: 5,
 //       });
 //
-//       await testEngine.moveToLocation({
-//         location: sugarRushSpeedwayStartingLine,
-//         character: vanellopeVonSchweetzSugarRushChamp,
+//       Await testEngine.moveToLocation({
+//         Location: sugarRushSpeedwayStartingLine,
+//         Character: vanellopeVonSchweetzSugarRushChamp,
 //       });
 //
-//       await testEngine.setCardDamage(
-//         vanellopeVonSchweetzSugarRushChamp,
-//         vanellopeVonSchweetzSugarRushChamp.willpower - 1,
+//       Await testEngine.setCardDamage(
+//         VanellopeVonSchweetzSugarRushChamp,
+//         VanellopeVonSchweetzSugarRushChamp.willpower - 1,
 //       );
 //
-//       await testEngine.activateCard(
-//         sugarRushSpeedwayStartingLine,
+//       Await testEngine.activateCard(
+//         SugarRushSpeedwayStartingLine,
 //         {
-//           targets: [vanellopeVonSchweetzSugarRushChamp],
+//           Targets: [vanellopeVonSchweetzSugarRushChamp],
 //         },
-//         true,
+//         True,
 //       );
 //
-//       await testEngine.resolveTopOfStack(
+//       Await testEngine.resolveTopOfStack(
 //         {
-//           targets: [sugarRushSpeedwayFinishLine],
+//           Targets: [sugarRushSpeedwayFinishLine],
 //         },
-//         true,
+//         True,
 //       );
 //
 //       // Resolve Finish Line ability
-//       await testEngine.resolveOptionalAbility();
+//       Await testEngine.resolveOptionalAbility();
 //
-//       expect(testEngine.getPlayerLore()).toEqual(3);
-//       expect(testEngine.getZonesCardCount().hand).toEqual(3);
-//       expect(testEngine.getCardModel(sugarRushSpeedwayFinishLine).zone).toBe(
+//       Expect(testEngine.getPlayerLore()).toEqual(3);
+//       Expect(testEngine.getZonesCardCount().hand).toEqual(3);
+//       Expect(testEngine.getCardModel(sugarRushSpeedwayFinishLine).zone).toBe(
 //         "discard",
 //       );
 //
-//       expect(
-//         testEngine.getCardModel(vanellopeVonSchweetzSugarRushChamp).zone,
+//       Expect(
+//         TestEngine.getCardModel(vanellopeVonSchweetzSugarRushChamp).zone,
 //       ).toBe("discard");
 //     });
 //   });

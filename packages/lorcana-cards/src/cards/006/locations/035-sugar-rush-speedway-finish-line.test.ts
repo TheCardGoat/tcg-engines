@@ -3,59 +3,59 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { vanellopeVonSchweetzSugarRushChamp } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { sugarRushSpeedwayStartingLine } from "@lorcanito/lorcana-engine/cards/005/locations/locations";
-// import { sugarRushSpeedwayFinishLine } from "@lorcanito/lorcana-engine/cards/006/locations/locations";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { vanellopeVonSchweetzSugarRushChamp } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { sugarRushSpeedwayStartingLine } from "@lorcanito/lorcana-engine/cards/005/locations/locations";
+// Import { sugarRushSpeedwayFinishLine } from "@lorcanito/lorcana-engine/cards/006/locations/locations";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Sugar Rush Speedway - Finish Line", () => {
-//   describe("BRING IT HOME, LITTLE ONE! When you move a character here from another location, you may banish this location to gain 3 lore and draw 3 cards.", () => {
-//     it("Moving from another location", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell:
-//           sugarRushSpeedwayFinishLine.moveCost +
-//           sugarRushSpeedwayStartingLine.moveCost,
-//         play: [
-//           sugarRushSpeedwayStartingLine,
-//           sugarRushSpeedwayFinishLine,
-//           vanellopeVonSchweetzSugarRushChamp,
+// Describe("Sugar Rush Speedway - Finish Line", () => {
+//   Describe("BRING IT HOME, LITTLE ONE! When you move a character here from another location, you may banish this location to gain 3 lore and draw 3 cards.", () => {
+//     It("Moving from another location", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell:
+//           SugarRushSpeedwayFinishLine.moveCost +
+//           SugarRushSpeedwayStartingLine.moveCost,
+//         Play: [
+//           SugarRushSpeedwayStartingLine,
+//           SugarRushSpeedwayFinishLine,
+//           VanellopeVonSchweetzSugarRushChamp,
 //         ],
-//         deck: 10,
+//         Deck: 10,
 //       });
 //
-//       await testEngine.moveToLocation({
-//         location: sugarRushSpeedwayStartingLine,
-//         character: vanellopeVonSchweetzSugarRushChamp,
+//       Await testEngine.moveToLocation({
+//         Location: sugarRushSpeedwayStartingLine,
+//         Character: vanellopeVonSchweetzSugarRushChamp,
 //       });
 //
-//       await testEngine.moveToLocation({
-//         location: sugarRushSpeedwayFinishLine,
-//         character: vanellopeVonSchweetzSugarRushChamp,
+//       Await testEngine.moveToLocation({
+//         Location: sugarRushSpeedwayFinishLine,
+//         Character: vanellopeVonSchweetzSugarRushChamp,
 //       });
 //
-//       await testEngine.resolveOptionalAbility();
+//       Await testEngine.resolveOptionalAbility();
 //
-//       expect(testEngine.getCardModel(sugarRushSpeedwayFinishLine).zone).toBe(
+//       Expect(testEngine.getCardModel(sugarRushSpeedwayFinishLine).zone).toBe(
 //         "discard",
 //       );
-//       expect(testEngine.getPlayerLore()).toEqual(3);
-//       expect(testEngine.getZonesCardCount().hand).toEqual(3);
+//       Expect(testEngine.getPlayerLore()).toEqual(3);
+//       Expect(testEngine.getZonesCardCount().hand).toEqual(3);
 //     });
 //
-//     it("NOT Moving from another location", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: sugarRushSpeedwayFinishLine.moveCost,
-//         play: [sugarRushSpeedwayFinishLine, vanellopeVonSchweetzSugarRushChamp],
-//         deck: 5,
+//     It("NOT Moving from another location", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: sugarRushSpeedwayFinishLine.moveCost,
+//         Play: [sugarRushSpeedwayFinishLine, vanellopeVonSchweetzSugarRushChamp],
+//         Deck: 5,
 //       });
 //
-//       await testEngine.moveToLocation({
-//         location: sugarRushSpeedwayFinishLine,
-//         character: vanellopeVonSchweetzSugarRushChamp,
+//       Await testEngine.moveToLocation({
+//         Location: sugarRushSpeedwayFinishLine,
+//         Character: vanellopeVonSchweetzSugarRushChamp,
 //       });
 //
-//       expect(testEngine.stackLayers).toHaveLength(0);
+//       Expect(testEngine.stackLayers).toHaveLength(0);
 //     });
 //   });
 // });

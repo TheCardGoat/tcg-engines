@@ -4,7 +4,7 @@ import { controlYourTemper } from "./026-control-your-temper";
 describe("Control Your Temper!", () => {
   it("has strength debuff action ability", () => {
     expect(controlYourTemper.abilities).toHaveLength(1);
-    // biome-ignore lint/style/noNonNullAssertion: length check above guarantees existence
+    // Biome-ignore lint/style/noNonNullAssertion: length check above guarantees existence
     const ability = controlYourTemper.abilities![0] as {
       type: string;
       effect?: {
@@ -27,9 +27,9 @@ describe("Control Your Temper!", () => {
 
     // Verify target is chosen character
     expect(ability.effect?.target).toMatchObject({
-      selector: "chosen",
-      count: 1,
       cardTypes: ["character"],
+      count: 1,
+      selector: "chosen",
     });
   });
 });

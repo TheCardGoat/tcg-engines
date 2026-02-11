@@ -3,61 +3,61 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   deweyLovableShowoff,
-//   hueyReliableLeader,
-//   magicaDeSpellShadowForm,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   DeweyLovableShowoff,
+//   HueyReliableLeader,
+//   MagicaDeSpellShadowForm,
 // } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Magica De Spell - Shadow Form", () => {
-//   it("Evasive (Only characters with Evasive can challenge this character.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [magicaDeSpellShadowForm],
+// Describe("Magica De Spell - Shadow Form", () => {
+//   It("Evasive (Only characters with Evasive can challenge this character.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [magicaDeSpellShadowForm],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(magicaDeSpellShadowForm);
-//     expect(cardUnderTest.hasEvasive).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(magicaDeSpellShadowForm);
+//     Expect(cardUnderTest.hasEvasive).toBe(true);
 //   });
 //
-//   it("DANCE OF DARKNESS When you play this character, you may return one of your other characters to your hand to draw a card.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: magicaDeSpellShadowForm.cost,
-//       hand: [magicaDeSpellShadowForm],
-//       play: [deweyLovableShowoff],
-//       deck: [hueyReliableLeader],
+//   It("DANCE OF DARKNESS When you play this character, you may return one of your other characters to your hand to draw a card.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: magicaDeSpellShadowForm.cost,
+//       Hand: [magicaDeSpellShadowForm],
+//       Play: [deweyLovableShowoff],
+//       Deck: [hueyReliableLeader],
 //     });
 //
-//     await testEngine.playCard(magicaDeSpellShadowForm, {
-//       acceptOptionalLayer: true,
-//       targets: [deweyLovableShowoff],
+//     Await testEngine.playCard(magicaDeSpellShadowForm, {
+//       AcceptOptionalLayer: true,
+//       Targets: [deweyLovableShowoff],
 //     });
 //
-//     await expect(testEngine.getCardModel(deweyLovableShowoff).zone).toBe(
+//     Await expect(testEngine.getCardModel(deweyLovableShowoff).zone).toBe(
 //       "hand",
 //     );
-//     await expect(testEngine.getCardModel(hueyReliableLeader).zone).toBe("hand");
+//     Await expect(testEngine.getCardModel(hueyReliableLeader).zone).toBe("hand");
 //   });
 //
-//   it("DANCE OF DARKNESS When you play this character, you may return one of your OTHER characters to your hand to draw a card.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: magicaDeSpellShadowForm.cost,
-//       hand: [magicaDeSpellShadowForm],
-//       play: [],
-//       deck: [hueyReliableLeader],
+//   It("DANCE OF DARKNESS When you play this character, you may return one of your OTHER characters to your hand to draw a card.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: magicaDeSpellShadowForm.cost,
+//       Hand: [magicaDeSpellShadowForm],
+//       Play: [],
+//       Deck: [hueyReliableLeader],
 //     });
 //
-//     await testEngine.playCard(
-//       magicaDeSpellShadowForm,
+//     Await testEngine.playCard(
+//       MagicaDeSpellShadowForm,
 //       {
-//         acceptOptionalLayer: true,
-//         targets: [magicaDeSpellShadowForm],
+//         AcceptOptionalLayer: true,
+//         Targets: [magicaDeSpellShadowForm],
 //       },
-//       true,
+//       True,
 //     );
 //
-//     await expect(testEngine.getCardModel(magicaDeSpellShadowForm).zone).toBe(
+//     Await expect(testEngine.getCardModel(magicaDeSpellShadowForm).zone).toBe(
 //       "play",
 //     );
 //   });

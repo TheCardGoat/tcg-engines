@@ -3,47 +3,47 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   gyroGearlooseEccentricInventor,
-//   montereyJackDefiantProtector,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   GyroGearlooseEccentricInventor,
+//   MontereyJackDefiantProtector,
 // } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Gyro Gearloose - Eccentric Inventor", () => {
-//   it("Evasive (Only characters with Evasive can challenge this character.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [gyroGearlooseEccentricInventor],
+// Describe("Gyro Gearloose - Eccentric Inventor", () => {
+//   It("Evasive (Only characters with Evasive can challenge this character.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [gyroGearlooseEccentricInventor],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(
-//       gyroGearlooseEccentricInventor,
+//     Const cardUnderTest = testEngine.getCardModel(
+//       GyroGearlooseEccentricInventor,
 //     );
-//     expect(cardUnderTest.hasEvasive).toBe(true);
+//     Expect(cardUnderTest.hasEvasive).toBe(true);
 //   });
 //
-//   it("I'LL SHOW YOU! When you play this character, chosen opposing character gets -3 {S} this turn.", async () => {
-//     const testEngine = new TestEngine(
+//   It("I'LL SHOW YOU! When you play this character, chosen opposing character gets -3 {S} this turn.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: gyroGearlooseEccentricInventor.cost,
-//         hand: [gyroGearlooseEccentricInventor],
+//         Inkwell: gyroGearlooseEccentricInventor.cost,
+//         Hand: [gyroGearlooseEccentricInventor],
 //       },
 //       {
-//         play: [montereyJackDefiantProtector],
+//         Play: [montereyJackDefiantProtector],
 //       },
 //     );
-//     expect(testEngine.getCardModel(montereyJackDefiantProtector).strength).toBe(
+//     Expect(testEngine.getCardModel(montereyJackDefiantProtector).strength).toBe(
 //       4,
 //     );
-//     await testEngine.playCard(gyroGearlooseEccentricInventor);
-//     await testEngine.resolveTopOfStack({
-//       targets: [montereyJackDefiantProtector],
+//     Await testEngine.playCard(gyroGearlooseEccentricInventor);
+//     Await testEngine.resolveTopOfStack({
+//       Targets: [montereyJackDefiantProtector],
 //     });
-//     expect(testEngine.getCardModel(montereyJackDefiantProtector).strength).toBe(
+//     Expect(testEngine.getCardModel(montereyJackDefiantProtector).strength).toBe(
 //       1,
 //     );
-//     testEngine.passTurn();
-//     expect(testEngine.getCardModel(montereyJackDefiantProtector).strength).toBe(
+//     TestEngine.passTurn();
+//     Expect(testEngine.getCardModel(montereyJackDefiantProtector).strength).toBe(
 //       4,
 //     );
 //   });

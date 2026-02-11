@@ -1,28 +1,8 @@
 import type { LocationCard } from "@tcg/lorcana-types";
 
 export const trainingGroundsImpossiblePillar: LocationCard = {
-  id: "etf",
-  cardType: "location",
-  name: "Training Grounds",
-  version: "Impossible Pillar",
-  fullName: "Training Grounds - Impossible Pillar",
-  inkType: ["ruby"],
-  franchise: "Mulan",
-  set: "004",
-  text: "STRENGTH OF MIND 1 {I} — Chosen character here gets +1 {S} this turn.",
-  cost: 1,
-  moveCost: 1,
-  lore: 0,
-  cardNumber: 136,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "35674539959c7627310558941f91d1dac8adff48",
-  },
   abilities: [
     {
-      id: "etf-1",
-      type: "activated",
       cost: { exert: true },
       effect: {
         type: "modify-stat",
@@ -37,7 +17,27 @@ export const trainingGroundsImpossiblePillar: LocationCard = {
         },
         duration: "this-turn",
       },
+      id: "etf-1",
       text: "STRENGTH OF MIND 1 {I} — Chosen character here gets +1 {S} this turn.",
+      type: "activated",
     },
   ],
+  cardNumber: 136,
+  cardType: "location",
+  cost: 1,
+  externalIds: {
+    ravensburger: "35674539959c7627310558941f91d1dac8adff48",
+  },
+  franchise: "Mulan",
+  fullName: "Training Grounds - Impossible Pillar",
+  id: "etf",
+  inkType: ["ruby"],
+  inkable: true,
+  lore: 0,
+  missingTests: true,
+  moveCost: 1,
+  name: "Training Grounds",
+  set: "004",
+  text: "STRENGTH OF MIND 1 {I} — Chosen character here gets +1 {S} this turn.",
+  version: "Impossible Pillar",
 };

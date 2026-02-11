@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { chiefBogoGazelleFan } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { chiefBogoGazelleFan } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Chief Bogo - Gazelle Fan", () => {
-//   it.skip("YOU LIKE GAZELLE TOO? While you have a character named Gazelle in play, this character gains Singer 6. (He counts as cost 6 to sing songs.)", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: chiefBogoGazelleFan.cost,
-//       play: [chiefBogoGazelleFan],
-//       hand: [chiefBogoGazelleFan],
+// Describe("Chief Bogo - Gazelle Fan", () => {
+//   It.skip("YOU LIKE GAZELLE TOO? While you have a character named Gazelle in play, this character gains Singer 6. (He counts as cost 6 to sing songs.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: chiefBogoGazelleFan.cost,
+//       Play: [chiefBogoGazelleFan],
+//       Hand: [chiefBogoGazelleFan],
 //     });
 //
-//     await testEngine.playCard(chiefBogoGazelleFan);
+//     Await testEngine.playCard(chiefBogoGazelleFan);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

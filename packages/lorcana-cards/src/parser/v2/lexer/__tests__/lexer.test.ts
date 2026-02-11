@@ -282,7 +282,7 @@ describe("LorcanaLexer", () => {
 
     it("distinguishes keywords from identifiers", () => {
       // Note: Chevrotain tokens don't use word boundaries by default,
-      // so "draws" matches "draw" (keyword) + "s" (identifier).
+      // So "draws" matches "draw" (keyword) + "s" (identifier).
       // Use a word that doesn't contain any keyword prefix.
       const result = LorcanaLexer.tokenize("character");
 

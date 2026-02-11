@@ -3,74 +3,74 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { plasmaBlaster } from "@lorcanito/lorcana-engine/cards/001/items/items";
-// import {
-//   devilsEyeDiamond,
-//   mulanDisguisedSoldier,
-//   suzyMasterSeamstress,
-//   tobyDoggedCompanion,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { plasmaBlaster } from "@lorcanito/lorcana-engine/cards/001/items/items";
+// Import {
+//   DevilsEyeDiamond,
+//   MulanDisguisedSoldier,
+//   SuzyMasterSeamstress,
+//   TobyDoggedCompanion,
 // } from "@lorcanito/lorcana-engine/cards/007";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Devil's Eye Diamond", () => {
-//   it("THE PRICE OF POWER {E} - If one of your characters was damaged this turn, gain 1 lore.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Devil's Eye Diamond", () => {
+//   It("THE PRICE OF POWER {E} - If one of your characters was damaged this turn, gain 1 lore.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         deck: 2,
-//         inkwell: 2,
-//         play: [devilsEyeDiamond, plasmaBlaster, suzyMasterSeamstress],
+//         Deck: 2,
+//         Inkwell: 2,
+//         Play: [devilsEyeDiamond, plasmaBlaster, suzyMasterSeamstress],
 //       },
 //       {
-//         deck: 2,
+//         Deck: 2,
 //       },
 //     );
-//     expect(testEngine.getLoreForPlayer()).toBe(0);
+//     Expect(testEngine.getLoreForPlayer()).toBe(0);
 //
-//     await testEngine.activateCard(plasmaBlaster, {
-//       targets: [suzyMasterSeamstress],
+//     Await testEngine.activateCard(plasmaBlaster, {
+//       Targets: [suzyMasterSeamstress],
 //     });
-//     expect(testEngine.getCardModel(suzyMasterSeamstress).damage).toBe(1);
+//     Expect(testEngine.getCardModel(suzyMasterSeamstress).damage).toBe(1);
 //
-//     await testEngine.activateCard(devilsEyeDiamond);
-//     expect(testEngine.getCardModel(devilsEyeDiamond).exerted).toBe(true);
+//     Await testEngine.activateCard(devilsEyeDiamond);
+//     Expect(testEngine.getCardModel(devilsEyeDiamond).exerted).toBe(true);
 //
-//     expect(testEngine.getLoreForPlayer()).toBe(1);
+//     Expect(testEngine.getLoreForPlayer()).toBe(1);
 //
-//     await testEngine.passTurn();
-//     await testEngine.passTurn();
+//     Await testEngine.passTurn();
+//     Await testEngine.passTurn();
 //
 //     // If damage was not taken during the turn, lore should not be gained
-//     expect(testEngine.getCardModel(devilsEyeDiamond).exerted).toBe(false);
-//     await testEngine.activateCard(devilsEyeDiamond);
+//     Expect(testEngine.getCardModel(devilsEyeDiamond).exerted).toBe(false);
+//     Await testEngine.activateCard(devilsEyeDiamond);
 //
-//     expect(testEngine.getLoreForPlayer()).toBe(1);
+//     Expect(testEngine.getLoreForPlayer()).toBe(1);
 //   });
 // });
 //
-// describe("Regression", () => {
-//   it("Should be able to activate Devil's Eye Diamond when characters are banished by damage", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Regression", () => {
+//   It("Should be able to activate Devil's Eye Diamond when characters are banished by damage", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         deck: 2,
-//         inkwell: 2,
-//         play: [devilsEyeDiamond, mulanDisguisedSoldier],
+//         Deck: 2,
+//         Inkwell: 2,
+//         Play: [devilsEyeDiamond, mulanDisguisedSoldier],
 //       },
 //       {
-//         play: [tobyDoggedCompanion],
-//         deck: 2,
+//         Play: [tobyDoggedCompanion],
+//         Deck: 2,
 //       },
 //     );
 //
-//     await testEngine.challenge({
-//       attacker: mulanDisguisedSoldier,
-//       defender: tobyDoggedCompanion,
-//       exertDefender: true,
+//     Await testEngine.challenge({
+//       Attacker: mulanDisguisedSoldier,
+//       Defender: tobyDoggedCompanion,
+//       ExertDefender: true,
 //     });
 //
-//     await testEngine.activateCard(devilsEyeDiamond);
-//     expect(testEngine.getCardModel(devilsEyeDiamond).exerted).toBe(true);
-//     expect(testEngine.getLoreForPlayer()).toBe(1);
+//     Await testEngine.activateCard(devilsEyeDiamond);
+//     Expect(testEngine.getCardModel(devilsEyeDiamond).exerted).toBe(true);
+//     Expect(testEngine.getLoreForPlayer()).toBe(1);
 //   });
 // });
 //

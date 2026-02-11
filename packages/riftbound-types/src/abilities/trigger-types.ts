@@ -201,9 +201,7 @@ export interface MultiEventTrigger {
 /**
  * Check if trigger subject is a query object
  */
-export function isTriggerSubjectQuery(
-  subject: TriggerSubject,
-): subject is TriggerSubjectQuery {
+export function isTriggerSubjectQuery(subject: TriggerSubject): subject is TriggerSubjectQuery {
   return typeof subject === "object" && subject !== null;
 }
 
@@ -244,10 +242,7 @@ export function isCombatTrigger(trigger: Trigger): boolean {
 /**
  * Check if trigger has a restriction
  */
-export function hasRestriction(
-  trigger: Trigger,
-  type: TriggerRestriction["type"],
-): boolean {
+export function hasRestriction(trigger: Trigger, type: TriggerRestriction["type"]): boolean {
   return trigger.restrictions?.some((r) => r.type === type) ?? false;
 }
 
@@ -413,9 +408,6 @@ export function whenMove(): Trigger {
 /**
  * Create a custom trigger
  */
-export function trigger(
-  event: TriggerEvent,
-  options?: Partial<Omit<Trigger, "event">>,
-): Trigger {
+export function trigger(event: TriggerEvent, options?: Partial<Omit<Trigger, "event">>): Trigger {
   return { event, ...options };
 }

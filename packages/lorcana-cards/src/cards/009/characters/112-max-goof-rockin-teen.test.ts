@@ -3,41 +3,41 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   hiddenCoveTranquilHaven,
-//   maxGoofRockinTeen,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   HiddenCoveTranquilHaven,
+//   MaxGoofRockinTeen,
 // } from "@lorcanito/lorcana-engine/cards/009";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Max Goof - Rockin' Teen", () => {
-//   it("Singer 5 (This character counts as cost 5 to sing songs.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [maxGoofRockinTeen],
+// Describe("Max Goof - Rockin' Teen", () => {
+//   It("Singer 5 (This character counts as cost 5 to sing songs.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [maxGoofRockinTeen],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(maxGoofRockinTeen);
-//     expect(cardUnderTest.hasSinger).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(maxGoofRockinTeen);
+//     Expect(cardUnderTest.hasSinger).toBe(true);
 //   });
 //
-//   it("I JUST WANNA STAY HOME This character can't move to locations.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: hiddenCoveTranquilHaven.moveCost,
-//       play: [maxGoofRockinTeen, hiddenCoveTranquilHaven],
+//   It("I JUST WANNA STAY HOME This character can't move to locations.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: hiddenCoveTranquilHaven.moveCost,
+//       Play: [maxGoofRockinTeen, hiddenCoveTranquilHaven],
 //     });
 //
-//     const maxGoof = testEngine.getCardModel(maxGoofRockinTeen);
-//     const hiddenCove = testEngine.getCardModel(hiddenCoveTranquilHaven);
+//     Const maxGoof = testEngine.getCardModel(maxGoofRockinTeen);
+//     Const hiddenCove = testEngine.getCardModel(hiddenCoveTranquilHaven);
 //
-//     expect(maxGoof.canEnterLocation(hiddenCove)).toBe(false);
+//     Expect(maxGoof.canEnterLocation(hiddenCove)).toBe(false);
 //
-//     await testEngine.moveToLocation({
-//       location: hiddenCove,
-//       character: maxGoof,
-//       skipAssertion: true,
+//     Await testEngine.moveToLocation({
+//       Location: hiddenCove,
+//       Character: maxGoof,
+//       SkipAssertion: true,
 //     });
 //
-//     expect(maxGoof.isAtLocation(hiddenCove)).toBe(false);
+//     Expect(maxGoof.isAtLocation(hiddenCove)).toBe(false);
 //   });
 // });
 //

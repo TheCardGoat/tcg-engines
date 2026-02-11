@@ -3,88 +3,88 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   belleHiddenArcher,
-//   pinocchioStarAttraction,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   BelleHiddenArcher,
+//   PinocchioStarAttraction,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Belle - Hidden Archer", () => {
-//   it("Shift", () => {
-//     const testStore = new TestStore({
-//       play: [belleHiddenArcher],
+// Describe("Belle - Hidden Archer", () => {
+//   It("Shift", () => {
+//     Const testStore = new TestStore({
+//       Play: [belleHiddenArcher],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       belleHiddenArcher.id,
+//       BelleHiddenArcher.id,
 //     );
 //
-//     expect(cardUnderTest.hasShift).toBeTruthy();
+//     Expect(cardUnderTest.hasShift).toBeTruthy();
 //   });
 //
-//   describe("**THORNY ARROWS** Whenever this character is challenged, the challenging character’s player discards all cards in their hand.", () => {
-//     it("as defender, discards all cards in hand", () => {
-//       const testStore = new TestStore(
+//   Describe("**THORNY ARROWS** Whenever this character is challenged, the challenging character’s player discards all cards in their hand.", () => {
+//     It("as defender, discards all cards in hand", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [pinocchioStarAttraction],
-//           hand: 5,
+//           Play: [pinocchioStarAttraction],
+//           Hand: 5,
 //         },
 //         {
-//           play: [belleHiddenArcher],
+//           Play: [belleHiddenArcher],
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         belleHiddenArcher.id,
+//         BelleHiddenArcher.id,
 //         "player_two",
 //       );
-//       const attacker = testStore.getByZoneAndId(
+//       Const attacker = testStore.getByZoneAndId(
 //         "play",
-//         pinocchioStarAttraction.id,
+//         PinocchioStarAttraction.id,
 //         "player_one",
 //       );
-//       cardUnderTest.updateCardMeta({ exerted: true });
-//       attacker.challenge(cardUnderTest);
+//       CardUnderTest.updateCardMeta({ exerted: true });
+//       Attacker.challenge(cardUnderTest);
 //
-//       expect(testStore.getZonesCardCount()).toEqual(
-//         expect.objectContaining({
-//           hand: 0,
-//           discard: 5 + 1, // 5 from hand, 1 from challenge
+//       Expect(testStore.getZonesCardCount()).toEqual(
+//         Expect.objectContaining({
+//           Hand: 0,
+//           Discard: 5 + 1, // 5 from hand, 1 from challenge
 //         }),
 //       );
 //     });
 //
-//     it("as attacker, discards none", () => {
-//       const testStore = new TestStore(
+//     It("as attacker, discards none", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [belleHiddenArcher],
-//           hand: 5,
+//           Play: [belleHiddenArcher],
+//           Hand: 5,
 //         },
 //         {
-//           play: [pinocchioStarAttraction],
+//           Play: [pinocchioStarAttraction],
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         belleHiddenArcher.id,
+//         BelleHiddenArcher.id,
 //         "player_one",
 //       );
-//       const defender = testStore.getByZoneAndId(
+//       Const defender = testStore.getByZoneAndId(
 //         "play",
-//         pinocchioStarAttraction.id,
+//         PinocchioStarAttraction.id,
 //         "player_two",
 //       );
-//       defender.updateCardMeta({ exerted: true });
-//       cardUnderTest.challenge(defender);
+//       Defender.updateCardMeta({ exerted: true });
+//       CardUnderTest.challenge(defender);
 //
-//       expect(testStore.getZonesCardCount()).toEqual(
-//         expect.objectContaining({
-//           hand: 5,
-//           discard: 0,
+//       Expect(testStore.getZonesCardCount()).toEqual(
+//         Expect.objectContaining({
+//           Hand: 5,
+//           Discard: 0,
 //         }),
 //       );
 //     });

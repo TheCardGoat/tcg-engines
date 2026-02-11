@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { tinkerBellTinyTactician } from "@lorcanito/lorcana-engine/cards/009/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { tinkerBellTinyTactician } from "@lorcanito/lorcana-engine/cards/009/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Tinker Bell - Tiny Tactician", () => {
-//   it.skip("**Battle plans** {E} - Draw a card, then choose and discard a card.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: tinkerBellTinyTactician.cost,
-//       play: [tinkerBellTinyTactician],
-//       hand: [tinkerBellTinyTactician],
+// Describe("Tinker Bell - Tiny Tactician", () => {
+//   It.skip("**Battle plans** {E} - Draw a card, then choose and discard a card.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: tinkerBellTinyTactician.cost,
+//       Play: [tinkerBellTinyTactician],
+//       Hand: [tinkerBellTinyTactician],
 //     });
 //
-//     await testEngine.playCard(tinkerBellTinyTactician);
+//     Await testEngine.playCard(tinkerBellTinyTactician);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

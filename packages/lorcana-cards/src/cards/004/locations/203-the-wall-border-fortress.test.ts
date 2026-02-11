@@ -3,9 +3,9 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
+// Import { describe, it } from "@jest/globals";
 //
-// describe("The Wall - Border Fortress", () => {
-//   it("TODO", () => {});
+// Describe("The Wall - Border Fortress", () => {
+//   It("TODO", () => {});
 // });
 //

@@ -11,21 +11,19 @@ import { Effects, Triggers } from "../helpers";
 describe("Trigger: When Hold", () => {
   describe("return to hand effects", () => {
     it.skip("should parse 'When I hold, return me to my owner's hand.'", () => {
-      const result = parseAbilities(
-        "When I hold, return me to my owner's hand.",
-      );
+      const result = parseAbilities("When I hold, return me to my owner's hand.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
-          trigger: expect.objectContaining({
-            event: "hold",
-          }),
           effect: expect.objectContaining({
             type: "return-to-hand",
           }),
+          trigger: expect.objectContaining({
+            event: "hold",
+          }),
+          type: "triggered",
         }),
       );
     });
@@ -39,14 +37,14 @@ describe("Trigger: When Hold", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
+          effect: expect.objectContaining({
+            amount: 1,
+            type: "draw",
+          }),
           trigger: expect.objectContaining({
             event: "hold",
           }),
-          effect: expect.objectContaining({
-            type: "draw",
-            amount: 1,
-          }),
+          type: "triggered",
         }),
       );
     });
@@ -60,12 +58,12 @@ describe("Trigger: When Hold", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           effect: expect.objectContaining({
-            type: "channel",
             amount: 1,
             exhausted: true,
+            type: "channel",
           }),
+          type: "triggered",
         }),
       );
     });
@@ -81,10 +79,10 @@ describe("Trigger: When Hold", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           effect: expect.objectContaining({
             type: "buff",
           }),
+          type: "triggered",
         }),
       );
     });
@@ -98,14 +96,14 @@ describe("Trigger: When Hold", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           trigger: expect.objectContaining({
             event: "hold",
             on: expect.objectContaining({
-              type: "unit",
               controller: "friendly",
+              type: "unit",
             }),
           }),
+          type: "triggered",
         }),
       );
     });

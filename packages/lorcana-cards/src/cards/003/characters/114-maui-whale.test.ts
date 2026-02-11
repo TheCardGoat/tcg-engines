@@ -3,39 +3,39 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { mauiWhale } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { mauiWhale } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Maui - Whale", () => {
-//   it.skip("**THIS MISSION IS CURSED** This character doesn’t ready at the start of the turn.", () => {
-//     const testStore = new TestStore({
-//       inkwell: mauiWhale.cost,
-//       play: [mauiWhale],
+// Describe("Maui - Whale", () => {
+//   It.skip("**THIS MISSION IS CURSED** This character doesn’t ready at the start of the turn.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: mauiWhale.cost,
+//       Play: [mauiWhale],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(mauiWhale);
-//     expect(cardUnderTest.ready).toBe(true);
-//     cardUnderTest.updateCardMeta({ exerted: true });
-//     expect(cardUnderTest.ready).toBe(false);
-//     testStore.passTurn();
-//     expect(cardUnderTest.ready).toBe(false);
-//     testStore.passTurn();
-//     expect(cardUnderTest.ready).toBe(false);
+//     Const cardUnderTest = testStore.getCard(mauiWhale);
+//     Expect(cardUnderTest.ready).toBe(true);
+//     CardUnderTest.updateCardMeta({ exerted: true });
+//     Expect(cardUnderTest.ready).toBe(false);
+//     TestStore.passTurn();
+//     Expect(cardUnderTest.ready).toBe(false);
+//     TestStore.passTurn();
+//     Expect(cardUnderTest.ready).toBe(false);
 //   });
-//   it.skip("**DON’T WORRY, I’M HERE** 2 {I} - Ready this character, this character can’t quest for the rest of this turn.", () => {
-//     const testStore = new TestStore({
-//       inkwell: mauiWhale.cost,
-//       play: [mauiWhale],
+//   It.skip("**DON’T WORRY, I’M HERE** 2 {I} - Ready this character, this character can’t quest for the rest of this turn.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: mauiWhale.cost,
+//       Play: [mauiWhale],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(mauiWhale);
-//     cardUnderTest.updateCardMeta({ exerted: true });
-//     expect(cardUnderTest.ready).toBe(false);
+//     Const cardUnderTest = testStore.getCard(mauiWhale);
+//     CardUnderTest.updateCardMeta({ exerted: true });
+//     Expect(cardUnderTest.ready).toBe(false);
 //
-//     cardUnderTest.activate();
-//     expect(cardUnderTest.ready).toBe(true);
-//     expect(cardUnderTest.canQuest).toBe(false);
+//     CardUnderTest.activate();
+//     Expect(cardUnderTest.ready).toBe(true);
+//     Expect(cardUnderTest.canQuest).toBe(false);
 //   });
 // });
 //

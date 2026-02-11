@@ -17,10 +17,10 @@ describe("Special: Extra Turn", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "spell",
           effect: expect.objectContaining({
             type: "extra-turn",
           }),
+          type: "spell",
         }),
       );
     });
@@ -36,13 +36,13 @@ describe("Special: Extra Turn", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "spell",
           condition: expect.objectContaining({
             type: "score",
           }),
           effect: expect.objectContaining({
             type: "extra-turn",
           }),
+          type: "spell",
         }),
       );
     });

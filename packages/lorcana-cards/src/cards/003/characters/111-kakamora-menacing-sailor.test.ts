@@ -3,24 +3,24 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { kakamoraMenacingSailor } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { kakamoraMenacingSailor } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Kakamora - Menacing Sailor", () => {
-//   it.skip("**PLUNDER** When you play this character, each opponent loses 1 Lore.", () => {
-//     const testStore = new TestStore({
-//       inkwell: kakamoraMenacingSailor.cost,
-//       hand: [kakamoraMenacingSailor],
+// Describe("Kakamora - Menacing Sailor", () => {
+//   It.skip("**PLUNDER** When you play this character, each opponent loses 1 Lore.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: kakamoraMenacingSailor.cost,
+//       Hand: [kakamoraMenacingSailor],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "hand",
-//       kakamoraMenacingSailor.id,
+//       KakamoraMenacingSailor.id,
 //     );
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

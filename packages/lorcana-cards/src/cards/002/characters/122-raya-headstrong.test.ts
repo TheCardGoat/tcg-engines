@@ -3,53 +3,53 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   pinocchioStarAttraction,
-//   pinocchioTalkativePuppet,
-//   rayaHeadstrong,
-//   theHuntsmanReluctantEnforcer,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   PinocchioStarAttraction,
+//   PinocchioTalkativePuppet,
+//   RayaHeadstrong,
+//   TheHuntsmanReluctantEnforcer,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Raya - Headstrong", () => {
-//   it("**NOTE TO SELF, DON’T DIE** During your turn, whenever this character banishes another character in a challenge, you may ready this character. She can’t quest for the rest of this turn.", () => {
-//     const testStore = new TestStore(
+// Describe("Raya - Headstrong", () => {
+//   It("**NOTE TO SELF, DON’T DIE** During your turn, whenever this character banishes another character in a challenge, you may ready this character. She can’t quest for the rest of this turn.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         play: [rayaHeadstrong],
+//         Play: [rayaHeadstrong],
 //       },
 //       {
-//         play: [
-//           theHuntsmanReluctantEnforcer,
-//           pinocchioTalkativePuppet,
-//           pinocchioStarAttraction,
+//         Play: [
+//           TheHuntsmanReluctantEnforcer,
+//           PinocchioTalkativePuppet,
+//           PinocchioStarAttraction,
 //         ],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId("play", rayaHeadstrong.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("play", rayaHeadstrong.id);
 //
-//     const target = testStore.getByZoneAndId(
+//     Const target = testStore.getByZoneAndId(
 //       "play",
-//       theHuntsmanReluctantEnforcer.id,
+//       TheHuntsmanReluctantEnforcer.id,
 //       "player_two",
 //     );
-//     const target2 = testStore.getByZoneAndId(
+//     Const target2 = testStore.getByZoneAndId(
 //       "play",
-//       pinocchioTalkativePuppet.id,
+//       PinocchioTalkativePuppet.id,
 //       "player_two",
 //     );
 //
 //     [target, target2].forEach((char) => {
-//       char.updateCardMeta({ exerted: true });
-//       cardUnderTest.challenge(char);
+//       Char.updateCardMeta({ exerted: true });
+//       CardUnderTest.challenge(char);
 //
-//       expect(char.zone).toBe("discard");
-//       expect(cardUnderTest.ready).toBe(true);
+//       Expect(char.zone).toBe("discard");
+//       Expect(cardUnderTest.ready).toBe(true);
 //     });
 //
-//     expect(cardUnderTest.hasQuestRestriction).toBe(true);
-//     expect(cardUnderTest.damage).toBe(target.strength + target2.strength);
+//     Expect(cardUnderTest.hasQuestRestriction).toBe(true);
+//     Expect(cardUnderTest.damage).toBe(target.strength + target2.strength);
 //   });
 // });
 //

@@ -27,7 +27,7 @@ export function parseTrigger(text: string): Trigger | undefined {
   }
 
   // Strip restriction prefixes if present (for cases without names)
-  // e.g., "Once per turn, when X" or "During your turn, when X"
+  // E.g., "Once per turn, when X" or "During your turn, when X"
   const restrictionMatch = textToParse.match(
     /^(?:Once per turn|During your turn),\s*/i,
   );
@@ -54,15 +54,15 @@ export function parseTrigger(text: string): Trigger | undefined {
     if (textToParse.match(/At the start of your turn/i)) {
       return {
         event: "start-turn",
-        timing: "at",
         on: "YOU",
+        timing: "at",
       };
     }
     if (textToParse.match(/At the end of your turn/i)) {
       return {
         event: "end-turn",
-        timing: "at",
         on: "YOU",
+        timing: "at",
       };
     }
   }
@@ -71,64 +71,64 @@ export function parseTrigger(text: string): Trigger | undefined {
   if (textToParse.match(/\byou play this character\b/i)) {
     return {
       event: "play",
-      timing,
       on: "SELF",
+      timing,
     };
   }
 
   if (textToParse.match(/\byou play this (?:item|location)\b/i)) {
     return {
       event: "play",
-      timing,
       on: "SELF",
+      timing,
     };
   }
 
   if (textToParse.match(/\bthis character quests\b/i)) {
     return {
       event: "quest",
-      timing,
       on: "SELF",
+      timing,
     };
   }
 
   if (textToParse.match(/\bthis character challenges\b/i)) {
     return {
       event: "challenge",
-      timing,
       on: "SELF",
+      timing,
     };
   }
 
   if (textToParse.match(/\bthis character is challenged\b/i)) {
     return {
       event: "challenged",
-      timing,
       on: "SELF",
+      timing,
     };
   }
 
   if (textToParse.match(/\bthis character is banished\b/i)) {
     return {
       event: "banish",
-      timing,
       on: "SELF",
+      timing,
     };
   }
 
   if (textToParse.match(/\bthis character leaves play\b/i)) {
     return {
       event: "leave-play",
-      timing,
       on: "SELF",
+      timing,
     };
   }
 
   if (textToParse.match(/\bthis character banishes another character\b/i)) {
     return {
       event: "banish",
-      timing,
       on: "OPPONENT_CHARACTERS",
+      timing,
     };
   }
 
@@ -136,8 +136,8 @@ export function parseTrigger(text: string): Trigger | undefined {
   if (textToParse.match(/\byou play a card\b/i)) {
     return {
       event: "play",
+      on: { cardType: "card", controller: "you" },
       timing,
-      on: { controller: "you", cardType: "card" },
     };
   }
 
@@ -146,76 +146,76 @@ export function parseTrigger(text: string): Trigger | undefined {
   if (textToParse.match(/\byou play a Hero character\b/i)) {
     return {
       event: "play",
+      on: { cardType: "character", classification: "Hero", controller: "you" },
       timing,
-      on: { controller: "you", cardType: "character", classification: "Hero" },
     };
   }
 
   if (textToParse.match(/\byou play a Villain character\b/i)) {
     return {
       event: "play",
-      timing,
       on: {
-        controller: "you",
         cardType: "character",
         classification: "Villain",
+        controller: "you",
       },
+      timing,
     };
   }
 
   if (textToParse.match(/\byou play a Princess character\b/i)) {
     return {
       event: "play",
-      timing,
       on: {
-        controller: "you",
         cardType: "character",
         classification: "Princess",
+        controller: "you",
       },
+      timing,
     };
   }
 
   if (textToParse.match(/\byou play a King character\b/i)) {
     return {
       event: "play",
+      on: { cardType: "character", classification: "King", controller: "you" },
       timing,
-      on: { controller: "you", cardType: "character", classification: "King" },
     };
   }
 
   if (textToParse.match(/\byou play a Queen character\b/i)) {
     return {
       event: "play",
-      timing,
       on: {
-        controller: "you",
         cardType: "character",
         classification: "Queen",
+        controller: "you",
       },
+      timing,
     };
   }
 
   if (textToParse.match(/\byou play a Pirate character\b/i)) {
     return {
       event: "play",
-      timing,
       on: {
-        controller: "you",
         cardType: "character",
         classification: "Pirate",
+        controller: "you",
       },
+      timing,
     };
   }
 
   if (textToParse.match(/\byou play a Floodborn character\b/i)) {
     return {
       event: "play",
-      timing,
       on: {
-        controller: "you",
         cardType: "character",
         classification: "Floodborn",
+        controller: "you",
       },
+      timing,
     };
   }
 
@@ -223,8 +223,8 @@ export function parseTrigger(text: string): Trigger | undefined {
   if (textToParse.match(/\byou play a character here\b/i)) {
     return {
       event: "play",
-      timing,
-      on: { controller: "you", cardType: "character", here: true } as any, // 'here' is a custom extension
+      on: { cardType: "character", controller: "you", here: true } as any,
+      timing, // 'here' is a custom extension
     };
   }
 
@@ -232,40 +232,40 @@ export function parseTrigger(text: string): Trigger | undefined {
   if (textToParse.match(/\byou play a character\b/i)) {
     return {
       event: "play",
+      on: { cardType: "character", controller: "you" },
       timing,
-      on: { controller: "you", cardType: "character" },
     };
   }
 
   if (textToParse.match(/\byou play an? item\b/i)) {
     return {
       event: "play",
+      on: { cardType: "item", controller: "you" },
       timing,
-      on: { controller: "you", cardType: "item" },
     };
   }
 
   if (textToParse.match(/\byou play an? action\b/i)) {
     return {
       event: "play",
+      on: { cardType: "action", controller: "you" },
       timing,
-      on: { controller: "you", cardType: "action" },
     };
   }
 
   if (textToParse.match(/\byou play a song\b/i)) {
     return {
       event: "play",
-      timing,
-      on: { controller: "you", cardType: "action" }, // "song" is mapped to "action"
+      on: { cardType: "action", controller: "you" },
+      timing, // "song" is mapped to "action"
     };
   }
 
   if (textToParse.match(/\byou play an? location\b/i)) {
     return {
       event: "play",
+      on: { cardType: "location", controller: "you" },
       timing,
-      on: { controller: "you", cardType: "location" },
     };
   }
 
@@ -273,24 +273,24 @@ export function parseTrigger(text: string): Trigger | undefined {
   if (textToParse.match(/\ban opponent plays a song\b/i)) {
     return {
       event: "play",
-      timing,
-      on: { controller: "opponent", cardType: "action" }, // "song" is mapped to "action"
+      on: { cardType: "action", controller: "opponent" },
+      timing, // "song" is mapped to "action"
     };
   }
 
   if (textToParse.match(/\ban opponent plays a character\b/i)) {
     return {
       event: "play",
+      on: { cardType: "character", controller: "opponent" },
       timing,
-      on: { controller: "opponent", cardType: "character" },
     };
   }
 
   if (textToParse.match(/\ban opponent plays a card\b/i)) {
     return {
       event: "play",
+      on: { cardType: "card", controller: "opponent" },
       timing,
-      on: { controller: "opponent", cardType: "card" },
     };
   }
 
@@ -298,16 +298,16 @@ export function parseTrigger(text: string): Trigger | undefined {
   if (textToParse.match(/\ba character is banished\b/i)) {
     return {
       event: "banish",
-      timing,
       on: "ANY_CHARACTER",
+      timing,
     };
   }
 
   if (textToParse.match(/\ban item is banished\b/i)) {
     return {
       event: "banish",
-      timing,
       on: "YOUR_ITEMS",
+      timing,
     };
   }
 

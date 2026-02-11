@@ -3,71 +3,71 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   mickeyMouseArtfulRogue,
-//   mickeyMouseDetective,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   MickeyMouseArtfulRogue,
+//   MickeyMouseDetective,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { mickeyMouseFriendlyFace } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { mickeyMouseTrumpeter } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import {
-//   desperatePlan,
-//   mickeyMouseGiantMouse,
+// Import { mickeyMouseFriendlyFace } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { mickeyMouseTrumpeter } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import {
+//   DesperatePlan,
+//   MickeyMouseGiantMouse,
 // } from "@lorcanito/lorcana-engine/cards/008";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Desperate Plan", () => {
-//   describe("If you have no cards in your hand, draw until you have 3 cards in your hand. Otherwise, choose and discard any number of cards, then draw that many cards.", () => {
-//     it("No cards in hand", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: desperatePlan.cost,
-//         hand: [desperatePlan],
-//         deck: 20,
+// Describe("Desperate Plan", () => {
+//   Describe("If you have no cards in your hand, draw until you have 3 cards in your hand. Otherwise, choose and discard any number of cards, then draw that many cards.", () => {
+//     It("No cards in hand", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: desperatePlan.cost,
+//         Hand: [desperatePlan],
+//         Deck: 20,
 //       });
 //
-//       await testEngine.playCard(desperatePlan);
+//       Await testEngine.playCard(desperatePlan);
 //       // await testEngine.resolveOptionalAbility();
 //
-//       expect(testEngine.stackLayers).toHaveLength(0);
-//       expect(testEngine.getZonesCardCount()).toEqual(
-//         expect.objectContaining({
-//           hand: 3,
-//           deck: 17,
+//       Expect(testEngine.stackLayers).toHaveLength(0);
+//       Expect(testEngine.getZonesCardCount()).toEqual(
+//         Expect.objectContaining({
+//           Hand: 3,
+//           Deck: 17,
 //         }),
 //       );
 //     });
 //
-//     it("With cards in hand", async () => {
-//       const toDiscard = [
-//         mickeyMouseGiantMouse,
-//         mickeyMouseDetective,
-//         mickeyMouseArtfulRogue,
+//     It("With cards in hand", async () => {
+//       Const toDiscard = [
+//         MickeyMouseGiantMouse,
+//         MickeyMouseDetective,
+//         MickeyMouseArtfulRogue,
 //       ];
-//       const toKeep = [mickeyMouseTrumpeter, mickeyMouseFriendlyFace];
-//       const testEngine = new TestEngine({
-//         inkwell: desperatePlan.cost,
-//         hand: [desperatePlan, ...toDiscard, ...toKeep],
-//         deck: 20,
+//       Const toKeep = [mickeyMouseTrumpeter, mickeyMouseFriendlyFace];
+//       Const testEngine = new TestEngine({
+//         Inkwell: desperatePlan.cost,
+//         Hand: [desperatePlan, ...toDiscard, ...toKeep],
+//         Deck: 20,
 //       });
 //
-//       await testEngine.playCard(desperatePlan, {
-//         targets: toDiscard,
+//       Await testEngine.playCard(desperatePlan, {
+//         Targets: toDiscard,
 //       });
 //
-//       for (const card of toDiscard) {
-//         expect(testEngine.getCardModel(card).zone).toEqual("discard");
+//       For (const card of toDiscard) {
+//         Expect(testEngine.getCardModel(card).zone).toEqual("discard");
 //       }
 //
-//       for (const card of toKeep) {
-//         expect(testEngine.getCardModel(card).zone).toEqual("hand");
+//       For (const card of toKeep) {
+//         Expect(testEngine.getCardModel(card).zone).toEqual("hand");
 //       }
 //
-//       expect(testEngine.stackLayers).toHaveLength(0);
-//       expect(testEngine.getZonesCardCount()).toEqual(
-//         expect.objectContaining({
-//           hand: toDiscard.length + toKeep.length,
-//           discard: toDiscard.length + 1,
-//           deck: 20 - toDiscard.length,
+//       Expect(testEngine.stackLayers).toHaveLength(0);
+//       Expect(testEngine.getZonesCardCount()).toEqual(
+//         Expect.objectContaining({
+//           Hand: toDiscard.length + toKeep.length,
+//           Discard: toDiscard.length + 1,
+//           Deck: 20 - toDiscard.length,
 //         }),
 //       );
 //     });

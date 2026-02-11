@@ -3,86 +3,86 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   francineEyeingTheEvidence,
-//   plutoSteelChampion,
-//   recoveredPage,
-//   theSultanPlayfulMonarch,
-//   tinkerBellFancyFootwork,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   FrancineEyeingTheEvidence,
+//   PlutoSteelChampion,
+//   RecoveredPage,
+//   TheSultanPlayfulMonarch,
+//   TinkerBellFancyFootwork,
 // } from "@lorcanito/lorcana-engine/cards/010";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Pluto - Steel Champion", () => {
-//   it("WINNER TAKE ALL During your turn, whenever one of your other Steel characters banishes another character in a challenge, gain 2 lore. MAKE ROOM Whenever you play another Steel character, you may banish chosen item.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Pluto - Steel Champion", () => {
+//   It("WINNER TAKE ALL During your turn, whenever one of your other Steel characters banishes another character in a challenge, gain 2 lore. MAKE ROOM Whenever you play another Steel character, you may banish chosen item.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         play: [plutoSteelChampion, francineEyeingTheEvidence],
+//         Play: [plutoSteelChampion, francineEyeingTheEvidence],
 //       },
 //       {
-//         play: [theSultanPlayfulMonarch, tinkerBellFancyFootwork],
+//         Play: [theSultanPlayfulMonarch, tinkerBellFancyFootwork],
 //       },
 //     );
 //
-//     await testEngine.exertCard(theSultanPlayfulMonarch);
-//     await testEngine.exertCard(tinkerBellFancyFootwork);
+//     Await testEngine.exertCard(theSultanPlayfulMonarch);
+//     Await testEngine.exertCard(tinkerBellFancyFootwork);
 //
-//     await testEngine.challenge({
-//       attacker: francineEyeingTheEvidence,
-//       defender: theSultanPlayfulMonarch,
+//     Await testEngine.challenge({
+//       Attacker: francineEyeingTheEvidence,
+//       Defender: theSultanPlayfulMonarch,
 //     });
 //
-//     expect(testEngine.getLoreForPlayer("player_one")).toBe(2);
+//     Expect(testEngine.getLoreForPlayer("player_one")).toBe(2);
 //
 //     // Pluto should not trigger on self
-//     await testEngine.challenge({
-//       attacker: plutoSteelChampion,
-//       defender: tinkerBellFancyFootwork,
+//     Await testEngine.challenge({
+//       Attacker: plutoSteelChampion,
+//       Defender: tinkerBellFancyFootwork,
 //     });
 //
-//     expect(testEngine.getLoreForPlayer("player_one")).toBe(2);
+//     Expect(testEngine.getLoreForPlayer("player_one")).toBe(2);
 //   });
 //
-//   it("MAKE ROOM Whenever you play another Steel character, you may banish chosen item.", async () => {
-//     const testEngine = new TestEngine(
+//   It("MAKE ROOM Whenever you play another Steel character, you may banish chosen item.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: plutoSteelChampion.cost + francineEyeingTheEvidence.cost,
-//         hand: [plutoSteelChampion, francineEyeingTheEvidence],
+//         Inkwell: plutoSteelChampion.cost + francineEyeingTheEvidence.cost,
+//         Hand: [plutoSteelChampion, francineEyeingTheEvidence],
 //       },
 //       {
-//         play: [recoveredPage],
+//         Play: [recoveredPage],
 //       },
 //     );
 //
-//     await testEngine.playCard(plutoSteelChampion);
-//     expect(testEngine.stackLayers).toHaveLength(0);
+//     Await testEngine.playCard(plutoSteelChampion);
+//     Expect(testEngine.stackLayers).toHaveLength(0);
 //
-//     await testEngine.playCard(francineEyeingTheEvidence);
-//     expect(testEngine.stackLayers).toHaveLength(1);
+//     Await testEngine.playCard(francineEyeingTheEvidence);
+//     Expect(testEngine.stackLayers).toHaveLength(1);
 //
-//     await testEngine.acceptOptionalLayer();
-//     await testEngine.resolveTopOfStack({ targets: [recoveredPage] });
+//     Await testEngine.acceptOptionalLayer();
+//     Await testEngine.resolveTopOfStack({ targets: [recoveredPage] });
 //
-//     expect(testEngine.getCardModel(recoveredPage).zone).toBe("discard");
+//     Expect(testEngine.getCardModel(recoveredPage).zone).toBe("discard");
 //   });
 // });
 //
-// describe("Regression", () => {
-//   it("Do not banish item when playing pluto", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Regression", () => {
+//   It("Do not banish item when playing pluto", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: plutoSteelChampion.cost,
-//         hand: [plutoSteelChampion],
+//         Inkwell: plutoSteelChampion.cost,
+//         Hand: [plutoSteelChampion],
 //       },
 //       {
-//         play: [recoveredPage],
+//         Play: [recoveredPage],
 //       },
 //     );
 //
-//     await testEngine.playCard(plutoSteelChampion);
-//     expect(testEngine.stackLayers).toHaveLength(0);
+//     Await testEngine.playCard(plutoSteelChampion);
+//     Expect(testEngine.stackLayers).toHaveLength(0);
 //
-//     expect(testEngine.getCardModel(recoveredPage).zone).toBe("play");
+//     Expect(testEngine.getCardModel(recoveredPage).zone).toBe("play");
 //   });
 // });
 //

@@ -3,28 +3,28 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   aladdinVigilantGuard,
-//   jasmineResourcefulInfiltrator,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   AladdinVigilantGuard,
+//   JasmineResourcefulInfiltrator,
 // } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Jasmine - Resourceful Infiltrator", () => {
-//   it("JUST WHAT YOU NEED When you play this character, you may give another chosen character Resist +1 until the start of your next turn. (Damage dealt to them is reduced by 1.)", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: jasmineResourcefulInfiltrator.cost,
-//       hand: [jasmineResourcefulInfiltrator],
-//       play: [aladdinVigilantGuard],
+// Describe("Jasmine - Resourceful Infiltrator", () => {
+//   It("JUST WHAT YOU NEED When you play this character, you may give another chosen character Resist +1 until the start of your next turn. (Damage dealt to them is reduced by 1.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: jasmineResourcefulInfiltrator.cost,
+//       Hand: [jasmineResourcefulInfiltrator],
+//       Play: [aladdinVigilantGuard],
 //     });
 //
-//     await testEngine.playCard(jasmineResourcefulInfiltrator);
-//     await testEngine.acceptOptionalAbility();
-//     await testEngine.resolveTopOfStack({
-//       targets: [aladdinVigilantGuard],
+//     Await testEngine.playCard(jasmineResourcefulInfiltrator);
+//     Await testEngine.acceptOptionalAbility();
+//     Await testEngine.resolveTopOfStack({
+//       Targets: [aladdinVigilantGuard],
 //     });
 //
-//     expect(testEngine.getCardModel(aladdinVigilantGuard).hasResist).toBe(true);
+//     Expect(testEngine.getCardModel(aladdinVigilantGuard).hasResist).toBe(true);
 //   });
 // });
 //

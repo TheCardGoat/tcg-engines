@@ -3,70 +3,70 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { robinHoodCapableFighter } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { gizmoduckSuitedUp } from "@lorcanito/lorcana-engine/cards/007/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { robinHoodCapableFighter } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { gizmoduckSuitedUp } from "@lorcanito/lorcana-engine/cards/007/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Resist +1 (Damage dealt to this character is reduced by 1.)", () => {
-//   it.skip("", async () => {
-//     const testEngine = new TestEngine({
-//       play: [gizmoduckSuitedUp],
+// Describe("Resist +1 (Damage dealt to this character is reduced by 1.)", () => {
+//   It.skip("", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [gizmoduckSuitedUp],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(gizmoduckSuitedUp);
-//     expect(cardUnderTest.hasResist).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(gizmoduckSuitedUp);
+//     Expect(cardUnderTest.hasResist).toBe(true);
 //   });
 // });
-// describe("BLATHERING BLATHERSKITE This character can challenge ready damaged characters.", () => {
-//   it("can challenge ready damaged characters", async () => {
-//     const testEngine = new TestEngine(
+// Describe("BLATHERING BLATHERSKITE This character can challenge ready damaged characters.", () => {
+//   It("can challenge ready damaged characters", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: 10,
-//         play: [gizmoduckSuitedUp],
-//         hand: [],
+//         Inkwell: 10,
+//         Play: [gizmoduckSuitedUp],
+//         Hand: [],
 //       },
 //       {
-//         inkwell: 10,
-//         play: [robinHoodCapableFighter],
+//         Inkwell: 10,
+//         Play: [robinHoodCapableFighter],
 //       },
 //     );
 //
-//     const cardUnderTest = testEngine.getCardModel(gizmoduckSuitedUp);
-//     const defender = testEngine.getCardModel(robinHoodCapableFighter);
+//     Const cardUnderTest = testEngine.getCardModel(gizmoduckSuitedUp);
+//     Const defender = testEngine.getCardModel(robinHoodCapableFighter);
 //
-//     defender.damage = 2;
+//     Defender.damage = 2;
 //
-//     expect(defender.damage).toEqual(2);
+//     Expect(defender.damage).toEqual(2);
 //
-//     expect(defender.ready).toBe(true);
+//     Expect(defender.ready).toBe(true);
 //
-//     expect(cardUnderTest.canChallenge(defender)).toBe(true);
+//     Expect(cardUnderTest.canChallenge(defender)).toBe(true);
 //
-//     cardUnderTest.challenge(defender);
+//     CardUnderTest.challenge(defender);
 //   });
 //
-//   it("can't challenge ready not damaged characters", async () => {
-//     const testEngine = new TestEngine(
+//   It("can't challenge ready not damaged characters", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: 10,
-//         play: [gizmoduckSuitedUp],
-//         hand: [],
+//         Inkwell: 10,
+//         Play: [gizmoduckSuitedUp],
+//         Hand: [],
 //       },
 //       {
-//         inkwell: 10,
-//         play: [robinHoodCapableFighter],
+//         Inkwell: 10,
+//         Play: [robinHoodCapableFighter],
 //       },
 //     );
 //
-//     const cardUnderTest = testEngine.getCardModel(gizmoduckSuitedUp);
-//     const defender = testEngine.getCardModel(robinHoodCapableFighter);
+//     Const cardUnderTest = testEngine.getCardModel(gizmoduckSuitedUp);
+//     Const defender = testEngine.getCardModel(robinHoodCapableFighter);
 //
-//     expect(defender.damage).toEqual(0);
+//     Expect(defender.damage).toEqual(0);
 //
-//     expect(defender.ready).toBe(true);
+//     Expect(defender.ready).toBe(true);
 //
-//     expect(cardUnderTest.canChallenge(defender)).toBe(false);
+//     Expect(cardUnderTest.canChallenge(defender)).toBe(false);
 //   });
 // });
 //

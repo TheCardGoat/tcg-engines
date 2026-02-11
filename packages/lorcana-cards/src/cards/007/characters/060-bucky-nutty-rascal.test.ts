@@ -3,33 +3,33 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   buckyNuttyRascal,
-//   wreckitRalphHerosDuty,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   BuckyNuttyRascal,
+//   WreckitRalphHerosDuty,
 // } from "@lorcanito/lorcana-engine/cards/007";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Bucky - Nutty Rascal", () => {
-//   it("POP! When this character is banished in a challenge, you may draw a card.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Bucky - Nutty Rascal", () => {
+//   It("POP! When this character is banished in a challenge, you may draw a card.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         deck: 10,
-//         play: [buckyNuttyRascal],
+//         Deck: 10,
+//         Play: [buckyNuttyRascal],
 //       },
 //       {
-//         play: [wreckitRalphHerosDuty],
+//         Play: [wreckitRalphHerosDuty],
 //       },
 //     );
 //
-//     await testEngine.challenge({
-//       attacker: buckyNuttyRascal,
-//       defender: wreckitRalphHerosDuty,
-//       exertDefender: true,
+//     Await testEngine.challenge({
+//       Attacker: buckyNuttyRascal,
+//       Defender: wreckitRalphHerosDuty,
+//       ExertDefender: true,
 //     });
 //
-//     await testEngine.resolveOptionalAbility();
-//     expect(testEngine.getZonesCardCount().hand).toBe(1);
+//     Await testEngine.resolveOptionalAbility();
+//     Expect(testEngine.getZonesCardCount().hand).toBe(1);
 //   });
 // });
 //

@@ -1,25 +1,8 @@
 import type { ItemCard } from "@tcg/lorcana-types";
 
 export const scepterOfArendelle: ItemCard = {
-  id: "1j9",
-  cardType: "item",
-  name: "Scepter of Arendelle",
-  inkType: ["sapphire"],
-  franchise: "Frozen",
-  set: "001",
-  text: "COMMAND {E} — Chosen character gains Support this turn. (Whenever they quest, you may add their {S} to another chosen character's {S} this turn.)",
-  cost: 1,
-  cardNumber: 170,
-  inkable: true,
-  externalIds: {
-    ravensburger: "c727888823a011c91f8ab8c27400f74ffd775c06",
-  },
   abilities: [
     {
-      id: "1j9-1",
-      text: "COMMAND {E} — Chosen character gains Support this turn.",
-      name: "COMMAND",
-      type: "activated",
       cost: {
         exert: true,
       },
@@ -29,38 +12,55 @@ export const scepterOfArendelle: ItemCard = {
         target: "CHOSEN_CHARACTER",
         duration: "this-turn",
       },
+      id: "1j9-1",
+      name: "COMMAND",
+      text: "COMMAND {E} — Chosen character gains Support this turn.",
+      type: "activated",
     },
   ],
+  cardNumber: 170,
+  cardType: "item",
+  cost: 1,
+  externalIds: {
+    ravensburger: "c727888823a011c91f8ab8c27400f74ffd775c06",
+  },
+  franchise: "Frozen",
+  id: "1j9",
+  inkType: ["sapphire"],
+  inkable: true,
+  name: "Scepter of Arendelle",
+  set: "001",
+  text: "COMMAND {E} — Chosen character gains Support this turn. (Whenever they quest, you may add their {S} to another chosen character's {S} this turn.)",
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { ActivatedAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-// import type { AbilityEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+// Import type { ActivatedAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { AbilityEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
 //
-// export const scepterOfArendelle: LorcanitoItemCard = {
-//   characteristics: ["item"],
-//   id: "ao2",
+// Export const scepterOfArendelle: LorcanitoItemCard = {
+//   Characteristics: ["item"],
+//   Id: "ao2",
 //
-//   name: "Scepter Of Arendelle",
-//   text: "**COMMAND** {E} − Chosen character gains **Support** this turn. _(Whenever they quest, you may add their {S} to another chosen character's {S} this turn.)_",
-//   type: "item",
-//   abilities: [
+//   Name: "Scepter Of Arendelle",
+//   Text: "**COMMAND** {E} − Chosen character gains **Support** this turn. _(Whenever they quest, you may add their {S} to another chosen character's {S} this turn.)_",
+//   Type: "item",
+//   Abilities: [
 //     {
-//       type: "activated",
-//       name: "Command",
-//       text: "Chosen character gains **Support** this turn.",
-//       costs: [{ type: "exert" }],
-//       effects: [
+//       Type: "activated",
+//       Name: "Command",
+//       Text: "Chosen character gains **Support** this turn.",
+//       Costs: [{ type: "exert" }],
+//       Effects: [
 //         {
-//           type: "ability",
-//           ability: "support",
-//           modifier: "add",
-//           duration: "turn",
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
+//           Type: "ability",
+//           Ability: "support",
+//           Modifier: "add",
+//           Duration: "turn",
+//           Target: {
+//             Type: "card",
+//             Value: 1,
+//             Filters: [
 //               { filter: "zone", value: "play" },
 //               { filter: "type", value: "character" },
 //             ],
@@ -69,15 +69,15 @@ export const scepterOfArendelle: ItemCard = {
 //       ],
 //     } as ActivatedAbility,
 //   ],
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 1,
-//   illustrator: "Grace Tran",
-//   number: 170,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 505963,
+//   Inkwell: true,
+//   Colors: ["sapphire"],
+//   Cost: 1,
+//   Illustrator: "Grace Tran",
+//   Number: 170,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 505963,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

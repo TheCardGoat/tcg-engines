@@ -3,31 +3,31 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { calhounCourageousRescuer } from "@lorcanito/lorcana-engine/cards/007/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { calhounCourageousRescuer } from "@lorcanito/lorcana-engine/cards/007/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Calhoun - Courageous Rescuer", () => {
-//   it.skip("Shift 4 (You may pay 4 {I} to play this on top of one of your characters named Calhoun.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [calhounCourageousRescuer],
+// Describe("Calhoun - Courageous Rescuer", () => {
+//   It.skip("Shift 4 (You may pay 4 {I} to play this on top of one of your characters named Calhoun.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [calhounCourageousRescuer],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(calhounCourageousRescuer);
-//     expect(cardUnderTest.hasShift).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(calhounCourageousRescuer);
+//     Expect(cardUnderTest.hasShift).toBe(true);
 //   });
 //
-//   it.skip("BACK TO START POSITIONS! Whenever this character challenges another character, you may return a Racer character card from your discard to your hand.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: calhounCourageousRescuer.cost,
-//       play: [calhounCourageousRescuer],
-//       hand: [calhounCourageousRescuer],
+//   It.skip("BACK TO START POSITIONS! Whenever this character challenges another character, you may return a Racer character card from your discard to your hand.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: calhounCourageousRescuer.cost,
+//       Play: [calhounCourageousRescuer],
+//       Hand: [calhounCourageousRescuer],
 //     });
 //
-//     await testEngine.playCard(calhounCourageousRescuer);
+//     Await testEngine.playCard(calhounCourageousRescuer);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

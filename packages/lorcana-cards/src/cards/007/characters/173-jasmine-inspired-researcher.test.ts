@@ -3,48 +3,48 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   genieOnTheJob,
-//   jetsamUrsulaSpy,
-//   maximusPalaceHorse,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   GenieOnTheJob,
+//   JetsamUrsulaSpy,
+//   MaximusPalaceHorse,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { jasmineInspiredResearcher } from "@lorcanito/lorcana-engine/cards/007";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { jasmineInspiredResearcher } from "@lorcanito/lorcana-engine/cards/007";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Jasmine - Inspired Researcher", () => {
-//   it("EXTRA ASSISTANCE Whenever this character quests, if you have no cards in your hand, draw a card for each Ally character you have in play.", async () => {
-//     const characterCards = [maximusPalaceHorse, genieOnTheJob];
-//     const testEngine = new TestEngine(
+// Describe("Jasmine - Inspired Researcher", () => {
+//   It("EXTRA ASSISTANCE Whenever this character quests, if you have no cards in your hand, draw a card for each Ally character you have in play.", async () => {
+//     Const characterCards = [maximusPalaceHorse, genieOnTheJob];
+//     Const testEngine = new TestEngine(
 //       {
-//         deck: 10,
-//         play: [jasmineInspiredResearcher, ...characterCards],
+//         Deck: 10,
+//         Play: [jasmineInspiredResearcher, ...characterCards],
 //       },
 //       {
-//         play: [jetsamUrsulaSpy],
+//         Play: [jetsamUrsulaSpy],
 //       },
 //     );
 //
-//     await testEngine.questCard(jasmineInspiredResearcher);
+//     Await testEngine.questCard(jasmineInspiredResearcher);
 //
-//     expect(testEngine.getZonesCardCount("player_one").hand).toBe(
-//       characterCards.length,
+//     Expect(testEngine.getZonesCardCount("player_one").hand).toBe(
+//       CharacterCards.length,
 //     );
 //   });
 //
-//   it("EXTRA ASSISTANCE Whenever this character quests, if you have no cards in your hand, draw a card for each Ally character you have in play.", async () => {
-//     const characterCards = [maximusPalaceHorse, genieOnTheJob];
-//     const testEngine = new TestEngine({
-//       deck: 10,
-//       play: [jasmineInspiredResearcher, jetsamUrsulaSpy],
+//   It("EXTRA ASSISTANCE Whenever this character quests, if you have no cards in your hand, draw a card for each Ally character you have in play.", async () => {
+//     Const characterCards = [maximusPalaceHorse, genieOnTheJob];
+//     Const testEngine = new TestEngine({
+//       Deck: 10,
+//       Play: [jasmineInspiredResearcher, jetsamUrsulaSpy],
 //     });
 //
-//     await testEngine.questCard(jasmineInspiredResearcher);
+//     Await testEngine.questCard(jasmineInspiredResearcher);
 //
-//     expect(testEngine.getZonesCardCount("player_one")).toEqual(
-//       expect.objectContaining({
-//         hand: 1,
-//         deck: 9,
+//     Expect(testEngine.getZonesCardCount("player_one")).toEqual(
+//       Expect.objectContaining({
+//         Hand: 1,
+//         Deck: 9,
 //       }),
 //     );
 //   });

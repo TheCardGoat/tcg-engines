@@ -268,7 +268,7 @@ export function banishSelfCost(): AbilityCost {
  * Create an exert + banish item cost
  */
 export function exertAndBanishItemCost(): AbilityCost {
-  return { exert: true, banishItem: true };
+  return { banishItem: true, exert: true };
 }
 
 /**
@@ -300,11 +300,7 @@ export function requiresInk(cost: AbilityCost): boolean {
  * Check if a cost requires banishing something
  */
 export function requiresBanish(cost: AbilityCost): boolean {
-  return (
-    cost.banishSelf === true ||
-    cost.banishItem === true ||
-    cost.banishCharacter === true
-  );
+  return cost.banishSelf === true || cost.banishItem === true || cost.banishCharacter === true;
 }
 
 /**

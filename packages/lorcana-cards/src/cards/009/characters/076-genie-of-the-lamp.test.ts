@@ -3,58 +3,58 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { deweyLovableShowoff } from "@lorcanito/lorcana-engine/cards/008";
-// import { genieOfTheLamp } from "@lorcanito/lorcana-engine/cards/009";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { deweyLovableShowoff } from "@lorcanito/lorcana-engine/cards/008";
+// Import { genieOfTheLamp } from "@lorcanito/lorcana-engine/cards/009";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Genie - Of the Lamp", () => {
-//   it("Evasive (Only characters with Evasive can challenge this character.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [genieOfTheLamp],
+// Describe("Genie - Of the Lamp", () => {
+//   It("Evasive (Only characters with Evasive can challenge this character.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [genieOfTheLamp],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(genieOfTheLamp);
-//     expect(cardUnderTest.hasEvasive).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(genieOfTheLamp);
+//     Expect(cardUnderTest.hasEvasive).toBe(true);
 //   });
 //
-//   it("LET'S MAKE SOME MAGIC While this character is exerted, your other characters get +2 {S}.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: genieOfTheLamp.cost,
-//       play: [genieOfTheLamp, deweyLovableShowoff],
+//   It("LET'S MAKE SOME MAGIC While this character is exerted, your other characters get +2 {S}.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: genieOfTheLamp.cost,
+//       Play: [genieOfTheLamp, deweyLovableShowoff],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(genieOfTheLamp);
-//     const targetCard = testEngine.getCardModel(deweyLovableShowoff);
+//     Const cardUnderTest = testEngine.getCardModel(genieOfTheLamp);
+//     Const targetCard = testEngine.getCardModel(deweyLovableShowoff);
 //
-//     expect(targetCard.strength).toBe(deweyLovableShowoff.strength);
+//     Expect(targetCard.strength).toBe(deweyLovableShowoff.strength);
 //
-//     await testEngine.exertCard(cardUnderTest);
+//     Await testEngine.exertCard(cardUnderTest);
 //
-//     expect(targetCard.strength).toBe(deweyLovableShowoff.strength + 2);
-//     expect(cardUnderTest.strength).toBe(genieOfTheLamp.strength);
+//     Expect(targetCard.strength).toBe(deweyLovableShowoff.strength + 2);
+//     Expect(cardUnderTest.strength).toBe(genieOfTheLamp.strength);
 //
-//     await testEngine.passTurn();
+//     Await testEngine.passTurn();
 //
-//     expect(cardUnderTest.ready).toBe(false);
-//     expect(targetCard.strength).toBe(deweyLovableShowoff.strength + 2);
+//     Expect(cardUnderTest.ready).toBe(false);
+//     Expect(targetCard.strength).toBe(deweyLovableShowoff.strength + 2);
 //
 //     // Turn ends, Genie is ready again
-//     await testEngine.passTurn();
+//     Await testEngine.passTurn();
 //
-//     expect(cardUnderTest.ready).toBe(true);
-//     expect(targetCard.strength).toBe(deweyLovableShowoff.strength);
+//     Expect(cardUnderTest.ready).toBe(true);
+//     Expect(targetCard.strength).toBe(deweyLovableShowoff.strength);
 //
-//     await testEngine.exertCard(cardUnderTest);
-//     expect(targetCard.strength).toBe(deweyLovableShowoff.strength + 2);
+//     Await testEngine.exertCard(cardUnderTest);
+//     Expect(targetCard.strength).toBe(deweyLovableShowoff.strength + 2);
 //
-//     await testEngine.passTurn();
+//     Await testEngine.passTurn();
 //
-//     expect(targetCard.strength).toBe(deweyLovableShowoff.strength + 2);
+//     Expect(targetCard.strength).toBe(deweyLovableShowoff.strength + 2);
 //
-//     cardUnderTest.banish();
-//     expect(cardUnderTest.zone).toBe("discard");
-//     expect(targetCard.strength).toBe(deweyLovableShowoff.strength);
+//     CardUnderTest.banish();
+//     Expect(cardUnderTest.zone).toBe("discard");
+//     Expect(targetCard.strength).toBe(deweyLovableShowoff.strength);
 //   });
 // });
 //

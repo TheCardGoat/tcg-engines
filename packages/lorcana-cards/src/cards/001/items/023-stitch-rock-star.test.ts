@@ -3,78 +3,78 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   liloMakingAWish,
-//   stichtNewDog,
-//   stitchRockStar,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   LiloMakingAWish,
+//   StichtNewDog,
+//   StitchRockStar,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Stitch Rock Star", () => {
-//   describe('"ADORING FANS - Whenever you play a character with cost 2 or less, you may exert them to draw a card.', () => {
-//     it("Drawing cards", () => {
-//       const testStore = new TestStore({
-//         deck: 2,
-//         inkwell: stichtNewDog.cost + liloMakingAWish.cost,
-//         hand: [stichtNewDog, liloMakingAWish],
-//         play: [stitchRockStar],
+// Describe("Stitch Rock Star", () => {
+//   Describe('"ADORING FANS - Whenever you play a character with cost 2 or less, you may exert them to draw a card.', () => {
+//     It("Drawing cards", () => {
+//       Const testStore = new TestStore({
+//         Deck: 2,
+//         Inkwell: stichtNewDog.cost + liloMakingAWish.cost,
+//         Hand: [stichtNewDog, liloMakingAWish],
+//         Play: [stitchRockStar],
 //       });
 //
-//       const aTarget = testStore.getByZoneAndId("hand", stichtNewDog.id);
-//       const anotherTarget = testStore.getByZoneAndId(
+//       Const aTarget = testStore.getByZoneAndId("hand", stichtNewDog.id);
+//       Const anotherTarget = testStore.getByZoneAndId(
 //         "hand",
-//         liloMakingAWish.id,
+//         LiloMakingAWish.id,
 //       );
 //
-//       aTarget.playFromHand();
-//       testStore.resolveTopOfStack();
+//       ATarget.playFromHand();
+//       TestStore.resolveTopOfStack();
 //
-//       expect(aTarget.ready).toEqual(false);
-//       expect(testStore.getZonesCardCount().deck).toBe(1);
-//       expect(testStore.getZonesCardCount().hand).toBe(2);
+//       Expect(aTarget.ready).toEqual(false);
+//       Expect(testStore.getZonesCardCount().deck).toBe(1);
+//       Expect(testStore.getZonesCardCount().hand).toBe(2);
 //
-//       anotherTarget.playFromHand();
-//       testStore.resolveTopOfStack({ targetId: anotherTarget.instanceId });
+//       AnotherTarget.playFromHand();
+//       TestStore.resolveTopOfStack({ targetId: anotherTarget.instanceId });
 //
-//       expect(anotherTarget.meta.exerted).toEqual(true);
-//       expect(testStore.getZonesCardCount().deck).toBe(0);
-//       expect(testStore.getZonesCardCount().hand).toBe(2);
-//       expect(testStore.store.tableStore.getTable().inkAvailable()).toEqual(0);
-//       expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
+//       Expect(anotherTarget.meta.exerted).toEqual(true);
+//       Expect(testStore.getZonesCardCount().deck).toBe(0);
+//       Expect(testStore.getZonesCardCount().hand).toBe(2);
+//       Expect(testStore.store.tableStore.getTable().inkAvailable()).toEqual(0);
+//       Expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
 //     });
 //
-//     it("Skipping effects", () => {
-//       const testStore = new TestStore({
-//         deck: 2,
-//         inkwell: stichtNewDog.cost + liloMakingAWish.cost,
-//         hand: [stichtNewDog, liloMakingAWish],
-//         play: [stitchRockStar],
+//     It("Skipping effects", () => {
+//       Const testStore = new TestStore({
+//         Deck: 2,
+//         Inkwell: stichtNewDog.cost + liloMakingAWish.cost,
+//         Hand: [stichtNewDog, liloMakingAWish],
+//         Play: [stitchRockStar],
 //       });
 //
-//       const aTarget = testStore.getByZoneAndId("hand", stichtNewDog.id);
-//       const anotherTarget = testStore.getByZoneAndId(
+//       Const aTarget = testStore.getByZoneAndId("hand", stichtNewDog.id);
+//       Const anotherTarget = testStore.getByZoneAndId(
 //         "hand",
-//         liloMakingAWish.id,
+//         LiloMakingAWish.id,
 //       );
 //
-//       aTarget.playFromHand();
-//       testStore.resolveTopOfStack({ skip: true });
+//       ATarget.playFromHand();
+//       TestStore.resolveTopOfStack({ skip: true });
 //
-//       expect(aTarget.ready).toEqual(true);
-//       expect(testStore.getZonesCardCount()).toEqual(
-//         expect.objectContaining({ deck: 2, hand: 1, play: 2 }),
+//       Expect(aTarget.ready).toEqual(true);
+//       Expect(testStore.getZonesCardCount()).toEqual(
+//         Expect.objectContaining({ deck: 2, hand: 1, play: 2 }),
 //       );
 //
-//       anotherTarget.playFromHand();
-//       testStore.resolveTopOfStack({ skip: true });
+//       AnotherTarget.playFromHand();
+//       TestStore.resolveTopOfStack({ skip: true });
 //
-//       expect(anotherTarget.ready).toEqual(true);
-//       expect(testStore.getZonesCardCount()).toEqual(
-//         expect.objectContaining({ deck: 2, hand: 0, play: 3 }),
+//       Expect(anotherTarget.ready).toEqual(true);
+//       Expect(testStore.getZonesCardCount()).toEqual(
+//         Expect.objectContaining({ deck: 2, hand: 0, play: 3 }),
 //       );
-//       expect(testStore.store.tableStore.getTable().inkAvailable()).toEqual(0);
-//       expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
+//       Expect(testStore.store.tableStore.getTable().inkAvailable()).toEqual(0);
+//       Expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
 //     });
 //   });
 // });

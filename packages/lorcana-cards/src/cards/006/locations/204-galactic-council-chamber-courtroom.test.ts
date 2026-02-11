@@ -3,40 +3,40 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { stitchAlienBuccaneer } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
-// import { galacticCouncilChamber } from "@lorcanito/lorcana-engine/cards/006/locations/locations";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { stitchAlienBuccaneer } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
+// Import { galacticCouncilChamber } from "@lorcanito/lorcana-engine/cards/006/locations/locations";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Galactic Council Chamber - Courtroom", () => {
-//   it("**FEDERATION DECREE** While you have an Alien or Robot character here, this location can’t be challenged.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Galactic Council Chamber - Courtroom", () => {
+//   It("**FEDERATION DECREE** While you have an Alien or Robot character here, this location can’t be challenged.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: galacticCouncilChamber.moveCost,
-//         play: [galacticCouncilChamber, stitchAlienBuccaneer],
+//         Inkwell: galacticCouncilChamber.moveCost,
+//         Play: [galacticCouncilChamber, stitchAlienBuccaneer],
 //       },
 //       {
-//         play: [goofyKnightForADay],
-//         deck: 2,
+//         Play: [goofyKnightForADay],
+//         Deck: 2,
 //       },
 //     );
-//     const cardUnderTest = testEngine.getCardModel(galacticCouncilChamber);
-//     const challenger = testEngine.getCardModel(goofyKnightForADay);
+//     Const cardUnderTest = testEngine.getCardModel(galacticCouncilChamber);
+//     Const challenger = testEngine.getCardModel(goofyKnightForADay);
 //
-//     expect(cardUnderTest.canBeChallenged(challenger)).toEqual(true);
+//     Expect(cardUnderTest.canBeChallenged(challenger)).toEqual(true);
 //
-//     await testEngine.moveToLocation({
-//       location: galacticCouncilChamber,
-//       character: stitchAlienBuccaneer,
+//     Await testEngine.moveToLocation({
+//       Location: galacticCouncilChamber,
+//       Character: stitchAlienBuccaneer,
 //     });
 //
-//     expect(cardUnderTest.canBeChallenged(challenger)).toEqual(false);
-//     expect(challenger.canChallenge(cardUnderTest)).toEqual(false);
+//     Expect(cardUnderTest.canBeChallenged(challenger)).toEqual(false);
+//     Expect(challenger.canChallenge(cardUnderTest)).toEqual(false);
 //
-//     await testEngine.passTurn("player_one");
+//     Await testEngine.passTurn("player_one");
 //
-//     expect(challenger.canChallenge(cardUnderTest)).toEqual(false);
+//     Expect(challenger.canChallenge(cardUnderTest)).toEqual(false);
 //   });
 // });
 //

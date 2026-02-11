@@ -3,107 +3,107 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { kenaiBigBrother } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
-// import { brawl } from "../../004/actions/130-brawl";
-// import { kodaSmallishBear } from "../../007";
-// import {
-//   charlotteLaBouffMardiGrasPrincess,
-//   deweyLovableShowoff,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { kenaiBigBrother } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { brawl } from "../../004/actions/130-brawl";
+// Import { kodaSmallishBear } from "../../007";
+// Import {
+//   CharlotteLaBouffMardiGrasPrincess,
+//   DeweyLovableShowoff,
 // } from "../../008";
 //
-// describe("Kenai - Big Brother", () => {
-//   it("**BROTHERS FOREVER** While this character is exerted, your characters named Koda can’t be challenged.", () => {
-//     const testStore = new TestEngine(
+// Describe("Kenai - Big Brother", () => {
+//   It("**BROTHERS FOREVER** While this character is exerted, your characters named Koda can’t be challenged.", () => {
+//     Const testStore = new TestEngine(
 //       {
-//         inkwell: kenaiBigBrother.cost,
-//         play: [
-//           kenaiBigBrother,
-//           kodaSmallishBear,
-//           charlotteLaBouffMardiGrasPrincess,
+//         Inkwell: kenaiBigBrother.cost,
+//         Play: [
+//           KenaiBigBrother,
+//           KodaSmallishBear,
+//           CharlotteLaBouffMardiGrasPrincess,
 //         ],
 //       },
 //       {
-//         play: [deweyLovableShowoff],
+//         Play: [deweyLovableShowoff],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getCardModel(kenaiBigBrother);
-//     const coda = testStore.getCardModel(kodaSmallishBear);
-//     const oppoCard = testStore.getCardModel(deweyLovableShowoff);
-//     const charlotte = testStore.getCardModel(charlotteLaBouffMardiGrasPrincess);
+//     Const cardUnderTest = testStore.getCardModel(kenaiBigBrother);
+//     Const coda = testStore.getCardModel(kodaSmallishBear);
+//     Const oppoCard = testStore.getCardModel(deweyLovableShowoff);
+//     Const charlotte = testStore.getCardModel(charlotteLaBouffMardiGrasPrincess);
 //
-//     cardUnderTest.exert();
-//     coda.exert();
-//     charlotte.exert();
+//     CardUnderTest.exert();
+//     Coda.exert();
+//     Charlotte.exert();
 //
-//     expect(cardUnderTest.exerted).toBe(true);
-//     expect(coda.exerted).toBe(true);
+//     Expect(cardUnderTest.exerted).toBe(true);
+//     Expect(coda.exerted).toBe(true);
 //
-//     testStore.passTurn();
+//     TestStore.passTurn();
 //
-//     expect(coda.canBeChallenged(oppoCard)).toBe(false);
-//     expect(charlotte.canBeChallenged(oppoCard)).toBe(true);
+//     Expect(coda.canBeChallenged(oppoCard)).toBe(false);
+//     Expect(charlotte.canBeChallenged(oppoCard)).toBe(true);
 //
-//     testStore.challenge({
-//       attacker: oppoCard,
-//       defender: coda,
+//     TestStore.challenge({
+//       Attacker: oppoCard,
+//       Defender: coda,
 //     });
 //
-//     expect(coda.zone).toEqual("play");
+//     Expect(coda.zone).toEqual("play");
 //
-//     testStore.challenge({
-//       attacker: oppoCard,
-//       defender: charlotte,
+//     TestStore.challenge({
+//       Attacker: oppoCard,
+//       Defender: charlotte,
 //     });
 //
-//     expect(charlotte.zone).toEqual("discard");
+//     Expect(charlotte.zone).toEqual("discard");
 //   });
 //
-//   it("**BROTHERS FOREVER** While this character is exerted, your characters named Koda can’t be challenged. But if Kenai will be banished, koda can be challenged.", async () => {
-//     const testStore = new TestEngine(
+//   It("**BROTHERS FOREVER** While this character is exerted, your characters named Koda can’t be challenged. But if Kenai will be banished, koda can be challenged.", async () => {
+//     Const testStore = new TestEngine(
 //       {
-//         inkwell: kenaiBigBrother.cost,
-//         play: [
-//           kenaiBigBrother,
-//           kodaSmallishBear,
-//           charlotteLaBouffMardiGrasPrincess,
+//         Inkwell: kenaiBigBrother.cost,
+//         Play: [
+//           KenaiBigBrother,
+//           KodaSmallishBear,
+//           CharlotteLaBouffMardiGrasPrincess,
 //         ],
 //       },
 //       {
-//         inkwell: brawl.cost,
-//         hand: [brawl],
-//         play: [deweyLovableShowoff],
+//         Inkwell: brawl.cost,
+//         Hand: [brawl],
+//         Play: [deweyLovableShowoff],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getCardModel(kenaiBigBrother);
-//     const coda = testStore.getCardModel(kodaSmallishBear);
-//     const oppoCard = testStore.getCardModel(deweyLovableShowoff);
-//     const charlotte = testStore.getCardModel(charlotteLaBouffMardiGrasPrincess);
+//     Const cardUnderTest = testStore.getCardModel(kenaiBigBrother);
+//     Const coda = testStore.getCardModel(kodaSmallishBear);
+//     Const oppoCard = testStore.getCardModel(deweyLovableShowoff);
+//     Const charlotte = testStore.getCardModel(charlotteLaBouffMardiGrasPrincess);
 //
-//     cardUnderTest.exert();
-//     coda.exert();
-//     charlotte.exert();
+//     CardUnderTest.exert();
+//     Coda.exert();
+//     Charlotte.exert();
 //
-//     expect(cardUnderTest.exerted).toBe(true);
-//     expect(coda.exerted).toBe(true);
+//     Expect(cardUnderTest.exerted).toBe(true);
+//     Expect(coda.exerted).toBe(true);
 //
-//     testStore.passTurn();
+//     TestStore.passTurn();
 //
-//     expect(coda.canBeChallenged(oppoCard)).toBe(false);
-//     expect(charlotte.canBeChallenged(oppoCard)).toBe(true);
+//     Expect(coda.canBeChallenged(oppoCard)).toBe(false);
+//     Expect(charlotte.canBeChallenged(oppoCard)).toBe(true);
 //
-//     testStore.playCard(brawl);
-//     testStore.resolveTopOfStack({ targets: [cardUnderTest] });
+//     TestStore.playCard(brawl);
+//     TestStore.resolveTopOfStack({ targets: [cardUnderTest] });
 //
-//     expect(cardUnderTest.zone).toEqual("discard");
-//     expect(coda.zone).toEqual("play");
-//     expect(charlotte.zone).toEqual("play");
+//     Expect(cardUnderTest.zone).toEqual("discard");
+//     Expect(coda.zone).toEqual("play");
+//     Expect(charlotte.zone).toEqual("play");
 //
-//     expect(coda.canBeChallenged(oppoCard)).toBe(true);
-//     expect(charlotte.canBeChallenged(oppoCard)).toBe(true);
+//     Expect(coda.canBeChallenged(oppoCard)).toBe(true);
+//     Expect(charlotte.canBeChallenged(oppoCard)).toBe(true);
 //   });
 // });
 //

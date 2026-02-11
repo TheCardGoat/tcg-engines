@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { signedContract } from "@lorcanito/lorcana-engine/cards/004/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { signedContract } from "@lorcanito/lorcana-engine/cards/004/items/items";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Signed Contract", () => {
-//   it.skip("**FINE PRINT** Whenever an opponent plays a song, you may draw a card.", () => {
-//     const testStore = new TestStore({
-//       inkwell: signedContract.cost,
-//       play: [signedContract],
+// Describe("Signed Contract", () => {
+//   It.skip("**FINE PRINT** Whenever an opponent plays a song, you may draw a card.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: signedContract.cost,
+//       Play: [signedContract],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("play", signedContract.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("play", signedContract.id);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

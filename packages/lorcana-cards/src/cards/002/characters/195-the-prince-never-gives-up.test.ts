@@ -27,35 +27,35 @@ describe("The Prince - Never Gives Up", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { thePrinceNeverGivesUp } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { thePrinceNeverGivesUp } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("The Prince- Never Gives Up", () => {
-//   it("Bodyguard", () => {
-//     const testStore = new TestStore({
-//       play: [thePrinceNeverGivesUp],
+// Describe("The Prince- Never Gives Up", () => {
+//   It("Bodyguard", () => {
+//     Const testStore = new TestStore({
+//       Play: [thePrinceNeverGivesUp],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       thePrinceNeverGivesUp.id,
+//       ThePrinceNeverGivesUp.id,
 //     );
 //
-//     expect(cardUnderTest.hasBodyguard).toBe(true);
+//     Expect(cardUnderTest.hasBodyguard).toBe(true);
 //   });
 //
-//   it("Resist 1", () => {
-//     const testStore = new TestStore({
-//       play: [thePrinceNeverGivesUp],
+//   It("Resist 1", () => {
+//     Const testStore = new TestStore({
+//       Play: [thePrinceNeverGivesUp],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       thePrinceNeverGivesUp.id,
+//       ThePrinceNeverGivesUp.id,
 //     );
 //
-//     expect(cardUnderTest.hasResist).toBe(true);
+//     Expect(cardUnderTest.hasResist).toBe(true);
 //   });
 // });
 //

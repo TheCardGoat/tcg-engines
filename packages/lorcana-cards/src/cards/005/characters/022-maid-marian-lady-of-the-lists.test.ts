@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { maidMarianLadyOfTheLists } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { maidMarianLadyOfTheLists } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Maid Marian - Lady of the Lists", () => {
-//   it.skip("IF THE LADY WANTS IT", () => {
-//     const testStore = new TestStore({
-//       inkwell: maidMarianLadyOfTheLists.cost,
-//       play: [maidMarianLadyOfTheLists],
+// Describe("Maid Marian - Lady of the Lists", () => {
+//   It.skip("IF THE LADY WANTS IT", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: maidMarianLadyOfTheLists.cost,
+//       Play: [maidMarianLadyOfTheLists],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(maidMarianLadyOfTheLists);
+//     Const cardUnderTest = testStore.getCard(maidMarianLadyOfTheLists);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

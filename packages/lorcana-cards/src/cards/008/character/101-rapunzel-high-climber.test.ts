@@ -3,42 +3,42 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   deweyLovableShowoff,
-//   rapunzelHighClimber,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   DeweyLovableShowoff,
+//   RapunzelHighClimber,
 // } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Rapunzel - High Climber", () => {
-//   it.skip("Evasive (Only characters with Evasive can challenge this character.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [rapunzelHighClimber],
+// Describe("Rapunzel - High Climber", () => {
+//   It.skip("Evasive (Only characters with Evasive can challenge this character.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [rapunzelHighClimber],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(rapunzelHighClimber);
-//     expect(cardUnderTest.hasEvasive).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(rapunzelHighClimber);
+//     Expect(cardUnderTest.hasEvasive).toBe(true);
 //   });
 //
-//   it("WRAPPED UP Whenever this character quests, chosen opposing character can't quest during their next turn.", async () => {
-//     const testEngine = new TestEngine(
+//   It("WRAPPED UP Whenever this character quests, chosen opposing character can't quest during their next turn.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: rapunzelHighClimber.cost,
-//         play: [rapunzelHighClimber],
+//         Inkwell: rapunzelHighClimber.cost,
+//         Play: [rapunzelHighClimber],
 //       },
 //       {
-//         play: [deweyLovableShowoff],
+//         Play: [deweyLovableShowoff],
 //       },
 //     );
 //
-//     const cardUnderTest = testEngine.getCardModel(rapunzelHighClimber);
-//     const target = testEngine.getCardModel(deweyLovableShowoff);
+//     Const cardUnderTest = testEngine.getCardModel(rapunzelHighClimber);
+//     Const target = testEngine.getCardModel(deweyLovableShowoff);
 //
-//     await testEngine.questCard(cardUnderTest);
-//     await testEngine.resolveTopOfStack({ targets: [target] });
+//     Await testEngine.questCard(cardUnderTest);
+//     Await testEngine.resolveTopOfStack({ targets: [target] });
 //
-//     testEngine.passTurn();
-//     expect(target.canQuest).toBe(false);
+//     TestEngine.passTurn();
+//     Expect(target.canQuest).toBe(false);
 //   });
 // });
 //

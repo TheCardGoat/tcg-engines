@@ -1,26 +1,26 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { targetCharacterGains } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { entersPlayExerted } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { targetCharacterGains } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import { entersPlayExerted } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const figaroTuxedoCat: LorcanitoCharacterCard = {
-//   id: "u7y",
-//   name: "Figaro",
-//   title: "Tuxedo Cat",
-//   characteristics: ["storyborn", "ally"],
-//   text: "PLAYFULNESS Opposing items enter play exerted.",
-//   type: "character",
-//   abilities: [
-//     targetCharacterGains({
-//       name: "PLAYFULNESS",
-//       text: "Opposing items enter play exerted.",
-//       gainedAbility: entersPlayExerted({
-//         name: "PLAYFULNESS",
+// Export const figaroTuxedoCat: LorcanitoCharacterCard = {
+//   Id: "u7y",
+//   Name: "Figaro",
+//   Title: "Tuxedo Cat",
+//   Characteristics: ["storyborn", "ally"],
+//   Text: "PLAYFULNESS Opposing items enter play exerted.",
+//   Type: "character",
+//   Abilities: [
+//     TargetCharacterGains({
+//       Name: "PLAYFULNESS",
+//       Text: "Opposing items enter play exerted.",
+//       GainedAbility: entersPlayExerted({
+//         Name: "PLAYFULNESS",
 //       }),
-//       target: {
-//         type: "card",
-//         value: "all",
-//         filters: [
+//       Target: {
+//         Type: "card",
+//         Value: "all",
+//         Filters: [
 //           { filter: "type", value: "item" },
 //           { filter: "owner", value: "opponent" },
 //           { filter: "zone", value: "play" },
@@ -28,18 +28,18 @@
 //       },
 //     }),
 //   ],
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 3,
-//   strength: 3,
-//   willpower: 3,
-//   illustrator: "Saulo Nate",
-//   number: 133,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 632714,
+//   Inkwell: true,
+//   Colors: ["ruby"],
+//   Cost: 3,
+//   Strength: 3,
+//   Willpower: 3,
+//   Illustrator: "Saulo Nate",
+//   Number: 133,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 632714,
 //   },
-//   rarity: "uncommon",
-//   lore: 1,
+//   Rarity: "uncommon",
+//   Lore: 1,
 // };
 //

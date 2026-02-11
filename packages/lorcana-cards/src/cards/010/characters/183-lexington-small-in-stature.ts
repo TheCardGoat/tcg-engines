@@ -1,35 +1,14 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const lexingtonSmallInStature: CharacterCard = {
-  id: "wbg",
-  cardType: "character",
-  name: "Lexington",
-  version: "Small in Stature",
-  fullName: "Lexington - Small in Stature",
-  inkType: ["steel"],
-  franchise: "Gargoyles",
-  set: "010",
-  text: "Alert (This character can challenge as if they had Evasive.)\nSTONE BY DAY If you have 3 or more cards in your hand, this character can't ready.",
-  cost: 3,
-  strength: 4,
-  willpower: 4,
-  lore: 1,
-  cardNumber: 183,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "747a1bda0a4acde5dc18cc41597751d4687ea225",
-  },
   abilities: [
     {
       id: "wbg-1",
-      type: "keyword",
       keyword: "Alert",
       text: "Alert",
+      type: "keyword",
     },
     {
-      id: "wbg-2",
-      type: "action",
       effect: {
         type: "conditional",
         condition: {
@@ -42,8 +21,29 @@ export const lexingtonSmallInStature: CharacterCard = {
           target: "SELF",
         },
       },
+      id: "wbg-2",
       text: "STONE BY DAY If you have 3 or more cards in your hand, this character can't ready.",
+      type: "action",
     },
   ],
+  cardNumber: 183,
+  cardType: "character",
   classifications: ["Storyborn", "Ally", "Gargoyle"],
+  cost: 3,
+  externalIds: {
+    ravensburger: "747a1bda0a4acde5dc18cc41597751d4687ea225",
+  },
+  franchise: "Gargoyles",
+  fullName: "Lexington - Small in Stature",
+  id: "wbg",
+  inkType: ["steel"],
+  inkable: true,
+  lore: 1,
+  missingTests: true,
+  name: "Lexington",
+  set: "010",
+  strength: 4,
+  text: "Alert (This character can challenge as if they had Evasive.)\nSTONE BY DAY If you have 3 or more cards in your hand, this character can't ready.",
+  version: "Small in Stature",
+  willpower: 4,
 };

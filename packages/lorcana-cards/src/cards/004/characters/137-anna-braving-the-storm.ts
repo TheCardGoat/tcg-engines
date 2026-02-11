@@ -1,39 +1,39 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { whileYouHaveAnotherCharacterWithCharacteristicThisCharacterGets } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { whileYouHaveAnotherCharacterWithCharacteristicThisCharacterGets } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
 //
-// export const annaBravingTheStorm: LorcanitoCharacterCard = {
-//   id: "mij",
-//   reprints: ["ads"],
-//   missingTestCase: true,
-//   name: "Anna",
-//   title: "Braving the Storm",
-//   characteristics: ["hero", "dreamborn", "queen"],
-//   text: "**I WAS BORN READY** If you have another Hero character in play, this character gets +1 {L}.",
-//   type: "character",
-//   abilities: [
-//     whileYouHaveAnotherCharacterWithCharacteristicThisCharacterGets({
-//       name: "I Was Born Ready",
-//       text: "If you have another Hero character in play, this character gets +1 {L}.",
-//       amount: 1,
-//       characteristics: ["hero"],
-//       minAmount: 2,
+// Export const annaBravingTheStorm: LorcanitoCharacterCard = {
+//   Id: "mij",
+//   Reprints: ["ads"],
+//   MissingTestCase: true,
+//   Name: "Anna",
+//   Title: "Braving the Storm",
+//   Characteristics: ["hero", "dreamborn", "queen"],
+//   Text: "**I WAS BORN READY** If you have another Hero character in play, this character gets +1 {L}.",
+//   Type: "character",
+//   Abilities: [
+//     WhileYouHaveAnotherCharacterWithCharacteristicThisCharacterGets({
+//       Name: "I Was Born Ready",
+//       Text: "If you have another Hero character in play, this character gets +1 {L}.",
+//       Amount: 1,
+//       Characteristics: ["hero"],
+//       MinAmount: 2,
 //     }),
 //   ],
-//   flavour:
+//   Flavour:
 //     "After talking to Olaf, Anna marched into the unexpected storm to save Kristoff.",
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 2,
-//   strength: 1,
-//   willpower: 4,
-//   lore: 1,
-//   illustrator: "Maria Dresden",
-//   number: 137,
-//   set: "URR",
-//   externalIds: {
-//     tcgPlayer: 543913,
+//   Inkwell: true,
+//   Colors: ["sapphire"],
+//   Cost: 2,
+//   Strength: 1,
+//   Willpower: 4,
+//   Lore: 1,
+//   Illustrator: "Maria Dresden",
+//   Number: 137,
+//   Set: "URR",
+//   ExternalIds: {
+//     TcgPlayer: 543913,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

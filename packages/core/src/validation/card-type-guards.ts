@@ -82,11 +82,10 @@ export function isCardOfType<T extends CardDefinition = CardDefinition>(
  * console.log(isRare(rareCard)); // true
  * ```
  */
-export function isCardWithField<
-  T extends CardDefinition,
-  K extends keyof T,
-  V extends T[K],
->(field: K, value: V): (card: T) => card is T & Record<K, V> {
+export function isCardWithField<T extends CardDefinition, K extends keyof T, V extends T[K]>(
+  field: K,
+  value: V,
+): (card: T) => card is T & Record<K, V> {
   return createTypeGuard<T, K, V>(field, value);
 }
 
@@ -115,12 +114,8 @@ export function isCardWithField<
  * const rareCreatures = cards.filter(isRareCreature);
  * ```
  */
-export function combineTypeGuards<T>(
-  guards: Array<(obj: T) => boolean>,
-): (obj: T) => obj is T {
-  return (obj: T): obj is T => {
-    return guards.every((guard) => guard(obj));
-  };
+export function combineTypeGuards<T>(guards: ((obj: T) => boolean)[]): (obj: T) => obj is T {
+  return (obj: T): obj is T => guards.every((guard) => guard(obj));
 }
 
 /**
@@ -143,12 +138,8 @@ export function combineTypeGuards<T>(
  * const spells = cards.filter(isSpell);
  * ```
  */
-export function combineTypeGuardsOr<T>(
-  guards: Array<(obj: T) => boolean>,
-): (obj: T) => obj is T {
-  return (obj: T): obj is T => {
-    return guards.some((guard) => guard(obj));
-  };
+export function combineTypeGuardsOr<T>(guards: ((obj: T) => boolean)[]): (obj: T) => obj is T {
+  return (obj: T): obj is T => guards.some((guard) => guard(obj));
 }
 
 /**
@@ -170,10 +161,6 @@ export function combineTypeGuardsOr<T>(
  * const nonCreatures = cards.filter(isNotCreature);
  * ```
  */
-export function negateTypeGuard<T>(
-  guard: (obj: T) => boolean,
-): (obj: T) => obj is T {
-  return (obj: T): obj is T => {
-    return !guard(obj);
-  };
+export function negateTypeGuard<T>(guard: (obj: T) => boolean): (obj: T) => obj is T {
+  return (obj: T): obj is T => !guard(obj);
 }

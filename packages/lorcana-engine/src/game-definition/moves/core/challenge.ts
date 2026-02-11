@@ -1,16 +1,7 @@
 import { createMove, createZoneId } from "@tcg/core";
 import { useLorcanaOps } from "../../../operations";
-import type {
-  LorcanaCardMeta,
-  LorcanaGameState,
-  LorcanaMoveParams,
-} from "../../../types";
-import {
-  and,
-  canChallenge,
-  cardInPlay,
-  isMainPhase,
-} from "../../../validators";
+import type { LorcanaCardMeta, LorcanaGameState, LorcanaMoveParams } from "../../../types";
+import { and, canChallenge, cardInPlay, isMainPhase } from "../../../validators";
 
 /**
  * Challenge Move

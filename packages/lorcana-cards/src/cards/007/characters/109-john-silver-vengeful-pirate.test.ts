@@ -3,112 +3,112 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { plasmaBlaster } from "@lorcanito/lorcana-engine/cards/001/items/items";
-// import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import {
-//   hesATramp,
-//   johnSilverVengefulPirate,
-//   weveGotCompany,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { plasmaBlaster } from "@lorcanito/lorcana-engine/cards/001/items/items";
+// Import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import {
+//   HesATramp,
+//   JohnSilverVengefulPirate,
+//   WeveGotCompany,
 // } from "@lorcanito/lorcana-engine/cards/007";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("John Silver - Vengeful Pirate", () => {
-//   describe("DRAWN TO A FIGHT If an opposing character was damaged this turn, you pay 2 {I} less to play this character.", () => {
-//     it("Doesn't not reduce the cost if there's no damage", async () => {
-//       const testEngine = new TestEngine(
+// Describe("John Silver - Vengeful Pirate", () => {
+//   Describe("DRAWN TO A FIGHT If an opposing character was damaged this turn, you pay 2 {I} less to play this character.", () => {
+//     It("Doesn't not reduce the cost if there's no damage", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: johnSilverVengefulPirate.cost - 2,
-//           play: [plasmaBlaster],
-//           hand: [johnSilverVengefulPirate],
+//           Inkwell: johnSilverVengefulPirate.cost - 2,
+//           Play: [plasmaBlaster],
+//           Hand: [johnSilverVengefulPirate],
 //         },
 //         {
-//           play: [goofyKnightForADay],
+//           Play: [goofyKnightForADay],
 //         },
 //       );
 //
-//       const cardUnderTest = testEngine.getCardModel(johnSilverVengefulPirate);
+//       Const cardUnderTest = testEngine.getCardModel(johnSilverVengefulPirate);
 //
-//       await testEngine.playCard(johnSilverVengefulPirate);
+//       Await testEngine.playCard(johnSilverVengefulPirate);
 //
-//       expect(cardUnderTest.cost).toBe(johnSilverVengefulPirate.cost);
-//       expect(cardUnderTest.zone).toBe("hand");
+//       Expect(cardUnderTest.cost).toBe(johnSilverVengefulPirate.cost);
+//       Expect(cardUnderTest.zone).toBe("hand");
 //     });
 //
-//     it("reduces the cost when opponent's char is damaged", async () => {
-//       const testEngine = new TestEngine(
+//     It("reduces the cost when opponent's char is damaged", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: johnSilverVengefulPirate.cost,
-//           play: [plasmaBlaster],
-//           hand: [johnSilverVengefulPirate],
+//           Inkwell: johnSilverVengefulPirate.cost,
+//           Play: [plasmaBlaster],
+//           Hand: [johnSilverVengefulPirate],
 //         },
 //         {
-//           play: [goofyKnightForADay],
+//           Play: [goofyKnightForADay],
 //         },
 //       );
 //
-//       const cardUnderTest = testEngine.getCardModel(johnSilverVengefulPirate);
+//       Const cardUnderTest = testEngine.getCardModel(johnSilverVengefulPirate);
 //
-//       expect(cardUnderTest.cost).toBe(johnSilverVengefulPirate.cost);
+//       Expect(cardUnderTest.cost).toBe(johnSilverVengefulPirate.cost);
 //
-//       await testEngine.activateCard(plasmaBlaster, {
-//         targets: [goofyKnightForADay],
+//       Await testEngine.activateCard(plasmaBlaster, {
+//         Targets: [goofyKnightForADay],
 //       });
 //
-//       await testEngine.playCard(johnSilverVengefulPirate);
-//       expect(cardUnderTest.cost).toBe(johnSilverVengefulPirate.cost - 2);
+//       Await testEngine.playCard(johnSilverVengefulPirate);
+//       Expect(cardUnderTest.cost).toBe(johnSilverVengefulPirate.cost - 2);
 //
-//       await testEngine.playCard(johnSilverVengefulPirate);
-//       expect(cardUnderTest.zone).toBe("play");
+//       Await testEngine.playCard(johnSilverVengefulPirate);
+//       Expect(cardUnderTest.zone).toBe("play");
 //     });
 //   });
 //
-//   it("Resist +1 (Damage dealt to this character is reduced by 1.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [johnSilverVengefulPirate],
+//   It("Resist +1 (Damage dealt to this character is reduced by 1.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [johnSilverVengefulPirate],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(johnSilverVengefulPirate);
-//     expect(cardUnderTest.hasResist).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(johnSilverVengefulPirate);
+//     Expect(cardUnderTest.hasResist).toBe(true);
 //   });
 //
-//   describe("I AIN'T GONE SOFT! Whenever you play an action that isn't a song, you may deal 1 damage to chosen character.", () => {
-//     it("deals 1 damage to chosen character when playing a action not song", async () => {
-//       const testEngine = new TestEngine(
+//   Describe("I AIN'T GONE SOFT! Whenever you play an action that isn't a song, you may deal 1 damage to chosen character.", () => {
+//     It("deals 1 damage to chosen character when playing a action not song", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: johnSilverVengefulPirate.cost,
-//           play: [johnSilverVengefulPirate],
-//           hand: [weveGotCompany],
+//           Inkwell: johnSilverVengefulPirate.cost,
+//           Play: [johnSilverVengefulPirate],
+//           Hand: [weveGotCompany],
 //         },
 //         {
-//           play: [goofyKnightForADay],
+//           Play: [goofyKnightForADay],
 //         },
 //       );
 //
-//       await testEngine.playCard(weveGotCompany);
+//       Await testEngine.playCard(weveGotCompany);
 //
-//       await testEngine.resolveOptionalAbility(true);
-//       await testEngine.resolveTopOfStack({ targets: [goofyKnightForADay] });
+//       Await testEngine.resolveOptionalAbility(true);
+//       Await testEngine.resolveTopOfStack({ targets: [goofyKnightForADay] });
 //
-//       expect(testEngine.getCardModel(goofyKnightForADay).damage).toBe(1);
+//       Expect(testEngine.getCardModel(goofyKnightForADay).damage).toBe(1);
 //     });
 //
-//     it("does NOT deal 1 damage to chosen character when playing a  song", async () => {
-//       const testEngine = new TestEngine(
+//     It("does NOT deal 1 damage to chosen character when playing a  song", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: johnSilverVengefulPirate.cost,
-//           play: [johnSilverVengefulPirate],
-//           hand: [hesATramp],
+//           Inkwell: johnSilverVengefulPirate.cost,
+//           Play: [johnSilverVengefulPirate],
+//           Hand: [hesATramp],
 //         },
 //         {
-//           play: [goofyKnightForADay],
+//           Play: [goofyKnightForADay],
 //         },
 //       );
 //
-//       await testEngine.playCard(hesATramp, {
-//         targets: [johnSilverVengefulPirate],
+//       Await testEngine.playCard(hesATramp, {
+//         Targets: [johnSilverVengefulPirate],
 //       });
-//       expect(testEngine.stackLayers).toHaveLength(0);
+//       Expect(testEngine.stackLayers).toHaveLength(0);
 //     });
 //   });
 // });

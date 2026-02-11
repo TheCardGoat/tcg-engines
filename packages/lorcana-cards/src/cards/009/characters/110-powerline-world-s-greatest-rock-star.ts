@@ -1,70 +1,70 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type {
+// Import type {
 //   LorcanitoCharacterCard,
 //   TargetFilter,
 // } from "@lorcanito/lorcana-engine";
-// import {
-//   shiftAbility,
-//   singerAbility,
+// Import {
+//   ShiftAbility,
+//   SingerAbility,
 // } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { self } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { wheneverThisCharSings } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// Import { self } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import { wheneverThisCharSings } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
 //
-// const filters: TargetFilter[] = [
+// Const filters: TargetFilter[] = [
 //   {
-//     filter: "attribute",
-//     value: "cost",
-//     comparison: { operator: "lte", value: 9 },
+//     Filter: "attribute",
+//     Value: "cost",
+//     Comparison: { operator: "lte", value: 9 },
 //   },
 //   { filter: "owner", value: "self" },
 //   { filter: "zone", value: "deck" },
 //   { filter: "characteristics", value: ["song"] },
 // ];
 //
-// export const powerlineWorldsGreatestRockStar: LorcanitoCharacterCard = {
-//   id: "ia6",
-//   name: "Powerline",
-//   title: "World's Greatest Rock Star",
-//   characteristics: ["floodborn"],
-//   text: "Shift 4 {I} (You may pay 4 {I} to play this on top of one of your characters named Powerline.)\nSinger 9\nMASH-UP Once during your turn, whenever this character sings a song, look at the top 4 cards of your deck. You may reveal a song card with cost 9 or less and play it for free. Put the rest on the bottom of your deck in any order.",
-//   type: "character",
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 6,
-//   strength: 6,
-//   willpower: 4,
-//   illustrator: "Nicholas Kole",
-//   number: 110,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 649224,
+// Export const powerlineWorldsGreatestRockStar: LorcanitoCharacterCard = {
+//   Id: "ia6",
+//   Name: "Powerline",
+//   Title: "World's Greatest Rock Star",
+//   Characteristics: ["floodborn"],
+//   Text: "Shift 4 {I} (You may pay 4 {I} to play this on top of one of your characters named Powerline.)\nSinger 9\nMASH-UP Once during your turn, whenever this character sings a song, look at the top 4 cards of your deck. You may reveal a song card with cost 9 or less and play it for free. Put the rest on the bottom of your deck in any order.",
+//   Type: "character",
+//   Inkwell: true,
+//   Colors: ["ruby"],
+//   Cost: 6,
+//   Strength: 6,
+//   Willpower: 4,
+//   Illustrator: "Nicholas Kole",
+//   Number: 110,
+//   Set: "009",
+//   ExternalIds: {
+//     TcgPlayer: 649224,
 //   },
-//   rarity: "super_rare",
-//   abilities: [
-//     shiftAbility(4, "Powerline"),
-//     singerAbility(9),
-//     wheneverThisCharSings({
-//       name: "MASH-UP",
-//       text: "Once during your turn, whenever this character sings a song, look at the top 4 cards of your deck. You may reveal a song card with cost 9 or less and play it for free. Put the rest on the bottom of your deck in any order.",
-//       oncePerTurn: true,
-//       effects: [
+//   Rarity: "super_rare",
+//   Abilities: [
+//     ShiftAbility(4, "Powerline"),
+//     SingerAbility(9),
+//     WheneverThisCharSings({
+//       Name: "MASH-UP",
+//       Text: "Once during your turn, whenever this character sings a song, look at the top 4 cards of your deck. You may reveal a song card with cost 9 or less and play it for free. Put the rest on the bottom of your deck in any order.",
+//       OncePerTurn: true,
+//       Effects: [
 //         {
-//           type: "scry",
-//           amount: 4,
-//           mode: "bottom",
-//           target: self,
-//           limits: {
-//             bottom: 4,
-//             play: 1,
-//             top: 0,
-//             inkwell: 0,
+//           Type: "scry",
+//           Amount: 4,
+//           Mode: "bottom",
+//           Target: self,
+//           Limits: {
+//             Bottom: 4,
+//             Play: 1,
+//             Top: 0,
+//             Inkwell: 0,
 //           },
-//           playFilters: filters,
-//           tutorFilters: filters,
+//           PlayFilters: filters,
+//           TutorFilters: filters,
 //         },
 //       ],
 //     }),
 //   ],
-//   lore: 2,
+//   Lore: 2,
 // };
 //

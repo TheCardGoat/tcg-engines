@@ -3,37 +3,37 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   goofyKnightForADay,
-//   herculesDivineHero,
-//   nanaDarlingFamilyPet,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   GoofyKnightForADay,
+//   HerculesDivineHero,
+//   NanaDarlingFamilyPet,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Nana - Darling Family Pet", () => {
-//   describe("**NURSEMAID** Whenever you play a Floodborn character, you may remove all damage from chosen character.", () => {
-//     it("Playing a floodborn", () => {
-//       const testStore = new TestStore({
-//         inkwell: herculesDivineHero.cost,
-//         hand: [herculesDivineHero],
-//         play: [nanaDarlingFamilyPet, goofyKnightForADay],
+// Describe("Nana - Darling Family Pet", () => {
+//   Describe("**NURSEMAID** Whenever you play a Floodborn character, you may remove all damage from chosen character.", () => {
+//     It("Playing a floodborn", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: herculesDivineHero.cost,
+//         Hand: [herculesDivineHero],
+//         Play: [nanaDarlingFamilyPet, goofyKnightForADay],
 //       });
 //
-//       const target = testStore.getByZoneAndId("play", goofyKnightForADay.id);
-//       const floodbornChar = testStore.getByZoneAndId(
+//       Const target = testStore.getByZoneAndId("play", goofyKnightForADay.id);
+//       Const floodbornChar = testStore.getByZoneAndId(
 //         "hand",
-//         herculesDivineHero.id,
+//         HerculesDivineHero.id,
 //       );
 //
-//       target.damage = goofyKnightForADay.willpower - 1;
+//       Target.damage = goofyKnightForADay.willpower - 1;
 //
-//       floodbornChar.playFromHand();
-//       expect(testStore.stackLayers).toHaveLength(1);
+//       FloodbornChar.playFromHand();
+//       Expect(testStore.stackLayers).toHaveLength(1);
 //
-//       testStore.resolveOptionalAbility();
-//       testStore.resolveTopOfStack({ targets: [target] });
-//       expect(target.damage).toEqual(0);
+//       TestStore.resolveOptionalAbility();
+//       TestStore.resolveTopOfStack({ targets: [target] });
+//       Expect(target.damage).toEqual(0);
 //     });
 //   });
 // });

@@ -3,27 +3,27 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { cruellaDeVilFashionableCruiser } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { cruellaDeVilFashionableCruiser } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Cruella De Vil - Fashionable Cruiser", () => {
-//   it("Now Get Going", () => {
-//     const testStore = new TestStore(
+// Describe("Cruella De Vil - Fashionable Cruiser", () => {
+//   It("Now Get Going", () => {
+//     Const testStore = new TestStore(
 //       {
-//         play: [cruellaDeVilFashionableCruiser],
+//         Play: [cruellaDeVilFashionableCruiser],
 //       },
 //       { deck: 1 },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       cruellaDeVilFashionableCruiser.id,
+//       CruellaDeVilFashionableCruiser.id,
 //     );
 //
-//     expect(cardUnderTest.hasEvasive).toEqual(true);
-//     testStore.passTurn();
-//     expect(cardUnderTest.hasEvasive).toEqual(false);
+//     Expect(cardUnderTest.hasEvasive).toEqual(true);
+//     TestStore.passTurn();
+//     Expect(cardUnderTest.hasEvasive).toEqual(false);
 //   });
 // });
 //

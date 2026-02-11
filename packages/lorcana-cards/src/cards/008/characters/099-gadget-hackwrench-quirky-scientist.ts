@@ -1,35 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const gadgetHackwrenchQuirkyScientist: CharacterCard = {
-  id: "1xg",
-  cardType: "character",
-  name: "Gadget Hackwrench",
-  version: "Quirky Scientist",
-  fullName: "Gadget Hackwrench - Quirky Scientist",
-  inkType: ["emerald"],
-  franchise: "Rescue Rangers",
-  set: "008",
-  text: "GOLLY! When you play this character, if an opponent has more cards in their hand than you, you may draw a card.",
-  cost: 4,
-  strength: 3,
-  willpower: 2,
-  lore: 2,
-  cardNumber: 99,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "fa60b1fa0ad93291d6d2a22286eb5955fb5c309f",
-  },
   abilities: [
     {
-      id: "1xg-1",
-      type: "triggered",
-      name: "GOLLY!",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "conditional",
         condition: {
@@ -42,8 +15,35 @@ export const gadgetHackwrenchQuirkyScientist: CharacterCard = {
           target: "CONTROLLER",
         },
       },
+      id: "1xg-1",
+      name: "GOLLY!",
       text: "GOLLY! When you play this character, if an opponent has more cards in their hand than you, you may draw a card.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 99,
+  cardType: "character",
   classifications: ["Storyborn", "Ally", "Inventor"],
+  cost: 4,
+  externalIds: {
+    ravensburger: "fa60b1fa0ad93291d6d2a22286eb5955fb5c309f",
+  },
+  franchise: "Rescue Rangers",
+  fullName: "Gadget Hackwrench - Quirky Scientist",
+  id: "1xg",
+  inkType: ["emerald"],
+  inkable: true,
+  lore: 2,
+  missingTests: true,
+  name: "Gadget Hackwrench",
+  set: "008",
+  strength: 3,
+  text: "GOLLY! When you play this character, if an opponent has more cards in their hand than you, you may draw a card.",
+  version: "Quirky Scientist",
+  willpower: 2,
 };

@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { flotsamRiffraff } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { flotsamRiffraff } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Flotsam - Riffraff", () => {
-//   it.skip("**EERIE PAIR** Your characters named Jetsam get +3 {S}.", () => {
-//     const testStore = new TestStore({
-//       inkwell: flotsamRiffraff.cost,
-//       play: [flotsamRiffraff],
+// Describe("Flotsam - Riffraff", () => {
+//   It.skip("**EERIE PAIR** Your characters named Jetsam get +3 {S}.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: flotsamRiffraff.cost,
+//       Play: [flotsamRiffraff],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("play", flotsamRiffraff.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("play", flotsamRiffraff.id);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

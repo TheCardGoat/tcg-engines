@@ -3,53 +3,53 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   kitCloudkickerToughGuy,
-//   mrSmeeBumblingMate,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   KitCloudkickerToughGuy,
+//   MrSmeeBumblingMate,
 // } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { tipoGrowingSon } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { tipoGrowingSon } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Kit Cloudkicker - Tough Guy", () => {
-//   it("**SKYSURFING** When you play this character, you may return chosen opposing character with 2 {S} or less to their player's hand.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Kit Cloudkicker - Tough Guy", () => {
+//   It("**SKYSURFING** When you play this character, you may return chosen opposing character with 2 {S} or less to their player's hand.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: kitCloudkickerToughGuy.cost,
-//         hand: [kitCloudkickerToughGuy],
+//         Inkwell: kitCloudkickerToughGuy.cost,
+//         Hand: [kitCloudkickerToughGuy],
 //       },
 //       {
-//         play: [tipoGrowingSon],
+//         Play: [tipoGrowingSon],
 //       },
 //     );
 //
-//     const cardUnderTest = testEngine.getCardModel(kitCloudkickerToughGuy);
-//     const target = testEngine.getCardModel(tipoGrowingSon);
-//     cardUnderTest.playFromHand();
+//     Const cardUnderTest = testEngine.getCardModel(kitCloudkickerToughGuy);
+//     Const target = testEngine.getCardModel(tipoGrowingSon);
+//     CardUnderTest.playFromHand();
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({ targets: [target] });
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({ targets: [target] });
 //
-//     expect(testEngine.getCardZone(target)).toBe("hand");
+//     Expect(testEngine.getCardZone(target)).toBe("hand");
 //   });
 //
-//   it("regression check - cannot bounce targets with 3 attack or more", async () => {
-//     const testEngine = new TestEngine(
+//   It("regression check - cannot bounce targets with 3 attack or more", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: kitCloudkickerToughGuy.cost,
-//         hand: [kitCloudkickerToughGuy],
+//         Inkwell: kitCloudkickerToughGuy.cost,
+//         Hand: [kitCloudkickerToughGuy],
 //       },
 //       {
-//         play: [mrSmeeBumblingMate],
+//         Play: [mrSmeeBumblingMate],
 //       },
 //     );
 //
-//     const cardUnderTest = testEngine.getCardModel(kitCloudkickerToughGuy);
-//     cardUnderTest.playFromHand();
+//     Const cardUnderTest = testEngine.getCardModel(kitCloudkickerToughGuy);
+//     CardUnderTest.playFromHand();
 //
-//     await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveOptionalAbility();
 //
-//     expect(testEngine.getCardZone(cardUnderTest)).toBe("play");
+//     Expect(testEngine.getCardZone(cardUnderTest)).toBe("play");
 //   });
 // });
 //

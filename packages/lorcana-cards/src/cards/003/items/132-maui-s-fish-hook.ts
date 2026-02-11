@@ -1,50 +1,50 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
-// import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/target";
+// Import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
+// Import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/target";
 //
-// export const mauisFishHook: LorcanitoItemCard = {
-//   id: "ya5",
-//   name: "Maui's Fish Hook",
-//   characteristics: ["item"],
-//   text: "**IT'S MAUI TIME!** If you have a character named Maui in play, you may use this item's Shapeshift ability for free.\n\n\n**SHAPESHIFT** {E}, 2 {I} – Choose one:\n\n· Chosen character gains **Evasive** until the start of your next turn. _(Only characters with Evasive can challenge them.)_\n\n· Chosen character gets +3 {S} this turn.",
-//   type: "item",
-//   abilities: [
+// Export const mauisFishHook: LorcanitoItemCard = {
+//   Id: "ya5",
+//   Name: "Maui's Fish Hook",
+//   Characteristics: ["item"],
+//   Text: "**IT'S MAUI TIME!** If you have a character named Maui in play, you may use this item's Shapeshift ability for free.\n\n\n**SHAPESHIFT** {E}, 2 {I} – Choose one:\n\n· Chosen character gains **Evasive** until the start of your next turn. _(Only characters with Evasive can challenge them.)_\n\n· Chosen character gets +3 {S} this turn.",
+//   Type: "item",
+//   Abilities: [
 //     {
-//       type: "activated",
-//       name: "Shapeshift",
-//       text: "{E}, 2 {I} – Choose one: Chosen character gains **Evasive** until the start of your next turn. Chosen character gets +3 {S} this turn.",
-//       costs: [{ type: "exert" }, { type: "ink", amount: 2 }],
-//       effects: [
+//       Type: "activated",
+//       Name: "Shapeshift",
+//       Text: "{E}, 2 {I} – Choose one: Chosen character gains **Evasive** until the start of your next turn. Chosen character gets +3 {S} this turn.",
+//       Costs: [{ type: "exert" }, { type: "ink", amount: 2 }],
+//       Effects: [
 //         {
-//           type: "modal",
+//           Type: "modal",
 //           // TODO: Get rid of target
-//           target: chosenCharacter,
-//           modes: [
+//           Target: chosenCharacter,
+//           Modes: [
 //             {
-//               id: "1",
-//               text: "Chosen character gains **Evasive** until the start of your next turn.",
-//               effects: [
+//               Id: "1",
+//               Text: "Chosen character gains **Evasive** until the start of your next turn.",
+//               Effects: [
 //                 {
-//                   type: "ability",
-//                   ability: "evasive",
-//                   modifier: "add",
-//                   duration: "next_turn",
-//                   until: true,
-//                   target: chosenCharacter,
+//                   Type: "ability",
+//                   Ability: "evasive",
+//                   Modifier: "add",
+//                   Duration: "next_turn",
+//                   Until: true,
+//                   Target: chosenCharacter,
 //                 },
 //               ],
 //             },
 //             {
-//               id: "2",
-//               text: "Chosen character gets +3 {S} this turn.",
-//               effects: [
+//               Id: "2",
+//               Text: "Chosen character gets +3 {S} this turn.",
+//               Effects: [
 //                 {
-//                   type: "attribute",
-//                   attribute: "strength",
-//                   amount: 3,
-//                   modifier: "add",
-//                   duration: "turn",
-//                   target: chosenCharacter,
+//                   Type: "attribute",
+//                   Attribute: "strength",
+//                   Amount: 3,
+//                   Modifier: "add",
+//                   Duration: "turn",
+//                   Target: chosenCharacter,
 //                 },
 //               ],
 //             },
@@ -53,15 +53,15 @@
 //       ],
 //     },
 //   ],
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 3,
-//   illustrator: "Peter Brockhammer",
-//   number: 132,
-//   set: "ITI",
-//   externalIds: {
-//     tcgPlayer: 538333,
+//   Inkwell: true,
+//   Colors: ["ruby"],
+//   Cost: 3,
+//   Illustrator: "Peter Brockhammer",
+//   Number: 132,
+//   Set: "ITI",
+//   ExternalIds: {
+//     TcgPlayer: 538333,
 //   },
-//   rarity: "rare",
+//   Rarity: "rare",
 // };
 //

@@ -3,21 +3,21 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { peterPanNeverLandHero } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { peterPanNeverLandHero } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Peter Pan - Never Land Hero", () => {
-//   it.skip("**Rush** _(This character can challenge the turn they're played.)_**OVER HERE, TINK** While you have a character named Tinker Bell in play, this character gets +2 {S}.", () => {
-//     const testStore = new TestStore({
-//       play: [peterPanNeverLandHero],
+// Describe("Peter Pan - Never Land Hero", () => {
+//   It.skip("**Rush** _(This character can challenge the turn they're played.)_**OVER HERE, TINK** While you have a character named Tinker Bell in play, this character gets +2 {S}.", () => {
+//     Const testStore = new TestStore({
+//       Play: [peterPanNeverLandHero],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       peterPanNeverLandHero.id,
+//       PeterPanNeverLandHero.id,
 //     );
-//     expect(cardUnderTest.hasRush).toBe(true);
+//     Expect(cardUnderTest.hasRush).toBe(true);
 //   });
 // });
 //

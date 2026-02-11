@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { mickeyMouseTrumpeter } from "@lorcanito/lorcana-engine/cards/009/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { mickeyMouseTrumpeter } from "@lorcanito/lorcana-engine/cards/009/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Mickey Mouse - Trumpeter", () => {
-//   it.skip("**BUGLE CALL** {E}, 2 {I} - Play a character for free.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: mickeyMouseTrumpeter.cost,
-//       play: [mickeyMouseTrumpeter],
-//       hand: [mickeyMouseTrumpeter],
+// Describe("Mickey Mouse - Trumpeter", () => {
+//   It.skip("**BUGLE CALL** {E}, 2 {I} - Play a character for free.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: mickeyMouseTrumpeter.cost,
+//       Play: [mickeyMouseTrumpeter],
+//       Hand: [mickeyMouseTrumpeter],
 //     });
 //
-//     await testEngine.playCard(mickeyMouseTrumpeter);
+//     Await testEngine.playCard(mickeyMouseTrumpeter);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

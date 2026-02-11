@@ -1,31 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const magicBroomIlluminaryKeeper: CharacterCard = {
-  id: "1ct",
-  cardType: "character",
-  name: "Magic Broom",
-  version: "Illuminary Keeper",
-  fullName: "Magic Broom - Illuminary Keeper",
-  inkType: ["amethyst"],
-  franchise: "Fantasia",
-  set: "004",
-  text: "NICE AND TIDY Whenever you play another character, you may banish this character to draw a card.",
-  cost: 1,
-  strength: 1,
-  willpower: 2,
-  lore: 1,
-  cardNumber: 48,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "aff7e808c09b68f3e297df1e5cd256f7f646571d",
-  },
   abilities: [
     {
-      id: "1ct-1",
-      type: "triggered",
-      name: "NICE AND TIDY",
-      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "optional",
         effect: {
@@ -40,8 +17,31 @@ export const magicBroomIlluminaryKeeper: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "1ct-1",
+      name: "NICE AND TIDY",
       text: "NICE AND TIDY Whenever you play another character, you may banish this character to draw a card.",
+      trigger: { event: "play", timing: "when", on: "SELF" },
+      type: "triggered",
     },
   ],
+  cardNumber: 48,
+  cardType: "character",
   classifications: ["Dreamborn", "Broom"],
+  cost: 1,
+  externalIds: {
+    ravensburger: "aff7e808c09b68f3e297df1e5cd256f7f646571d",
+  },
+  franchise: "Fantasia",
+  fullName: "Magic Broom - Illuminary Keeper",
+  id: "1ct",
+  inkType: ["amethyst"],
+  inkable: true,
+  lore: 1,
+  missingTests: true,
+  name: "Magic Broom",
+  set: "004",
+  strength: 1,
+  text: "NICE AND TIDY Whenever you play another character, you may banish this character to draw a card.",
+  version: "Illuminary Keeper",
+  willpower: 2,
 };

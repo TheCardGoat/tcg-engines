@@ -3,31 +3,31 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { wildcatsWrench } from "@lorcanito/lorcana-engine/cards/003/items/items";
-// import { forbiddenMountainMaleficentsCastle } from "@lorcanito/lorcana-engine/cards/003/locations/locations";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { wildcatsWrench } from "@lorcanito/lorcana-engine/cards/003/items/items";
+// Import { forbiddenMountainMaleficentsCastle } from "@lorcanito/lorcana-engine/cards/003/locations/locations";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Wildcat’s Wrench", () => {
-//   it("**REBUILD** {E} – Remove up to 2 damage from chosen location.", () => {
-//     const testStore = new TestStore({
-//       play: [wildcatsWrench, forbiddenMountainMaleficentsCastle],
+// Describe("Wildcat’s Wrench", () => {
+//   It("**REBUILD** {E} – Remove up to 2 damage from chosen location.", () => {
+//     Const testStore = new TestStore({
+//       Play: [wildcatsWrench, forbiddenMountainMaleficentsCastle],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("play", wildcatsWrench.id);
-//     const targetLocation = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId("play", wildcatsWrench.id);
+//     Const targetLocation = testStore.getByZoneAndId(
 //       "play",
-//       forbiddenMountainMaleficentsCastle.id,
+//       ForbiddenMountainMaleficentsCastle.id,
 //     );
 //
-//     targetLocation.updateCardMeta({ damage: 2 });
-//     expect(targetLocation.damage).toBe(2);
+//     TargetLocation.updateCardMeta({ damage: 2 });
+//     Expect(targetLocation.damage).toBe(2);
 //
-//     cardUnderTest.activate();
-//     testStore.resolveTopOfStack({ targets: [targetLocation] });
+//     CardUnderTest.activate();
+//     TestStore.resolveTopOfStack({ targets: [targetLocation] });
 //
-//     expect(targetLocation.damage).toBe(0);
-//     expect(cardUnderTest.meta.exerted).toBe(true);
+//     Expect(targetLocation.damage).toBe(0);
+//     Expect(cardUnderTest.meta.exerted).toBe(true);
 //   });
 // });
 //

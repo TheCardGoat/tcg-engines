@@ -19,7 +19,7 @@
       }
     }
   ],
-  "ignore": [
+  "ignorePatterns": [
     "**/dist/**",
     "**/build/**",
     "**/node_modules/**",

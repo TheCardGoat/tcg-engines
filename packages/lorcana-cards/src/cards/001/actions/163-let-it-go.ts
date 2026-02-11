@@ -1,68 +1,68 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
 export const letItGo: ActionCard = {
-  id: "n1y",
-  cardType: "action",
-  name: "Let It Go",
-  inkType: ["sapphire"],
-  franchise: "Disney",
-  set: "001",
-  text: "_(A character with cost 5 or more can {E} to sing this song for free.)_\nPut chosen character into their player",
-  cost: 5,
+  abilities: [],
   actionSubtype: "song",
   cardNumber: 163,
-  inkable: true,
+  cardType: "action",
+  cost: 5,
   externalIds: {
     ravensburger: "",
   },
-  abilities: [],
+  franchise: "Disney",
+  id: "n1y",
+  inkType: ["sapphire"],
+  inkable: true,
+  name: "Let It Go",
+  set: "001",
+  text: "_(A character with cost 5 or more can {E} to sing this song for free.)_\nPut chosen character into their player",
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { CardEffectTarget } from "@lorcanito/lorcana-engine";
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { CardEffectTarget } from "@lorcanito/lorcana-engine";
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// const chosenCharacter: CardEffectTarget = {
-//   type: "card",
-//   value: 1,
-//   filters: [
+// Const chosenCharacter: CardEffectTarget = {
+//   Type: "card",
+//   Value: 1,
+//   Filters: [
 //     { filter: "type", value: "character" },
 //     { filter: "zone", value: "play" },
 //   ],
 // };
 //
-// export const letItGo: LorcanitoActionCard = {
-//   id: "n1y",
-//   name: "Let It Go",
-//   characteristics: ["action", "song"],
-//   text: "_(A character with cost 5 or more can {E} to sing this song for free.)_\nPut chosen character into their player's inkwell facedown and exerted.",
-//   type: "action",
-//   abilities: [
+// Export const letItGo: LorcanitoActionCard = {
+//   Id: "n1y",
+//   Name: "Let It Go",
+//   Characteristics: ["action", "song"],
+//   Text: "_(A character with cost 5 or more can {E} to sing this song for free.)_\nPut chosen character into their player's inkwell facedown and exerted.",
+//   Type: "action",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       name: "Let It Go",
-//       text: "Put chosen character into their player's inkwell facedown and exerted.",
-//       effects: [
+//       Type: "resolution",
+//       Name: "Let It Go",
+//       Text: "Put chosen character into their player's inkwell facedown and exerted.",
+//       Effects: [
 //         {
-//           type: "move",
-//           to: "inkwell",
-//           exerted: true,
-//           target: chosenCharacter,
+//           Type: "move",
+//           To: "inkwell",
+//           Exerted: true,
+//           Target: chosenCharacter,
 //         },
 //       ],
 //     },
 //   ],
-//   flavour:
+//   Flavour:
 //     "It's time to see what I can do<br />To test the limits and break through",
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 5,
-//   illustrator: "Milica Celikovic",
-//   number: 163,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 492997,
+//   Inkwell: true,
+//   Colors: ["sapphire"],
+//   Cost: 5,
+//   Illustrator: "Milica Celikovic",
+//   Number: 163,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 492997,
 //   },
-//   rarity: "rare",
+//   Rarity: "rare",
 // };
 //

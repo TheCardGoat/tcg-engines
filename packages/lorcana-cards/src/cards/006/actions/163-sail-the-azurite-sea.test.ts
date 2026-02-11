@@ -3,38 +3,38 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   microbots,
-//   sailTheAzuriteSea,
-//   yokaiScientificSupervillain,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   Microbots,
+//   SailTheAzuriteSea,
+//   YokaiScientificSupervillain,
 // } from "@lorcanito/lorcana-engine/cards/006";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Sail The Azurite Sea", () => {
-//   it("This turn, you may put an additional card from your hand into your inkwell facedown. Draw a card.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: sailTheAzuriteSea.cost,
-//       hand: [sailTheAzuriteSea, microbots, yokaiScientificSupervillain],
-//       deck: 6,
+// Describe("Sail The Azurite Sea", () => {
+//   It("This turn, you may put an additional card from your hand into your inkwell facedown. Draw a card.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: sailTheAzuriteSea.cost,
+//       Hand: [sailTheAzuriteSea, microbots, yokaiScientificSupervillain],
+//       Deck: 6,
 //     });
 //
-//     await testEngine.putIntoInkwell(microbots);
+//     Await testEngine.putIntoInkwell(microbots);
 //
-//     expect(
-//       testEngine.store.tableStore.getTable("player_one").canAddToInkwell(),
+//     Expect(
+//       TestEngine.store.tableStore.getTable("player_one").canAddToInkwell(),
 //     ).toEqual(false);
 //
-//     await testEngine.playCard(sailTheAzuriteSea);
+//     Await testEngine.playCard(sailTheAzuriteSea);
 //
-//     expect(
-//       testEngine.store.tableStore.getTable("player_one").canAddToInkwell(),
+//     Expect(
+//       TestEngine.store.tableStore.getTable("player_one").canAddToInkwell(),
 //     ).toEqual(true);
 //
-//     await testEngine.putIntoInkwell(yokaiScientificSupervillain);
+//     Await testEngine.putIntoInkwell(yokaiScientificSupervillain);
 //
-//     expect(
-//       testEngine.store.tableStore.getTable("player_one").canAddToInkwell(),
+//     Expect(
+//       TestEngine.store.tableStore.getTable("player_one").canAddToInkwell(),
 //     ).toEqual(false);
 //   });
 // });

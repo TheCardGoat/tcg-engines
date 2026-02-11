@@ -19,8 +19,8 @@ describe("Keyword: Legion", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "keyword",
           keyword: "Legion",
+          type: "keyword",
         }),
       );
     });
@@ -36,11 +36,11 @@ describe("Keyword: Legion", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "keyword",
-          keyword: "Legion",
           effect: expect.objectContaining({
             type: "buff",
           }),
+          keyword: "Legion",
+          type: "keyword",
         }),
       );
     });
@@ -56,11 +56,11 @@ describe("Keyword: Legion", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "keyword",
-          keyword: "Legion",
           effect: expect.objectContaining({
             type: "sequence",
           }),
+          keyword: "Legion",
+          type: "keyword",
         }),
       );
     });
@@ -76,12 +76,12 @@ describe("Keyword: Legion", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "keyword",
-          keyword: "Legion",
           effect: expect.objectContaining({
-            type: "modify-might",
             amount: 2,
+            type: "modify-might",
           }),
+          keyword: "Legion",
+          type: "keyword",
         }),
       );
     });
@@ -97,12 +97,12 @@ describe("Keyword: Legion", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "keyword",
-          keyword: "Legion",
           effect: expect.objectContaining({
-            type: "create-token",
             amount: 2,
+            type: "create-token",
           }),
+          keyword: "Legion",
+          type: "keyword",
         }),
       );
     });
@@ -118,11 +118,11 @@ describe("Keyword: Legion", () => {
       expect(result.abilities).toHaveLength(2);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "keyword",
-          keyword: "Legion",
           effect: expect.objectContaining({
             type: "ready",
           }),
+          keyword: "Legion",
+          type: "keyword",
         }),
       );
       expect(result.abilities?.[1]).toEqual(
@@ -143,10 +143,10 @@ describe("Keyword: Legion", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "activated",
           condition: expect.objectContaining({
             type: "legion",
           }),
+          type: "activated",
         }),
       );
     });
@@ -160,11 +160,11 @@ describe("Keyword: Legion", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "activated",
-          timing: "reaction",
           condition: expect.objectContaining({
             type: "legion",
           }),
+          timing: "reaction",
+          type: "activated",
         }),
       );
     });

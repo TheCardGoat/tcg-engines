@@ -1,71 +1,71 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { atTheStartOfYourTurn } from "@lorcanito/lorcana-engine/abilities/atTheAbilities";
-// import {
-//   thisCard,
-//   thisCharacter,
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { atTheStartOfYourTurn } from "@lorcanito/lorcana-engine/abilities/atTheAbilities";
+// Import {
+//   ThisCard,
+//   ThisCharacter,
 // } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import { putTopCardOfOpponentDeckIntoTheirInkwell } from "@lorcanito/lorcana-engine/effects/effects";
+// Import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import { putTopCardOfOpponentDeckIntoTheirInkwell } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const stitchExperiment_626: LorcanitoCharacterCard = {
-//   id: "fjv",
-//   name: "Stitch",
-//   title: "Experiment 626",
-//   characteristics: ["storyborn", "hero", "alien"],
-//   text: "SO NAUGHTY When you play this character, each opponent puts the top card of their deck into their inkwell.\nSTEALTH MODE At the start of your turn, if this card is in your discard, you may choose and discard a card with {IW} to play him for free and he enters play exerted.",
-//   type: "character",
-//   abilities: [
-//     whenYouPlayThisCharAbility({
-//       type: "resolution",
-//       name: "SO NAUGHTY",
-//       text: "When you play this character, each opponent puts the top card of their deck into their inkwell.",
-//       effects: [putTopCardOfOpponentDeckIntoTheirInkwell],
+// Export const stitchExperiment_626: LorcanitoCharacterCard = {
+//   Id: "fjv",
+//   Name: "Stitch",
+//   Title: "Experiment 626",
+//   Characteristics: ["storyborn", "hero", "alien"],
+//   Text: "SO NAUGHTY When you play this character, each opponent puts the top card of their deck into their inkwell.\nSTEALTH MODE At the start of your turn, if this card is in your discard, you may choose and discard a card with {IW} to play him for free and he enters play exerted.",
+//   Type: "character",
+//   Abilities: [
+//     WhenYouPlayThisCharAbility({
+//       Type: "resolution",
+//       Name: "SO NAUGHTY",
+//       Text: "When you play this character, each opponent puts the top card of their deck into their inkwell.",
+//       Effects: [putTopCardOfOpponentDeckIntoTheirInkwell],
 //     }),
-//     atTheStartOfYourTurn({
-//       name: "STEALTH MODE",
-//       text: "At the start of your turn, if this card is in your discard, you may choose and discard a card with {IW} to play him for free and he enters play exerted.",
-//       optional: true,
-//       doesItTriggerFromDiscard: true,
-//       dependentEffects: true,
-//       conditions: [
+//     AtTheStartOfYourTurn({
+//       Name: "STEALTH MODE",
+//       Text: "At the start of your turn, if this card is in your discard, you may choose and discard a card with {IW} to play him for free and he enters play exerted.",
+//       Optional: true,
+//       DoesItTriggerFromDiscard: true,
+//       DependentEffects: true,
+//       Conditions: [
 //         {
-//           type: "filter",
-//           filters: [...thisCard.filters, { filter: "zone", value: "discard" }],
-//           comparison: { operator: "eq", value: 1 },
+//           Type: "filter",
+//           Filters: [...thisCard.filters, { filter: "zone", value: "discard" }],
+//           Comparison: { operator: "eq", value: 1 },
 //         },
 //         {
-//           type: "filter",
-//           filters: [
+//           Type: "filter",
+//           Filters: [
 //             { filter: "owner", value: "self" },
 //             { filter: "zone", value: "hand" },
 //             { filter: "attribute", value: "inkwell", comparison: true },
 //           ],
-//           comparison: { operator: "gte", value: 1 },
+//           Comparison: { operator: "gte", value: 1 },
 //         },
 //       ],
-//       effects: [
+//       Effects: [
 //         {
-//           type: "discard",
-//           amount: 1,
-//           afterEffect: [
+//           Type: "discard",
+//           Amount: 1,
+//           AfterEffect: [
 //             {
-//               type: "create-layer-based-on-target",
-//               target: thisCharacter,
-//               effects: [
+//               Type: "create-layer-based-on-target",
+//               Target: thisCharacter,
+//               Effects: [
 //                 {
-//                   type: "play",
-//                   forFree: true,
-//                   exerted: true,
-//                   target: thisCard,
+//                   Type: "play",
+//                   ForFree: true,
+//                   Exerted: true,
+//                   Target: thisCard,
 //                 },
 //               ],
 //             },
 //           ],
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
+//           Target: {
+//             Type: "card",
+//             Value: 1,
+//             Filters: [
 //               { filter: "owner", value: "self" },
 //               { filter: "zone", value: "hand" },
 //               { filter: "attribute", value: "inkwell", comparison: true },
@@ -75,18 +75,18 @@
 //       ],
 //     }),
 //   ],
-//   inkwell: false,
-//   colors: ["sapphire"],
-//   cost: 3,
-//   strength: 3,
-//   willpower: 3,
-//   illustrator: "Matteo Marzocco",
-//   number: 166,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631463,
+//   Inkwell: false,
+//   Colors: ["sapphire"],
+//   Cost: 3,
+//   Strength: 3,
+//   Willpower: 3,
+//   Illustrator: "Matteo Marzocco",
+//   Number: 166,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631463,
 //   },
-//   rarity: "legendary",
-//   lore: 2,
+//   Rarity: "legendary",
+//   Lore: 2,
 // };
 //

@@ -41,9 +41,9 @@ export function isConditionMet(
     }
 
     const result = handler.evaluate(condition, sourceCard, {
-      state,
-      registry,
       context: ctx,
+      registry,
+      state,
     });
 
     return result;
@@ -71,7 +71,7 @@ export function areConditionsMet(
   }
 
   // Sort by complexity to fail fast
-  const sorted = [...conditions].sort((a, b) => {
+  const sorted = [...conditions].toSorted((a, b) => {
     const ha = conditionRegistry.get(a.type);
     const hb = conditionRegistry.get(b.type);
     const ca = ha ? ha.complexity : 100;
@@ -79,7 +79,5 @@ export function areConditionsMet(
     return ca - cb;
   });
 
-  return sorted.every((cond) =>
-    isConditionMet(cond, sourceCard, state, registry, context),
-  );
+  return sorted.every((cond) => isConditionMet(cond, sourceCard, state, registry, context));
 }

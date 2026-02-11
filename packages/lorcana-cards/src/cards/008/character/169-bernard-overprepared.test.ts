@@ -3,32 +3,32 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   bernardOverprepared,
-//   jimDearBelovedHusband,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   BernardOverprepared,
+//   JimDearBelovedHusband,
 // } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Bernard - Over-Prepared", () => {
-//   it("GO DOWN THERE AND INVESTIGATE When you play this character, if you have an Ally character in play, you may draw a card.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: bernardOverprepared.cost + jimDearBelovedHusband.cost,
-//       hand: [bernardOverprepared],
-//       play: [jimDearBelovedHusband],
-//       deck: 1,
+// Describe("Bernard - Over-Prepared", () => {
+//   It("GO DOWN THERE AND INVESTIGATE When you play this character, if you have an Ally character in play, you may draw a card.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: bernardOverprepared.cost + jimDearBelovedHusband.cost,
+//       Hand: [bernardOverprepared],
+//       Play: [jimDearBelovedHusband],
+//       Deck: 1,
 //     });
 //
-//     const initialHandCount = testEngine.getZonesCardCount().hand;
-//     expect(initialHandCount).toBe(1);
+//     Const initialHandCount = testEngine.getZonesCardCount().hand;
+//     Expect(initialHandCount).toBe(1);
 //
-//     await testEngine.playCard(bernardOverprepared);
-//     expect(testEngine.getZonesCardCount().hand).toBe(0);
+//     Await testEngine.playCard(bernardOverprepared);
+//     Expect(testEngine.getZonesCardCount().hand).toBe(0);
 //
-//     await testEngine.acceptOptionalLayer();
+//     Await testEngine.acceptOptionalLayer();
 //
-//     expect(testEngine.getZonesCardCount().hand).toBe(1);
-//     expect(testEngine.getZonesCardCount().deck).toBe(0);
+//     Expect(testEngine.getZonesCardCount().hand).toBe(1);
+//     Expect(testEngine.getZonesCardCount().deck).toBe(0);
 //   });
 // });
 //

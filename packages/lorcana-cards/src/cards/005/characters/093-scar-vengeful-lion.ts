@@ -1,35 +1,14 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const scarVengefulLion: CharacterCard = {
-  id: "15b",
-  cardType: "character",
-  name: "Scar",
-  version: "Vengeful Lion",
-  fullName: "Scar - Vengeful Lion",
-  inkType: ["emerald"],
-  franchise: "Lion King",
-  set: "005",
-  text: "Ward (Opponents can't choose this character except to challenge.)\nLIFE'S NOT FAIR, IS IT? Whenever one of your characters challenges a damaged character, you may draw a card.",
-  cost: 4,
-  strength: 4,
-  willpower: 2,
-  lore: 1,
-  cardNumber: 93,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "94e713f1c1f184e73a082487f65cd724657ffbec",
-  },
   abilities: [
     {
       id: "15b-1",
-      type: "keyword",
       keyword: "Ward",
       text: "Ward",
+      type: "keyword",
     },
     {
-      id: "15b-2",
-      type: "action",
       effect: {
         type: "optional",
         effect: {
@@ -39,8 +18,29 @@ export const scarVengefulLion: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "15b-2",
       text: "LIFE'S NOT FAIR, IS IT? Whenever one of your characters challenges a damaged character, you may draw a card.",
+      type: "action",
     },
   ],
+  cardNumber: 93,
+  cardType: "character",
   classifications: ["Storyborn", "Villain"],
+  cost: 4,
+  externalIds: {
+    ravensburger: "94e713f1c1f184e73a082487f65cd724657ffbec",
+  },
+  franchise: "Lion King",
+  fullName: "Scar - Vengeful Lion",
+  id: "15b",
+  inkType: ["emerald"],
+  inkable: true,
+  lore: 1,
+  missingTests: true,
+  name: "Scar",
+  set: "005",
+  strength: 4,
+  text: "Ward (Opponents can't choose this character except to challenge.)\nLIFE'S NOT FAIR, IS IT? Whenever one of your characters challenges a damaged character, you may draw a card.",
+  version: "Vengeful Lion",
+  willpower: 2,
 };

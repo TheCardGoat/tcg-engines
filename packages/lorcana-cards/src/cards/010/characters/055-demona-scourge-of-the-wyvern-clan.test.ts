@@ -3,95 +3,95 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   broadwaySturdyAndStrong,
-//   demonaScourgeOfTheWyvernClan,
-//   hudsonDeterminedReader,
-//   lexingtonSmallInStature,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   BroadwaySturdyAndStrong,
+//   DemonaScourgeOfTheWyvernClan,
+//   HudsonDeterminedReader,
+//   LexingtonSmallInStature,
 // } from "@lorcanito/lorcana-engine/cards/010";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Demona - Scourge of the Wyvern Clan", () => {
-//   describe("AD SAXUM COMMUTATE When you play this character, exert all opposing characters. Then, each player with fewer than 3 cards in their hand draws until they have 3. STONE BY DAY If you have 3 or more cards in your hand, this character can't ready.", () => {
-//     it("Exerts all opponsing characters.", async () => {
-//       const cardsInPlay = [hudsonDeterminedReader, lexingtonSmallInStature];
+// Describe("Demona - Scourge of the Wyvern Clan", () => {
+//   Describe("AD SAXUM COMMUTATE When you play this character, exert all opposing characters. Then, each player with fewer than 3 cards in their hand draws until they have 3. STONE BY DAY If you have 3 or more cards in your hand, this character can't ready.", () => {
+//     It("Exerts all opponsing characters.", async () => {
+//       Const cardsInPlay = [hudsonDeterminedReader, lexingtonSmallInStature];
 //
-//       const testEngine = new TestEngine(
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: demonaScourgeOfTheWyvernClan.cost,
-//           hand: [demonaScourgeOfTheWyvernClan],
+//           Inkwell: demonaScourgeOfTheWyvernClan.cost,
+//           Hand: [demonaScourgeOfTheWyvernClan],
 //         },
 //         {
-//           play: cardsInPlay,
-//         },
-//       );
-//
-//       for (const card of cardsInPlay) {
-//         expect(testEngine.getCardModel(card).exerted).toBe(false);
-//       }
-//
-//       await testEngine.playCard(demonaScourgeOfTheWyvernClan);
-//
-//       for (const card of cardsInPlay) {
-//         expect(testEngine.getCardModel(card).exerted).toBe(true);
-//       }
-//     });
-//
-//     it("Both Players 0 cards in hand", async () => {
-//       const testEngine = new TestEngine(
-//         {
-//           inkwell: demonaScourgeOfTheWyvernClan.cost,
-//           hand: [demonaScourgeOfTheWyvernClan],
-//         },
-//         {
-//           hand: [],
+//           Play: cardsInPlay,
 //         },
 //       );
 //
-//       await testEngine.playCard(demonaScourgeOfTheWyvernClan);
+//       For (const card of cardsInPlay) {
+//         Expect(testEngine.getCardModel(card).exerted).toBe(false);
+//       }
 //
-//       expect(testEngine.getZonesCardCount("player_one").hand).toBe(3);
-//       expect(testEngine.getZonesCardCount("player_two").hand).toBe(3);
+//       Await testEngine.playCard(demonaScourgeOfTheWyvernClan);
+//
+//       For (const card of cardsInPlay) {
+//         Expect(testEngine.getCardModel(card).exerted).toBe(true);
+//       }
 //     });
 //
-//     it("Both Players 3 cards in hand", async () => {
-//       const testEngine = new TestEngine(
+//     It("Both Players 0 cards in hand", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: demonaScourgeOfTheWyvernClan.cost,
-//           hand: [
-//             broadwaySturdyAndStrong,
-//             demonaScourgeOfTheWyvernClan,
-//             hudsonDeterminedReader,
-//             lexingtonSmallInStature,
+//           Inkwell: demonaScourgeOfTheWyvernClan.cost,
+//           Hand: [demonaScourgeOfTheWyvernClan],
+//         },
+//         {
+//           Hand: [],
+//         },
+//       );
+//
+//       Await testEngine.playCard(demonaScourgeOfTheWyvernClan);
+//
+//       Expect(testEngine.getZonesCardCount("player_one").hand).toBe(3);
+//       Expect(testEngine.getZonesCardCount("player_two").hand).toBe(3);
+//     });
+//
+//     It("Both Players 3 cards in hand", async () => {
+//       Const testEngine = new TestEngine(
+//         {
+//           Inkwell: demonaScourgeOfTheWyvernClan.cost,
+//           Hand: [
+//             BroadwaySturdyAndStrong,
+//             DemonaScourgeOfTheWyvernClan,
+//             HudsonDeterminedReader,
+//             LexingtonSmallInStature,
 //           ],
 //         },
 //         {
-//           hand: 3,
+//           Hand: 3,
 //         },
 //       );
 //
-//       await testEngine.playCard(demonaScourgeOfTheWyvernClan);
+//       Await testEngine.playCard(demonaScourgeOfTheWyvernClan);
 //
-//       expect(testEngine.getZonesCardCount("player_one").hand).toBe(3);
-//       expect(testEngine.getZonesCardCount("player_two").hand).toBe(3);
+//       Expect(testEngine.getZonesCardCount("player_one").hand).toBe(3);
+//       Expect(testEngine.getZonesCardCount("player_two").hand).toBe(3);
 //     });
 //
-//     it("Mixture of hand sizes", async () => {
-//       const testEngine = new TestEngine(
+//     It("Mixture of hand sizes", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: demonaScourgeOfTheWyvernClan.cost,
-//           hand: [demonaScourgeOfTheWyvernClan],
+//           Inkwell: demonaScourgeOfTheWyvernClan.cost,
+//           Hand: [demonaScourgeOfTheWyvernClan],
 //         },
 //         {
-//           hand: 4,
+//           Hand: 4,
 //         },
 //       );
 //
-//       await testEngine.playCard(demonaScourgeOfTheWyvernClan);
+//       Await testEngine.playCard(demonaScourgeOfTheWyvernClan);
 //
-//       expect(testEngine.getZonesCardCount("player_one").hand).toBe(3);
-//       expect(testEngine.getZonesCardCount("player_two").hand).toBe(4);
+//       Expect(testEngine.getZonesCardCount("player_one").hand).toBe(3);
+//       Expect(testEngine.getZonesCardCount("player_two").hand).toBe(4);
 //     });
 //   });
 // });

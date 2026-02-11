@@ -20,20 +20,20 @@ describe("The Headless Horseman - Relentless Spirit", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { theHeadlessHorsemanRelentlessSpirit } from "@lorcanito/lorcana-engine/cards/010/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { theHeadlessHorsemanRelentlessSpirit } from "@lorcanito/lorcana-engine/cards/010/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("The Headless Horseman - Relentless Spirit", () => {
-//   it.skip("Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [theHeadlessHorsemanRelentlessSpirit],
+// Describe("The Headless Horseman - Relentless Spirit", () => {
+//   It.skip("Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [theHeadlessHorsemanRelentlessSpirit],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(
-//       theHeadlessHorsemanRelentlessSpirit,
+//     Const cardUnderTest = testEngine.getCardModel(
+//       TheHeadlessHorsemanRelentlessSpirit,
 //     );
-//     expect(cardUnderTest.hasBodyguard).toBe(true);
+//     Expect(cardUnderTest.hasBodyguard).toBe(true);
 //   });
 // });
 //

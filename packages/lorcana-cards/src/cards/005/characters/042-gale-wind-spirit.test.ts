@@ -3,64 +3,64 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { dragonFire } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
-// import { letItGo } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
-// import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { galeWindSpirit } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { dragonFire } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
+// Import { letItGo } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
+// Import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { galeWindSpirit } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Gale - Wind Spirit", () => {
-//   describe("**RECURRING GUST** When this character is banished, return this card to your hand.", () => {
-//     it("Does not trigger on spell removal", () => {
-//       const testStore = new TestStore({
-//         inkwell: dragonFire.cost,
-//         hand: [dragonFire],
-//         play: [galeWindSpirit],
+// Describe("Gale - Wind Spirit", () => {
+//   Describe("**RECURRING GUST** When this character is banished, return this card to your hand.", () => {
+//     It("Does not trigger on spell removal", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: dragonFire.cost,
+//         Hand: [dragonFire],
+//         Play: [galeWindSpirit],
 //       });
 //
-//       const cardUnderTest = testStore.getCard(galeWindSpirit);
-//       const banisher = testStore.getCard(dragonFire);
+//       Const cardUnderTest = testStore.getCard(galeWindSpirit);
+//       Const banisher = testStore.getCard(dragonFire);
 //
-//       banisher.playFromHand();
-//       testStore.resolveTopOfStack({ targets: [cardUnderTest] });
+//       Banisher.playFromHand();
+//       TestStore.resolveTopOfStack({ targets: [cardUnderTest] });
 //
-//       expect(cardUnderTest.zone).toEqual("hand");
+//       Expect(cardUnderTest.zone).toEqual("hand");
 //     });
 //
-//     it("Does not trigger on inkwell removal", () => {
-//       const testStore = new TestStore({
-//         inkwell: dragonFire.cost,
-//         hand: [letItGo],
-//         play: [galeWindSpirit],
+//     It("Does not trigger on inkwell removal", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: dragonFire.cost,
+//         Hand: [letItGo],
+//         Play: [galeWindSpirit],
 //       });
 //
-//       const cardUnderTest = testStore.getCard(galeWindSpirit);
-//       const banisher = testStore.getCard(letItGo);
+//       Const cardUnderTest = testStore.getCard(galeWindSpirit);
+//       Const banisher = testStore.getCard(letItGo);
 //
-//       banisher.playFromHand();
-//       testStore.resolveTopOfStack({ targets: [cardUnderTest] });
+//       Banisher.playFromHand();
+//       TestStore.resolveTopOfStack({ targets: [cardUnderTest] });
 //
-//       expect(cardUnderTest.zone).toEqual("inkwell");
+//       Expect(cardUnderTest.zone).toEqual("inkwell");
 //     });
 //
-//     it("Does triggers on removal", () => {
-//       const testStore = new TestStore(
+//     It("Does triggers on removal", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [goofyKnightForADay],
+//           Play: [goofyKnightForADay],
 //         },
 //         {
-//           play: [galeWindSpirit],
+//           Play: [galeWindSpirit],
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getCard(galeWindSpirit);
-//       cardUnderTest.updateCardMeta({ exerted: true });
-//       const banisher = testStore.getCard(goofyKnightForADay);
+//       Const cardUnderTest = testStore.getCard(galeWindSpirit);
+//       CardUnderTest.updateCardMeta({ exerted: true });
+//       Const banisher = testStore.getCard(goofyKnightForADay);
 //
-//       banisher.challenge(cardUnderTest);
+//       Banisher.challenge(cardUnderTest);
 //
-//       expect(cardUnderTest.zone).toEqual("hand");
+//       Expect(cardUnderTest.zone).toEqual("hand");
 //     });
 //   });
 // });

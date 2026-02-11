@@ -1,35 +1,14 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const cobraBubblesFormerCia: CharacterCard = {
-  id: "1r8",
-  cardType: "character",
-  name: "Cobra Bubbles",
-  version: "Former CIA",
-  fullName: "Cobra Bubbles - Former CIA",
-  inkType: ["steel"],
-  franchise: "Lilo and Stitch",
-  set: "006",
-  text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)\nTHINK ABOUT WHAT'S BEST 2 {I} – Draw a card, then choose and discard a card.",
-  cost: 5,
-  strength: 3,
-  willpower: 4,
-  lore: 2,
-  cardNumber: 188,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "e3e47e553b80da5e66909453f91e285f5af8e7bb",
-  },
   abilities: [
     {
       id: "1r8-1",
-      type: "keyword",
       keyword: "Bodyguard",
       text: "Bodyguard",
+      type: "keyword",
     },
     {
-      id: "1r8-2",
-      type: "action",
       effect: {
         type: "sequence",
         steps: [
@@ -46,8 +25,29 @@ export const cobraBubblesFormerCia: CharacterCard = {
           },
         ],
       },
+      id: "1r8-2",
       text: "THINK ABOUT WHAT'S BEST 2 {I} – Draw a card, then choose and discard a card.",
+      type: "action",
     },
   ],
+  cardNumber: 188,
+  cardType: "character",
   classifications: ["Dreamborn", "Ally"],
+  cost: 5,
+  externalIds: {
+    ravensburger: "e3e47e553b80da5e66909453f91e285f5af8e7bb",
+  },
+  franchise: "Lilo and Stitch",
+  fullName: "Cobra Bubbles - Former CIA",
+  id: "1r8",
+  inkType: ["steel"],
+  inkable: true,
+  lore: 2,
+  missingTests: true,
+  name: "Cobra Bubbles",
+  set: "006",
+  strength: 3,
+  text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)\nTHINK ABOUT WHAT'S BEST 2 {I} – Draw a card, then choose and discard a card.",
+  version: "Former CIA",
+  willpower: 4,
 };

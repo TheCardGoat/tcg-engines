@@ -3,167 +3,167 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { sisuEmpoweredSibling } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import {
-//   kronkUnlicensedInvestigator,
-//   mickeyMouseFoodFightDefender,
-//   royalGuardBovineProtector,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { sisuEmpoweredSibling } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import {
+//   KronkUnlicensedInvestigator,
+//   MickeyMouseFoodFightDefender,
+//   RoyalGuardBovineProtector,
 // } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { emeraldChromiconItem } from "@lorcanito/lorcana-engine/cards/005/items/items";
-// import {
-//   mickeyMouseGiantMouse,
-//   pullTheLever,
-//   wrongLeverAction,
+// Import { emeraldChromiconItem } from "@lorcanito/lorcana-engine/cards/005/items/items";
+// Import {
+//   MickeyMouseGiantMouse,
+//   PullTheLever,
+//   WrongLeverAction,
 // } from "@lorcanito/lorcana-engine/cards/008";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
-// import { mrSmeeBumblingMate } from "../../003/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { mrSmeeBumblingMate } from "../../003/characters/characters";
 //
-// describe("Emerald Chromicon", () => {
-//   describe("**EMERALD LIGHT** During opponents’ turns, whenever one of your characters is banished, you may return chosen character to their player’s hand.", () => {
-//     it("Opponent attacking", () => {
-//       const testStore = new TestStore(
+// Describe("Emerald Chromicon", () => {
+//   Describe("**EMERALD LIGHT** During opponents’ turns, whenever one of your characters is banished, you may return chosen character to their player’s hand.", () => {
+//     It("Opponent attacking", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [goofyKnightForADay],
+//           Play: [goofyKnightForADay],
 //         },
 //         {
-//           play: [emeraldChromiconItem, royalGuardBovineProtector],
+//           Play: [emeraldChromiconItem, royalGuardBovineProtector],
 //         },
 //       );
 //
-//       const attacker = testStore.getCard(goofyKnightForADay);
-//       const defender = testStore.getCard(royalGuardBovineProtector);
+//       Const attacker = testStore.getCard(goofyKnightForADay);
+//       Const defender = testStore.getCard(royalGuardBovineProtector);
 //
-//       defender.updateCardMeta({ exerted: true });
-//       attacker.challenge(defender);
+//       Defender.updateCardMeta({ exerted: true });
+//       Attacker.challenge(defender);
 //
-//       expect(testStore.stackLayers).toHaveLength(1);
+//       Expect(testStore.stackLayers).toHaveLength(1);
 //     });
 //
-//     it("You Attacking", () => {
-//       const testStore = new TestStore(
+//     It("You Attacking", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [emeraldChromiconItem, goofyKnightForADay],
+//           Play: [emeraldChromiconItem, goofyKnightForADay],
 //         },
 //         {
-//           play: [royalGuardBovineProtector],
+//           Play: [royalGuardBovineProtector],
 //         },
 //       );
 //
-//       const attacker = testStore.getCard(goofyKnightForADay);
-//       const defender = testStore.getCard(royalGuardBovineProtector);
+//       Const attacker = testStore.getCard(goofyKnightForADay);
+//       Const defender = testStore.getCard(royalGuardBovineProtector);
 //
-//       defender.updateCardMeta({ exerted: true });
-//       attacker.challenge(defender);
+//       Defender.updateCardMeta({ exerted: true });
+//       Attacker.challenge(defender);
 //
-//       expect(testStore.stackLayers).toHaveLength(0);
+//       Expect(testStore.stackLayers).toHaveLength(0);
 //     });
 //   });
 // });
 //
-// describe("Regression", () => {
-//   it("Should NOT trigger when returning to hand", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Regression", () => {
+//   It("Should NOT trigger when returning to hand", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: wrongLeverAction.cost,
-//         hand: [wrongLeverAction],
-//         play: [goofyKnightForADay],
+//         Inkwell: wrongLeverAction.cost,
+//         Hand: [wrongLeverAction],
+//         Play: [goofyKnightForADay],
 //       },
 //       {
-//         play: [mickeyMouseGiantMouse, emeraldChromiconItem],
+//         Play: [mickeyMouseGiantMouse, emeraldChromiconItem],
 //       },
 //     );
 //
-//     await testEngine.playCard(wrongLeverAction, { mode: "1" }, true);
-//     await testEngine.resolveTopOfStack({ targets: [mickeyMouseGiantMouse] });
+//     Await testEngine.playCard(wrongLeverAction, { mode: "1" }, true);
+//     Await testEngine.resolveTopOfStack({ targets: [mickeyMouseGiantMouse] });
 //
-//     expect(testEngine.getCardModel(mickeyMouseGiantMouse).zone).toBe("hand");
+//     Expect(testEngine.getCardModel(mickeyMouseGiantMouse).zone).toBe("hand");
 //
-//     expect(testEngine.stackLayers).toHaveLength(0);
+//     Expect(testEngine.stackLayers).toHaveLength(0);
 //   });
 //
-//   it("Should NOT trigger when card is put at the bottom", async () => {
-//     const testEngine = new TestEngine(
+//   It("Should NOT trigger when card is put at the bottom", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: wrongLeverAction.cost,
-//         discard: [pullTheLever],
-//         hand: [wrongLeverAction],
-//         play: [goofyKnightForADay],
+//         Inkwell: wrongLeverAction.cost,
+//         Discard: [pullTheLever],
+//         Hand: [wrongLeverAction],
+//         Play: [goofyKnightForADay],
 //       },
 //       {
-//         play: [mickeyMouseGiantMouse, emeraldChromiconItem],
+//         Play: [mickeyMouseGiantMouse, emeraldChromiconItem],
 //       },
 //     );
 //
-//     await testEngine.playCard(wrongLeverAction);
+//     Await testEngine.playCard(wrongLeverAction);
 //
-//     await testEngine.resolveTopOfStack({ mode: "2" }, true);
-//     await testEngine.resolveTopOfStack({ targets: [pullTheLever] }, true);
+//     Await testEngine.resolveTopOfStack({ mode: "2" }, true);
+//     Await testEngine.resolveTopOfStack({ targets: [pullTheLever] }, true);
 //
-//     expect(testEngine.getCardModel(pullTheLever).zone).toBe("deck");
-//     expect(testEngine.stackLayers).toHaveLength(1);
+//     Expect(testEngine.getCardModel(pullTheLever).zone).toBe("deck");
+//     Expect(testEngine.stackLayers).toHaveLength(1);
 //
-//     await testEngine.resolveTopOfStack({ targets: [mickeyMouseGiantMouse] });
-//     expect(testEngine.getCardModel(mickeyMouseGiantMouse).zone).toBe("deck");
+//     Await testEngine.resolveTopOfStack({ targets: [mickeyMouseGiantMouse] });
+//     Expect(testEngine.getCardModel(mickeyMouseGiantMouse).zone).toBe("deck");
 //
-//     expect(testEngine.stackLayers).toHaveLength(0);
+//     Expect(testEngine.stackLayers).toHaveLength(0);
 //   });
 //
-//   it("Mr Smee Interaction", async () => {
-//     const testEngine = new TestEngine(
+//   It("Mr Smee Interaction", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         play: [mrSmeeBumblingMate, emeraldChromiconItem],
+//         Play: [mrSmeeBumblingMate, emeraldChromiconItem],
 //       },
 //       {
-//         play: [emeraldChromiconItem],
+//         Play: [emeraldChromiconItem],
 //       },
 //     );
 //
-//     const smee = testEngine.getCardModel(mrSmeeBumblingMate);
-//     await testEngine.setCardDamage(mrSmeeBumblingMate, 2);
-//     expect(smee.damage).toBe(2);
+//     Const smee = testEngine.getCardModel(mrSmeeBumblingMate);
+//     Await testEngine.setCardDamage(mrSmeeBumblingMate, 2);
+//     Expect(smee.damage).toBe(2);
 //
-//     await testEngine.tapCard(mrSmeeBumblingMate);
-//     expect(smee.exerted).toBe(true);
+//     Await testEngine.tapCard(mrSmeeBumblingMate);
+//     Expect(smee.exerted).toBe(true);
 //
 //     // Mr Smee damage himself at the end of the turn, which causes him to be banished
 //     // This should NOT trigger the Emerald Chromicon ability, because it is not an opponent's turn
-//     await testEngine.passTurn();
+//     Await testEngine.passTurn();
 //
-//     expect(smee.zone).toBe("discard");
+//     Expect(smee.zone).toBe("discard");
 //   });
 //
-//   it("Adds three layers onto the stack when removed by Sisu", () => {
-//     const testStore = new TestStore(
+//   It("Adds three layers onto the stack when removed by Sisu", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: sisuEmpoweredSibling.cost,
-//         hand: [sisuEmpoweredSibling],
+//         Inkwell: sisuEmpoweredSibling.cost,
+//         Hand: [sisuEmpoweredSibling],
 //       },
 //       {
-//         play: [
-//           emeraldChromiconItem,
-//           royalGuardBovineProtector,
-//           mickeyMouseFoodFightDefender,
-//           kronkUnlicensedInvestigator,
+//         Play: [
+//           EmeraldChromiconItem,
+//           RoyalGuardBovineProtector,
+//           MickeyMouseFoodFightDefender,
+//           KronkUnlicensedInvestigator,
 //         ],
 //       },
 //     );
 //
-//     const removal = testStore.getCard(sisuEmpoweredSibling);
+//     Const removal = testStore.getCard(sisuEmpoweredSibling);
 //
-//     const firstTarget = testStore.getCard(royalGuardBovineProtector);
-//     const secondTarget = testStore.getCard(mickeyMouseFoodFightDefender);
-//     const thirdTarget = testStore.getCard(kronkUnlicensedInvestigator);
+//     Const firstTarget = testStore.getCard(royalGuardBovineProtector);
+//     Const secondTarget = testStore.getCard(mickeyMouseFoodFightDefender);
+//     Const thirdTarget = testStore.getCard(kronkUnlicensedInvestigator);
 //
-//     removal.playFromHand();
+//     Removal.playFromHand();
 //
-//     for (const card of [firstTarget, secondTarget, thirdTarget]) {
-//       expect(card.zone).toEqual("discard");
+//     For (const card of [firstTarget, secondTarget, thirdTarget]) {
+//       Expect(card.zone).toEqual("discard");
 //     }
 //
-//     expect(testStore.stackLayers).toHaveLength(3);
+//     Expect(testStore.stackLayers).toHaveLength(3);
 //   });
 // });
 //

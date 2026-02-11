@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { invitedToTheBallAction } from "@lorcanito/lorcana-engine/cards/005/actions/actions";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { invitedToTheBallAction } from "@lorcanito/lorcana-engine/cards/005/actions/actions";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Invited to the Ball - Action", () => {
-//   it.skip("Reveal the top 2 cards of your deck. Put revealed character cards into your hand. Put the rest on the bottom of your deck in any order.", () => {
-//     const testStore = new TestStore({
-//       inkwell: invitedToTheBallAction.cost,
-//       hand: [invitedToTheBallAction],
+// Describe("Invited to the Ball - Action", () => {
+//   It.skip("Reveal the top 2 cards of your deck. Put revealed character cards into your hand. Put the rest on the bottom of your deck in any order.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: invitedToTheBallAction.cost,
+//       Hand: [invitedToTheBallAction],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(invitedToTheBallAction);
+//     Const cardUnderTest = testStore.getCard(invitedToTheBallAction);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

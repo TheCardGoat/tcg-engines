@@ -4,7 +4,7 @@ import { arielOnHumanLegs } from "./001-ariel-on-human-legs";
 describe("Ariel - On Human Legs", () => {
   it("has VOICELESS restriction ability", () => {
     expect(arielOnHumanLegs.abilities).toHaveLength(1);
-    // biome-ignore lint/style/noNonNullAssertion: length check above guarantees existence
+    // Biome-ignore lint/style/noNonNullAssertion: length check above guarantees existence
     const ability = arielOnHumanLegs.abilities![0] as {
       type: string;
       name: string;

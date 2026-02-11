@@ -1,28 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const peteWrestlingChamp: CharacterCard = {
-  id: "pvv",
-  cardType: "character",
-  name: "Pete",
-  version: "Wrestling Champ",
-  fullName: "Pete - Wrestling Champ",
-  inkType: ["steel"],
-  set: "005",
-  text: "RE-PETE {E} - Reveal the top card of your deck. If it's a character card named Pete, you may play it for free.",
-  cost: 3,
-  strength: 1,
-  willpower: 3,
-  lore: 1,
-  cardNumber: 187,
-  inkable: false,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "5d4ac7161bfe7af9982b72789e53ee2a506ae7bf",
-  },
   abilities: [
     {
-      id: "pvv-1",
-      type: "action",
       effect: {
         type: "conditional",
         condition: {
@@ -35,8 +15,28 @@ export const peteWrestlingChamp: CharacterCard = {
           cost: "free",
         },
       },
+      id: "pvv-1",
       text: "RE-PETE {E} - Reveal the top card of your deck. If it's a character card named Pete, you may play it for free.",
+      type: "action",
     },
   ],
+  cardNumber: 187,
+  cardType: "character",
   classifications: ["Dreamborn", "Villain"],
+  cost: 3,
+  externalIds: {
+    ravensburger: "5d4ac7161bfe7af9982b72789e53ee2a506ae7bf",
+  },
+  fullName: "Pete - Wrestling Champ",
+  id: "pvv",
+  inkType: ["steel"],
+  inkable: false,
+  lore: 1,
+  missingTests: true,
+  name: "Pete",
+  set: "005",
+  strength: 1,
+  text: "RE-PETE {E} - Reveal the top card of your deck. If it's a character card named Pete, you may play it for free.",
+  version: "Wrestling Champ",
+  willpower: 3,
 };

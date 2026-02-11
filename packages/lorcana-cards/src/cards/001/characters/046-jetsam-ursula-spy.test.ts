@@ -3,49 +3,49 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   flotsamUrsulaSpy,
-//   jetsamUrsulaSpy,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   FlotsamUrsulaSpy,
+//   JetsamUrsulaSpy,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Jetsam - Ursula's Spy", () => {
-//   it("Evasive", () => {
-//     const testStore = new TestStore({
-//       play: [jetsamUrsulaSpy],
+// Describe("Jetsam - Ursula's Spy", () => {
+//   It("Evasive", () => {
+//     Const testStore = new TestStore({
+//       Play: [jetsamUrsulaSpy],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("play", jetsamUrsulaSpy.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("play", jetsamUrsulaSpy.id);
 //
-//     expect(cardUnderTest.hasEvasive).toEqual(true);
+//     Expect(cardUnderTest.hasEvasive).toEqual(true);
 //   });
 //
-//   describe("**SINISTER SLITHER** Your characters named Flotsam gain **Evasive.**", () => {
-//     it("Jetsam in play", () => {
-//       const testStore = new TestStore({
-//         play: [jetsamUrsulaSpy, flotsamUrsulaSpy],
+//   Describe("**SINISTER SLITHER** Your characters named Flotsam gain **Evasive.**", () => {
+//     It("Jetsam in play", () => {
+//       Const testStore = new TestStore({
+//         Play: [jetsamUrsulaSpy, flotsamUrsulaSpy],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         flotsamUrsulaSpy.id,
+//         FlotsamUrsulaSpy.id,
 //       );
 //
-//       expect(cardUnderTest.hasEvasive).toEqual(true);
+//       Expect(cardUnderTest.hasEvasive).toEqual(true);
 //     });
 //
-//     it("Jetsam NOT in play", () => {
-//       const testStore = new TestStore({
-//         play: [flotsamUrsulaSpy],
+//     It("Jetsam NOT in play", () => {
+//       Const testStore = new TestStore({
+//         Play: [flotsamUrsulaSpy],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         flotsamUrsulaSpy.id,
+//         FlotsamUrsulaSpy.id,
 //       );
 //
-//       expect(cardUnderTest.hasEvasive).toEqual(false);
+//       Expect(cardUnderTest.hasEvasive).toEqual(false);
 //     });
 //   });
 // });

@@ -21,9 +21,7 @@ interface ValidationError {
 /**
  * Validation result - success with data or failure with errors
  */
-export type ValidationResult<T> =
-  | { success: true; data: T }
-  | { success: false; errors: string[] };
+export type ValidationResult<T> = { success: true; data: T } | { success: false; errors: string[] };
 
 /**
  * Validator function type
@@ -97,6 +95,7 @@ export class ValidatorBuilder<T extends Record<string, unknown>> {
   required<K extends keyof T>(field: K, message: string): this {
     this.rules.push({
       field,
+      message,
       rule: (value: unknown) => {
         if (typeof value === "string") {
           return value.trim().length > 0;
@@ -106,7 +105,6 @@ export class ValidatorBuilder<T extends Record<string, unknown>> {
         }
         return value !== null && value !== undefined;
       },
-      message,
     });
     return this;
   }
@@ -126,8 +124,8 @@ export class ValidatorBuilder<T extends Record<string, unknown>> {
   ): this {
     this.rules.push({
       field,
-      rule: (value: unknown) => typeof value === expectedType,
       message,
+      rule: (value: unknown) => typeof value === expectedType,
     });
     return this;
   }
@@ -143,6 +141,7 @@ export class ValidatorBuilder<T extends Record<string, unknown>> {
   min<K extends keyof T>(field: K, minValue: number, message: string): this {
     this.rules.push({
       field,
+      message,
       rule: (value: unknown) => {
         if (typeof value === "number") {
           return value >= minValue;
@@ -152,7 +151,6 @@ export class ValidatorBuilder<T extends Record<string, unknown>> {
         }
         return false;
       },
-      message,
     });
     return this;
   }
@@ -168,6 +166,7 @@ export class ValidatorBuilder<T extends Record<string, unknown>> {
   max<K extends keyof T>(field: K, maxValue: number, message: string): this {
     this.rules.push({
       field,
+      message,
       rule: (value: unknown) => {
         if (typeof value === "number") {
           return value <= maxValue;
@@ -177,7 +176,6 @@ export class ValidatorBuilder<T extends Record<string, unknown>> {
         }
         return false;
       },
-      message,
     });
     return this;
   }
@@ -190,15 +188,11 @@ export class ValidatorBuilder<T extends Record<string, unknown>> {
    * @param message - Error message if validation fails
    * @returns This builder instance for chaining
    */
-  custom<K extends keyof T>(
-    field: K,
-    rule: (value: T[K]) => boolean,
-    message: string,
-  ): this {
+  custom<K extends keyof T>(field: K, rule: (value: T[K]) => boolean, message: string): this {
     this.rules.push({
       field,
-      rule: rule as ValidationRule<unknown>,
       message,
+      rule: rule as ValidationRule<unknown>,
     });
     return this;
   }
@@ -210,7 +204,7 @@ export class ValidatorBuilder<T extends Record<string, unknown>> {
    */
   build(): Validator<T> {
     const rules = [...this.rules];
-    const abortEarly = this.options.abortEarly;
+    const {abortEarly} = this.options;
 
     return {
       validate: (data: T): ValidationResult<T> => {
@@ -225,8 +219,8 @@ export class ValidatorBuilder<T extends Record<string, unknown>> {
 
             if (abortEarly) {
               return {
-                success: false,
                 errors,
+                success: false,
               };
             }
           }
@@ -234,14 +228,14 @@ export class ValidatorBuilder<T extends Record<string, unknown>> {
 
         if (errors.length > 0) {
           return {
-            success: false,
             errors,
+            success: false,
           };
         }
 
         return {
-          success: true,
           data,
+          success: true,
         };
       },
     };

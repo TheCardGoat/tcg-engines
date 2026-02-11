@@ -3,32 +3,32 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   camiloMadrigalAtTheCenterOfAttention,
-//   theSultanRoyalApparition,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   CamiloMadrigalAtTheCenterOfAttention,
+//   TheSultanRoyalApparition,
 // } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Camilo Madrigal - At the Center of Attention", () => {
-//   it("BIS! BIS! When this character is banished in a challenge, return this card to your hand.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Camilo Madrigal - At the Center of Attention", () => {
+//   It("BIS! BIS! When this character is banished in a challenge, return this card to your hand.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         play: [camiloMadrigalAtTheCenterOfAttention],
+//         Play: [camiloMadrigalAtTheCenterOfAttention],
 //       },
 //       {
-//         play: [theSultanRoyalApparition],
+//         Play: [theSultanRoyalApparition],
 //       },
 //     );
 //
-//     await testEngine.challenge({
-//       attacker: camiloMadrigalAtTheCenterOfAttention,
-//       defender: theSultanRoyalApparition,
-//       exertDefender: true,
+//     Await testEngine.challenge({
+//       Attacker: camiloMadrigalAtTheCenterOfAttention,
+//       Defender: theSultanRoyalApparition,
+//       ExertDefender: true,
 //     });
 //
-//     expect(
-//       testEngine.getCardModel(camiloMadrigalAtTheCenterOfAttention).zone,
+//     Expect(
+//       TestEngine.getCardModel(camiloMadrigalAtTheCenterOfAttention).zone,
 //     ).toEqual("hand");
 //   });
 // });

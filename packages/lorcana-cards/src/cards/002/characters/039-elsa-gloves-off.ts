@@ -1,30 +1,30 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { challengerAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { challengerAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
 //
-// export const elsaGlovesOff: LorcanitoCharacterCard = {
-//   id: "dmk",
-//   reprints: ["b83"],
-//   name: "Elsa",
-//   title: "Gloves Off",
-//   characteristics: ["hero", "queen", "sorcerer", "storyborn"],
-//   text: "**Challenger** +3 _(While challenging, this character gets +3 {S})_",
-//   type: "character",
-//   abilities: [challengerAbility(3)],
-//   flavour:
+// Export const elsaGlovesOff: LorcanitoCharacterCard = {
+//   Id: "dmk",
+//   Reprints: ["b83"],
+//   Name: "Elsa",
+//   Title: "Gloves Off",
+//   Characteristics: ["hero", "queen", "sorcerer", "storyborn"],
+//   Text: "**Challenger** +3 _(While challenging, this character gets +3 {S})_",
+//   Type: "character",
+//   Abilities: [challengerAbility(3)],
+//   Flavour:
 //     "The power of ice may not stop the flood, but it will help protect Lorcana.",
-//   inkwell: true,
-//   colors: ["amethyst"],
-//   cost: 4,
-//   strength: 3,
-//   willpower: 4,
-//   lore: 1,
-//   illustrator: "Cristian Romero",
-//   number: 39,
-//   set: "ROF",
-//   externalIds: {
-//     tcgPlayer: 618771,
+//   Inkwell: true,
+//   Colors: ["amethyst"],
+//   Cost: 4,
+//   Strength: 3,
+//   Willpower: 4,
+//   Lore: 1,
+//   Illustrator: "Cristian Romero",
+//   Number: 39,
+//   Set: "ROF",
+//   ExternalIds: {
+//     TcgPlayer: 618771,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

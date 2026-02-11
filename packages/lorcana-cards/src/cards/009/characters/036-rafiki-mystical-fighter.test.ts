@@ -3,31 +3,31 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { rafikiMysticalFighter } from "@lorcanito/lorcana-engine/cards/009/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { rafikiMysticalFighter } from "@lorcanito/lorcana-engine/cards/009/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Rafiki - Mystical Fighter", () => {
-//   it.skip("**Challenger** +3 _(While challenging, this character gets +3 {S}.)_", async () => {
-//     const testEngine = new TestEngine({
-//       play: [rafikiMysticalFighter],
+// Describe("Rafiki - Mystical Fighter", () => {
+//   It.skip("**Challenger** +3 _(While challenging, this character gets +3 {S}.)_", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [rafikiMysticalFighter],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(rafikiMysticalFighter);
-//     expect(cardUnderTest.hasChallenger).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(rafikiMysticalFighter);
+//     Expect(cardUnderTest.hasChallenger).toBe(true);
 //   });
 //
-//   it.skip("**ANCIENT SKILLS** Whenever he challenges a Hyena character, this character takes no damage from the challenge.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: rafikiMysticalFighter.cost,
-//       play: [rafikiMysticalFighter],
-//       hand: [rafikiMysticalFighter],
+//   It.skip("**ANCIENT SKILLS** Whenever he challenges a Hyena character, this character takes no damage from the challenge.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: rafikiMysticalFighter.cost,
+//       Play: [rafikiMysticalFighter],
+//       Hand: [rafikiMysticalFighter],
 //     });
 //
-//     await testEngine.playCard(rafikiMysticalFighter);
+//     Await testEngine.playCard(rafikiMysticalFighter);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

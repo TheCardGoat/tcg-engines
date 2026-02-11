@@ -1,33 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const minnieMouseAmethystChampion: CharacterCard = {
-  id: "1kv",
-  cardType: "character",
-  name: "Minnie Mouse",
-  version: "Amethyst Champion",
-  fullName: "Minnie Mouse - Amethyst Champion",
-  inkType: ["amethyst"],
-  set: "010",
-  text: "MYSTICAL BALANCE Whenever one of your other Amethyst characters is banished in a challenge, you may draw a card.",
-  cost: 4,
-  strength: 2,
-  willpower: 3,
-  lore: 2,
-  cardNumber: 35,
-  inkable: true,
-  externalIds: {
-    ravensburger: "ccf42c36e04eff8e85e6c695ec9ed7ae661666f7",
-  },
   abilities: [
     {
-      id: "1kv-1",
-      type: "triggered",
-      name: "MYSTICAL BALANCE",
-      trigger: {
-        event: "banish",
-        timing: "whenever",
-        on: "YOUR_OTHER_CHARACTERS",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -37,8 +12,33 @@ export const minnieMouseAmethystChampion: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "1kv-1",
+      name: "MYSTICAL BALANCE",
       text: "MYSTICAL BALANCE Whenever one of your other Amethyst characters is banished in a challenge, you may draw a card.",
+      trigger: {
+        event: "banish",
+        timing: "whenever",
+        on: "YOUR_OTHER_CHARACTERS",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 35,
+  cardType: "character",
   classifications: ["Dreamborn", "Hero"],
+  cost: 4,
+  externalIds: {
+    ravensburger: "ccf42c36e04eff8e85e6c695ec9ed7ae661666f7",
+  },
+  fullName: "Minnie Mouse - Amethyst Champion",
+  id: "1kv",
+  inkType: ["amethyst"],
+  inkable: true,
+  lore: 2,
+  name: "Minnie Mouse",
+  set: "010",
+  strength: 2,
+  text: "MYSTICAL BALANCE Whenever one of your other Amethyst characters is banished in a challenge, you may draw a card.",
+  version: "Amethyst Champion",
+  willpower: 3,
 };

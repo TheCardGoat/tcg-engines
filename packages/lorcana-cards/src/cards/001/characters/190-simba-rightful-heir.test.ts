@@ -5,9 +5,9 @@ import { simbaRightfulHeir } from "./190-simba-rightful-heir";
 describe("Simba - Rightful Heir", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [simbaRightfulHeir] });
-  //   expect(testEngine.getCardModel(simbaRightfulHeir).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [simbaRightfulHeir] });
+  //   Expect(testEngine.getCardModel(simbaRightfulHeir).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,36 +17,36 @@ describe("Simba - Rightful Heir", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   heiheiBoatSnack,
-//   simbaRightfulHeir,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   HeiheiBoatSnack,
+//   SimbaRightfulHeir,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Simba - Rightful Heir", () => {
-//   it("**I KNOW WHAT I HAVE TO DO** During your turn, whenever this character banishes another character in a challenge, you gain 1 lore.", () => {
-//     const testStore = new TestStore(
+// Describe("Simba - Rightful Heir", () => {
+//   It("**I KNOW WHAT I HAVE TO DO** During your turn, whenever this character banishes another character in a challenge, you gain 1 lore.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         play: [simbaRightfulHeir],
+//         Play: [simbaRightfulHeir],
 //       },
 //       {
-//         play: [heiheiBoatSnack],
+//         Play: [heiheiBoatSnack],
 //       },
 //     );
 //
-//     const attacker = testStore.getByZoneAndId("play", simbaRightfulHeir.id);
-//     const defender = testStore.getByZoneAndId(
+//     Const attacker = testStore.getByZoneAndId("play", simbaRightfulHeir.id);
+//     Const defender = testStore.getByZoneAndId(
 //       "play",
-//       heiheiBoatSnack.id,
+//       HeiheiBoatSnack.id,
 //       "player_two",
 //     );
 //
-//     defender.updateCardMeta({ exerted: true });
+//     Defender.updateCardMeta({ exerted: true });
 //
-//     expect(testStore.store.tableStore.getTable("player_one").lore).toEqual(0);
-//     attacker.challenge(defender);
-//     expect(testStore.store.tableStore.getTable("player_one").lore).toEqual(1);
+//     Expect(testStore.store.tableStore.getTable("player_one").lore).toEqual(0);
+//     Attacker.challenge(defender);
+//     Expect(testStore.store.tableStore.getTable("player_one").lore).toEqual(1);
 //   });
 // });
 //

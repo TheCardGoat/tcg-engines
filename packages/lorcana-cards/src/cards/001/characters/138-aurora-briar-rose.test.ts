@@ -5,9 +5,9 @@ import { auroraBriarRose } from "./138-aurora-briar-rose";
 describe("Aurora - Briar Rose", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [auroraBriarRose] });
-  //   expect(testEngine.getCardModel(auroraBriarRose).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [auroraBriarRose] });
+  //   Expect(testEngine.getCardModel(auroraBriarRose).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -16,28 +16,28 @@ describe("Aurora - Briar Rose", () => {
 // /**
 //  * @jest-environment node
 //  */
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   auroraBriarRose,
-//   mickeyMouseTrueFriend,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   AuroraBriarRose,
+//   MickeyMouseTrueFriend,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Aurora Briar Rose!", () => {
-//   it("DISARMING BEAUTY effect - Chosen characters gets -2 {S} this turn.", () => {
-//     const testStore = new TestStore({
-//       inkwell: auroraBriarRose.cost,
-//       hand: [auroraBriarRose],
-//       play: [mickeyMouseTrueFriend],
+// Describe("Aurora Briar Rose!", () => {
+//   It("DISARMING BEAUTY effect - Chosen characters gets -2 {S} this turn.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: auroraBriarRose.cost,
+//       Hand: [auroraBriarRose],
+//       Play: [mickeyMouseTrueFriend],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", auroraBriarRose.id);
-//     const target = testStore.getByZoneAndId("play", mickeyMouseTrueFriend.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", auroraBriarRose.id);
+//     Const target = testStore.getByZoneAndId("play", mickeyMouseTrueFriend.id);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveTopOfStack({ targetId: target.instanceId });
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveTopOfStack({ targetId: target.instanceId });
 //
-//     expect(target.strength).toEqual((target.lorcanitoCard.strength || 0) - 2);
+//     Expect(target.strength).toEqual((target.lorcanitoCard.strength || 0) - 2);
 //   });
 // });
 //

@@ -18,9 +18,7 @@ describe("Keyword: Accelerate", () => {
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
-        expect.objectContaining(
-          Abilities.accelerate(Costs.energyAndPower(1, "fury")),
-        ),
+        expect.objectContaining(Abilities.accelerate(Costs.energyAndPower(1, "fury"))),
       );
     });
 
@@ -33,13 +31,11 @@ describe("Keyword: Accelerate", () => {
       expect(result.abilities).toHaveLength(3);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "keyword",
           keyword: "Accelerate",
+          type: "keyword",
         }),
       );
-      expect(result.abilities?.[1]).toEqual(
-        expect.objectContaining(Abilities.assault(2)),
-      );
+      expect(result.abilities?.[1]).toEqual(expect.objectContaining(Abilities.assault(2)));
     });
 
     it.skip("should parse '[Accelerate][Weaponmaster]'", () => {
@@ -49,9 +45,7 @@ describe("Keyword: Accelerate", () => {
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(2);
-      expect(result.abilities?.[1]).toEqual(
-        expect.objectContaining(Abilities.weaponmaster()),
-      );
+      expect(result.abilities?.[1]).toEqual(expect.objectContaining(Abilities.weaponmaster()));
     });
   });
 
@@ -64,9 +58,7 @@ describe("Keyword: Accelerate", () => {
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(2);
       expect(result.abilities?.[0]).toEqual(
-        expect.objectContaining(
-          Abilities.accelerate(Costs.energyAndPower(1, "body")),
-        ),
+        expect.objectContaining(Abilities.accelerate(Costs.energyAndPower(1, "body"))),
       );
     });
 
@@ -98,9 +90,7 @@ describe("Keyword: Accelerate", () => {
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(2);
       expect(result.abilities?.[0]).toEqual(
-        expect.objectContaining(
-          Abilities.accelerate(Costs.energyAndPower(1, "calm")),
-        ),
+        expect.objectContaining(Abilities.accelerate(Costs.energyAndPower(1, "calm"))),
       );
     });
   });
@@ -114,9 +104,7 @@ describe("Keyword: Accelerate", () => {
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(2);
       expect(result.abilities?.[0]).toEqual(
-        expect.objectContaining(
-          Abilities.accelerate(Costs.energyAndPower(1, "chaos")),
-        ),
+        expect.objectContaining(Abilities.accelerate(Costs.energyAndPower(1, "chaos"))),
       );
     });
 
@@ -139,9 +127,7 @@ describe("Keyword: Accelerate", () => {
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(2);
       expect(result.abilities?.[0]).toEqual(
-        expect.objectContaining(
-          Abilities.accelerate(Costs.energyAndPower(1, "mind")),
-        ),
+        expect.objectContaining(Abilities.accelerate(Costs.energyAndPower(1, "mind"))),
       );
     });
 
@@ -173,9 +159,7 @@ describe("Keyword: Accelerate", () => {
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(2);
       expect(result.abilities?.[0]).toEqual(
-        expect.objectContaining(
-          Abilities.accelerate(Costs.energyAndPower(1, "order")),
-        ),
+        expect.objectContaining(Abilities.accelerate(Costs.energyAndPower(1, "order"))),
       );
     });
 

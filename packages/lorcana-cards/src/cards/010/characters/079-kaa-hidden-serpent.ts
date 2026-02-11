@@ -1,27 +1,27 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { evasiveAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { evasiveAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
 //
-// export const kaaHiddenSerpent: LorcanitoCharacterCard = {
-//   id: "vlw",
-//   name: "Kaa",
-//   title: "Secretive Snake",
-//   characteristics: ["storyborn", "villain"],
-//   text: "Evasive (Only characters with Evasive can challenge this character.)",
-//   type: "character",
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 7,
-//   strength: 6,
-//   willpower: 7,
-//   illustrator: "Mariana Moreno",
-//   number: 79,
-//   set: "010",
-//   externalIds: {
-//     tcgPlayer: 660192,
+// Export const kaaHiddenSerpent: LorcanitoCharacterCard = {
+//   Id: "vlw",
+//   Name: "Kaa",
+//   Title: "Secretive Snake",
+//   Characteristics: ["storyborn", "villain"],
+//   Text: "Evasive (Only characters with Evasive can challenge this character.)",
+//   Type: "character",
+//   Inkwell: true,
+//   Colors: ["emerald"],
+//   Cost: 7,
+//   Strength: 6,
+//   Willpower: 7,
+//   Illustrator: "Mariana Moreno",
+//   Number: 79,
+//   Set: "010",
+//   ExternalIds: {
+//     TcgPlayer: 660192,
 //   },
-//   rarity: "uncommon",
-//   abilities: [evasiveAbility],
-//   lore: 3,
+//   Rarity: "uncommon",
+//   Abilities: [evasiveAbility],
+//   Lore: 3,
 // };
 //

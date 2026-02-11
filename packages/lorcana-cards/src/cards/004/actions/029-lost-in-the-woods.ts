@@ -1,40 +1,40 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { allOpposingCharacters } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+// Import { allOpposingCharacters } from "@lorcanito/lorcana-engine/abilities/targets";
 //
-// export const lostInTheWoods: LorcanitoActionCard = {
-//   id: "p0f",
-//   reprints: ["vre"],
-//   name: "Lost in the Woods",
-//   characteristics: ["action", "song"],
-//   text: "_(A character with cost 4 or more can {E} to sing this song for free.)_\n\n\nAll opposing characters get -2 {S} until the start of your next turn.",
-//   type: "action",
-//   abilities: [
+// Export const lostInTheWoods: LorcanitoActionCard = {
+//   Id: "p0f",
+//   Reprints: ["vre"],
+//   Name: "Lost in the Woods",
+//   Characteristics: ["action", "song"],
+//   Text: "_(A character with cost 4 or more can {E} to sing this song for free.)_\n\n\nAll opposing characters get -2 {S} until the start of your next turn.",
+//   Type: "action",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       effects: [
+//       Type: "resolution",
+//       Effects: [
 //         {
-//           type: "attribute",
-//           attribute: "strength",
-//           amount: 2,
-//           modifier: "subtract",
-//           duration: "next_turn",
-//           until: true,
-//           target: allOpposingCharacters,
+//           Type: "attribute",
+//           Attribute: "strength",
+//           Amount: 2,
+//           Modifier: "subtract",
+//           Duration: "next_turn",
+//           Until: true,
+//           Target: allOpposingCharacters,
 //         },
 //       ],
 //     },
 //   ],
-//   flavour: "I'm left behind, wondering if I should follow",
-//   inkwell: true,
-//   colors: ["amber"],
-//   cost: 4,
-//   illustrator: "Ellie Horie",
-//   number: 29,
-//   set: "URR",
-//   externalIds: {
-//     tcgPlayer: 547770,
+//   Flavour: "I'm left behind, wondering if I should follow",
+//   Inkwell: true,
+//   Colors: ["amber"],
+//   Cost: 4,
+//   Illustrator: "Ellie Horie",
+//   Number: 29,
+//   Set: "URR",
+//   ExternalIds: {
+//     TcgPlayer: 547770,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

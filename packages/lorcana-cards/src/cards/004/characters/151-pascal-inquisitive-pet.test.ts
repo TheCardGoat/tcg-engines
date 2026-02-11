@@ -3,24 +3,24 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { pascalInquisitivePet } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { pascalInquisitivePet } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Pascal - Inquisitive Pet", () => {
-//   it.skip("**COLORFUL TACTICS** When you play this character, look at the top 3 cards of your deck and put them back in any order.", () => {
-//     const testStore = new TestStore({
-//       inkwell: pascalInquisitivePet.cost,
-//       hand: [pascalInquisitivePet],
+// Describe("Pascal - Inquisitive Pet", () => {
+//   It.skip("**COLORFUL TACTICS** When you play this character, look at the top 3 cards of your deck and put them back in any order.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: pascalInquisitivePet.cost,
+//       Hand: [pascalInquisitivePet],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "hand",
-//       pascalInquisitivePet.id,
+//       PascalInquisitivePet.id,
 //     );
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

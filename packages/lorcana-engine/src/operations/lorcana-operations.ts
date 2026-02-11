@@ -18,7 +18,7 @@ import type { LorcanaCardMeta, LorcanaGameState } from "../types";
  * Extension of MoveContext with Lorcana-specific operations.
  * This type can be used in move reducers for cleaner code.
  */
-export type LorcanaOperations = {
+export interface LorcanaOperations {
   /**
    * Exert a card (turn sideways)
    *
@@ -48,11 +48,7 @@ export type LorcanaOperations = {
    * @param amount - Amount of lore to add
    * @returns New lore total
    */
-  addLore(
-    draft: Draft<LorcanaGameState>,
-    playerId: PlayerId,
-    amount: number,
-  ): number;
+  addLore(draft: Draft<LorcanaGameState>, playerId: PlayerId, amount: number): number;
 
   /**
    * Get lore total for a player
@@ -158,7 +154,7 @@ export type LorcanaOperations = {
    * @returns Location ID, or undefined if not at a location
    */
   getLocation(characterId: CardId): CardId | undefined;
-};
+}
 
 /**
  * Create Lorcana operations from a MoveContext
@@ -181,39 +177,6 @@ export function createLorcanaOperations<TParams>(
   context: MoveContext<TParams, LorcanaCardMeta>,
 ): LorcanaOperations {
   return {
-    exertCard(cardId: CardId): void {
-      context.cards.updateCardMeta(cardId, { state: "exerted" });
-    },
-
-    readyCard(cardId: CardId): void {
-      context.cards.updateCardMeta(cardId, { state: "ready" });
-    },
-
-    addLore(
-      draft: Draft<LorcanaGameState>,
-      playerId: PlayerId,
-      amount: number,
-    ): number {
-      const current = draft.external.loreScores[playerId] ?? 0;
-      const newTotal = current + amount;
-      draft.external.loreScores[playerId] = newTotal;
-
-      // Check win condition (Rule 1.9.1.1)
-      if (newTotal >= 20 && context.endGame) {
-        context.endGame({
-          winner: playerId,
-          reason: "lore_victory",
-          metadata: { finalLore: newTotal },
-        });
-      }
-
-      return newTotal;
-    },
-
-    getLore(state: LorcanaGameState, playerId: PlayerId): number {
-      return state.external.loreScores[playerId] ?? 0;
-    },
-
     addDamage(cardId: CardId, amount: number): number {
       const current = context.cards.getCardMeta(cardId)?.damage ?? 0;
       const newDamage = current + amount;
@@ -221,24 +184,42 @@ export function createLorcanaOperations<TParams>(
       return newDamage;
     },
 
+    addLore(draft: Draft<LorcanaGameState>, playerId: PlayerId, amount: number): number {
+      const current = draft.external.loreScores[playerId] ?? 0;
+      const newTotal = current + amount;
+      draft.external.loreScores[playerId] = newTotal;
+
+      // Check win condition (Rule 1.9.1.1)
+      if (newTotal >= 20 && context.endGame) {
+        context.endGame({
+          metadata: { finalLore: newTotal },
+          reason: "lore_victory",
+          winner: playerId,
+        });
+      }
+
+      return newTotal;
+    },
+
+    exertCard(cardId: CardId): void {
+      context.cards.updateCardMeta(cardId, { state: "exerted" });
+    },
+
+    getCardType(cardId: CardId): string | undefined {
+      const card = context.registry?.getCard(cardId);
+      return card?.type;
+    },
+
     getDamage(cardId: CardId): number {
       return context.cards.getCardMeta(cardId)?.damage ?? 0;
     },
 
-    removeDamage(cardId: CardId, amount?: number): number {
-      const current = context.cards.getCardMeta(cardId)?.damage ?? 0;
-      const newDamage =
-        amount === undefined ? 0 : Math.max(0, current - amount);
-      context.cards.updateCardMeta(cardId, { damage: newDamage });
-      return newDamage;
+    getLocation(characterId: CardId): CardId | undefined {
+      return context.cards.getCardMeta(characterId)?.atLocationId;
     },
 
-    markAsDrying(cardId: CardId): void {
-      context.cards.updateCardMeta(cardId, { isDrying: true });
-    },
-
-    markAsDry(cardId: CardId): void {
-      context.cards.updateCardMeta(cardId, { isDrying: false });
+    getLore(state: LorcanaGameState, playerId: PlayerId): number {
+      return state.external.loreScores[playerId] ?? 0;
     },
 
     isDrying(cardId: CardId): boolean {
@@ -249,21 +230,31 @@ export function createLorcanaOperations<TParams>(
       return context.cards.getCardMeta(cardId)?.state === "exerted";
     },
 
-    getCardType(cardId: CardId): string | undefined {
-      const card = context.registry?.getCard(cardId);
-      return card?.type;
+    leaveLocation(characterId: CardId): void {
+      context.cards.updateCardMeta(characterId, { atLocationId: undefined });
+    },
+
+    markAsDry(cardId: CardId): void {
+      context.cards.updateCardMeta(cardId, { isDrying: false });
+    },
+
+    markAsDrying(cardId: CardId): void {
+      context.cards.updateCardMeta(cardId, { isDrying: true });
     },
 
     moveToLocation(characterId: CardId, locationId: CardId): void {
       context.cards.updateCardMeta(characterId, { atLocationId: locationId });
     },
 
-    leaveLocation(characterId: CardId): void {
-      context.cards.updateCardMeta(characterId, { atLocationId: undefined });
+    readyCard(cardId: CardId): void {
+      context.cards.updateCardMeta(cardId, { state: "ready" });
     },
 
-    getLocation(characterId: CardId): CardId | undefined {
-      return context.cards.getCardMeta(characterId)?.atLocationId;
+    removeDamage(cardId: CardId, amount?: number): number {
+      const current = context.cards.getCardMeta(cardId)?.damage ?? 0;
+      const newDamage = amount === undefined ? 0 : Math.max(0, current - amount);
+      context.cards.updateCardMeta(cardId, { damage: newDamage });
+      return newDamage;
     },
   };
 }

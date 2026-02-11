@@ -3,131 +3,131 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   annaDiplomaticQueen,
-//   edLaughingHyena,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   AnnaDiplomaticQueen,
+//   EdLaughingHyena,
 // } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Anna - Diplomatic Queen", () => {
-//   describe("**ROYAL RESOLUTION** When you play this character you may pay 2 {I} to chose one:* Each opponent choses and discards a card.* Chosen character gets +2 {S} this turn. * Banish chosen damaged character.", () => {
-//     it("you MUST pay 2 {I} to chose one", () => {
-//       const testStore = new TestStore(
+// Describe("Anna - Diplomatic Queen", () => {
+//   Describe("**ROYAL RESOLUTION** When you play this character you may pay 2 {I} to chose one:* Each opponent choses and discards a card.* Chosen character gets +2 {S} this turn. * Banish chosen damaged character.", () => {
+//     It("you MUST pay 2 {I} to chose one", () => {
+//       Const testStore = new TestStore(
 //         {
-//           inkwell: annaDiplomaticQueen.cost,
-//           hand: [annaDiplomaticQueen],
+//           Inkwell: annaDiplomaticQueen.cost,
+//           Hand: [annaDiplomaticQueen],
 //         },
 //         {
-//           hand: [edLaughingHyena],
-//           deck: 1,
+//           Hand: [edLaughingHyena],
+//           Deck: 1,
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getCard(annaDiplomaticQueen);
-//       const target = testStore.getCard(edLaughingHyena);
+//       Const cardUnderTest = testStore.getCard(annaDiplomaticQueen);
+//       Const target = testStore.getCard(edLaughingHyena);
 //
-//       cardUnderTest.playFromHand();
-//       testStore.resolveOptionalAbility();
-//       testStore.resolveTopOfStack({ mode: "1" }, true);
+//       CardUnderTest.playFromHand();
+//       TestStore.resolveOptionalAbility();
+//       TestStore.resolveTopOfStack({ mode: "1" }, true);
 //
-//       expect(testStore.stackLayers).toHaveLength(0);
+//       Expect(testStore.stackLayers).toHaveLength(0);
 //     });
 //
-//     it("Each opponent chooses and discards a card.", async () => {
-//       const testEngine = new TestEngine(
+//     It("Each opponent chooses and discards a card.", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: annaDiplomaticQueen.cost + 2,
-//           hand: [annaDiplomaticQueen],
+//           Inkwell: annaDiplomaticQueen.cost + 2,
+//           Hand: [annaDiplomaticQueen],
 //         },
 //         {
-//           hand: [edLaughingHyena],
-//           deck: 1,
+//           Hand: [edLaughingHyena],
+//           Deck: 1,
 //         },
 //       );
 //
-//       const target = testEngine.getCardModel(edLaughingHyena);
+//       Const target = testEngine.getCardModel(edLaughingHyena);
 //
-//       await testEngine.playCard(annaDiplomaticQueen);
-//       await testEngine.resolveOptionalAbility();
-//       await testEngine.resolveTopOfStack({ mode: "1" }, true);
+//       Await testEngine.playCard(annaDiplomaticQueen);
+//       Await testEngine.resolveOptionalAbility();
+//       Await testEngine.resolveTopOfStack({ mode: "1" }, true);
 //
-//       expect(testEngine.store.priorityPlayer).toEqual("player_two");
-//       testEngine.changeActivePlayer("player_two");
-//       await testEngine.resolveTopOfStack({ targets: [target] });
+//       Expect(testEngine.store.priorityPlayer).toEqual("player_two");
+//       TestEngine.changeActivePlayer("player_two");
+//       Await testEngine.resolveTopOfStack({ targets: [target] });
 //
-//       expect(target.zone).toBe("discard");
+//       Expect(target.zone).toBe("discard");
 //     });
 //
-//     it("Chosen character gets +2 {S} this turn.", () => {
-//       const testStore = new TestStore(
+//     It("Chosen character gets +2 {S} this turn.", () => {
+//       Const testStore = new TestStore(
 //         {
-//           inkwell: annaDiplomaticQueen.cost + 2,
-//           hand: [annaDiplomaticQueen],
-//           play: [edLaughingHyena],
+//           Inkwell: annaDiplomaticQueen.cost + 2,
+//           Hand: [annaDiplomaticQueen],
+//           Play: [edLaughingHyena],
 //         },
 //         {
-//           deck: 1,
+//           Deck: 1,
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getCard(annaDiplomaticQueen);
-//       const target = testStore.getCard(edLaughingHyena);
+//       Const cardUnderTest = testStore.getCard(annaDiplomaticQueen);
+//       Const target = testStore.getCard(edLaughingHyena);
 //
-//       cardUnderTest.playFromHand();
-//       testStore.resolveOptionalAbility();
-//       testStore.resolveTopOfStack({ mode: "2" }, true);
-//       testStore.resolveTopOfStack({ targets: [target] });
+//       CardUnderTest.playFromHand();
+//       TestStore.resolveOptionalAbility();
+//       TestStore.resolveTopOfStack({ mode: "2" }, true);
+//       TestStore.resolveTopOfStack({ targets: [target] });
 //
-//       expect(target.strength).toBe(edLaughingHyena.strength + 2);
+//       Expect(target.strength).toBe(edLaughingHyena.strength + 2);
 //
-//       testStore.passTurn();
+//       TestStore.passTurn();
 //
-//       expect(target.strength).toBe(edLaughingHyena.strength);
+//       Expect(target.strength).toBe(edLaughingHyena.strength);
 //     });
 //
-//     it("Banish chosen damaged character.", () => {
-//       const testStore = new TestStore(
+//     It("Banish chosen damaged character.", () => {
+//       Const testStore = new TestStore(
 //         {
-//           inkwell: annaDiplomaticQueen.cost + 2,
-//           hand: [annaDiplomaticQueen],
-//           play: [edLaughingHyena],
+//           Inkwell: annaDiplomaticQueen.cost + 2,
+//           Hand: [annaDiplomaticQueen],
+//           Play: [edLaughingHyena],
 //         },
 //         {
-//           deck: 1,
+//           Deck: 1,
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getCard(annaDiplomaticQueen);
-//       const target = testStore.getCard(edLaughingHyena);
-//       target.updateCardMeta({ damage: 1 });
+//       Const cardUnderTest = testStore.getCard(annaDiplomaticQueen);
+//       Const target = testStore.getCard(edLaughingHyena);
+//       Target.updateCardMeta({ damage: 1 });
 //
-//       cardUnderTest.playFromHand();
-//       testStore.resolveOptionalAbility();
-//       testStore.resolveTopOfStack({ mode: "3" }, true);
-//       testStore.resolveTopOfStack({ targets: [target] });
+//       CardUnderTest.playFromHand();
+//       TestStore.resolveOptionalAbility();
+//       TestStore.resolveTopOfStack({ mode: "3" }, true);
+//       TestStore.resolveTopOfStack({ targets: [target] });
 //
-//       expect(target.zone).toBe("discard");
+//       Expect(target.zone).toBe("discard");
 //     });
 //   });
 // });
 //
-// describe("Regression", () => {
-//   it("should not crash when playing a card with no cost", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: annaDiplomaticQueen.cost + 2,
-//       hand: [annaDiplomaticQueen],
-//       play: [edLaughingHyena],
+// Describe("Regression", () => {
+//   It("should not crash when playing a card with no cost", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: annaDiplomaticQueen.cost + 2,
+//       Hand: [annaDiplomaticQueen],
+//       Play: [edLaughingHyena],
 //     });
 //
-//     const cardUnderTest = await testEngine.playCard(annaDiplomaticQueen);
-//     await testEngine.acceptOptionalLayer();
-//     await testEngine.resolveTopOfStack({ mode: "2" }, true);
-//     await testEngine.resolveTopOfStack({ targets: [edLaughingHyena] });
+//     Const cardUnderTest = await testEngine.playCard(annaDiplomaticQueen);
+//     Await testEngine.acceptOptionalLayer();
+//     Await testEngine.resolveTopOfStack({ mode: "2" }, true);
+//     Await testEngine.resolveTopOfStack({ targets: [edLaughingHyena] });
 //
-//     expect(testEngine.getCardModel(edLaughingHyena).strength).toBe(
-//       edLaughingHyena.strength + 2,
+//     Expect(testEngine.getCardModel(edLaughingHyena).strength).toBe(
+//       EdLaughingHyena.strength + 2,
 //     );
 //   });
 // });

@@ -1,27 +1,27 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { challengerAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { challengerAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
 //
-// export const druunRavenousPlague: LorcanitoCharacterCard = {
-//   id: "bk0",
-//   name: "Druun",
-//   title: "Ravenous Plague",
-//   characteristics: ["storyborn", "villain"],
-//   text: "Challenger +4 (While challenging, this character gets +4 {S}.)",
-//   type: "character",
-//   abilities: [challengerAbility(4)],
-//   inkwell: true,
-//   colors: ["amethyst"],
-//   cost: 4,
-//   strength: 1,
-//   willpower: 5,
-//   illustrator: "Alex Accorsi",
-//   number: 46,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 632708,
+// Export const druunRavenousPlague: LorcanitoCharacterCard = {
+//   Id: "bk0",
+//   Name: "Druun",
+//   Title: "Ravenous Plague",
+//   Characteristics: ["storyborn", "villain"],
+//   Text: "Challenger +4 (While challenging, this character gets +4 {S}.)",
+//   Type: "character",
+//   Abilities: [challengerAbility(4)],
+//   Inkwell: true,
+//   Colors: ["amethyst"],
+//   Cost: 4,
+//   Strength: 1,
+//   Willpower: 5,
+//   Illustrator: "Alex Accorsi",
+//   Number: 46,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 632708,
 //   },
-//   rarity: "uncommon",
-//   lore: 1,
+//   Rarity: "uncommon",
+//   Lore: 1,
 // };
 //

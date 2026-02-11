@@ -3,35 +3,35 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { standOut } from "@lorcanito/lorcana-engine/cards/009/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { standOut } from "@lorcanito/lorcana-engine/cards/009/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Stand Out", () => {
-//   it.skip("(A character with cost 3 or more can {E} to sing this song for free.)", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: standOut.cost,
-//       play: [standOut],
-//       hand: [standOut],
+// Describe("Stand Out", () => {
+//   It.skip("(A character with cost 3 or more can {E} to sing this song for free.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: standOut.cost,
+//       Play: [standOut],
+//       Hand: [standOut],
 //     });
 //
-//     await testEngine.playCard(standOut);
+//     Await testEngine.playCard(standOut);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 //
-//   it.skip("Chosen character gets +3 {S} and gains Evasive until the start of your next turn. (Only characters with Evasive can challenge them.)", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: standOut.cost,
-//       play: [standOut],
-//       hand: [standOut],
+//   It.skip("Chosen character gets +3 {S} and gains Evasive until the start of your next turn. (Only characters with Evasive can challenge them.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: standOut.cost,
+//       Play: [standOut],
+//       Hand: [standOut],
 //     });
 //
-//     await testEngine.playCard(standOut);
+//     Await testEngine.playCard(standOut);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

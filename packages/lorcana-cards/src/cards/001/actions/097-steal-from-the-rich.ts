@@ -1,92 +1,92 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
 export const stealFromTheRich: ActionCard = {
-  id: "ncz",
-  cardType: "action",
-  name: "Steal from the Rich",
-  inkType: ["emerald"],
-  franchise: "Robin Hood",
-  set: "001",
-  text: "Whenever one of your characters quests this turn, each opponent loses 1 lore.",
-  cost: 5,
-  cardNumber: 97,
-  inkable: false,
-  externalIds: {
-    ravensburger: "54317280fda3eec0bfe9a09946029a6334cadaf3",
-  },
   abilities: [
     {
-      id: "ncz-1",
-      text: "Whenever one of your characters quests this turn, each opponent loses 1 lore.",
-      type: "triggered",
-      trigger: {
-        event: "banish",
-        timing: "whenever",
-        on: "YOUR_OTHER_CHARACTERS",
-      },
       effect: {
         type: "lose-lore",
         amount: 1,
         target: "EACH_OPPONENT",
       },
+      id: "ncz-1",
+      text: "Whenever one of your characters quests this turn, each opponent loses 1 lore.",
+      trigger: {
+        event: "banish",
+        timing: "whenever",
+        on: "YOUR_OTHER_CHARACTERS",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 97,
+  cardType: "action",
+  cost: 5,
+  externalIds: {
+    ravensburger: "54317280fda3eec0bfe9a09946029a6334cadaf3",
+  },
+  franchise: "Robin Hood",
+  id: "ncz",
+  inkType: ["emerald"],
+  inkable: false,
+  name: "Steal from the Rich",
+  set: "001",
+  text: "Whenever one of your characters quests this turn, each opponent loses 1 lore.",
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { Trigger } from "@lorcanito/lorcana-engine";
-// import type { FloatingTriggeredAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-// import type { LoreEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+// Import type { Trigger } from "@lorcanito/lorcana-engine";
+// Import type { FloatingTriggeredAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { LoreEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
 //
-// export const stealFromRich: LorcanitoActionCard = {
-//   id: "wje",
-//   name: "Steal from the Rich",
-//   characteristics: ["action"],
-//   text: "Whenever one of your characters quests this turn, each opponent loses 1 lore.",
-//   type: "action",
-//   abilities: [
+// Export const stealFromRich: LorcanitoActionCard = {
+//   Id: "wje",
+//   Name: "Steal from the Rich",
+//   Characteristics: ["action"],
+//   Text: "Whenever one of your characters quests this turn, each opponent loses 1 lore.",
+//   Type: "action",
+//   Abilities: [
 //     {
-//       type: "floating-triggered",
-//       duration: "turn",
-//       trigger: {
-//         on: "quest",
-//         target: {
-//           type: "card",
-//           value: "all",
-//           filters: [
+//       Type: "floating-triggered",
+//       Duration: "turn",
+//       Trigger: {
+//         On: "quest",
+//         Target: {
+//           Type: "card",
+//           Value: "all",
+//           Filters: [
 //             { filter: "owner", value: "self" },
 //             { filter: "zone", value: "play" },
 //             { filter: "type", value: "character" },
 //           ],
 //         },
 //       } as Trigger,
-//       layer: {
-//         type: "resolution",
-//         effects: [
+//       Layer: {
+//         Type: "resolution",
+//         Effects: [
 //           {
-//             type: "lore",
-//             amount: 1,
-//             modifier: "subtract",
-//             target: {
-//               type: "player",
-//               value: "opponent",
+//             Type: "lore",
+//             Amount: 1,
+//             Modifier: "subtract",
+//             Target: {
+//               Type: "player",
+//               Value: "opponent",
 //             },
 //           } as LoreEffect,
 //         ],
 //       },
 //     } as FloatingTriggeredAbility,
 //   ],
-//   flavour:
+//   Flavour:
 //     "Wonder how much ol' Prince John spent on all those fancy locks. \n−Little John",
-//   colors: ["emerald"],
-//   cost: 5,
-//   illustrator: "Hedvig Häggman-Sund",
-//   number: 97,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 508773,
+//   Colors: ["emerald"],
+//   Cost: 5,
+//   Illustrator: "Hedvig Häggman-Sund",
+//   Number: 97,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 508773,
 //   },
-//   rarity: "rare",
+//   Rarity: "rare",
 // };
 //

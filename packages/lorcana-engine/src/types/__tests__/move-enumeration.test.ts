@@ -2,27 +2,27 @@ import { describe, expect, it } from "bun:test";
 import type { PlayerId } from "@tcg/core";
 import type {
   AvailableMoveInfo,
-  MoveParameterOptions,
   MoveParamSchema,
+  MoveParameterOptions,
   MoveValidationError,
-  ParameterInfo,
   ParamFieldSchema,
+  ParameterInfo,
 } from "../move-enumeration";
 
 describe("Move Enumeration Types", () => {
   describe("Type Compilation", () => {
     it("should compile AvailableMoveInfo type", () => {
       const moveInfo: AvailableMoveInfo = {
-        moveId: "chooseWhoGoesFirstMove",
-        displayName: "Choose First Player",
         description: "Select which player goes first",
+        displayName: "Choose First Player",
         icon: "dice",
+        moveId: "chooseWhoGoesFirstMove",
         paramSchema: {
           required: [
             {
+              description: "Player to go first",
               name: "playerId",
               type: "playerId",
-              description: "Player to go first",
             },
           ],
         },
@@ -34,9 +34,9 @@ describe("Move Enumeration Types", () => {
 
     it("should compile AvailableMoveInfo without optional fields", () => {
       const moveInfo: AvailableMoveInfo = {
-        moveId: "passTurn",
-        displayName: "Pass Turn",
         description: "End your turn",
+        displayName: "Pass Turn",
+        moveId: "passTurn",
       };
 
       expect(moveInfo.moveId).toBe("passTurn");
@@ -46,9 +46,9 @@ describe("Move Enumeration Types", () => {
 
     it("should compile ParamFieldSchema type", () => {
       const fieldSchema: ParamFieldSchema = {
+        description: "Card to play",
         name: "cardId",
         type: "cardId",
-        description: "Card to play",
         validValues: ["card1", "card2"],
       };
 
@@ -58,10 +58,10 @@ describe("Move Enumeration Types", () => {
 
     it("should compile ParamFieldSchema with enum values", () => {
       const fieldSchema: ParamFieldSchema = {
-        name: "choice",
-        type: "string",
         description: "Choice to make",
         enumValues: ["option1", "option2"],
+        name: "choice",
+        type: "string",
       };
 
       expect(fieldSchema.enumValues).toEqual(["option1", "option2"]);
@@ -69,18 +69,18 @@ describe("Move Enumeration Types", () => {
 
     it("should compile MoveParamSchema type", () => {
       const schema: MoveParamSchema = {
-        required: [
-          {
-            name: "playerId",
-            type: "playerId",
-            description: "Target player",
-          },
-        ],
         optional: [
           {
+            description: "Optional target",
             name: "targetId",
             type: "cardId",
-            description: "Optional target",
+          },
+        ],
+        required: [
+          {
+            description: "Target player",
+            name: "playerId",
+            type: "playerId",
           },
         ],
       };
@@ -91,17 +91,17 @@ describe("Move Enumeration Types", () => {
 
     it("should compile MoveParameterOptions type", () => {
       const options: MoveParameterOptions = {
+        parameterInfo: {
+          playerId: {
+            description: "Player to choose",
+            type: "playerId",
+            validValues: ["player_one", "player_two"],
+          },
+        },
         validCombinations: [
           { playerId: "player_one" as PlayerId },
           { playerId: "player_two" as PlayerId },
         ],
-        parameterInfo: {
-          playerId: {
-            type: "playerId",
-            description: "Player to choose",
-            validValues: ["player_one", "player_two"],
-          },
-        },
       };
 
       expect(options.validCombinations).toHaveLength(2);
@@ -110,11 +110,11 @@ describe("Move Enumeration Types", () => {
 
     it("should compile ParameterInfo type", () => {
       const info: ParameterInfo = {
-        type: "number",
         description: "Number of cards to draw",
-        validValues: [1, 2, 3],
-        min: 1,
         max: 7,
+        min: 1,
+        type: "number",
+        validValues: [1, 2, 3],
       };
 
       expect(info.type).toBe("number");
@@ -124,13 +124,13 @@ describe("Move Enumeration Types", () => {
 
     it("should compile MoveValidationError type", () => {
       const error: MoveValidationError = {
-        moveId: "playCard",
-        errorCode: "INSUFFICIENT_INK",
-        reason: "Not enough ink to play this card",
         context: {
-          required: 5,
           available: 3,
+          required: 5,
         },
+        errorCode: "INSUFFICIENT_INK",
+        moveId: "playCard",
+        reason: "Not enough ink to play this card",
         suggestions: ["Add more cards to your inkwell"],
       };
 
@@ -140,8 +140,8 @@ describe("Move Enumeration Types", () => {
 
     it("should compile MoveValidationError without optional fields", () => {
       const error: MoveValidationError = {
-        moveId: "quest",
         errorCode: "INVALID_TARGET",
+        moveId: "quest",
         reason: "Character is exhausted",
       };
 
@@ -153,18 +153,16 @@ describe("Move Enumeration Types", () => {
   describe("Type Safety", () => {
     it("should enforce valid parameter types", () => {
       const paramInfo: ParameterInfo = {
-        type: "cardId",
         description: "Card ID",
+        type: "cardId",
       };
 
       // Type should be one of the allowed values
-      expect(["cardId", "playerId", "number", "boolean", "object"]).toContain(
-        paramInfo.type,
-      );
+      expect(["cardId", "playerId", "number", "boolean", "object"]).toContain(paramInfo.type);
     });
 
     it("should allow all valid ParamFieldSchema types", () => {
-      const types: Array<ParamFieldSchema["type"]> = [
+      const types: ParamFieldSchema["type"][] = [
         "cardId",
         "playerId",
         "number",

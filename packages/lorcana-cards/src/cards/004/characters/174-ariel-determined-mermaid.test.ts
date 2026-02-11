@@ -3,34 +3,34 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { youHaveForgottenMe } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
-// import {
-//   aWholeNewWorld,
-//   grabYourSword,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { youHaveForgottenMe } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
+// Import {
+//   AWholeNewWorld,
+//   GrabYourSword,
 // } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
-// import { arielDeterminedMermaid } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { arielDeterminedMermaid } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Ariel - Determined Mermaid", () => {
-//   it("**I WANT MORE** Whenever you play a song, you may draw a card, then choose and discard a card.", () => {
-//     const testStore = new TestStore({
-//       inkwell: grabYourSword.cost,
-//       play: [arielDeterminedMermaid],
-//       hand: [grabYourSword, aWholeNewWorld, youHaveForgottenMe],
-//       deck: [aWholeNewWorld],
+// Describe("Ariel - Determined Mermaid", () => {
+//   It("**I WANT MORE** Whenever you play a song, you may draw a card, then choose and discard a card.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: grabYourSword.cost,
+//       Play: [arielDeterminedMermaid],
+//       Hand: [grabYourSword, aWholeNewWorld, youHaveForgottenMe],
+//       Deck: [aWholeNewWorld],
 //     });
 //
-//     const song = testStore.getCard(grabYourSword);
-//     const cardToDiscard = testStore.getCard(youHaveForgottenMe);
+//     Const song = testStore.getCard(grabYourSword);
+//     Const cardToDiscard = testStore.getCard(youHaveForgottenMe);
 //
-//     song.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({ targets: [cardToDiscard] });
+//     Song.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({ targets: [cardToDiscard] });
 //
-//     expect(testStore.getZonesCardCount().hand).toEqual(2);
-//     expect(testStore.getZonesCardCount().discard).toEqual(2);
-//     expect(cardToDiscard.zone).toEqual("discard");
+//     Expect(testStore.getZonesCardCount().hand).toEqual(2);
+//     Expect(testStore.getZonesCardCount().discard).toEqual(2);
+//     Expect(cardToDiscard.zone).toEqual("discard");
 //   });
 // });
 //

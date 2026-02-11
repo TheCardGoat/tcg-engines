@@ -3,37 +3,37 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { doloresMadrigalEasyListener } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { marianoGuzmanSeductivePretender } from "@lorcanito/lorcana-engine/cards/007/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { doloresMadrigalEasyListener } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { marianoGuzmanSeductivePretender } from "@lorcanito/lorcana-engine/cards/007/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Mariano Guzmán - Seductive Pretender", () => {
-//   it("I SEE YOU As long as you have a Dolores Madrigal character in play, this character gets +1 {L}.", async () => {
-//     const testEngine = new TestEngine({
-//       play: [marianoGuzmanSeductivePretender, doloresMadrigalEasyListener],
+// Describe("Mariano Guzmán - Seductive Pretender", () => {
+//   It("I SEE YOU As long as you have a Dolores Madrigal character in play, this character gets +1 {L}.", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [marianoGuzmanSeductivePretender, doloresMadrigalEasyListener],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(
-//       marianoGuzmanSeductivePretender,
+//     Const cardUnderTest = testEngine.getCardModel(
+//       MarianoGuzmanSeductivePretender,
 //     );
-//     expect(testEngine.getPlayerLore()).toBe(0);
-//     cardUnderTest.quest();
-//     expect(testEngine.getPlayerLore()).toBe(2);
+//     Expect(testEngine.getPlayerLore()).toBe(0);
+//     CardUnderTest.quest();
+//     Expect(testEngine.getPlayerLore()).toBe(2);
 //   });
 //
-//   it("Ensure only 1 lore is gained when Dolores Madrigal is not in play.", async () => {
-//     const testEngine = new TestEngine({
-//       play: [marianoGuzmanSeductivePretender],
-//       hand: [doloresMadrigalEasyListener],
+//   It("Ensure only 1 lore is gained when Dolores Madrigal is not in play.", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [marianoGuzmanSeductivePretender],
+//       Hand: [doloresMadrigalEasyListener],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(
-//       marianoGuzmanSeductivePretender,
+//     Const cardUnderTest = testEngine.getCardModel(
+//       MarianoGuzmanSeductivePretender,
 //     );
-//     expect(testEngine.getPlayerLore()).toBe(0);
-//     cardUnderTest.quest();
-//     expect(testEngine.getPlayerLore()).toBe(1);
+//     Expect(testEngine.getPlayerLore()).toBe(0);
+//     CardUnderTest.quest();
+//     Expect(testEngine.getPlayerLore()).toBe(1);
 //   });
 // });
 //

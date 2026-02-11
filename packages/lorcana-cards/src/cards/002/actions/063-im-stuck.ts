@@ -1,32 +1,32 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-// import { exertedCharCantReadyNextTurn } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import { exertedCharCantReadyNextTurn } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const imStuck: LorcanitoActionCard = {
-//   id: "t6t",
-//   reprints: ["sai"],
+// Export const imStuck: LorcanitoActionCard = {
+//   Id: "t6t",
+//   Reprints: ["sai"],
 //
-//   name: "I'm Stuck!",
-//   characteristics: ["action"],
-//   text: "Chosen exerted character can't ready at the start of their next turn.",
-//   type: "action",
-//   abilities: [
+//   Name: "I'm Stuck!",
+//   Characteristics: ["action"],
+//   Text: "Chosen exerted character can't ready at the start of their next turn.",
+//   Type: "action",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       text: "Chosen exerted character can't ready at the start of their next turn.",
-//       effects: [exertedCharCantReadyNextTurn],
+//       Type: "resolution",
+//       Text: "Chosen exerted character can't ready at the start of their next turn.",
+//       Effects: [exertedCharCantReadyNextTurn],
 //     },
 //   ],
-//   flavour: "Oh, bother−not again.",
-//   inkwell: true,
-//   colors: ["amethyst"],
-//   cost: 1,
-//   illustrator: "Rob Di Salve",
-//   number: 63,
-//   set: "ROF",
-//   externalIds: {
-//     tcgPlayer: 517032,
+//   Flavour: "Oh, bother−not again.",
+//   Inkwell: true,
+//   Colors: ["amethyst"],
+//   Cost: 1,
+//   Illustrator: "Rob Di Salve",
+//   Number: 63,
+//   Set: "ROF",
+//   ExternalIds: {
+//     TcgPlayer: 517032,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

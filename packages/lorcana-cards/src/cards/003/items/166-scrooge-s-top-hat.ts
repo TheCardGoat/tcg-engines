@@ -1,59 +1,59 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
-// import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/target";
-// import {
-//   youPayXLessToPlayNextActionThisTurn,
-//   youPayXLessToPlayNextItemThisTurn,
-//   youPayXLessToPlayNextLocationThisTurn,
+// Import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
+// Import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/target";
+// Import {
+//   YouPayXLessToPlayNextActionThisTurn,
+//   YouPayXLessToPlayNextItemThisTurn,
+//   YouPayXLessToPlayNextLocationThisTurn,
 // } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const scroogesTopHat: LorcanitoItemCard = {
-//   id: "jzq",
-//   missingTestCase: true,
-//   name: "Scrooge's Top Hat",
-//   characteristics: ["item"],
-//   text: "**BUSINESS EXPERTISE** {E} – Choose one: You pay 1 {I} less to play your next action this turn. You pay 1 {I} less to play your next item this turn. You pay 1 {I} less to play your next location this turn.",
-//   type: "item",
-//   abilities: [
+// Export const scroogesTopHat: LorcanitoItemCard = {
+//   Id: "jzq",
+//   MissingTestCase: true,
+//   Name: "Scrooge's Top Hat",
+//   Characteristics: ["item"],
+//   Text: "**BUSINESS EXPERTISE** {E} – Choose one: You pay 1 {I} less to play your next action this turn. You pay 1 {I} less to play your next item this turn. You pay 1 {I} less to play your next location this turn.",
+//   Type: "item",
+//   Abilities: [
 //     {
-//       type: "activated",
-//       name: "PENNY PINCHER",
-//       text: "{E} – Choose one: You pay 1 {I} less to play your next action this turn. You pay 1 {I} less to play your next item this turn. You pay 1 {I} less to play your next location this turn.",
-//       costs: [{ type: "exert" }],
-//       effects: [
+//       Type: "activated",
+//       Name: "PENNY PINCHER",
+//       Text: "{E} – Choose one: You pay 1 {I} less to play your next action this turn. You pay 1 {I} less to play your next item this turn. You pay 1 {I} less to play your next location this turn.",
+//       Costs: [{ type: "exert" }],
+//       Effects: [
 //         {
-//           type: "modal",
-//           target: chosenCharacter,
-//           modes: [
+//           Type: "modal",
+//           Target: chosenCharacter,
+//           Modes: [
 //             {
-//               id: "1",
-//               text: "You pay 1 {I} less to play your next action this turn.",
-//               effects: [youPayXLessToPlayNextActionThisTurn(1)],
+//               Id: "1",
+//               Text: "You pay 1 {I} less to play your next action this turn.",
+//               Effects: [youPayXLessToPlayNextActionThisTurn(1)],
 //             },
 //             {
-//               id: "2",
-//               text: "You pay 1 {I} less to play your next item this turn.",
-//               effects: [youPayXLessToPlayNextItemThisTurn(1)],
+//               Id: "2",
+//               Text: "You pay 1 {I} less to play your next item this turn.",
+//               Effects: [youPayXLessToPlayNextItemThisTurn(1)],
 //             },
 //             {
-//               id: "3",
-//               text: "You pay 1 {I} less to play your next location this turn.",
-//               effects: [youPayXLessToPlayNextLocationThisTurn(1)],
+//               Id: "3",
+//               Text: "You pay 1 {I} less to play your next location this turn.",
+//               Effects: [youPayXLessToPlayNextLocationThisTurn(1)],
 //             },
 //           ],
 //         },
 //       ],
 //     },
 //   ],
-//   flavour: "Just the thing to top off another brilliant deal.",
-//   colors: ["sapphire"],
-//   cost: 2,
-//   illustrator: "Gabriel Angelo",
-//   number: 166,
-//   set: "ITI",
-//   externalIds: {
-//     tcgPlayer: 537623,
+//   Flavour: "Just the thing to top off another brilliant deal.",
+//   Colors: ["sapphire"],
+//   Cost: 2,
+//   Illustrator: "Gabriel Angelo",
+//   Number: 166,
+//   Set: "ITI",
+//   ExternalIds: {
+//     TcgPlayer: 537623,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

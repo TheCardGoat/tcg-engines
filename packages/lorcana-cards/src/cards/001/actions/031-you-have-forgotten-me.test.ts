@@ -3,93 +3,93 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { youHaveForgottenMe } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
-// import {
-//   aladdinHeroicOutlaw,
-//   heiheiBoatSnack,
-//   magicBroomBucketBrigade,
-//   mickeyMouseTrueFriend,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { youHaveForgottenMe } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
+// Import {
+//   AladdinHeroicOutlaw,
+//   HeiheiBoatSnack,
+//   MagicBroomBucketBrigade,
+//   MickeyMouseTrueFriend,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("You Have Forgotten Me", () => {
-//   it("discard 2 cards", () => {
-//     const testStore = new TestStore(
+// Describe("You Have Forgotten Me", () => {
+//   It("discard 2 cards", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: youHaveForgottenMe.cost,
-//         hand: [youHaveForgottenMe],
+//         Inkwell: youHaveForgottenMe.cost,
+//         Hand: [youHaveForgottenMe],
 //       },
 //       {
-//         hand: [
-//           magicBroomBucketBrigade,
-//           aladdinHeroicOutlaw,
-//           heiheiBoatSnack,
-//           mickeyMouseTrueFriend,
+//         Hand: [
+//           MagicBroomBucketBrigade,
+//           AladdinHeroicOutlaw,
+//           HeiheiBoatSnack,
+//           MickeyMouseTrueFriend,
 //         ],
 //       },
 //     );
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "hand",
-//       youHaveForgottenMe.id,
+//       YouHaveForgottenMe.id,
 //     );
 //
-//     const cardToDiscard1 = testStore.getByZoneAndId(
+//     Const cardToDiscard1 = testStore.getByZoneAndId(
 //       "hand",
-//       heiheiBoatSnack.id,
+//       HeiheiBoatSnack.id,
 //       "player_two",
 //     );
-//     const cardToDiscard2 = testStore.getByZoneAndId(
+//     Const cardToDiscard2 = testStore.getByZoneAndId(
 //       "hand",
-//       mickeyMouseTrueFriend.id,
+//       MickeyMouseTrueFriend.id,
 //       "player_two",
 //     );
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     testStore.changePlayer("player_two");
-//     testStore.resolveTopOfStack({
-//       targets: [cardToDiscard1, cardToDiscard2],
+//     TestStore.changePlayer("player_two");
+//     TestStore.resolveTopOfStack({
+//       Targets: [cardToDiscard1, cardToDiscard2],
 //     });
 //
-//     expect(cardToDiscard1.zone).toEqual("discard");
-//     expect(cardToDiscard2.zone).toEqual("discard");
+//     Expect(cardToDiscard1.zone).toEqual("discard");
+//     Expect(cardToDiscard2.zone).toEqual("discard");
 //
-//     expect(testStore.getZonesCardCount("player_one")).toEqual(
-//       expect.objectContaining({ hand: 0, discard: 1 }),
+//     Expect(testStore.getZonesCardCount("player_one")).toEqual(
+//       Expect.objectContaining({ hand: 0, discard: 1 }),
 //     );
-//     expect(testStore.getZonesCardCount("player_two")).toEqual(
-//       expect.objectContaining({ hand: 2, deck: 0, discard: 2 }),
+//     Expect(testStore.getZonesCardCount("player_two")).toEqual(
+//       Expect.objectContaining({ hand: 2, deck: 0, discard: 2 }),
 //     );
 //   });
 //
-//   it("passed priority to opponent", () => {
-//     const testStore = new TestStore(
+//   It("passed priority to opponent", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: youHaveForgottenMe.cost,
-//         hand: [youHaveForgottenMe],
+//         Inkwell: youHaveForgottenMe.cost,
+//         Hand: [youHaveForgottenMe],
 //       },
 //       {
-//         hand: [
-//           magicBroomBucketBrigade,
-//           aladdinHeroicOutlaw,
-//           heiheiBoatSnack,
-//           mickeyMouseTrueFriend,
+//         Hand: [
+//           MagicBroomBucketBrigade,
+//           AladdinHeroicOutlaw,
+//           HeiheiBoatSnack,
+//           MickeyMouseTrueFriend,
 //         ],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "hand",
-//       youHaveForgottenMe.id,
+//       YouHaveForgottenMe.id,
 //     );
 //
-//     cardUnderTest.playFromHand();
-//     expect(testStore.store.stackLayerStore.layers).toHaveLength(1);
-//     expect(testStore.store.stackLayerStore.layers[0]?.responder).toEqual(
+//     CardUnderTest.playFromHand();
+//     Expect(testStore.store.stackLayerStore.layers).toHaveLength(1);
+//     Expect(testStore.store.stackLayerStore.layers[0]?.responder).toEqual(
 //       "player_two",
 //     );
-//     expect(testStore.store.priorityPlayer).toEqual("player_two");
+//     Expect(testStore.store.priorityPlayer).toEqual("player_two");
 //   });
 // });
 //

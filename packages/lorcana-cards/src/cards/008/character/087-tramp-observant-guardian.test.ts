@@ -3,36 +3,36 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   deweyLovableShowoff,
-//   trampObservantGuardian,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   DeweyLovableShowoff,
+//   TrampObservantGuardian,
 // } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Tramp - Observant Guardian", () => {
-//   it("HOW DO I GET IN? When you play this character, chosen character gains Ward until the start of your next turn. (Opponents can't choose them except to challenge.)", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: trampObservantGuardian.cost,
-//       hand: [trampObservantGuardian],
-//       play: [deweyLovableShowoff],
+// Describe("Tramp - Observant Guardian", () => {
+//   It("HOW DO I GET IN? When you play this character, chosen character gains Ward until the start of your next turn. (Opponents can't choose them except to challenge.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: trampObservantGuardian.cost,
+//       Hand: [trampObservantGuardian],
+//       Play: [deweyLovableShowoff],
 //     });
 //
-//     const target = testEngine.getCardModel(deweyLovableShowoff);
+//     Const target = testEngine.getCardModel(deweyLovableShowoff);
 //
-//     await testEngine.playCard(trampObservantGuardian);
+//     Await testEngine.playCard(trampObservantGuardian);
 //     // await testEngine.acceptOptionalLayer();
-//     await testEngine.resolveTopOfStack({ targets: [target] });
+//     Await testEngine.resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.hasWard).toBe(true);
+//     Expect(target.hasWard).toBe(true);
 //
-//     testEngine.passTurn();
+//     TestEngine.passTurn();
 //
-//     expect(target.hasWard).toBe(true);
+//     Expect(target.hasWard).toBe(true);
 //
-//     testEngine.passTurn();
+//     TestEngine.passTurn();
 //
-//     expect(target.hasWard).toBe(false);
+//     Expect(target.hasWard).toBe(false);
 //   });
 // });
 //

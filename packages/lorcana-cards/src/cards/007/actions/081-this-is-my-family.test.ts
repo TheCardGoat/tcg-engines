@@ -3,35 +3,35 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { thisIsMyFamily } from "@lorcanito/lorcana-engine/cards/007/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { thisIsMyFamily } from "@lorcanito/lorcana-engine/cards/007/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("This Is My Family", () => {
-//   it.skip("(A character with cost 2 or more can {E} to sing this song for free.)", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: thisIsMyFamily.cost,
-//       play: [thisIsMyFamily],
-//       hand: [thisIsMyFamily],
+// Describe("This Is My Family", () => {
+//   It.skip("(A character with cost 2 or more can {E} to sing this song for free.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: thisIsMyFamily.cost,
+//       Play: [thisIsMyFamily],
+//       Hand: [thisIsMyFamily],
 //     });
 //
-//     await testEngine.playCard(thisIsMyFamily);
+//     Await testEngine.playCard(thisIsMyFamily);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 //
-//   it.skip("Gain 1 lore. Draw a card.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: thisIsMyFamily.cost,
-//       play: [thisIsMyFamily],
-//       hand: [thisIsMyFamily],
+//   It.skip("Gain 1 lore. Draw a card.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: thisIsMyFamily.cost,
+//       Play: [thisIsMyFamily],
+//       Hand: [thisIsMyFamily],
 //     });
 //
-//     await testEngine.playCard(thisIsMyFamily);
+//     Await testEngine.playCard(thisIsMyFamily);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

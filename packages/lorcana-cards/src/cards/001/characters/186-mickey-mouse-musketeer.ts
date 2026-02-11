@@ -1,35 +1,14 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const mickeyMouseMusketeer: CharacterCard = {
-  id: "9h9",
-  cardType: "character",
-  name: "Mickey Mouse",
-  version: "Musketeer",
-  fullName: "Mickey Mouse - Musketeer",
-  inkType: ["steel"],
-  set: "001",
-  text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)\nALL FOR ONE Your other Musketeer characters get +1 {S}.",
-  cost: 6,
-  strength: 2,
-  willpower: 7,
-  lore: 2,
-  cardNumber: 186,
-  inkable: true,
-  externalIds: {
-    ravensburger: "222a49ab00ebfa5c98e9df4f600b676cbbeb4f6d",
-  },
   abilities: [
     {
       id: "9h9-1",
+      keyword: "Bodyguard",
       text: "Bodyguard",
       type: "keyword",
-      keyword: "Bodyguard",
     },
     {
-      id: "9h9-2",
-      text: "ALL FOR ONE Your other Musketeer characters get +1 {S}.",
-      name: "ALL FOR ONE",
-      type: "static",
       effect: {
         type: "modify-stat",
         stat: "strength",
@@ -37,40 +16,61 @@ export const mickeyMouseMusketeer: CharacterCard = {
         target: "CHOSEN_CHARACTER",
         duration: "this-turn",
       },
+      id: "9h9-2",
+      name: "ALL FOR ONE",
+      text: "ALL FOR ONE Your other Musketeer characters get +1 {S}.",
+      type: "static",
     },
   ],
+  cardNumber: 186,
+  cardType: "character",
   classifications: ["Dreamborn", "Hero", "Musketeer"],
+  cost: 6,
+  externalIds: {
+    ravensburger: "222a49ab00ebfa5c98e9df4f600b676cbbeb4f6d",
+  },
+  fullName: "Mickey Mouse - Musketeer",
+  id: "9h9",
+  inkType: ["steel"],
+  inkable: true,
+  lore: 2,
+  name: "Mickey Mouse",
+  set: "001",
+  strength: 2,
+  text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)\nALL FOR ONE Your other Musketeer characters get +1 {S}.",
+  version: "Musketeer",
+  willpower: 7,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { bodyguardAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import { bodyguardAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const mickeyMouseMusketeer: LorcanitoCharacterCard = {
-//   id: "o71",
-//   name: "Mickey Mouse",
-//   title: "Musketeer",
-//   characteristics: ["hero", "dreamborn", "musketeer"],
-//   text: "**Bodyguard** _(This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)_\n**ALL FOR ONE** Your other Musketeer characters\rget +1 {S}.",
-//   type: "character",
-//   abilities: [
+// Export const mickeyMouseMusketeer: LorcanitoCharacterCard = {
+//   Id: "o71",
+//   Name: "Mickey Mouse",
+//   Title: "Musketeer",
+//   Characteristics: ["hero", "dreamborn", "musketeer"],
+//   Text: "**Bodyguard** _(This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)_\n**ALL FOR ONE** Your other Musketeer characters\rget +1 {S}.",
+//   Type: "character",
+//   Abilities: [
 //     {
-//       type: "static",
-//       ability: "effects",
-//       name: "All For One",
-//       text: "Your other Musketeer characters get +1 {S}.",
-//       effects: [
+//       Type: "static",
+//       Ability: "effects",
+//       Name: "All For One",
+//       Text: "Your other Musketeer characters get +1 {S}.",
+//       Effects: [
 //         {
-//           type: "attribute",
-//           attribute: "strength",
-//           amount: 1,
-//           modifier: "add",
-//           duration: "turn",
-//           target: {
-//             type: "card",
-//             value: "all",
-//             excludeSelf: true,
-//             filters: [
+//           Type: "attribute",
+//           Attribute: "strength",
+//           Amount: 1,
+//           Modifier: "add",
+//           Duration: "turn",
+//           Target: {
+//             Type: "card",
+//             Value: "all",
+//             ExcludeSelf: true,
+//             Filters: [
 //               { filter: "zone", value: "play" },
 //               { filter: "owner", value: "self" },
 //               { filter: "characteristics", value: ["musketeer"] },
@@ -79,20 +79,20 @@ export const mickeyMouseMusketeer: CharacterCard = {
 //         },
 //       ],
 //     },
-//     bodyguardAbility,
+//     BodyguardAbility,
 //   ],
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 6,
-//   strength: 2,
-//   willpower: 7,
-//   lore: 2,
-//   illustrator: "Jochem Van Gool",
-//   number: 186,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 494141,
+//   Inkwell: true,
+//   Colors: ["steel"],
+//   Cost: 6,
+//   Strength: 2,
+//   Willpower: 7,
+//   Lore: 2,
+//   Illustrator: "Jochem Van Gool",
+//   Number: 186,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 494141,
 //   },
-//   rarity: "rare",
+//   Rarity: "rare",
 // };
 //

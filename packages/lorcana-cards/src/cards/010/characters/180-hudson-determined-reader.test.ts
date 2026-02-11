@@ -3,174 +3,174 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   basilTenaciousMouse,
-//   hudsonDeterminedReader,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   BasilTenaciousMouse,
+//   HudsonDeterminedReader,
 // } from "@lorcanito/lorcana-engine/cards/010/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Hudson - Determined Reader", () => {
-//   describe("FINDING ANSWERS - Behavioral Tests", () => {
-//     it("should allow drawing a card then discarding a card when played", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: hudsonDeterminedReader.cost,
-//         hand: [hudsonDeterminedReader],
-//         deck: [basilTenaciousMouse, basilTenaciousMouse],
+// Describe("Hudson - Determined Reader", () => {
+//   Describe("FINDING ANSWERS - Behavioral Tests", () => {
+//     It("should allow drawing a card then discarding a card when played", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: hudsonDeterminedReader.cost,
+//         Hand: [hudsonDeterminedReader],
+//         Deck: [basilTenaciousMouse, basilTenaciousMouse],
 //       });
 //
-//       await testEngine.playCard(hudsonDeterminedReader);
+//       Await testEngine.playCard(hudsonDeterminedReader);
 //
 //       // Accept the optional ability
-//       await testEngine.acceptOptionalLayer();
+//       Await testEngine.acceptOptionalLayer();
 //
 //       // After drawing, should have drawn 1 card
-//       expect(testEngine.getZonesCardCount("player_one").hand).toBe(1);
+//       Expect(testEngine.getZonesCardCount("player_one").hand).toBe(1);
 //
 //       // Choose a card to discard
-//       const cardToDiscard = testEngine.getByZoneAndId(
+//       Const cardToDiscard = testEngine.getByZoneAndId(
 //         "hand",
-//         basilTenaciousMouse.id,
+//         BasilTenaciousMouse.id,
 //       );
-//       await testEngine.resolveTopOfStack({ targets: [cardToDiscard] });
+//       Await testEngine.resolveTopOfStack({ targets: [cardToDiscard] });
 //
 //       // Final hand should be empty (played 1, drew 1, discarded 1)
-//       expect(testEngine.getZonesCardCount("player_one").hand).toBe(0);
+//       Expect(testEngine.getZonesCardCount("player_one").hand).toBe(0);
 //
 //       // Discard should have 1 card
-//       expect(testEngine.getZonesCardCount("player_one").discard).toBe(1);
+//       Expect(testEngine.getZonesCardCount("player_one").discard).toBe(1);
 //     });
 //
-//     it("should allow declining the optional ability", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: hudsonDeterminedReader.cost,
-//         hand: [hudsonDeterminedReader],
-//         deck: [basilTenaciousMouse],
+//     It("should allow declining the optional ability", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: hudsonDeterminedReader.cost,
+//         Hand: [hudsonDeterminedReader],
+//         Deck: [basilTenaciousMouse],
 //       });
 //
-//       await testEngine.playCard(hudsonDeterminedReader);
+//       Await testEngine.playCard(hudsonDeterminedReader);
 //
 //       // Skip the optional ability
-//       await testEngine.skipTopOfStack();
+//       Await testEngine.skipTopOfStack();
 //
 //       // Hand should be empty (just played Hudson)
-//       expect(testEngine.getZonesCardCount("player_one").hand).toBe(0);
+//       Expect(testEngine.getZonesCardCount("player_one").hand).toBe(0);
 //
 //       // Deck should be unchanged (1 card)
-//       expect(testEngine.getZonesCardCount("player_one").deck).toBe(1);
+//       Expect(testEngine.getZonesCardCount("player_one").deck).toBe(1);
 //     });
 //
-//     it("should trigger when you play this character", () => {
-//       const ability = hudsonDeterminedReader.abilities?.find(
+//     It("should trigger when you play this character", () => {
+//       Const ability = hudsonDeterminedReader.abilities?.find(
 //         (a) => "name" in a && a.name === "FINDING ANSWERS",
 //       );
 //
-//       expect(ability).toBeDefined();
+//       Expect(ability).toBeDefined();
 //
-//       if (
-//         ability &&
+//       If (
+//         Ability &&
 //         "trigger" in ability &&
-//         ability.trigger &&
-//         typeof ability.trigger === "object"
+//         Ability.trigger &&
+//         Typeof ability.trigger === "object"
 //       ) {
-//         expect((ability.trigger as any).on).toBe("play");
+//         Expect((ability.trigger as any).on).toBe("play");
 //       }
 //     });
 //
-//     it("should be optional", () => {
-//       const ability = hudsonDeterminedReader.abilities?.find(
+//     It("should be optional", () => {
+//       Const ability = hudsonDeterminedReader.abilities?.find(
 //         (a) => "name" in a && a.name === "FINDING ANSWERS",
 //       );
 //
-//       expect(ability).toBeDefined();
-//       if (ability && "optional" in ability) {
-//         expect(ability.optional).toBe(true);
+//       Expect(ability).toBeDefined();
+//       If (ability && "optional" in ability) {
+//         Expect(ability.optional).toBe(true);
 //       }
 //     });
 //   });
 //
-//   describe("STONE BY DAY - Structure Tests", () => {
-//     it("should have ready restriction effect", () => {
-//       const ability = hudsonDeterminedReader.abilities?.find(
+//   Describe("STONE BY DAY - Structure Tests", () => {
+//     It("should have ready restriction effect", () => {
+//       Const ability = hudsonDeterminedReader.abilities?.find(
 //         (a) => "name" in a && a.name === "STONE BY DAY",
 //       );
 //
-//       expect(ability).toBeDefined();
-//       if (ability && "effects" in ability && Array.isArray(ability.effects)) {
-//         const restrictionEffect = ability.effects[0] as any;
-//         expect(restrictionEffect.type).toBe("restriction");
-//         expect(restrictionEffect.restriction).toBe("ready");
-//         expect(restrictionEffect.duration).toBe("static");
+//       Expect(ability).toBeDefined();
+//       If (ability && "effects" in ability && Array.isArray(ability.effects)) {
+//         Const restrictionEffect = ability.effects[0] as any;
+//         Expect(restrictionEffect.type).toBe("restriction");
+//         Expect(restrictionEffect.restriction).toBe("ready");
+//         Expect(restrictionEffect.duration).toBe("static");
 //       }
 //     });
 //
-//     it("should have condition for 3 or more cards in hand", () => {
-//       const ability = hudsonDeterminedReader.abilities?.find(
+//     It("should have condition for 3 or more cards in hand", () => {
+//       Const ability = hudsonDeterminedReader.abilities?.find(
 //         (a) => "name" in a && a.name === "STONE BY DAY",
 //       );
 //
-//       expect(ability).toBeDefined();
-//       if (
-//         ability &&
+//       Expect(ability).toBeDefined();
+//       If (
+//         Ability &&
 //         "conditions" in ability &&
 //         Array.isArray(ability.conditions)
 //       ) {
-//         const condition = ability.conditions[0] as any;
-//         expect(condition.type).toBe("filter");
-//         expect(condition.comparison?.operator).toBe("gte");
-//         expect(condition.comparison?.value).toBe(3);
+//         Const condition = ability.conditions[0] as any;
+//         Expect(condition.type).toBe("filter");
+//         Expect(condition.comparison?.operator).toBe("gte");
+//         Expect(condition.comparison?.value).toBe(3);
 //       }
 //     });
 //
-//     it("should have Stone By Day ability defined", () => {
-//       const ability = hudsonDeterminedReader.abilities?.find(
+//     It("should have Stone By Day ability defined", () => {
+//       Const ability = hudsonDeterminedReader.abilities?.find(
 //         (a) => "name" in a && a.name === "STONE BY DAY",
 //       );
 //
-//       expect(ability).toBeDefined();
-//       if (
-//         ability &&
+//       Expect(ability).toBeDefined();
+//       If (
+//         Ability &&
 //         "type" in ability &&
-//         ability.type === "static" &&
+//         Ability.type === "static" &&
 //         "ability" in ability
 //       ) {
-//         expect((ability as any).ability).toBe("effects");
+//         Expect((ability as any).ability).toBe("effects");
 //       }
 //     });
 //   });
 //
-//   describe("Stats and basic properties", () => {
-//     it("should have correct stats", () => {
-//       const testEngine = new TestEngine({
-//         play: [hudsonDeterminedReader],
+//   Describe("Stats and basic properties", () => {
+//     It("should have correct stats", () => {
+//       Const testEngine = new TestEngine({
+//         Play: [hudsonDeterminedReader],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(hudsonDeterminedReader);
+//       Const cardUnderTest = testEngine.getCardModel(hudsonDeterminedReader);
 //
-//       expect(cardUnderTest.strength).toBe(2);
-//       expect(cardUnderTest.willpower).toBe(4);
-//       expect(cardUnderTest.lore).toBe(1);
-//       expect(cardUnderTest.cost).toBe(2);
+//       Expect(cardUnderTest.strength).toBe(2);
+//       Expect(cardUnderTest.willpower).toBe(4);
+//       Expect(cardUnderTest.lore).toBe(1);
+//       Expect(cardUnderTest.cost).toBe(2);
 //     });
 //
-//     it("should be inkwell card", () => {
-//       expect(hudsonDeterminedReader.inkwell).toBe(true);
+//     It("should be inkwell card", () => {
+//       Expect(hudsonDeterminedReader.inkwell).toBe(true);
 //     });
 //
-//     it("should have correct characteristics", () => {
-//       expect(hudsonDeterminedReader.characteristics).toEqual([
+//     It("should have correct characteristics", () => {
+//       Expect(hudsonDeterminedReader.characteristics).toEqual([
 //         "storyborn",
 //         "mentor",
 //         "gargoyle",
 //       ]);
 //     });
 //
-//     it("should be steel color", () => {
-//       expect(hudsonDeterminedReader.colors).toEqual(["steel"]);
+//     It("should be steel color", () => {
+//       Expect(hudsonDeterminedReader.colors).toEqual(["steel"]);
 //     });
 //
-//     it("should be common rarity", () => {
-//       expect(hudsonDeterminedReader.rarity).toBe("common");
+//     It("should be common rarity", () => {
+//       Expect(hudsonDeterminedReader.rarity).toBe("common");
 //     });
 //   });
 // });

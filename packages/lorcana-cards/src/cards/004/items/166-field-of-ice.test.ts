@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { fieldOfIce } from "@lorcanito/lorcana-engine/cards/004/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { fieldOfIce } from "@lorcanito/lorcana-engine/cards/004/items/items";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Field of Ice", () => {
-//   it.skip("**ICY DEFENSE** Whenever you play a character, they gain **Resist** +1 until the start of your next turn. _(Damage dealt to them is reduced by 1.)_", () => {
-//     const testStore = new TestStore({
-//       inkwell: fieldOfIce.cost,
-//       play: [fieldOfIce],
+// Describe("Field of Ice", () => {
+//   It.skip("**ICY DEFENSE** Whenever you play a character, they gain **Resist** +1 until the start of your next turn. _(Damage dealt to them is reduced by 1.)_", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: fieldOfIce.cost,
+//       Play: [fieldOfIce],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("play", fieldOfIce.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("play", fieldOfIce.id);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

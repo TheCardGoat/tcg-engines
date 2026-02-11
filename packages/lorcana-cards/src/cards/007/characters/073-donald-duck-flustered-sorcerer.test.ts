@@ -3,19 +3,19 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
-// import { donaldDuckFlusteredSorcerer } from "./073-donald-duck-flustered-sorcerer";
+// Import { describe, it } from "@jest/globals";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { donaldDuckFlusteredSorcerer } from "./073-donald-duck-flustered-sorcerer";
 //
-// describe.skip("Donald Duck - Flustered Sorcerer", () => {
-//   it.skip("OBFUSCATE! Opponents need 25 lore to win the game.", async () => {
-//     const testEngine = new TestEngine(
+// Describe.skip("Donald Duck - Flustered Sorcerer", () => {
+//   It.skip("OBFUSCATE! Opponents need 25 lore to win the game.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: donaldDuckFlusteredSorcerer.cost,
-//         play: [donaldDuckFlusteredSorcerer],
+//         Inkwell: donaldDuckFlusteredSorcerer.cost,
+//         Play: [donaldDuckFlusteredSorcerer],
 //       },
 //       {
-//         lore: 20, // Default win condition is 20
+//         Lore: 20, // Default win condition is 20
 //       },
 //     );
 //

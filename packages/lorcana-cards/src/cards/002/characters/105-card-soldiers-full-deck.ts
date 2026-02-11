@@ -1,26 +1,26 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
 //
-// export const cardSoldiersFullDeck: LorcanitoCharacterCard = {
-//   id: "x9a",
-//   reprints: ["yi4"],
-//   name: "Card Soldiers",
-//   title: "Full Deck",
-//   characteristics: ["storyborn", "ally"],
-//   type: "character",
-//   flavour: "You'll have to deal with them sooner or later.",
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 5,
-//   strength: 5,
-//   willpower: 5,
-//   lore: 2,
-//   illustrator: "Bill Robinson",
-//   number: 105,
-//   set: "ROF",
-//   externalIds: {
-//     tcgPlayer: 525428,
+// Export const cardSoldiersFullDeck: LorcanitoCharacterCard = {
+//   Id: "x9a",
+//   Reprints: ["yi4"],
+//   Name: "Card Soldiers",
+//   Title: "Full Deck",
+//   Characteristics: ["storyborn", "ally"],
+//   Type: "character",
+//   Flavour: "You'll have to deal with them sooner or later.",
+//   Inkwell: true,
+//   Colors: ["ruby"],
+//   Cost: 5,
+//   Strength: 5,
+//   Willpower: 5,
+//   Lore: 2,
+//   Illustrator: "Bill Robinson",
+//   Number: 105,
+//   Set: "ROF",
+//   ExternalIds: {
+//     TcgPlayer: 525428,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

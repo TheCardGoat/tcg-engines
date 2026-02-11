@@ -3,42 +3,42 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { aPiratesLife } from "@lorcanito/lorcana-engine/cards/004/actions/actions";
-// import { hiddenInkcaster } from "@lorcanito/lorcana-engine/cards/004/items/items";
-// import { gatheringKnowledgeAndWisdom } from "@lorcanito/lorcana-engine/cards/005/actions/actions";
-// import { petePirateScoundrel } from "@lorcanito/lorcana-engine/cards/007/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { aPiratesLife } from "@lorcanito/lorcana-engine/cards/004/actions/actions";
+// Import { hiddenInkcaster } from "@lorcanito/lorcana-engine/cards/004/items/items";
+// Import { gatheringKnowledgeAndWisdom } from "@lorcanito/lorcana-engine/cards/005/actions/actions";
+// Import { petePirateScoundrel } from "@lorcanito/lorcana-engine/cards/007/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("PILFER AND PLUNDER Whenever you play an action that isn’t a song, you may banish chosen item.", () => {
-//   it("should banish chosen item when playing an action not a song", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: 10,
-//       play: [petePirateScoundrel, hiddenInkcaster],
-//       hand: [gatheringKnowledgeAndWisdom],
+// Describe("PILFER AND PLUNDER Whenever you play an action that isn’t a song, you may banish chosen item.", () => {
+//   It("should banish chosen item when playing an action not a song", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: 10,
+//       Play: [petePirateScoundrel, hiddenInkcaster],
+//       Hand: [gatheringKnowledgeAndWisdom],
 //     });
 //
-//     await testEngine.playCard(gatheringKnowledgeAndWisdom);
+//     Await testEngine.playCard(gatheringKnowledgeAndWisdom);
 //
-//     const cardTarget = testEngine.getCardModel(hiddenInkcaster);
+//     Const cardTarget = testEngine.getCardModel(hiddenInkcaster);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({ targets: [cardTarget] });
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({ targets: [cardTarget] });
 //
-//     expect(cardTarget.zone).toEqual("discard");
+//     Expect(cardTarget.zone).toEqual("discard");
 //   });
-//   it("should not banish chosen item when playing a song", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: 10,
-//       play: [petePirateScoundrel, hiddenInkcaster],
-//       hand: [aPiratesLife],
+//   It("should not banish chosen item when playing a song", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: 10,
+//       Play: [petePirateScoundrel, hiddenInkcaster],
+//       Hand: [aPiratesLife],
 //     });
 //
-//     await testEngine.playCard(aPiratesLife);
+//     Await testEngine.playCard(aPiratesLife);
 //
-//     const cardTarget = testEngine.getCardModel(hiddenInkcaster);
+//     Const cardTarget = testEngine.getCardModel(hiddenInkcaster);
 //
-//     expect(cardTarget.zone).toEqual("play");
+//     Expect(cardTarget.zone).toEqual("play");
 //   });
 // });
 //

@@ -3,51 +3,51 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   drFacilierSavvyOpportunist,
-//   madamMimRivalOfMerlin,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   DrFacilierSavvyOpportunist,
+//   MadamMimRivalOfMerlin,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { pegasusFlyingSteed } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { pegasusFlyingSteed } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Madam Mim - Rival of Merlin", () => {
-//   it("**GRUESOME AND GRIM** {E} − Play a character with cost 4 or less for free. They gain **Rush**. At the end of the turn, banish them. _They can challenge the turn they're played._'", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Madam Mim - Rival of Merlin", () => {
+//   It("**GRUESOME AND GRIM** {E} − Play a character with cost 4 or less for free. They gain **Rush**. At the end of the turn, banish them. _They can challenge the turn they're played._'", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         hand: [drFacilierSavvyOpportunist],
-//         play: [madamMimRivalOfMerlin],
-//         deck: 1,
+//         Hand: [drFacilierSavvyOpportunist],
+//         Play: [madamMimRivalOfMerlin],
+//         Deck: 1,
 //       },
 //       {
-//         deck: 2,
-//         play: [pegasusFlyingSteed],
+//         Deck: 2,
+//         Play: [pegasusFlyingSteed],
 //       },
 //     );
 //
-//     await testEngine.activateCard(madamMimRivalOfMerlin, {
-//       targets: [drFacilierSavvyOpportunist],
+//     Await testEngine.activateCard(madamMimRivalOfMerlin, {
+//       Targets: [drFacilierSavvyOpportunist],
 //     });
 //
-//     expect(testEngine.getCardModel(drFacilierSavvyOpportunist).hasRush).toBe(
-//       true,
+//     Expect(testEngine.getCardModel(drFacilierSavvyOpportunist).hasRush).toBe(
+//       True,
 //     );
 //
-//     await testEngine.passTurn();
+//     Await testEngine.passTurn();
 //
-//     expect(testEngine.getCardModel(madamMimRivalOfMerlin).zone).toBe("play");
-//     expect(testEngine.getCardModel(pegasusFlyingSteed).zone).toBe("play");
-//     expect(testEngine.getCardModel(drFacilierSavvyOpportunist).zone).toBe(
+//     Expect(testEngine.getCardModel(madamMimRivalOfMerlin).zone).toBe("play");
+//     Expect(testEngine.getCardModel(pegasusFlyingSteed).zone).toBe("play");
+//     Expect(testEngine.getCardModel(drFacilierSavvyOpportunist).zone).toBe(
 //       "discard",
 //     );
 //   });
 //
-//   it("Shift", () => {
-//     const testEngine = new TestEngine({
-//       play: [madamMimRivalOfMerlin],
+//   It("Shift", () => {
+//     Const testEngine = new TestEngine({
+//       Play: [madamMimRivalOfMerlin],
 //     });
 //
-//     expect(testEngine.getCardModel(madamMimRivalOfMerlin).hasShift).toBe(true);
+//     Expect(testEngine.getCardModel(madamMimRivalOfMerlin).hasShift).toBe(true);
 //   });
 // });
 //

@@ -1,29 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const marshmallowPersistentGuardian: CharacterCard = {
-  id: "it5",
-  cardType: "character",
-  name: "Marshmallow",
-  version: "Persistent Guardian",
-  fullName: "Marshmallow - Persistent Guardian",
-  inkType: ["amethyst"],
-  franchise: "Disney",
-  set: "001",
-  text: "**DURABLE** When this character is banished in a challenge, you may return this card to your hand.",
-  cost: 6,
-  strength: 5,
-  willpower: 5,
-  lore: 1,
-  cardNumber: 50,
-  inkable: true,
-  externalIds: {
-    ravensburger: "",
-  },
   abilities: [
     {
-      type: "action",
-      text: "**DURABLE** When this character is banished in a challenge, you may return this card to your hand.",
-      id: "it5-1",
       effect: {
         type: "optional",
         effect: {
@@ -32,44 +11,65 @@ export const marshmallowPersistentGuardian: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "it5-1",
+      text: "**DURABLE** When this character is banished in a challenge, you may return this card to your hand.",
+      type: "action",
     },
   ],
+  cardNumber: 50,
+  cardType: "character",
   classifications: ["Storyborn", "Ally"],
+  cost: 6,
+  externalIds: {
+    ravensburger: "",
+  },
+  franchise: "Disney",
+  fullName: "Marshmallow - Persistent Guardian",
+  id: "it5",
+  inkType: ["amethyst"],
+  inkable: true,
+  lore: 1,
+  name: "Marshmallow",
+  set: "001",
+  strength: 5,
+  text: "**DURABLE** When this character is banished in a challenge, you may return this card to your hand.",
+  version: "Persistent Guardian",
+  willpower: 5,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { whenThisCharacterBanishedInAChallenge } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-// import { returnThisCardToHand } from "@lorcanito/lorcana-engine/effects/effects";
+// Import { whenThisCharacterBanishedInAChallenge } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import { returnThisCardToHand } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const marshmallowPersistentGuardian: LorcanitoCharacterCard = {
-//   id: "it5",
-//   name: "Marshmallow",
-//   title: "Persistent Guardian",
-//   characteristics: ["storyborn", "ally"],
-//   text: "**DURABLE** When this character is banished in a challenge, you may return this card to your hand.",
-//   type: "character",
-//   abilities: [
-//     whenThisCharacterBanishedInAChallenge({
-//       name: "Durable",
-//       optional: true,
-//       text: "When this character is banished in a challenge, you may return this card to your hand.",
-//       effects: [returnThisCardToHand],
+// Export const marshmallowPersistentGuardian: LorcanitoCharacterCard = {
+//   Id: "it5",
+//   Name: "Marshmallow",
+//   Title: "Persistent Guardian",
+//   Characteristics: ["storyborn", "ally"],
+//   Text: "**DURABLE** When this character is banished in a challenge, you may return this card to your hand.",
+//   Type: "character",
+//   Abilities: [
+//     WhenThisCharacterBanishedInAChallenge({
+//       Name: "Durable",
+//       Optional: true,
+//       Text: "When this character is banished in a challenge, you may return this card to your hand.",
+//       Effects: [returnThisCardToHand],
 //     }),
 //   ],
-//   flavour:
+//   Flavour:
 //     "Hey! We were just talking about you! All good things, all good things. −Olaf",
-//   colors: ["amethyst"],
-//   cost: 6,
-//   strength: 5,
-//   willpower: 5,
-//   lore: 1,
-//   illustrator: "Kendall Hale",
-//   number: 50,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 505955,
+//   Colors: ["amethyst"],
+//   Cost: 6,
+//   Strength: 5,
+//   Willpower: 5,
+//   Lore: 1,
+//   Illustrator: "Kendall Hale",
+//   Number: 50,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 505955,
 //   },
-//   rarity: "super_rare",
+//   Rarity: "super_rare",
 // };
 //

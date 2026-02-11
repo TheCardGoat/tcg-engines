@@ -64,10 +64,10 @@ describe("Cost: Additional", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           condition: expect.objectContaining({
             type: "paid-additional-cost",
           }),
+          type: "triggered",
         }),
       );
     });

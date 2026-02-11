@@ -5,9 +5,9 @@ import { captainHookForcefulDuelist } from "./174-captain-hook-forceful-duelist"
 describe("Captain Hook - Forceful Duelist", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [captainHookForcefulDuelist] });
-  //   expect(testEngine.getCardModel(captainHookForcefulDuelist).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [captainHookForcefulDuelist] });
+  //   Expect(testEngine.getCardModel(captainHookForcefulDuelist).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });

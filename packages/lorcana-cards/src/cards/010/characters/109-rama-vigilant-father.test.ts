@@ -3,114 +3,114 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   balooFriendAndGuardian,
-//   headlessManhorseManny, // cost 6 - should trigger
-//   kaaHiddenSerpent,
-//   ramaVigilantFather,
-//   theHornedKingWickedRuler, // cost 4 - should not trigger
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   BalooFriendAndGuardian,
+//   HeadlessManhorseManny, // cost 6 - should trigger
+//   KaaHiddenSerpent,
+//   RamaVigilantFather,
+//   TheHornedKingWickedRuler, // cost 4 - should not trigger
 // } from "@lorcanito/lorcana-engine/cards/010/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Rama - Vigilant Father", () => {
-//   describe("PROTECTION OF THE PACK", () => {
-//     it("1. should trigger when you play another character with strength 5 or more", async () => {
-//       const testEngine = new TestEngine({
-//         play: [ramaVigilantFather],
-//         hand: [headlessManhorseManny],
-//         inkwell: headlessManhorseManny.cost,
+// Describe("Rama - Vigilant Father", () => {
+//   Describe("PROTECTION OF THE PACK", () => {
+//     It("1. should trigger when you play another character with strength 5 or more", async () => {
+//       Const testEngine = new TestEngine({
+//         Play: [ramaVigilantFather],
+//         Hand: [headlessManhorseManny],
+//         Inkwell: headlessManhorseManny.cost,
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(ramaVigilantFather);
-//       const cardInHand = testEngine.getCardModel(headlessManhorseManny);
+//       Const cardUnderTest = testEngine.getCardModel(ramaVigilantFather);
+//       Const cardInHand = testEngine.getCardModel(headlessManhorseManny);
 //
 //       // Quest with Rama to exert him
-//       await testEngine.questCard(cardUnderTest);
-//       expect(cardUnderTest.ready).toBe(false);
+//       Await testEngine.questCard(cardUnderTest);
+//       Expect(cardUnderTest.ready).toBe(false);
 //
-//       await testEngine.playCard(cardInHand, {}, true);
+//       Await testEngine.playCard(cardInHand, {}, true);
 //
 //       // Accept Bodyguard
-//       await testEngine.acceptOptionalAbility();
+//       Await testEngine.acceptOptionalAbility();
 //
-//       expect(cardUnderTest.ready).toBe(true);
-//       expect(cardUnderTest.canQuest).toBe(false);
+//       Expect(cardUnderTest.ready).toBe(true);
+//       Expect(cardUnderTest.canQuest).toBe(false);
 //     });
 //
-//     it("2. should not trigger when you play another character with cost less than 5", async () => {
-//       const testEngine = new TestEngine({
-//         play: [ramaVigilantFather],
-//         hand: [theHornedKingWickedRuler], // Cost 4
-//         inkwell: theHornedKingWickedRuler.cost,
+//     It("2. should not trigger when you play another character with cost less than 5", async () => {
+//       Const testEngine = new TestEngine({
+//         Play: [ramaVigilantFather],
+//         Hand: [theHornedKingWickedRuler], // Cost 4
+//         Inkwell: theHornedKingWickedRuler.cost,
 //       });
 //
 //       // Verify Rama's trigger should not fire for cost 4 character
-//       await testEngine.playCard(theHornedKingWickedRuler);
+//       Await testEngine.playCard(theHornedKingWickedRuler);
 //
 //       // PROTECTION OF THE PACK should NOT trigger for cost 4
-//       const protectionAbility = testEngine.store.stackLayerStore.layers.find(
+//       Const protectionAbility = testEngine.store.stackLayerStore.layers.find(
 //         (layer) => layer.ability.name === "PROTECTION OF THE PACK",
 //       );
-//       expect(protectionAbility).toBeUndefined();
+//       Expect(protectionAbility).toBeUndefined();
 //     });
 //
-//     it("3. should not trigger when you play Rama himself", async () => {
-//       const testEngine = new TestEngine({
-//         hand: [ramaVigilantFather],
-//         inkwell: ramaVigilantFather.cost,
+//     It("3. should not trigger when you play Rama himself", async () => {
+//       Const testEngine = new TestEngine({
+//         Hand: [ramaVigilantFather],
+//         Inkwell: ramaVigilantFather.cost,
 //       });
 //
 //       // Play Rama
-//       await testEngine.playCard(ramaVigilantFather);
+//       Await testEngine.playCard(ramaVigilantFather);
 //
 //       // Should not trigger his own ability when he's played
-//       expect(testEngine.stackLayers).toHaveLength(0);
+//       Expect(testEngine.stackLayers).toHaveLength(0);
 //     });
 //
-//     it("4. should ready Rama when you accept the optional ability", async () => {
-//       const testEngine = new TestEngine({
-//         play: [ramaVigilantFather],
-//         hand: [headlessManhorseManny],
-//         inkwell: headlessManhorseManny.cost,
+//     It("4. should ready Rama when you accept the optional ability", async () => {
+//       Const testEngine = new TestEngine({
+//         Play: [ramaVigilantFather],
+//         Hand: [headlessManhorseManny],
+//         Inkwell: headlessManhorseManny.cost,
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(ramaVigilantFather);
+//       Const cardUnderTest = testEngine.getCardModel(ramaVigilantFather);
 //
 //       // Exert Rama
-//       cardUnderTest.updateCardMeta({ exerted: true });
-//       expect(cardUnderTest.ready).toBe(false);
+//       CardUnderTest.updateCardMeta({ exerted: true });
+//       Expect(cardUnderTest.ready).toBe(false);
 //
-//       await testEngine.playCard(headlessManhorseManny, {}, true);
+//       Await testEngine.playCard(headlessManhorseManny, {}, true);
 //
 //       // Accept Bodyguard
-//       await testEngine.acceptOptionalAbility();
+//       Await testEngine.acceptOptionalAbility();
 //
 //       // Rama should be ready
-//       expect(cardUnderTest.ready).toBe(true);
+//       Expect(cardUnderTest.ready).toBe(true);
 //     });
 //
-//     it("5. should prevent Rama from questing for the rest of the turn when readied", async () => {
-//       const testEngine = new TestEngine({
-//         play: [ramaVigilantFather],
-//         hand: [kaaHiddenSerpent],
-//         inkwell: kaaHiddenSerpent.cost,
+//     It("5. should prevent Rama from questing for the rest of the turn when readied", async () => {
+//       Const testEngine = new TestEngine({
+//         Play: [ramaVigilantFather],
+//         Hand: [kaaHiddenSerpent],
+//         Inkwell: kaaHiddenSerpent.cost,
 //       });
 //
 //       // Play Rama first
-//       await testEngine.tapCard(ramaVigilantFather);
+//       Await testEngine.tapCard(ramaVigilantFather);
 //
 //       // Play another character with cost 6
-//       await testEngine.playCard(kaaHiddenSerpent);
+//       Await testEngine.playCard(kaaHiddenSerpent);
 //
 //       // Accept optional ability
-//       await testEngine.resolveOptionalAbility();
+//       Await testEngine.resolveOptionalAbility();
 //
 //       // Rama should be ready but unable to quest
-//       expect(testEngine.getCardModel(ramaVigilantFather).meta.exerted).toBe(
-//         false,
+//       Expect(testEngine.getCardModel(ramaVigilantFather).meta.exerted).toBe(
+//         False,
 //       );
-//       expect(testEngine.getCardModel(ramaVigilantFather).canQuest).toBe(false);
+//       Expect(testEngine.getCardModel(ramaVigilantFather).canQuest).toBe(false);
 //     });
 //   });
 // });

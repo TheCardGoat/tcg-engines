@@ -1,28 +1,28 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { evasiveAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { evasiveAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
 //
-// export const daisyDuckSpotlessFoodfighter: LorcanitoCharacterCard = {
-//   id: "r79",
-//   name: "Daisy Duck",
-//   title: "Spotless Food-Fighter",
-//   characteristics: ["hero", "storyborn"],
-//   text: "**Evasive** _(Only characters with Evasive can challenge this character.)_",
-//   type: "character",
-//   abilities: [evasiveAbility],
-//   flavour: "She has an unblemished record.",
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 2,
-//   strength: 2,
-//   willpower: 2,
-//   lore: 1,
-//   illustrator: "Maddie Shilt",
-//   number: 111,
-//   set: "SSK",
-//   externalIds: {
-//     tcgPlayer: 561482,
+// Export const daisyDuckSpotlessFoodfighter: LorcanitoCharacterCard = {
+//   Id: "r79",
+//   Name: "Daisy Duck",
+//   Title: "Spotless Food-Fighter",
+//   Characteristics: ["hero", "storyborn"],
+//   Text: "**Evasive** _(Only characters with Evasive can challenge this character.)_",
+//   Type: "character",
+//   Abilities: [evasiveAbility],
+//   Flavour: "She has an unblemished record.",
+//   Inkwell: true,
+//   Colors: ["ruby"],
+//   Cost: 2,
+//   Strength: 2,
+//   Willpower: 2,
+//   Lore: 1,
+//   Illustrator: "Maddie Shilt",
+//   Number: 111,
+//   Set: "SSK",
+//   ExternalIds: {
+//     TcgPlayer: 561482,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

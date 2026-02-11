@@ -3,32 +3,32 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   aliceCourageousKeyholder,
-//   deweyLovableShowoff,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   AliceCourageousKeyholder,
+//   DeweyLovableShowoff,
 // } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Alice - Courageous Keyholder", () => {
-//   it("THIS WAY OUT When you play this character, you may ready chosen damaged character of yours. They can't quest for the rest of this turn.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: aliceCourageousKeyholder.cost,
-//       hand: [aliceCourageousKeyholder],
-//       play: [deweyLovableShowoff],
+// Describe("Alice - Courageous Keyholder", () => {
+//   It("THIS WAY OUT When you play this character, you may ready chosen damaged character of yours. They can't quest for the rest of this turn.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: aliceCourageousKeyholder.cost,
+//       Hand: [aliceCourageousKeyholder],
+//       Play: [deweyLovableShowoff],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(aliceCourageousKeyholder);
-//     const target = testEngine.getCardModel(deweyLovableShowoff);
-//     target.exert();
-//     testEngine.setCardDamage(target, 1);
+//     Const cardUnderTest = testEngine.getCardModel(aliceCourageousKeyholder);
+//     Const target = testEngine.getCardModel(deweyLovableShowoff);
+//     Target.exert();
+//     TestEngine.setCardDamage(target, 1);
 //
-//     await testEngine.playCard(cardUnderTest);
-//     await testEngine.acceptOptionalLayer();
-//     await testEngine.resolveTopOfStack({ targets: [target] });
+//     Await testEngine.playCard(cardUnderTest);
+//     Await testEngine.acceptOptionalLayer();
+//     Await testEngine.resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.exerted).toEqual(false);
-//     expect(target.hasQuestRestriction).toEqual(true);
+//     Expect(target.exerted).toEqual(false);
+//     Expect(target.hasQuestRestriction).toEqual(true);
 //   });
 // });
 //

@@ -3,41 +3,41 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   kenaiProtectiveBrother,
-//   wreckitRalphHerosDuty,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   KenaiProtectiveBrother,
+//   WreckitRalphHerosDuty,
 // } from "@lorcanito/lorcana-engine/cards/007";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Kenai - Protective Brother", () => {
-//   it("HE NEEDS ME At the end of your turn, if this character is exerted, you may ready another chosen character of yours and remove all damage from them.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Kenai - Protective Brother", () => {
+//   It("HE NEEDS ME At the end of your turn, if this character is exerted, you may ready another chosen character of yours and remove all damage from them.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         play: [kenaiProtectiveBrother, wreckitRalphHerosDuty],
+//         Play: [kenaiProtectiveBrother, wreckitRalphHerosDuty],
 //       },
 //       {
-//         deck: 7,
+//         Deck: 7,
 //       },
 //     );
 //
-//     await testEngine.setCardDamage(
-//       wreckitRalphHerosDuty,
-//       wreckitRalphHerosDuty.willpower - 1,
+//     Await testEngine.setCardDamage(
+//       WreckitRalphHerosDuty,
+//       WreckitRalphHerosDuty.willpower - 1,
 //     );
-//     await testEngine.tapCard(wreckitRalphHerosDuty);
-//     await testEngine.tapCard(kenaiProtectiveBrother);
+//     Await testEngine.tapCard(wreckitRalphHerosDuty);
+//     Await testEngine.tapCard(kenaiProtectiveBrother);
 //
-//     await testEngine.passTurn();
-//     testEngine.changeActivePlayer("player_one");
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({
-//       targets: [wreckitRalphHerosDuty],
+//     Await testEngine.passTurn();
+//     TestEngine.changeActivePlayer("player_one");
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({
+//       Targets: [wreckitRalphHerosDuty],
 //     });
 //
-//     const cardModel = testEngine.getCardModel(wreckitRalphHerosDuty);
-//     expect(cardModel.damage).toBe(0);
-//     expect(cardModel.exerted).toBe(false);
+//     Const cardModel = testEngine.getCardModel(wreckitRalphHerosDuty);
+//     Expect(cardModel.damage).toBe(0);
+//     Expect(cardModel.exerted).toBe(false);
 //   });
 // });
 //

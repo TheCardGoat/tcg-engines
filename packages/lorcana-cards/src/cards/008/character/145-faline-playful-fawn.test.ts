@@ -3,46 +3,46 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   falinePlayfulFawn,
-//   hiroHamadaIntuitiveThinker,
-//   princeJohnFraidycat,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   FalinePlayfulFawn,
+//   HiroHamadaIntuitiveThinker,
+//   PrinceJohnFraidycat,
 // } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Faline - Playful Fawn", () => {
-//   it("Evasive (Only characters with Evasive can challenge this character.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [falinePlayfulFawn],
+// Describe("Faline - Playful Fawn", () => {
+//   It("Evasive (Only characters with Evasive can challenge this character.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [falinePlayfulFawn],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(falinePlayfulFawn);
-//     expect(cardUnderTest.hasEvasive).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(falinePlayfulFawn);
+//     Expect(cardUnderTest.hasEvasive).toBe(true);
 //   });
 //
-//   it("PRECOCIOUS FRIEND While you have a character in play with more {S} than each opposing character, this character gets +2 {L}.", async () => {
-//     const testEngine = new TestEngine(
+//   It("PRECOCIOUS FRIEND While you have a character in play with more {S} than each opposing character, this character gets +2 {L}.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         play: [falinePlayfulFawn],
+//         Play: [falinePlayfulFawn],
 //       },
 //       {
-//         inkwell: princeJohnFraidycat.cost + hiroHamadaIntuitiveThinker.cost,
-//         hand: [princeJohnFraidycat, hiroHamadaIntuitiveThinker],
+//         Inkwell: princeJohnFraidycat.cost + hiroHamadaIntuitiveThinker.cost,
+//         Hand: [princeJohnFraidycat, hiroHamadaIntuitiveThinker],
 //       },
 //     );
 //
 //     // Has highest strength
-//     const cardUnderTest = testEngine.getCardModel(falinePlayfulFawn);
-//     expect(cardUnderTest.lore).toEqual(3);
+//     Const cardUnderTest = testEngine.getCardModel(falinePlayfulFawn);
+//     Expect(cardUnderTest.lore).toEqual(3);
 //
 //     // Still has highest strength
-//     await testEngine.playCard(hiroHamadaIntuitiveThinker);
-//     expect(cardUnderTest.lore).toEqual(3);
+//     Await testEngine.playCard(hiroHamadaIntuitiveThinker);
+//     Expect(cardUnderTest.lore).toEqual(3);
 //
 //     // Doesn't have highest strength
-//     await testEngine.playCard(princeJohnFraidycat);
-//     expect(cardUnderTest.lore).toEqual(1);
+//     Await testEngine.playCard(princeJohnFraidycat);
+//     Expect(cardUnderTest.lore).toEqual(1);
 //   });
 // });
 //

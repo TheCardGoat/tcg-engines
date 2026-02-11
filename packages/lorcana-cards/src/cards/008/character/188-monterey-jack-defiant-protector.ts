@@ -1,27 +1,27 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { bodyguardAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { bodyguardAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
 //
-// export const montereyJackDefiantProtector: LorcanitoCharacterCard = {
-//   id: "qhq",
-//   name: "Monterey Jack",
-//   title: "Defiant Protector",
-//   characteristics: ["storyborn", "ally"],
-//   text: "Bodyguard",
-//   type: "character",
-//   abilities: [bodyguardAbility],
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 5,
-//   strength: 4,
-//   willpower: 5,
-//   illustrator: "Ricardo Caria",
-//   number: 188,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631474,
+// Export const montereyJackDefiantProtector: LorcanitoCharacterCard = {
+//   Id: "qhq",
+//   Name: "Monterey Jack",
+//   Title: "Defiant Protector",
+//   Characteristics: ["storyborn", "ally"],
+//   Text: "Bodyguard",
+//   Type: "character",
+//   Abilities: [bodyguardAbility],
+//   Inkwell: true,
+//   Colors: ["steel"],
+//   Cost: 5,
+//   Strength: 4,
+//   Willpower: 5,
+//   Illustrator: "Ricardo Caria",
+//   Number: 188,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631474,
 //   },
-//   rarity: "common",
-//   lore: 2,
+//   Rarity: "common",
+//   Lore: 2,
 // };
 //

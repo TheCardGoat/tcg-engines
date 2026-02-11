@@ -1,30 +1,30 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { rushAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { rushAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
 //
-// export const queenOfHeartsImpulsiveRuler: LorcanitoCharacterCard = {
-//   id: "e84",
-//   reprints: ["tge"],
-//   name: "Queen of Hearts",
-//   title: "Impulsive Ruler",
-//   characteristics: ["queen", "storyborn", "villain"],
-//   text: "**Rush** _(This character can challenge the turn they're played.)_",
-//   type: "character",
-//   abilities: [rushAbility],
-//   flavour:
+// Export const queenOfHeartsImpulsiveRuler: LorcanitoCharacterCard = {
+//   Id: "e84",
+//   Reprints: ["tge"],
+//   Name: "Queen of Hearts",
+//   Title: "Impulsive Ruler",
+//   Characteristics: ["queen", "storyborn", "villain"],
+//   Text: "**Rush** _(This character can challenge the turn they're played.)_",
+//   Type: "character",
+//   Abilities: [rushAbility],
+//   Flavour:
 //     'The glow of lore in the flood cought her eye. "The spellbook!" she cried. "Don\'t let it get away!"',
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 2,
-//   strength: 2,
-//   willpower: 2,
-//   lore: 1,
-//   illustrator: "Valerio Buonfantino",
-//   number: 119,
-//   set: "ROF",
-//   externalIds: {
-//     tcgPlayer: 526275,
+//   Inkwell: true,
+//   Colors: ["ruby"],
+//   Cost: 2,
+//   Strength: 2,
+//   Willpower: 2,
+//   Lore: 1,
+//   Illustrator: "Valerio Buonfantino",
+//   Number: 119,
+//   Set: "ROF",
+//   ExternalIds: {
+//     TcgPlayer: 526275,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

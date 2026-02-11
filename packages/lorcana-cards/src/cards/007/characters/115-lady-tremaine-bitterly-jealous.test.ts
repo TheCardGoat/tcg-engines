@@ -3,35 +3,35 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { diabloDevotedHerald } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { ladyTremaineBitterlyJealous } from "@lorcanito/lorcana-engine/cards/007/index";
-// import { deweyLovableShowoff } from "@lorcanito/lorcana-engine/cards/008";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { diabloDevotedHerald } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { ladyTremaineBitterlyJealous } from "@lorcanito/lorcana-engine/cards/007/index";
+// Import { deweyLovableShowoff } from "@lorcanito/lorcana-engine/cards/008";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Lady Tremaine - Bitterly Jealous", () => {
-//   it("THAT'S QUITE ENOUGH {E} – Return chosen damaged character to their player's hand. Then, each opponent discards a card at random.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Lady Tremaine - Bitterly Jealous", () => {
+//   It("THAT'S QUITE ENOUGH {E} – Return chosen damaged character to their player's hand. Then, each opponent discards a card at random.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         play: [ladyTremaineBitterlyJealous, deweyLovableShowoff],
+//         Play: [ladyTremaineBitterlyJealous, deweyLovableShowoff],
 //       },
 //       {
-//         hand: [diabloDevotedHerald],
+//         Hand: [diabloDevotedHerald],
 //       },
 //     );
 //
-//     const cardUnderTest = testEngine.getCardModel(ladyTremaineBitterlyJealous);
-//     const target = testEngine.getCardModel(deweyLovableShowoff);
-//     const targetDiscard = testEngine.getCardModel(diabloDevotedHerald);
+//     Const cardUnderTest = testEngine.getCardModel(ladyTremaineBitterlyJealous);
+//     Const target = testEngine.getCardModel(deweyLovableShowoff);
+//     Const targetDiscard = testEngine.getCardModel(diabloDevotedHerald);
 //
-//     target.damage = 1; // Ensure the target is damaged
+//     Target.damage = 1; // Ensure the target is damaged
 //
-//     await testEngine.activateCard(cardUnderTest, {
-//       targets: [target],
+//     Await testEngine.activateCard(cardUnderTest, {
+//       Targets: [target],
 //     });
 //
-//     expect(target.zone).toBe("hand");
-//     expect(targetDiscard.zone).toBe("discard");
+//     Expect(target.zone).toBe("hand");
+//     Expect(targetDiscard.zone).toBe("discard");
 //   });
 // });
 //

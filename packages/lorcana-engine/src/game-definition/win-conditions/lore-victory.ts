@@ -10,15 +10,13 @@ import type { LorcanaGameState } from "../../types";
  */
 export function checkLoreVictory(
   state: LorcanaGameState,
-):
-  | { winner: string; reason: string; metadata: { finalLore: number } }
-  | undefined {
+): { winner: string; reason: string; metadata: { finalLore: number } } | undefined {
   for (const [playerId, lore] of Object.entries(state.external.loreScores)) {
     if (lore >= 20) {
       return {
-        winner: playerId,
-        reason: "lore_victory",
         metadata: { finalLore: lore },
+        reason: "lore_victory",
+        winner: playerId,
       };
     }
   }

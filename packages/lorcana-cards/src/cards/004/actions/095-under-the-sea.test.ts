@@ -3,99 +3,99 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   heiheiBoatSnack,
-//   minnieMouseBelovedPrincess,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   HeiheiBoatSnack,
+//   MinnieMouseBelovedPrincess,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { underTheSea } from "@lorcanito/lorcana-engine/cards/004/actions/actions";
-// import {
-//   agustinMadrigalClumsyDad,
-//   arielSingingMermaid,
+// Import { underTheSea } from "@lorcanito/lorcana-engine/cards/004/actions/actions";
+// Import {
+//   AgustinMadrigalClumsyDad,
+//   ArielSingingMermaid,
 // } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
-// import { liloBestExplorerEver } from "../../009";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { liloBestExplorerEver } from "../../009";
 //
-// describe("Under The Sea", () => {
-//   it("Put all opposing characters with 2 {S} or less on the bottom of their players' decks in any order.", () => {
-//     const testStore = new TestStore(
+// Describe("Under The Sea", () => {
+//   It("Put all opposing characters with 2 {S} or less on the bottom of their players' decks in any order.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: underTheSea.cost,
-//         hand: [underTheSea],
+//         Inkwell: underTheSea.cost,
+//         Hand: [underTheSea],
 //       },
 //       {
-//         play: [
-//           minnieMouseBelovedPrincess,
-//           heiheiBoatSnack,
-//           agustinMadrigalClumsyDad,
-//           arielSingingMermaid,
+//         Play: [
+//           MinnieMouseBelovedPrincess,
+//           HeiheiBoatSnack,
+//           AgustinMadrigalClumsyDad,
+//           ArielSingingMermaid,
 //         ],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", underTheSea.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", underTheSea.id);
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     expect(testStore.getCard(heiheiBoatSnack).zone).toEqual("deck");
-//     expect(testStore.getCard(agustinMadrigalClumsyDad).zone).toEqual("deck");
-//     expect(testStore.getCard(minnieMouseBelovedPrincess).zone).toEqual("deck");
+//     Expect(testStore.getCard(heiheiBoatSnack).zone).toEqual("deck");
+//     Expect(testStore.getCard(agustinMadrigalClumsyDad).zone).toEqual("deck");
+//     Expect(testStore.getCard(minnieMouseBelovedPrincess).zone).toEqual("deck");
 //
-//     expect(testStore.getCard(arielSingingMermaid).zone).toEqual("play");
+//     Expect(testStore.getCard(arielSingingMermaid).zone).toEqual("play");
 //   });
 //
-//   it("When oppo plays lilo that give 2 {S} all char only for this turn", async () => {
-//     const testEngine = new TestEngine(
+//   It("When oppo plays lilo that give 2 {S} all char only for this turn", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: liloBestExplorerEver.cost,
-//         hand: [liloBestExplorerEver],
-//         play: [
-//           minnieMouseBelovedPrincess,
-//           heiheiBoatSnack,
-//           agustinMadrigalClumsyDad,
-//           arielSingingMermaid,
+//         Inkwell: liloBestExplorerEver.cost,
+//         Hand: [liloBestExplorerEver],
+//         Play: [
+//           MinnieMouseBelovedPrincess,
+//           HeiheiBoatSnack,
+//           AgustinMadrigalClumsyDad,
+//           ArielSingingMermaid,
 //         ],
 //       },
 //       {
-//         inkwell: underTheSea.cost,
-//         hand: [underTheSea],
+//         Inkwell: underTheSea.cost,
+//         Hand: [underTheSea],
 //       },
 //     );
 //
-//     const cardLilo = testEngine.getCardModel(liloBestExplorerEver);
-//     const cardHeihei = testEngine.getCardModel(heiheiBoatSnack);
-//     const cardAriel = testEngine.getCardModel(arielSingingMermaid);
-//     const cardAgustin = testEngine.getCardModel(agustinMadrigalClumsyDad);
-//     const cardMinnie = testEngine.getCardModel(minnieMouseBelovedPrincess);
+//     Const cardLilo = testEngine.getCardModel(liloBestExplorerEver);
+//     Const cardHeihei = testEngine.getCardModel(heiheiBoatSnack);
+//     Const cardAriel = testEngine.getCardModel(arielSingingMermaid);
+//     Const cardAgustin = testEngine.getCardModel(agustinMadrigalClumsyDad);
+//     Const cardMinnie = testEngine.getCardModel(minnieMouseBelovedPrincess);
 //
-//     await testEngine.playCard(cardLilo);
+//     Await testEngine.playCard(cardLilo);
 //
-//     expect(cardLilo.zone).toEqual("play");
+//     Expect(cardLilo.zone).toEqual("play");
 //     // Lilo itself should NOT have challenger (effect is "your OTHER characters")
-//     expect(cardLilo.hasChallenger).toEqual(false);
-//     expect(cardHeihei.hasChallenger).toEqual(true);
-//     expect(cardAriel.hasChallenger).toEqual(true);
-//     expect(cardAgustin.hasChallenger).toEqual(true);
-//     expect(cardMinnie.hasChallenger).toEqual(true);
+//     Expect(cardLilo.hasChallenger).toEqual(false);
+//     Expect(cardHeihei.hasChallenger).toEqual(true);
+//     Expect(cardAriel.hasChallenger).toEqual(true);
+//     Expect(cardAgustin.hasChallenger).toEqual(true);
+//     Expect(cardMinnie.hasChallenger).toEqual(true);
 //
-//     testEngine.passTurn();
+//     TestEngine.passTurn();
 //
-//     expect(cardLilo.hasChallenger).toEqual(false);
-//     expect(cardHeihei.hasChallenger).toEqual(false);
-//     expect(cardAriel.hasChallenger).toEqual(false);
-//     expect(cardAgustin.hasChallenger).toEqual(false);
-//     expect(cardMinnie.hasChallenger).toEqual(false);
+//     Expect(cardLilo.hasChallenger).toEqual(false);
+//     Expect(cardHeihei.hasChallenger).toEqual(false);
+//     Expect(cardAriel.hasChallenger).toEqual(false);
+//     Expect(cardAgustin.hasChallenger).toEqual(false);
+//     Expect(cardMinnie.hasChallenger).toEqual(false);
 //
-//     const cardUnderTest = testEngine.getCardModel(underTheSea);
+//     Const cardUnderTest = testEngine.getCardModel(underTheSea);
 //
-//     await testEngine.playCard(cardUnderTest);
+//     Await testEngine.playCard(cardUnderTest);
 //
-//     expect(cardHeihei.zone).toEqual("deck");
-//     expect(cardAgustin.zone).toEqual("deck");
-//     expect(cardMinnie.zone).toEqual("deck");
+//     Expect(cardHeihei.zone).toEqual("deck");
+//     Expect(cardAgustin.zone).toEqual("deck");
+//     Expect(cardMinnie.zone).toEqual("deck");
 //
-//     expect(cardAriel.zone).toEqual("play");
+//     Expect(cardAriel.zone).toEqual("play");
 //   });
 // });
 //

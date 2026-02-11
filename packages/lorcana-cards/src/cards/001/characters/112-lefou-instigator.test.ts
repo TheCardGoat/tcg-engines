@@ -5,9 +5,9 @@ import { lefouInstigator } from "./112-lefou-instigator";
 describe("Lefou - Instigator", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [lefouInstigator] });
-  //   expect(testEngine.getCardModel(lefouInstigator).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [lefouInstigator] });
+  //   Expect(testEngine.getCardModel(lefouInstigator).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,33 +17,33 @@ describe("Lefou - Instigator", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   herculesTrueHero,
-//   lefouInstigator,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   HerculesTrueHero,
+//   LefouInstigator,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Lefou Instigator", () => {
-//   it("FAN THE FLAMES effect- Ready chosen character they can't quest", () => {
-//     const testStore = new TestStore({
-//       inkwell: lefouInstigator.cost,
-//       play: [herculesTrueHero],
-//       hand: [lefouInstigator],
+// Describe("Lefou Instigator", () => {
+//   It("FAN THE FLAMES effect- Ready chosen character they can't quest", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: lefouInstigator.cost,
+//       Play: [herculesTrueHero],
+//       Hand: [lefouInstigator],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", lefouInstigator.id);
-//     const target = testStore.getByZoneAndId("play", herculesTrueHero.id);
-//     target.updateCardMeta({ exerted: true });
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", lefouInstigator.id);
+//     Const target = testStore.getByZoneAndId("play", herculesTrueHero.id);
+//     Target.updateCardMeta({ exerted: true });
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     testStore.resolveTopOfStack({
-//       targetId: target.instanceId,
+//     TestStore.resolveTopOfStack({
+//       TargetId: target.instanceId,
 //     });
 //
-//     expect(testStore.getByZoneAndId("play", herculesTrueHero.id).meta).toEqual(
-//       expect.objectContaining({ exerted: false }),
+//     Expect(testStore.getByZoneAndId("play", herculesTrueHero.id).meta).toEqual(
+//       Expect.objectContaining({ exerted: false }),
 //     );
 //   });
 // });

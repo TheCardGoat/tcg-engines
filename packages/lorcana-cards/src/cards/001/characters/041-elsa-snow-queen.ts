@@ -1,54 +1,54 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const elsaSnowQueen: CharacterCard = {
-  id: "u2z",
-  cardType: "character",
-  name: "Elsa",
-  version: "Snow Queen",
-  fullName: "Elsa - Snow Queen",
-  inkType: ["amethyst"],
-  franchise: "Disney",
-  set: "001",
-  text: "**Freeze** {E} - Exert chosen opposing character.",
-  cost: 3,
-  strength: 2,
-  willpower: 3,
-  lore: 1,
+  abilities: [],
   cardNumber: 41,
-  inkable: true,
+  cardType: "character",
+  classifications: ["Hero", "Dreamborn", "Queen", "Sorcerer"],
+  cost: 3,
   externalIds: {
     ravensburger: "",
   },
-  abilities: [],
-  classifications: ["Hero", "Dreamborn", "Queen", "Sorcerer"],
+  franchise: "Disney",
+  fullName: "Elsa - Snow Queen",
+  id: "u2z",
+  inkType: ["amethyst"],
+  inkable: true,
+  lore: 1,
+  name: "Elsa",
+  set: "001",
+  strength: 2,
+  text: "**Freeze** {E} - Exert chosen opposing character.",
+  version: "Snow Queen",
+  willpower: 3,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { ActivatedAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { ActivatedAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const elsaSnowQueen: LorcanitoCharacterCard = {
-//   id: "u2z",
-//   reprints: ["hcz"],
-//   name: "Elsa",
-//   title: "Snow Queen",
-//   characteristics: ["hero", "dreamborn", "queen", "sorcerer"],
-//   text: "**Freeze** {E} - Exert chosen opposing character.",
-//   type: "character",
-//   abilities: [
+// Export const elsaSnowQueen: LorcanitoCharacterCard = {
+//   Id: "u2z",
+//   Reprints: ["hcz"],
+//   Name: "Elsa",
+//   Title: "Snow Queen",
+//   Characteristics: ["hero", "dreamborn", "queen", "sorcerer"],
+//   Text: "**Freeze** {E} - Exert chosen opposing character.",
+//   Type: "character",
+//   Abilities: [
 //     {
-//       type: "activated",
-//       name: "Freeze",
-//       text: "Exert chosen opposing character.",
-//       costs: [{ type: "exert" }],
-//       effects: [
+//       Type: "activated",
+//       Name: "Freeze",
+//       Text: "Exert chosen opposing character.",
+//       Costs: [{ type: "exert" }],
+//       Effects: [
 //         {
-//           type: "exert",
-//           exert: true,
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
+//           Type: "exert",
+//           Exert: true,
+//           Target: {
+//             Type: "card",
+//             Value: 1,
+//             Filters: [
 //               { filter: "type", value: "character" },
 //               { filter: "zone", value: "play" },
 //               { filter: "owner", value: "opponent" },
@@ -58,20 +58,20 @@ export const elsaSnowQueen: CharacterCard = {
 //       ],
 //     } as ActivatedAbility,
 //   ],
-//   flavour:
+//   Flavour:
 //     "Recreated by magical ink, Elsa found herself in an unfamiliar new world. Fortunately, ice works the same way everywhere.",
-//   inkwell: true,
-//   colors: ["amethyst"],
-//   cost: 3,
-//   strength: 2,
-//   willpower: 3,
-//   lore: 1,
-//   illustrator: "Nicholas Kole",
-//   number: 41,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 492705,
+//   Inkwell: true,
+//   Colors: ["amethyst"],
+//   Cost: 3,
+//   Strength: 2,
+//   Willpower: 3,
+//   Lore: 1,
+//   Illustrator: "Nicholas Kole",
+//   Number: 41,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 492705,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

@@ -3,55 +3,55 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   caterpillarCalmAndCollected,
-//   hiramFlavershamToymaker,
-//   jasmineHeirOfAgrabah,
-//   shereKhanMenacingPredator,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   CaterpillarCalmAndCollected,
+//   HiramFlavershamToymaker,
+//   JasmineHeirOfAgrabah,
+//   ShereKhanMenacingPredator,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Shere Khan - Menacing Predator", () => {
-//   it("**DON'T INSULT MY INTELLIGENCE** Whenever one of your characters challenges another character, gain 1 lore.", () => {
-//     const testStore = new TestStore(
+// Describe("Shere Khan - Menacing Predator", () => {
+//   It("**DON'T INSULT MY INTELLIGENCE** Whenever one of your characters challenges another character, gain 1 lore.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         play: [
-//           shereKhanMenacingPredator,
-//           caterpillarCalmAndCollected,
-//           jasmineHeirOfAgrabah,
+//         Play: [
+//           ShereKhanMenacingPredator,
+//           CaterpillarCalmAndCollected,
+//           JasmineHeirOfAgrabah,
 //         ],
 //       },
 //       {
-//         play: [hiramFlavershamToymaker],
+//         Play: [hiramFlavershamToymaker],
 //       },
 //     );
 //
-//     const defender = testStore.getByZoneAndId(
+//     Const defender = testStore.getByZoneAndId(
 //       "play",
-//       hiramFlavershamToymaker.id,
+//       HiramFlavershamToymaker.id,
 //       "player_two",
 //     );
-//     defender.updateCardMeta({ exerted: true });
+//     Defender.updateCardMeta({ exerted: true });
 //
-//     const attackerOne = testStore.getByZoneAndId(
+//     Const attackerOne = testStore.getByZoneAndId(
 //       "play",
-//       caterpillarCalmAndCollected.id,
+//       CaterpillarCalmAndCollected.id,
 //     );
-//     const attackerTwo = testStore.getByZoneAndId(
+//     Const attackerTwo = testStore.getByZoneAndId(
 //       "play",
-//       jasmineHeirOfAgrabah.id,
+//       JasmineHeirOfAgrabah.id,
 //     );
 //
-//     expect(testStore.getPlayerLore()).toEqual(0);
+//     Expect(testStore.getPlayerLore()).toEqual(0);
 //
-//     attackerOne.challenge(defender);
-//     testStore.resolveOptionalAbility();
-//     expect(testStore.getPlayerLore()).toEqual(1);
+//     AttackerOne.challenge(defender);
+//     TestStore.resolveOptionalAbility();
+//     Expect(testStore.getPlayerLore()).toEqual(1);
 //
-//     attackerTwo.challenge(defender);
-//     testStore.resolveOptionalAbility();
-//     expect(testStore.getPlayerLore()).toEqual(2);
+//     AttackerTwo.challenge(defender);
+//     TestStore.resolveOptionalAbility();
+//     Expect(testStore.getPlayerLore()).toEqual(2);
 //   });
 // });
 //

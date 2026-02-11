@@ -3,33 +3,33 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   chipRangerLeader,
-//   daleFriendInNeed,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   ChipRangerLeader,
+//   DaleFriendInNeed,
 // } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Chip - Ranger Leader", () => {
-//   describe("**THE VALUE OF FRIENDSHIP** While you have a character named Dale in play, this character gains **Support**. _(Whenever they quest, you may add their {S} to another chosen character's {S} this turn.)_", () => {
-//     it("should have support when Dale is in play", async () => {
-//       const testEngine = new TestEngine({
-//         play: [chipRangerLeader, daleFriendInNeed],
+// Describe("Chip - Ranger Leader", () => {
+//   Describe("**THE VALUE OF FRIENDSHIP** While you have a character named Dale in play, this character gains **Support**. _(Whenever they quest, you may add their {S} to another chosen character's {S} this turn.)_", () => {
+//     It("should have support when Dale is in play", async () => {
+//       Const testEngine = new TestEngine({
+//         Play: [chipRangerLeader, daleFriendInNeed],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(chipRangerLeader);
+//       Const cardUnderTest = testEngine.getCardModel(chipRangerLeader);
 //
-//       expect(cardUnderTest.hasSupport).toBe(true);
+//       Expect(cardUnderTest.hasSupport).toBe(true);
 //     });
 //
-//     it("should not have support when Dale is not in play", async () => {
-//       const testEngine = new TestEngine({
-//         play: [chipRangerLeader],
+//     It("should not have support when Dale is not in play", async () => {
+//       Const testEngine = new TestEngine({
+//         Play: [chipRangerLeader],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(chipRangerLeader);
+//       Const cardUnderTest = testEngine.getCardModel(chipRangerLeader);
 //
-//       expect(cardUnderTest.hasSupport).toBe(false);
+//       Expect(cardUnderTest.hasSupport).toBe(false);
 //     });
 //   });
 // });

@@ -1,36 +1,36 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { whenYouPlayThis } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import { banishChosenItem } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { whenYouPlayThis } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import { banishChosenItem } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const fredMajorScienceEnthusiast: LorcanitoCharacterCard = {
-//   id: "k1g",
-//   missingTestCase: true,
-//   name: "Fred",
-//   title: "Major Science Enthusiast",
-//   characteristics: ["storyborn", "hero"],
-//   text: "SPITTING FIRE! When you play this character, you may banish chosen item.",
-//   type: "character",
-//   abilities: [
-//     whenYouPlayThis({
-//       name: "SPITTING FIRE!",
-//       text: "When you play this character, you may banish chosen item.",
-//       optional: true,
-//       effects: [banishChosenItem],
+// Export const fredMajorScienceEnthusiast: LorcanitoCharacterCard = {
+//   Id: "k1g",
+//   MissingTestCase: true,
+//   Name: "Fred",
+//   Title: "Major Science Enthusiast",
+//   Characteristics: ["storyborn", "hero"],
+//   Text: "SPITTING FIRE! When you play this character, you may banish chosen item.",
+//   Type: "character",
+//   Abilities: [
+//     WhenYouPlayThis({
+//       Name: "SPITTING FIRE!",
+//       Text: "When you play this character, you may banish chosen item.",
+//       Optional: true,
+//       Effects: [banishChosenItem],
 //     }),
 //   ],
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 3,
-//   strength: 2,
-//   willpower: 3,
-//   illustrator: "Jared Nickell / Patir Balanovsky",
-//   number: 92,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631411,
+//   Inkwell: true,
+//   Colors: ["emerald"],
+//   Cost: 3,
+//   Strength: 2,
+//   Willpower: 3,
+//   Illustrator: "Jared Nickell / Patir Balanovsky",
+//   Number: 92,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631411,
 //   },
-//   rarity: "common",
-//   lore: 2,
+//   Rarity: "common",
+//   Lore: 2,
 // };
 //

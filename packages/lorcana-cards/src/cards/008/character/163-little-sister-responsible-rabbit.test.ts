@@ -3,32 +3,32 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   littleSisterResponsibleRabbit,
-//   roquefortLockExpert,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   LittleSisterResponsibleRabbit,
+//   RoquefortLockExpert,
 // } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Little Sister - Responsible Rabbit", () => {
-//   it("LET ME HELP When you play this character, you may remove up to 1 damage from chosen character.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: littleSisterResponsibleRabbit.cost + roquefortLockExpert.cost,
-//       hand: [littleSisterResponsibleRabbit],
-//       play: [roquefortLockExpert],
+// Describe("Little Sister - Responsible Rabbit", () => {
+//   It("LET ME HELP When you play this character, you may remove up to 1 damage from chosen character.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: littleSisterResponsibleRabbit.cost + roquefortLockExpert.cost,
+//       Hand: [littleSisterResponsibleRabbit],
+//       Play: [roquefortLockExpert],
 //     });
 //
-//     const littleSisterCard = testEngine.getCardModel(
-//       littleSisterResponsibleRabbit,
+//     Const littleSisterCard = testEngine.getCardModel(
+//       LittleSisterResponsibleRabbit,
 //     );
-//     const roquefortCard = testEngine.getCardModel(roquefortLockExpert);
+//     Const roquefortCard = testEngine.getCardModel(roquefortLockExpert);
 //
-//     roquefortCard.meta.damage = 1;
-//     expect(roquefortCard.meta.damage).toBe(1);
+//     RoquefortCard.meta.damage = 1;
+//     Expect(roquefortCard.meta.damage).toBe(1);
 //
-//     await testEngine.playCard(littleSisterResponsibleRabbit);
-//     await testEngine.acceptOptionalLayer();
-//     await testEngine.resolveTopOfStack({ targets: [roquefortCard] });
+//     Await testEngine.playCard(littleSisterResponsibleRabbit);
+//     Await testEngine.acceptOptionalLayer();
+//     Await testEngine.resolveTopOfStack({ targets: [roquefortCard] });
 //   });
 // });
 //

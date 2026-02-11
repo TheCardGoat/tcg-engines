@@ -3,91 +3,91 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   captainHookForcefulDuelist,
-//   mickeyMouseArtfulRogue,
-//   mrSmee,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   CaptainHookForcefulDuelist,
+//   MickeyMouseArtfulRogue,
+//   MrSmee,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import {
-//   stitchCovertAgent,
-//   wendyDarlingAuthorityOnPeterPan,
+// Import {
+//   StitchCovertAgent,
+//   WendyDarlingAuthorityOnPeterPan,
 // } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { trampStreetSmartDog } from "@lorcanito/lorcana-engine/cards/007/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { trampStreetSmartDog } from "@lorcanito/lorcana-engine/cards/007/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Tramp - Street-Smart Dog", () => {
-//   describe("NOW IT'S A PARTY", () => {
-//     it("For each of your characters in play you pay 1 {} less to play this character.", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: 5,
-//         play: [mrSmee, captainHookForcefulDuelist],
-//         hand: [trampStreetSmartDog],
+// Describe("Tramp - Street-Smart Dog", () => {
+//   Describe("NOW IT'S A PARTY", () => {
+//     It("For each of your characters in play you pay 1 {} less to play this character.", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: 5,
+//         Play: [mrSmee, captainHookForcefulDuelist],
+//         Hand: [trampStreetSmartDog],
 //       });
 //
-//       await testEngine.playCard(trampStreetSmartDog);
+//       Await testEngine.playCard(trampStreetSmartDog);
 //
-//       expect(testEngine.getCardZone(trampStreetSmartDog)).toEqual("play");
+//       Expect(testEngine.getCardZone(trampStreetSmartDog)).toEqual("play");
 //     });
 //
-//     it("Can't play for cheaper if no characters in play", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: 5,
-//         play: [],
-//         hand: [trampStreetSmartDog],
+//     It("Can't play for cheaper if no characters in play", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: 5,
+//         Play: [],
+//         Hand: [trampStreetSmartDog],
 //       });
 //
-//       await testEngine.playCard(trampStreetSmartDog);
+//       Await testEngine.playCard(trampStreetSmartDog);
 //
-//       expect(testEngine.getCardZone(trampStreetSmartDog)).toEqual("hand");
+//       Expect(testEngine.getCardZone(trampStreetSmartDog)).toEqual("hand");
 //     });
 //   });
 //
-//   describe("TURTLING AGAIN?", () => {
-//     it("When you play this character, you may draw a card for each of your other characters in play. Then choose the same number of cards from your hand and discard them.", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: 5,
-//         play: [mrSmee, captainHookForcefulDuelist],
-//         hand: [trampStreetSmartDog, wendyDarlingAuthorityOnPeterPan],
-//         deck: [mickeyMouseArtfulRogue, stitchCovertAgent],
+//   Describe("TURTLING AGAIN?", () => {
+//     It("When you play this character, you may draw a card for each of your other characters in play. Then choose the same number of cards from your hand and discard them.", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: 5,
+//         Play: [mrSmee, captainHookForcefulDuelist],
+//         Hand: [trampStreetSmartDog, wendyDarlingAuthorityOnPeterPan],
+//         Deck: [mickeyMouseArtfulRogue, stitchCovertAgent],
 //       });
 //
-//       await testEngine.playCard(trampStreetSmartDog);
+//       Await testEngine.playCard(trampStreetSmartDog);
 //
-//       await testEngine.resolveOptionalAbility();
+//       Await testEngine.resolveOptionalAbility();
 //
-//       await testEngine.resolveTopOfStack({
-//         targets: [wendyDarlingAuthorityOnPeterPan, stitchCovertAgent],
+//       Await testEngine.resolveTopOfStack({
+//         Targets: [wendyDarlingAuthorityOnPeterPan, stitchCovertAgent],
 //       });
 //
-//       expect(testEngine.getCardZone(trampStreetSmartDog)).toEqual("play");
+//       Expect(testEngine.getCardZone(trampStreetSmartDog)).toEqual("play");
 //
-//       const zones = testEngine.getZonesCardCount();
+//       Const zones = testEngine.getZonesCardCount();
 //
-//       expect(zones.play).toEqual(3);
-//       expect(zones.hand).toEqual(1);
-//       expect(zones.deck).toEqual(0);
+//       Expect(zones.play).toEqual(3);
+//       Expect(zones.hand).toEqual(1);
+//       Expect(zones.deck).toEqual(0);
 //     });
 //   });
 // });
 //
-// describe("Regression", () => {
-//   it("We're able to play Tramp even when we don't have enough ink", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: 3, // We have three
-//       play: [
-//         mrSmee,
-//         captainHookForcefulDuelist,
-//         wendyDarlingAuthorityOnPeterPan,
+// Describe("Regression", () => {
+//   It("We're able to play Tramp even when we don't have enough ink", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: 3, // We have three
+//       Play: [
+//         MrSmee,
+//         CaptainHookForcefulDuelist,
+//         WendyDarlingAuthorityOnPeterPan,
 //       ], // Three characters in play should reduce Tramp's cost by 3.
-//       hand: [trampStreetSmartDog], // Tramp Costs 7
-//       deck: [mickeyMouseArtfulRogue, stitchCovertAgent],
+//       Hand: [trampStreetSmartDog], // Tramp Costs 7
+//       Deck: [mickeyMouseArtfulRogue, stitchCovertAgent],
 //     });
 //
 //     // Tramp should cost 4, and we only have 3.
-//     await testEngine.playCard(trampStreetSmartDog);
+//     Await testEngine.playCard(trampStreetSmartDog);
 //
-//     expect(testEngine.getCardZone(trampStreetSmartDog)).toEqual("hand");
+//     Expect(testEngine.getCardZone(trampStreetSmartDog)).toEqual("hand");
 //   });
 // });
 //

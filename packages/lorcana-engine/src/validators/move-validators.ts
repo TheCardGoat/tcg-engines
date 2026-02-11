@@ -31,10 +31,9 @@ export type Validator<TParams = unknown> = (
  * Takes arguments and returns a validator function.
  * Allows validators to be configured per-move.
  */
-export type ParameterizedValidator<
-  TArgs extends unknown[],
-  TParams = unknown,
-> = (...args: TArgs) => Validator<TParams>;
+export type ParameterizedValidator<TArgs extends unknown[], TParams = unknown> = (
+  ...args: TArgs
+) => Validator<TParams>;
 
 // ===== Phase/Flow Validators =====
 
@@ -51,17 +50,15 @@ export type ParameterizedValidator<
  */
 export const isPhase =
   <TParams = unknown>(expectedPhase: string): Validator<TParams> =>
-  (_state, context) => {
-    return context.flow?.currentPhase === expectedPhase;
-  };
+  (_state, context) =>
+    context.flow?.currentPhase === expectedPhase;
 
 /**
  * Validate it's the main phase specifically
  *
  * Most Lorcana actions require main phase.
  */
-export const isMainPhase = <TParams = unknown>(): Validator<TParams> =>
-  isPhase<TParams>("main");
+export const isMainPhase = <TParams = unknown>(): Validator<TParams> => isPhase<TParams>("main");
 
 // ===== Card Location Validators =====
 
@@ -80,23 +77,20 @@ export const isMainPhase = <TParams = unknown>(): Validator<TParams> =>
  */
 export const cardInZone =
   <TParams = unknown>(cardId: CardId, zoneId: ZoneId): Validator<TParams> =>
-  (_state, context) => {
-    return context.zones.getCardZone(cardId) === zoneId;
-  };
+  (_state, context) =>
+    context.zones.getCardZone(cardId) === zoneId;
 
 /**
  * Validate card is in hand
  */
-export const cardInHand = <TParams = unknown>(
-  cardId: CardId,
-): Validator<TParams> => cardInZone(cardId, "hand" as ZoneId);
+export const cardInHand = <TParams = unknown>(cardId: CardId): Validator<TParams> =>
+  cardInZone(cardId, "hand" as ZoneId);
 
 /**
  * Validate card is in play
  */
-export const cardInPlay = <TParams = unknown>(
-  cardId: CardId,
-): Validator<TParams> => cardInZone(cardId, "play" as ZoneId);
+export const cardInPlay = <TParams = unknown>(cardId: CardId): Validator<TParams> =>
+  cardInZone(cardId, "play" as ZoneId);
 
 /**
  * Validate card exists in any zone
@@ -106,9 +100,8 @@ export const cardInPlay = <TParams = unknown>(
  */
 export const cardExists =
   <TParams = unknown>(cardId: CardId): Validator<TParams> =>
-  (_state, context) => {
-    return context.zones.getCardZone(cardId) !== undefined;
-  };
+  (_state, context) =>
+    context.zones.getCardZone(cardId) !== undefined;
 
 // ===== Ownership Validators =====
 
@@ -126,18 +119,16 @@ export const cardExists =
  */
 export const cardOwnedByPlayer =
   <TParams = unknown>(cardId: CardId): Validator<TParams> =>
-  (_state, context) => {
-    return context.cards.getCardOwner(cardId) === context.playerId;
-  };
+  (_state, context) =>
+    context.cards.getCardOwner(cardId) === context.playerId;
 
 /**
  * Validate card is owned by a specific player
  */
 export const cardOwnedBy =
   <TParams = unknown>(cardId: CardId, playerId: PlayerId): Validator<TParams> =>
-  (_state, context) => {
-    return context.cards.getCardOwner(cardId) === playerId;
-  };
+  (_state, context) =>
+    context.cards.getCardOwner(cardId) === playerId;
 
 // ===== Tracker Validators =====
 
@@ -154,10 +145,7 @@ export const cardOwnedBy =
  * ```
  */
 export const hasNotUsedAction =
-  <TParams = unknown>(
-    actionName: string,
-    playerId?: PlayerId,
-  ): Validator<TParams> =>
+  <TParams = unknown>(actionName: string, playerId?: PlayerId): Validator<TParams> =>
   (_state, context) => {
     const player = playerId ?? context.playerId;
     return !context.trackers?.check(actionName, player);
@@ -167,10 +155,7 @@ export const hasNotUsedAction =
  * Validate action has been used
  */
 export const hasUsedAction =
-  <TParams = unknown>(
-    actionName: string,
-    playerId?: PlayerId,
-  ): Validator<TParams> =>
+  <TParams = unknown>(actionName: string, playerId?: PlayerId): Validator<TParams> =>
   (_state, context) => {
     const player = playerId ?? context.playerId;
     return context.trackers?.check(actionName, player) ?? false;
@@ -256,15 +241,12 @@ export const cardIsDrying =
  */
 export const canQuest =
   <TParams = unknown>(cardId: CardId): Validator<TParams> =>
-  (state, context) => {
-    return (
-      cardInPlay(cardId)(state, context) &&
-      cardOwnedByPlayer(cardId)(state, context) &&
-      cardIsReady(cardId)(state, context) &&
-      cardIsDry(cardId)(state, context) &&
-      hasNotUsedAction(`quested:${cardId}`)(state, context)
-    );
-  };
+  (state, context) =>
+    cardInPlay(cardId)(state, context) &&
+    cardOwnedByPlayer(cardId)(state, context) &&
+    cardIsReady(cardId)(state, context) &&
+    cardIsDry(cardId)(state, context) &&
+    hasNotUsedAction(`quested:${cardId}`)(state, context);
 
 /**
  * Validate card can challenge
@@ -280,14 +262,11 @@ export const canQuest =
  */
 export const canChallenge =
   <TParams = unknown>(cardId: CardId): Validator<TParams> =>
-  (state, context) => {
-    return (
-      cardInPlay(cardId)(state, context) &&
-      cardOwnedByPlayer(cardId)(state, context) &&
-      cardIsReady(cardId)(state, context) &&
-      cardIsDry(cardId)(state, context)
-    );
-  };
+  (state, context) =>
+    cardInPlay(cardId)(state, context) &&
+    cardOwnedByPlayer(cardId)(state, context) &&
+    cardIsReady(cardId)(state, context) &&
+    cardIsDry(cardId)(state, context);
 
 /**
  * Validate card can be used to pay costs (e.g., singing, abilities)
@@ -303,14 +282,11 @@ export const canChallenge =
  */
 export const canPayCosts =
   <TParams = unknown>(cardId: CardId): Validator<TParams> =>
-  (state, context) => {
-    return (
-      cardInPlay(cardId)(state, context) &&
-      cardOwnedByPlayer(cardId)(state, context) &&
-      cardIsReady(cardId)(state, context) &&
-      cardIsDry(cardId)(state, context)
-    );
-  };
+  (state, context) =>
+    cardInPlay(cardId)(state, context) &&
+    cardOwnedByPlayer(cardId)(state, context) &&
+    cardIsReady(cardId)(state, context) &&
+    cardIsDry(cardId)(state, context);
 
 // ===== Logical Combinators =====
 
@@ -330,32 +306,25 @@ export const canPayCosts =
  * ```
  */
 export const and =
-  <TParams = unknown>(
-    ...validators: Validator<TParams>[]
-  ): Validator<TParams> =>
-  (state, context) => {
-    return validators.every((validator) => validator(state, context));
-  };
+  <TParams = unknown>(...validators: Validator<TParams>[]): Validator<TParams> =>
+  (state, context) =>
+    validators.every((validator) => validator(state, context));
 
 /**
  * Combine validators with OR logic
  */
 export const or =
-  <TParams = unknown>(
-    ...validators: Validator<TParams>[]
-  ): Validator<TParams> =>
-  (state, context) => {
-    return validators.some((validator) => validator(state, context));
-  };
+  <TParams = unknown>(...validators: Validator<TParams>[]): Validator<TParams> =>
+  (state, context) =>
+    validators.some((validator) => validator(state, context));
 
 /**
  * Negate a validator
  */
 export const not =
   <TParams = unknown>(validator: Validator<TParams>): Validator<TParams> =>
-  (state, context) => {
-    return !validator(state, context);
-  };
+  (state, context) =>
+    !validator(state, context);
 
 /**
  * Always returns true (no-op validator)

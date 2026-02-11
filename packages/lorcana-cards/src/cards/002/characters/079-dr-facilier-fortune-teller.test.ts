@@ -3,52 +3,52 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   drFacilierFortuneTeller,
-//   goofyKnightForADay,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   DrFacilierFortuneTeller,
+//   GoofyKnightForADay,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Dr. Facilier - Fortune Teller", () => {
-//   it("**YOU'RE IN MY WORLD** Whenever this character quests, chosen opposing character can't quest during their next turn.", () => {
-//     const testStore = new TestStore(
+// Describe("Dr. Facilier - Fortune Teller", () => {
+//   It("**YOU'RE IN MY WORLD** Whenever this character quests, chosen opposing character can't quest during their next turn.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         play: [drFacilierFortuneTeller],
+//         Play: [drFacilierFortuneTeller],
 //       },
 //       {
-//         play: [goofyKnightForADay],
+//         Play: [goofyKnightForADay],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       drFacilierFortuneTeller.id,
+//       DrFacilierFortuneTeller.id,
 //     );
 //
-//     const target = testStore.getByZoneAndId(
+//     Const target = testStore.getByZoneAndId(
 //       "play",
-//       goofyKnightForADay.id,
+//       GoofyKnightForADay.id,
 //       "player_two",
 //     );
 //
-//     cardUnderTest.quest();
-//     testStore.resolveTopOfStack({ targets: [target] });
+//     CardUnderTest.quest();
+//     TestStore.resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.hasQuestRestriction).toEqual(true);
+//     Expect(target.hasQuestRestriction).toEqual(true);
 //   });
 //
-//   it("Evasive", () => {
-//     const testStore = new TestStore({
-//       play: [drFacilierFortuneTeller],
+//   It("Evasive", () => {
+//     Const testStore = new TestStore({
+//       Play: [drFacilierFortuneTeller],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       drFacilierFortuneTeller.id,
+//       DrFacilierFortuneTeller.id,
 //     );
 //
-//     expect(cardUnderTest.hasEvasive).toEqual(true);
+//     Expect(cardUnderTest.hasEvasive).toEqual(true);
 //   });
 // });
 //

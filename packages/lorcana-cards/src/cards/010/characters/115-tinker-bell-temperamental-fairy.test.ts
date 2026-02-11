@@ -3,127 +3,127 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   bronxFerociousBeast,
-//   diabloWatchfulRaven,
-//   hermesHarriedMessenger,
-//   tinkerBellTemperamentalFairy,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   BronxFerociousBeast,
+//   DiabloWatchfulRaven,
+//   HermesHarriedMessenger,
+//   TinkerBellTemperamentalFairy,
 // } from "@lorcanito/lorcana-engine/cards/010/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Tinker Bell - Temperamental Fairy", () => {
-//   describe("Shift 3", () => {
-//     it("should have Shift ability", () => {
-//       const testEngine = new TestEngine({
-//         play: [tinkerBellTemperamentalFairy],
+// Describe("Tinker Bell - Temperamental Fairy", () => {
+//   Describe("Shift 3", () => {
+//     It("should have Shift ability", () => {
+//       Const testEngine = new TestEngine({
+//         Play: [tinkerBellTemperamentalFairy],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(
-//         tinkerBellTemperamentalFairy,
+//       Const cardUnderTest = testEngine.getCardModel(
+//         TinkerBellTemperamentalFairy,
 //       );
-//       expect(cardUnderTest.hasShift).toBe(true);
+//       Expect(cardUnderTest.hasShift).toBe(true);
 //     });
 //
-//     it("should have shift cost of 3", () => {
-//       const shiftAbility = tinkerBellTemperamentalFairy.abilities?.find(
+//     It("should have shift cost of 3", () => {
+//       Const shiftAbility = tinkerBellTemperamentalFairy.abilities?.find(
 //         (a) => "ability" in a && a.ability === "shift",
 //       );
 //
-//       expect(shiftAbility).toBeDefined();
+//       Expect(shiftAbility).toBeDefined();
 //
-//       if (shiftAbility && "costs" in shiftAbility) {
-//         expect(shiftAbility.costs).toEqual([{ type: "ink", amount: 3 }]);
+//       If (shiftAbility && "costs" in shiftAbility) {
+//         Expect(shiftAbility.costs).toEqual([{ type: "ink", amount: 3 }]);
 //       }
 //     });
 //   });
 //
-//   describe("HARMLESS DIVERSION - When you play this character, exert chosen opposing character with 2 {S} or less", () => {
-//     it("should have the HARMLESS DIVERSION ability defined", () => {
-//       const harmlessDiversion = tinkerBellTemperamentalFairy.abilities?.find(
+//   Describe("HARMLESS DIVERSION - When you play this character, exert chosen opposing character with 2 {S} or less", () => {
+//     It("should have the HARMLESS DIVERSION ability defined", () => {
+//       Const harmlessDiversion = tinkerBellTemperamentalFairy.abilities?.find(
 //         (a) => "name" in a && a.name === "HARMLESS DIVERSION",
 //       );
 //
-//       expect(harmlessDiversion).toBeDefined();
+//       Expect(harmlessDiversion).toBeDefined();
 //
-//       if (
-//         harmlessDiversion &&
+//       If (
+//         HarmlessDiversion &&
 //         "effects" in harmlessDiversion &&
 //         Array.isArray(harmlessDiversion.effects)
 //       ) {
-//         expect(harmlessDiversion.effects).toHaveLength(1);
-//         const effect = harmlessDiversion.effects[0] as any;
-//         expect(effect.type).toBe("exert");
+//         Expect(harmlessDiversion.effects).toHaveLength(1);
+//         Const effect = harmlessDiversion.effects[0] as any;
+//         Expect(effect.type).toBe("exert");
 //
 //         // Should target opposing characters with strength <= 2
-//         if ("target" in harmlessDiversion) {
-//           const target = harmlessDiversion.target as any;
-//           expect(target.filters).toBeDefined();
+//         If ("target" in harmlessDiversion) {
+//           Const target = harmlessDiversion.target as any;
+//           Expect(target.filters).toBeDefined();
 //
-//           const strengthFilter = target.filters.find(
+//           Const strengthFilter = target.filters.find(
 //             (f: any) => f.filter === "attribute" && f.value === "strength",
 //           );
-//           expect(strengthFilter).toBeDefined();
-//           expect(strengthFilter.comparison.operator).toBe("lte");
-//           expect(strengthFilter.comparison.value).toBe(2);
+//           Expect(strengthFilter).toBeDefined();
+//           Expect(strengthFilter.comparison.operator).toBe("lte");
+//           Expect(strengthFilter.comparison.value).toBe(2);
 //         }
 //       }
 //     });
 //
-//     it.skip("should trigger when played and require a target (integration test)", async () => {
+//     It.skip("should trigger when played and require a target (integration test)", async () => {
 //       // Note: This test requires a character with 2 or less strength to be available
 //       // Diablo (3), Hermes (3), and Bronx (6) all have too much strength
 //       // This test is skipped until we have a suitable test character
-//       expect(true).toBe(true);
+//       Expect(true).toBe(true);
 //     });
 //   });
 //
-//   describe("Stats and basic properties", () => {
-//     it("should have correct stats", () => {
-//       const testEngine = new TestEngine({
-//         play: [tinkerBellTemperamentalFairy],
+//   Describe("Stats and basic properties", () => {
+//     It("should have correct stats", () => {
+//       Const testEngine = new TestEngine({
+//         Play: [tinkerBellTemperamentalFairy],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(
-//         tinkerBellTemperamentalFairy,
+//       Const cardUnderTest = testEngine.getCardModel(
+//         TinkerBellTemperamentalFairy,
 //       );
 //
-//       expect(cardUnderTest.strength).toBe(5);
-//       expect(cardUnderTest.willpower).toBe(3);
-//       expect(cardUnderTest.lore).toBe(1);
-//       expect(cardUnderTest.cost).toBe(5);
+//       Expect(cardUnderTest.strength).toBe(5);
+//       Expect(cardUnderTest.willpower).toBe(3);
+//       Expect(cardUnderTest.lore).toBe(1);
+//       Expect(cardUnderTest.cost).toBe(5);
 //     });
 //
-//     it("should be inkwell card", () => {
-//       expect(tinkerBellTemperamentalFairy.inkwell).toBe(true);
+//     It("should be inkwell card", () => {
+//       Expect(tinkerBellTemperamentalFairy.inkwell).toBe(true);
 //     });
 //
-//     it("should have correct characteristics", () => {
-//       expect(tinkerBellTemperamentalFairy.characteristics).toEqual([
+//     It("should have correct characteristics", () => {
+//       Expect(tinkerBellTemperamentalFairy.characteristics).toEqual([
 //         "floodborn",
 //         "ally",
 //         "fairy",
 //       ]);
 //     });
 //
-//     it("should be ruby color", () => {
-//       expect(tinkerBellTemperamentalFairy.colors).toEqual(["ruby"]);
+//     It("should be ruby color", () => {
+//       Expect(tinkerBellTemperamentalFairy.colors).toEqual(["ruby"]);
 //     });
 //   });
 //
-//   describe("Gameplay", () => {
-//     it("should be playable from hand", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: tinkerBellTemperamentalFairy.cost,
-//         hand: [tinkerBellTemperamentalFairy],
+//   Describe("Gameplay", () => {
+//     It("should be playable from hand", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: tinkerBellTemperamentalFairy.cost,
+//         Hand: [tinkerBellTemperamentalFairy],
 //       });
 //
-//       await testEngine.playCard(tinkerBellTemperamentalFairy);
+//       Await testEngine.playCard(tinkerBellTemperamentalFairy);
 //
-//       const cardUnderTest = testEngine.getCardModel(
-//         tinkerBellTemperamentalFairy,
+//       Const cardUnderTest = testEngine.getCardModel(
+//         TinkerBellTemperamentalFairy,
 //       );
-//       expect(cardUnderTest.zone).toBe("play");
+//       Expect(cardUnderTest.zone).toBe("play");
 //     });
 //   });
 // });

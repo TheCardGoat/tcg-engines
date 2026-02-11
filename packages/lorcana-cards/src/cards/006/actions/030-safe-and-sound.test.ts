@@ -3,42 +3,42 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { safeAndSound } from "@lorcanito/lorcana-engine/cards/006/actions/actions";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
-// import { goonsMaleficent } from "../../001/characters/characters";
-// import { thePhantomBlotShadowyFigure } from "../../007";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { safeAndSound } from "@lorcanito/lorcana-engine/cards/006/actions/actions";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { goonsMaleficent } from "../../001/characters/characters";
+// Import { thePhantomBlotShadowyFigure } from "../../007";
 //
-// describe("Safe And Sound", () => {
-//   it("Chosen character of yours can’t be challenged until the start of your next turn.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Safe And Sound", () => {
+//   It("Chosen character of yours can’t be challenged until the start of your next turn.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: safeAndSound.cost,
-//         play: [goonsMaleficent],
-//         hand: [safeAndSound],
+//         Inkwell: safeAndSound.cost,
+//         Play: [goonsMaleficent],
+//         Hand: [safeAndSound],
 //       },
 //       {
-//         inkwell: safeAndSound.cost,
-//         play: [thePhantomBlotShadowyFigure],
+//         Inkwell: safeAndSound.cost,
+//         Play: [thePhantomBlotShadowyFigure],
 //       },
 //     );
 //
-//     await testEngine.playCard(safeAndSound, { targets: [goonsMaleficent] });
-//     await testEngine.exertCard(goonsMaleficent);
+//     Await testEngine.playCard(safeAndSound, { targets: [goonsMaleficent] });
+//     Await testEngine.exertCard(goonsMaleficent);
 //
-//     await testEngine.passTurn();
+//     Await testEngine.passTurn();
 //
-//     const cardUnderTest = testEngine.getCardModel(goonsMaleficent);
-//     const challenger = testEngine.getCardModel(thePhantomBlotShadowyFigure);
+//     Const cardUnderTest = testEngine.getCardModel(goonsMaleficent);
+//     Const challenger = testEngine.getCardModel(thePhantomBlotShadowyFigure);
 //
-//     expect(cardUnderTest.canBeChallenged(challenger)).toBe(false);
+//     Expect(cardUnderTest.canBeChallenged(challenger)).toBe(false);
 //
-//     await testEngine.passTurn();
-//     await testEngine.exertCard(goonsMaleficent);
+//     Await testEngine.passTurn();
+//     Await testEngine.exertCard(goonsMaleficent);
 //
-//     await testEngine.passTurn();
+//     Await testEngine.passTurn();
 //
-//     expect(cardUnderTest.canBeChallenged(challenger)).toBe(true);
+//     Expect(cardUnderTest.canBeChallenged(challenger)).toBe(true);
 //   });
 // });
 //

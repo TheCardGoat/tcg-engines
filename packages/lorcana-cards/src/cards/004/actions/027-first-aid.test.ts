@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { firstAid } from "@lorcanito/lorcana-engine/cards/004/actions/actions";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { firstAid } from "@lorcanito/lorcana-engine/cards/004/actions/actions";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("First Aid", () => {
-//   it.skip("Remove up to 1 damage from each of your characters.", () => {
-//     const testStore = new TestStore({
-//       inkwell: firstAid.cost,
-//       hand: [firstAid],
+// Describe("First Aid", () => {
+//   It.skip("Remove up to 1 damage from each of your characters.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: firstAid.cost,
+//       Hand: [firstAid],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", firstAid.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", firstAid.id);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

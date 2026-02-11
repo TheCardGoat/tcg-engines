@@ -1,51 +1,51 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import {
-//   evasiveAbility,
-//   shiftAbility,
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import {
+//   EvasiveAbility,
+//   ShiftAbility,
 // } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { thisCharacterGetsLore } from "@lorcanito/lorcana-engine/effects/effects";
+// Import { thisCharacterGetsLore } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const lumiereFiredUp: LorcanitoCharacterCard = {
-//   id: "goi",
-//   name: "Lumiere",
-//   title: "Fired Up",
-//   characteristics: ["floodborn", "ally"],
-//   text: "Shift 3 (You may pay 3 {I} to play this on top of one of your characters named Lumiere.)\nEvasive (Only characters with Evasive can challenge this character.)\nSACREBLEU!: Whenever one of your items is banished, this character gets +1 {L} this turn.",
-//   type: "character",
-//   abilities: [
-//     shiftAbility(3, "Lumiere"),
-//     evasiveAbility,
+// Export const lumiereFiredUp: LorcanitoCharacterCard = {
+//   Id: "goi",
+//   Name: "Lumiere",
+//   Title: "Fired Up",
+//   Characteristics: ["floodborn", "ally"],
+//   Text: "Shift 3 (You may pay 3 {I} to play this on top of one of your characters named Lumiere.)\nEvasive (Only characters with Evasive can challenge this character.)\nSACREBLEU!: Whenever one of your items is banished, this character gets +1 {L} this turn.",
+//   Type: "character",
+//   Abilities: [
+//     ShiftAbility(3, "Lumiere"),
+//     EvasiveAbility,
 //     {
-//       type: "static-triggered",
-//       name: "SACREBLEU!",
-//       text: "Whenever one of your items is banished, this character gets +1 {L} this turn.",
-//       trigger: {
-//         on: "banish",
-//         filters: [
+//       Type: "static-triggered",
+//       Name: "SACREBLEU!",
+//       Text: "Whenever one of your items is banished, this character gets +1 {L} this turn.",
+//       Trigger: {
+//         On: "banish",
+//         Filters: [
 //           { filter: "type", value: "item" },
 //           { filter: "owner", value: "self" },
 //         ],
 //       },
-//       layer: {
-//         type: "resolution",
-//         name: "SACREBLEU!",
-//         effects: [thisCharacterGetsLore(1)],
+//       Layer: {
+//         Type: "resolution",
+//         Name: "SACREBLEU!",
+//         Effects: [thisCharacterGetsLore(1)],
 //       },
 //     },
 //   ],
-//   inkwell: true,
-//   colors: ["ruby", "sapphire"],
-//   cost: 5,
-//   strength: 4,
-//   willpower: 3,
-//   illustrator: "Justin Runfola",
-//   number: 139,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631689,
+//   Inkwell: true,
+//   Colors: ["ruby", "sapphire"],
+//   Cost: 5,
+//   Strength: 4,
+//   Willpower: 3,
+//   Illustrator: "Justin Runfola",
+//   Number: 139,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631689,
 //   },
-//   rarity: "super_rare",
-//   lore: 2,
+//   Rarity: "super_rare",
+//   Lore: 2,
 // };
 //

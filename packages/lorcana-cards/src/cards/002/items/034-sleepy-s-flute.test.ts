@@ -3,40 +3,40 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { hakunaMatata } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
-// import { sleepysFlute } from "@lorcanito/lorcana-engine/cards/002/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { hakunaMatata } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
+// Import { sleepysFlute } from "@lorcanito/lorcana-engine/cards/002/items/items";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Sleepy's Flute", () => {
-//   describe("**A SILLY SONG** {E} − If you played a song this turn, gain 1 lore.", () => {
-//     it("should gain 1 lore if a song was played this turn", () => {
-//       const testStore = new TestStore({
-//         inkwell: hakunaMatata.cost,
-//         hand: [hakunaMatata],
-//         play: [sleepysFlute],
+// Describe("Sleepy's Flute", () => {
+//   Describe("**A SILLY SONG** {E} − If you played a song this turn, gain 1 lore.", () => {
+//     It("should gain 1 lore if a song was played this turn", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: hakunaMatata.cost,
+//         Hand: [hakunaMatata],
+//         Play: [sleepysFlute],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId("play", sleepysFlute.id);
-//       const song = testStore.getByZoneAndId("hand", hakunaMatata.id);
+//       Const cardUnderTest = testStore.getByZoneAndId("play", sleepysFlute.id);
+//       Const song = testStore.getByZoneAndId("hand", hakunaMatata.id);
 //
-//       song.playFromHand();
-//       cardUnderTest.activate();
+//       Song.playFromHand();
+//       CardUnderTest.activate();
 //
-//       expect(cardUnderTest.ready).toEqual(false);
-//       expect(testStore.store.tableStore.getTable().lore).toEqual(1);
+//       Expect(cardUnderTest.ready).toEqual(false);
+//       Expect(testStore.store.tableStore.getTable().lore).toEqual(1);
 //     });
 //
-//     it("should not gain 1 lore if a song was NOT played this turn", () => {
-//       const testStore = new TestStore({
-//         play: [sleepysFlute],
+//     It("should not gain 1 lore if a song was NOT played this turn", () => {
+//       Const testStore = new TestStore({
+//         Play: [sleepysFlute],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId("play", sleepysFlute.id);
+//       Const cardUnderTest = testStore.getByZoneAndId("play", sleepysFlute.id);
 //
-//       cardUnderTest.activate();
+//       CardUnderTest.activate();
 //
-//       expect(testStore.store.tableStore.getTable().lore).toEqual(0);
+//       Expect(testStore.store.tableStore.getTable().lore).toEqual(0);
 //     });
 //   });
 // });

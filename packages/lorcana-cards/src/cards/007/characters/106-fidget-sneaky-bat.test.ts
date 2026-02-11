@@ -3,43 +3,43 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { theMusesProclaimersOfHeroes } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { fidgetSneakyBat } from "@lorcanito/lorcana-engine/cards/007/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { theMusesProclaimersOfHeroes } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { fidgetSneakyBat } from "@lorcanito/lorcana-engine/cards/007/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("EVASIVE (Only characters with Evasive can challenge this character.)", () => {
-//   it.skip("", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: fidgetSneakyBat.cost,
-//       play: [fidgetSneakyBat],
-//       hand: [fidgetSneakyBat],
+// Describe("EVASIVE (Only characters with Evasive can challenge this character.)", () => {
+//   It.skip("", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: fidgetSneakyBat.cost,
+//       Play: [fidgetSneakyBat],
+//       Hand: [fidgetSneakyBat],
 //     });
 //
-//     await testEngine.playCard(fidgetSneakyBat);
+//     Await testEngine.playCard(fidgetSneakyBat);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //
-// describe("TOOK CARE OF EVERYTHING Whenever this character quests, another chosen character of yours gain Evasive until the start of your next turn.", () => {
-//   it("another character should gain Evasive", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: fidgetSneakyBat.cost,
-//       play: [fidgetSneakyBat, theMusesProclaimersOfHeroes],
-//       hand: [],
+// Describe("TOOK CARE OF EVERYTHING Whenever this character quests, another chosen character of yours gain Evasive until the start of your next turn.", () => {
+//   It("another character should gain Evasive", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: fidgetSneakyBat.cost,
+//       Play: [fidgetSneakyBat, theMusesProclaimersOfHeroes],
+//       Hand: [],
 //     });
 //
-//     const target = testEngine.getCardModel(theMusesProclaimersOfHeroes);
+//     Const target = testEngine.getCardModel(theMusesProclaimersOfHeroes);
 //
-//     expect(target.hasEvasive).toBe(false);
+//     Expect(target.hasEvasive).toBe(false);
 //
-//     await testEngine.questCard(fidgetSneakyBat);
+//     Await testEngine.questCard(fidgetSneakyBat);
 //
-//     await testEngine.resolveTopOfStack({ targets: [target] });
+//     Await testEngine.resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.hasEvasive).toBe(true);
+//     Expect(target.hasEvasive).toBe(true);
 //   });
 // });
 //

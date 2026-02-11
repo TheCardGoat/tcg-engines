@@ -3,44 +3,44 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   iagoLoudMouthedParrot,
-//   johnSilverAlienPirate,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   IagoLoudMouthedParrot,
+//   JohnSilverAlienPirate,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Iago Silver - Loud-Mouthed Parrot", () => {
-//   it("YOU GOT A PROBLEM? - {E} − Chosen character gains **Reckless** during their next turn. _(They can't quest and must challenge if able.)_", () => {
-//     const testStore = new TestStore(
+// Describe("Iago Silver - Loud-Mouthed Parrot", () => {
+//   It("YOU GOT A PROBLEM? - {E} − Chosen character gains **Reckless** during their next turn. _(They can't quest and must challenge if able.)_", () => {
+//     Const testStore = new TestStore(
 //       {
-//         deck: 2,
-//         inkwell: iagoLoudMouthedParrot.cost,
-//         play: [iagoLoudMouthedParrot],
+//         Deck: 2,
+//         Inkwell: iagoLoudMouthedParrot.cost,
+//         Play: [iagoLoudMouthedParrot],
 //       },
 //       {
-//         deck: 2,
-//         play: [johnSilverAlienPirate],
+//         Deck: 2,
+//         Play: [johnSilverAlienPirate],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       iagoLoudMouthedParrot.id,
+//       IagoLoudMouthedParrot.id,
 //     );
-//     const target = testStore.getByZoneAndId(
+//     Const target = testStore.getByZoneAndId(
 //       "play",
-//       johnSilverAlienPirate.id,
+//       JohnSilverAlienPirate.id,
 //       "player_two",
 //     );
 //
-//     cardUnderTest.activate();
-//     testStore.resolveTopOfStack({ targetId: target.instanceId });
+//     CardUnderTest.activate();
+//     TestStore.resolveTopOfStack({ targetId: target.instanceId });
 //
 //     // Character gets "Reckless" on their turn
-//     expect(target.hasReckless).toBeFalsy();
-//     testStore.passTurn();
-//     expect(target.hasReckless).toBeTruthy();
+//     Expect(target.hasReckless).toBeFalsy();
+//     TestStore.passTurn();
+//     Expect(target.hasReckless).toBeTruthy();
 //   });
 // });
 //

@@ -3,44 +3,44 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { stealFromRich } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
-// import {
-//   cruellaDeVilMiserableAsUsual,
-//   dukeOfWeselton,
-//   genieTheEverImpressive,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { stealFromRich } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
+// Import {
+//   CruellaDeVilMiserableAsUsual,
+//   DukeOfWeselton,
+//   GenieTheEverImpressive,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Steal from the Rich", () => {
-//   it("Whenever one of your characters quests this turn, each opponent loses 1 lore.", () => {
-//     const cardsInPlay = [
-//       genieTheEverImpressive,
-//       dukeOfWeselton,
-//       cruellaDeVilMiserableAsUsual,
+// Describe("Steal from the Rich", () => {
+//   It("Whenever one of your characters quests this turn, each opponent loses 1 lore.", () => {
+//     Const cardsInPlay = [
+//       GenieTheEverImpressive,
+//       DukeOfWeselton,
+//       CruellaDeVilMiserableAsUsual,
 //     ];
-//     const testStore = new TestStore({
-//       inkwell: stealFromRich.cost,
-//       hand: [stealFromRich],
-//       play: cardsInPlay,
+//     Const testStore = new TestStore({
+//       Inkwell: stealFromRich.cost,
+//       Hand: [stealFromRich],
+//       Play: cardsInPlay,
 //     });
 //
-//     testStore.store.tableStore.getTable("player_two").lore = 3;
+//     TestStore.store.tableStore.getTable("player_two").lore = 3;
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", stealFromRich.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", stealFromRich.id);
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     expect(cardUnderTest.zone).toEqual("discard");
+//     Expect(cardUnderTest.zone).toEqual("discard");
 //
-//     cardsInPlay.forEach((card, index) => {
-//       const target = testStore.getByZoneAndId("play", card.id);
-//       target.quest();
+//     CardsInPlay.forEach((card, index) => {
+//       Const target = testStore.getByZoneAndId("play", card.id);
+//       Target.quest();
 //
-//       expect(testStore.store.tableStore.getTable("player_one").lore).toBe(
-//         index + 1,
+//       Expect(testStore.store.tableStore.getTable("player_one").lore).toBe(
+//         Index + 1,
 //       );
-//       expect(testStore.store.tableStore.getTable("player_two").lore).toBe(
+//       Expect(testStore.store.tableStore.getTable("player_two").lore).toBe(
 //         2 - index,
 //       );
 //     });

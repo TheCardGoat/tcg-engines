@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { tadashiHamadaGiftedRoboticist } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { tadashiHamadaGiftedRoboticist } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Tadashi Hamada - Gifted Roboticist", () => {
-//   it.skip("SOMEONE HAS TO HELP During an opponent’s turn, when this character is banished, you may put the top card of your deck into your inkwell facedown. Then, put this card into your inkwell facedown.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: tadashiHamadaGiftedRoboticist.cost,
-//       play: [tadashiHamadaGiftedRoboticist],
-//       hand: [tadashiHamadaGiftedRoboticist],
+// Describe("Tadashi Hamada - Gifted Roboticist", () => {
+//   It.skip("SOMEONE HAS TO HELP During an opponent’s turn, when this character is banished, you may put the top card of your deck into your inkwell facedown. Then, put this card into your inkwell facedown.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: tadashiHamadaGiftedRoboticist.cost,
+//       Play: [tadashiHamadaGiftedRoboticist],
+//       Hand: [tadashiHamadaGiftedRoboticist],
 //     });
 //
-//     await testEngine.playCard(tadashiHamadaGiftedRoboticist);
+//     Await testEngine.playCard(tadashiHamadaGiftedRoboticist);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

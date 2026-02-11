@@ -3,20 +3,20 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { megaraPullingTheStrings } from "@lorcanito/lorcana-engine/cards/009/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { megaraPullingTheStrings } from "@lorcanito/lorcana-engine/cards/009/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Megara - Pulling the Strings", () => {
-//   it.skip("WONDER BOY When you play this character, chosen character gets +2 {S} this turn.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: megaraPullingTheStrings.cost,
-//       hand: [megaraPullingTheStrings],
+// Describe("Megara - Pulling the Strings", () => {
+//   It.skip("WONDER BOY When you play this character, chosen character gets +2 {S} this turn.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: megaraPullingTheStrings.cost,
+//       Hand: [megaraPullingTheStrings],
 //     });
 //
-//     await testEngine.playCard(megaraPullingTheStrings);
-//     await testEngine.acceptOptionalLayer();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.playCard(megaraPullingTheStrings);
+//     Await testEngine.acceptOptionalLayer();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

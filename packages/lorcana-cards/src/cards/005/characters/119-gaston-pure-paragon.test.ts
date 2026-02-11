@@ -3,77 +3,77 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   arthurNoviceSparrow,
-//   chacaImpressiveDaughter,
-//   gastonPureParagon,
-//   ludwigVonDrakeSelfproclaimedGenius,
-//   petePastryChomper,
-//   theQueenCruelestOfAll,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   ArthurNoviceSparrow,
+//   ChacaImpressiveDaughter,
+//   GastonPureParagon,
+//   LudwigVonDrakeSelfproclaimedGenius,
+//   PetePastryChomper,
+//   TheQueenCruelestOfAll,
 // } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Gaston - Pure Paragon", () => {
-//   describe("**A MAN AMONG MEN!** For each damaged character you have in play, you pay 2 {I} less to play this character.<br/>**Rush** _(This character can challenge the turn they're played.)_", () => {
-//     it("Playing full cost", () => {
-//       const testStore = new TestStore({
-//         inkwell: gastonPureParagon.cost,
-//         hand: [gastonPureParagon],
+// Describe("Gaston - Pure Paragon", () => {
+//   Describe("**A MAN AMONG MEN!** For each damaged character you have in play, you pay 2 {I} less to play this character.<br/>**Rush** _(This character can challenge the turn they're played.)_", () => {
+//     It("Playing full cost", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: gastonPureParagon.cost,
+//         Hand: [gastonPureParagon],
 //       });
 //
-//       const cardUnderTest = testStore.getCard(gastonPureParagon);
+//       Const cardUnderTest = testStore.getCard(gastonPureParagon);
 //
-//       cardUnderTest.playFromHand();
+//       CardUnderTest.playFromHand();
 //
-//       expect(testStore.getAvailableInkwellCardCount("player_one")).toBe(0);
-//       expect(cardUnderTest.zone).toBe("play");
+//       Expect(testStore.getAvailableInkwellCardCount("player_one")).toBe(0);
+//       Expect(cardUnderTest.zone).toBe("play");
 //     });
 //
-//     it("One damaged Character", () => {
-//       const testStore = new TestStore({
-//         inkwell: gastonPureParagon.cost - 2,
-//         play: [petePastryChomper],
-//         hand: [gastonPureParagon],
+//     It("One damaged Character", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: gastonPureParagon.cost - 2,
+//         Play: [petePastryChomper],
+//         Hand: [gastonPureParagon],
 //       });
 //
-//       const cardUnderTest = testStore.getCard(gastonPureParagon);
+//       Const cardUnderTest = testStore.getCard(gastonPureParagon);
 //
-//       const pete = testStore.getCard(petePastryChomper);
-//       pete.updateCardDamage(1, "add");
+//       Const pete = testStore.getCard(petePastryChomper);
+//       Pete.updateCardDamage(1, "add");
 //
-//       cardUnderTest.playFromHand();
+//       CardUnderTest.playFromHand();
 //
-//       expect(testStore.getAvailableInkwellCardCount("player_one")).toBe(0);
-//       expect(cardUnderTest.zone).toBe("play");
+//       Expect(testStore.getAvailableInkwellCardCount("player_one")).toBe(0);
+//       Expect(cardUnderTest.zone).toBe("play");
 //     });
 //
-//     it("Five damaged Character", () => {
-//       const cardsInPlay = [
-//         petePastryChomper,
-//         arthurNoviceSparrow,
-//         chacaImpressiveDaughter,
-//         theQueenCruelestOfAll,
-//         ludwigVonDrakeSelfproclaimedGenius,
+//     It("Five damaged Character", () => {
+//       Const cardsInPlay = [
+//         PetePastryChomper,
+//         ArthurNoviceSparrow,
+//         ChacaImpressiveDaughter,
+//         TheQueenCruelestOfAll,
+//         LudwigVonDrakeSelfproclaimedGenius,
 //       ];
-//       const testStore = new TestStore({
-//         inkwell: 0,
-//         play: cardsInPlay,
-//         hand: [gastonPureParagon],
+//       Const testStore = new TestStore({
+//         Inkwell: 0,
+//         Play: cardsInPlay,
+//         Hand: [gastonPureParagon],
 //       });
 //
-//       const cardUnderTest = testStore.getCard(gastonPureParagon);
+//       Const cardUnderTest = testStore.getCard(gastonPureParagon);
 //
-//       const pete = testStore.getCard(petePastryChomper);
+//       Const pete = testStore.getCard(petePastryChomper);
 //
-//       cardsInPlay.forEach((card) => {
-//         testStore.getCard(card).updateCardDamage(1, "add");
+//       CardsInPlay.forEach((card) => {
+//         TestStore.getCard(card).updateCardDamage(1, "add");
 //       });
 //
-//       cardUnderTest.playFromHand();
+//       CardUnderTest.playFromHand();
 //
-//       expect(testStore.getAvailableInkwellCardCount("player_one")).toBe(0);
-//       expect(cardUnderTest.zone).toBe("play");
+//       Expect(testStore.getAvailableInkwellCardCount("player_one")).toBe(0);
+//       Expect(cardUnderTest.zone).toBe("play");
 //     });
 //   });
 // });

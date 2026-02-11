@@ -3,31 +3,31 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { cobraBubblesFormerCia } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { cobraBubblesFormerCia } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Cobra Bubbles - Former CIA", () => {
-//   it.skip("Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [cobraBubblesFormerCia],
+// Describe("Cobra Bubbles - Former CIA", () => {
+//   It.skip("Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [cobraBubblesFormerCia],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(cobraBubblesFormerCia);
-//     expect(cardUnderTest.hasBodyguard).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(cobraBubblesFormerCia);
+//     Expect(cardUnderTest.hasBodyguard).toBe(true);
 //   });
 //
-//   it.skip("THINK ABOUT WHAT'S BEST 2 {I} – Draw a card, then choose and discard a card.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: cobraBubblesFormerCia.cost,
-//       play: [cobraBubblesFormerCia],
-//       hand: [cobraBubblesFormerCia],
+//   It.skip("THINK ABOUT WHAT'S BEST 2 {I} – Draw a card, then choose and discard a card.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: cobraBubblesFormerCia.cost,
+//       Play: [cobraBubblesFormerCia],
+//       Hand: [cobraBubblesFormerCia],
 //     });
 //
-//     await testEngine.playCard(cobraBubblesFormerCia);
+//     Await testEngine.playCard(cobraBubblesFormerCia);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

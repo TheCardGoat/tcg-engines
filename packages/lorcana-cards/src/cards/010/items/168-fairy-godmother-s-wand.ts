@@ -1,12 +1,12 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
-// import { wheneverACardIsPutIntoYourInkwell } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-// import type { CardEffectTarget } from "@lorcanito/lorcana-engine/effects/effectTargets";
+// Import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
+// Import { wheneverACardIsPutIntoYourInkwell } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// Import type { CardEffectTarget } from "@lorcanito/lorcana-engine/effects/effectTargets";
 //
-// const chosenPrincessCharacterOfYours: CardEffectTarget = {
-//   type: "card",
-//   value: 1,
-//   filters: [
+// Const chosenPrincessCharacterOfYours: CardEffectTarget = {
+//   Type: "card",
+//   Value: 1,
+//   Filters: [
 //     { filter: "type", value: "character" },
 //     { filter: "zone", value: "play" },
 //     { filter: "owner", value: "self" },
@@ -14,39 +14,39 @@
 //   ],
 // };
 //
-// const fairyGodmothersWandAbility = wheneverACardIsPutIntoYourInkwell({
-//   name: "Only Till Midnight",
-//   text: "During your turn, whenever you put a card into your inkwell, chosen Princess character of yours gains Ward until the start of your next turn. (Opponents can't choose them except to challenge.)",
-//   optional: true,
-//   conditions: [{ type: "during-turn", value: "self" }],
-//   effects: [
+// Const fairyGodmothersWandAbility = wheneverACardIsPutIntoYourInkwell({
+//   Name: "Only Till Midnight",
+//   Text: "During your turn, whenever you put a card into your inkwell, chosen Princess character of yours gains Ward until the start of your next turn. (Opponents can't choose them except to challenge.)",
+//   Optional: true,
+//   Conditions: [{ type: "during-turn", value: "self" }],
+//   Effects: [
 //     {
-//       type: "ability",
-//       ability: "ward",
-//       duration: "next_turn",
-//       until: true,
-//       modifier: "add",
-//       target: chosenPrincessCharacterOfYours,
+//       Type: "ability",
+//       Ability: "ward",
+//       Duration: "next_turn",
+//       Until: true,
+//       Modifier: "add",
+//       Target: chosenPrincessCharacterOfYours,
 //     },
 //   ],
 // });
 //
-// export const fairyGodmothersWand: LorcanitoItemCard = {
-//   id: "vw5",
-//   name: "Fairy Godmother's Wand",
-//   characteristics: ["item"],
-//   text: "ONLY TILL MIDNIGHT During your turn, whenever you put a card into your inkwell, chosen Princess character of yours gains Ward until the start of your next turn. (Opponents can't choose them except to challenge.)",
-//   type: "item",
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 2,
-//   illustrator: "Aurélie Lise-Anne",
-//   number: 168,
-//   set: "010",
-//   externalIds: {
-//     tcgPlayer: 658786,
+// Export const fairyGodmothersWand: LorcanitoItemCard = {
+//   Id: "vw5",
+//   Name: "Fairy Godmother's Wand",
+//   Characteristics: ["item"],
+//   Text: "ONLY TILL MIDNIGHT During your turn, whenever you put a card into your inkwell, chosen Princess character of yours gains Ward until the start of your next turn. (Opponents can't choose them except to challenge.)",
+//   Type: "item",
+//   Inkwell: true,
+//   Colors: ["sapphire"],
+//   Cost: 2,
+//   Illustrator: "Aurélie Lise-Anne",
+//   Number: 168,
+//   Set: "010",
+//   ExternalIds: {
+//     TcgPlayer: 658786,
 //   },
-//   rarity: "super_rare",
-//   abilities: [fairyGodmothersWandAbility],
+//   Rarity: "super_rare",
+//   Abilities: [fairyGodmothersWandAbility],
 // };
 //

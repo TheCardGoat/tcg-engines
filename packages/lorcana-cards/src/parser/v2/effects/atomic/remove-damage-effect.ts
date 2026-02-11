@@ -21,10 +21,10 @@ function convertToCharacterTarget(simpleTarget: {
 
   // Map card type to proper name
   const cardTypeMap: Record<string, string> = {
+    card: "card",
     character: "character",
     item: "item",
     location: "location",
-    card: "card",
   };
 
   const cardType = cardTypeMap[type.toLowerCase()] || type;
@@ -34,19 +34,19 @@ function convertToCharacterTarget(simpleTarget: {
     string,
     { selector: string; owner: string; count: number | "all" }
   > = {
-    chosen: { selector: "chosen", owner: "any", count: 1 },
-    "chosen opposing": { selector: "chosen", owner: "opponent", count: 1 },
-    this: { selector: "self", owner: "any", count: 1 },
-    your: { selector: "all", owner: "you", count: "all" },
-    opponent: { selector: "all", owner: "opponent", count: "all" },
-    "opponent's": { selector: "all", owner: "opponent", count: "all" },
-    opposing: { selector: "all", owner: "opponent", count: "all" },
-    another: { selector: "chosen", owner: "any", count: 1 },
-    an: { selector: "chosen", owner: "any", count: 1 },
-    each: { selector: "all", owner: "any", count: "all" },
-    all: { selector: "all", owner: "any", count: "all" },
-    other: { selector: "all", owner: "any", count: "all" },
-    them: { selector: "chosen", owner: "opponent", count: 1 },
+    all: { count: "all", owner: "any", selector: "all" },
+    an: { count: 1, owner: "any", selector: "chosen" },
+    another: { count: 1, owner: "any", selector: "chosen" },
+    chosen: { count: 1, owner: "any", selector: "chosen" },
+    "chosen opposing": { count: 1, owner: "opponent", selector: "chosen" },
+    each: { count: "all", owner: "any", selector: "all" },
+    opponent: { count: "all", owner: "opponent", selector: "all" },
+    "opponent's": { count: "all", owner: "opponent", selector: "all" },
+    opposing: { count: "all", owner: "opponent", selector: "all" },
+    other: { count: "all", owner: "any", selector: "all" },
+    them: { count: 1, owner: "opponent", selector: "chosen" },
+    this: { count: 1, owner: "any", selector: "self" },
+    your: { count: "all", owner: "you", selector: "all" },
   };
 
   const mapping = modifier
@@ -58,11 +58,11 @@ function convertToCharacterTarget(simpleTarget: {
   const { selector, owner, count } = mapping || modifierMap.chosen;
 
   return {
-    selector: selector as any,
+    cardTypes: [cardType],
     count,
     owner: owner as any,
+    selector: selector as any,
     zones: ["play"],
-    cardTypes: [cardType],
   };
 }
 
@@ -99,9 +99,9 @@ function parseFromCst(
   logger.info("Parsed remove damage effect from CST", { amount });
 
   return {
-    type: "remove-damage",
     amount,
     target: "CHOSEN_CHARACTER",
+    type: "remove-damage",
   };
 }
 
@@ -140,10 +140,10 @@ function parseFromText(text: string): RemoveDamageEffect | null {
     });
 
     const effect: RemoveDamageEffect = {
-      type: "remove-damage",
       amount,
-      upTo: true,
       target,
+      type: "remove-damage",
+      upTo: true,
     };
 
     return effect;
@@ -177,9 +177,9 @@ function parseFromText(text: string): RemoveDamageEffect | null {
   logger.info("Parsed remove damage effect from text", { amount, target });
 
   return {
-    type: "remove-damage",
     amount,
     target,
+    type: "remove-damage",
   };
 }
 
@@ -187,14 +187,14 @@ function parseFromText(text: string): RemoveDamageEffect | null {
  * Remove damage effect parser implementation
  */
 export const removeDamageEffectParser: EffectParser = {
-  pattern: /remove\s+(\d+|\{d\})\s+damage\s+from/i,
   description:
     "Parses remove damage effects (e.g., 'remove 3 damage from chosen character', 'remove {d} damage')",
-
   parse: (input: CstNode | string): RemoveDamageEffect | null => {
     if (typeof input === "string") {
       return parseFromText(input);
     }
     return parseFromCst(input as { NumberToken?: IToken[] } | null | undefined);
   },
+
+  pattern: /remove\s+(\d+|\{d\})\s+damage\s+from/i,
 };

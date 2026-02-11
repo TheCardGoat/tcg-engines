@@ -1,43 +1,17 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const queenOfHeartsSensingWeakness: CharacterCard = {
-  id: "1je",
-  cardType: "character",
-  name: "Queen of Hearts",
-  version: "Sensing Weakness",
-  fullName: "Queen of Hearts - Sensing Weakness",
-  inkType: ["ruby"],
-  franchise: "Alice in Wonderland",
-  set: "009",
-  text: "Shift 2 {I} (You may pay 2 {I} to play this on top of one of your characters named Queen of Hearts.)\nLET THE GAME BEGIN Whenever one of your characters challenges another character, you may draw a card.",
-  cost: 5,
-  strength: 4,
-  willpower: 3,
-  lore: 1,
-  cardNumber: 120,
-  inkable: true,
-  externalIds: {
-    ravensburger: "c7b064db265bded03b75f9a2b194df8a9567e845",
-  },
   abilities: [
     {
-      id: "1je-1",
-      type: "keyword",
-      keyword: "Shift",
       cost: {
         ink: 2,
       },
+      id: "1je-1",
+      keyword: "Shift",
       text: "Shift 2 {I}",
+      type: "keyword",
     },
     {
-      id: "1je-2",
-      type: "triggered",
-      name: "LET THE GAME BEGIN",
-      trigger: {
-        event: "banish",
-        timing: "whenever",
-        on: "YOUR_OTHER_CHARACTERS",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -47,8 +21,34 @@ export const queenOfHeartsSensingWeakness: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "1je-2",
+      name: "LET THE GAME BEGIN",
       text: "LET THE GAME BEGIN Whenever one of your characters challenges another character, you may draw a card.",
+      trigger: {
+        event: "banish",
+        timing: "whenever",
+        on: "YOUR_OTHER_CHARACTERS",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 120,
+  cardType: "character",
   classifications: ["Floodborn", "Villain", "Queen"],
+  cost: 5,
+  externalIds: {
+    ravensburger: "c7b064db265bded03b75f9a2b194df8a9567e845",
+  },
+  franchise: "Alice in Wonderland",
+  fullName: "Queen of Hearts - Sensing Weakness",
+  id: "1je",
+  inkType: ["ruby"],
+  inkable: true,
+  lore: 1,
+  name: "Queen of Hearts",
+  set: "009",
+  strength: 4,
+  text: "Shift 2 {I} (You may pay 2 {I} to play this on top of one of your characters named Queen of Hearts.)\nLET THE GAME BEGIN Whenever one of your characters challenges another character, you may draw a card.",
+  version: "Sensing Weakness",
+  willpower: 3,
 };

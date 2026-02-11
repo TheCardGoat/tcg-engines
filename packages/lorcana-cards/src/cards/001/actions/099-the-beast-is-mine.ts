@@ -1,72 +1,72 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
 export const theBeastIsMine: ActionCard = {
-  id: "10f",
-  cardType: "action",
-  name: "The Beast is Mine!",
-  inkType: ["emerald"],
-  franchise: "Beauty and the Beast",
-  set: "001",
-  text: "Chosen character gains Reckless during their next turn. (They can't quest and must challenge if able.)",
-  cost: 3,
-  cardNumber: 99,
-  inkable: true,
-  externalIds: {
-    ravensburger: "8488fbd0b43280a0577520d149097ebe9d751d8f",
-  },
   abilities: [
     {
-      id: "10f-1",
-      text: "Chosen character gains Reckless during their next turn.",
-      type: "static",
       effect: {
         type: "gain-keyword",
         keyword: "Reckless",
         target: "CHOSEN_CHARACTER",
         duration: "this-turn",
       },
+      id: "10f-1",
+      text: "Chosen character gains Reckless during their next turn.",
+      type: "static",
     },
   ],
+  cardNumber: 99,
+  cardType: "action",
+  cost: 3,
+  externalIds: {
+    ravensburger: "8488fbd0b43280a0577520d149097ebe9d751d8f",
+  },
+  franchise: "Beauty and the Beast",
+  id: "10f",
+  inkType: ["emerald"],
+  inkable: true,
+  name: "The Beast is Mine!",
+  set: "001",
+  text: "Chosen character gains Reckless during their next turn. (They can't quest and must challenge if able.)",
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-// import type { AbilityEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+// Import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { AbilityEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
 //
-// export const theBeastIsMine: LorcanitoActionCard = {
-//   id: "mlb",
-//   name: "The Beast is Mine!",
-//   characteristics: ["action"],
-//   text: "Chosen character gains **Reckless** during their next turn. _(They can't quest and must challenge if able.)_",
-//   type: "action",
-//   abilities: [
+// Export const theBeastIsMine: LorcanitoActionCard = {
+//   Id: "mlb",
+//   Name: "The Beast is Mine!",
+//   Characteristics: ["action"],
+//   Text: "Chosen character gains **Reckless** during their next turn. _(They can't quest and must challenge if able.)_",
+//   Type: "action",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       name: "The Beast is Mine!",
-//       text: "Chosen character gains **Reckless** during their next turn. _(They can't quest and must challenge if able.)_",
-//       effects: [
+//       Type: "resolution",
+//       Name: "The Beast is Mine!",
+//       Text: "Chosen character gains **Reckless** during their next turn. _(They can't quest and must challenge if able.)_",
+//       Effects: [
 //         {
-//           type: "ability",
-//           ability: "reckless",
-//           modifier: "add",
-//           duration: "next_turn",
-//           target: chosenCharacter,
+//           Type: "ability",
+//           Ability: "reckless",
+//           Modifier: "add",
+//           Duration: "next_turn",
+//           Target: chosenCharacter,
 //         } as AbilityEffect,
 //       ],
 //     },
 //   ],
-//   flavour:
+//   Flavour:
 //     "It's only fitting that the finest hunter gets the foulest \rbeast!<br />\r− Gaston",
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 3,
-//   illustrator: "\tMatthew Robert Davies",
-//   number: 99,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 494154,
+//   Inkwell: true,
+//   Colors: ["emerald"],
+//   Cost: 3,
+//   Illustrator: "\tMatthew Robert Davies",
+//   Number: 99,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 494154,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

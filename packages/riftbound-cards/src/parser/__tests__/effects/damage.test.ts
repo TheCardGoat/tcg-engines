@@ -17,11 +17,11 @@ describe("Effect: Damage", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "spell",
           effect: expect.objectContaining({
-            type: "damage",
             amount: 2,
+            type: "damage",
           }),
+          type: "spell",
         }),
       );
     });
@@ -36,20 +36,18 @@ describe("Effect: Damage", () => {
 
   describe("split damage", () => {
     it.skip("should parse 'Deal 5 damage split among any number of enemy units here.'", () => {
-      const result = parseAbilities(
-        "Deal 5 damage split among any number of enemy units here.",
-      );
+      const result = parseAbilities("Deal 5 damage split among any number of enemy units here.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "spell",
           effect: expect.objectContaining({
-            type: "damage",
             amount: 5,
             split: true,
+            type: "damage",
           }),
+          type: "spell",
         }),
       );
     });
@@ -73,22 +71,20 @@ describe("Effect: Damage", () => {
 
   describe("damage equal to might", () => {
     it.skip("should parse 'Deal damage equal to my Might to an enemy unit.'", () => {
-      const result = parseAbilities(
-        "Deal damage equal to my Might to an enemy unit.",
-      );
+      const result = parseAbilities("Deal damage equal to my Might to an enemy unit.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "spell",
           effect: expect.objectContaining({
-            type: "damage",
             amount: expect.objectContaining({
               type: "might",
               of: "self",
             }),
+            type: "damage",
           }),
+          type: "spell",
         }),
       );
     });

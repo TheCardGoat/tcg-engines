@@ -1,18 +1,14 @@
 import { afterEach, beforeEach, describe, expect, it } from "bun:test";
 import { createPlayerId } from "@tcg/core";
-import {
-  LorcanaTestEngine,
-  PLAYER_ONE,
-  PLAYER_TWO,
-} from "../../../testing/lorcana-test-engine";
+import { LorcanaTestEngine, PLAYER_ONE, PLAYER_TWO } from "../../../testing/lorcana-test-engine";
 
 describe("Move: Choose First Player", () => {
   let testEngine: LorcanaTestEngine;
 
   beforeEach(() => {
     testEngine = new LorcanaTestEngine(
-      { hand: 7, deck: 10 },
-      { hand: 7, deck: 10 },
+      { deck: 10, hand: 7 },
+      { deck: 10, hand: 7 },
       { skipPreGame: false },
     );
 
@@ -38,12 +34,8 @@ describe("Move: Choose First Player", () => {
 
     // Verify pending mulligan is set for both players
     expect(updatedCtx.pendingMulligan?.length).toBe(2);
-    expect(updatedCtx.pendingMulligan?.map((p) => String(p))).toContain(
-      PLAYER_ONE,
-    );
-    expect(updatedCtx.pendingMulligan?.map((p) => String(p))).toContain(
-      PLAYER_TWO,
-    );
+    expect(updatedCtx.pendingMulligan?.map((p) => String(p))).toContain(PLAYER_ONE);
+    expect(updatedCtx.pendingMulligan?.map((p) => String(p))).toContain(PLAYER_TWO);
 
     // Verify phase transition occurred
     expect(testEngine.getGamePhase()).toBe("mulligan");
@@ -63,12 +55,8 @@ describe("Move: Choose First Player", () => {
 
     // Verify pending mulligan is set for both players
     expect(updatedCtx.pendingMulligan?.length).toBe(2);
-    expect(updatedCtx.pendingMulligan?.map((p) => String(p))).toContain(
-      PLAYER_ONE,
-    );
-    expect(updatedCtx.pendingMulligan?.map((p) => String(p))).toContain(
-      PLAYER_TWO,
-    );
+    expect(updatedCtx.pendingMulligan?.map((p) => String(p))).toContain(PLAYER_ONE);
+    expect(updatedCtx.pendingMulligan?.map((p) => String(p))).toContain(PLAYER_TWO);
 
     // Verify phase transition occurred
     expect(testEngine.getGamePhase()).toBe("mulligan");
@@ -108,8 +96,8 @@ describe("Move: Choose First Player", () => {
     // Try to have the OTHER player choose - should fail
     testEngine.changeActivePlayer(otherPlayer);
     const result = testEngine.engine.executeMove("chooseWhoGoesFirstMove", {
-      playerId: createPlayerId(otherPlayer),
       params: { playerId: createPlayerId(PLAYER_ONE) },
+      playerId: createPlayerId(otherPlayer),
     });
 
     // Should fail with detailed error information
@@ -180,8 +168,8 @@ describe("Move: Choose First Player", () => {
 
     // Attempt to choose an invalid player ID as the designated chooser
     const result = testEngine.engine.executeMove("chooseWhoGoesFirstMove", {
-      playerId: createPlayerId(choosingPlayer || PLAYER_ONE),
       params: { playerId: createPlayerId("invalid_player_id") },
+      playerId: createPlayerId(choosingPlayer || PLAYER_ONE),
     });
 
     // Should fail with detailed error information
@@ -191,10 +179,7 @@ describe("Move: Choose First Player", () => {
       expect(result.error).toContain("Invalid player ID");
       expect(result.error).toContain("invalid_player_id");
       expect(result.errorContext?.playerId).toBe("invalid_player_id");
-      expect(result.errorContext?.validPlayers).toEqual([
-        PLAYER_ONE,
-        PLAYER_TWO,
-      ]);
+      expect(result.errorContext?.validPlayers).toEqual([PLAYER_ONE, PLAYER_TWO]);
     }
 
     // Verify OTP was not set
@@ -222,8 +207,8 @@ describe("Move: Choose First Player", () => {
 
     // For now, let's test by creating a new engine and trying to choose twice before phase transition
     const testEngine2 = new LorcanaTestEngine(
-      { hand: 7, deck: 10 },
-      { hand: 7, deck: 10 },
+      { deck: 10, hand: 7 },
+      { deck: 10, hand: 7 },
       { skipPreGame: false },
     );
 
@@ -233,25 +218,23 @@ describe("Move: Choose First Player", () => {
 
     // Execute the move as the designated chooser
     const result = testEngine2.engine.executeMove("chooseWhoGoesFirstMove", {
-      playerId: createPlayerId(choosingPlayer2 || PLAYER_ONE),
       params: { playerId: createPlayerId(PLAYER_ONE) },
+      playerId: createPlayerId(choosingPlayer2 || PLAYER_ONE),
     });
     expect(result.success).toBe(true);
 
     // Now try to choose again - should fail because phase has changed to mulligan
     // Note: The move transitions to mulligan phase after successful execution,
-    // so the wrong phase error takes precedence over OTP already being set
+    // So the wrong phase error takes precedence over OTP already being set
     const result2 = testEngine2.engine.executeMove("chooseWhoGoesFirstMove", {
-      playerId: createPlayerId(choosingPlayer2 || PLAYER_ONE),
       params: { playerId: createPlayerId(PLAYER_TWO) },
+      playerId: createPlayerId(choosingPlayer2 || PLAYER_ONE),
     });
 
     expect(result2.success).toBe(false);
     if (!result2.success) {
       expect(result2.errorCode).toBe("WRONG_PHASE");
-      expect(result2.error).toContain(
-        "Cannot choose first player during mulligan phase",
-      );
+      expect(result2.error).toContain("Cannot choose first player during mulligan phase");
       expect(result2.errorContext?.currentPhase).toBe("mulligan");
     }
 
@@ -270,17 +253,15 @@ describe("Move: Choose First Player", () => {
 
     // Try to choose first player again while in mulligan phase
     const result = testEngine.engine.executeMove("chooseWhoGoesFirstMove", {
-      playerId: createPlayerId(choosingPlayer || PLAYER_ONE),
       params: { playerId: createPlayerId(PLAYER_TWO) },
+      playerId: createPlayerId(choosingPlayer || PLAYER_ONE),
     });
 
     // Should fail with detailed error about wrong phase
     expect(result.success).toBe(false);
     if (!result.success) {
       expect(result.errorCode).toBe("WRONG_PHASE");
-      expect(result.error).toContain(
-        "Cannot choose first player during mulligan phase",
-      );
+      expect(result.error).toContain("Cannot choose first player during mulligan phase");
       expect(result.error).toContain("Must be in chooseFirstPlayer phase");
       expect(result.errorContext?.currentPhase).toBe("mulligan");
       expect(result.errorContext?.requiredPhase).toBe("chooseFirstPlayer");
@@ -299,9 +280,7 @@ describe("Move: Choose First Player", () => {
       const choosingPlayer = ctx.choosingFirstPlayer;
 
       // Get available moves for the designated chooser
-      const availableMoves = testEngine.getAvailableMoves(
-        choosingPlayer || PLAYER_ONE,
-      );
+      const availableMoves = testEngine.getAvailableMoves(choosingPlayer || PLAYER_ONE);
 
       // Should include chooseWhoGoesFirstMove
       expect(availableMoves).toContain("chooseWhoGoesFirstMove");
@@ -310,8 +289,7 @@ describe("Move: Choose First Player", () => {
     it("should NOT list chooseWhoGoesFirstMove for non-designated player", () => {
       const ctx = testEngine.getCtx();
       const choosingPlayer = ctx.choosingFirstPlayer;
-      const otherPlayer =
-        choosingPlayer === PLAYER_ONE ? PLAYER_TWO : PLAYER_ONE;
+      const otherPlayer = choosingPlayer === PLAYER_ONE ? PLAYER_TWO : PLAYER_ONE;
 
       // Get available moves for the OTHER player
       const availableMoves = testEngine.getAvailableMoves(otherPlayer);
@@ -345,23 +323,16 @@ describe("Move: Choose First Player", () => {
       // Should have parameter info
       expect(params?.parameterInfo.playerId).toBeDefined();
       expect(params?.parameterInfo.playerId.type).toBe("playerId");
-      expect(params?.parameterInfo.playerId.validValues).toEqual([
-        PLAYER_ONE,
-        PLAYER_TWO,
-      ]);
+      expect(params?.parameterInfo.playerId.validValues).toEqual([PLAYER_ONE, PLAYER_TWO]);
     });
 
     it("should NOT enumerate parameters for non-designated player", () => {
       const ctx = testEngine.getCtx();
       const choosingPlayer = ctx.choosingFirstPlayer;
-      const otherPlayer =
-        choosingPlayer === PLAYER_ONE ? PLAYER_TWO : PLAYER_ONE;
+      const otherPlayer = choosingPlayer === PLAYER_ONE ? PLAYER_TWO : PLAYER_ONE;
 
       // Try to enumerate parameters as other player
-      const params = testEngine.enumerateMoveParameters(
-        "chooseWhoGoesFirstMove",
-        otherPlayer,
-      );
+      const params = testEngine.enumerateMoveParameters("chooseWhoGoesFirstMove", otherPlayer);
 
       // Should return null (move not available)
       expect(params).toBeNull();
@@ -372,9 +343,7 @@ describe("Move: Choose First Player", () => {
       const choosingPlayer = ctx.choosingFirstPlayer;
 
       // Get detailed move info
-      const moves = testEngine.getAvailableMovesDetailed(
-        choosingPlayer || PLAYER_ONE,
-      );
+      const moves = testEngine.getAvailableMovesDetailed(choosingPlayer || PLAYER_ONE);
 
       // Should have one move
       expect(moves).toHaveLength(1);
@@ -390,13 +359,12 @@ describe("Move: Choose First Player", () => {
     it("should explain why non-designated player cannot choose", () => {
       const ctx = testEngine.getCtx();
       const choosingPlayer = ctx.choosingFirstPlayer;
-      const otherPlayer =
-        choosingPlayer === PLAYER_ONE ? PLAYER_TWO : PLAYER_ONE;
+      const otherPlayer = choosingPlayer === PLAYER_ONE ? PLAYER_TWO : PLAYER_ONE;
 
       // Try to execute as other player
       const error = testEngine.whyCannotExecuteMove("chooseWhoGoesFirstMove", {
-        playerId: createPlayerId(otherPlayer),
         params: { playerId: createPlayerId(PLAYER_ONE) },
+        playerId: createPlayerId(otherPlayer),
       });
 
       // Should have error
@@ -428,9 +396,7 @@ describe("Move: Choose First Player", () => {
       const choosingPlayer = ctx.choosingFirstPlayer;
 
       // Before choosing, should have chooseWhoGoesFirstMove
-      let availableMoves = testEngine.getAvailableMoves(
-        choosingPlayer || PLAYER_ONE,
-      );
+      let availableMoves = testEngine.getAvailableMoves(choosingPlayer || PLAYER_ONE);
       expect(availableMoves).toContain("chooseWhoGoesFirstMove");
 
       // Choose first player

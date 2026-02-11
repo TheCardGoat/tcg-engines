@@ -1,36 +1,36 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
+// Import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
 //
-// export const scarab: LorcanitoItemCard = {
-//   id: "pv5",
-//   name: "Scarab",
-//   characteristics: ["item"],
-//   text: "SEARCH THE SANDS {E} 2 {I} – Return an Illusion character card from your discard to your hand.",
-//   type: "item",
-//   inkwell: false,
-//   colors: ["amethyst"],
-//   cost: 2,
-//   illustrator: "Carlos Ruiz",
-//   number: 83,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631404,
+// Export const scarab: LorcanitoItemCard = {
+//   Id: "pv5",
+//   Name: "Scarab",
+//   Characteristics: ["item"],
+//   Text: "SEARCH THE SANDS {E} 2 {I} – Return an Illusion character card from your discard to your hand.",
+//   Type: "item",
+//   Inkwell: false,
+//   Colors: ["amethyst"],
+//   Cost: 2,
+//   Illustrator: "Carlos Ruiz",
+//   Number: 83,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631404,
 //   },
-//   rarity: "uncommon",
-//   abilities: [
+//   Rarity: "uncommon",
+//   Abilities: [
 //     {
-//       type: "activated",
-//       name: "SEARCH THE SANDS",
-//       text: "{E} 2 {I} – Return an Illusion character card from your discard to your hand.",
-//       costs: [{ type: "exert" }, { type: "ink", amount: 2 }],
-//       effects: [
+//       Type: "activated",
+//       Name: "SEARCH THE SANDS",
+//       Text: "{E} 2 {I} – Return an Illusion character card from your discard to your hand.",
+//       Costs: [{ type: "exert" }, { type: "ink", amount: 2 }],
+//       Effects: [
 //         {
-//           type: "move",
-//           to: "hand",
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
+//           Type: "move",
+//           To: "hand",
+//           Target: {
+//             Type: "card",
+//             Value: 1,
+//             Filters: [
 //               { filter: "type", value: "character" },
 //               { filter: "zone", value: "discard" },
 //               { filter: "owner", value: "self" },

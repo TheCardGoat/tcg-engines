@@ -1,35 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const coldstoneReincarnatedCyborg: CharacterCard = {
-  id: "1uk",
-  cardType: "character",
-  name: "Coldstone",
-  version: "Reincarnated Cyborg",
-  fullName: "Coldstone - Reincarnated Cyborg",
-  inkType: ["amethyst"],
-  franchise: "Gargoyles",
-  set: "010",
-  text: "THE CANTRIPS HAVE BEEN SPOKEN When you play this character, if you have 2 or more Gargoyle character cards in your discard, gain 2 lore.",
-  cost: 5,
-  strength: 5,
-  willpower: 4,
-  lore: 2,
-  cardNumber: 51,
-  inkable: false,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "efe9bd3b196659d235f5f564d9d2c23aaa674bdb",
-  },
   abilities: [
     {
-      id: "1uk-1",
-      type: "triggered",
-      name: "THE CANTRIPS HAVE BEEN SPOKEN",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "conditional",
         condition: {
@@ -42,8 +15,35 @@ export const coldstoneReincarnatedCyborg: CharacterCard = {
           amount: 2,
         },
       },
+      id: "1uk-1",
+      name: "THE CANTRIPS HAVE BEEN SPOKEN",
       text: "THE CANTRIPS HAVE BEEN SPOKEN When you play this character, if you have 2 or more Gargoyle character cards in your discard, gain 2 lore.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 51,
+  cardType: "character",
   classifications: ["Storyborn", "Ally", "Gargoyle"],
+  cost: 5,
+  externalIds: {
+    ravensburger: "efe9bd3b196659d235f5f564d9d2c23aaa674bdb",
+  },
+  franchise: "Gargoyles",
+  fullName: "Coldstone - Reincarnated Cyborg",
+  id: "1uk",
+  inkType: ["amethyst"],
+  inkable: false,
+  lore: 2,
+  missingTests: true,
+  name: "Coldstone",
+  set: "010",
+  strength: 5,
+  text: "THE CANTRIPS HAVE BEEN SPOKEN When you play this character, if you have 2 or more Gargoyle character cards in your discard, gain 2 lore.",
+  version: "Reincarnated Cyborg",
+  willpower: 4,
 };

@@ -3,41 +3,41 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   mickeyBraveLittleTailor,
-//   mickeyMouseTrueFriend,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   MickeyBraveLittleTailor,
+//   MickeyMouseTrueFriend,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { madamMimFox } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { hadesDoubleDealer } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { madamMimFox } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { hadesDoubleDealer } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Hades - Double Dealer", () => {
-//   it("**GET DOWN TO BUSINESS** {E},  Banish chosen character of yours - Play another character from your hand with the same name.", () => {
-//     const testEngine = new TestEngine({
-//       play: [hadesDoubleDealer, mickeyBraveLittleTailor],
-//       hand: [mickeyMouseTrueFriend, madamMimFox],
+// Describe("Hades - Double Dealer", () => {
+//   It("**GET DOWN TO BUSINESS** {E},  Banish chosen character of yours - Play another character from your hand with the same name.", () => {
+//     Const testEngine = new TestEngine({
+//       Play: [hadesDoubleDealer, mickeyBraveLittleTailor],
+//       Hand: [mickeyMouseTrueFriend, madamMimFox],
 //     });
 //
-//     testEngine.activateCard(hadesDoubleDealer);
-//     testEngine.resolveTopOfStack({ targets: [mickeyBraveLittleTailor] }, true);
-//     expect(testEngine.getCardZone(mickeyBraveLittleTailor)).toBe("discard");
+//     TestEngine.activateCard(hadesDoubleDealer);
+//     TestEngine.resolveTopOfStack({ targets: [mickeyBraveLittleTailor] }, true);
+//     Expect(testEngine.getCardZone(mickeyBraveLittleTailor)).toBe("discard");
 //
-//     testEngine.resolveTopOfStack({ targets: [mickeyMouseTrueFriend] }, true);
-//     expect(testEngine.getCardZone(mickeyMouseTrueFriend)).toBe("play");
+//     TestEngine.resolveTopOfStack({ targets: [mickeyMouseTrueFriend] }, true);
+//     Expect(testEngine.getCardZone(mickeyMouseTrueFriend)).toBe("play");
 //   });
-//   it("Cannot play a character with a different name", () => {
-//     const testEngine = new TestEngine({
-//       play: [hadesDoubleDealer, mickeyBraveLittleTailor],
-//       hand: [mickeyMouseTrueFriend, madamMimFox],
+//   It("Cannot play a character with a different name", () => {
+//     Const testEngine = new TestEngine({
+//       Play: [hadesDoubleDealer, mickeyBraveLittleTailor],
+//       Hand: [mickeyMouseTrueFriend, madamMimFox],
 //     });
 //
-//     testEngine.activateCard(hadesDoubleDealer);
-//     testEngine.resolveTopOfStack({ targets: [mickeyBraveLittleTailor] }, true);
-//     expect(testEngine.getCardZone(mickeyBraveLittleTailor)).toBe("discard");
+//     TestEngine.activateCard(hadesDoubleDealer);
+//     TestEngine.resolveTopOfStack({ targets: [mickeyBraveLittleTailor] }, true);
+//     Expect(testEngine.getCardZone(mickeyBraveLittleTailor)).toBe("discard");
 //
-//     testEngine.resolveTopOfStack({ targets: [madamMimFox] }, true);
-//     expect(testEngine.getCardZone(madamMimFox)).toBe("hand");
+//     TestEngine.resolveTopOfStack({ targets: [madamMimFox] }, true);
+//     Expect(testEngine.getCardZone(madamMimFox)).toBe("hand");
 //   });
 // });
 //

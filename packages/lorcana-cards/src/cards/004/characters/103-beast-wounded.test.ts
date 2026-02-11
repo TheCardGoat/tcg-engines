@@ -3,21 +3,21 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { beastWounded } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { beastWounded } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Beast - Wounded", () => {
-//   it("**THAT HURTS!** This character enters play with 4 damage.", () => {
-//     const testStore = new TestStore({
-//       inkwell: beastWounded.cost,
-//       hand: [beastWounded],
+// Describe("Beast - Wounded", () => {
+//   It("**THAT HURTS!** This character enters play with 4 damage.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: beastWounded.cost,
+//       Hand: [beastWounded],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(beastWounded);
+//     Const cardUnderTest = testStore.getCard(beastWounded);
 //
-//     cardUnderTest.playFromHand();
-//     expect(cardUnderTest.damage).toEqual(4);
+//     CardUnderTest.playFromHand();
+//     Expect(cardUnderTest.damage).toEqual(4);
 //   });
 // });
 //

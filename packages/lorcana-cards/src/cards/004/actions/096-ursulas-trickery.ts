@@ -1,24 +1,8 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
 export const ursulasTrickery: ActionCard = {
-  id: "1sb",
-  cardType: "action",
-  name: "Ursula’s Trickery",
-  inkType: ["emerald"],
-  franchise: "Little Mermaid",
-  set: "004",
-  text: "Each opponent may choose and discard a card. For each opponent who doesn't, you draw a card.",
-  cost: 1,
-  cardNumber: 96,
-  inkable: false,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "e8e8b6146e68fc314030023117c7ad8ef501a416",
-  },
   abilities: [
     {
-      id: "1sb-1",
-      type: "action",
       effect: {
         type: "sequence",
         steps: [
@@ -35,7 +19,23 @@ export const ursulasTrickery: ActionCard = {
           },
         ],
       },
+      id: "1sb-1",
       text: "Each opponent may choose and discard a card. For each opponent who doesn't, you draw a card.",
+      type: "action",
     },
   ],
+  cardNumber: 96,
+  cardType: "action",
+  cost: 1,
+  externalIds: {
+    ravensburger: "e8e8b6146e68fc314030023117c7ad8ef501a416",
+  },
+  franchise: "Little Mermaid",
+  id: "1sb",
+  inkType: ["emerald"],
+  inkable: false,
+  missingTests: true,
+  name: "Ursula’s Trickery",
+  set: "004",
+  text: "Each opponent may choose and discard a card. For each opponent who doesn't, you draw a card.",
 };

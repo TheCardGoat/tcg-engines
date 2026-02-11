@@ -3,137 +3,137 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   beyondTheHorizon,
-//   fredMajorScienceEnthusiast,
-//   louisEndearingAlligator,
-//   madDogKarnagesFirstMate,
-//   napoleonCleverBloodhound,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   BeyondTheHorizon,
+//   FredMajorScienceEnthusiast,
+//   LouisEndearingAlligator,
+//   MadDogKarnagesFirstMate,
+//   NapoleonCleverBloodhound,
 // } from "@lorcanito/lorcana-engine/cards/008";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Beyond The Horizon", () => {
-//   it("Sing Together 7 (Any number of your or your teammates' characters with total cost 7 or more may {E} to sing this song for free.)", async () => {
-//     const testEngine = new TestEngine({
-//       hand: [beyondTheHorizon],
+// Describe("Beyond The Horizon", () => {
+//   It("Sing Together 7 (Any number of your or your teammates' characters with total cost 7 or more may {E} to sing this song for free.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Hand: [beyondTheHorizon],
 //     });
 //
-//     expect(testEngine.getCardModel(beyondTheHorizon).hasSingTogether).toBe(
-//       true,
+//     Expect(testEngine.getCardModel(beyondTheHorizon).hasSingTogether).toBe(
+//       True,
 //     );
 //   });
 //
-//   it("Both Discard their hands", async () => {
-//     const initialHand = [
-//       beyondTheHorizon,
-//       napoleonCleverBloodhound,
-//       louisEndearingAlligator,
-//       madDogKarnagesFirstMate,
-//       fredMajorScienceEnthusiast,
+//   It("Both Discard their hands", async () => {
+//     Const initialHand = [
+//       BeyondTheHorizon,
+//       NapoleonCleverBloodhound,
+//       LouisEndearingAlligator,
+//       MadDogKarnagesFirstMate,
+//       FredMajorScienceEnthusiast,
 //     ];
-//     const testEngine = new TestEngine(
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: beyondTheHorizon.cost,
-//         hand: initialHand,
-//         deck: 10,
+//         Inkwell: beyondTheHorizon.cost,
+//         Hand: initialHand,
+//         Deck: 10,
 //       },
 //       {
-//         hand: 10,
-//         deck: 10,
+//         Hand: 10,
+//         Deck: 10,
 //       },
 //     );
 //
-//     await testEngine.playCard(beyondTheHorizon, { mode: "1" });
+//     Await testEngine.playCard(beyondTheHorizon, { mode: "1" });
 //
-//     expect(testEngine.getZonesCardCount("player_one")).toEqual(
-//       expect.objectContaining({
-//         hand: 3,
-//         deck: 10 - 3,
-//         discard: initialHand.length,
+//     Expect(testEngine.getZonesCardCount("player_one")).toEqual(
+//       Expect.objectContaining({
+//         Hand: 3,
+//         Deck: 10 - 3,
+//         Discard: initialHand.length,
 //       }),
 //     );
-//     expect(testEngine.getZonesCardCount("player_two")).toEqual(
-//       expect.objectContaining({
-//         hand: 3,
-//         deck: 10 - 3,
-//         discard: 10,
-//       }),
-//     );
-//   });
-//
-//   it("Only player discards", async () => {
-//     const initialHand = [
-//       beyondTheHorizon,
-//       napoleonCleverBloodhound,
-//       louisEndearingAlligator,
-//       madDogKarnagesFirstMate,
-//       fredMajorScienceEnthusiast,
-//     ];
-//     const testEngine = new TestEngine(
-//       {
-//         inkwell: beyondTheHorizon.cost,
-//         hand: initialHand,
-//         deck: 10,
-//       },
-//       {
-//         hand: 10,
-//         deck: 10,
-//       },
-//     );
-//
-//     await testEngine.playCard(beyondTheHorizon, { mode: "2" });
-//
-//     expect(testEngine.getZonesCardCount("player_one")).toEqual(
-//       expect.objectContaining({
-//         hand: 3,
-//         deck: 10 - 3,
-//         discard: initialHand.length,
-//       }),
-//     );
-//     expect(testEngine.getZonesCardCount("player_two")).toEqual(
-//       expect.objectContaining({
-//         hand: 10,
-//         deck: 10,
-//         discard: 0,
+//     Expect(testEngine.getZonesCardCount("player_two")).toEqual(
+//       Expect.objectContaining({
+//         Hand: 3,
+//         Deck: 10 - 3,
+//         Discard: 10,
 //       }),
 //     );
 //   });
 //
-//   it("Only opponent discards", async () => {
-//     const initialHand = [
-//       beyondTheHorizon,
-//       napoleonCleverBloodhound,
-//       louisEndearingAlligator,
-//       madDogKarnagesFirstMate,
-//       fredMajorScienceEnthusiast,
+//   It("Only player discards", async () => {
+//     Const initialHand = [
+//       BeyondTheHorizon,
+//       NapoleonCleverBloodhound,
+//       LouisEndearingAlligator,
+//       MadDogKarnagesFirstMate,
+//       FredMajorScienceEnthusiast,
 //     ];
-//     const testEngine = new TestEngine(
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: beyondTheHorizon.cost,
-//         hand: initialHand,
-//         deck: 10,
+//         Inkwell: beyondTheHorizon.cost,
+//         Hand: initialHand,
+//         Deck: 10,
 //       },
 //       {
-//         hand: 10,
-//         deck: 10,
+//         Hand: 10,
+//         Deck: 10,
 //       },
 //     );
 //
-//     await testEngine.playCard(beyondTheHorizon, { mode: "3" });
+//     Await testEngine.playCard(beyondTheHorizon, { mode: "2" });
 //
-//     expect(testEngine.getZonesCardCount("player_one")).toEqual(
-//       expect.objectContaining({
-//         hand: initialHand.length - 1,
-//         deck: 10,
-//         discard: 1,
+//     Expect(testEngine.getZonesCardCount("player_one")).toEqual(
+//       Expect.objectContaining({
+//         Hand: 3,
+//         Deck: 10 - 3,
+//         Discard: initialHand.length,
 //       }),
 //     );
-//     expect(testEngine.getZonesCardCount("player_two")).toEqual(
-//       expect.objectContaining({
-//         hand: 3,
-//         deck: 10 - 3,
-//         discard: 10,
+//     Expect(testEngine.getZonesCardCount("player_two")).toEqual(
+//       Expect.objectContaining({
+//         Hand: 10,
+//         Deck: 10,
+//         Discard: 0,
+//       }),
+//     );
+//   });
+//
+//   It("Only opponent discards", async () => {
+//     Const initialHand = [
+//       BeyondTheHorizon,
+//       NapoleonCleverBloodhound,
+//       LouisEndearingAlligator,
+//       MadDogKarnagesFirstMate,
+//       FredMajorScienceEnthusiast,
+//     ];
+//     Const testEngine = new TestEngine(
+//       {
+//         Inkwell: beyondTheHorizon.cost,
+//         Hand: initialHand,
+//         Deck: 10,
+//       },
+//       {
+//         Hand: 10,
+//         Deck: 10,
+//       },
+//     );
+//
+//     Await testEngine.playCard(beyondTheHorizon, { mode: "3" });
+//
+//     Expect(testEngine.getZonesCardCount("player_one")).toEqual(
+//       Expect.objectContaining({
+//         Hand: initialHand.length - 1,
+//         Deck: 10,
+//         Discard: 1,
+//       }),
+//     );
+//     Expect(testEngine.getZonesCardCount("player_two")).toEqual(
+//       Expect.objectContaining({
+//         Hand: 3,
+//         Deck: 10 - 3,
+//         Discard: 10,
 //       }),
 //     );
 //   });

@@ -1,30 +1,30 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import {
-//   anotherChosenCharacterOfYours,
-//   thisCharacter,
+// Import {
+//   AnotherChosenCharacterOfYours,
+//   ThisCharacter,
 // } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { wheneverQuests } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-// import { chosenPlayerMillXCards } from "@lorcanito/lorcana-engine/effects/effects";
+// Import { wheneverQuests } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import { chosenPlayerMillXCards } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// const searchInTheSwampAbility = wheneverQuests({
-//   name: "SEARCH THE SWAMP",
-//   text: "Whenever this character quests, you may deal 2 damage to another chosen character of yours to put the top 3 cards of chosen player's deck into their discard.",
-//   optional: true,
-//   effects: [
+// Const searchInTheSwampAbility = wheneverQuests({
+//   Name: "SEARCH THE SWAMP",
+//   Text: "Whenever this character quests, you may deal 2 damage to another chosen character of yours to put the top 3 cards of chosen player's deck into their discard.",
+//   Optional: true,
+//   Effects: [
 //     {
-//       type: "damage",
-//       amount: 2,
-//       target: anotherChosenCharacterOfYours,
-//       afterEffect: [
+//       Type: "damage",
+//       Amount: 2,
+//       Target: anotherChosenCharacterOfYours,
+//       AfterEffect: [
 //         {
-//           type: "create-layer-based-on-target",
-//           target: thisCharacter,
-//           effects: [
-//             chosenPlayerMillXCards({
-//               amount: 3,
-//               name: "Search the Swamp",
-//               text: "put the top 3 cards of chosen player's deck into their discard.",
+//           Type: "create-layer-based-on-target",
+//           Target: thisCharacter,
+//           Effects: [
+//             ChosenPlayerMillXCards({
+//               Amount: 3,
+//               Name: "Search the Swamp",
+//               Text: "put the top 3 cards of chosen player's deck into their discard.",
 //             }),
 //           ],
 //         },
@@ -33,26 +33,26 @@
 //   ],
 // });
 //
-// export const madameMedusaDiamondLover: LorcanitoCharacterCard = {
-//   id: "ekw",
-//   name: "Madame Medusa",
-//   title: "Diamond Lover",
-//   characteristics: ["storyborn", "villain"],
-//   text: "SEARCH THE SWAMP Whenever this character quests, you may deal 2 damage to another chosen character of yours to put the top 3 cards of chosen player's deck into their discard.",
-//   type: "character",
-//   abilities: [searchInTheSwampAbility],
-//   inkwell: true,
-//   colors: ["amethyst", "ruby"],
-//   cost: 4,
-//   strength: 3,
-//   willpower: 4,
-//   illustrator: "Roger Perez",
-//   number: 53,
-//   set: "007",
-//   externalIds: {
-//     tcgPlayer: 618696,
+// Export const madameMedusaDiamondLover: LorcanitoCharacterCard = {
+//   Id: "ekw",
+//   Name: "Madame Medusa",
+//   Title: "Diamond Lover",
+//   Characteristics: ["storyborn", "villain"],
+//   Text: "SEARCH THE SWAMP Whenever this character quests, you may deal 2 damage to another chosen character of yours to put the top 3 cards of chosen player's deck into their discard.",
+//   Type: "character",
+//   Abilities: [searchInTheSwampAbility],
+//   Inkwell: true,
+//   Colors: ["amethyst", "ruby"],
+//   Cost: 4,
+//   Strength: 3,
+//   Willpower: 4,
+//   Illustrator: "Roger Perez",
+//   Number: 53,
+//   Set: "007",
+//   ExternalIds: {
+//     TcgPlayer: 618696,
 //   },
-//   rarity: "uncommon",
-//   lore: 1,
+//   Rarity: "uncommon",
+//   Lore: 1,
 // };
 //

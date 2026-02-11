@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { ursulaSeaWitch } from "@lorcanito/lorcana-engine/cards/009/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { ursulaSeaWitch } from "@lorcanito/lorcana-engine/cards/009/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Ursula - Sea Witch", () => {
-//   it.skip("YOU'RE TOO LATE Whenever this character quests, chosen opposing character can't ready at the start of their next turn.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: ursulaSeaWitch.cost,
-//       play: [ursulaSeaWitch],
-//       hand: [ursulaSeaWitch],
+// Describe("Ursula - Sea Witch", () => {
+//   It.skip("YOU'RE TOO LATE Whenever this character quests, chosen opposing character can't ready at the start of their next turn.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: ursulaSeaWitch.cost,
+//       Play: [ursulaSeaWitch],
+//       Hand: [ursulaSeaWitch],
 //     });
 //
-//     await testEngine.playCard(ursulaSeaWitch);
+//     Await testEngine.playCard(ursulaSeaWitch);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

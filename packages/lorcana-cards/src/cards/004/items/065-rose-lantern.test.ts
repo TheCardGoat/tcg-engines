@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { roseLantern } from "@lorcanito/lorcana-engine/cards/004/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { roseLantern } from "@lorcanito/lorcana-engine/cards/004/items/items";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Rose Lantern", () => {
-//   it.skip("MYSTERICAL PETALS  {E}, 2 {I} − Move 1 damage counter from chosen character to chosen opposing character.", () => {
-//     const testStore = new TestStore({
-//       inkwell: roseLantern.cost,
-//       play: [roseLantern],
+// Describe("Rose Lantern", () => {
+//   It.skip("MYSTERICAL PETALS  {E}, 2 {I} − Move 1 damage counter from chosen character to chosen opposing character.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: roseLantern.cost,
+//       Play: [roseLantern],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("play", roseLantern.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("play", roseLantern.id);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

@@ -5,12 +5,7 @@
  */
 
 import type { Cost, Domain } from "@tcg/riftbound-types/abilities/cost-types";
-import {
-  ENERGY_PATTERN,
-  EXHAUST_PATTERN,
-  isValidDomain,
-  POWER_PATTERN,
-} from "../patterns/costs";
+import { ENERGY_PATTERN, EXHAUST_PATTERN, POWER_PATTERN, isValidDomain } from "../patterns/costs";
 
 /**
  * Parse a cost string into a Cost object
@@ -115,14 +110,12 @@ export function parseAdditionalCostText(text: string): Partial<Cost> {
   const hasKillFriendlyUnit = /Kill\s+a\s+friendly\s+unit/i.test(text);
 
   return {
-    ...(recycleMatch
-      ? { recycle: Number.parseInt(recycleMatch[1], 10) }
-      : undefined),
+    ...(recycleMatch ? { recycle: Number.parseInt(recycleMatch[1], 10) } : undefined),
     ...(hasKillFriendlyUnit
       ? {
           kill: {
-            type: "unit" as const,
             controller: "friendly" as const,
+            type: "unit" as const,
           },
         }
       : undefined),
@@ -134,19 +127,14 @@ export function parseAdditionalCostText(text: string): Partial<Cost> {
  */
 export function mergeCosts(base: Cost, additional: Partial<Cost>): Cost {
   return {
-    energy:
-      additional.energy !== undefined
-        ? (base.energy ?? 0) + additional.energy
-        : base.energy,
-    power:
-      additional.power !== undefined
-        ? [...(base.power ?? []), ...additional.power]
-        : base.power,
-    exhaust: additional.exhaust ?? base.exhaust,
-    recycle: additional.recycle ?? base.recycle,
-    kill: additional.kill ?? base.kill,
     discard: additional.discard ?? base.discard,
-    spend: additional.spend ?? base.spend,
+    energy: additional.energy !== undefined ? (base.energy ?? 0) + additional.energy : base.energy,
+    exhaust: additional.exhaust ?? base.exhaust,
+    kill: additional.kill ?? base.kill,
+    power:
+      additional.power !== undefined ? [...(base.power ?? []), ...additional.power] : base.power,
+    recycle: additional.recycle ?? base.recycle,
     returnToHand: additional.returnToHand ?? base.returnToHand,
+    spend: additional.spend ?? base.spend,
   };
 }

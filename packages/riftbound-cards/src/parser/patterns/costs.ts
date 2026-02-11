@@ -49,10 +49,7 @@ export const ENERGY_PATTERN = /:rb_energy_(\d+):/g;
  * @example ":rb_rune_fury:" -> captures "fury"
  * @example ":rb_rune_rainbow:" -> captures "rainbow"
  */
-export const POWER_PATTERN = new RegExp(
-  `:rb_rune_(${DOMAIN_PATTERN_STRING}):`,
-  "g",
-);
+export const POWER_PATTERN = new RegExp(`:rb_rune_(${DOMAIN_PATTERN_STRING}):`, "g");
 
 /**
  * Pattern to match exhaust cost: :rb_exhaust:

@@ -1,60 +1,60 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import {
-//   type ActivatedAbility,
-//   challengerAbility,
-//   exertCharCost,
-//   type GainAbilityStaticAbility,
-//   type ResolutionAbility,
-//   resistAbility,
-//   yourOtherCharactersGet,
+// Import {
+//   Type ActivatedAbility,
+//   ChallengerAbility,
+//   ExertCharCost,
+//   Type GainAbilityStaticAbility,
+//   Type ResolutionAbility,
+//   ResistAbility,
+//   YourOtherCharactersGet,
 // } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { forEachItemYouHaveInPlay } from "@lorcanito/lorcana-engine/abilities/amounts";
-// import { atTheStartOfYourTurn } from "@lorcanito/lorcana-engine/abilities/atTheAbilities";
-// import { yourDamagedCharacters } from "@lorcanito/lorcana-engine/abilities/target";
-// import {
-//   anyTarget,
-//   chosenCharacter,
-//   chosenCharacterOfYours,
-//   chosenDamagedCharacter,
-//   eachOfYourCharacters,
-//   oneOfYourOpponentsCharactersItemsOrLocations,
+// Import { forEachItemYouHaveInPlay } from "@lorcanito/lorcana-engine/abilities/amounts";
+// Import { atTheStartOfYourTurn } from "@lorcanito/lorcana-engine/abilities/atTheAbilities";
+// Import { yourDamagedCharacters } from "@lorcanito/lorcana-engine/abilities/target";
+// Import {
+//   AnyTarget,
+//   ChosenCharacter,
+//   ChosenCharacterOfYours,
+//   ChosenDamagedCharacter,
+//   EachOfYourCharacters,
+//   OneOfYourOpponentsCharactersItemsOrLocations,
 // } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { wheneverIsReturnedToHand } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-// import {
-//   banishChosenItem,
-//   drawACard,
-//   enterPlaysExerted,
-//   mayBanish,
-//   millOpponentXCards,
-//   moveToLocation,
-//   readyAndCantQuest,
-//   removeDamageEffect,
-//   returnChosenCharacterWithStrength,
-//   revealTopOfDeckPutInHandOrDeck,
-//   youGainLore,
-//   youMayDrawThenChooseAndDiscard,
+// Import { wheneverIsReturnedToHand } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// Import {
+//   BanishChosenItem,
+//   DrawACard,
+//   EnterPlaysExerted,
+//   MayBanish,
+//   MillOpponentXCards,
+//   MoveToLocation,
+//   ReadyAndCantQuest,
+//   RemoveDamageEffect,
+//   ReturnChosenCharacterWithStrength,
+//   RevealTopOfDeckPutInHandOrDeck,
+//   YouGainLore,
+//   YouMayDrawThenChooseAndDiscard,
 // } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const noRoomNoRoom: ActivatedAbility = {
-//   type: "activated",
-//   costs: [{ type: "ink", amount: 1 }, { type: "exert" }],
-//   name: "No Room, No Room",
-//   text: "{E}, 1 {I} – Each opponent puts the top card of their deck into their discard.",
-//   effects: millOpponentXCards(1),
+// Export const noRoomNoRoom: ActivatedAbility = {
+//   Type: "activated",
+//   Costs: [{ type: "ink", amount: 1 }, { type: "exert" }],
+//   Name: "No Room, No Room",
+//   Text: "{E}, 1 {I} – Each opponent puts the top card of their deck into their discard.",
+//   Effects: millOpponentXCards(1),
 // };
-// export const makeARescue: ActivatedAbility = {
-//   type: "activated",
-//   costs: [{ type: "ink", amount: 3 }, { type: "exert" }],
-//   name: "Make A Rescue",
-//   text: "Return a Pirate character card from your discard to your hand.",
-//   effects: [
+// Export const makeARescue: ActivatedAbility = {
+//   Type: "activated",
+//   Costs: [{ type: "ink", amount: 3 }, { type: "exert" }],
+//   Name: "Make A Rescue",
+//   Text: "Return a Pirate character card from your discard to your hand.",
+//   Effects: [
 //     {
-//       type: "move",
-//       to: "hand",
-//       target: {
-//         type: "card",
-//         value: 1,
-//         filters: [
+//       Type: "move",
+//       To: "hand",
+//       Target: {
+//         Type: "card",
+//         Value: 1,
+//         Filters: [
 //           { filter: "owner", value: "self" },
 //           { filter: "type", value: ["character"] },
 //           { filter: "characteristics", value: ["pirate"] },
@@ -64,243 +64,243 @@
 //     },
 //   ],
 // };
-// export const faithAndTrust: ActivatedAbility = {
-//   type: "activated",
-//   costs: [{ type: "ink", amount: 2 }, { type: "exert" }],
-//   effects: [
+// Export const faithAndTrust: ActivatedAbility = {
+//   Type: "activated",
+//   Costs: [{ type: "ink", amount: 2 }, { type: "exert" }],
+//   Effects: [
 //     {
-//       type: "ability",
-//       ability: "evasive",
-//       modifier: "add",
-//       duration: "next_turn",
-//       until: true,
-//       target: chosenCharacter,
+//       Type: "ability",
+//       Ability: "evasive",
+//       Modifier: "add",
+//       Duration: "next_turn",
+//       Until: true,
+//       Target: chosenCharacter,
 //     },
 //     {
-//       type: "ability",
-//       ability: "custom",
-//       customAbility: challengerAbility(2),
-//       modifier: "add",
-//       duration: "next_turn",
-//       until: true,
-//       target: chosenCharacter,
+//       Type: "ability",
+//       Ability: "custom",
+//       CustomAbility: challengerAbility(2),
+//       Modifier: "add",
+//       Duration: "next_turn",
+//       Until: true,
+//       Target: chosenCharacter,
 //     },
 //   ],
 // };
-// export const glitteringAccess: ActivatedAbility = {
-//   type: "activated",
-//   costs: [{ type: "ink", amount: 1 }, { type: "exert" }, { type: "banish" }],
-//   effects: readyAndCantQuest(chosenCharacterOfYours),
+// Export const glitteringAccess: ActivatedAbility = {
+//   Type: "activated",
+//   Costs: [{ type: "ink", amount: 1 }, { type: "exert" }, { type: "banish" }],
+//   Effects: readyAndCantQuest(chosenCharacterOfYours),
 // };
-// export const thereYouGo: ActivatedAbility = {
-//   type: "activated",
-//   costs: [{ type: "banish" }],
-//   resolveEffectsIndividually: true,
-//   effects: [removeDamageEffect(2, eachOfYourCharacters, true), drawACard],
+// Export const thereYouGo: ActivatedAbility = {
+//   Type: "activated",
+//   Costs: [{ type: "banish" }],
+//   ResolveEffectsIndividually: true,
+//   Effects: [removeDamageEffect(2, eachOfYourCharacters, true), drawACard],
 // };
-// export const resourceAllocation: ActivatedAbility = {
-//   type: "activated",
-//   costs: [{ type: "ink", amount: 1 }, { type: "banish" }],
-//   effects: [returnChosenCharacterWithStrength(2, "lte")],
+// Export const resourceAllocation: ActivatedAbility = {
+//   Type: "activated",
+//   Costs: [{ type: "ink", amount: 1 }, { type: "banish" }],
+//   Effects: [returnChosenCharacterWithStrength(2, "lte")],
 // };
-// export const tenThousandMedicalProcedures: ActivatedAbility = {
-//   type: "activated",
-//   costs: [{ type: "exert" }],
-//   effects: [
+// Export const tenThousandMedicalProcedures: ActivatedAbility = {
+//   Type: "activated",
+//   Costs: [{ type: "exert" }],
+//   Effects: [
 //     {
-//       type: "modal",
+//       Type: "modal",
 //       // TODO: Get rid of target
-//       target: chosenCharacter,
-//       modes: [
+//       Target: chosenCharacter,
+//       Modes: [
 //         {
-//           id: "1",
-//           text: "Remove up to 1 damage from chosen character.",
-//           effects: [removeDamageEffect(1, chosenCharacter, true)],
+//           Id: "1",
+//           Text: "Remove up to 1 damage from chosen character.",
+//           Effects: [removeDamageEffect(1, chosenCharacter, true)],
 //         },
 //         {
-//           id: "2",
-//           text: "If you have a Robot character in play, remove up to 3 damage from chosen character.",
-//           effects: [removeDamageEffect(3, chosenCharacter, true)],
+//           Id: "2",
+//           Text: "If you have a Robot character in play, remove up to 3 damage from chosen character.",
+//           Effects: [removeDamageEffect(3, chosenCharacter, true)],
 //         },
 //       ],
 //     },
 //   ],
 // };
-// export const spycraft: ActivatedAbility = {
+// Export const spycraft: ActivatedAbility = {
 //   ...youMayDrawThenChooseAndDiscard,
-//   type: "activated",
-//   costs: [{ type: "exert" }],
+//   Type: "activated",
+//   Costs: [{ type: "exert" }],
 // };
-// export const handleWithCare: ActivatedAbility = {
-//   type: "activated",
-//   costs: [{ type: "exert" }, { type: "ink", amount: 2 }],
-//   effects: [
+// Export const handleWithCare: ActivatedAbility = {
+//   Type: "activated",
+//   Costs: [{ type: "exert" }, { type: "ink", amount: 2 }],
+//   Effects: [
 //     {
-//       type: "ability",
-//       ability: "bodyguard",
-//       modifier: "add",
-//       duration: "next_turn",
-//       until: true,
-//       target: chosenCharacter,
+//       Type: "ability",
+//       Ability: "bodyguard",
+//       Modifier: "add",
+//       Duration: "next_turn",
+//       Until: true,
+//       Target: chosenCharacter,
 //     },
 //   ],
 // };
-// export const happyFace: ResolutionAbility = {
-//   type: "resolution",
-//   name: "Happy Face",
-//   text: "This item enters play exerted.",
-//   effects: [enterPlaysExerted],
+// Export const happyFace: ResolutionAbility = {
+//   Type: "resolution",
+//   Name: "Happy Face",
+//   Text: "This item enters play exerted.",
+//   Effects: [enterPlaysExerted],
 // };
-// export const destroy: ActivatedAbility = {
-//   type: "activated",
-//   costs: [{ type: "exert" }, { type: "banish" }],
-//   name: "Destroy!",
-//   text: "Choose one:\n* Banish chosen item.\n* Banish chosen damaged character.",
-//   effects: [
+// Export const destroy: ActivatedAbility = {
+//   Type: "activated",
+//   Costs: [{ type: "exert" }, { type: "banish" }],
+//   Name: "Destroy!",
+//   Text: "Choose one:\n* Banish chosen item.\n* Banish chosen damaged character.",
+//   Effects: [
 //     {
-//       type: "modal",
-//       target: anyTarget,
-//       modes: [
+//       Type: "modal",
+//       Target: anyTarget,
+//       Modes: [
 //         {
-//           id: "1",
-//           text: "Banish chosen item.",
-//           effects: [banishChosenItem],
+//           Id: "1",
+//           Text: "Banish chosen item.",
+//           Effects: [banishChosenItem],
 //         },
 //         {
-//           id: "2",
-//           text: "Banish chosen damaged character.",
-//           effects: [mayBanish(chosenDamagedCharacter)],
+//           Id: "2",
+//           Text: "Banish chosen damaged character.",
+//           Effects: [mayBanish(chosenDamagedCharacter)],
 //         },
 //       ],
 //     },
 //   ],
 // };
-// export const limitlessApplications: ResolutionAbility = {
-//   type: "resolution",
-//   name: "Inspired Tech",
-//   text: "When you play this item, chosen character gets -1 {S} this turn for each item named Microbots you have in play.",
-//   effects: [
+// Export const limitlessApplications: ResolutionAbility = {
+//   Type: "resolution",
+//   Name: "Inspired Tech",
+//   Text: "When you play this item, chosen character gets -1 {S} this turn for each item named Microbots you have in play.",
+//   Effects: [
 //     {
-//       type: "attribute",
-//       attribute: "strength",
-//       amount: forEachItemYouHaveInPlay,
-//       modifier: "subtract",
-//       duration: "turn",
-//       target: chosenCharacter,
+//       Type: "attribute",
+//       Attribute: "strength",
+//       Amount: forEachItemYouHaveInPlay,
+//       Modifier: "subtract",
+//       Duration: "turn",
+//       Target: chosenCharacter,
 //     },
 //   ],
 // };
-// export const makeItSings: ActivatedAbility = {
-//   type: "activated",
-//   costs: [{ type: "banish" }, { type: "ink", amount: 1 }],
-//   name: "Make It Sing",
-//   text: "1 {I}, Banish this item - Chosen character counts as having +3 cost to sing songs this turn.",
-//   effects: [
+// Export const makeItSings: ActivatedAbility = {
+//   Type: "activated",
+//   Costs: [{ type: "banish" }, { type: "ink", amount: 1 }],
+//   Name: "Make It Sing",
+//   Text: "1 {I}, Banish this item - Chosen character counts as having +3 cost to sing songs this turn.",
+//   Effects: [
 //     {
-//       type: "attribute",
-//       attribute: "singCost",
-//       amount: 3,
-//       modifier: "add",
-//       duration: "turn",
-//       target: chosenCharacter,
+//       Type: "attribute",
+//       Attribute: "singCost",
+//       Amount: 3,
+//       Modifier: "add",
+//       Duration: "turn",
+//       Target: chosenCharacter,
 //     },
 //   ],
 // };
-// export const iMadeHer: ActivatedAbility = {
-//   type: "activated",
-//   name: "I Made Her",
-//   text: "{E} one of your characters - Chosen character gets -2 {S} until the start of your next turn.",
-//   costs: [exertCharCost(1)],
-//   effects: [
+// Export const iMadeHer: ActivatedAbility = {
+//   Type: "activated",
+//   Name: "I Made Her",
+//   Text: "{E} one of your characters - Chosen character gets -2 {S} until the start of your next turn.",
+//   Costs: [exertCharCost(1)],
+//   Effects: [
 //     {
-//       type: "attribute",
-//       attribute: "strength",
-//       amount: 2,
-//       modifier: "subtract",
-//       duration: "next_turn",
-//       until: true,
-//       target: chosenCharacter,
+//       Type: "attribute",
+//       Attribute: "strength",
+//       Amount: 2,
+//       Modifier: "subtract",
+//       Duration: "next_turn",
+//       Until: true,
+//       Target: chosenCharacter,
 //     },
 //   ],
 // };
-// export const backFools = wheneverIsReturnedToHand({
-//   name: "Back, Fools!",
-//   text: "Whenever one of your opponents' characters, items, or locations is returned to their hand from play, gain 1 lore.",
-//   target: oneOfYourOpponentsCharactersItemsOrLocations,
-//   from: "play",
-//   effects: [youGainLore(1)],
+// Export const backFools = wheneverIsReturnedToHand({
+//   Name: "Back, Fools!",
+//   Text: "Whenever one of your opponents' characters, items, or locations is returned to their hand from play, gain 1 lore.",
+//   Target: oneOfYourOpponentsCharactersItemsOrLocations,
+//   From: "play",
+//   Effects: [youGainLore(1)],
 // });
-// export const giveThemAShow = atTheStartOfYourTurn({
-//   name: "Give 'Em A Show",
-//   text: "At the start of your turn, you may move a character of yours to a location for free.",
-//   optional: true,
-//   effects: [moveToLocation(chosenCharacterOfYours)],
+// Export const giveThemAShow = atTheStartOfYourTurn({
+//   Name: "Give 'Em A Show",
+//   Text: "At the start of your turn, you may move a character of yours to a location for free.",
+//   Optional: true,
+//   Effects: [moveToLocation(chosenCharacterOfYours)],
 // });
-// export const takeItForASpin: ActivatedAbility = {
-//   type: "activated",
-//   name: "Take It For A Spin",
-//   text: "2 {I} – Chosen character of yours gains Evasive until the start of your next turn. (Only characters with Evasive can challenge them.)",
-//   costs: [{ type: "ink", amount: 2 }],
-//   effects: [
+// Export const takeItForASpin: ActivatedAbility = {
+//   Type: "activated",
+//   Name: "Take It For A Spin",
+//   Text: "2 {I} – Chosen character of yours gains Evasive until the start of your next turn. (Only characters with Evasive can challenge them.)",
+//   Costs: [{ type: "ink", amount: 2 }],
+//   Effects: [
 //     {
-//       type: "ability",
-//       ability: "evasive",
-//       duration: "next_turn",
-//       until: true,
-//       modifier: "add",
-//       target: chosenCharacter,
+//       Type: "ability",
+//       Ability: "evasive",
+//       Duration: "next_turn",
+//       Until: true,
+//       Modifier: "add",
+//       Target: chosenCharacter,
 //     },
 //   ],
 // };
-// export const aSuitableWeapon = yourOtherCharactersGet({
-//   name: "A Suitable Weapon",
-//   text: "Your damaged characters get +1 {S}.",
-//   effects: [
+// Export const aSuitableWeapon = yourOtherCharactersGet({
+//   Name: "A Suitable Weapon",
+//   Text: "Your damaged characters get +1 {S}.",
+//   Effects: [
 //     {
-//       type: "attribute",
-//       attribute: "strength",
-//       amount: 1,
-//       modifier: "add",
-//       target: yourDamagedCharacters,
+//       Type: "attribute",
+//       Attribute: "strength",
+//       Amount: 1,
+//       Modifier: "add",
+//       Target: yourDamagedCharacters,
 //     },
 //   ],
 // });
-// export const simboulOfRoyalty: GainAbilityStaticAbility = {
-//   type: "static",
-//   ability: "gain-ability",
-//   name: "Symbol of Royalty",
-//   text: "Your Prince and King characters gain Resist +1. (Damage dealt to them is reduced by 1.)",
-//   gainedAbility: resistAbility(1),
-//   target: {
-//     type: "card",
-//     value: "all",
-//     excludeSelf: true,
-//     filters: [
+// Export const simboulOfRoyalty: GainAbilityStaticAbility = {
+//   Type: "static",
+//   Ability: "gain-ability",
+//   Name: "Symbol of Royalty",
+//   Text: "Your Prince and King characters gain Resist +1. (Damage dealt to them is reduced by 1.)",
+//   GainedAbility: resistAbility(1),
+//   Target: {
+//     Type: "card",
+//     Value: "all",
+//     ExcludeSelf: true,
+//     Filters: [
 //       { filter: "zone", value: "play" },
 //       { filter: "type", value: "character" },
 //       { filter: "owner", value: "self" },
 //       {
-//         filter: "characteristics",
-//         conjunction: "or",
-//         value: ["prince", "king"],
+//         Filter: "characteristics",
+//         Conjunction: "or",
+//         Value: ["prince", "king"],
 //       },
 //     ],
 //   },
 // };
-// export const royalSearch: ActivatedAbility = {
-//   type: "activated",
-//   costs: [{ type: "exert" }, { type: "ink", amount: 2 }],
-//   name: "Royal Search",
-//   text: "{E}, 2 {I} – Reveal the top card of your deck. If it’s a Prince or King character card, you may put it into your hand. Otherwise, put it on the top of your deck.",
-//   effects: revealTopOfDeckPutInHandOrDeck({
-//     mode: "top",
-//     tutorFilters: [
+// Export const royalSearch: ActivatedAbility = {
+//   Type: "activated",
+//   Costs: [{ type: "exert" }, { type: "ink", amount: 2 }],
+//   Name: "Royal Search",
+//   Text: "{E}, 2 {I} – Reveal the top card of your deck. If it’s a Prince or King character card, you may put it into your hand. Otherwise, put it on the top of your deck.",
+//   Effects: revealTopOfDeckPutInHandOrDeck({
+//     Mode: "top",
+//     TutorFilters: [
 //       { filter: "type", value: "character" },
 //       { filter: "owner", value: "self" },
 //       {
-//         filter: "characteristics",
-//         conjunction: "or",
-//         value: ["prince", "king"],
+//         Filter: "characteristics",
+//         Conjunction: "or",
+//         Value: ["prince", "king"],
 //       },
 //     ],
 //   }),

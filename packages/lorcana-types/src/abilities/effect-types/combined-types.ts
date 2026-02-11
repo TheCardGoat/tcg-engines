@@ -241,7 +241,7 @@ export type StaticEffect =
  */
 export interface GainKeywordsEffect {
   type: "gain-keywords";
-  keywords: Array<{ keyword: string; value?: number }>;
+  keywords: { keyword: string; value?: number }[];
   target: CharacterTarget;
   duration?: EffectDuration;
 }
@@ -533,24 +533,18 @@ export function targetsCharacters(effect: Effect): boolean {
     return false;
   }
 
-  const target = effect.target;
+  const {target} = effect;
 
   // String character targets
   if (typeof target === "string") {
-    return (
-      target.includes("CHARACTER") ||
-      target === "SELF" ||
-      target === "THIS_CHARACTER"
-    );
+    return target.includes("CHARACTER") || target === "SELF" || target === "THIS_CHARACTER";
   }
 
   // Query-based character targets - check for character-specific properties
   // Character queries have 'owner' property or character filters
   if (typeof target === "object" && target !== null) {
     // Check for character query indicators
-    return (
-      "owner" in target || ("filter" in target && Array.isArray(target.filter))
-    );
+    return "owner" in target || ("filter" in target && Array.isArray(target.filter));
   }
 
   return false;

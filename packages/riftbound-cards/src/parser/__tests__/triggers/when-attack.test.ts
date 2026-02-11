@@ -19,32 +19,28 @@ describe("Trigger: When Attack", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
+          effect: expect.objectContaining({
+            amount: 5,
+            split: true,
+            type: "damage",
+          }),
           trigger: expect.objectContaining({
             event: "attack",
           }),
-          effect: expect.objectContaining({
-            type: "damage",
-            amount: 5,
-            split: true,
-          }),
+          type: "triggered",
         }),
       );
     });
 
     it.skip("should parse 'When I attack, deal 2 to an enemy unit here.'", () => {
-      const result = parseAbilities(
-        "When I attack, deal 2 to an enemy unit here.",
-      );
+      const result = parseAbilities("When I attack, deal 2 to an enemy unit here.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
     });
 
     it.skip("should parse 'When I attack, deal 3 to an enemy unit here.'", () => {
-      const result = parseAbilities(
-        "When I attack, deal 3 to an enemy unit here.",
-      );
+      const result = parseAbilities("When I attack, deal 3 to an enemy unit here.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
@@ -59,22 +55,20 @@ describe("Trigger: When Attack", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
+          effect: expect.objectContaining({
+            amount: 1,
+            type: "draw",
+          }),
           trigger: expect.objectContaining({
             event: "attack",
           }),
-          effect: expect.objectContaining({
-            type: "draw",
-            amount: 1,
-          }),
+          type: "triggered",
         }),
       );
     });
 
     it.skip("should parse 'When I attack, draw 1 for each other friendly unit here.'", () => {
-      const result = parseAbilities(
-        "When I attack, draw 1 for each other friendly unit here.",
-      );
+      const result = parseAbilities("When I attack, draw 1 for each other friendly unit here.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
@@ -91,11 +85,11 @@ describe("Trigger: When Attack", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
-          optional: true,
           effect: expect.objectContaining({
             type: "move",
           }),
+          optional: true,
+          type: "triggered",
         }),
       );
     });
@@ -112,19 +106,17 @@ describe("Trigger: When Attack", () => {
 
   describe("might modification effects", () => {
     it.skip("should parse 'When I attack, give me +2 :rb_might: this turn.'", () => {
-      const result = parseAbilities(
-        "When I attack, give me +2 :rb_might: this turn.",
-      );
+      const result = parseAbilities("When I attack, give me +2 :rb_might: this turn.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           effect: expect.objectContaining({
-            type: "modify-might",
             amount: 2,
+            type: "modify-might",
           }),
+          type: "triggered",
         }),
       );
     });
@@ -149,10 +141,10 @@ describe("Trigger: When Attack", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           effect: expect.objectContaining({
             type: "stun",
           }),
+          type: "triggered",
         }),
       );
     });
@@ -168,10 +160,10 @@ describe("Trigger: When Attack", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           effect: expect.objectContaining({
             type: "buff",
           }),
+          type: "triggered",
         }),
       );
     });
@@ -179,18 +171,16 @@ describe("Trigger: When Attack", () => {
 
   describe("token creation effects", () => {
     it.skip("should parse 'When I attack, play a 1 :rb_might: Recruit unit token here.'", () => {
-      const result = parseAbilities(
-        "When I attack, play a 1 :rb_might: Recruit unit token here.",
-      );
+      const result = parseAbilities("When I attack, play a 1 :rb_might: Recruit unit token here.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           effect: expect.objectContaining({
             type: "create-token",
           }),
+          type: "triggered",
         }),
       );
     });
@@ -206,10 +196,10 @@ describe("Trigger: When Attack", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           condition: expect.objectContaining({
             type: "while-alone",
           }),
+          type: "triggered",
         }),
       );
     });
@@ -234,14 +224,14 @@ describe("Trigger: When Attack", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           trigger: expect.objectContaining({
             event: "attack",
             on: expect.objectContaining({
-              type: "unit",
               controller: "friendly",
+              type: "unit",
             }),
           }),
+          type: "triggered",
         }),
       );
     });

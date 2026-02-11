@@ -1,30 +1,15 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const ratiganNefariousCriminal: CharacterCard = {
-  id: "8q4",
-  cardType: "character",
-  name: "Ratigan",
-  version: "Nefarious Criminal",
-  fullName: "Ratigan - Nefarious Criminal",
-  inkType: ["ruby"],
-  franchise: "Great Mouse Detective",
-  set: "007",
-  text: "A MARVELOUS PERFORMANCE Whenever you play an action while this character is exerted, gain 1 lore.",
-  cost: 4,
-  strength: 3,
-  willpower: 3,
-  lore: 1,
-  cardNumber: 143,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "1f72b455c62ec192fa0b46a65aa7a58a6ff89147",
-  },
   abilities: [
     {
+      effect: {
+        type: "gain-lore",
+        amount: 1,
+      },
       id: "8q4-1",
-      type: "triggered",
       name: "A MARVELOUS PERFORMANCE",
+      text: "A MARVELOUS PERFORMANCE Whenever you play an action while this character is exerted, gain 1 lore.",
       trigger: {
         event: "play",
         timing: "whenever",
@@ -33,12 +18,27 @@ export const ratiganNefariousCriminal: CharacterCard = {
           cardType: "action",
         },
       },
-      effect: {
-        type: "gain-lore",
-        amount: 1,
-      },
-      text: "A MARVELOUS PERFORMANCE Whenever you play an action while this character is exerted, gain 1 lore.",
+      type: "triggered",
     },
   ],
+  cardNumber: 143,
+  cardType: "character",
   classifications: ["Storyborn", "Villain"],
+  cost: 4,
+  externalIds: {
+    ravensburger: "1f72b455c62ec192fa0b46a65aa7a58a6ff89147",
+  },
+  franchise: "Great Mouse Detective",
+  fullName: "Ratigan - Nefarious Criminal",
+  id: "8q4",
+  inkType: ["ruby"],
+  inkable: true,
+  lore: 1,
+  missingTests: true,
+  name: "Ratigan",
+  set: "007",
+  strength: 3,
+  text: "A MARVELOUS PERFORMANCE Whenever you play an action while this character is exerted, gain 1 lore.",
+  version: "Nefarious Criminal",
+  willpower: 3,
 };

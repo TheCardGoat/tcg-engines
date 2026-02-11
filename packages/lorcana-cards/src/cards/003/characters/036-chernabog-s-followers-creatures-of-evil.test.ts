@@ -3,49 +3,49 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { chernabogsFollowersCreaturesOfEvil } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { chernabogsFollowersCreaturesOfEvil } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Chernabog's Followers - Creatures of Evil", () => {
-//   describe("**RESTLESS SOULS** Whenever this character quests, you may banish this character to draw a card.", () => {
-//     it("should banish this character to draw a card", () => {
-//       const testStore = new TestStore({
-//         inkwell: chernabogsFollowersCreaturesOfEvil.cost,
-//         play: [chernabogsFollowersCreaturesOfEvil],
-//         deck: 1,
+// Describe("Chernabog's Followers - Creatures of Evil", () => {
+//   Describe("**RESTLESS SOULS** Whenever this character quests, you may banish this character to draw a card.", () => {
+//     It("should banish this character to draw a card", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: chernabogsFollowersCreaturesOfEvil.cost,
+//         Play: [chernabogsFollowersCreaturesOfEvil],
+//         Deck: 1,
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         chernabogsFollowersCreaturesOfEvil.id,
+//         ChernabogsFollowersCreaturesOfEvil.id,
 //       );
 //
-//       cardUnderTest.quest();
+//       CardUnderTest.quest();
 //
-//       testStore.resolveOptionalAbility();
-//       expect(cardUnderTest.zone).toEqual("discard");
-//       expect(testStore.getZonesCardCount().hand).toEqual(1);
+//       TestStore.resolveOptionalAbility();
+//       Expect(cardUnderTest.zone).toEqual("discard");
+//       Expect(testStore.getZonesCardCount().hand).toEqual(1);
 //     });
 //
-//     it("should not banish this character and not draw", () => {
-//       const testStore = new TestStore({
-//         inkwell: chernabogsFollowersCreaturesOfEvil.cost,
-//         play: [chernabogsFollowersCreaturesOfEvil],
-//         deck: 1,
+//     It("should not banish this character and not draw", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: chernabogsFollowersCreaturesOfEvil.cost,
+//         Play: [chernabogsFollowersCreaturesOfEvil],
+//         Deck: 1,
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         chernabogsFollowersCreaturesOfEvil.id,
+//         ChernabogsFollowersCreaturesOfEvil.id,
 //       );
 //
-//       cardUnderTest.quest();
+//       CardUnderTest.quest();
 //
-//       testStore.skipOptionalAbility();
-//       expect(cardUnderTest.zone).toEqual("play");
-//       expect(testStore.getZonesCardCount().hand).toEqual(0);
-//       expect(testStore.getZonesCardCount().deck).toEqual(1);
+//       TestStore.skipOptionalAbility();
+//       Expect(cardUnderTest.zone).toEqual("play");
+//       Expect(testStore.getZonesCardCount().hand).toEqual(0);
+//       Expect(testStore.getZonesCardCount().deck).toEqual(1);
 //     });
 //   });
 // });

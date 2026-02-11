@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { mrSmeeEfficientCaptain } from "@lorcanito/lorcana-engine/cards/007/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { mrSmeeEfficientCaptain } from "@lorcanito/lorcana-engine/cards/007/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Mr. Smee - Efficient Captain", () => {
-//   it.skip("PIPE UP THE CREW Whenever you play an action that isn’t a song, you may ready chosen Pirate character.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: mrSmeeEfficientCaptain.cost,
-//       play: [mrSmeeEfficientCaptain],
-//       hand: [mrSmeeEfficientCaptain],
+// Describe("Mr. Smee - Efficient Captain", () => {
+//   It.skip("PIPE UP THE CREW Whenever you play an action that isn’t a song, you may ready chosen Pirate character.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: mrSmeeEfficientCaptain.cost,
+//       Play: [mrSmeeEfficientCaptain],
+//       Hand: [mrSmeeEfficientCaptain],
 //     });
 //
-//     await testEngine.playCard(mrSmeeEfficientCaptain);
+//     Await testEngine.playCard(mrSmeeEfficientCaptain);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

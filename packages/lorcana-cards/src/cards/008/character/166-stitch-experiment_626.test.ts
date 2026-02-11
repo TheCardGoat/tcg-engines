@@ -3,91 +3,91 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   arthurDeterminedSquire,
-//   roquefortLockExpert,
-//   stitchExperiment_626,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   ArthurDeterminedSquire,
+//   RoquefortLockExpert,
+//   StitchExperiment_626,
 // } from "@lorcanito/lorcana-engine/cards/008";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Stitch - Experiment 626", () => {
-//   it("SO NAUGHTY When you play this character, each opponent puts the top card of their deck into their inkwell.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Stitch - Experiment 626", () => {
+//   It("SO NAUGHTY When you play this character, each opponent puts the top card of their deck into their inkwell.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: stitchExperiment_626.cost,
-//         hand: [stitchExperiment_626],
-//         deck: 10,
+//         Inkwell: stitchExperiment_626.cost,
+//         Hand: [stitchExperiment_626],
+//         Deck: 10,
 //       },
 //       {
-//         deck: 10,
+//         Deck: 10,
 //       },
 //     );
 //
-//     expect(testEngine.getZonesCardCount("player_two")).toEqual(
-//       expect.objectContaining({
-//         deck: 10,
-//         inkwell: 0,
+//     Expect(testEngine.getZonesCardCount("player_two")).toEqual(
+//       Expect.objectContaining({
+//         Deck: 10,
+//         Inkwell: 0,
 //       }),
 //     );
-//     expect(testEngine.getZonesCardCount("player_one")).toEqual(
-//       expect.objectContaining({
-//         deck: 10,
-//         inkwell: stitchExperiment_626.cost,
+//     Expect(testEngine.getZonesCardCount("player_one")).toEqual(
+//       Expect.objectContaining({
+//         Deck: 10,
+//         Inkwell: stitchExperiment_626.cost,
 //       }),
 //     );
-//     await testEngine.playCard(stitchExperiment_626);
-//     expect(testEngine.getZonesCardCount("player_two")).toEqual(
-//       expect.objectContaining({
-//         deck: 9,
-//         inkwell: 1,
+//     Await testEngine.playCard(stitchExperiment_626);
+//     Expect(testEngine.getZonesCardCount("player_two")).toEqual(
+//       Expect.objectContaining({
+//         Deck: 9,
+//         Inkwell: 1,
 //       }),
 //     );
-//     expect(testEngine.getZonesCardCount("player_one")).toEqual(
-//       expect.objectContaining({
-//         deck: 10,
-//         inkwell: stitchExperiment_626.cost,
+//     Expect(testEngine.getZonesCardCount("player_one")).toEqual(
+//       Expect.objectContaining({
+//         Deck: 10,
+//         Inkwell: stitchExperiment_626.cost,
 //       }),
 //     );
 //   });
 //
-//   it("STEALTH MODE At the start of your turn, if this card is in your discard, you may choose and discard a card with {IW} to play him for free and he enters play exerted.", async () => {
-//     const testEngine = new TestEngine({
-//       hand: [arthurDeterminedSquire, roquefortLockExpert],
-//       discard: [stitchExperiment_626],
+//   It("STEALTH MODE At the start of your turn, if this card is in your discard, you may choose and discard a card with {IW} to play him for free and he enters play exerted.", async () => {
+//     Const testEngine = new TestEngine({
+//       Hand: [arthurDeterminedSquire, roquefortLockExpert],
+//       Discard: [stitchExperiment_626],
 //     });
 //
-//     await testEngine.passTurn();
-//     await testEngine.passTurn();
+//     Await testEngine.passTurn();
+//     Await testEngine.passTurn();
 //
-//     await testEngine.acceptOptionalLayer();
-//     await testEngine.resolveTopOfStack({ targets: [arthurDeterminedSquire] });
+//     Await testEngine.acceptOptionalLayer();
+//     Await testEngine.resolveTopOfStack({ targets: [arthurDeterminedSquire] });
 //
-//     expect(testEngine.getCardModel(arthurDeterminedSquire).zone).toEqual(
+//     Expect(testEngine.getCardModel(arthurDeterminedSquire).zone).toEqual(
 //       "discard",
 //     );
-//     expect(testEngine.getCardModel(stitchExperiment_626).zone).toEqual("play");
-//     expect(testEngine.getCardModel(stitchExperiment_626).exerted).toEqual(true);
+//     Expect(testEngine.getCardModel(stitchExperiment_626).zone).toEqual("play");
+//     Expect(testEngine.getCardModel(stitchExperiment_626).exerted).toEqual(true);
 //   });
 //
-//   it("STEALTH MODE - Cancelling effect", async () => {
-//     const testEngine = new TestEngine({
-//       hand: [arthurDeterminedSquire],
-//       discard: [stitchExperiment_626],
+//   It("STEALTH MODE - Cancelling effect", async () => {
+//     Const testEngine = new TestEngine({
+//       Hand: [arthurDeterminedSquire],
+//       Discard: [stitchExperiment_626],
 //     });
 //
-//     await testEngine.passTurn();
-//     await testEngine.passTurn();
+//     Await testEngine.passTurn();
+//     Await testEngine.passTurn();
 //
-//     await testEngine.skipTopOfStack();
+//     Await testEngine.skipTopOfStack();
 //
-//     expect(testEngine.getCardModel(arthurDeterminedSquire).zone).toEqual(
+//     Expect(testEngine.getCardModel(arthurDeterminedSquire).zone).toEqual(
 //       "hand",
 //     );
-//     expect(testEngine.getCardModel(stitchExperiment_626).zone).toEqual(
+//     Expect(testEngine.getCardModel(stitchExperiment_626).zone).toEqual(
 //       "discard",
 //     );
-//     expect(testEngine.stackLayers).toHaveLength(0);
+//     Expect(testEngine.stackLayers).toHaveLength(0);
 //   });
 // });
 //

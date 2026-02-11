@@ -3,21 +3,21 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { ticktockEverpresentPursuer } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { ticktockEverpresentPursuer } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Tick-Tock - Ever-Present Pursuer", () => {
-//   it("**Evasive** _(Only characters with Evasive can challenge this character.)_", () => {
-//     const testStore = new TestStore({
-//       play: [ticktockEverpresentPursuer],
+// Describe("Tick-Tock - Ever-Present Pursuer", () => {
+//   It("**Evasive** _(Only characters with Evasive can challenge this character.)_", () => {
+//     Const testStore = new TestStore({
+//       Play: [ticktockEverpresentPursuer],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       ticktockEverpresentPursuer.id,
+//       TicktockEverpresentPursuer.id,
 //     );
-//     expect(cardUnderTest.hasEvasive).toBe(true);
+//     Expect(cardUnderTest.hasEvasive).toBe(true);
 //   });
 // });
 //

@@ -5,9 +5,9 @@ import { whiteRabbitundefined } from "./068-white-rabbit-pocket-watch";
 describe("White Rabbit - undefined", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [whiteRabbitPocketWatch] });
-  //   expect(testEngine.getCardModel(whiteRabbitPocketWatch).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [whiteRabbitPocketWatch] });
+  //   Expect(testEngine.getCardModel(whiteRabbitPocketWatch).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -16,28 +16,28 @@ describe("White Rabbit - undefined", () => {
 // /**
 //  * @jest-environment node
 //  */
-// import { describe, expect, it } from "@jest/globals";
-// import { moanaOfMotunui } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { whiteRabbitPocketWatch } from "@lorcanito/lorcana-engine/cards/001/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { moanaOfMotunui } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { whiteRabbitPocketWatch } from "@lorcanito/lorcana-engine/cards/001/items/items";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("White Rabbit's Pocket Watch", () => {
-//   it("I'm late - Chosen character gains **Rush** this turn.", () => {
-//     const testStore = new TestStore({
-//       inkwell: 1,
-//       play: [whiteRabbitPocketWatch, moanaOfMotunui],
+// Describe("White Rabbit's Pocket Watch", () => {
+//   It("I'm late - Chosen character gains **Rush** this turn.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: 1,
+//       Play: [whiteRabbitPocketWatch, moanaOfMotunui],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       whiteRabbitPocketWatch.id,
+//       WhiteRabbitPocketWatch.id,
 //     );
-//     const target = testStore.getByZoneAndId("play", moanaOfMotunui.id);
+//     Const target = testStore.getByZoneAndId("play", moanaOfMotunui.id);
 //
-//     cardUnderTest.activate();
-//     testStore.resolveTopOfStack({ targetId: target.instanceId });
+//     CardUnderTest.activate();
+//     TestStore.resolveTopOfStack({ targetId: target.instanceId });
 //
-//     expect(target.hasRush).toEqual(true);
+//     Expect(target.hasRush).toEqual(true);
 //   });
 // });
 //

@@ -3,58 +3,58 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   miloThatchCleverCartographer,
-//   starkeyDeviousPirate,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   MiloThatchCleverCartographer,
+//   StarkeyDeviousPirate,
 // } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { thebesTheBigOlive } from "@lorcanito/lorcana-engine/cards/004/locations/locations";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { thebesTheBigOlive } from "@lorcanito/lorcana-engine/cards/004/locations/locations";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Thebes - The Big Olive", () => {
-//   it("During your turn, whenever a character banishes another character in a challenge while here, you gain 2 lore.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Thebes - The Big Olive", () => {
+//   It("During your turn, whenever a character banishes another character in a challenge while here, you gain 2 lore.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: thebesTheBigOlive.moveCost,
-//         play: [starkeyDeviousPirate, thebesTheBigOlive],
+//         Inkwell: thebesTheBigOlive.moveCost,
+//         Play: [starkeyDeviousPirate, thebesTheBigOlive],
 //       },
 //       {
-//         play: [miloThatchCleverCartographer],
+//         Play: [miloThatchCleverCartographer],
 //       },
 //     );
 //
-//     await testEngine.moveToLocation({
-//       location: thebesTheBigOlive,
-//       character: starkeyDeviousPirate,
+//     Await testEngine.moveToLocation({
+//       Location: thebesTheBigOlive,
+//       Character: starkeyDeviousPirate,
 //     });
-//     await testEngine.tapCard(miloThatchCleverCartographer);
+//     Await testEngine.tapCard(miloThatchCleverCartographer);
 //
-//     expect(testEngine.getLoreForPlayer("player_one")).toBe(0);
-//     await testEngine.challenge({
-//       attacker: starkeyDeviousPirate,
-//       defender: miloThatchCleverCartographer,
+//     Expect(testEngine.getLoreForPlayer("player_one")).toBe(0);
+//     Await testEngine.challenge({
+//       Attacker: starkeyDeviousPirate,
+//       Defender: miloThatchCleverCartographer,
 //     });
-//     expect(testEngine.getLoreForPlayer("player_one")).toBe(2);
+//     Expect(testEngine.getLoreForPlayer("player_one")).toBe(2);
 //   });
 //
-//   it("Doesnt trigger when characters are not in the location", async () => {
-//     const testEngine = new TestEngine(
+//   It("Doesnt trigger when characters are not in the location", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         play: [starkeyDeviousPirate, thebesTheBigOlive],
+//         Play: [starkeyDeviousPirate, thebesTheBigOlive],
 //       },
 //       {
-//         play: [miloThatchCleverCartographer],
+//         Play: [miloThatchCleverCartographer],
 //       },
 //     );
 //
-//     await testEngine.tapCard(miloThatchCleverCartographer);
+//     Await testEngine.tapCard(miloThatchCleverCartographer);
 //
-//     expect(testEngine.getLoreForPlayer("player_one")).toBe(0);
-//     await testEngine.challenge({
-//       attacker: starkeyDeviousPirate,
-//       defender: miloThatchCleverCartographer,
+//     Expect(testEngine.getLoreForPlayer("player_one")).toBe(0);
+//     Await testEngine.challenge({
+//       Attacker: starkeyDeviousPirate,
+//       Defender: miloThatchCleverCartographer,
 //     });
-//     expect(testEngine.getLoreForPlayer("player_one")).toBe(0);
+//     Expect(testEngine.getLoreForPlayer("player_one")).toBe(0);
 //   });
 // });
 //

@@ -3,112 +3,112 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   cinderellaGentleAndKind,
-//   moanaOfMotunui,
-//   stichtNewDog,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   CinderellaGentleAndKind,
+//   MoanaOfMotunui,
+//   StichtNewDog,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { fairyGodmothersWand } from "@lorcanito/lorcana-engine/cards/010/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { fairyGodmothersWand } from "@lorcanito/lorcana-engine/cards/010/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Fairy Godmother's Wand", () => {
-//   it("ONLY TILL MIDNIGHT - chosen Princess character gains Ward until the start of your next turn", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Fairy Godmother's Wand", () => {
+//   It("ONLY TILL MIDNIGHT - chosen Princess character gains Ward until the start of your next turn", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: fairyGodmothersWand.cost,
-//         play: [fairyGodmothersWand, moanaOfMotunui],
-//         hand: [cinderellaGentleAndKind],
+//         Inkwell: fairyGodmothersWand.cost,
+//         Play: [fairyGodmothersWand, moanaOfMotunui],
+//         Hand: [cinderellaGentleAndKind],
 //       },
 //       {},
 //     );
 //
-//     const princessTarget = testEngine.getCardModel(moanaOfMotunui);
-//     const cardToInkwell = testEngine.getCardModel(cinderellaGentleAndKind);
+//     Const princessTarget = testEngine.getCardModel(moanaOfMotunui);
+//     Const cardToInkwell = testEngine.getCardModel(cinderellaGentleAndKind);
 //
-//     expect(princessTarget.hasWard).toBe(false);
+//     Expect(princessTarget.hasWard).toBe(false);
 //
 //     // Put a card into inkwell during our turn
-//     await testEngine.putIntoInkwell(cardToInkwell);
+//     Await testEngine.putIntoInkwell(cardToInkwell);
 //
 //     // Resolve optional ability
-//     await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveOptionalAbility();
 //
 //     // Choose the Princess target
-//     await testEngine.resolveTopOfStack({ targets: [princessTarget] });
+//     Await testEngine.resolveTopOfStack({ targets: [princessTarget] });
 //
 //     // Princess should have Ward now
-//     expect(princessTarget.hasWard).toBe(true);
+//     Expect(princessTarget.hasWard).toBe(true);
 //
 //     // Pass to opponent's turn
-//     testEngine.passTurn();
+//     TestEngine.passTurn();
 //
 //     // Princess should still have Ward during opponent's turn
-//     expect(princessTarget.hasWard).toBe(true);
+//     Expect(princessTarget.hasWard).toBe(true);
 //
 //     // Pass back to our turn (start of next turn)
-//     testEngine.passTurn();
+//     TestEngine.passTurn();
 //
 //     // Ward should be removed at the start of our next turn
-//     expect(princessTarget.hasWard).toBe(false);
+//     Expect(princessTarget.hasWard).toBe(false);
 //   });
 //
-//   it("ONLY TILL MIDNIGHT - should only trigger during your turn", async () => {
-//     const testEngine = new TestEngine(
+//   It("ONLY TILL MIDNIGHT - should only trigger during your turn", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: fairyGodmothersWand.cost,
-//         play: [fairyGodmothersWand],
+//         Inkwell: fairyGodmothersWand.cost,
+//         Play: [fairyGodmothersWand],
 //       },
 //       {
-//         hand: [cinderellaGentleAndKind],
-//         play: [moanaOfMotunui],
+//         Hand: [cinderellaGentleAndKind],
+//         Play: [moanaOfMotunui],
 //       },
 //     );
 //
-//     const princessTarget = testEngine.getCardModel(moanaOfMotunui, 1);
-//     const cardToInkwell = testEngine.getCardModel(cinderellaGentleAndKind, 1);
+//     Const princessTarget = testEngine.getCardModel(moanaOfMotunui, 1);
+//     Const cardToInkwell = testEngine.getCardModel(cinderellaGentleAndKind, 1);
 //
 //     // Pass to opponent's turn
-//     testEngine.passTurn();
+//     TestEngine.passTurn();
 //
-//     expect(princessTarget.hasWard).toBe(false);
+//     Expect(princessTarget.hasWard).toBe(false);
 //
 //     // Put a card into inkwell during opponent's turn
-//     await testEngine.putIntoInkwell(cardToInkwell);
+//     Await testEngine.putIntoInkwell(cardToInkwell);
 //
 //     // Ability should not trigger (no optional ability to resolve)
-//     expect(princessTarget.hasWard).toBe(false);
+//     Expect(princessTarget.hasWard).toBe(false);
 //   });
 //
-//   it("ONLY TILL MIDNIGHT - should only target Princess characters of yours", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: fairyGodmothersWand.cost,
-//       play: [fairyGodmothersWand, stichtNewDog, moanaOfMotunui],
-//       hand: [cinderellaGentleAndKind],
+//   It("ONLY TILL MIDNIGHT - should only target Princess characters of yours", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: fairyGodmothersWand.cost,
+//       Play: [fairyGodmothersWand, stichtNewDog, moanaOfMotunui],
+//       Hand: [cinderellaGentleAndKind],
 //     });
 //
-//     const nonPrincessChar = testEngine.getCardModel(stichtNewDog);
-//     const princessChar = testEngine.getCardModel(moanaOfMotunui);
-//     const cardToInkwell = testEngine.getCardModel(cinderellaGentleAndKind);
+//     Const nonPrincessChar = testEngine.getCardModel(stichtNewDog);
+//     Const princessChar = testEngine.getCardModel(moanaOfMotunui);
+//     Const cardToInkwell = testEngine.getCardModel(cinderellaGentleAndKind);
 //
-//     expect(nonPrincessChar.hasWard).toBe(false);
-//     expect(princessChar.hasWard).toBe(false);
+//     Expect(nonPrincessChar.hasWard).toBe(false);
+//     Expect(princessChar.hasWard).toBe(false);
 //
 //     // Put a card into inkwell
-//     await testEngine.putIntoInkwell(cardToInkwell);
+//     Await testEngine.putIntoInkwell(cardToInkwell);
 //
 //     // Resolve optional ability
-//     await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveOptionalAbility();
 //
 //     // Try to target non-Princess character - should fail
-//     await expect(
-//       testEngine.resolveTopOfStack({ targets: [nonPrincessChar] }),
+//     Await expect(
+//       TestEngine.resolveTopOfStack({ targets: [nonPrincessChar] }),
 //     ).rejects.toThrow();
 //
 //     // But should work with Princess character
-//     await testEngine.resolveTopOfStack({ targets: [princessChar] });
-//     expect(princessChar.hasWard).toBe(true);
-//     expect(nonPrincessChar.hasWard).toBe(false);
+//     Await testEngine.resolveTopOfStack({ targets: [princessChar] });
+//     Expect(princessChar.hasWard).toBe(true);
+//     Expect(nonPrincessChar.hasWard).toBe(false);
 //   });
 // });
 //

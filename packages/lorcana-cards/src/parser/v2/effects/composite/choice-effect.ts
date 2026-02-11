@@ -173,18 +173,18 @@ function parseFromText(text: string): ChoiceEffect | null {
 
   for (let i = 0; i < options.length; i++) {
     const option = options[i];
-    logger.debug("Parsing choice option", { optionIndex: i, option });
+    logger.debug("Parsing choice option", { option, optionIndex: i });
 
     const effect = parseAtomicEffect(option);
     if (effect) {
       effects.push(effect);
       labels.push(option);
       logger.debug("Successfully parsed choice option", {
-        optionIndex: i,
         effect,
+        optionIndex: i,
       });
     } else {
-      logger.warn("Failed to parse choice option", { optionIndex: i, option });
+      logger.warn("Failed to parse choice option", { option, optionIndex: i });
       // Continue parsing other options
     }
   }
@@ -198,14 +198,14 @@ function parseFromText(text: string): ChoiceEffect | null {
   }
 
   logger.info("Parsed choice effect", {
-    totalOptions: options.length,
     parsedOptions: effects.length,
+    totalOptions: options.length,
   });
 
   return {
-    type: "choice",
-    options: effects,
     optionLabels: labels,
+    options: effects,
+    type: "choice",
   };
 }
 
@@ -222,14 +222,14 @@ function parseFromCst(_ctx: CstNode): ChoiceEffect | null {
  * Choice effect parser implementation
  */
 export const choiceEffectParser: EffectParser = {
-  pattern: /choose\s+one[\s:−-]+/i,
   description:
     "Parses choice effects where player selects one option (e.g., 'Choose one: Deal 3 damage; or gain 2 lore')",
-
   parse: (input: CstNode | string): ChoiceEffect | null => {
     if (typeof input === "string") {
       return parseFromText(input);
     }
     return parseFromCst(input);
   },
+
+  pattern: /choose\s+one[\s:−-]+/i,
 };

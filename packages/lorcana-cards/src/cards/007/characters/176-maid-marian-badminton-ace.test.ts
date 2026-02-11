@@ -3,59 +3,59 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { goonsMaleficent } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { goofyFlyingFool } from "@lorcanito/lorcana-engine/cards/006";
-// import {
-//   ladyKluckProtectiveConfidant,
-//   maidMarianBadmintonAce,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { goonsMaleficent } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { goofyFlyingFool } from "@lorcanito/lorcana-engine/cards/006";
+// Import {
+//   LadyKluckProtectiveConfidant,
+//   MaidMarianBadmintonAce,
 // } from "@lorcanito/lorcana-engine/cards/007";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Maid Marian - Badminton Ace", () => {
-//   it("During an opponent’s turn, whenever one of your Ally characters is damaged, deal 1 damage to chosen opposing character.", async () => {
-//     const testStore = new TestStore(
+// Describe("Maid Marian - Badminton Ace", () => {
+//   It("During an opponent’s turn, whenever one of your Ally characters is damaged, deal 1 damage to chosen opposing character.", async () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: goofyFlyingFool.cost,
-//         play: [goofyFlyingFool],
+//         Inkwell: goofyFlyingFool.cost,
+//         Play: [goofyFlyingFool],
 //       },
 //       {
-//         inkwell: maidMarianBadmintonAce.cost,
-//         play: [maidMarianBadmintonAce, goonsMaleficent],
-//         hand: [],
+//         Inkwell: maidMarianBadmintonAce.cost,
+//         Play: [maidMarianBadmintonAce, goonsMaleficent],
+//         Hand: [],
 //       },
 //     );
-//     const allyToDamage = testStore.getCard(goonsMaleficent);
-//     const goodShotTarget = testStore.getCard(goofyFlyingFool);
+//     Const allyToDamage = testStore.getCard(goonsMaleficent);
+//     Const goodShotTarget = testStore.getCard(goofyFlyingFool);
 //
-//     allyToDamage.updateCardMeta({ exerted: true });
+//     AllyToDamage.updateCardMeta({ exerted: true });
 //
-//     goodShotTarget.challenge(allyToDamage);
+//     GoodShotTarget.challenge(allyToDamage);
 //
-//     testStore.changePlayer("player_two");
-//     testStore.resolveTopOfStack({ targets: [goodShotTarget] });
-//     expect(goodShotTarget.damage).toBe(goonsMaleficent.strength + 1);
+//     TestStore.changePlayer("player_two");
+//     TestStore.resolveTopOfStack({ targets: [goodShotTarget] });
+//     Expect(goodShotTarget.damage).toBe(goonsMaleficent.strength + 1);
 //   });
 //
-//   it("Your characters named Lady Kluck gain Resist +1. (Damage dealt to them is reduced by 1.)", async () => {
-//     const testEngine = new TestEngine(
+//   It("Your characters named Lady Kluck gain Resist +1. (Damage dealt to them is reduced by 1.)", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: goonsMaleficent.cost,
-//         play: [goonsMaleficent],
+//         Inkwell: goonsMaleficent.cost,
+//         Play: [goonsMaleficent],
 //       },
 //       {
-//         inkwell: maidMarianBadmintonAce.cost,
-//         play: [maidMarianBadmintonAce, ladyKluckProtectiveConfidant],
+//         Inkwell: maidMarianBadmintonAce.cost,
+//         Play: [maidMarianBadmintonAce, ladyKluckProtectiveConfidant],
 //       },
 //     );
 //
-//     const kluck = testEngine.getCardModel(ladyKluckProtectiveConfidant);
-//     kluck.updateCardMeta({ exerted: true });
+//     Const kluck = testEngine.getCardModel(ladyKluckProtectiveConfidant);
+//     Kluck.updateCardMeta({ exerted: true });
 //
-//     const attacker = testEngine.getCardModel(goonsMaleficent);
-//     attacker.challenge(kluck);
-//     expect(kluck.damage).toBe(goonsMaleficent.strength - 1);
+//     Const attacker = testEngine.getCardModel(goonsMaleficent);
+//     Attacker.challenge(kluck);
+//     Expect(kluck.damage).toBe(goonsMaleficent.strength - 1);
 //   });
 // });
 //

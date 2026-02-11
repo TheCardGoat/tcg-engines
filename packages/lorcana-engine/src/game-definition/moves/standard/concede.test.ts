@@ -1,18 +1,14 @@
 import { afterEach, beforeEach, describe, expect, it } from "bun:test";
 import { createPlayerId } from "@tcg/core";
-import {
-  LorcanaTestEngine,
-  PLAYER_ONE,
-  PLAYER_TWO,
-} from "../../../testing/lorcana-test-engine";
+import { LorcanaTestEngine, PLAYER_ONE, PLAYER_TWO } from "../../../testing/lorcana-test-engine";
 
 describe("Move: Concede", () => {
   let testEngine: LorcanaTestEngine;
 
   beforeEach(() => {
     testEngine = new LorcanaTestEngine(
-      { hand: 7, deck: 10 },
-      { hand: 7, deck: 10 },
+      { deck: 10, hand: 7 },
+      { deck: 10, hand: 7 },
       { skipPreGame: true },
     );
   });
@@ -28,8 +24,8 @@ describe("Move: Concede", () => {
       // Player one concedes
       testEngine.changeActivePlayer(PLAYER_ONE);
       const result = testEngine.engine.executeMove("concede", {
-        playerId: createPlayerId(PLAYER_ONE),
         params: {},
+        playerId: createPlayerId(PLAYER_ONE),
       });
 
       expect(result.success).toBe(true);
@@ -47,8 +43,8 @@ describe("Move: Concede", () => {
       // Player two concedes
       testEngine.changeActivePlayer(PLAYER_TWO);
       const result = testEngine.engine.executeMove("concede", {
-        playerId: createPlayerId(PLAYER_TWO),
         params: {},
+        playerId: createPlayerId(PLAYER_TWO),
       });
 
       expect(result.success).toBe(true);
@@ -63,8 +59,8 @@ describe("Move: Concede", () => {
       // Player one concedes
       testEngine.changeActivePlayer(PLAYER_ONE);
       const result = testEngine.engine.executeMove("concede", {
-        playerId: createPlayerId(PLAYER_ONE),
         params: {},
+        playerId: createPlayerId(PLAYER_ONE),
       });
 
       expect(result.success).toBe(true);
@@ -79,8 +75,8 @@ describe("Move: Concede", () => {
       // Player two concedes
       testEngine.changeActivePlayer(PLAYER_TWO);
       const result = testEngine.engine.executeMove("concede", {
-        playerId: createPlayerId(PLAYER_TWO),
         params: {},
+        playerId: createPlayerId(PLAYER_TWO),
       });
 
       expect(result.success).toBe(true);
@@ -99,8 +95,8 @@ describe("Move: Concede", () => {
       // Player one concedes
       testEngine.changeActivePlayer(PLAYER_ONE);
       const concedeResult = testEngine.engine.executeMove("concede", {
-        playerId: createPlayerId(PLAYER_ONE),
         params: {},
+        playerId: createPlayerId(PLAYER_ONE),
       });
 
       // Verify concede succeeded
@@ -110,8 +106,8 @@ describe("Move: Concede", () => {
       // Try to execute another move
       testEngine.changeActivePlayer(PLAYER_TWO);
       const result = testEngine.engine.executeMove("passTurn", {
-        playerId: createPlayerId(PLAYER_TWO),
         params: {},
+        playerId: createPlayerId(PLAYER_TWO),
       });
 
       expect(result.success).toBe(false);
@@ -125,8 +121,8 @@ describe("Move: Concede", () => {
       // Concede during main phase (default)
       testEngine.changeActivePlayer(PLAYER_ONE);
       const result = testEngine.engine.executeMove("concede", {
-        playerId: createPlayerId(PLAYER_ONE),
         params: {},
+        playerId: createPlayerId(PLAYER_ONE),
       });
 
       expect(result.success).toBe(true);
@@ -140,15 +136,15 @@ describe("Move: Concede", () => {
       // First player concedes
       testEngine.changeActivePlayer(PLAYER_ONE);
       testEngine.engine.executeMove("concede", {
-        playerId: createPlayerId(PLAYER_ONE),
         params: {},
+        playerId: createPlayerId(PLAYER_ONE),
       });
 
       // Try to concede again
       testEngine.changeActivePlayer(PLAYER_TWO);
       const result = testEngine.engine.executeMove("concede", {
-        playerId: createPlayerId(PLAYER_TWO),
         params: {},
+        playerId: createPlayerId(PLAYER_TWO),
       });
 
       expect(result.success).toBe(false);
@@ -160,16 +156,16 @@ describe("Move: Concede", () => {
     it("should handle concede when player has no cards", () => {
       // Setup: Create a game where player one has no cards in any zone
       const emptyTestEngine = new LorcanaTestEngine(
-        { hand: 0, deck: 0 }, // Player one has no cards
-        { hand: 7, deck: 10 }, // Player two has cards
+        { deck: 0, hand: 0 }, // Player one has no cards
+        { deck: 10, hand: 7 }, // Player two has cards
         { skipPreGame: true },
       );
 
       // Player one (with no cards) concedes
       emptyTestEngine.changeActivePlayer(PLAYER_ONE);
       const result = emptyTestEngine.engine.executeMove("concede", {
-        playerId: createPlayerId(PLAYER_ONE),
         params: {},
+        playerId: createPlayerId(PLAYER_ONE),
       });
 
       expect(result.success).toBe(true);

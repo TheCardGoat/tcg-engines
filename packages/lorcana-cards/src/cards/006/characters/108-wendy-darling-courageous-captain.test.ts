@@ -3,45 +3,45 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   stitchAlienBuccaneer,
-//   wendyDarlingCourageousCaptain,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   StitchAlienBuccaneer,
+//   WendyDarlingCourageousCaptain,
 // } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Wendy Darling - Courageous Captain", () => {
-//   it("Evasive (Only characters with Evasive can challenge this character.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [wendyDarlingCourageousCaptain],
+// Describe("Wendy Darling - Courageous Captain", () => {
+//   It("Evasive (Only characters with Evasive can challenge this character.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [wendyDarlingCourageousCaptain],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(
-//       wendyDarlingCourageousCaptain,
+//     Const cardUnderTest = testEngine.getCardModel(
+//       WendyDarlingCourageousCaptain,
 //     );
-//     expect(cardUnderTest.hasEvasive).toBe(true);
+//     Expect(cardUnderTest.hasEvasive).toBe(true);
 //   });
 //
-//   it("LOOK LIVELY, CREW! While you have another Pirate character in play, this character gets +1 {S} and +1 {L}.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: stitchAlienBuccaneer.cost,
-//       play: [wendyDarlingCourageousCaptain],
-//       hand: [stitchAlienBuccaneer],
+//   It("LOOK LIVELY, CREW! While you have another Pirate character in play, this character gets +1 {S} and +1 {L}.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: stitchAlienBuccaneer.cost,
+//       Play: [wendyDarlingCourageousCaptain],
+//       Hand: [stitchAlienBuccaneer],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(
-//       wendyDarlingCourageousCaptain,
+//     Const cardUnderTest = testEngine.getCardModel(
+//       WendyDarlingCourageousCaptain,
 //     );
-//     expect(cardUnderTest.lore).toEqual(wendyDarlingCourageousCaptain.lore);
-//     expect(cardUnderTest.strength).toEqual(
-//       wendyDarlingCourageousCaptain.strength,
+//     Expect(cardUnderTest.lore).toEqual(wendyDarlingCourageousCaptain.lore);
+//     Expect(cardUnderTest.strength).toEqual(
+//       WendyDarlingCourageousCaptain.strength,
 //     );
 //
-//     await testEngine.playCard(stitchAlienBuccaneer);
+//     Await testEngine.playCard(stitchAlienBuccaneer);
 //
-//     expect(cardUnderTest.lore).toEqual(wendyDarlingCourageousCaptain.lore + 1);
-//     expect(cardUnderTest.strength).toEqual(
-//       wendyDarlingCourageousCaptain.strength + 1,
+//     Expect(cardUnderTest.lore).toEqual(wendyDarlingCourageousCaptain.lore + 1);
+//     Expect(cardUnderTest.strength).toEqual(
+//       WendyDarlingCourageousCaptain.strength + 1,
 //     );
 //   });
 // });

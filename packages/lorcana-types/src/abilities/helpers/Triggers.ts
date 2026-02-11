@@ -20,8 +20,8 @@ export const Triggers = {
    */
   WhenYouPlay: (on: TriggerSubject = "SELF"): Trigger => ({
     event: "play",
-    timing: "when",
     on,
+    timing: "when",
   }),
 
   /**
@@ -29,8 +29,8 @@ export const Triggers = {
    */
   WheneverThisQuests: (): Trigger => ({
     event: "quest",
-    timing: "whenever",
     on: "SELF",
+    timing: "whenever",
   }),
 
   /**
@@ -38,17 +38,14 @@ export const Triggers = {
    */
   WhenBanished: (on: TriggerSubject = "SELF"): Trigger => ({
     event: "banish",
-    timing: "when",
     on,
+    timing: "when",
   }),
 
   /**
    * "When this character is banished in a challenge"
    */
-  BanishInChallenge: (params: {
-    timing: TriggerTiming;
-    on: TriggerSubject;
-  }): Trigger => ({
+  BanishInChallenge: (params: { timing: TriggerTiming; on: TriggerSubject }): Trigger => ({
     event: "banish-in-challenge",
     ...params,
   }),
@@ -58,8 +55,8 @@ export const Triggers = {
    */
   AtStartOfYourTurn: (): Trigger => ({
     event: "start-turn",
-    timing: "at",
     on: "YOU",
+    timing: "at",
   }),
 
   /**
@@ -67,8 +64,8 @@ export const Triggers = {
    */
   AtEndOfYourTurn: (): Trigger => ({
     event: "end-turn",
-    timing: "at",
     on: "YOU",
+    timing: "at",
   }),
 
   /**
@@ -76,8 +73,8 @@ export const Triggers = {
    */
   WheneverYouPlayCharacter: (): Trigger => ({
     event: "play",
-    timing: "whenever",
     on: { controller: "you", cardType: "character" },
+    timing: "whenever",
   }),
 
   /**
@@ -85,8 +82,8 @@ export const Triggers = {
    */
   WheneverYouPlaySong: (): Trigger => ({
     event: "play",
-    timing: "whenever",
     on: { controller: "you", cardType: "song" },
+    timing: "whenever",
   }),
 
   /**
@@ -94,12 +91,12 @@ export const Triggers = {
    */
   WheneverYouPlayFloodborn: (): Trigger => ({
     event: "play",
-    timing: "whenever",
     on: {
       controller: "you",
       cardType: "character",
       classification: "Floodborn",
     },
+    timing: "whenever",
   }),
 
   /**
@@ -107,8 +104,8 @@ export const Triggers = {
    */
   WhenLeavePlay: (): Trigger => ({
     event: "leave-play",
-    timing: "when",
     on: "SELF",
+    timing: "when",
   }),
 
   /**
@@ -116,8 +113,8 @@ export const Triggers = {
    */
   WheneverYourOtherCharacterBanished: (): Trigger => ({
     event: "banish",
-    timing: "whenever",
     on: "YOUR_OTHER_CHARACTERS",
+    timing: "whenever",
   }),
 
   /**
@@ -125,8 +122,8 @@ export const Triggers = {
    */
   WheneverOpponentCharacterBanished: (): Trigger => ({
     event: "banish",
-    timing: "whenever",
     on: "OPPONENT_CHARACTERS",
+    timing: "whenever",
   }),
 
   /**
@@ -134,8 +131,8 @@ export const Triggers = {
    */
   WheneverYouDraw: (): Trigger => ({
     event: "draw",
-    timing: "whenever",
     on: "YOU",
+    timing: "whenever",
   }),
 
   /**
@@ -143,8 +140,8 @@ export const Triggers = {
    */
   WheneverYouGainLore: (): Trigger => ({
     event: "gain-lore",
-    timing: "whenever",
     on: "YOU",
+    timing: "whenever",
   }),
 
   /**
@@ -152,8 +149,8 @@ export const Triggers = {
    */
   WheneverThisChallenges: (): Trigger => ({
     event: "challenge",
-    timing: "whenever",
     on: "SELF",
+    timing: "whenever",
   }),
 
   /**
@@ -161,7 +158,7 @@ export const Triggers = {
    */
   WheneverThisChallenged: (): Trigger => ({
     event: "challenged",
-    timing: "whenever",
     on: "SELF",
+    timing: "whenever",
   }),
 };

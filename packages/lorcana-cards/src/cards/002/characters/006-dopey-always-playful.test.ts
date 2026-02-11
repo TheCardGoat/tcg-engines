@@ -3,61 +3,61 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { smash } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
-// import { liloMakingAWish } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import {
-//   docLeaderOfTheSevenDwarfs,
-//   dopeyAlwaysPlayful,
-//   sleepyNoddingOff,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { smash } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
+// Import { liloMakingAWish } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import {
+//   DocLeaderOfTheSevenDwarfs,
+//   DopeyAlwaysPlayful,
+//   SleepyNoddingOff,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Dopey - Always Playful", () => {
-//   it("**ODD ONE OUT** When this character is banished, your other Seven Dwarfs characters get +2 {S} until the start of your next turn.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Dopey - Always Playful", () => {
+//   It("**ODD ONE OUT** When this character is banished, your other Seven Dwarfs characters get +2 {S} until the start of your next turn.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: smash.cost,
-//         hand: [smash],
-//         deck: 1,
-//         play: [
-//           dopeyAlwaysPlayful,
-//           sleepyNoddingOff,
-//           docLeaderOfTheSevenDwarfs,
-//           liloMakingAWish,
+//         Inkwell: smash.cost,
+//         Hand: [smash],
+//         Deck: 1,
+//         Play: [
+//           DopeyAlwaysPlayful,
+//           SleepyNoddingOff,
+//           DocLeaderOfTheSevenDwarfs,
+//           LiloMakingAWish,
 //         ],
 //       },
 //       { deck: 1 },
 //     );
 //
-//     await testEngine.playCard(smash);
-//     await testEngine.resolveTopOfStack({
-//       targets: [dopeyAlwaysPlayful],
+//     Await testEngine.playCard(smash);
+//     Await testEngine.resolveTopOfStack({
+//       Targets: [dopeyAlwaysPlayful],
 //     });
-//     expect(testEngine.getCardModel(dopeyAlwaysPlayful).zone).toEqual("discard");
+//     Expect(testEngine.getCardModel(dopeyAlwaysPlayful).zone).toEqual("discard");
 //
-//     expect(testEngine.getCardModel(liloMakingAWish).strength).toEqual(
-//       liloMakingAWish.strength,
+//     Expect(testEngine.getCardModel(liloMakingAWish).strength).toEqual(
+//       LiloMakingAWish.strength,
 //     );
-//     const dwarves = [
-//       testEngine.getCardModel(docLeaderOfTheSevenDwarfs),
-//       testEngine.getCardModel(sleepyNoddingOff),
+//     Const dwarves = [
+//       TestEngine.getCardModel(docLeaderOfTheSevenDwarfs),
+//       TestEngine.getCardModel(sleepyNoddingOff),
 //     ];
 //
-//     dwarves.forEach((card) => {
-//       expect(card.strength).toEqual((card.lorcanitoCard.strength || 0) + 2);
+//     Dwarves.forEach((card) => {
+//       Expect(card.strength).toEqual((card.lorcanitoCard.strength || 0) + 2);
 //     });
 //
-//     await testEngine.passTurn("player_one");
+//     Await testEngine.passTurn("player_one");
 //
-//     dwarves.forEach((card) => {
-//       expect(card.strength).toEqual((card.lorcanitoCard.strength || 0) + 2);
+//     Dwarves.forEach((card) => {
+//       Expect(card.strength).toEqual((card.lorcanitoCard.strength || 0) + 2);
 //     });
 //
-//     await testEngine.passTurn("player_two");
+//     Await testEngine.passTurn("player_two");
 //
-//     dwarves.forEach((card) => {
-//       expect(card.strength).toEqual(card.lorcanitoCard.strength);
+//     Dwarves.forEach((card) => {
+//       Expect(card.strength).toEqual(card.lorcanitoCard.strength);
 //     });
 //   });
 // });

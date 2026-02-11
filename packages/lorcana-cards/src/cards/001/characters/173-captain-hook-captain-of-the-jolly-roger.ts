@@ -1,29 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const captainHookCaptainOfTheJollyRoger: CharacterCard = {
-  id: "z5q",
-  cardType: "character",
-  name: "Captain Hook",
-  version: "Captain of the Jolly Roger",
-  fullName: "Captain Hook - Captain of the Jolly Roger",
-  inkType: ["steel"],
-  franchise: "Disney",
-  set: "001",
-  text: "**DOUBLE THE POWDER!** When you play this character, you may return an action card named Fire the Cannons! from your discard to your hand.",
-  cost: 4,
-  strength: 3,
-  willpower: 4,
-  lore: 1,
-  cardNumber: 173,
-  inkable: true,
-  externalIds: {
-    ravensburger: "",
-  },
   abilities: [
     {
-      type: "action",
-      id: "c2l-1",
-      text: "**CAPTAIN HOOK** You may return target character to their player's hand.",
       effect: {
         type: "optional",
         effect: {
@@ -38,43 +17,64 @@ export const captainHookCaptainOfTheJollyRoger: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "c2l-1",
+      text: "**CAPTAIN HOOK** You may return target character to their player's hand.",
+      type: "action",
     },
   ],
+  cardNumber: 173,
+  cardType: "character",
   classifications: ["Storyborn", "Villain", "Pirate", "Captain"],
+  cost: 4,
+  externalIds: {
+    ravensburger: "",
+  },
+  franchise: "Disney",
+  fullName: "Captain Hook - Captain of the Jolly Roger",
+  id: "z5q",
+  inkType: ["steel"],
+  inkable: true,
+  lore: 1,
+  name: "Captain Hook",
+  set: "001",
+  strength: 3,
+  text: "**DOUBLE THE POWDER!** When you play this character, you may return an action card named Fire the Cannons! from your discard to your hand.",
+  version: "Captain of the Jolly Roger",
+  willpower: 4,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const captainHookCaptainOfTheJollyRoger: LorcanitoCharacterCard = {
-//   id: "z5q",
-//   reprints: ["kc5"],
+// Export const captainHookCaptainOfTheJollyRoger: LorcanitoCharacterCard = {
+//   Id: "z5q",
+//   Reprints: ["kc5"],
 //
-//   name: "Captain Hook",
-//   title: "Captain of the Jolly Roger",
-//   characteristics: ["storyborn", "villain", "pirate", "captain"],
-//   text: "**DOUBLE THE POWDER!** When you play this character, you may return an action card named Fire the Cannons! from your discard to your hand.",
-//   type: "character",
-//   abilities: [
-//     whenYouPlayThisCharAbility({
-//       type: "resolution",
-//       optional: true,
-//       name: "DOUBLE THE POWDER!",
-//       text: "When you play this character, you may return an action card named Fire the Cannons! from your discard to your hand.",
-//       effects: [
+//   Name: "Captain Hook",
+//   Title: "Captain of the Jolly Roger",
+//   Characteristics: ["storyborn", "villain", "pirate", "captain"],
+//   Text: "**DOUBLE THE POWDER!** When you play this character, you may return an action card named Fire the Cannons! from your discard to your hand.",
+//   Type: "character",
+//   Abilities: [
+//     WhenYouPlayThisCharAbility({
+//       Type: "resolution",
+//       Optional: true,
+//       Name: "DOUBLE THE POWDER!",
+//       Text: "When you play this character, you may return an action card named Fire the Cannons! from your discard to your hand.",
+//       Effects: [
 //         {
-//           type: "move",
-//           to: "hand",
-//           exerted: false,
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
+//           Type: "move",
+//           To: "hand",
+//           Exerted: false,
+//           Target: {
+//             Type: "card",
+//             Value: 1,
+//             Filters: [
 //               {
-//                 filter: "attribute",
-//                 value: "name",
-//                 comparison: { operator: "eq", value: "Fire the Cannons!" },
+//                 Filter: "attribute",
+//                 Value: "name",
+//                 Comparison: { operator: "eq", value: "Fire the Cannons!" },
 //               },
 //               { filter: "zone", value: "discard" },
 //               { filter: "owner", value: "self" },
@@ -84,18 +84,18 @@ export const captainHookCaptainOfTheJollyRoger: CharacterCard = {
 //       ],
 //     }),
 //   ],
-//   flavour: "A pretty sight, Mr. Smee. We’ll pot ’em like sitting \rducks.",
-//   colors: ["steel"],
-//   cost: 4,
-//   strength: 3,
-//   willpower: 4,
-//   lore: 1,
-//   illustrator: "Adrianne Gumaya",
-//   number: 173,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 493489,
+//   Flavour: "A pretty sight, Mr. Smee. We’ll pot ’em like sitting \rducks.",
+//   Colors: ["steel"],
+//   Cost: 4,
+//   Strength: 3,
+//   Willpower: 4,
+//   Lore: 1,
+//   Illustrator: "Adrianne Gumaya",
+//   Number: 173,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 493489,
 //   },
-//   rarity: "rare",
+//   Rarity: "rare",
 // };
 //

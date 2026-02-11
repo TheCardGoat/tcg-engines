@@ -3,39 +3,39 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   liloGalacticHero,
-//   stitchRockStar,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   LiloGalacticHero,
+//   StitchRockStar,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { iagoOutOfReach } from "@lorcanito/lorcana-engine/cards/008";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { iagoOutOfReach } from "@lorcanito/lorcana-engine/cards/008";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Iago - Out of Reach", () => {
-//   it("SELF-PRESERVATION While you have another exerted character in play, this character can't be challenged.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Iago - Out of Reach", () => {
+//   It("SELF-PRESERVATION While you have another exerted character in play, this character can't be challenged.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         play: [iagoOutOfReach, stitchRockStar],
+//         Play: [iagoOutOfReach, stitchRockStar],
 //       },
 //       {
-//         play: [liloGalacticHero],
+//         Play: [liloGalacticHero],
 //       },
 //     );
 //
-//     const cardUnderTest = testEngine.getCardModel(iagoOutOfReach);
-//     const challenger = testEngine.getCardModel(liloGalacticHero);
+//     Const cardUnderTest = testEngine.getCardModel(iagoOutOfReach);
+//     Const challenger = testEngine.getCardModel(liloGalacticHero);
 //
-//     await testEngine.tapCard(iagoOutOfReach);
+//     Await testEngine.tapCard(iagoOutOfReach);
 //
 //     // Check that Iago can be challenged
-//     expect(cardUnderTest.canBeChallenged(challenger)).toEqual(true);
-//     expect(challenger.canChallenge(cardUnderTest)).toEqual(true);
+//     Expect(cardUnderTest.canBeChallenged(challenger)).toEqual(true);
+//     Expect(challenger.canChallenge(cardUnderTest)).toEqual(true);
 //
-//     await testEngine.tapCard(stitchRockStar);
+//     Await testEngine.tapCard(stitchRockStar);
 //
 //     // Check that Iago can't be challenged
-//     expect(cardUnderTest.canBeChallenged(challenger)).toEqual(false);
-//     expect(challenger.canChallenge(cardUnderTest)).toEqual(false);
+//     Expect(cardUnderTest.canBeChallenged(challenger)).toEqual(false);
+//     Expect(challenger.canChallenge(cardUnderTest)).toEqual(false);
 //   });
 // });
 //

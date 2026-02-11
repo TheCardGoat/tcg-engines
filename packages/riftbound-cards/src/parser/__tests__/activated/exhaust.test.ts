@@ -17,14 +17,14 @@ describe("Activated: Exhaust Cost", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "activated",
           cost: expect.objectContaining({
             exhaust: true,
           }),
           effect: expect.objectContaining({
-            type: "draw",
             amount: 1,
+            type: "draw",
           }),
+          type: "activated",
         }),
       );
     });
@@ -39,30 +39,26 @@ describe("Activated: Exhaust Cost", () => {
 
   describe("might modification effects", () => {
     it.skip("should parse ':rb_exhaust:: Give a unit +2 :rb_might: this turn.'", () => {
-      const result = parseAbilities(
-        ":rb_exhaust:: Give a unit +2 :rb_might: this turn.",
-      );
+      const result = parseAbilities(":rb_exhaust:: Give a unit +2 :rb_might: this turn.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "activated",
           cost: expect.objectContaining({
             exhaust: true,
           }),
           effect: expect.objectContaining({
-            type: "modify-might",
             amount: 2,
+            type: "modify-might",
           }),
+          type: "activated",
         }),
       );
     });
 
     it.skip("should parse ':rb_exhaust:: Give me +1 :rb_might: this turn.'", () => {
-      const result = parseAbilities(
-        ":rb_exhaust:: Give me +1 :rb_might: this turn.",
-      );
+      const result = parseAbilities(":rb_exhaust:: Give me +1 :rb_might: this turn.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
@@ -79,11 +75,11 @@ describe("Activated: Exhaust Cost", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "activated",
           effect: expect.objectContaining({
-            type: "grant-keyword",
             keyword: "Ganking",
+            type: "grant-keyword",
           }),
+          type: "activated",
         }),
       );
     });
@@ -99,10 +95,10 @@ describe("Activated: Exhaust Cost", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "activated",
           effect: expect.objectContaining({
             type: "buff",
           }),
+          type: "activated",
         }),
       );
     });
@@ -110,19 +106,17 @@ describe("Activated: Exhaust Cost", () => {
 
   describe("damage effects", () => {
     it.skip("should parse ':rb_exhaust:: Deal 2 to a unit at a battlefield.'", () => {
-      const result = parseAbilities(
-        ":rb_exhaust:: Deal 2 to a unit at a battlefield.",
-      );
+      const result = parseAbilities(":rb_exhaust:: Deal 2 to a unit at a battlefield.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "activated",
           effect: expect.objectContaining({
-            type: "damage",
             amount: 2,
+            type: "damage",
           }),
+          type: "activated",
         }),
       );
     });
@@ -136,10 +130,10 @@ describe("Activated: Exhaust Cost", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "activated",
           effect: expect.objectContaining({
             type: "move",
           }),
+          type: "activated",
         }),
       );
     });
@@ -153,11 +147,11 @@ describe("Activated: Exhaust Cost", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "activated",
           cost: expect.objectContaining({
-            exhaust: true,
             energy: 1,
+            exhaust: true,
           }),
+          type: "activated",
         }),
       );
     });
@@ -178,11 +172,11 @@ describe("Activated: Exhaust Cost", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "activated",
           cost: expect.objectContaining({
             exhaust: true,
             power: expect.arrayContaining(["rainbow"]),
           }),
+          type: "activated",
         }),
       );
     });
@@ -207,12 +201,12 @@ describe("Activated: Exhaust Cost", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "activated",
           cost: expect.objectContaining({
-            exhaust: true,
             energy: 1,
+            exhaust: true,
             power: expect.arrayContaining(["body"]),
           }),
+          type: "activated",
         }),
       );
     });
@@ -228,10 +222,10 @@ describe("Activated: Exhaust Cost", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "activated",
           condition: expect.objectContaining({
             type: "legion",
           }),
+          type: "activated",
         }),
       );
     });
@@ -247,8 +241,8 @@ describe("Activated: Exhaust Cost", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "activated",
           timing: "reaction",
+          type: "activated",
         }),
       );
     });
@@ -264,10 +258,10 @@ describe("Activated: Exhaust Cost", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "activated",
           effect: expect.objectContaining({
             type: "create-token",
           }),
+          type: "activated",
         }),
       );
     });

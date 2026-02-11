@@ -3,55 +3,55 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { genieInvestigativeMind } from "@lorcanito/lorcana-engine/cards/010/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { genieInvestigativeMind } from "@lorcanito/lorcana-engine/cards/010/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Genie - Investigative Mind", () => {
-//   describe("Vanilla character", () => {
-//     it("should have no special abilities", () => {
-//       expect(genieInvestigativeMind.abilities).toEqual([]);
+// Describe("Genie - Investigative Mind", () => {
+//   Describe("Vanilla character", () => {
+//     It("should have no special abilities", () => {
+//       Expect(genieInvestigativeMind.abilities).toEqual([]);
 //     });
 //
-//     it("should be playable", () => {
-//       const testEngine = new TestEngine({
-//         inkwell: genieInvestigativeMind.cost,
-//         hand: [genieInvestigativeMind],
+//     It("should be playable", () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: genieInvestigativeMind.cost,
+//         Hand: [genieInvestigativeMind],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(genieInvestigativeMind);
-//       expect(cardUnderTest.zone).toBe("hand");
+//       Const cardUnderTest = testEngine.getCardModel(genieInvestigativeMind);
+//       Expect(cardUnderTest.zone).toBe("hand");
 //     });
 //   });
 //
-//   describe("Stats and basic properties", () => {
-//     it("should have correct stats", () => {
-//       const testEngine = new TestEngine({
-//         play: [genieInvestigativeMind],
+//   Describe("Stats and basic properties", () => {
+//     It("should have correct stats", () => {
+//       Const testEngine = new TestEngine({
+//         Play: [genieInvestigativeMind],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(genieInvestigativeMind);
+//       Const cardUnderTest = testEngine.getCardModel(genieInvestigativeMind);
 //
-//       expect(cardUnderTest.strength).toBe(4);
-//       expect(cardUnderTest.willpower).toBe(7);
-//       expect(cardUnderTest.lore).toBe(2);
-//       expect(cardUnderTest.cost).toBe(5);
+//       Expect(cardUnderTest.strength).toBe(4);
+//       Expect(cardUnderTest.willpower).toBe(7);
+//       Expect(cardUnderTest.lore).toBe(2);
+//       Expect(cardUnderTest.cost).toBe(5);
 //     });
 //
-//     it("should be inkwell card", () => {
-//       expect(genieInvestigativeMind.inkwell).toBe(true);
+//     It("should be inkwell card", () => {
+//       Expect(genieInvestigativeMind.inkwell).toBe(true);
 //     });
 //
-//     it("should have correct characteristics for Detective synergy", () => {
-//       expect(genieInvestigativeMind.characteristics).toEqual([
+//     It("should have correct characteristics for Detective synergy", () => {
+//       Expect(genieInvestigativeMind.characteristics).toEqual([
 //         "storyborn",
 //         "ally",
 //         "detective",
 //       ]);
 //     });
 //
-//     it("should be sapphire color", () => {
-//       expect(genieInvestigativeMind.colors).toEqual(["sapphire"]);
+//     It("should be sapphire color", () => {
+//       Expect(genieInvestigativeMind.colors).toEqual(["sapphire"]);
 //     });
 //   });
 // });

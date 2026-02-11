@@ -3,34 +3,34 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { liloMakingAWish } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { fourDozenEggs } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
-// import { owlLogicalLecturer } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { liloMakingAWish } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { fourDozenEggs } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
+// Import { owlLogicalLecturer } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Four Dozen Eggs", () => {
-//   it("Your characters gain **Resist** +2 until the start of your next turn. _(Damage dealt to them is reduced by 2.)_", () => {
-//     const testStore = new TestStore({
-//       inkwell: fourDozenEggs.cost,
-//       hand: [fourDozenEggs],
-//       play: [liloMakingAWish, owlLogicalLecturer],
+// Describe("Four Dozen Eggs", () => {
+//   It("Your characters gain **Resist** +2 until the start of your next turn. _(Damage dealt to them is reduced by 2.)_", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: fourDozenEggs.cost,
+//       Hand: [fourDozenEggs],
+//       Play: [liloMakingAWish, owlLogicalLecturer],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", fourDozenEggs.id);
-//     const target = testStore.getByZoneAndId("play", owlLogicalLecturer.id);
-//     const anotherTarget = testStore.getByZoneAndId("play", liloMakingAWish.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", fourDozenEggs.id);
+//     Const target = testStore.getByZoneAndId("play", owlLogicalLecturer.id);
+//     Const anotherTarget = testStore.getByZoneAndId("play", liloMakingAWish.id);
 //
 //     [target, anotherTarget].forEach((character) => {
-//       expect(character.hasResist).toBe(false);
+//       Expect(character.hasResist).toBe(false);
 //     });
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
 //     [target, anotherTarget].forEach((character) => {
-//       expect(character.hasResist).toBe(true);
+//       Expect(character.hasResist).toBe(true);
 //     });
-//     expect(cardUnderTest.zone).toEqual("discard");
+//     Expect(cardUnderTest.zone).toEqual("discard");
 //   });
 // });
 //

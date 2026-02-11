@@ -3,18 +3,18 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { thomasOmalleyFelineCharmer } from "@lorcanito/lorcana-engine/cards/007/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { thomasOmalleyFelineCharmer } from "@lorcanito/lorcana-engine/cards/007/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Thomas O'malley - Feline Charmer", () => {
-//   it.skip("Ward (Opponents can't choose this character except to challenge.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [thomasOmalleyFelineCharmer],
+// Describe("Thomas O'malley - Feline Charmer", () => {
+//   It.skip("Ward (Opponents can't choose this character except to challenge.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [thomasOmalleyFelineCharmer],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(thomasOmalleyFelineCharmer);
-//     expect(cardUnderTest.hasWard).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(thomasOmalleyFelineCharmer);
+//     Expect(cardUnderTest.hasWard).toBe(true);
 //   });
 // });
 //

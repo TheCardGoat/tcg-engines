@@ -3,102 +3,102 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   aladdinCorneredSwordman,
-//   liloGalacticHero,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   AladdinCorneredSwordman,
+//   LiloGalacticHero,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { lastStand } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
-// import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { lastStand } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
+// Import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Last Stand", () => {
-//   describe("Banish chosen character who was challenged this turn.", () => {
-//     it("Does NOT Banish a character that has not been challenged", () => {
-//       const testStore = new TestStore(
+// Describe("Last Stand", () => {
+//   Describe("Banish chosen character who was challenged this turn.", () => {
+//     It("Does NOT Banish a character that has not been challenged", () => {
+//       Const testStore = new TestStore(
 //         {
-//           inkwell: lastStand.cost,
-//           hand: [lastStand],
-//           play: [liloGalacticHero],
+//           Inkwell: lastStand.cost,
+//           Hand: [lastStand],
+//           Play: [liloGalacticHero],
 //         },
 //         {
-//           play: [goofyKnightForADay, aladdinCorneredSwordman],
+//           Play: [goofyKnightForADay, aladdinCorneredSwordman],
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getByZoneAndId("hand", lastStand.id);
-//       const target = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId("hand", lastStand.id);
+//       Const target = testStore.getByZoneAndId(
 //         "play",
-//         aladdinCorneredSwordman.id,
+//         AladdinCorneredSwordman.id,
 //         "player_two",
 //       );
-//       const challenger = testStore.getByZoneAndId("play", liloGalacticHero.id);
-//       const defender = testStore.getByZoneAndId(
+//       Const challenger = testStore.getByZoneAndId("play", liloGalacticHero.id);
+//       Const defender = testStore.getByZoneAndId(
 //         "play",
-//         goofyKnightForADay.id,
+//         GoofyKnightForADay.id,
 //         "player_two",
 //       );
 //
-//       target.updateCardMeta({ exerted: true });
-//       challenger.challenge(defender);
+//       Target.updateCardMeta({ exerted: true });
+//       Challenger.challenge(defender);
 //
-//       cardUnderTest.playFromHand();
-//       testStore.resolveTopOfStack({ targets: [target] });
+//       CardUnderTest.playFromHand();
+//       TestStore.resolveTopOfStack({ targets: [target] });
 //
-//       expect(target.zone).toEqual("play");
+//       Expect(target.zone).toEqual("play");
 //     });
 //
-//     it("Does NOT Banish a character that has not been challenged", () => {
-//       const testStore = new TestStore(
+//     It("Does NOT Banish a character that has not been challenged", () => {
+//       Const testStore = new TestStore(
 //         {
-//           inkwell: lastStand.cost,
-//           hand: [lastStand],
+//           Inkwell: lastStand.cost,
+//           Hand: [lastStand],
 //         },
 //         {
-//           play: [goofyKnightForADay],
+//           Play: [goofyKnightForADay],
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getByZoneAndId("hand", lastStand.id);
-//       const target = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId("hand", lastStand.id);
+//       Const target = testStore.getByZoneAndId(
 //         "play",
-//         goofyKnightForADay.id,
+//         GoofyKnightForADay.id,
 //         "player_two",
 //       );
 //
-//       cardUnderTest.playFromHand();
-//       testStore.resolveTopOfStack({ targets: [target] });
+//       CardUnderTest.playFromHand();
+//       TestStore.resolveTopOfStack({ targets: [target] });
 //
-//       expect(target.zone).toEqual("play");
+//       Expect(target.zone).toEqual("play");
 //     });
 //
-//     it("Banishes a character that has been challenged", () => {
-//       const testStore = new TestStore(
+//     It("Banishes a character that has been challenged", () => {
+//       Const testStore = new TestStore(
 //         {
-//           inkwell: lastStand.cost,
-//           hand: [lastStand],
-//           play: [liloGalacticHero],
+//           Inkwell: lastStand.cost,
+//           Hand: [lastStand],
+//           Play: [liloGalacticHero],
 //         },
 //         {
-//           play: [goofyKnightForADay],
+//           Play: [goofyKnightForADay],
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getByZoneAndId("hand", lastStand.id);
-//       const target = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId("hand", lastStand.id);
+//       Const target = testStore.getByZoneAndId(
 //         "play",
-//         goofyKnightForADay.id,
+//         GoofyKnightForADay.id,
 //         "player_two",
 //       );
-//       const challenger = testStore.getByZoneAndId("play", liloGalacticHero.id);
+//       Const challenger = testStore.getByZoneAndId("play", liloGalacticHero.id);
 //
-//       target.updateCardMeta({ exerted: true });
-//       challenger.challenge(target);
+//       Target.updateCardMeta({ exerted: true });
+//       Challenger.challenge(target);
 //
-//       cardUnderTest.playFromHand();
-//       testStore.resolveTopOfStack({ targets: [target] });
+//       CardUnderTest.playFromHand();
+//       TestStore.resolveTopOfStack({ targets: [target] });
 //
-//       expect(target.zone).toEqual("discard");
+//       Expect(target.zone).toEqual("discard");
 //     });
 //   });
 // });

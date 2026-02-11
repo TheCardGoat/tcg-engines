@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { tadashiHamadaBaymaxInventor } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { tadashiHamadaBaymaxInventor } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Tadashi Hamada - Baymax Inventor", () => {
-//   it.skip("LET'S GET BACK TO WORK This character gets +1 {S} and +1 {W} for each item you have in play.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: tadashiHamadaBaymaxInventor.cost,
-//       play: [tadashiHamadaBaymaxInventor],
-//       hand: [tadashiHamadaBaymaxInventor],
+// Describe("Tadashi Hamada - Baymax Inventor", () => {
+//   It.skip("LET'S GET BACK TO WORK This character gets +1 {S} and +1 {W} for each item you have in play.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: tadashiHamadaBaymaxInventor.cost,
+//       Play: [tadashiHamadaBaymaxInventor],
+//       Hand: [tadashiHamadaBaymaxInventor],
 //     });
 //
-//     await testEngine.playCard(tadashiHamadaBaymaxInventor);
+//     Await testEngine.playCard(tadashiHamadaBaymaxInventor);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

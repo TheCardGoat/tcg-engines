@@ -1,24 +1,24 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
 //
-// export const lafayetteSleepyDachshund: LorcanitoCharacterCard = {
-//   id: "crk",
-//   name: "Lafayette",
-//   title: "Sleepy Dachshund",
-//   characteristics: ["storyborn"],
-//   type: "character",
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 5,
-//   strength: 7,
-//   willpower: 4,
-//   illustrator: "Sara Leal",
-//   number: 132,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631437,
+// Export const lafayetteSleepyDachshund: LorcanitoCharacterCard = {
+//   Id: "crk",
+//   Name: "Lafayette",
+//   Title: "Sleepy Dachshund",
+//   Characteristics: ["storyborn"],
+//   Type: "character",
+//   Inkwell: true,
+//   Colors: ["ruby"],
+//   Cost: 5,
+//   Strength: 7,
+//   Willpower: 4,
+//   Illustrator: "Sara Leal",
+//   Number: 132,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631437,
 //   },
-//   rarity: "common",
-//   lore: 1,
+//   Rarity: "common",
+//   Lore: 1,
 // };
 //

@@ -179,12 +179,12 @@ export function classifyAbility(text: string): ClassificationResult {
 
   // Priority 1: Check for triggered abilities (trigger word prefix) - HIGHEST PRIORITY
   // This must come before keywords because some abilities like "IT WORKS! Whenever..."
-  // would otherwise be misclassified as static
+  // Would otherwise be misclassified as static
   if (isTriggeredAbilityText(textToClassify)) {
     return {
-      type: "triggered",
       confidence: 0.95,
       reason: "Starts with trigger word (When/Whenever/At/The first time)",
+      type: "triggered",
     };
   }
 
@@ -192,9 +192,9 @@ export function classifyAbility(text: string): ClassificationResult {
   // Must come before keywords to handle patterns like "{E} - Draw a card"
   if (hasActivatedAbilityCost(textToClassify)) {
     return {
-      type: "activated",
       confidence: 0.9,
       reason: "Contains cost separator pattern",
+      type: "activated",
     };
   }
 
@@ -202,29 +202,29 @@ export function classifyAbility(text: string): ClassificationResult {
   // Now check keywords after triggers and activated to ensure proper classification
   if (isKeywordAbilityText(textToClassify)) {
     return {
-      type: "keyword",
-      confidence: 1.0,
+      confidence: 1,
       reason: "Matched keyword pattern",
+      type: "keyword",
     };
   }
 
   // Priority 4: Check for replacement abilities (would/instead pattern)
   if (textToClassify.includes("would") && textToClassify.includes("instead")) {
     return {
-      type: "replacement",
       confidence: 0.85,
       reason: "Contains replacement pattern (would...instead)",
+      type: "replacement",
     };
   }
 
   // Priority 5: Check for common static ability patterns (before action)
   // This is important because some static abilities start with words that could
-  // be confused with action verbs (e.g., "Chosen character gains Rush")
+  // Be confused with action verbs (e.g., "Chosen character gains Rush")
   if (isLikelyStaticAbility(textToClassify)) {
     return {
-      type: "static",
       confidence: 0.85,
       reason: "Matches common static ability patterns",
+      type: "static",
     };
   }
 
@@ -232,18 +232,18 @@ export function classifyAbility(text: string): ClassificationResult {
   // This now includes "You may X" patterns
   if (isActionEffect(textToClassify)) {
     return {
-      type: "action",
       confidence: 0.85,
       reason: "Standalone effect starting with action verb",
+      type: "action",
     };
   }
 
   // Default: Static ability (continuous effect)
   // Lower confidence because we're not pattern-matching
   return {
-    type: "static",
     confidence: 0.7,
     reason: "Default to static ability (no other patterns matched)",
+    type: "static",
   };
 }
 
@@ -281,7 +281,7 @@ function isLikelyStaticAbility(text: string): boolean {
   }
 
   // Check for continuous modifications without trigger words
-  // e.g., "This character gets +2 {S}" (without "When" or "Whenever")
+  // E.g., "This character gets +2 {S}" (without "When" or "Whenever")
   if (
     text.match(/\b(?:gets?|gains?)\s+[+-]\d+\s+\{[SWL]\}/i) &&
     !text.match(/^(?:When|Whenever|At the)\s+/i) &&
@@ -291,7 +291,7 @@ function isLikelyStaticAbility(text: string): boolean {
   }
 
   // Check for "Chosen X gains/gets" patterns (static targeted modifications)
-  // e.g., "Chosen character gains Rush" or "Chosen character gains Rush this turn"
+  // E.g., "Chosen character gains Rush" or "Chosen character gains Rush this turn"
   // These are always static abilities (targeted continuous effects)
   if (
     text.match(/^Chosen\s+(?:character|item|location)s?\s+(?:gains?|gets?)\s+/i)

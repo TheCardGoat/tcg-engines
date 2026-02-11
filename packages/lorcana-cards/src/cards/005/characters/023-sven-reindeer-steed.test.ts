@@ -3,21 +3,21 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { svenReindeerSteed } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { svenReindeerSteed } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Sven - Reindeer Steed", () => {
-//   it.skip("**REINDEER GAMES** When you play this character, you may ready chosen character. They can’t quest or challenge for the rest of this turn.", () => {
-//     const testStore = new TestStore({
-//       inkwell: svenReindeerSteed.cost,
-//       hand: [svenReindeerSteed],
+// Describe("Sven - Reindeer Steed", () => {
+//   It.skip("**REINDEER GAMES** When you play this character, you may ready chosen character. They can’t quest or challenge for the rest of this turn.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: svenReindeerSteed.cost,
+//       Hand: [svenReindeerSteed],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(svenReindeerSteed);
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     Const cardUnderTest = testStore.getCard(svenReindeerSteed);
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

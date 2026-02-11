@@ -3,74 +3,74 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   brunoMadrigalUndetectedUncle,
-//   luisaMadrigalMagicallyStrongOne,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   BrunoMadrigalUndetectedUncle,
+//   LuisaMadrigalMagicallyStrongOne,
 // } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { luisaMadrigalEntertainingMuscle } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { luisaMadrigalEntertainingMuscle } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Bruno Madrigal - Undetected Uncle", () => {
-//   it("**Evasive** _(Only characters with Evasive can challenge this character.)_", () => {
-//     const testStore = new TestStore({
-//       play: [brunoMadrigalUndetectedUncle],
+// Describe("Bruno Madrigal - Undetected Uncle", () => {
+//   It("**Evasive** _(Only characters with Evasive can challenge this character.)_", () => {
+//     Const testStore = new TestStore({
+//       Play: [brunoMadrigalUndetectedUncle],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(brunoMadrigalUndetectedUncle);
-//     expect(cardUnderTest.hasEvasive).toBe(true);
+//     Const cardUnderTest = testStore.getCard(brunoMadrigalUndetectedUncle);
+//     Expect(cardUnderTest.hasEvasive).toBe(true);
 //   });
 //
-//   describe("**YOU JUST HAVE TO SEE IT** {E} − Name a card, then reveal the top card of your deck. If it's the named card, put that card into your hand and gain 3 lore. Otherwise, put it on the top of your deck.", () => {
-//     it("Hit", () => {
-//       const testStore = new TestStore({
-//         play: [brunoMadrigalUndetectedUncle],
-//         deck: [
-//           luisaMadrigalMagicallyStrongOne,
-//           luisaMadrigalEntertainingMuscle,
+//   Describe("**YOU JUST HAVE TO SEE IT** {E} − Name a card, then reveal the top card of your deck. If it's the named card, put that card into your hand and gain 3 lore. Otherwise, put it on the top of your deck.", () => {
+//     It("Hit", () => {
+//       Const testStore = new TestStore({
+//         Play: [brunoMadrigalUndetectedUncle],
+//         Deck: [
+//           LuisaMadrigalMagicallyStrongOne,
+//           LuisaMadrigalEntertainingMuscle,
 //         ],
 //       });
 //
-//       const cardUnderTest = testStore.getCard(brunoMadrigalUndetectedUncle);
-//       const target = testStore.getCard(luisaMadrigalEntertainingMuscle);
-//       const notTarget = testStore.getCard(luisaMadrigalMagicallyStrongOne);
+//       Const cardUnderTest = testStore.getCard(brunoMadrigalUndetectedUncle);
+//       Const target = testStore.getCard(luisaMadrigalEntertainingMuscle);
+//       Const notTarget = testStore.getCard(luisaMadrigalMagicallyStrongOne);
 //
-//       cardUnderTest.activate();
-//       expect(testStore.stackLayers.length).toBe(1);
+//       CardUnderTest.activate();
+//       Expect(testStore.stackLayers.length).toBe(1);
 //
-//       testStore.resolveTopOfStack({
-//         nameACard: target.name,
+//       TestStore.resolveTopOfStack({
+//         NameACard: target.name,
 //       });
 //
-//       expect(target.zone).toBe("hand");
-//       expect(notTarget.zone).toBe("deck");
-//       expect(testStore.getPlayerLore("player_one")).toBe(3);
+//       Expect(target.zone).toBe("hand");
+//       Expect(notTarget.zone).toBe("deck");
+//       Expect(testStore.getPlayerLore("player_one")).toBe(3);
 //     });
 //
-//     it("Miss", () => {
-//       const testStore = new TestStore({
-//         play: [brunoMadrigalUndetectedUncle],
-//         deck: [
-//           luisaMadrigalMagicallyStrongOne,
-//           luisaMadrigalEntertainingMuscle,
+//     It("Miss", () => {
+//       Const testStore = new TestStore({
+//         Play: [brunoMadrigalUndetectedUncle],
+//         Deck: [
+//           LuisaMadrigalMagicallyStrongOne,
+//           LuisaMadrigalEntertainingMuscle,
 //         ],
 //       });
 //
-//       const cardUnderTest = testStore.getCard(brunoMadrigalUndetectedUncle);
-//       const target = testStore.getCard(luisaMadrigalEntertainingMuscle);
-//       const notTarget = testStore.getCard(luisaMadrigalMagicallyStrongOne);
+//       Const cardUnderTest = testStore.getCard(brunoMadrigalUndetectedUncle);
+//       Const target = testStore.getCard(luisaMadrigalEntertainingMuscle);
+//       Const notTarget = testStore.getCard(luisaMadrigalMagicallyStrongOne);
 //
-//       cardUnderTest.activate();
-//       expect(testStore.stackLayers.length).toBe(1);
+//       CardUnderTest.activate();
+//       Expect(testStore.stackLayers.length).toBe(1);
 //
-//       testStore.resolveTopOfStack({
-//         nameACard: cardUnderTest.name,
+//       TestStore.resolveTopOfStack({
+//         NameACard: cardUnderTest.name,
 //       });
 //
-//       expect(target.meta.revealed).toBe(true);
-//       expect(target.zone).toBe("deck");
-//       expect(notTarget.zone).toBe("deck");
-//       expect(testStore.getPlayerLore("player_one")).toBe(0);
+//       Expect(target.meta.revealed).toBe(true);
+//       Expect(target.zone).toBe("deck");
+//       Expect(notTarget.zone).toBe("deck");
+//       Expect(testStore.getPlayerLore("player_one")).toBe(0);
 //     });
 //   });
 // });

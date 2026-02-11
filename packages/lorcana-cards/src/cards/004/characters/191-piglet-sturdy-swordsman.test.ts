@@ -3,45 +3,45 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { ursulaDeceiverOfAll } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { pigletSturdySwordsman } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { ursulaDeceiverOfAll } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { pigletSturdySwordsman } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Piglet - Sturdy Swordsman", () => {
-//   it("**Resist +1** _(Damage dealt to this character is reduced by 1.)_**NOT SO SMALL ANYMORE** While you have no cards in your hand, this character can challenge ready characters.", () => {
-//     const testStore = new TestStore(
+// Describe("Piglet - Sturdy Swordsman", () => {
+//   It("**Resist +1** _(Damage dealt to this character is reduced by 1.)_**NOT SO SMALL ANYMORE** While you have no cards in your hand, this character can challenge ready characters.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         hand: [pigletSturdySwordsman],
-//         play: [pigletSturdySwordsman],
+//         Hand: [pigletSturdySwordsman],
+//         Play: [pigletSturdySwordsman],
 //       },
 //       { play: [ursulaDeceiverOfAll] },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       pigletSturdySwordsman.id,
+//       PigletSturdySwordsman.id,
 //     );
 //
-//     const defender = testStore.getByZoneAndId(
+//     Const defender = testStore.getByZoneAndId(
 //       "play",
-//       ursulaDeceiverOfAll.id,
+//       UrsulaDeceiverOfAll.id,
 //       "player_two",
 //     );
 //
-//     expect(cardUnderTest.canChallenge(defender)).toBeFalsy();
+//     Expect(cardUnderTest.canChallenge(defender)).toBeFalsy();
 //
-//     const cardInHand = testStore.getByZoneAndId(
+//     Const cardInHand = testStore.getByZoneAndId(
 //       "hand",
-//       pigletSturdySwordsman.id,
+//       PigletSturdySwordsman.id,
 //     );
 //
-//     cardInHand.discard();
+//     CardInHand.discard();
 //
-//     expect(cardUnderTest.canChallenge(defender)).toBeTruthy();
+//     Expect(cardUnderTest.canChallenge(defender)).toBeTruthy();
 //
-//     cardUnderTest.challenge(defender);
-//     expect(cardUnderTest.damage).toBe(1);
+//     CardUnderTest.challenge(defender);
+//     Expect(cardUnderTest.damage).toBe(1);
 //   });
 // });
 //

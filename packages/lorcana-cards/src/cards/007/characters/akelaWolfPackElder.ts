@@ -1,24 +1,24 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const akelaWolfPackElder: LorcanitoCharacterCard = {
-//   id: "r4z",
-//   name: "Akela",
-//   title: "Wolf Pack Elder",
-//   characteristics: ["storyborn", "ally"],
-//   type: "character",
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 2,
-//   strength: 3,
-//   willpower: 2,
-//   illustrator: "Mike Parker",
-//   number: 182,
-//   set: "007",
-//   externalIds: {
-//     tcgPlayer: 618713,
+// Export const akelaWolfPackElder: LorcanitoCharacterCard = {
+//   Id: "r4z",
+//   Name: "Akela",
+//   Title: "Wolf Pack Elder",
+//   Characteristics: ["storyborn", "ally"],
+//   Type: "character",
+//   Inkwell: true,
+//   Colors: ["steel"],
+//   Cost: 2,
+//   Strength: 3,
+//   Willpower: 2,
+//   Illustrator: "Mike Parker",
+//   Number: 182,
+//   Set: "007",
+//   ExternalIds: {
+//     TcgPlayer: 618713,
 //   },
-//   rarity: "common",
-//   lore: 1,
+//   Rarity: "common",
+//   Lore: 1,
 // };
 //

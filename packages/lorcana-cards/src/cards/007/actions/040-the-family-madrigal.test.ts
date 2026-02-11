@@ -3,172 +3,172 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   liloGalacticHero,
-//   mickeyBraveLittleTailor,
-//   mickeyMouseTrueFriend,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   LiloGalacticHero,
+//   MickeyBraveLittleTailor,
+//   MickeyMouseTrueFriend,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import {
-//   agustinMadrigalClumsyDad,
-//   almaMadrigalFamilyMatriarch,
-//   mickeyMouseLeaderOfTheBand,
+// Import {
+//   AgustinMadrigalClumsyDad,
+//   AlmaMadrigalFamilyMatriarch,
+//   MickeyMouseLeaderOfTheBand,
 // } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import {
-//   dontLetTheFrostbiteBite,
-//   tryEverything,
+// Import {
+//   DontLetTheFrostbiteBite,
+//   TryEverything,
 // } from "@lorcanito/lorcana-engine/cards/005/actions/actions";
-// import { heffalumpsAndWoozles } from "@lorcanito/lorcana-engine/cards/006";
-// import {
-//   theFamilyMadrigal,
-//   thisIsMyFamily,
+// Import { heffalumpsAndWoozles } from "@lorcanito/lorcana-engine/cards/006";
+// Import {
+//   TheFamilyMadrigal,
+//   ThisIsMyFamily,
 // } from "@lorcanito/lorcana-engine/cards/007";
-// import { hesATramp } from "@lorcanito/lorcana-engine/cards/007/actions/actions";
-// import { downInNewOrleans } from "@lorcanito/lorcana-engine/cards/008";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { hesATramp } from "@lorcanito/lorcana-engine/cards/007/actions/actions";
+// Import { downInNewOrleans } from "@lorcanito/lorcana-engine/cards/008";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("The Family Madrigal", () => {
-//   describe("Look at the top 5 cards of your deck. You may reveal up to 1 Madrigal character card and up to 1 song card and put them into your hand.", () => {
-//     const deck = [
-//       liloGalacticHero,
-//       mickeyBraveLittleTailor,
-//       hesATramp,
-//       agustinMadrigalClumsyDad,
-//       almaMadrigalFamilyMatriarch,
-//       mickeyMouseTrueFriend,
-//       mickeyMouseLeaderOfTheBand,
+// Describe("The Family Madrigal", () => {
+//   Describe("Look at the top 5 cards of your deck. You may reveal up to 1 Madrigal character card and up to 1 song card and put them into your hand.", () => {
+//     Const deck = [
+//       LiloGalacticHero,
+//       MickeyBraveLittleTailor,
+//       HesATramp,
+//       AgustinMadrigalClumsyDad,
+//       AlmaMadrigalFamilyMatriarch,
+//       MickeyMouseTrueFriend,
+//       MickeyMouseLeaderOfTheBand,
 //     ];
 //
-//     it("Happy Case", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: theFamilyMadrigal.cost,
-//         hand: [theFamilyMadrigal],
-//         deck: deck,
+//     It("Happy Case", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: theFamilyMadrigal.cost,
+//         Hand: [theFamilyMadrigal],
+//         Deck: deck,
 //       });
 //
-//       await testEngine.playCard(theFamilyMadrigal, {
-//         scry: {
-//           hand: [agustinMadrigalClumsyDad, hesATramp],
-//           top: [
-//             mickeyBraveLittleTailor,
-//             mickeyMouseTrueFriend,
-//             mickeyMouseLeaderOfTheBand,
+//       Await testEngine.playCard(theFamilyMadrigal, {
+//         Scry: {
+//           Hand: [agustinMadrigalClumsyDad, hesATramp],
+//           Top: [
+//             MickeyBraveLittleTailor,
+//             MickeyMouseTrueFriend,
+//             MickeyMouseLeaderOfTheBand,
 //           ],
 //         },
 //       });
 //
 //       // Should have drawn both the Madrigal character and the song
-//       expect(testEngine.getCardModel(agustinMadrigalClumsyDad).zone).toBe(
+//       Expect(testEngine.getCardModel(agustinMadrigalClumsyDad).zone).toBe(
 //         "hand",
 //       );
-//       expect(testEngine.getCardModel(hesATramp).zone).toBe("hand");
+//       Expect(testEngine.getCardModel(hesATramp).zone).toBe("hand");
 //       // The rest should remain on top
-//       expect(testEngine.getCardModel(mickeyBraveLittleTailor).zone).toBe(
+//       Expect(testEngine.getCardModel(mickeyBraveLittleTailor).zone).toBe(
 //         "deck",
 //       );
 //     });
 //
-//     it("Choosing only one potential target", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: theFamilyMadrigal.cost,
-//         hand: [theFamilyMadrigal],
-//         deck: deck,
+//     It("Choosing only one potential target", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: theFamilyMadrigal.cost,
+//         Hand: [theFamilyMadrigal],
+//         Deck: deck,
 //       });
 //
-//       await testEngine.playCard(theFamilyMadrigal, {
-//         scry: {
-//           hand: [agustinMadrigalClumsyDad],
-//           top: [
-//             mickeyBraveLittleTailor,
-//             mickeyMouseTrueFriend,
-//             mickeyMouseLeaderOfTheBand,
-//             hesATramp,
+//       Await testEngine.playCard(theFamilyMadrigal, {
+//         Scry: {
+//           Hand: [agustinMadrigalClumsyDad],
+//           Top: [
+//             MickeyBraveLittleTailor,
+//             MickeyMouseTrueFriend,
+//             MickeyMouseLeaderOfTheBand,
+//             HesATramp,
 //           ],
 //         },
 //       });
 //
-//       expect(testEngine.getCardModel(agustinMadrigalClumsyDad).zone).toBe(
+//       Expect(testEngine.getCardModel(agustinMadrigalClumsyDad).zone).toBe(
 //         "hand",
 //       );
-//       expect(testEngine.getCardModel(hesATramp).zone).toBe("deck");
+//       Expect(testEngine.getCardModel(hesATramp).zone).toBe("deck");
 //     });
 //
-//     it("Choosing one correct target and one incorrect", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: theFamilyMadrigal.cost,
-//         hand: [theFamilyMadrigal],
-//         deck: deck,
+//     It("Choosing one correct target and one incorrect", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: theFamilyMadrigal.cost,
+//         Hand: [theFamilyMadrigal],
+//         Deck: deck,
 //       });
 //
-//       await testEngine.playCard(theFamilyMadrigal, {
-//         scry: {
-//           hand: [agustinMadrigalClumsyDad, mickeyBraveLittleTailor],
-//           top: [
-//             mickeyBraveLittleTailor,
-//             mickeyMouseTrueFriend,
-//             mickeyMouseLeaderOfTheBand,
-//             hesATramp,
+//       Await testEngine.playCard(theFamilyMadrigal, {
+//         Scry: {
+//           Hand: [agustinMadrigalClumsyDad, mickeyBraveLittleTailor],
+//           Top: [
+//             MickeyBraveLittleTailor,
+//             MickeyMouseTrueFriend,
+//             MickeyMouseLeaderOfTheBand,
+//             HesATramp,
 //           ],
 //         },
 //       });
 //
-//       expect(testEngine.getCardModel(agustinMadrigalClumsyDad).zone).toBe(
+//       Expect(testEngine.getCardModel(agustinMadrigalClumsyDad).zone).toBe(
 //         "hand",
 //       );
-//       expect(testEngine.getCardModel(mickeyBraveLittleTailor).zone).toBe(
+//       Expect(testEngine.getCardModel(mickeyBraveLittleTailor).zone).toBe(
 //         "deck",
 //       );
 //     });
 //
-//     it("choosing 2 songs", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: theFamilyMadrigal.cost,
-//         hand: [theFamilyMadrigal],
-//         deck: [
-//           heffalumpsAndWoozles,
-//           thisIsMyFamily,
-//           tryEverything,
-//           downInNewOrleans,
-//           dontLetTheFrostbiteBite,
+//     It("choosing 2 songs", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: theFamilyMadrigal.cost,
+//         Hand: [theFamilyMadrigal],
+//         Deck: [
+//           HeffalumpsAndWoozles,
+//           ThisIsMyFamily,
+//           TryEverything,
+//           DownInNewOrleans,
+//           DontLetTheFrostbiteBite,
 //         ],
 //       });
 //
-//       await testEngine.playCard(theFamilyMadrigal, {
-//         scry: {
-//           hand: [dontLetTheFrostbiteBite, downInNewOrleans],
-//           top: [heffalumpsAndWoozles, thisIsMyFamily, tryEverything],
+//       Await testEngine.playCard(theFamilyMadrigal, {
+//         Scry: {
+//           Hand: [dontLetTheFrostbiteBite, downInNewOrleans],
+//           Top: [heffalumpsAndWoozles, thisIsMyFamily, tryEverything],
 //         },
 //       });
 //
-//       expect(testEngine.getCardModel(dontLetTheFrostbiteBite).zone).toBe(
+//       Expect(testEngine.getCardModel(dontLetTheFrostbiteBite).zone).toBe(
 //         "hand",
 //       );
-//       expect(testEngine.getCardModel(downInNewOrleans).zone).toBe("deck");
+//       Expect(testEngine.getCardModel(downInNewOrleans).zone).toBe("deck");
 //     });
 //
-//     it("Choosing more than they should", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: theFamilyMadrigal.cost,
-//         hand: [theFamilyMadrigal],
-//         deck: deck,
+//     It("Choosing more than they should", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: theFamilyMadrigal.cost,
+//         Hand: [theFamilyMadrigal],
+//         Deck: deck,
 //       });
 //
-//       await testEngine.playCard(theFamilyMadrigal, {
-//         scry: {
-//           hand: [agustinMadrigalClumsyDad, almaMadrigalFamilyMatriarch],
-//           top: [
-//             mickeyBraveLittleTailor,
-//             mickeyMouseTrueFriend,
-//             mickeyMouseLeaderOfTheBand,
-//             hesATramp,
+//       Await testEngine.playCard(theFamilyMadrigal, {
+//         Scry: {
+//           Hand: [agustinMadrigalClumsyDad, almaMadrigalFamilyMatriarch],
+//           Top: [
+//             MickeyBraveLittleTailor,
+//             MickeyMouseTrueFriend,
+//             MickeyMouseLeaderOfTheBand,
+//             HesATramp,
 //           ],
 //         },
 //       });
 //
-//       expect(testEngine.getCardModel(agustinMadrigalClumsyDad).zone).toBe(
+//       Expect(testEngine.getCardModel(agustinMadrigalClumsyDad).zone).toBe(
 //         "hand",
 //       );
-//       expect(testEngine.getCardModel(almaMadrigalFamilyMatriarch).zone).toBe(
+//       Expect(testEngine.getCardModel(almaMadrigalFamilyMatriarch).zone).toBe(
 //         "deck",
 //       );
 //     });

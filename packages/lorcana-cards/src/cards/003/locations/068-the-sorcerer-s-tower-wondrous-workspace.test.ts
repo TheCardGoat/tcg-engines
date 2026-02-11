@@ -3,58 +3,58 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { magicBroomBucketBrigade } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { magicBroomTheBigSweeper } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { theSorcerersTowerWondrousWorkspace } from "@lorcanito/lorcana-engine/cards/003/locations/locations";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { magicBroomBucketBrigade } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { magicBroomTheBigSweeper } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { theSorcerersTowerWondrousWorkspace } from "@lorcanito/lorcana-engine/cards/003/locations/locations";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("The Sorcerer's Tower - Wondrous Workspace", () => {
-//   it("**BROOM CLOSET** Your characters named Magic Broom may move here for free.", () => {
-//     const testStore = new TestStore({
-//       play: [
-//         theSorcerersTowerWondrousWorkspace,
-//         magicBroomBucketBrigade,
-//         magicBroomTheBigSweeper,
+// Describe("The Sorcerer's Tower - Wondrous Workspace", () => {
+//   It("**BROOM CLOSET** Your characters named Magic Broom may move here for free.", () => {
+//     Const testStore = new TestStore({
+//       Play: [
+//         TheSorcerersTowerWondrousWorkspace,
+//         MagicBroomBucketBrigade,
+//         MagicBroomTheBigSweeper,
 //       ],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(theSorcerersTowerWondrousWorkspace);
+//     Const cardUnderTest = testStore.getCard(theSorcerersTowerWondrousWorkspace);
 //
-//     const magicBroomBucketBrigadeCard = testStore.getCard(
-//       magicBroomBucketBrigade,
+//     Const magicBroomBucketBrigadeCard = testStore.getCard(
+//       MagicBroomBucketBrigade,
 //     );
-//     const magicBroomTheBigSweeperCard = testStore.getCard(
-//       magicBroomTheBigSweeper,
+//     Const magicBroomTheBigSweeperCard = testStore.getCard(
+//       MagicBroomTheBigSweeper,
 //     );
 //
-//     magicBroomBucketBrigadeCard.enterLocation(cardUnderTest);
-//     magicBroomTheBigSweeperCard.enterLocation(cardUnderTest);
+//     MagicBroomBucketBrigadeCard.enterLocation(cardUnderTest);
+//     MagicBroomTheBigSweeperCard.enterLocation(cardUnderTest);
 //
-//     expect(magicBroomBucketBrigadeCard.isAtLocation(cardUnderTest)).toBe(true);
-//     expect(magicBroomTheBigSweeperCard.isAtLocation(cardUnderTest)).toBe(true);
-//     expect(cardUnderTest.containsCharacter(magicBroomBucketBrigadeCard)).toBe(
-//       true,
+//     Expect(magicBroomBucketBrigadeCard.isAtLocation(cardUnderTest)).toBe(true);
+//     Expect(magicBroomTheBigSweeperCard.isAtLocation(cardUnderTest)).toBe(true);
+//     Expect(cardUnderTest.containsCharacter(magicBroomBucketBrigadeCard)).toBe(
+//       True,
 //     );
-//     expect(cardUnderTest.containsCharacter(magicBroomTheBigSweeperCard)).toBe(
-//       true,
+//     Expect(cardUnderTest.containsCharacter(magicBroomTheBigSweeperCard)).toBe(
+//       True,
 //     );
 //   });
 //
-//   it.skip("**MAGICAL POWER** Characters get +1 {L} while here.", () => {
-//     const testStore = new TestStore({
-//       inkwell: theSorcerersTowerWondrousWorkspace.cost,
-//       play: [theSorcerersTowerWondrousWorkspace],
+//   It.skip("**MAGICAL POWER** Characters get +1 {L} while here.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: theSorcerersTowerWondrousWorkspace.cost,
+//       Play: [theSorcerersTowerWondrousWorkspace],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       theSorcerersTowerWondrousWorkspace.id,
+//       TheSorcerersTowerWondrousWorkspace.id,
 //     );
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

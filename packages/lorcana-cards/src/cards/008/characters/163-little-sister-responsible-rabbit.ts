@@ -1,35 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const littleSisterResponsibleRabbit: CharacterCard = {
-  id: "g97",
-  cardType: "character",
-  name: "Little Sister",
-  version: "Responsible Rabbit",
-  fullName: "Little Sister - Responsible Rabbit",
-  inkType: ["sapphire"],
-  franchise: "Robin Hood",
-  set: "008",
-  text: "LET ME HELP When you play this character, you may remove up to 1 damage from chosen character.",
-  cost: 1,
-  strength: 1,
-  willpower: 2,
-  lore: 1,
-  cardNumber: 163,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "3a961bf8eb9371454ce96de5f2d75d4141a71c9f",
-  },
   abilities: [
     {
-      id: "g97-1",
-      type: "triggered",
-      name: "LET ME HELP",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -46,8 +19,35 @@ export const littleSisterResponsibleRabbit: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "g97-1",
+      name: "LET ME HELP",
       text: "LET ME HELP When you play this character, you may remove up to 1 damage from chosen character.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 163,
+  cardType: "character",
   classifications: ["Storyborn", "Ally"],
+  cost: 1,
+  externalIds: {
+    ravensburger: "3a961bf8eb9371454ce96de5f2d75d4141a71c9f",
+  },
+  franchise: "Robin Hood",
+  fullName: "Little Sister - Responsible Rabbit",
+  id: "g97",
+  inkType: ["sapphire"],
+  inkable: true,
+  lore: 1,
+  missingTests: true,
+  name: "Little Sister",
+  set: "008",
+  strength: 1,
+  text: "LET ME HELP When you play this character, you may remove up to 1 damage from chosen character.",
+  version: "Responsible Rabbit",
+  willpower: 2,
 };

@@ -1,28 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const kuzcoWantedLlama: CharacterCard = {
-  id: "zpa",
-  cardType: "character",
-  name: "Kuzco",
-  version: "Wanted Llama",
-  fullName: "Kuzco - Wanted Llama",
-  inkType: ["amethyst"],
-  franchise: "Emperors New Groove",
-  set: "009",
-  text: "OK, WHERE AM I? When this character is banished, you may draw a card.",
-  cost: 2,
-  strength: 1,
-  willpower: 2,
-  lore: 1,
-  cardNumber: 49,
-  inkable: true,
-  externalIds: {
-    ravensburger: "80ac67a466b42aed5a364be95f561b6c881ac934",
-  },
   abilities: [
     {
-      id: "zpa-1",
-      type: "action",
       effect: {
         type: "optional",
         effect: {
@@ -32,8 +12,28 @@ export const kuzcoWantedLlama: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "zpa-1",
       text: "OK, WHERE AM I? When this character is banished, you may draw a card.",
+      type: "action",
     },
   ],
+  cardNumber: 49,
+  cardType: "character",
   classifications: ["Storyborn", "King"],
+  cost: 2,
+  externalIds: {
+    ravensburger: "80ac67a466b42aed5a364be95f561b6c881ac934",
+  },
+  franchise: "Emperors New Groove",
+  fullName: "Kuzco - Wanted Llama",
+  id: "zpa",
+  inkType: ["amethyst"],
+  inkable: true,
+  lore: 1,
+  name: "Kuzco",
+  set: "009",
+  strength: 1,
+  text: "OK, WHERE AM I? When this character is banished, you may draw a card.",
+  version: "Wanted Llama",
+  willpower: 2,
 };

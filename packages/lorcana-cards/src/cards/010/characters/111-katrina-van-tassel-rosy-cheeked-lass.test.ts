@@ -3,96 +3,96 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { katrinaVanTasselRosycheekedLass } from "@lorcanito/lorcana-engine/cards/010/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { katrinaVanTasselRosycheekedLass } from "@lorcanito/lorcana-engine/cards/010/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe.skip("Katrina Van Tassel - Rosy-Cheeked Lass", () => {
-//   it("should be a vanilla character with correct stats and no special abilities", () => {
-//     const testEngine = new TestEngine({
-//       play: [katrinaVanTasselRosycheekedLass],
+// Describe.skip("Katrina Van Tassel - Rosy-Cheeked Lass", () => {
+//   It("should be a vanilla character with correct stats and no special abilities", () => {
+//     Const testEngine = new TestEngine({
+//       Play: [katrinaVanTasselRosycheekedLass],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(
-//       katrinaVanTasselRosycheekedLass,
+//     Const cardUnderTest = testEngine.getCardModel(
+//       KatrinaVanTasselRosycheekedLass,
 //     );
 //
 //     // Verify card is in play
-//     expect(cardUnderTest.zone).toBe("play");
+//     Expect(cardUnderTest.zone).toBe("play");
 //
 //     // Verify base stats
-//     expect(cardUnderTest.lorcanitoCard.cost).toBe(3);
-//     expect(cardUnderTest.lorcanitoCard.strength).toBe(2);
-//     expect(cardUnderTest.lorcanitoCard.willpower).toBe(5);
-//     expect(cardUnderTest.lorcanitoCard.lore).toBe(2);
+//     Expect(cardUnderTest.lorcanitoCard.cost).toBe(3);
+//     Expect(cardUnderTest.lorcanitoCard.strength).toBe(2);
+//     Expect(cardUnderTest.lorcanitoCard.willpower).toBe(5);
+//     Expect(cardUnderTest.lorcanitoCard.lore).toBe(2);
 //
 //     // Verify characteristics
-//     expect(cardUnderTest.lorcanitoCard.characteristics).toContain("storyborn");
+//     Expect(cardUnderTest.lorcanitoCard.characteristics).toContain("storyborn");
 //
 //     // Verify color and inkwell
-//     expect(cardUnderTest.lorcanitoCard.colors).toContain("steel");
-//     expect(cardUnderTest.lorcanitoCard.inkwell).toBe(true);
+//     Expect(cardUnderTest.lorcanitoCard.colors).toContain("steel");
+//     Expect(cardUnderTest.lorcanitoCard.inkwell).toBe(true);
 //
 //     // Verify no special abilities
-//     expect(cardUnderTest.lorcanitoCard.abilities).toEqual([]);
+//     Expect(cardUnderTest.lorcanitoCard.abilities).toEqual([]);
 //   });
 //
-//   it("should be able to quest for lore", async () => {
-//     const testEngine = new TestEngine({
-//       play: [katrinaVanTasselRosycheekedLass],
+//   It("should be able to quest for lore", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [katrinaVanTasselRosycheekedLass],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(
-//       katrinaVanTasselRosycheekedLass,
+//     Const cardUnderTest = testEngine.getCardModel(
+//       KatrinaVanTasselRosycheekedLass,
 //     );
 //
-//     const initialLore = testEngine.store.tableStore.getTable("player_one").lore;
+//     Const initialLore = testEngine.store.tableStore.getTable("player_one").lore;
 //
-//     cardUnderTest.quest();
+//     CardUnderTest.quest();
 //
-//     expect(testEngine.store.tableStore.getTable("player_one").lore).toBe(
-//       initialLore + 2,
+//     Expect(testEngine.store.tableStore.getTable("player_one").lore).toBe(
+//       InitialLore + 2,
 //     );
-//     expect(cardUnderTest.meta.exerted).toBe(true);
+//     Expect(cardUnderTest.meta.exerted).toBe(true);
 //   });
 //
-//   it("should be playable from hand with correct ink cost", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: katrinaVanTasselRosycheekedLass.cost,
-//       hand: [katrinaVanTasselRosycheekedLass],
+//   It("should be playable from hand with correct ink cost", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: katrinaVanTasselRosycheekedLass.cost,
+//       Hand: [katrinaVanTasselRosycheekedLass],
 //     });
 //
-//     const cardModel = testEngine.getCardModel(katrinaVanTasselRosycheekedLass);
+//     Const cardModel = testEngine.getCardModel(katrinaVanTasselRosycheekedLass);
 //
-//     expect(cardModel.zone).toBe("hand");
+//     Expect(cardModel.zone).toBe("hand");
 //
-//     await testEngine.playCard(katrinaVanTasselRosycheekedLass);
+//     Await testEngine.playCard(katrinaVanTasselRosycheekedLass);
 //
-//     expect(cardModel.zone).toBe("play");
-//     expect(
-//       testEngine.store.tableStore.getTable("player_one").inkAvailable(),
+//     Expect(cardModel.zone).toBe("play");
+//     Expect(
+//       TestEngine.store.tableStore.getTable("player_one").inkAvailable(),
 //     ).toBe(0);
 //   });
 //
-//   it("should be able to be used as ink", async () => {
-//     const testEngine = new TestEngine({
-//       hand: [katrinaVanTasselRosycheekedLass],
+//   It("should be able to be used as ink", async () => {
+//     Const testEngine = new TestEngine({
+//       Hand: [katrinaVanTasselRosycheekedLass],
 //     });
 //
-//     const cardModel = testEngine.getCardModel(katrinaVanTasselRosycheekedLass);
+//     Const cardModel = testEngine.getCardModel(katrinaVanTasselRosycheekedLass);
 //
-//     expect(cardModel.zone).toBe("hand");
-//     expect(cardModel.lorcanitoCard.inkwell).toBe(true);
+//     Expect(cardModel.zone).toBe("hand");
+//     Expect(cardModel.lorcanitoCard.inkwell).toBe(true);
 //
-//     const initialInkwellSize =
-//       testEngine.store.tableStore.getTable("player_one").zones.inkwell.cards
+//     Const initialInkwellSize =
+//       TestEngine.store.tableStore.getTable("player_one").zones.inkwell.cards
 //         .length;
 //
-//     cardModel.addToInkwell();
+//     CardModel.addToInkwell();
 //
-//     expect(cardModel.zone).toBe("inkwell");
-//     expect(
-//       testEngine.store.tableStore.getTable("player_one").zones.inkwell.cards
+//     Expect(cardModel.zone).toBe("inkwell");
+//     Expect(
+//       TestEngine.store.tableStore.getTable("player_one").zones.inkwell.cards
 //         .length,
 //     ).toBe(initialInkwellSize + 1);
 //   });

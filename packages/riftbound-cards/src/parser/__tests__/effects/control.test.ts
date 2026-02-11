@@ -11,18 +11,16 @@ import { Effects } from "../helpers";
 describe("Effect: Take Control", () => {
   describe("take control of unit", () => {
     it.skip("should parse 'Take control of an enemy unit at a battlefield.'", () => {
-      const result = parseAbilities(
-        "Take control of an enemy unit at a battlefield.",
-      );
+      const result = parseAbilities("Take control of an enemy unit at a battlefield.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "spell",
           effect: expect.objectContaining({
             type: "take-control",
           }),
+          type: "spell",
         }),
       );
     });
@@ -59,19 +57,17 @@ describe("Effect: Take Control", () => {
 
   describe("take control of spell", () => {
     it.skip("should parse 'Gain control of a spell. You may make new choices for it.'", () => {
-      const result = parseAbilities(
-        "Gain control of a spell. You may make new choices for it.",
-      );
+      const result = parseAbilities("Gain control of a spell. You may make new choices for it.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "spell",
           effect: expect.objectContaining({
-            type: "gain-control-of-spell",
             newChoices: true,
+            type: "gain-control-of-spell",
           }),
+          type: "spell",
         }),
       );
     });

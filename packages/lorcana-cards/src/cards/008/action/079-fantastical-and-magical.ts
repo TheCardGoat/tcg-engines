@@ -1,46 +1,46 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type {
+// Import type {
 //   DynamicAmount,
 //   LorcanitoActionCard,
 // } from "@lorcanito/lorcana-engine";
-// import { singerTogetherAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import {
-//   drawXCards,
-//   youGainLore,
+// Import { singerTogetherAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import {
+//   DrawXCards,
+//   YouGainLore,
 // } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// const singers: DynamicAmount = {
-//   dynamic: true,
-//   filters: [
+// Const singers: DynamicAmount = {
+//   Dynamic: true,
+//   Filters: [
 //     {
-//       filter: "sing",
-//       value: "singer",
+//       Filter: "sing",
+//       Value: "singer",
 //     },
 //   ],
 // };
 //
-// export const fantasticalAndMagical: LorcanitoActionCard = {
-//   id: "h9s",
-//   name: "Fantastical And Magical",
-//   characteristics: ["action", "song"],
-//   text: "Sing Together 9\nFor each character that sang this song, draw a card and gain 1 lore.",
-//   type: "action",
-//   inkwell: false,
-//   colors: ["amethyst"],
-//   cost: 9,
-//   illustrator: "Natalia Trykowska",
-//   number: 79,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631401,
+// Export const fantasticalAndMagical: LorcanitoActionCard = {
+//   Id: "h9s",
+//   Name: "Fantastical And Magical",
+//   Characteristics: ["action", "song"],
+//   Text: "Sing Together 9\nFor each character that sang this song, draw a card and gain 1 lore.",
+//   Type: "action",
+//   Inkwell: false,
+//   Colors: ["amethyst"],
+//   Cost: 9,
+//   Illustrator: "Natalia Trykowska",
+//   Number: 79,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631401,
 //   },
-//   rarity: "rare",
-//   abilities: [
-//     singerTogetherAbility(9),
+//   Rarity: "rare",
+//   Abilities: [
+//     SingerTogetherAbility(9),
 //     {
-//       type: "resolution",
-//       resolveAmountBeforeCreatingLayer: true,
-//       effects: [youGainLore(singers), drawXCards(singers)],
+//       Type: "resolution",
+//       ResolveAmountBeforeCreatingLayer: true,
+//       Effects: [youGainLore(singers), drawXCards(singers)],
 //     },
 //   ],
 // };

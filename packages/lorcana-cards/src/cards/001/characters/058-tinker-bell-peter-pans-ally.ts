@@ -1,36 +1,14 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const tinkerBellPeterPansAlly: CharacterCard = {
-  id: "oug",
-  cardType: "character",
-  name: "Tinker Bell",
-  version: "Peter Pan’s Ally",
-  fullName: "Tinker Bell - Peter Pan’s Ally",
-  inkType: ["amethyst"],
-  franchise: "Peter Pan",
-  set: "001",
-  text: "Evasive (Only characters with Evasive can challenge this character.)\nLOYAL AND DEVOTED Your characters named Peter Pan gain Challenger +1. (They get +1 {S} while challenging.)",
-  cost: 5,
-  strength: 3,
-  willpower: 3,
-  lore: 2,
-  cardNumber: 58,
-  inkable: false,
-  externalIds: {
-    ravensburger: "598be1e1fde814f7659cf509dad4db7131a68730",
-  },
   abilities: [
     {
       id: "oug-1",
+      keyword: "Evasive",
       text: "Evasive",
       type: "keyword",
-      keyword: "Evasive",
     },
     {
-      id: "oug-2",
-      text: "LOYAL AND DEVOTED Your characters named Peter Pan gain Challenger +1.",
-      name: "LOYAL AND DEVOTED",
-      type: "static",
       effect: {
         type: "gain-keyword",
         keyword: "Challenger",
@@ -38,62 +16,84 @@ export const tinkerBellPeterPansAlly: CharacterCard = {
         target: "YOUR_CHARACTERS",
         duration: "this-turn",
       },
+      id: "oug-2",
+      name: "LOYAL AND DEVOTED",
+      text: "LOYAL AND DEVOTED Your characters named Peter Pan gain Challenger +1.",
+      type: "static",
     },
   ],
+  cardNumber: 58,
+  cardType: "character",
   classifications: ["Storyborn", "Ally", "Fairy"],
+  cost: 5,
+  externalIds: {
+    ravensburger: "598be1e1fde814f7659cf509dad4db7131a68730",
+  },
+  franchise: "Peter Pan",
+  fullName: "Tinker Bell - Peter Pan’s Ally",
+  id: "oug",
+  inkType: ["amethyst"],
+  inkable: false,
+  lore: 2,
+  name: "Tinker Bell",
+  set: "001",
+  strength: 3,
+  text: "Evasive (Only characters with Evasive can challenge this character.)\nLOYAL AND DEVOTED Your characters named Peter Pan gain Challenger +1. (They get +1 {S} while challenging.)",
+  version: "Peter Pan’s Ally",
+  willpower: 3,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import {
-//   challengerAbility,
-//   evasiveAbility,
-//   type GainAbilityStaticAbility,
+// Import {
+//   ChallengerAbility,
+//   EvasiveAbility,
+//   Type GainAbilityStaticAbility,
 // } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const tinkerBellPeterPan: LorcanitoCharacterCard = {
-//   id: "xbz",
+// Export const tinkerBellPeterPan: LorcanitoCharacterCard = {
+//   Id: "xbz",
 //
-//   name: "Tinker Bell",
-//   title: "Peter Pan's Ally",
-//   characteristics: ["storyborn", "ally", "fairy"],
-//   text: "**Evasive** _(Only characters with Evasive can challenge this character.)_\n\n**LOYAL AND DEVOTED** Your characters named Peter Pan gain **Challenger +1.** _(They get +1 {S} while challenging.)_",
-//   type: "character",
-//   abilities: [
+//   Name: "Tinker Bell",
+//   Title: "Peter Pan's Ally",
+//   Characteristics: ["storyborn", "ally", "fairy"],
+//   Text: "**Evasive** _(Only characters with Evasive can challenge this character.)_\n\n**LOYAL AND DEVOTED** Your characters named Peter Pan gain **Challenger +1.** _(They get +1 {S} while challenging.)_",
+//   Type: "character",
+//   Abilities: [
 //     {
-//       type: "static",
-//       name: "Loyal and Devoted",
-//       text: "Your characters named Peter Pan gain **Challenger +1.** _(They get +1 {S} while challenging.)_",
-//       ability: "gain-ability",
-//       gainedAbility: challengerAbility(1),
-//       target: {
-//         type: "card",
-//         value: "all",
-//         filters: [
+//       Type: "static",
+//       Name: "Loyal and Devoted",
+//       Text: "Your characters named Peter Pan gain **Challenger +1.** _(They get +1 {S} while challenging.)_",
+//       Ability: "gain-ability",
+//       GainedAbility: challengerAbility(1),
+//       Target: {
+//         Type: "card",
+//         Value: "all",
+//         Filters: [
 //           { filter: "zone", value: "play" },
 //           { filter: "type", value: "character" },
 //           { filter: "owner", value: "self" },
 //           {
-//             filter: "attribute",
-//             value: "name",
-//             comparison: { operator: "eq", value: "Peter Pan" },
+//             Filter: "attribute",
+//             Value: "name",
+//             Comparison: { operator: "eq", value: "Peter Pan" },
 //           },
 //         ],
 //       },
 //     } as GainAbilityStaticAbility,
-//     evasiveAbility,
+//     EvasiveAbility,
 //   ],
-//   colors: ["amethyst"],
-//   cost: 5,
-//   strength: 3,
-//   willpower: 3,
-//   lore: 2,
-//   illustrator: "Adrianne Gumaya",
-//   number: 58,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 507488,
+//   Colors: ["amethyst"],
+//   Cost: 5,
+//   Strength: 3,
+//   Willpower: 3,
+//   Lore: 2,
+//   Illustrator: "Adrianne Gumaya",
+//   Number: 58,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 507488,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

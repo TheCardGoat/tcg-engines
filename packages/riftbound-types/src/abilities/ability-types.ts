@@ -364,13 +364,7 @@ export interface ReplacementAbility {
   readonly name?: string;
 
   /** What event this replaces */
-  readonly replaces:
-    | "die"
-    | "take-damage"
-    | "move"
-    | "draw"
-    | "discard"
-    | "score";
+  readonly replaces: "die" | "take-damage" | "move" | "draw" | "discard" | "score";
 
   /** What is being affected */
   readonly target?: AnyTarget;
@@ -426,18 +420,14 @@ export function isKeywordAbility(ability: Ability): ability is KeywordAbility {
 /**
  * Check if ability is a triggered ability
  */
-export function isTriggeredAbility(
-  ability: Ability,
-): ability is TriggeredAbility {
+export function isTriggeredAbility(ability: Ability): ability is TriggeredAbility {
   return ability.type === "triggered";
 }
 
 /**
  * Check if ability is an activated ability
  */
-export function isActivatedAbility(
-  ability: Ability,
-): ability is ActivatedAbility {
+export function isActivatedAbility(ability: Ability): ability is ActivatedAbility {
   return ability.type === "activated";
 }
 
@@ -458,18 +448,14 @@ export function isSpellAbility(ability: Ability): ability is SpellAbility {
 /**
  * Check if ability is a replacement ability
  */
-export function isReplacementAbility(
-  ability: Ability,
-): ability is ReplacementAbility {
+export function isReplacementAbility(ability: Ability): ability is ReplacementAbility {
   return ability.type === "replacement";
 }
 
 /**
  * Check if keyword is a simple keyword
  */
-export function isSimpleKeyword(
-  keyword: RiftboundKeyword,
-): keyword is SimpleKeyword {
+export function isSimpleKeyword(keyword: RiftboundKeyword): keyword is SimpleKeyword {
   return [
     "Tank",
     "Ganking",
@@ -486,32 +472,22 @@ export function isSimpleKeyword(
 /**
  * Check if keyword is a value keyword
  */
-export function isValueKeyword(
-  keyword: RiftboundKeyword,
-): keyword is ValueKeyword {
+export function isValueKeyword(keyword: RiftboundKeyword): keyword is ValueKeyword {
   return keyword === "Assault" || keyword === "Shield" || keyword === "Deflect";
 }
 
 /**
  * Check if keyword is a cost keyword
  */
-export function isCostKeyword(
-  keyword: RiftboundKeyword,
-): keyword is CostKeyword {
-  return (
-    keyword === "Accelerate" || keyword === "Equip" || keyword === "Repeat"
-  );
+export function isCostKeyword(keyword: RiftboundKeyword): keyword is CostKeyword {
+  return keyword === "Accelerate" || keyword === "Equip" || keyword === "Repeat";
 }
 
 /**
  * Check if keyword is an effect keyword
  */
-export function isEffectKeyword(
-  keyword: RiftboundKeyword,
-): keyword is EffectKeyword {
-  return (
-    keyword === "Deathknell" || keyword === "Legion" || keyword === "Vision"
-  );
+export function isEffectKeyword(keyword: RiftboundKeyword): keyword is EffectKeyword {
+  return keyword === "Deathknell" || keyword === "Legion" || keyword === "Vision";
 }
 
 // ============================================================================
@@ -522,64 +498,55 @@ export function isEffectKeyword(
  * Create a simple keyword ability
  */
 export function keyword(kw: SimpleKeyword): SimpleKeywordAbility {
-  return { type: "keyword", keyword: kw };
+  return { keyword: kw, type: "keyword" };
 }
 
 /**
  * Create an Assault ability
  */
-export function assault(
-  value: number,
-  condition?: Condition,
-): ValueKeywordAbility {
+export function assault(value: number, condition?: Condition): ValueKeywordAbility {
   return condition
-    ? { type: "keyword", keyword: "Assault", value, condition }
-    : { type: "keyword", keyword: "Assault", value };
+    ? { condition, keyword: "Assault", type: "keyword", value }
+    : { keyword: "Assault", type: "keyword", value };
 }
 
 /**
  * Create a Shield ability
  */
-export function shield(
-  value: number,
-  condition?: Condition,
-): ValueKeywordAbility {
+export function shield(value: number, condition?: Condition): ValueKeywordAbility {
   return condition
-    ? { type: "keyword", keyword: "Shield", value, condition }
-    : { type: "keyword", keyword: "Shield", value };
+    ? { condition, keyword: "Shield", type: "keyword", value }
+    : { keyword: "Shield", type: "keyword", value };
 }
 
 /**
  * Create a Deflect ability
  */
-export function deflect(
-  value: number,
-  condition?: Condition,
-): ValueKeywordAbility {
+export function deflect(value: number, condition?: Condition): ValueKeywordAbility {
   return condition
-    ? { type: "keyword", keyword: "Deflect", value, condition }
-    : { type: "keyword", keyword: "Deflect", value };
+    ? { condition, keyword: "Deflect", type: "keyword", value }
+    : { keyword: "Deflect", type: "keyword", value };
 }
 
 /**
  * Create an Accelerate ability
  */
 export function accelerate(cost: Cost): CostKeywordAbility {
-  return { type: "keyword", keyword: "Accelerate", cost };
+  return { cost, keyword: "Accelerate", type: "keyword" };
 }
 
 /**
  * Create an Equip ability
  */
 export function equip(cost: Cost): CostKeywordAbility {
-  return { type: "keyword", keyword: "Equip", cost };
+  return { cost, keyword: "Equip", type: "keyword" };
 }
 
 /**
  * Create a Deathknell ability
  */
 export function deathknell(effect: Effect): EffectKeywordAbility {
-  return { type: "keyword", keyword: "Deathknell", effect };
+  return { effect, keyword: "Deathknell", type: "keyword" };
 }
 
 /**
@@ -591,9 +558,9 @@ export function triggered(
   options?: { name?: string; condition?: Condition; optional?: boolean },
 ): TriggeredAbility {
   return {
-    type: "triggered",
-    trigger,
     effect,
+    trigger,
+    type: "triggered",
     ...options,
   };
 }
@@ -612,9 +579,9 @@ export function activated(
   },
 ): ActivatedAbility {
   return {
-    type: "activated",
     cost,
     effect,
+    type: "activated",
     ...options,
   };
 }
@@ -627,8 +594,8 @@ export function staticAbility(
   options?: { name?: string; condition?: Condition; affects?: StaticAffects },
 ): StaticAbility {
   return {
-    type: "static",
     effect,
+    type: "static",
     ...options,
   };
 }
@@ -642,9 +609,9 @@ export function spell(
   options?: { additionalCost?: Cost; repeat?: Cost; condition?: Condition },
 ): SpellAbility {
   return {
-    type: "spell",
-    timing,
     effect,
+    timing,
+    type: "spell",
     ...options,
   };
 }
@@ -663,9 +630,9 @@ export function replacement(
   },
 ): ReplacementAbility {
   return {
-    type: "replacement",
-    replaces,
     replacement: replacementEffect,
+    replaces,
+    type: "replacement",
     ...options,
   };
 }

@@ -3,128 +3,128 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { clarabelleLightOnHerHooves } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { intoTheUnknown } from "@lorcanito/lorcana-engine/cards/008";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { clarabelleLightOnHerHooves } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { intoTheUnknown } from "@lorcanito/lorcana-engine/cards/008";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Clarabelle - Light on Her Hooves", () => {
-//   it("Shift", () => {
-//     const testStore = new TestStore({
-//       play: [clarabelleLightOnHerHooves],
+// Describe("Clarabelle - Light on Her Hooves", () => {
+//   It("Shift", () => {
+//     Const testStore = new TestStore({
+//       Play: [clarabelleLightOnHerHooves],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(clarabelleLightOnHerHooves);
-//     expect(cardUnderTest.hasShift).toBe(true);
+//     Const cardUnderTest = testStore.getCard(clarabelleLightOnHerHooves);
+//     Expect(cardUnderTest.hasShift).toBe(true);
 //   });
 //
-//   describe("**KEEP IN STEP** At the end of your turn, if chosen opponent has more cards in their hand than you, you may draw cards until you have the same number.", () => {
-//     it("Draws cards until you have the same number of cards as the opponent", () => {
-//       const testStore = new TestStore(
+//   Describe("**KEEP IN STEP** At the end of your turn, if chosen opponent has more cards in their hand than you, you may draw cards until you have the same number.", () => {
+//     It("Draws cards until you have the same number of cards as the opponent", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [clarabelleLightOnHerHooves],
-//           hand: 2,
-//           deck: 10,
+//           Play: [clarabelleLightOnHerHooves],
+//           Hand: 2,
+//           Deck: 10,
 //         },
 //         {
-//           hand: 6,
-//           deck: 1,
+//           Hand: 6,
+//           Deck: 1,
 //         },
 //       );
 //
-//       testStore.passTurn();
-//       testStore.resolveOptionalAbility();
+//       TestStore.passTurn();
+//       TestStore.resolveOptionalAbility();
 //
-//       expect(testStore.store.turnCount).toBe(1);
-//       expect(testStore.getZonesCardCount("player_one").hand).toBe(6);
-//       expect(testStore.getZonesCardCount("player_two").hand).toBe(6 + 1); // 1 card drawn
+//       Expect(testStore.store.turnCount).toBe(1);
+//       Expect(testStore.getZonesCardCount("player_one").hand).toBe(6);
+//       Expect(testStore.getZonesCardCount("player_two").hand).toBe(6 + 1); // 1 card drawn
 //     });
 //
-//     it("You have more cards than the opponent", () => {
-//       const testStore = new TestStore(
+//     It("You have more cards than the opponent", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [clarabelleLightOnHerHooves],
-//           hand: 6,
-//           deck: 10,
+//           Play: [clarabelleLightOnHerHooves],
+//           Hand: 6,
+//           Deck: 10,
 //         },
 //         {
-//           hand: 2,
-//           deck: 1,
+//           Hand: 2,
+//           Deck: 1,
 //         },
 //       );
 //
-//       testStore.passTurn();
+//       TestStore.passTurn();
 //
-//       expect(testStore.store.turnCount).toBe(1);
-//       expect(testStore.getZonesCardCount("player_one").hand).toBe(6);
-//       expect(testStore.getZonesCardCount("player_two").hand).toBe(2 + 1); // 1 card drawn
+//       Expect(testStore.store.turnCount).toBe(1);
+//       Expect(testStore.getZonesCardCount("player_one").hand).toBe(6);
+//       Expect(testStore.getZonesCardCount("player_two").hand).toBe(2 + 1); // 1 card drawn
 //     });
 //   });
 //
-//   describe("Regression tests", () => {
-//     it("Double Clarabelles should let you pass your turn.", async () => {
-//       const testStore = new TestEngine(
+//   Describe("Regression tests", () => {
+//     It("Double Clarabelles should let you pass your turn.", async () => {
+//       Const testStore = new TestEngine(
 //         {
-//           play: [clarabelleLightOnHerHooves, clarabelleLightOnHerHooves],
-//           deck: 10,
-//           hand: 2,
+//           Play: [clarabelleLightOnHerHooves, clarabelleLightOnHerHooves],
+//           Deck: 10,
+//           Hand: 2,
 //         },
 //         {
-//           hand: 6,
-//           deck: 1,
+//           Hand: 6,
+//           Deck: 1,
 //         },
 //       );
 //
-//       expect(testStore.store.turnCount).toBe(0);
-//       testStore.passTurn();
-//       expect(testStore.store.turnCount).toBe(0);
+//       Expect(testStore.store.turnCount).toBe(0);
+//       TestStore.passTurn();
+//       Expect(testStore.store.turnCount).toBe(0);
 //
-//       testStore.changeActivePlayer("player_one");
-//       await testStore.acceptOptionalLayer();
-//       await testStore.skipTopOfStack();
+//       TestStore.changeActivePlayer("player_one");
+//       Await testStore.acceptOptionalLayer();
+//       Await testStore.skipTopOfStack();
 //
 //       // After resolving the ability, the turn should end
-//       expect(testStore.store.turnCount).toBe(1);
+//       Expect(testStore.store.turnCount).toBe(1);
 //     });
 //
-//     it("Does NOT trigger end-of-turn ability when card is in inkwell", async () => {
-//       const testEngine = new TestEngine(
+//     It("Does NOT trigger end-of-turn ability when card is in inkwell", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: intoTheUnknown.cost,
-//           play: [clarabelleLightOnHerHooves],
-//           hand: [intoTheUnknown],
-//           deck: 10,
+//           Inkwell: intoTheUnknown.cost,
+//           Play: [clarabelleLightOnHerHooves],
+//           Hand: [intoTheUnknown],
+//           Deck: 10,
 //         },
 //         {
-//           hand: 6,
-//           deck: 10,
+//           Hand: 6,
+//           Deck: 10,
 //         },
 //       );
 //
 //       // Exert Clarabelle
-//       await testEngine.exertCard(clarabelleLightOnHerHooves);
+//       Await testEngine.exertCard(clarabelleLightOnHerHooves);
 //
 //       // Play Into the Unknown to put Clarabelle into inkwell
-//       await testEngine.playCard(intoTheUnknown);
-//       await testEngine.resolveTopOfStack({
-//         targets: [clarabelleLightOnHerHooves],
+//       Await testEngine.playCard(intoTheUnknown);
+//       Await testEngine.resolveTopOfStack({
+//         Targets: [clarabelleLightOnHerHooves],
 //       });
 //
 //       // Verify Clarabelle is in inkwell
-//       expect(testEngine.getCardModel(clarabelleLightOnHerHooves).zone).toBe(
+//       Expect(testEngine.getCardModel(clarabelleLightOnHerHooves).zone).toBe(
 //         "inkwell",
 //       );
 //
-//       const opponentHandBefore =
-//         testEngine.getZonesCardCount("player_two").hand;
+//       Const opponentHandBefore =
+//         TestEngine.getZonesCardCount("player_two").hand;
 //
 //       // Pass turn - ability should NOT trigger
-//       await testEngine.passTurn();
+//       Await testEngine.passTurn();
 //
 //       // Verify opponent did NOT draw cards (hand count should only increase by 1 from beginning of turn draw)
-//       const opponentHandAfter = testEngine.getZonesCardCount("player_two").hand;
-//       expect(opponentHandAfter).toBe(opponentHandBefore + 1); // Only beginning of turn draw
+//       Const opponentHandAfter = testEngine.getZonesCardCount("player_two").hand;
+//       Expect(opponentHandAfter).toBe(opponentHandBefore + 1); // Only beginning of turn draw
 //     });
 //   });
 // });

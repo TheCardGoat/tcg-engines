@@ -3,35 +3,35 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { orRewriteHistory } from "@lorcanito/lorcana-engine/cards/010/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { orRewriteHistory } from "@lorcanito/lorcana-engine/cards/010/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Or Rewrite History!", () => {
-//   it.skip("(A character with cost 3 or more can {E} to sing this song for free.)", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: orRewriteHistory.cost,
-//       play: [orRewriteHistory],
-//       hand: [orRewriteHistory],
+// Describe("Or Rewrite History!", () => {
+//   It.skip("(A character with cost 3 or more can {E} to sing this song for free.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: orRewriteHistory.cost,
+//       Play: [orRewriteHistory],
+//       Hand: [orRewriteHistory],
 //     });
 //
-//     await testEngine.playCard(orRewriteHistory);
+//     Await testEngine.playCard(orRewriteHistory);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 //
-//   it.skip("Return a character card from your discard to your hand.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: orRewriteHistory.cost,
-//       play: [orRewriteHistory],
-//       hand: [orRewriteHistory],
+//   It.skip("Return a character card from your discard to your hand.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: orRewriteHistory.cost,
+//       Play: [orRewriteHistory],
+//       Hand: [orRewriteHistory],
 //     });
 //
-//     await testEngine.playCard(orRewriteHistory);
+//     Await testEngine.playCard(orRewriteHistory);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

@@ -3,34 +3,34 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { simbaSonOfMufasa } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { simbaSonOfMufasa } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Simba - Son of Mufasa", () => {
-//   it.skip("", () => {
-//     const testStore = new TestStore({
-//       inkwell: simbaSonOfMufasa.cost,
-//       play: [simbaSonOfMufasa],
+// Describe("Simba - Son of Mufasa", () => {
+//   It.skip("", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: simbaSonOfMufasa.cost,
+//       Play: [simbaSonOfMufasa],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(simbaSonOfMufasa);
+//     Const cardUnderTest = testStore.getCard(simbaSonOfMufasa);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 //
-//   it.skip("**FEARSOME ROAR** When you play this character, you may banish chosen item or location.", () => {
-//     const testStore = new TestStore({
-//       inkwell: simbaSonOfMufasa.cost,
-//       hand: [simbaSonOfMufasa],
+//   It.skip("**FEARSOME ROAR** When you play this character, you may banish chosen item or location.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: simbaSonOfMufasa.cost,
+//       Hand: [simbaSonOfMufasa],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(simbaSonOfMufasa);
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     Const cardUnderTest = testStore.getCard(simbaSonOfMufasa);
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

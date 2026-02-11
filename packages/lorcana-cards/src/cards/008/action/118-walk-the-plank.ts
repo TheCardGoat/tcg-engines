@@ -1,26 +1,26 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type {
+// Import type {
 //   LorcanitoActionCard,
 //   ResolutionAbility,
 // } from "@lorcanito/lorcana-engine";
-// import type { ActivatedAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import type { ActivatedAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
 //
-// const walkThePlankGainedAbility: ActivatedAbility = {
-//   type: "activated",
-//   costs: [{ type: "exert" }],
-//   effects: [
+// Const walkThePlankGainedAbility: ActivatedAbility = {
+//   Type: "activated",
+//   Costs: [{ type: "exert" }],
+//   Effects: [
 //     {
-//       type: "banish",
-//       target: {
-//         type: "card",
-//         value: 1,
-//         filters: [
+//       Type: "banish",
+//       Target: {
+//         Type: "card",
+//         Value: 1,
+//         Filters: [
 //           { filter: "type", value: "character" },
 //           { filter: "zone", value: "play" },
 //           {
-//             filter: "status",
-//             value: "damage",
-//             comparison: { operator: "gte", value: 1 },
+//             Filter: "status",
+//             Value: "damage",
+//             Comparison: { operator: "gte", value: 1 },
 //           },
 //         ],
 //       },
@@ -28,19 +28,19 @@
 //   ],
 // };
 //
-// const walkThePlankAbility: ResolutionAbility = {
-//   type: "resolution",
-//   effects: [
+// Const walkThePlankAbility: ResolutionAbility = {
+//   Type: "resolution",
+//   Effects: [
 //     {
-//       type: "ability",
-//       ability: "custom",
-//       duration: "turn",
-//       modifier: "add",
-//       customAbility: walkThePlankGainedAbility,
-//       target: {
-//         type: "card",
-//         value: "all",
-//         filters: [
+//       Type: "ability",
+//       Ability: "custom",
+//       Duration: "turn",
+//       Modifier: "add",
+//       CustomAbility: walkThePlankGainedAbility,
+//       Target: {
+//         Type: "card",
+//         Value: "all",
+//         Filters: [
 //           { filter: "type", value: "character" },
 //           { filter: "zone", value: "play" },
 //           { filter: "owner", value: "self" },
@@ -51,22 +51,22 @@
 //   ],
 // };
 //
-// export const walkThePlank: LorcanitoActionCard = {
-//   id: "yl4",
-//   name: "Walk The Plank!",
-//   characteristics: ["action"],
-//   text: 'Your Pirate characters gain "{E} – Banish chosen damaged character" this turn.',
-//   type: "action",
-//   inkwell: false,
-//   colors: ["emerald", "steel"],
-//   cost: 3,
-//   illustrator: "Alberto Zermeno",
-//   number: 118,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631427,
+// Export const walkThePlank: LorcanitoActionCard = {
+//   Id: "yl4",
+//   Name: "Walk The Plank!",
+//   Characteristics: ["action"],
+//   Text: 'Your Pirate characters gain "{E} – Banish chosen damaged character" this turn.',
+//   Type: "action",
+//   Inkwell: false,
+//   Colors: ["emerald", "steel"],
+//   Cost: 3,
+//   Illustrator: "Alberto Zermeno",
+//   Number: 118,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631427,
 //   },
-//   rarity: "uncommon",
-//   abilities: [walkThePlankAbility],
+//   Rarity: "uncommon",
+//   Abilities: [walkThePlankAbility],
 // };
 //

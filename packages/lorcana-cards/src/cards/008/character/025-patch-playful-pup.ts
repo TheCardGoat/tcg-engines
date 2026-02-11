@@ -1,57 +1,57 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { wardAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { whileConditionThisCharacterGets } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { wardAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import { whileConditionThisCharacterGets } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
 //
-// export const patchPlayfulPup: LorcanitoCharacterCard = {
-//   id: "pl4",
-//   name: "Patch",
-//   title: "Playful Pup",
-//   characteristics: ["storyborn", "puppy"],
-//   text: "Ward\nPUPPY BARKING While you have another Puppy character in play, this character gets +1 {L}.",
-//   type: "character",
-//   abilities: [
-//     wardAbility,
-//     whileConditionThisCharacterGets({
-//       name: "PUPPY BARKING",
-//       text: "While you have another Puppy character in play, this character gets +1 {L}.",
-//       conditions: [
+// Export const patchPlayfulPup: LorcanitoCharacterCard = {
+//   Id: "pl4",
+//   Name: "Patch",
+//   Title: "Playful Pup",
+//   Characteristics: ["storyborn", "puppy"],
+//   Text: "Ward\nPUPPY BARKING While you have another Puppy character in play, this character gets +1 {L}.",
+//   Type: "character",
+//   Abilities: [
+//     WardAbility,
+//     WhileConditionThisCharacterGets({
+//       Name: "PUPPY BARKING",
+//       Text: "While you have another Puppy character in play, this character gets +1 {L}.",
+//       Conditions: [
 //         {
-//           type: "filter",
-//           filters: [
+//           Type: "filter",
+//           Filters: [
 //             { filter: "owner", value: "self" },
 //             { filter: "zone", value: "play" },
 //             { filter: "type", value: "character" },
 //             { filter: "characteristics", value: ["puppy"] },
 //           ],
-//           excludeSelf: true,
-//           comparison: { operator: "gte", value: 1 },
+//           ExcludeSelf: true,
+//           Comparison: { operator: "gte", value: 1 },
 //         },
 //       ],
-//       effects: [
+//       Effects: [
 //         {
-//           type: "attribute" as const,
-//           attribute: "lore" as const,
-//           amount: 1,
-//           modifier: "add" as const,
-//           target: thisCharacter,
+//           Type: "attribute" as const,
+//           Attribute: "lore" as const,
+//           Amount: 1,
+//           Modifier: "add" as const,
+//           Target: thisCharacter,
 //         },
 //       ],
 //     }),
 //   ],
-//   inkwell: false,
-//   colors: ["amber", "sapphire"],
-//   cost: 1,
-//   strength: 0,
-//   willpower: 2,
-//   illustrator: "Oggy Christiansson",
-//   number: 25,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631368,
+//   Inkwell: false,
+//   Colors: ["amber", "sapphire"],
+//   Cost: 1,
+//   Strength: 0,
+//   Willpower: 2,
+//   Illustrator: "Oggy Christiansson",
+//   Number: 25,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631368,
 //   },
-//   rarity: "uncommon",
-//   lore: 1,
+//   Rarity: "uncommon",
+//   Lore: 1,
 // };
 //

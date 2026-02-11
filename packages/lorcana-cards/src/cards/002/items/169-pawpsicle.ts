@@ -1,30 +1,8 @@
 import type { ItemCard } from "@tcg/lorcana-types";
 
 export const pawpsicle: ItemCard = {
-  id: "s1u",
-  cardType: "item",
-  name: "Pawpsicle",
-  inkType: ["sapphire"],
-  franchise: "Zootropolis",
-  set: "002",
-  text: "JUMBO POP When you play this item, you may draw a card.\nTHAT'S REDWOOD Banish this item — Remove up to 2 damage from chosen character.",
-  cost: 1,
-  cardNumber: 169,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "651952e179e63cca4db165a7416ab0c4d3f16556",
-  },
   abilities: [
     {
-      id: "s1u-1",
-      type: "triggered",
-      name: "JUMBO POP",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -34,11 +12,17 @@ export const pawpsicle: ItemCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "s1u-1",
+      name: "JUMBO POP",
       text: "JUMBO POP When you play this item, you may draw a card.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
     {
-      id: "s1u-2",
-      type: "activated",
       cost: { exert: true },
       effect: {
         type: "remove-damage",
@@ -52,7 +36,23 @@ export const pawpsicle: ItemCard = {
           cardTypes: ["character"],
         },
       },
+      id: "s1u-2",
       text: "THAT'S REDWOOD Banish this item — Remove up to 2 damage from chosen character.",
+      type: "activated",
     },
   ],
+  cardNumber: 169,
+  cardType: "item",
+  cost: 1,
+  externalIds: {
+    ravensburger: "651952e179e63cca4db165a7416ab0c4d3f16556",
+  },
+  franchise: "Zootropolis",
+  id: "s1u",
+  inkType: ["sapphire"],
+  inkable: true,
+  missingTests: true,
+  name: "Pawpsicle",
+  set: "002",
+  text: "JUMBO POP When you play this item, you may draw a card.\nTHAT'S REDWOOD Banish this item — Remove up to 2 damage from chosen character.",
 };

@@ -3,23 +3,23 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { jafarRoyalVizier } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { jafarRoyalVizier } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Jafar- Royal Vizier", () => {
-//   it.skip("I don't trust him, sire", () => {
-//     const testStore = new TestStore({
-//       inkwell: jafarRoyalVizier.cost,
+// Describe("Jafar- Royal Vizier", () => {
+//   It.skip("I don't trust him, sire", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: jafarRoyalVizier.cost,
 //
-//       hand: [jafarRoyalVizier],
+//       Hand: [jafarRoyalVizier],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", jafarRoyalVizier.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", jafarRoyalVizier.id);
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     testStore.resolveTopOfStack({});
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

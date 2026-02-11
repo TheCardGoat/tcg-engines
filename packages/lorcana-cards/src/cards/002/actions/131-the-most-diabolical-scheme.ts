@@ -1,25 +1,8 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
 export const theMostDiabolicalScheme: ActionCard = {
-  id: "hlj",
-  cardType: "action",
-  name: "The Most Diabolical Scheme",
-  inkType: ["ruby"],
-  franchise: "Great Mouse Detective",
-  set: "002",
-  text: "Banish chosen Villain of yours to banish chosen character.",
-  actionSubtype: "song",
-  cost: 3,
-  cardNumber: 131,
-  inkable: false,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "3f6d21f1b5fcecdb1b1f40696d7d1016f0e483ba",
-  },
   abilities: [
     {
-      id: "hlj-1",
-      type: "action",
       effect: {
         type: "banish",
         target: {
@@ -30,7 +13,24 @@ export const theMostDiabolicalScheme: ActionCard = {
           cardTypes: ["character"],
         },
       },
+      id: "hlj-1",
       text: "Banish chosen Villain of yours to banish chosen character.",
+      type: "action",
     },
   ],
+  actionSubtype: "song",
+  cardNumber: 131,
+  cardType: "action",
+  cost: 3,
+  externalIds: {
+    ravensburger: "3f6d21f1b5fcecdb1b1f40696d7d1016f0e483ba",
+  },
+  franchise: "Great Mouse Detective",
+  id: "hlj",
+  inkType: ["ruby"],
+  inkable: false,
+  missingTests: true,
+  name: "The Most Diabolical Scheme",
+  set: "002",
+  text: "Banish chosen Villain of yours to banish chosen character.",
 };

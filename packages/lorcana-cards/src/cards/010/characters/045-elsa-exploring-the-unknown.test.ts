@@ -3,12 +3,12 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   elsaExploringTheUnknown,
-//   taranPigKeeper,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   ElsaExploringTheUnknown,
+//   TaranPigKeeper,
 // } from "@lorcanito/lorcana-engine/cards/010/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Elsa - Exploring the Unknown", () => {});
+// Describe("Elsa - Exploring the Unknown", () => {});
 //

@@ -1,43 +1,43 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import {
-//   shiftAbility,
-//   supportAbility,
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import {
+//   ShiftAbility,
+//   SupportAbility,
 // } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { ifYouHaveCharacterNamed } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
-// import { wheneverThisCharacterQuests } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-// import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
+// Import { ifYouHaveCharacterNamed } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
+// Import { wheneverThisCharacterQuests } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// Import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const annaMagicalMission: LorcanitoCharacterCard = {
-//   id: "uvp",
-//   name: "Anna",
-//   title: "Magical Mission",
-//   characteristics: ["floodborn", "hero", "queen", "sorcerer"],
-//   text: "Shift 4 \nSupport \nCOORDINATED PLAN Whenever this character quests, if you have a character named Elsa in play, you may draw a card.",
-//   type: "character",
-//   abilities: [
-//     shiftAbility(4, "Anna"),
-//     supportAbility,
-//     wheneverThisCharacterQuests({
-//       name: "COORDINATED PLAN",
-//       text: "Whenever this character quests, if you have a character named Elsa in play, you may draw a card.",
-//       optional: true,
-//       conditions: [ifYouHaveCharacterNamed(["Elsa"])],
-//       effects: [drawACard],
+// Export const annaMagicalMission: LorcanitoCharacterCard = {
+//   Id: "uvp",
+//   Name: "Anna",
+//   Title: "Magical Mission",
+//   Characteristics: ["floodborn", "hero", "queen", "sorcerer"],
+//   Text: "Shift 4 \nSupport \nCOORDINATED PLAN Whenever this character quests, if you have a character named Elsa in play, you may draw a card.",
+//   Type: "character",
+//   Abilities: [
+//     ShiftAbility(4, "Anna"),
+//     SupportAbility,
+//     WheneverThisCharacterQuests({
+//       Name: "COORDINATED PLAN",
+//       Text: "Whenever this character quests, if you have a character named Elsa in play, you may draw a card.",
+//       Optional: true,
+//       Conditions: [ifYouHaveCharacterNamed(["Elsa"])],
+//       Effects: [drawACard],
 //     }),
 //   ],
-//   inkwell: true,
-//   colors: ["amethyst", "sapphire"],
-//   cost: 6,
-//   strength: 3,
-//   willpower: 6,
-//   illustrator: "Luigi Aimè",
-//   number: 72,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631399,
+//   Inkwell: true,
+//   Colors: ["amethyst", "sapphire"],
+//   Cost: 6,
+//   Strength: 3,
+//   Willpower: 6,
+//   Illustrator: "Luigi Aimè",
+//   Number: 72,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631399,
 //   },
-//   rarity: "rare",
-//   lore: 2,
+//   Rarity: "rare",
+//   Lore: 2,
 // };
 //

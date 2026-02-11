@@ -1,35 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const julietaMadrigalExcellentCook: CharacterCard = {
-  id: "10k",
-  cardType: "character",
-  name: "Julieta Madrigal",
-  version: "Excellent Cook",
-  fullName: "Julieta Madrigal - Excellent Cook",
-  inkType: ["amber"],
-  franchise: "Encanto",
-  set: "009",
-  text: "SIGNATURE RECIPE When you play this character, you may remove up to 2 damage from chosen character. If you removed damage this way, you may draw a card.",
-  cost: 3,
-  strength: 1,
-  willpower: 4,
-  lore: 1,
-  cardNumber: 18,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "83c1850fb595a638632eaf8ed7f131f16558051a",
-  },
   abilities: [
     {
-      id: "10k-1",
-      type: "triggered",
-      name: "SIGNATURE RECIPE",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "conditional",
         condition: {
@@ -42,8 +15,35 @@ export const julietaMadrigalExcellentCook: CharacterCard = {
           target: "CONTROLLER",
         },
       },
+      id: "10k-1",
+      name: "SIGNATURE RECIPE",
       text: "SIGNATURE RECIPE When you play this character, you may remove up to 2 damage from chosen character. If you removed damage this way, you may draw a card.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 18,
+  cardType: "character",
   classifications: ["Storyborn", "Mentor", "Madrigal"],
+  cost: 3,
+  externalIds: {
+    ravensburger: "83c1850fb595a638632eaf8ed7f131f16558051a",
+  },
+  franchise: "Encanto",
+  fullName: "Julieta Madrigal - Excellent Cook",
+  id: "10k",
+  inkType: ["amber"],
+  inkable: true,
+  lore: 1,
+  missingTests: true,
+  name: "Julieta Madrigal",
+  set: "009",
+  strength: 1,
+  text: "SIGNATURE RECIPE When you play this character, you may remove up to 2 damage from chosen character. If you removed damage this way, you may draw a card.",
+  version: "Excellent Cook",
+  willpower: 4,
 };

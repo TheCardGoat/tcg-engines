@@ -3,38 +3,38 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { sisuWiseFriend } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import {
-//   sisuInHerElement,
-//   sisuUnitingDragon,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { sisuWiseFriend } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import {
+//   SisuInHerElement,
+//   SisuUnitingDragon,
 // } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Sisu - Uniting Dragon", () => {
-//   describe("TRUST BUILDS TRUST Whenever this character quests, reveal the top card of your deck. If it’s a Dragon character card, put it into your hand and repeat this effect. Otherwise, put it on either the top or the bottom of your deck.", () => {
-//     it("Two dragons on top", async () => {
-//       const testEngine = new TestEngine({
-//         play: [sisuUnitingDragon],
-//         deck: [sisuInHerElement, sisuWiseFriend],
+// Describe("Sisu - Uniting Dragon", () => {
+//   Describe("TRUST BUILDS TRUST Whenever this character quests, reveal the top card of your deck. If it’s a Dragon character card, put it into your hand and repeat this effect. Otherwise, put it on either the top or the bottom of your deck.", () => {
+//     It("Two dragons on top", async () => {
+//       Const testEngine = new TestEngine({
+//         Play: [sisuUnitingDragon],
+//         Deck: [sisuInHerElement, sisuWiseFriend],
 //       });
 //
-//       await testEngine.questCard(sisuUnitingDragon);
+//       Await testEngine.questCard(sisuUnitingDragon);
 //
-//       await testEngine.resolveTopOfStack(
+//       Await testEngine.resolveTopOfStack(
 //         {
-//           scry: { hand: [sisuWiseFriend] },
+//           Scry: { hand: [sisuWiseFriend] },
 //         },
-//         true,
+//         True,
 //       );
 //
-//       expect(testEngine.getCardModel(sisuWiseFriend).zone).toBe("hand");
+//       Expect(testEngine.getCardModel(sisuWiseFriend).zone).toBe("hand");
 //
-//       await testEngine.resolveTopOfStack({
-//         scry: { hand: [sisuInHerElement] },
+//       Await testEngine.resolveTopOfStack({
+//         Scry: { hand: [sisuInHerElement] },
 //       });
 //
-//       expect(testEngine.getCardModel(sisuInHerElement).zone).toBe("hand");
+//       Expect(testEngine.getCardModel(sisuInHerElement).zone).toBe("hand");
 //     });
 //   });
 // });

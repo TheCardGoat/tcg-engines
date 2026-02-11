@@ -3,29 +3,29 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   mufasaRulerOfPrideRock,
-//   scarBetrayer,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   MufasaRulerOfPrideRock,
+//   ScarBetrayer,
 // } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Scar - Betrayer", () => {
-//   it("**LONG LIVE THE KING** When you play this character, you may banish chosen character named Mufasa.", () => {
-//     const testStore = new TestStore({
-//       inkwell: scarBetrayer.cost,
-//       hand: [scarBetrayer],
-//       play: [mufasaRulerOfPrideRock],
+// Describe("Scar - Betrayer", () => {
+//   It("**LONG LIVE THE KING** When you play this character, you may banish chosen character named Mufasa.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: scarBetrayer.cost,
+//       Hand: [scarBetrayer],
+//       Play: [mufasaRulerOfPrideRock],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(scarBetrayer);
-//     const mufasa = testStore.getCard(mufasaRulerOfPrideRock);
+//     Const cardUnderTest = testStore.getCard(scarBetrayer);
+//     Const mufasa = testStore.getCard(mufasaRulerOfPrideRock);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({ targets: [mufasa] });
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({ targets: [mufasa] });
 //
-//     expect(mufasa.zone).toEqual("discard");
+//     Expect(mufasa.zone).toEqual("discard");
 //   });
 // });
 //

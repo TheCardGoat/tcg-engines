@@ -3,39 +3,39 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   cruellaDeVilMiserableAsUsual,
-//   dukeOfWeselton,
-//   genieTheEverImpressive,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   CruellaDeVilMiserableAsUsual,
+//   DukeOfWeselton,
+//   GenieTheEverImpressive,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { NnPuppies } from "@lorcanito/lorcana-engine/cards/003/actions/actions";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { NnPuppies } from "@lorcanito/lorcana-engine/cards/003/actions/actions";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("99 Puppies", () => {
-//   it("Whenever one of your characters quests this turn, gain 1 lore.", () => {
-//     const cardsInPlay = [
-//       genieTheEverImpressive,
-//       dukeOfWeselton,
-//       cruellaDeVilMiserableAsUsual,
+// Describe("99 Puppies", () => {
+//   It("Whenever one of your characters quests this turn, gain 1 lore.", () => {
+//     Const cardsInPlay = [
+//       GenieTheEverImpressive,
+//       DukeOfWeselton,
+//       CruellaDeVilMiserableAsUsual,
 //     ];
-//     const testStore = new TestStore({
-//       inkwell: NnPuppies.cost,
-//       hand: [NnPuppies],
-//       play: cardsInPlay,
+//     Const testStore = new TestStore({
+//       Inkwell: NnPuppies.cost,
+//       Hand: [NnPuppies],
+//       Play: cardsInPlay,
 //     });
 //
-//     const cardUnderTest = testStore.getCard(NnPuppies);
+//     Const cardUnderTest = testStore.getCard(NnPuppies);
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     expect(cardUnderTest.zone).toEqual("discard");
+//     Expect(cardUnderTest.zone).toEqual("discard");
 //
-//     cardsInPlay.forEach((card, index) => {
-//       const target = testStore.getCard(card);
-//       target.quest();
+//     CardsInPlay.forEach((card, index) => {
+//       Const target = testStore.getCard(card);
+//       Target.quest();
 //
-//       expect(testStore.store.tableStore.getTable("player_one").lore).toBe(
+//       Expect(testStore.store.tableStore.getTable("player_one").lore).toBe(
 //         (index + 1) * 2,
 //       );
 //     });

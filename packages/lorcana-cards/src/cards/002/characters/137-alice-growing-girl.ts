@@ -1,53 +1,53 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { supportAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { yourOtherCharacters } from "@lorcanito/lorcana-engine/abilities/target";
-// import { whileConditionThisCharacterGets } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { supportAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import { yourOtherCharacters } from "@lorcanito/lorcana-engine/abilities/target";
+// Import { whileConditionThisCharacterGets } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
 //
-// export const aliceGrowingGirl: LorcanitoCharacterCard = {
-//   id: "wfi",
-//   reprints: ["rtw"],
+// Export const aliceGrowingGirl: LorcanitoCharacterCard = {
+//   Id: "wfi",
+//   Reprints: ["rtw"],
 //
-//   name: "Alice",
-//   title: "Growing Girl",
-//   characteristics: ["hero", "dreamborn"],
-//   text: "**GOOD ADVICE** Your other characters gain **Support**. _(Whenever they quest, you may add their {S} to another chosen character's {S} this turn.)_\n\n**WHAT DID I DO?** While this character has 10 {S} or more, she gets +4 {L}.",
-//   type: "character",
-//   abilities: [
+//   Name: "Alice",
+//   Title: "Growing Girl",
+//   Characteristics: ["hero", "dreamborn"],
+//   Text: "**GOOD ADVICE** Your other characters gain **Support**. _(Whenever they quest, you may add their {S} to another chosen character's {S} this turn.)_\n\n**WHAT DID I DO?** While this character has 10 {S} or more, she gets +4 {L}.",
+//   Type: "character",
+//   Abilities: [
 //     {
-//       type: "static",
-//       ability: "gain-ability",
-//       name: "Good Advice",
-//       text: "Your other characters gain **Support**.",
-//       gainedAbility: supportAbility,
-//       target: yourOtherCharacters,
+//       Type: "static",
+//       Ability: "gain-ability",
+//       Name: "Good Advice",
+//       Text: "Your other characters gain **Support**.",
+//       GainedAbility: supportAbility,
+//       Target: yourOtherCharacters,
 //     },
-//     whileConditionThisCharacterGets({
-//       name: "What did I Do?",
-//       text: "While this character has 10 {S} or more, she gets +4 {L}.",
-//       attribute: "lore",
-//       amount: 4,
-//       conditions: [
+//     WhileConditionThisCharacterGets({
+//       Name: "What did I Do?",
+//       Text: "While this character has 10 {S} or more, she gets +4 {L}.",
+//       Attribute: "lore",
+//       Amount: 4,
+//       Conditions: [
 //         {
-//           type: "attribute",
-//           attribute: "strength",
-//           comparison: { operator: "gte", value: 10 },
+//           Type: "attribute",
+//           Attribute: "strength",
+//           Comparison: { operator: "gte", value: 10 },
 //         },
 //       ],
 //     }),
 //   ],
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 3,
-//   strength: 1,
-//   willpower: 4,
-//   lore: 1,
-//   illustrator: "Alice Pisoni",
-//   number: 137,
-//   set: "ROF",
-//   externalIds: {
-//     tcgPlayer: 527528,
+//   Inkwell: true,
+//   Colors: ["sapphire"],
+//   Cost: 3,
+//   Strength: 1,
+//   Willpower: 4,
+//   Lore: 1,
+//   Illustrator: "Alice Pisoni",
+//   Number: 137,
+//   Set: "ROF",
+//   ExternalIds: {
+//     TcgPlayer: 527528,
 //   },
-//   rarity: "legendary",
+//   Rarity: "legendary",
 // };
 //

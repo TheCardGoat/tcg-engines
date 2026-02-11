@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { undermine } from "@lorcanito/lorcana-engine/cards/008";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { undermine } from "@lorcanito/lorcana-engine/cards/008";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Undermine", () => {
-//   it.skip("Chosen opponent chooses and discards a card. Chosen character gets +2 {S} this turn.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: undermine.cost,
-//       play: [undermine],
-//       hand: [undermine],
+// Describe("Undermine", () => {
+//   It.skip("Chosen opponent chooses and discards a card. Chosen character gets +2 {S} this turn.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: undermine.cost,
+//       Play: [undermine],
+//       Hand: [undermine],
 //     });
 //
-//     await testEngine.playCard(undermine);
+//     Await testEngine.playCard(undermine);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

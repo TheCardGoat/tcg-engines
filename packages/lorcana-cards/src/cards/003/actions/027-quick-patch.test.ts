@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { quickPatch } from "@lorcanito/lorcana-engine/cards/003/actions/actions";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { quickPatch } from "@lorcanito/lorcana-engine/cards/003/actions/actions";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Quick Patch", () => {
-//   it.skip("Remove up to 3 damage from chosen location.", () => {
-//     const testStore = new TestStore({
-//       inkwell: quickPatch.cost,
-//       hand: [quickPatch],
+// Describe("Quick Patch", () => {
+//   It.skip("Remove up to 3 damage from chosen location.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: quickPatch.cost,
+//       Hand: [quickPatch],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", quickPatch.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", quickPatch.id);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

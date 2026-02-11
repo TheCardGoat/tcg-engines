@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { cybugInvasiveEnemy } from "@lorcanito/lorcana-engine/cards/007/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { cybugInvasiveEnemy } from "@lorcanito/lorcana-engine/cards/007/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Cy-bug - Invasive Enemy", () => {
-//   it.skip("HIVE MIND This character gets +1 {S} for each other character you have in play.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: cybugInvasiveEnemy.cost,
-//       play: [cybugInvasiveEnemy],
-//       hand: [cybugInvasiveEnemy],
+// Describe("Cy-bug - Invasive Enemy", () => {
+//   It.skip("HIVE MIND This character gets +1 {S} for each other character you have in play.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: cybugInvasiveEnemy.cost,
+//       Play: [cybugInvasiveEnemy],
+//       Hand: [cybugInvasiveEnemy],
 //     });
 //
-//     await testEngine.playCard(cybugInvasiveEnemy);
+//     Await testEngine.playCard(cybugInvasiveEnemy);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

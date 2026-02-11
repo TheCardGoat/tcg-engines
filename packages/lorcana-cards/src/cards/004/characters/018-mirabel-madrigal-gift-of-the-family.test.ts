@@ -3,37 +3,37 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { mirabelMadrigalGiftOfTheFamily } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { mirabelMadrigalGiftOfTheFamily } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Mirabel Madrigal - Gift of the Family", () => {
-//   it.skip("**Support** _(Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)_", () => {
-//     const testStore = new TestStore({
-//       play: [mirabelMadrigalGiftOfTheFamily],
+// Describe("Mirabel Madrigal - Gift of the Family", () => {
+//   It.skip("**Support** _(Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)_", () => {
+//     Const testStore = new TestStore({
+//       Play: [mirabelMadrigalGiftOfTheFamily],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       mirabelMadrigalGiftOfTheFamily.id,
+//       MirabelMadrigalGiftOfTheFamily.id,
 //     );
-//     expect(cardUnderTest.hasSupport).toBe(true);
+//     Expect(cardUnderTest.hasSupport).toBe(true);
 //   });
 //
-//   it.skip("**SAVING THE MIRACLE** Whenever this character quests, your other Madrigal characters get +1 {L} this turn.", () => {
-//     const testStore = new TestStore({
-//       inkwell: mirabelMadrigalGiftOfTheFamily.cost,
-//       play: [mirabelMadrigalGiftOfTheFamily],
+//   It.skip("**SAVING THE MIRACLE** Whenever this character quests, your other Madrigal characters get +1 {L} this turn.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: mirabelMadrigalGiftOfTheFamily.cost,
+//       Play: [mirabelMadrigalGiftOfTheFamily],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       mirabelMadrigalGiftOfTheFamily.id,
+//       MirabelMadrigalGiftOfTheFamily.id,
 //     );
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

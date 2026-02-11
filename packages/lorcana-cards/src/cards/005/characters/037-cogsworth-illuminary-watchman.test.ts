@@ -3,21 +3,21 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { cogsworthIlluminaryWatchman } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { cogsworthIlluminaryWatchman } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Cogsworth - Illuminary Watchman", () => {
-//   it.skip("**TIME TO MOVE IT!** When you play this character, chosen character gains **Rush** this turn. _(They can challenge the turn they’re played.)_", () => {
-//     const testStore = new TestStore({
-//       inkwell: cogsworthIlluminaryWatchman.cost,
-//       hand: [cogsworthIlluminaryWatchman],
+// Describe("Cogsworth - Illuminary Watchman", () => {
+//   It.skip("**TIME TO MOVE IT!** When you play this character, chosen character gains **Rush** this turn. _(They can challenge the turn they’re played.)_", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: cogsworthIlluminaryWatchman.cost,
+//       Hand: [cogsworthIlluminaryWatchman],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(cogsworthIlluminaryWatchman);
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     Const cardUnderTest = testStore.getCard(cogsworthIlluminaryWatchman);
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

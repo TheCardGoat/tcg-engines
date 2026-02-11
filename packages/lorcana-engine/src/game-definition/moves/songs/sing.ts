@@ -1,17 +1,7 @@
-import { createMove, type ZoneId } from "@tcg/core";
+import { type ZoneId, createMove } from "@tcg/core";
 import { useLorcanaOps } from "../../../operations";
-import type {
-  LorcanaCardMeta,
-  LorcanaGameState,
-  LorcanaMoveParams,
-} from "../../../types";
-import {
-  and,
-  cardInHand,
-  cardInPlay,
-  cardOwnedByPlayer,
-  isMainPhase,
-} from "../../../validators";
+import type { LorcanaCardMeta, LorcanaGameState, LorcanaMoveParams } from "../../../types";
+import { and, cardInHand, cardInPlay, cardOwnedByPlayer, isMainPhase } from "../../../validators";
 
 /**
  * Sing Move (Legacy)
@@ -27,18 +17,12 @@ import {
  * - Singer must be owned by current player
  * - Singer must be able to sing (ready, not drying, meets cost requirement)
  */
-export const sing = createMove<
-  LorcanaGameState,
-  LorcanaMoveParams,
-  "sing",
-  LorcanaCardMeta
->({
+export const sing = createMove<LorcanaGameState, LorcanaMoveParams, "sing", LorcanaCardMeta>({
   condition: and(
     isMainPhase(),
     (state, context) => cardInHand(context.params.songId)(state, context),
     (state, context) => cardInPlay(context.params.singerId)(state, context),
-    (state, context) =>
-      cardOwnedByPlayer(context.params.singerId)(state, context),
+    (state, context) => cardOwnedByPlayer(context.params.singerId)(state, context),
   ),
   reducer: (draft, context) => {
     const { singerId, songId } = context.params;

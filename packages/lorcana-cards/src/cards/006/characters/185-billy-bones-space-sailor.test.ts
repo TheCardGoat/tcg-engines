@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { billyBonesSpaceSailor } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { billyBonesSpaceSailor } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Billy Bones - Space Sailor", () => {
-//   it.skip("KEEP IT HIDDEN When this character is banished, you may banish chosen item or location.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: billyBonesSpaceSailor.cost,
-//       play: [billyBonesSpaceSailor],
-//       hand: [billyBonesSpaceSailor],
+// Describe("Billy Bones - Space Sailor", () => {
+//   It.skip("KEEP IT HIDDEN When this character is banished, you may banish chosen item or location.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: billyBonesSpaceSailor.cost,
+//       Play: [billyBonesSpaceSailor],
+//       Hand: [billyBonesSpaceSailor],
 //     });
 //
-//     await testEngine.playCard(billyBonesSpaceSailor);
+//     Await testEngine.playCard(billyBonesSpaceSailor);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

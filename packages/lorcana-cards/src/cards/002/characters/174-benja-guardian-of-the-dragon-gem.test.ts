@@ -3,33 +3,33 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { benjaGuardianOfTheDragonGem } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { mouseArmor } from "@lorcanito/lorcana-engine/cards/002/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { benjaGuardianOfTheDragonGem } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { mouseArmor } from "@lorcanito/lorcana-engine/cards/002/items/items";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Benja- Guardian of the Dragon Gem", () => {
-//   it("**WE HAVE A CHOICE** When you play this character, you may banish chosen item.", () => {
-//     const testStore = new TestStore({
-//       inkwell: benjaGuardianOfTheDragonGem.cost,
-//       hand: [benjaGuardianOfTheDragonGem],
-//       play: [mouseArmor],
+// Describe("Benja- Guardian of the Dragon Gem", () => {
+//   It("**WE HAVE A CHOICE** When you play this character, you may banish chosen item.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: benjaGuardianOfTheDragonGem.cost,
+//       Hand: [benjaGuardianOfTheDragonGem],
+//       Play: [mouseArmor],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "hand",
-//       benjaGuardianOfTheDragonGem.id,
+//       BenjaGuardianOfTheDragonGem.id,
 //     );
-//     const target = testStore.getByZoneAndId("play", mouseArmor.id);
+//     Const target = testStore.getByZoneAndId("play", mouseArmor.id);
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({
-//       targetId: target.instanceId,
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({
+//       TargetId: target.instanceId,
 //     });
 //
-//     expect(target.zone).toEqual("discard");
+//     Expect(target.zone).toEqual("discard");
 //   });
 // });
 //

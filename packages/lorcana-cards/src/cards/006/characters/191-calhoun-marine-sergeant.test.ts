@@ -1,36 +1,36 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { describe, expect, it } from "@jest/globals";
-// import { goonsMaleficent } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { calhounMarineSergeant } from "@lorcanito/lorcana-engine/cards/006";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { goonsMaleficent } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { calhounMarineSergeant } from "@lorcanito/lorcana-engine/cards/006";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Calhoun - Marine Sergeant", () => {
-//   describe("**LEVEL UP** During your turn, whenever this character banishes another character in a challenge, gain 2 lore.", () => {
-//     it("should gain 2 lore when banishes another character in a challenge during your turn", () => {
-//       const testStore = new TestStore(
+// Describe("Calhoun - Marine Sergeant", () => {
+//   Describe("**LEVEL UP** During your turn, whenever this character banishes another character in a challenge, gain 2 lore.", () => {
+//     It("should gain 2 lore when banishes another character in a challenge during your turn", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [calhounMarineSergeant],
+//           Play: [calhounMarineSergeant],
 //         },
 //         {
-//           play: [goonsMaleficent],
+//           Play: [goonsMaleficent],
 //         },
 //       );
-//       const attacker = testStore.getByZoneAndId(
+//       Const attacker = testStore.getByZoneAndId(
 //         "play",
-//         calhounMarineSergeant.id,
+//         CalhounMarineSergeant.id,
 //       );
-//       const defender = testStore.getByZoneAndId(
+//       Const defender = testStore.getByZoneAndId(
 //         "play",
-//         goonsMaleficent.id,
+//         GoonsMaleficent.id,
 //         "player_two",
 //       );
 //
-//       defender.updateCardMeta({ exerted: true });
-//       expect(testStore.store.tableStore.getTable("player_one").lore).toEqual(0);
-//       attacker.challenge(defender);
-//       expect(testStore.store.tableStore.getTable("player_one").lore).toEqual(2);
-//       expect(defender.zone).toEqual("discard");
-//       expect(attacker.damage).toBe(1);
+//       Defender.updateCardMeta({ exerted: true });
+//       Expect(testStore.store.tableStore.getTable("player_one").lore).toEqual(0);
+//       Attacker.challenge(defender);
+//       Expect(testStore.store.tableStore.getTable("player_one").lore).toEqual(2);
+//       Expect(defender.zone).toEqual("discard");
+//       Expect(attacker.damage).toBe(1);
 //     });
 //   });
 // });

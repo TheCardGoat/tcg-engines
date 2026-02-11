@@ -3,41 +3,41 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   jumbaJookibaCriticalScientist,
-//   khanWarHorse,
-//   pouncingPractice,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   JumbaJookibaCriticalScientist,
+//   KhanWarHorse,
+//   PouncingPractice,
 // } from "@lorcanito/lorcana-engine/cards/008";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Pouncing Practice", () => {
-//   it("Chosen character gets -2 {S} this turn. Chosen character of yours gains Evasive this turn. (They can challenge characters with Evasive.)", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Pouncing Practice", () => {
+//   It("Chosen character gets -2 {S} this turn. Chosen character of yours gains Evasive this turn. (They can challenge characters with Evasive.)", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: pouncingPractice.cost,
-//         hand: [pouncingPractice],
-//         play: [jumbaJookibaCriticalScientist],
+//         Inkwell: pouncingPractice.cost,
+//         Hand: [pouncingPractice],
+//         Play: [jumbaJookibaCriticalScientist],
 //       },
 //       {
-//         play: [khanWarHorse],
+//         Play: [khanWarHorse],
 //       },
 //     );
 //
-//     await testEngine.playCard(
-//       pouncingPractice,
+//     Await testEngine.playCard(
+//       PouncingPractice,
 //       { targets: [khanWarHorse] },
-//       true,
+//       True,
 //     );
-//     expect(testEngine.getCardModel(khanWarHorse).strength).toBe(
-//       khanWarHorse.strength - 2,
+//     Expect(testEngine.getCardModel(khanWarHorse).strength).toBe(
+//       KhanWarHorse.strength - 2,
 //     );
 //
-//     await testEngine.resolveTopOfStack({
-//       targets: [jumbaJookibaCriticalScientist],
+//     Await testEngine.resolveTopOfStack({
+//       Targets: [jumbaJookibaCriticalScientist],
 //     });
-//     expect(
-//       testEngine.getCardModel(jumbaJookibaCriticalScientist).hasEvasive,
+//     Expect(
+//       TestEngine.getCardModel(jumbaJookibaCriticalScientist).hasEvasive,
 //     ).toBe(true);
 //   });
 // });

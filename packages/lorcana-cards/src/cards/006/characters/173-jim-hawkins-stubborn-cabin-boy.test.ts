@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { jimHawkinsStubbornCabinBoy } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { jimHawkinsStubbornCabinBoy } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Jim Hawkins - Stubborn Cabin Boy", () => {
-//   it.skip("COME HERE, COME HERE, COME HERE! During your turn, whenever a card is put into your inkwell, this character gets Challenger +2 this turn. (While challenging, this character gets +2 {S}.)", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: jimHawkinsStubbornCabinBoy.cost,
-//       play: [jimHawkinsStubbornCabinBoy],
-//       hand: [jimHawkinsStubbornCabinBoy],
+// Describe("Jim Hawkins - Stubborn Cabin Boy", () => {
+//   It.skip("COME HERE, COME HERE, COME HERE! During your turn, whenever a card is put into your inkwell, this character gets Challenger +2 this turn. (While challenging, this character gets +2 {S}.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: jimHawkinsStubbornCabinBoy.cost,
+//       Play: [jimHawkinsStubbornCabinBoy],
+//       Hand: [jimHawkinsStubbornCabinBoy],
 //     });
 //
-//     await testEngine.playCard(jimHawkinsStubbornCabinBoy);
+//     Await testEngine.playCard(jimHawkinsStubbornCabinBoy);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

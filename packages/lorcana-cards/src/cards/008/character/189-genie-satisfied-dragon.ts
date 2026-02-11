@@ -1,37 +1,37 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import {
-//   duringYourTurnThisCharacterGains,
-//   evasiveAbility,
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import {
+//   DuringYourTurnThisCharacterGains,
+//   EvasiveAbility,
 // } from "@lorcanito/lorcana-engine/abilities/abilities";
 //
-// export const genieSatisfiedDragon: LorcanitoCharacterCard = {
-//   id: "sub",
-//   name: "Genie",
-//   title: "Satisfied Dragon",
-//   characteristics: ["storyborn", "ally", "dragon"],
-//   text: "BUG CATCHER During your turn, this character gains Evasive. (They can challenge characters with Evasive.)",
-//   type: "character",
-//   abilities: [
-//     duringYourTurnThisCharacterGains({
-//       name: "BUG CATCHER",
-//       text: "During your turn, this character gains Evasive. (They can challenge characters with Evasive.)",
-//       ability: evasiveAbility,
-//       conditions: [],
+// Export const genieSatisfiedDragon: LorcanitoCharacterCard = {
+//   Id: "sub",
+//   Name: "Genie",
+//   Title: "Satisfied Dragon",
+//   Characteristics: ["storyborn", "ally", "dragon"],
+//   Text: "BUG CATCHER During your turn, this character gains Evasive. (They can challenge characters with Evasive.)",
+//   Type: "character",
+//   Abilities: [
+//     DuringYourTurnThisCharacterGains({
+//       Name: "BUG CATCHER",
+//       Text: "During your turn, this character gains Evasive. (They can challenge characters with Evasive.)",
+//       Ability: evasiveAbility,
+//       Conditions: [],
 //     }),
 //   ],
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 3,
-//   strength: 3,
-//   willpower: 4,
-//   illustrator: "Rosa la Barbera / Livio Cacciatore",
-//   number: 189,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 633426,
+//   Inkwell: true,
+//   Colors: ["steel"],
+//   Cost: 3,
+//   Strength: 3,
+//   Willpower: 4,
+//   Illustrator: "Rosa la Barbera / Livio Cacciatore",
+//   Number: 189,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 633426,
 //   },
-//   rarity: "common",
-//   lore: 1,
+//   Rarity: "common",
+//   Lore: 1,
 // };
 //

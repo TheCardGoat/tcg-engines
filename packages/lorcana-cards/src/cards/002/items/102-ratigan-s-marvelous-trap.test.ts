@@ -3,32 +3,32 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { ratigansMarvelousTrap } from "@lorcanito/lorcana-engine/cards/002/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { ratigansMarvelousTrap } from "@lorcanito/lorcana-engine/cards/002/items/items";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Ratigan's Marvelous Trap", () => {
-//   it("**SNAP! BOOM! TWANG!** Banish this item − Each opponent loses 2 lore.", () => {
-//     const initialLore = 3;
+// Describe("Ratigan's Marvelous Trap", () => {
+//   It("**SNAP! BOOM! TWANG!** Banish this item − Each opponent loses 2 lore.", () => {
+//     Const initialLore = 3;
 //
-//     const testStore = new TestStore(
+//     Const testStore = new TestStore(
 //       {
-//         play: [ratigansMarvelousTrap],
+//         Play: [ratigansMarvelousTrap],
 //       },
 //       {
-//         lore: initialLore,
+//         Lore: initialLore,
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       ratigansMarvelousTrap.id,
+//       RatigansMarvelousTrap.id,
 //     );
 //
-//     cardUnderTest.activate();
+//     CardUnderTest.activate();
 //
-//     expect(cardUnderTest.zone).toEqual("discard");
-//     expect(testStore.getPlayerLore("player_two")).toEqual(initialLore - 2);
+//     Expect(cardUnderTest.zone).toEqual("discard");
+//     Expect(testStore.getPlayerLore("player_two")).toEqual(initialLore - 2);
 //   });
 // });
 //

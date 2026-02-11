@@ -1,54 +1,54 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import {
-//   chosenCharacterNamed,
-//   thisCharacter,
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import {
+//   ChosenCharacterNamed,
+//   ThisCharacter,
 // } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { readyAndCantQuest } from "@lorcanito/lorcana-engine/effects/effects";
+// Import { readyAndCantQuest } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const faZhouMulansFather: LorcanitoCharacterCard = {
-//   id: "ex8",
-//   missingTestCase: true,
-//   name: "Fa Zhou",
-//   title: "Mulan's Father",
-//   characteristics: ["storyborn", "mentor"],
-//   text: "**WAR WOUND** This character cannot challenge.\n\n\n**HEAD OF FAMILY** {E} - Ready chosen character named Mulan. They can't quest for the rest of the turn.",
-//   type: "character",
-//   abilities: [
+// Export const faZhouMulansFather: LorcanitoCharacterCard = {
+//   Id: "ex8",
+//   MissingTestCase: true,
+//   Name: "Fa Zhou",
+//   Title: "Mulan's Father",
+//   Characteristics: ["storyborn", "mentor"],
+//   Text: "**WAR WOUND** This character cannot challenge.\n\n\n**HEAD OF FAMILY** {E} - Ready chosen character named Mulan. They can't quest for the rest of the turn.",
+//   Type: "character",
+//   Abilities: [
 //     {
-//       type: "static",
-//       ability: "effects",
-//       name: "War Wound",
-//       text: "This character cannot challenge.",
-//       effects: [
+//       Type: "static",
+//       Ability: "effects",
+//       Name: "War Wound",
+//       Text: "This character cannot challenge.",
+//       Effects: [
 //         {
-//           type: "restriction",
-//           restriction: "challenge",
-//           target: thisCharacter,
+//           Type: "restriction",
+//           Restriction: "challenge",
+//           Target: thisCharacter,
 //         },
 //       ],
 //     },
 //     {
-//       type: "activated",
-//       costs: [{ type: "exert" }],
-//       name: "Head of Family",
-//       text: "{E} - Ready chosen character named Mulan. They can't quest for the rest of the turn.",
-//       effects: readyAndCantQuest(chosenCharacterNamed("mulan")),
+//       Type: "activated",
+//       Costs: [{ type: "exert" }],
+//       Name: "Head of Family",
+//       Text: "{E} - Ready chosen character named Mulan. They can't quest for the rest of the turn.",
+//       Effects: readyAndCantQuest(chosenCharacterNamed("mulan")),
 //     },
 //   ],
-//   flavour: '"I am ready to serve the Emperor."',
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 2,
-//   willpower: 4,
-//   strength: 0,
-//   lore: 1,
-//   illustrator: "Carmine Pucci",
-//   number: 105,
-//   set: "URR",
-//   externalIds: {
-//     tcgPlayer: 550590,
+//   Flavour: '"I am ready to serve the Emperor."',
+//   Inkwell: true,
+//   Colors: ["ruby"],
+//   Cost: 2,
+//   Willpower: 4,
+//   Strength: 0,
+//   Lore: 1,
+//   Illustrator: "Carmine Pucci",
+//   Number: 105,
+//   Set: "URR",
+//   ExternalIds: {
+//     TcgPlayer: 550590,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

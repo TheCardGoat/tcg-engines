@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { floraGoodFairy } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { floraGoodFairy } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Flora - Good Fairy", () => {
-//   it.skip("**FIDDLE FADDLE** While being challenged, this character gets +2 {S}.", () => {
-//     const testStore = new TestStore({
-//       inkwell: floraGoodFairy.cost,
-//       play: [floraGoodFairy],
+// Describe("Flora - Good Fairy", () => {
+//   It.skip("**FIDDLE FADDLE** While being challenged, this character gets +2 {S}.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: floraGoodFairy.cost,
+//       Play: [floraGoodFairy],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(floraGoodFairy);
+//     Const cardUnderTest = testStore.getCard(floraGoodFairy);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

@@ -3,32 +3,32 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   painUnderworldImp,
-//   panicUnderworldImp,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   PainUnderworldImp,
+//   PanicUnderworldImp,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Pain - Underworld Imp", () => {
-//   it("**COMING, YOUR MOST LUGUBRIOUSNESS** While this character has 5 {S} or more, he gets + 2 {L}.", () => {
-//     const testStore = new TestStore({
-//       inkwell: panicUnderworldImp.cost,
-//       hand: [panicUnderworldImp],
-//       play: [painUnderworldImp],
+// Describe("Pain - Underworld Imp", () => {
+//   It("**COMING, YOUR MOST LUGUBRIOUSNESS** While this character has 5 {S} or more, he gets + 2 {L}.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: panicUnderworldImp.cost,
+//       Hand: [panicUnderworldImp],
+//       Play: [painUnderworldImp],
 //     });
 //
-//     const buff = testStore.getByZoneAndId("hand", panicUnderworldImp.id);
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const buff = testStore.getByZoneAndId("hand", panicUnderworldImp.id);
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       painUnderworldImp.id,
+//       PainUnderworldImp.id,
 //     );
 //
-//     buff.playFromHand();
-//     testStore.resolveTopOfStack({ targets: [cardUnderTest] });
+//     Buff.playFromHand();
+//     TestStore.resolveTopOfStack({ targets: [cardUnderTest] });
 //
-//     expect(cardUnderTest.strength).toBe(painUnderworldImp.strength + 4);
-//     expect(cardUnderTest.lore).toBe(painUnderworldImp.lore + 2);
+//     Expect(cardUnderTest.strength).toBe(painUnderworldImp.strength + 4);
+//     Expect(cardUnderTest.lore).toBe(painUnderworldImp.lore + 2);
 //   });
 // });
 //

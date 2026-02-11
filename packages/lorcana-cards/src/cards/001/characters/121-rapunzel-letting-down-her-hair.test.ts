@@ -5,9 +5,9 @@ import { rapunzelLettingDownHerHair } from "./121-rapunzel-letting-down-her-hair
 describe("Rapunzel - Letting Down Her Hair", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [rapunzelLettingHerHairDown] });
-  //   expect(testEngine.getCardModel(rapunzelLettingHerHairDown).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [rapunzelLettingHerHairDown] });
+  //   Expect(testEngine.getCardModel(rapunzelLettingHerHairDown).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });

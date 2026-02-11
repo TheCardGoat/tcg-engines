@@ -3,55 +3,55 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   ambush,
-//   mammaOdieLoneSage,
-//   owlPirateLookout,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   Ambush,
+//   MammaOdieLoneSage,
+//   OwlPirateLookout,
 // } from "@lorcanito/lorcana-engine/cards/006";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Ambush!", () => {
-//   it("{E} one of your characters to deal damage equal to their {S} to chosen character.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Ambush!", () => {
+//   It("{E} one of your characters to deal damage equal to their {S} to chosen character.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: ambush.cost,
-//         play: [owlPirateLookout],
-//         hand: [ambush],
+//         Inkwell: ambush.cost,
+//         Play: [owlPirateLookout],
+//         Hand: [ambush],
 //       },
 //       {
-//         play: [mammaOdieLoneSage],
+//         Play: [mammaOdieLoneSage],
 //       },
 //     );
 //
-//     await testEngine.playCard(ambush);
+//     Await testEngine.playCard(ambush);
 //
-//     await testEngine.resolveTopOfStack({ targets: [owlPirateLookout] }, true);
-//     expect(testEngine.getCardModel(owlPirateLookout).exerted).toBe(true);
+//     Await testEngine.resolveTopOfStack({ targets: [owlPirateLookout] }, true);
+//     Expect(testEngine.getCardModel(owlPirateLookout).exerted).toBe(true);
 //
-//     await testEngine.resolveTopOfStack({ targets: [mammaOdieLoneSage] });
-//     expect(testEngine.getCardModel(mammaOdieLoneSage).damage).toBe(
-//       owlPirateLookout.strength,
+//     Await testEngine.resolveTopOfStack({ targets: [mammaOdieLoneSage] });
+//     Expect(testEngine.getCardModel(mammaOdieLoneSage).damage).toBe(
+//       OwlPirateLookout.strength,
 //     );
 //   });
 //
-//   describe("Regression", () => {
-//     it.skip("Should not target Wet Characters", async () => {
-//       const testEngine = new TestEngine(
+//   Describe("Regression", () => {
+//     It.skip("Should not target Wet Characters", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: ambush.cost + owlPirateLookout.cost,
-//           hand: [ambush, owlPirateLookout],
+//           Inkwell: ambush.cost + owlPirateLookout.cost,
+//           Hand: [ambush, owlPirateLookout],
 //         },
 //         {
-//           play: [mammaOdieLoneSage],
+//           Play: [mammaOdieLoneSage],
 //         },
 //       );
 //
-//       await testEngine.playCard(owlPirateLookout);
-//       await testEngine.playCard(ambush);
+//       Await testEngine.playCard(owlPirateLookout);
+//       Await testEngine.playCard(ambush);
 //
-//       await testEngine.resolveTopOfStack({ targets: [owlPirateLookout] }, true);
-//       expect(testEngine.getCardModel(owlPirateLookout).exerted).toBe(false);
+//       Await testEngine.resolveTopOfStack({ targets: [owlPirateLookout] }, true);
+//       Expect(testEngine.getCardModel(owlPirateLookout).exerted).toBe(false);
 //     });
 //   });
 // });

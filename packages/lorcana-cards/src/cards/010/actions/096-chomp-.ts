@@ -1,29 +1,29 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { chosenDamagedCharacter } from "@lorcanito/lorcana-engine/abilities/target";
-// import { dealDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+// Import { chosenDamagedCharacter } from "@lorcanito/lorcana-engine/abilities/target";
+// Import { dealDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const chomp: LorcanitoActionCard = {
-//   id: "n2m",
-//   name: "Chomp!",
-//   characteristics: ["action"],
-//   text: "Deal 2 damage to chosen damaged character.",
-//   type: "action",
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 1,
-//   illustrator: "Grace Tran",
-//   number: 96,
-//   set: "010",
-//   externalIds: {
-//     tcgPlayer: 659187,
+// Export const chomp: LorcanitoActionCard = {
+//   Id: "n2m",
+//   Name: "Chomp!",
+//   Characteristics: ["action"],
+//   Text: "Deal 2 damage to chosen damaged character.",
+//   Type: "action",
+//   Inkwell: true,
+//   Colors: ["emerald"],
+//   Cost: 1,
+//   Illustrator: "Grace Tran",
+//   Number: 96,
+//   Set: "010",
+//   ExternalIds: {
+//     TcgPlayer: 659187,
 //   },
-//   rarity: "common",
-//   abilities: [
+//   Rarity: "common",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       text: "Deal 2 damage to chosen damaged character.",
-//       effects: [dealDamageEffect(2, chosenDamagedCharacter)],
+//       Type: "resolution",
+//       Text: "Deal 2 damage to chosen damaged character.",
+//       Effects: [dealDamageEffect(2, chosenDamagedCharacter)],
 //     },
 //   ],
 // };

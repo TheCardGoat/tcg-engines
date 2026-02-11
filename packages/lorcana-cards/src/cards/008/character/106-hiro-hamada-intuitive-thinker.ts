@@ -1,35 +1,35 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { readyChosenCharacterWithCharacteristics } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { readyChosenCharacterWithCharacteristics } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const hiroHamadaIntuitiveThinker: LorcanitoCharacterCard = {
-//   id: "yji",
-//   name: "Hiro Hamada",
-//   title: "Intuitive Thinker",
-//   characteristics: ["storyborn", "hero", "inventor"],
-//   text: "LOOK FOR A NEW ANGLE {E} - Ready chosen Floodborn character.",
-//   type: "character",
-//   abilities: [
+// Export const hiroHamadaIntuitiveThinker: LorcanitoCharacterCard = {
+//   Id: "yji",
+//   Name: "Hiro Hamada",
+//   Title: "Intuitive Thinker",
+//   Characteristics: ["storyborn", "hero", "inventor"],
+//   Text: "LOOK FOR A NEW ANGLE {E} - Ready chosen Floodborn character.",
+//   Type: "character",
+//   Abilities: [
 //     {
-//       type: "activated",
-//       name: "LOOK FOR A NEW ANGLE",
-//       text: "{E} - Ready chosen Floodborn character.",
-//       costs: [{ type: "exert" }],
-//       effects: [readyChosenCharacterWithCharacteristics(["floodborn"])],
+//       Type: "activated",
+//       Name: "LOOK FOR A NEW ANGLE",
+//       Text: "{E} - Ready chosen Floodborn character.",
+//       Costs: [{ type: "exert" }],
+//       Effects: [readyChosenCharacterWithCharacteristics(["floodborn"])],
 //     },
 //   ],
-//   inkwell: true,
-//   colors: ["emerald", "sapphire"],
-//   cost: 2,
-//   strength: 1,
-//   willpower: 3,
-//   illustrator: "Kendall Hale",
-//   number: 106,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631418,
+//   Inkwell: true,
+//   Colors: ["emerald", "sapphire"],
+//   Cost: 2,
+//   Strength: 1,
+//   Willpower: 3,
+//   Illustrator: "Kendall Hale",
+//   Number: 106,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631418,
 //   },
-//   rarity: "uncommon",
-//   lore: 1,
+//   Rarity: "uncommon",
+//   Lore: 1,
 // };
 //

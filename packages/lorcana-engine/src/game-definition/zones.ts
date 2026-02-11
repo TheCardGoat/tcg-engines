@@ -34,7 +34,7 @@ export type LorcanaZoneVisibility = "owner" | "all";
  * Defines properties for each zone type in Lorcana.
  * This is a simpler version of core's ZoneConfig, tailored to Lorcana's rule structure.
  */
-export type LorcanaZoneConfig = {
+export interface LorcanaZoneConfig {
   /**
    * Who can see cards in this zone
    *
@@ -58,20 +58,14 @@ export type LorcanaZoneConfig = {
    * - false: Cards are visible to appropriate players
    */
   facedown: boolean;
-};
+}
 
 /**
  * Lorcana zone identifiers
  *
  * The 5 zones in Disney Lorcana (Rule 8)
  */
-export type LorcanaZoneId =
-  | "deck"
-  | "hand"
-  | "play"
-  | "discard"
-  | "inkwell"
-  | "limbo";
+export type LorcanaZoneId = "deck" | "hand" | "play" | "discard" | "inkwell" | "limbo";
 
 /**
  * Lorcana Zone Configurations
@@ -107,9 +101,9 @@ export const lorcanaZones: Record<LorcanaZoneId, LorcanaZoneConfig> = {
    * - 3.2.1.2: Attempting to draw from empty deck = loss
    */
   deck: {
-    visibility: "owner",
-    ordered: true,
     facedown: true,
+    ordered: true,
+    visibility: "owner",
   },
 
   /**
@@ -127,9 +121,9 @@ export const lorcanaZones: Record<LorcanaZoneId, LorcanaZoneConfig> = {
    * - 8.3.4: Discard means choose from hand
    */
   hand: {
-    visibility: "owner",
-    ordered: false,
     facedown: false,
+    ordered: false,
+    visibility: "owner",
   },
 
   /**
@@ -147,9 +141,9 @@ export const lorcanaZones: Record<LorcanaZoneId, LorcanaZoneConfig> = {
    * - 8.4.4: Leaving play may trigger abilities
    */
   play: {
-    visibility: "all",
-    ordered: false,
     facedown: false,
+    ordered: false,
+    visibility: "all",
   },
 
   /**
@@ -168,9 +162,9 @@ export const lorcanaZones: Record<LorcanaZoneId, LorcanaZoneConfig> = {
    * - 8.6.4: Multiple cards enter in owner's chosen order
    */
   discard: {
-    visibility: "all",
-    ordered: true,
     facedown: false,
+    ordered: true,
+    visibility: "all",
   },
 
   /**
@@ -191,9 +185,9 @@ export const lorcanaZones: Record<LorcanaZoneId, LorcanaZoneConfig> = {
    * - 4.3.3: Limited to once per turn normally
    */
   inkwell: {
-    visibility: "owner",
-    ordered: false,
     facedown: true,
+    ordered: false,
+    visibility: "owner",
   },
 
   /**
@@ -209,9 +203,9 @@ export const lorcanaZones: Record<LorcanaZoneId, LorcanaZoneConfig> = {
    * - Not facedown (tracking purposes)
    */
   limbo: {
-    visibility: "owner",
-    ordered: true,
     facedown: false,
+    ordered: true,
+    visibility: "owner",
   },
 };
 
@@ -221,12 +215,9 @@ export const lorcanaZones: Record<LorcanaZoneId, LorcanaZoneConfig> = {
  * @param value - Value to check
  * @returns True if value is a valid LorcanaZoneId
  */
-export const isLorcanaZoneId = (value: unknown): value is LorcanaZoneId => {
-  return (
-    typeof value === "string" &&
-    ["deck", "hand", "play", "discard", "inkwell", "limbo"].includes(value)
-  );
-};
+export const isLorcanaZoneId = (value: unknown): value is LorcanaZoneId =>
+  typeof value === "string" &&
+  ["deck", "hand", "play", "discard", "inkwell", "limbo"].includes(value);
 
 /**
  * Get zone configuration by ID
@@ -248,9 +239,8 @@ export const getZoneConfig = (zoneId: string): LorcanaZoneConfig => {
  * @param zoneId - The zone identifier
  * @returns True if zone is public
  */
-export const isPublicZone = (zoneId: LorcanaZoneId): boolean => {
-  return lorcanaZones[zoneId].visibility === "all";
-};
+export const isPublicZone = (zoneId: LorcanaZoneId): boolean =>
+  lorcanaZones[zoneId].visibility === "all";
 
 /**
  * Check if zone is private (only owner can see)
@@ -258,9 +248,8 @@ export const isPublicZone = (zoneId: LorcanaZoneId): boolean => {
  * @param zoneId - The zone identifier
  * @returns True if zone is private
  */
-export const isPrivateZone = (zoneId: LorcanaZoneId): boolean => {
-  return lorcanaZones[zoneId].visibility === "owner";
-};
+export const isPrivateZone = (zoneId: LorcanaZoneId): boolean =>
+  lorcanaZones[zoneId].visibility === "owner";
 
 /**
  * Check if zone maintains card order
@@ -268,9 +257,7 @@ export const isPrivateZone = (zoneId: LorcanaZoneId): boolean => {
  * @param zoneId - The zone identifier
  * @returns True if zone is ordered
  */
-export const isOrderedZone = (zoneId: LorcanaZoneId): boolean => {
-  return lorcanaZones[zoneId].ordered;
-};
+export const isOrderedZone = (zoneId: LorcanaZoneId): boolean => lorcanaZones[zoneId].ordered;
 
 /**
  * Check if zone cards are facedown
@@ -278,6 +265,4 @@ export const isOrderedZone = (zoneId: LorcanaZoneId): boolean => {
  * @param zoneId - The zone identifier
  * @returns True if zone is facedown
  */
-export const isFacedownZone = (zoneId: LorcanaZoneId): boolean => {
-  return lorcanaZones[zoneId].facedown;
-};
+export const isFacedownZone = (zoneId: LorcanaZoneId): boolean => lorcanaZones[zoneId].facedown;

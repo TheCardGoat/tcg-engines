@@ -1,35 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const simbaFutureKing: CharacterCard = {
-  id: "q21",
-  cardType: "character",
-  name: "Simba",
-  version: "Future King",
-  fullName: "Simba - Future King",
-  inkType: ["steel"],
-  franchise: "Lion King",
-  set: "001",
-  text: "GUESS WHAT? When you play this character, you may draw a card, then choose and discard a card.",
-  cost: 1,
-  strength: 1,
-  willpower: 2,
-  lore: 1,
-  cardNumber: 188,
-  inkable: true,
-  externalIds: {
-    ravensburger: "5de9049716db6093e203ad3ba87b04894b400848",
-  },
   abilities: [
     {
-      id: "q21-1",
-      text: "GUESS WHAT? When you play this character, you may draw a card, then choose and discard a card.",
-      name: "GUESS WHAT?",
-      type: "triggered",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -39,44 +12,71 @@ export const simbaFutureKing: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "q21-1",
+      name: "GUESS WHAT?",
+      text: "GUESS WHAT? When you play this character, you may draw a card, then choose and discard a card.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 188,
+  cardType: "character",
   classifications: ["Storyborn", "Hero", "Prince"],
+  cost: 1,
+  externalIds: {
+    ravensburger: "5de9049716db6093e203ad3ba87b04894b400848",
+  },
+  franchise: "Lion King",
+  fullName: "Simba - Future King",
+  id: "q21",
+  inkType: ["steel"],
+  inkable: true,
+  lore: 1,
+  name: "Simba",
+  set: "001",
+  strength: 1,
+  text: "GUESS WHAT? When you play this character, you may draw a card, then choose and discard a card.",
+  version: "Future King",
+  willpower: 2,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-// import { youMayDrawThenChooseAndDiscard } from "@lorcanito/lorcana-engine/effects/effects";
+// Import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import { youMayDrawThenChooseAndDiscard } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const simbaFutureKing: LorcanitoCharacterCard = {
-//   id: "umu",
-//   name: "Simba",
-//   title: "Future King",
-//   characteristics: ["hero", "storyborn", "prince"],
-//   text: "**GUESS WHAT?** When you play this character, you may draw a card, then choose and discard a card.",
-//   type: "character",
-//   abilities: [
-//     whenYouPlayThisCharAbility({
+// Export const simbaFutureKing: LorcanitoCharacterCard = {
+//   Id: "umu",
+//   Name: "Simba",
+//   Title: "Future King",
+//   Characteristics: ["hero", "storyborn", "prince"],
+//   Text: "**GUESS WHAT?** When you play this character, you may draw a card, then choose and discard a card.",
+//   Type: "character",
+//   Abilities: [
+//     WhenYouPlayThisCharAbility({
 //       ...youMayDrawThenChooseAndDiscard,
-//       name: "Guess What?",
-//       text: "When you play this character, you may draw a card, then choose and discard a card.",
-//       type: "resolution",
+//       Name: "Guess What?",
+//       Text: "When you play this character, you may draw a card, then choose and discard a card.",
+//       Type: "resolution",
 //     }),
 //   ],
-//   flavour: "I'm gonna be the best king the Pride Lands have ever seen!",
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 1,
-//   strength: 1,
-//   willpower: 2,
-//   lore: 1,
-//   illustrator: "Nicholas Kole",
-//   number: 188,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 502536,
+//   Flavour: "I'm gonna be the best king the Pride Lands have ever seen!",
+//   Inkwell: true,
+//   Colors: ["steel"],
+//   Cost: 1,
+//   Strength: 1,
+//   Willpower: 2,
+//   Lore: 1,
+//   Illustrator: "Nicholas Kole",
+//   Number: 188,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 502536,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

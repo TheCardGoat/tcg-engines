@@ -17,7 +17,7 @@ class ParserLogger {
    * Called automatically on first log operation.
    */
   private ensureInitialized(): void {
-    if (this.initialized) return;
+    if (this.initialized) {return;}
     this.initialized = true;
 
     if (process.env.PARSER_DEBUG === "true") {
@@ -56,13 +56,13 @@ class ParserLogger {
 
   private log(level: LogLevel, message: string, context?: LogContext): void {
     this.ensureInitialized();
-    if (!this.enabled) return;
-    if (!this.shouldLog(level)) return;
+    if (!this.enabled) {return;}
+    if (!this.shouldLog(level)) {return;}
 
     const logEntry = {
-      timestamp: new Date().toISOString(),
       level,
       message,
+      timestamp: new Date().toISOString(),
       ...context,
     };
 
@@ -70,9 +70,9 @@ class ParserLogger {
     const logFn =
       level === "error"
         ? console.error
-        : level === "warn"
+        : (level === "warn"
           ? console.warn
-          : console.log;
+          : console.log);
     logFn(JSON.stringify(logEntry));
   }
 

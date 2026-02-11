@@ -13,12 +13,7 @@ import type {
   ValueKeywordAbility,
 } from "@tcg/riftbound-types";
 import type { Cost } from "@tcg/riftbound-types/abilities/cost-types";
-import {
-  extractAndParseCost,
-  mergeCosts,
-  parseAdditionalCostText,
-  parseCost,
-} from "./cost-parser";
+import { extractAndParseCost, mergeCosts, parseAdditionalCostText, parseCost } from "./cost-parser";
 
 // ============================================================================
 // Constants
@@ -27,11 +22,7 @@ import {
 /**
  * Cost keywords that have an associated cost
  */
-export const COST_KEYWORDS: readonly CostKeyword[] = [
-  "Accelerate",
-  "Equip",
-  "Repeat",
-] as const;
+export const COST_KEYWORDS: readonly CostKeyword[] = ["Accelerate", "Equip", "Repeat"] as const;
 
 // ============================================================================
 // Cost Keyword Parsing
@@ -124,9 +115,9 @@ export function parseCostKeyword(
   }
 
   return {
-    type: "keyword",
-    keyword,
     cost,
+    keyword,
+    type: "keyword",
   };
 }
 
@@ -138,9 +129,8 @@ export function parseCostKeyword(
  */
 export function parseCostKeywords(
   text: string,
-): Array<{ ability: CostKeywordAbility; startIndex: number }> {
-  const results: Array<{ ability: CostKeywordAbility; startIndex: number }> =
-    [];
+): { ability: CostKeywordAbility; startIndex: number }[] {
+  const results: { ability: CostKeywordAbility; startIndex: number }[] = [];
   const pattern = new RegExp(COST_KEYWORD_PATTERN.source, "g");
 
   let match: RegExpExecArray | null;

@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { razoulPalaceGuard } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { razoulPalaceGuard } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Razoul - Palace Guard", () => {
-//   it.skip("**LOOKY HERE** While this character has no damage, he gets +2 {S}.", () => {
-//     const testStore = new TestStore({
-//       inkwell: razoulPalaceGuard.cost,
-//       play: [razoulPalaceGuard],
+// Describe("Razoul - Palace Guard", () => {
+//   It.skip("**LOOKY HERE** While this character has no damage, he gets +2 {S}.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: razoulPalaceGuard.cost,
+//       Play: [razoulPalaceGuard],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(razoulPalaceGuard);
+//     Const cardUnderTest = testStore.getCard(razoulPalaceGuard);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

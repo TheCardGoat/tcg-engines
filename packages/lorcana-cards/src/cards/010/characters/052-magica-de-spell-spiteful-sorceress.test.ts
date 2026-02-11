@@ -3,159 +3,159 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   magicaDeSpellSpitefulSorceress,
-//   mickeyMouseDetective,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   MagicaDeSpellSpitefulSorceress,
+//   MickeyMouseDetective,
 // } from "@lorcanito/lorcana-engine/cards/010/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Magica De Spell - Spiteful Sorceress", () => {
-//   it("Character should have correct base stats", async () => {
-//     const testEngine = new TestEngine({
-//       hand: [magicaDeSpellSpitefulSorceress],
+// Describe("Magica De Spell - Spiteful Sorceress", () => {
+//   It("Character should have correct base stats", async () => {
+//     Const testEngine = new TestEngine({
+//       Hand: [magicaDeSpellSpitefulSorceress],
 //     });
 //
-//     const cardUnderTest = testEngine.getByZoneAndId(
+//     Const cardUnderTest = testEngine.getByZoneAndId(
 //       "hand",
-//       magicaDeSpellSpitefulSorceress.id,
+//       MagicaDeSpellSpitefulSorceress.id,
 //     );
 //
 //     // Check base stats
-//     expect(cardUnderTest.cost).toBe(5);
-//     expect(cardUnderTest.strength).toBe(3);
-//     expect(cardUnderTest.willpower).toBe(6);
-//     expect(cardUnderTest.lore).toBe(2);
-//     expect(cardUnderTest.characteristics).toEqual([
+//     Expect(cardUnderTest.cost).toBe(5);
+//     Expect(cardUnderTest.strength).toBe(3);
+//     Expect(cardUnderTest.willpower).toBe(6);
+//     Expect(cardUnderTest.lore).toBe(2);
+//     Expect(cardUnderTest.characteristics).toEqual([
 //       "storyborn",
 //       "villain",
 //       "sorcerer",
 //     ]);
 //   });
 //
-//   it("Character can be played with correct cost", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: magicaDeSpellSpitefulSorceress.cost,
-//       hand: [magicaDeSpellSpitefulSorceress],
+//   It("Character can be played with correct cost", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: magicaDeSpellSpitefulSorceress.cost,
+//       Hand: [magicaDeSpellSpitefulSorceress],
 //     });
 //
-//     const cardUnderTest = testEngine.getByZoneAndId(
+//     Const cardUnderTest = testEngine.getByZoneAndId(
 //       "hand",
-//       magicaDeSpellSpitefulSorceress.id,
+//       MagicaDeSpellSpitefulSorceress.id,
 //     );
 //
-//     await testEngine.playCard(cardUnderTest);
-//     const magicaInPlay = testEngine.getByZoneAndId(
+//     Await testEngine.playCard(cardUnderTest);
+//     Const magicaInPlay = testEngine.getByZoneAndId(
 //       "play",
-//       magicaDeSpellSpitefulSorceress.id,
+//       MagicaDeSpellSpitefulSorceress.id,
 //     );
-//     expect(magicaInPlay.zone).toBe("play");
+//     Expect(magicaInPlay.zone).toBe("play");
 //   });
 //
-//   it("Should have inkwell ability", async () => {
-//     const testEngine = new TestEngine({
-//       hand: [magicaDeSpellSpitefulSorceress],
+//   It("Should have inkwell ability", async () => {
+//     Const testEngine = new TestEngine({
+//       Hand: [magicaDeSpellSpitefulSorceress],
 //     });
 //
-//     const cardUnderTest = testEngine.getByZoneAndId(
+//     Const cardUnderTest = testEngine.getByZoneAndId(
 //       "hand",
-//       magicaDeSpellSpitefulSorceress.id,
+//       MagicaDeSpellSpitefulSorceress.id,
 //     );
 //
-//     expect(cardUnderTest.inkwell).toBe(true);
+//     Expect(cardUnderTest.inkwell).toBe(true);
 //   });
 //
-//   it("MYSTICAL MANIPULATION - Should have the ability defined", () => {
-//     const mysticalManipulation = magicaDeSpellSpitefulSorceress.abilities?.find(
+//   It("MYSTICAL MANIPULATION - Should have the ability defined", () => {
+//     Const mysticalManipulation = magicaDeSpellSpitefulSorceress.abilities?.find(
 //       (a) => "name" in a && a.name === "MYSTICAL MANIPULATION",
 //     );
 //
-//     expect(mysticalManipulation).toBeDefined();
+//     Expect(mysticalManipulation).toBeDefined();
 //   });
 //
-//   it("MYSTICAL MANIPULATION - Should have move damage effect", () => {
-//     const mysticalManipulation = magicaDeSpellSpitefulSorceress.abilities?.find(
+//   It("MYSTICAL MANIPULATION - Should have move damage effect", () => {
+//     Const mysticalManipulation = magicaDeSpellSpitefulSorceress.abilities?.find(
 //       (a) => "name" in a && a.name === "MYSTICAL MANIPULATION",
 //     );
 //
-//     expect(mysticalManipulation).toBeDefined();
+//     Expect(mysticalManipulation).toBeDefined();
 //
-//     if (
-//       mysticalManipulation &&
+//     If (
+//       MysticalManipulation &&
 //       "effects" in mysticalManipulation &&
 //       Array.isArray(mysticalManipulation.effects)
 //     ) {
 //       // Should have move damage effect
-//       expect(mysticalManipulation.effects).toHaveLength(1);
-//       const effect = mysticalManipulation.effects[0] as any;
-//       expect(effect.type).toBe("move-damage");
-//       expect(effect.amount).toBe(1);
-//       expect(effect.target).toBeDefined();
-//       expect(effect.to).toBeDefined();
+//       Expect(mysticalManipulation.effects).toHaveLength(1);
+//       Const effect = mysticalManipulation.effects[0] as any;
+//       Expect(effect.type).toBe("move-damage");
+//       Expect(effect.amount).toBe(1);
+//       Expect(effect.target).toBeDefined();
+//       Expect(effect.to).toBeDefined();
 //     }
 //   });
 //
-//   it("MYSTICAL MANIPULATION - Should be optional", () => {
-//     const mysticalManipulation = magicaDeSpellSpitefulSorceress.abilities?.find(
+//   It("MYSTICAL MANIPULATION - Should be optional", () => {
+//     Const mysticalManipulation = magicaDeSpellSpitefulSorceress.abilities?.find(
 //       (a) => "name" in a && a.name === "MYSTICAL MANIPULATION",
 //     );
 //
-//     expect(mysticalManipulation).toBeDefined();
-//     if (
-//       mysticalManipulation &&
+//     Expect(mysticalManipulation).toBeDefined();
+//     If (
+//       MysticalManipulation &&
 //       "optional" in mysticalManipulation &&
-//       mysticalManipulation.optional !== undefined
+//       MysticalManipulation.optional !== undefined
 //     ) {
-//       expect(mysticalManipulation.optional).toBe(true);
+//       Expect(mysticalManipulation.optional).toBe(true);
 //     }
 //   });
 //
-//   it("Should have correct rarity and set info", () => {
-//     expect(magicaDeSpellSpitefulSorceress.rarity).toBe("rare");
-//     expect(magicaDeSpellSpitefulSorceress.set).toBe("010");
-//     expect(magicaDeSpellSpitefulSorceress.number).toBe(52);
-//     expect(magicaDeSpellSpitefulSorceress.inkwell).toBe(true);
-//     expect(magicaDeSpellSpitefulSorceress.colors).toEqual(["amethyst"]);
+//   It("Should have correct rarity and set info", () => {
+//     Expect(magicaDeSpellSpitefulSorceress.rarity).toBe("rare");
+//     Expect(magicaDeSpellSpitefulSorceress.set).toBe("010");
+//     Expect(magicaDeSpellSpitefulSorceress.number).toBe(52);
+//     Expect(magicaDeSpellSpitefulSorceress.inkwell).toBe(true);
+//     Expect(magicaDeSpellSpitefulSorceress.colors).toEqual(["amethyst"]);
 //   });
 //
-//   it("Should have the MYSTICAL MANIPULATION ability present", () => {
-//     expect(magicaDeSpellSpitefulSorceress.abilities).toBeDefined();
-//     expect(magicaDeSpellSpitefulSorceress.abilities?.length).toBe(1);
+//   It("Should have the MYSTICAL MANIPULATION ability present", () => {
+//     Expect(magicaDeSpellSpitefulSorceress.abilities).toBeDefined();
+//     Expect(magicaDeSpellSpitefulSorceress.abilities?.length).toBe(1);
 //
-//     const abilityNames = magicaDeSpellSpitefulSorceress.abilities?.map((a) =>
+//     Const abilityNames = magicaDeSpellSpitefulSorceress.abilities?.map((a) =>
 //       "name" in a ? a.name : "unknown",
 //     );
 //
-//     expect(abilityNames).toContain("MYSTICAL MANIPULATION");
+//     Expect(abilityNames).toContain("MYSTICAL MANIPULATION");
 //   });
 //
-//   it("MYSTICAL MANIPULATION - Should have correct text", () => {
-//     const mysticalManipulation = magicaDeSpellSpitefulSorceress.abilities?.find(
+//   It("MYSTICAL MANIPULATION - Should have correct text", () => {
+//     Const mysticalManipulation = magicaDeSpellSpitefulSorceress.abilities?.find(
 //       (a) => "name" in a && a.name === "MYSTICAL MANIPULATION",
 //     );
 //
-//     expect(mysticalManipulation).toBeDefined();
-//     if (mysticalManipulation && "text" in mysticalManipulation) {
-//       expect(mysticalManipulation.text).toContain(
+//     Expect(mysticalManipulation).toBeDefined();
+//     If (mysticalManipulation && "text" in mysticalManipulation) {
+//       Expect(mysticalManipulation.text).toContain(
 //         "Whenever you put a card under one of your characters or locations",
 //       );
-//       expect(mysticalManipulation.text).toContain(
+//       Expect(mysticalManipulation.text).toContain(
 //         "you may move 1 damage counter",
 //       );
-//       expect(mysticalManipulation.text).toContain(
+//       Expect(mysticalManipulation.text).toContain(
 //         "from chosen character to chosen opposing character",
 //       );
 //     }
 //   });
 //
-//   it("Should have correct trigger text", () => {
-//     expect(magicaDeSpellSpitefulSorceress.text).toContain(
+//   It("Should have correct trigger text", () => {
+//     Expect(magicaDeSpellSpitefulSorceress.text).toContain(
 //       "MYSTICAL MANIPULATION",
 //     );
-//     expect(magicaDeSpellSpitefulSorceress.text).toContain(
+//     Expect(magicaDeSpellSpitefulSorceress.text).toContain(
 //       "Whenever you put a card under one of your characters or locations",
 //     );
-//     expect(magicaDeSpellSpitefulSorceress.text).toContain(
+//     Expect(magicaDeSpellSpitefulSorceress.text).toContain(
 //       "you may move 1 damage counter",
 //     );
 //   });

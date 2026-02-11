@@ -1,25 +1,8 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
 export const whenWillMyLifeBegin: ActionCard = {
-  id: "1ay",
-  cardType: "action",
-  name: "When Will My Life Begin?",
-  inkType: ["steel"],
-  franchise: "Tangled",
-  set: "005",
-  text: "Chosen character can't challenge during their next turn. Draw a card.",
-  actionSubtype: "song",
-  cost: 3,
-  cardNumber: 197,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "a93a1efecc6c3e773ca5de295729482697c34e24",
-  },
   abilities: [
     {
-      id: "1ay-1",
-      type: "action",
       effect: {
         type: "sequence",
         steps: [
@@ -35,7 +18,24 @@ export const whenWillMyLifeBegin: ActionCard = {
           },
         ],
       },
+      id: "1ay-1",
       text: "Chosen character can't challenge during their next turn. Draw a card.",
+      type: "action",
     },
   ],
+  actionSubtype: "song",
+  cardNumber: 197,
+  cardType: "action",
+  cost: 3,
+  externalIds: {
+    ravensburger: "a93a1efecc6c3e773ca5de295729482697c34e24",
+  },
+  franchise: "Tangled",
+  id: "1ay",
+  inkType: ["steel"],
+  inkable: true,
+  missingTests: true,
+  name: "When Will My Life Begin?",
+  set: "005",
+  text: "Chosen character can't challenge during their next turn. Draw a card.",
 };

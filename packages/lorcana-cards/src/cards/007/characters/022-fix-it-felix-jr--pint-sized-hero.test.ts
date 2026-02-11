@@ -3,66 +3,66 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { iWontGiveIn } from "@lorcanito/lorcana-engine/cards/006";
-// import {
-//   calhounBattletested,
-//   candleheadDedicatedRacer,
-//   fixitFelixJrPintsizedHero,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { iWontGiveIn } from "@lorcanito/lorcana-engine/cards/006";
+// Import {
+//   CalhounBattletested,
+//   CandleheadDedicatedRacer,
+//   FixitFelixJrPintsizedHero,
 // } from "@lorcanito/lorcana-engine/cards/007";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Fix‐It Felix, Jr. - Pint‐Sized Hero", () => {
-//   it("LET’S GET TO WORK Whenever you return a Racer character card from your discard to your hand, you may ready chosen Racer character. They can’t quest for the rest of this turn.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: iWontGiveIn.cost,
-//       discard: [candleheadDedicatedRacer],
-//       play: [fixitFelixJrPintsizedHero, calhounBattletested],
-//       hand: [iWontGiveIn],
+// Describe("Fix‐It Felix, Jr. - Pint‐Sized Hero", () => {
+//   It("LET’S GET TO WORK Whenever you return a Racer character card from your discard to your hand, you may ready chosen Racer character. They can’t quest for the rest of this turn.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: iWontGiveIn.cost,
+//       Discard: [candleheadDedicatedRacer],
+//       Play: [fixitFelixJrPintsizedHero, calhounBattletested],
+//       Hand: [iWontGiveIn],
 //     });
 //
-//     const cardFromDiscar = testEngine.getCardModel(candleheadDedicatedRacer);
-//     const actionInHand = testEngine.getCardModel(iWontGiveIn);
-//     const cardInPlay = testEngine.getCardModel(calhounBattletested);
+//     Const cardFromDiscar = testEngine.getCardModel(candleheadDedicatedRacer);
+//     Const actionInHand = testEngine.getCardModel(iWontGiveIn);
+//     Const cardInPlay = testEngine.getCardModel(calhounBattletested);
 //
-//     await testEngine.exertCard(cardInPlay);
+//     Await testEngine.exertCard(cardInPlay);
 //
-//     expect(cardInPlay.exerted).toBe(true);
+//     Expect(cardInPlay.exerted).toBe(true);
 //
-//     await testEngine.playCard(actionInHand);
-//     await testEngine.resolveTopOfStack({ targets: [cardFromDiscar] }, true);
-//     expect(cardFromDiscar.zone).toBe("hand");
+//     Await testEngine.playCard(actionInHand);
+//     Await testEngine.resolveTopOfStack({ targets: [cardFromDiscar] }, true);
+//     Expect(cardFromDiscar.zone).toBe("hand");
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({ targets: [cardInPlay] });
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({ targets: [cardInPlay] });
 //
-//     expect(cardInPlay.exerted).toBe(false);
+//     Expect(cardInPlay.exerted).toBe(false);
 //
-//     expect(cardInPlay.hasQuestRestriction).toBe(true);
+//     Expect(cardInPlay.hasQuestRestriction).toBe(true);
 //   });
 //
-//   it("LET’S GET TO WORK GET TO WORK Try selecting a pilot to make ready from deck, I expect an exception", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: iWontGiveIn.cost,
-//       discard: [candleheadDedicatedRacer],
-//       play: [fixitFelixJrPintsizedHero],
-//       hand: [iWontGiveIn],
-//       deck: [calhounBattletested],
+//   It("LET’S GET TO WORK GET TO WORK Try selecting a pilot to make ready from deck, I expect an exception", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: iWontGiveIn.cost,
+//       Discard: [candleheadDedicatedRacer],
+//       Play: [fixitFelixJrPintsizedHero],
+//       Hand: [iWontGiveIn],
+//       Deck: [calhounBattletested],
 //     });
 //
-//     const cardFromDiscar = testEngine.getCardModel(candleheadDedicatedRacer);
-//     const actionInHand = testEngine.getCardModel(iWontGiveIn);
-//     const cardInDeck = testEngine.getCardModel(calhounBattletested);
+//     Const cardFromDiscar = testEngine.getCardModel(candleheadDedicatedRacer);
+//     Const actionInHand = testEngine.getCardModel(iWontGiveIn);
+//     Const cardInDeck = testEngine.getCardModel(calhounBattletested);
 //
-//     await testEngine.exertCard(cardInDeck);
+//     Await testEngine.exertCard(cardInDeck);
 //
-//     expect(cardInDeck.exerted).toBe(true);
+//     Expect(cardInDeck.exerted).toBe(true);
 //
-//     await testEngine.playCard(actionInHand);
-//     await testEngine.resolveTopOfStack({ targets: [cardFromDiscar] }, true);
+//     Await testEngine.playCard(actionInHand);
+//     Await testEngine.resolveTopOfStack({ targets: [cardFromDiscar] }, true);
 //
-//     expect(cardFromDiscar.zone).toBe("hand");
-//     expect(testEngine.stackLayers).toHaveLength(0);
+//     Expect(cardFromDiscar.zone).toBe("hand");
+//     Expect(testEngine.stackLayers).toHaveLength(0);
 //   });
 // });
 //

@@ -3,28 +3,28 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { arthurTrainedSwordsman } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { lastCannon } from "@lorcanito/lorcana-engine/cards/002/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { arthurTrainedSwordsman } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { lastCannon } from "@lorcanito/lorcana-engine/cards/002/items/items";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Last Cannon", () => {
-//   it("**ARM YOURSELF** 1 {I}, Banish this item − Chosen character gains **Challenger** +3 this turn. _(They get +3 {S} while challenging.)_", () => {
-//     const testStore = new TestStore({
-//       play: [lastCannon, arthurTrainedSwordsman],
-//       inkwell: 1,
+// Describe("Last Cannon", () => {
+//   It("**ARM YOURSELF** 1 {I}, Banish this item − Chosen character gains **Challenger** +3 this turn. _(They get +3 {S} while challenging.)_", () => {
+//     Const testStore = new TestStore({
+//       Play: [lastCannon, arthurTrainedSwordsman],
+//       Inkwell: 1,
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("play", lastCannon.id);
-//     const target = testStore.getByZoneAndId("play", arthurTrainedSwordsman.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("play", lastCannon.id);
+//     Const target = testStore.getByZoneAndId("play", arthurTrainedSwordsman.id);
 //
-//     expect(target.hasChallenger).toBeFalsy();
+//     Expect(target.hasChallenger).toBeFalsy();
 //
-//     cardUnderTest.activate();
-//     testStore.resolveTopOfStack({ targets: [target] });
+//     CardUnderTest.activate();
+//     TestStore.resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.hasChallenger).toBeTruthy();
-//     expect(cardUnderTest.zone).toEqual("discard");
+//     Expect(target.hasChallenger).toBeTruthy();
+//     Expect(cardUnderTest.zone).toEqual("discard");
 //   });
 // });
 //

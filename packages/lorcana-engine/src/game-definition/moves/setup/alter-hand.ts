@@ -1,15 +1,11 @@
 import {
   type CardId,
   type ConditionFailure,
-  createMove,
   type PlayerId,
   type ZoneId,
+  createMove,
 } from "@tcg/core";
-import type {
-  LorcanaCardMeta,
-  LorcanaGameState,
-  LorcanaMoveParams,
-} from "../../../types";
+import type { LorcanaCardMeta, LorcanaGameState, LorcanaMoveParams } from "../../../types";
 
 /**
  * Alter Hand Move (Mulligan)
@@ -32,10 +28,99 @@ export const alterHand = createMove<
   // Enumerator: Returns targeting constraints for UI/AI
   // UI will present card selection interface: "Select 0-7 cards from your hand to mulligan"
   // AI can enumerate all valid combinations based on these constraints
+  condition: (state, context): true | ConditionFailure => {
+    const { playerId, cardsToMulligan } = context.params;
+
+    // 1. Check we're in the correct phase
+    if (context.flow?.currentPhase !== "mulligan") {
+      return {
+        context: {
+          currentPhase: context.flow?.currentPhase,
+          requiredPhase: "mulligan",
+        },
+        errorCode: "WRONG_PHASE",
+        reason: `Cannot mulligan during ${context.flow?.currentPhase || "unknown"} phase. Must be in mulligan phase.`,
+      };
+    }
+
+    // 2. Check player is in pending mulligan list
+    const pendingMulligan = context.game.getPendingMulligan();
+    if (!pendingMulligan.includes(playerId)) {
+      return {
+        context: {
+          playerId: String(playerId),
+          pendingPlayers: pendingMulligan.map((p) => String(p)),
+        },
+        errorCode: "ALREADY_MULLIGANED",
+        reason: `Player ${String(playerId)} has already mulliganed or is not eligible to mulligan.`,
+      };
+    }
+
+    // 3. Check player has priority (is current player)
+    const currentPlayer = context.flow?.currentPlayer;
+    if (currentPlayer !== playerId) {
+      return {
+        context: {
+          currentPlayer: String(currentPlayer),
+          executingPlayer: String(playerId),
+        },
+        errorCode: "NOT_PRIORITY_PLAYER",
+        reason: `Only ${String(currentPlayer)} can mulligan right now. You are ${String(playerId)}.`,
+      };
+    }
+
+    // 4. Validate all card IDs are valid
+    for (const cardId of cardsToMulligan) {
+      const cardZone = context.zones.getCardZone(cardId);
+      if (cardZone === undefined) {
+        return {
+          context: {
+            cardId,
+          },
+          errorCode: "INVALID_CARD_ID",
+          reason: `Invalid card ID: ${cardId}. Card does not exist in any zone.`,
+        };
+      }
+    }
+
+    // 5. Validate all cards are in player's hand
+    const handCards = context.zones.getCardsInZone("hand" as ZoneId, playerId);
+    for (const cardId of cardsToMulligan) {
+      if (!handCards.includes(cardId)) {
+        const cardZone = context.zones.getCardZone(cardId);
+        const cardOwner = context.cards.getCardOwner(cardId);
+
+        return {
+          context: {
+            cardId,
+            cardZone,
+            cardOwner: String(cardOwner),
+            playerId: String(playerId),
+          },
+          errorCode: "CARD_NOT_IN_HAND",
+          reason: `Card ${cardId} is not in your hand. It's in ${cardZone || "unknown zone"} owned by ${cardOwner || "unknown"}.`,
+        };
+      }
+    }
+
+    // 6. Validate cards to mulligan don't exceed hand size
+    if (cardsToMulligan.length > handCards.length) {
+      return {
+        context: {
+          requested: cardsToMulligan.length,
+          handSize: handCards.length,
+        },
+        errorCode: "TOO_MANY_CARDS",
+        reason: `Cannot mulligan ${cardsToMulligan.length} cards when hand only has ${handCards.length} cards.`,
+      };
+    }
+
+    return true;
+  },
+
   enumerator: (state, context) => {
     // Get cards in hand for validation constraints
-    const handCards =
-      context.zones?.getCardsInZone("hand" as ZoneId, context.playerId) || [];
+    const handCards = context.zones?.getCardsInZone("hand" as ZoneId, context.playerId) || [];
 
     // Return single parameter set with targeting information
     // The targeting system will handle enumerating card combinations
@@ -49,105 +134,15 @@ export const alterHand = createMove<
           validCards: handCards,
         },
         // TODO: Integrate with targeting system DSL
-        // target: {
-        //   filter: {
-        //     zone: "hand" as ZoneId,
-        //     owner: context.playerId
+        // Target: {
+        //   Filter: {
+        //     Zone: "hand" as ZoneId,
+        //     Owner: context.playerId
         //   },
-        //   count: { min: 0, max: 7 }
+        //   Count: { min: 0, max: 7 }
         // }
       },
     ];
-  },
-
-  condition: (state, context): true | ConditionFailure => {
-    const { playerId, cardsToMulligan } = context.params;
-
-    // 1. Check we're in the correct phase
-    if (context.flow?.currentPhase !== "mulligan") {
-      return {
-        reason: `Cannot mulligan during ${context.flow?.currentPhase || "unknown"} phase. Must be in mulligan phase.`,
-        errorCode: "WRONG_PHASE",
-        context: {
-          currentPhase: context.flow?.currentPhase,
-          requiredPhase: "mulligan",
-        },
-      };
-    }
-
-    // 2. Check player is in pending mulligan list
-    const pendingMulligan = context.game.getPendingMulligan();
-    if (!pendingMulligan.includes(playerId)) {
-      return {
-        reason: `Player ${String(playerId)} has already mulliganed or is not eligible to mulligan.`,
-        errorCode: "ALREADY_MULLIGANED",
-        context: {
-          playerId: String(playerId),
-          pendingPlayers: pendingMulligan.map((p) => String(p)),
-        },
-      };
-    }
-
-    // 3. Check player has priority (is current player)
-    const currentPlayer = context.flow?.currentPlayer;
-    if (currentPlayer !== playerId) {
-      return {
-        reason: `Only ${String(currentPlayer)} can mulligan right now. You are ${String(playerId)}.`,
-        errorCode: "NOT_PRIORITY_PLAYER",
-        context: {
-          currentPlayer: String(currentPlayer),
-          executingPlayer: String(playerId),
-        },
-      };
-    }
-
-    // 4. Validate all card IDs are valid
-    for (const cardId of cardsToMulligan) {
-      const cardZone = context.zones.getCardZone(cardId);
-      if (cardZone === undefined) {
-        return {
-          reason: `Invalid card ID: ${cardId}. Card does not exist in any zone.`,
-          errorCode: "INVALID_CARD_ID",
-          context: {
-            cardId,
-          },
-        };
-      }
-    }
-
-    // 5. Validate all cards are in player's hand
-    const handCards = context.zones.getCardsInZone("hand" as ZoneId, playerId);
-    for (const cardId of cardsToMulligan) {
-      if (!handCards.includes(cardId)) {
-        const cardZone = context.zones.getCardZone(cardId);
-        const cardOwner = context.cards.getCardOwner(cardId);
-
-        return {
-          reason: `Card ${cardId} is not in your hand. It's in ${cardZone || "unknown zone"} owned by ${cardOwner || "unknown"}.`,
-          errorCode: "CARD_NOT_IN_HAND",
-          context: {
-            cardId,
-            cardZone,
-            cardOwner: String(cardOwner),
-            playerId: String(playerId),
-          },
-        };
-      }
-    }
-
-    // 6. Validate cards to mulligan don't exceed hand size
-    if (cardsToMulligan.length > handCards.length) {
-      return {
-        reason: `Cannot mulligan ${cardsToMulligan.length} cards when hand only has ${handCards.length} cards.`,
-        errorCode: "TOO_MANY_CARDS",
-        context: {
-          requested: cardsToMulligan.length,
-          handSize: handCards.length,
-        },
-      };
-    }
-
-    return true;
   },
 
   reducer: (draft, context) => {
@@ -158,25 +153,22 @@ export const alterHand = createMove<
       for (const cardId of cardsToMulligan) {
         context.zones.moveCard({
           cardId,
-          targetZoneId: "deck" as ZoneId,
-          position: "bottom", // Lorcana-specific: cards go to bottom
+          position: "bottom",
+          targetZoneId: "deck" as ZoneId, // Lorcana-specific: cards go to bottom
         });
       }
     }
 
     // Rule 3.1.6.2: Draw until player has 7 cards
-    const currentHandSize = context.zones.getCardsInZone(
-      "hand" as ZoneId,
-      playerId,
-    ).length;
+    const currentHandSize = context.zones.getCardsInZone("hand" as ZoneId, playerId).length;
     const cardsToDraw = 7 - currentHandSize;
 
     if (cardsToDraw > 0) {
       const drawnCards = context.zones.drawCards({
-        from: "deck" as ZoneId,
-        to: "hand" as ZoneId,
         count: cardsToDraw,
+        from: "deck" as ZoneId,
         playerId,
+        to: "hand" as ZoneId,
       });
 
       // Validate that we drew enough cards (deck exhaustion check)
@@ -205,6 +197,6 @@ export const alterHand = createMove<
       }
     }
     // When all players complete mulligan (pending list empty), flow manager
-    // will auto-transition via its endIf condition on next move attempt or flow check
+    // Will auto-transition via its endIf condition on next move attempt or flow check
   },
 });

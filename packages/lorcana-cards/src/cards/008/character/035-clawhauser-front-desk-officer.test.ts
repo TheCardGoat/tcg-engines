@@ -3,27 +3,27 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { clawhauserFrontDeskOfficer } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { clawhauserFrontDeskOfficer } from "@lorcanito/lorcana-engine/cards/008/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Clawhauser - Front Desk Officer", () => {
-//   it.skip("Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [clawhauserFrontDeskOfficer],
+// Describe("Clawhauser - Front Desk Officer", () => {
+//   It.skip("Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [clawhauserFrontDeskOfficer],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(clawhauserFrontDeskOfficer);
-//     expect(cardUnderTest.hasBodyguard).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(clawhauserFrontDeskOfficer);
+//     Expect(cardUnderTest.hasBodyguard).toBe(true);
 //   });
 //
-//   it.skip("Singer 4 (This character counts as cost 4 to sing songs.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [clawhauserFrontDeskOfficer],
+//   It.skip("Singer 4 (This character counts as cost 4 to sing songs.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [clawhauserFrontDeskOfficer],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(clawhauserFrontDeskOfficer);
-//     expect(cardUnderTest.hasSinger).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(clawhauserFrontDeskOfficer);
+//     Expect(cardUnderTest.hasSinger).toBe(true);
 //   });
 // });
 //

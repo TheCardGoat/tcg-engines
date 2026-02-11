@@ -3,31 +3,31 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { brunoMadrigalUndetectedUncle } from "@lorcanito/lorcana-engine/cards/009/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { brunoMadrigalUndetectedUncle } from "@lorcanito/lorcana-engine/cards/009/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Bruno Madrigal - Undetected Uncle", () => {
-//   it.skip("**Evasive** _(Only characters with Evasive can challenge this character.)_", async () => {
-//     const testEngine = new TestEngine({
-//       play: [brunoMadrigalUndetectedUncle],
+// Describe("Bruno Madrigal - Undetected Uncle", () => {
+//   It.skip("**Evasive** _(Only characters with Evasive can challenge this character.)_", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [brunoMadrigalUndetectedUncle],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(brunoMadrigalUndetectedUncle);
-//     expect(cardUnderTest.hasEvasive).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(brunoMadrigalUndetectedUncle);
+//     Expect(cardUnderTest.hasEvasive).toBe(true);
 //   });
 //
-//   it.skip("**YOU JUST HAVE TO SEE IT** {E} − Name a card, then reveal the top card of your deck. If it's the named card, put that card into your hand and gain 3 lore. Otherwise, put it on the top of your deck.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: brunoMadrigalUndetectedUncle.cost,
-//       play: [brunoMadrigalUndetectedUncle],
-//       hand: [brunoMadrigalUndetectedUncle],
+//   It.skip("**YOU JUST HAVE TO SEE IT** {E} − Name a card, then reveal the top card of your deck. If it's the named card, put that card into your hand and gain 3 lore. Otherwise, put it on the top of your deck.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: brunoMadrigalUndetectedUncle.cost,
+//       Play: [brunoMadrigalUndetectedUncle],
+//       Hand: [brunoMadrigalUndetectedUncle],
 //     });
 //
-//     await testEngine.playCard(brunoMadrigalUndetectedUncle);
+//     Await testEngine.playCard(brunoMadrigalUndetectedUncle);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

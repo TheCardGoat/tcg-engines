@@ -3,87 +3,87 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   eliLaBouffBigDaddy,
-//   goofyKnightForADay,
-//   ratiganVeryLargeMouse,
-//   rayEasygoingFirefly,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   EliLaBouffBigDaddy,
+//   GoofyKnightForADay,
+//   RatiganVeryLargeMouse,
+//   RayEasygoingFirefly,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Ratigan - Very Large Mouse", () => {
-//   it("**THIS IS MY KINGDOM** When you play this character, exert chosen opposing character with 3 {S} or less. Chose one of your characters and ready them. They can't quest for the rest of this turn.", () => {
-//     const testStore = new TestStore(
+// Describe("Ratigan - Very Large Mouse", () => {
+//   It("**THIS IS MY KINGDOM** When you play this character, exert chosen opposing character with 3 {S} or less. Chose one of your characters and ready them. They can't quest for the rest of this turn.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: ratiganVeryLargeMouse.cost,
-//         hand: [ratiganVeryLargeMouse],
-//         play: [goofyKnightForADay],
+//         Inkwell: ratiganVeryLargeMouse.cost,
+//         Hand: [ratiganVeryLargeMouse],
+//         Play: [goofyKnightForADay],
 //       },
 //       { play: [rayEasygoingFirefly] },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "hand",
-//       ratiganVeryLargeMouse.id,
+//       RatiganVeryLargeMouse.id,
 //     );
-//     const target = testStore.getByZoneAndId("play", goofyKnightForADay.id);
-//     const targetOpp = testStore.getByZoneAndId(
+//     Const target = testStore.getByZoneAndId("play", goofyKnightForADay.id);
+//     Const targetOpp = testStore.getByZoneAndId(
 //       "play",
-//       rayEasygoingFirefly.id,
+//       RayEasygoingFirefly.id,
 //       "player_two",
 //     );
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     testStore.resolveTopOfStack({ targets: [targetOpp] }, true);
-//     expect(targetOpp.ready).toEqual(false);
+//     TestStore.resolveTopOfStack({ targets: [targetOpp] }, true);
+//     Expect(targetOpp.ready).toEqual(false);
 //
-//     testStore.resolveTopOfStack({ targets: [target] }, true);
-//     expect(target.ready).toEqual(true);
-//     expect(target.hasQuestRestriction).toEqual(true);
+//     TestStore.resolveTopOfStack({ targets: [target] }, true);
+//     Expect(target.ready).toEqual(true);
+//     Expect(target.hasQuestRestriction).toEqual(true);
 //   });
 // });
 //
-// describe("Regression", () => {
-//   it("should NOT block the game if there is not valid cards, on the opponent side", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: ratiganVeryLargeMouse.cost,
-//       hand: [ratiganVeryLargeMouse],
+// Describe("Regression", () => {
+//   It("should NOT block the game if there is not valid cards, on the opponent side", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: ratiganVeryLargeMouse.cost,
+//       Hand: [ratiganVeryLargeMouse],
 //     });
 //
-//     await testEngine.playCard(ratiganVeryLargeMouse);
+//     Await testEngine.playCard(ratiganVeryLargeMouse);
 //
-//     expect(testEngine.stackLayers).toHaveLength(0);
+//     Expect(testEngine.stackLayers).toHaveLength(0);
 //   });
 //
-//   it("should NOT block the game if there is not valid cards on your side", async () => {
-//     const testEngine = new TestEngine(
+//   It("should NOT block the game if there is not valid cards on your side", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: ratiganVeryLargeMouse.cost,
-//         hand: [ratiganVeryLargeMouse],
+//         Inkwell: ratiganVeryLargeMouse.cost,
+//         Hand: [ratiganVeryLargeMouse],
 //       },
 //       {
-//         play: [eliLaBouffBigDaddy],
+//         Play: [eliLaBouffBigDaddy],
 //       },
 //     );
 //
-//     await testEngine.playCard(
-//       ratiganVeryLargeMouse,
+//     Await testEngine.playCard(
+//       RatiganVeryLargeMouse,
 //       {
-//         targets: [eliLaBouffBigDaddy],
+//         Targets: [eliLaBouffBigDaddy],
 //       },
-//       true,
+//       True,
 //     );
 //
-//     expect(testEngine.getCardModel(eliLaBouffBigDaddy).exerted).toEqual(true);
+//     Expect(testEngine.getCardModel(eliLaBouffBigDaddy).exerted).toEqual(true);
 //     // expect(testEngine.stackLayers).toHaveLength(2);
 //
 //     // await testEngine.acceptOptionalLayer();
 //     // expect(testEngine.stackLayers).toHaveLength(1);
 //     // await testEngine.acceptOptionalLayer();
-//     expect(testEngine.stackLayers).toHaveLength(0);
+//     Expect(testEngine.stackLayers).toHaveLength(0);
 //   });
 // });
 //

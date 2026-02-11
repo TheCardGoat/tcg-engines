@@ -3,74 +3,74 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { gastonBaritoneBully } from "@lorcanito/lorcana-engine/cards/002/characters/008-gaston-baritone-bully";
-// import {
-//   arielSingingMermaid,
-//   littleJohnSirReginald,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { gastonBaritoneBully } from "@lorcanito/lorcana-engine/cards/002/characters/008-gaston-baritone-bully";
+// Import {
+//   ArielSingingMermaid,
+//   LittleJohnSirReginald,
 // } from "@lorcanito/lorcana-engine/cards/009/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Little John - Sir Reginald", () => {
-//   it.skip("WHAT A BEAUTIFUL BRAWL! When you play this character, choose one:", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: littleJohnSirReginald.cost,
-//       hand: [littleJohnSirReginald],
+// Describe("Little John - Sir Reginald", () => {
+//   It.skip("WHAT A BEAUTIFUL BRAWL! When you play this character, choose one:", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: littleJohnSirReginald.cost,
+//       Hand: [littleJohnSirReginald],
 //     });
 //
-//     await testEngine.playCard(littleJohnSirReginald);
-//     await testEngine.acceptOptionalLayer();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.playCard(littleJohnSirReginald);
+//     Await testEngine.acceptOptionalLayer();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 //
-//   it("- Chosen Hero character gains Resist +2 this turn. (Damage dealt to them is reduced by 2.)", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: littleJohnSirReginald.cost,
-//       play: [arielSingingMermaid],
-//       hand: [littleJohnSirReginald],
+//   It("- Chosen Hero character gains Resist +2 this turn. (Damage dealt to them is reduced by 2.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: littleJohnSirReginald.cost,
+//       Play: [arielSingingMermaid],
+//       Hand: [littleJohnSirReginald],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(littleJohnSirReginald);
-//     const target = testEngine.getCardModel(arielSingingMermaid);
+//     Const cardUnderTest = testEngine.getCardModel(littleJohnSirReginald);
+//     Const target = testEngine.getCardModel(arielSingingMermaid);
 //
-//     await testEngine.playCard(
-//       cardUnderTest,
+//     Await testEngine.playCard(
+//       CardUnderTest,
 //       {
-//         mode: "1",
+//         Mode: "1",
 //       },
-//       true,
+//       True,
 //     );
 //
-//     await testEngine.resolveTopOfStack({ targets: [target] });
+//     Await testEngine.resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.hasResist).toBe(true);
+//     Expect(target.hasResist).toBe(true);
 //   });
 //
-//   it("- Deal 2 damage to chosen Villain character.", async () => {
-//     const testEngine = new TestEngine(
+//   It("- Deal 2 damage to chosen Villain character.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: littleJohnSirReginald.cost,
-//         hand: [littleJohnSirReginald],
+//         Inkwell: littleJohnSirReginald.cost,
+//         Hand: [littleJohnSirReginald],
 //       },
 //       {
-//         play: [gastonBaritoneBully],
+//         Play: [gastonBaritoneBully],
 //       },
 //     );
 //
-//     const cardUnderTest = testEngine.getCardModel(littleJohnSirReginald);
-//     const target = testEngine.getCardModel(gastonBaritoneBully);
+//     Const cardUnderTest = testEngine.getCardModel(littleJohnSirReginald);
+//     Const target = testEngine.getCardModel(gastonBaritoneBully);
 //
-//     await testEngine.playCard(
-//       cardUnderTest,
+//     Await testEngine.playCard(
+//       CardUnderTest,
 //       {
-//         mode: "2",
+//         Mode: "2",
 //       },
-//       true,
+//       True,
 //     );
 //
-//     await testEngine.resolveTopOfStack({ targets: [target] });
+//     Await testEngine.resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.damage).toBe(2);
+//     Expect(target.damage).toBe(2);
 //   });
 // });
 //

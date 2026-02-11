@@ -3,45 +3,45 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   mickeyBraveLittleTailor,
-//   pascalRapunzelCompanion,
-//   rapunzelGiftedWithHealing,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   MickeyBraveLittleTailor,
+//   PascalRapunzelCompanion,
+//   RapunzelGiftedWithHealing,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Pascal - Rapunzel's Companion", () => {
-//   describe("**CAMOUFLAGE** While you have another character in play, this character gains **Evasive**. _(Only characters\rwith Evasive can challenge them.)_", () => {
-//     it("Alone in the battlefield", () => {
-//       const testStore = new TestStore(
+// Describe("Pascal - Rapunzel's Companion", () => {
+//   Describe("**CAMOUFLAGE** While you have another character in play, this character gains **Evasive**. _(Only characters\rwith Evasive can challenge them.)_", () => {
+//     It("Alone in the battlefield", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [pascalRapunzelCompanion],
+//           Play: [pascalRapunzelCompanion],
 //         },
 //         {
-//           play: [mickeyBraveLittleTailor],
+//           Play: [mickeyBraveLittleTailor],
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         pascalRapunzelCompanion.id,
+//         PascalRapunzelCompanion.id,
 //       );
 //
-//       expect(cardUnderTest.hasEvasive).toEqual(false);
+//       Expect(cardUnderTest.hasEvasive).toEqual(false);
 //     });
 //
-//     it("With another characters in play", () => {
-//       const testStore = new TestStore({
-//         play: [pascalRapunzelCompanion, rapunzelGiftedWithHealing],
+//     It("With another characters in play", () => {
+//       Const testStore = new TestStore({
+//         Play: [pascalRapunzelCompanion, rapunzelGiftedWithHealing],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         pascalRapunzelCompanion.id,
+//         PascalRapunzelCompanion.id,
 //       );
 //
-//       expect(cardUnderTest.hasEvasive).toEqual(true);
+//       Expect(cardUnderTest.hasEvasive).toEqual(true);
 //     });
 //   });
 // });

@@ -3,218 +3,218 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import type { CardModel } from "@lorcanito/lorcana-engine";
-// import { weKnowTheWay } from "@lorcanito/lorcana-engine/cards/005/actions/actions";
-// import { alanadaleRockinRooster } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import {
-//   deweyLovableShowoff,
-//   donaldDuckCoinCollector,
-//   monstroInfamousWhale,
+// Import { describe, expect, it } from "@jest/globals";
+// Import type { CardModel } from "@lorcanito/lorcana-engine";
+// Import { weKnowTheWay } from "@lorcanito/lorcana-engine/cards/005/actions/actions";
+// Import { alanadaleRockinRooster } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import {
+//   DeweyLovableShowoff,
+//   DonaldDuckCoinCollector,
+//   MonstroInfamousWhale,
 // } from "@lorcanito/lorcana-engine/cards/008";
-// import { elsaSpiritOfWinter } from "@lorcanito/lorcana-engine/cards/009";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
-// import type { GenerateOnDemandLayerMove } from "@lorcanito/shared";
-// import { moneyEverywhere } from "./037-donaldDuckCoinCollector";
-// import {
-//   fullBreach,
-//   fullBreachAndMoneyEverywhereCombo,
+// Import { elsaSpiritOfWinter } from "@lorcanito/lorcana-engine/cards/009";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import type { GenerateOnDemandLayerMove } from "@lorcanito/shared";
+// Import { moneyEverywhere } from "./037-donaldDuckCoinCollector";
+// Import {
+//   FullBreach,
+//   FullBreachAndMoneyEverywhereCombo,
 // } from "./064-monstro-infamous-whale";
 //
-// describe("Monstro - Infamous Whale", () => {
-//   it("Rush (This character can challenge the turn they're played.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [monstroInfamousWhale],
+// Describe("Monstro - Infamous Whale", () => {
+//   It("Rush (This character can challenge the turn they're played.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [monstroInfamousWhale],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(monstroInfamousWhale);
-//     expect(cardUnderTest.hasRush).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(monstroInfamousWhale);
+//     Expect(cardUnderTest.hasRush).toBe(true);
 //   });
 //
-//   it("FULL BREACH Choose and discard a card – Ready this character. He can't quest for the rest of this turn.", async () => {
-//     const testEngine = new TestEngine({
-//       play: [monstroInfamousWhale],
-//       hand: [deweyLovableShowoff],
+//   It("FULL BREACH Choose and discard a card – Ready this character. He can't quest for the rest of this turn.", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [monstroInfamousWhale],
+//       Hand: [deweyLovableShowoff],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(monstroInfamousWhale);
-//     const target: CardModel = testEngine.getCardModel(deweyLovableShowoff);
+//     Const cardUnderTest = testEngine.getCardModel(monstroInfamousWhale);
+//     Const target: CardModel = testEngine.getCardModel(deweyLovableShowoff);
 //
-//     cardUnderTest.exert();
-//     expect(cardUnderTest.exerted).toEqual(true);
+//     CardUnderTest.exert();
+//     Expect(cardUnderTest.exerted).toEqual(true);
 //
-//     cardUnderTest.activate("FULL BREACH", { costs: [target] });
+//     CardUnderTest.activate("FULL BREACH", { costs: [target] });
 //
-//     expect(cardUnderTest.exerted).toEqual(false);
+//     Expect(cardUnderTest.exerted).toEqual(false);
 //   });
 // });
 //
-// describe("Infinite Loop", () => {
+// Describe("Infinite Loop", () => {
 //   // Note this is a work-around, so don't this as example
-//   it("Adds a helper function to RootStore", async () => {
-//     const testEngine = new TestEngine({
-//       play: [monstroInfamousWhale],
-//       hand: [donaldDuckCoinCollector, alanadaleRockinRooster, weKnowTheWay],
-//       deck: 60,
+//   It("Adds a helper function to RootStore", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [monstroInfamousWhale],
+//       Hand: [donaldDuckCoinCollector, alanadaleRockinRooster, weKnowTheWay],
+//       Deck: 60,
 //     });
 //
-//     testEngine.assertThatZonesContain({
-//       hand: 3,
-//       deck: 60,
-//       discard: 0,
+//     TestEngine.assertThatZonesContain({
+//       Hand: 3,
+//       Deck: 60,
+//       Discard: 0,
 //     });
 //
-//     const move: GenerateOnDemandLayerMove = {
-//       type: "GENERATE_ON_DEMAND_LAYER",
-//       instanceId: testEngine.getCardModel(monstroInfamousWhale).instanceId,
-//       ability: fullBreachAndMoneyEverywhereCombo as unknown as Record<
-//         string,
-//         unknown
+//     Const move: GenerateOnDemandLayerMove = {
+//       Type: "GENERATE_ON_DEMAND_LAYER",
+//       InstanceId: testEngine.getCardModel(monstroInfamousWhale).instanceId,
+//       Ability: fullBreachAndMoneyEverywhereCombo as unknown as Record<
+//         String,
+//         Unknown
 //       >,
 //     };
-//     await testEngine.engine.execute(move);
+//     Await testEngine.engine.execute(move);
 //
-//     testEngine.assertThatZonesContain({
-//       hand: 63,
-//       deck: 0,
-//       discard: 0,
+//     TestEngine.assertThatZonesContain({
+//       Hand: 63,
+//       Deck: 0,
+//       Discard: 0,
 //     });
 //
-//     expect(testEngine.stackLayers).toHaveLength(1);
+//     Expect(testEngine.stackLayers).toHaveLength(1);
 //
-//     const hand = testEngine.store.tableStore.getPlayerZone(
+//     Const hand = testEngine.store.tableStore.getPlayerZone(
 //       "player_one",
 //       "hand",
 //     ).cards;
-//     const targets = hand.slice(0, 60);
+//     Const targets = hand.slice(0, 60);
 //
-//     await testEngine.resolveTopOfStack({
-//       targets,
+//     Await testEngine.resolveTopOfStack({
+//       Targets,
 //     });
 //
-//     testEngine.assertThatZonesContain({
-//       hand: 3,
-//       deck: 0,
-//       discard: 60,
+//     TestEngine.assertThatZonesContain({
+//       Hand: 3,
+//       Deck: 0,
+//       Discard: 60,
 //     });
 //
-//     expect(testEngine.stackLayers).toHaveLength(0);
+//     Expect(testEngine.stackLayers).toHaveLength(0);
 //   });
 //
-//   it("Should not create infinite continuous effects, or else it breaks the transport mechanism", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: donaldDuckCoinCollector.cost,
-//       play: [monstroInfamousWhale],
-//       hand: [donaldDuckCoinCollector],
-//       deck: 60,
+//   It("Should not create infinite continuous effects, or else it breaks the transport mechanism", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: donaldDuckCoinCollector.cost,
+//       Play: [monstroInfamousWhale],
+//       Hand: [donaldDuckCoinCollector],
+//       Deck: 60,
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(monstroInfamousWhale);
-//     expect(cardUnderTest.activatedAbilities).toHaveLength(1);
-//     expect(
-//       testEngine.store.continuousEffectStore.continuousEffects,
+//     Const cardUnderTest = testEngine.getCardModel(monstroInfamousWhale);
+//     Expect(cardUnderTest.activatedAbilities).toHaveLength(1);
+//     Expect(
+//       TestEngine.store.continuousEffectStore.continuousEffects,
 //     ).toHaveLength(0);
 //
-//     await testEngine.playCard(donaldDuckCoinCollector);
+//     Await testEngine.playCard(donaldDuckCoinCollector);
 //
-//     expect(cardUnderTest.activatedAbilities).toHaveLength(2);
-//     expect(
-//       testEngine.store.continuousEffectStore.continuousEffects,
+//     Expect(cardUnderTest.activatedAbilities).toHaveLength(2);
+//     Expect(
+//       TestEngine.store.continuousEffectStore.continuousEffects,
 //     ).toHaveLength(2); // Donald and Monstro are both with Donald's continuous effect
 //
-//     testEngine.assertThatZonesContain({
-//       deck: 60,
-//       hand: 0,
+//     TestEngine.assertThatZonesContain({
+//       Deck: 60,
+//       Hand: 0,
 //     });
 //
-//     await testEngine.activateCard(cardUnderTest, {
-//       ability: moneyEverywhere.name,
+//     Await testEngine.activateCard(cardUnderTest, {
+//       Ability: moneyEverywhere.name,
 //     });
 //
-//     testEngine.assertThatZonesContain({
-//       deck: 59,
-//       hand: 1,
-//       discard: 0,
+//     TestEngine.assertThatZonesContain({
+//       Deck: 59,
+//       Hand: 1,
+//       Discard: 0,
 //     });
 //
-//     await testEngine.activateCard(cardUnderTest, {
-//       ability: fullBreach.name,
-//       costs: [testEngine.getACardFromHand()],
+//     Await testEngine.activateCard(cardUnderTest, {
+//       Ability: fullBreach.name,
+//       Costs: [testEngine.getACardFromHand()],
 //     });
 //
-//     testEngine.assertThatZonesContain({
-//       deck: 59,
-//       hand: 0,
-//       discard: 1,
+//     TestEngine.assertThatZonesContain({
+//       Deck: 59,
+//       Hand: 0,
+//       Discard: 1,
 //     });
 //
 //     // Once Monstro Discards, he will untap and can't quest until the end of the turn.
-//     expect(cardUnderTest.exerted).toEqual(false);
-//     expect(cardUnderTest.hasQuestRestriction).toEqual(true);
-//     expect(
-//       testEngine.store.continuousEffectStore.continuousEffects,
+//     Expect(cardUnderTest.exerted).toEqual(false);
+//     Expect(cardUnderTest.hasQuestRestriction).toEqual(true);
+//     Expect(
+//       TestEngine.store.continuousEffectStore.continuousEffects,
 //     ).toHaveLength(3); // Added Monstro's continuous effect, as he can't quest for the rest of the turn.
 //
 //     // Now if we repeat this indefinitely, we don't want to have infinite continuous effects.
 //
-//     await testEngine.activateCard(cardUnderTest, {
-//       ability: moneyEverywhere.name,
+//     Await testEngine.activateCard(cardUnderTest, {
+//       Ability: moneyEverywhere.name,
 //     });
-//     await testEngine.activateCard(cardUnderTest, {
-//       ability: fullBreach.name,
-//       costs: [testEngine.getACardFromHand()],
+//     Await testEngine.activateCard(cardUnderTest, {
+//       Ability: fullBreach.name,
+//       Costs: [testEngine.getACardFromHand()],
 //     });
 //
-//     expect(cardUnderTest.hasQuestRestriction).toEqual(true);
-//     expect(
-//       testEngine.store.continuousEffectStore.continuousEffects,
+//     Expect(cardUnderTest.hasQuestRestriction).toEqual(true);
+//     Expect(
+//       TestEngine.store.continuousEffectStore.continuousEffects,
 //     ).toHaveLength(3); // instead of adding another continuous effect, we should skip adding the same one again.
 //
 //     // Doing one more time to ensure it works consistently
-//     await testEngine.activateCard(cardUnderTest, {
-//       ability: moneyEverywhere.name,
+//     Await testEngine.activateCard(cardUnderTest, {
+//       Ability: moneyEverywhere.name,
 //     });
-//     await testEngine.activateCard(cardUnderTest, {
-//       ability: fullBreach.name,
-//       costs: [testEngine.getACardFromHand()],
+//     Await testEngine.activateCard(cardUnderTest, {
+//       Ability: fullBreach.name,
+//       Costs: [testEngine.getACardFromHand()],
 //     });
 //
-//     expect(
-//       testEngine.store.continuousEffectStore.continuousEffects,
+//     Expect(
+//       TestEngine.store.continuousEffectStore.continuousEffects,
 //     ).toHaveLength(3);
 //   });
 // });
 //
-// describe("Regression Tests", () => {
-//   it("should NOT be blocked by 'cant ready at the start of the turn' effects", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Regression Tests", () => {
+//   It("should NOT be blocked by 'cant ready at the start of the turn' effects", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: elsaSpiritOfWinter.cost,
-//         hand: [elsaSpiritOfWinter],
+//         Inkwell: elsaSpiritOfWinter.cost,
+//         Hand: [elsaSpiritOfWinter],
 //       },
 //       {
-//         play: [monstroInfamousWhale],
-//         hand: [deweyLovableShowoff],
+//         Play: [monstroInfamousWhale],
+//         Hand: [deweyLovableShowoff],
 //       },
 //     );
 //
-//     const cardUnderTest = testEngine.getCardModel(monstroInfamousWhale);
-//     const target: CardModel = testEngine.getCardModel(deweyLovableShowoff);
+//     Const cardUnderTest = testEngine.getCardModel(monstroInfamousWhale);
+//     Const target: CardModel = testEngine.getCardModel(deweyLovableShowoff);
 //
-//     await testEngine.playCard(elsaSpiritOfWinter, {
-//       targets: [cardUnderTest],
-//       acceptOptionalLayer: true,
+//     Await testEngine.playCard(elsaSpiritOfWinter, {
+//       Targets: [cardUnderTest],
+//       AcceptOptionalLayer: true,
 //     });
-//     expect(cardUnderTest.exerted).toEqual(true);
-//     await testEngine.passTurn();
-//     expect(cardUnderTest.exerted).toEqual(true);
+//     Expect(cardUnderTest.exerted).toEqual(true);
+//     Await testEngine.passTurn();
+//     Expect(cardUnderTest.exerted).toEqual(true);
 //
-//     await testEngine.activateCard(cardUnderTest, {
-//       ability: "FULL BREACH",
-//       costs: [target],
+//     Await testEngine.activateCard(cardUnderTest, {
+//       Ability: "FULL BREACH",
+//       Costs: [target],
 //     });
 //
-//     expect(cardUnderTest.exerted).toEqual(false);
+//     Expect(cardUnderTest.exerted).toEqual(false);
 //   });
 // });
 //

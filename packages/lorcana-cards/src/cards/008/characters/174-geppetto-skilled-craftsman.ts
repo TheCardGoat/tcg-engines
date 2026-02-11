@@ -1,35 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const geppettoSkilledCraftsman: CharacterCard = {
-  id: "1ae",
-  cardType: "character",
-  name: "Geppetto",
-  version: "Skilled Craftsman",
-  fullName: "Geppetto - Skilled Craftsman",
-  inkType: ["sapphire"],
-  franchise: "Pinocchio",
-  set: "008",
-  text: "SEEKING INSPIRATION Whenever this character quests, you may choose and discard any number of item cards to gain 1 lore for each item card discarded this way.",
-  cost: 5,
-  strength: 4,
-  willpower: 4,
-  lore: 2,
-  cardNumber: 174,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "a73496316fa073149d81e6831fb59c5170aa9689",
-  },
   abilities: [
     {
-      id: "1ae-1",
-      type: "triggered",
-      name: "SEEKING INSPIRATION",
-      trigger: {
-        event: "quest",
-        timing: "whenever",
-        on: "SELF",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -38,8 +11,35 @@ export const geppettoSkilledCraftsman: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "1ae-1",
+      name: "SEEKING INSPIRATION",
       text: "SEEKING INSPIRATION Whenever this character quests, you may choose and discard any number of item cards to gain 1 lore for each item card discarded this way.",
+      trigger: {
+        event: "quest",
+        timing: "whenever",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 174,
+  cardType: "character",
   classifications: ["Storyborn", "Ally", "Inventor"],
+  cost: 5,
+  externalIds: {
+    ravensburger: "a73496316fa073149d81e6831fb59c5170aa9689",
+  },
+  franchise: "Pinocchio",
+  fullName: "Geppetto - Skilled Craftsman",
+  id: "1ae",
+  inkType: ["sapphire"],
+  inkable: true,
+  lore: 2,
+  missingTests: true,
+  name: "Geppetto",
+  set: "008",
+  strength: 4,
+  text: "SEEKING INSPIRATION Whenever this character quests, you may choose and discard any number of item cards to gain 1 lore for each item card discarded this way.",
+  version: "Skilled Craftsman",
+  willpower: 4,
 };

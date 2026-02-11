@@ -3,49 +3,49 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { liShangNewlyPromoted } from "@lorcanito/lorcana-engine/cards/007/characters/characters";
-// import { mushuYourWorstNightmare } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { liShangNewlyPromoted } from "@lorcanito/lorcana-engine/cards/007/characters/characters";
+// Import { mushuYourWorstNightmare } from "@lorcanito/lorcana-engine/cards/008/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Mushu - Your Worst Nightmare", () => {
-//   it("Shift 4 (You may pay 4 {I} to play this on top of one of your characters named Mushu.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [mushuYourWorstNightmare],
+// Describe("Mushu - Your Worst Nightmare", () => {
+//   It("Shift 4 (You may pay 4 {I} to play this on top of one of your characters named Mushu.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [mushuYourWorstNightmare],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(mushuYourWorstNightmare);
-//     expect(cardUnderTest.hasShift).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(mushuYourWorstNightmare);
+//     Expect(cardUnderTest.hasShift).toBe(true);
 //   });
 //
-//   it("ALL FIRED UP Whenever you play another character, they gain Rush, Reckless, and Evasive this turn.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: mushuYourWorstNightmare.cost + liShangNewlyPromoted.cost,
-//       hand: [mushuYourWorstNightmare, liShangNewlyPromoted],
+//   It("ALL FIRED UP Whenever you play another character, they gain Rush, Reckless, and Evasive this turn.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: mushuYourWorstNightmare.cost + liShangNewlyPromoted.cost,
+//       Hand: [mushuYourWorstNightmare, liShangNewlyPromoted],
 //     });
 //
-//     const targetCard = testEngine.getCardModel(liShangNewlyPromoted);
-//     const sourceCard = testEngine.getCardModel(mushuYourWorstNightmare);
+//     Const targetCard = testEngine.getCardModel(liShangNewlyPromoted);
+//     Const sourceCard = testEngine.getCardModel(mushuYourWorstNightmare);
 //
-//     expect(targetCard.hasRush).toBe(false);
-//     expect(targetCard.hasReckless).toBe(false);
-//     expect(targetCard.hasEvasive).toBe(false);
+//     Expect(targetCard.hasRush).toBe(false);
+//     Expect(targetCard.hasReckless).toBe(false);
+//     Expect(targetCard.hasEvasive).toBe(false);
 //
-//     await testEngine.playCard(mushuYourWorstNightmare);
-//     await testEngine.playCard(liShangNewlyPromoted);
+//     Await testEngine.playCard(mushuYourWorstNightmare);
+//     Await testEngine.playCard(liShangNewlyPromoted);
 //
-//     expect(sourceCard.hasRush).toBe(false);
-//     expect(sourceCard.hasEvasive).toBe(false);
-//     expect(sourceCard.hasReckless).toBe(false);
-//     expect(targetCard.hasRush).toBe(true);
-//     expect(targetCard.hasEvasive).toBe(true);
-//     expect(targetCard.hasReckless).toBe(true);
+//     Expect(sourceCard.hasRush).toBe(false);
+//     Expect(sourceCard.hasEvasive).toBe(false);
+//     Expect(sourceCard.hasReckless).toBe(false);
+//     Expect(targetCard.hasRush).toBe(true);
+//     Expect(targetCard.hasEvasive).toBe(true);
+//     Expect(targetCard.hasReckless).toBe(true);
 //
-//     await testEngine.passTurn();
+//     Await testEngine.passTurn();
 //
-//     expect(targetCard.hasRush).toBe(false);
-//     expect(targetCard.hasReckless).toBe(false);
-//     expect(targetCard.hasEvasive).toBe(false);
+//     Expect(targetCard.hasRush).toBe(false);
+//     Expect(targetCard.hasReckless).toBe(false);
+//     Expect(targetCard.hasEvasive).toBe(false);
 //   });
 // });
 //

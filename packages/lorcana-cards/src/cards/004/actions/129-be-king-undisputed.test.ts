@@ -3,59 +3,59 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { princeJohnGreediestOfAll } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { beKingUndisputed } from "@lorcanito/lorcana-engine/cards/004/actions/actions";
-// import { magicBroomLivelySweeper } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { princeJohnGreediestOfAll } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { beKingUndisputed } from "@lorcanito/lorcana-engine/cards/004/actions/actions";
+// Import { magicBroomLivelySweeper } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Be King Undisputed", () => {
-//   it("Each opponent chooses and banishes one of their characters.", () => {
-//     const testStore = new TestStore(
+// Describe("Be King Undisputed", () => {
+//   It("Each opponent chooses and banishes one of their characters.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: beKingUndisputed.cost,
-//         hand: [beKingUndisputed],
+//         Inkwell: beKingUndisputed.cost,
+//         Hand: [beKingUndisputed],
 //       },
 //       {
-//         play: [magicBroomLivelySweeper],
+//         Play: [magicBroomLivelySweeper],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", beKingUndisputed.id);
-//     const target = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", beKingUndisputed.id);
+//     Const target = testStore.getByZoneAndId(
 //       "play",
-//       magicBroomLivelySweeper.id,
+//       MagicBroomLivelySweeper.id,
 //       "player_two",
 //     );
 //
-//     cardUnderTest.playFromHand();
-//     testStore.changePlayer().resolveTopOfStack({ targets: [target] });
+//     CardUnderTest.playFromHand();
+//     TestStore.changePlayer().resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.zone).toBe("discard");
+//     Expect(target.zone).toBe("discard");
 //   });
 //
-//   it("Only targetable character has ward", () => {
-//     const testStore = new TestStore(
+//   It("Only targetable character has ward", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: beKingUndisputed.cost,
-//         hand: [beKingUndisputed],
+//         Inkwell: beKingUndisputed.cost,
+//         Hand: [beKingUndisputed],
 //       },
 //       {
-//         play: [princeJohnGreediestOfAll],
+//         Play: [princeJohnGreediestOfAll],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", beKingUndisputed.id);
-//     const target = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", beKingUndisputed.id);
+//     Const target = testStore.getByZoneAndId(
 //       "play",
-//       princeJohnGreediestOfAll.id,
+//       PrinceJohnGreediestOfAll.id,
 //       "player_two",
 //     );
 //
-//     cardUnderTest.playFromHand();
-//     testStore.changePlayer().resolveTopOfStack({ targets: [target] });
+//     CardUnderTest.playFromHand();
+//     TestStore.changePlayer().resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.zone).toBe("discard");
+//     Expect(target.zone).toBe("discard");
 //   });
 // });
 //

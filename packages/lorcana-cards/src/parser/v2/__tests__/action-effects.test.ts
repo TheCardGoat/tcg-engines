@@ -22,9 +22,9 @@ describe("Action Effects - Task Group 2.5", () => {
       const effect = parseEffect("Chosen player draws 2 cards");
 
       expect(effect).toEqual({
-        type: "draw",
         amount: 2,
         target: "CHOSEN_PLAYER",
+        type: "draw",
       });
     });
 
@@ -42,9 +42,9 @@ describe("Action Effects - Task Group 2.5", () => {
       const effect = parseEffect("Chosen player draws a card");
 
       expect(effect).toEqual({
-        type: "draw",
         amount: 1,
         target: "CHOSEN_PLAYER",
+        type: "draw",
       });
     });
   });
@@ -54,9 +54,9 @@ describe("Action Effects - Task Group 2.5", () => {
       const effect = parseEffect("Each player draws 1 card");
 
       expect(effect).toEqual({
-        type: "draw",
         amount: 1,
         target: "EACH_PLAYER",
+        type: "draw",
       });
     });
 
@@ -64,9 +64,9 @@ describe("Action Effects - Task Group 2.5", () => {
       const effect = parseEffect("Each player draws 2 cards");
 
       expect(effect).toEqual({
-        type: "draw",
         amount: 2,
         target: "EACH_PLAYER",
+        type: "draw",
       });
     });
 
@@ -74,9 +74,9 @@ describe("Action Effects - Task Group 2.5", () => {
       const effect = parseEffect("Each opponent draws 1 card");
 
       expect(effect).toEqual({
-        type: "draw",
         amount: 1,
         target: "EACH_OPPONENT",
+        type: "draw",
       });
     });
   });
@@ -86,9 +86,9 @@ describe("Action Effects - Task Group 2.5", () => {
       const effect = parseEffect("Each opponent loses 1 lore");
 
       expect(effect).toEqual({
-        type: "lose-lore",
         amount: 1,
         target: "EACH_OPPONENT",
+        type: "lose-lore",
       });
     });
 
@@ -96,9 +96,9 @@ describe("Action Effects - Task Group 2.5", () => {
       const effect = parseEffect("Each opponent loses 2 lore");
 
       expect(effect).toEqual({
-        type: "lose-lore",
         amount: 2,
         target: "EACH_OPPONENT",
+        type: "lose-lore",
       });
     });
 
@@ -118,14 +118,14 @@ describe("Action Effects - Task Group 2.5", () => {
       const effect = parseEffect("Banish all items");
 
       expect(effect).toEqual({
-        type: "banish",
         target: {
-          selector: "all",
+          cardTypes: ["item"],
           count: "all",
           owner: "any",
+          selector: "all",
           zones: ["play"],
-          cardTypes: ["item"],
         },
+        type: "banish",
       });
     });
 
@@ -133,14 +133,14 @@ describe("Action Effects - Task Group 2.5", () => {
       const effect = parseEffect("Banish all characters");
 
       expect(effect).toEqual({
-        type: "banish",
         target: {
-          selector: "all",
+          cardTypes: ["character"],
           count: "all",
           owner: "any",
+          selector: "all",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "banish",
       });
     });
 
@@ -148,14 +148,14 @@ describe("Action Effects - Task Group 2.5", () => {
       const effect = parseEffect("Banish all locations");
 
       expect(effect).toEqual({
-        type: "banish",
         target: {
-          selector: "all",
+          cardTypes: ["location"],
           count: "all",
           owner: "any",
+          selector: "all",
           zones: ["play"],
-          cardTypes: ["location"],
         },
+        type: "banish",
       });
     });
 
@@ -163,14 +163,14 @@ describe("Action Effects - Task Group 2.5", () => {
       const effect = parseEffect("Banish all opposing characters");
 
       expect(effect).toEqual({
-        type: "banish",
         target: {
-          selector: "all",
+          cardTypes: ["character"],
           count: "all",
           owner: "opponent",
+          selector: "all",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "banish",
       });
     });
   });
@@ -180,14 +180,14 @@ describe("Action Effects - Task Group 2.5", () => {
       const effect = parseEffect("Ready chosen character");
 
       expect(effect).toEqual({
-        type: "ready",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "ready",
       });
     });
 
@@ -195,14 +195,14 @@ describe("Action Effects - Task Group 2.5", () => {
       const effect = parseEffect("Ready chosen item");
 
       expect(effect).toEqual({
-        type: "ready",
         target: {
-          selector: "chosen",
+          cardTypes: ["item"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["item"],
         },
+        type: "ready",
       });
     });
 
@@ -210,14 +210,14 @@ describe("Action Effects - Task Group 2.5", () => {
       const effect = parseEffect("Ready chosen location");
 
       expect(effect).toEqual({
-        type: "ready",
         target: {
-          selector: "chosen",
+          cardTypes: ["location"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["location"],
         },
+        type: "ready",
       });
     });
   });
@@ -230,12 +230,12 @@ describe("Action Effects - Task Group 2.5", () => {
 
       // Parser interprets "a character" as a target specification
       expect(effect).toMatchObject({
-        type: "return-to-hand",
         target: {
-          selector: "chosen",
           cardTypes: ["character"],
           count: 1,
+          selector: "chosen",
         },
+        type: "return-to-hand",
       });
     });
 
@@ -245,10 +245,10 @@ describe("Action Effects - Task Group 2.5", () => {
       );
 
       // Parser interprets "an action" as target - but "action" isn't a valid target cardType
-      // so it falls back to CHOSEN_CHARACTER
+      // So it falls back to CHOSEN_CHARACTER
       expect(effect).toMatchObject({
-        type: "return-to-hand",
         target: "CHOSEN_CHARACTER",
+        type: "return-to-hand",
       });
     });
 
@@ -259,9 +259,9 @@ describe("Action Effects - Task Group 2.5", () => {
 
       // Parser now has special handling for "from discard" pattern
       expect(effect).toMatchObject({
-        type: "return-from-discard",
         cardType: "item",
         target: "CONTROLLER",
+        type: "return-from-discard",
       });
     });
 
@@ -271,12 +271,12 @@ describe("Action Effects - Task Group 2.5", () => {
       );
 
       expect(effect).toMatchObject({
-        type: "return-to-hand",
         target: {
-          selector: "chosen",
           cardTypes: ["location"],
           count: 1,
+          selector: "chosen",
         },
+        type: "return-to-hand",
       });
     });
 
@@ -287,8 +287,8 @@ describe("Action Effects - Task Group 2.5", () => {
 
       // "song" is not a valid cardType, falls back to CHOSEN_CHARACTER
       expect(effect).toMatchObject({
-        type: "return-to-hand",
         target: "CHOSEN_CHARACTER",
+        type: "return-to-hand",
       });
     });
   });
@@ -298,16 +298,16 @@ describe("Action Effects - Task Group 2.5", () => {
       const effect = parseEffect("Chosen character gains Rush this turn");
 
       expect(effect).toEqual({
-        type: "gain-keyword",
+        duration: "this-turn",
         keyword: "Rush",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
-        duration: "this-turn",
+        type: "gain-keyword",
       });
     });
 
@@ -315,16 +315,16 @@ describe("Action Effects - Task Group 2.5", () => {
       const effect = parseEffect("Chosen character gains Ward this turn");
 
       expect(effect).toEqual({
-        type: "gain-keyword",
+        duration: "this-turn",
         keyword: "Ward",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
-        duration: "this-turn",
+        type: "gain-keyword",
       });
     });
 
@@ -332,16 +332,16 @@ describe("Action Effects - Task Group 2.5", () => {
       const effect = parseEffect("Chosen character gains Evasive this turn");
 
       expect(effect).toEqual({
-        type: "gain-keyword",
+        duration: "this-turn",
         keyword: "Evasive",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
-        duration: "this-turn",
+        type: "gain-keyword",
       });
     });
 
@@ -351,17 +351,17 @@ describe("Action Effects - Task Group 2.5", () => {
       );
 
       expect(effect).toEqual({
-        type: "gain-keyword",
+        duration: "this-turn",
         keyword: "Challenger",
-        value: 2,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
-        duration: "this-turn",
+        type: "gain-keyword",
+        value: 2,
       });
     });
 
@@ -369,17 +369,17 @@ describe("Action Effects - Task Group 2.5", () => {
       const effect = parseEffect("Chosen character gains Resist +1 this turn");
 
       expect(effect).toEqual({
-        type: "gain-keyword",
+        duration: "this-turn",
         keyword: "Resist",
-        value: 1,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
-        duration: "this-turn",
+        type: "gain-keyword",
+        value: 1,
       });
     });
   });
@@ -389,17 +389,17 @@ describe("Action Effects - Task Group 2.5", () => {
       const effect = parseEffect("Chosen character gets +2 {S} this turn");
 
       expect(effect).toEqual({
-        type: "modify-stat",
-        stat: "strength",
+        duration: "this-turn",
         modifier: 2,
+        stat: "strength",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
-        duration: "this-turn",
+        type: "modify-stat",
       });
     });
 
@@ -411,11 +411,11 @@ describe("Action Effects - Task Group 2.5", () => {
         stat: "willpower",
         modifier: -1, // Real negative stat modifier, not a placeholder
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
         duration: "this-turn",
       });
@@ -425,17 +425,17 @@ describe("Action Effects - Task Group 2.5", () => {
       const effect = parseEffect("Chosen character gets +1 {L} this turn");
 
       expect(effect).toEqual({
-        type: "modify-stat",
-        stat: "lore",
+        duration: "this-turn",
         modifier: 1,
+        stat: "lore",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
-        duration: "this-turn",
+        type: "modify-stat",
       });
     });
 
@@ -447,11 +447,11 @@ describe("Action Effects - Task Group 2.5", () => {
         stat: "strength",
         modifier: D_PLACEHOLDER, // {d} placeholder value (positive)
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
         duration: "this-turn",
       });
@@ -465,11 +465,11 @@ describe("Action Effects - Task Group 2.5", () => {
         stat: "willpower",
         modifier: D_PLACEHOLDER, // {d} placeholder value (sign handled separately)
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
         duration: "this-turn",
       });
@@ -483,11 +483,11 @@ describe("Action Effects - Task Group 2.5", () => {
         stat: "lore",
         modifier: D_PLACEHOLDER, // {d} placeholder value (defaults to positive)
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
         duration: "this-turn",
       });
@@ -500,9 +500,9 @@ describe("Action Effects - Task Group 2.5", () => {
       const effect = parseEffect("Each player draws 1 card");
 
       expect(effect).toEqual({
-        type: "draw",
         amount: 1,
         target: "EACH_PLAYER",
+        type: "draw",
       });
     });
 
@@ -511,16 +511,16 @@ describe("Action Effects - Task Group 2.5", () => {
 
       // Parser omits duration field when no explicit duration is specified
       expect(effect).toEqual({
-        type: "modify-stat",
-        stat: "strength",
         modifier: 3,
+        stat: "strength",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "modify-stat",
       });
     });
 
@@ -529,15 +529,15 @@ describe("Action Effects - Task Group 2.5", () => {
 
       // Parser omits duration field when no explicit duration is specified
       expect(effect).toEqual({
-        type: "gain-keyword",
         keyword: "Rush",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "gain-keyword",
       });
     });
   });

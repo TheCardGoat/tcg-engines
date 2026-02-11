@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { donaldDuckSleepwalker } from "@lorcanito/lorcana-engine/cards/009/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { donaldDuckSleepwalker } from "@lorcanito/lorcana-engine/cards/009/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Donald Duck - Sleepwalker", () => {
-//   it.skip("**STARTLED AWAKE** Whenever you play an action, this character gets +2 {S} this turn.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: donaldDuckSleepwalker.cost,
-//       play: [donaldDuckSleepwalker],
-//       hand: [donaldDuckSleepwalker],
+// Describe("Donald Duck - Sleepwalker", () => {
+//   It.skip("**STARTLED AWAKE** Whenever you play an action, this character gets +2 {S} this turn.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: donaldDuckSleepwalker.cost,
+//       Play: [donaldDuckSleepwalker],
+//       Hand: [donaldDuckSleepwalker],
 //     });
 //
-//     await testEngine.playCard(donaldDuckSleepwalker);
+//     Await testEngine.playCard(donaldDuckSleepwalker);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

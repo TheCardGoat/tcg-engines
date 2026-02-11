@@ -3,20 +3,20 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { vanellopeVonSchweetzSpunkySpeedster } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { vanellopeVonSchweetzSpunkySpeedster } from "@lorcanito/lorcana-engine/cards/008/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Vanellope Von Schweetz - Spunky Speedster", () => {
-//   it.skip("Evasive (Only characters with Evasive can challenge this character.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [vanellopeVonSchweetzSpunkySpeedster],
+// Describe("Vanellope Von Schweetz - Spunky Speedster", () => {
+//   It.skip("Evasive (Only characters with Evasive can challenge this character.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [vanellopeVonSchweetzSpunkySpeedster],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(
-//       vanellopeVonSchweetzSpunkySpeedster,
+//     Const cardUnderTest = testEngine.getCardModel(
+//       VanellopeVonSchweetzSpunkySpeedster,
 //     );
-//     expect(cardUnderTest.hasEvasive).toBe(true);
+//     Expect(cardUnderTest.hasEvasive).toBe(true);
 //   });
 // });
 //

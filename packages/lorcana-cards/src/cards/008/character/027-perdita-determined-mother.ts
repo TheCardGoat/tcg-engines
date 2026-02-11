@@ -1,25 +1,25 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { shiftAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { whenYouPlayThisCharacter } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import { putAllCardsFromDiscardToInkwellFaceDownAndExerted } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { shiftAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import { whenYouPlayThisCharacter } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import { putAllCardsFromDiscardToInkwellFaceDownAndExerted } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const perditaDeterminedMother: LorcanitoCharacterCard = {
-//   id: "iue",
-//   name: "Perdita",
-//   title: "Determined Mother",
-//   characteristics: ["floodborn", "hero"],
-//   text: "Shift 4 (You may pay 4 {I} to play this on top of one of your characters named Perdita.)\nQUICK, EVERYONE HIDE When you play this character, you may put all Puppy character cards from your discard into your inkwell facedown and exerted.",
-//   type: "character",
-//   abilities: [
-//     shiftAbility(4, "Perdita"),
-//     whenYouPlayThisCharacter({
-//       name: "QUICK, EVERYONE HIDE",
-//       text: "When you play this character, you may put all Puppy character cards from your discard into your inkwell facedown and exerted.",
-//       optional: true,
-//       effects: [
-//         putAllCardsFromDiscardToInkwellFaceDownAndExerted({
-//           filters: [
+// Export const perditaDeterminedMother: LorcanitoCharacterCard = {
+//   Id: "iue",
+//   Name: "Perdita",
+//   Title: "Determined Mother",
+//   Characteristics: ["floodborn", "hero"],
+//   Text: "Shift 4 (You may pay 4 {I} to play this on top of one of your characters named Perdita.)\nQUICK, EVERYONE HIDE When you play this character, you may put all Puppy character cards from your discard into your inkwell facedown and exerted.",
+//   Type: "character",
+//   Abilities: [
+//     ShiftAbility(4, "Perdita"),
+//     WhenYouPlayThisCharacter({
+//       Name: "QUICK, EVERYONE HIDE",
+//       Text: "When you play this character, you may put all Puppy character cards from your discard into your inkwell facedown and exerted.",
+//       Optional: true,
+//       Effects: [
+//         PutAllCardsFromDiscardToInkwellFaceDownAndExerted({
+//           Filters: [
 //             { filter: "type", value: "character" },
 //             { filter: "owner", value: "self" },
 //             { filter: "characteristics", value: ["puppy"] },
@@ -28,18 +28,18 @@
 //       ],
 //     }),
 //   ],
-//   inkwell: true,
-//   colors: ["amber", "sapphire"],
-//   cost: 6,
-//   strength: 4,
-//   willpower: 6,
-//   illustrator: "Brian Weiss",
-//   number: 27,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 630061,
+//   Inkwell: true,
+//   Colors: ["amber", "sapphire"],
+//   Cost: 6,
+//   Strength: 4,
+//   Willpower: 6,
+//   Illustrator: "Brian Weiss",
+//   Number: 27,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 630061,
 //   },
-//   rarity: "super_rare",
-//   lore: 2,
+//   Rarity: "super_rare",
+//   Lore: 2,
 // };
 //

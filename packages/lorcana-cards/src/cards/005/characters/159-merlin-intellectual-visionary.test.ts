@@ -3,36 +3,36 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { merlinIntellectualVisionary } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { merlinIntellectualVisionary } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Merlin - Intellectual Visionary", () => {
-//   it.skip("", () => {
-//     const testStore = new TestStore({
-//       inkwell: merlinIntellectualVisionary.cost,
-//       play: [merlinIntellectualVisionary],
+// Describe("Merlin - Intellectual Visionary", () => {
+//   It.skip("", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: merlinIntellectualVisionary.cost,
+//       Play: [merlinIntellectualVisionary],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(merlinIntellectualVisionary);
+//     Const cardUnderTest = testStore.getCard(merlinIntellectualVisionary);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //
-// describe("Regression Tests", () => {
-//   it("should let you play Merlin - Intellectual Visionary", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: merlinIntellectualVisionary.cost,
-//       hand: [merlinIntellectualVisionary],
+// Describe("Regression Tests", () => {
+//   It("should let you play Merlin - Intellectual Visionary", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: merlinIntellectualVisionary.cost,
+//       Hand: [merlinIntellectualVisionary],
 //     });
 //
-//     await testEngine.playCard(merlinIntellectualVisionary);
+//     Await testEngine.playCard(merlinIntellectualVisionary);
 //
-//     expect(testEngine.testStore.getCard(merlinIntellectualVisionary).zone).toBe(
+//     Expect(testEngine.testStore.getCard(merlinIntellectualVisionary).zone).toBe(
 //       "play",
 //     );
 //   });

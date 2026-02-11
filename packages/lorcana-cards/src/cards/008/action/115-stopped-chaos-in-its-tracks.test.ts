@@ -3,31 +3,31 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   generalLiHeadOfTheImperialArmy,
-//   khanWarHorse,
-//   stoppedChaosInItsTracks,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   GeneralLiHeadOfTheImperialArmy,
+//   KhanWarHorse,
+//   StoppedChaosInItsTracks,
 // } from "@lorcanito/lorcana-engine/cards/008";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Stopped Chaos In Its Tracks", () => {
-//   it("Return up to 2 chosen characters with 3 {S} or less each to their player's hand.", async () => {
-//     const targets = [generalLiHeadOfTheImperialArmy, khanWarHorse];
-//     const testEngine = new TestEngine(
+// Describe("Stopped Chaos In Its Tracks", () => {
+//   It("Return up to 2 chosen characters with 3 {S} or less each to their player's hand.", async () => {
+//     Const targets = [generalLiHeadOfTheImperialArmy, khanWarHorse];
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: stoppedChaosInItsTracks.cost,
-//         hand: [stoppedChaosInItsTracks],
+//         Inkwell: stoppedChaosInItsTracks.cost,
+//         Hand: [stoppedChaosInItsTracks],
 //       },
 //       {
-//         play: targets,
+//         Play: targets,
 //       },
 //     );
 //
-//     await testEngine.playCard(stoppedChaosInItsTracks, { targets });
+//     Await testEngine.playCard(stoppedChaosInItsTracks, { targets });
 //
-//     for (const target of targets) {
-//       expect(testEngine.getCardModel(target).zone).toBe("hand");
+//     For (const target of targets) {
+//       Expect(testEngine.getCardModel(target).zone).toBe("hand");
 //     }
 //   });
 // });

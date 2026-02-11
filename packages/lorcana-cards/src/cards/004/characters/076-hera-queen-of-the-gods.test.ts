@@ -3,27 +3,27 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { zeusGodOfLightning } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import {
-//   heraQueenOfTheGods,
-//   herculesBelovedHero,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { zeusGodOfLightning } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import {
+//   HeraQueenOfTheGods,
+//   HerculesBelovedHero,
 // } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Hera - Queen of the Gods", () => {
-//   it("**Ward** _(Opponents can't choose this character except to challenge.)_**PROTECTIVE GODDESS** Your characters named Zeus gain **Ward**.**YOU'RE A TRUE HERO** Your characters named Hercules gain **Evasive**. _(Only characters with Evasive can challenge them.)_", () => {
-//     const testStore = new TestStore({
-//       play: [heraQueenOfTheGods, zeusGodOfLightning, herculesBelovedHero],
+// Describe("Hera - Queen of the Gods", () => {
+//   It("**Ward** _(Opponents can't choose this character except to challenge.)_**PROTECTIVE GODDESS** Your characters named Zeus gain **Ward**.**YOU'RE A TRUE HERO** Your characters named Hercules gain **Evasive**. _(Only characters with Evasive can challenge them.)_", () => {
+//     Const testStore = new TestStore({
+//       Play: [heraQueenOfTheGods, zeusGodOfLightning, herculesBelovedHero],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(heraQueenOfTheGods);
-//     const zeusCard = testStore.getCard(zeusGodOfLightning);
-//     const herculesCard = testStore.getCard(herculesBelovedHero);
+//     Const cardUnderTest = testStore.getCard(heraQueenOfTheGods);
+//     Const zeusCard = testStore.getCard(zeusGodOfLightning);
+//     Const herculesCard = testStore.getCard(herculesBelovedHero);
 //
-//     expect(cardUnderTest.hasWard).toBe(true);
-//     expect(zeusCard.hasWard).toBe(true);
-//     expect(herculesCard.hasEvasive).toBe(true);
+//     Expect(cardUnderTest.hasWard).toBe(true);
+//     Expect(zeusCard.hasWard).toBe(true);
+//     Expect(herculesCard.hasEvasive).toBe(true);
 //   });
 // });
 //

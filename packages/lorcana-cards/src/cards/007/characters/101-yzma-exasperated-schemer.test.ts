@@ -3,36 +3,36 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { magicBroomBucketBrigade } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { yzmaExasperatedSchemer } from "@lorcanito/lorcana-engine/cards/007/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { magicBroomBucketBrigade } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { yzmaExasperatedSchemer } from "@lorcanito/lorcana-engine/cards/007/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Yzma - Exasperated Schemer", () => {
-//   it("HOW SHALL I DO IT? When you play this character, you may draw a card, then choose and discard a card.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: 10,
-//       deck: [magicBroomBucketBrigade],
-//       hand: [yzmaExasperatedSchemer],
+// Describe("Yzma - Exasperated Schemer", () => {
+//   It("HOW SHALL I DO IT? When you play this character, you may draw a card, then choose and discard a card.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: 10,
+//       Deck: [magicBroomBucketBrigade],
+//       Hand: [yzmaExasperatedSchemer],
 //     });
 //
-//     await testEngine.playCard(yzmaExasperatedSchemer);
+//     Await testEngine.playCard(yzmaExasperatedSchemer);
 //
-//     expect(testEngine.stackLayers).toHaveLength(1);
-//     testEngine.resolveOptionalAbility();
+//     Expect(testEngine.stackLayers).toHaveLength(1);
+//     TestEngine.resolveOptionalAbility();
 //
-//     expect(testEngine.stackLayers).toHaveLength(1);
+//     Expect(testEngine.stackLayers).toHaveLength(1);
 //
-//     expect(testEngine.getZonesCardCount()).toEqual(
-//       expect.objectContaining({ hand: 1, deck: 0, play: 1, discard: 0 }),
+//     Expect(testEngine.getZonesCardCount()).toEqual(
+//       Expect.objectContaining({ hand: 1, deck: 0, play: 1, discard: 0 }),
 //     );
 //
-//     const aCardToDiscard = testEngine.getCardModel(magicBroomBucketBrigade);
-//     testEngine.resolveTopOfStack({
-//       targets: [aCardToDiscard],
+//     Const aCardToDiscard = testEngine.getCardModel(magicBroomBucketBrigade);
+//     TestEngine.resolveTopOfStack({
+//       Targets: [aCardToDiscard],
 //     });
-//     expect(testEngine.getZonesCardCount()).toEqual(
-//       expect.objectContaining({ hand: 0, deck: 0, play: 1, discard: 1 }),
+//     Expect(testEngine.getZonesCardCount()).toEqual(
+//       Expect.objectContaining({ hand: 0, deck: 0, play: 1, discard: 1 }),
 //     );
 //   });
 // });

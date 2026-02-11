@@ -1,157 +1,157 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { describe, expect, it } from "@jest/globals";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { arielSpectacularSinger } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import {
-//   daisyDuckDonaldsDate,
-//   princeNaveenUkulelePlayer,
-//   vanellopeVonSchweetzSugarRushChamp,
-//   vanellopeVonSchweetzSugarRushPrincess,
+// Import { describe, expect, it } from "@jest/globals";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { arielSpectacularSinger } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import {
+//   DaisyDuckDonaldsDate,
+//   PrinceNaveenUkulelePlayer,
+//   VanellopeVonSchweetzSugarRushChamp,
+//   VanellopeVonSchweetzSugarRushPrincess,
 // } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Vanellope von Schweetz - Sugar Rush Princess", () => {
-//   it("Shift", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: 2,
-//       hand: [vanellopeVonSchweetzSugarRushPrincess],
-//       play: [vanellopeVonSchweetzSugarRushChamp],
+// Describe("Vanellope von Schweetz - Sugar Rush Princess", () => {
+//   It("Shift", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: 2,
+//       Hand: [vanellopeVonSchweetzSugarRushPrincess],
+//       Play: [vanellopeVonSchweetzSugarRushChamp],
 //     });
 //
-//     await testEngine.shiftCard({
-//       shifted: vanellopeVonSchweetzSugarRushChamp,
-//       shifter: vanellopeVonSchweetzSugarRushPrincess,
+//     Await testEngine.shiftCard({
+//       Shifted: vanellopeVonSchweetzSugarRushChamp,
+//       Shifter: vanellopeVonSchweetzSugarRushPrincess,
 //     });
-//     expect(
-//       testEngine.getCardModel(vanellopeVonSchweetzSugarRushChamp).zone,
+//     Expect(
+//       TestEngine.getCardModel(vanellopeVonSchweetzSugarRushChamp).zone,
 //     ).toBe("play");
 //   });
 //
-//   it("**I HEARBY DECREE** Whenever you play another Princess character, all opposing characters get -1 {S} until the start of your next turn.", async () => {
-//     const testEngine = new TestEngine(
+//   It("**I HEARBY DECREE** Whenever you play another Princess character, all opposing characters get -1 {S} until the start of your next turn.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: vanellopeVonSchweetzSugarRushChamp.cost,
-//         hand: [vanellopeVonSchweetzSugarRushChamp],
-//         play: [vanellopeVonSchweetzSugarRushPrincess],
+//         Inkwell: vanellopeVonSchweetzSugarRushChamp.cost,
+//         Hand: [vanellopeVonSchweetzSugarRushChamp],
+//         Play: [vanellopeVonSchweetzSugarRushPrincess],
 //       },
 //       {
-//         play: [daisyDuckDonaldsDate, princeNaveenUkulelePlayer],
+//         Play: [daisyDuckDonaldsDate, princeNaveenUkulelePlayer],
 //       },
 //     );
 //
-//     const trigger = testEngine.getCardModel(vanellopeVonSchweetzSugarRushChamp);
-//     const target1 = testEngine.getCardModel(daisyDuckDonaldsDate);
-//     const target2 = testEngine.getCardModel(princeNaveenUkulelePlayer);
+//     Const trigger = testEngine.getCardModel(vanellopeVonSchweetzSugarRushChamp);
+//     Const target1 = testEngine.getCardModel(daisyDuckDonaldsDate);
+//     Const target2 = testEngine.getCardModel(princeNaveenUkulelePlayer);
 //
-//     expect(target1.strength).toBe(daisyDuckDonaldsDate.strength);
-//     expect(target2.strength).toBe(princeNaveenUkulelePlayer.strength);
-//     await testEngine.playCard(trigger);
-//     expect(target1.strength).toBe(daisyDuckDonaldsDate.strength - 1);
-//     expect(target2.strength).toBe(princeNaveenUkulelePlayer.strength - 1);
+//     Expect(target1.strength).toBe(daisyDuckDonaldsDate.strength);
+//     Expect(target2.strength).toBe(princeNaveenUkulelePlayer.strength);
+//     Await testEngine.playCard(trigger);
+//     Expect(target1.strength).toBe(daisyDuckDonaldsDate.strength - 1);
+//     Expect(target2.strength).toBe(princeNaveenUkulelePlayer.strength - 1);
 //
-//     await testEngine.passTurn();
-//     await testEngine.passTurn();
+//     Await testEngine.passTurn();
+//     Await testEngine.passTurn();
 //
-//     expect(target1.strength).toBe(daisyDuckDonaldsDate.strength);
-//     expect(target2.strength).toBe(princeNaveenUkulelePlayer.strength);
+//     Expect(target1.strength).toBe(daisyDuckDonaldsDate.strength);
+//     Expect(target2.strength).toBe(princeNaveenUkulelePlayer.strength);
 //   });
 //
-//   it("Triggers when playing Ariel - Spectacular Singer (another Princess)", async () => {
-//     const testEngine = new TestEngine(
+//   It("Triggers when playing Ariel - Spectacular Singer (another Princess)", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: arielSpectacularSinger.cost,
-//         hand: [arielSpectacularSinger],
-//         play: [vanellopeVonSchweetzSugarRushPrincess],
+//         Inkwell: arielSpectacularSinger.cost,
+//         Hand: [arielSpectacularSinger],
+//         Play: [vanellopeVonSchweetzSugarRushPrincess],
 //       },
 //       {
-//         play: [daisyDuckDonaldsDate],
+//         Play: [daisyDuckDonaldsDate],
 //       },
 //     );
 //
-//     const trigger = testEngine.getCardModel(arielSpectacularSinger);
-//     const target = testEngine.getCardModel(daisyDuckDonaldsDate);
+//     Const trigger = testEngine.getCardModel(arielSpectacularSinger);
+//     Const target = testEngine.getCardModel(daisyDuckDonaldsDate);
 //
-//     await testEngine.playCard(trigger, {});
+//     Await testEngine.playCard(trigger, {});
 //
-//     const deck = testEngine.getCardsByZone("deck");
-//     const top4 = deck.slice(-4);
+//     Const deck = testEngine.getCardsByZone("deck");
+//     Const top4 = deck.slice(-4);
 //
-//     await testEngine.resolveTopOfStack(
+//     Await testEngine.resolveTopOfStack(
 //       {
-//         scry: {
-//           bottom: top4,
+//         Scry: {
+//           Bottom: top4,
 //         },
 //       },
-//       true,
+//       True,
 //     );
-//     expect(target.strength).toBe(daisyDuckDonaldsDate.strength - 1);
+//     Expect(target.strength).toBe(daisyDuckDonaldsDate.strength - 1);
 //   });
 //
-//   it("Triggers when playing another copy of Vanellope von Schweetz - Sugar Rush Princess", async () => {
-//     const testEngine = new TestEngine(
+//   It("Triggers when playing another copy of Vanellope von Schweetz - Sugar Rush Princess", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: vanellopeVonSchweetzSugarRushPrincess.cost,
-//         hand: [vanellopeVonSchweetzSugarRushPrincess],
-//         play: [vanellopeVonSchweetzSugarRushPrincess],
+//         Inkwell: vanellopeVonSchweetzSugarRushPrincess.cost,
+//         Hand: [vanellopeVonSchweetzSugarRushPrincess],
+//         Play: [vanellopeVonSchweetzSugarRushPrincess],
 //       },
 //       {
-//         play: [daisyDuckDonaldsDate],
+//         Play: [daisyDuckDonaldsDate],
 //       },
 //     );
 //
-//     const handCards = testEngine.getCardsByZone("hand");
-//     const trigger = handCards?.find(
+//     Const handCards = testEngine.getCardsByZone("hand");
+//     Const trigger = handCards?.find(
 //       (c) => c.lorcanitoCard.id === vanellopeVonSchweetzSugarRushPrincess.id,
 //     );
 //
-//     if (!trigger) {
-//       throw new Error("Could not find trigger card in hand");
+//     If (!trigger) {
+//       Throw new Error("Could not find trigger card in hand");
 //     }
 //
-//     const target = testEngine.getCardModel(daisyDuckDonaldsDate);
+//     Const target = testEngine.getCardModel(daisyDuckDonaldsDate);
 //
-//     await testEngine.playCard(trigger, {});
-//     expect(target.strength).toBe(daisyDuckDonaldsDate.strength - 1);
+//     Await testEngine.playCard(trigger, {});
+//     Expect(target.strength).toBe(daisyDuckDonaldsDate.strength - 1);
 //   });
 //
-//   it("Triggers when Shifting another Princess", async () => {
-//     const testEngine = new TestEngine(
+//   It("Triggers when Shifting another Princess", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: 10,
-//         hand: [vanellopeVonSchweetzSugarRushPrincess],
-//         play: [
-//           vanellopeVonSchweetzSugarRushPrincess,
-//           vanellopeVonSchweetzSugarRushChamp,
+//         Inkwell: 10,
+//         Hand: [vanellopeVonSchweetzSugarRushPrincess],
+//         Play: [
+//           VanellopeVonSchweetzSugarRushPrincess,
+//           VanellopeVonSchweetzSugarRushChamp,
 //         ],
 //       },
 //       {
-//         play: [daisyDuckDonaldsDate],
+//         Play: [daisyDuckDonaldsDate],
 //       },
 //     );
 //
-//     const handCards = testEngine.getCardsByZone("hand");
-//     const shifter = handCards?.find(
+//     Const handCards = testEngine.getCardsByZone("hand");
+//     Const shifter = handCards?.find(
 //       (c) => c.lorcanitoCard.id === vanellopeVonSchweetzSugarRushPrincess.id,
 //     );
-//     const playCards = testEngine.getCardsByZone("play");
-//     const shifted = playCards?.find(
+//     Const playCards = testEngine.getCardsByZone("play");
+//     Const shifted = playCards?.find(
 //       (c) => c.lorcanitoCard.id === vanellopeVonSchweetzSugarRushChamp.id,
 //     );
-//     const target = testEngine
+//     Const target = testEngine
 //       .getCardsByZone("play", "player_two")
 //       ?.find((c) => c.lorcanitoCard.id === daisyDuckDonaldsDate.id);
 //
-//     if (!(shifter && shifted && target)) {
-//       throw new Error("Could not find shifter, shifted, or target card");
+//     If (!(shifter && shifted && target)) {
+//       Throw new Error("Could not find shifter, shifted, or target card");
 //     }
 //
-//     await testEngine.shiftCard({
-//       shifter: shifter,
-//       shifted: shifted.lorcanitoCard as LorcanitoCharacterCard,
+//     Await testEngine.shiftCard({
+//       Shifter: shifter,
+//       Shifted: shifted.lorcanitoCard as LorcanitoCharacterCard,
 //     });
 //
 //     // testEngine.resolveTopOfStack({});
-//     expect(target.strength).toBe(daisyDuckDonaldsDate.strength - 1);
+//     Expect(target.strength).toBe(daisyDuckDonaldsDate.strength - 1);
 //   });
 // });
 //

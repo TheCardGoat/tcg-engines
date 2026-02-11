@@ -3,229 +3,229 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   hudsonDeterminedReader,
-//   plutoSteelChampion,
-//   theGamesAfoot,
-//   theHeadlessHorsemanCursedRider,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   HudsonDeterminedReader,
+//   PlutoSteelChampion,
+//   TheGamesAfoot,
+//   TheHeadlessHorsemanCursedRider,
 // } from "@lorcanito/lorcana-engine/cards/010";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("The Headless Horseman - Cursed Rider", () => {
-//   describe("Shift ability", () => {
-//     it("should have shift ability", () => {
-//       const testEngine = new TestEngine({
-//         play: [theHeadlessHorsemanCursedRider],
+// Describe("The Headless Horseman - Cursed Rider", () => {
+//   Describe("Shift ability", () => {
+//     It("should have shift ability", () => {
+//       Const testEngine = new TestEngine({
+//         Play: [theHeadlessHorsemanCursedRider],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(
-//         theHeadlessHorsemanCursedRider,
+//       Const cardUnderTest = testEngine.getCardModel(
+//         TheHeadlessHorsemanCursedRider,
 //       );
 //
-//       expect(cardUnderTest.hasShift).toBe(true);
+//       Expect(cardUnderTest.hasShift).toBe(true);
 //     });
 //   });
 //
-//   describe("WITCHING HOUR ability", () => {
-//     it("both players draw 3 cards and discard 3 cards at random - no action cards", async () => {
-//       const testEngine = new TestEngine(
+//   Describe("WITCHING HOUR ability", () => {
+//     It("both players draw 3 cards and discard 3 cards at random - no action cards", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: theHeadlessHorsemanCursedRider.cost,
-//           hand: [theHeadlessHorsemanCursedRider],
-//           deck: [
-//             hudsonDeterminedReader,
-//             hudsonDeterminedReader,
-//             hudsonDeterminedReader,
+//           Inkwell: theHeadlessHorsemanCursedRider.cost,
+//           Hand: [theHeadlessHorsemanCursedRider],
+//           Deck: [
+//             HudsonDeterminedReader,
+//             HudsonDeterminedReader,
+//             HudsonDeterminedReader,
 //           ],
 //         },
 //         {
-//           deck: [
-//             hudsonDeterminedReader,
-//             hudsonDeterminedReader,
-//             hudsonDeterminedReader,
+//           Deck: [
+//             HudsonDeterminedReader,
+//             HudsonDeterminedReader,
+//             HudsonDeterminedReader,
 //           ],
-//           play: [plutoSteelChampion],
+//           Play: [plutoSteelChampion],
 //         },
 //       );
 //
-//       const cardUnderTest = testEngine.getCardModel(
-//         theHeadlessHorsemanCursedRider,
+//       Const cardUnderTest = testEngine.getCardModel(
+//         TheHeadlessHorsemanCursedRider,
 //       );
 //
-//       const player1Before = testEngine.getZonesCardCount("player_one");
-//       const player2Before = testEngine.getZonesCardCount("player_two");
+//       Const player1Before = testEngine.getZonesCardCount("player_one");
+//       Const player2Before = testEngine.getZonesCardCount("player_two");
 //
-//       expect(player1Before.hand).toBe(1); // The Horseman card
-//       expect(player1Before.deck).toBe(3);
-//       expect(player2Before.hand).toBe(0);
-//       expect(player2Before.deck).toBe(3);
+//       Expect(player1Before.hand).toBe(1); // The Horseman card
+//       Expect(player1Before.deck).toBe(3);
+//       Expect(player2Before.hand).toBe(0);
+//       Expect(player2Before.deck).toBe(3);
 //
-//       await testEngine.playCard(cardUnderTest);
+//       Await testEngine.playCard(cardUnderTest);
 //
-//       const player1After = testEngine.getZonesCardCount("player_one");
-//       const player2After = testEngine.getZonesCardCount("player_two");
+//       Const player1After = testEngine.getZonesCardCount("player_one");
+//       Const player2After = testEngine.getZonesCardCount("player_two");
 //
 //       // After drawing 3 and discarding 3, net change should be 0 for hand count
 //       // Player 1: had 1 (Horseman) - 1 (played) + 3 (drew) = 3, then - 3 (discarded) = 0
 //       // Player 2: had 0 + 3 (drew) = 3, then - 3 (discarded) = 0
-//       expect(player1After.hand).toBe(0);
-//       expect(player2After.hand).toBe(0);
-//       expect(player1After.discard).toBe(3);
-//       expect(player2After.discard).toBe(3);
+//       Expect(player1After.hand).toBe(0);
+//       Expect(player2After.hand).toBe(0);
+//       Expect(player1After.discard).toBe(3);
+//       Expect(player2After.discard).toBe(3);
 //
 //       // No action cards discarded, so no damage layer should be created
-//       expect(testEngine.stackLayers.length).toBe(0);
+//       Expect(testEngine.stackLayers.length).toBe(0);
 //     });
 //
-//     it("deals 2 damage per action card discarded - 1 action card from player", async () => {
-//       const testEngine = new TestEngine(
+//     It("deals 2 damage per action card discarded - 1 action card from player", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: theHeadlessHorsemanCursedRider.cost,
-//           hand: [theHeadlessHorsemanCursedRider],
-//           deck: [
-//             theGamesAfoot, // action
-//             hudsonDeterminedReader,
-//             hudsonDeterminedReader,
+//           Inkwell: theHeadlessHorsemanCursedRider.cost,
+//           Hand: [theHeadlessHorsemanCursedRider],
+//           Deck: [
+//             TheGamesAfoot, // action
+//             HudsonDeterminedReader,
+//             HudsonDeterminedReader,
 //           ],
 //         },
 //         {
-//           deck: [
-//             hudsonDeterminedReader,
-//             hudsonDeterminedReader,
-//             hudsonDeterminedReader,
+//           Deck: [
+//             HudsonDeterminedReader,
+//             HudsonDeterminedReader,
+//             HudsonDeterminedReader,
 //           ],
-//           play: [plutoSteelChampion],
+//           Play: [plutoSteelChampion],
 //         },
 //       );
 //
-//       const cardUnderTest = testEngine.getCardModel(
-//         theHeadlessHorsemanCursedRider,
+//       Const cardUnderTest = testEngine.getCardModel(
+//         TheHeadlessHorsemanCursedRider,
 //       );
-//       const opponentCharacter = testEngine.getByZoneAndId(
+//       Const opponentCharacter = testEngine.getByZoneAndId(
 //         "play",
-//         plutoSteelChampion.id,
+//         PlutoSteelChampion.id,
 //         "player_two",
 //       );
 //
-//       await testEngine.playCard(cardUnderTest);
+//       Await testEngine.playCard(cardUnderTest);
 //
 //       // Should have a damage layer since 1 action card was discarded
-//       expect(testEngine.stackLayers.length).toBe(1);
+//       Expect(testEngine.stackLayers.length).toBe(1);
 //
-//       await testEngine.resolveTopOfStack({ targets: [opponentCharacter] });
+//       Await testEngine.resolveTopOfStack({ targets: [opponentCharacter] });
 //
 //       // 1 action card discarded = 2 damage
-//       expect(opponentCharacter.meta.damage).toBe(2);
+//       Expect(opponentCharacter.meta.damage).toBe(2);
 //     });
 //
-//     it("deals 2 damage per action card discarded - multiple action cards from both players", async () => {
-//       const testEngine = new TestEngine(
+//     It("deals 2 damage per action card discarded - multiple action cards from both players", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: theHeadlessHorsemanCursedRider.cost,
-//           hand: [theHeadlessHorsemanCursedRider],
-//           deck: [theGamesAfoot, theGamesAfoot, hudsonDeterminedReader],
+//           Inkwell: theHeadlessHorsemanCursedRider.cost,
+//           Hand: [theHeadlessHorsemanCursedRider],
+//           Deck: [theGamesAfoot, theGamesAfoot, hudsonDeterminedReader],
 //         },
 //         {
-//           deck: [theGamesAfoot, hudsonDeterminedReader, hudsonDeterminedReader],
-//           play: [plutoSteelChampion],
+//           Deck: [theGamesAfoot, hudsonDeterminedReader, hudsonDeterminedReader],
+//           Play: [plutoSteelChampion],
 //         },
 //       );
 //
-//       const cardUnderTest = testEngine.getCardModel(
-//         theHeadlessHorsemanCursedRider,
+//       Const cardUnderTest = testEngine.getCardModel(
+//         TheHeadlessHorsemanCursedRider,
 //       );
 //
-//       await testEngine.playCard(cardUnderTest);
+//       Await testEngine.playCard(cardUnderTest);
 //
 //       // Get the opponent character AFTER playing, to ensure we have the right instance
-//       const opponentCharacter = testEngine.getByZoneAndId(
+//       Const opponentCharacter = testEngine.getByZoneAndId(
 //         "play",
-//         plutoSteelChampion.id,
+//         PlutoSteelChampion.id,
 //         "player_two",
 //       );
 //
-//       await testEngine.resolveTopOfStack({ targets: [opponentCharacter] });
+//       Await testEngine.resolveTopOfStack({ targets: [opponentCharacter] });
 //
 //       // 3 action cards discarded total = 6 damage (should put 6 damage on 5/5 Pluto, banishing it)
-//       expect(opponentCharacter.zone).toBe("discard");
+//       Expect(opponentCharacter.zone).toBe("discard");
 //     });
 //
-//     it("deals 2 damage per action card discarded - all 6 cards are action cards", async () => {
-//       const testEngine = new TestEngine(
+//     It("deals 2 damage per action card discarded - all 6 cards are action cards", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: theHeadlessHorsemanCursedRider.cost,
-//           hand: [theHeadlessHorsemanCursedRider],
-//           deck: [theGamesAfoot, theGamesAfoot, theGamesAfoot],
+//           Inkwell: theHeadlessHorsemanCursedRider.cost,
+//           Hand: [theHeadlessHorsemanCursedRider],
+//           Deck: [theGamesAfoot, theGamesAfoot, theGamesAfoot],
 //         },
 //         {
-//           deck: [theGamesAfoot, theGamesAfoot, theGamesAfoot],
-//           play: [plutoSteelChampion],
+//           Deck: [theGamesAfoot, theGamesAfoot, theGamesAfoot],
+//           Play: [plutoSteelChampion],
 //         },
 //       );
 //
-//       const cardUnderTest = testEngine.getCardModel(
-//         theHeadlessHorsemanCursedRider,
+//       Const cardUnderTest = testEngine.getCardModel(
+//         TheHeadlessHorsemanCursedRider,
 //       );
-//       const opponentCharacter = testEngine.getByZoneAndId(
+//       Const opponentCharacter = testEngine.getByZoneAndId(
 //         "play",
-//         plutoSteelChampion.id,
+//         PlutoSteelChampion.id,
 //         "player_two",
 //       );
 //
-//       await testEngine.playCard(cardUnderTest);
-//       await testEngine.resolveTopOfStack({ targets: [opponentCharacter] });
+//       Await testEngine.playCard(cardUnderTest);
+//       Await testEngine.resolveTopOfStack({ targets: [opponentCharacter] });
 //
 //       // 6 action cards discarded = 12 damage (should banish the 5/5 Pluto)
-//       expect(opponentCharacter.zone).toBe("discard");
+//       Expect(opponentCharacter.zone).toBe("discard");
 //     });
 //
-//     it("targets only opposing characters for damage", async () => {
-//       const testEngine = new TestEngine(
+//     It("targets only opposing characters for damage", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: theHeadlessHorsemanCursedRider.cost,
-//           hand: [theHeadlessHorsemanCursedRider],
-//           deck: [theGamesAfoot, hudsonDeterminedReader, hudsonDeterminedReader],
-//           play: [hudsonDeterminedReader],
+//           Inkwell: theHeadlessHorsemanCursedRider.cost,
+//           Hand: [theHeadlessHorsemanCursedRider],
+//           Deck: [theGamesAfoot, hudsonDeterminedReader, hudsonDeterminedReader],
+//           Play: [hudsonDeterminedReader],
 //         },
 //         {
-//           deck: [
-//             hudsonDeterminedReader,
-//             hudsonDeterminedReader,
-//             hudsonDeterminedReader,
+//           Deck: [
+//             HudsonDeterminedReader,
+//             HudsonDeterminedReader,
+//             HudsonDeterminedReader,
 //           ],
-//           play: [plutoSteelChampion],
+//           Play: [plutoSteelChampion],
 //         },
 //       );
 //
-//       const cardUnderTest = testEngine.getCardModel(
-//         theHeadlessHorsemanCursedRider,
+//       Const cardUnderTest = testEngine.getCardModel(
+//         TheHeadlessHorsemanCursedRider,
 //       );
 //
-//       await testEngine.playCard(cardUnderTest);
+//       Await testEngine.playCard(cardUnderTest);
 //
 //       // Get characters AFTER playing to ensure correct instances
-//       const ownCharacter = testEngine.getByZoneAndId(
+//       Const ownCharacter = testEngine.getByZoneAndId(
 //         "play",
-//         hudsonDeterminedReader.id,
+//         HudsonDeterminedReader.id,
 //         "player_one",
 //       );
-//       const opponentCharacter = testEngine.getByZoneAndId(
+//       Const opponentCharacter = testEngine.getByZoneAndId(
 //         "play",
-//         plutoSteelChampion.id,
+//         PlutoSteelChampion.id,
 //         "player_two",
 //       );
 //
 //       // 1 action card was discarded, should have damage layer
-//       expect(testEngine.stackLayers.length).toBe(1);
+//       Expect(testEngine.stackLayers.length).toBe(1);
 //
 //       // Target the opponent character correctly
-//       await testEngine.resolveTopOfStack({ targets: [opponentCharacter] });
+//       Await testEngine.resolveTopOfStack({ targets: [opponentCharacter] });
 //
 //       // Own character should not be damaged
-//       expect(ownCharacter.meta.damage || 0).toBe(0);
+//       Expect(ownCharacter.meta.damage || 0).toBe(0);
 //       // Opponent character should take damage
-//       expect(opponentCharacter.meta.damage).toBe(2);
+//       Expect(opponentCharacter.meta.damage).toBe(2);
 //     });
 //   });
 // });

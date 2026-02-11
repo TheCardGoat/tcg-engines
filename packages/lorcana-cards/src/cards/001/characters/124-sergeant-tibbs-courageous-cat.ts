@@ -1,52 +1,52 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const sergeantTibbsCourageousCat: CharacterCard = {
-  id: "bpd",
-  cardType: "character",
-  name: "Sergeant Tibbs",
-  version: "Courageous Cat",
-  fullName: "Sergeant Tibbs - Courageous Cat",
-  inkType: ["ruby"],
-  franchise: "Disney",
-  set: "001",
-  text: "",
-  cost: 1,
-  strength: 2,
-  willpower: 2,
-  lore: 1,
+  abilities: [],
   cardNumber: 124,
-  inkable: true,
+  cardType: "character",
+  classifications: ["Storyborn"],
+  cost: 1,
   externalIds: {
     ravensburger: "",
   },
-  abilities: [],
-  classifications: ["Storyborn"],
+  franchise: "Disney",
+  fullName: "Sergeant Tibbs - Courageous Cat",
+  id: "bpd",
+  inkType: ["ruby"],
+  inkable: true,
+  lore: 1,
+  name: "Sergeant Tibbs",
+  set: "001",
+  strength: 2,
+  text: "",
+  version: "Courageous Cat",
+  willpower: 2,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const seargentTibbies: LorcanitoCharacterCard = {
-//   id: "bpd",
-//   reprints: ["cz0"],
+// Export const seargentTibbies: LorcanitoCharacterCard = {
+//   Id: "bpd",
+//   Reprints: ["cz0"],
 //
-//   name: "Sergeant Tibbs",
-//   title: "Courageous Cat",
-//   characteristics: ["storyborn"],
-//   type: "character",
-//   flavour: "Yes, sir. Righto, sir. Right away, sir...",
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 1,
-//   strength: 2,
-//   willpower: 2,
-//   lore: 1,
-//   illustrator: "Cory Godbey",
-//   number: 124,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 497203,
+//   Name: "Sergeant Tibbs",
+//   Title: "Courageous Cat",
+//   Characteristics: ["storyborn"],
+//   Type: "character",
+//   Flavour: "Yes, sir. Righto, sir. Right away, sir...",
+//   Inkwell: true,
+//   Colors: ["ruby"],
+//   Cost: 1,
+//   Strength: 2,
+//   Willpower: 2,
+//   Lore: 1,
+//   Illustrator: "Cory Godbey",
+//   Number: 124,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 497203,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

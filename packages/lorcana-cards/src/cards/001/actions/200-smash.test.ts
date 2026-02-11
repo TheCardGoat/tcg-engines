@@ -5,9 +5,9 @@ import { smashundefined } from "./200-smash";
 describe("Smash - undefined", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [smash] });
-  //   expect(testEngine.getCardModel(smash).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [smash] });
+  //   Expect(testEngine.getCardModel(smash).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,34 +17,34 @@ describe("Smash - undefined", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { smash } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
-// import { aladdinHeroicOutlaw } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { smash } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
+// Import { aladdinHeroicOutlaw } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Smash", () => {
-//   it("Deal 3 damage to chosen character", () => {
-//     const testStore = new TestStore({
-//       inkwell: smash.cost,
-//       hand: [smash],
-//       play: [aladdinHeroicOutlaw],
+// Describe("Smash", () => {
+//   It("Deal 3 damage to chosen character", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: smash.cost,
+//       Hand: [smash],
+//       Play: [aladdinHeroicOutlaw],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", smash.id);
-//     const target = testStore.getByZoneAndId("play", aladdinHeroicOutlaw.id);
-//     target.updateCardMeta({ damage: 0 });
-//     expect(
-//       testStore.getByZoneAndId("play", aladdinHeroicOutlaw.id).meta,
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", smash.id);
+//     Const target = testStore.getByZoneAndId("play", aladdinHeroicOutlaw.id);
+//     Target.updateCardMeta({ damage: 0 });
+//     Expect(
+//       TestStore.getByZoneAndId("play", aladdinHeroicOutlaw.id).meta,
 //     ).toEqual(expect.objectContaining({ damage: 0 }));
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     testStore.resolveTopOfStack({
-//       targetId: target.instanceId,
+//     TestStore.resolveTopOfStack({
+//       TargetId: target.instanceId,
 //     });
 //
-//     expect(
-//       testStore.getByZoneAndId("play", aladdinHeroicOutlaw.id).meta,
+//     Expect(
+//       TestStore.getByZoneAndId("play", aladdinHeroicOutlaw.id).meta,
 //     ).toEqual(expect.objectContaining({ damage: 3 }));
 //   });
 // });

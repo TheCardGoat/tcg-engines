@@ -1,27 +1,27 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const benjaGuardianOfTheDragonGem: LorcanitoCharacterCard = {
-//   id: "buc",
-//   reprints: ["tik"],
-//   name: "Benja",
-//   title: "Guardian of the Dragon Gem",
-//   characteristics: ["storyborn", "king", "mentor"],
-//   text: "**WE HAVE A CHOICE** When you play this character, you may banish chosen item.",
-//   type: "character",
-//   abilities: [
+// Export const benjaGuardianOfTheDragonGem: LorcanitoCharacterCard = {
+//   Id: "buc",
+//   Reprints: ["tik"],
+//   Name: "Benja",
+//   Title: "Guardian of the Dragon Gem",
+//   Characteristics: ["storyborn", "king", "mentor"],
+//   Text: "**WE HAVE A CHOICE** When you play this character, you may banish chosen item.",
+//   Type: "character",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       name: "We Have a Choice",
-//       text: "When you play this character, you may banish chosen item.",
-//       optional: true,
-//       effects: [
+//       Type: "resolution",
+//       Name: "We Have a Choice",
+//       Text: "When you play this character, you may banish chosen item.",
+//       Optional: true,
+//       Effects: [
 //         {
-//           type: "banish",
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
+//           Type: "banish",
+//           Target: {
+//             Type: "card",
+//             Value: 1,
+//             Filters: [
 //               { filter: "type", value: "item" },
 //               { filter: "zone", value: "play" },
 //             ],
@@ -30,19 +30,19 @@
 //       ],
 //     },
 //   ],
-//   flavour: "Don't mistake spirit for skill.",
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 3,
-//   strength: 2,
-//   willpower: 3,
-//   lore: 2,
-//   illustrator: "Grace Tran",
-//   number: 174,
-//   set: "ROF",
-//   externalIds: {
-//     tcgPlayer: 527773,
+//   Flavour: "Don't mistake spirit for skill.",
+//   Inkwell: true,
+//   Colors: ["steel"],
+//   Cost: 3,
+//   Strength: 2,
+//   Willpower: 3,
+//   Lore: 2,
+//   Illustrator: "Grace Tran",
+//   Number: 174,
+//   Set: "ROF",
+//   ExternalIds: {
+//     TcgPlayer: 527773,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

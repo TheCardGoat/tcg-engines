@@ -3,97 +3,97 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   eeyoreOverstuffedDonkey,
-//   mamaOdieVoiceOfWisdom,
-//   pigletPoohPirateCaptain,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   EeyoreOverstuffedDonkey,
+//   MamaOdieVoiceOfWisdom,
+//   PigletPoohPirateCaptain,
 // } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { cleansingRainwater } from "@lorcanito/lorcana-engine/cards/003/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { cleansingRainwater } from "@lorcanito/lorcana-engine/cards/003/items/items";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Cleansing Rainwater", () => {
-//   describe("**ANCIENT POWER** Banish this item – Remove up to 2 damage from each of your characters.", () => {
-//     it("Remove 2 damage from characters", () => {
-//       const testStore = new TestStore({
-//         inkwell: 9,
-//         play: [
-//           cleansingRainwater,
-//           mamaOdieVoiceOfWisdom,
-//           pigletPoohPirateCaptain,
-//           eeyoreOverstuffedDonkey,
+// Describe("Cleansing Rainwater", () => {
+//   Describe("**ANCIENT POWER** Banish this item – Remove up to 2 damage from each of your characters.", () => {
+//     It("Remove 2 damage from characters", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: 9,
+//         Play: [
+//           CleansingRainwater,
+//           MamaOdieVoiceOfWisdom,
+//           PigletPoohPirateCaptain,
+//           EeyoreOverstuffedDonkey,
 //         ],
-//         discard: [],
+//         Discard: [],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         cleansingRainwater.id,
+//         CleansingRainwater.id,
 //       );
-//       const damagedCharacter = testStore.getByZoneAndId(
+//       Const damagedCharacter = testStore.getByZoneAndId(
 //         "play",
-//         mamaOdieVoiceOfWisdom.id,
+//         MamaOdieVoiceOfWisdom.id,
 //       );
-//       const anotherDamagedCharacter = testStore.getByZoneAndId(
+//       Const anotherDamagedCharacter = testStore.getByZoneAndId(
 //         "play",
-//         pigletPoohPirateCaptain.id,
+//         PigletPoohPirateCaptain.id,
 //       );
-//       const yetAnotherDamagedCharacter = testStore.getByZoneAndId(
+//       Const yetAnotherDamagedCharacter = testStore.getByZoneAndId(
 //         "play",
-//         eeyoreOverstuffedDonkey.id,
+//         EeyoreOverstuffedDonkey.id,
 //       );
 //
-//       damagedCharacter.updateCardMeta({ damage: 2 });
-//       anotherDamagedCharacter.updateCardMeta({ damage: 2 });
-//       yetAnotherDamagedCharacter.updateCardMeta({ damage: 2 });
+//       DamagedCharacter.updateCardMeta({ damage: 2 });
+//       AnotherDamagedCharacter.updateCardMeta({ damage: 2 });
+//       YetAnotherDamagedCharacter.updateCardMeta({ damage: 2 });
 //
-//       cardUnderTest.activate();
-//       testStore.resolveTopOfStack();
+//       CardUnderTest.activate();
+//       TestStore.resolveTopOfStack();
 //
-//       expect(damagedCharacter.meta.damage).toEqual(0);
-//       expect(anotherDamagedCharacter.meta.damage).toEqual(0);
-//       expect(yetAnotherDamagedCharacter.meta.damage).toEqual(0);
+//       Expect(damagedCharacter.meta.damage).toEqual(0);
+//       Expect(anotherDamagedCharacter.meta.damage).toEqual(0);
+//       Expect(yetAnotherDamagedCharacter.meta.damage).toEqual(0);
 //     });
 //
-//     it("Remove up to 2 damage from characters", () => {
-//       const testStore = new TestStore({
-//         inkwell: 9,
-//         play: [
-//           cleansingRainwater,
-//           mamaOdieVoiceOfWisdom,
-//           pigletPoohPirateCaptain,
-//           eeyoreOverstuffedDonkey,
+//     It("Remove up to 2 damage from characters", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: 9,
+//         Play: [
+//           CleansingRainwater,
+//           MamaOdieVoiceOfWisdom,
+//           PigletPoohPirateCaptain,
+//           EeyoreOverstuffedDonkey,
 //         ],
-//         discard: [],
+//         Discard: [],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         cleansingRainwater.id,
+//         CleansingRainwater.id,
 //       );
-//       const damagedCharacter = testStore.getByZoneAndId(
+//       Const damagedCharacter = testStore.getByZoneAndId(
 //         "play",
-//         mamaOdieVoiceOfWisdom.id,
+//         MamaOdieVoiceOfWisdom.id,
 //       );
-//       const anotherDamagedCharacter = testStore.getByZoneAndId(
+//       Const anotherDamagedCharacter = testStore.getByZoneAndId(
 //         "play",
-//         pigletPoohPirateCaptain.id,
+//         PigletPoohPirateCaptain.id,
 //       );
-//       const yetAnotherDamagedCharacter = testStore.getByZoneAndId(
+//       Const yetAnotherDamagedCharacter = testStore.getByZoneAndId(
 //         "play",
-//         eeyoreOverstuffedDonkey.id,
+//         EeyoreOverstuffedDonkey.id,
 //       );
 //
-//       damagedCharacter.updateCardMeta({ damage: 5 });
-//       anotherDamagedCharacter.updateCardMeta({ damage: 1 });
-//       yetAnotherDamagedCharacter.updateCardMeta({ damage: 4 });
+//       DamagedCharacter.updateCardMeta({ damage: 5 });
+//       AnotherDamagedCharacter.updateCardMeta({ damage: 1 });
+//       YetAnotherDamagedCharacter.updateCardMeta({ damage: 4 });
 //
-//       cardUnderTest.activate();
-//       testStore.resolveTopOfStack();
+//       CardUnderTest.activate();
+//       TestStore.resolveTopOfStack();
 //
-//       expect(damagedCharacter.meta.damage).toEqual(3);
-//       expect(anotherDamagedCharacter.meta.damage).toEqual(0);
-//       expect(yetAnotherDamagedCharacter.meta.damage).toEqual(2);
+//       Expect(damagedCharacter.meta.damage).toEqual(3);
+//       Expect(anotherDamagedCharacter.meta.damage).toEqual(0);
+//       Expect(yetAnotherDamagedCharacter.meta.damage).toEqual(2);
 //     });
 //   });
 // });

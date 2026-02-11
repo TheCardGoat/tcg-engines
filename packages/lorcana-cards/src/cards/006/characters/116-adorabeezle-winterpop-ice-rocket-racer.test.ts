@@ -3,26 +3,26 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { adorabeezleWinterpopIceRocketRacer } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { adorabeezleWinterpopIceRocketRacer } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Adorabeezle Winterpop - Ice Rocket Racer", () => {
-//   it("KEEP DRIVING While this character has damage, she gets +1 {L}.", async () => {
-//     const testEngine = new TestEngine({
-//       play: [adorabeezleWinterpopIceRocketRacer],
+// Describe("Adorabeezle Winterpop - Ice Rocket Racer", () => {
+//   It("KEEP DRIVING While this character has damage, she gets +1 {L}.", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [adorabeezleWinterpopIceRocketRacer],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(
-//       adorabeezleWinterpopIceRocketRacer,
+//     Const cardUnderTest = testEngine.getCardModel(
+//       AdorabeezleWinterpopIceRocketRacer,
 //     );
 //
-//     expect(cardUnderTest.lore).toEqual(adorabeezleWinterpopIceRocketRacer.lore);
+//     Expect(cardUnderTest.lore).toEqual(adorabeezleWinterpopIceRocketRacer.lore);
 //
-//     await testEngine.setCardDamage(cardUnderTest, 1);
+//     Await testEngine.setCardDamage(cardUnderTest, 1);
 //
-//     expect(cardUnderTest.lore).toEqual(
-//       adorabeezleWinterpopIceRocketRacer.lore + 1,
+//     Expect(cardUnderTest.lore).toEqual(
+//       AdorabeezleWinterpopIceRocketRacer.lore + 1,
 //     );
 //   });
 // });

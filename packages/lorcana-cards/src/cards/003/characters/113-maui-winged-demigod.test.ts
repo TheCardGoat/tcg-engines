@@ -3,51 +3,51 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   heiheiAccidentalExplorer,
-//   mauiWingedDemigod,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   HeiheiAccidentalExplorer,
+//   MauiWingedDemigod,
 // } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { heiheiBumblingRooster } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { stitchTeamUnderdog } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { heiheiBumblingRooster } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { stitchTeamUnderdog } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Maui - Winged Demigod", () => {
-//   it("**Reckless** _(They can’t quest and must challenge if able.)_", () => {
-//     const testStore = new TestStore({
-//       play: [mauiWingedDemigod],
+// Describe("Maui - Winged Demigod", () => {
+//   It("**Reckless** _(They can’t quest and must challenge if able.)_", () => {
+//     Const testStore = new TestStore({
+//       Play: [mauiWingedDemigod],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       mauiWingedDemigod.id,
+//       MauiWingedDemigod.id,
 //     );
-//     expect(cardUnderTest.hasReckless).toBe(true);
+//     Expect(cardUnderTest.hasReckless).toBe(true);
 //   });
 //
-//   it("**IN MY STOMACH** Whenever one of your characters named Heihei quests, this character gets +1 {L} and loses **Reckless** for this turn.", async () => {
-//     const testEngine = new TestEngine({
-//       play: [
-//         mauiWingedDemigod,
-//         heiheiBumblingRooster,
-//         heiheiAccidentalExplorer,
-//         stitchTeamUnderdog,
+//   It("**IN MY STOMACH** Whenever one of your characters named Heihei quests, this character gets +1 {L} and loses **Reckless** for this turn.", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [
+//         MauiWingedDemigod,
+//         HeiheiBumblingRooster,
+//         HeiheiAccidentalExplorer,
+//         StitchTeamUnderdog,
 //       ],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(mauiWingedDemigod);
+//     Const cardUnderTest = testEngine.getCardModel(mauiWingedDemigod);
 //
-//     await testEngine.questCard(stitchTeamUnderdog);
-//     expect(cardUnderTest.lore).toBe(mauiWingedDemigod.lore);
-//     expect(cardUnderTest.hasReckless).toBe(true);
+//     Await testEngine.questCard(stitchTeamUnderdog);
+//     Expect(cardUnderTest.lore).toBe(mauiWingedDemigod.lore);
+//     Expect(cardUnderTest.hasReckless).toBe(true);
 //
-//     await testEngine.questCard(heiheiBumblingRooster);
-//     expect(cardUnderTest.lore).toBe(mauiWingedDemigod.lore + 1);
+//     Await testEngine.questCard(heiheiBumblingRooster);
+//     Expect(cardUnderTest.lore).toBe(mauiWingedDemigod.lore + 1);
 //     // expect(cardUnderTest.hasReckless).toBe(false);
 //
-//     await testEngine.questCard(heiheiAccidentalExplorer);
-//     expect(cardUnderTest.lore).toBe(mauiWingedDemigod.lore + 2);
+//     Await testEngine.questCard(heiheiAccidentalExplorer);
+//     Expect(cardUnderTest.lore).toBe(mauiWingedDemigod.lore + 2);
 //     // expect(cardUnderTest.hasReckless).toBe(false);
 //   });
 // });

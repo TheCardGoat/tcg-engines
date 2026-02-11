@@ -1,50 +1,50 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const kronkRighthandMan: CharacterCard = {
-  id: "qie",
-  cardType: "character",
-  name: "Kronk",
-  version: "Right-Hand Man",
-  fullName: "Kronk - Right-Hand Man",
-  inkType: ["steel"],
-  franchise: "Disney",
-  set: "001",
-  text: "",
-  cost: 6,
-  strength: 6,
-  willpower: 6,
-  lore: 2,
+  abilities: [],
   cardNumber: 183,
-  inkable: true,
+  cardType: "character",
+  classifications: ["Storyborn", "Ally"],
+  cost: 6,
   externalIds: {
     ravensburger: "",
   },
-  abilities: [],
-  classifications: ["Storyborn", "Ally"],
+  franchise: "Disney",
+  fullName: "Kronk - Right-Hand Man",
+  id: "qie",
+  inkType: ["steel"],
+  inkable: true,
+  lore: 2,
+  name: "Kronk",
+  set: "001",
+  strength: 6,
+  text: "",
+  version: "Right-Hand Man",
+  willpower: 6,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const kronRightHandMan: LorcanitoCharacterCard = {
-//   id: "qie",
-//   name: "Kronk",
-//   title: "Right-Hand Man",
-//   characteristics: ["storyborn", "ally"],
-//   type: "character",
-//   flavour: "Oh yeah. It's all coming together!",
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 6,
-//   strength: 6,
-//   willpower: 6,
-//   lore: 2,
-//   illustrator: "Jake Parker",
-//   number: 183,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 503320,
+// Export const kronRightHandMan: LorcanitoCharacterCard = {
+//   Id: "qie",
+//   Name: "Kronk",
+//   Title: "Right-Hand Man",
+//   Characteristics: ["storyborn", "ally"],
+//   Type: "character",
+//   Flavour: "Oh yeah. It's all coming together!",
+//   Inkwell: true,
+//   Colors: ["steel"],
+//   Cost: 6,
+//   Strength: 6,
+//   Willpower: 6,
+//   Lore: 2,
+//   Illustrator: "Jake Parker",
+//   Number: 183,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 503320,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

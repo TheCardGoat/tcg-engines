@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { rhinoMotivationalSpeaker } from "@lorcanito/lorcana-engine/cards/007/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { rhinoMotivationalSpeaker } from "@lorcanito/lorcana-engine/cards/007/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Rhino - Motivational Speaker", () => {
-//   it.skip("DESTINY CALLING Your other characters get +2 {W}.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: rhinoMotivationalSpeaker.cost,
-//       play: [rhinoMotivationalSpeaker],
-//       hand: [rhinoMotivationalSpeaker],
+// Describe("Rhino - Motivational Speaker", () => {
+//   It.skip("DESTINY CALLING Your other characters get +2 {W}.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: rhinoMotivationalSpeaker.cost,
+//       Play: [rhinoMotivationalSpeaker],
+//       Hand: [rhinoMotivationalSpeaker],
 //     });
 //
-//     await testEngine.playCard(rhinoMotivationalSpeaker);
+//     Await testEngine.playCard(rhinoMotivationalSpeaker);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

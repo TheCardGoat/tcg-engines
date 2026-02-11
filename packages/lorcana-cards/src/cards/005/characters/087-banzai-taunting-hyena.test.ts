@@ -3,29 +3,29 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   banzaiTauntingHyena,
-//   monstroWhaleOfAWhale,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   BanzaiTauntingHyena,
+//   MonstroWhaleOfAWhale,
 // } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Banzai - Taunting Hyena", () => {
-//   it("**HERE KITTY, KITTY, KITTY** When you play this character, you may exert chosen damaged character.", () => {
-//     const testStore = new TestStore({
-//       inkwell: banzaiTauntingHyena.cost,
-//       hand: [banzaiTauntingHyena],
-//       play: [monstroWhaleOfAWhale],
+// Describe("Banzai - Taunting Hyena", () => {
+//   It("**HERE KITTY, KITTY, KITTY** When you play this character, you may exert chosen damaged character.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: banzaiTauntingHyena.cost,
+//       Hand: [banzaiTauntingHyena],
+//       Play: [monstroWhaleOfAWhale],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(banzaiTauntingHyena);
-//     const target = testStore.getCard(monstroWhaleOfAWhale);
-//     target.updateCardMeta({ damage: 2 });
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({ targets: [target] });
+//     Const cardUnderTest = testStore.getCard(banzaiTauntingHyena);
+//     Const target = testStore.getCard(monstroWhaleOfAWhale);
+//     Target.updateCardMeta({ damage: 2 });
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.meta.exerted).toEqual(true);
+//     Expect(target.meta.exerted).toEqual(true);
 //   });
 // });
 //

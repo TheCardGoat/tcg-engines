@@ -3,30 +3,30 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { mrLitwakArcadeOwner } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
-// import { deweyLovableShowoff } from "@lorcanito/lorcana-engine/cards/008";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { mrLitwakArcadeOwner } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
+// Import { deweyLovableShowoff } from "@lorcanito/lorcana-engine/cards/008";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Mr. Litwak - Arcade Owner", () => {
-//   it("THE GANG'S ALL HERE Once during your turn, whenever you play another character, you may ready this character. He can’t quest or challenge for the rest of this turn.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: deweyLovableShowoff.cost,
-//       play: [mrLitwakArcadeOwner],
-//       hand: [deweyLovableShowoff],
+// Describe("Mr. Litwak - Arcade Owner", () => {
+//   It("THE GANG'S ALL HERE Once during your turn, whenever you play another character, you may ready this character. He can’t quest or challenge for the rest of this turn.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: deweyLovableShowoff.cost,
+//       Play: [mrLitwakArcadeOwner],
+//       Hand: [deweyLovableShowoff],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(mrLitwakArcadeOwner);
-//     const cardInHand = testEngine.getCardModel(deweyLovableShowoff);
+//     Const cardUnderTest = testEngine.getCardModel(mrLitwakArcadeOwner);
+//     Const cardInHand = testEngine.getCardModel(deweyLovableShowoff);
 //
-//     cardUnderTest.exert();
+//     CardUnderTest.exert();
 //
-//     expect(cardUnderTest.exerted).toBe(true);
+//     Expect(cardUnderTest.exerted).toBe(true);
 //
-//     await testEngine.playCard(cardInHand);
-//     await testEngine.acceptOptionalLayer();
+//     Await testEngine.playCard(cardInHand);
+//     Await testEngine.acceptOptionalLayer();
 //
-//     expect(cardUnderTest.exerted).toBe(false);
+//     Expect(cardUnderTest.exerted).toBe(false);
 //   });
 // });
 //

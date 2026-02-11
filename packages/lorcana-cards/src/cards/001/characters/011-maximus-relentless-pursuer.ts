@@ -1,41 +1,14 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const maximusRelentlessPursuer: CharacterCard = {
-  id: "2z0",
-  cardType: "character",
-  name: "Maximus",
-  version: "Relentless Pursuer",
-  fullName: "Maximus - Relentless Pursuer",
-  inkType: ["amber"],
-  franchise: "Tangled",
-  set: "001",
-  text: "Rush HORSE KICK When you play this character, chosen character gets -2 {S} this turn.",
-  cost: 3,
-  strength: 3,
-  willpower: 3,
-  lore: 1,
-  cardNumber: 11,
-  inkable: true,
-  externalIds: {
-    ravensburger: "0ab6dfaa2b7d68e702c7a1f3f1ea67f1e2789b76",
-  },
   abilities: [
     {
       id: "2z0-1",
-      type: "keyword",
       keyword: "Rush",
       text: "Rush",
+      type: "keyword",
     },
     {
-      id: "2z0-2",
-      text: "HORSE KICK When you play this character, chosen character gets -2 {S} this turn.",
-      name: "HORSE KICK",
-      type: "triggered",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "modify-stat",
         stat: "strength",
@@ -43,38 +16,65 @@ export const maximusRelentlessPursuer: CharacterCard = {
         target: "CHOSEN_CHARACTER",
         duration: "this-turn",
       },
+      id: "2z0-2",
+      name: "HORSE KICK",
+      text: "HORSE KICK When you play this character, chosen character gets -2 {S} this turn.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 11,
+  cardType: "character",
   classifications: ["Dreamborn", "Ally"],
+  cost: 3,
+  externalIds: {
+    ravensburger: "0ab6dfaa2b7d68e702c7a1f3f1ea67f1e2789b76",
+  },
+  franchise: "Tangled",
+  fullName: "Maximus - Relentless Pursuer",
+  id: "2z0",
+  inkType: ["amber"],
+  inkable: true,
+  lore: 1,
+  name: "Maximus",
+  set: "001",
+  strength: 3,
+  text: "Rush HORSE KICK When you play this character, chosen character gets -2 {S} this turn.",
+  version: "Relentless Pursuer",
+  willpower: 3,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const maximusRentlessPersuer: LorcanitoCharacterCard = {
-//   id: "ak8",
+// Export const maximusRentlessPersuer: LorcanitoCharacterCard = {
+//   Id: "ak8",
 //
-//   name: "Maximus",
-//   title: "Relentless Pursuer",
-//   characteristics: ["dreamborn", "ally"],
-//   text: "**HORSE KICK** When you play this character, chosen character gets -2 {S} this turn.",
-//   type: "character",
-//   abilities: [
-//     whenYouPlayThisCharAbility({
-//       type: "resolution",
-//       name: "HORSE KICK",
-//       text: "When you play this character, chosen character gets -2 {S} this turn.",
-//       effects: [
+//   Name: "Maximus",
+//   Title: "Relentless Pursuer",
+//   Characteristics: ["dreamborn", "ally"],
+//   Text: "**HORSE KICK** When you play this character, chosen character gets -2 {S} this turn.",
+//   Type: "character",
+//   Abilities: [
+//     WhenYouPlayThisCharAbility({
+//       Type: "resolution",
+//       Name: "HORSE KICK",
+//       Text: "When you play this character, chosen character gets -2 {S} this turn.",
+//       Effects: [
 //         {
-//           type: "attribute",
-//           attribute: "strength",
-//           amount: 2,
-//           modifier: "subtract",
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
+//           Type: "attribute",
+//           Attribute: "strength",
+//           Amount: 2,
+//           Modifier: "subtract",
+//           Target: {
+//             Type: "card",
+//             Value: 1,
+//             Filters: [
 //               { filter: "type", value: "character" },
 //               { filter: "zone", value: "play" },
 //             ],
@@ -83,20 +83,20 @@ export const maximusRelentlessPursuer: CharacterCard = {
 //       ],
 //     }),
 //   ],
-//   flavour:
+//   Flavour:
 //     "He pursues his quarry with courage, discipline, \rand a touch of class.",
-//   inkwell: true,
-//   colors: ["amber"],
-//   cost: 3,
-//   strength: 3,
-//   willpower: 3,
-//   lore: 1,
-//   illustrator: "Kendall Hale",
-//   number: 11,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 494101,
+//   Inkwell: true,
+//   Colors: ["amber"],
+//   Cost: 3,
+//   Strength: 3,
+//   Willpower: 3,
+//   Lore: 1,
+//   Illustrator: "Kendall Hale",
+//   Number: 11,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 494101,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

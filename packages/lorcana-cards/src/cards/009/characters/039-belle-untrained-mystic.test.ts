@@ -3,20 +3,20 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { belleUntrainedMystic } from "@lorcanito/lorcana-engine/cards/009/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { belleUntrainedMystic } from "@lorcanito/lorcana-engine/cards/009/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Belle - Untrained Mystic", () => {
-//   it.skip("**HERE NOW, DON'T DO THAT** When you play this character, move up to 1 damage counter from chosen character to chosen opposing character.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: belleUntrainedMystic.cost,
-//       hand: [belleUntrainedMystic],
+// Describe("Belle - Untrained Mystic", () => {
+//   It.skip("**HERE NOW, DON'T DO THAT** When you play this character, move up to 1 damage counter from chosen character to chosen opposing character.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: belleUntrainedMystic.cost,
+//       Hand: [belleUntrainedMystic],
 //     });
 //
-//     await testEngine.playCard(belleUntrainedMystic);
-//     await testEngine.acceptOptionalLayer();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.playCard(belleUntrainedMystic);
+//     Await testEngine.acceptOptionalLayer();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

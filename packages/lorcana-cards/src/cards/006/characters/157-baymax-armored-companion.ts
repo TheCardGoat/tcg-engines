@@ -1,31 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const baymaxArmoredCompanion: CharacterCard = {
-  id: "12n",
-  cardType: "character",
-  name: "Baymax",
-  version: "Armored Companion",
-  fullName: "Baymax - Armored Companion",
-  inkType: ["sapphire"],
-  franchise: "Big Hero 6",
-  set: "006",
-  text: "THE TREATMENT IS WORKING When you play this character and whenever he quests, you may remove up to 2 damage from another chosen character of yours. Gain 1 lore for each 1 damage removed this way.",
-  cost: 5,
-  strength: 2,
-  willpower: 6,
-  lore: 2,
-  cardNumber: 157,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "8b5b13c2943342369d72422e5cc509b8583ffe42",
-  },
   abilities: [
     {
-      id: "12n-1",
-      type: "triggered",
-      name: "THE TREATMENT IS WORKING When you play this character and",
-      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "optional",
         effect: {
@@ -42,8 +19,31 @@ export const baymaxArmoredCompanion: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "12n-1",
+      name: "THE TREATMENT IS WORKING When you play this character and",
       text: "THE TREATMENT IS WORKING When you play this character and whenever he quests, you may remove up to 2 damage from another chosen character of yours. Gain 1 lore for each 1 damage removed this way.",
+      trigger: { event: "play", timing: "when", on: "SELF" },
+      type: "triggered",
     },
   ],
+  cardNumber: 157,
+  cardType: "character",
   classifications: ["Storyborn", "Hero", "Robot"],
+  cost: 5,
+  externalIds: {
+    ravensburger: "8b5b13c2943342369d72422e5cc509b8583ffe42",
+  },
+  franchise: "Big Hero 6",
+  fullName: "Baymax - Armored Companion",
+  id: "12n",
+  inkType: ["sapphire"],
+  inkable: true,
+  lore: 2,
+  missingTests: true,
+  name: "Baymax",
+  set: "006",
+  strength: 2,
+  text: "THE TREATMENT IS WORKING When you play this character and whenever he quests, you may remove up to 2 damage from another chosen character of yours. Gain 1 lore for each 1 damage removed this way.",
+  version: "Armored Companion",
+  willpower: 6,
 };

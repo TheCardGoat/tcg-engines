@@ -5,8 +5,10 @@ conditionRegistry.register<HasCardUnderCondition>("has-card-under", {
   complexity: 20,
   evaluate: (_condition, sourceCard) => {
     const stack = sourceCard.stackPosition;
-    if (!stack) return false;
+    if (!stack) {
+      return false;
+    }
     // Check if there are cards underneath
-    return !!(stack.cardsUnderneath && stack.cardsUnderneath.length > 0);
+    return Boolean(stack.cardsUnderneath && stack.cardsUnderneath.length > 0);
   },
 });

@@ -3,45 +3,45 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   gastonArrogantHunter,
-//   liloMakingAWish,
-//   stichtNewDog,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   GastonArrogantHunter,
+//   LiloMakingAWish,
+//   StichtNewDog,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { hakunaMatata } from "@lorcanito/lorcana-engine/cards/001/songs/027-hakuna-matata";
-// import { recordPlayer } from "@lorcanito/lorcana-engine/cards/004/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { hakunaMatata } from "@lorcanito/lorcana-engine/cards/001/songs/027-hakuna-matata";
+// Import { recordPlayer } from "@lorcanito/lorcana-engine/cards/004/items/items";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Record Player", () => {
-//   it("**LOOK AT THIS!** Whenever you play a song, chosen character gets -2 {S} until the start of your next turn.", () => {
-//     const testStore = new TestStore({
-//       inkwell: hakunaMatata.cost,
-//       hand: [hakunaMatata],
-//       play: [recordPlayer, gastonArrogantHunter],
+// Describe("Record Player", () => {
+//   It("**LOOK AT THIS!** Whenever you play a song, chosen character gets -2 {S} until the start of your next turn.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: hakunaMatata.cost,
+//       Hand: [hakunaMatata],
+//       Play: [recordPlayer, gastonArrogantHunter],
 //     });
 //
-//     const target = testStore.getCard(gastonArrogantHunter);
-//     const trigger = testStore.getCard(hakunaMatata);
+//     Const target = testStore.getCard(gastonArrogantHunter);
+//     Const trigger = testStore.getCard(hakunaMatata);
 //
-//     trigger.playFromHand();
-//     testStore.resolveTopOfStack({ targets: [target] });
+//     Trigger.playFromHand();
+//     TestStore.resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.strength).toEqual(gastonArrogantHunter.strength - 2);
+//     Expect(target.strength).toEqual(gastonArrogantHunter.strength - 2);
 //   });
 //
-//   it("**HIT PARADE** Your characters named Stitch count as having +1 cost to sing songs.", () => {
-//     const testStore = new TestStore({
-//       inkwell: recordPlayer.cost,
-//       play: [recordPlayer, stichtNewDog, liloMakingAWish],
+//   It("**HIT PARADE** Your characters named Stitch count as having +1 cost to sing songs.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: recordPlayer.cost,
+//       Play: [recordPlayer, stichtNewDog, liloMakingAWish],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(stichtNewDog);
-//     const anotherCard = testStore.getCard(liloMakingAWish);
+//     Const cardUnderTest = testStore.getCard(stichtNewDog);
+//     Const anotherCard = testStore.getCard(liloMakingAWish);
 //
-//     expect(cardUnderTest.singerCost).toEqual(stichtNewDog.cost + 1);
-//     expect(cardUnderTest.cost).toEqual(stichtNewDog.cost);
-//     expect(anotherCard.singerCost).toEqual(liloMakingAWish.cost);
+//     Expect(cardUnderTest.singerCost).toEqual(stichtNewDog.cost + 1);
+//     Expect(cardUnderTest.cost).toEqual(stichtNewDog.cost);
+//     Expect(anotherCard.singerCost).toEqual(liloMakingAWish.cost);
 //   });
 // });
 //

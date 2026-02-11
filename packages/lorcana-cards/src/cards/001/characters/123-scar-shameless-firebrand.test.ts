@@ -5,9 +5,9 @@ import { scarShamelessFirebrand } from "./123-scar-shameless-firebrand";
 describe("Scar - Shameless Firebrand", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [scarShamelessFirebrand] });
-  //   expect(testEngine.getCardModel(scarShamelessFirebrand).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [scarShamelessFirebrand] });
+  //   Expect(testEngine.getCardModel(scarShamelessFirebrand).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,69 +17,69 @@ describe("Scar - Shameless Firebrand", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   chiefTui,
-//   drFacilierCharlatan,
-//   herculesTrueHero,
-//   scarShamelessFirebrand,
-//   stichtNewDog,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   ChiefTui,
+//   DrFacilierCharlatan,
+//   HerculesTrueHero,
+//   ScarShamelessFirebrand,
+//   StichtNewDog,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Scar Shameless Firebrand", () => {
-//   it("ROUSING SPEECH effect- Ready All characters with cost 3 or less", () => {
-//     const testStore = new TestStore({
-//       inkwell: scarShamelessFirebrand.cost,
-//       play: [herculesTrueHero, stichtNewDog, drFacilierCharlatan],
-//       hand: [scarShamelessFirebrand],
+// Describe("Scar Shameless Firebrand", () => {
+//   It("ROUSING SPEECH effect- Ready All characters with cost 3 or less", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: scarShamelessFirebrand.cost,
+//       Play: [herculesTrueHero, stichtNewDog, drFacilierCharlatan],
+//       Hand: [scarShamelessFirebrand],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "hand",
-//       scarShamelessFirebrand.id,
+//       ScarShamelessFirebrand.id,
 //     );
-//     const oneCostTarget = testStore.getByZoneAndId("play", herculesTrueHero.id);
-//     const twoCostTarget = testStore.getByZoneAndId("play", stichtNewDog.id);
-//     const threeCostTarget = testStore.getByZoneAndId(
+//     Const oneCostTarget = testStore.getByZoneAndId("play", herculesTrueHero.id);
+//     Const twoCostTarget = testStore.getByZoneAndId("play", stichtNewDog.id);
+//     Const threeCostTarget = testStore.getByZoneAndId(
 //       "play",
-//       drFacilierCharlatan.id,
+//       DrFacilierCharlatan.id,
 //     );
-//     oneCostTarget.updateCardMeta({ exerted: true });
-//     twoCostTarget.updateCardMeta({ exerted: true });
-//     threeCostTarget.updateCardMeta({ exerted: true });
+//     OneCostTarget.updateCardMeta({ exerted: true });
+//     TwoCostTarget.updateCardMeta({ exerted: true });
+//     ThreeCostTarget.updateCardMeta({ exerted: true });
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     expect(testStore.getByZoneAndId("play", herculesTrueHero.id).meta).toEqual(
-//       expect.objectContaining({ exerted: false }),
+//     Expect(testStore.getByZoneAndId("play", herculesTrueHero.id).meta).toEqual(
+//       Expect.objectContaining({ exerted: false }),
 //     );
-//     expect(testStore.getByZoneAndId("play", stichtNewDog.id).meta).toEqual(
-//       expect.objectContaining({ exerted: false }),
+//     Expect(testStore.getByZoneAndId("play", stichtNewDog.id).meta).toEqual(
+//       Expect.objectContaining({ exerted: false }),
 //     );
-//     expect(
-//       testStore.getByZoneAndId("play", drFacilierCharlatan.id).meta,
+//     Expect(
+//       TestStore.getByZoneAndId("play", drFacilierCharlatan.id).meta,
 //     ).toEqual(expect.objectContaining({ exerted: false }));
 //   });
 //
-//   it("ROUSING SPEECH effect- Should Not Ready All characters with cost greater than 3", () => {
-//     const testStore = new TestStore({
-//       inkwell: scarShamelessFirebrand.cost,
-//       play: [chiefTui],
-//       hand: [scarShamelessFirebrand],
+//   It("ROUSING SPEECH effect- Should Not Ready All characters with cost greater than 3", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: scarShamelessFirebrand.cost,
+//       Play: [chiefTui],
+//       Hand: [scarShamelessFirebrand],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "hand",
-//       scarShamelessFirebrand.id,
+//       ScarShamelessFirebrand.id,
 //     );
-//     const target = testStore.getByZoneAndId("play", chiefTui.id);
-//     target.updateCardMeta({ exerted: true });
+//     Const target = testStore.getByZoneAndId("play", chiefTui.id);
+//     Target.updateCardMeta({ exerted: true });
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     expect(testStore.getByZoneAndId("play", chiefTui.id).meta).toEqual(
-//       expect.objectContaining({ exerted: true }),
+//     Expect(testStore.getByZoneAndId("play", chiefTui.id).meta).toEqual(
+//       Expect.objectContaining({ exerted: true }),
 //     );
 //   });
 // });

@@ -1,33 +1,8 @@
 import type { ItemCard } from "@tcg/lorcana-types";
 
 export const weightSet: ItemCard = {
-  id: "1vv",
-  cardType: "item",
-  name: "Weight Set",
-  inkType: ["steel"],
-  franchise: "Hercules",
-  set: "002",
-  text: "TRAINING Whenever you play a character with 4 or more, you may pay 1 to draw a card.",
-  cost: 3,
-  cardNumber: 204,
-  inkable: true,
-  externalIds: {
-    ravensburger: "f4a817b51d3a5cca4d03b98d0eddc55294471120",
-  },
   abilities: [
     {
-      id: "1vv-1",
-      text: "TRAINING Whenever you play a character with 4 or more, you may pay 1 to draw a card.",
-      name: "TRAINING",
-      type: "triggered",
-      trigger: {
-        event: "play",
-        timing: "whenever",
-        on: {
-          controller: "you",
-          cardType: "character",
-        },
-      },
       effect: {
         type: "optional",
         effect: {
@@ -37,58 +12,83 @@ export const weightSet: ItemCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "1vv-1",
+      name: "TRAINING",
+      text: "TRAINING Whenever you play a character with 4 or more, you may pay 1 to draw a card.",
+      trigger: {
+        event: "play",
+        timing: "whenever",
+        on: {
+          controller: "you",
+          cardType: "character",
+        },
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 204,
+  cardType: "item",
+  cost: 3,
+  externalIds: {
+    ravensburger: "f4a817b51d3a5cca4d03b98d0eddc55294471120",
+  },
+  franchise: "Hercules",
+  id: "1vv",
+  inkType: ["steel"],
+  inkable: true,
+  name: "Weight Set",
+  set: "002",
+  text: "TRAINING Whenever you play a character with 4 or more, you may pay 1 to draw a card.",
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { wheneverTargetPlays } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import { wheneverTargetPlays } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// Import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const weightSet: LorcanitoItemCard = {
-//   id: "k1c",
+// Export const weightSet: LorcanitoItemCard = {
+//   Id: "k1c",
 //
-//   name: "Weight Set",
-//   characteristics: ["item"],
-//   text: "**TRAINING** Whenever you play a character with 4 {S} or more, you may pay 1 {I} to draw a card.",
-//   type: "item",
-//   abilities: [
-//     wheneverTargetPlays({
-//       name: "Training",
-//       text: "Whenever you play a character with 4 {S} or more, you may pay 1 {I} to draw a card.",
-//       optional: true,
-//       costs: [{ type: "ink", amount: 1 }],
-//       triggerFilter: [
+//   Name: "Weight Set",
+//   Characteristics: ["item"],
+//   Text: "**TRAINING** Whenever you play a character with 4 {S} or more, you may pay 1 {I} to draw a card.",
+//   Type: "item",
+//   Abilities: [
+//     WheneverTargetPlays({
+//       Name: "Training",
+//       Text: "Whenever you play a character with 4 {S} or more, you may pay 1 {I} to draw a card.",
+//       Optional: true,
+//       Costs: [{ type: "ink", amount: 1 }],
+//       TriggerFilter: [
 //         { filter: "type", value: "character" },
 //         { filter: "owner", value: "self" },
 //         {
-//           filter: "attribute",
-//           value: "strength",
-//           comparison: { operator: "gte", value: 4 },
+//           Filter: "attribute",
+//           Value: "strength",
+//           Comparison: { operator: "gte", value: 4 },
 //         },
 //       ],
-//       effects: [
+//       Effects: [
 //         {
-//           type: "draw",
-//           amount: 1,
-//           target: {
-//             type: "player",
-//             value: "self",
+//           Type: "draw",
+//           Amount: 1,
+//           Target: {
+//             Type: "player",
+//             Value: "self",
 //           },
 //         },
 //       ],
 //     }),
 //   ],
-//   flavour: "Go the distance with the right equipment.",
-//   colors: ["steel"],
-//   cost: 3,
-//   inkwell: true,
-//   illustrator: "Brian Weisz",
-//   number: 204,
-//   set: "ROF",
-//   externalIds: {
-//     tcgPlayer: 527529,
+//   Flavour: "Go the distance with the right equipment.",
+//   Colors: ["steel"],
+//   Cost: 3,
+//   Inkwell: true,
+//   Illustrator: "Brian Weisz",
+//   Number: 204,
+//   Set: "ROF",
+//   ExternalIds: {
+//     TcgPlayer: 527529,
 //   },
-//   rarity: "rare",
+//   Rarity: "rare",
 // };
 //

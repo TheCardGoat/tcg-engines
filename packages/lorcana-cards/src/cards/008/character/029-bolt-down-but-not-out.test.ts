@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { boltDownButNotOut } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { boltDownButNotOut } from "@lorcanito/lorcana-engine/cards/008/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Bolt - Down but Not Out", () => {
-//   it.skip("NONE OF YOUR POWERS ARE WORKING This character enters play exerted.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: boltDownButNotOut.cost,
-//       play: [boltDownButNotOut],
-//       hand: [boltDownButNotOut],
+// Describe("Bolt - Down but Not Out", () => {
+//   It.skip("NONE OF YOUR POWERS ARE WORKING This character enters play exerted.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: boltDownButNotOut.cost,
+//       Play: [boltDownButNotOut],
+//       Hand: [boltDownButNotOut],
 //     });
 //
-//     await testEngine.playCard(boltDownButNotOut);
+//     Await testEngine.playCard(boltDownButNotOut);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

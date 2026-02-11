@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { pyrosLavaTitan } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { pyrosLavaTitan } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Pyros - Lava Titan", () => {
-//   it.skip("**ERUPTION** During your turn, whenever this character banishes another character in a challenge, you may ready chosen character.", () => {
-//     const testStore = new TestStore({
-//       inkwell: pyrosLavaTitan.cost,
-//       play: [pyrosLavaTitan],
+// Describe("Pyros - Lava Titan", () => {
+//   It.skip("**ERUPTION** During your turn, whenever this character banishes another character in a challenge, you may ready chosen character.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: pyrosLavaTitan.cost,
+//       Play: [pyrosLavaTitan],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(pyrosLavaTitan);
+//     Const cardUnderTest = testStore.getCard(pyrosLavaTitan);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

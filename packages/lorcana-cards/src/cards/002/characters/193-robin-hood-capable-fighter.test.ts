@@ -3,34 +3,34 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   princeNaveenPennilessRoyal,
-//   robinHoodCapableFighter,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   PrinceNaveenPennilessRoyal,
+//   RobinHoodCapableFighter,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Robin Hood- Capable Fighter", () => {
-//   it("**SKIRMISH** {E} − Deal 1 damage to chosen character.", () => {
-//     const testStore = new TestStore({
-//       inkwell: robinHoodCapableFighter.cost,
-//       hand: [robinHoodCapableFighter],
-//       play: [princeNaveenPennilessRoyal],
+// Describe("Robin Hood- Capable Fighter", () => {
+//   It("**SKIRMISH** {E} − Deal 1 damage to chosen character.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: robinHoodCapableFighter.cost,
+//       Hand: [robinHoodCapableFighter],
+//       Play: [princeNaveenPennilessRoyal],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "hand",
-//       robinHoodCapableFighter.id,
+//       RobinHoodCapableFighter.id,
 //     );
-//     const target = testStore.getByZoneAndId(
+//     Const target = testStore.getByZoneAndId(
 //       "play",
-//       princeNaveenPennilessRoyal.id,
+//       PrinceNaveenPennilessRoyal.id,
 //     );
 //
-//     cardUnderTest.activate();
-//     testStore.resolveTopOfStack({ targets: [target] });
+//     CardUnderTest.activate();
+//     TestStore.resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.meta.damage).toEqual(1);
+//     Expect(target.meta.damage).toEqual(1);
 //   });
 // });
 //

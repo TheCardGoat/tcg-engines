@@ -44,9 +44,9 @@ function parseFromText(text: string): RepeatEffect | null {
     logger.info("Parsed repeat effect", { effect, times });
 
     return {
-      type: "repeat",
-      times,
       effect,
+      times,
+      type: "repeat",
     };
   }
 
@@ -102,9 +102,9 @@ function parseFromText(text: string): RepeatEffect | null {
     logger.info("Parsed repeat effect", { effect, times });
 
     return {
-      type: "repeat",
-      times,
       effect,
+      times,
+      type: "repeat",
     };
   }
 
@@ -125,14 +125,14 @@ function parseFromCst(_ctx: CstNode): RepeatEffect | null {
  * Repeat effect parser implementation
  */
 export const repeatEffectParser: EffectParser = {
-  pattern: /(.+),\s*\d+\s+times?/i,
   description:
     "Parses repeat effects that execute multiple times (e.g., 'draw 1 card, 3 times')",
-
   parse: (input: CstNode | string): RepeatEffect | null => {
     if (typeof input === "string") {
       return parseFromText(input);
     }
     return parseFromCst(input);
   },
+
+  pattern: /(.+),\s*\d+\s+times?/i,
 };

@@ -3,45 +3,45 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   liloGalacticHero,
-//   mauiDemiGod,
-//   stichtNewDog,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   LiloGalacticHero,
+//   MauiDemiGod,
+//   StichtNewDog,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { madamMimFox } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { madamMimElephant } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { yzmaConnivingChemist } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { madamMimFox } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { madamMimElephant } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { yzmaConnivingChemist } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Yzma - Conniving Chemist", () => {
-//   it("**FEEL THE POWER** – _If you have fewer than 3 cards in your hand, draw until you have 3 cards in your hand._", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Yzma - Conniving Chemist", () => {
+//   It("**FEEL THE POWER** – _If you have fewer than 3 cards in your hand, draw until you have 3 cards in your hand._", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: yzmaConnivingChemist.cost,
-//         hand: [yzmaConnivingChemist],
-//         deck: [
-//           liloGalacticHero,
-//           stichtNewDog,
-//           mauiDemiGod,
-//           madamMimFox,
-//           madamMimElephant,
+//         Inkwell: yzmaConnivingChemist.cost,
+//         Hand: [yzmaConnivingChemist],
+//         Deck: [
+//           LiloGalacticHero,
+//           StichtNewDog,
+//           MauiDemiGod,
+//           MadamMimFox,
+//           MadamMimElephant,
 //         ],
 //       },
 //       { deck: 1 },
 //     );
 //
-//     const cardUnderTest = testEngine.getCardModel(yzmaConnivingChemist);
-//     await testEngine.playCard(cardUnderTest);
+//     Const cardUnderTest = testEngine.getCardModel(yzmaConnivingChemist);
+//     Await testEngine.playCard(cardUnderTest);
 //
-//     expect(testEngine.getZonesCardCount().hand).toBe(0);
+//     Expect(testEngine.getZonesCardCount().hand).toBe(0);
 //
-//     await testEngine.passTurn();
+//     Await testEngine.passTurn();
 //
-//     await testEngine.passTurn();
-//     await testEngine.activateCard(cardUnderTest);
+//     Await testEngine.passTurn();
+//     Await testEngine.activateCard(cardUnderTest);
 //
-//     expect(testEngine.getZonesCardCount().hand).toBe(3);
+//     Expect(testEngine.getZonesCardCount().hand).toBe(3);
 //   });
 // });
 //

@@ -22,7 +22,7 @@ import {
  * accessing protected parser methods which TypeScript cannot type properly.
  */
 export function addConditionRules(parser: CstParser): void {
-  // biome-ignore lint/suspicious/noExplicitAny: Chevrotain mixin requires accessing protected methods
+  // Biome-ignore lint/suspicious/noExplicitAny: Chevrotain mixin requires accessing protected methods
   const p = parser as any;
 
   /**

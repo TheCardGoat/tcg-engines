@@ -3,91 +3,91 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   goofyKnightForADay,
-//   madamMimFox,
-//   madamMimSnake,
-//   merlinShapeshifter,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   GoofyKnightForADay,
+//   MadamMimFox,
+//   MadamMimSnake,
+//   MerlinShapeshifter,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Merlin - Shapeshifter", () => {
-//   describe("**BATTLE OF WITS** Whenever one of your other characters is returned to your hand from play, this character gets +1 {L} this turn.", () => {
-//     it("Effect only active until end of turn", () => {
-//       const testStore = new TestStore(
+// Describe("Merlin - Shapeshifter", () => {
+//   Describe("**BATTLE OF WITS** Whenever one of your other characters is returned to your hand from play, this character gets +1 {L} this turn.", () => {
+//     It("Effect only active until end of turn", () => {
+//       Const testStore = new TestStore(
 //         {
-//           inkwell: madamMimFox.cost,
-//           hand: [madamMimFox],
-//           play: [merlinShapeshifter, goofyKnightForADay],
+//           Inkwell: madamMimFox.cost,
+//           Hand: [madamMimFox],
+//           Play: [merlinShapeshifter, goofyKnightForADay],
 //         },
 //         { deck: 1 },
 //       );
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         merlinShapeshifter.id,
+//         MerlinShapeshifter.id,
 //       );
-//       const otherCard = testStore.getByZoneAndId("play", goofyKnightForADay.id);
-//       const bounce = testStore.getByZoneAndId("hand", madamMimFox.id);
+//       Const otherCard = testStore.getByZoneAndId("play", goofyKnightForADay.id);
+//       Const bounce = testStore.getByZoneAndId("hand", madamMimFox.id);
 //
-//       expect(cardUnderTest.lore).toEqual(merlinShapeshifter.lore);
+//       Expect(cardUnderTest.lore).toEqual(merlinShapeshifter.lore);
 //
-//       bounce.playFromHand();
-//       testStore.resolveOptionalAbility();
-//       testStore.resolveTopOfStack({ targets: [otherCard] });
+//       Bounce.playFromHand();
+//       TestStore.resolveOptionalAbility();
+//       TestStore.resolveTopOfStack({ targets: [otherCard] });
 //
-//       expect(otherCard.zone).toEqual("hand");
-//       expect(cardUnderTest.lore).toEqual(merlinShapeshifter.lore + 1);
+//       Expect(otherCard.zone).toEqual("hand");
+//       Expect(cardUnderTest.lore).toEqual(merlinShapeshifter.lore + 1);
 //
-//       testStore.passTurn();
+//       TestStore.passTurn();
 //
-//       expect(cardUnderTest.lore).toEqual(merlinShapeshifter.lore);
+//       Expect(cardUnderTest.lore).toEqual(merlinShapeshifter.lore);
 //     });
 //
-//     it("accumulates previous effects", async () => {
-//       const testEngine = new TestEngine(
+//     It("accumulates previous effects", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: madamMimFox.cost + madamMimSnake.cost + madamMimFox.cost,
-//           hand: [madamMimFox],
-//           play: [merlinShapeshifter, madamMimSnake],
+//           Inkwell: madamMimFox.cost + madamMimSnake.cost + madamMimFox.cost,
+//           Hand: [madamMimFox],
+//           Play: [merlinShapeshifter, madamMimSnake],
 //         },
 //         { deck: 1 },
 //       );
 //
-//       await testEngine.playCard(madamMimFox);
-//       await testEngine.resolveOptionalAbility();
-//       await testEngine.resolveTopOfStack({ targets: [madamMimSnake] }, true);
+//       Await testEngine.playCard(madamMimFox);
+//       Await testEngine.resolveOptionalAbility();
+//       Await testEngine.resolveTopOfStack({ targets: [madamMimSnake] }, true);
 //
-//       expect(testEngine.getCardModel(madamMimSnake).zone).toEqual("hand");
+//       Expect(testEngine.getCardModel(madamMimSnake).zone).toEqual("hand");
 //
 //       // expect(testEngine.getCardModel(merlinShapeshifter).lore).toEqual(
 //       //   merlinShapeshifter.lore,
 //       // );
 //       // await testEngine.resolveOptionalAbility();
-//       expect(testEngine.getCardModel(merlinShapeshifter).lore).toEqual(
-//         merlinShapeshifter.lore + 1,
+//       Expect(testEngine.getCardModel(merlinShapeshifter).lore).toEqual(
+//         MerlinShapeshifter.lore + 1,
 //       );
 //
-//       await testEngine.playCard(madamMimSnake);
-//       await testEngine.resolveOptionalAbility();
-//       await testEngine.resolveTopOfStack({ targets: [madamMimFox] }, true);
+//       Await testEngine.playCard(madamMimSnake);
+//       Await testEngine.resolveOptionalAbility();
+//       Await testEngine.resolveTopOfStack({ targets: [madamMimFox] }, true);
 //
-//       expect(testEngine.getCardModel(madamMimFox).zone).toEqual("hand");
+//       Expect(testEngine.getCardModel(madamMimFox).zone).toEqual("hand");
 //       // await testEngine.resolveOptionalAbility();
-//       expect(testEngine.getCardModel(merlinShapeshifter).lore).toEqual(
-//         merlinShapeshifter.lore + 2,
+//       Expect(testEngine.getCardModel(merlinShapeshifter).lore).toEqual(
+//         MerlinShapeshifter.lore + 2,
 //       );
 //
-//       await testEngine.playCard(madamMimFox);
-//       await testEngine.resolveOptionalAbility();
-//       await testEngine.resolveTopOfStack({ targets: [madamMimSnake] }, true);
+//       Await testEngine.playCard(madamMimFox);
+//       Await testEngine.resolveOptionalAbility();
+//       Await testEngine.resolveTopOfStack({ targets: [madamMimSnake] }, true);
 //
-//       expect(testEngine.getCardModel(madamMimSnake).zone).toEqual("hand");
+//       Expect(testEngine.getCardModel(madamMimSnake).zone).toEqual("hand");
 //       // await testEngine.resolveOptionalAbility();
-//       expect(testEngine.getCardModel(merlinShapeshifter).lore).toEqual(
-//         merlinShapeshifter.lore + 3,
+//       Expect(testEngine.getCardModel(merlinShapeshifter).lore).toEqual(
+//         MerlinShapeshifter.lore + 3,
 //       );
 //     });
 //   });

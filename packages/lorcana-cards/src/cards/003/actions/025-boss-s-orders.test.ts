@@ -3,30 +3,30 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { bosssOrders } from "@lorcanito/lorcana-engine/cards/003/actions/actions";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { bosssOrders } from "@lorcanito/lorcana-engine/cards/003/actions/actions";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Boss's Orders", () => {
-//   it("Chosen character gains **Support** this turn. _(Whenever they quest, you may add their {S} to another chosen character's {S} this turn.)_", () => {
-//     const testStore = new TestStore({
-//       inkwell: bosssOrders.cost,
-//       hand: [bosssOrders],
-//       play: [goofyKnightForADay],
+// Describe("Boss's Orders", () => {
+//   It("Chosen character gains **Support** this turn. _(Whenever they quest, you may add their {S} to another chosen character's {S} this turn.)_", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: bosssOrders.cost,
+//       Hand: [bosssOrders],
+//       Play: [goofyKnightForADay],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", bosssOrders.id);
-//     const target = testStore.getByZoneAndId("play", goofyKnightForADay.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", bosssOrders.id);
+//     Const target = testStore.getByZoneAndId("play", goofyKnightForADay.id);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveTopOfStack({ targets: [target] });
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.hasSupport).toBe(true);
+//     Expect(target.hasSupport).toBe(true);
 //
-//     testStore.passTurn();
+//     TestStore.passTurn();
 //
-//     expect(target.hasSupport).toBe(false);
+//     Expect(target.hasSupport).toBe(false);
 //   });
 // });
 //

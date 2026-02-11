@@ -5,9 +5,9 @@ import { theBeastIsMine } from "./099-the-beast-is-mine";
 describe("The Beast is Mine! - undefined", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [theBeastIsMine] });
-  //   expect(testEngine.getCardModel(theBeastIsMine).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [theBeastIsMine] });
+  //   Expect(testEngine.getCardModel(theBeastIsMine).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -16,35 +16,35 @@ describe("The Beast is Mine! - undefined", () => {
 // /**
 //  * @jest-environment node
 //  */
-// import { describe, expect, it } from "@jest/globals";
-// import { theBeastIsMine } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
-// import { moanaOfMotunui } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { theBeastIsMine } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
+// Import { moanaOfMotunui } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("The Beast is Mine!", () => {
-//   it("Chosen character gains **Reckless** during their next turn.", () => {
-//     const testStore = new TestStore(
+// Describe("The Beast is Mine!", () => {
+//   It("Chosen character gains **Reckless** during their next turn.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: theBeastIsMine.cost,
-//         hand: [theBeastIsMine],
-//         play: [moanaOfMotunui],
+//         Inkwell: theBeastIsMine.cost,
+//         Hand: [theBeastIsMine],
+//         Play: [moanaOfMotunui],
 //       },
 //       {
-//         deck: 1,
+//         Deck: 1,
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", theBeastIsMine.id);
-//     const target = testStore.getByZoneAndId("play", moanaOfMotunui.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", theBeastIsMine.id);
+//     Const target = testStore.getByZoneAndId("play", moanaOfMotunui.id);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveTopOfStack({ targetId: target.instanceId });
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveTopOfStack({ targetId: target.instanceId });
 //
-//     expect(target.hasReckless).toEqual(false);
+//     Expect(target.hasReckless).toEqual(false);
 //
-//     testStore.store.passTurn(testStore.store.turnPlayer);
+//     TestStore.store.passTurn(testStore.store.turnPlayer);
 //
-//     expect(target.hasReckless).toEqual(true);
+//     Expect(target.hasReckless).toEqual(true);
 //   });
 // });
 //

@@ -3,71 +3,71 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   allIsFound,
-//   doubleTrouble,
-//   showMeMore,
-//   theReturnOfHercules,
-//   waterHasMemory,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   AllIsFound,
+//   DoubleTrouble,
+//   ShowMeMore,
+//   TheReturnOfHercules,
+//   WaterHasMemory,
 // } from "@lorcanito/lorcana-engine/cards/007";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Water Has Memory", () => {
-//   describe("Look at the top 4 cards of chosen player's deck. Put one on the top of their deck and the rest on the bottom of their deck in any order.", () => {
-//     it("Own deck", async () => {
-//       const testEngine = new TestEngine({
-//         deck: [doubleTrouble, allIsFound, theReturnOfHercules, showMeMore],
-//         inkwell: waterHasMemory.cost,
-//         hand: [waterHasMemory],
+// Describe("Water Has Memory", () => {
+//   Describe("Look at the top 4 cards of chosen player's deck. Put one on the top of their deck and the rest on the bottom of their deck in any order.", () => {
+//     It("Own deck", async () => {
+//       Const testEngine = new TestEngine({
+//         Deck: [doubleTrouble, allIsFound, theReturnOfHercules, showMeMore],
+//         Inkwell: waterHasMemory.cost,
+//         Hand: [waterHasMemory],
 //       });
 //
-//       await testEngine.playCard(
-//         waterHasMemory,
+//       Await testEngine.playCard(
+//         WaterHasMemory,
 //         {
-//           targetPlayer: "player_one",
+//           TargetPlayer: "player_one",
 //         },
-//         true,
+//         True,
 //       );
-//       await testEngine.resolveTopOfStack({
-//         scry: {
-//           top: [doubleTrouble],
-//           bottom: [allIsFound, theReturnOfHercules, showMeMore],
+//       Await testEngine.resolveTopOfStack({
+//         Scry: {
+//           Top: [doubleTrouble],
+//           Bottom: [allIsFound, theReturnOfHercules, showMeMore],
 //         },
 //       });
 //
-//       await testEngine.drawCard();
-//       expect(testEngine.getCardModel(doubleTrouble).zone).toBe("hand");
+//       Await testEngine.drawCard();
+//       Expect(testEngine.getCardModel(doubleTrouble).zone).toBe("hand");
 //     });
 //
-//     it("Opponent deck", async () => {
-//       const testEngine = new TestEngine(
+//     It("Opponent deck", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           deck: 10,
-//           inkwell: waterHasMemory.cost,
-//           hand: [waterHasMemory],
+//           Deck: 10,
+//           Inkwell: waterHasMemory.cost,
+//           Hand: [waterHasMemory],
 //         },
 //         {
-//           deck: [doubleTrouble, allIsFound, theReturnOfHercules, showMeMore],
+//           Deck: [doubleTrouble, allIsFound, theReturnOfHercules, showMeMore],
 //         },
 //       );
 //
-//       await testEngine.playCard(
-//         waterHasMemory,
+//       Await testEngine.playCard(
+//         WaterHasMemory,
 //         {
-//           targetPlayer: "player_two",
+//           TargetPlayer: "player_two",
 //         },
-//         true,
+//         True,
 //       );
-//       await testEngine.resolveTopOfStack({
-//         scry: {
-//           top: [doubleTrouble],
-//           bottom: [allIsFound, theReturnOfHercules, showMeMore],
+//       Await testEngine.resolveTopOfStack({
+//         Scry: {
+//           Top: [doubleTrouble],
+//           Bottom: [allIsFound, theReturnOfHercules, showMeMore],
 //         },
 //       });
 //
-//       await testEngine.drawCard("player_two");
-//       expect(testEngine.getCardModel(doubleTrouble).zone).toBe("hand");
+//       Await testEngine.drawCard("player_two");
+//       Expect(testEngine.getCardModel(doubleTrouble).zone).toBe("hand");
 //     });
 //   });
 // });

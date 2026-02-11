@@ -1,24 +1,8 @@
 import type { ItemCard } from "@tcg/lorcana-types";
 
 export const rlsLegacysCannon: ItemCard = {
-  id: "1rt",
-  cardType: "item",
-  name: "RLS Legacy's Cannon",
-  inkType: ["steel"],
-  franchise: "Treasure Planet",
-  set: "004",
-  text: "BA-BOOM! {E}, 2 {I}, Discard a card — Deal 2 damage to chosen character or location.",
-  cost: 3,
-  cardNumber: 202,
-  inkable: false,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "e3f387f2b59dcd08d2b328296fa4c6ef0dcb7867",
-  },
   abilities: [
     {
-      id: "1rt-1",
-      type: "activated",
       cost: { exert: true },
       effect: {
         type: "deal-damage",
@@ -31,7 +15,23 @@ export const rlsLegacysCannon: ItemCard = {
           cardTypes: ["character"],
         },
       },
+      id: "1rt-1",
       text: "BA-BOOM! {E}, 2 {I}, Discard a card — Deal 2 damage to chosen character or location.",
+      type: "activated",
     },
   ],
+  cardNumber: 202,
+  cardType: "item",
+  cost: 3,
+  externalIds: {
+    ravensburger: "e3f387f2b59dcd08d2b328296fa4c6ef0dcb7867",
+  },
+  franchise: "Treasure Planet",
+  id: "1rt",
+  inkType: ["steel"],
+  inkable: false,
+  missingTests: true,
+  name: "RLS Legacy's Cannon",
+  set: "004",
+  text: "BA-BOOM! {E}, 2 {I}, Discard a card — Deal 2 damage to chosen character or location.",
 };

@@ -17,12 +17,12 @@ describe("Effect: Channel", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "spell",
           effect: expect.objectContaining({
-            type: "channel",
             amount: 1,
             exhausted: true,
+            type: "channel",
           }),
+          type: "spell",
         }),
       );
     });
@@ -34,12 +34,12 @@ describe("Effect: Channel", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "spell",
           effect: expect.objectContaining({
-            type: "channel",
             amount: 2,
             exhausted: true,
+            type: "channel",
           }),
+          type: "spell",
         }),
       );
     });
@@ -53,11 +53,11 @@ describe("Effect: Channel", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "spell",
           effect: expect.objectContaining({
-            type: "channel",
             amount: 1,
+            type: "channel",
           }),
+          type: "spell",
         }),
       );
     });

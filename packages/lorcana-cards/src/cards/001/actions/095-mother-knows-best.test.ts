@@ -5,9 +5,9 @@ import { motherKnowsBest } from "./095-mother-knows-best";
 describe("Mother Knows Best - undefined", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [motherKnowsBest] });
-  //   expect(testEngine.getCardModel(motherKnowsBest).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [motherKnowsBest] });
+  //   Expect(testEngine.getCardModel(motherKnowsBest).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,52 +17,52 @@ describe("Mother Knows Best - undefined", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { moanaOfMotunui } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { motherKnowsBest } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { moanaOfMotunui } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { motherKnowsBest } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Mother Knows Best", () => {
-//   it("Your own card", () => {
-//     const testStore = new TestStore({
-//       inkwell: motherKnowsBest.cost,
-//       hand: [motherKnowsBest],
-//       play: [moanaOfMotunui],
+// Describe("Mother Knows Best", () => {
+//   It("Your own card", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: motherKnowsBest.cost,
+//       Hand: [motherKnowsBest],
+//       Play: [moanaOfMotunui],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", motherKnowsBest.id);
-//     const target = testStore.getByZoneAndId("play", moanaOfMotunui.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", motherKnowsBest.id);
+//     Const target = testStore.getByZoneAndId("play", moanaOfMotunui.id);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveTopOfStack({
-//       targetId: target.instanceId,
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveTopOfStack({
+//       TargetId: target.instanceId,
 //     });
 //
-//     expect(target.zone).toEqual("hand");
+//     Expect(target.zone).toEqual("hand");
 //   });
 //
-//   it("Opponent's card", () => {
-//     const testStore = new TestStore(
+//   It("Opponent's card", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: motherKnowsBest.cost,
-//         hand: [motherKnowsBest],
+//         Inkwell: motherKnowsBest.cost,
+//         Hand: [motherKnowsBest],
 //       },
 //       { play: [moanaOfMotunui] },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", motherKnowsBest.id);
-//     const target = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", motherKnowsBest.id);
+//     Const target = testStore.getByZoneAndId(
 //       "play",
-//       moanaOfMotunui.id,
+//       MoanaOfMotunui.id,
 //       "player_two",
 //     );
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveTopOfStack({
-//       targetId: target.instanceId,
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveTopOfStack({
+//       TargetId: target.instanceId,
 //     });
 //
-//     expect(target.zone).toEqual("hand");
+//     Expect(target.zone).toEqual("hand");
 //   });
 // });
 //

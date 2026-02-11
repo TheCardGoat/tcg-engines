@@ -62,16 +62,7 @@ export type {
   TooManyCopiesError,
   TooManyInkTypesError,
 } from "./deck-validation";
-export {
-  MAX_COPIES_PER_CARD,
-  MAX_INK_TYPES,
-  MIN_DECK_SIZE,
-} from "./deck-validation";
+export { MAX_COPIES_PER_CARD, MAX_INK_TYPES, MIN_DECK_SIZE } from "./deck-validation";
 // Ink Types
 export type { InkType } from "./ink-types";
-export {
-  getInkColor,
-  INK_COLORS,
-  INK_TYPES,
-  isValidInkType,
-} from "./ink-types";
+export { getInkColor, INK_COLORS, INK_TYPES, isValidInkType } from "./ink-types";

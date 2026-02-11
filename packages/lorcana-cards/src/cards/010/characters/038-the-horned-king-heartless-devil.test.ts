@@ -3,74 +3,74 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { theHornedKingHeartlessDevil } from "@lorcanito/lorcana-engine/cards/010/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { theHornedKingHeartlessDevil } from "@lorcanito/lorcana-engine/cards/010/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("The Horned King - Heartless Devil", () => {
-//   it("should be a vanilla character with no special abilities", () => {
-//     const testEngine = new TestEngine({
-//       play: [theHornedKingHeartlessDevil],
+// Describe("The Horned King - Heartless Devil", () => {
+//   It("should be a vanilla character with no special abilities", () => {
+//     Const testEngine = new TestEngine({
+//       Play: [theHornedKingHeartlessDevil],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(theHornedKingHeartlessDevil);
+//     Const cardUnderTest = testEngine.getCardModel(theHornedKingHeartlessDevil);
 //
 //     // Verify card is in play
-//     expect(cardUnderTest.zone).toBe("play");
+//     Expect(cardUnderTest.zone).toBe("play");
 //
 //     // Verify base stats
-//     expect(cardUnderTest.lorcanitoCard.cost).toBe(1);
-//     expect(cardUnderTest.lorcanitoCard.strength).toBe(2);
-//     expect(cardUnderTest.lorcanitoCard.willpower).toBe(2);
-//     expect(cardUnderTest.lorcanitoCard.lore).toBe(1);
+//     Expect(cardUnderTest.lorcanitoCard.cost).toBe(1);
+//     Expect(cardUnderTest.lorcanitoCard.strength).toBe(2);
+//     Expect(cardUnderTest.lorcanitoCard.willpower).toBe(2);
+//     Expect(cardUnderTest.lorcanitoCard.lore).toBe(1);
 //
 //     // Verify characteristics
-//     expect(cardUnderTest.lorcanitoCard.characteristics).toContain("storyborn");
-//     expect(cardUnderTest.lorcanitoCard.characteristics).toContain("villain");
-//     expect(cardUnderTest.lorcanitoCard.characteristics).toContain("king");
-//     expect(cardUnderTest.lorcanitoCard.characteristics).toContain("sorcerer");
+//     Expect(cardUnderTest.lorcanitoCard.characteristics).toContain("storyborn");
+//     Expect(cardUnderTest.lorcanitoCard.characteristics).toContain("villain");
+//     Expect(cardUnderTest.lorcanitoCard.characteristics).toContain("king");
+//     Expect(cardUnderTest.lorcanitoCard.characteristics).toContain("sorcerer");
 //
 //     // Verify color and inkwell
-//     expect(cardUnderTest.lorcanitoCard.colors).toContain("amethyst");
-//     expect(cardUnderTest.lorcanitoCard.inkwell).toBe(true);
+//     Expect(cardUnderTest.lorcanitoCard.colors).toContain("amethyst");
+//     Expect(cardUnderTest.lorcanitoCard.inkwell).toBe(true);
 //
 //     // Verify no special abilities
-//     expect(cardUnderTest.lorcanitoCard.abilities).toEqual([]);
-//     expect(cardUnderTest.lorcanitoCard.text).toBe("");
+//     Expect(cardUnderTest.lorcanitoCard.abilities).toEqual([]);
+//     Expect(cardUnderTest.lorcanitoCard.text).toBe("");
 //   });
 //
-//   it("should be able to quest for lore", async () => {
-//     const testEngine = new TestEngine({
-//       play: [theHornedKingHeartlessDevil],
+//   It("should be able to quest for lore", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [theHornedKingHeartlessDevil],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(theHornedKingHeartlessDevil);
+//     Const cardUnderTest = testEngine.getCardModel(theHornedKingHeartlessDevil);
 //
-//     const initialLore = testEngine.store.tableStore.getTable("player_one").lore;
+//     Const initialLore = testEngine.store.tableStore.getTable("player_one").lore;
 //
-//     cardUnderTest.quest();
+//     CardUnderTest.quest();
 //
-//     expect(testEngine.store.tableStore.getTable("player_one").lore).toBe(
-//       initialLore + 1,
+//     Expect(testEngine.store.tableStore.getTable("player_one").lore).toBe(
+//       InitialLore + 1,
 //     );
-//     expect(cardUnderTest.meta.exerted).toBe(true);
+//     Expect(cardUnderTest.meta.exerted).toBe(true);
 //   });
 //
-//   it("should be playable from hand with correct ink cost", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: theHornedKingHeartlessDevil.cost,
-//       hand: [theHornedKingHeartlessDevil],
+//   It("should be playable from hand with correct ink cost", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: theHornedKingHeartlessDevil.cost,
+//       Hand: [theHornedKingHeartlessDevil],
 //     });
 //
-//     const cardModel = testEngine.getCardModel(theHornedKingHeartlessDevil);
+//     Const cardModel = testEngine.getCardModel(theHornedKingHeartlessDevil);
 //
-//     expect(cardModel.zone).toBe("hand");
+//     Expect(cardModel.zone).toBe("hand");
 //
-//     await testEngine.playCard(theHornedKingHeartlessDevil);
+//     Await testEngine.playCard(theHornedKingHeartlessDevil);
 //
-//     expect(cardModel.zone).toBe("play");
-//     expect(
-//       testEngine.store.tableStore.getTable("player_one").inkAvailable(),
+//     Expect(cardModel.zone).toBe("play");
+//     Expect(
+//       TestEngine.store.tableStore.getTable("player_one").inkAvailable(),
 //     ).toBe(0);
 //   });
 // });

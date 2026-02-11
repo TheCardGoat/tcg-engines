@@ -190,12 +190,7 @@ export interface ScryKeywordFilter {
 /** Filter by cost comparison */
 export interface ScryCostComparisonFilter {
   type: "cost-comparison";
-  comparison:
-    | "less-or-equal"
-    | "equal"
-    | "greater-or-equal"
-    | "less"
-    | "greater";
+  comparison: "less-or-equal" | "equal" | "greater-or-equal" | "less" | "greater";
   value: number | VariableAmount;
 }
 
@@ -222,16 +217,12 @@ export interface ScryNotFilter {
 // ============================================================================
 
 /** Check if destination is a hand destination */
-export function isScryHandDestination(
-  dest: ScryDestination,
-): dest is ScryHandDestination {
+export function isScryHandDestination(dest: ScryDestination): dest is ScryHandDestination {
   return dest.zone === "hand";
 }
 
 /** Check if destination is a deck-top destination */
-export function isScryDeckTopDestination(
-  dest: ScryDestination,
-): dest is ScryDeckTopDestination {
+export function isScryDeckTopDestination(dest: ScryDestination): dest is ScryDeckTopDestination {
   return dest.zone === "deck-top";
 }
 
@@ -243,23 +234,17 @@ export function isScryDeckBottomDestination(
 }
 
 /** Check if destination is an inkwell destination */
-export function isScryInkwellDestination(
-  dest: ScryDestination,
-): dest is ScryInkwellDestination {
+export function isScryInkwellDestination(dest: ScryDestination): dest is ScryInkwellDestination {
   return dest.zone === "inkwell";
 }
 
 /** Check if destination is a play destination */
-export function isScryPlayDestination(
-  dest: ScryDestination,
-): dest is ScryPlayDestination {
+export function isScryPlayDestination(dest: ScryDestination): dest is ScryPlayDestination {
   return dest.zone === "play";
 }
 
 /** Check if destination is a discard destination */
-export function isScryDiscardDestination(
-  dest: ScryDestination,
-): dest is ScryDiscardDestination {
+export function isScryDiscardDestination(dest: ScryDestination): dest is ScryDiscardDestination {
   return dest.zone === "discard";
 }
 

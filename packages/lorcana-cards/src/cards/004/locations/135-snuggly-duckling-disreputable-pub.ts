@@ -1,30 +1,8 @@
 import type { LocationCard } from "@tcg/lorcana-types";
 
 export const snugglyDucklingDisreputablePub: LocationCard = {
-  id: "1o0",
-  cardType: "location",
-  name: "Snuggly Duckling",
-  version: "Disreputable Pub",
-  fullName: "Snuggly Duckling - Disreputable Pub",
-  inkType: ["ruby"],
-  franchise: "Tangled",
-  set: "004",
-  text: "ROUTINE RUCKUS Whenever a character with 3 {S} or more challenges another character while here, gain 1 lore. If the challenging character has 6 {S} or more, gain 3 lore instead.",
-  cost: 2,
-  moveCost: 2,
-  lore: 0,
-  cardNumber: 135,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "d8442ef512485e4740ec831c0beeb50cf8069b5c",
-  },
   abilities: [
     {
-      id: "1o0-1",
-      type: "triggered",
-      name: "ROUTINE RUCKUS",
-      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "choice",
         options: [
@@ -42,7 +20,29 @@ export const snugglyDucklingDisreputablePub: LocationCard = {
           "more, gain 3 lore instead.",
         ],
       },
+      id: "1o0-1",
+      name: "ROUTINE RUCKUS",
       text: "ROUTINE RUCKUS Whenever a character with 3 {S} or more challenges another character while here, gain 1 lore. If the challenging character has 6 {S} or more, gain 3 lore instead.",
+      trigger: { event: "play", timing: "when", on: "SELF" },
+      type: "triggered",
     },
   ],
+  cardNumber: 135,
+  cardType: "location",
+  cost: 2,
+  externalIds: {
+    ravensburger: "d8442ef512485e4740ec831c0beeb50cf8069b5c",
+  },
+  franchise: "Tangled",
+  fullName: "Snuggly Duckling - Disreputable Pub",
+  id: "1o0",
+  inkType: ["ruby"],
+  inkable: true,
+  lore: 0,
+  missingTests: true,
+  moveCost: 2,
+  name: "Snuggly Duckling",
+  set: "004",
+  text: "ROUTINE RUCKUS Whenever a character with 3 {S} or more challenges another character while here, gain 1 lore. If the challenging character has 6 {S} or more, gain 3 lore instead.",
+  version: "Disreputable Pub",
 };

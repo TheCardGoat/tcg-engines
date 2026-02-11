@@ -1,35 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const stitchTeamUnderdog: CharacterCard = {
-  id: "jmz",
-  cardType: "character",
-  name: "Stitch",
-  version: "Team Underdog",
-  fullName: "Stitch - Team Underdog",
-  inkType: ["steel"],
-  franchise: "Lilo and Stitch",
-  set: "005",
-  text: "HEAVE HO! When you play this character, you may deal 2 damage to chosen character.",
-  cost: 4,
-  strength: 1,
-  willpower: 4,
-  lore: 1,
-  cardNumber: 171,
-  inkable: false,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "46c74815d938940a1435bdae976105ce9951db9f",
-  },
   abilities: [
     {
-      id: "jmz-1",
-      type: "triggered",
-      name: "HEAVE HO!",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -45,8 +18,35 @@ export const stitchTeamUnderdog: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "jmz-1",
+      name: "HEAVE HO!",
       text: "HEAVE HO! When you play this character, you may deal 2 damage to chosen character.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 171,
+  cardType: "character",
   classifications: ["Storyborn", "Hero", "Alien"],
+  cost: 4,
+  externalIds: {
+    ravensburger: "46c74815d938940a1435bdae976105ce9951db9f",
+  },
+  franchise: "Lilo and Stitch",
+  fullName: "Stitch - Team Underdog",
+  id: "jmz",
+  inkType: ["steel"],
+  inkable: false,
+  lore: 1,
+  missingTests: true,
+  name: "Stitch",
+  set: "005",
+  strength: 1,
+  text: "HEAVE HO! When you play this character, you may deal 2 damage to chosen character.",
+  version: "Team Underdog",
+  willpower: 4,
 };

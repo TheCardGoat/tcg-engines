@@ -3,34 +3,34 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   gumboPot,
-//   mauricesWorkshop,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   GumboPot,
+//   MauricesWorkshop,
 // } from "@lorcanito/lorcana-engine/cards/002/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Maurice's Workshop", () => {
-//   it("**LOOKING FOR THIS?** Whenever you play another item, you may pay 1 {I} to draw a card.", () => {
-//     const testStore = new TestStore({
-//       inkwell: mauricesWorkshop.cost + gumboPot.cost + 1,
-//       hand: [mauricesWorkshop, gumboPot],
-//       deck: 3,
+// Describe("Maurice's Workshop", () => {
+//   It("**LOOKING FOR THIS?** Whenever you play another item, you may pay 1 {I} to draw a card.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: mauricesWorkshop.cost + gumboPot.cost + 1,
+//       Hand: [mauricesWorkshop, gumboPot],
+//       Deck: 3,
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", mauricesWorkshop.id);
-//     const target = testStore.getByZoneAndId("hand", gumboPot.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", mauricesWorkshop.id);
+//     Const target = testStore.getByZoneAndId("hand", gumboPot.id);
 //
-//     cardUnderTest.playFromHand();
-//     expect(testStore.stackLayers).toHaveLength(0);
+//     CardUnderTest.playFromHand();
+//     Expect(testStore.stackLayers).toHaveLength(0);
 //
-//     target.playFromHand();
-//     testStore.resolveOptionalAbility();
+//     Target.playFromHand();
+//     TestStore.resolveOptionalAbility();
 //
-//     expect(testStore.getZonesCardCount()).toEqual(
-//       expect.objectContaining({
-//         deck: 2,
-//         hand: 1,
+//     Expect(testStore.getZonesCardCount()).toEqual(
+//       Expect.objectContaining({
+//         Deck: 2,
+//         Hand: 1,
 //       }),
 //     );
 //   });

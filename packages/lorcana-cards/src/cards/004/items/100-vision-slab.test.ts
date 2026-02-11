@@ -3,125 +3,125 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   donaldDuck,
-//   mickeyBraveLittleTailor,
-//   rapunzelGiftedWithHealing,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   DonaldDuck,
+//   MickeyBraveLittleTailor,
+//   RapunzelGiftedWithHealing,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import {
-//   goofyKnightForADay,
-//   madamMimSnake,
+// Import {
+//   GoofyKnightForADay,
+//   MadamMimSnake,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import {
-//   belleAccomplishedMystic,
-//   goofySuperGoof,
+// Import {
+//   BelleAccomplishedMystic,
+//   GoofySuperGoof,
 // } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { visionSlab } from "@lorcanito/lorcana-engine/cards/004/items/items";
-// import {
-//   luisaMadrigalEntertainingMuscle,
-//   whiteRabbitRoyalHerald,
+// Import { visionSlab } from "@lorcanito/lorcana-engine/cards/004/items/items";
+// Import {
+//   LuisaMadrigalEntertainingMuscle,
+//   WhiteRabbitRoyalHerald,
 // } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Vision Slab", () => {
-//   describe("**TRAPPED!** Damage counters can't be removed.", () => {
-//     it("Prevent Removing Damage", async () => {
-//       const testEngine = new TestEngine({
-//         play: [goofyKnightForADay, visionSlab],
-//         hand: [rapunzelGiftedWithHealing],
-//         inkwell: rapunzelGiftedWithHealing.cost,
+// Describe("Vision Slab", () => {
+//   Describe("**TRAPPED!** Damage counters can't be removed.", () => {
+//     It("Prevent Removing Damage", async () => {
+//       Const testEngine = new TestEngine({
+//         Play: [goofyKnightForADay, visionSlab],
+//         Hand: [rapunzelGiftedWithHealing],
+//         Inkwell: rapunzelGiftedWithHealing.cost,
 //       });
 //
-//       await testEngine.setCardDamage(goofyKnightForADay, 5);
-//       await testEngine.playCard(rapunzelGiftedWithHealing, {
-//         targets: [goofyKnightForADay],
+//       Await testEngine.setCardDamage(goofyKnightForADay, 5);
+//       Await testEngine.playCard(rapunzelGiftedWithHealing, {
+//         Targets: [goofyKnightForADay],
 //       });
 //
-//       expect(testEngine.getCardModel(goofyKnightForADay).damage).toEqual(5);
+//       Expect(testEngine.getCardModel(goofyKnightForADay).damage).toEqual(5);
 //     });
 //
-//     it("Prevent Moving Damage", async () => {
-//       const testEngine = new TestEngine(
+//     It("Prevent Moving Damage", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: belleAccomplishedMystic.cost * 2 + madamMimSnake.cost,
-//           play: [goofySuperGoof, donaldDuck, visionSlab],
-//           hand: [belleAccomplishedMystic, madamMimSnake],
+//           Inkwell: belleAccomplishedMystic.cost * 2 + madamMimSnake.cost,
+//           Play: [goofySuperGoof, donaldDuck, visionSlab],
+//           Hand: [belleAccomplishedMystic, madamMimSnake],
 //         },
 //         {
-//           play: [mickeyBraveLittleTailor, goofyKnightForADay],
+//           Play: [mickeyBraveLittleTailor, goofyKnightForADay],
 //         },
 //       );
 //
-//       await testEngine.setCardDamage(donaldDuck, 2);
-//       await testEngine.playCard(
-//         belleAccomplishedMystic,
+//       Await testEngine.setCardDamage(donaldDuck, 2);
+//       Await testEngine.playCard(
+//         BelleAccomplishedMystic,
 //         {
-//           targets: [donaldDuck],
+//           Targets: [donaldDuck],
 //         },
-//         true,
+//         True,
 //       );
-//       await testEngine.resolveTopOfStack({
-//         targets: [goofyKnightForADay],
+//       Await testEngine.resolveTopOfStack({
+//         Targets: [goofyKnightForADay],
 //       });
 //
-//       expect(testEngine.getCardModel(donaldDuck).damage).toBe(2);
-//       expect(testEngine.getCardModel(goofyKnightForADay).damage).toBe(0);
+//       Expect(testEngine.getCardModel(donaldDuck).damage).toBe(2);
+//       Expect(testEngine.getCardModel(goofyKnightForADay).damage).toBe(0);
 //     });
 //
-//     it("Applies to both players' cards", async () => {
-//       const testEngine = new TestEngine(
+//     It("Applies to both players' cards", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           play: [whiteRabbitRoyalHerald],
-//           hand: [visionSlab],
-//           inkwell: visionSlab.cost,
+//           Play: [whiteRabbitRoyalHerald],
+//           Hand: [visionSlab],
+//           Inkwell: visionSlab.cost,
 //         },
 //         {
-//           play: [luisaMadrigalEntertainingMuscle],
+//           Play: [luisaMadrigalEntertainingMuscle],
 //         },
 //       );
 //
-//       const ownCharacter = testEngine.getCardModel(whiteRabbitRoyalHerald);
-//       const opponentsCard = testEngine.getCardModel(
-//         luisaMadrigalEntertainingMuscle,
+//       Const ownCharacter = testEngine.getCardModel(whiteRabbitRoyalHerald);
+//       Const opponentsCard = testEngine.getCardModel(
+//         LuisaMadrigalEntertainingMuscle,
 //       );
 //
-//       expect(
-//         testEngine.store.effectStore.getAbilitiesForCard(ownCharacter),
+//       Expect(
+//         TestEngine.store.effectStore.getAbilitiesForCard(ownCharacter),
 //       ).toHaveLength(0);
-//       expect(
-//         testEngine.store.effectStore.getAbilitiesForCard(opponentsCard),
+//       Expect(
+//         TestEngine.store.effectStore.getAbilitiesForCard(opponentsCard),
 //       ).toHaveLength(0);
 //
-//       await testEngine.playCard(visionSlab);
+//       Await testEngine.playCard(visionSlab);
 //
-//       expect(
-//         testEngine.store.effectStore.getAbilitiesForCard(ownCharacter).at(0)
+//       Expect(
+//         TestEngine.store.effectStore.getAbilitiesForCard(ownCharacter).at(0)
 //           ?.name,
 //       ).toEqual("TRAPPED!");
-//       expect(
-//         testEngine.store.effectStore.getAbilitiesForCard(opponentsCard).at(0)
+//       Expect(
+//         TestEngine.store.effectStore.getAbilitiesForCard(opponentsCard).at(0)
 //           ?.name,
 //       ).toEqual("TRAPPED!");
 //     });
 //   });
 //
-//   describe("**DANGER REVEALED** At the start of your turn, if an opposing character has damage, gain 1 lore. ", () => {
-//     it("Gives 1 lore if opponent has damaged character", async () => {
-//       const testEngine = new TestEngine(
+//   Describe("**DANGER REVEALED** At the start of your turn, if an opposing character has damage, gain 1 lore. ", () => {
+//     It("Gives 1 lore if opponent has damaged character", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           play: [whiteRabbitRoyalHerald],
+//           Play: [whiteRabbitRoyalHerald],
 //         },
 //         {
-//           play: [luisaMadrigalEntertainingMuscle, visionSlab],
+//           Play: [luisaMadrigalEntertainingMuscle, visionSlab],
 //         },
 //       );
 //
-//       await testEngine.setCardDamage(whiteRabbitRoyalHerald, 1);
+//       Await testEngine.setCardDamage(whiteRabbitRoyalHerald, 1);
 //
-//       expect(testEngine.getLoreForPlayer("player_two")).toEqual(0);
-//       await testEngine.passTurn();
-//       expect(testEngine.getLoreForPlayer("player_two")).toEqual(1);
+//       Expect(testEngine.getLoreForPlayer("player_two")).toEqual(0);
+//       Await testEngine.passTurn();
+//       Expect(testEngine.getLoreForPlayer("player_two")).toEqual(1);
 //     });
 //   });
 // });

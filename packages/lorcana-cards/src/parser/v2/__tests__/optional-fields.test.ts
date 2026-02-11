@@ -23,7 +23,7 @@ describe("Optional Fields in AbilityWithText", () => {
 
       expect(result.success).toBe(true);
       expect(result.ability).toBeDefined();
-      // text is currently included by default if it has a value
+      // Text is currently included by default if it has a value
       expect(result.ability?.text).toBe("Rush");
     });
 
@@ -68,8 +68,8 @@ describe("Optional Fields in AbilityWithText", () => {
   describe("With generateAbilityUids option", () => {
     it("should include id when generateAbilityUids is true and cardId is provided", () => {
       const result = parseAbilityText("Rush", {
-        generateAbilityUids: true,
         cardId: "17t",
+        generateAbilityUids: true,
       });
 
       expect(result.success).toBe(true);
@@ -78,8 +78,8 @@ describe("Optional Fields in AbilityWithText", () => {
 
     it("should NOT include id when generateAbilityUids is false", () => {
       const result = parseAbilityText("Rush", {
-        generateAbilityUids: false,
         cardId: "17t",
+        generateAbilityUids: false,
       });
 
       expect(result.success).toBe(true);

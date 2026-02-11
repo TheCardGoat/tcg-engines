@@ -17,10 +17,10 @@ describe("Effect: Counter", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "spell",
           effect: expect.objectContaining({
             type: "counter",
           }),
+          type: "spell",
         }),
       );
     });
@@ -39,21 +39,19 @@ describe("Effect: Counter", () => {
 
   describe("counter unless", () => {
     it.skip("should parse 'Counter a spell unless its controller pays :rb_energy_2:.'", () => {
-      const result = parseAbilities(
-        "Counter a spell unless its controller pays :rb_energy_2:.",
-      );
+      const result = parseAbilities("Counter a spell unless its controller pays :rb_energy_2:.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "spell",
           effect: expect.objectContaining({
             type: "counter",
             unless: expect.objectContaining({
               energy: 2,
             }),
           }),
+          type: "spell",
         }),
       );
     });

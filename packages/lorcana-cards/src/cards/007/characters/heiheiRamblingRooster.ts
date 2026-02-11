@@ -1,24 +1,24 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const heiheiRamblingRooster: LorcanitoCharacterCard = {
-//   id: "pfq",
-//   name: "Heihei",
-//   title: "Rambling Rooster",
-//   characteristics: ["dreamborn", "ally"],
-//   type: "character",
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 1,
-//   strength: 2,
-//   willpower: 2,
-//   illustrator: "Alan Batson",
-//   number: 185,
-//   set: "007",
-//   externalIds: {
-//     tcgPlayer: 619512,
+// Export const heiheiRamblingRooster: LorcanitoCharacterCard = {
+//   Id: "pfq",
+//   Name: "Heihei",
+//   Title: "Rambling Rooster",
+//   Characteristics: ["dreamborn", "ally"],
+//   Type: "character",
+//   Inkwell: true,
+//   Colors: ["steel"],
+//   Cost: 1,
+//   Strength: 2,
+//   Willpower: 2,
+//   Illustrator: "Alan Batson",
+//   Number: 185,
+//   Set: "007",
+//   ExternalIds: {
+//     TcgPlayer: 619512,
 //   },
-//   rarity: "common",
-//   lore: 1,
+//   Rarity: "common",
+//   Lore: 1,
 // };
 //

@@ -5,9 +5,9 @@ import { ursulaundefined } from "./ursulaShellNecklace";
 describe("Ursula - undefined", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [Ursula] });
-  //   expect(testEngine.getCardModel(Ursula).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [Ursula] });
+  //   Expect(testEngine.getCardModel(Ursula).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });

@@ -5,9 +5,9 @@ import { aladdinCorneredSwordsman } from "./171-aladdin-cornered-swordsman";
 describe("Aladdin - Cornered Swordsman", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [aladdinCorneredSwordman] });
-  //   expect(testEngine.getCardModel(aladdinCorneredSwordman).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [aladdinCorneredSwordman] });
+  //   Expect(testEngine.getCardModel(aladdinCorneredSwordman).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });

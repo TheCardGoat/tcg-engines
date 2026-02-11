@@ -5,9 +5,9 @@ import { magicGoldenFlower } from "./169-magic-golden-flower";
 describe("Magic Golden Flower - undefined", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [magicGoldenFlower] });
-  //   expect(testEngine.getCardModel(magicGoldenFlower).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [magicGoldenFlower] });
+  //   Expect(testEngine.getCardModel(magicGoldenFlower).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,45 +17,45 @@ describe("Magic Golden Flower - undefined", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { arielOnHumanLegs } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { magicGoldenFlower } from "@lorcanito/lorcana-engine/cards/001/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { arielOnHumanLegs } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { magicGoldenFlower } from "@lorcanito/lorcana-engine/cards/001/items/items";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Magic Golden Flower", () => {
-//   it("Healing Pollen - healing 3 damage", () => {
-//     const testStore = new TestStore({
-//       play: [magicGoldenFlower, arielOnHumanLegs],
+// Describe("Magic Golden Flower", () => {
+//   It("Healing Pollen - healing 3 damage", () => {
+//     Const testStore = new TestStore({
+//       Play: [magicGoldenFlower, arielOnHumanLegs],
 //     });
 //
-//     const damagedChar = testStore.getByZoneAndId("play", arielOnHumanLegs.id);
-//     damagedChar.updateCardMeta({ damage: 3 });
-//     expect(damagedChar.meta).toEqual(expect.objectContaining({ damage: 3 }));
+//     Const damagedChar = testStore.getByZoneAndId("play", arielOnHumanLegs.id);
+//     DamagedChar.updateCardMeta({ damage: 3 });
+//     Expect(damagedChar.meta).toEqual(expect.objectContaining({ damage: 3 }));
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       magicGoldenFlower.id,
+//       MagicGoldenFlower.id,
 //     );
 //
-//     cardUnderTest.activate();
+//     CardUnderTest.activate();
 //
-//     testStore.resolveTopOfStack({
-//       targetId: damagedChar.instanceId,
+//     TestStore.resolveTopOfStack({
+//       TargetId: damagedChar.instanceId,
 //     });
 //
-//     expect(damagedChar.meta).toEqual(expect.objectContaining({ damage: 0 }));
-//     expect(testStore.getZonesCardCount()).toEqual(
-//       expect.objectContaining({
-//         play: 1,
-//         discard: 1,
+//     Expect(damagedChar.meta).toEqual(expect.objectContaining({ damage: 0 }));
+//     Expect(testStore.getZonesCardCount()).toEqual(
+//       Expect.objectContaining({
+//         Play: 1,
+//         Discard: 1,
 //       }),
 //     );
-//     expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
+//     Expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
 //   });
 //
-//   it("Can undo", () => {
+//   It("Can undo", () => {
 //     // TODO: implement undo
-//     expect(true).toBe(true);
+//     Expect(true).toBe(true);
 //   });
 // });
 //

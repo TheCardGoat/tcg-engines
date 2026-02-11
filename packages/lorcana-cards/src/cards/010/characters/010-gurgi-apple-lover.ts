@@ -1,35 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const gurgiAppleLover: CharacterCard = {
-  id: "1pr",
-  cardType: "character",
-  name: "Gurgi",
-  version: "Apple Lover",
-  fullName: "Gurgi - Apple Lover",
-  inkType: ["amber"],
-  franchise: "Black Cauldron",
-  set: "010",
-  text: "HAPPY DAY When you play this character, you may remove up to 2 damage from chosen character.",
-  cost: 2,
-  strength: 2,
-  willpower: 3,
-  lore: 1,
-  cardNumber: 10,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "de9420fae42d1c05568f9e37cdeae27e27a78cd2",
-  },
   abilities: [
     {
-      id: "1pr-1",
-      type: "triggered",
-      name: "HAPPY DAY",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -46,8 +19,35 @@ export const gurgiAppleLover: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "1pr-1",
+      name: "HAPPY DAY",
       text: "HAPPY DAY When you play this character, you may remove up to 2 damage from chosen character.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 10,
+  cardType: "character",
   classifications: ["Storyborn", "Ally"],
+  cost: 2,
+  externalIds: {
+    ravensburger: "de9420fae42d1c05568f9e37cdeae27e27a78cd2",
+  },
+  franchise: "Black Cauldron",
+  fullName: "Gurgi - Apple Lover",
+  id: "1pr",
+  inkType: ["amber"],
+  inkable: true,
+  lore: 1,
+  missingTests: true,
+  name: "Gurgi",
+  set: "010",
+  strength: 2,
+  text: "HAPPY DAY When you play this character, you may remove up to 2 damage from chosen character.",
+  version: "Apple Lover",
+  willpower: 3,
 };

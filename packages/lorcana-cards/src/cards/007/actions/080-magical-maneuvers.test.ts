@@ -3,40 +3,40 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   arielSpectacularSinger,
-//   mickeyBraveLittleTailor,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   ArielSpectacularSinger,
+//   MickeyBraveLittleTailor,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { magicalManeuvers } from "@lorcanito/lorcana-engine/cards/007";
-// import { mickeyMouseBraveLittlePrince } from "@lorcanito/lorcana-engine/cards/009";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { magicalManeuvers } from "@lorcanito/lorcana-engine/cards/007";
+// Import { mickeyMouseBraveLittlePrince } from "@lorcanito/lorcana-engine/cards/009";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Magical Maneuvers", () => {
-//   it("Return chosen character of yours to your hand. Exert chosen character.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Magical Maneuvers", () => {
+//   It("Return chosen character of yours to your hand. Exert chosen character.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: magicalManeuvers.cost,
-//         hand: [magicalManeuvers],
-//         play: [arielSpectacularSinger],
+//         Inkwell: magicalManeuvers.cost,
+//         Hand: [magicalManeuvers],
+//         Play: [arielSpectacularSinger],
 //       },
 //       {
-//         play: [mickeyBraveLittleTailor, mickeyMouseBraveLittlePrince],
+//         Play: [mickeyBraveLittleTailor, mickeyMouseBraveLittlePrince],
 //       },
 //     );
 //
-//     await testEngine.playCard(magicalManeuvers);
+//     Await testEngine.playCard(magicalManeuvers);
 //
 //     // First effect: Return your character to hand
-//     await testEngine.resolveTopOfStack(
+//     Await testEngine.resolveTopOfStack(
 //       { targets: [arielSpectacularSinger] },
-//       true,
+//       True,
 //     );
-//     expect(testEngine.getCardModel(arielSpectacularSinger).zone).toBe("hand");
+//     Expect(testEngine.getCardModel(arielSpectacularSinger).zone).toBe("hand");
 //
 //     // Second effect: Exert any character
-//     await testEngine.resolveTopOfStack({ targets: [mickeyBraveLittleTailor] });
-//     expect(testEngine.getCardModel(mickeyBraveLittleTailor).exerted).toBe(true);
+//     Await testEngine.resolveTopOfStack({ targets: [mickeyBraveLittleTailor] });
+//     Expect(testEngine.getCardModel(mickeyBraveLittleTailor).exerted).toBe(true);
 //   });
 // });
 //

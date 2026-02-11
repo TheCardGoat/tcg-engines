@@ -3,52 +3,52 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { thisIsMyFamily } from "@lorcanito/lorcana-engine/cards/007";
-// import {
-//   charlotteLaBouffMardiGrasPrincess,
-//   deweyLovableShowoff,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { thisIsMyFamily } from "@lorcanito/lorcana-engine/cards/007";
+// Import {
+//   CharlotteLaBouffMardiGrasPrincess,
+//   DeweyLovableShowoff,
 // } from "@lorcanito/lorcana-engine/cards/008";
-// import { maxGoofChartTopper } from "@lorcanito/lorcana-engine/cards/009";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { maxGoofChartTopper } from "@lorcanito/lorcana-engine/cards/009";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Max Goof - Chart Topper", () => {
-//   it("Shift 4 {I} (You may pay 4 {I} to play this on top of one of your characters named Max Goof.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [maxGoofChartTopper],
+// Describe("Max Goof - Chart Topper", () => {
+//   It("Shift 4 {I} (You may pay 4 {I} to play this on top of one of your characters named Max Goof.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [maxGoofChartTopper],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(maxGoofChartTopper);
-//     expect(cardUnderTest.hasShift).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(maxGoofChartTopper);
+//     Expect(cardUnderTest.hasShift).toBe(true);
 //   });
 //
-//   it("NUMBER ONE HIT Whenever this character quests, you may play a song card with cost 4 or less from your discard for free, then put it on the bottom of your deck instead of into your discard.", async () => {
-//     const testEngine = new TestEngine({
-//       play: [maxGoofChartTopper],
-//       discard: [thisIsMyFamily],
-//       deck: [deweyLovableShowoff, charlotteLaBouffMardiGrasPrincess],
+//   It("NUMBER ONE HIT Whenever this character quests, you may play a song card with cost 4 or less from your discard for free, then put it on the bottom of your deck instead of into your discard.", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [maxGoofChartTopper],
+//       Discard: [thisIsMyFamily],
+//       Deck: [deweyLovableShowoff, charlotteLaBouffMardiGrasPrincess],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(maxGoofChartTopper);
-//     const targetCard = testEngine.getCardModel(thisIsMyFamily);
+//     Const cardUnderTest = testEngine.getCardModel(maxGoofChartTopper);
+//     Const targetCard = testEngine.getCardModel(thisIsMyFamily);
 //
-//     expect(testEngine.getCardsByZone("deck").length).toBe(2);
-//     expect(testEngine.getCardsByZone("discard").length).toBe(1);
+//     Expect(testEngine.getCardsByZone("deck").length).toBe(2);
+//     Expect(testEngine.getCardsByZone("discard").length).toBe(1);
 //
-//     await testEngine.questCard(cardUnderTest);
-//     expect(testEngine.getPlayerLore()).toBe(2);
+//     Await testEngine.questCard(cardUnderTest);
+//     Expect(testEngine.getPlayerLore()).toBe(2);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({ targets: [targetCard] }, true);
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({ targets: [targetCard] }, true);
+//     Await testEngine.resolveTopOfStack({});
 //
 //     // This is my Family draws you a card, and give one lore
-//     expect(testEngine.getPlayerLore()).toBe(3);
-//     expect(testEngine.getCardsByZone("hand").length).toBe(1);
+//     Expect(testEngine.getPlayerLore()).toBe(3);
+//     Expect(testEngine.getCardsByZone("hand").length).toBe(1);
 //
 //     // You initially had 2, you drew 1, and put the other on the bottom of your deck
-//     expect(testEngine.getCardsByZone("deck").length).toBe(2);
-//     expect(testEngine.getCardsByZone("discard").length).toBe(0);
+//     Expect(testEngine.getCardsByZone("deck").length).toBe(2);
+//     Expect(testEngine.getCardsByZone("discard").length).toBe(0);
 //   });
 // });
 //

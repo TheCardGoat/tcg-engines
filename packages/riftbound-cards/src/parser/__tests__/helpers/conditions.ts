@@ -41,52 +41,45 @@ import type {
 export const Conditions = {
   // State conditions
   whileMighty: (target?: "self" | Target): WhileMightyCondition =>
-    target ? { type: "while-mighty", target } : { type: "while-mighty" },
+    target ? { target, type: "while-mighty" } : { type: "while-mighty" },
 
   whileBuffed: (target?: "self" | Target): WhileBuffedCondition =>
-    target ? { type: "while-buffed", target } : { type: "while-buffed" },
+    target ? { target, type: "while-buffed" } : { type: "while-buffed" },
 
-  whileAtBattlefield: (
-    target?: "self" | Target,
-  ): WhileAtBattlefieldCondition =>
-    target
-      ? { type: "while-at-battlefield", target }
-      : { type: "while-at-battlefield" },
+  whileAtBattlefield: (target?: "self" | Target): WhileAtBattlefieldCondition =>
+    target ? { target, type: "while-at-battlefield" } : { type: "while-at-battlefield" },
 
   whileAlone: (target?: "self" | Target): WhileAloneCondition =>
-    target ? { type: "while-alone", target } : { type: "while-alone" },
+    target ? { target, type: "while-alone" } : { type: "while-alone" },
 
   // Turn conditions
-  thisTurn: (
-    event: ThisTurnCondition["event"],
-    count?: Comparison,
-  ): ThisTurnCondition =>
-    count ? { type: "this-turn", event, count } : { type: "this-turn", event },
+  thisTurn: (event: ThisTurnCondition["event"], count?: Comparison): ThisTurnCondition =>
+    count ? { count, event, type: "this-turn" } : { event, type: "this-turn" },
 
   legion: (): LegionCondition => ({ type: "legion" }),
 
   firstTime: (event: string): FirstTimeCondition => ({
-    type: "first-time",
     event,
+    type: "first-time",
   }),
 
   // Count conditions
   count: (target: Target, comparison: Comparison): CountCondition => ({
-    type: "count",
-    target,
     comparison,
+    target,
+    type: "count",
   }),
 
   hasAtLeast: (count: number, target: Target): HasAtLeastCondition => ({
-    type: "has-at-least",
     count,
     target,
+    type: "has-at-least",
   }),
 
   // Cost conditions
   payCost: (cost: Cost): PayCostCondition => ({
-    type: "pay-cost",
     cost,
+    type: "pay-cost",
   }),
 
   paidAdditionalCost: (): PaidAdditionalCostCondition => ({
@@ -94,27 +87,21 @@ export const Conditions = {
   }),
 
   spentPower: (amount: number, domain?: string): SpentPowerCondition => ({
-    type: "spent-power",
     amount,
     domain,
+    type: "spent-power",
   }),
 
   // Score conditions
-  scoreWithin: (
-    points: number,
-    whose?: "your" | "opponent" | "any",
-  ): ScoreWithinCondition => ({
-    type: "score-within",
+  scoreWithin: (points: number, whose?: "your" | "opponent" | "any"): ScoreWithinCondition => ({
     points,
+    type: "score-within",
     whose,
   }),
 
-  score: (
-    comparison: Comparison,
-    whose?: "your" | "opponent",
-  ): ScoreCondition => ({
-    type: "score",
+  score: (comparison: Comparison, whose?: "your" | "opponent"): ScoreCondition => ({
     comparison,
+    type: "score",
     whose,
   }),
 
@@ -122,40 +109,40 @@ export const Conditions = {
   inCombat: (): InCombatCondition => ({ type: "in-combat" }),
 
   attacking: (target?: "self" | Target): AttackingCondition =>
-    target ? { type: "attacking", target } : { type: "attacking" },
+    target ? { target, type: "attacking" } : { type: "attacking" },
 
   defending: (target?: "self" | Target): DefendingCondition =>
-    target ? { type: "defending", target } : { type: "defending" },
+    target ? { target, type: "defending" } : { type: "defending" },
 
   // Control conditions
   control: (target: Target): ControlCondition => ({
-    type: "control",
     target,
+    type: "control",
   }),
 
   opponentControls: (target: Target): OpponentControlsCondition => ({
-    type: "opponent-controls",
     target,
+    type: "opponent-controls",
   }),
 
   controlBattlefield: (count?: Comparison): ControlBattlefieldCondition => ({
-    type: "control-battlefield",
     count,
+    type: "control-battlefield",
   }),
 
   // Logical conditions
   and: (...conditions: Condition[]): AndCondition => ({
-    type: "and",
     conditions,
+    type: "and",
   }),
 
   or: (...conditions: Condition[]): OrCondition => ({
-    type: "or",
     conditions,
+    type: "or",
   }),
 
   not: (condition: Condition): NotCondition => ({
-    type: "not",
     condition,
+    type: "not",
   }),
 };

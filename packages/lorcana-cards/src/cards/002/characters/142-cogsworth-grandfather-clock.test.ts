@@ -3,204 +3,204 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   megaraPullingTheStrings,
-//   mickeyMouseTrueFriend,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   MegaraPullingTheStrings,
+//   MickeyMouseTrueFriend,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { letTheStormRageOn } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
-// import {
-//   cogsworthGrandfatherClock,
-//   eliLaBouffBigDaddy,
-//   goofyKnightForADay,
-//   madamMimFox,
-//   owlLogicalLecturer,
+// Import { letTheStormRageOn } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
+// Import {
+//   CogsworthGrandfatherClock,
+//   EliLaBouffBigDaddy,
+//   GoofyKnightForADay,
+//   MadamMimFox,
+//   OwlLogicalLecturer,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Cogsworth - Grandfather Clock", () => {
-//   it("Shift", () => {
-//     const testStore = new TestStore({
-//       play: [cogsworthGrandfatherClock],
+// Describe("Cogsworth - Grandfather Clock", () => {
+//   It("Shift", () => {
+//     Const testStore = new TestStore({
+//       Play: [cogsworthGrandfatherClock],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       cogsworthGrandfatherClock.id,
+//       CogsworthGrandfatherClock.id,
 //     );
 //
-//     expect(cardUnderTest.hasShift).toBeTruthy();
+//     Expect(cardUnderTest.hasShift).toBeTruthy();
 //   });
 //
-//   it("Ward", () => {
-//     const testStore = new TestStore({
-//       play: [cogsworthGrandfatherClock],
+//   It("Ward", () => {
+//     Const testStore = new TestStore({
+//       Play: [cogsworthGrandfatherClock],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       cogsworthGrandfatherClock.id,
+//       CogsworthGrandfatherClock.id,
 //     );
 //
-//     expect(cardUnderTest.hasWard).toBeTruthy();
+//     Expect(cardUnderTest.hasWard).toBeTruthy();
 //   });
 //
-//   describe("**UNWIND** Your other characters gain **Resist** +1 _(Damage dealt to them is reduced by 1.)_", () => {
-//     it("Other characters gain Resist", () => {
-//       const testStore = new TestStore({
-//         play: [
-//           megaraPullingTheStrings,
-//           mickeyMouseTrueFriend,
-//           cogsworthGrandfatherClock,
+//   Describe("**UNWIND** Your other characters gain **Resist** +1 _(Damage dealt to them is reduced by 1.)_", () => {
+//     It("Other characters gain Resist", () => {
+//       Const testStore = new TestStore({
+//         Play: [
+//           MegaraPullingTheStrings,
+//           MickeyMouseTrueFriend,
+//           CogsworthGrandfatherClock,
 //         ],
 //       });
 //
-//       const target = testStore.getByZoneAndId(
+//       Const target = testStore.getByZoneAndId(
 //         "play",
-//         megaraPullingTheStrings.id,
+//         MegaraPullingTheStrings.id,
 //       );
-//       const anotherTarget = testStore.getByZoneAndId(
+//       Const anotherTarget = testStore.getByZoneAndId(
 //         "play",
-//         mickeyMouseTrueFriend.id,
+//         MickeyMouseTrueFriend.id,
 //       );
 //
-//       expect(target.hasResist).toEqual(true);
-//       expect(anotherTarget.hasResist).toEqual(true);
+//       Expect(target.hasResist).toEqual(true);
+//       Expect(anotherTarget.hasResist).toEqual(true);
 //     });
 //
-//     it("Multiple Cogsworth should stack resist", () => {
-//       const testStore = new TestStore(
+//     It("Multiple Cogsworth should stack resist", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [
-//             megaraPullingTheStrings,
-//             mickeyMouseTrueFriend,
-//             cogsworthGrandfatherClock,
-//             cogsworthGrandfatherClock,
+//           Play: [
+//             MegaraPullingTheStrings,
+//             MickeyMouseTrueFriend,
+//             CogsworthGrandfatherClock,
+//             CogsworthGrandfatherClock,
 //           ],
 //         },
 //         {
-//           play: [madamMimFox, mickeyMouseTrueFriend],
+//           Play: [madamMimFox, mickeyMouseTrueFriend],
 //         },
 //       );
 //
-//       const target = testStore.getByZoneAndId("play", mickeyMouseTrueFriend.id);
+//       Const target = testStore.getByZoneAndId("play", mickeyMouseTrueFriend.id);
 //
-//       const cogs = testStore.getByZoneAndId(
+//       Const cogs = testStore.getByZoneAndId(
 //         "play",
-//         cogsworthGrandfatherClock.id,
+//         CogsworthGrandfatherClock.id,
 //       );
 //
-//       target.updateCardMeta({ exerted: true });
-//       cogs.updateCardMeta({ exerted: true });
+//       Target.updateCardMeta({ exerted: true });
+//       Cogs.updateCardMeta({ exerted: true });
 //
-//       const opponentMim = testStore.getByZoneAndId(
+//       Const opponentMim = testStore.getByZoneAndId(
 //         "play",
-//         madamMimFox.id,
+//         MadamMimFox.id,
 //         "player_two",
 //       );
-//       const opponentMicky = testStore.getByZoneAndId(
+//       Const opponentMicky = testStore.getByZoneAndId(
 //         "play",
-//         mickeyMouseTrueFriend.id,
+//         MickeyMouseTrueFriend.id,
 //         "player_two",
 //       );
 //
-//       expect(target.hasResist).toEqual(true);
+//       Expect(target.hasResist).toEqual(true);
 //       // Check that Mickey is at resist 2, fox has 4 attack so it should be reduced to 2
-//       opponentMim.challenge(target);
-//       expect(target.damage).toEqual(2);
+//       OpponentMim.challenge(target);
+//       Expect(target.damage).toEqual(2);
 //
-//       expect(cogs.hasResist).toEqual(true);
+//       Expect(cogs.hasResist).toEqual(true);
 //       // Check that cogsworth is only at resist 1, mickey has 3 attack so it should be reduced to 2
-//       opponentMicky.challenge(cogs);
-//       expect(cogs.damage).toEqual(2);
+//       OpponentMicky.challenge(cogs);
+//       Expect(cogs.damage).toEqual(2);
 //     });
 //
-//     it("Cogsworth himself doesn't have resist", () => {
-//       const testStore = new TestStore({
-//         play: [cogsworthGrandfatherClock],
+//     It("Cogsworth himself doesn't have resist", () => {
+//       Const testStore = new TestStore({
+//         Play: [cogsworthGrandfatherClock],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         cogsworthGrandfatherClock.id,
+//         CogsworthGrandfatherClock.id,
 //       );
 //
-//       expect(cardUnderTest.hasResist).toEqual(false);
+//       Expect(cardUnderTest.hasResist).toEqual(false);
 //     });
 //
-//     it("Two Cogsworths give resist to one another", () => {
-//       const testStore = new TestStore({
-//         play: [cogsworthGrandfatherClock, cogsworthGrandfatherClock],
+//     It("Two Cogsworths give resist to one another", () => {
+//       Const testStore = new TestStore({
+//         Play: [cogsworthGrandfatherClock, cogsworthGrandfatherClock],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         cogsworthGrandfatherClock.id,
+//         CogsworthGrandfatherClock.id,
 //       );
 //
-//       expect(cardUnderTest.hasResist).toEqual(true);
+//       Expect(cardUnderTest.hasResist).toEqual(true);
 //     });
 //   });
 // });
 //
-// describe("Regression", () => {
-//   it("should not be targeted by Let the Storm Rage On", () => {
-//     const testStore = new TestStore(
+// Describe("Regression", () => {
+//   It("should not be targeted by Let the Storm Rage On", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: letTheStormRageOn.cost,
-//         hand: [letTheStormRageOn],
-//         deck: 2,
+//         Inkwell: letTheStormRageOn.cost,
+//         Hand: [letTheStormRageOn],
+//         Deck: 2,
 //       },
 //       { play: [cogsworthGrandfatherClock, goofyKnightForADay] },
 //     );
 //
-//     const cardUnderTest = testStore.getCard(letTheStormRageOn);
-//     const target = testStore.getCard(cogsworthGrandfatherClock);
+//     Const cardUnderTest = testStore.getCard(letTheStormRageOn);
+//     Const target = testStore.getCard(cogsworthGrandfatherClock);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveTopOfStack({ targets: [target] }, true);
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveTopOfStack({ targets: [target] }, true);
 //
-//     expect(target.meta.damage).toBeFalsy();
+//     Expect(target.meta.damage).toBeFalsy();
 //   });
 //
-//   it("Resist not working", () => {
-//     const testStore = new TestStore(
+//   It("Resist not working", () => {
+//     Const testStore = new TestStore(
 //       {
-//         play: [eliLaBouffBigDaddy],
+//         Play: [eliLaBouffBigDaddy],
 //       },
 //       { play: [cogsworthGrandfatherClock, owlLogicalLecturer] },
 //     );
 //
-//     const attacker = testStore.getCard(eliLaBouffBigDaddy);
-//     const defender = testStore.getCard(owlLogicalLecturer);
+//     Const attacker = testStore.getCard(eliLaBouffBigDaddy);
+//     Const defender = testStore.getCard(owlLogicalLecturer);
 //
-//     expect(defender.hasResist).toEqual(true);
-//     defender.updateCardMeta({ exerted: true });
+//     Expect(defender.hasResist).toEqual(true);
+//     Defender.updateCardMeta({ exerted: true });
 //
-//     attacker.challenge(defender);
+//     Attacker.challenge(defender);
 //
-//     expect(defender.meta.damage).toEqual(1);
-//     expect(attacker.meta.damage).toEqual(2);
+//     Expect(defender.meta.damage).toEqual(1);
+//     Expect(attacker.meta.damage).toEqual(2);
 //   });
 //
-//   it("Resist not working", () => {
-//     const testStore = new TestStore(
+//   It("Resist not working", () => {
+//     Const testStore = new TestStore(
 //       { play: [cogsworthGrandfatherClock, owlLogicalLecturer] },
 //       {
-//         play: [eliLaBouffBigDaddy],
+//         Play: [eliLaBouffBigDaddy],
 //       },
 //     );
 //
-//     const attacker = testStore.getCard(owlLogicalLecturer);
-//     const defender = testStore.getCard(eliLaBouffBigDaddy);
+//     Const attacker = testStore.getCard(owlLogicalLecturer);
+//     Const defender = testStore.getCard(eliLaBouffBigDaddy);
 //
-//     expect(attacker.hasResist).toEqual(true);
-//     defender.updateCardMeta({ exerted: true });
+//     Expect(attacker.hasResist).toEqual(true);
+//     Defender.updateCardMeta({ exerted: true });
 //
-//     attacker.challenge(defender);
+//     Attacker.challenge(defender);
 //
-//     expect(defender.meta.damage).toEqual(2);
-//     expect(attacker.meta.damage).toEqual(1);
+//     Expect(defender.meta.damage).toEqual(2);
+//     Expect(attacker.meta.damage).toEqual(1);
 //   });
 // });
 //

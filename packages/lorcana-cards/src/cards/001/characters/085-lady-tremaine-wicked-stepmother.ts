@@ -1,35 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const ladyTremaineWickedStepmother: CharacterCard = {
-  id: "qdk",
-  cardType: "character",
-  name: "Lady Tremaine",
-  version: "Wicked Stepmother",
-  fullName: "Lady Tremaine - Wicked Stepmother",
-  inkType: ["emerald"],
-  franchise: "Cinderella",
-  set: "001",
-  text: "DO IT AGAIN! When you play this character, you may return an action card from your discard to your hand.",
-  cost: 6,
-  strength: 1,
-  willpower: 5,
-  lore: 1,
-  cardNumber: 85,
-  inkable: false,
-  externalIds: {
-    ravensburger: "5f10313dc8b4bca05c0fcd2a13d6b70db3cee3a8",
-  },
   abilities: [
     {
-      id: "qdk-1",
-      text: "DO IT AGAIN! When you play this character, you may return an action card from your discard to your hand.",
-      name: "DO IT AGAIN!",
-      type: "triggered",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -39,37 +12,64 @@ export const ladyTremaineWickedStepmother: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "qdk-1",
+      name: "DO IT AGAIN!",
+      text: "DO IT AGAIN! When you play this character, you may return an action card from your discard to your hand.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 85,
+  cardType: "character",
+  cost: 6,
+  externalIds: {
+    ravensburger: "5f10313dc8b4bca05c0fcd2a13d6b70db3cee3a8",
+  },
+  franchise: "Cinderella",
+  fullName: "Lady Tremaine - Wicked Stepmother",
+  id: "qdk",
+  inkType: ["emerald"],
+  inkable: false,
+  lore: 1,
+  name: "Lady Tremaine",
+  set: "001",
+  strength: 1,
+  text: "DO IT AGAIN! When you play this character, you may return an action card from your discard to your hand.",
+  version: "Wicked Stepmother",
+  willpower: 5,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const ladyTremaine: LorcanitoCharacterCard = {
-//   id: "ucd",
+// Export const ladyTremaine: LorcanitoCharacterCard = {
+//   Id: "ucd",
 //
-//   name: "Lady Tremaine",
-//   title: "Wicked Stepmother",
-//   characteristics: ["dreamborn", "villain"],
-//   text: "**Do it again!** When you play this character, you may return an action card from your discard to your hand.",
-//   type: "character",
-//   abilities: [
-//     whenYouPlayThisCharAbility({
-//       type: "resolution",
-//       optional: true,
-//       name: "DO IT AGAIN!",
-//       text: "When you play this character, you may return an action card from your discard to your hand.",
-//       effects: [
+//   Name: "Lady Tremaine",
+//   Title: "Wicked Stepmother",
+//   Characteristics: ["dreamborn", "villain"],
+//   Text: "**Do it again!** When you play this character, you may return an action card from your discard to your hand.",
+//   Type: "character",
+//   Abilities: [
+//     WhenYouPlayThisCharAbility({
+//       Type: "resolution",
+//       Optional: true,
+//       Name: "DO IT AGAIN!",
+//       Text: "When you play this character, you may return an action card from your discard to your hand.",
+//       Effects: [
 //         {
-//           type: "move",
-//           to: "hand",
-//           exerted: false,
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
+//           Type: "move",
+//           To: "hand",
+//           Exerted: false,
+//           Target: {
+//             Type: "card",
+//             Value: 1,
+//             Filters: [
 //               { filter: "type", value: "action" },
 //               { filter: "zone", value: "discard" },
 //               { filter: "owner", value: "self" },
@@ -79,18 +79,18 @@ export const ladyTremaineWickedStepmother: CharacterCard = {
 //       ],
 //     }),
 //   ],
-//   flavour: '"If your chores are done, then clearly you..."',
-//   colors: ["emerald"],
-//   cost: 6,
-//   strength: 1,
-//   willpower: 5,
-//   lore: 1,
-//   illustrator: "Leonardo Giammichele",
-//   number: 85,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 489665,
+//   Flavour: '"If your chores are done, then clearly you..."',
+//   Colors: ["emerald"],
+//   Cost: 6,
+//   Strength: 1,
+//   Willpower: 5,
+//   Lore: 1,
+//   Illustrator: "Leonardo Giammichele",
+//   Number: 85,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 489665,
 //   },
-//   rarity: "rare",
+//   Rarity: "rare",
 // };
 //

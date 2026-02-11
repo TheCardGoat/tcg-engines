@@ -1,34 +1,34 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { wheneverQuests } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-// import { youPayXLessToPlayNextCharThisTurn } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { wheneverQuests } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// Import { youPayXLessToPlayNextCharThisTurn } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const hueyReliableLeader: LorcanitoCharacterCard = {
-//   id: "w4f",
-//   name: "Huey",
-//   title: "Reliable Leader",
-//   characteristics: ["storyborn", "ally"],
-//   text: "I KNOW THE WAY Whenever this character quests, you pay 1 {I} less for the next character you play this turn.",
-//   type: "character",
-//   abilities: [
-//     wheneverQuests({
-//       name: "I KNOW THE WAY",
-//       text: "Whenever this character quests, you pay 1 {I} less for the next character you play this turn.",
-//       effects: [youPayXLessToPlayNextCharThisTurn(1)],
+// Export const hueyReliableLeader: LorcanitoCharacterCard = {
+//   Id: "w4f",
+//   Name: "Huey",
+//   Title: "Reliable Leader",
+//   Characteristics: ["storyborn", "ally"],
+//   Text: "I KNOW THE WAY Whenever this character quests, you pay 1 {I} less for the next character you play this turn.",
+//   Type: "character",
+//   Abilities: [
+//     WheneverQuests({
+//       Name: "I KNOW THE WAY",
+//       Text: "Whenever this character quests, you pay 1 {I} less for the next character you play this turn.",
+//       Effects: [youPayXLessToPlayNextCharThisTurn(1)],
 //     }),
 //   ],
-//   inkwell: false,
-//   colors: ["amber"],
-//   cost: 2,
-//   strength: 2,
-//   willpower: 3,
-//   illustrator: "Federico Maria Cugliari",
-//   number: 3,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 633429,
+//   Inkwell: false,
+//   Colors: ["amber"],
+//   Cost: 2,
+//   Strength: 2,
+//   Willpower: 3,
+//   Illustrator: "Federico Maria Cugliari",
+//   Number: 3,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 633429,
 //   },
-//   rarity: "uncommon",
-//   lore: 1,
+//   Rarity: "uncommon",
+//   Lore: 1,
 // };
 //

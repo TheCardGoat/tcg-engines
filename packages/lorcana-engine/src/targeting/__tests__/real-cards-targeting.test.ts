@@ -1,11 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import type {
-  CardId,
-  CardInstance,
-  CardRegistry,
-  PlayerId,
-  ZoneId,
-} from "@tcg/core";
+import type { CardId, CardInstance, CardRegistry, PlayerId, ZoneId } from "@tcg/core";
 import type { LorcanaCardDefinition } from "@tcg/lorcana-types";
 import type { LorcanaCardMeta, LorcanaGameState } from "../../types/game-state";
 import { createTargetFiltersPredicate } from "../filter-resolver";
@@ -18,80 +12,80 @@ const mockRegistry = {
 } as unknown as CardRegistry<LorcanaCardDefinition>;
 
 const mockDefinitions: Record<string, LorcanaCardDefinition> = {
-  "char-villain": {
-    id: "char-villain",
-    name: "Maleficent",
-    cardType: "character",
-    classifications: ["Villain", "Sorcerer"],
-    cost: 3,
-    strength: 2,
-    willpower: 2,
-    lore: 1,
-    color: "amethyst",
-    inkable: true,
-  } as any,
   "char-hero": {
-    id: "char-hero",
-    name: "Aladdin",
     cardType: "character",
     classifications: ["Hero", "Storyborn"],
+    color: "ruby",
     cost: 2,
+    id: "char-hero",
+    inkable: true,
+    lore: 1,
+    name: "Aladdin",
     strength: 2,
     willpower: 2,
-    lore: 1,
-    color: "ruby",
-    inkable: true,
   } as any,
   "char-high-str": {
-    id: "char-high-str",
-    name: "Maui",
     cardType: "character",
     classifications: ["Hero", "Demigod"],
+    color: "ruby",
     cost: 5,
+    id: "char-high-str",
+    inkable: true,
+    lore: 2,
+    name: "Maui",
     strength: 6,
     willpower: 5,
-    lore: 2,
-    color: "ruby",
-    inkable: true,
-  } as any,
-  "item-basic": {
-    id: "item-basic",
-    name: "Dinglehopper",
-    cardType: "item",
-    cost: 1,
-    color: "emerald",
-    inkable: true,
-  } as any,
-  "loc-basic": {
-    id: "loc-basic",
-    name: "Forbidden Mountain",
-    cardType: "location",
-    cost: 2,
-    moveCost: 1,
-    willpower: 6,
-    lore: 1,
-    color: "amethyst",
-    inkable: true,
   } as any,
   "char-support": {
-    id: "char-support",
-    name: "Alice",
-    cardType: "character",
     abilities: [{ type: "keyword", keyword: "Support" }],
+    cardType: "character",
+    color: "sapphire",
     cost: 3,
+    id: "char-support",
+    inkable: true,
+    lore: 1,
+    name: "Alice",
     strength: 2,
     willpower: 2,
-    lore: 1,
-    color: "sapphire",
+  } as any,
+  "char-villain": {
+    cardType: "character",
+    classifications: ["Villain", "Sorcerer"],
+    color: "amethyst",
+    cost: 3,
+    id: "char-villain",
     inkable: true,
+    lore: 1,
+    name: "Maleficent",
+    strength: 2,
+    willpower: 2,
+  } as any,
+  "item-basic": {
+    cardType: "item",
+    color: "emerald",
+    cost: 1,
+    id: "item-basic",
+    inkable: true,
+    name: "Dinglehopper",
+  } as any,
+  "loc-basic": {
+    cardType: "location",
+    color: "amethyst",
+    cost: 2,
+    id: "loc-basic",
+    inkable: true,
+    lore: 1,
+    moveCost: 1,
+    name: "Forbidden Mountain",
+    willpower: 6,
   } as any,
 };
 
 const mockState: LorcanaGameState = {
-  playerIds: ["player1" as PlayerId, "player2" as PlayerId],
-  turnNumber: 1,
   activePlayerId: "player1" as PlayerId,
-  cards: {}, // Populated per test
+  cards: {},
+  playerIds: ["player1" as PlayerId, "player2" as PlayerId],
+  turnNumber: 1, // Populated per test
 } as any;
 
 const makeCard = (
@@ -129,23 +123,11 @@ describe("Real Card Targeting Scenarios", () => {
   const p1Item = makeCard("i1", "item-basic", "player1");
   const p2Location = makeCard("l1", "loc-basic", "player2");
 
-  const cards = [
-    p1Villain,
-    p2Hero,
-    p2DamagedHero,
-    p1ExertedVillain,
-    p1HighStr,
-    p1Item,
-    p2Location,
-  ];
+  const cards = [p1Villain, p2Hero, p2DamagedHero, p1ExertedVillain, p1HighStr, p1Item, p2Location];
 
   // Helper to filter cards
   const filterCards = (filters: LorcanaFilter[]) => {
-    const predicate = createTargetFiltersPredicate(
-      filters,
-      mockState,
-      mockRegistry,
-    );
+    const predicate = createTargetFiltersPredicate(filters, mockState, mockRegistry);
     return cards.filter(predicate);
   };
 
@@ -153,13 +135,11 @@ describe("Real Card Targeting Scenarios", () => {
     // "Banish chosen Villain character"
     const filters: LorcanaFilter[] = [
       { type: "card-type", value: "character" },
-      { type: "has-classification", classification: "Villain" },
+      { classification: "Villain", type: "has-classification" },
     ];
 
     const results = filterCards(filters);
-    expect(results.map((c) => c.id)).toEqual(
-      expect.arrayContaining(["c1", "c4"]),
-    );
+    expect(results.map((c) => c.id)).toEqual(expect.arrayContaining(["c1", "c4"]));
     expect(results).not.toContain(p2Hero); // Not a Villain
   });
 
@@ -171,7 +151,7 @@ describe("Real Card Targeting Scenarios", () => {
     ];
 
     const results = filterCards(filters);
-    expect(results.map((c) => c.id)).toContain("c3" as CardId); // p2DamagedHero
+    expect(results.map((c) => c.id)).toContain("c3" as CardId); // P2DamagedHero
     expect(results).not.toContain(p1Villain); // Not damaged
   });
 
@@ -186,18 +166,16 @@ describe("Real Card Targeting Scenarios", () => {
     // "Banish chosen location or item"
     const filters: LorcanaFilter[] = [
       {
-        type: "or",
         filters: [
           { type: "card-type", value: "location" },
           { type: "card-type", value: "item" },
         ],
+        type: "or",
       },
     ];
 
     const results = filterCards(filters);
-    expect(results.map((c) => c.id)).toEqual(
-      expect.arrayContaining(["i1", "l1"]),
-    );
+    expect(results.map((c) => c.id)).toEqual(expect.arrayContaining(["i1", "l1"]));
     expect(results).not.toContain(p1Villain);
   });
 
@@ -205,14 +183,12 @@ describe("Real Card Targeting Scenarios", () => {
     // "characters with cost 3 or more"
     const filters: LorcanaFilter[] = [
       { type: "card-type", value: "character" },
-      { type: "cost", comparison: "gte", value: 3 },
+      { comparison: "gte", type: "cost", value: 3 },
     ];
 
     const results = filterCards(filters);
-    // p1Villain (cost 3), p1HighStr (cost 5)
-    expect(results.map((c) => c.id)).toEqual(
-      expect.arrayContaining(["c1", "c4", "c5"]),
-    );
+    // P1Villain (cost 3), p1HighStr (cost 5)
+    expect(results.map((c) => c.id)).toEqual(expect.arrayContaining(["c1", "c4", "c5"]));
     expect(results).not.toContain(p2Hero); // Cost 2
   });
 
@@ -220,14 +196,12 @@ describe("Real Card Targeting Scenarios", () => {
     // "chosen character with 3 strength or less"
     const filters: LorcanaFilter[] = [
       { type: "card-type", value: "character" },
-      { type: "strength", comparison: "lte", value: 3 },
+      { comparison: "lte", type: "strength", value: 3 },
     ];
 
     const results = filterCards(filters);
-    // p1Villain (2), p2Hero (2), p2DamagedHero (2)
-    expect(results.map((c) => c.id)).toEqual(
-      expect.arrayContaining(["c1", "c2", "c3", "c4"]),
-    );
+    // P1Villain (2), p2Hero (2), p2DamagedHero (2)
+    expect(results.map((c) => c.id)).toEqual(expect.arrayContaining(["c1", "c2", "c3", "c4"]));
     expect(results).not.toContain(p1HighStr); // Str 6
   });
 
@@ -235,13 +209,11 @@ describe("Real Card Targeting Scenarios", () => {
     // "chosen character named Aladdin"
     const filters: LorcanaFilter[] = [
       { type: "card-type", value: "character" },
-      { type: "name", equals: "Aladdin" },
+      { equals: "Aladdin", type: "name" },
     ];
 
     const results = filterCards(filters);
-    expect(results.map((c) => c.id)).toEqual(
-      expect.arrayContaining(["c2", "c3"]),
-    );
+    expect(results.map((c) => c.id)).toEqual(expect.arrayContaining(["c2", "c3"]));
     expect(results).not.toContain(p1Villain);
   });
 
@@ -262,25 +234,23 @@ describe("Real Card Targeting Scenarios", () => {
     // Complex arbitrary test
     const filters: LorcanaFilter[] = [
       {
-        type: "or",
         filters: [
           { type: "card-type", value: "item" },
           {
-            type: "and",
             filters: [
               { type: "card-type", value: "character" },
               { type: "has-classification", classification: "Villain" },
             ],
+            type: "and",
           },
         ],
+        type: "or",
       },
     ];
 
     const results = filterCards(filters);
     // Should define p1Item, p1Villain, p1ExertedVillain
-    expect(results.map((c) => c.id)).toEqual(
-      expect.arrayContaining(["i1", "c1", "c4"]),
-    );
+    expect(results.map((c) => c.id)).toEqual(expect.arrayContaining(["i1", "c1", "c4"]));
     expect(results).not.toContain(p2Hero);
     expect(results).not.toContain(p2Location);
   });
@@ -288,13 +258,11 @@ describe("Real Card Targeting Scenarios", () => {
   it("should handle 'chosen character with Support'", () => {
     // Mock a card with Support
     const p1Support = makeCard("c6", "char-support", "player1");
-    // mockDefinitions["char-support"] is already defined in setup
+    // MockDefinitions["char-support"] is already defined in setup
 
     cards.push(p1Support);
 
-    const filters: LorcanaFilter[] = [
-      { type: "has-keyword", keyword: "Support" },
-    ];
+    const filters: LorcanaFilter[] = [{ keyword: "Support", type: "has-keyword" }];
 
     const results = filterCards(filters);
     expect(results.map((c) => c.id)).toContain("c6" as CardId);

@@ -3,54 +3,54 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { doItAgain } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
-// import {
-//   ladyTremaine,
-//   scarShamelessFirebrand,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { doItAgain } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
+// Import {
+//   LadyTremaine,
+//   ScarShamelessFirebrand,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Lady Tremaine", () => {
-//   it("DO IT AGAIN effect - returning own item", () => {
-//     const testStore = new TestStore({
-//       inkwell: ladyTremaine.cost,
-//       hand: [ladyTremaine],
-//       discard: [doItAgain],
+// Describe("Lady Tremaine", () => {
+//   It("DO IT AGAIN effect - returning own item", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: ladyTremaine.cost,
+//       Hand: [ladyTremaine],
+//       Discard: [doItAgain],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", ladyTremaine.id);
-//     const target = testStore.getByZoneAndId("discard", doItAgain.id);
-//     expect(target.zone).toEqual("discard");
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", ladyTremaine.id);
+//     Const target = testStore.getByZoneAndId("discard", doItAgain.id);
+//     Expect(target.zone).toEqual("discard");
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({
-//       targets: [target],
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({
+//       Targets: [target],
 //     });
 //
-//     expect(target.zone).toEqual("hand");
-//     expect(testStore.getZonesCardCount()).toEqual(
-//       expect.objectContaining({ hand: 1, deck: 0, discard: 0, play: 1 }),
+//     Expect(target.zone).toEqual("hand");
+//     Expect(testStore.getZonesCardCount()).toEqual(
+//       Expect.objectContaining({ hand: 1, deck: 0, discard: 0, play: 1 }),
 //     );
 //   });
 //
-//   it("DO IT AGAIN effect - no valid target", () => {
-//     const testStore = new TestStore({
-//       inkwell: ladyTremaine.cost,
-//       hand: [ladyTremaine],
-//       discard: [scarShamelessFirebrand],
+//   It("DO IT AGAIN effect - no valid target", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: ladyTremaine.cost,
+//       Hand: [ladyTremaine],
+//       Discard: [scarShamelessFirebrand],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", ladyTremaine.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", ladyTremaine.id);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
 //
-//     testStore.resolveTopOfStack();
+//     TestStore.resolveTopOfStack();
 //
-//     expect(testStore.getZonesCardCount()).toEqual(
-//       expect.objectContaining({ hand: 0, deck: 0, discard: 1, play: 1 }),
+//     Expect(testStore.getZonesCardCount()).toEqual(
+//       Expect.objectContaining({ hand: 0, deck: 0, discard: 1, play: 1 }),
 //     );
 //   });
 // });

@@ -3,66 +3,66 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it, test } from "@jest/globals";
-// import {
-//   madamMimFox,
-//   pinocchioStarAttraction,
+// Import { describe, expect, it, test } from "@jest/globals";
+// Import {
+//   MadamMimFox,
+//   PinocchioStarAttraction,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Madam Mim - Fox", () => {
-//   test("**Rush** _(This character can challenge the turn they’re played.)_", () => {
-//     const testStore = new TestStore({
-//       play: [madamMimFox],
+// Describe("Madam Mim - Fox", () => {
+//   Test("**Rush** _(This character can challenge the turn they’re played.)_", () => {
+//     Const testStore = new TestStore({
+//       Play: [madamMimFox],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("play", madamMimFox.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("play", madamMimFox.id);
 //
-//     expect(cardUnderTest.hasRush).toEqual(true);
+//     Expect(cardUnderTest.hasRush).toEqual(true);
 //   });
 //
-//   describe("**CHASING THE RABBIT** When you play this character, banish her or return another chosen character of yours to your hand.", () => {
-//     it("skipping the effect banishes her", () => {
-//       const testStore = new TestStore({
-//         inkwell: madamMimFox.cost,
-//         hand: [madamMimFox],
-//         play: [pinocchioStarAttraction],
+//   Describe("**CHASING THE RABBIT** When you play this character, banish her or return another chosen character of yours to your hand.", () => {
+//     It("skipping the effect banishes her", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: madamMimFox.cost,
+//         Hand: [madamMimFox],
+//         Play: [pinocchioStarAttraction],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId("hand", madamMimFox.id);
-//       const target = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId("hand", madamMimFox.id);
+//       Const target = testStore.getByZoneAndId(
 //         "play",
-//         pinocchioStarAttraction.id,
+//         PinocchioStarAttraction.id,
 //       );
 //
-//       cardUnderTest.playFromHand();
-//       testStore.resolveTopOfStack({ skip: true });
+//       CardUnderTest.playFromHand();
+//       TestStore.resolveTopOfStack({ skip: true });
 //
-//       expect(target.zone).toEqual("play");
-//       expect(cardUnderTest.zone).toEqual("discard");
-//       expect(testStore.stackLayers).toHaveLength(0);
+//       Expect(target.zone).toEqual("play");
+//       Expect(cardUnderTest.zone).toEqual("discard");
+//       Expect(testStore.stackLayers).toHaveLength(0);
 //     });
 //
-//     it("return another chosen character of yours to your hand.", () => {
-//       const testStore = new TestStore({
-//         inkwell: madamMimFox.cost,
-//         hand: [madamMimFox],
-//         play: [pinocchioStarAttraction],
+//     It("return another chosen character of yours to your hand.", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: madamMimFox.cost,
+//         Hand: [madamMimFox],
+//         Play: [pinocchioStarAttraction],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId("hand", madamMimFox.id);
-//       const target = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId("hand", madamMimFox.id);
+//       Const target = testStore.getByZoneAndId(
 //         "play",
-//         pinocchioStarAttraction.id,
+//         PinocchioStarAttraction.id,
 //       );
 //
-//       cardUnderTest.playFromHand();
-//       testStore.resolveOptionalAbility();
-//       testStore.resolveTopOfStack({ targets: [target] });
+//       CardUnderTest.playFromHand();
+//       TestStore.resolveOptionalAbility();
+//       TestStore.resolveTopOfStack({ targets: [target] });
 //
-//       expect(target.zone).toEqual("hand");
-//       expect(cardUnderTest.zone).toEqual("play");
-//       expect(testStore.stackLayers).toHaveLength(0);
+//       Expect(target.zone).toEqual("hand");
+//       Expect(cardUnderTest.zone).toEqual("play");
+//       Expect(testStore.stackLayers).toHaveLength(0);
 //     });
 //   });
 // });

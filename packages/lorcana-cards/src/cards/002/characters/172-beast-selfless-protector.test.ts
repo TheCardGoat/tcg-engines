@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { beastSelflessProtector } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { beastSelflessProtector } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Beast - Selfless Protector", () => {
-//   it("**SHIELD ANOTHER** Whenever one of your other characters would be dealt damage, put that many damage counters on this character instead.", () => {
-//     const testStore = new TestStore({
-//       play: [beastSelflessProtector],
+// Describe("Beast - Selfless Protector", () => {
+//   It("**SHIELD ANOTHER** Whenever one of your other characters would be dealt damage, put that many damage counters on this character instead.", () => {
+//     Const testStore = new TestStore({
+//       Play: [beastSelflessProtector],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       beastSelflessProtector.id,
+//       BeastSelflessProtector.id,
 //     );
 //
-//     expect(cardUnderTest.hasProtector).toEqual(true);
+//     Expect(cardUnderTest.hasProtector).toEqual(true);
 //   });
 // });
 //

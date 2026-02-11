@@ -3,26 +3,26 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { youCanFly } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
-// import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { youCanFly } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
+// Import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("You Can Fly", () => {
-//   it("Chosen character gains **Evasive** until the start of your next turn.", () => {
-//     const testStore = new TestStore({
-//       inkwell: youCanFly.cost,
-//       hand: [youCanFly],
-//       play: [goofyKnightForADay],
+// Describe("You Can Fly", () => {
+//   It("Chosen character gains **Evasive** until the start of your next turn.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: youCanFly.cost,
+//       Hand: [youCanFly],
+//       Play: [goofyKnightForADay],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", youCanFly.id);
-//     const target = testStore.getByZoneAndId("play", goofyKnightForADay.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", youCanFly.id);
+//     Const target = testStore.getByZoneAndId("play", goofyKnightForADay.id);
 //
-//     expect(target.hasEvasive).toBe(false);
-//     cardUnderTest.playFromHand();
-//     testStore.resolveTopOfStack({ targets: [target] });
-//     expect(target.hasEvasive).toBe(true);
+//     Expect(target.hasEvasive).toBe(false);
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveTopOfStack({ targets: [target] });
+//     Expect(target.hasEvasive).toBe(true);
 //   });
 // });
 //

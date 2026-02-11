@@ -3,100 +3,100 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { smash } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
-// import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import {
-//   hydraDeadlySerpent,
-//   kingLouieBandleader,
-//   kitCloudkickerNavigator,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { smash } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
+// Import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import {
+//   HydraDeadlySerpent,
+//   KingLouieBandleader,
+//   KitCloudkickerNavigator,
 // } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Hydra - Deadly Serpent", () => {
-//   describe("**WATCH THE TEETH** When this character is damaged, deal the same amount of damage to a chosen opposing character.", () => {
-//     it("receives damage from action card", () => {
-//       const testStore = new TestStore(
+// Describe("Hydra - Deadly Serpent", () => {
+//   Describe("**WATCH THE TEETH** When this character is damaged, deal the same amount of damage to a chosen opposing character.", () => {
+//     It("receives damage from action card", () => {
+//       Const testStore = new TestStore(
 //         {
-//           inkwell: smash.cost,
-//           hand: [smash],
-//           play: [hydraDeadlySerpent],
+//           Inkwell: smash.cost,
+//           Hand: [smash],
+//           Play: [hydraDeadlySerpent],
 //         },
 //         {
-//           play: [goofyKnightForADay],
+//           Play: [goofyKnightForADay],
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getCard(hydraDeadlySerpent);
-//       const targetCard = testStore.getCard(goofyKnightForADay);
-//       const removalCard = testStore.getCard(smash);
+//       Const cardUnderTest = testStore.getCard(hydraDeadlySerpent);
+//       Const targetCard = testStore.getCard(goofyKnightForADay);
+//       Const removalCard = testStore.getCard(smash);
 //
-//       removalCard.playFromHand();
-//       testStore.resolveTopOfStack({ targets: [cardUnderTest] }, true);
+//       RemovalCard.playFromHand();
+//       TestStore.resolveTopOfStack({ targets: [cardUnderTest] }, true);
 //
 //       // Hydra adds a layer to the stack
-//       testStore.resolveTopOfStack({ targets: [targetCard] });
+//       TestStore.resolveTopOfStack({ targets: [targetCard] });
 //
-//       expect(cardUnderTest.damage).toBe(3);
-//       expect(targetCard.damage).toBe(3);
+//       Expect(cardUnderTest.damage).toBe(3);
+//       Expect(targetCard.damage).toBe(3);
 //     });
 //
-//     it("receives damage from challenge and dies", () => {
-//       const testStore = new TestStore(
+//     It("receives damage from challenge and dies", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [hydraDeadlySerpent],
+//           Play: [hydraDeadlySerpent],
 //         },
 //         {
-//           play: [goofyKnightForADay, kingLouieBandleader],
+//           Play: [goofyKnightForADay, kingLouieBandleader],
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getCard(hydraDeadlySerpent);
-//       const targetCard = testStore.getCard(goofyKnightForADay);
-//       const challenged = testStore.getCard(kingLouieBandleader);
+//       Const cardUnderTest = testStore.getCard(hydraDeadlySerpent);
+//       Const targetCard = testStore.getCard(goofyKnightForADay);
+//       Const challenged = testStore.getCard(kingLouieBandleader);
 //
-//       challenged.updateCardMeta({ exerted: true });
-//       cardUnderTest.challenge(challenged);
+//       Challenged.updateCardMeta({ exerted: true });
+//       CardUnderTest.challenge(challenged);
 //
-//       testStore.resolveTopOfStack({ targets: [targetCard] });
+//       TestStore.resolveTopOfStack({ targets: [targetCard] });
 //
-//       expect(cardUnderTest.zone).toEqual("discard");
-//       expect(targetCard.damage).toBe(challenged.strength);
+//       Expect(cardUnderTest.zone).toEqual("discard");
+//       Expect(targetCard.damage).toBe(challenged.strength);
 //     });
 //   });
 // });
 //
-// describe("Regression", () => {
-//   it("Cancels effect when it doesn't find a valid target", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Regression", () => {
+//   It("Cancels effect when it doesn't find a valid target", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         play: [hydraDeadlySerpent],
+//         Play: [hydraDeadlySerpent],
 //       },
 //       {
-//         play: [goofyKnightForADay, kitCloudkickerNavigator],
+//         Play: [goofyKnightForADay, kitCloudkickerNavigator],
 //       },
 //     );
 //
-//     await testEngine.setCardDamage(
-//       goofyKnightForADay,
-//       goofyKnightForADay.willpower - 1,
+//     Await testEngine.setCardDamage(
+//       GoofyKnightForADay,
+//       GoofyKnightForADay.willpower - 1,
 //     );
-//     await testEngine.tapCard(goofyKnightForADay);
+//     Await testEngine.tapCard(goofyKnightForADay);
 //
-//     const { attacker, defender } = await testEngine.challenge({
-//       attacker: hydraDeadlySerpent,
-//       defender: goofyKnightForADay,
+//     Const { attacker, defender } = await testEngine.challenge({
+//       Attacker: hydraDeadlySerpent,
+//       Defender: goofyKnightForADay,
 //     });
 //
-//     expect(attacker.isDead).toBe(true);
-//     expect(defender.isDead).toBe(true);
+//     Expect(attacker.isDead).toBe(true);
+//     Expect(defender.isDead).toBe(true);
 //
-//     expect(testEngine.stackLayers).toHaveLength(1);
+//     Expect(testEngine.stackLayers).toHaveLength(1);
 //
-//     await testEngine.acceptOptionalLayer();
+//     Await testEngine.acceptOptionalLayer();
 //
-//     expect(testEngine.stackLayers).toHaveLength(0);
+//     Expect(testEngine.stackLayers).toHaveLength(0);
 //   });
 // });
 //

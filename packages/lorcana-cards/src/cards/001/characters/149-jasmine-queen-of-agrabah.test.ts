@@ -5,9 +5,9 @@ import { jasmineQueenOfAgrabah } from "./149-jasmine-queen-of-agrabah";
 describe("Jasmine - Queen of Agrabah", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [jasmineQueenOfAgrabah] });
-  //   expect(testEngine.getCardModel(jasmineQueenOfAgrabah).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [jasmineQueenOfAgrabah] });
+  //   Expect(testEngine.getCardModel(jasmineQueenOfAgrabah).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,70 +17,70 @@ describe("Jasmine - Queen of Agrabah", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   jasmineQueenOfAgrabah,
-//   mauiHeroToAll,
-//   mickeyMouseTrueFriend,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   JasmineQueenOfAgrabah,
+//   MauiHeroToAll,
+//   MickeyMouseTrueFriend,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Jasmine - Queen of Agrabah", () => {
-//   describe("Caretaker - When you play this character and whenever she quests, you may remove up to 2 damage from each of your characters.", () => {
-//     it("On play", () => {
-//       const testStore = new TestStore({
-//         deck: 2,
-//         inkwell: jasmineQueenOfAgrabah.cost,
-//         play: [mauiHeroToAll, mickeyMouseTrueFriend],
-//         hand: [jasmineQueenOfAgrabah],
+// Describe("Jasmine - Queen of Agrabah", () => {
+//   Describe("Caretaker - When you play this character and whenever she quests, you may remove up to 2 damage from each of your characters.", () => {
+//     It("On play", () => {
+//       Const testStore = new TestStore({
+//         Deck: 2,
+//         Inkwell: jasmineQueenOfAgrabah.cost,
+//         Play: [mauiHeroToAll, mickeyMouseTrueFriend],
+//         Hand: [jasmineQueenOfAgrabah],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "hand",
-//         jasmineQueenOfAgrabah.id,
+//         JasmineQueenOfAgrabah.id,
 //       );
-//       const aDamagedChar = testStore.getByZoneAndId("play", mauiHeroToAll.id);
-//       const anotherDamagedChar = testStore.getByZoneAndId(
+//       Const aDamagedChar = testStore.getByZoneAndId("play", mauiHeroToAll.id);
+//       Const anotherDamagedChar = testStore.getByZoneAndId(
 //         "play",
-//         mickeyMouseTrueFriend.id,
+//         MickeyMouseTrueFriend.id,
 //       );
 //
 //       [aDamagedChar, anotherDamagedChar].forEach((char) => {
-//         char.updateCardMeta({ damage: 4 });
+//         Char.updateCardMeta({ damage: 4 });
 //       });
 //
-//       cardUnderTest.playFromHand();
-//       testStore.resolveTopOfStack({});
+//       CardUnderTest.playFromHand();
+//       TestStore.resolveTopOfStack({});
 //
 //       [aDamagedChar, anotherDamagedChar].forEach((char) => {
-//         expect(char.meta.damage).toBe(2);
+//         Expect(char.meta.damage).toBe(2);
 //       });
 //     });
 //
-//     it("On quest", () => {
-//       const testStore = new TestStore({
-//         play: [jasmineQueenOfAgrabah, mauiHeroToAll, mickeyMouseTrueFriend],
+//     It("On quest", () => {
+//       Const testStore = new TestStore({
+//         Play: [jasmineQueenOfAgrabah, mauiHeroToAll, mickeyMouseTrueFriend],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         jasmineQueenOfAgrabah.id,
+//         JasmineQueenOfAgrabah.id,
 //       );
-//       const aDamagedChar = testStore.getByZoneAndId("play", mauiHeroToAll.id);
-//       const anotherDamagedChar = testStore.getByZoneAndId(
+//       Const aDamagedChar = testStore.getByZoneAndId("play", mauiHeroToAll.id);
+//       Const anotherDamagedChar = testStore.getByZoneAndId(
 //         "play",
-//         mickeyMouseTrueFriend.id,
+//         MickeyMouseTrueFriend.id,
 //       );
 //
 //       [aDamagedChar, anotherDamagedChar].forEach((char) => {
-//         char.updateCardMeta({ damage: 2 });
+//         Char.updateCardMeta({ damage: 2 });
 //       });
 //
-//       cardUnderTest.quest();
-//       testStore.resolveTopOfStack({});
+//       CardUnderTest.quest();
+//       TestStore.resolveTopOfStack({});
 //
 //       [aDamagedChar, anotherDamagedChar].forEach((char) => {
-//         expect(char.meta.damage).toBe(0);
+//         Expect(char.meta.damage).toBe(0);
 //       });
 //     });
 //   });

@@ -34,11 +34,7 @@ export enum LogLevel {
  * - ADVANCED_PLAYER: Detailed mechanics (DEBUG level)
  * - DEVELOPER: Full internal details (TRACE level)
  */
-export type VerbosityPreset =
-  | "SILENT"
-  | "NORMAL_PLAYER"
-  | "ADVANCED_PLAYER"
-  | "DEVELOPER";
+export type VerbosityPreset = "SILENT" | "NORMAL_PLAYER" | "ADVANCED_PLAYER" | "DEVELOPER";
 
 /**
  * Log Context
@@ -55,7 +51,7 @@ export type VerbosityPreset =
  *
  * Games can add custom fields via index signature.
  */
-export type LogContext = {
+export interface LogContext {
   /** Move identifier */
   moveId?: string;
   /** Player identifier */
@@ -80,7 +76,7 @@ export type LogContext = {
   patchCount?: number;
   /** Custom context fields */
   [key: string]: unknown;
-};
+}
 
 /**
  * Logger Options
@@ -103,7 +99,7 @@ export type LogContext = {
  * };
  * ```
  */
-export type LoggerOptions = {
+export interface LoggerOptions {
   /**
    * Log level or verbosity preset
    *
@@ -145,4 +141,4 @@ export type LoggerOptions = {
    * See Pino documentation for available options.
    */
   [key: string]: unknown;
-};
+}

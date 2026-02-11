@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { happyLivelyKnight } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { happyLivelyKnight } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Happy - Lively Knight", () => {
-//   it.skip("**BURST OF SPEED** During your turn, this character gains Evasive. _(They can challenge characters with Evasive.)_", () => {
-//     const testStore = new TestStore({
-//       inkwell: happyLivelyKnight.cost,
-//       play: [happyLivelyKnight],
+// Describe("Happy - Lively Knight", () => {
+//   It.skip("**BURST OF SPEED** During your turn, this character gains Evasive. _(They can challenge characters with Evasive.)_", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: happyLivelyKnight.cost,
+//       Play: [happyLivelyKnight],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(happyLivelyKnight);
+//     Const cardUnderTest = testStore.getCard(happyLivelyKnight);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

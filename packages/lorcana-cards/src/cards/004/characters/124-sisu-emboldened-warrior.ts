@@ -1,52 +1,52 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 //
-// export const sisuEmboldenedWarrior: LorcanitoCharacterCard = {
-//   id: "m8s",
-//   reprints: ["g9x"],
-//   name: "Sisu",
-//   title: "Emboldened Warrior",
-//   characteristics: ["hero", "storyborn", "dragon", "deity"],
-//   text: "**SURGE OF POWER** This character gets +1 {S} for each card in opponent's hands.",
-//   type: "character",
-//   abilities: [
+// Export const sisuEmboldenedWarrior: LorcanitoCharacterCard = {
+//   Id: "m8s",
+//   Reprints: ["g9x"],
+//   Name: "Sisu",
+//   Title: "Emboldened Warrior",
+//   Characteristics: ["hero", "storyborn", "dragon", "deity"],
+//   Text: "**SURGE OF POWER** This character gets +1 {S} for each card in opponent's hands.",
+//   Type: "character",
+//   Abilities: [
 //     {
-//       type: "static",
-//       ability: "effects",
-//       name: "SURGE OF POWER",
-//       text: "This character gets +1 {S} for each card in opponent's hands.",
-//       effects: [
+//       Type: "static",
+//       Ability: "effects",
+//       Name: "SURGE OF POWER",
+//       Text: "This character gets +1 {S} for each card in opponent's hands.",
+//       Effects: [
 //         {
-//           type: "attribute",
-//           attribute: "strength",
-//           amount: {
-//             dynamic: true,
-//             filters: [
+//           Type: "attribute",
+//           Attribute: "strength",
+//           Amount: {
+//             Dynamic: true,
+//             Filters: [
 //               { filter: "zone", value: "hand" },
 //               { filter: "owner", value: "opponent" },
 //             ],
 //           },
-//           modifier: "add",
-//           target: thisCharacter,
+//           Modifier: "add",
+//           Target: thisCharacter,
 //         },
 //       ],
 //     },
 //   ],
-//   flavour:
+//   Flavour:
 //     "Sometimes the only way to fight the unimaginable is with the incredible.",
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 3,
-//   strength: 1,
-//   willpower: 4,
-//   lore: 2,
-//   illustrator: "LadyShalirin",
-//   number: 124,
-//   set: "URR",
-//   externalIds: {
-//     tcgPlayer: 547778,
+//   Inkwell: true,
+//   Colors: ["ruby"],
+//   Cost: 3,
+//   Strength: 1,
+//   Willpower: 4,
+//   Lore: 2,
+//   Illustrator: "LadyShalirin",
+//   Number: 124,
+//   Set: "URR",
+//   ExternalIds: {
+//     TcgPlayer: 547778,
 //   },
-//   rarity: "rare",
+//   Rarity: "rare",
 // };
 //

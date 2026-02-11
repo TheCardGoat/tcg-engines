@@ -3,89 +3,89 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { madamMimSnake } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import {
-//   aladdinBraveRescuer,
-//   aladdinResoluteSwordsman,
-//   magicBroomIlluminaryKeeper,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { madamMimSnake } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import {
+//   AladdinBraveRescuer,
+//   AladdinResoluteSwordsman,
+//   MagicBroomIlluminaryKeeper,
 // } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Magic Broom - Illuminary Keeper", () => {
-//   describe("**NICE AND TIDY** Whenever you play another character, you man banish this character to draw a card.", () => {
-//     it("should banish Magic Broom - Illuminary Keeper and draw a card when playing Aladdin - Resolute Swordsman", () => {
-//       const testStore = new TestStore({
-//         inkwell: aladdinResoluteSwordsman.cost,
-//         play: [magicBroomIlluminaryKeeper],
-//         hand: [aladdinResoluteSwordsman],
-//         deck: [aladdinBraveRescuer],
+// Describe("Magic Broom - Illuminary Keeper", () => {
+//   Describe("**NICE AND TIDY** Whenever you play another character, you man banish this character to draw a card.", () => {
+//     It("should banish Magic Broom - Illuminary Keeper and draw a card when playing Aladdin - Resolute Swordsman", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: aladdinResoluteSwordsman.cost,
+//         Play: [magicBroomIlluminaryKeeper],
+//         Hand: [aladdinResoluteSwordsman],
+//         Deck: [aladdinBraveRescuer],
 //       });
 //
-//       const trigger = testStore.getCard(aladdinResoluteSwordsman);
-//       trigger.playFromHand();
+//       Const trigger = testStore.getCard(aladdinResoluteSwordsman);
+//       Trigger.playFromHand();
 //
-//       testStore.resolveOptionalAbility();
+//       TestStore.resolveOptionalAbility();
 //
-//       expect(testStore.getZonesCardCount().deck).toEqual(0);
-//       expect(testStore.getZonesCardCount().hand).toEqual(1);
+//       Expect(testStore.getZonesCardCount().deck).toEqual(0);
+//       Expect(testStore.getZonesCardCount().hand).toEqual(1);
 //     });
 //
-//     it("should not banish Magic Broom - Illuminary Keeper and draw a card when playing Aladdin - Brave Rescuer", () => {
-//       const testStore = new TestStore({
-//         inkwell: aladdinResoluteSwordsman.cost,
-//         play: [magicBroomIlluminaryKeeper],
-//         hand: [aladdinResoluteSwordsman],
-//         deck: [aladdinBraveRescuer],
+//     It("should not banish Magic Broom - Illuminary Keeper and draw a card when playing Aladdin - Brave Rescuer", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: aladdinResoluteSwordsman.cost,
+//         Play: [magicBroomIlluminaryKeeper],
+//         Hand: [aladdinResoluteSwordsman],
+//         Deck: [aladdinBraveRescuer],
 //       });
 //
-//       const trigger = testStore.getByZoneAndId(
+//       Const trigger = testStore.getByZoneAndId(
 //         "hand",
-//         aladdinResoluteSwordsman.id,
+//         AladdinResoluteSwordsman.id,
 //       );
-//       trigger.playFromHand();
+//       Trigger.playFromHand();
 //
-//       testStore.skipOptionalAbility();
+//       TestStore.skipOptionalAbility();
 //
-//       expect(testStore.getZonesCardCount().deck).toEqual(1);
-//       expect(testStore.getZonesCardCount().hand).toEqual(0);
+//       Expect(testStore.getZonesCardCount().deck).toEqual(1);
+//       Expect(testStore.getZonesCardCount().hand).toEqual(0);
 //     });
 //   });
 // });
 //
-// describe("Regressiom", () => {
-//   it("Should not bounce AND draw at the same time", async () => {
-//     const testEngine = new TestEngine({
-//       deck: 1,
-//       inkwell: madamMimSnake.cost,
-//       hand: [madamMimSnake],
-//       play: [magicBroomIlluminaryKeeper],
+// Describe("Regressiom", () => {
+//   It("Should not bounce AND draw at the same time", async () => {
+//     Const testEngine = new TestEngine({
+//       Deck: 1,
+//       Inkwell: madamMimSnake.cost,
+//       Hand: [madamMimSnake],
+//       Play: [magicBroomIlluminaryKeeper],
 //     });
 //
-//     await testEngine.playCard(madamMimSnake);
+//     Await testEngine.playCard(madamMimSnake);
 //
 //     // Accept Madam Mim's ability
-//     await testEngine.acceptOptionalLayer();
+//     Await testEngine.acceptOptionalLayer();
 //
 //     // Bouncing Magic Broom
-//     await testEngine.resolveTopOfStack(
+//     Await testEngine.resolveTopOfStack(
 //       {
-//         targets: [magicBroomIlluminaryKeeper],
+//         Targets: [magicBroomIlluminaryKeeper],
 //       },
-//       true,
+//       True,
 //     );
 //
 //     // Broom trigger is in the bag
-//     expect(testEngine.stackLayers).toHaveLength(1);
+//     Expect(testEngine.stackLayers).toHaveLength(1);
 //
 //     // Accept Broom's ability
-//     await testEngine.acceptOptionalLayer();
+//     Await testEngine.acceptOptionalLayer();
 //
-//     expect(testEngine.getZonesCardCount()).toEqual(
-//       expect.objectContaining({
-//         hand: 1, // Broom is in hand
-//         deck: 1,
+//     Expect(testEngine.getZonesCardCount()).toEqual(
+//       Expect.objectContaining({
+//         Hand: 1, // Broom is in hand
+//         Deck: 1,
 //       }),
 //     );
 //   });

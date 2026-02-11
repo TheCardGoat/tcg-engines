@@ -1,27 +1,27 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+// Import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 //
-// export const brunosReturn: LorcanitoActionCard = {
-//   id: "azx",
-//   reprints: ["cr8"],
-//   name: "Bruno's Return",
-//   characteristics: ["action"],
-//   text: "Return a character card from your discard to your hand. Then remove up to 2 damage from chosen character.",
-//   type: "action",
-//   abilities: [
+// Export const brunosReturn: LorcanitoActionCard = {
+//   Id: "azx",
+//   Reprints: ["cr8"],
+//   Name: "Bruno's Return",
+//   Characteristics: ["action"],
+//   Text: "Return a character card from your discard to your hand. Then remove up to 2 damage from chosen character.",
+//   Type: "action",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       text: "Return a character card from your discard to your hand.",
-//       resolveEffectsIndividually: true,
-//       effects: [
+//       Type: "resolution",
+//       Text: "Return a character card from your discard to your hand.",
+//       ResolveEffectsIndividually: true,
+//       Effects: [
 //         {
-//           type: "move",
-//           to: "hand",
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
+//           Type: "move",
+//           To: "hand",
+//           Target: {
+//             Type: "card",
+//             Value: 1,
+//             Filters: [
 //               { filter: "type", value: "character" },
 //               { filter: "zone", value: "discard" },
 //               { filter: "owner", value: "self" },
@@ -29,22 +29,22 @@
 //           },
 //         },
 //         {
-//           type: "heal",
-//           amount: 2,
-//           upTo: true,
-//           target: chosenCharacter,
+//           Type: "heal",
+//           Amount: 2,
+//           UpTo: true,
+//           Target: chosenCharacter,
 //         },
 //       ],
 //     },
 //   ],
-//   colors: ["amber"],
-//   cost: 2,
-//   illustrator: "Cristian Romero",
-//   number: 26,
-//   set: "URR",
-//   externalIds: {
-//     tcgPlayer: 548206,
+//   Colors: ["amber"],
+//   Cost: 2,
+//   Illustrator: "Cristian Romero",
+//   Number: 26,
+//   Set: "URR",
+//   ExternalIds: {
+//     TcgPlayer: 548206,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

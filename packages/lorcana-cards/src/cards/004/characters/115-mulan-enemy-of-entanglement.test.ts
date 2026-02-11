@@ -3,34 +3,34 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { packTactics } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
-// import { mulanEnemyOfEntanglement } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import {
-//   gatheringKnowledgeAndWisdom,
-//   rememberWhoYouAre,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { packTactics } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
+// Import { mulanEnemyOfEntanglement } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import {
+//   GatheringKnowledgeAndWisdom,
+//   RememberWhoYouAre,
 // } from "@lorcanito/lorcana-engine/cards/005/actions/actions";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Mulan - Enemy of Entanglement", () => {
-//   it("**TIME TO SHINE** Whenever you play an action, this character gets +2 {S} this turn.", () => {
-//     const testEngine = new TestEngine({
-//       inkwell: 90,
-//       play: [mulanEnemyOfEntanglement],
-//       hand: [gatheringKnowledgeAndWisdom, rememberWhoYouAre, packTactics],
+// Describe("Mulan - Enemy of Entanglement", () => {
+//   It("**TIME TO SHINE** Whenever you play an action, this character gets +2 {S} this turn.", () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: 90,
+//       Play: [mulanEnemyOfEntanglement],
+//       Hand: [gatheringKnowledgeAndWisdom, rememberWhoYouAre, packTactics],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(mulanEnemyOfEntanglement);
-//     expect(cardUnderTest.strength).toBe(mulanEnemyOfEntanglement.strength);
+//     Const cardUnderTest = testEngine.getCardModel(mulanEnemyOfEntanglement);
+//     Expect(cardUnderTest.strength).toBe(mulanEnemyOfEntanglement.strength);
 //
-//     testEngine.playCard(gatheringKnowledgeAndWisdom);
-//     expect(cardUnderTest.strength).toBe(mulanEnemyOfEntanglement.strength + 2);
+//     TestEngine.playCard(gatheringKnowledgeAndWisdom);
+//     Expect(cardUnderTest.strength).toBe(mulanEnemyOfEntanglement.strength + 2);
 //
-//     testEngine.playCard(rememberWhoYouAre);
-//     expect(cardUnderTest.strength).toBe(mulanEnemyOfEntanglement.strength + 4);
+//     TestEngine.playCard(rememberWhoYouAre);
+//     Expect(cardUnderTest.strength).toBe(mulanEnemyOfEntanglement.strength + 4);
 //
-//     testEngine.playCard(packTactics);
-//     expect(cardUnderTest.strength).toBe(mulanEnemyOfEntanglement.strength + 6);
+//     TestEngine.playCard(packTactics);
+//     Expect(cardUnderTest.strength).toBe(mulanEnemyOfEntanglement.strength + 6);
 //   });
 // });
 //

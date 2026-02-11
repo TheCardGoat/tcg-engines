@@ -3,51 +3,51 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   donaldDuckCoinCollector,
-//   khanWarHorse,
-//   theNephewsPiggyBank,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   DonaldDuckCoinCollector,
+//   KhanWarHorse,
+//   TheNephewsPiggyBank,
 // } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Donald Duck - Coin Collector", () => {
-//   it("HERE, PIGGY, PIGGY For each item named The Nephews' Piggy Bank you have in play, you pay 2 {I} less to play this character.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: donaldDuckCoinCollector.cost + theNephewsPiggyBank.cost,
-//       hand: [donaldDuckCoinCollector, theNephewsPiggyBank],
+// Describe("Donald Duck - Coin Collector", () => {
+//   It("HERE, PIGGY, PIGGY For each item named The Nephews' Piggy Bank you have in play, you pay 2 {I} less to play this character.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: donaldDuckCoinCollector.cost + theNephewsPiggyBank.cost,
+//       Hand: [donaldDuckCoinCollector, theNephewsPiggyBank],
 //     });
 //
-//     expect(testEngine.getCardModel(donaldDuckCoinCollector).cost).toBe(
-//       donaldDuckCoinCollector.cost,
+//     Expect(testEngine.getCardModel(donaldDuckCoinCollector).cost).toBe(
+//       DonaldDuckCoinCollector.cost,
 //     );
 //
-//     await testEngine.playCard(theNephewsPiggyBank);
+//     Await testEngine.playCard(theNephewsPiggyBank);
 //
-//     expect(testEngine.getCardModel(donaldDuckCoinCollector).cost).toBe(
-//       donaldDuckCoinCollector.cost - 2,
+//     Expect(testEngine.getCardModel(donaldDuckCoinCollector).cost).toBe(
+//       DonaldDuckCoinCollector.cost - 2,
 //     );
 //   });
 //
-//   it("MONEY EVERYWHERE When you play this character, your other characters gain '{E} – Draw a card' this turn.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: donaldDuckCoinCollector.cost,
-//       play: [khanWarHorse],
-//       hand: [donaldDuckCoinCollector],
-//       deck: 10,
+//   It("MONEY EVERYWHERE When you play this character, your other characters gain '{E} – Draw a card' this turn.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: donaldDuckCoinCollector.cost,
+//       Play: [khanWarHorse],
+//       Hand: [donaldDuckCoinCollector],
+//       Deck: 10,
 //     });
 //
-//     expect(
-//       testEngine.getCardModel(khanWarHorse).activatedAbilities,
+//     Expect(
+//       TestEngine.getCardModel(khanWarHorse).activatedAbilities,
 //     ).toHaveLength(0);
 //
-//     await testEngine.playCard(donaldDuckCoinCollector);
+//     Await testEngine.playCard(donaldDuckCoinCollector);
 //
-//     await testEngine.activateCard(khanWarHorse);
+//     Await testEngine.activateCard(khanWarHorse);
 //
-//     expect(testEngine.getCardModel(khanWarHorse).ready).toBe(false);
-//     expect(testEngine.getZonesCardCount().hand).toBe(1);
-//     expect(testEngine.getZonesCardCount().deck).toBe(9);
+//     Expect(testEngine.getCardModel(khanWarHorse).ready).toBe(false);
+//     Expect(testEngine.getZonesCardCount().hand).toBe(1);
+//     Expect(testEngine.getZonesCardCount().deck).toBe(9);
 //   });
 // });
 //

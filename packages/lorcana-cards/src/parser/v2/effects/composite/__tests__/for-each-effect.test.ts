@@ -16,9 +16,8 @@ describe("forEachEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("for-each");
-      const counter = (result as Effect & { counter: { type: string } })
-        .counter;
-      const effect = (result as Effect & { effect: Effect }).effect;
+      const {counter} = (result as Effect & { counter: { type: string } });
+      const {effect} = (result as Effect & { effect: Effect });
       expect(counter.type).toBe("characters");
       expect(effect.type).toBe("gain-lore");
     });
@@ -30,9 +29,8 @@ describe("forEachEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("for-each");
-      const counter = (result as Effect & { counter: { type: string } })
-        .counter;
-      const effect = (result as Effect & { effect: Effect }).effect;
+      const {counter} = (result as Effect & { counter: { type: string } });
+      const {effect} = (result as Effect & { effect: Effect });
       expect(counter.type).toBe("characters");
       expect(effect.type).toBe("draw");
     });
@@ -44,9 +42,8 @@ describe("forEachEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("for-each");
-      const counter = (result as Effect & { counter: { type: string } })
-        .counter;
-      const effect = (result as Effect & { effect: Effect }).effect;
+      const {counter} = (result as Effect & { counter: { type: string } });
+      const {effect} = (result as Effect & { effect: Effect });
       expect(counter.type).toBe("cards-in-hand");
       expect(effect.type).toBe("gain-lore");
     });
@@ -58,9 +55,8 @@ describe("forEachEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("for-each");
-      const counter = (result as Effect & { counter: { type: string } })
-        .counter;
-      const effect = (result as Effect & { effect: Effect }).effect;
+      const {counter} = (result as Effect & { counter: { type: string } });
+      const {effect} = (result as Effect & { effect: Effect });
       expect(counter.type).toBe("damage-on-target");
       expect(effect.type).toBe("draw");
     });
@@ -72,9 +68,8 @@ describe("forEachEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("for-each");
-      const counter = (result as Effect & { counter: { type: string } })
-        .counter;
-      const effect = (result as Effect & { effect: Effect }).effect;
+      const {counter} = (result as Effect & { counter: { type: string } });
+      const {effect} = (result as Effect & { effect: Effect });
       expect(counter.type).toBe("items");
       expect(effect.type).toBe("gain-lore");
     });
@@ -88,7 +83,7 @@ describe("forEachEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("for-each");
-      const effect = (result as Effect & { effect: Effect }).effect;
+      const {effect} = (result as Effect & { effect: Effect });
       expect(effect.type).toBe("gain-lore");
     });
 
@@ -169,7 +164,7 @@ describe("forEachEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("for-each");
-      const effect = (result as Effect & { effect: Effect }).effect;
+      const {effect} = (result as Effect & { effect: Effect });
       expect(effect.type).toBe("gain-lore");
     });
 
@@ -189,8 +184,7 @@ describe("forEachEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("for-each");
-      const counter = (result as Effect & { counter: { type: string } })
-        .counter;
+      const {counter} = (result as Effect & { counter: { type: string } });
       expect(counter.type).toBe("characters");
     });
   });
@@ -202,7 +196,7 @@ describe("forEachEffectParser", () => {
       );
 
       expect(result).not.toBeNull();
-      const effect = (result as Effect & { effect: Effect }).effect;
+      const {effect} = (result as Effect & { effect: Effect });
       expect(effect.type).toBe("draw");
     });
 
@@ -212,7 +206,7 @@ describe("forEachEffectParser", () => {
       );
 
       expect(result).not.toBeNull();
-      const effect = (result as Effect & { effect: Effect }).effect;
+      const {effect} = (result as Effect & { effect: Effect });
       expect(effect.type).toBe("discard");
     });
 
@@ -222,7 +216,7 @@ describe("forEachEffectParser", () => {
       );
 
       expect(result).not.toBeNull();
-      const effect = (result as Effect & { effect: Effect }).effect;
+      const {effect} = (result as Effect & { effect: Effect });
       expect(effect.type).toBe("deal-damage");
     });
   });
@@ -233,9 +227,9 @@ describe("forEachEffectParser", () => {
         "for each character, gain 1 lore",
       );
 
-      const counter = (
+      const {counter} = (
         result as Effect & { counter: { type: string; controller?: string } }
-      ).counter;
+      );
       expect(counter.type).toBe("characters");
       expect(counter.controller).toBe("you"); // Defaults to "you" when no controller specified
     });
@@ -245,9 +239,9 @@ describe("forEachEffectParser", () => {
         "for each other character you control, gain 1 lore",
       );
 
-      const counter = (
+      const {counter} = (
         result as Effect & { counter: { type: string; controller?: string } }
-      ).counter;
+      );
       expect(counter.type).toBe("characters");
       expect(counter.controller).toBe("you");
     });
@@ -257,9 +251,9 @@ describe("forEachEffectParser", () => {
         "for each card in your discard, gain 1 lore",
       );
 
-      const counter = (
+      const {counter} = (
         result as Effect & { counter: { type: string; controller?: string } }
-      ).counter;
+      );
       expect(counter.type).toBe("cards-in-discard");
       expect(counter.controller).toBe("you");
     });
@@ -267,7 +261,7 @@ describe("forEachEffectParser", () => {
 
   describe("CST parsing", () => {
     it("returns null for CST node input (not yet implemented)", () => {
-      const mockCstNode = { name: "test", children: {} } as any;
+      const mockCstNode = { children: {}, name: "test" } as any;
       const result = forEachEffectParser.parse(mockCstNode);
 
       expect(result).toBeNull();

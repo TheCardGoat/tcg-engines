@@ -1,35 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const ursulaVoiceStealer: CharacterCard = {
-  id: "19w",
-  cardType: "character",
-  name: "Ursula",
-  version: "Voice Stealer",
-  fullName: "Ursula - Voice Stealer",
-  inkType: ["amethyst"],
-  franchise: "Little Mermaid",
-  set: "009",
-  text: "SING FOR ME When you play this character, exert chosen opposing ready character. Then, you may play a song with cost equal to or less than the exerted character's cost for free.",
-  cost: 5,
-  strength: 3,
-  willpower: 4,
-  lore: 1,
-  cardNumber: 44,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "a56b1e5ceac728acb2ec90212fecc0118d4e568f",
-  },
   abilities: [
     {
-      id: "19w-1",
-      type: "triggered",
-      name: "SING FOR ME",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -40,8 +13,35 @@ export const ursulaVoiceStealer: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "19w-1",
+      name: "SING FOR ME",
       text: "SING FOR ME When you play this character, exert chosen opposing ready character. Then, you may play a song with cost equal to or less than the exerted character's cost for free.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 44,
+  cardType: "character",
   classifications: ["Storyborn", "Villain", "Sorcerer"],
+  cost: 5,
+  externalIds: {
+    ravensburger: "a56b1e5ceac728acb2ec90212fecc0118d4e568f",
+  },
+  franchise: "Little Mermaid",
+  fullName: "Ursula - Voice Stealer",
+  id: "19w",
+  inkType: ["amethyst"],
+  inkable: true,
+  lore: 1,
+  missingTests: true,
+  name: "Ursula",
+  set: "009",
+  strength: 3,
+  text: "SING FOR ME When you play this character, exert chosen opposing ready character. Then, you may play a song with cost equal to or less than the exerted character's cost for free.",
+  version: "Voice Stealer",
+  willpower: 4,
 };

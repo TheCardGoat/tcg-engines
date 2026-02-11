@@ -1,10 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it } from "bun:test";
 import { createPlayerId } from "@tcg/core";
-import {
-  LorcanaTestEngine,
-  PLAYER_ONE,
-  PLAYER_TWO,
-} from "../../../testing/lorcana-test-engine";
+import { LorcanaTestEngine, PLAYER_ONE, PLAYER_TWO } from "../../../testing/lorcana-test-engine";
 
 describe("Move: Challenge", () => {
   let testEngine: LorcanaTestEngine;
@@ -14,9 +10,9 @@ describe("Move: Challenge", () => {
   beforeEach(() => {
     // Create engine with empty card definitions (we'll populate dynamically)
     testEngine = new LorcanaTestEngine(
-      { hand: 5, deck: 10, inkwell: 0 },
-      { hand: 5, deck: 10, inkwell: 0 },
-      { skipPreGame: false, cardDefinitions: {} },
+      { deck: 10, hand: 5, inkwell: 0 },
+      { deck: 10, hand: 5, inkwell: 0 },
+      { cardDefinitions: {}, skipPreGame: false },
     );
 
     // Complete pre-game setup to get to main phase
@@ -36,16 +32,16 @@ describe("Move: Challenge", () => {
 
     // Player two takes their turn (beginning -> main -> end -> next turn)
     testEngine.changeActivePlayer(PLAYER_TWO);
-    testEngine.passTurn(); // beginning -> main
-    testEngine.passTurn(); // main -> end -> turn 3 beginning -> main (player_one)
+    testEngine.passTurn(); // Beginning -> main
+    testEngine.passTurn(); // Main -> end -> turn 3 beginning -> main (player_one)
 
     // Player one takes their turn
     testEngine.changeActivePlayer(PLAYER_ONE);
-    testEngine.passTurn(); // main -> end -> turn 4 beginning -> main (player_two)
+    testEngine.passTurn(); // Main -> end -> turn 4 beginning -> main (player_two)
 
     // Back to player two, now characters have been through a turn cycle
     testEngine.changeActivePlayer(PLAYER_TWO);
-    testEngine.passTurn(); // main -> end -> turn 5 beginning -> main (player_one)
+    testEngine.passTurn(); // Main -> end -> turn 5 beginning -> main (player_one)
 
     // Now on player_one's turn with characters no longer summoning sick
     testEngine.changeActivePlayer(PLAYER_ONE);
@@ -265,9 +261,9 @@ describe("Move: Challenge", () => {
     it("should reject challenging with drying (just played) characters", () => {
       // Create a fresh engine without passing turns
       const freshEngine = new LorcanaTestEngine(
-        { hand: 5, deck: 10 },
-        { hand: 5, deck: 10 },
-        { skipPreGame: false, cardDefinitions: {} },
+        { deck: 10, hand: 5 },
+        { deck: 10, hand: 5 },
+        { cardDefinitions: {}, skipPreGame: false },
       );
 
       // Complete setup
@@ -292,11 +288,11 @@ describe("Move: Challenge", () => {
 
       // Try to challenge - should fail
       const result = freshEngine.engine.executeMove("challenge", {
-        playerId: createPlayerId(PLAYER_ONE),
         params: {
           attackerId: dryingAttacker,
           defenderId: dryingDefender,
         },
+        playerId: createPlayerId(PLAYER_ONE),
       });
 
       expect(result.success).toBe(false);
@@ -323,11 +319,11 @@ describe("Move: Challenge", () => {
 
       // Try to challenge again with exerted attacker - should fail
       const result = testEngine.engine.executeMove("challenge", {
-        playerId: createPlayerId(PLAYER_ONE),
         params: {
           attackerId: attacker,
           defenderId: defender,
         },
+        playerId: createPlayerId(PLAYER_ONE),
       });
 
       expect(result.success).toBe(false);
@@ -365,18 +361,18 @@ describe("Move: Challenge", () => {
       });
 
       const result = testEngine.engine.executeMove("challenge", {
-        playerId: createPlayerId(PLAYER_ONE),
         params: {
           attackerId: attacker,
           defenderId: ownCharacter,
         },
+        playerId: createPlayerId(PLAYER_ONE),
       });
 
       // Should fail (can't challenge own characters)
       // Note: This might succeed in current implementation
-      // but is a game rule that should be enforced
+      // But is a game rule that should be enforced
       // For now, we'll document expected behavior
-      // expect(result.success).toBe(false);
+      // Expect(result.success).toBe(false);
     });
 
     it("should reject challenging characters not in play", () => {
@@ -384,11 +380,11 @@ describe("Move: Challenge", () => {
       const charInHand = hand[0];
 
       const result = testEngine.engine.executeMove("challenge", {
-        playerId: createPlayerId(PLAYER_ONE),
         params: {
           attackerId: attacker,
           defenderId: charInHand,
         },
+        playerId: createPlayerId(PLAYER_ONE),
       });
 
       expect(result.success).toBe(false);
@@ -396,11 +392,11 @@ describe("Move: Challenge", () => {
 
     it("should reject invalid attacker/defender IDs", () => {
       const result = testEngine.engine.executeMove("challenge", {
-        playerId: createPlayerId(PLAYER_ONE),
         params: {
           attackerId: "invalid-card-id-12345",
           defenderId: defender,
         },
+        playerId: createPlayerId(PLAYER_ONE),
       });
 
       expect(result.success).toBe(false);
@@ -413,11 +409,11 @@ describe("Move: Challenge", () => {
       });
 
       const result = testEngine.engine.executeMove("challenge", {
-        playerId: createPlayerId(PLAYER_ONE),
         params: {
           attackerId: opponentChar,
           defenderId: defender,
         },
+        playerId: createPlayerId(PLAYER_ONE),
       });
 
       expect(result.success).toBe(false);
@@ -513,9 +509,7 @@ describe("Move: Challenge", () => {
       testEngine.challenge(attacker, fragileDefender);
 
       // Defender should be banished (3 damage >= 3 willpower)
-      expect(testEngine.getZone("discard", PLAYER_TWO)).toContain(
-        fragileDefender,
-      );
+      expect(testEngine.getZone("discard", PLAYER_TWO)).toContain(fragileDefender);
 
       // Attacker took 2 damage
       expect(testEngine.getDamage(attacker)).toBe(2);

@@ -3,119 +3,119 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { mauiDemiGod } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import {
-//   goofyKnightForADay,
-//   yzmaScaryBeyondAllReason,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { mauiDemiGod } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import {
+//   GoofyKnightForADay,
+//   YzmaScaryBeyondAllReason,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
 // // Flaky test, skipping for now
-// describe.skip("Yzma - Scary Beyond All Reason", () => {
-//   describe.skip("**CRUEL IRONY** When you play this character, shuffle another chosen character card into their player's deck. That player draws 2 cards.", () => {
-//     it("Targeting opponent's card", () => {
-//       const testStore = new TestStore(
+// Describe.skip("Yzma - Scary Beyond All Reason", () => {
+//   Describe.skip("**CRUEL IRONY** When you play this character, shuffle another chosen character card into their player's deck. That player draws 2 cards.", () => {
+//     It("Targeting opponent's card", () => {
+//       Const testStore = new TestStore(
 //         {
-//           inkwell: yzmaScaryBeyondAllReason.cost,
-//           hand: [yzmaScaryBeyondAllReason],
-//           play: [goofyKnightForADay],
+//           Inkwell: yzmaScaryBeyondAllReason.cost,
+//           Hand: [yzmaScaryBeyondAllReason],
+//           Play: [goofyKnightForADay],
 //         },
 //         {
-//           play: [mauiDemiGod],
-//           deck: 60,
+//           Play: [mauiDemiGod],
+//           Deck: 60,
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "hand",
-//         yzmaScaryBeyondAllReason.id,
+//         YzmaScaryBeyondAllReason.id,
 //       );
 //
-//       const target = testStore.getByZoneAndId(
+//       Const target = testStore.getByZoneAndId(
 //         "play",
-//         mauiDemiGod.id,
+//         MauiDemiGod.id,
 //         "player_two",
 //       );
 //
-//       cardUnderTest.playFromHand();
-//       testStore.resolveTopOfStack({ targets: [target] });
+//       CardUnderTest.playFromHand();
+//       TestStore.resolveTopOfStack({ targets: [target] });
 //
-//       expect(target.zone).toBe("deck");
-//       expect(testStore.getZonesCardCount("player_two")).toEqual(
-//         expect.objectContaining({
-//           deck: 60 - 2 + 1, // Maui is shuffled back into the deck
-//           hand: 2,
-//           play: 0,
+//       Expect(target.zone).toBe("deck");
+//       Expect(testStore.getZonesCardCount("player_two")).toEqual(
+//         Expect.objectContaining({
+//           Deck: 60 - 2 + 1, // Maui is shuffled back into the deck
+//           Hand: 2,
+//           Play: 0,
 //         }),
 //       );
 //     });
 //
-//     it("Targeting your own card", () => {
-//       const testStore = new TestStore(
+//     It("Targeting your own card", () => {
+//       Const testStore = new TestStore(
 //         {
-//           inkwell: yzmaScaryBeyondAllReason.cost,
-//           hand: [yzmaScaryBeyondAllReason],
-//           play: [goofyKnightForADay],
-//           deck: 60,
+//           Inkwell: yzmaScaryBeyondAllReason.cost,
+//           Hand: [yzmaScaryBeyondAllReason],
+//           Play: [goofyKnightForADay],
+//           Deck: 60,
 //         },
 //         {
-//           play: [mauiDemiGod],
-//           deck: 3,
+//           Play: [mauiDemiGod],
+//           Deck: 3,
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "hand",
-//         yzmaScaryBeyondAllReason.id,
+//         YzmaScaryBeyondAllReason.id,
 //       );
-//       const target = testStore.getByZoneAndId("play", goofyKnightForADay.id);
+//       Const target = testStore.getByZoneAndId("play", goofyKnightForADay.id);
 //
-//       cardUnderTest.playFromHand();
-//       testStore.resolveTopOfStack({ targets: [target] });
+//       CardUnderTest.playFromHand();
+//       TestStore.resolveTopOfStack({ targets: [target] });
 //
-//       expect(target.zone).toBe("deck");
-//       expect(testStore.getZonesCardCount("player_one")).toEqual(
-//         expect.objectContaining({
-//           deck: 60 - 2 + 1, // goofyKnightForADay is shuffled back into the deck
-//           hand: 2,
+//       Expect(target.zone).toBe("deck");
+//       Expect(testStore.getZonesCardCount("player_one")).toEqual(
+//         Expect.objectContaining({
+//           Deck: 60 - 2 + 1, // goofyKnightForADay is shuffled back into the deck
+//           Hand: 2,
 //         }),
 //       );
-//       expect(testStore.getZonesCardCount("player_two")).toEqual(
-//         expect.objectContaining({
-//           deck: 3,
-//           hand: 0,
-//           play: 1,
+//       Expect(testStore.getZonesCardCount("player_two")).toEqual(
+//         Expect.objectContaining({
+//           Deck: 3,
+//           Hand: 0,
+//           Play: 1,
 //         }),
 //       );
 //     });
 //   });
 //
-//   it("Shift", () => {
-//     const testStore = new TestStore({
-//       play: [yzmaScaryBeyondAllReason],
+//   It("Shift", () => {
+//     Const testStore = new TestStore({
+//       Play: [yzmaScaryBeyondAllReason],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       yzmaScaryBeyondAllReason.id,
+//       YzmaScaryBeyondAllReason.id,
 //     );
 //
-//     expect(cardUnderTest.hasShift).toBe(true);
+//     Expect(cardUnderTest.hasShift).toBe(true);
 //   });
 // });
 //
-// describe("Regression", () => {
-//   it("When no target is available, it should igore layer", async () => {
-//     const testEngine = new TestEngine({
-//       hand: [yzmaScaryBeyondAllReason],
-//       inkwell: yzmaScaryBeyondAllReason.cost,
+// Describe("Regression", () => {
+//   It("When no target is available, it should igore layer", async () => {
+//     Const testEngine = new TestEngine({
+//       Hand: [yzmaScaryBeyondAllReason],
+//       Inkwell: yzmaScaryBeyondAllReason.cost,
 //     });
 //
-//     await testEngine.playCard(yzmaScaryBeyondAllReason);
+//     Await testEngine.playCard(yzmaScaryBeyondAllReason);
 //
-//     expect(testEngine.stackLayers).toHaveLength(0);
+//     Expect(testEngine.stackLayers).toHaveLength(0);
 //   });
 // });
 //

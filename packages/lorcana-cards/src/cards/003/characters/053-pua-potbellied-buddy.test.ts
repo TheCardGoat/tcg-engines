@@ -3,25 +3,25 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { puaPotbelliedBuddy } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { puaPotbelliedBuddy } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Pua - Potbellied Buddy", () => {
-//   it.skip("**ALWAYS THERE** When this character is banished, you may shuffle this card into your deck.", () => {
-//     const testStore = new TestStore({
-//       inkwell: puaPotbelliedBuddy.cost,
-//       play: [puaPotbelliedBuddy],
+// Describe("Pua - Potbellied Buddy", () => {
+//   It.skip("**ALWAYS THERE** When this character is banished, you may shuffle this card into your deck.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: puaPotbelliedBuddy.cost,
+//       Play: [puaPotbelliedBuddy],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       puaPotbelliedBuddy.id,
+//       PuaPotbelliedBuddy.id,
 //     );
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

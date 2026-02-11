@@ -3,36 +3,36 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   druunRavenousPlague,
-//   royalGuardOctopusSoldier,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   DruunRavenousPlague,
+//   RoyalGuardOctopusSoldier,
 // } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Royal Guard - Octopus Soldier", () => {
-//   it("HEAVILY ARMED Every time you draw a card, this character gains Challenger +1 for this turn. (Gains +1 {S} while challenging.)", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Royal Guard - Octopus Soldier", () => {
+//   It("HEAVILY ARMED Every time you draw a card, this character gains Challenger +1 for this turn. (Gains +1 {S} while challenging.)", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         play: [royalGuardOctopusSoldier],
+//         Play: [royalGuardOctopusSoldier],
 //       },
 //       {
-//         play: [druunRavenousPlague],
+//         Play: [druunRavenousPlague],
 //       },
 //     );
 //
-//     const underTest = testEngine.getCardModel(royalGuardOctopusSoldier);
-//     const oppoChar = testEngine.getCardModel(druunRavenousPlague);
+//     Const underTest = testEngine.getCardModel(royalGuardOctopusSoldier);
+//     Const oppoChar = testEngine.getCardModel(druunRavenousPlague);
 //
-//     oppoChar.exert();
+//     OppoChar.exert();
 //
-//     await testEngine.drawCard();
+//     Await testEngine.drawCard();
 //
-//     expect(testEngine.getCardsByZone("hand").length).toBe(1);
+//     Expect(testEngine.getCardsByZone("hand").length).toBe(1);
 //
-//     underTest.challenge(oppoChar);
+//     UnderTest.challenge(oppoChar);
 //
-//     expect(oppoChar.damage).toBe(underTest.strength + 1);
+//     Expect(oppoChar.damage).toBe(underTest.strength + 1);
 //   });
 // });
 //

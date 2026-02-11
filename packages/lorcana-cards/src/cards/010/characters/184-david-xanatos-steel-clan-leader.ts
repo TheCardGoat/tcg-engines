@@ -1,35 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const davidXanatosSteelClanLeader: CharacterCard = {
-  id: "xa7",
-  cardType: "character",
-  name: "David Xanatos",
-  version: "Steel Clan Leader",
-  fullName: "David Xanatos - Steel Clan Leader",
-  inkType: ["steel"],
-  franchise: "Gargoyles",
-  set: "010",
-  text: "MINOR INCONVENIENCE When you play this character, you may choose and discard a card to deal 2 damage to chosen character.",
-  cost: 3,
-  strength: 3,
-  willpower: 2,
-  lore: 1,
-  cardNumber: 184,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "77f48553077c039331c07d2db0a31696cdd3c13f",
-  },
   abilities: [
     {
-      id: "xa7-1",
-      type: "triggered",
-      name: "MINOR INCONVENIENCE",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -45,8 +18,35 @@ export const davidXanatosSteelClanLeader: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "xa7-1",
+      name: "MINOR INCONVENIENCE",
       text: "MINOR INCONVENIENCE When you play this character, you may choose and discard a card to deal 2 damage to chosen character.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 184,
+  cardType: "character",
   classifications: ["Storyborn", "Villain"],
+  cost: 3,
+  externalIds: {
+    ravensburger: "77f48553077c039331c07d2db0a31696cdd3c13f",
+  },
+  franchise: "Gargoyles",
+  fullName: "David Xanatos - Steel Clan Leader",
+  id: "xa7",
+  inkType: ["steel"],
+  inkable: true,
+  lore: 1,
+  missingTests: true,
+  name: "David Xanatos",
+  set: "010",
+  strength: 3,
+  text: "MINOR INCONVENIENCE When you play this character, you may choose and discard a card to deal 2 damage to chosen character.",
+  version: "Steel Clan Leader",
+  willpower: 2,
 };

@@ -257,7 +257,7 @@ describe("Targets & Conditions Integration", () => {
       expect(target).toBeDefined();
       expect(target?.type).toBe("character");
       // Note: parseTargetFromText finds first target ("this character")
-      expect(target?.modifier).toBe("chosen"); // regex matches "chosen character" first
+      expect(target?.modifier).toBe("chosen"); // Regex matches "chosen character" first
     });
 
     it("parses Maleficent - Monstrous Dragon choice ability", () => {
@@ -287,12 +287,12 @@ describe("Targets & Conditions Integration", () => {
       const text =
         "When you play this character, gain 1 lore for each character you have in play.";
 
-      // parseTargetFromText finds first target in text
+      // ParseTargetFromText finds first target in text
       const target = parseTargetFromText(text);
 
       // Should find "this character" (first occurrence)
       expect(target).toBeDefined();
-      expect(target?.modifier).toBe("each"); // regex matches "each character" first
+      expect(target?.modifier).toBe("each"); // Regex matches "each character" first
     });
 
     it("parses Belle - Bookworm timing ability", () => {
@@ -335,12 +335,12 @@ describe("Targets & Conditions Integration", () => {
     it("parses Tinker Bell - Giant Fairy banish ability", () => {
       const text = "When you play this character, banish chosen item.";
 
-      // parseTargetFromText finds first target
+      // ParseTargetFromText finds first target
       const target = parseTargetFromText(text);
 
       // Should find "this character" first
       expect(target).toBeDefined();
-      expect(target?.modifier).toBe("chosen"); // regex matches "chosen item" first
+      expect(target?.modifier).toBe("chosen"); // Regex matches "chosen item" first
     });
 
     it("parses Simba - Returned King conditional damage", () => {
@@ -366,7 +366,7 @@ describe("Targets & Conditions Integration", () => {
 
       expect(target).toBeDefined();
       expect(target?.type).toBe("character");
-      // parseTargetFromText should capture "each"
+      // ParseTargetFromText should capture "each"
       expect(target?.modifier).toBeUndefined(); // "opposing" not in patterns
     });
   });
@@ -375,7 +375,7 @@ describe("Targets & Conditions Integration", () => {
     it("handles multiple targets in sequence", () => {
       const text = "Banish chosen character, then ready your character.";
 
-      // parseTargetFromText should find the first target
+      // ParseTargetFromText should find the first target
       const target = parseTargetFromText(text);
 
       expect(target).toBeDefined();
@@ -399,7 +399,7 @@ describe("Targets & Conditions Integration", () => {
     it("handles nested conditions and targets", () => {
       const text = "If you have 5 lore, chosen character gets +2 strength.";
 
-      // parseConditionFromText finds first condition
+      // ParseConditionFromText finds first condition
       const condition = parseConditionFromText(text);
       const target = parseTargetFromText(text);
 

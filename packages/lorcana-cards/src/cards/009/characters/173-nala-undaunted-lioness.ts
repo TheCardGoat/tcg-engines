@@ -1,29 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const nalaUndauntedLioness: CharacterCard = {
-  id: "1xs",
-  cardType: "character",
-  name: "Nala",
-  version: "Undaunted Lioness",
-  fullName: "Nala - Undaunted Lioness",
-  inkType: ["steel"],
-  franchise: "Lion King",
-  set: "009",
-  text: "DETERMINED DIVERSION While this character has no damage, she gets +1 {L} and gains Resist +1. (Damage dealt to them is reduced by 1.)",
-  cost: 2,
-  strength: 0,
-  willpower: 2,
-  lore: 2,
-  cardNumber: 173,
-  inkable: false,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "fb7ea808456214e200b4637c8b19a6e87955731f",
-  },
   abilities: [
     {
-      id: "1xs-1",
-      type: "static",
       effect: {
         type: "sequence",
         steps: [
@@ -41,8 +20,29 @@ export const nalaUndauntedLioness: CharacterCard = {
           },
         ],
       },
+      id: "1xs-1",
       text: "DETERMINED DIVERSION While this character has no damage, she gets +1 {L} and gains Resist +1.",
+      type: "static",
     },
   ],
+  cardNumber: 173,
+  cardType: "character",
   classifications: ["Storyborn", "Ally"],
+  cost: 2,
+  externalIds: {
+    ravensburger: "fb7ea808456214e200b4637c8b19a6e87955731f",
+  },
+  franchise: "Lion King",
+  fullName: "Nala - Undaunted Lioness",
+  id: "1xs",
+  inkType: ["steel"],
+  inkable: false,
+  lore: 2,
+  missingTests: true,
+  name: "Nala",
+  set: "009",
+  strength: 0,
+  text: "DETERMINED DIVERSION While this character has no damage, she gets +1 {L} and gains Resist +1. (Damage dealt to them is reduced by 1.)",
+  version: "Undaunted Lioness",
+  willpower: 2,
 };

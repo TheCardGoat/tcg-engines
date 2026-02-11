@@ -3,46 +3,46 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { pawpsicle } from "@lorcanito/lorcana-engine/cards/002/items/items";
-// import { glean } from "@lorcanito/lorcana-engine/cards/004/actions/actions";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { pawpsicle } from "@lorcanito/lorcana-engine/cards/002/items/items";
+// Import { glean } from "@lorcanito/lorcana-engine/cards/004/actions/actions";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Glean", () => {
-//   it("Targeting your own card", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: glean.cost,
-//       hand: [glean],
-//       play: [pawpsicle],
+// Describe("Glean", () => {
+//   It("Targeting your own card", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: glean.cost,
+//       Hand: [glean],
+//       Play: [pawpsicle],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(glean);
-//     const target = testEngine.getCardModel(pawpsicle);
+//     Const cardUnderTest = testEngine.getCardModel(glean);
+//     Const target = testEngine.getCardModel(pawpsicle);
 //
-//     await testEngine.playCard(cardUnderTest);
+//     Await testEngine.playCard(cardUnderTest);
 //
-//     await testEngine.resolveTopOfStack({ targets: [target] });
-//     expect(testEngine.getLoreForPlayer()).toEqual(2);
+//     Await testEngine.resolveTopOfStack({ targets: [target] });
+//     Expect(testEngine.getLoreForPlayer()).toEqual(2);
 //   });
 //
-//   it("Targeting opponent's card", async () => {
-//     const testEngine = new TestEngine(
+//   It("Targeting opponent's card", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: glean.cost,
-//         hand: [glean],
+//         Inkwell: glean.cost,
+//         Hand: [glean],
 //       },
 //       {
-//         play: [pawpsicle],
+//         Play: [pawpsicle],
 //       },
 //     );
 //
-//     const cardUnderTest = testEngine.getCardModel(glean);
-//     const target = testEngine.getCardModel(pawpsicle);
+//     Const cardUnderTest = testEngine.getCardModel(glean);
+//     Const target = testEngine.getCardModel(pawpsicle);
 //
-//     await testEngine.playCard(cardUnderTest);
+//     Await testEngine.playCard(cardUnderTest);
 //
-//     await testEngine.resolveTopOfStack({ targets: [target] });
-//     expect(testEngine.getLoreForPlayer("player_two")).toEqual(2);
+//     Await testEngine.resolveTopOfStack({ targets: [target] });
+//     Expect(testEngine.getLoreForPlayer("player_two")).toEqual(2);
 //   });
 // });
 //

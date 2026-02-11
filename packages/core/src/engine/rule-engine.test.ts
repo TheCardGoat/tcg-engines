@@ -1,34 +1,31 @@
 import { describe, expect, it } from "bun:test";
-import type {
-  GameDefinition,
-  Player,
-} from "../game-definition/game-definition";
+import type { GameDefinition, Player } from "../game-definition/game-definition";
 import type { CardId, PlayerId, ZoneId } from "../types";
 import type { CardZoneConfig } from "../zones";
 import { RuleEngine } from "./rule-engine";
 
 describe("RuleEngine - Operations Integration", () => {
-  type TestCardDef = {
+  interface TestCardDef {
     id: string;
     name: string;
     cost: number;
-  };
+  }
 
-  type TestCardMeta = {
+  interface TestCardMeta {
     damage?: number;
     exerted?: boolean;
-  };
+  }
 
-  type TestState = {
+  interface TestState {
     players: Player[];
     currentPlayer: number;
     resources: Record<string, number>;
-  };
+  }
 
-  type TestMoves = {
+  interface TestMoves {
     playCard: { cardId: string };
     draw: {};
-  };
+  }
 
   const createTestGameDefinition = (): GameDefinition<
     TestState,
@@ -39,43 +36,29 @@ describe("RuleEngine - Operations Integration", () => {
     const handZone: CardZoneConfig = {
       id: "hand" as ZoneId,
       name: "Hand",
-      visibility: "private",
       ordered: false,
+      visibility: "private",
     };
 
     const deckZone: CardZoneConfig = {
       id: "deck" as ZoneId,
       name: "Deck",
-      visibility: "secret",
       ordered: true,
+      visibility: "secret",
     };
 
     const playZone: CardZoneConfig = {
       id: "play" as ZoneId,
       name: "Play Area",
-      visibility: "public",
       ordered: false,
+      visibility: "public",
     };
 
     return {
-      name: "Test Card Game",
-      zones: {
-        hand: handZone,
-        deck: deckZone,
-        play: playZone,
-      },
       cards: {
         "monster-1": { id: "monster-1", name: "Monster 1", cost: 3 },
         "monster-2": { id: "monster-2", name: "Monster 2", cost: 5 },
       },
-      setup: (players: Player[]) => ({
-        players,
-        currentPlayer: 0,
-        resources: {
-          [players[0].id]: 10,
-          [players[1].id]: 10,
-        },
-      }),
       moves: {
         playCard: {
           condition: (state, context) => {
@@ -146,6 +129,20 @@ describe("RuleEngine - Operations Integration", () => {
           },
         },
       },
+      name: "Test Card Game",
+      setup: (players: Player[]) => ({
+        players,
+        currentPlayer: 0,
+        resources: {
+          [players[0].id]: 10,
+          [players[1].id]: 10,
+        },
+      }),
+      zones: {
+        hand: handZone,
+        deck: deckZone,
+        play: playZone,
+      },
     };
   };
 
@@ -162,8 +159,8 @@ describe("RuleEngine - Operations Integration", () => {
       // Execute draw move - even with empty deck, it should succeed
       // (the move just won't do anything)
       const result = engine.executeMove("draw", {
-        playerId: "player-1" as unknown as PlayerId,
         params: {},
+        playerId: "player-1" as unknown as PlayerId,
       });
 
       // The move should execute successfully even with no cards
@@ -184,8 +181,8 @@ describe("RuleEngine - Operations Integration", () => {
 
       // Execute playCard move - this should use card operations
       const result = engine.executeMove("playCard", {
-        playerId: "player-1" as unknown as PlayerId,
         params: { cardId: "card-1" },
+        playerId: "player-1" as unknown as PlayerId,
       });
 
       // Will fail initially since we haven't populated cards, but tests the API
@@ -201,10 +198,10 @@ describe("RuleEngine - Operations Integration", () => {
       const gameDef = createTestGameDefinition();
       const engine = new RuleEngine(gameDef, players);
 
-      // canExecuteMove should have access to operations
+      // CanExecuteMove should have access to operations
       const canPlay = engine.canExecuteMove("playCard", {
-        playerId: "player-1" as unknown as PlayerId,
         params: { cardId: "card-1" },
+        playerId: "player-1" as unknown as PlayerId,
       });
 
       expect(typeof canPlay).toBe("boolean");
@@ -224,8 +221,8 @@ describe("RuleEngine - Operations Integration", () => {
       // Engine should initialize with zones from definition
       // We can verify this by executing a move that uses zones
       const result = engine.executeMove("draw", {
-        playerId: "player-1" as unknown as PlayerId,
         params: {},
+        playerId: "player-1" as unknown as PlayerId,
       });
 
       // Move should execute successfully (zones are accessible)
@@ -243,13 +240,13 @@ describe("RuleEngine - Operations Integration", () => {
 
       // Execute draw multiple times
       engine.executeMove("draw", {
-        playerId: "player-1" as unknown as PlayerId,
         params: {},
+        playerId: "player-1" as unknown as PlayerId,
       });
 
       engine.executeMove("draw", {
-        playerId: "player-1" as unknown as PlayerId,
         params: {},
+        playerId: "player-1" as unknown as PlayerId,
       });
 
       // Internal state should be tracking card movements
@@ -270,8 +267,8 @@ describe("RuleEngine - Operations Integration", () => {
       const engine = new RuleEngine(gameDef, players);
 
       const result = engine.executeMove("draw", {
-        playerId: "player-1" as unknown as PlayerId,
         params: {},
+        playerId: "player-1" as unknown as PlayerId,
       });
 
       // Move should execute successfully

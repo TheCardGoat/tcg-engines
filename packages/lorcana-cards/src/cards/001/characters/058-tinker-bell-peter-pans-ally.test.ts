@@ -5,9 +5,9 @@ import { tinkerBellPeterPansAlly } from "./058-tinker-bell-peter-pans-ally";
 describe("Tinker Bell - Peter Pan’s Ally", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [tinkerBellPeterPan] });
-  //   expect(testEngine.getCardModel(tinkerBellPeterPan).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [tinkerBellPeterPan] });
+  //   Expect(testEngine.getCardModel(tinkerBellPeterPan).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });

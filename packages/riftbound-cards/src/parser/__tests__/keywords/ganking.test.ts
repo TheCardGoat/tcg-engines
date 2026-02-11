@@ -11,15 +11,11 @@ import { Abilities, Effects, Triggers } from "../helpers";
 describe("Keyword: Ganking", () => {
   describe("simple ganking", () => {
     it.skip("should parse '[Ganking] (I can move from battlefield to battlefield.)'", () => {
-      const result = parseAbilities(
-        "[Ganking] (I can move from battlefield to battlefield.)",
-      );
+      const result = parseAbilities("[Ganking] (I can move from battlefield to battlefield.)");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
-      expect(result.abilities?.[0]).toEqual(
-        expect.objectContaining(Abilities.ganking()),
-      );
+      expect(result.abilities?.[0]).toEqual(expect.objectContaining(Abilities.ganking()));
     });
   });
 
@@ -31,9 +27,7 @@ describe("Keyword: Ganking", () => {
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(2);
-      expect(result.abilities?.[0]).toEqual(
-        expect.objectContaining(Abilities.ganking()),
-      );
+      expect(result.abilities?.[0]).toEqual(expect.objectContaining(Abilities.ganking()));
       expect(result.abilities?.[1]).toEqual(
         expect.objectContaining({
           type: "static",
@@ -75,8 +69,8 @@ describe("Keyword: Ganking", () => {
       expect(result.abilities).toHaveLength(2);
       expect(result.abilities?.[1]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           optional: true,
+          type: "triggered",
         }),
       );
     });
@@ -117,10 +111,10 @@ describe("Keyword: Ganking", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "static",
           condition: expect.objectContaining({
             type: "while-buffed",
           }),
+          type: "static",
         }),
       );
     });
@@ -159,11 +153,11 @@ describe("Keyword: Ganking", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "static",
           effect: expect.objectContaining({
-            type: "grant-keyword",
             keyword: "Ganking",
+            type: "grant-keyword",
           }),
+          type: "static",
         }),
       );
     });
@@ -177,11 +171,11 @@ describe("Keyword: Ganking", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "activated",
           effect: expect.objectContaining({
-            type: "grant-keyword",
             keyword: "Ganking",
+            type: "grant-keyword",
           }),
+          type: "activated",
         }),
       );
     });
@@ -195,11 +189,11 @@ describe("Keyword: Ganking", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           effect: expect.objectContaining({
-            type: "grant-keyword",
             keyword: "Ganking",
+            type: "grant-keyword",
           }),
+          type: "triggered",
         }),
       );
     });
@@ -215,13 +209,11 @@ describe("Keyword: Ganking", () => {
       expect(result.abilities).toHaveLength(3);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "keyword",
           keyword: "Accelerate",
+          type: "keyword",
         }),
       );
-      expect(result.abilities?.[1]).toEqual(
-        expect.objectContaining(Abilities.ganking()),
-      );
+      expect(result.abilities?.[1]).toEqual(expect.objectContaining(Abilities.ganking()));
     });
   });
 });

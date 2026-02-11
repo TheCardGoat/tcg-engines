@@ -11,18 +11,16 @@ import { Abilities } from "../helpers";
 describe("Static: Restriction", () => {
   describe("scoring restrictions", () => {
     it.skip("should parse 'While I'm at a battlefield, opponents can't score points.'", () => {
-      const result = parseAbilities(
-        "While I'm at a battlefield, opponents can't score points.",
-      );
+      const result = parseAbilities("While I'm at a battlefield, opponents can't score points.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "static",
           condition: expect.objectContaining({
             type: "while-at-battlefield",
           }),
+          type: "static",
         }),
       );
     });
@@ -30,9 +28,7 @@ describe("Static: Restriction", () => {
 
   describe("play restrictions", () => {
     it.skip("should parse 'You may play me to an occupied enemy battlefield.'", () => {
-      const result = parseAbilities(
-        "You may play me to an occupied enemy battlefield.",
-      );
+      const result = parseAbilities("You may play me to an occupied enemy battlefield.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
@@ -53,9 +49,7 @@ describe("Static: Restriction", () => {
 
   describe("damage restrictions", () => {
     it.skip("should parse 'If I have moved twice this turn, I don't take damage.'", () => {
-      const result = parseAbilities(
-        "If I have moved twice this turn, I don't take damage.",
-      );
+      const result = parseAbilities("If I have moved twice this turn, I don't take damage.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
@@ -72,12 +66,12 @@ describe("Static: Restriction", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "activated",
           restrictions: expect.arrayContaining([
             expect.objectContaining({
               type: "played-equipment-this-turn",
             }),
           ]),
+          type: "activated",
         }),
       );
     });

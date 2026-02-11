@@ -3,49 +3,49 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   mickeyBraveLittleTailor,
-//   mickeyMouseArtfulRogue,
-//   mickeyMouseTrueFriend,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   MickeyBraveLittleTailor,
+//   MickeyMouseArtfulRogue,
+//   MickeyMouseTrueFriend,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { diabloMaleficentsSpy } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { diabloMaleficentsSpy } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Diablo - Maleficent's Spy", () => {
-//   it("**SCOUT AHEAD** When you play this character, you may look at each opponent's hand.", () => {
-//     const testStore = new TestStore(
+// Describe("Diablo - Maleficent's Spy", () => {
+//   It("**SCOUT AHEAD** When you play this character, you may look at each opponent's hand.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: diabloMaleficentsSpy.cost,
-//         hand: [diabloMaleficentsSpy],
+//         Inkwell: diabloMaleficentsSpy.cost,
+//         Hand: [diabloMaleficentsSpy],
 //       },
 //       {
-//         hand: [
-//           mickeyBraveLittleTailor,
-//           mickeyMouseArtfulRogue,
-//           mickeyMouseTrueFriend,
+//         Hand: [
+//           MickeyBraveLittleTailor,
+//           MickeyMouseArtfulRogue,
+//           MickeyMouseTrueFriend,
 //         ],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getCard(diabloMaleficentsSpy);
-//     cardUnderTest.playFromHand();
+//     Const cardUnderTest = testStore.getCard(diabloMaleficentsSpy);
+//     CardUnderTest.playFromHand();
 //     // testStore.resolveOptionalAbility(true);
 //
-//     const targets = [
-//       testStore.getByZoneAndId(
+//     Const targets = [
+//       TestStore.getByZoneAndId(
 //         "hand",
-//         mickeyBraveLittleTailor.id,
+//         MickeyBraveLittleTailor.id,
 //         "player_two",
 //       ),
-//       testStore.getByZoneAndId("hand", mickeyMouseArtfulRogue.id, "player_two"),
-//       testStore.getByZoneAndId("hand", mickeyMouseTrueFriend.id, "player_two"),
+//       TestStore.getByZoneAndId("hand", mickeyMouseArtfulRogue.id, "player_two"),
+//       TestStore.getByZoneAndId("hand", mickeyMouseTrueFriend.id, "player_two"),
 //     ];
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     targets.forEach((card) => {
-//       expect(card.meta.revealed).toEqual(true);
+//     Targets.forEach((card) => {
+//       Expect(card.meta.revealed).toEqual(true);
 //     });
 //   });
 // });

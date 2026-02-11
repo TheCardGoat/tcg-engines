@@ -13,11 +13,11 @@
  */
 
 import {
+  type RuleEngineOptions,
   createCardId,
   createCardOperations,
   createPlayerId,
   createZoneOperations,
-  type RuleEngineOptions,
 } from "@tcg/core";
 import type {
   LorcanaCardDefinition,
@@ -28,11 +28,7 @@ import type {
 } from "@tcg/lorcana-types";
 import { LorcanaEngine } from "../engine/lorcana-engine";
 import { lorcanaGameDefinition } from "../game-definition/definition";
-import type {
-  LorcanaCardMeta,
-  LorcanaGameState,
-  LorcanaMoveParams,
-} from "../types";
+import type { LorcanaCardMeta, LorcanaGameState, LorcanaMoveParams } from "../types";
 
 // Union of engine types and types package types for compatibility
 type LorcanaCardDefinitionInput =
@@ -53,7 +49,7 @@ export const PLAYER_TWO = createPlayerId("player_two");
  * Zones can be configured with either a number (to create placeholder cards)
  * or an array of LorcanaCardDefinitionInput (to create cards with actual definitions).
  */
-export type TestInitialState = {
+export interface TestInitialState {
   /** Cards in hand - number or card definitions */
   hand?: number | LorcanaCardDefinitionInput[];
   /** Cards in deck - number or card definitions */
@@ -66,26 +62,26 @@ export type TestInitialState = {
   discard?: number | LorcanaCardDefinitionInput[];
   /** Starting lore */
   lore?: number;
-};
+}
 
 /**
  * Test Card Definition
  *
  * Minimal card definition for testing combat and stats
  */
-export type TestCardDefinition = {
+export interface TestCardDefinition {
   id: string;
   name?: string;
   strength?: number;
   willpower?: number;
   lore?: number;
   cost?: number;
-};
+}
 
 /**
  * Test Engine Options
  */
-export type TestEngineOptions = {
+export interface TestEngineOptions {
   /** Skip pre-game phase (start directly in main game) */
   skipPreGame?: boolean;
   /** Optional RNG seed for deterministic tests */
@@ -94,7 +90,7 @@ export type TestEngineOptions = {
   debug?: boolean;
   /** Optional card definitions for testing (with stats like strength, willpower) */
   cardDefinitions?: Record<string, TestCardDefinition>;
-};
+}
 
 /**
  * Test Card Model
@@ -191,8 +187,7 @@ export class LorcanaTestEngine {
   private cardCounter = 0;
 
   /** Registry of Lorcana card definitions placed in play (for getCardModel) */
-  private playedCardDefinitions: Map<string, LorcanaCardDefinitionInput> =
-    new Map();
+  private playedCardDefinitions = new Map<string, LorcanaCardDefinitionInput>();
 
   constructor(
     _playerOneState: TestInitialState = {},
@@ -216,7 +211,7 @@ export class LorcanaTestEngine {
 
     // Create game definition with card definitions registry
     // The registry will be a closure over this.cardDefinitions, so modifications
-    // to this.cardDefinitions will be visible to the registry
+    // To this.cardDefinitions will be visible to the registry
     const gameDefinition = {
       ...lorcanaGameDefinition,
       cards: this.cardDefinitions,
@@ -237,7 +232,7 @@ export class LorcanaTestEngine {
     if (opts.skipPreGame) {
       // Set OTP to skip chooseFirstPlayer phase
       // @ts-expect-error - Accessing internal properties for testing setup
-      const internalState = this.engine.internalState;
+      const { internalState } = this.engine;
       if (internalState) {
         internalState.otp = createPlayerId(PLAYER_ONE);
         internalState.pendingMulligan = []; // Clear mulligan requirement
@@ -279,12 +274,9 @@ export class LorcanaTestEngine {
    *
    * TODO: @tcg/core should expose a proper TestEngine base class with this capability
    */
-  private initializeZones(
-    playerOneState: TestInitialState,
-    playerTwoState: TestInitialState,
-  ) {
+  private initializeZones(playerOneState: TestInitialState, playerTwoState: TestInitialState) {
     // Access internal state directly (testing backdoor)
-    const internalState = (this.engine as any).internalState;
+    const { internalState } = this.engine as any;
 
     if (!internalState) {
       throw new Error("Cannot access engine internal state for test setup");
@@ -305,8 +297,8 @@ export class LorcanaTestEngine {
         // Initialize with default Lorcana card metadata
         cardOps.setCardMeta(createCardId(cardId), {
           damage: 0,
-          state: "ready",
-          isDrying: true, // Characters start with summoning sickness
+          isDrying: true,
+          state: "ready", // Characters start with summoning sickness
         } as any);
       }
     };
@@ -318,7 +310,9 @@ export class LorcanaTestEngine {
       value: number | LorcanaCardDefinitionInput[] | undefined,
       shuffle: boolean,
     ) => {
-      if (value === undefined) return;
+      if (value === undefined) {
+        return;
+      }
 
       if (this.isCardDefinitionsArray(value)) {
         // Handle card definitions array
@@ -328,19 +322,19 @@ export class LorcanaTestEngine {
         }
         // Create placeholder cards for the count (cards are registered for keyword lookup)
         const cardIds = zoneOps.createDeck({
-          zoneId: zoneId as any,
-          playerId: createPlayerId(playerId),
           cardCount: value.length,
+          playerId: createPlayerId(playerId),
           shuffle,
+          zoneId: zoneId as any,
         });
         initializeCardMetadata(cardIds);
       } else {
         // Handle number - create placeholder cards
         const cardIds = zoneOps.createDeck({
-          zoneId: zoneId as any,
-          playerId: createPlayerId(playerId),
           cardCount: value,
+          playerId: createPlayerId(playerId),
           shuffle,
+          zoneId: zoneId as any,
         });
         initializeCardMetadata(cardIds);
       }
@@ -416,33 +410,30 @@ export class LorcanaTestEngine {
 
     // Access internal state for test purposes
     // @ts-expect-error - Accessing private property for testing
-    const internalState = this.engine.internalState;
+    const { internalState } = this.engine;
 
     // Access tracker system for test purposes
     // @ts-expect-error - Accessing private property for testing
-    const trackerSystem = this.engine.trackerSystem;
+    const { trackerSystem } = this.engine;
 
     return {
-      currentPhase: flowManager.getCurrentPhase(),
-      currentSegment: flowManager.getCurrentSegment(),
-      turnNumber: flowManager.getTurnNumber(),
-      currentPlayer: flowManager.getCurrentPlayer(),
-      otp: internalState?.otp,
       choosingFirstPlayer: internalState?.choosingFirstPlayer,
-      pendingMulligan: internalState?.pendingMulligan,
-      trackers: trackerSystem
-        ? {
-            check: (name: string, playerId: any) =>
-              trackerSystem.check(name, playerId),
-            mark: (name: string, playerId: any) =>
-              trackerSystem.mark(name, playerId),
-            unmark: (name: string, playerId: any) =>
-              trackerSystem.unmark(name, playerId),
-          }
-        : undefined,
+      currentPhase: flowManager.getCurrentPhase(),
+      currentPlayer: flowManager.getCurrentPlayer(),
+      currentSegment: flowManager.getCurrentSegment(),
       flow: {
         currentPhase: flowManager.getCurrentPhase(),
       },
+      otp: internalState?.otp,
+      pendingMulligan: internalState?.pendingMulligan,
+      trackers: trackerSystem
+        ? {
+            check: (name: string, playerId: any) => trackerSystem.check(name, playerId),
+            mark: (name: string, playerId: any) => trackerSystem.mark(name, playerId),
+            unmark: (name: string, playerId: any) => trackerSystem.unmark(name, playerId),
+          }
+        : undefined,
+      turnNumber: flowManager.getTurnNumber(),
     };
   }
 
@@ -470,7 +461,7 @@ export class LorcanaTestEngine {
     const segment = this.getGameSegment();
     if (segment === "startingAGame") {
       // No turn player during startingAGame until OTP is chosen
-      const otp = this.getCtx().otp;
+      const { otp } = this.getCtx();
       return otp;
     }
 
@@ -517,8 +508,8 @@ export class LorcanaTestEngine {
 
     // Execute on engine
     const result = this.engine.executeMove(moveId, {
-      playerId,
       params,
+      playerId,
     });
 
     if (!result.success) {
@@ -545,8 +536,8 @@ export class LorcanaTestEngine {
   alterHand(cardsToMulligan: string[]) {
     const playerId = createPlayerId(this.activePlayerEngine);
     return this.executeMove("alterHand", {
-      playerId,
       cardsToMulligan,
+      playerId,
     });
   }
 
@@ -647,10 +638,7 @@ export class LorcanaTestEngine {
    * @returns Error information or null
    */
   whyCannotExecuteMove(moveId: string, params: any) {
-    return this.engine.whyCannotExecuteMove(
-      moveId as keyof LorcanaMoveParams,
-      params,
-    );
+    return this.engine.whyCannotExecuteMove(moveId as keyof LorcanaMoveParams, params);
   }
 
   // ========== Zone Access Helpers ==========
@@ -660,7 +648,7 @@ export class LorcanaTestEngine {
    */
   getZone(zoneId: string, playerId: string): string[] {
     // Access internal state directly (testing backdoor)
-    const internalState = (this.engine as any).internalState;
+    const { internalState } = this.engine as any;
 
     if (!internalState) {
       return [];
@@ -691,7 +679,7 @@ export class LorcanaTestEngine {
    */
   getDamage(cardId: string): number {
     // Access internal state directly (testing backdoor)
-    const internalState = (this.engine as any).internalState;
+    const { internalState } = this.engine as any;
 
     if (!internalState) {
       return 0;
@@ -707,7 +695,7 @@ export class LorcanaTestEngine {
    */
   getCardMeta(cardId: string): LorcanaCardMeta | undefined {
     // Access internal state directly (testing backdoor)
-    const internalState = (this.engine as any).internalState;
+    const { internalState } = this.engine as any;
 
     if (!internalState) {
       return undefined;
@@ -739,7 +727,7 @@ export class LorcanaTestEngine {
     stats: { strength?: number; willpower?: number; lore?: number } = {},
   ): string {
     // Access internal state directly (testing backdoor)
-    const internalState = (this.engine as any).internalState;
+    const { internalState } = this.engine as any;
 
     if (!internalState) {
       throw new Error("Cannot access engine internal state for test setup");
@@ -759,28 +747,28 @@ export class LorcanaTestEngine {
     }
     internalState.zones["play"].cardIds.push(cardId);
     internalState.cards[cardId] = {
+      controller: pid,
       definitionId: "placeholder",
       owner: pid,
-      controller: pid,
-      zone: "play" as any,
       position: internalState.zones["play"].cardIds.length - 1,
+      zone: "play" as any,
     };
 
     // Add card definition to registry (modifying this.cardDefinitions which the registry wraps)
     this.cardDefinitions[cardId] = {
       id: cardId,
+      lore: stats.lore ?? 1,
       name: "Test Character",
       strength: stats.strength ?? 1,
       willpower: stats.willpower ?? 1,
-      lore: stats.lore ?? 1,
     };
 
     // Initialize card metadata (ready to use, no summoning sickness)
     const cardOps = createCardOperations(internalState);
     cardOps.setCardMeta(createCardId(cardId), {
       damage: 0,
-      state: "ready",
-      isDrying: false, // No summoning sickness - ready to use immediately
+      isDrying: false,
+      state: "ready", // No summoning sickness - ready to use immediately
     } as any);
 
     return cardId;
@@ -793,7 +781,7 @@ export class LorcanaTestEngine {
    * Useful for test setup
    */
   moveCard(cardId: string, targetZone: string, playerId?: string) {
-    const internalState = (this.engine as any).internalState;
+    const { internalState } = this.engine as any;
     const zoneOps = createZoneOperations(internalState);
 
     zoneOps.moveCard({

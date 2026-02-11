@@ -1,43 +1,43 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { whenYouPlayThisCharacter } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import { whenYouPlayThisCharacter } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 //
-// export const trampObservantGuardian: LorcanitoCharacterCard = {
-//   id: "gh5",
-//   name: "Tramp",
-//   title: "Observant Guardian",
-//   characteristics: ["storyborn", "hero"],
-//   text: "HOW DO I GET IN? When you play this character, chosen character gains Ward until the start of your next turn. (Opponents can't choose them except to challenge.)",
-//   type: "character",
-//   abilities: [
-//     whenYouPlayThisCharacter({
-//       name: "HOW DO I GET IN?",
-//       text: "When you play this character, chosen character gains Ward until the start of your next turn. (Opponents can't choose them except to challenge.)",
-//       effects: [
+// Export const trampObservantGuardian: LorcanitoCharacterCard = {
+//   Id: "gh5",
+//   Name: "Tramp",
+//   Title: "Observant Guardian",
+//   Characteristics: ["storyborn", "hero"],
+//   Text: "HOW DO I GET IN? When you play this character, chosen character gains Ward until the start of your next turn. (Opponents can't choose them except to challenge.)",
+//   Type: "character",
+//   Abilities: [
+//     WhenYouPlayThisCharacter({
+//       Name: "HOW DO I GET IN?",
+//       Text: "When you play this character, chosen character gains Ward until the start of your next turn. (Opponents can't choose them except to challenge.)",
+//       Effects: [
 //         {
-//           type: "ability",
-//           ability: "ward",
-//           duration: "next_turn",
-//           until: true,
-//           modifier: "add",
-//           target: chosenCharacter,
+//           Type: "ability",
+//           Ability: "ward",
+//           Duration: "next_turn",
+//           Until: true,
+//           Modifier: "add",
+//           Target: chosenCharacter,
 //         },
 //       ],
 //     }),
 //   ],
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 3,
-//   strength: 3,
-//   willpower: 3,
-//   illustrator: "Edu Francisco",
-//   number: 87,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631408,
+//   Inkwell: true,
+//   Colors: ["emerald"],
+//   Cost: 3,
+//   Strength: 3,
+//   Willpower: 3,
+//   Illustrator: "Edu Francisco",
+//   Number: 87,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631408,
 //   },
-//   rarity: "common",
-//   lore: 1,
+//   Rarity: "common",
+//   Lore: 1,
 // };
 //

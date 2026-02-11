@@ -3,81 +3,81 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   annaTrustingSister,
-//   elsaFierceProtector,
-//   roquefortLockExpert,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   AnnaTrustingSister,
+//   ElsaFierceProtector,
+//   RoquefortLockExpert,
 // } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Anna - Trusting Sister", () => {
-//   it("WE CAN DO THIS TOGETHER When you play this character, if you have a character named Elsa in play, you may put the top card of your deck into your inkwell facedown and exerted.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: annaTrustingSister.cost + elsaFierceProtector.cost,
-//       hand: [annaTrustingSister],
-//       play: [elsaFierceProtector],
-//       deck: [roquefortLockExpert],
+// Describe("Anna - Trusting Sister", () => {
+//   It("WE CAN DO THIS TOGETHER When you play this character, if you have a character named Elsa in play, you may put the top card of your deck into your inkwell facedown and exerted.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: annaTrustingSister.cost + elsaFierceProtector.cost,
+//       Hand: [annaTrustingSister],
+//       Play: [elsaFierceProtector],
+//       Deck: [roquefortLockExpert],
 //     });
 //
-//     const initialDeckCount = testEngine.getZonesCardCount().deck;
-//     const initialInkwellCount =
-//       annaTrustingSister.cost + elsaFierceProtector.cost;
+//     Const initialDeckCount = testEngine.getZonesCardCount().deck;
+//     Const initialInkwellCount =
+//       AnnaTrustingSister.cost + elsaFierceProtector.cost;
 //
-//     await testEngine.playCard(annaTrustingSister);
-//     await testEngine.acceptOptionalLayer();
+//     Await testEngine.playCard(annaTrustingSister);
+//     Await testEngine.acceptOptionalLayer();
 //
-//     expect(testEngine.getZonesCardCount().inkwell).toBe(
-//       initialInkwellCount + 1,
+//     Expect(testEngine.getZonesCardCount().inkwell).toBe(
+//       InitialInkwellCount + 1,
 //     );
-//     expect(testEngine.getZonesCardCount().deck).toBe(initialDeckCount - 1);
+//     Expect(testEngine.getZonesCardCount().deck).toBe(initialDeckCount - 1);
 //
-//     const inkwellCards = testEngine.getCardsByZone("inkwell");
-//     const inkedCard = inkwellCards[inkwellCards.length - 1];
-//     expect(inkedCard).toBeDefined();
-//     if (inkedCard) {
-//       expect(inkedCard.meta?.exerted).toBe(true);
+//     Const inkwellCards = testEngine.getCardsByZone("inkwell");
+//     Const inkedCard = inkwellCards[inkwellCards.length - 1];
+//     Expect(inkedCard).toBeDefined();
+//     If (inkedCard) {
+//       Expect(inkedCard.meta?.exerted).toBe(true);
 //     }
 //   });
 //
-//   it("should NOT put a card into inkwell if Elsa is NOT in play", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: annaTrustingSister.cost,
-//       hand: [annaTrustingSister],
-//       play: [], // No Elsa in play
-//       deck: [roquefortLockExpert],
+//   It("should NOT put a card into inkwell if Elsa is NOT in play", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: annaTrustingSister.cost,
+//       Hand: [annaTrustingSister],
+//       Play: [], // No Elsa in play
+//       Deck: [roquefortLockExpert],
 //     });
 //
-//     const initialInkwellCount = testEngine.getZonesCardCount().inkwell;
-//     const initialDeckCount = testEngine.getZonesCardCount().deck;
+//     Const initialInkwellCount = testEngine.getZonesCardCount().inkwell;
+//     Const initialDeckCount = testEngine.getZonesCardCount().deck;
 //
-//     await testEngine.playCard(annaTrustingSister);
-//     try {
-//       await testEngine.acceptOptionalLayer();
+//     Await testEngine.playCard(annaTrustingSister);
+//     Try {
+//       Await testEngine.acceptOptionalLayer();
 //     } catch (e) {
 //       // Expected if no optional ability is on stack
 //     }
 //
-//     expect(testEngine.getZonesCardCount().inkwell).toBe(initialInkwellCount);
-//     expect(testEngine.getZonesCardCount().deck).toBe(initialDeckCount);
+//     Expect(testEngine.getZonesCardCount().inkwell).toBe(initialInkwellCount);
+//     Expect(testEngine.getZonesCardCount().deck).toBe(initialDeckCount);
 //   });
-//   it("should NOT put a card into inkwell if Elsa is in play but player declines", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: annaTrustingSister.cost + elsaFierceProtector.cost,
-//       hand: [annaTrustingSister],
-//       play: [elsaFierceProtector], // Elsa is in play
-//       deck: [roquefortLockExpert],
+//   It("should NOT put a card into inkwell if Elsa is in play but player declines", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: annaTrustingSister.cost + elsaFierceProtector.cost,
+//       Hand: [annaTrustingSister],
+//       Play: [elsaFierceProtector], // Elsa is in play
+//       Deck: [roquefortLockExpert],
 //     });
 //
-//     const initialInkwellCount = testEngine.getZonesCardCount().inkwell;
-//     const initialDeckCount = testEngine.getZonesCardCount().deck;
+//     Const initialInkwellCount = testEngine.getZonesCardCount().inkwell;
+//     Const initialDeckCount = testEngine.getZonesCardCount().deck;
 //
-//     await testEngine.playCard(annaTrustingSister);
+//     Await testEngine.playCard(annaTrustingSister);
 //
-//     await testEngine.skipTopOfStack(); // Player chooses NOT to use the ability
+//     Await testEngine.skipTopOfStack(); // Player chooses NOT to use the ability
 //
-//     expect(testEngine.getZonesCardCount().inkwell).toBe(initialInkwellCount);
-//     expect(testEngine.getZonesCardCount().deck).toBe(initialDeckCount);
+//     Expect(testEngine.getZonesCardCount().inkwell).toBe(initialInkwellCount);
+//     Expect(testEngine.getZonesCardCount().deck).toBe(initialDeckCount);
 //   });
 // });
 //

@@ -1,45 +1,45 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import {
-//   chosenOpposingCharacter,
-//   thisCharacter,
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import {
+//   ChosenOpposingCharacter,
+//   ThisCharacter,
 // } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { moveDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
+// Import { moveDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const neroFearsomeCrocodile: LorcanitoCharacterCard = {
-//   id: "oz8",
-//   name: "Nero",
-//   title: "Fearsome Crocodile",
-//   characteristics: ["storyborn", "ally"],
-//   text: "AND MEAN {E} – Move 1 damage counter from this character to chosen opposing character.",
-//   type: "character",
-//   abilities: [
+// Export const neroFearsomeCrocodile: LorcanitoCharacterCard = {
+//   Id: "oz8",
+//   Name: "Nero",
+//   Title: "Fearsome Crocodile",
+//   Characteristics: ["storyborn", "ally"],
+//   Text: "AND MEAN {E} – Move 1 damage counter from this character to chosen opposing character.",
+//   Type: "character",
+//   Abilities: [
 //     {
-//       type: "activated",
-//       name: "AND MEAN",
-//       text: "{E} – Move 1 damage counter from this character to chosen opposing character.",
-//       costs: [{ type: "exert" }],
-//       effects: [
-//         moveDamageEffect({
-//           amount: 1,
-//           from: thisCharacter,
-//           to: chosenOpposingCharacter,
+//       Type: "activated",
+//       Name: "AND MEAN",
+//       Text: "{E} – Move 1 damage counter from this character to chosen opposing character.",
+//       Costs: [{ type: "exert" }],
+//       Effects: [
+//         MoveDamageEffect({
+//           Amount: 1,
+//           From: thisCharacter,
+//           To: chosenOpposingCharacter,
 //         }),
 //       ],
 //     },
 //   ],
-//   inkwell: false,
-//   colors: ["amethyst"],
-//   cost: 2,
-//   strength: 2,
-//   willpower: 3,
-//   illustrator: "Teresta Q.",
-//   number: 65,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 633430,
+//   Inkwell: false,
+//   Colors: ["amethyst"],
+//   Cost: 2,
+//   Strength: 2,
+//   Willpower: 3,
+//   Illustrator: "Teresta Q.",
+//   Number: 65,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 633430,
 //   },
-//   rarity: "common",
-//   lore: 1,
+//   Rarity: "common",
+//   Lore: 1,
 // };
 //

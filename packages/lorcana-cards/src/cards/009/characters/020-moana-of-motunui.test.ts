@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { moanaOfMotunui } from "@lorcanito/lorcana-engine/cards/009/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { moanaOfMotunui } from "@lorcanito/lorcana-engine/cards/009/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Moana - Of Motunui", () => {
-//   it.skip("**WE CAN FIX IT** Whenever this character quests, you may ready your other Princess characters. They can't quest for the rest of this turn.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: moanaOfMotunui.cost,
-//       play: [moanaOfMotunui],
-//       hand: [moanaOfMotunui],
+// Describe("Moana - Of Motunui", () => {
+//   It.skip("**WE CAN FIX IT** Whenever this character quests, you may ready your other Princess characters. They can't quest for the rest of this turn.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: moanaOfMotunui.cost,
+//       Play: [moanaOfMotunui],
+//       Hand: [moanaOfMotunui],
 //     });
 //
-//     await testEngine.playCard(moanaOfMotunui);
+//     Await testEngine.playCard(moanaOfMotunui);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

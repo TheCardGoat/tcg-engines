@@ -1,4 +1,4 @@
-import { createPlayerId, type FlowDefinition } from "@tcg/core";
+import { type FlowDefinition, createPlayerId } from "@tcg/core";
 import type { LorcanaCardMeta, LorcanaGameState } from "../../types";
 
 /**
@@ -18,7 +18,6 @@ import type { LorcanaCardMeta, LorcanaGameState } from "../../types";
  * The engine automatically handles phase transitions and turn management.
  */
 export const lorcanaFlow: FlowDefinition<LorcanaGameState, LorcanaCardMeta> = {
-  initialGameSegment: "startingAGame",
   gameSegments: {
     /**
      * Starting a Game Segment
@@ -28,8 +27,8 @@ export const lorcanaFlow: FlowDefinition<LorcanaGameState, LorcanaCardMeta> = {
      * - Mulligan phase (Rule 3.1.6)
      */
     startingAGame: {
-      order: 0,
       next: "mainGame",
+      order: 0,
       turn: {
         initialPhase: "chooseFirstPlayer",
         onBegin: (context) => {
@@ -131,11 +130,7 @@ export const lorcanaFlow: FlowDefinition<LorcanaGameState, LorcanaCardMeta> = {
             const turnNum = context.getTurnNumber();
             // This assumes OTP is player_one - needs improvement for robustness
             context.setCurrentPlayer(
-              turnNum % 2 === 1
-                ? otpStr
-                : otpStr === "player_one"
-                  ? "player_two"
-                  : "player_one",
+              turnNum % 2 === 1 ? otpStr : (otpStr === "player_one" ? "player_two" : "player_one"),
             );
           } else {
             // First turn - set to OTP
@@ -152,7 +147,7 @@ export const lorcanaFlow: FlowDefinition<LorcanaGameState, LorcanaCardMeta> = {
            * - Automatically advances to Main phase
            */
           beginning: {
-            order: 1,
+            endIf: () => true,
             next: "main",
             onBegin: (context) => {
               // Ready all cards for the current player
@@ -179,7 +174,7 @@ export const lorcanaFlow: FlowDefinition<LorcanaGameState, LorcanaCardMeta> = {
               // TODO: Draw a card (if not first turn)
               // This requires checking if it's turn 1 and drawing from deck
             },
-            endIf: () => true, // Auto-advance
+            order: 1, // Auto-advance
           },
 
           /**
@@ -188,11 +183,11 @@ export const lorcanaFlow: FlowDefinition<LorcanaGameState, LorcanaCardMeta> = {
            * - Player manually ends phase by passing
            */
           main: {
-            order: 2,
             next: "end",
             onBegin: (_context) => {
               // No automatic actions at start of main phase
             },
+            order: 2,
             // No endIf - player must manually pass to end phase
           },
 
@@ -213,4 +208,5 @@ export const lorcanaFlow: FlowDefinition<LorcanaGameState, LorcanaCardMeta> = {
       },
     },
   },
+  initialGameSegment: "startingAGame",
 };

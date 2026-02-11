@@ -3,52 +3,52 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   docLeaderOfTheSevenDwarfs,
-//   dopeyAlwaysPlayful,
-//   grumpyBadTempered,
-//   happyGoodNatured,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   DocLeaderOfTheSevenDwarfs,
+//   DopeyAlwaysPlayful,
+//   GrumpyBadTempered,
+//   HappyGoodNatured,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { olafCarrotEnthusiast } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { olafCarrotEnthusiast } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Olaf - Carrot Enthusiast", () => {
-//   it("**CARROTS ALL AROUND!** Whenever he quests, each of your other characters gets +{S} equal to this character's {S} this turn.", () => {
-//     const testStore = new TestStore({
-//       inkwell: olafCarrotEnthusiast.cost,
-//       play: [
-//         olafCarrotEnthusiast,
-//         docLeaderOfTheSevenDwarfs,
-//         dopeyAlwaysPlayful,
-//         grumpyBadTempered,
-//         happyGoodNatured,
+// Describe("Olaf - Carrot Enthusiast", () => {
+//   It("**CARROTS ALL AROUND!** Whenever he quests, each of your other characters gets +{S} equal to this character's {S} this turn.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: olafCarrotEnthusiast.cost,
+//       Play: [
+//         OlafCarrotEnthusiast,
+//         DocLeaderOfTheSevenDwarfs,
+//         DopeyAlwaysPlayful,
+//         GrumpyBadTempered,
+//         HappyGoodNatured,
 //       ],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       olafCarrotEnthusiast.id,
+//       OlafCarrotEnthusiast.id,
 //     );
 //
-//     const targets = [
-//       testStore.getByZoneAndId("play", docLeaderOfTheSevenDwarfs.id),
-//       testStore.getByZoneAndId("play", dopeyAlwaysPlayful.id),
-//       testStore.getByZoneAndId("play", grumpyBadTempered.id),
-//       testStore.getByZoneAndId("play", happyGoodNatured.id),
+//     Const targets = [
+//       TestStore.getByZoneAndId("play", docLeaderOfTheSevenDwarfs.id),
+//       TestStore.getByZoneAndId("play", dopeyAlwaysPlayful.id),
+//       TestStore.getByZoneAndId("play", grumpyBadTempered.id),
+//       TestStore.getByZoneAndId("play", happyGoodNatured.id),
 //     ];
 //
 //     // Store initial strengths
-//     const initialStrengths = targets.map((target) => target.strength);
+//     Const initialStrengths = targets.map((target) => target.strength);
 //
-//     cardUnderTest.playFromHand();
-//     cardUnderTest.quest();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({ targets });
+//     CardUnderTest.playFromHand();
+//     CardUnderTest.quest();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({ targets });
 //
-//     targets.forEach((target, index) => {
-//       expect(target.strength).toBe(
-//         initialStrengths[index]! + olafCarrotEnthusiast.strength,
+//     Targets.forEach((target, index) => {
+//       Expect(target.strength).toBe(
+//         InitialStrengths[index]! + olafCarrotEnthusiast.strength,
 //       );
 //     });
 //   });

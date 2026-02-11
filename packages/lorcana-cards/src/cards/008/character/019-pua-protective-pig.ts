@@ -1,38 +1,38 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { bodyguardAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { whenThisIsBanished } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { bodyguardAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import { whenThisIsBanished } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const puaProtectivePig: LorcanitoCharacterCard = {
-//   id: "nwe",
-//   missingTestCase: true,
-//   name: "Pua",
-//   title: "Protective Pig",
-//   characteristics: ["storyborn", "ally"],
-//   text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)\nFREE FRUIT When this character is banished, you may draw a card.",
-//   type: "character",
-//   abilities: [
-//     bodyguardAbility,
-//     whenThisIsBanished({
-//       name: "FREE FRUIT",
-//       text: "When this character is banished, you may draw a card.",
-//       optional: true,
-//       effects: [drawACard],
+// Export const puaProtectivePig: LorcanitoCharacterCard = {
+//   Id: "nwe",
+//   MissingTestCase: true,
+//   Name: "Pua",
+//   Title: "Protective Pig",
+//   Characteristics: ["storyborn", "ally"],
+//   Text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)\nFREE FRUIT When this character is banished, you may draw a card.",
+//   Type: "character",
+//   Abilities: [
+//     BodyguardAbility,
+//     WhenThisIsBanished({
+//       Name: "FREE FRUIT",
+//       Text: "When this character is banished, you may draw a card.",
+//       Optional: true,
+//       Effects: [drawACard],
 //     }),
 //   ],
-//   inkwell: true,
-//   colors: ["amber", "amethyst"],
-//   cost: 3,
-//   strength: 2,
-//   willpower: 2,
-//   illustrator: "Alexandria Neonakis",
-//   number: 19,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631363,
+//   Inkwell: true,
+//   Colors: ["amber", "amethyst"],
+//   Cost: 3,
+//   Strength: 2,
+//   Willpower: 2,
+//   Illustrator: "Alexandria Neonakis",
+//   Number: 19,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631363,
 //   },
-//   rarity: "uncommon",
-//   lore: 1,
+//   Rarity: "uncommon",
+//   Lore: 1,
 // };
 //

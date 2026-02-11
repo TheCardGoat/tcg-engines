@@ -115,10 +115,7 @@ export interface BaseContext {
  * };
  * ```
  */
-export interface TargetDSL<
-  TFilter = unknown,
-  TContext extends BaseContext = BaseContext,
-> {
+export interface TargetDSL<TFilter = unknown, TContext extends BaseContext = BaseContext> {
   /** How targets are selected (chosen, all, self, etc.) */
   selector: SelectorScope;
 
@@ -187,8 +184,8 @@ export interface PlayerTargetDSL {
  * Default single target configuration
  */
 export const DEFAULT_SINGLE_TARGET: Partial<TargetDSL> = {
-  selector: "chosen",
   count: 1,
+  selector: "chosen",
 };
 
 /**

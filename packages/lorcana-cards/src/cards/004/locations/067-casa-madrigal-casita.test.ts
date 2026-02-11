@@ -3,9 +3,9 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
+// Import { describe, it } from "@jest/globals";
 //
-// describe("Casa Madrigal - Casita", () => {
-//   it("TODO", () => {});
+// Describe("Casa Madrigal - Casita", () => {
+//   It("TODO", () => {});
 // });
 //

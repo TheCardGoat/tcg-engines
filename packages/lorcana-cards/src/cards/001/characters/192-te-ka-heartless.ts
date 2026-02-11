@@ -1,75 +1,75 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const teKaHeartless: CharacterCard = {
-  id: "pfr",
-  cardType: "character",
-  name: "Te Ka",
-  version: "Heartless",
-  fullName: "Te Ka - Heartless",
-  inkType: ["steel"],
-  franchise: "Disney",
-  set: "001",
-  text: "**SEEK THE HEART** During your turn, whenever this character banishes another character in a challenge, you gain 2 lore.",
-  cost: 6,
-  strength: 5,
-  willpower: 5,
-  lore: 2,
-  cardNumber: 192,
-  inkable: true,
-  externalIds: {
-    ravensburger: "",
-  },
   abilities: [
     {
-      type: "action",
-      text: "**SEEK THE HEART** During your turn, whenever this character banishes another character in a challenge, you gain 2 lore.",
-      id: "pfr-1",
       effect: {
         type: "gain-lore",
         amount: 2,
       },
+      id: "pfr-1",
+      text: "**SEEK THE HEART** During your turn, whenever this character banishes another character in a challenge, you gain 2 lore.",
+      type: "action",
     },
   ],
+  cardNumber: 192,
+  cardType: "character",
   classifications: ["Dreamborn", "Villain", "Deity"],
+  cost: 6,
+  externalIds: {
+    ravensburger: "",
+  },
+  franchise: "Disney",
+  fullName: "Te Ka - Heartless",
+  id: "pfr",
+  inkType: ["steel"],
+  inkable: true,
+  lore: 2,
+  name: "Te Ka",
+  set: "001",
+  strength: 5,
+  text: "**SEEK THE HEART** During your turn, whenever this character banishes another character in a challenge, you gain 2 lore.",
+  version: "Heartless",
+  willpower: 5,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { self } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { wheneverBanishesAnotherCharacterInChallenge } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import { self } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import { wheneverBanishesAnotherCharacterInChallenge } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const teKaHeartless: LorcanitoCharacterCard = {
-//   id: "pfr",
-//   name: "Te Ka",
-//   title: "Heartless",
-//   characteristics: ["dreamborn", "villain", "deity"],
-//   text: "**SEEK THE HEART** During your turn, whenever this character banishes another character in a challenge, you gain 2 lore.",
-//   type: "character",
-//   abilities: [
-//     wheneverBanishesAnotherCharacterInChallenge({
-//       effects: [
+// Export const teKaHeartless: LorcanitoCharacterCard = {
+//   Id: "pfr",
+//   Name: "Te Ka",
+//   Title: "Heartless",
+//   Characteristics: ["dreamborn", "villain", "deity"],
+//   Text: "**SEEK THE HEART** During your turn, whenever this character banishes another character in a challenge, you gain 2 lore.",
+//   Type: "character",
+//   Abilities: [
+//     WheneverBanishesAnotherCharacterInChallenge({
+//       Effects: [
 //         {
-//           type: "lore",
-//           amount: 2,
-//           modifier: "add",
-//           target: self,
+//           Type: "lore",
+//           Amount: 2,
+//           Modifier: "add",
+//           Target: self,
 //         },
 //       ],
 //     }),
 //   ],
-//   flavour: "Maui: Ever defeat a lava monster? \nMoana: No. Have you?",
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 6,
-//   strength: 5,
-//   willpower: 5,
-//   lore: 2,
-//   illustrator: "Andrew Trabbold",
-//   number: 192,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 508954,
+//   Flavour: "Maui: Ever defeat a lava monster? \nMoana: No. Have you?",
+//   Inkwell: true,
+//   Colors: ["steel"],
+//   Cost: 6,
+//   Strength: 5,
+//   Willpower: 5,
+//   Lore: 2,
+//   Illustrator: "Andrew Trabbold",
+//   Number: 192,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 508954,
 //   },
-//   rarity: "legendary",
+//   Rarity: "legendary",
 // };
 //

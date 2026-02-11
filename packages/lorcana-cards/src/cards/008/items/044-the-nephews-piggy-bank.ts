@@ -1,23 +1,8 @@
 import type { ItemCard } from "@tcg/lorcana-types";
 
 export const theNephewsPiggyBank: ItemCard = {
-  id: "12r",
-  cardType: "item",
-  name: "The Nephews' Piggy Bank",
-  inkType: ["amber"],
-  set: "008",
-  text: "INSIDE JOB If you have a character named Donald Duck in play, you pay 1 {I} less to play this item.\nPAYOFF {E} – Chosen character gets -1 {S} until the start of your next turn.",
-  cost: 2,
-  cardNumber: 44,
-  inkable: false,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "8bb480d66afa05abc46b8e1acccb123b0e1426b2",
-  },
   abilities: [
     {
-      id: "12r-1",
-      type: "action",
       effect: {
         type: "conditional",
         condition: {
@@ -29,11 +14,11 @@ export const theNephewsPiggyBank: ItemCard = {
           from: "hand",
         },
       },
+      id: "12r-1",
       text: "INSIDE JOB If you have a character named Donald Duck in play, you pay 1 {I} less to play this item.",
+      type: "action",
     },
     {
-      id: "12r-2",
-      type: "action",
       effect: {
         type: "modify-stat",
         stat: "strength",
@@ -46,7 +31,22 @@ export const theNephewsPiggyBank: ItemCard = {
           cardTypes: ["character"],
         },
       },
+      id: "12r-2",
       text: "PAYOFF {E} – Chosen character gets -1 {S} until the start of your next turn.",
+      type: "action",
     },
   ],
+  cardNumber: 44,
+  cardType: "item",
+  cost: 2,
+  externalIds: {
+    ravensburger: "8bb480d66afa05abc46b8e1acccb123b0e1426b2",
+  },
+  id: "12r",
+  inkType: ["amber"],
+  inkable: false,
+  missingTests: true,
+  name: "The Nephews' Piggy Bank",
+  set: "008",
+  text: "INSIDE JOB If you have a character named Donald Duck in play, you pay 1 {I} less to play this item.\nPAYOFF {E} – Chosen character gets -1 {S} until the start of your next turn.",
 };

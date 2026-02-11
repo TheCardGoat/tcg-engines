@@ -1,41 +1,14 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const theSultanRoyalApparition: CharacterCard = {
-  id: "nun",
-  cardType: "character",
-  name: "The Sultan",
-  version: "Royal Apparition",
-  fullName: "The Sultan - Royal Apparition",
-  inkType: ["amethyst", "steel"],
-  franchise: "Aladdin",
-  set: "008",
-  text: "Vanish (When an opponent chooses this character for an action, banish them.)\nCOMMANDING PRESENCE Whenever one of your Illusion characters quests, exert chosen opposing character.",
-  cost: 5,
-  strength: 5,
-  willpower: 5,
-  lore: 2,
-  cardNumber: 73,
-  inkable: false,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "55f69fe83954df53e85b4424654b817eb81e9f0b",
-  },
   abilities: [
     {
       id: "nun-1",
-      type: "keyword",
       keyword: "Vanish",
       text: "Vanish",
+      type: "keyword",
     },
     {
-      id: "nun-2",
-      type: "triggered",
-      name: "COMMANDING PRESENCE",
-      trigger: {
-        event: "banish",
-        timing: "whenever",
-        on: "YOUR_OTHER_CHARACTERS",
-      },
       effect: {
         type: "exert",
         target: {
@@ -46,8 +19,35 @@ export const theSultanRoyalApparition: CharacterCard = {
           cardTypes: ["character"],
         },
       },
+      id: "nun-2",
+      name: "COMMANDING PRESENCE",
       text: "COMMANDING PRESENCE Whenever one of your Illusion characters quests, exert chosen opposing character.",
+      trigger: {
+        event: "banish",
+        timing: "whenever",
+        on: "YOUR_OTHER_CHARACTERS",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 73,
+  cardType: "character",
   classifications: ["Dreamborn", "Ally", "King", "Illusion"],
+  cost: 5,
+  externalIds: {
+    ravensburger: "55f69fe83954df53e85b4424654b817eb81e9f0b",
+  },
+  franchise: "Aladdin",
+  fullName: "The Sultan - Royal Apparition",
+  id: "nun",
+  inkType: ["amethyst", "steel"],
+  inkable: false,
+  lore: 2,
+  missingTests: true,
+  name: "The Sultan",
+  set: "008",
+  strength: 5,
+  text: "Vanish (When an opponent chooses this character for an action, banish them.)\nCOMMANDING PRESENCE Whenever one of your Illusion characters quests, exert chosen opposing character.",
+  version: "Royal Apparition",
+  willpower: 5,
 };

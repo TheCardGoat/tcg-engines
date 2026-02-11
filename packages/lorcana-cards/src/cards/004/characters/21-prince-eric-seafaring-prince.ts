@@ -1,27 +1,27 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { bodyguardAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { bodyguardAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
 //
-// export const princeEricSeafaringPrince: LorcanitoCharacterCard = {
-//   id: "nko",
-//   name: "Prince Eric",
-//   title: "Seafaring Prince",
-//   characteristics: ["hero", "dreamborn", "prince"],
-//   text: "**Bodyguard** _(This character may enter play exerted. An opposing character who challenges one of your character must chose one with Bodyguard if able.)_",
-//   type: "character",
-//   abilities: [bodyguardAbility],
-//   inkwell: true,
-//   colors: ["amber"],
-//   cost: 3,
-//   strength: 3,
-//   willpower: 3,
-//   lore: 1,
-//   illustrator: "Ling Dang",
-//   number: 21,
-//   set: "URR",
-//   externalIds: {
-//     tcgPlayer: 550560,
+// Export const princeEricSeafaringPrince: LorcanitoCharacterCard = {
+//   Id: "nko",
+//   Name: "Prince Eric",
+//   Title: "Seafaring Prince",
+//   Characteristics: ["hero", "dreamborn", "prince"],
+//   Text: "**Bodyguard** _(This character may enter play exerted. An opposing character who challenges one of your character must chose one with Bodyguard if able.)_",
+//   Type: "character",
+//   Abilities: [bodyguardAbility],
+//   Inkwell: true,
+//   Colors: ["amber"],
+//   Cost: 3,
+//   Strength: 3,
+//   Willpower: 3,
+//   Lore: 1,
+//   Illustrator: "Ling Dang",
+//   Number: 21,
+//   Set: "URR",
+//   ExternalIds: {
+//     TcgPlayer: 550560,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

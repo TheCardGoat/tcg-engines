@@ -3,51 +3,51 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { merlinGoat } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import {
-//   donaldDuckFirstMate,
-//   peterPanNeverLandPrankster,
-//   thievery,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { merlinGoat } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import {
+//   DonaldDuckFirstMate,
+//   PeterPanNeverLandPrankster,
+//   Thievery,
 // } from "@lorcanito/lorcana-engine/cards/006";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Peter Pan - Never Land Prankster", () => {
-//   it("LOOK INNOCENT This character enters play exerted.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: peterPanNeverLandPrankster.cost,
-//       hand: [peterPanNeverLandPrankster],
+// Describe("Peter Pan - Never Land Prankster", () => {
+//   It("LOOK INNOCENT This character enters play exerted.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: peterPanNeverLandPrankster.cost,
+//       Hand: [peterPanNeverLandPrankster],
 //     });
 //
-//     const cardUnderTest = await testEngine.playCard(peterPanNeverLandPrankster);
+//     Const cardUnderTest = await testEngine.playCard(peterPanNeverLandPrankster);
 //
-//     expect(cardUnderTest.exerted).toEqual(true);
+//     Expect(cardUnderTest.exerted).toEqual(true);
 //   });
 //
-//   it("CAN'T TAKE A JOKE? While this character is exerted, each opposing player can't gain lore unless one of their characters has challenged this turn.", async () => {
-//     const testEngine = new TestEngine(
+//   It("CAN'T TAKE A JOKE? While this character is exerted, each opposing player can't gain lore unless one of their characters has challenged this turn.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: merlinGoat.cost + thievery.cost,
-//         hand: [merlinGoat, thievery],
-//         play: [donaldDuckFirstMate],
+//         Inkwell: merlinGoat.cost + thievery.cost,
+//         Hand: [merlinGoat, thievery],
+//         Play: [donaldDuckFirstMate],
 //       },
 //       {
-//         play: [peterPanNeverLandPrankster],
+//         Play: [peterPanNeverLandPrankster],
 //       },
 //     );
 //
-//     await testEngine.tapCard(peterPanNeverLandPrankster);
+//     Await testEngine.tapCard(peterPanNeverLandPrankster);
 //
-//     await testEngine.playCard(merlinGoat);
-//     expect(testEngine.getLoreForPlayer("player_one")).toEqual(0);
+//     Await testEngine.playCard(merlinGoat);
+//     Expect(testEngine.getLoreForPlayer("player_one")).toEqual(0);
 //
-//     await testEngine.challenge({
-//       attacker: donaldDuckFirstMate,
-//       defender: peterPanNeverLandPrankster,
+//     Await testEngine.challenge({
+//       Attacker: donaldDuckFirstMate,
+//       Defender: peterPanNeverLandPrankster,
 //     });
 //
-//     await testEngine.playCard(thievery);
-//     expect(testEngine.getLoreForPlayer("player_one")).toEqual(1);
+//     Await testEngine.playCard(thievery);
+//     Expect(testEngine.getLoreForPlayer("player_one")).toEqual(1);
 //   });
 // });
 //

@@ -3,36 +3,36 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { benjaGuardianOfTheDragonGem } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { iveGotADream } from "@lorcanito/lorcana-engine/cards/003/actions/actions";
-// import { prideLandsJungleOasis } from "@lorcanito/lorcana-engine/cards/005/locations/locations";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { benjaGuardianOfTheDragonGem } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { iveGotADream } from "@lorcanito/lorcana-engine/cards/003/actions/actions";
+// Import { prideLandsJungleOasis } from "@lorcanito/lorcana-engine/cards/005/locations/locations";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("I've Got a Dream", () => {
-//   it("Ready chosen character of yours at a location. They can't quest for the rest of this turn. Gain lore equal to that location {L}.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: prideLandsJungleOasis.moveCost,
-//       hand: [iveGotADream],
-//       play: [prideLandsJungleOasis, benjaGuardianOfTheDragonGem],
+// Describe("I've Got a Dream", () => {
+//   It("Ready chosen character of yours at a location. They can't quest for the rest of this turn. Gain lore equal to that location {L}.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: prideLandsJungleOasis.moveCost,
+//       Hand: [iveGotADream],
+//       Play: [prideLandsJungleOasis, benjaGuardianOfTheDragonGem],
 //     });
 //
-//     await testEngine.moveToLocation({
-//       location: prideLandsJungleOasis,
-//       character: benjaGuardianOfTheDragonGem,
+//     Await testEngine.moveToLocation({
+//       Location: prideLandsJungleOasis,
+//       Character: benjaGuardianOfTheDragonGem,
 //     });
 //
-//     const { singer } = await testEngine.singSong({
-//       song: iveGotADream,
-//       singer: benjaGuardianOfTheDragonGem,
+//     Const { singer } = await testEngine.singSong({
+//       Song: iveGotADream,
+//       Singer: benjaGuardianOfTheDragonGem,
 //     });
 //
-//     expect(singer.exerted).toBe(true);
+//     Expect(singer.exerted).toBe(true);
 //
-//     await testEngine.resolveTopOfStack({ targets: [singer] });
-//     expect(singer.exerted).toBe(false);
-//     expect(singer.hasQuestRestriction).toBe(true);
-//     expect(testEngine.getPlayerLore()).toBe(prideLandsJungleOasis.lore);
+//     Await testEngine.resolveTopOfStack({ targets: [singer] });
+//     Expect(singer.exerted).toBe(false);
+//     Expect(singer.hasQuestRestriction).toBe(true);
+//     Expect(testEngine.getPlayerLore()).toBe(prideLandsJungleOasis.lore);
 //   });
 // });
 //

@@ -1,36 +1,36 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { ifYouHaveCharacterNamed } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
-// import { whenYouPlayThisCharacter } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import { chosenOpposingCharacterGainsRecklessDuringNextTurn } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { ifYouHaveCharacterNamed } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
+// Import { whenYouPlayThisCharacter } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import { chosenOpposingCharacterGainsRecklessDuringNextTurn } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const chacaJuniorChipmunk: LorcanitoCharacterCard = {
-//   id: "wro",
-//   name: "Chaca",
-//   title: "Junior Chipmunk",
-//   characteristics: ["storyborn", "ally"],
-//   text: "IN CAHOOTS When you play this character, if you have a character named Tipo in play, chosen opposing character gains Reckless during their next turn. (They can't quest and must challenge if able.)",
-//   type: "character",
-//   abilities: [
-//     whenYouPlayThisCharacter({
-//       name: "IN CAHOOTS",
-//       text: "When you play this character, if you have a character named Tipo in play, chosen opposing character gains Reckless during their next turn. (They can't quest and must challenge if able.)",
-//       conditions: [ifYouHaveCharacterNamed("Tipo")],
-//       effects: [chosenOpposingCharacterGainsRecklessDuringNextTurn],
+// Export const chacaJuniorChipmunk: LorcanitoCharacterCard = {
+//   Id: "wro",
+//   Name: "Chaca",
+//   Title: "Junior Chipmunk",
+//   Characteristics: ["storyborn", "ally"],
+//   Text: "IN CAHOOTS When you play this character, if you have a character named Tipo in play, chosen opposing character gains Reckless during their next turn. (They can't quest and must challenge if able.)",
+//   Type: "character",
+//   Abilities: [
+//     WhenYouPlayThisCharacter({
+//       Name: "IN CAHOOTS",
+//       Text: "When you play this character, if you have a character named Tipo in play, chosen opposing character gains Reckless during their next turn. (They can't quest and must challenge if able.)",
+//       Conditions: [ifYouHaveCharacterNamed("Tipo")],
+//       Effects: [chosenOpposingCharacterGainsRecklessDuringNextTurn],
 //     }),
 //   ],
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 4,
-//   strength: 3,
-//   willpower: 3,
-//   illustrator: "Florencia Vanzquez",
-//   number: 88,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631409,
+//   Inkwell: true,
+//   Colors: ["emerald"],
+//   Cost: 4,
+//   Strength: 3,
+//   Willpower: 3,
+//   Illustrator: "Florencia Vanzquez",
+//   Number: 88,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631409,
 //   },
-//   rarity: "common",
-//   lore: 1,
+//   Rarity: "common",
+//   Lore: 1,
 // };
 //

@@ -1,37 +1,8 @@
 import type { LocationCard } from "@tcg/lorcana-types";
 
 export const zootopiaPoliceHeadquarters: LocationCard = {
-  id: "98y",
-  cardType: "location",
-  name: "Zootopia",
-  version: "Police Headquarters",
-  fullName: "Zootopia - Police Headquarters",
-  inkType: ["steel"],
-  franchise: "Zootropolis",
-  set: "010",
-  text: "NEW INFORMATION Once per turn, when you play a character here, you may draw a card.",
-  cost: 1,
-  moveCost: 1,
-  lore: 0,
-  cardNumber: 203,
-  inkable: true,
-  externalIds: {
-    ravensburger: "2155a20775327ef31c200c31abc6084494a2cc46",
-  },
   abilities: [
     {
-      id: "98y-1",
-      text: "NEW INFORMATION Once per turn, when you play a character here, you may draw a card.",
-      name: "NEW INFORMATION",
-      type: "triggered",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: {
-          controller: "you",
-          cardType: "character",
-        },
-      },
       effect: {
         type: "optional",
         effect: {
@@ -41,51 +12,80 @@ export const zootopiaPoliceHeadquarters: LocationCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "98y-1",
+      name: "NEW INFORMATION",
+      text: "NEW INFORMATION Once per turn, when you play a character here, you may draw a card.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: {
+          controller: "you",
+          cardType: "character",
+        },
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 203,
+  cardType: "location",
+  cost: 1,
+  externalIds: {
+    ravensburger: "2155a20775327ef31c200c31abc6084494a2cc46",
+  },
+  franchise: "Zootropolis",
+  fullName: "Zootopia - Police Headquarters",
+  id: "98y",
+  inkType: ["steel"],
+  inkable: true,
+  lore: 0,
+  moveCost: 1,
+  name: "Zootopia",
+  set: "010",
+  text: "NEW INFORMATION Once per turn, when you play a character here, you may draw a card.",
+  version: "Police Headquarters",
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
-// import { whenYouMoveACharacterHere } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import { youMayDrawThenChooseAndDiscard } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
+// Import { whenYouMoveACharacterHere } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import { youMayDrawThenChooseAndDiscard } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const zootopiaPoliceHeadquarters: LorcanitoLocationCard = {
-//   id: "moe",
-//   name: "Zootopia",
-//   title: "Police Headquarters",
-//   characteristics: ["location"],
-//   text: "NEW INFORMATION Once during your turn, whenever you move a character here, you may draw a card, then choose and discard a card.",
-//   type: "location",
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 1,
-//   willpower: 4,
-//   illustrator: "",
-//   number: 203,
-//   set: "010",
-//   externalIds: {
-//     tcgPlayer: 659415,
+// Export const zootopiaPoliceHeadquarters: LorcanitoLocationCard = {
+//   Id: "moe",
+//   Name: "Zootopia",
+//   Title: "Police Headquarters",
+//   Characteristics: ["location"],
+//   Text: "NEW INFORMATION Once during your turn, whenever you move a character here, you may draw a card, then choose and discard a card.",
+//   Type: "location",
+//   Inkwell: true,
+//   Colors: ["steel"],
+//   Cost: 1,
+//   Willpower: 4,
+//   Illustrator: "",
+//   Number: 203,
+//   Set: "010",
+//   ExternalIds: {
+//     TcgPlayer: 659415,
 //   },
-//   rarity: "super_rare",
-//   moveCost: 1,
-//   lore: 1,
-//   abilities: [
-//     whenYouMoveACharacterHere({
-//       name: "NEW INFORMATION",
-//       text: "Once during your turn, whenever you move a character here, you may draw a card, then choose and discard a card.",
-//       optional: true,
-//       oncePerTurn: true,
-//       conditions: [
+//   Rarity: "super_rare",
+//   MoveCost: 1,
+//   Lore: 1,
+//   Abilities: [
+//     WhenYouMoveACharacterHere({
+//       Name: "NEW INFORMATION",
+//       Text: "Once during your turn, whenever you move a character here, you may draw a card, then choose and discard a card.",
+//       Optional: true,
+//       OncePerTurn: true,
+//       Conditions: [
 //         { type: "first-time-move-to-location" },
 //         {
-//           type: "during-turn",
-//           value: "self",
+//           Type: "during-turn",
+//           Value: "self",
 //         },
 //       ],
-//       resolveEffectsIndividually:
-//         youMayDrawThenChooseAndDiscard.resolveEffectsIndividually,
-//       effects: youMayDrawThenChooseAndDiscard.effects,
+//       ResolveEffectsIndividually:
+//         YouMayDrawThenChooseAndDiscard.resolveEffectsIndividually,
+//       Effects: youMayDrawThenChooseAndDiscard.effects,
 //     }),
 //   ],
 // };

@@ -3,20 +3,20 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { sourBillSurlyHenchman } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { sourBillSurlyHenchman } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Sour Bill - Surly Henchman", () => {
-//   it.skip("UNPALATABLE When you play this character, chosen opposing character gets -2 {S} this turn.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: sourBillSurlyHenchman.cost,
-//       hand: [sourBillSurlyHenchman],
+// Describe("Sour Bill - Surly Henchman", () => {
+//   It.skip("UNPALATABLE When you play this character, chosen opposing character gets -2 {S} this turn.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: sourBillSurlyHenchman.cost,
+//       Hand: [sourBillSurlyHenchman],
 //     });
 //
-//     await testEngine.playCard(sourBillSurlyHenchman);
-//     await testEngine.acceptOptionalLayer();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.playCard(sourBillSurlyHenchman);
+//     Await testEngine.acceptOptionalLayer();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

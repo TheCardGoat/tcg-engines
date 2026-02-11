@@ -3,25 +3,25 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { aurelianGyrosensor } from "@lorcanito/lorcana-engine/cards/003/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { aurelianGyrosensor } from "@lorcanito/lorcana-engine/cards/003/items/items";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Aurelian Gyrosensor", () => {
-//   it.skip("**SEEKING KNOWLEDGE** Whenever one of your characters quests, you may look at the top card of your deck. Put it on either the top or the bottom of your deck.", () => {
-//     const testStore = new TestStore({
-//       inkwell: aurelianGyrosensor.cost,
-//       play: [aurelianGyrosensor],
+// Describe("Aurelian Gyrosensor", () => {
+//   It.skip("**SEEKING KNOWLEDGE** Whenever one of your characters quests, you may look at the top card of your deck. Put it on either the top or the bottom of your deck.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: aurelianGyrosensor.cost,
+//       Play: [aurelianGyrosensor],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       aurelianGyrosensor.id,
+//       AurelianGyrosensor.id,
 //     );
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

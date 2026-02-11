@@ -3,28 +3,28 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { mickeyBraveLittleTailor } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { forbiddenMountainMaleficentsCastle } from "@lorcanito/lorcana-engine/cards/003/locations/locations";
-// import { theIslandsIPulledFromTheSea } from "@lorcanito/lorcana-engine/cards/006";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { mickeyBraveLittleTailor } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { forbiddenMountainMaleficentsCastle } from "@lorcanito/lorcana-engine/cards/003/locations/locations";
+// Import { theIslandsIPulledFromTheSea } from "@lorcanito/lorcana-engine/cards/006";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("The Islands I Pulled From The Sea", () => {
-//   it("Search your deck for a location card, reveal that card to all players, and put it into your hand. Then, shuffle your deck.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: 10,
-//       play: [mickeyBraveLittleTailor],
-//       hand: [theIslandsIPulledFromTheSea],
-//       deck: [forbiddenMountainMaleficentsCastle],
+// Describe("The Islands I Pulled From The Sea", () => {
+//   It("Search your deck for a location card, reveal that card to all players, and put it into your hand. Then, shuffle your deck.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: 10,
+//       Play: [mickeyBraveLittleTailor],
+//       Hand: [theIslandsIPulledFromTheSea],
+//       Deck: [forbiddenMountainMaleficentsCastle],
 //     });
 //
-//     await testEngine.playCard(theIslandsIPulledFromTheSea);
-//     await testEngine.resolveTopOfStack({
-//       targets: [forbiddenMountainMaleficentsCastle],
+//     Await testEngine.playCard(theIslandsIPulledFromTheSea);
+//     Await testEngine.resolveTopOfStack({
+//       Targets: [forbiddenMountainMaleficentsCastle],
 //     });
 //
-//     expect(
-//       testEngine.getCardModel(forbiddenMountainMaleficentsCastle).zone,
+//     Expect(
+//       TestEngine.getCardModel(forbiddenMountainMaleficentsCastle).zone,
 //     ).toBe("hand");
 //   });
 // });

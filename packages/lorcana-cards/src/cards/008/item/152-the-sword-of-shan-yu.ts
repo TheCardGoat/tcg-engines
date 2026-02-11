@@ -1,33 +1,33 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
-// import { exertCharCost } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { readyAndCantQuest } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
+// Import { exertCharCost } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import { readyAndCantQuest } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const theSwordOfShanYu: LorcanitoItemCard = {
-//   id: "zlc",
-//   name: "The Sword Of Shan-Yu",
-//   characteristics: ["item"],
-//   text: "WORTHY WEAPON {E}, {E} one of your characters – Ready chosen character. They can't quest for the rest of this turn.",
-//   type: "item",
-//   abilities: [
+// Export const theSwordOfShanYu: LorcanitoItemCard = {
+//   Id: "zlc",
+//   Name: "The Sword Of Shan-Yu",
+//   Characteristics: ["item"],
+//   Text: "WORTHY WEAPON {E}, {E} one of your characters – Ready chosen character. They can't quest for the rest of this turn.",
+//   Type: "item",
+//   Abilities: [
 //     {
-//       type: "activated",
-//       name: "WORTHY WEAPON",
-//       text: "{E}, {E} one of your characters – Ready chosen character. They can't quest for the rest of this turn.",
-//       costs: [{ type: "exert" }, exertCharCost(1)],
-//       effects: [...readyAndCantQuest(chosenCharacter)],
+//       Type: "activated",
+//       Name: "WORTHY WEAPON",
+//       Text: "{E}, {E} one of your characters – Ready chosen character. They can't quest for the rest of this turn.",
+//       Costs: [{ type: "exert" }, exertCharCost(1)],
+//       Effects: [...readyAndCantQuest(chosenCharacter)],
 //     },
 //   ],
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 1,
-//   illustrator: "Domenico Russo",
-//   number: 152,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631452,
+//   Inkwell: true,
+//   Colors: ["ruby"],
+//   Cost: 1,
+//   Illustrator: "Domenico Russo",
+//   Number: 152,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631452,
 //   },
-//   rarity: "rare",
+//   Rarity: "rare",
 // };
 //

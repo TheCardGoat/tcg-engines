@@ -3,42 +3,42 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   generalLiHeadOfTheImperialArmy,
-//   jumbaJookibaCriticalScientist,
-//   theyNeverComeBack,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   GeneralLiHeadOfTheImperialArmy,
+//   JumbaJookibaCriticalScientist,
+//   TheyNeverComeBack,
 // } from "@lorcanito/lorcana-engine/cards/008";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("They Never Come Back", () => {
-//   it("Up to 2 chosen characters can’t ready at the start of their next turn. Draw a card.", async () => {
-//     const targets = [
-//       jumbaJookibaCriticalScientist,
-//       generalLiHeadOfTheImperialArmy,
+// Describe("They Never Come Back", () => {
+//   It("Up to 2 chosen characters can’t ready at the start of their next turn. Draw a card.", async () => {
+//     Const targets = [
+//       JumbaJookibaCriticalScientist,
+//       GeneralLiHeadOfTheImperialArmy,
 //     ];
 //
-//     const testEngine = new TestEngine(
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: theyNeverComeBack.cost,
-//         hand: [theyNeverComeBack],
-//         deck: 10,
+//         Inkwell: theyNeverComeBack.cost,
+//         Hand: [theyNeverComeBack],
+//         Deck: 10,
 //       },
 //       {
-//         play: targets,
+//         Play: targets,
 //       },
 //     );
 //
-//     for (const target of targets) {
-//       await testEngine.tapCard(target);
+//     For (const target of targets) {
+//       Await testEngine.tapCard(target);
 //     }
 //
-//     await testEngine.playCard(theyNeverComeBack, {
-//       targets: targets,
+//     Await testEngine.playCard(theyNeverComeBack, {
+//       Targets: targets,
 //     });
 //
-//     for (const target of targets) {
-//       expect(testEngine.getCardModel(target).exerted).toBe(true);
+//     For (const target of targets) {
+//       Expect(testEngine.getCardModel(target).exerted).toBe(true);
 //     }
 //   });
 // });

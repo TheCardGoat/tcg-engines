@@ -3,37 +3,37 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   kashekimAncientRuler,
-//   trainingStaff,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   KashekimAncientRuler,
+//   TrainingStaff,
 // } from "@lorcanito/lorcana-engine/cards/007";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Training Staff", () => {
-//   it("PRECISION STRIKE {E}, 1 {I} – Chosen character gains Challenger +2 this turn. (They get +2 {S} while challenging.)", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Training Staff", () => {
+//   It("PRECISION STRIKE {E}, 1 {I} – Chosen character gains Challenger +2 this turn. (They get +2 {S} while challenging.)", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: 1,
-//         play: [trainingStaff, kashekimAncientRuler],
+//         Inkwell: 1,
+//         Play: [trainingStaff, kashekimAncientRuler],
 //       },
 //       {
-//         deck: 1,
+//         Deck: 1,
 //       },
 //     );
 //
-//     await testEngine.activateCard(trainingStaff);
+//     Await testEngine.activateCard(trainingStaff);
 //
-//     const target = testEngine.getCardModel(kashekimAncientRuler);
+//     Const target = testEngine.getCardModel(kashekimAncientRuler);
 //
-//     expect(target.hasChallenger).toBe(false);
+//     Expect(target.hasChallenger).toBe(false);
 //
-//     await testEngine.resolveTopOfStack({ targets: [kashekimAncientRuler] });
+//     Await testEngine.resolveTopOfStack({ targets: [kashekimAncientRuler] });
 //
-//     expect(target.hasChallenger).toBe(true);
+//     Expect(target.hasChallenger).toBe(true);
 //
-//     await testEngine.passTurn();
-//     expect(target.hasEvasive).toBe(false);
+//     Await testEngine.passTurn();
+//     Expect(target.hasEvasive).toBe(false);
 //   });
 // });
 //

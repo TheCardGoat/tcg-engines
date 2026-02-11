@@ -3,39 +3,39 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   liloMakingAWish,
-//   stichtNewDog,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   LiloMakingAWish,
+//   StichtNewDog,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { pawpsicle } from "@lorcanito/lorcana-engine/cards/002/items/items";
-// import { aladdinBraveRescuer } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { hiroHamadaRoboticsProdigy } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { pawpsicle } from "@lorcanito/lorcana-engine/cards/002/items/items";
+// Import { aladdinBraveRescuer } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { hiroHamadaRoboticsProdigy } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Hiro Hamada - Robotics Prodigy", () => {
-//   it("**SWEET TECH**  {E}, 2 {I} − Search your deck for an item card or a Robot character card and reveal it to all players. Shuffle your deck and put that card on top of it.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Hiro Hamada - Robotics Prodigy", () => {
+//   It("**SWEET TECH**  {E}, 2 {I} − Search your deck for an item card or a Robot character card and reveal it to all players. Shuffle your deck and put that card on top of it.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: 2,
-//         play: [hiroHamadaRoboticsProdigy],
-//         deck: [liloMakingAWish, stichtNewDog, pawpsicle, aladdinBraveRescuer],
+//         Inkwell: 2,
+//         Play: [hiroHamadaRoboticsProdigy],
+//         Deck: [liloMakingAWish, stichtNewDog, pawpsicle, aladdinBraveRescuer],
 //       },
 //       {
-//         deck: 1,
+//         Deck: 1,
 //       },
 //     );
 //
-//     const cardUnderTest = testEngine.getCardModel(hiroHamadaRoboticsProdigy);
-//     const target = testEngine.getCardModel(pawpsicle);
-//     await testEngine.activateCard(cardUnderTest, { ability: "SWEET TECH" });
+//     Const cardUnderTest = testEngine.getCardModel(hiroHamadaRoboticsProdigy);
+//     Const target = testEngine.getCardModel(pawpsicle);
+//     Await testEngine.activateCard(cardUnderTest, { ability: "SWEET TECH" });
 //
-//     await testEngine.resolveTopOfStack({ targets: [target] });
+//     Await testEngine.resolveTopOfStack({ targets: [target] });
 //
-//     await testEngine.passTurn();
-//     await testEngine.passTurn();
+//     Await testEngine.passTurn();
+//     Await testEngine.passTurn();
 //
-//     expect(target.zone).toEqual("hand");
+//     Expect(target.zone).toEqual("hand");
 //   });
 // });
 //

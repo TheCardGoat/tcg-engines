@@ -507,7 +507,7 @@ describe("Real Card Parsing - Coverage Statistics", () => {
 
     const results = effectTypes.map((text) => {
       const result = parserV2.parseAbility(text);
-      return { text, parsed: result !== null };
+      return { parsed: result !== null, text };
     });
 
     // Log any unparsed effects

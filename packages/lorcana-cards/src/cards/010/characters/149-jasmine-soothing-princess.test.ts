@@ -3,72 +3,72 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/180-goofy-knight-for-a-day";
-// import { mickeyMouseGiantMouse } from "@lorcanito/lorcana-engine/cards/008/characters/characters";
-// import { jasmineSoothingPrincess } from "@lorcanito/lorcana-engine/cards/010/characters/149-jasmine-soothing-princess";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/180-goofy-knight-for-a-day";
+// Import { mickeyMouseGiantMouse } from "@lorcanito/lorcana-engine/cards/008/characters/characters";
+// Import { jasmineSoothingPrincess } from "@lorcanito/lorcana-engine/cards/010/characters/149-jasmine-soothing-princess";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Jasmine - Soothing Princess", () => {
-//   it("has Boost 2 ability", async () => {
-//     const testEngine = new TestEngine({
-//       play: [jasmineSoothingPrincess],
+// Describe("Jasmine - Soothing Princess", () => {
+//   It("has Boost 2 ability", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [jasmineSoothingPrincess],
 //     });
 //
-//     expect(testEngine.getCardModel(jasmineSoothingPrincess).hasBoost).toBe(
-//       true,
+//     Expect(testEngine.getCardModel(jasmineSoothingPrincess).hasBoost).toBe(
+//       True,
 //     );
 //   });
 //
-//   describe("UPLIFTING AURA - Whenever this character quests, if there's a card under her, remove up to 3 damage from each of your characters.", async () => {
-//     it("Boosted", async () => {
-//       const cardsInPlay = [
-//         jasmineSoothingPrincess,
-//         goofyKnightForADay,
-//         mickeyMouseGiantMouse,
+//   Describe("UPLIFTING AURA - Whenever this character quests, if there's a card under her, remove up to 3 damage from each of your characters.", async () => {
+//     It("Boosted", async () => {
+//       Const cardsInPlay = [
+//         JasmineSoothingPrincess,
+//         GoofyKnightForADay,
+//         MickeyMouseGiantMouse,
 //       ];
-//       const testEngine = new TestEngine({
-//         play: cardsInPlay,
-//         inkwell: 2, // For boosting
+//       Const testEngine = new TestEngine({
+//         Play: cardsInPlay,
+//         Inkwell: 2, // For boosting
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(jasmineSoothingPrincess);
-//       await testEngine.activateCard(jasmineSoothingPrincess);
-//       expect(cardUnderTest.boostBonus).toEqual(1);
+//       Const cardUnderTest = testEngine.getCardModel(jasmineSoothingPrincess);
+//       Await testEngine.activateCard(jasmineSoothingPrincess);
+//       Expect(cardUnderTest.boostBonus).toEqual(1);
 //
-//       for (const card of cardsInPlay) {
-//         await testEngine.setCardDamage(card, 4);
+//       For (const card of cardsInPlay) {
+//         Await testEngine.setCardDamage(card, 4);
 //       }
 //
-//       await testEngine.questCard(jasmineSoothingPrincess);
+//       Await testEngine.questCard(jasmineSoothingPrincess);
 //
-//       for (const card of cardsInPlay) {
-//         expect(testEngine.getCardModel(card).damage).toEqual(1);
+//       For (const card of cardsInPlay) {
+//         Expect(testEngine.getCardModel(card).damage).toEqual(1);
 //       }
 //     });
 //
-//     it("NOT boosted", async () => {
-//       const cardsInPlay = [
-//         jasmineSoothingPrincess,
-//         goofyKnightForADay,
-//         mickeyMouseGiantMouse,
+//     It("NOT boosted", async () => {
+//       Const cardsInPlay = [
+//         JasmineSoothingPrincess,
+//         GoofyKnightForADay,
+//         MickeyMouseGiantMouse,
 //       ];
-//       const testEngine = new TestEngine({
-//         play: cardsInPlay,
-//         inkwell: 2, // For boosting
+//       Const testEngine = new TestEngine({
+//         Play: cardsInPlay,
+//         Inkwell: 2, // For boosting
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(jasmineSoothingPrincess);
-//       expect(cardUnderTest.boostBonus).toEqual(0);
+//       Const cardUnderTest = testEngine.getCardModel(jasmineSoothingPrincess);
+//       Expect(cardUnderTest.boostBonus).toEqual(0);
 //
-//       for (const card of cardsInPlay) {
-//         await testEngine.setCardDamage(card, 4);
+//       For (const card of cardsInPlay) {
+//         Await testEngine.setCardDamage(card, 4);
 //       }
 //
-//       await testEngine.questCard(jasmineSoothingPrincess);
+//       Await testEngine.questCard(jasmineSoothingPrincess);
 //
-//       for (const card of cardsInPlay) {
-//         expect(testEngine.getCardModel(card).damage).toEqual(4);
+//       For (const card of cardsInPlay) {
+//         Expect(testEngine.getCardModel(card).damage).toEqual(4);
 //       }
 //     });
 //   });

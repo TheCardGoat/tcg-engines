@@ -3,31 +3,31 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { zipperAstuteDecoy } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { zipperAstuteDecoy } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Zipper - Astute Decoy", () => {
-//   it.skip("Ward (Opponents can't choose this character except to challenge.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [zipperAstuteDecoy],
+// Describe("Zipper - Astute Decoy", () => {
+//   It.skip("Ward (Opponents can't choose this character except to challenge.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [zipperAstuteDecoy],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(zipperAstuteDecoy);
-//     expect(cardUnderTest.hasWard).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(zipperAstuteDecoy);
+//     Expect(cardUnderTest.hasWard).toBe(true);
 //   });
 //
-//   it.skip("RUN INTERFERENCE During your turn, whenever a card is put into your inkwell, another chosen character gains Resist +1 until the start of your next turn. (Damage dealt to them is reduced by 1.)", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: zipperAstuteDecoy.cost,
-//       play: [zipperAstuteDecoy],
-//       hand: [zipperAstuteDecoy],
+//   It.skip("RUN INTERFERENCE During your turn, whenever a card is put into your inkwell, another chosen character gains Resist +1 until the start of your next turn. (Damage dealt to them is reduced by 1.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: zipperAstuteDecoy.cost,
+//       Play: [zipperAstuteDecoy],
+//       Hand: [zipperAstuteDecoy],
 //     });
 //
-//     await testEngine.playCard(zipperAstuteDecoy);
+//     Await testEngine.playCard(zipperAstuteDecoy);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

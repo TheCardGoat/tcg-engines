@@ -1,39 +1,39 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import {
-//   evasiveAbility,
-//   shiftAbility,
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import {
+//   EvasiveAbility,
+//   ShiftAbility,
 // } from "@lorcanito/lorcana-engine/abilities/abilities";
 //
-// export const princePhillipVanquisherOfFoes: LorcanitoCharacterCard = {
-//   id: "dh6",
-//   reprints: ["wj7"],
-//   missingTestCase: true,
-//   name: "Prince Phillip",
-//   title: "Vanquisher of Foes",
-//   characteristics: ["hero", "floodborn", "prince"],
-//   text: "**Shift** 6 \n\n**Evasive** _(Only characters with Evasive can challenge this character.)_\n\n**STRIKE TO THE HEART** When you play this character, banish all opposing damaged characters.",
-//   type: "character",
-//   abilities: [
-//     shiftAbility(6, "prince phillip"),
-//     evasiveAbility,
+// Export const princePhillipVanquisherOfFoes: LorcanitoCharacterCard = {
+//   Id: "dh6",
+//   Reprints: ["wj7"],
+//   MissingTestCase: true,
+//   Name: "Prince Phillip",
+//   Title: "Vanquisher of Foes",
+//   Characteristics: ["hero", "floodborn", "prince"],
+//   Text: "**Shift** 6 \n\n**Evasive** _(Only characters with Evasive can challenge this character.)_\n\n**STRIKE TO THE HEART** When you play this character, banish all opposing damaged characters.",
+//   Type: "character",
+//   Abilities: [
+//     ShiftAbility(6, "prince phillip"),
+//     EvasiveAbility,
 //     {
-//       type: "resolution",
-//       name: "Strike To The Heart",
-//       text: "When you play this character, banish all opposing damaged characters.",
-//       effects: [
+//       Type: "resolution",
+//       Name: "Strike To The Heart",
+//       Text: "When you play this character, banish all opposing damaged characters.",
+//       Effects: [
 //         {
-//           type: "banish",
-//           target: {
-//             type: "card",
-//             value: "all",
-//             filters: [
+//           Type: "banish",
+//           Target: {
+//             Type: "card",
+//             Value: "all",
+//             Filters: [
 //               { filter: "zone", value: "play" },
 //               { filter: "type", value: "character" },
 //               { filter: "owner", value: "opponent" },
 //               {
-//                 filter: "status",
-//                 value: "damaged",
+//                 Filter: "status",
+//                 Value: "damaged",
 //               },
 //             ],
 //           },
@@ -41,18 +41,18 @@
 //       ],
 //     },
 //   ],
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 9,
-//   lore: 3,
-//   strength: 6,
-//   willpower: 6,
-//   illustrator: "Randy Bishop",
-//   number: 87,
-//   set: "URR",
-//   externalIds: {
-//     tcgPlayer: 550581,
+//   Inkwell: true,
+//   Colors: ["emerald"],
+//   Cost: 9,
+//   Lore: 3,
+//   Strength: 6,
+//   Willpower: 6,
+//   Illustrator: "Randy Bishop",
+//   Number: 87,
+//   Set: "URR",
+//   ExternalIds: {
+//     TcgPlayer: 550581,
 //   },
-//   rarity: "super_rare",
+//   Rarity: "super_rare",
 // };
 //

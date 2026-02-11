@@ -1,49 +1,49 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type {
+// Import type {
 //   CardEffectTarget,
 //   LorcanitoCharacterCard,
 // } from "@lorcanito/lorcana-engine";
-// import {
-//   anotherChosenCharacterOfYours,
-//   parentsTarget,
+// Import {
+//   AnotherChosenCharacterOfYours,
+//   ParentsTarget,
 // } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { whenYouPlayThis } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import {
-//   chosenCharacterGainsChallenger,
-//   chosenCharacterOfYoursGainsWhenBanishedReturnToHand,
+// Import { whenYouPlayThis } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import {
+//   ChosenCharacterGainsChallenger,
+//   ChosenCharacterOfYoursGainsWhenBanishedReturnToHand,
 // } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const motherGothelKnowsWhatsBest: LorcanitoCharacterCard = {
-//   id: "pwy",
-//   name: "Mother Gothel",
-//   title: "Knows What's Best",
-//   characteristics: ["storyborn", "villain", "sorcerer"],
-//   text: "LOOK WHAT YOU'VE DONE When you play this character, you may deal 2 damage to another chosen character of yours to give that character Challenger +1 and “When this character is banished in a challenge, return this card to your hand” this turn. (They get +1 {S} while challenging.)",
-//   type: "character",
-//   abilities: [
-//     whenYouPlayThis({
-//       name: "LOOK WHAT YOU'VE DONE",
-//       text: "When you play this character, you may deal 2 damage to another chosen character of yours to give that character Challenger +1 and “When this character is banished in a challenge, return this card to your hand” this turn. (They get +1 {S} while challenging.)",
-//       optional: true,
-//       effects: [
+// Export const motherGothelKnowsWhatsBest: LorcanitoCharacterCard = {
+//   Id: "pwy",
+//   Name: "Mother Gothel",
+//   Title: "Knows What's Best",
+//   Characteristics: ["storyborn", "villain", "sorcerer"],
+//   Text: "LOOK WHAT YOU'VE DONE When you play this character, you may deal 2 damage to another chosen character of yours to give that character Challenger +1 and “When this character is banished in a challenge, return this card to your hand” this turn. (They get +1 {S} while challenging.)",
+//   Type: "character",
+//   Abilities: [
+//     WhenYouPlayThis({
+//       Name: "LOOK WHAT YOU'VE DONE",
+//       Text: "When you play this character, you may deal 2 damage to another chosen character of yours to give that character Challenger +1 and “When this character is banished in a challenge, return this card to your hand” this turn. (They get +1 {S} while challenging.)",
+//       Optional: true,
+//       Effects: [
 //         {
-//           type: "damage",
-//           amount: 2,
+//           Type: "damage",
+//           Amount: 2,
 //           // TODO/NOTE: this character incorrectly shows up in target selection window.
 //           //  An error appears if this character is selected, though.
-//           target: anotherChosenCharacterOfYours,
-//           afterEffect: [
+//           Target: anotherChosenCharacterOfYours,
+//           AfterEffect: [
 //             {
-//               type: "create-layer-based-on-target",
-//               target: {} as CardEffectTarget, // uses parent target
-//               effects: [
+//               Type: "create-layer-based-on-target",
+//               Target: {} as CardEffectTarget, // uses parent target
+//               Effects: [
 //                 {
 //                   ...chosenCharacterOfYoursGainsWhenBanishedReturnToHand,
-//                   target: parentsTarget,
+//                   Target: parentsTarget,
 //                 },
 //                 {
 //                   ...chosenCharacterGainsChallenger(1),
-//                   target: parentsTarget,
+//                   Target: parentsTarget,
 //                 },
 //               ],
 //             },
@@ -52,18 +52,18 @@
 //       ],
 //     }),
 //   ],
-//   inkwell: false,
-//   colors: ["amethyst", "ruby"],
-//   cost: 2,
-//   strength: 1,
-//   willpower: 3,
-//   illustrator: "Joel DuQue",
-//   number: 70,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631397,
+//   Inkwell: false,
+//   Colors: ["amethyst", "ruby"],
+//   Cost: 2,
+//   Strength: 1,
+//   Willpower: 3,
+//   Illustrator: "Joel DuQue",
+//   Number: 70,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631397,
 //   },
-//   rarity: "rare",
-//   lore: 1,
+//   Rarity: "rare",
+//   Lore: 1,
 // };
 //

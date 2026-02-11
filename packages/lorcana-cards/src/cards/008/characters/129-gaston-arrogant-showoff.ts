@@ -1,35 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const gastonArrogantShowoff: CharacterCard = {
-  id: "is0",
-  cardType: "character",
-  name: "Gaston",
-  version: "Arrogant Showoff",
-  fullName: "Gaston - Arrogant Showoff",
-  inkType: ["ruby"],
-  franchise: "Beauty and the Beast",
-  set: "008",
-  text: "BREAK APART When you play this character, you may banish one of your items to give chosen character +2 {S} this turn.",
-  cost: 4,
-  strength: 4,
-  willpower: 4,
-  lore: 1,
-  cardNumber: 129,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "43ad90059e880643ed35509ac9f1453d0931a266",
-  },
   abilities: [
     {
-      id: "is0-1",
-      type: "triggered",
-      name: "BREAK APART",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -44,8 +17,35 @@ export const gastonArrogantShowoff: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "is0-1",
+      name: "BREAK APART",
       text: "BREAK APART When you play this character, you may banish one of your items to give chosen character +2 {S} this turn.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 129,
+  cardType: "character",
   classifications: ["Storyborn", "Villain"],
+  cost: 4,
+  externalIds: {
+    ravensburger: "43ad90059e880643ed35509ac9f1453d0931a266",
+  },
+  franchise: "Beauty and the Beast",
+  fullName: "Gaston - Arrogant Showoff",
+  id: "is0",
+  inkType: ["ruby"],
+  inkable: true,
+  lore: 1,
+  missingTests: true,
+  name: "Gaston",
+  set: "008",
+  strength: 4,
+  text: "BREAK APART When you play this character, you may banish one of your items to give chosen character +2 {S} this turn.",
+  version: "Arrogant Showoff",
+  willpower: 4,
 };

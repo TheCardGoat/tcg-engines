@@ -3,34 +3,34 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   anastasiaBossyStepsister,
-//   daisyDuckMultitalentedPirate,
-//   johnSilverVengefulPirate,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   AnastasiaBossyStepsister,
+//   DaisyDuckMultitalentedPirate,
+//   JohnSilverVengefulPirate,
 // } from "@lorcanito/lorcana-engine/cards/007";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Daisy Duck - Multitalented Pirate", () => {
-//   it("FOWL PLAY Once during your turn, whenever a card is put into your inkwell, chosen opponent chooses one of their characters and returns that card to their hand.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Daisy Duck - Multitalented Pirate", () => {
+//   It("FOWL PLAY Once during your turn, whenever a card is put into your inkwell, chosen opponent chooses one of their characters and returns that card to their hand.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         play: [daisyDuckMultitalentedPirate],
-//         hand: [johnSilverVengefulPirate],
+//         Play: [daisyDuckMultitalentedPirate],
+//         Hand: [johnSilverVengefulPirate],
 //       },
 //       {
-//         play: [anastasiaBossyStepsister],
+//         Play: [anastasiaBossyStepsister],
 //       },
 //     );
 //
-//     await testEngine.putIntoInkwell(johnSilverVengefulPirate);
+//     Await testEngine.putIntoInkwell(johnSilverVengefulPirate);
 //
-//     testEngine.changeActivePlayer("player_two");
-//     await testEngine.resolveTopOfStack({
-//       targets: [anastasiaBossyStepsister],
+//     TestEngine.changeActivePlayer("player_two");
+//     Await testEngine.resolveTopOfStack({
+//       Targets: [anastasiaBossyStepsister],
 //     });
 //
-//     expect(testEngine.getCardModel(anastasiaBossyStepsister).zone).toBe("hand");
+//     Expect(testEngine.getCardModel(anastasiaBossyStepsister).zone).toBe("hand");
 //   });
 // });
 //

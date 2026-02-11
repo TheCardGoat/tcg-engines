@@ -25,7 +25,7 @@ describe.skip("LorcanaAbilityParser", () => {
   function parseText(text: string, rule: keyof LorcanaAbilityParser) {
     const lexResult = LorcanaLexer.tokenize(text);
     parser.input = lexResult.tokens;
-    // biome-ignore lint/suspicious/noExplicitAny: Dynamic rule access for testing
+    // Biome-ignore lint/suspicious/noExplicitAny: Dynamic rule access for testing
     const cst = (parser as any)[rule]();
     return {
       cst,

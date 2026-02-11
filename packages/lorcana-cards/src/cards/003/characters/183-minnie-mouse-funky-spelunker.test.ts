@@ -3,31 +3,31 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { minnieMouseFunkySpelunker } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { forbiddenMountainMaleficentsCastle } from "@lorcanito/lorcana-engine/cards/003/locations/locations";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { minnieMouseFunkySpelunker } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { forbiddenMountainMaleficentsCastle } from "@lorcanito/lorcana-engine/cards/003/locations/locations";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Minnie Mouse - Funky Spelunker", () => {
-//   it("**JOURNEY** While this character is at a location, she gets +2 {S}.", () => {
-//     const testStore = new TestStore({
-//       inkwell: forbiddenMountainMaleficentsCastle.moveCost,
-//       play: [minnieMouseFunkySpelunker, forbiddenMountainMaleficentsCastle],
+// Describe("Minnie Mouse - Funky Spelunker", () => {
+//   It("**JOURNEY** While this character is at a location, she gets +2 {S}.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: forbiddenMountainMaleficentsCastle.moveCost,
+//       Play: [minnieMouseFunkySpelunker, forbiddenMountainMaleficentsCastle],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       minnieMouseFunkySpelunker.id,
+//       MinnieMouseFunkySpelunker.id,
 //     );
-//     const location = testStore.getByZoneAndId(
+//     Const location = testStore.getByZoneAndId(
 //       "play",
-//       forbiddenMountainMaleficentsCastle.id,
+//       ForbiddenMountainMaleficentsCastle.id,
 //     );
 //
-//     expect(cardUnderTest.strength).toEqual(minnieMouseFunkySpelunker.strength);
-//     cardUnderTest.enterLocation(location);
-//     expect(cardUnderTest.strength).toEqual(
-//       minnieMouseFunkySpelunker.strength + 2,
+//     Expect(cardUnderTest.strength).toEqual(minnieMouseFunkySpelunker.strength);
+//     CardUnderTest.enterLocation(location);
+//     Expect(cardUnderTest.strength).toEqual(
+//       MinnieMouseFunkySpelunker.strength + 2,
 //     );
 //   });
 // });

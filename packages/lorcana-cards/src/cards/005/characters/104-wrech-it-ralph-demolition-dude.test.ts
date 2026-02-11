@@ -3,39 +3,39 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { wrechitRalphDemolitionDude } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { wrechitRalphDemolitionDude } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Wrech-It Ralph - Demolition Dude", () => {
-//   describe("**REFRESHING BREAK** Whenever you ready this character, gain 1 lore for each 1 damage on him.", () => {
-//     it("Gains lore passing turn", () => {
-//       const testStore = new TestStore(
+// Describe("Wrech-It Ralph - Demolition Dude", () => {
+//   Describe("**REFRESHING BREAK** Whenever you ready this character, gain 1 lore for each 1 damage on him.", () => {
+//     It("Gains lore passing turn", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [wrechitRalphDemolitionDude],
-//           deck: 5,
+//           Play: [wrechitRalphDemolitionDude],
+//           Deck: 5,
 //         },
 //         {
-//           deck: 5,
+//           Deck: 5,
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getCard(wrechitRalphDemolitionDude);
-//       cardUnderTest.updateCardMeta({ exerted: true });
+//       Const cardUnderTest = testStore.getCard(wrechitRalphDemolitionDude);
+//       CardUnderTest.updateCardMeta({ exerted: true });
 //
-//       expect(testStore.store.tableStore.getTable("player_one").lore).toEqual(0);
+//       Expect(testStore.store.tableStore.getTable("player_one").lore).toEqual(0);
 //
-//       testStore.passTurn();
-//       testStore.passTurn();
+//       TestStore.passTurn();
+//       TestStore.passTurn();
 //
-//       expect(testStore.store.tableStore.getTable("player_one").lore).toEqual(0);
+//       Expect(testStore.store.tableStore.getTable("player_one").lore).toEqual(0);
 //
-//       cardUnderTest.updateCardMeta({ exerted: true, damage: 3 });
+//       CardUnderTest.updateCardMeta({ exerted: true, damage: 3 });
 //
-//       testStore.passTurn();
-//       testStore.passTurn();
+//       TestStore.passTurn();
+//       TestStore.passTurn();
 //
-//       expect(testStore.store.tableStore.getTable("player_one").lore).toEqual(3);
+//       Expect(testStore.store.tableStore.getTable("player_one").lore).toEqual(3);
 //     });
 //   });
 // });

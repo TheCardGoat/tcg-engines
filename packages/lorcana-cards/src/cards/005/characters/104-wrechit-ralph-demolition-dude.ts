@@ -1,34 +1,34 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { wheneverYouReadyThisCharacter } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-// import { youGainLore } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { wheneverYouReadyThisCharacter } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// Import { youGainLore } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const wrechitRalphDemolitionDude: LorcanitoCharacterCard = {
-//   id: "lpn",
-//   name: "Wreck-It Ralph",
-//   title: "Demolition Dude",
-//   characteristics: ["hero", "storyborn"],
-//   text: "**REFRESHING BREAK** Whenever you ready this character, gain 1 lore for each 1 damage on him.",
-//   type: "character",
-//   abilities: [
-//     wheneverYouReadyThisCharacter({
-//       name: "Refreshing Break",
-//       text: "Whenever you ready this character, gain 1 lore for each 1 damage on him.",
-//       effects: [youGainLore({ dynamic: true, sourceAttribute: "damage" })],
+// Export const wrechitRalphDemolitionDude: LorcanitoCharacterCard = {
+//   Id: "lpn",
+//   Name: "Wreck-It Ralph",
+//   Title: "Demolition Dude",
+//   Characteristics: ["hero", "storyborn"],
+//   Text: "**REFRESHING BREAK** Whenever you ready this character, gain 1 lore for each 1 damage on him.",
+//   Type: "character",
+//   Abilities: [
+//     WheneverYouReadyThisCharacter({
+//       Name: "Refreshing Break",
+//       Text: "Whenever you ready this character, gain 1 lore for each 1 damage on him.",
+//       Effects: [youGainLore({ dynamic: true, sourceAttribute: "damage" })],
 //     }),
 //   ],
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 3,
-//   strength: 1,
-//   willpower: 4,
-//   lore: 1,
-//   illustrator: "Lisanne Koeteeuw",
-//   number: 104,
-//   set: "SSK",
-//   externalIds: {
-//     tcgPlayer: 555259,
+//   Inkwell: true,
+//   Colors: ["ruby"],
+//   Cost: 3,
+//   Strength: 1,
+//   Willpower: 4,
+//   Lore: 1,
+//   Illustrator: "Lisanne Koeteeuw",
+//   Number: 104,
+//   Set: "SSK",
+//   ExternalIds: {
+//     TcgPlayer: 555259,
 //   },
-//   rarity: "rare",
+//   Rarity: "rare",
 // };
 //

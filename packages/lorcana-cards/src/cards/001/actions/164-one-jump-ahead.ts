@@ -1,25 +1,8 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
 export const oneJumpAhead: ActionCard = {
-  id: "gf6",
-  cardType: "action",
-  name: "One Jump Ahead",
-  inkType: ["sapphire"],
-  franchise: "Disney",
-  set: "001",
-  text: "_(A character with cost 2 or more can {E} to sing this song for free.)_\nPut the top card of your deck into your inkwell facedown and exerted.",
-  cost: 2,
-  actionSubtype: "song",
-  cardNumber: 164,
-  inkable: true,
-  externalIds: {
-    ravensburger: "",
-  },
   abilities: [
     {
-      type: "action",
-      text: "_(A character with cost 2 or more can {E} to sing this song for free.)_\nPut the top card of your deck into your inkwell facedown and exerted.",
-      id: "gf6-1",
       effect: {
         type: "put-into-inkwell",
         source: "top-of-deck",
@@ -27,50 +10,67 @@ export const oneJumpAhead: ActionCard = {
         exerted: true,
         facedown: true,
       },
+      id: "gf6-1",
+      text: "_(A character with cost 2 or more can {E} to sing this song for free.)_\nPut the top card of your deck into your inkwell facedown and exerted.",
+      type: "action",
     },
   ],
+  actionSubtype: "song",
+  cardNumber: 164,
+  cardType: "action",
+  cost: 2,
+  externalIds: {
+    ravensburger: "",
+  },
+  franchise: "Disney",
+  id: "gf6",
+  inkType: ["sapphire"],
+  inkable: true,
+  name: "One Jump Ahead",
+  set: "001",
+  text: "_(A character with cost 2 or more can {E} to sing this song for free.)_\nPut the top card of your deck into your inkwell facedown and exerted.",
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const oneJumpAhead: LorcanitoActionCard = {
-//   id: "gf6",
-//   reprints: ["uhq"],
-//   name: "One Jump Ahead",
-//   characteristics: ["action", "song"],
-//   text: "_(A character with cost 2 or more can {E} to sing this song for free.)_\nPut the top card of your deck into your inkwell facedown and exerted.",
-//   type: "action",
-//   abilities: [
+// Export const oneJumpAhead: LorcanitoActionCard = {
+//   Id: "gf6",
+//   Reprints: ["uhq"],
+//   Name: "One Jump Ahead",
+//   Characteristics: ["action", "song"],
+//   Text: "_(A character with cost 2 or more can {E} to sing this song for free.)_\nPut the top card of your deck into your inkwell facedown and exerted.",
+//   Type: "action",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       name: "One Jump Ahead",
-//       text: "Put the top card of your deck into your inkwell facedown and exerted.",
-//       optional: false,
-//       effects: [
+//       Type: "resolution",
+//       Name: "One Jump Ahead",
+//       Text: "Put the top card of your deck into your inkwell facedown and exerted.",
+//       Optional: false,
+//       Effects: [
 //         {
-//           type: "move",
-//           to: "inkwell",
-//           exerted: true,
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [{ filter: "top-deck", value: "self" }],
+//           Type: "move",
+//           To: "inkwell",
+//           Exerted: true,
+//           Target: {
+//             Type: "card",
+//             Value: 1,
+//             Filters: [{ filter: "top-deck", value: "self" }],
 //           },
 //         },
 //       ],
 //     },
 //   ],
-//   flavour:
+//   Flavour:
 //     "Gotta eat to live, gotta steal to eat -\nTell you all about it when I got the time",
-//   colors: ["sapphire"],
-//   cost: 2,
-//   illustrator: "Bill Robinson",
-//   number: 164,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 492726,
+//   Colors: ["sapphire"],
+//   Cost: 2,
+//   Illustrator: "Bill Robinson",
+//   Number: 164,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 492726,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //
