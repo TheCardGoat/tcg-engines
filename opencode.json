@@ -12,9 +12,6 @@
   ],
   "formatter": {
     "prettier": {
-      "disabled": true
-    },
-    "biome": {
       "disabled": false
     }
   },

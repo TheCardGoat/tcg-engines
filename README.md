@@ -398,7 +398,8 @@ bun run format        # Format
 
 ### Code Quality
 
-- **Biome** - Fast linting and formatting (replaces ESLint + Prettier)
+- **oxlint** - Fast linting (replaces ESLint)
+- **Oxc formatter** - Fast code formatting (Prettier-compatible)
 - **TypeScript Strict Mode** - Full type safety, no `any` types
 - **Turborepo Boundaries** - Enforced package dependencies
 
@@ -470,7 +471,7 @@ All code follows strict standards documented in `agent-os/standards/`:
 - **RNG**: seedrandom 3.0.5+
 - **IDs**: nanoid 5.0.0+
 - **Build System**: Turborepo
-- **Code Quality**: Biome 2.0.4
+- **Code Quality**: oxlint (linting), Oxc formatter (formatting)
 - **Testing**: Bun Test (Jest-compatible)
 
 [View the full Tech Stack Documentation](agent-os/product/tech-stack.md)
@@ -534,7 +535,7 @@ We welcome contributions! Here's how to get started:
 - **Type Safety** - No `any` types, use proper TypeScript types
 - **Test Coverage** - 95%+ coverage required
 - **Documentation** - Update docs for public API changes
-- **Code Style** - Follow Biome formatting and linting rules
+- **Code Style** - Follow oxlint linting rules and Oxc formatter settings
 - **Commit Messages** - Use conventional commits format
 
 ## License

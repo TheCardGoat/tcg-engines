@@ -53,7 +53,8 @@ packages/your-game-engine/
 ├── package.json              # Package configuration
 ├── tsconfig.json             # TypeScript configuration
 ├── turbo.json                # Turbo build configuration
-├── biome.json                # Linting/formatting configuration
+├── .oxlintrc.json           # Linting configuration (oxlint)
+├── .oxfmt.json              # Formatting configuration (oxfmt)
 ├── bunfig.toml               # Test runner configuration
 ├── README.md                 # Package overview
 ├── ARCHITECTURE.md           # Detailed architecture docs
@@ -223,7 +224,7 @@ Create your package structure and configuration files:
 1. **package.json**: Define package name, dependencies, and scripts
 2. **tsconfig.json**: Configure TypeScript with strict mode
 3. **turbo.json**: Configure build tasks
-4. **biome.json**: Configure linting and formatting
+4. **.oxlintrc.json / .oxfmt.json**: Configure linting and formatting
 5. **bunfig.toml**: Configure test runner
 
 See `packages/gundam-engine` for a complete example.

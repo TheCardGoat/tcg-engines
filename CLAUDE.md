@@ -28,7 +28,7 @@ cp .ai_memory/TEMPLATE.md .ai_memory/<feature-branch>.md
 bun install          # Install dependencies
 bun test             # Run all tests
 bun run check-types  # TypeScript check
-bun run format       # Format code (Biome)
+bun run format       # Format code (Oxc formatter)
 bun run lint         # Run linter
 
 # CI Pipeline

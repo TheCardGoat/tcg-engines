@@ -31,8 +31,8 @@
     "build": "tsc --noEmit && mkdir -p dist",
     "typecheck": "tsc --noEmit",
     "check-types": "tsc --noEmit",
-    "format": "bun x @biomejs/biome check --fix --max-diagnostics=none --diagnostic-level=error --linter-enabled=false ./src",
-    "lint": "bun x @biomejs/biome lint --fix --max-diagnostics=none --diagnostic-level=error ./src",
+    "format": "oxfmt --write ./src",
+    "lint": "oxlint --fix ./src",
     "test": "AGENT=1 bun test --silent",
     "test:watch": "bun test --watch",
     "test:coverage": "bun test --coverage",
@@ -47,7 +47,6 @@
     "zod": "^4.3.5"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.3.11",
     "@types/bun": "1.2.14",
     "@types/seedrandom": "^3.0.8",
     "typescript": "5.8.3"

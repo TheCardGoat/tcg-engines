@@ -105,24 +105,38 @@ const cardId = nanoid(); // e.g., "V1StGXR8_Z5jdHi6B-myT"
 
 ### Code Quality
 
-**Biome 2.0.4**
-- Fast linting and formatting
-- Replaces ESLint + Prettier
+**oxlint 1.46.0 + oxfmt**
+- Fast linting via oxlint (10-100x faster than ESLint)
+- Formatting via oxfmt (Prettier-compatible)
+- Replaces ESLint + Biome + Prettier
 - Consistent code style
 - Import sorting
 - Why: Modern, fast, zero-config code quality tool
 
 ```json
-// biome.json configuration
+// .oxlintrc.json configuration
 {
-  "formatter": {
-    "indentStyle": "space",
-    "indentWidth": 2
+  "categories": {
+    "correctness": "warn",
+    "suspicious": "warn",
+    "perf": "warn",
+    "style": "warn"
   },
-  "linter": {
-    "rules": {
-      "recommended": true
-    }
+  "plugins": ["typescript", "react", "unicorn", "jsx-a11y"]
+}
+```
+
+```json
+// .oxfmt.json configuration
+{
+  "plugins": ["prettier"],
+  "prettier": {
+    "quoteProps": "preserve",
+    "singleQuote": false,
+    "trailingComma": "es5",
+    "semi": true,
+    "tabWidth": 2,
+    "useTabs": false
   }
 }
 ```
@@ -357,12 +371,13 @@ export const createTestEngine = (options?: Partial<EngineOptions>) => {
 ### Recommended IDE
 **Visual Studio Code**
 - TypeScript language service
-- Biome extension
+- oxlint extension
 - Git integration
 - Terminal integration
 
 ### VSCode Extensions (Recommended)
-- Biome (code quality)
+- oxlint (code quality)
+- Prettier - Code formatter (oxfmt uses Prettier plugin)
 - TypeScript and JavaScript Language Features
 - GitLens (Git integration)
 - Better Comments
@@ -371,11 +386,11 @@ export const createTestEngine = (options?: Partial<EngineOptions>) => {
 ### VSCode Settings
 ```json
 {
-  "editor.defaultFormatter": "biomejs.biome",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
-    "quickfix.biome": "explicit",
-    "source.organizeImports.biome": "explicit"
+    "source.fixAll.esbenp.prettier-vscode": "explicit",
+    "source.organizeImports": "explicit"
   }
 }
 ```
@@ -489,7 +504,7 @@ To contribute to @tcg/core:
 - Text editor (VSCode recommended)
 
 ### Optional
-- Biome extension
+- oxlint extension (VS Code)
 - GitHub CLI (`gh`)
 - Turbo CLI (global install)
 
@@ -515,7 +530,8 @@ To contribute to @tcg/core:
 - [Immer](https://immerjs.github.io/immer/)
 - [Bun](https://bun.sh/)
 - [Zod](https://zod.dev/)
-- [Biome](https://biomejs.dev/)
+- [oxlint](https://oxc.rs/)
+- [oxfmt](https://oxc.rs/)
 
 ### Community Resources
 - GitHub Repository: [tcg-engines](https://github.com/the-card-goat/tcg-engines)

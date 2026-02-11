@@ -9,8 +9,8 @@
   ],
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "format": "bun x @biomejs/biome check --fix --max-diagnostics=none --diagnostic-level=error --linter-enabled=false ./src",
-    "lint": "bun x @biomejs/biome lint --write ./src",
+    "format": "oxfmt --write ./src",
+    "lint": "oxlint --fix ./src",
     "check-types": "tsc --noEmit",
     "test": "echo 'No tests'"
   },
@@ -19,7 +19,6 @@
     "pino-pretty": "13.0.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.3.11",
     "@lorcanito/typescript-config": "workspace:*"
   },
   "exports": {
