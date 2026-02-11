@@ -7,16 +7,14 @@ import { z } from "zod";
 const contentServerSchema = {
   // Database (own PostgreSQL instance)
   DATABASE_URL: z
-    .string()
     .url({
-      message: "DATABASE_URL must be a valid PostgreSQL connection string",
+      error: "DATABASE_URL must be a valid PostgreSQL connection string",
     })
     .describe("PostgreSQL connection string for content database"),
 
   // Auth Service URL for JWKS verification
   AUTH_SERVICE_URL: z
-    .string()
-    .url({ message: "AUTH_SERVICE_URL must be a valid URL" })
+    .url({ error: "AUTH_SERVICE_URL must be a valid URL" })
     .optional()
     .default("http://localhost:3001")
     .describe("Auth service URL for JWT verification via JWKS"),
@@ -31,8 +29,8 @@ const contentServerSchema = {
       z
         .number()
         .int()
-        .min(1, { message: "PORT must be at least 1" })
-        .max(65535, { message: "PORT must be at most 65535" }),
+        .min(1, { error: "PORT must be at least 1" })
+        .max(65535, { error: "PORT must be at most 65535" }),
     )
     .describe("Content service port"),
 

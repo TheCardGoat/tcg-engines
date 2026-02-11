@@ -5,7 +5,7 @@
  * in a type-safe and reusable way.
  */
 
-import { type ZodObject, type ZodRawShape, type ZodTypeAny, z } from "zod";
+import { type ZodObject, type ZodRawShape, z } from "zod";
 
 /**
  * Creates a card schema from a shape object
@@ -60,8 +60,8 @@ export function createCardSchema<T extends ZodRawShape>(
 export function extendSchema<T extends ZodRawShape, E extends ZodRawShape>(
   baseSchema: ZodObject<T>,
   extension: E,
-): ZodObject<any> {
-  return baseSchema.extend(extension) as ZodObject<any>;
+): any {
+  return baseSchema.extend(extension);
 }
 
 /**
@@ -85,17 +85,13 @@ export function extendSchema<T extends ZodRawShape, E extends ZodRawShape>(
 export function mergeSchemas<T extends ZodRawShape, U extends ZodRawShape>(
   schema1: ZodObject<T>,
   schema2: ZodObject<U>,
-): ZodObject<any>;
+): any;
 
 export function mergeSchemas<
   T extends ZodRawShape,
   U extends ZodRawShape,
   V extends ZodRawShape,
->(
-  schema1: ZodObject<T>,
-  schema2: ZodObject<U>,
-  schema3: ZodObject<V>,
-): ZodObject<any>;
+>(schema1: ZodObject<T>, schema2: ZodObject<U>, schema3: ZodObject<V>): any;
 
 export function mergeSchemas<
   T extends ZodRawShape,
@@ -107,16 +103,14 @@ export function mergeSchemas<
   schema2: ZodObject<U>,
   schema3: ZodObject<V>,
   schema4: ZodObject<W>,
-): ZodObject<any>;
+): any;
 
-export function mergeSchemas(
-  ...schemas: ZodObject<ZodRawShape>[]
-): ZodObject<any> {
+export function mergeSchemas(...schemas: ZodObject<ZodRawShape>[]): any {
   if (schemas.length < 2) {
     throw new Error("mergeSchemas requires at least 2 schemas");
   }
 
-  return schemas.reduce((acc, schema) => acc.merge(schema)) as ZodObject<any>;
+  return schemas.reduce((acc, schema) => acc.extend(schema.shape));
 }
 
 /**
@@ -137,7 +131,7 @@ export function mergeSchemas(
  * const fullSchema = composeSchemas([hasId, hasName, hasType]);
  * ```
  */
-export function composeSchemas(schemas: ZodTypeAny[]): ZodTypeAny {
+export function composeSchemas(schemas: z.ZodType[]): any {
   if (schemas.length === 0) {
     throw new Error("composeSchemas requires at least 1 schema");
   }
@@ -146,13 +140,13 @@ export function composeSchemas(schemas: ZodTypeAny[]): ZodTypeAny {
     return schemas[0];
   }
 
-  // Use merge for object schemas
-  return schemas.reduce((acc: ZodTypeAny, schema: ZodTypeAny): ZodTypeAny => {
+  // Use extend for object schemas
+  return schemas.reduce((acc: any, schema: any): any => {
     if (acc instanceof z.ZodObject && schema instanceof z.ZodObject) {
-      return acc.merge(schema) as ZodTypeAny;
+      return acc.extend(schema.shape) as any;
     }
     return z.intersection(acc, schema);
-  }) as ZodTypeAny;
+  }) as any;
 }
 
 /**
@@ -178,8 +172,8 @@ export function composeSchemas(schemas: ZodTypeAny[]): ZodTypeAny {
  */
 export function createOptionalSchema<T extends ZodRawShape>(
   schema: ZodObject<T>,
-): ZodObject<{ [K in keyof T]: ZodTypeAny }> {
-  return schema.partial() as ZodObject<{ [K in keyof T]: ZodTypeAny }>;
+): any {
+  return schema.partial();
 }
 
 /**
@@ -202,10 +196,8 @@ export function createOptionalSchema<T extends ZodRawShape>(
  * schema.parse({ id: "1", name: "Card", extra: "not allowed" });
  * ```
  */
-export function createStrictSchema<T extends ZodRawShape>(
-  shape: T,
-): ZodObject<T> {
-  return z.object(shape).strict();
+export function createStrictSchema<T extends ZodRawShape>(shape: T): any {
+  return z.strictObject(shape);
 }
 
 /**
@@ -225,10 +217,10 @@ export function createStrictSchema<T extends ZodRawShape>(
  * const deckSchema = createArraySchema(cardSchema, { min: 40, max: 60 });
  * ```
  */
-export function createArraySchema<T extends ZodTypeAny>(
+export function createArraySchema<T extends z.ZodType>(
   itemSchema: T,
   options?: { min?: number; max?: number },
-): z.ZodArray<T> {
+): any {
   let arraySchema = z.array(itemSchema);
 
   if (options?.min !== undefined) {
@@ -262,7 +254,7 @@ export function createArraySchema<T extends ZodTypeAny>(
 export function createDiscriminatedUnion<K extends string>(
   discriminator: K,
   schemas: [ZodObject<any>, ZodObject<any>, ...ZodObject<any>[]],
-): z.ZodDiscriminatedUnion<K, any> {
+): any {
   return z.discriminatedUnion(discriminator, schemas as any);
 }
 
@@ -279,10 +271,10 @@ export function createDiscriminatedUnion<K extends string>(
  * const scoresSchema = createRecordSchema(z.string(), z.number());
  * ```
  */
-export function createRecordSchema<
-  K extends z.ZodTypeAny,
-  V extends z.ZodTypeAny,
->(keySchema: K, valueSchema: V): z.ZodRecord<K, V> {
+export function createRecordSchema(
+  keySchema: z.ZodString | z.ZodNumber,
+  valueSchema: z.ZodType,
+): any {
   return z.record(keySchema, valueSchema);
 }
 
@@ -304,12 +296,12 @@ export function createRecordSchema<
  * );
  * ```
  */
-export function createRefinedSchema<T extends ZodTypeAny>(
+export function createRefinedSchema<T extends z.ZodTypeAny>(
   baseSchema: T,
   refinement: (val: z.infer<T>) => boolean,
   message: string,
-): z.ZodEffects<T> {
-  return baseSchema.refine(refinement, { message });
+): any {
+  return baseSchema.refine(refinement, { error: message });
 }
 
 /**
@@ -328,17 +320,17 @@ export function createRefinedSchema<T extends ZodTypeAny>(
  * ]);
  * ```
  */
-export function createMultiRefinedSchema<T extends ZodTypeAny>(
+export function createMultiRefinedSchema<T extends z.ZodTypeAny>(
   baseSchema: T,
   refinements: Array<{
     check: (val: z.infer<T>) => boolean;
     message: string;
   }>,
-): ZodTypeAny {
-  let schema: ZodTypeAny = baseSchema;
+): any {
+  let schema: any = baseSchema;
 
   for (const { check, message } of refinements) {
-    schema = schema.refine(check, { message });
+    schema = schema.refine(check, { error: message });
   }
 
   return schema;

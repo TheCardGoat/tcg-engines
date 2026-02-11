@@ -396,7 +396,7 @@ describe("schema-builders", () => {
       const result = schema.safeParse(invalidCard);
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors.length).toBeGreaterThan(0);
+        expect(result.error.issues.length).toBeGreaterThan(0);
       }
     });
   });

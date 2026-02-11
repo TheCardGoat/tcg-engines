@@ -23,17 +23,18 @@ export type GameDefinitionValidationResult =
  */
 const GameDefinitionSchema = z.object({
   // Name validation
-  name: z.string().min(1, "Game name must not be empty"),
+  name: z.string().min(1),
 
   // Setup function validation
-  setup: z.function().args(z.array(z.string())).returns(z.record(z.any())),
+  setup: z.any(),
 
   // Moves validation
   moves: z.record(
+    z.string(),
     z.object({
-      reducer: z.function(),
-      condition: z.function().optional(),
-      metadata: z.record(z.any()).optional(),
+      reducer: z.any(),
+      condition: z.any().optional(),
+      metadata: z.record(z.string(), z.any()).optional(),
     }),
   ),
 
@@ -41,34 +42,21 @@ const GameDefinitionSchema = z.object({
   flow: z
     .object({
       initial: z.string(),
-      states: z.record(z.any()),
+      states: z.record(z.string(), z.any()),
       hooks: z
         .object({
-          onBegin: z.function().optional(),
-          onEnd: z.function().optional(),
+          onBegin: z.any().optional(),
+          onEnd: z.any().optional(),
         })
         .optional(),
     })
     .optional(),
 
   // Optional endIf validation
-  endIf: z
-    .function()
-    .args(z.any())
-    .returns(
-      z.union([
-        z.object({ winner: z.string(), reason: z.string() }),
-        z.undefined(),
-      ]),
-    )
-    .optional(),
+  endIf: z.any().optional(),
 
   // Optional playerView validation
-  playerView: z
-    .function()
-    .args(z.any(), z.string())
-    .returns(z.any())
-    .optional(),
+  playerView: z.any().optional(),
 });
 
 /**
