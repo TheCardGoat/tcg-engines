@@ -24,7 +24,7 @@
     "drizzle-orm": "^0.44.2",
     "postgres": "^3.4.7",
     "jose": "^5.2.0",
-    "zod": "^3.23.8",
+    "zod": "^4.3.5",
     "@t3-oss/env-core": "^0.11.1"
   },
   "devDependencies": {

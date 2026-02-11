@@ -10,9 +10,8 @@ import { z } from "zod";
 // ============================================================================
 
 export const authDatabaseUrlSchema = z
-  .string()
   .url({
-    message: "AUTH_DATABASE_URL must be a valid PostgreSQL connection string",
+    error: "AUTH_DATABASE_URL must be a valid PostgreSQL connection string",
   })
   .describe("PostgreSQL connection string for auth database");
 
@@ -22,7 +21,7 @@ export const authDatabaseUrlSchema = z
 
 export const authSecretSchema = z
   .string()
-  .min(32, { message: "AUTH_SECRET must be at least 32 characters" })
+  .min(32, { error: "AUTH_SECRET must be at least 32 characters" })
   .describe("Better Auth secret for session encryption");
 
 export const authDiscordClientIdSchema = z
@@ -50,8 +49,8 @@ export const authPortSchema = z
     z
       .number()
       .int()
-      .min(1, { message: "AUTH_PORT must be at least 1" })
-      .max(65535, { message: "AUTH_PORT must be at most 65535" }),
+      .min(1, { error: "AUTH_PORT must be at least 1" })
+      .max(65535, { error: "AUTH_PORT must be at most 65535" }),
   )
   .describe("Auth service port");
 
@@ -62,8 +61,7 @@ export const authCorsOriginSchema = z
   .describe("CORS origin for auth service");
 
 export const authBaseUrlSchema = z
-  .string()
-  .url({ message: "AUTH_BASE_URL must be a valid URL" })
+  .url({ error: "AUTH_BASE_URL must be a valid URL" })
   .optional()
   .default("http://localhost:3001")
   .describe("Base URL for auth service (used for JWT issuer/audience)");
@@ -85,10 +83,7 @@ const createRateLimitSchema = (defaultValue: string) =>
     .default(defaultValue)
     .transform((val) => Number.parseInt(val, 10))
     .pipe(
-      z
-        .number()
-        .int()
-        .min(1, { message: "Rate limit value must be at least 1" }),
+      z.number().int().min(1, { error: "Rate limit value must be at least 1" }),
     );
 
 export const authRateLimitEnabledSchema = z

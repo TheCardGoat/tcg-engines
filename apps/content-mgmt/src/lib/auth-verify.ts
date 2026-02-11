@@ -15,7 +15,7 @@ import { env } from "../config/env";
  */
 const AuthPayloadSchema = z.object({
   id: z.string().min(1),
-  email: z.string().email(),
+  email: z.email(),
   name: z.string().optional(),
   subscriptionTier: z.string().optional(),
 });
@@ -82,7 +82,10 @@ function validatePayload(payload: JWTPayload): AuthPayload | null {
   const result = AuthPayloadSchema.safeParse(payload);
   if (!result.success) {
     if (env.NODE_ENV !== "production") {
-      console.error("JWT payload validation failed:", result.error.format());
+      console.error(
+        "JWT payload validation failed:",
+        JSON.stringify(result.error),
+      );
     }
     return null;
   }
