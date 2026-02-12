@@ -292,7 +292,7 @@ export function createRefinedSchema<T extends z.ZodTypeAny>(
   refinement: (val: z.infer<T>) => boolean,
   message: string,
 ): any {
-  return baseSchema.refine(refinement, { error: message });
+  return baseSchema.refine(refinement, { message });
 }
 
 /**
@@ -321,7 +321,7 @@ export function createMultiRefinedSchema<T extends z.ZodTypeAny>(
   let schema: any = baseSchema;
 
   for (const { check, message } of refinements) {
-    schema = schema.refine(check, { error: message });
+    schema = schema.refine(check, { message });
   }
 
   return schema;

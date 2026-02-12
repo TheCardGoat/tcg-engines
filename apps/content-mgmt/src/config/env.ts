@@ -7,14 +7,16 @@ import { z } from "zod";
 const contentServerSchema = {
   // Database (own PostgreSQL instance)
   DATABASE_URL: z
-    .url({
-      error: "DATABASE_URL must be a valid PostgreSQL connection string",
+    .string({
+      message: "DATABASE_URL must be a valid PostgreSQL connection string",
     })
+    .url()
     .describe("PostgreSQL connection string for content database"),
 
   // Auth Service URL for JWKS verification
   AUTH_SERVICE_URL: z
-    .url({ error: "AUTH_SERVICE_URL must be a valid URL" })
+    .string({ message: "AUTH_SERVICE_URL must be a valid URL" })
+    .url()
     .optional()
     .default("http://localhost:3001")
     .describe("Auth service URL for JWT verification via JWKS"),
@@ -29,16 +31,12 @@ const contentServerSchema = {
       z
         .number()
         .int()
-        .min(1, { error: "PORT must be at least 1" })
-        .max(65535, { error: "PORT must be at most 65535" }),
+        .min(1, { message: "PORT must be at least 1" })
+        .max(65_535, { message: "PORT must be at most 65535" }),
     )
     .describe("Content service port"),
 
-  CORS_ORIGIN: z
-    .string()
-    .optional()
-    .default("*")
-    .describe("CORS origin for content service"),
+  CORS_ORIGIN: z.string().optional().default("*").describe("CORS origin for content service"),
 
   NODE_ENV: z
     .enum(["development", "production", "test"])
@@ -80,23 +78,21 @@ export type ContentEnv = z.infer<z.ZodObject<typeof contentServerSchema>>;
  * Validated environment object for Content Management Service
  */
 export const env = createEnv({
-  isServer: true,
-  server: contentServerSchema,
-  runtimeEnv: process.env,
   emptyStringAsUndefined: true,
+  isServer: true,
+  runtimeEnv: process.env,
+  server: contentServerSchema,
 });
 
 /**
  * Parse environment variables from a custom runtime environment
  */
-export function parseContentEnv(
-  runtimeEnv: Record<string, string | undefined>,
-): ContentEnv {
+export function parseContentEnv(runtimeEnv: Record<string, string | undefined>): ContentEnv {
   return createEnv({
-    isServer: true,
-    server: contentServerSchema,
-    runtimeEnv,
     emptyStringAsUndefined: true,
+    isServer: true,
+    runtimeEnv,
+    server: contentServerSchema,
   });
 }
 

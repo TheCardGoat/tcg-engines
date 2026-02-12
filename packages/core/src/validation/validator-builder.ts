@@ -74,7 +74,7 @@ interface ValidationRuleWithMetadata<T> {
  * }
  * ```
  */
-export class ValidatorBuilder<T extends Record<string, unknown>> {
+export class ValidatorBuilder<T extends object> {
   private rules: ValidationRuleWithMetadata<T>[] = [];
   private options: ValidatorBuilderOptions;
 
@@ -204,7 +204,7 @@ export class ValidatorBuilder<T extends Record<string, unknown>> {
    */
   build(): Validator<T> {
     const rules = [...this.rules];
-    const {abortEarly} = this.options;
+    const { abortEarly } = this.options;
 
     return {
       validate: (data: T): ValidationResult<T> => {
@@ -258,7 +258,7 @@ export class ValidatorBuilder<T extends Record<string, unknown>> {
  * );
  * ```
  */
-export function createValidator<T extends Record<string, unknown>>(
+export function createValidator<T extends object>(
   builderFn: (builder: ValidatorBuilder<T>) => ValidatorBuilder<T>,
   options?: ValidatorBuilderOptions,
 ): Validator<T> {
