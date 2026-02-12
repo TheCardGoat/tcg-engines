@@ -11,7 +11,6 @@
  */
 
 import type { CardId, PlayerId } from "@tcg/core";
-import type { Effect } from "@tcg/gundam-types/effects";
 import type { GundamGameState } from "../types";
 import {
   createEffectContext,
@@ -19,7 +18,7 @@ import {
   type EffectResult,
   executeEffect,
 } from "./effect-executor";
-import type { AbilityDefinition, Effect as EngineEffect } from "./effect-types";
+import type { AbilityDefinition, Effect } from "./effect-types";
 
 // ============================================================================
 // Ability Types

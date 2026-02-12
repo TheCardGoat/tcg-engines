@@ -37,6 +37,7 @@ import type {
   ActivateActionTiming,
   ActivateMainTiming,
   AttackTiming,
+  BaseEffectCardDefinition,
   BurstTiming,
   CardFilter,
   // Card Types
@@ -66,6 +67,7 @@ import type {
   MainTiming,
   ModifyStatsAction,
   MoveCardAction,
+  PropertyCostFilter,
   RestAction,
   SearchAction,
   StartOfTurnTiming,
@@ -78,6 +80,7 @@ import type {
   // Zones
   ZoneType,
 } from "@tcg/gundam-types/effects";
+import type { CostFilter } from "@tcg/gundam-types/targeting";
 
 // ============================================================================
 // RUNTIME TYPES FROM LOCAL MODULE
@@ -124,6 +127,11 @@ export type {
   ZoneType,
   CardType,
   Color,
+  BaseEffectCardDefinition,
+  LevelFilter,
+  PropertyCostFilter,
+  // Re-export from targeting
+  CostFilter,
   // Re-export runtime types from effect-runtime
   TemporaryModifier,
   EndOfTurnModifier,

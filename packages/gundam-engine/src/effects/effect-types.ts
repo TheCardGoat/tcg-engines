@@ -714,15 +714,15 @@ export type Cost =
 /**
  * Ability definition structure
  *
- * Uses the shared Effect type from @tcg/gundam-types/effects for consistency
- * across the codebase.
+ * Uses the engine's Effect type which is a union of simple effect shapes.
+ * This allows for easier creation of abilities in tests and card definitions.
  */
 export interface AbilityDefinition {
   readonly name?: string;
   readonly type: "triggered" | "activated" | "static";
   readonly trigger?: string;
   readonly cost?: Cost;
-  readonly effect: SharedEffect;
+  readonly effect: Effect;
   readonly description?: string;
 }
 

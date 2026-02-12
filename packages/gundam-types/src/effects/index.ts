@@ -41,27 +41,39 @@ export type * from "./effect-timing";
 
 // Keywords
 export type * from "./keywords";
-
-// Targeting System (includes LevelFilter, CostFilter, CardType, Color, CardFilter)
+// Export from targeting.ts for CardFilter and ZoneType
 export type {
   CardFilter,
+  PropertyCostFilter,
+  ZoneType,
+} from "./targeting";
+// Targeting System (includes LevelFilter, CardType, Color, CardFilter)
+// Export from targeting-types
+export type {
   CardType,
   Color,
+  LevelFilter,
   TargetCountRange,
   TargetFilter,
   TargetingSpec,
   TargetPropertyFilter,
   TargetStateFilter,
-  ZoneType,
-} from "./targeting";
+} from "./targeting-types";
 
 // ============================================================================
 // EFFECT DEFINITION
 // ============================================================================
 
+// Card Definitions (for targeting system)
+// NOTE: CommandCardDefinition and UnitCardDefinition are exported from cards/card-types
+// to avoid duplicate exports. Only export unique types here.
+export type {
+  BaseCardDefinition as EffectBaseCardDefinition,
+  BaseEffectCardDefinition,
+  PilotEffect,
+} from "./card-definitions";
 // Effect Definition
 export type * from "./effect-definition";
-
 // Effect narrowing types
 export type {
   ActivatedEffect,
