@@ -18,8 +18,8 @@ export const aladdinBarrelingThrough: CharacterCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "gain-lore",
         amount: 1,
+        type: "gain-lore",
       },
       id: "1tr-3",
       text: 'ONLY THE BOLD While there\'s a card under this character, your characters with Reckless gain "{E} — Gain 1 lore."',

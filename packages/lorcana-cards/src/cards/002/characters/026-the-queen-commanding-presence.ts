@@ -13,19 +13,18 @@ export const theQueenCommandingPresence: CharacterCard = {
     },
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "modify-stat",
-            stat: "strength",
-            modifier: -4,
-            target: "SELF",
             duration: "this-turn",
+            modifier: -4,
+            stat: "strength",
+            target: "SELF",
+            type: "modify-stat",
           },
           {
-            type: "modify-stat",
-            stat: "strength",
+            duration: "this-turn",
             modifier: 4,
+            stat: "strength",
             target: {
               selector: "chosen",
               count: 1,
@@ -33,17 +32,18 @@ export const theQueenCommandingPresence: CharacterCard = {
               zones: ["play"],
               cardTypes: ["character"],
             },
-            duration: "this-turn",
+            type: "modify-stat",
           },
         ],
+        type: "sequence",
       },
       id: "5hw-2",
       name: "WHO IS THE FAIREST?",
       text: "WHO IS THE FAIREST? Whenever this character quests, chosen opposing character gets -4 {S} this turn and chosen character gets +4 {S} this turn.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

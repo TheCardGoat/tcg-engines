@@ -10,18 +10,18 @@ export const annaIceBreaker: CharacterCard = {
     },
     {
       effect: {
-        type: "restriction",
+        duration: "until-start-of-next-turn",
         restriction: "cant-ready",
         target: "SELF",
-        duration: "until-start-of-next-turn",
+        type: "restriction",
       },
       id: "pj2-2",
       name: "WINTER AMBUSH",
       text: "WINTER AMBUSH When you play this character, chosen opposing character can't ready at the start of their next turn.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

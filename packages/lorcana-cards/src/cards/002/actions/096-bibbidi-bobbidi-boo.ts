@@ -4,14 +4,14 @@ export const bibbidiBobbidiBoo: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "return-to-hand",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "return-to-hand",
       },
       id: "1iv-1",
       text: "Return chosen character of yours to your hand to play another character with the same cost or less for free.",

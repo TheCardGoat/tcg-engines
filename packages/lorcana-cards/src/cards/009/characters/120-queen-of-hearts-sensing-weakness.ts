@@ -13,21 +13,21 @@ export const queenOfHeartsSensingWeakness: CharacterCard = {
     },
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "draw",
           amount: 1,
           target: "CONTROLLER",
+          type: "draw",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "1je-2",
       name: "LET THE GAME BEGIN",
       text: "LET THE GAME BEGIN Whenever one of your characters challenges another character, you may draw a card.",
       trigger: {
         event: "banish",
-        timing: "whenever",
         on: "YOUR_OTHER_CHARACTERS",
+        timing: "whenever",
       },
       type: "triggered",
     },

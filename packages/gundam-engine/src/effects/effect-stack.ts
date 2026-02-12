@@ -39,8 +39,8 @@ import type { EffectInstance, EffectStackState } from "./effect-runtime";
  */
 export function createEffectStack(): EffectStackState {
   return {
-    stack: [],
     nextInstanceId: 0,
+    stack: [],
   };
 }
 
@@ -76,11 +76,11 @@ export function enqueueEffect(
   const instanceId = `effect-${draft.gundam.effectStack.nextInstanceId++}`;
 
   const instance: EffectInstance = {
+    controllerId,
+    currentActionIndex: 0,
+    effectRef,
     instanceId,
     sourceCardId,
-    controllerId,
-    effectRef,
-    currentActionIndex: 0,
     state: "pending",
   };
 
@@ -116,19 +116,17 @@ export function enqueueEffect(
  */
 export function enqueueBatchEffects(
   draft: GundamGameState,
-  effects: Array<{
+  effects: {
     sourceCardId: CardId;
     effectRef: { effectId: string };
     controllerId: PlayerId;
-  }>,
+  }[],
   order: number[],
 ): string[] {
   // Validate order indices
   for (const index of order) {
     if (index < 0 || index >= effects.length) {
-      throw new Error(
-        `Invalid order index ${index}: must be between 0 and ${effects.length - 1}`,
-      );
+      throw new Error(`Invalid order index ${index}: must be between 0 and ${effects.length - 1}`);
     }
   }
 
@@ -253,10 +251,7 @@ export function getEffectStackCount(state: GundamGameState): number {
  * markEffectResolving(draft, "effect-0");
  * ```
  */
-export function markEffectResolving(
-  draft: GundamGameState,
-  instanceId: string,
-): void {
+export function markEffectResolving(draft: GundamGameState, instanceId: string): void {
   const instance = findEffectInstance(draft, instanceId);
   if (instance) {
     (instance as EffectInstance & { state: "resolving" }).state = "resolving";
@@ -276,10 +271,7 @@ export function markEffectResolving(
  * markEffectResolved(draft, "effect-0");
  * ```
  */
-export function markEffectResolved(
-  draft: GundamGameState,
-  instanceId: string,
-): void {
+export function markEffectResolved(draft: GundamGameState, instanceId: string): void {
   const instance = findEffectInstance(draft, instanceId);
   if (instance) {
     (instance as EffectInstance & { state: "resolved" }).state = "resolved";
@@ -300,10 +292,7 @@ export function markEffectResolved(
  * markEffectFizzled(draft, "effect-0");
  * ```
  */
-export function markEffectFizzled(
-  draft: GundamGameState,
-  instanceId: string,
-): void {
+export function markEffectFizzled(draft: GundamGameState, instanceId: string): void {
   const instance = findEffectInstance(draft, instanceId);
   if (instance) {
     (instance as EffectInstance & { state: "fizzled" }).state = "fizzled";
@@ -336,9 +325,7 @@ export function findEffectInstance(
   state: GundamGameState,
   instanceId: string,
 ): EffectInstance | undefined {
-  return state.gundam.effectStack.stack.find(
-    (effect) => effect.instanceId === instanceId,
-  );
+  return state.gundam.effectStack.stack.find((effect) => effect.instanceId === instanceId);
 }
 
 /**

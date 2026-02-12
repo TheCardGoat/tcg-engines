@@ -11,24 +11,24 @@ export const gastonFrightfulBully: CharacterCard = {
     },
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "there's a card under him",
+          type: "if",
         },
         then: {
-          type: "restriction",
           restriction: "cant-challenge",
           target: "SELF",
+          type: "restriction",
         },
+        type: "conditional",
       },
       id: "14y-2",
       name: "TOP THAT!",
       text: "TOP THAT! Whenever this character quests, if there's a card under him, chosen opposing character can't challenge and must quest if able during their next turn.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

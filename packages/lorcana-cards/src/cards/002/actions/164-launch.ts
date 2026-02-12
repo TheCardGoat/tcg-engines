@@ -4,15 +4,15 @@ export const launch: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "deal-damage",
         amount: 5,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "deal-damage",
       },
       id: "1wz-1",
       text: "Banish chosen item of yours to deal 5 damage to chosen character.",

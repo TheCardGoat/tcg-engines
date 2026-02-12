@@ -4,9 +4,8 @@ export const petePirateScoundrel: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "banish",
           target: {
             selector: "chosen",
             count: 1,
@@ -14,19 +13,20 @@ export const petePirateScoundrel: CharacterCard = {
             zones: ["play"],
             cardTypes: ["item"],
           },
+          type: "banish",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "1o3-1",
       name: "PILFER AND PLUNDER",
       text: "PILFER AND PLUNDER Whenever you play an action that isn't a song, you may banish chosen item.",
       trigger: {
         event: "play",
-        timing: "whenever",
         on: {
-          controller: "you",
           cardType: "action",
+          controller: "you",
         },
+        timing: "whenever",
       },
       type: "triggered",
     },

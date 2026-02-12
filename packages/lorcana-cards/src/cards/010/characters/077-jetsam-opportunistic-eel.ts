@@ -4,23 +4,23 @@ export const jetsamOpportunisticEel: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "deal-damage",
         amount: 3,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "deal-damage",
       },
       id: "1vu-1",
       name: "AMBUSH FROM THE DEEP",
       text: "AMBUSH FROM THE DEEP When you play this character, deal 3 damage to chosen opposing damaged character.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

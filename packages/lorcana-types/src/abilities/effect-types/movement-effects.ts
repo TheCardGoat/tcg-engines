@@ -200,7 +200,7 @@ export interface MoveCostReductionEffect {
  */
 export interface GrantAbilitiesWhileHereEffect {
   type: "grant-abilities-while-here";
-  abilities: Array<
+  abilities: (
     | { type: "keyword"; keyword: string; value?: number }
     | {
         type: "activated";
@@ -212,5 +212,5 @@ export interface GrantAbilitiesWhileHereEffect {
           [key: string]: unknown;
         };
       }
-  >;
+  )[];
 }

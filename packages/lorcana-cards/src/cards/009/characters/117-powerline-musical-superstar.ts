@@ -4,17 +4,17 @@ export const powerlineMusicalSuperstar: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you've played a song this turn",
+          type: "if",
         },
         then: {
-          type: "gain-keyword",
+          duration: "this-turn",
           keyword: "Rush",
           target: "SELF",
-          duration: "this-turn",
+          type: "gain-keyword",
         },
+        type: "conditional",
       },
       id: "yez-1",
       text: "ELECTRIC MOVE If you've played a song this turn, this character gains Rush this turn.",

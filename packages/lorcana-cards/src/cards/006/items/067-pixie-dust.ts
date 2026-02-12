@@ -4,15 +4,15 @@ export const pixieDust: ItemCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Challenger",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "gain-keyword",
         value: 2,
       },
       id: "100-1",

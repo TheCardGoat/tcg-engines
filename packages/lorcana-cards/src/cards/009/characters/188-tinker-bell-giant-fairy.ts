@@ -13,31 +13,30 @@ export const tinkerBellGiantFairy: CharacterCard = {
     },
     {
       effect: {
-        type: "deal-damage",
         amount: 1,
         target: {
-          selector: "all",
+          cardTypes: ["character"],
           count: "all",
           owner: "opponent",
+          selector: "all",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "deal-damage",
       },
       id: "pf8-2",
       name: "ROCK THE BOAT",
       text: "ROCK THE BOAT When you play this character, deal 1 damage to each opposing character.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "deal-damage",
           amount: 2,
           target: {
             selector: "chosen",
@@ -46,16 +45,17 @@ export const tinkerBellGiantFairy: CharacterCard = {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "deal-damage",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "pf8-3",
       name: "PUNY PIRATE!",
       text: "PUNY PIRATE! During your turn, whenever this character banishes another character in a challenge, you may deal 2 damage to chosen opposing character.",
       trigger: {
         event: "banish",
-        timing: "whenever",
         on: "OPPONENT_CHARACTERS",
+        timing: "whenever",
       },
       type: "triggered",
     },

@@ -5,15 +5,15 @@ export const potionOfMalice: ItemCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "put-damage",
         amount: 1,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "put-damage",
       },
       id: "ifu-1",
       text: "SUPPRESSED ANGER {E}, 1 {I} — Put 1 damage counter on chosen character.",
@@ -21,9 +21,9 @@ export const potionOfMalice: ItemCard = {
     },
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Reckless",
         target: "CHOSEN_CHARACTER",
+        type: "gain-keyword",
       },
       id: "ifu-2",
       text: "MINDLESS RAGE {E}, Banish this item – Each opposing damaged character gains Reckless until the start of your next turn.",

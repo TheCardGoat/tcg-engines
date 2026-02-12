@@ -4,19 +4,19 @@ export const crikeeLuckyCricket: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
-        modifier: 3,
-        target: "YOUR_CHARACTERS",
         duration: "this-turn",
+        modifier: 3,
+        stat: "strength",
+        target: "YOUR_CHARACTERS",
+        type: "modify-stat",
       },
       id: "dzo-1",
       name: "SPREADING GOOD FORTUNE",
       text: "SPREADING GOOD FORTUNE When you play this character, your other characters get +3 {S} this turn.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

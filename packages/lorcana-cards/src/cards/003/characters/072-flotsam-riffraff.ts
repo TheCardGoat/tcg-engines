@@ -4,10 +4,10 @@ export const flotsamRiffraff: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: 3,
+        stat: "strength",
         target: "YOUR_CHARACTERS",
+        type: "modify-stat",
       },
       id: "c4r-1",
       text: "EERIE PAIR Your characters named Jetsam get +3 {S}.",

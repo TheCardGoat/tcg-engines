@@ -4,10 +4,10 @@ export const captainHookForcefulDuelist: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: 2,
+        stat: "strength",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "uk5-1",
       text: "**Challenger** +2 (_While challenging, this character get +2 {S}._)",

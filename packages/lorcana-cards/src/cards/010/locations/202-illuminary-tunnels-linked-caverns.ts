@@ -7,13 +7,13 @@ export const illuminaryTunnelsLinkedCaverns: LocationCard = {
         type: "has-character-here",
       },
       effect: {
-        type: "modify-stat",
-        stat: "lore",
         modifier: {
-          type: "locations-in-play",
           controller: "you",
+          type: "locations-in-play",
         },
+        stat: "lore",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "1ij-1",
       name: "SUBTERRANEAN NETWORK",
@@ -25,9 +25,9 @@ export const illuminaryTunnelsLinkedCaverns: LocationCard = {
         type: "has-character-here",
       },
       effect: {
-        type: "cost-reduction",
         amount: 0,
         cardType: "location",
+        type: "cost-reduction",
       },
       id: "1ij-2",
       name: "LOCUS",

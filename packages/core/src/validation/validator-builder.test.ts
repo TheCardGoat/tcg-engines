@@ -288,7 +288,7 @@ describe("ValidatorBuilder", () => {
         .build();
 
       const validResult = validator.validate({
-        metadata: { version: 1, category: "creature" },
+        metadata: { category: "creature", version: 1 },
         name: "Dragon",
       });
       expect(validResult.success).toBe(true);

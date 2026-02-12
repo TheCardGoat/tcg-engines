@@ -5,13 +5,13 @@ export const princeJohnGoldLover: CharacterCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "play-card",
-        from: "hand",
         cost: "free",
         costRestriction: {
           comparison: "less-or-equal",
           value: 5,
         },
+        from: "hand",
+        type: "play-card",
       },
       id: "1b5-1",
       text: "BEAUTIFUL, LOVELY TAXES {E} — Play an item from your hand or discard with cost 5 or less for free, exerted.",

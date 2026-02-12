@@ -16,9 +16,9 @@ export const peterPansShadowNotSewnOn: CharacterCard = {
     },
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Evasive",
         target: "YOUR_CHARACTERS",
+        type: "gain-keyword",
       },
       id: "1n6-3",
       text: "TIPTOE Your other characters with Rush gain Evasive.",

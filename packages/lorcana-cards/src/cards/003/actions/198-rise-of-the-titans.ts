@@ -4,14 +4,14 @@ export const riseOfTheTitans: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "banish",
         target: {
-          selector: "chosen",
+          cardTypes: ["location"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["location"],
         },
+        type: "banish",
       },
       id: "68m-1",
       text: "Banish chosen location or item.",

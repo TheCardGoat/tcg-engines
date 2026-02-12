@@ -4,9 +4,9 @@ export const tobyTurtleWaryFriend: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Resist",
         target: "SELF",
+        type: "gain-keyword",
         value: 1,
       },
       id: "1le-1",

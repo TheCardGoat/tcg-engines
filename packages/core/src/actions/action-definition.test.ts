@@ -11,8 +11,8 @@ describe("Action Definition Types", () => {
   describe("ActionTiming", () => {
     it("should define timing constraints with segments", () => {
       const timing: ActionTiming = {
-        segments: ["gameplay"],
         phases: ["mainPhase"],
+        segments: ["gameplay"],
       };
 
       expect(timing.segments).toEqual(["gameplay"]);
@@ -20,7 +20,9 @@ describe("Action Definition Types", () => {
     });
 
     it("should support custom timing predicates", () => {
-      type GameState = { turnCount: number };
+      interface GameState {
+        turnCount: number;
+      }
       const timing: ActionTiming<GameState> = {
         custom: (state) => state.turnCount > 5,
       };
@@ -31,8 +33,8 @@ describe("Action Definition Types", () => {
 
     it("should support multiple phases and steps", () => {
       const timing: ActionTiming = {
-        segments: ["gameplay"],
         phases: ["mainPhase", "combatPhase"],
+        segments: ["gameplay"],
         steps: ["attackStep", "blockStep"],
       };
 
@@ -45,9 +47,9 @@ describe("Action Definition Types", () => {
     it("should define metadata for categorization", () => {
       const metadata: ActionMetadata = {
         category: "card-play",
+        priorityHint: 10,
         subcategory: "creature",
         tags: ["costs-resources", "requires-target"],
-        priorityHint: 10,
       };
 
       expect(metadata.category).toBe("card-play");
@@ -57,8 +59,8 @@ describe("Action Definition Types", () => {
 
     it("should support hidden actions", () => {
       const metadata: ActionMetadata = {
-        hidden: true,
         category: "internal",
+        hidden: true,
       };
 
       expect(metadata.hidden).toBe(true);
@@ -78,12 +80,12 @@ describe("Action Definition Types", () => {
 
     it("should define action with timing constraints", () => {
       const action: ActionDefinition = {
+        description: "Play a creature card from your hand",
         id: "play-creature",
         name: "Play Creature",
-        description: "Play a creature card from your hand",
         timing: {
-          segments: ["gameplay"],
           phases: ["mainPhase"],
+          segments: ["gameplay"],
         },
       };
 
@@ -97,8 +99,8 @@ describe("Action Definition Types", () => {
         name: "Lightning Bolt",
         targets: [
           {
-            filter: { type: "creature" },
             count: 1,
+            filter: { type: "creature" },
           },
         ],
       };
@@ -110,12 +112,12 @@ describe("Action Definition Types", () => {
     it("should define action with metadata", () => {
       const action: ActionDefinition = {
         id: "attack",
-        name: "Attack",
         metadata: {
           category: "combat",
-          tags: ["combat-action"],
           priorityHint: 8,
+          tags: ["combat-action"],
         },
+        name: "Attack",
       };
 
       expect(action.metadata?.category).toBe("combat");
@@ -123,7 +125,10 @@ describe("Action Definition Types", () => {
     });
 
     it("should support game-specific state types", () => {
-      type LorcanaState = { turnPhase: string; inkPool: number };
+      interface LorcanaState {
+        turnPhase: string;
+        inkPool: number;
+      }
 
       const action: ActionDefinition<LorcanaState> = {
         id: "quest",
@@ -133,12 +138,8 @@ describe("Action Definition Types", () => {
         },
       };
 
-      expect(action.timing?.custom?.({ turnPhase: "main", inkPool: 3 })).toBe(
-        true,
-      );
-      expect(action.timing?.custom?.({ turnPhase: "draw", inkPool: 3 })).toBe(
-        false,
-      );
+      expect(action.timing?.custom?.({ inkPool: 3, turnPhase: "main" })).toBe(true);
+      expect(action.timing?.custom?.({ inkPool: 3, turnPhase: "draw" })).toBe(false);
     });
   });
 
@@ -170,11 +171,11 @@ describe("Action Definition Types", () => {
       const player1 = createPlayerId("player1");
       const instance: ActionInstance = {
         actionId: "choose-option",
-        playerId: player1,
         params: {
-          optionIndex: 2,
           cardId: "card1",
+          optionIndex: 2,
         },
+        playerId: player1,
         timestamp: Date.now(),
       };
 

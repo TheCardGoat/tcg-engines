@@ -4,9 +4,9 @@ export const tritonYoungPrince: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Evasive",
         target: "SELF",
+        type: "gain-keyword",
       },
       id: "si2-1",
       text: "SUPERIOR SWIMMER During your turn, this character gains Evasive.",
@@ -14,20 +14,20 @@ export const tritonYoungPrince: CharacterCard = {
     },
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "put-into-inkwell",
-          source: "hand",
-          target: "CONTROLLER",
           exerted: true,
           facedown: true,
+          source: "hand",
+          target: "CONTROLLER",
+          type: "put-into-inkwell",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "si2-2",
       name: "KEEPER OF ATLANTICA",
       text: "KEEPER OF ATLANTICA Whenever one of your locations is banished, you may put that card into your inkwell facedown and exerted.",
-      trigger: { event: "play", timing: "when", on: "SELF" },
+      trigger: { event: "play", on: "SELF", timing: "when" },
       type: "triggered",
     },
   ],

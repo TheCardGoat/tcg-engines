@@ -4,21 +4,21 @@ export const johnSilverGreedyTreasureSeeker: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "gain-keyword",
             keyword: "Resist",
             target: "SELF",
+            type: "gain-keyword",
             value: 1,
           },
           {
-            type: "modify-stat",
-            stat: "lore",
             modifier: 1,
+            stat: "lore",
             target: "CHOSEN_CHARACTER",
+            type: "modify-stat",
           },
         ],
+        type: "sequence",
       },
       id: "jy5-1",
       text: "CHART YOUR OWN COURSE For each location you have in play, this character gains Resist +1 and gets +1 {L}.",

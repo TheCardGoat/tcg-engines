@@ -5,16 +5,16 @@ export const rapunzelSunshine: CharacterCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "remove-damage",
         amount: 2,
-        upTo: true,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "remove-damage",
+        upTo: true,
       },
       id: "zai-1",
       text: "MAGIC HAIR {E} — Remove up to 2 damage from chosen character.",

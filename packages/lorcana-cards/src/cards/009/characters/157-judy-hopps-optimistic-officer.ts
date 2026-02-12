@@ -4,10 +4,9 @@ export const judyHoppsOptimisticOfficer: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "optional",
+            chooser: "CONTROLLER",
             effect: {
               type: "banish",
               target: {
@@ -18,22 +17,23 @@ export const judyHoppsOptimisticOfficer: CharacterCard = {
                 cardTypes: ["item"],
               },
             },
-            chooser: "CONTROLLER",
+            type: "optional",
           },
           {
-            type: "draw",
             amount: 1,
             target: "CONTROLLER",
+            type: "draw",
           },
         ],
+        type: "sequence",
       },
       id: "142-1",
       name: "DON'T CALL ME CUTE",
       text: "DON'T CALL ME CUTE When you play this character, you may banish chosen item. If you do, its player draws a card.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

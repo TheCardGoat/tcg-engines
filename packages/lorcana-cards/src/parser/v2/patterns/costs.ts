@@ -25,8 +25,7 @@ export const EXERT_AND_INK_PATTERN = /^\{E\},\s*(\{d\}|\d+) \{I\}$/;
  * Pattern for combined exert and banish cost: {E}, Banish this X
  * Captures: what to banish (item or character)
  */
-export const EXERT_AND_BANISH_PATTERN =
-  /^\{E\},\s*Banish this (item|character)$/;
+export const EXERT_AND_BANISH_PATTERN = /^\{E\},\s*Banish this (item|character)$/;
 
 /**
  * Pattern for banish self cost
@@ -65,10 +64,10 @@ export const COST_PATTERNS = {
  */
 export function hasActivatedAbilityCost(text: string): boolean {
   // Must start with a cost pattern and contain separator
-  const hasExert = text.startsWith('{E}');
+  const hasExert = text.startsWith("{E}");
   const hasInk = /^(\{d\}|\d+) \{I\}/.test(text);
-  const hasBanish = text.startsWith('Banish this');
-  const hasDiscard = text.startsWith('Choose and discard');
+  const hasBanish = text.startsWith("Banish this");
+  const hasDiscard = text.startsWith("Choose and discard");
 
   const hasSeparator = COST_SEPARATOR_PATTERN.test(text);
 

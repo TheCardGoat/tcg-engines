@@ -1,22 +1,15 @@
-import type {
-  ActionCard,
-  CharacterCard,
-  ItemCard,
-  LocationCard,
-} from "@tcg/lorcana-types";
+import type { ActionCard, CharacterCard, ItemCard, LocationCard } from "@tcg/lorcana-types";
 
-let allCardsCache:
-  | (CharacterCard | ActionCard | ItemCard | LocationCard)[]
-  | null = null;
-let allCardsByIdCache: Record<
-  string,
-  CharacterCard | ActionCard | ItemCard | LocationCard
-> | null = null;
+let allCardsCache: (CharacterCard | ActionCard | ItemCard | LocationCard)[] | null = null;
+let allCardsByIdCache: Record<string, CharacterCard | ActionCard | ItemCard | LocationCard> | null =
+  null;
 
 export async function getAllCards(): Promise<
   (CharacterCard | ActionCard | ItemCard | LocationCard)[]
 > {
-  if (allCardsCache) {return allCardsCache;}
+  if (allCardsCache) {
+    return allCardsCache;
+  }
   const { allCards } = await import("./cards");
   allCardsCache = allCards;
   return allCardsCache;
@@ -25,7 +18,9 @@ export async function getAllCards(): Promise<
 export async function getAllCardsById(): Promise<
   Record<string, CharacterCard | ActionCard | ItemCard | LocationCard>
 > {
-  if (allCardsByIdCache) {return allCardsByIdCache;}
+  if (allCardsByIdCache) {
+    return allCardsByIdCache;
+  }
   const { allCardsById } = await import("./cards");
   allCardsByIdCache = allCardsById;
   return allCardsByIdCache;

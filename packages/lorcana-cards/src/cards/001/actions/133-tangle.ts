@@ -4,9 +4,9 @@ export const tangle: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "lose-lore",
         amount: 1,
         target: "EACH_OPPONENT",
+        type: "lose-lore",
       },
       id: "1ly-1",
       text: "Each opponent loses 1 lore.",

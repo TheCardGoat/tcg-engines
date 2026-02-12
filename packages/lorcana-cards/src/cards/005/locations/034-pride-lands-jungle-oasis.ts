@@ -4,9 +4,8 @@ export const prideLandsJungleOasis: LocationCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "banish",
           target: {
             selector: "self",
             count: 1,
@@ -14,8 +13,9 @@ export const prideLandsJungleOasis: LocationCard = {
             zones: ["play"],
             cardTypes: ["location"],
           },
+          type: "banish",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "5wg-1",
       text: "OUR HUMBLE HOME While you have 3 or more characters here, you may banish this location to play a character from your discard for free.",

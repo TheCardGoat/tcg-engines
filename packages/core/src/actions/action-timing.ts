@@ -1,15 +1,8 @@
 import type { CardDefinition } from "../cards/card-definition";
 import type { CardInstance } from "../cards/card-instance";
 import type { CardRegistry } from "../operations/card-registry";
-import {
-  type TargetContext,
-  validateTargetSelection,
-} from "../targeting/target-validation";
-import type {
-  ActionDefinition,
-  ActionInstance,
-  ActionValidationResult,
-} from "./action-definition";
+import { type TargetContext, validateTargetSelection } from "../targeting/target-validation";
+import type { ActionDefinition, ActionInstance, ActionValidationResult } from "./action-definition";
 
 /**
  * Game State Context for Timing Validation
@@ -18,7 +11,7 @@ import type {
  * Games using core-engine will have their full state here, but we only
  * require the flow control properties.
  */
-export type TimingContext = {
+export interface TimingContext {
   /** Current segment in the game flow */
   currentSegment?: string | null;
 
@@ -27,7 +20,7 @@ export type TimingContext = {
 
   /** Current step within the phase */
   currentStep?: string | null;
-};
+}
 
 /**
  * Validate Action Timing
@@ -50,7 +43,7 @@ export function validateActionTiming<TGameState extends TimingContext>(
   timingContext: TimingContext,
   gameState?: TGameState,
 ): boolean {
-  const timing = action.timing;
+  const { timing } = action;
 
   // No timing restrictions means action is always valid (timing-wise)
   if (!timing) {
@@ -59,36 +52,21 @@ export function validateActionTiming<TGameState extends TimingContext>(
 
   // Check segment restrictions
   if (timing.segments && timing.segments.length > 0) {
-    if (
-      !(
-        timingContext.currentSegment &&
-        timing.segments.includes(timingContext.currentSegment)
-      )
-    ) {
+    if (!(timingContext.currentSegment && timing.segments.includes(timingContext.currentSegment))) {
       return false;
     }
   }
 
   // Check phase restrictions
   if (timing.phases && timing.phases.length > 0) {
-    if (
-      !(
-        timingContext.currentPhase &&
-        timing.phases.includes(timingContext.currentPhase)
-      )
-    ) {
+    if (!(timingContext.currentPhase && timing.phases.includes(timingContext.currentPhase))) {
       return false;
     }
   }
 
   // Check step restrictions
   if (timing.steps && timing.steps.length > 0) {
-    if (
-      !(
-        timingContext.currentStep &&
-        timing.steps.includes(timingContext.currentStep)
-      )
-    ) {
+    if (!(timingContext.currentStep && timing.steps.includes(timingContext.currentStep))) {
       return false;
     }
   }
@@ -132,9 +110,9 @@ export function validateAction<
   const timingValid = validateActionTiming(definition, timingContext, state);
   if (!timingValid) {
     return {
-      valid: false,
       error: "Action cannot be performed at this time",
       reason: "timing",
+      valid: false,
     };
   }
 
@@ -142,10 +120,10 @@ export function validateAction<
   if (definition.targets && definition.targets.length > 0) {
     if (!instance.targets || instance.targets.length === 0) {
       return {
-        valid: false,
         error: "Action requires targets but none were provided",
-        reason: "targets",
         invalidTargets: [],
+        reason: "targets",
+        valid: false,
       };
     }
 
@@ -161,31 +139,31 @@ export function validateAction<
 
       if (targetCards.length !== selectedTargets.length) {
         return {
-          valid: false,
           error: `Some target cards at index ${i} do not exist in game state`,
-          reason: "targets",
           invalidTargets: [i],
+          reason: "targets",
+          valid: false,
         };
       }
 
       // Create minimal target context for validation
       // Note: We don't have a source card concept in actions, so we use the player
       const context: Omit<TargetContext<TCustomState>, "previousTargets"> = {
+        controller: instance.playerId,
         sourceCard: {
+          controller: instance.playerId,
           id: "" as any,
           owner: instance.playerId,
-          controller: instance.playerId,
         } as any,
-        controller: instance.playerId,
       };
 
       // Validate target selection using @tcg/core's targeting system
       if (!targetDef) {
         return {
-          valid: false,
           error: `Target definition at index ${i} is undefined`,
-          reason: "targets",
           invalidTargets: [i],
+          reason: "targets",
+          valid: false,
         };
       }
 
@@ -199,10 +177,10 @@ export function validateAction<
 
       if (!validationResult.valid) {
         return {
-          valid: false,
           error: `Invalid targets at index ${i}: ${validationResult.error}`,
-          reason: "targets",
           invalidTargets: [i],
+          reason: "targets",
+          valid: false,
         };
       }
     }
@@ -230,9 +208,7 @@ export function getAvailableActions<TGameState extends TimingContext>(
   timingContext: TimingContext,
   gameState?: TGameState,
 ): ActionDefinition<TGameState>[] {
-  return actions.filter((action) =>
-    validateActionTiming(action, timingContext, gameState),
-  );
+  return actions.filter((action) => validateActionTiming(action, timingContext, gameState));
 }
 
 /**
@@ -251,7 +227,5 @@ export function hasAvailableActions<TGameState extends TimingContext>(
   timingContext: TimingContext,
   gameState?: TGameState,
 ): boolean {
-  return actions.some((action) =>
-    validateActionTiming(action, timingContext, gameState),
-  );
+  return actions.some((action) => validateActionTiming(action, timingContext, gameState));
 }

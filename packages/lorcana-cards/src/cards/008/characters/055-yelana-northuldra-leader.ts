@@ -4,25 +4,25 @@ export const yelanaNorthuldraLeader: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
+        duration: "this-turn",
         keyword: "Challenger",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "gain-keyword",
         value: 2,
-        duration: "this-turn",
       },
       id: "17l-1",
       name: "WE ONLY TRUST NATURE",
       text: "WE ONLY TRUST NATURE When you play this character, chosen character gains Challenger +2 this turn.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

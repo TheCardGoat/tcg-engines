@@ -62,4 +62,4 @@ export { passMove } from "./pass";
 export { playResourceMove } from "./play-resource";
 
 // TODO: Implement concede move
-// export { concedeMove } from "./concede";
+// Export { concedeMove } from "./concede";

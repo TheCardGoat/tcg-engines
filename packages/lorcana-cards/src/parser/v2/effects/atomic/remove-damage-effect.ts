@@ -30,10 +30,7 @@ function convertToCharacterTarget(simpleTarget: {
   const cardType = cardTypeMap[type.toLowerCase()] || type;
 
   // Map modifier to selector and owner
-  const modifierMap: Record<
-    string,
-    { selector: string; owner: string; count: number | "all" }
-  > = {
+  const modifierMap: Record<string, { selector: string; owner: string; count: number | "all" }> = {
     all: { count: "all", owner: "any", selector: "all" },
     an: { count: 1, owner: "any", selector: "chosen" },
     another: { count: 1, owner: "any", selector: "chosen" },
@@ -81,9 +78,7 @@ function parseFromCst(
   logger.debug("Attempting to parse remove damage effect from CST", { ctx });
 
   if (!(ctx && ctx.NumberToken) || ctx.NumberToken.length === 0) {
-    logger.debug(
-      "Remove damage effect CST missing NumberToken or invalid context",
-    );
+    logger.debug("Remove damage effect CST missing NumberToken or invalid context");
     return null;
   }
 
@@ -112,14 +107,12 @@ function parseFromText(text: string): RemoveDamageEffect | null {
   logger.debug("Attempting to parse remove damage effect from text", { text });
 
   // Try "remove up to N damage from X" pattern (with {d} placeholder support)
-  const removeUpToPattern =
-    /remove\s+up\s+to\s+(\d+|\{d\})\s+damage\s+from\s+(.+)/i;
+  const removeUpToPattern = /remove\s+up\s+to\s+(\d+|\{d\})\s+damage\s+from\s+(.+)/i;
   const upToMatch = text.match(removeUpToPattern);
 
   if (upToMatch) {
     const amountValue = upToMatch[1];
-    const amount =
-      amountValue === "{d}" ? -1 : Number.parseInt(amountValue, 10);
+    const amount = amountValue === "{d}" ? -1 : Number.parseInt(amountValue, 10);
 
     if (Number.isNaN(amount)) {
       logger.warn("Failed to extract number from remove damage effect text", {
@@ -130,9 +123,7 @@ function parseFromText(text: string): RemoveDamageEffect | null {
 
     const targetText = upToMatch[2].trim();
     const simpleTarget = parseTargetFromText(targetText);
-    const target = simpleTarget
-      ? convertToCharacterTarget(simpleTarget)
-      : "CHOSEN_CHARACTER";
+    const target = simpleTarget ? convertToCharacterTarget(simpleTarget) : "CHOSEN_CHARACTER";
 
     logger.info("Parsed remove damage effect from text (up to pattern)", {
       amount,
@@ -170,9 +161,7 @@ function parseFromText(text: string): RemoveDamageEffect | null {
 
   const targetText = match[2].trim();
   const simpleTarget = parseTargetFromText(targetText);
-  const target = simpleTarget
-    ? convertToCharacterTarget(simpleTarget)
-    : "CHOSEN_CHARACTER";
+  const target = simpleTarget ? convertToCharacterTarget(simpleTarget) : "CHOSEN_CHARACTER";
 
   logger.info("Parsed remove damage effect from text", { amount, target });
 

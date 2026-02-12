@@ -4,36 +4,36 @@ export const recoveredPage: ItemCard = {
   abilities: [
     {
       effect: {
-        type: "look-at-cards",
         amount: 1,
         source: "deck",
         target: "CONTROLLER",
+        type: "look-at-cards",
       },
       id: "1xi-1",
       name: "WHAT IS TO COME",
       text: "WHAT IS TO COME When you play this item, look at the top 4 cards of your deck. You may reveal a character card and put it into your hand. Put the rest on the bottom of your deck in any order.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },
     {
       cost: {
-        ink: 0,
         banishSelf: true,
+        ink: 0,
       },
       effect: {
-        type: "put-under",
         source: "top-of-deck",
+        type: "put-under",
         under: {
-          selector: "chosen",
           count: 1,
           filter: [
             { type: "owner", owner: "you" },
             { type: "has-keyword", keyword: "Boost" },
           ],
+          selector: "chosen",
         },
       },
       id: "1xi-2",

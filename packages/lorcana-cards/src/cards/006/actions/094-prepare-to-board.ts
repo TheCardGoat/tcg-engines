@@ -4,17 +4,17 @@ export const prepareToBoard: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "a Pirate character is chosen",
+          type: "if",
         },
         then: {
-          type: "modify-stat",
-          stat: "strength",
           modifier: 3,
+          stat: "strength",
           target: "CHOSEN_CHARACTER",
+          type: "modify-stat",
         },
+        type: "conditional",
       },
       id: "lql-1",
       text: "Chosen character gets +2 {S} this turn. If a Pirate character is chosen, they get +3 {S} instead.",

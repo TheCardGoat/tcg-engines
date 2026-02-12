@@ -126,10 +126,7 @@ function parseFromText(text: string): ChoiceEffect | null {
   // 3. Semicolon separator (without "or")
   if (options.length < 2) {
     // Check for pattern like: "X; Y; Z" (semicolon without "or")
-    if (
-      normalizedText.includes(";") &&
-      !normalizedText.toLowerCase().includes(" or ")
-    ) {
+    if (normalizedText.includes(";") && !normalizedText.toLowerCase().includes(" or ")) {
       options = normalizedText
         .split(";")
         .map((s) => s.trim())
@@ -148,10 +145,7 @@ function parseFromText(text: string): ChoiceEffect | null {
       .split(".")
       .map((s) => s.trim())
       .filter((s) => s.length > 0);
-    if (
-      periodParts.length >= 2 &&
-      !normalizedText.toLowerCase().includes(" or ")
-    ) {
+    if (periodParts.length >= 2 && !normalizedText.toLowerCase().includes(" or ")) {
       options = periodParts;
       logger.debug("Split choice options on periods", {
         optionCount: options.length,

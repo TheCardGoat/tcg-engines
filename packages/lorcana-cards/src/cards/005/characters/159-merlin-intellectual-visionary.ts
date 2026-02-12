@@ -13,24 +13,24 @@ export const merlinIntellectualVisionary: CharacterCard = {
     },
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you used Shift to play him",
+          type: "if",
         },
         then: {
-          type: "search-deck",
           putInto: "hand",
           shuffle: true,
+          type: "search-deck",
         },
+        type: "conditional",
       },
       id: "1g2-2",
       name: "OVERDEVELOPED BRAIN",
       text: "OVERDEVELOPED BRAIN When you play this character, if you used Shift to play him, you may search your deck for any card, put that card into your hand, then shuffle your deck.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

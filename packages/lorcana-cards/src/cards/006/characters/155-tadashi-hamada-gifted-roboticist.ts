@@ -4,14 +4,14 @@ export const tadashiHamadaGiftedRoboticist: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "put-into-inkwell",
+          facedown: true,
           source: "top-of-deck",
           target: "CONTROLLER",
-          facedown: true,
+          type: "put-into-inkwell",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "36l-1",
       text: "SOMEONE HAS TO HELP During an opponent’s turn, when this character is banished, you may put the top card of your deck into your inkwell facedown. Then, put this card into your inkwell facedown.",

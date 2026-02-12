@@ -4,13 +4,11 @@ export const theTwinsLostBoys: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you have a location in play",
+          type: "if",
         },
         then: {
-          type: "deal-damage",
           amount: 2,
           target: {
             selector: "chosen",
@@ -19,15 +17,17 @@ export const theTwinsLostBoys: CharacterCard = {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "deal-damage",
         },
+        type: "conditional",
       },
       id: "hrd-1",
       name: "TWO FOR ONE",
       text: "TWO FOR ONE When you play this character, if you have a location in play, you may deal 2 damage to chosen character.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

@@ -4,34 +4,34 @@ export const davidXanatosCharismaticLeader: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "draw",
         amount: 1,
         target: "CONTROLLER",
+        type: "draw",
       },
       id: "1jd-1",
       name: "LEARN FROM EVERYTHING",
       text: "LEARN FROM EVERYTHING During your turn, whenever one of your characters is banished, draw a card.",
       trigger: {
         event: "banish",
-        timing: "whenever",
         on: "YOUR_OTHER_CHARACTERS",
+        timing: "whenever",
       },
       type: "triggered",
     },
     {
       effect: {
-        type: "gain-keyword",
+        duration: "this-turn",
         keyword: "Rush",
         target: "SELF",
-        duration: "this-turn",
+        type: "gain-keyword",
       },
       id: "1jd-2",
       name: "WHAT ARE YOU WAITING FOR?",
       text: "WHAT ARE YOU WAITING FOR? Whenever this character quests, chosen character gains Rush this turn.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

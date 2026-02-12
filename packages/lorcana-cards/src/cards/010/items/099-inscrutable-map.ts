@@ -5,10 +5,10 @@ export const inscrutableMap: ItemCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "modify-stat",
-        stat: "lore",
         modifier: -1,
+        stat: "lore",
         target: "CHOSEN_CHARACTER",
+        type: "modify-stat",
       },
       id: "fpa-1",
       text: "BACKTRACK {E}, 1 {I} — Chosen opposing character gets -1 {L} until the start of your next turn.",

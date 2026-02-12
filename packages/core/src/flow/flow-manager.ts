@@ -230,7 +230,7 @@ export class FlowManager<TState, TCardMeta = any> {
     this.executeHook(gameSegmentDef.onBegin);
 
     // Initialize turn structure for this game segment
-    const {phases} = gameSegmentDef.turn;
+    const { phases } = gameSegmentDef.turn;
     if (phases) {
       const sortedPhases = Object.entries(phases).toSorted(([, a], [, b]) => a.order - b.order);
       this.currentPhase = gameSegmentDef.turn.initialPhase ?? sortedPhases[0]?.[0];
@@ -273,7 +273,9 @@ export class FlowManager<TState, TCardMeta = any> {
    * Task 9.5: Execute a lifecycle hook with FlowContext
    */
   private executeHook(hook: ((context: FlowContext<TState>) => void) | undefined): void {
-    if (!hook) {return;}
+    if (!hook) {
+      return;
+    }
 
     this.gameState = produce(this.gameState, (draft) => {
       const context = this.createFlowContext(draft);
@@ -436,13 +438,17 @@ export class FlowManager<TState, TCardMeta = any> {
    * Task 9.7: Check and execute endIf conditions
    */
   public checkEndConditions(): void {
-    if (!this.currentGameSegment) {return;}
+    if (!this.currentGameSegment) {
+      return;
+    }
 
     const gameSegments = this.normalizedGameSegments;
     const gameSegmentDef = gameSegments[this.currentGameSegment];
-    if (!gameSegmentDef) {return;}
+    if (!gameSegmentDef) {
+      return;
+    }
 
-    const {phases} = gameSegmentDef.turn;
+    const { phases } = gameSegmentDef.turn;
 
     // Check step endIf
     if (this.currentPhase && this.currentStep && phases) {
@@ -527,14 +533,20 @@ export class FlowManager<TState, TCardMeta = any> {
    * Task 9.13: Transition to next step
    */
   private transitionToNextStep(): void {
-    if (!this.currentGameSegment) {return;}
+    if (!this.currentGameSegment) {
+      return;
+    }
 
     const gameSegments = this.normalizedGameSegments;
     const gameSegmentDef = gameSegments[this.currentGameSegment];
-    if (!gameSegmentDef) {return;}
+    if (!gameSegmentDef) {
+      return;
+    }
 
-    const {phases} = gameSegmentDef.turn;
-    if (!(this.currentPhase && this.currentStep && phases)) {return;}
+    const { phases } = gameSegmentDef.turn;
+    if (!(this.currentPhase && this.currentStep && phases)) {
+      return;
+    }
 
     // Set guard to prevent nested transitions
     this.isTransitioning = true;
@@ -572,14 +584,20 @@ export class FlowManager<TState, TCardMeta = any> {
    * Task 9.13: Transition to next phase
    */
   private transitionToNextPhase(): void {
-    if (!this.currentGameSegment) {return;}
+    if (!this.currentGameSegment) {
+      return;
+    }
 
     const gameSegments = this.normalizedGameSegments;
     const gameSegmentDef = gameSegments[this.currentGameSegment];
-    if (!gameSegmentDef) {return;}
+    if (!gameSegmentDef) {
+      return;
+    }
 
-    const {phases} = gameSegmentDef.turn;
-    if (!(this.currentPhase && phases)) {return;}
+    const { phases } = gameSegmentDef.turn;
+    if (!(this.currentPhase && phases)) {
+      return;
+    }
 
     // Set guard to prevent nested transitions
     this.isTransitioning = true;
@@ -648,16 +666,20 @@ export class FlowManager<TState, TCardMeta = any> {
    * Transition to next turn
    */
   private transitionToNextTurn(): void {
-    if (!this.currentGameSegment) {return;}
+    if (!this.currentGameSegment) {
+      return;
+    }
 
     const gameSegments = this.normalizedGameSegments;
     const gameSegmentDef = gameSegments[this.currentGameSegment];
-    if (!gameSegmentDef) {return;}
+    if (!gameSegmentDef) {
+      return;
+    }
 
     // Set guard to prevent nested transitions
     this.isTransitioning = true;
 
-    const {phases} = gameSegmentDef.turn;
+    const { phases } = gameSegmentDef.turn;
 
     // Execute step onEnd if in step
     if (this.currentPhase && this.currentStep && phases) {
@@ -746,16 +768,20 @@ export class FlowManager<TState, TCardMeta = any> {
    * Transition to next game segment
    */
   private transitionToNextGameSegment(): void {
-    if (!this.currentGameSegment) {return;}
+    if (!this.currentGameSegment) {
+      return;
+    }
 
     const gameSegments = this.normalizedGameSegments;
     const gameSegmentDef = gameSegments[this.currentGameSegment];
-    if (!gameSegmentDef) {return;}
+    if (!gameSegmentDef) {
+      return;
+    }
 
     // Set guard to prevent nested transitions
     this.isTransitioning = true;
 
-    const {phases} = gameSegmentDef.turn;
+    const { phases } = gameSegmentDef.turn;
 
     // Execute step onEnd if in step
     if (this.currentPhase && this.currentStep && phases) {
@@ -812,7 +838,9 @@ export class FlowManager<TState, TCardMeta = any> {
       // Initialize turn structure for new game segment
       const nextPhases = nextGameSegmentDef.turn.phases;
       if (nextPhases) {
-        const sortedPhases = Object.entries(nextPhases).toSorted(([, a], [, b]) => a.order - b.order);
+        const sortedPhases = Object.entries(nextPhases).toSorted(
+          ([, a], [, b]) => a.order - b.order,
+        );
         this.currentPhase = nextGameSegmentDef.turn.initialPhase ?? sortedPhases[0]?.[0];
 
         // Initialize steps

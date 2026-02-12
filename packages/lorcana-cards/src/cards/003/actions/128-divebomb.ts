@@ -4,14 +4,14 @@ export const divebomb: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "banish",
         target: {
-          selector: "all",
+          cardTypes: ["character"],
           count: "all",
           owner: "you",
+          selector: "all",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "banish",
       },
       id: "1ei-1",
       text: "Banish one of your characters with Reckless to banish chosen character with less {S} than that character.",

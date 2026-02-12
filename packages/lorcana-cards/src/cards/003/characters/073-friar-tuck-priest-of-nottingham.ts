@@ -4,18 +4,18 @@ export const friarTuckPriestOfNottingham: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "discard",
         amount: 1,
-        target: "CONTROLLER",
         chosen: true,
+        target: "CONTROLLER",
+        type: "discard",
       },
       id: "f7m-1",
       name: "YOU THIEVING SCOUNDREL",
       text: "YOU THIEVING SCOUNDREL When you play this character, the player or players with the most cards in their hand chooses and discards a card.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

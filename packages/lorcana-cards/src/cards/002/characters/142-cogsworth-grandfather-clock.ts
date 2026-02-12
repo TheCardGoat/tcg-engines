@@ -19,9 +19,9 @@ export const cogsworthGrandfatherClock: CharacterCard = {
     },
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Resist",
         target: "YOUR_CHARACTERS",
+        type: "gain-keyword",
         value: 1,
       },
       id: "184-3",

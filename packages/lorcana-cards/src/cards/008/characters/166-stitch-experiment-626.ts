@@ -4,34 +4,34 @@ export const stitchExperiment626: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "put-into-inkwell",
-        source: "hand",
-        target: "OPPONENT",
         exerted: true,
         facedown: true,
+        source: "hand",
+        target: "OPPONENT",
+        type: "put-into-inkwell",
       },
       id: "bxo-1",
       name: "SO NAUGHTY",
       text: "SO NAUGHTY When you play this character, each opponent puts the top card of their deck into their inkwell facedown and exerted.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "this card is in your discard",
+          type: "if",
         },
         then: {
-          type: "restriction",
           restriction: "enters-play-exerted",
           target: "SELF",
+          type: "restriction",
         },
+        type: "conditional",
       },
       id: "bxo-2",
       text: "STEALTH MODE At the start of your turn, if this card is in your discard, you may choose and discard a card with {IW} to play this character for free and he enters play exerted.",

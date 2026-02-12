@@ -4,23 +4,23 @@ export const jockAttentiveUncle: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you have 3 or more other characters in play",
+          type: "if",
         },
         then: {
-          type: "gain-lore",
           amount: 2,
+          type: "gain-lore",
         },
+        type: "conditional",
       },
       id: "17d-1",
       name: "VOICE OF EXPERIENCE",
       text: "VOICE OF EXPERIENCE When you play this character, if you have 3 or more other characters in play, gain 2 lore.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

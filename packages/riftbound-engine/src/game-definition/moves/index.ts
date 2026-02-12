@@ -5,11 +5,7 @@
  */
 
 import type { GameMoveDefinitions } from "@tcg/core";
-import type {
-  RiftboundCardMeta,
-  RiftboundGameState,
-  RiftboundMoves,
-} from "../../types";
+import type { RiftboundCardMeta, RiftboundGameState, RiftboundMoves } from "../../types";
 
 // Import all move categories
 import { cardPlayMoves } from "./cards";
@@ -53,12 +49,7 @@ export const riftboundMoves: GameMoveDefinitions<
 
   // Discard/trash moves
   ...discardMoves,
-} as GameMoveDefinitions<
-  RiftboundGameState,
-  RiftboundMoves,
-  RiftboundCardMeta,
-  unknown
->;
+} as GameMoveDefinitions<RiftboundGameState, RiftboundMoves, RiftboundCardMeta, unknown>;
 
 export { cardPlayMoves } from "./cards";
 export { combatMoves } from "./combat";

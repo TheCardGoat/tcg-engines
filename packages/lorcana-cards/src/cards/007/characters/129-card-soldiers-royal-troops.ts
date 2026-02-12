@@ -4,10 +4,10 @@ export const cardSoldiersRoyalTroops: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: 2,
+        stat: "strength",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "1p8-1",
       text: "TAKE POINT While a damaged character is in play, this character gets +2 {S}.",

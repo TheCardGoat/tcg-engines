@@ -14,7 +14,7 @@ describe("optionalEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("optional");
-      const {effect} = (result as Effect & { effect: Effect });
+      const { effect } = result as Effect & { effect: Effect };
       expect(effect).toBeDefined();
       expect(effect.type).toBe("draw");
     });
@@ -24,7 +24,7 @@ describe("optionalEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("optional");
-      const {effect} = (result as Effect & { effect: Effect });
+      const { effect } = result as Effect & { effect: Effect };
       expect(effect.type).toBe("discard");
     });
 
@@ -33,29 +33,25 @@ describe("optionalEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("optional");
-      const {effect} = (result as Effect & { effect: Effect });
+      const { effect } = result as Effect & { effect: Effect };
       expect(effect.type).toBe("gain-lore");
     });
 
     it("parses 'you may deal 3 damage' correctly", () => {
-      const result = optionalEffectParser.parse(
-        "you may deal 3 damage to chosen character",
-      );
+      const result = optionalEffectParser.parse("you may deal 3 damage to chosen character");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("optional");
-      const {effect} = (result as Effect & { effect: Effect });
+      const { effect } = result as Effect & { effect: Effect };
       expect(effect.type).toBe("deal-damage");
     });
 
     it("parses 'you may exert chosen character' correctly", () => {
-      const result = optionalEffectParser.parse(
-        "you may exert chosen character",
-      );
+      const result = optionalEffectParser.parse("you may exert chosen character");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("optional");
-      const {effect} = (result as Effect & { effect: Effect });
+      const { effect } = result as Effect & { effect: Effect };
       expect(effect.type).toBe("exert");
     });
   });
@@ -66,7 +62,7 @@ describe("optionalEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("optional");
-      const {effect} = (result as Effect & { effect: Effect });
+      const { effect } = result as Effect & { effect: Effect };
       expect(effect.type).toBe("draw");
     });
 
@@ -131,7 +127,7 @@ describe("optionalEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("optional");
-      const {effect} = (result as Effect & { effect: Effect });
+      const { effect } = result as Effect & { effect: Effect };
       expect(effect.type).toBe("draw");
     });
 
@@ -152,24 +148,20 @@ describe("optionalEffectParser", () => {
 
   describe("text parsing - complex effects", () => {
     it("parses optional banish effect", () => {
-      const result = optionalEffectParser.parse(
-        "you may banish chosen character",
-      );
+      const result = optionalEffectParser.parse("you may banish chosen character");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("optional");
-      const {effect} = (result as Effect & { effect: Effect });
+      const { effect } = result as Effect & { effect: Effect };
       expect(effect.type).toBe("banish");
     });
 
     it("parses optional effect with target clause", () => {
-      const result = optionalEffectParser.parse(
-        "you may deal 2 damage to each opposing character",
-      );
+      const result = optionalEffectParser.parse("you may deal 2 damage to each opposing character");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("optional");
-      const {effect} = (result as Effect & { effect: Effect });
+      const { effect } = result as Effect & { effect: Effect };
       expect(effect.type).toBe("deal-damage");
     });
   });

@@ -7,38 +7,38 @@ export const donaldDuckPieSlinger: CharacterCard = {
         type: "used-shift",
       },
       effect: {
-        type: "lose-lore",
         amount: 0,
         target: "EACH_OPPONENT",
+        type: "lose-lore",
       },
       id: "14s-1",
       name: "HUMBLE PIE",
       text: "HUMBLE PIE When you play this character, if you used Shift to play him, each opponent loses {d} lore.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },
     {
       condition: {
-        type: "comparison",
-        left: {
-          type: "lore",
-          controller: "opponent",
-        },
         comparison: "greater-or-equal",
+        left: {
+          controller: "opponent",
+          type: "lore",
+        },
         right: {
           type: "constant",
           value: 0,
         },
+        type: "comparison",
       },
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: 0,
+        stat: "strength",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "14s-2",
       name: "RAGING DUCK",

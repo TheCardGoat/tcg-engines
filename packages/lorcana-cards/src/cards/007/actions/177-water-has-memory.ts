@@ -4,12 +4,9 @@ export const waterHasMemory: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "scry",
             amount: 4,
-            target: "CHOSEN_PLAYER",
             destinations: [
               {
                 zone: "deck-bottom",
@@ -17,12 +14,15 @@ export const waterHasMemory: ActionCard = {
                 ordering: "player-choice",
               },
             ],
+            target: "CHOSEN_PLAYER",
+            type: "scry",
           },
           {
-            type: "put-on-bottom",
             target: "CHOSEN_CHARACTER",
+            type: "put-on-bottom",
           },
         ],
+        type: "sequence",
       },
       id: "q8v-1",
       text: "Look at the top 4 cards of chosen player's deck. Put one on the top of their deck and the rest on the bottom of their deck in any order.",

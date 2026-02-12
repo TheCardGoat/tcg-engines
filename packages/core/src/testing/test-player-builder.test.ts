@@ -126,7 +126,7 @@ describe("createTestPlayers", () => {
 
       // Type-level check happens at compile time
       // The following would fail TypeScript compilation if Player.id wasn't PlayerId:
-      // const playerId: PlayerId = players[0].id;
+      // Const playerId: PlayerId = players[0].id;
     });
   });
 });

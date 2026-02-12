@@ -4,9 +4,9 @@ export const fangRiverCity: LocationCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Ward",
         target: "CHARACTERS_HERE",
+        type: "gain-keyword",
       },
       id: "1bl-1",
       name: "SURROUNDED BY WATER",

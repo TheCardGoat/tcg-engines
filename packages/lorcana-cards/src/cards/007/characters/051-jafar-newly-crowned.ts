@@ -4,9 +4,8 @@ export const jafarNewlyCrowned: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "return-to-hand",
           target: {
             selector: "chosen",
             count: 1,
@@ -14,8 +13,9 @@ export const jafarNewlyCrowned: CharacterCard = {
             zones: ["play"],
             cardTypes: ["card"],
           },
+          type: "return-to-hand",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "1i1-1",
       text: "THIS IS NOT DONE YET During an opponent's turn, whenever one of your Illusion characters is banished, you may return that card to your hand.",

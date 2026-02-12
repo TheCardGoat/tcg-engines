@@ -4,25 +4,25 @@ export const loseTheWay: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "optional",
+            chooser: "CONTROLLER",
             effect: {
               type: "discard",
               amount: 1,
               target: "CONTROLLER",
               chosen: true,
             },
-            chooser: "CONTROLLER",
+            type: "optional",
           },
           {
-            type: "restriction",
+            duration: "until-start-of-next-turn",
             restriction: "cant-ready",
             target: "SELF",
-            duration: "until-start-of-next-turn",
+            type: "restriction",
           },
         ],
+        type: "sequence",
       },
       id: "1um-1",
       text: "Exert chosen character. Then, you may choose and discard a card. If you do, the exerted character can't ready at the start of their next turn.",

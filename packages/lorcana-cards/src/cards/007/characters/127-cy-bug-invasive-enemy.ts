@@ -4,10 +4,10 @@ export const cybugInvasiveEnemy: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: 1,
+        stat: "strength",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "1ls-1",
       text: "HIVE MIND This character gets +1 {S} for each other character you have in play.",

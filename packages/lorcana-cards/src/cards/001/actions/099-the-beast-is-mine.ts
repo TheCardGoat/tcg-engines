@@ -4,10 +4,10 @@ export const theBeastIsMine: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
+        duration: "this-turn",
         keyword: "Reckless",
         target: "CHOSEN_CHARACTER",
-        duration: "this-turn",
+        type: "gain-keyword",
       },
       id: "10f-1",
       text: "Chosen character gains Reckless during their next turn.",

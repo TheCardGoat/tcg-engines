@@ -4,10 +4,10 @@ export const donaldDuckFirstMate: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "lore",
         modifier: 2,
+        stat: "lore",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "1rl-1",
       text: "CAPTAIN ON DECK While you have a Captain character in play, this character gets +2 {L}.",

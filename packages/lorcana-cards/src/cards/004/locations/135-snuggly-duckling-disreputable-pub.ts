@@ -4,26 +4,26 @@ export const snugglyDucklingDisreputablePub: LocationCard = {
   abilities: [
     {
       effect: {
-        type: "choice",
-        options: [
-          {
-            type: "gain-lore",
-            amount: 1,
-          },
-          {
-            type: "gain-lore",
-            amount: 3,
-          },
-        ],
         optionLabels: [
           "gain 1 lore. If the challenging character has 6 {S}",
           "more, gain 3 lore instead.",
         ],
+        options: [
+          {
+            amount: 1,
+            type: "gain-lore",
+          },
+          {
+            amount: 3,
+            type: "gain-lore",
+          },
+        ],
+        type: "choice",
       },
       id: "1o0-1",
       name: "ROUTINE RUCKUS",
       text: "ROUTINE RUCKUS Whenever a character with 3 {S} or more challenges another character while here, gain 1 lore. If the challenging character has 6 {S} or more, gain 3 lore instead.",
-      trigger: { event: "play", timing: "when", on: "SELF" },
+      trigger: { event: "play", on: "SELF", timing: "when" },
       type: "triggered",
     },
   ],

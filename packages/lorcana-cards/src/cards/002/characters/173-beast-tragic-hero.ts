@@ -13,18 +13,18 @@ export const beastTragicHero: CharacterCard = {
     },
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "this character has no damage",
+          type: "if",
         },
         then: {
-          type: "modify-stat",
-          stat: "strength",
-          modifier: 4,
-          target: "CHOSEN_CHARACTER",
           duration: "this-turn",
+          modifier: 4,
+          stat: "strength",
+          target: "CHOSEN_CHARACTER",
+          type: "modify-stat",
         },
+        type: "conditional",
       },
       id: "kyf-2",
       text: "IT'S BETTER THIS WAY At the start of your turn, if this character has no damage, draw a card. Otherwise, he gets +4 {S} this turn.",

@@ -4,12 +4,9 @@ export const jumboPop: ItemCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "remove-damage",
             amount: 2,
-            upTo: true,
             target: {
               selector: "all",
               count: "all",
@@ -17,13 +14,16 @@ export const jumboPop: ItemCard = {
               zones: ["play"],
               cardTypes: ["character"],
             },
+            type: "remove-damage",
+            upTo: true,
           },
           {
-            type: "draw",
             amount: 1,
             target: "CONTROLLER",
+            type: "draw",
           },
         ],
+        type: "sequence",
       },
       id: "lhl-1",
       text: "HERE YOU GO Banish this item – Remove up to 2 damage from each of your characters. Draw a card.",

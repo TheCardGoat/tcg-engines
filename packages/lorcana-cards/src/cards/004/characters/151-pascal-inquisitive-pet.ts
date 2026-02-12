@@ -4,24 +4,24 @@ export const pascalInquisitivePet: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "scry",
         amount: 3,
-        target: "CONTROLLER",
         destinations: [
           {
-            zone: "deck-top",
-            remainder: true,
             ordering: "player-choice",
+            remainder: true,
+            zone: "deck-top",
           },
         ],
+        target: "CONTROLLER",
+        type: "scry",
       },
       id: "f7s-1",
       name: "COLORFUL TACTICS",
       text: "COLORFUL TACTICS When you play this character, look at the top 3 cards of your deck and put them back in any order.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

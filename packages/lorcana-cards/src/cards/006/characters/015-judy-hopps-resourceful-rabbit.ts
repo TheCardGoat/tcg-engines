@@ -10,9 +10,8 @@ export const judyHoppsResourcefulRabbit: CharacterCard = {
     },
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "ready",
           target: {
             selector: "chosen",
             count: 1,
@@ -20,8 +19,9 @@ export const judyHoppsResourcefulRabbit: CharacterCard = {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "ready",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "1r5-2",
       text: "NEED SOME HELP? At the end of your turn, you may ready another chosen character of yours.",

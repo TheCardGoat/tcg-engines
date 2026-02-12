@@ -11,25 +11,25 @@ export const kenaiMagicalBear: CharacterCard = {
     },
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "return-to-hand",
             target: "SELF",
+            type: "return-to-hand",
           },
           {
-            type: "gain-lore",
             amount: 1,
+            type: "gain-lore",
           },
         ],
+        type: "sequence",
       },
       id: "wwk-2",
       name: "WISDOM OF HIS STORY",
       text: "WISDOM OF HIS STORY During your turn, when this character is banished in a challenge, return this card to your hand and gain 1 lore.",
       trigger: {
         event: "banish",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

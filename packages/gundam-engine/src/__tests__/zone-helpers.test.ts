@@ -9,11 +9,7 @@
 
 import { beforeEach, describe, expect, it } from "bun:test";
 import { type CardId, createPlayerId } from "@tcg/core";
-import {
-  createTestCard,
-  createTestCards,
-  resetCardCounter,
-} from "@tcg/core/testing";
+import { createTestCard, createTestCards, resetCardCounter } from "@tcg/core/testing";
 import {
   createPlayerZones,
   deployUnit,
@@ -147,11 +143,7 @@ describe("Gundam Zone Helpers - Using @tcg/core/testing", () => {
       const unit = createTestCard({ name: "Gundam" });
       const handWithCard = { ...zones.hand, cards: [unit.id] as CardId[] };
 
-      const result = deployUnit(
-        handWithCard,
-        zones.battleArea,
-        unit.id as CardId,
-      );
+      const result = deployUnit(handWithCard, zones.battleArea, unit.id as CardId);
 
       expect(result.hand.cards).not.toContain(unit.id as CardId);
       expect(result.battleArea.cards).toContain(unit.id as CardId);
@@ -185,11 +177,7 @@ describe("Gundam Zone Helpers - Using @tcg/core/testing", () => {
       const resource = createTestCard({ name: "Resource Card" });
       const handWithCard = { ...zones.hand, cards: [resource.id] as CardId[] };
 
-      const result = placeResource(
-        handWithCard,
-        zones.resourceArea,
-        resource.id as CardId,
-      );
+      const result = placeResource(handWithCard, zones.resourceArea, resource.id as CardId);
 
       expect(result.hand.cards).not.toContain(resource.id as CardId);
       expect(result.resourceArea.cards).toContain(resource.id as CardId);
@@ -228,11 +216,7 @@ describe("Gundam Zone Helpers - Using @tcg/core/testing", () => {
         cards: [unit.id] as CardId[],
       };
 
-      const result = destroyUnit(
-        battleAreaWithUnit,
-        zones.trash,
-        unit.id as CardId,
-      );
+      const result = destroyUnit(battleAreaWithUnit, zones.trash, unit.id as CardId);
 
       expect(result.battleArea.cards).not.toContain(unit.id as CardId);
       expect(result.trash.cards).toContain(unit.id as CardId);
@@ -253,16 +237,10 @@ describe("Gundam Zone Helpers - Using @tcg/core/testing", () => {
 
       const result1 = destroyUnit(battleArea, trash, unit1.id as CardId);
       const battleAreaAfter = { ...result1.battleArea };
-      const result2 = destroyUnit(
-        battleAreaAfter,
-        result1.trash,
-        unit2.id as CardId,
-      );
+      const result2 = destroyUnit(battleAreaAfter, result1.trash, unit2.id as CardId);
 
       // Newest destroyed unit should be at the end (visible on top)
-      expect(result2.trash.cards[result2.trash.cards.length - 1]).toBe(
-        unit2.id as CardId,
-      );
+      expect(result2.trash.cards[result2.trash.cards.length - 1]).toBe(unit2.id as CardId);
     });
   });
 
@@ -317,10 +295,7 @@ describe("Gundam Zone Helpers - Using @tcg/core/testing", () => {
 
       // First shield should be removed
       expect(result.removedShields[0]).toBe(shield1.id as CardId);
-      expect(result.shieldSection.cards).toEqual([
-        shield2.id,
-        shield3.id,
-      ] as CardId[]);
+      expect(result.shieldSection.cards).toEqual([shield2.id, shield3.id] as CardId[]);
     });
   });
 
@@ -342,32 +317,28 @@ describe("Gundam Zone Helpers - Using @tcg/core/testing", () => {
         ...zones.hand,
         cards: [resourceCard.id, unitCard.id] as CardId[],
       };
-      let resourceArea = zones.resourceArea;
-      let battleArea = zones.battleArea;
+      let { resourceArea } = zones;
+      let { battleArea } = zones;
 
       // Step 1: Draw a card
       const drawResult = drawCards(deck, hand, 1);
-      deck = drawResult.deck;
-      hand = drawResult.hand;
+      ({ deck } = drawResult);
+      ({ hand } = drawResult);
 
       expect(hand.cards).toHaveLength(3); // Started with 2, drew 1
 
       // Step 2: Place resource
-      const placeResult = placeResource(
-        hand,
-        resourceArea,
-        resourceCard.id as CardId,
-      );
-      hand = placeResult.hand;
-      resourceArea = placeResult.resourceArea;
+      const placeResult = placeResource(hand, resourceArea, resourceCard.id as CardId);
+      ({ hand } = placeResult);
+      ({ resourceArea } = placeResult);
 
       expect(resourceArea.cards).toContain(resourceCard.id as CardId);
       expect(hand.cards).toHaveLength(2);
 
       // Step 3: Deploy unit
       const deployResult = deployUnit(hand, battleArea, unitCard.id as CardId);
-      hand = deployResult.hand;
-      battleArea = deployResult.battleArea;
+      ({ hand } = deployResult);
+      ({ battleArea } = deployResult);
 
       expect(battleArea.cards).toContain(unitCard.id as CardId);
       expect(hand.cards).toHaveLength(1); // Should have 1 card left (the drawn card)
@@ -391,12 +362,12 @@ describe("Gundam Zone Helpers - Using @tcg/core/testing", () => {
         cards: [attacker.id] as CardId[],
       };
 
-      let trash = zones.trash;
+      let { trash } = zones;
 
       // Defender takes 3 damage
       const damageResult = takeDamage(shieldSection, trash, 3);
-      shieldSection = damageResult.shieldSection;
-      trash = damageResult.trash;
+      ({ shieldSection } = damageResult);
+      ({ trash } = damageResult);
 
       expect(shieldSection.cards).toHaveLength(3); // 6 - 3 = 3 shields remaining
       expect(trash.cards).toHaveLength(3); // 3 shields in trash

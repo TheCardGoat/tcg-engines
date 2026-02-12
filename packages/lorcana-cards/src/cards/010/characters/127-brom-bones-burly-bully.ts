@@ -4,17 +4,17 @@ export const bromBonesBurlyBully: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "lose-lore",
         amount: 1,
         target: "EACH_OPPONENT",
+        type: "lose-lore",
       },
       id: "1ai-1",
       name: "ROUGH AND TUMBLE",
       text: "ROUGH AND TUMBLE Whenever this character challenges a character with 2 {S} or less, each opponent loses 1 lore.",
       trigger: {
         event: "challenge",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

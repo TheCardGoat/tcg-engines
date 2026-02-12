@@ -4,9 +4,9 @@ export const jafarRoyalVizier: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Evasive",
         target: "SELF",
+        type: "gain-keyword",
       },
       id: "1gq-1",
       text: "I DON'T TRUST HIM, SIRE During your turn, this character gains Evasive.",

@@ -3,9 +3,6 @@
   import Zone from "$lib/components/board/Zone.svelte";
 
   const { Story } = defineMeta({
-    title: "Board/Zone",
-    component: Zone,
-    tags: ["autodocs"],
     argTypes: {
       type: {
         control: { type: "select" },
@@ -31,9 +28,12 @@
       droppable: { control: "boolean" },
       dropHighlight: { control: "boolean" },
     },
+    component: Zone,
     parameters: {
       layout: "centered",
     },
+    tags: ["autodocs"],
+    title: "Board/Zone",
   });
 </script>
 

@@ -4,9 +4,8 @@ export const scarBetrayer: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "banish",
           target: {
             selector: "chosen",
             count: 1,
@@ -14,16 +13,17 @@ export const scarBetrayer: CharacterCard = {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "banish",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "1rc-1",
       name: "LONG LIVE THE KING",
       text: "LONG LIVE THE KING When you play this character, you may banish chosen character named Mufasa.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

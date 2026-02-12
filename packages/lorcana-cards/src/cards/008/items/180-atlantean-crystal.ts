@@ -5,15 +5,15 @@ export const atlanteanCrystal: ItemCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "gain-keyword",
         keyword: "Resist",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "gain-keyword",
         value: 2,
       },
       id: "1y7-1",

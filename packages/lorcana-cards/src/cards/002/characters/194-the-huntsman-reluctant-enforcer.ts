@@ -4,22 +4,22 @@ export const theHuntsmanReluctantEnforcer: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
-        effect: {
-          type: "discard",
-          amount: 1,
-          target: "CONTROLLER",
-          chosen: true,
-        },
         chooser: "CONTROLLER",
+        effect: {
+          amount: 1,
+          chosen: true,
+          target: "CONTROLLER",
+          type: "discard",
+        },
+        type: "optional",
       },
       id: "voc-1",
       name: "CHANGE OF HEART",
       text: "CHANGE OF HEART Whenever this character quests, you may draw a card, then choose and discard a card.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

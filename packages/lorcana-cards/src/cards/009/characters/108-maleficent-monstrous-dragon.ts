@@ -4,9 +4,8 @@ export const maleficentMonstrousDragon: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "banish",
           target: {
             selector: "chosen",
             count: 1,
@@ -14,16 +13,17 @@ export const maleficentMonstrousDragon: CharacterCard = {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "banish",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "19f-1",
       name: "DRAGON FIRE",
       text: "DRAGON FIRE When you play this character, you may banish chosen character.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

@@ -4,9 +4,8 @@ export const magicBroomIlluminaryKeeper: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "banish",
           target: {
             selector: "self",
             count: 1,
@@ -14,13 +13,14 @@ export const magicBroomIlluminaryKeeper: CharacterCard = {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "banish",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "1ct-1",
       name: "NICE AND TIDY",
       text: "NICE AND TIDY Whenever you play another character, you may banish this character to draw a card.",
-      trigger: { event: "play", timing: "when", on: "SELF" },
+      trigger: { event: "play", on: "SELF", timing: "when" },
       type: "triggered",
     },
   ],

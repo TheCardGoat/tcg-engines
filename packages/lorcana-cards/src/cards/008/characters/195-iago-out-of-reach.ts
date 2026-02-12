@@ -4,9 +4,9 @@ export const iagoOutOfReach: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "restriction",
         restriction: "cant-be-challenged",
         target: "SELF",
+        type: "restriction",
       },
       id: "9cu-1",
       text: "SELF-PRESERVATION While you have another exerted character in play, this character can't be challenged.",

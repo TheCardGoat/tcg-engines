@@ -5,17 +5,17 @@ export const medalOfHeroes: ItemCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "modify-stat",
-        stat: "lore",
+        duration: "this-turn",
         modifier: 2,
+        stat: "lore",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
-        duration: "this-turn",
+        type: "modify-stat",
       },
       id: "b7p-1",
       text: "CONGRATULATIONS, SOLDIER {E}, 2 {I}, Banish this item — Chosen character of yours gets +2 {L} this turn.",

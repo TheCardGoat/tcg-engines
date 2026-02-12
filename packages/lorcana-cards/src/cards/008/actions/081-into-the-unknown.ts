@@ -4,10 +4,10 @@ export const intoTheUnknown: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "put-into-inkwell",
+        exerted: true,
         source: "chosen-character",
         target: "CARD_OWNER",
-        exerted: true,
+        type: "put-into-inkwell",
       },
       id: "1ef-1",
       text: "Put chosen exerted character into their player's inkwell facedown and exerted.",

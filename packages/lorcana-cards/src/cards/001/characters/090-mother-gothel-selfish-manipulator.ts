@@ -4,9 +4,9 @@ export const motherGothelSelfishManipulator: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "restriction",
         restriction: "cant-quest",
         target: "SELF",
+        type: "restriction",
       },
       id: "xse-1",
       name: "SKIP THE DRAMA, STAY WITH MAMA",

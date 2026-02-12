@@ -4,9 +4,9 @@ export const magicMirrorundefined: ItemCard = {
   abilities: [
     {
       effect: {
-        type: "draw",
         amount: 1,
         target: "CONTROLLER",
+        type: "draw",
       },
       id: "bql-1",
       text: "**Speak** {E}, 4 {I} - Draw a card.",

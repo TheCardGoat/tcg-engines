@@ -4,9 +4,8 @@ export const princePhillipDragonSlayer: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "banish",
           target: {
             selector: "chosen",
             count: 1,
@@ -14,8 +13,9 @@ export const princePhillipDragonSlayer: CharacterCard = {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "banish",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "c7p-1",
       text: "**DRAGON SLAYER** When you play this character, you may banish chosen character.",

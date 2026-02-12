@@ -6,22 +6,13 @@
  */
 
 // Re-export core types for convenience
-export type {
-  GameDefinition,
-  MoveContext,
-  MoveExecutionResult,
-  RuleEngine,
-} from "@tcg/core";
+export type { GameDefinition, MoveContext, MoveExecutionResult, RuleEngine } from "@tcg/core";
 
 // Export game definition
 export { templateGameDefinition } from "./game-definition";
 
 // Export types
-export type {
-  CardInstance,
-  TemplateGameMoves,
-  TemplateGameState,
-} from "./types";
+export type { CardInstance, TemplateGameMoves, TemplateGameState } from "./types";
 
 // Helper to create game
 import { type Player, RuleEngine } from "@tcg/core";

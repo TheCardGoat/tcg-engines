@@ -19,17 +19,17 @@ export const mulanImperialGeneral: CharacterCard = {
     },
     {
       effect: {
-        type: "grant-ability",
         ability: "can-challenge-ready",
         target: "SELF",
+        type: "grant-ability",
       },
       id: "17b-3",
       name: "EXCEPTIONAL LEADER",
       text: "EXCEPTIONAL LEADER Whenever this character challenges another character, your other characters gain “This character can challenge ready characters” this turn.",
       trigger: {
         event: "challenge",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

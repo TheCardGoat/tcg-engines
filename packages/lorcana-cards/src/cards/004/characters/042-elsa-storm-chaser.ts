@@ -5,17 +5,17 @@ export const elsaStormChaser: CharacterCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "gain-keyword",
+        duration: "this-turn",
         keyword: "Challenger",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "gain-keyword",
         value: 2,
-        duration: "this-turn",
       },
       id: "ih5-1",
       text: "TEMPEST {E} — Chosen character gains Challenger +2 and Rush this turn.",

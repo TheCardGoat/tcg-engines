@@ -4,10 +4,10 @@ export const princeEricDashingAndBrave: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: 2,
+        stat: "strength",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "omx-1",
       text: "**Challenger** +2 _(While challenging, this character gets +2 {S}.)_",

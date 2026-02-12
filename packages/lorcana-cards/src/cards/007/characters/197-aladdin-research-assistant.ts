@@ -4,34 +4,34 @@ export const aladdinResearchAssistant: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "play-card",
-          from: "hand",
           cost: "free",
           costRestriction: {
             comparison: "less-or-equal",
             value: 3,
           },
+          from: "hand",
+          type: "play-card",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "1do-1",
       name: "HELPING HAND",
       text: "HELPING HAND Whenever this character quests, you may play an Ally character with cost 3 or less for free.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: 1,
+        stat: "strength",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "1do-2",
       text: "PUT IN THE EFFORT While this character is exerted, your Ally characters get +1 {S}.",

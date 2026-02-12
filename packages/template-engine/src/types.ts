@@ -6,13 +6,13 @@ import type { CardId, PlayerId } from "@tcg/core";
  * This is a minimal working example showing how to structure your game state.
  * Your game state should be a plain TypeScript type with all game data.
  */
-export type TemplateGameState = {
+export interface TemplateGameState {
   // Player information
-  players: Array<{
+  players: {
     id: PlayerId;
     name: string;
     life: number;
-  }>;
+  }[];
 
   // Turn tracking
   currentPlayerIndex: number;
@@ -29,21 +29,21 @@ export type TemplateGameState = {
 
   // Cards - lookup table of actual card data
   cards: Record<CardId, CardInstance>;
-};
+}
 
 /**
  * Card Instance
  *
  * Represents a card in play with runtime state.
  */
-export type CardInstance = {
+export interface CardInstance {
   id: CardId;
   definitionId: string; // References a card definition (like "fireball")
   ownerId: PlayerId;
   tapped: boolean;
   damage: number;
   counters: Record<string, number>;
-};
+}
 
 /**
  * Template Game Moves
@@ -51,9 +51,9 @@ export type CardInstance = {
  * Define the shape of data for each move type.
  * Use Record<string, never> for moves with no parameters.
  */
-export type TemplateGameMoves = {
+export interface TemplateGameMoves {
   drawCard: Record<string, never>;
   playCard: { cardId: CardId };
   attack: { attackerId: CardId; targetId: CardId };
   endPhase: Record<string, never>;
-};
+}

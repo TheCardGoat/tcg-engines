@@ -5,11 +5,11 @@ export const bellesFavoriteBook: ItemCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "put-into-inkwell",
-        source: "top-of-deck",
-        target: "CONTROLLER",
         exerted: true,
         facedown: true,
+        source: "top-of-deck",
+        target: "CONTROLLER",
+        type: "put-into-inkwell",
       },
       id: "1gu-1",
       text: "CHAPTER THREE {E}, Banish one of your other items — Put the top card of your deck into your inkwell facedown and exerted.",

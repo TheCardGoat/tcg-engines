@@ -4,14 +4,14 @@ export const princeJohnsMirror: ItemCard = {
   abilities: [
     {
       condition: {
-        type: "has-named-character",
-        name: "Prince John",
         controller: "you",
+        name: "Prince John",
+        type: "has-named-character",
       },
       effect: {
-        type: "cost-reduction",
         amount: 3,
         cardType: "item",
+        type: "cost-reduction",
       },
       id: "fzx-1",
       name: "YOU LOOK REGAL",
@@ -20,25 +20,25 @@ export const princeJohnsMirror: ItemCard = {
     },
     {
       condition: {
-        type: "resource-count",
-        what: "cards-in-hand",
-        controller: "opponent",
         comparison: "greater-than",
+        controller: "opponent",
+        type: "resource-count",
         value: 0,
+        what: "cards-in-hand",
       },
       effect: {
-        type: "discard",
         amount: 0,
-        target: "OPPONENT",
         chosen: true,
+        target: "OPPONENT",
+        type: "discard",
       },
       id: "fzx-2",
       name: "A FEELING OF POWER",
       text: "A FEELING OF POWER At the end of each opponent's turn, if they have more than 3 cards in their hand, they discard until they have {d} cards in their hand.",
       trigger: {
         event: "end-turn",
-        timing: "at",
         on: "OPPONENT",
+        timing: "at",
       },
       type: "triggered",
     },

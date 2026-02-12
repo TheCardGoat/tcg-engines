@@ -19,8 +19,8 @@ export const jafarStrikingIllusionist: CharacterCard = {
     },
     {
       effect: {
-        type: "gain-lore",
         amount: 1,
+        type: "gain-lore",
       },
       id: "1nu-3",
       text: "POWER BEYOND MEASURE During your turn, while this character is exerted, whenever you draw a card, gain 1 lore.",

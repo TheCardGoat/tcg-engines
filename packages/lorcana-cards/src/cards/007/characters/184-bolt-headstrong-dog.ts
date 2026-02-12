@@ -4,25 +4,25 @@ export const boltHeadstrongDog: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "he has no damage",
+          type: "if",
         },
         then: {
-          type: "discard",
           amount: 1,
-          target: "CONTROLLER",
           chosen: true,
+          target: "CONTROLLER",
+          type: "discard",
         },
+        type: "conditional",
       },
       id: "131-1",
       name: "THERE'S NO TURNING BACK",
       text: "THERE'S NO TURNING BACK Whenever this character quests, if he has no damage, you may draw a card, then choose and discard a card.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

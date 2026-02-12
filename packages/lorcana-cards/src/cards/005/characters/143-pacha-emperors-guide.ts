@@ -4,43 +4,43 @@ export const pachaEmperorsGuide: CharacterCard = {
   abilities: [
     {
       condition: {
-        type: "has-item-count",
-        controller: "you",
         comparison: "greater-or-equal",
+        controller: "you",
         count: 1,
+        type: "has-item-count",
       },
       effect: {
-        type: "gain-lore",
         amount: 1,
+        type: "gain-lore",
       },
       id: "jdl-1",
       name: "HELPFUL SUPPLIES",
       text: "HELPFUL SUPPLIES At the start of your turn, if you have an item in play, gain 1 lore.",
       trigger: {
         event: "start-turn",
-        timing: "at",
         on: "YOU",
+        timing: "at",
       },
       type: "triggered",
     },
     {
       condition: {
-        type: "has-location-count",
-        controller: "you",
         comparison: "greater-or-equal",
+        controller: "you",
         count: 1,
+        type: "has-location-count",
       },
       effect: {
-        type: "gain-lore",
         amount: 0,
+        type: "gain-lore",
       },
       id: "jdl-2",
       name: "PERFECT DIRECTIONS",
       text: "PERFECT DIRECTIONS At the start of your turn, if you have a location in play, gain {d} lore.",
       trigger: {
         event: "start-turn",
-        timing: "at",
         on: "YOU",
+        timing: "at",
       },
       type: "triggered",
     },

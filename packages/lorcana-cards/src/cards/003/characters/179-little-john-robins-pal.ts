@@ -10,9 +10,9 @@ export const littleJohnRobinsPal: CharacterCard = {
     },
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Evasive",
         target: "SELF",
+        type: "gain-keyword",
       },
       id: "1ta-2",
       text: "DISGUISED During your turn, this character gains Evasive.",

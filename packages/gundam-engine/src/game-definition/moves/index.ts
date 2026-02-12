@@ -10,18 +10,14 @@ import { playCard } from "./core/play-card";
 import { playCommandMove } from "./core/play-command";
 import { resolveEffectStackMove } from "./core/resolve-effect-stack";
 
-export const gundamMoves: GameMoveDefinitions<
-  GundamGameState,
-  GundamMoves,
-  GundamCardMeta
-> = {
-  playCard,
+export const gundamMoves: GameMoveDefinitions<GundamGameState, GundamMoves, GundamCardMeta> = {
   attack: attackMove,
+  concede,
+  executeEffect: executeEffectMove,
+  handleTurnEnd: handleTurnEndMove,
+  handleTurnStart: handleTurnStartMove,
   pass: passMove,
+  playCard,
   playCommand: playCommandMove,
   resolveEffectStack: resolveEffectStackMove,
-  executeEffect: executeEffectMove,
-  handleTurnStart: handleTurnStartMove,
-  handleTurnEnd: handleTurnEndMove,
-  concede,
 };

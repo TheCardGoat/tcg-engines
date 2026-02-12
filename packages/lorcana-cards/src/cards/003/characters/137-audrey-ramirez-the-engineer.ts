@@ -10,22 +10,22 @@ export const audreyRamirezTheEngineer: CharacterCard = {
     },
     {
       effect: {
-        type: "ready",
         target: {
-          selector: "all",
+          cardTypes: ["item"],
           count: "all",
           owner: "you",
+          selector: "all",
           zones: ["play"],
-          cardTypes: ["item"],
         },
+        type: "ready",
       },
       id: "csd-2",
       name: "SPARE PARTS",
       text: "SPARE PARTS Whenever this character quests, ready one of your items.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

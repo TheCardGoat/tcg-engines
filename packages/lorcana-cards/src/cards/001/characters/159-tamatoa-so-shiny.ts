@@ -4,30 +4,30 @@ export const tamatoaSoShiny: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "return-from-discard",
           cardType: "item",
           target: "CONTROLLER",
+          type: "return-from-discard",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "sj3-1",
       name: "WHAT HAVE WE HERE?",
       text: "WHAT HAVE WE HERE? When you play this character and whenever he quests, you may return an item card from your discard to your hand.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },
     {
       effect: {
-        type: "modify-stat",
+        modifier: { controller: "you", type: "items-in-play" },
         stat: "lore",
-        modifier: { type: "items-in-play", controller: "you" },
         target: "SELF",
+        type: "modify-stat",
       },
       id: "sj3-2",
       name: "GLAM",

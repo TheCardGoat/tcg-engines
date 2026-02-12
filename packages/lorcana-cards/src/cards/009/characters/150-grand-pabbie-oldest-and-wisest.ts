@@ -4,16 +4,16 @@ export const grandPabbieOldestAndWisest: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-lore",
         amount: 2,
+        type: "gain-lore",
       },
       id: "qlg-1",
       name: "ANCIENT INSIGHT",
       text: "ANCIENT INSIGHT Whenever you remove 1 or more damage from one of your characters, gain 2 lore.",
       trigger: {
         event: "banish",
-        timing: "whenever",
         on: "YOUR_OTHER_CHARACTERS",
+        timing: "whenever",
       },
       type: "triggered",
     },

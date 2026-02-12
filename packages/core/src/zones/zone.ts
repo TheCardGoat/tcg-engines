@@ -12,7 +12,7 @@ export type ZoneVisibility = "public" | "private" | "secret";
 /**
  * Zone configuration defining the properties and rules of a zone
  */
-export type CardZoneConfig = {
+export interface CardZoneConfig {
   /**
    * Unique identifier for the zone
    */
@@ -48,12 +48,12 @@ export type CardZoneConfig = {
    * Maximum number of cards allowed in the zone
    */
   maxSize?: number;
-};
+}
 
 /**
  * A zone containing cards with configuration
  */
-export type Zone = {
+export interface Zone {
   /**
    * Zone configuration
    */
@@ -63,4 +63,4 @@ export type Zone = {
    * Cards currently in the zone
    */
   cards: CardId[];
-};
+}

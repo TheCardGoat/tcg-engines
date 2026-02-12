@@ -4,9 +4,9 @@ export const aliceGrowingGirl: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Support",
         target: "YOUR_CHARACTERS",
+        type: "gain-keyword",
       },
       id: "1ao-1",
       name: "GOOD ADVICE Your other",
@@ -15,10 +15,10 @@ export const aliceGrowingGirl: CharacterCard = {
     },
     {
       effect: {
-        type: "modify-stat",
-        stat: "lore",
         modifier: 4,
+        stat: "lore",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "1ao-2",
       text: "WHAT DID I DO? While this character has 10 {S} or more, she gets +4 {L}.",

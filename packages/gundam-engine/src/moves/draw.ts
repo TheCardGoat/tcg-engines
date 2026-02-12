@@ -28,13 +28,13 @@ function getDrawCount(context: MoveContext): number {
   const count = context.params?.count;
 
   // Default to 1 if not specified
-  if (count === undefined) return 1;
+  if (count === undefined) {
+    return 1;
+  }
 
   // Validate type and value
   if (typeof count !== "number" || count < 0 || !Number.isInteger(count)) {
-    throw new Error(
-      `Invalid draw count: ${count}. Must be a non-negative integer.`,
-    );
+    throw new Error(`Invalid draw count: ${count}. Must be a non-negative integer.`);
   }
 
   return count;
@@ -58,7 +58,9 @@ export const drawMove: GameMoveDefinition<GundamGameState> = {
     const { playerId } = context;
     const deck = state.zones.deck[playerId];
 
-    if (!deck) return [];
+    if (!deck) {
+      return [];
+    }
 
     const deckSize = getZoneSize(deck);
 
@@ -98,11 +100,15 @@ export const drawMove: GameMoveDefinition<GundamGameState> = {
     }
 
     // Drawing 0 cards is technically valid but unusual
-    if (count === 0) return true;
+    if (count === 0) {
+      return true;
+    }
 
     // Check if player's deck exists
     const deck = state.zones.deck[playerId];
-    if (!deck) return false;
+    if (!deck) {
+      return false;
+    }
 
     // Can only draw if deck has enough cards
     const deckSize = getZoneSize(deck);
@@ -130,12 +136,14 @@ export const drawMove: GameMoveDefinition<GundamGameState> = {
     // Validate zones exist (should never fail if condition passed)
     if (!(deck && hand)) {
       throw new Error(
-        `Missing zones for player ${playerId}: deck=${!!deck}, hand=${!!hand}`,
+        `Missing zones for player ${playerId}: deck=${Boolean(deck)}, hand=${Boolean(hand)}`,
       );
     }
 
     // Handle no-op case
-    if (count === 0) return;
+    if (count === 0) {
+      return;
+    }
 
     // Use @tcg/core's draw function to move cards
     // This will throw if trying to draw more cards than available
@@ -147,10 +155,10 @@ export const drawMove: GameMoveDefinition<GundamGameState> = {
   },
 
   metadata: {
-    category: "draw",
-    tags: ["core", "mandatory", "phase-action"],
-    description: "Draw cards from deck to hand",
-    canBeUndone: false,
     affectsZones: ["deck", "hand"],
+    canBeUndone: false,
+    category: "draw",
+    description: "Draw cards from deck to hand",
+    tags: ["core", "mandatory", "phase-action"],
   },
 };

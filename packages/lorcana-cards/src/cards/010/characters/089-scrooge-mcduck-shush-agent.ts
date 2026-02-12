@@ -4,43 +4,43 @@ export const scroogeMcduckShushAgent: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "draw",
             amount: 1,
             target: "CONTROLLER",
+            type: "draw",
           },
           {
-            type: "discard",
             amount: 1,
-            target: "CONTROLLER",
             chosen: true,
+            target: "CONTROLLER",
+            type: "discard",
           },
         ],
+        type: "sequence",
       },
       id: "1l2-1",
       name: "BACKUP PLAN",
       text: "BACKUP PLAN When you play this character, draw a card, then choose and discard a card.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },
     {
       effect: {
-        type: "return-to-hand",
         target: "SELF",
+        type: "return-to-hand",
       },
       id: "1l2-2",
       name: "ON THE MOVE",
       text: "ON THE MOVE When this character is challenged, return this card to your hand.",
       trigger: {
         event: "challenged",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

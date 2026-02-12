@@ -4,16 +4,16 @@ export const blessedBagpipes: ItemCard = {
   abilities: [
     {
       effect: {
-        type: "gain-lore",
         amount: 1,
+        type: "gain-lore",
       },
       id: "a2n-2",
       name: "BATTLE ANTHEM",
       text: "BATTLE ANTHEM Whenever one of your characters or locations with a card under them is challenged, gain 1 lore.",
       trigger: {
         event: "banish",
-        timing: "whenever",
         on: "YOUR_OTHER_CHARACTERS",
+        timing: "whenever",
       },
       type: "triggered",
     },

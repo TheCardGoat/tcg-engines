@@ -18,11 +18,7 @@ import type { CardId, GameMoveDefinition, MoveContext } from "@tcg/core";
 import type { EffectAction } from "@tcg/gundam-types/effects";
 import type { Draft } from "immer";
 import { executeAction } from "../../../effects/action-handlers";
-import {
-  findEffectInstance,
-  getEffect,
-  markEffectResolving,
-} from "../../../effects/effect-stack";
+import { findEffectInstance, getEffect, markEffectResolving } from "../../../effects/effect-stack";
 import type { GundamGameState } from "../../../types";
 
 /**
@@ -68,10 +64,7 @@ export const executeEffectMove: GameMoveDefinition<GundamGameState> = {
    * This move is called internally by resolveEffectStack,
    * not directly by players.
    */
-  enumerator: () => {
-    // Internal move - not enumerable
-    return [];
-  },
+  enumerator: () => [],
 
   /**
    * Condition: Can execute if:
@@ -89,7 +82,9 @@ export const executeEffectMove: GameMoveDefinition<GundamGameState> = {
 
     // Find effect instance
     const instance = findEffectInstance(state, effectInstanceId);
-    if (!instance) return false;
+    if (!instance) {
+      return false;
+    }
 
     // Check effect state
     if (instance.state !== "pending" && instance.state !== "resolving") {
@@ -141,8 +136,8 @@ export const executeEffectMove: GameMoveDefinition<GundamGameState> = {
     for (const action of actions) {
       // Create action context
       const actionContext = {
-        sourceCardId,
         controllerId,
+        sourceCardId,
         targets,
       };
 
@@ -152,9 +147,7 @@ export const executeEffectMove: GameMoveDefinition<GundamGameState> = {
       // Advance current action index
       const updatedInstance = findEffectInstance(draft, effectInstanceId);
       if (updatedInstance) {
-        (
-          updatedInstance as { currentActionIndex: number }
-        ).currentActionIndex += 1;
+        (updatedInstance as { currentActionIndex: number }).currentActionIndex += 1;
       }
     }
 
@@ -168,10 +161,10 @@ export const executeEffectMove: GameMoveDefinition<GundamGameState> = {
   },
 
   metadata: {
-    category: "effect-execution",
-    tags: ["internal"],
-    description: "Execute effect actions",
-    canBeUndone: false,
     affectsZones: [],
+    canBeUndone: false,
+    category: "effect-execution",
+    description: "Execute effect actions",
+    tags: ["internal"],
   },
 };

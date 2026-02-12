@@ -8,9 +8,7 @@ describe("The Headless Horseman - Relentless Spirit", () => {
       play: [theHeadlessHorsemanRelentlessSpirit],
     });
 
-    const cardUnderTest = testEngine.getCardModel(
-      theHeadlessHorsemanRelentlessSpirit,
-    );
+    const cardUnderTest = testEngine.getCardModel(theHeadlessHorsemanRelentlessSpirit);
     expect(cardUnderTest.hasBodyguard()).toBe(true);
   });
 });

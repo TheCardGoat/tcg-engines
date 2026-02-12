@@ -4,18 +4,18 @@ export const mauricesWorkshop: ItemCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "draw",
           amount: 1,
           target: "CONTROLLER",
+          type: "draw",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "18c-1",
       name: "LOOKING FOR THIS?",
       text: "LOOKING FOR THIS? Whenever you play another item, you may pay 1 {I} to draw a card.",
-      trigger: { event: "play", timing: "when", on: "SELF" },
+      trigger: { event: "play", on: "SELF", timing: "when" },
       type: "triggered",
     },
   ],

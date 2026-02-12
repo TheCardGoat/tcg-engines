@@ -4,10 +4,10 @@ export const hiddenCoveTranquilHaven: LocationCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: 1,
+        stat: "strength",
         target: "CHARACTERS_HERE",
+        type: "modify-stat",
       },
       id: "1ts-1",
       name: "REVITALIZING WATERS",

@@ -4,11 +4,11 @@ export const leadTheWay: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
-        modifier: 2,
-        target: "YOUR_CHARACTERS",
         duration: "this-turn",
+        modifier: 2,
+        stat: "strength",
+        target: "YOUR_CHARACTERS",
+        type: "modify-stat",
       },
       id: "3ig-1",
       text: "Your characters get +2 {S} this turn.",

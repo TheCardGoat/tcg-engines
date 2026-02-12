@@ -4,16 +4,16 @@ export const liloCausingAnUproar: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you've played 3 or more actions this turn",
+          type: "if",
         },
         then: {
-          type: "play-card",
-          from: "hand",
           cost: "free",
+          from: "hand",
+          type: "play-card",
         },
+        type: "conditional",
       },
       id: "1to-1",
       text: "STOMPIN' TIME! During your turn, if you've played 3 or more actions this turn, you may play this character for free.",
@@ -21,27 +21,27 @@ export const liloCausingAnUproar: CharacterCard = {
     },
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "play-card",
             from: "hand",
+            type: "play-card",
           },
           {
-            type: "restriction",
+            duration: "this-turn",
             restriction: "cant-quest",
             target: "SELF",
-            duration: "this-turn",
+            type: "restriction",
           },
         ],
+        type: "sequence",
       },
       id: "1to-2",
       name: "RAAAWR!",
       text: "RAAAWR! When you play this character, ready chosen character. They can't quest for the rest of this turn.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

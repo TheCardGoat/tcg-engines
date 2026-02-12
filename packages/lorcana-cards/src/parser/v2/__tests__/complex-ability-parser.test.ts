@@ -11,9 +11,7 @@ import { parseTriggeredAbility } from "../parsers/triggered-parser";
 
 describe("Triggered Ability Parser", () => {
   it("should parse simple triggered ability", () => {
-    const result = parseTriggeredAbility(
-      "When you play this character, draw a card.",
-    );
+    const result = parseTriggeredAbility("When you play this character, draw a card.");
 
     expect(result.success).toBe(true);
     const ability = result.ability?.ability as any;
@@ -24,9 +22,7 @@ describe("Triggered Ability Parser", () => {
   });
 
   it("should parse triggered ability with whenever", () => {
-    const result = parseTriggeredAbility(
-      "Whenever this character quests, gain 1 lore.",
-    );
+    const result = parseTriggeredAbility("Whenever this character quests, gain 1 lore.");
 
     expect(result.success).toBe(true);
     const ability = result.ability?.ability as any;
@@ -67,9 +63,7 @@ describe("Triggered Ability Parser", () => {
   });
 
   it("should parse at start of turn trigger", () => {
-    const result = parseTriggeredAbility(
-      "At the start of your turn, draw a card.",
-    );
+    const result = parseTriggeredAbility("At the start of your turn, draw a card.");
 
     expect(result.success).toBe(true);
     const ability = result.ability?.ability as any;
@@ -101,9 +95,7 @@ describe("Activated Ability Parser", () => {
   });
 
   it("should parse activated ability with combined cost", () => {
-    const result = parseActivatedAbility(
-      "{E}, 2 {I} - Deal 3 damage to chosen character.",
-    );
+    const result = parseActivatedAbility("{E}, 2 {I} - Deal 3 damage to chosen character.");
 
     expect(result.success).toBe(true);
     const ability = result.ability?.ability as any;
@@ -167,9 +159,7 @@ describe("Static Ability Parser", () => {
   });
 
   it("should parse conditional static ability", () => {
-    const result = parseStaticAbility(
-      "While this character has no damage, he gets +2 {S}.",
-    );
+    const result = parseStaticAbility("While this character has no damage, he gets +2 {S}.");
 
     expect(result.success).toBe(true);
     const ability = result.ability?.ability as any;
@@ -179,9 +169,7 @@ describe("Static Ability Parser", () => {
   });
 
   it("should parse named static ability", () => {
-    const result = parseStaticAbility(
-      "HIDDEN AWAY This character can't be challenged.",
-    );
+    const result = parseStaticAbility("HIDDEN AWAY This character can't be challenged.");
 
     expect(result.success).toBe(true);
     expect(result.ability?.name).toBe("HIDDEN AWAY");

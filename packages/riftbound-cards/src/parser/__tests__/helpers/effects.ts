@@ -75,8 +75,12 @@ export const Effects = {
     then?: Effect,
   ): DiscardEffect => {
     const effect: DiscardEffect = { amount, type: "discard" };
-    if (player) {(effect as { player: typeof player }).player = player;}
-    if (then) {(effect as { then: Effect }).then = then;}
+    if (player) {
+      (effect as { player: typeof player }).player = player;
+    }
+    if (then) {
+      (effect as { then: Effect }).then = then;
+    }
     return effect;
   },
 

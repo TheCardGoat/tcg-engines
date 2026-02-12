@@ -10,17 +10,17 @@ export const isabelaMadrigalGoldenChild: CharacterCard = {
     },
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "no other character has quested this turn",
+          type: "if",
         },
         then: {
-          type: "modify-stat",
-          stat: "lore",
           modifier: 3,
+          stat: "lore",
           target: "SELF",
+          type: "modify-stat",
         },
+        type: "conditional",
       },
       id: "qop-2",
       text: "LADIES FIRST During your turn, if no other character has quested this turn, this character gets +3 {L}.",
@@ -28,18 +28,18 @@ export const isabelaMadrigalGoldenChild: CharacterCard = {
     },
     {
       effect: {
-        type: "restriction",
+        duration: "this-turn",
         restriction: "cant-quest",
         target: "SELF",
-        duration: "this-turn",
+        type: "restriction",
       },
       id: "qop-3",
       name: "LEAVE IT TO ME",
       text: "LEAVE IT TO ME Whenever this character quests, your other characters can't quest for the rest of this turn.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

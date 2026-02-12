@@ -21,10 +21,10 @@ import type {
  *
  * Configuration for HistoryManager initialization.
  */
-export type HistoryManagerOptions = {
+export interface HistoryManagerOptions {
   /** Initial entries (for replay/restore) */
   initialEntries?: HistoryEntry[];
-};
+}
 
 /**
  * History Manager
@@ -162,10 +162,7 @@ export class HistoryManager {
    * @param playerId - Player requesting access (undefined = see all)
    * @returns True if player can see this entry
    */
-  private canPlayerSeeEntry(
-    entry: HistoryEntry,
-    playerId: PlayerId | undefined,
-  ): boolean {
+  private canPlayerSeeEntry(entry: HistoryEntry, playerId: PlayerId | undefined): boolean {
     // If no player filter, show all entries
     if (playerId === undefined) {
       return true;
@@ -220,16 +217,16 @@ export class HistoryManager {
 
     // Build formatted entry
     const formatted: FormattedHistoryEntry = {
+      error: entry.error,
       id: entry.id,
+      message,
       moveId: entry.moveId,
+      phase: entry.phase,
       playerId: entry.playerId,
+      segment: entry.segment,
+      success: entry.success,
       timestamp: entry.timestamp,
       turn: entry.turn,
-      phase: entry.phase,
-      segment: entry.segment,
-      message,
-      success: entry.success,
-      error: entry.error,
     };
 
     // Include additional details for DEVELOPER mode
@@ -297,16 +294,18 @@ export class HistoryManager {
     verbosity: VerbosityLevel,
   ): MessageTemplateData | null {
     switch (verbosity) {
-      case "DEVELOPER":
-        return (
-          messages.developer ?? messages.advanced ?? messages.casual ?? null
-        );
-      case "ADVANCED":
+      case "DEVELOPER": {
+        return messages.developer ?? messages.advanced ?? messages.casual ?? null;
+      }
+      case "ADVANCED": {
         return messages.advanced ?? messages.casual ?? null;
-      case "CASUAL":
+      }
+      case "CASUAL": {
         return messages.casual ?? null;
-      default:
+      }
+      default: {
         return messages.casual ?? null;
+      }
     }
   }
 }

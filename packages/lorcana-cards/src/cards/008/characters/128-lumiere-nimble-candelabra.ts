@@ -4,9 +4,9 @@ export const lumiereNimbleCandelabra: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Evasive",
         target: "SELF",
+        type: "gain-keyword",
       },
       id: "1k4-1",
       text: "QUICK-STEP While you have an item card in your discard, this character gains Evasive.",

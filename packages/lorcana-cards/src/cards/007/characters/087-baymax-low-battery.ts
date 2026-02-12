@@ -4,9 +4,9 @@ export const baymaxLowBattery: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "restriction",
         restriction: "enters-play-exerted",
         target: "SELF",
+        type: "restriction",
       },
       id: "10p-1",
       name: "SHHHHH",

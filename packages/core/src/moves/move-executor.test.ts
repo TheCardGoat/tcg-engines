@@ -4,20 +4,14 @@ import type { GameMoveDefinition } from "../game-definition/move-definitions";
 import { createMockContext } from "../testing/test-context-factory";
 import type { PlayerId } from "../types";
 import { createPlayerId } from "../types";
-import {
-  canExecuteMove,
-  executeMove,
-  getMove,
-  getMoveIds,
-  moveExists,
-} from "./move-executor";
+import { canExecuteMove, executeMove, getMove, getMoveIds, moveExists } from "./move-executor";
 import type { MoveContext } from "./move-system";
 
 describe("Move Executor", () => {
-  type TestGameState = {
+  interface TestGameState {
     players: Record<PlayerId, { life: number; mana: number }>;
     turnCount: number;
-  };
+  }
 
   const player1 = createPlayerId("p1");
   const player2 = createPlayerId("p2");
@@ -31,16 +25,9 @@ describe("Move Executor", () => {
   };
 
   const testMoves: Record<string, GameMoveDefinition<TestGameState>> = {
-    "spend-mana": {
-      condition: (state: TestGameState, context: MoveContext) =>
-        state.players[context.playerId].mana >= 2,
-      reducer: (draft: Draft<TestGameState>, context: MoveContext) => {
-        draft.players[context.playerId].mana -= 2;
-      },
-    },
     "deal-damage": {
       condition: (state: TestGameState, context: MoveContext) => {
-        if (!context.targets?.[0]) return false;
+        if (!context.targets?.[0]) {return false;}
         const targetId = context.targets[0][0] as PlayerId;
         return targetId in state.players;
       },
@@ -56,20 +43,22 @@ describe("Move Executor", () => {
         draft.turnCount += 1;
       },
     },
+    "spend-mana": {
+      condition: (state: TestGameState, context: MoveContext) =>
+        state.players[context.playerId].mana >= 2,
+      reducer: (draft: Draft<TestGameState>, context: MoveContext) => {
+        draft.players[context.playerId].mana -= 2;
+      },
+    },
   };
 
   describe("executeMove", () => {
     it("should execute valid move successfully", () => {
       const context: MoveContext = createMockContext({
-        playerId: player1,
         params: {},
+        playerId: player1,
       });
-      const result = executeMove(
-        initialState,
-        "spend-mana",
-        context,
-        testMoves,
-      );
+      const result = executeMove(initialState, "spend-mana", context, testMoves);
 
       expect(result.success).toBe(true);
       if (result.success) {
@@ -88,15 +77,10 @@ describe("Move Executor", () => {
       };
 
       const context: MoveContext = createMockContext({
-        playerId: player1,
         params: {},
+        playerId: player1,
       });
-      const result = executeMove(
-        lowManaState,
-        "spend-mana",
-        context,
-        testMoves,
-      );
+      const result = executeMove(lowManaState, "spend-mana", context, testMoves);
 
       expect(result.success).toBe(false);
       if (!result.success) {
@@ -107,15 +91,10 @@ describe("Move Executor", () => {
 
     it("should reject non-existent move", () => {
       const context: MoveContext = createMockContext({
-        playerId: player1,
         params: {},
+        playerId: player1,
       });
-      const result = executeMove(
-        initialState,
-        "nonexistent",
-        context,
-        testMoves,
-      );
+      const result = executeMove(initialState, "nonexistent", context, testMoves);
 
       expect(result.success).toBe(false);
       if (!result.success) {
@@ -126,8 +105,8 @@ describe("Move Executor", () => {
 
     it("should execute move without condition", () => {
       const context: MoveContext = createMockContext({
-        playerId: player1,
         params: {},
+        playerId: player1,
       });
       const result = executeMove(initialState, "next-turn", context, testMoves);
 
@@ -139,16 +118,11 @@ describe("Move Executor", () => {
 
     it("should execute move with targets", () => {
       const context: MoveContext = createMockContext({
-        playerId: player1,
         params: {},
+        playerId: player1,
         targets: [[player2]],
       });
-      const result = executeMove(
-        initialState,
-        "deal-damage",
-        context,
-        testMoves,
-      );
+      const result = executeMove(initialState, "deal-damage", context, testMoves);
 
       expect(result.success).toBe(true);
       if (result.success) {
@@ -166,8 +140,8 @@ describe("Move Executor", () => {
 
       const moves = { ...testMoves, broken: brokenMove };
       const context: MoveContext = createMockContext({
-        playerId: player1,
         params: {},
+        playerId: player1,
       });
       const result = executeMove(initialState, "broken", context, moves);
 
@@ -187,15 +161,10 @@ describe("Move Executor", () => {
 
       const moves = { ...testMoves, "broken-reducer": brokenMove };
       const context: MoveContext = createMockContext({
-        playerId: player1,
         params: {},
+        playerId: player1,
       });
-      const result = executeMove(
-        initialState,
-        "broken-reducer",
-        context,
-        moves,
-      );
+      const result = executeMove(initialState, "broken-reducer", context, moves);
 
       expect(result.success).toBe(false);
       if (!result.success) {
@@ -206,8 +175,8 @@ describe("Move Executor", () => {
 
     it("should not mutate original state", () => {
       const context: MoveContext = createMockContext({
-        playerId: player1,
         params: {},
+        playerId: player1,
       });
       executeMove(initialState, "spend-mana", context, testMoves);
 
@@ -219,15 +188,10 @@ describe("Move Executor", () => {
   describe("canExecuteMove", () => {
     it("should return true for valid move", () => {
       const context: MoveContext = createMockContext({
-        playerId: player1,
         params: {},
+        playerId: player1,
       });
-      const canExecute = canExecuteMove(
-        initialState,
-        "spend-mana",
-        context,
-        testMoves,
-      );
+      const canExecute = canExecuteMove(initialState, "spend-mana", context, testMoves);
 
       expect(canExecute).toBe(true);
     });
@@ -242,53 +206,38 @@ describe("Move Executor", () => {
       };
 
       const context: MoveContext = createMockContext({
-        playerId: player1,
         params: {},
+        playerId: player1,
       });
-      const canExecute = canExecuteMove(
-        lowManaState,
-        "spend-mana",
-        context,
-        testMoves,
-      );
+      const canExecute = canExecuteMove(lowManaState, "spend-mana", context, testMoves);
 
       expect(canExecute).toBe(false);
     });
 
     it("should return false for non-existent move", () => {
       const context: MoveContext = createMockContext({
-        playerId: player1,
         params: {},
+        playerId: player1,
       });
-      const canExecute = canExecuteMove(
-        initialState,
-        "nonexistent",
-        context,
-        testMoves,
-      );
+      const canExecute = canExecuteMove(initialState, "nonexistent", context, testMoves);
 
       expect(canExecute).toBe(false);
     });
 
     it("should return true for move without condition", () => {
       const context: MoveContext = createMockContext({
-        playerId: player1,
         params: {},
+        playerId: player1,
       });
-      const canExecute = canExecuteMove(
-        initialState,
-        "next-turn",
-        context,
-        testMoves,
-      );
+      const canExecute = canExecuteMove(initialState, "next-turn", context, testMoves);
 
       expect(canExecute).toBe(true);
     });
 
     it("should not execute the move (dry run)", () => {
       const context: MoveContext = createMockContext({
-        playerId: player1,
         params: {},
+        playerId: player1,
       });
       canExecuteMove(initialState, "spend-mana", context, testMoves);
 
@@ -306,8 +255,8 @@ describe("Move Executor", () => {
 
       const moves = { ...testMoves, broken: brokenMove };
       const context: MoveContext = createMockContext({
-        playerId: player1,
         params: {},
+        playerId: player1,
       });
       const canExecute = canExecuteMove(initialState, "broken", context, moves);
 
@@ -361,26 +310,16 @@ describe("Move Executor", () => {
   describe("Integration: Validation Pipeline", () => {
     it("should follow full validation pipeline", () => {
       const context: MoveContext = createMockContext({
-        playerId: player1,
         params: {},
+        playerId: player1,
       });
 
       // 1. Check if move can be executed
-      const canExecute = canExecuteMove(
-        initialState,
-        "spend-mana",
-        context,
-        testMoves,
-      );
+      const canExecute = canExecuteMove(initialState, "spend-mana", context, testMoves);
       expect(canExecute).toBe(true);
 
       // 2. Execute the move
-      const result = executeMove(
-        initialState,
-        "spend-mana",
-        context,
-        testMoves,
-      );
+      const result = executeMove(initialState, "spend-mana", context, testMoves);
       expect(result.success).toBe(true);
 
       // 3. Use new state
@@ -389,12 +328,7 @@ describe("Move Executor", () => {
         expect(newState.players[player1].mana).toBe(3);
 
         // 4. Check if move can still be executed
-        const canExecuteAgain = canExecuteMove(
-          newState,
-          "spend-mana",
-          context,
-          testMoves,
-        );
+        const canExecuteAgain = canExecuteMove(newState, "spend-mana", context, testMoves);
         expect(canExecuteAgain).toBe(true); // Still >= 2 mana
       }
     });
@@ -409,18 +343,13 @@ describe("Move Executor", () => {
       };
 
       const context: MoveContext = createMockContext({
-        playerId: player1,
         params: {},
+        playerId: player1,
       });
 
       // Pre-check prevents unnecessary execution
       if (canExecuteMove(lowManaState, "spend-mana", context, testMoves)) {
-        const result = executeMove(
-          lowManaState,
-          "spend-mana",
-          context,
-          testMoves,
-        );
+        const result = executeMove(lowManaState, "spend-mana", context, testMoves);
         expect(result.success).toBe(true);
       } else {
         // Move was correctly prevented

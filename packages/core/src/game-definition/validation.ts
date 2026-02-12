@@ -32,23 +32,23 @@ const GameDefinitionSchema = z.object({
   moves: z.record(
     z.string(),
     z.object({
-      reducer: z.any(),
       condition: z.any().optional(),
       metadata: z.record(z.string(), z.any()).optional(),
+      reducer: z.any(),
     }),
   ),
 
   // Optional flow validation
   flow: z
     .object({
-      initial: z.string(),
-      states: z.record(z.string(), z.any()),
       hooks: z
         .object({
           onBegin: z.any().optional(),
           onEnd: z.any().optional(),
         })
         .optional(),
+      initial: z.string(),
+      states: z.record(z.string(), z.any()),
     })
     .optional(),
 
@@ -72,10 +72,9 @@ const GameDefinitionSchema = z.object({
  * @param definition - GameDefinition to validate
  * @returns GameDefinitionValidationResult with success flag and error details
  */
-export function validateGameDefinition<
-  TState,
-  TMoves extends Record<string, any>,
->(definition: GameDefinition<TState, TMoves>): GameDefinitionValidationResult {
+export function validateGameDefinition<TState, TMoves extends Record<string, any>>(
+  definition: GameDefinition<TState, TMoves>,
+): GameDefinitionValidationResult {
   const errors: string[] = [];
 
   try {
@@ -161,9 +160,9 @@ export function validateGameDefinition<
   // Return result
   if (errors.length > 0) {
     return {
-      success: false,
       error: errors.join("; "),
       errors,
+      success: false,
     };
   }
 

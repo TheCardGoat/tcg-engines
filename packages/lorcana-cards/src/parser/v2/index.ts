@@ -203,9 +203,7 @@ export class LorcanaParserV2 {
 
     // Try location/static effect name pattern (with "Characters gain/get while here")
     if (!name) {
-      nameMatch = originalText.match(
-        /^([A-Z][A-Z\s!?'-]+)\s+Characters\s+(?:gain|get)/i,
-      );
+      nameMatch = originalText.match(/^([A-Z][A-Z\s!?'-]+)\s+Characters\s+(?:gain|get)/i);
       // Exclude common words that are not ability names
       const invalidNames = ["Your", "Their", "Opponent's", "All"];
       const extractedName = nameMatch ? nameMatch[1].trim() : undefined;
@@ -216,9 +214,7 @@ export class LorcanaParserV2 {
 
     // Try special ability grant name pattern (with "This character can challenge")
     if (!name) {
-      nameMatch = originalText.match(
-        /^([A-Z][A-Z\s!?'-]+)\s+This character\s+can challenge/i,
-      );
+      nameMatch = originalText.match(/^([A-Z][A-Z\s!?'-]+)\s+This character\s+can challenge/i);
       name = nameMatch ? nameMatch[1].trim() : undefined;
     }
 
@@ -235,9 +231,7 @@ export class LorcanaParserV2 {
       // Named abilities with restriction: "NAME Once per turn, when X, do Y"
       (name &&
         (/^(When|Whenever)/i.test(originalText.substring(name.length).trim()) ||
-          /^Once per turn,\s+(?:when|whenever)/i.test(
-            originalText.substring(name.length).trim(),
-          ) ||
+          /^Once per turn,\s+(?:when|whenever)/i.test(originalText.substring(name.length).trim()) ||
           /^During your turn,\s+(?:when|whenever)/i.test(
             originalText.substring(name.length).trim(),
           )));
@@ -301,9 +295,7 @@ export class LorcanaParserV2 {
       /^(?:While |Your characters |Your items |This character can'?t |This character cannot |This item can'?t |This item cannot |[A-Z][A-Z\s!?'-]+\s+(?:This character|This item|This character can'?t|This item can'?t|This character cannot|This item cannot))|(?:enters? play exerted)/i.test(
         originalText,
       ) ||
-      /(?:Each player|Each opponent)\s+(?:can'?t|cannot|can)\s+/i.test(
-        originalText,
-      ) ||
+      /(?:Each player|Each opponent)\s+(?:can'?t|cannot|can)\s+/i.test(originalText) ||
       /characters?\s+(?:gain|get)\s+/i.test(originalText) ||
       /items?\s+(?:gain|get)\s+/i.test(originalText) ||
       /This character can challenge ready characters/i.test(originalText);
@@ -345,10 +337,6 @@ export const parserV2 = new LorcanaParserV2();
 
 export { logger } from "./logging";
 export type { MultiParseResult } from "./parser";
-export {
-  parseAbilityText,
-  parseAbilityTextMulti,
-  parseAbilityTexts,
-} from "./parser";
+export { parseAbilityText, parseAbilityTextMulti, parseAbilityTexts } from "./parser";
 // Re-export types and utilities
 export type { Ability, AbilityWithText, Effect, ParseResult } from "./types";

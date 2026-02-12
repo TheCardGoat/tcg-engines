@@ -4,9 +4,9 @@ export const flintheartGlomgoldLoneCheater: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Evasive",
         target: "SELF",
+        type: "gain-keyword",
       },
       id: "j9d-1",
       text: "THEY'LL NEVER SEE IT COMING! During your turn, this character gains Evasive.",

@@ -4,19 +4,19 @@ export const fixitFelixJrPintsizedHero: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "restriction",
+          duration: "this-turn",
           restriction: "cant-quest",
           target: "SELF",
-          duration: "this-turn",
+          type: "restriction",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "b28-1",
       name: "LET'S GET TO WORK",
       text: "LET'S GET TO WORK Whenever you return a Racer character card from your discard to your hand, you may ready chosen Racer character. They can't quest for the rest of this turn.",
-      trigger: { event: "play", timing: "when", on: "SELF" },
+      trigger: { event: "play", on: "SELF", timing: "when" },
       type: "triggered",
     },
   ],

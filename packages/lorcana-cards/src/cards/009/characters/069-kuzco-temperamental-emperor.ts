@@ -10,9 +10,8 @@ export const kuzcoTemperamentalEmperor: CharacterCard = {
     },
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "banish",
           target: {
             selector: "chosen",
             count: 1,
@@ -20,16 +19,17 @@ export const kuzcoTemperamentalEmperor: CharacterCard = {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "banish",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "1og-2",
       name: "NO TOUCHY!",
       text: "NO TOUCHY! When this character is challenged and banished, you may banish the challenging character.",
       trigger: {
         event: "challenged",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

@@ -4,9 +4,8 @@ export const beastForbiddingRecluse: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "deal-damage",
           amount: 1,
           target: {
             selector: "chosen",
@@ -15,16 +14,17 @@ export const beastForbiddingRecluse: CharacterCard = {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "deal-damage",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "682-1",
       name: "YOU'RE NOT WELCOME HERE",
       text: "YOU'RE NOT WELCOME HERE When you play this character, you may deal 1 damage to chosen character.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

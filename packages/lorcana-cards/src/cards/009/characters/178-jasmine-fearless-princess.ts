@@ -4,9 +4,9 @@ export const jasmineFearlessPrincess: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Evasive",
         target: "SELF",
+        type: "gain-keyword",
       },
       id: "t89-1",
       text: "TAKE THE LEAP During your turn, this character gains Evasive.",
@@ -15,11 +15,11 @@ export const jasmineFearlessPrincess: CharacterCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "gain-keyword",
+        duration: "this-turn",
         keyword: "Challenger",
         target: "SELF",
+        type: "gain-keyword",
         value: 3,
-        duration: "this-turn",
       },
       id: "t89-2",
       text: "NOW'S MY CHANCE Choose and discard a card — This character gains Challenger +3 this turn.",

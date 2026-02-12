@@ -4,26 +4,26 @@ export const princeJohnFraidycat: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "deal-damage",
         amount: 1,
         target: {
-          selector: "self",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "self",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "deal-damage",
       },
       id: "fa9-1",
       name: "HELP! HELP!",
       text: "HELP! HELP! Whenever an opponent plays a character, deal 1 damage to this character.",
       trigger: {
         event: "play",
-        timing: "whenever",
         on: {
-          controller: "opponent",
           cardType: "character",
+          controller: "opponent",
         },
+        timing: "whenever",
       },
       type: "triggered",
     },

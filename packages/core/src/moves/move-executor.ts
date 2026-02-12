@@ -8,10 +8,7 @@ import type { MoveContext, MoveResult } from "./move-system";
  * Used by executor functions that need to look up moves by string ID.
  * For type-safe move definitions in game definitions, use GameMoveDefinitions instead.
  */
-type GenericMoveMap<TGameState> = Record<
-  string,
-  GameMoveDefinition<TGameState>
->;
+type GenericMoveMap<TGameState> = Record<string, GameMoveDefinition<TGameState>>;
 
 /**
  * Execute a move with full validation pipeline
@@ -54,10 +51,10 @@ export function executeMove<TGameState>(
   const moveDef = moves[moveId];
   if (!moveDef) {
     return {
-      success: false,
       error: `Move '${moveId}' does not exist`,
       errorCode: "MOVE_NOT_FOUND",
       errorContext: { moveId },
+      success: false,
     };
   }
 
@@ -67,21 +64,21 @@ export function executeMove<TGameState>(
       const isValid = moveDef.condition(state, context);
       if (!isValid) {
         return {
-          success: false,
           error: `Move '${moveId}' condition not met`,
           errorCode: "CONDITION_FAILED",
           errorContext: { moveId },
+          success: false,
         };
       }
     } catch (error) {
       return {
-        success: false,
         error: `Error checking condition for move '${moveId}': ${error instanceof Error ? error.message : String(error)}`,
         errorCode: "CONDITION_ERROR",
         errorContext: {
           moveId,
           originalError: error instanceof Error ? error.message : String(error),
         },
+        success: false,
       };
     }
   }
@@ -93,18 +90,18 @@ export function executeMove<TGameState>(
     });
 
     return {
-      success: true,
       state: nextState,
+      success: true,
     };
   } catch (error) {
     return {
-      success: false,
       error: `Error executing move '${moveId}': ${error instanceof Error ? error.message : String(error)}`,
       errorCode: "EXECUTION_ERROR",
       errorContext: {
         moveId,
         originalError: error instanceof Error ? error.message : String(error),
       },
+      success: false,
     };
   }
 }
@@ -174,9 +171,7 @@ export function getMove<TGameState>(
  * @param moves - Available moves
  * @returns Array of move IDs
  */
-export function getMoveIds<TGameState>(
-  moves: GenericMoveMap<TGameState>,
-): string[] {
+export function getMoveIds<TGameState>(moves: GenericMoveMap<TGameState>): string[] {
   return Object.keys(moves);
 }
 
@@ -187,9 +182,6 @@ export function getMoveIds<TGameState>(
  * @param moves - Available moves
  * @returns True if move exists
  */
-export function moveExists<TGameState>(
-  moveId: string,
-  moves: GenericMoveMap<TGameState>,
-): boolean {
+export function moveExists<TGameState>(moveId: string, moves: GenericMoveMap<TGameState>): boolean {
   return moveId in moves;
 }

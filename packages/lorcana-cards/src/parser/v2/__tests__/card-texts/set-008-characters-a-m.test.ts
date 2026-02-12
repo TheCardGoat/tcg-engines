@@ -1,13 +1,6 @@
 // @ts-nocheck - Skipped tests contain expected values that don't match current types
 import { describe, expect, it } from "bun:test";
-import {
-  Abilities,
-  Conditions,
-  Costs,
-  Effects,
-  Targets,
-  Triggers,
-} from "@tcg/lorcana-types";
+import { Abilities, Conditions, Costs, Effects, Targets, Triggers } from "@tcg/lorcana-types";
 import { parseAbilityTextMulti } from "../../parser";
 
 describe("Set 008 Card Text Parser Tests - Characters A M", () => {
@@ -92,8 +85,7 @@ describe("Set 008 Card Text Parser Tests - Characters A M", () => {
   });
 
   it.skip("Darling Dear - Beloved Wife: should parse card text", () => {
-    const text =
-      "HOW SWEET When you play this character, chosen character gets +2 {L} this turn.";
+    const text = "HOW SWEET When you play this character, chosen character gets +2 {L} this turn.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBeGreaterThan(0);
@@ -132,8 +124,7 @@ describe("Set 008 Card Text Parser Tests - Characters A M", () => {
   });
 
   it.skip("Bolt - Down but Not Out: should parse card text", () => {
-    const text =
-      "NONE OF YOUR POWERS ARE WORKING This character enters play exerted.";
+    const text = "NONE OF YOUR POWERS ARE WORKING This character enters play exerted.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBeGreaterThan(0);
@@ -220,8 +211,7 @@ describe("Set 008 Card Text Parser Tests - Characters A M", () => {
   });
 
   it.skip("Druun - Ravenous Plague: should parse card text", () => {
-    const text =
-      "Challenger +4 (While challenging, this character gets +4 {S}.)";
+    const text = "Challenger +4 (While challenging, this character gets +4 {S}.)";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBeGreaterThan(0);
@@ -284,8 +274,7 @@ describe("Set 008 Card Text Parser Tests - Characters A M", () => {
   });
 
   it.skip("Elsa - Fierce Protector: should parse card text", () => {
-    const text =
-      "ICE OVER 1 {I} , Choose and discard a card — Exert chosen opposing character.";
+    const text = "ICE OVER 1 {I} , Choose and discard a card — Exert chosen opposing character.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBeGreaterThan(0);
@@ -404,8 +393,7 @@ describe("Set 008 Card Text Parser Tests - Characters A M", () => {
   });
 
   it.skip("Into the Unknown: should parse card text", () => {
-    const text =
-      "Put chosen exerted character into their player's inkwell facedown and exerted.";
+    const text = "Put chosen exerted character into their player's inkwell facedown and exerted.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBeGreaterThan(0);
@@ -460,8 +448,7 @@ describe("Set 008 Card Text Parser Tests - Characters A M", () => {
   });
 
   it.skip("Fred - Major Science Enthusiast: should parse card text", () => {
-    const text =
-      "SPITTING FIRE! When you play this character, you may banish chosen item.";
+    const text = "SPITTING FIRE! When you play this character, you may banish chosen item.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBeGreaterThan(0);
@@ -753,16 +740,14 @@ describe("Set 008 Card Text Parser Tests - Characters A M", () => {
   });
 
   it.skip("Light the Fuse: should parse card text", () => {
-    const text =
-      "Deal 1 damage to chosen character for each exerted character you have in play.";
+    const text = "Deal 1 damage to chosen character for each exerted character you have in play.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBeGreaterThan(0);
   });
 
   it.skip("Most Everyone's Mad Here: should parse card text", () => {
-    const text =
-      "Gain lore equal to the damage on chosen character, then banish them.";
+    const text = "Gain lore equal to the damage on chosen character, then banish them.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBeGreaterThan(0);
@@ -911,8 +896,7 @@ describe("Set 008 Card Text Parser Tests - Characters A M", () => {
   });
 
   it.skip("Captain Hook - Forceful Duelist: should parse card text", () => {
-    const text =
-      "Challenger +2 (While challenging, this character gets +2 {S}.)";
+    const text = "Challenger +2 (While challenging, this character gets +2 {S}.)";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBeGreaterThan(0);

@@ -37,17 +37,18 @@ describe("Condition Resolver", () => {
     registry = {
       getAllCards: () => [],
       getCard: (id: string) => {
-        if (id === "def-elsa")
-          {return {
-            id: "def-elsa",
-            name: "Elsa",
-            fullName: "Elsa - Snow Queen",
+        if (id === "def-elsa") {
+          return {
             cardType: "character",
-            inkType: ["amethyst"],
             cost: 3,
+            fullName: "Elsa - Snow Queen",
+            id: "def-elsa",
+            inkType: ["amethyst"],
             inkable: true,
+            name: "Elsa",
             set: "1",
-          } as LorcanaCardDefinition;}
+          } as LorcanaCardDefinition;
+        }
         return undefined;
       },
       hasCard: () => true,

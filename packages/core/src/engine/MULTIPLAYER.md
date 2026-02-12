@@ -72,13 +72,13 @@ const server = new MultiplayerEngine(gameDefinition, players, {
   // Callback when moves are rejected
   onMoveRejected: (moveId, error, errorCode) => {
     console.error(`Move ${moveId} rejected: ${error}`);
-  }
+  },
 });
 
 // Execute moves (server only)
 const result = server.executeMove("playCard", {
   playerId: createPlayerId("p1"),
-  data: { cardId: "card-123" }
+  data: { cardId: "card-123" },
 });
 
 // Patches are automatically broadcast via onPatchBroadcast callback
@@ -96,7 +96,7 @@ const client = new MultiplayerEngine(gameDefinition, players, {
   onPatchesApplied: (patches) => {
     console.log(`Applied ${patches.length} patches from server`);
     updateUI(); // Refresh your game UI
-  }
+  },
 });
 
 // Receive and apply patches from server
@@ -137,7 +137,7 @@ function handleDrawCard() {
   websocket.send({
     type: "MOVE_REQUEST",
     moveId: "drawCard",
-    playerId: "p1"
+    playerId: "p1",
   });
 }
 
@@ -146,7 +146,7 @@ function handleDrawCard() {
 websocket.on("message", (msg) => {
   if (msg.type === "MOVE_REQUEST") {
     const result = server.executeMove(msg.moveId, {
-      playerId: msg.playerId
+      playerId: msg.playerId,
     });
 
     // On success, patches automatically broadcast to all clients
@@ -155,7 +155,7 @@ websocket.on("message", (msg) => {
       websocket.send({
         type: "MOVE_ERROR",
         error: result.error,
-        errorCode: result.errorCode
+        errorCode: result.errorCode,
       });
     }
   }
@@ -173,7 +173,7 @@ function handleReconnection(clientId: string, lastKnownIndex: number) {
   return {
     type: "CATCHUP",
     patches: catchupPatches,
-    currentIndex: server.getCurrentHistoryIndex()
+    currentIndex: server.getCurrentHistoryIndex(),
   };
 }
 
@@ -181,7 +181,7 @@ function handleReconnection(clientId: string, lastKnownIndex: number) {
 function reconnect(lastKnownIndex: number) {
   websocket.send({
     type: "RECONNECT",
-    lastKnownIndex
+    lastKnownIndex,
   });
 }
 
@@ -216,7 +216,7 @@ if (clientState && !clientState.connected) {
 
 // Get all clients for monitoring
 const allClients = server.getAllClients();
-console.log(`${allClients.filter(c => c.connected).length} clients online`);
+console.log(`${allClients.filter((c) => c.connected).length} clients online`);
 ```
 
 ### Pattern 4: Optimistic UI Updates
@@ -236,7 +236,7 @@ function handlePlayCard(cardId: string) {
   websocket.send({
     type: "MOVE_REQUEST",
     moveId: "playCard",
-    data: { cardId }
+    data: { cardId },
   });
 
   // Server will broadcast patches if successful
@@ -256,35 +256,35 @@ websocket.on("message", (msg) => {
 
 ### Server-Only Methods
 
-| Method | Description |
-|--------|-------------|
-| `executeMove(moveId, context)` | Execute a move and generate patches |
-| `getCatchupPatches(sinceIndex)` | Get patches for reconnecting clients |
-| `registerClient(clientId, lastSyncedIndex)` | Track a connected client |
-| `unregisterClient(clientId)` | Mark client as disconnected |
-| `updateClientSyncIndex(clientId, index)` | Update client's sync state |
-| `getClientState(clientId)` | Get a client's sync state |
-| `getAllClients()` | Get all registered clients |
-| `getHistory()` | Get full move history |
-| `getCurrentHistoryIndex()` | Get current history position |
+| Method                                      | Description                          |
+| ------------------------------------------- | ------------------------------------ |
+| `executeMove(moveId, context)`              | Execute a move and generate patches  |
+| `getCatchupPatches(sinceIndex)`             | Get patches for reconnecting clients |
+| `registerClient(clientId, lastSyncedIndex)` | Track a connected client             |
+| `unregisterClient(clientId)`                | Mark client as disconnected          |
+| `updateClientSyncIndex(clientId, index)`    | Update client's sync state           |
+| `getClientState(clientId)`                  | Get a client's sync state            |
+| `getAllClients()`                           | Get all registered clients           |
+| `getHistory()`                              | Get full move history                |
+| `getCurrentHistoryIndex()`                  | Get current history position         |
 
 ### Client-Only Methods
 
-| Method | Description |
-|--------|-------------|
+| Method                        | Description               |
+| ----------------------------- | ------------------------- |
 | `applyServerPatches(patches)` | Apply patches from server |
 
 ### Common Methods (Both Server & Client)
 
-| Method | Description |
-|--------|-------------|
-| `getState()` | Get current game state |
-| `getPlayerView(playerId)` | Get player-specific view |
-| `canExecuteMove(moveId, context)` | Check if move is valid |
-| `getValidMoves(playerId)` | Get all valid moves for player |
-| `checkGameEnd()` | Check if game has ended |
-| `getEngine()` | Access underlying RuleEngine |
-| `getMode()` | Get current mode (server/client) |
+| Method                            | Description                      |
+| --------------------------------- | -------------------------------- |
+| `getState()`                      | Get current game state           |
+| `getPlayerView(playerId)`         | Get player-specific view         |
+| `canExecuteMove(moveId, context)` | Check if move is valid           |
+| `getValidMoves(playerId)`         | Get all valid moves for player   |
+| `checkGameEnd()`                  | Check if game has ended          |
+| `getEngine()`                     | Access underlying RuleEngine     |
+| `getMode()`                       | Get current mode (server/client) |
 
 ## Examples
 
@@ -309,7 +309,7 @@ export function createLorcanaServer(players) {
   return new MultiplayerEngine(lorcanaGameDefinition, players, {
     mode: "server",
     seed: generateGameSeed(),
-    onPatchBroadcast: broadcastToClients
+    onPatchBroadcast: broadcastToClients,
   });
 }
 ```
@@ -325,7 +325,7 @@ export function createGundamServer(players) {
   return new MultiplayerEngine(gundamGameDefinition, players, {
     mode: "server",
     seed: generateGameSeed(),
-    onPatchBroadcast: broadcastToClients
+    onPatchBroadcast: broadcastToClients,
   });
 }
 ```
@@ -411,7 +411,7 @@ if (result.success) {
 // NEW CODE
 const server = new MultiplayerEngine(gameDefinition, players, {
   mode: "server",
-  onPatchBroadcast: (broadcast) => broadcastToClients(broadcast.patches)
+  onPatchBroadcast: (broadcast) => broadcastToClients(broadcast.patches),
 });
 const result = server.executeMove("playCard", context);
 // Patches automatically broadcast via callback

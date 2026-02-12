@@ -4,22 +4,22 @@ export const minnieMouseStoryteller: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "lore",
-        modifier: 1,
-        target: "SELF",
         duration: "this-turn",
+        modifier: 1,
+        stat: "lore",
+        target: "SELF",
+        type: "modify-stat",
       },
       id: "i03-1",
       name: "GATHER AROUND",
       text: "GATHER AROUND Whenever you play a character, this character gets +1 {L} this turn.",
       trigger: {
         event: "play",
-        timing: "whenever",
         on: {
-          controller: "you",
           cardType: "character",
+          controller: "you",
         },
+        timing: "whenever",
       },
       type: "triggered",
     },

@@ -10,10 +10,10 @@ export const flotsamUrsulasSpy: CharacterCard = {
     },
     {
       effect: {
-        type: "gain-keyword",
+        duration: "this-turn",
         keyword: "Rush",
         target: "YOUR_CHARACTERS",
-        duration: "this-turn",
+        type: "gain-keyword",
       },
       id: "4d0-2",
       name: "DEXTEROUS LUNGE",

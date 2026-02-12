@@ -4,15 +4,15 @@ export const mickeyMouseDetective: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "put-into-inkwell",
-          source: "top-of-deck",
-          target: "CONTROLLER",
           exerted: true,
           facedown: true,
+          source: "top-of-deck",
+          target: "CONTROLLER",
+          type: "put-into-inkwell",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "aec-1",
       text: "**GET A CLUE** When you play this character, you may put the top card of your deck into your inkwell facedown and exerted.",

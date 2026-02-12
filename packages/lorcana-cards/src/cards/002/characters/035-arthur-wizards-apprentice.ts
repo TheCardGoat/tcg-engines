@@ -4,20 +4,20 @@ export const arthurWizardsApprentice: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
-        effect: {
-          type: "gain-lore",
-          amount: 2,
-        },
         chooser: "CONTROLLER",
+        effect: {
+          amount: 2,
+          type: "gain-lore",
+        },
+        type: "optional",
       },
       id: "gq1-1",
       name: "STUDENT",
       text: "STUDENT Whenever this character quests, you may return another chosen character of yours to your hand to gain 2 lore.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

@@ -7,9 +7,9 @@ export const theQueenWickedAndVain: CharacterCard = {
         exert: true,
       },
       effect: {
-        type: "draw",
         amount: 1,
         target: "CONTROLLER",
+        type: "draw",
       },
       id: "2kk-1",
       text: "I SUMMON THEE {E} — Draw a card.",

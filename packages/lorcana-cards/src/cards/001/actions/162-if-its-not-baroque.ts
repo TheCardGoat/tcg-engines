@@ -4,9 +4,9 @@ export const ifItsNotBaroque: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "return-from-discard",
         cardType: "item",
         target: "CONTROLLER",
+        type: "return-from-discard",
       },
       id: "v94-1",
       text: "Return an item card from your discard to your hand.",

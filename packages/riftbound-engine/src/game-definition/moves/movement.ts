@@ -4,27 +4,14 @@
  * Moves for unit movement: standard move, ganking, and recalls.
  */
 
-import type {
-  CardId as CoreCardId,
-  ZoneId as CoreZoneId,
-  GameMoveDefinitions,
-} from "@tcg/core";
-import type {
-  RiftboundCardMeta,
-  RiftboundGameState,
-  RiftboundMoves,
-} from "../../types";
+import type { CardId as CoreCardId, ZoneId as CoreZoneId, GameMoveDefinitions } from "@tcg/core";
+import type { RiftboundCardMeta, RiftboundGameState, RiftboundMoves } from "../../types";
 
 /**
  * Movement move definitions
  */
 export const movementMoves: Partial<
-  GameMoveDefinitions<
-    RiftboundGameState,
-    RiftboundMoves,
-    RiftboundCardMeta,
-    unknown
-  >
+  GameMoveDefinitions<RiftboundGameState, RiftboundMoves, RiftboundCardMeta, unknown>
 > = {
   /**
    * Standard Move

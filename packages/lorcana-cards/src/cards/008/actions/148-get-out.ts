@@ -4,10 +4,8 @@ export const getOut: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "banish",
             target: {
               selector: "chosen",
               count: 1,
@@ -15,13 +13,15 @@ export const getOut: ActionCard = {
               zones: ["play"],
               cardTypes: ["character"],
             },
+            type: "banish",
           },
           {
-            type: "return-from-discard",
-            target: "CONTROLLER",
             cardType: "item",
+            target: "CONTROLLER",
+            type: "return-from-discard",
           },
         ],
+        type: "sequence",
       },
       id: "rmf-1",
       text: "Banish chosen character, then return an item card from your discard to your hand.",

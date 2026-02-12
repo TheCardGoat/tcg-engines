@@ -4,8 +4,8 @@ export const kristoffReindeerKeeper: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "play-card",
         from: "hand",
+        type: "play-card",
       },
       id: "1qs-1",
       text: "SONG OF THE HERD For each song card in your discard, you pay 1 {I} less to play this character.",

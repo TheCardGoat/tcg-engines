@@ -11,16 +11,16 @@ export const calhounMarineSergeant: CharacterCard = {
     },
     {
       effect: {
-        type: "gain-lore",
         amount: 2,
+        type: "gain-lore",
       },
       id: "10g-2",
       name: "LEVEL UP",
       text: "LEVEL UP During your turn, whenever this character banishes another character in a challenge, gain 2 lore.",
       trigger: {
         event: "banish",
-        timing: "whenever",
         on: "OPPONENT_CHARACTERS",
+        timing: "whenever",
       },
       type: "triggered",
     },

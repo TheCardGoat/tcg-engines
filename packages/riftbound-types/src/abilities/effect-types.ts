@@ -291,14 +291,14 @@ export interface CreateTokenEffect {
  */
 export const TOKEN_PRESETS = {
   GOLD: { name: "Gold", type: "gear" } as const,
-  MECH: { name: "Mech", type: "unit", might: 3 } as const,
-  RECRUIT: { name: "Recruit", type: "unit", might: 1 } as const,
-  SAND_SOLDIER: { name: "Sand Soldier", type: "unit", might: 2 } as const,
+  MECH: { might: 3, name: "Mech", type: "unit" } as const,
+  RECRUIT: { might: 1, name: "Recruit", type: "unit" } as const,
+  SAND_SOLDIER: { might: 2, name: "Sand Soldier", type: "unit" } as const,
   SPRITE: {
+    keywords: ["Temporary"],
+    might: 3,
     name: "Sprite",
     type: "unit",
-    might: 3,
-    keywords: ["Temporary"],
   } as const,
 } as const;
 

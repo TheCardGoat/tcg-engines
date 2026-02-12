@@ -4,12 +4,9 @@ export const headsHeldHigh: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "remove-damage",
             amount: 3,
-            upTo: true,
             target: {
               selector: "chosen",
               count: 1,
@@ -17,15 +14,18 @@ export const headsHeldHigh: ActionCard = {
               zones: ["play"],
               cardTypes: ["character"],
             },
+            type: "remove-damage",
+            upTo: true,
           },
           {
-            type: "modify-stat",
-            stat: "strength",
-            modifier: -3,
-            target: "CHOSEN_CHARACTER",
             duration: "this-turn",
+            modifier: -3,
+            stat: "strength",
+            target: "CHOSEN_CHARACTER",
+            type: "modify-stat",
           },
         ],
+        type: "sequence",
       },
       id: "x39-1",
       text: "Sing Together 6 Remove up to 3 damage from any number of chosen characters. All opposing characters get -3 {S} this turn.",

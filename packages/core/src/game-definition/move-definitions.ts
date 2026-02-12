@@ -17,12 +17,7 @@ import type { MoveContext, NormalizeParams } from "../moves/move-system";
  * @template TCardMeta - Card metadata type (for zone/card operations)
  * @template TCardDefinition - Card definition type (for registry access)
  */
-export type GameMoveDefinition<
-  TState,
-  TParams = any,
-  TCardMeta = any,
-  TCardDefinition = any,
-> = {
+export interface GameMoveDefinition<TState, TParams = any, TCardMeta = any, TCardDefinition = any> {
   /**
    * Move reducer - executes the move using Immer draft
    *
@@ -100,10 +95,7 @@ export type GameMoveDefinition<
    */
   enumerator?: (
     state: TState,
-    context: import("../moves/move-enumeration").MoveEnumerationContext<
-      TCardMeta,
-      TCardDefinition
-    >,
+    context: import("../moves/move-enumeration").MoveEnumerationContext<TCardMeta, TCardDefinition>,
   ) => TParams[];
 
   /**
@@ -120,7 +112,7 @@ export type GameMoveDefinition<
     /** Custom metadata */
     [key: string]: unknown;
   };
-};
+}
 
 /**
  * Game Move Definitions - Exhaustive mapping of moves with type-safe parameters

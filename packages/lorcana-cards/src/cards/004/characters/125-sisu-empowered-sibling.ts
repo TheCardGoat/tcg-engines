@@ -13,16 +13,16 @@ export const sisuEmpoweredSibling: CharacterCard = {
     },
     {
       effect: {
-        type: "play-card",
         from: "hand",
+        type: "play-card",
       },
       id: "1q9-2",
       name: "I GOT THIS!",
       text: "I GOT THIS! When you play this character, banish all opposing characters with 2 {S} or less.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

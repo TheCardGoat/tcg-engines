@@ -4,18 +4,18 @@ export const brunoMadrigalSingleminded: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "restriction",
+        duration: "until-start-of-next-turn",
         restriction: "cant-ready",
         target: "SELF",
-        duration: "until-start-of-next-turn",
+        type: "restriction",
       },
       id: "1a1-1",
       name: "STANDING TALL",
       text: "STANDING TALL When you play this character, chosen opposing character can't ready at the start of their next turn.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

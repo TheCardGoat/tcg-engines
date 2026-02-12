@@ -4,23 +4,23 @@ export const honeymarenNorthuldraGuide: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "an opponent has an exerted character in play",
+          type: "if",
         },
         then: {
-          type: "gain-lore",
           amount: 1,
+          type: "gain-lore",
         },
+        type: "conditional",
       },
       id: "1d4-1",
       name: "TALE OF THE FIFTH SPIRIT",
       text: "TALE OF THE FIFTH SPIRIT When you play this character, if an opponent has an exerted character in play, gain 1 lore.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

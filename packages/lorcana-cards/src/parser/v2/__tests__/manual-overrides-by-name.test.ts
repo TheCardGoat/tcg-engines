@@ -17,9 +17,9 @@ describe("Manual Overrides by Name", () => {
   const testEntry: any = {
     ability: {
       effect: {
-        type: "gain-keyword",
         keyword: "Ward",
         target: "THIS_CHARACTER",
+        type: "gain-keyword",
       },
       id: "test-1",
       text: "Test static ability",

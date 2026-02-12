@@ -4,11 +4,7 @@
  */
 
 import { parserV2 } from "./index";
-import {
-  MANUAL_ENTRIES_BY_NAME,
-  getManualEntries,
-  tooComplexText,
-} from "./manual-overrides";
+import { MANUAL_ENTRIES_BY_NAME, getManualEntries, tooComplexText } from "./manual-overrides";
 import { normalizeText } from "./preprocessor";
 import type { AbilityWithText, ParseResult } from "./types";
 
@@ -45,11 +41,7 @@ function addAbilityIdIfEnabled(
   index = 1,
   override = false,
 ): AbilityWithText {
-  if (
-    options?.generateAbilityUids &&
-    options?.cardId &&
-    (override || !ability.id)
-  ) {
+  if (options?.generateAbilityUids && options?.cardId && (override || !ability.id)) {
     return {
       ...ability,
       id: generateAbilityId(options.cardId, index),
@@ -79,10 +71,7 @@ export interface MultiParseResult {
 /**
  * Parse ability text - old API compatibility.
  */
-export function parseAbilityText(
-  text: string,
-  options?: ParseOptions,
-): ParseResult {
+export function parseAbilityText(text: string, options?: ParseOptions): ParseResult {
   // Check for manual override by card name
   if (options?.cardName && MANUAL_ENTRIES_BY_NAME[options.cardName]) {
     const entry = MANUAL_ENTRIES_BY_NAME[options.cardName];
@@ -122,7 +111,7 @@ export function parseAbilityText(
   const ability = parserV2.parseAbility(text);
   if (ability) {
     // Extract name from ability if present (for named abilities)
-    const {name} = (ability as { name?: string });
+    const { name } = ability as { name?: string };
     const abilityWithText: AbilityWithText = {
       ability: ability as AbilityWithText["ability"],
       // TODO: Type assertion needed because @tcg/lorcana-engine and @tcg/lorcana-types
@@ -156,10 +145,7 @@ interface BatchResult {
 /**
  * Parse multiple ability texts.
  */
-export function parseAbilityTexts(
-  texts: string[],
-  options?: ParseOptions,
-): BatchResult {
+export function parseAbilityTexts(texts: string[], options?: ParseOptions): BatchResult {
   const results = texts.map((text) => parseAbilityText(text, options));
   const successful = results.filter((r) => r.success).length;
   const failed = results.filter((r) => !r.success).length;
@@ -193,10 +179,7 @@ export function parseAbilityTexts(
  * }
  * ```
  */
-export function parseAbilityTextMulti(
-  text: string,
-  options?: ParseOptions,
-): MultiParseResult {
+export function parseAbilityTextMulti(text: string, options?: ParseOptions): MultiParseResult {
   if (!(text && text.trim())) {
     return {
       abilities: [],

@@ -4,18 +4,18 @@ export const liShangArcheryInstructor: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
+        duration: "this-turn",
         keyword: "Evasive",
         target: "YOUR_CHARACTERS",
-        duration: "this-turn",
+        type: "gain-keyword",
       },
       id: "1eu-1",
       name: "ARCHERY LESSON",
       text: "ARCHERY LESSON Whenever this character quests, your characters gain Evasive this turn.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

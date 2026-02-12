@@ -71,59 +71,56 @@ export function createMockContext<TParams = any>(
   },
 ): MoveContext<TParams> {
   const mockZones: ZoneOperations = {
-    moveCard: () => {},
-    getCardsInZone: () => [],
-    shuffleZone: () => {},
-    getCardZone: () => undefined,
-    drawCards: () => [],
-    mulligan: () => {},
     bulkMove: () => [],
     createDeck: () => [],
+    drawCards: () => [],
+    getCardZone: () => undefined,
+    getCardsInZone: () => [],
+    moveCard: () => {},
+    mulligan: () => {},
+    shuffleZone: () => {},
     ...options?.zones,
   };
 
   const mockCards: CardOperations<any> = {
     getCardMeta: () => ({}),
-    updateCardMeta: () => {},
-    setCardMeta: () => {},
     getCardOwner: () => undefined as any,
     queryCards: () => [],
+    setCardMeta: () => {},
+    updateCardMeta: () => {},
     ...options?.cards,
   };
 
   const mockGame: GameOperations = {
-    setOTP: () => {},
-    getOTP: () => undefined,
-    setChoosingFirstPlayer: () => {},
-    getChoosingFirstPlayer: () => undefined,
-    setPendingMulligan: () => {},
-    getPendingMulligan: () => [],
     addPendingMulligan: () => {},
+    getChoosingFirstPlayer: () => undefined,
+    getOTP: () => undefined,
+    getPendingMulligan: () => [],
     removePendingMulligan: () => {},
+    setChoosingFirstPlayer: () => {},
+    setOTP: () => {},
+    setPendingMulligan: () => {},
     ...options?.game,
   };
 
   const mockCounters: CounterOperations = {
-    setFlag: () => {},
-    getFlag: () => false,
     addCounter: () => {},
-    removeCounter: () => {},
-    getCounter: () => 0,
-    clearCounter: () => {},
     clearAllCounters: () => {},
-    getCardsWithFlag: () => [],
+    clearCounter: () => {},
     getCardsWithCounter: () => [],
+    getCardsWithFlag: () => [],
+    getCounter: () => 0,
+    getFlag: () => false,
+    removeCounter: () => {},
+    setFlag: () => {},
     ...options?.counters,
   };
 
   return {
     ...input,
-    rng: options?.rng || new SeededRNG("test-seed"),
-    zones: mockZones,
     cards: mockCards,
-    game: mockGame,
     counters: mockCounters,
-    registry: options?.registry,
+    endGame: options?.endGame || (() => {}),
     flow: options?.flow
       ? {
           ...options.flow,
@@ -132,16 +129,19 @@ export function createMockContext<TParams = any>(
           endTurn: options.flow.endTurn || (() => {}),
         }
       : undefined,
-    endGame: options?.endGame || (() => {}),
+    game: mockGame,
+    history: {
+      log: () => {},
+      ...options?.history,
+    },
+    registry: options?.registry,
+    rng: options?.rng || new SeededRNG("test-seed"),
     trackers: options?.trackers || {
       check: () => false,
       mark: () => {},
       unmark: () => {},
     },
-    history: {
-      log: () => {},
-      ...options?.history,
-    },
+    zones: mockZones,
   };
 }
 
@@ -156,10 +156,10 @@ export function createMockCardOperations<TCardMeta = any>(
 ): CardOperations<TCardMeta> {
   return {
     getCardMeta: () => ({}) as TCardMeta,
-    updateCardMeta: () => {},
-    setCardMeta: () => {},
     getCardOwner: () => undefined as any,
     queryCards: () => [],
+    setCardMeta: () => {},
+    updateCardMeta: () => {},
     ...overrides,
   };
 }
@@ -170,18 +170,16 @@ export function createMockCardOperations<TCardMeta = any>(
  * @param overrides - Optional method overrides
  * @returns Mock ZoneOperations
  */
-export function createMockZoneOperations(
-  overrides?: Partial<ZoneOperations>,
-): ZoneOperations {
+export function createMockZoneOperations(overrides?: Partial<ZoneOperations>): ZoneOperations {
   return {
-    moveCard: () => {},
-    getCardsInZone: () => [],
-    shuffleZone: () => {},
-    getCardZone: () => undefined,
-    drawCards: () => [],
-    mulligan: () => {},
     bulkMove: () => [],
     createDeck: () => [],
+    drawCards: () => [],
+    getCardZone: () => undefined,
+    getCardsInZone: () => [],
+    moveCard: () => {},
+    mulligan: () => {},
+    shuffleZone: () => {},
     ...overrides,
   };
 }

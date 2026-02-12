@@ -4,19 +4,19 @@ export const annaTruehearted: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "lore",
-        modifier: 1,
-        target: "CHOSEN_CHARACTER",
         duration: "this-turn",
+        modifier: 1,
+        stat: "lore",
+        target: "CHOSEN_CHARACTER",
+        type: "modify-stat",
       },
       id: "1qm-1",
       name: "LET ME HELP YOU",
       text: "LET ME HELP YOU Whenever this character quests, your other Hero characters get +1 {L} this turn.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

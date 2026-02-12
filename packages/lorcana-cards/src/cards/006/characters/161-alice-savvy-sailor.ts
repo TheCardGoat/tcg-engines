@@ -10,28 +10,28 @@ export const aliceSavvySailor: CharacterCard = {
     },
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "modify-stat",
-            stat: "lore",
             modifier: 1,
+            stat: "lore",
             target: "SELF",
+            type: "modify-stat",
           },
           {
-            type: "gain-keyword",
             keyword: "Ward",
             target: "SELF",
+            type: "gain-keyword",
           },
         ],
+        type: "sequence",
       },
       id: "1hn-2",
       name: "AHOY!",
       text: "AHOY! Whenever this character quests, another chosen character of yours gets +1 {L} and gains Ward until the start of your next turn.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

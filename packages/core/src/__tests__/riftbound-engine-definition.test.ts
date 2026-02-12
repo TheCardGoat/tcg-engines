@@ -42,7 +42,7 @@ describe("Riftbound Game - Refactored Engine Features", () => {
 
   it("should have proper zone configuration", () => {
     const gameDefinition = createMockRiftboundGame();
-    const zones = gameDefinition.zones;
+    const { zones } = gameDefinition;
 
     // Verify Riftbound zones
     expect(zones?.mainDeck).toBeDefined();
@@ -86,7 +86,7 @@ describe("Riftbound Game - Refactored Engine Features", () => {
   it("should use tracker system for draw limitation", () => {
     const gameDefinition = createMockRiftboundGame();
 
-    const drawCard = gameDefinition.moves.drawCard;
+    const { drawCard } = gameDefinition.moves;
     expect(drawCard.condition).toBeDefined();
 
     // Uses context.trackers.check("hasDrawn")
@@ -94,9 +94,9 @@ describe("Riftbound Game - Refactored Engine Features", () => {
 
   it("should use flow context in phase hooks", () => {
     const gameDefinition = createMockRiftboundGame();
-    const flow = gameDefinition.flow;
+    const { flow } = gameDefinition;
 
-    // ending phase uses context.getCurrentPlayer()
+    // Ending phase uses context.getCurrentPlayer()
     expect(flow).toBeDefined();
     if (!(flow && "turn" in flow)) {
       throw new Error("Expected simplified flow definition with turn property");

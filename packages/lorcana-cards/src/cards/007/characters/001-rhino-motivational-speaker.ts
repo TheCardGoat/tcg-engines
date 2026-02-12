@@ -4,10 +4,10 @@ export const rhinoMotivationalSpeaker: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "willpower",
         modifier: 2,
+        stat: "willpower",
         target: "YOUR_CHARACTERS",
+        type: "modify-stat",
       },
       id: "15i-1",
       name: "DESTINY CALLING Your other",

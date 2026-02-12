@@ -8,11 +8,11 @@ const playerId = createPlayerId;
 
 describe("GameOperations", () => {
   const createTestState = (): InternalState => ({
-    zones: {},
-    cards: {},
     cardMetas: {},
+    cards: {},
     otp: undefined,
     pendingMulligan: undefined,
+    zones: {},
   });
 
   describe("OTP Operations", () => {
@@ -62,10 +62,7 @@ describe("GameOperations", () => {
 
       ops.setPendingMulligan([playerId("player-1"), playerId("player-2")]);
 
-      expect(state.pendingMulligan).toEqual([
-        playerId("player-1"),
-        playerId("player-2"),
-      ]);
+      expect(state.pendingMulligan).toEqual([playerId("player-1"), playerId("player-2")]);
     });
 
     it("should get pending mulligan list", () => {
@@ -105,10 +102,7 @@ describe("GameOperations", () => {
 
       ops.addPendingMulligan(playerId("player-2"));
 
-      expect(state.pendingMulligan).toEqual([
-        playerId("player-1"),
-        playerId("player-2"),
-      ]);
+      expect(state.pendingMulligan).toEqual([playerId("player-1"), playerId("player-2")]);
     });
 
     it("should not add duplicate player to pending mulligan list", () => {
@@ -132,19 +126,12 @@ describe("GameOperations", () => {
 
     it("should remove player from pending mulligan list", () => {
       const state = createTestState();
-      state.pendingMulligan = [
-        playerId("player-1"),
-        playerId("player-2"),
-        playerId("player-3"),
-      ];
+      state.pendingMulligan = [playerId("player-1"), playerId("player-2"), playerId("player-3")];
       const ops = createGameOperations(state);
 
       ops.removePendingMulligan(playerId("player-2"));
 
-      expect(state.pendingMulligan).toEqual([
-        playerId("player-1"),
-        playerId("player-3"),
-      ]);
+      expect(state.pendingMulligan).toEqual([playerId("player-1"), playerId("player-3")]);
     });
 
     it("should handle removing player not in list", () => {
@@ -183,10 +170,7 @@ describe("GameOperations", () => {
 
       ops.setPendingMulligan([playerId("player-3"), playerId("player-4")]);
 
-      expect(state.pendingMulligan).toEqual([
-        playerId("player-3"),
-        playerId("player-4"),
-      ]);
+      expect(state.pendingMulligan).toEqual([playerId("player-3"), playerId("player-4")]);
     });
   });
 
@@ -243,10 +227,7 @@ describe("GameOperations", () => {
 
       // Verify state
       expect(ops.getOTP()).toBe(playerId("player-1"));
-      expect(ops.getPendingMulligan()).toEqual([
-        playerId("player-1"),
-        playerId("player-2"),
-      ]);
+      expect(ops.getPendingMulligan()).toEqual([playerId("player-1"), playerId("player-2")]);
 
       // Player 1 decides to keep
       ops.removePendingMulligan(playerId("player-1"));
@@ -271,10 +252,7 @@ describe("GameOperations", () => {
 
       // 3. All players mulligan
       ops.setPendingMulligan([playerId("player-1"), playerId("player-2")]);
-      expect(ops.getPendingMulligan()).toEqual([
-        playerId("player-1"),
-        playerId("player-2"),
-      ]);
+      expect(ops.getPendingMulligan()).toEqual([playerId("player-1"), playerId("player-2")]);
     });
   });
 });

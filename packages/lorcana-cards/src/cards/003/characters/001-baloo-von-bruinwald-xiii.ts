@@ -10,16 +10,16 @@ export const balooVonBruinwaldXiii: CharacterCard = {
     },
     {
       effect: {
-        type: "gain-lore",
         amount: 2,
+        type: "gain-lore",
       },
       id: "owv-2",
       name: "LET'S MAKE LIKE A TREE",
       text: "LET'S MAKE LIKE A TREE When this character is banished, gain 2 lore.",
       trigger: {
         event: "banish",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

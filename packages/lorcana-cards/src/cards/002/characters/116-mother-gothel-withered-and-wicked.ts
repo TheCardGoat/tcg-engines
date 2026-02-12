@@ -4,8 +4,8 @@ export const motherGothelWitheredAndWicked: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "play-card",
         from: "hand",
+        type: "play-card",
       },
       id: "6fh-1",
       name: "WHAT HAVE YOU DONE?!",

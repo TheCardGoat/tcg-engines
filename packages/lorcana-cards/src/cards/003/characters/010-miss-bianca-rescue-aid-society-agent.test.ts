@@ -8,9 +8,7 @@ describe("Miss Bianca - Rescue Aid Society Agent", () => {
       play: [missBiancaRescueAidSocietyAgent],
     });
 
-    const cardUnderTest = testEngine.getCardModel(
-      missBiancaRescueAidSocietyAgent,
-    );
+    const cardUnderTest = testEngine.getCardModel(missBiancaRescueAidSocietyAgent);
     expect(cardUnderTest.hasSinger()).toBe(true);
   });
 });

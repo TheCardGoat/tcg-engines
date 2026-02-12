@@ -45,9 +45,7 @@ export function parseConditionFromCst(ctx: {
     return parseWithConditionFromCst(ctx.withCondition[0].children as any);
   }
   if (ctx.withoutCondition) {
-    return parseWithoutConditionFromCst(
-      ctx.withoutCondition[0].children as any,
-    );
+    return parseWithoutConditionFromCst(ctx.withoutCondition[0].children as any);
   }
 
   logger.debug("No recognized condition type found in CST");
@@ -195,9 +193,7 @@ function parseWithoutConditionFromCst(ctx: {
 /**
  * Extract expression text from condition expression CST node.
  */
-function extractExpressionFromCst(
-  expressionNodes: CstNode[] | undefined,
-): string | null {
+function extractExpressionFromCst(expressionNodes: CstNode[] | undefined): string | null {
   if (!expressionNodes || expressionNodes.length === 0) {
     return null;
   }
@@ -283,10 +279,10 @@ export function parseConditionFromText(text: string): VisitorCondition | null {
  * All variants are converted to IfCondition as the catch-all type.
  * The expression is preserved without adding the type prefix.
  */
-export function toCondition(
-  visitor: VisitorCondition | null,
-): IfCondition | null {
-  if (!visitor) {return null;}
+export function toCondition(visitor: VisitorCondition | null): IfCondition | null {
+  if (!visitor) {
+    return null;
+  }
 
   return {
     expression: visitor.expression,

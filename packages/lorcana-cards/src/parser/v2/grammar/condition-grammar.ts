@@ -5,15 +5,7 @@
  */
 
 import type { CstParser } from "chevrotain";
-import {
-  At,
-  Character,
-  During,
-  Identifier,
-  If,
-  NumberToken,
-  Your,
-} from "../lexer/tokens";
+import { At, Character, During, Identifier, If, NumberToken, Your } from "../lexer/tokens";
 
 /**
  * Adds condition-related grammar rules to the parser.

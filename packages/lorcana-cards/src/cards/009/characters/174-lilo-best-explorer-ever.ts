@@ -4,11 +4,11 @@ export const liloBestExplorerEver: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
+        duration: "this-turn",
         keyword: "Challenger",
         target: "SELF",
+        type: "gain-keyword",
         value: 2,
-        duration: "this-turn",
       },
       id: "127-1",
       text: "COME ON, PEOPLE, LET'S MOVE When you play this character, your other characters gain Challenger +2 this turn",
@@ -16,28 +16,28 @@ export const liloBestExplorerEver: CharacterCard = {
     },
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "gain-keyword",
             keyword: "Challenger",
             target: "SELF",
+            type: "gain-keyword",
             value: 2,
           },
           {
-            type: "grant-ability",
             ability: "can-challenge-ready",
             target: "SELF",
+            type: "grant-ability",
           },
         ],
+        type: "sequence",
       },
       id: "127-2",
       name: "GO GET 'EM",
       text: 'GO GET \'EM Whenever this character quests, chosen Alien character gains Challenger +2 and "This character can challenge ready characters" this turn.',
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

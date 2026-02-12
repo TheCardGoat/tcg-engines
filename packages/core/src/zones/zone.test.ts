@@ -23,11 +23,11 @@ describe("Zone Type Definitions", () => {
   describe("ZoneConfig", () => {
     it("should define valid zone configuration structure", () => {
       const config: CardZoneConfig = {
+        faceDown: true,
         id: "deck" as ZoneId,
         name: "Deck",
-        visibility: "secret",
         ordered: true,
-        faceDown: true,
+        visibility: "secret",
       };
 
       expect(String(config.id)).toBe("deck");
@@ -41,9 +41,9 @@ describe("Zone Type Definitions", () => {
       const configWithOwner: CardZoneConfig = {
         id: "hand" as ZoneId,
         name: "Hand",
-        visibility: "private",
         ordered: false,
         owner: "player-1" as PlayerId,
+        visibility: "private",
       };
 
       expect(configWithOwner.owner).toBeDefined();
@@ -53,10 +53,10 @@ describe("Zone Type Definitions", () => {
     it("should support optional maxSize property", () => {
       const configWithMaxSize: CardZoneConfig = {
         id: "hand" as ZoneId,
-        name: "Hand",
-        visibility: "private",
-        ordered: false,
         maxSize: 7,
+        name: "Hand",
+        ordered: false,
+        visibility: "private",
       };
 
       expect(configWithMaxSize.maxSize).toBe(7);
@@ -66,8 +66,8 @@ describe("Zone Type Definitions", () => {
       const minimalConfig: CardZoneConfig = {
         id: "play" as ZoneId,
         name: "Play Area",
-        visibility: "public",
         ordered: false,
+        visibility: "public",
       };
 
       expect(minimalConfig.owner).toBeUndefined();
@@ -79,14 +79,14 @@ describe("Zone Type Definitions", () => {
   describe("Zone", () => {
     it("should define valid zone structure with config and cards", () => {
       const zone: Zone = {
+        cards: [],
         config: {
+          faceDown: true,
           id: "deck" as ZoneId,
           name: "Deck",
-          visibility: "secret",
           ordered: true,
-          faceDown: true,
+          visibility: "secret",
         },
-        cards: [],
       };
 
       expect(zone.config).toBeDefined();
@@ -99,13 +99,13 @@ describe("Zone Type Definitions", () => {
       const cardId2 = "card-2" as CardId;
 
       const zone: Zone = {
+        cards: [cardId1, cardId2],
         config: {
           id: "hand" as ZoneId,
           name: "Hand",
-          visibility: "private",
           ordered: false,
+          visibility: "private",
         },
-        cards: [cardId1, cardId2],
       };
 
       expect(zone.cards).toHaveLength(2);
@@ -114,20 +114,16 @@ describe("Zone Type Definitions", () => {
     });
 
     it("should maintain card order when ordered is true", () => {
-      const cardIds = [
-        "card-1" as CardId,
-        "card-2" as CardId,
-        "card-3" as CardId,
-      ];
+      const cardIds = ["card-1" as CardId, "card-2" as CardId, "card-3" as CardId];
 
       const orderedZone: Zone = {
+        cards: cardIds,
         config: {
           id: "deck" as ZoneId,
           name: "Deck",
-          visibility: "secret",
           ordered: true,
+          visibility: "secret",
         },
-        cards: cardIds,
       };
 
       expect(orderedZone.cards[0]).toBe(cardIds[0]);
@@ -142,8 +138,8 @@ describe("Zone Type Definitions", () => {
       const config: CardZoneConfig = {
         id: zoneId,
         name: "Deck",
-        visibility: "secret",
         ordered: true,
+        visibility: "secret",
       };
 
       const _typeCheck: ZoneId = config.id;
@@ -154,13 +150,13 @@ describe("Zone Type Definitions", () => {
       const cardIds: CardId[] = ["card-1" as CardId, "card-2" as CardId];
 
       const zone: Zone = {
+        cards: cardIds,
         config: {
           id: "hand" as ZoneId,
           name: "Hand",
-          visibility: "private",
           ordered: false,
+          visibility: "private",
         },
-        cards: cardIds,
       };
 
       const _typeCheck: CardId[] = zone.cards;
@@ -172,9 +168,9 @@ describe("Zone Type Definitions", () => {
       const config: CardZoneConfig = {
         id: "hand" as ZoneId,
         name: "Hand",
-        visibility: "private",
         ordered: false,
         owner: playerId,
+        visibility: "private",
       };
 
       if (config.owner) {

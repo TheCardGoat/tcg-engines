@@ -4,10 +4,10 @@ export const annaBravingTheStorm: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "lore",
         modifier: 1,
+        stat: "lore",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "mi9-1",
       text: "I WAS BORN READY While you have another Hero character in play, this character gets +1 {L}.",

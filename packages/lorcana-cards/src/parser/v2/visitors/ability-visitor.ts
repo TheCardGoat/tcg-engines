@@ -21,10 +21,7 @@ interface Effect {
   [key: string]: unknown;
 }
 
-export class AbilityVisitor
-  extends BaseVisitor
-  implements ICstVisitor<unknown, unknown>
-{
+export class AbilityVisitor extends BaseVisitor implements ICstVisitor<unknown, unknown> {
   constructor() {
     super();
     this.validateVisitor();
@@ -33,10 +30,7 @@ export class AbilityVisitor
   /**
    * Visit ability node - top level entry point
    */
-  ability(ctx: {
-    triggeredAbility?: CstNode[];
-    otherAbility?: CstNode[];
-  }): Ability {
+  ability(ctx: { triggeredAbility?: CstNode[]; otherAbility?: CstNode[] }): Ability {
     logger.debug("Visiting ability node", { ctx });
 
     if (ctx.triggeredAbility) {
@@ -67,10 +61,7 @@ export class AbilityVisitor
   /**
    * Visit triggered ability node
    */
-  triggeredAbility(ctx: {
-    triggerPhrase?: CstNode[];
-    effectPhrase?: CstNode[];
-  }): Ability {
+  triggeredAbility(ctx: { triggerPhrase?: CstNode[]; effectPhrase?: CstNode[] }): Ability {
     logger.debug("Visiting triggered ability", { ctx });
 
     const trigger = ctx.triggerPhrase ? this.visit(ctx.triggerPhrase) : null;
@@ -143,10 +134,7 @@ export class AbilityVisitor
   /**
    * Visit effect phrase node
    */
-  effectPhrase(ctx: {
-    compositeEffect?: CstNode[];
-    atomicEffect?: CstNode[];
-  }): Effect {
+  effectPhrase(ctx: { compositeEffect?: CstNode[]; atomicEffect?: CstNode[] }): Effect {
     logger.debug("Visiting effect phrase", { ctx });
 
     if (ctx.compositeEffect) {
@@ -222,9 +210,7 @@ export class AbilityVisitor
   drawEffect(ctx: { NumberToken?: IToken[] }): Effect {
     logger.debug("Visiting draw effect", { ctx });
 
-    const amount = ctx.NumberToken?.[0]?.image
-      ? Number.parseInt(ctx.NumberToken[0].image, 10)
-      : 0;
+    const amount = ctx.NumberToken?.[0]?.image ? Number.parseInt(ctx.NumberToken[0].image, 10) : 0;
 
     logger.info("Parsed draw effect from CST", { amount });
 
@@ -241,9 +227,7 @@ export class AbilityVisitor
   discardEffect(ctx: { NumberToken?: IToken[] }): Effect {
     logger.debug("Visiting discard effect", { ctx });
 
-    const amount = ctx.NumberToken?.[0]?.image
-      ? Number.parseInt(ctx.NumberToken[0].image, 10)
-      : 0;
+    const amount = ctx.NumberToken?.[0]?.image ? Number.parseInt(ctx.NumberToken[0].image, 10) : 0;
 
     logger.info("Parsed discard effect from CST", { amount });
 
@@ -260,9 +244,7 @@ export class AbilityVisitor
   damageEffect(ctx: { NumberToken?: IToken[] }): Effect {
     logger.debug("Visiting damage effect", { ctx });
 
-    const amount = ctx.NumberToken?.[0]?.image
-      ? Number.parseInt(ctx.NumberToken[0].image, 10)
-      : 0;
+    const amount = ctx.NumberToken?.[0]?.image ? Number.parseInt(ctx.NumberToken[0].image, 10) : 0;
 
     logger.info("Parsed damage effect from CST", { amount });
 
@@ -276,16 +258,10 @@ export class AbilityVisitor
    * Visit lore effect node
    * Parses "gain/lose X lore" effects
    */
-  loreEffect(ctx: {
-    NumberToken?: IToken[];
-    Gain?: IToken[];
-    Lose?: IToken[];
-  }): Effect {
+  loreEffect(ctx: { NumberToken?: IToken[]; Gain?: IToken[]; Lose?: IToken[] }): Effect {
     logger.debug("Visiting lore effect", { ctx });
 
-    const amount = ctx.NumberToken?.[0]?.image
-      ? Number.parseInt(ctx.NumberToken[0].image, 10)
-      : 0;
+    const amount = ctx.NumberToken?.[0]?.image ? Number.parseInt(ctx.NumberToken[0].image, 10) : 0;
     const isGain = ctx.Gain !== undefined;
 
     logger.info("Parsed lore effect from CST", { amount, isGain });
@@ -341,9 +317,7 @@ export class AbilityVisitor
   }): Effect {
     logger.debug("Visiting stat modification effect", { ctx });
 
-    const amount = ctx.NumberToken?.[0]?.image
-      ? Number.parseInt(ctx.NumberToken[0].image, 10)
-      : 0;
+    const amount = ctx.NumberToken?.[0]?.image ? Number.parseInt(ctx.NumberToken[0].image, 10) : 0;
 
     // Determine which stat is being modified
     let stat = "strength";

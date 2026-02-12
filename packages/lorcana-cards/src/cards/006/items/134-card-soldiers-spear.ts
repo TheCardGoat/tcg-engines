@@ -4,10 +4,10 @@ export const cardSoldiersSpear: ItemCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: 1,
+        stat: "strength",
         target: "YOUR_CHARACTERS",
+        type: "modify-stat",
       },
       id: "1ul-1",
       name: "A SUITABLE WEAPON Your damaged",

@@ -4,10 +4,10 @@ export const miloThatchSpiritedScholar: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: 2,
+        stat: "strength",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "1cr-1",
       text: "I'M YOUR MAN! While this character is at a location, he gets +2 {S}.",

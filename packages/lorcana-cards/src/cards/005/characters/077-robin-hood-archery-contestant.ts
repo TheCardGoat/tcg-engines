@@ -4,23 +4,23 @@ export const robinHoodArcheryContestant: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "an opponent has a damaged character in play",
+          type: "if",
         },
         then: {
-          type: "gain-lore",
           amount: 1,
+          type: "gain-lore",
         },
+        type: "conditional",
       },
       id: "t9f-1",
       name: "TRICK SHOT",
       text: "TRICK SHOT When you play this character, if an opponent has a damaged character in play, gain 1 lore.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

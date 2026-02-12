@@ -4,21 +4,21 @@ export const captainHookCaptainOfTheJollyRoger: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
         effect: {
-          type: "return-from-discard",
-          cardType: "action",
           cardName: "Fire the Cannons!",
+          cardType: "action",
           target: "CONTROLLER",
+          type: "return-from-discard",
         },
+        type: "optional",
       },
       id: "1d2-1",
       name: "DOUBLE THE POWDER!",
       text: "DOUBLE THE POWDER! When you play this character, you may return an action card named Fire the Cannons! from your discard to your hand.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

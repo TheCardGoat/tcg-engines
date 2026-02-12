@@ -4,22 +4,22 @@ export const hadesInfernalSchemer: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "put-into-inkwell",
+          facedown: true,
           source: "chosen-character",
           target: "OPPONENT",
-          facedown: true,
+          type: "put-into-inkwell",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "12a-1",
       name: "IS THERE A DOWNSIDE TO THIS?",
       text: "IS THERE A DOWNSIDE TO THIS? When you play this character, you may put chosen opposing character into their player's inkwell facedown.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

@@ -4,9 +4,9 @@ export const liShangNewlyPromoted: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "grant-ability",
         ability: "can-challenge-ready",
         target: "SELF",
+        type: "grant-ability",
       },
       id: "1s1-1",
       name: "I WON'T LET YOU DOWN",
@@ -15,10 +15,10 @@ export const liShangNewlyPromoted: CharacterCard = {
     },
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: 2,
+        stat: "strength",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "1s1-2",
       text: "BIG RESPONSIBILITY While this character is damaged, he gets +2 {S}.",

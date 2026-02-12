@@ -1,13 +1,6 @@
 // @ts-nocheck - Skipped tests contain expected values that don't match current types
 import { describe, expect, it } from "bun:test";
-import {
-  Abilities,
-  Conditions,
-  Costs,
-  Effects,
-  Targets,
-  Triggers,
-} from "@tcg/lorcana-types";
+import { Abilities, Conditions, Costs, Effects, Targets, Triggers } from "@tcg/lorcana-types";
 import { parseAbilityTextMulti } from "../../parser";
 
 describe("Set 008 Card Text Parser Tests - Characters N Z", () => {
@@ -124,8 +117,7 @@ describe("Set 008 Card Text Parser Tests - Characters N Z", () => {
   });
 
   it.skip("Trials and Tribulations: should parse card text", () => {
-    const text =
-      "Chosen character gets -4 {S} until the start of your next turn.";
+    const text = "Chosen character gets -4 {S} until the start of your next turn.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBeGreaterThan(0);
@@ -140,8 +132,7 @@ describe("Set 008 Card Text Parser Tests - Characters N Z", () => {
   });
 
   it.skip("Palace Guard - Spectral Sentry: should parse card text", () => {
-    const text =
-      "Vanish (When an opponent chooses this character for an action, banish them.)";
+    const text = "Vanish (When an opponent chooses this character for an action, banish them.)";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBeGreaterThan(0);
@@ -164,8 +155,7 @@ describe("Set 008 Card Text Parser Tests - Characters N Z", () => {
   });
 
   it.skip("Ryder - Fleet-Footed Infiltrator: should parse card text", () => {
-    const text =
-      "Evasive (Only characters with Evasive can challenge this character.)";
+    const text = "Evasive (Only characters with Evasive can challenge this character.)";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBeGreaterThan(0);
@@ -212,8 +202,7 @@ describe("Set 008 Card Text Parser Tests - Characters N Z", () => {
   });
 
   it.skip("Pull the Lever!: should parse card text", () => {
-    const text =
-      "Choose one:\n- Draw 2 cards.\n- Each opponent chooses and discards a card.";
+    const text = "Choose one:\n- Draw 2 cards.\n- Each opponent chooses and discards a card.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBeGreaterThan(0);
@@ -236,8 +225,7 @@ describe("Set 008 Card Text Parser Tests - Characters N Z", () => {
   });
 
   it.skip("Tipo - Junior Chipmunk: should parse card text", () => {
-    const text =
-      "Evasive (Only characters with Evasive can challenge this character.)";
+    const text = "Evasive (Only characters with Evasive can challenge this character.)";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBeGreaterThan(0);
@@ -292,24 +280,21 @@ describe("Set 008 Card Text Parser Tests - Characters N Z", () => {
   });
 
   it.skip("Walk the Plank!: should parse card text", () => {
-    const text =
-      'Your Pirate characters gain "{E} — Banish chosen damaged character" this turn.';
+    const text = 'Your Pirate characters gain "{E} — Banish chosen damaged character" this turn.';
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBeGreaterThan(0);
   });
 
   it.skip("Vanellope Von Schweetz - Spunky Speedster: should parse card text", () => {
-    const text =
-      "Evasive (Only characters with Evasive can challenge this character.)";
+    const text = "Evasive (Only characters with Evasive can challenge this character.)";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBeGreaterThan(0);
   });
 
   it.skip("The Dodo - Outlandish Storyteller: should parse card text", () => {
-    const text =
-      "EXTRAORDINARY SITUATION This character gets +1 {S} for each 1 damage on him.";
+    const text = "EXTRAORDINARY SITUATION This character gets +1 {S} for each 1 damage on him.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBeGreaterThan(0);
@@ -403,8 +388,7 @@ describe("Set 008 Card Text Parser Tests - Characters N Z", () => {
   });
 
   it.skip("The Wardrobe - Perceptive Friend: should parse card text", () => {
-    const text =
-      "I HAVE JUST THE THING! , Choose and discard an item card — Draw 2 cards.";
+    const text = "I HAVE JUST THE THING! , Choose and discard an item card — Draw 2 cards.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBeGreaterThan(0);

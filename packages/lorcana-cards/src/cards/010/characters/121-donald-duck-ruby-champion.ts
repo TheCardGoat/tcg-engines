@@ -4,10 +4,10 @@ export const donaldDuckRubyChampion: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: 1,
+        stat: "strength",
         target: "CHOSEN_CHARACTER",
+        type: "modify-stat",
       },
       id: "10w-1",
       name: "HIGH ENERGY Your other Ruby",
@@ -16,10 +16,10 @@ export const donaldDuckRubyChampion: CharacterCard = {
     },
     {
       effect: {
-        type: "modify-stat",
-        stat: "lore",
         modifier: 1,
+        stat: "lore",
         target: "CHOSEN_CHARACTER",
+        type: "modify-stat",
       },
       id: "10w-2",
       text: "POWERFUL REWARD Your other Ruby characters with 7 {S} or more get +1 {L}.",

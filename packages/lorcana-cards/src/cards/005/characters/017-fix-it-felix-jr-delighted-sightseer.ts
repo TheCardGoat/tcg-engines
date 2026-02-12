@@ -4,16 +4,16 @@ export const fixitFelixJrDelightedSightseer: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you have a location in play",
+          type: "if",
         },
         then: {
-          type: "draw",
           amount: 1,
           target: "CONTROLLER",
+          type: "draw",
         },
+        type: "conditional",
       },
       id: "108-1",
       text: "OH, MY LAND! When you play this character, if you have a location in play, draw a card.",

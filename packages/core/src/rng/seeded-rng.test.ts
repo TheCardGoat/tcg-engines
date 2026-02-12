@@ -209,8 +209,11 @@ describe("SeededRNG", () => {
       for (let i = 0; i < 100; i++) {
         const flip = rng.flipCoin();
         expect(typeof flip).toBe("boolean");
-        if (flip) heads++;
-        else tails++;
+        if (flip) {
+          heads++;
+        } else {
+          tails++;
+        }
       }
 
       // Both outcomes should occur (probability check)
@@ -224,7 +227,9 @@ describe("SeededRNG", () => {
 
       // 90% bias towards heads
       for (let i = 0; i < 1000; i++) {
-        if (rng.flipCoin(0.9)) heads++;
+        if (rng.flipCoin(0.9)) {
+          heads++;
+        }
       }
 
       // Should be roughly 900 heads out of 1000
@@ -317,20 +322,20 @@ describe("SeededRNG", () => {
     it("should maintain determinism across all operations", () => {
       const rng1 = new SeededRNG("complex-seed");
       const results1 = {
-        random: rng1.random(),
+        coin: rng1.flipCoin(),
+        dice: rng1.rollDice(6),
         int: rng1.randomInt(1, 100),
         pick: rng1.pick(["a", "b", "c", "d"]),
-        dice: rng1.rollDice(6),
-        coin: rng1.flipCoin(),
+        random: rng1.random(),
       };
 
       const rng2 = new SeededRNG("complex-seed");
       const results2 = {
-        random: rng2.random(),
+        coin: rng2.flipCoin(),
+        dice: rng2.rollDice(6),
         int: rng2.randomInt(1, 100),
         pick: rng2.pick(["a", "b", "c", "d"]),
-        dice: rng2.rollDice(6),
-        coin: rng2.flipCoin(),
+        random: rng2.random(),
       };
 
       expect(results1).toEqual(results2);

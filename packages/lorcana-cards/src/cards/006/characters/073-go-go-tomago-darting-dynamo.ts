@@ -10,8 +10,8 @@ export const goGoTomagoDartingDynamo: CharacterCard = {
     },
     {
       effect: {
-        type: "play-card",
         from: "hand",
+        type: "play-card",
       },
       id: "1b9-2",
       text: "STOP WHINING, WOMAN UP When you play this character, you may pay 2 {I} to gain lore equal to the damage on chosen opposing character.",

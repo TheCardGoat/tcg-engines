@@ -10,18 +10,18 @@ export const drFacilierFortuneTeller: CharacterCard = {
     },
     {
       effect: {
-        type: "restriction",
+        duration: "until-start-of-next-turn",
         restriction: "cant-quest",
         target: "SELF",
-        duration: "until-start-of-next-turn",
+        type: "restriction",
       },
       id: "h8r-2",
       name: "YOU'RE IN MY WORLD",
       text: "YOU'RE IN MY WORLD Whenever this character quests, chosen opposing character can't quest during their next turn.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

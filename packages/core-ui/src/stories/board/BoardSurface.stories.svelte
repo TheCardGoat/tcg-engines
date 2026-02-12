@@ -3,9 +3,6 @@
   import BoardSurface from "$lib/components/board/BoardSurface.svelte";
 
   const { Story } = defineMeta({
-    title: "Board/BoardSurface",
-    component: BoardSurface,
-    tags: ["autodocs"],
     argTypes: {
       aspectRatio: {
         control: { type: "select" },
@@ -22,9 +19,12 @@
       maxWidth: { control: "text" },
       width: { control: "text" },
     },
+    component: BoardSurface,
     parameters: {
       layout: "fullscreen",
     },
+    tags: ["autodocs"],
+    title: "Board/BoardSurface",
   });
 </script>
 

@@ -14,18 +14,18 @@ import { RuleEngine } from "../rule-engine";
  * - Flow state access
  */
 
-type TestGameState = {
-  players: Array<{ id: string; name: string; score: number }>;
+interface TestGameState {
+  players: { id: string; name: string; score: number }[];
   currentPlayerIndex: number;
   turnNumber: number;
   phase: "ready" | "draw" | "main" | "end";
   log: string[];
-};
+}
 
-type TestMoves = {
+interface TestMoves {
   incrementScore: { amount: number };
   nextPhase: Record<string, never>;
-};
+}
 
 describe("RuleEngine - Flow Integration", () => {
   describe("Task 11.27, 11.28: Flow Manager Integration", () => {
@@ -38,29 +38,29 @@ describe("RuleEngine - Flow Integration", () => {
       const flow: FlowDefinition<TestGameState> = {
         turn: {
           phases: {
-            ready: { order: 0, next: "draw" },
-            draw: { order: 1, next: "main" },
-            main: { order: 2, next: "end" },
-            end: { order: 3, next: undefined },
+            draw: { next: "main", order: 1 },
+            end: { next: undefined, order: 3 },
+            main: { next: "end", order: 2 },
+            ready: { next: "draw", order: 0 },
           },
         },
       };
 
       const gameDef: GameDefinition<TestGameState, TestMoves> = {
+        flow,
+        moves,
         name: "Test Game",
         setup: (players) => ({
+          currentPlayerIndex: 0,
+          log: [],
+          phase: "ready",
           players: players.map((p) => ({
             id: p.id,
             name: p.name || "Player",
             score: 0,
           })),
-          currentPlayerIndex: 0,
           turnNumber: 1,
-          phase: "ready",
-          log: [],
         }),
-        moves,
-        flow,
       };
 
       const players = [
@@ -82,19 +82,19 @@ describe("RuleEngine - Flow Integration", () => {
       };
 
       const gameDef: GameDefinition<TestGameState, TestMoves> = {
+        moves,
         name: "Test Game",
         setup: (players) => ({
+          currentPlayerIndex: 0,
+          log: [],
+          phase: "ready",
           players: players.map((p) => ({
             id: p.id,
             name: p.name || "Player",
             score: 0,
           })),
-          currentPlayerIndex: 0,
           turnNumber: 1,
-          phase: "ready",
-          log: [],
         }),
-        moves,
         // No flow definition
       };
 
@@ -122,31 +122,31 @@ describe("RuleEngine - Flow Integration", () => {
           },
           phases: {
             ready: {
-              order: 0,
               next: undefined,
               onBegin: (context) => {
                 context.state.log.push("ready-begin");
               },
+              order: 0,
             },
           },
         },
       };
 
       const gameDef: GameDefinition<TestGameState, TestMoves> = {
+        flow,
+        moves,
         name: "Test Game",
         setup: (players) => ({
+          currentPlayerIndex: 0,
+          log: [],
+          phase: "ready",
           players: players.map((p) => ({
             id: p.id,
             name: p.name || "Player",
             score: 0,
           })),
-          currentPlayerIndex: 0,
           turnNumber: 1,
-          phase: "ready",
-          log: [],
         }),
-        moves,
-        flow,
       };
 
       const players = [
@@ -172,28 +172,28 @@ describe("RuleEngine - Flow Integration", () => {
       const flow: FlowDefinition<TestGameState> = {
         turn: {
           phases: {
-            ready: { order: 0, next: "draw" },
-            draw: { order: 1, next: "main" },
-            main: { order: 2, next: undefined },
+            draw: { next: "main", order: 1 },
+            main: { next: undefined, order: 2 },
+            ready: { next: "draw", order: 0 },
           },
         },
       };
 
       const gameDef: GameDefinition<TestGameState, TestMoves> = {
+        flow,
+        moves,
         name: "Test Game",
         setup: (players) => ({
+          currentPlayerIndex: 0,
+          log: [],
+          phase: "ready",
           players: players.map((p) => ({
             id: p.id,
             name: p.name || "Player",
             score: 0,
           })),
-          currentPlayerIndex: 0,
           turnNumber: 1,
-          phase: "ready",
-          log: [],
         }),
-        moves,
-        flow,
       };
 
       const players = [
@@ -230,37 +230,37 @@ describe("RuleEngine - Flow Integration", () => {
       const flow: FlowDefinition<TestGameState> = {
         turn: {
           phases: {
+            main: {
+              next: undefined,
+              order: 1,
+            },
             ready: {
-              order: 0,
-              next: "main",
               endIf: (context) => {
                 // Auto-end when any player has score >= 5
                 return context.state.players.some((p) => p.score >= 5);
               },
-            },
-            main: {
-              order: 1,
-              next: undefined,
+              next: "main",
+              order: 0,
             },
           },
         },
       };
 
       const gameDef: GameDefinition<TestGameState, TestMoves> = {
+        flow,
+        moves,
         name: "Test Game",
         setup: (players) => ({
+          currentPlayerIndex: 0,
+          log: [],
+          phase: "ready",
           players: players.map((p) => ({
             id: p.id,
             name: p.name || "Player",
             score: 0,
           })),
-          currentPlayerIndex: 0,
           turnNumber: 1,
-          phase: "ready",
-          log: [],
         }),
-        moves,
-        flow,
       };
 
       const players = [
@@ -295,30 +295,30 @@ describe("RuleEngine - Flow Integration", () => {
       };
 
       const gameDef: GameDefinition<TestGameState, TestMoves> = {
-        name: "Test Game",
-        setup: (players) => ({
-          players: players.map((p) => ({
-            id: p.id,
-            name: p.name || "Player",
-            score: 0,
-          })),
-          currentPlayerIndex: 0,
-          turnNumber: 1,
-          phase: "ready",
-          log: [],
-        }),
-        moves,
         endIf: (state) => {
           // Game ends when any player reaches 10 points
           const winner = state.players.find((p) => p.score >= 10);
           if (winner) {
             return {
-              winner: winner.id,
               reason: "Score limit reached",
+              winner: winner.id,
             };
           }
           return undefined;
         },
+        moves,
+        name: "Test Game",
+        setup: (players) => ({
+          currentPlayerIndex: 0,
+          log: [],
+          phase: "ready",
+          players: players.map((p) => ({
+            id: p.id,
+            name: p.name || "Player",
+            score: 0,
+          })),
+          turnNumber: 1,
+        }),
       };
 
       const players = [
@@ -334,8 +334,8 @@ describe("RuleEngine - Flow Integration", () => {
 
       // Execute move to reach winning score
       engine.executeMove("incrementScore", {
-        playerId: createPlayerId("p1"),
         params: { amount: 10 },
+        playerId: createPlayerId("p1"),
       });
 
       // Game should be ended now

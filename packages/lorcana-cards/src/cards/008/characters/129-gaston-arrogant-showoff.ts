@@ -4,9 +4,8 @@ export const gastonArrogantShowoff: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "banish",
           target: {
             selector: "all",
             count: "all",
@@ -14,16 +13,17 @@ export const gastonArrogantShowoff: CharacterCard = {
             zones: ["play"],
             cardTypes: ["item"],
           },
+          type: "banish",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "is0-1",
       name: "BREAK APART",
       text: "BREAK APART When you play this character, you may banish one of your items to give chosen character +2 {S} this turn.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

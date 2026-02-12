@@ -300,7 +300,7 @@ The `GainKeywordEffect` will be updated to accept keyword objects from the `Keyw
 // Before
 export interface GainKeywordEffect extends BaseEffect {
   type: "gain-keyword";
-  keyword: string;  // Any string allowed
+  keyword: string; // Any string allowed
   value?: number;
   target: CharacterTarget;
   duration?: EffectDuration;
@@ -309,7 +309,7 @@ export interface GainKeywordEffect extends BaseEffect {
 // After
 export interface GainKeywordEffect extends BaseEffect {
   type: "gain-keyword";
-  keyword: KeywordAbility;  // Only valid keyword abilities
+  keyword: KeywordAbility; // Only valid keyword abilities
   target: CharacterTarget;
   duration?: EffectDuration;
 }

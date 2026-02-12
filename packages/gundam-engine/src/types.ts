@@ -7,10 +7,7 @@
 
 import type { CardId, PlayerId, Zone } from "@tcg/core";
 import type { KeywordEffect } from "@tcg/gundam-types/effects";
-import type {
-  EffectStackState,
-  TemporaryModifier,
-} from "./effects/effect-runtime";
+import type { EffectStackState, TemporaryModifier } from "./effects/effect-runtime";
 
 /**
  * Gundam Game State
@@ -18,7 +15,7 @@ import type {
  * Extends core game state with Gundam-specific properties.
  * Uses @tcg/core's Zone type for all zone management.
  */
-export type GundamGameState = {
+export interface GundamGameState {
   /** Player identifiers */
   players: PlayerId[];
 
@@ -136,7 +133,7 @@ export type GundamGameState = {
     loser?: PlayerId;
     gameEndReason?: string;
   };
-};
+}
 
 /**
  * Card Position (Orientation)
@@ -152,7 +149,7 @@ export type CardPosition = "active" | "rested";
  * Defines all possible player actions in the game.
  * Each move type specifies its required parameters.
  */
-export type GundamMoves = {
+export interface GundamMoves {
   playCard: {
     playerId: PlayerId;
     cardId: CardId;
@@ -162,7 +159,7 @@ export type GundamMoves = {
   attack: {
     playerId: PlayerId;
     attackerId: CardId;
-    targetId?: CardId; // undefined = direct attack to player
+    targetId?: CardId; // Undefined = direct attack to player
   };
 
   /** Pass/end current phase */
@@ -203,7 +200,7 @@ export type GundamMoves = {
   handleTurnEnd: {
     playerId: PlayerId;
   };
-};
+}
 
 /**
  * Card Metadata Types
@@ -211,7 +208,7 @@ export type GundamMoves = {
  * Dynamic runtime state for cards in play.
  * Replaces generic `any` metadata with explicit types.
  */
-export type GundamCardMeta = {
+export interface GundamCardMeta {
   /**
    * 5-4. Active and Rested
    * 5-4-1. Cards in the battle area, resource area, and base section can be in one of the two following indicative orientations.
@@ -233,4 +230,4 @@ export type GundamCardMeta = {
   damage: number;
 
   playedThisTurn: boolean;
-};
+}

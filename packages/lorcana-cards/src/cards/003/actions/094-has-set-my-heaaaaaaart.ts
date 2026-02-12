@@ -4,14 +4,14 @@ export const hasSetMyHeaaaaaaart: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "banish",
         target: {
-          selector: "chosen",
+          cardTypes: ["item"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["item"],
         },
+        type: "banish",
       },
       id: "4bh-1",
       text: "Banish chosen item.",

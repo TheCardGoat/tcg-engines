@@ -69,9 +69,7 @@ function parseFromText(text: string): RepeatEffect | null {
 
     // For "repeat this/that", we need the previous effect which isn't available here
     // Return null to indicate this pattern needs to be handled at a higher level
-    logger.debug(
-      "Repeat this/that pattern requires context - not handling at this level",
-    );
+    logger.debug("Repeat this/that pattern requires context - not handling at this level");
     return null;
   }
 
@@ -125,8 +123,7 @@ function parseFromCst(_ctx: CstNode): RepeatEffect | null {
  * Repeat effect parser implementation
  */
 export const repeatEffectParser: EffectParser = {
-  description:
-    "Parses repeat effects that execute multiple times (e.g., 'draw 1 card, 3 times')",
+  description: "Parses repeat effects that execute multiple times (e.g., 'draw 1 card, 3 times')",
   parse: (input: CstNode | string): RepeatEffect | null => {
     if (typeof input === "string") {
       return parseFromText(input);

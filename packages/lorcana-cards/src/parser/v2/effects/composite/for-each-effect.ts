@@ -61,11 +61,7 @@ function parseCounter(text: string): ForEachCounter | null {
   }
 
   // "damage on this/it/self" (without "character") - no controller property
-  if (
-    /\bdamage\s+on\s+(?:this|that|it|self)(?:\s+character)?\s*$/i.test(
-      normalized,
-    )
-  ) {
+  if (/\bdamage\s+on\s+(?:this|that|it|self)(?:\s+character)?\s*$/i.test(normalized)) {
     return { type: "damage-on-self" };
   }
 
@@ -92,10 +88,7 @@ function parseCounter(text: string): ForEachCounter | null {
     if (controller === "any") {
       if (/\bopponent\b/i.test(normalized)) {
         controller = "opponent";
-      } else if (
-        /\byou\s+control\b/i.test(normalized) ||
-        /\byour\b/i.test(normalized)
-      ) {
+      } else if (/\byou\s+control\b/i.test(normalized) || /\byour\b/i.test(normalized)) {
         controller = "you";
       }
       // Else: keep default "any" for damaged characters
@@ -111,10 +104,7 @@ function parseCounter(text: string): ForEachCounter | null {
       controller = "you";
       if (/\bopponent\b/i.test(normalized)) {
         controller = "opponent";
-      } else if (
-        /\byou\s+control\b/i.test(normalized) ||
-        /\byour\b/i.test(normalized)
-      ) {
+      } else if (/\byou\s+control\b/i.test(normalized) || /\byour\b/i.test(normalized)) {
         controller = "you";
       }
     }
@@ -208,9 +198,7 @@ function parseFromText(text: string): ForEachEffect | null {
     // Check if this is a multi-sentence pattern (contains period before "for each")
     // If so, let it be handled by the sequence parser instead
     if (effectText.includes(". ")) {
-      logger.debug(
-        "Multi-sentence pattern detected - delegating to sequence parser",
-      );
+      logger.debug("Multi-sentence pattern detected - delegating to sequence parser");
       return null;
     }
   }

@@ -5,12 +5,12 @@ import type { CardId, PlayerId, ZoneId } from "../types";
 import type { CardZoneConfig } from "../zones";
 
 // Mock One Piece game state - SIMPLIFIED!
-type TestGameState = {
+interface TestGameState {
   battleAllowed: boolean;
   leaderLife: Record<string, number>;
-};
+}
 
-type TestMoves = {
+interface TestMoves {
   // Setup moves
   initializeDecks: { playerId: PlayerId };
   placeLeader: { playerId: PlayerId; leaderId: CardId };
@@ -31,7 +31,7 @@ type TestMoves = {
   // Standard moves
   pass: { playerId: PlayerId };
   concede: { playerId: PlayerId };
-};
+}
 
 // One Piece move definitions
 const onePieceMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
@@ -39,21 +39,21 @@ const onePieceMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
   initializeDecks: {
     reducer: (_draft, context) => {
       const { zones } = context;
-      const playerId = context.params.playerId;
+      const { playerId } = context.params;
 
       // Use engine's createDeck utility!
       zones.createDeck({
-        zoneId: "deck" as ZoneId,
-        playerId,
         cardCount: 50,
+        playerId,
         shuffle: true,
+        zoneId: "deck" as ZoneId,
       });
 
       zones.createDeck({
-        zoneId: "donDeck" as ZoneId,
-        playerId,
         cardCount: 10,
+        playerId,
         shuffle: true,
+        zoneId: "donDeck" as ZoneId,
       });
 
       // NO MORE: draft.setupStep
@@ -63,7 +63,7 @@ const onePieceMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
   placeLeader: {
     reducer: (_draft, context) => {
       const { zones } = context;
-      const leaderId = context.params.leaderId;
+      const { leaderId } = context.params;
 
       // Place Leader card in leader area
       zones.moveCard({
@@ -85,15 +85,15 @@ const onePieceMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
   drawOpeningHand: {
     reducer: (_draft, context) => {
       const { zones } = context;
-      const playerId = context.params.playerId;
+      const { playerId } = context.params;
 
       // BEFORE: Manual loop (11 lines)
       // AFTER: Use drawCards utility!
       zones.drawCards({
-        from: "deck" as ZoneId,
-        to: "hand" as ZoneId,
         count: 5,
+        from: "deck" as ZoneId,
         playerId,
+        to: "hand" as ZoneId,
       });
 
       // NO MORE: draft.setupStep, draft.mulliganOffered
@@ -103,16 +103,16 @@ const onePieceMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
   decideMulligan: {
     reducer: (_draft, context) => {
       const { zones } = context;
-      const playerId = context.params.playerId;
-      const redraw = context.params.redraw;
+      const { playerId } = context.params;
+      const { redraw } = context.params;
 
       if (redraw) {
         // BEFORE: Manual mulligan (22 lines)
         // AFTER: One line!
         zones.mulligan({
-          hand: "hand" as ZoneId,
           deck: "deck" as ZoneId,
           drawCount: 5,
+          hand: "hand" as ZoneId,
           playerId,
         });
       }
@@ -124,17 +124,17 @@ const onePieceMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
   placeLifeCards: {
     reducer: (_draft, context) => {
       const { zones } = context;
-      const playerId = context.params.playerId;
-      const lifeCount = context.params.lifeCount;
+      const { playerId } = context.params;
+      const { lifeCount } = context.params;
 
       // BEFORE: Manual loop (9 lines)
       // AFTER: Use bulkMove utility!
       zones.bulkMove({
-        from: "deck" as ZoneId,
-        to: "life" as ZoneId,
         count: lifeCount,
+        from: "deck" as ZoneId,
         playerId,
         position: "bottom",
+        to: "life" as ZoneId,
       });
 
       // NO MORE: draft.setupStep
@@ -162,13 +162,13 @@ const onePieceMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
     },
     reducer: (_draft, context) => {
       const { zones } = context;
-      const playerId = context.params.playerId;
+      const { playerId } = context.params;
 
       zones.drawCards({
-        from: "deck" as ZoneId,
-        to: "hand" as ZoneId,
         count: 1,
+        from: "deck" as ZoneId,
         playerId,
+        to: "hand" as ZoneId,
       });
     },
   },
@@ -176,7 +176,7 @@ const onePieceMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
   placeDon: {
     reducer: (_draft, context) => {
       const { zones } = context;
-      const playerId = context.params.playerId;
+      const { playerId } = context.params;
 
       // Get DON!! count for this turn (use flow.turn)
       const turnNumber = context.flow?.turn ?? 1;
@@ -184,17 +184,17 @@ const onePieceMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
 
       // Draw DON!! cards
       zones.bulkMove({
-        from: "donDeck" as ZoneId,
-        to: "donArea" as ZoneId,
         count: donCount,
+        from: "donDeck" as ZoneId,
         playerId,
+        to: "donArea" as ZoneId,
       });
     },
   },
 
   playCharacter: {
     reducer: (_draft, context) => {
-      const cardId = context.params.cardId;
+      const { cardId } = context.params;
 
       context.zones.moveCard({
         cardId,
@@ -205,7 +205,7 @@ const onePieceMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
 
   playEvent: {
     reducer: (_draft, context) => {
-      const cardId = context.params.cardId;
+      const { cardId } = context.params;
 
       // Events go directly to discard
       context.zones.moveCard({
@@ -217,7 +217,7 @@ const onePieceMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
 
   playStage: {
     reducer: (_draft, context) => {
-      const cardId = context.params.cardId;
+      const { cardId } = context.params;
 
       context.zones.moveCard({
         cardId,
@@ -228,7 +228,7 @@ const onePieceMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
 
   giveDon: {
     reducer: (_draft, context) => {
-      const donCardId = context.params.donCardId;
+      const { donCardId } = context.params;
 
       // Attach DON!! to character (simplified)
       context.zones.moveCard({
@@ -263,86 +263,86 @@ const onePieceMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
 
 // One Piece zones (unchanged)
 const onePieceZones: Record<string, CardZoneConfig> = {
-  deck: {
-    id: "deck" as ZoneId,
-    name: "zones.deck",
-    visibility: "secret",
-    ordered: true,
-    owner: undefined,
-    faceDown: true,
-    maxSize: 50,
-  },
-  hand: {
-    id: "hand" as ZoneId,
-    name: "zones.hand",
-    visibility: "private",
-    ordered: false,
-    owner: undefined,
-    faceDown: false,
-    maxSize: undefined,
-  },
-  donDeck: {
-    id: "donDeck" as ZoneId,
-    name: "zones.donDeck",
-    visibility: "public",
-    ordered: true,
-    owner: undefined,
-    faceDown: true,
-    maxSize: 10,
-  },
-  donArea: {
-    id: "donArea" as ZoneId,
-    name: "zones.donArea",
-    visibility: "public",
-    ordered: false,
-    owner: undefined,
-    faceDown: false,
-    maxSize: undefined,
-  },
-  leader: {
-    id: "leader" as ZoneId,
-    name: "zones.leader",
-    visibility: "public",
-    ordered: false,
-    owner: undefined,
-    faceDown: false,
-    maxSize: 1,
-  },
   characters: {
+    faceDown: false,
     id: "characters" as ZoneId,
+    maxSize: undefined,
     name: "zones.characters",
-    visibility: "public",
     ordered: false,
     owner: undefined,
-    faceDown: false,
-    maxSize: undefined,
-  },
-  stage: {
-    id: "stage" as ZoneId,
-    name: "zones.stage",
     visibility: "public",
-    ordered: false,
-    owner: undefined,
-    faceDown: false,
-    maxSize: undefined,
   },
-  life: {
-    id: "life" as ZoneId,
-    name: "zones.life",
-    visibility: "secret",
+  deck: {
+    faceDown: true,
+    id: "deck" as ZoneId,
+    maxSize: 50,
+    name: "zones.deck",
     ordered: true,
     owner: undefined,
-    faceDown: true,
-    maxSize: 5,
+    visibility: "secret",
   },
   discard: {
+    faceDown: false,
     id: "discard" as ZoneId,
+    maxSize: undefined,
     name: "zones.discard",
-    visibility: "public",
     ordered: false,
     owner: undefined,
+    visibility: "public",
+  },
+  donArea: {
     faceDown: false,
+    id: "donArea" as ZoneId,
     maxSize: undefined,
+    name: "zones.donArea",
+    ordered: false,
+    owner: undefined,
+    visibility: "public",
+  },
+  donDeck: {
+    faceDown: true,
+    id: "donDeck" as ZoneId,
+    maxSize: 10,
+    name: "zones.donDeck",
+    ordered: true,
+    owner: undefined,
+    visibility: "public",
+  },
+  hand: {
+    faceDown: false,
+    id: "hand" as ZoneId,
+    maxSize: undefined,
+    name: "zones.hand",
+    ordered: false,
+    owner: undefined,
+    visibility: "private",
+  },
+  leader: {
+    faceDown: false,
+    id: "leader" as ZoneId,
+    maxSize: 1,
+    name: "zones.leader",
+    ordered: false,
+    owner: undefined,
+    visibility: "public",
+  },
+  life: {
+    faceDown: true,
+    id: "life" as ZoneId,
+    maxSize: 5,
+    name: "zones.life",
+    ordered: true,
+    owner: undefined,
+    visibility: "secret",
+  },
+  stage: {
+    faceDown: false,
+    id: "stage" as ZoneId,
+    maxSize: undefined,
+    name: "zones.stage",
+    ordered: false,
+    owner: undefined,
+    visibility: "public",
   },
 };
 
@@ -351,36 +351,36 @@ const onePieceFlow: FlowDefinition<TestGameState> = {
   turn: {
     initialPhase: "refresh",
     phases: {
-      refresh: {
-        order: 1,
-        next: "draw",
-        onBegin: (_context) => {},
-        endIf: () => true,
-      },
-      draw: {
-        order: 2,
-        next: "don",
-        onBegin: (_context) => {},
-        endIf: () => true,
-      },
       don: {
-        order: 3,
+        endIf: () => true,
         next: "main",
         onBegin: (_context) => {},
-        endIf: () => true,
+        order: 3,
       },
-      main: {
-        order: 4,
-        next: "end",
+      draw: {
+        endIf: () => true,
+        next: "don",
         onBegin: (_context) => {},
+        order: 2,
       },
       end: {
-        order: 5,
+        endIf: () => true,
         next: "refresh",
         onBegin: (context) => {
           context.state.battleAllowed = false;
         },
+        order: 5,
+      },
+      main: {
+        next: "end",
+        onBegin: (_context) => {},
+        order: 4,
+      },
+      refresh: {
         endIf: () => true,
+        next: "draw",
+        onBegin: (_context) => {},
+        order: 1,
       },
     },
   },
@@ -396,10 +396,7 @@ const onePieceFlow: FlowDefinition<TestGameState> = {
  * ✅ Standard moves library (pass, concede)
  * ✅ Flow context access (isFirstTurn, turn)
  */
-export function createMockOnePieceGame(): GameDefinition<
-  TestGameState,
-  TestMoves
-> {
+export function createMockOnePieceGame(): GameDefinition<TestGameState, TestMoves> {
   return {
     name: "Test One Piece Game",
     zones: onePieceZones,

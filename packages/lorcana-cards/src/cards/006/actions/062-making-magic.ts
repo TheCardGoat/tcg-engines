@@ -4,9 +4,9 @@ export const makingMagic: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "draw",
         amount: 1,
         target: "CONTROLLER",
+        type: "draw",
       },
       id: "1ci-1",
       text: "Move 1 damage counter from chosen character to chosen opposing character. Draw a card.",

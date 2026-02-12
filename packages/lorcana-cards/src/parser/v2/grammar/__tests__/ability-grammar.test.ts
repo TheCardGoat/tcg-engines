@@ -189,10 +189,7 @@ describe.skip("LorcanaAbilityParser", () => {
     });
 
     it("parses multiple effects in sequence", () => {
-      const result = parseText(
-        "draw 2, then draw 1, then draw 1",
-        "compositeEffect",
-      );
+      const result = parseText("draw 2, then draw 1, then draw 1", "compositeEffect");
 
       expect(result.errors).toHaveLength(0);
       expect(result.cst).toBeDefined();
@@ -299,20 +296,14 @@ describe.skip("LorcanaAbilityParser", () => {
 
   describe("complex real-world abilities", () => {
     it("parses simple triggered draw ability", () => {
-      const result = parseText(
-        "when you play this character, draw 2.",
-        "triggeredAbility",
-      );
+      const result = parseText("when you play this character, draw 2.", "triggeredAbility");
 
       expect(result.errors).toHaveLength(0);
       expect(result.cst).toBeDefined();
     });
 
     it("parses sequence ability", () => {
-      const result = parseText(
-        "when you play, draw 2, then draw 1.",
-        "triggeredAbility",
-      );
+      const result = parseText("when you play, draw 2, then draw 1.", "triggeredAbility");
 
       expect(result.errors).toHaveLength(0);
       expect(result.cst).toBeDefined();

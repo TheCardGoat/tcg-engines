@@ -13,15 +13,15 @@ export const mushuYourWorstNightmare: CharacterCard = {
     },
     {
       effect: {
-        type: "gain-keyword",
+        duration: "this-turn",
         keyword: "Rush",
         target: "CHOSEN_CHARACTER",
-        duration: "this-turn",
+        type: "gain-keyword",
       },
       id: "qm5-2",
       name: "ALL FIRED UP",
       text: "ALL FIRED UP Whenever you play another character, they gain Rush, Reckless, and Evasive this turn.",
-      trigger: { event: "play", timing: "when", on: "SELF" },
+      trigger: { event: "play", on: "SELF", timing: "when" },
       type: "triggered",
     },
   ],

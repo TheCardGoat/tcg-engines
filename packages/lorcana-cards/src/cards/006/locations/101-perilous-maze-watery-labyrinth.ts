@@ -4,15 +4,15 @@ export const perilousMazeWateryLabyrinth: LocationCard = {
   abilities: [
     {
       effect: {
-        type: "discard",
         amount: 1,
-        target: "EACH_OPPONENT",
         chosen: true,
+        target: "EACH_OPPONENT",
+        type: "discard",
       },
       id: "1w9-1",
       name: "LOST IN THE WAVES",
       text: "LOST IN THE WAVES Whenever a character is challenged while here, each opponent chooses and discards a card.",
-      trigger: { event: "play", timing: "when", on: "SELF" },
+      trigger: { event: "play", on: "SELF", timing: "when" },
       type: "triggered",
     },
   ],

@@ -7,9 +7,9 @@ export const juniorWoodchuckGuidebook: ItemCard = {
         exert: true,
       },
       effect: {
-        type: "draw",
         amount: 2,
         target: "CONTROLLER",
+        type: "draw",
       },
       id: "ebe-1",
       text: "THE BOOK KNOWS EVERYTHING {E}, 1 {I}, Banish this item — Draw 2 cards.",

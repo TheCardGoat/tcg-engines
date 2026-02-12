@@ -5,15 +5,15 @@ export const beastFrustratedDesigner: CharacterCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "deal-damage",
         amount: 5,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "deal-damage",
       },
       id: "1u2-1",
       text: "I'VE HAD IT! {E}, 2 {I}, Banish 2 of your items — Deal 5 damage to chosen character.",

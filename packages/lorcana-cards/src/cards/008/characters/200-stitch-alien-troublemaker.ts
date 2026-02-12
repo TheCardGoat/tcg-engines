@@ -4,20 +4,20 @@ export const stitchAlienTroublemaker: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
-        effect: {
-          type: "gain-lore",
-          amount: 1,
-        },
         chooser: "CONTROLLER",
+        effect: {
+          amount: 1,
+          type: "gain-lore",
+        },
+        type: "optional",
       },
       id: "aiz-1",
       name: "I WIN!",
       text: "I WIN! During your turn, whenever this character banishes another character in a challenge, you may draw a card and gain 1 lore.",
       trigger: {
         event: "banish",
-        timing: "whenever",
         on: "OPPONENT_CHARACTERS",
+        timing: "whenever",
       },
       type: "triggered",
     },

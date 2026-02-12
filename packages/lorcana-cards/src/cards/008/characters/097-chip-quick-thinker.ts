@@ -4,8 +4,8 @@ export const chipQuickThinker: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "play-card",
         from: "hand",
+        type: "play-card",
       },
       id: "1aq-1",
       text: "I’LL HANDLE THIS When you play this character, chosen opponent chooses and discards a card.",

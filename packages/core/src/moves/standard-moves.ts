@@ -6,7 +6,7 @@ import type { MoveContext } from "./move-system";
 /**
  * Options for configuring standard moves
  */
-export type StandardMoveOptions = {
+export interface StandardMoveOptions {
   /** Which standard moves to include */
   include?: StandardMoveName[];
   /** Custom zone names for draw/shuffle operations */
@@ -17,28 +17,23 @@ export type StandardMoveOptions = {
   };
   /** Custom game-over handling for concede */
   onConcede?: (playerId: PlayerId, context: MoveContext) => void;
-};
+}
 
 /**
  * Available standard move names
  */
-export type StandardMoveName =
-  | "pass"
-  | "concede"
-  | "draw"
-  | "shuffle"
-  | "mulligan";
+export type StandardMoveName = "pass" | "concede" | "draw" | "shuffle" | "mulligan";
 
 /**
  * Type definition for standard moves
  */
-export type StandardMoves = {
+export interface StandardMoves {
   pass: { playerId: PlayerId };
   concede: { playerId: PlayerId };
   draw: { playerId: PlayerId; count?: number };
   shuffle: { playerId: PlayerId };
   mulligan: { playerId: PlayerId; keepCards?: string[] };
-};
+}
 
 /**
  * Create a library of standard TCG moves that games can opt into.
@@ -71,10 +66,7 @@ export function standardMoves<TState>(
   // Pass move - do nothing, just advance turn
   if (include.includes("pass")) {
     moves.pass = {
-      condition: (_state: TState, _context: MoveContext) => {
-        // Can always pass (unless game has ended)
-        return true;
-      },
+      condition: (_state: TState, _context: MoveContext) => true,
       reducer: (_draft: Draft<TState>, _context: MoveContext) => {
         // No state changes - this is just a signal to advance flow
       },
@@ -96,9 +88,9 @@ export function standardMoves<TState>(
               : undefined
           ) as PlayerId | undefined;
           context.endGame({
-            winner,
-            reason: "concede",
             metadata: { conceedingPlayer: context.playerId },
+            reason: "concede",
+            winner,
           });
         }
       },
@@ -110,19 +102,16 @@ export function standardMoves<TState>(
     moves.draw = {
       condition: (_state: TState, context: MoveContext) => {
         const count = context.params?.count ?? 1;
-        const deckCards = context.zones.getCardsInZone(
-          deckZone,
-          context.playerId,
-        );
+        const deckCards = context.zones.getCardsInZone(deckZone, context.playerId);
         return deckCards.length >= count;
       },
       reducer: (_draft: Draft<TState>, context: MoveContext) => {
         const count = context.params?.count ?? 1;
         context.zones.drawCards({
-          from: deckZone,
-          to: handZone,
           count,
+          from: deckZone,
           playerId: context.playerId,
+          to: handZone,
         });
       },
     };
@@ -141,26 +130,18 @@ export function standardMoves<TState>(
   // Mulligan move - return hand to deck, shuffle, and redraw
   if (include.includes("mulligan")) {
     moves.mulligan = {
-      condition: (_state: TState, context: MoveContext) => {
-        // Typically only allowed on first turn or during setup
-        return context.flow?.isFirstTurn ?? true;
-      },
+      condition: (_state: TState, context: MoveContext) => context.flow?.isFirstTurn ?? true,
       reducer: (_draft: Draft<TState>, context: MoveContext) => {
         const keepCards = context.params?.keepCards ?? [];
-        const handCards = context.zones.getCardsInZone(
-          handZone,
-          context.playerId,
-        );
+        const handCards = context.zones.getCardsInZone(handZone, context.playerId);
 
         // Return non-kept cards to deck
-        const cardsToReturn = handCards.filter(
-          (cardId: string) => !keepCards.includes(cardId),
-        );
+        const cardsToReturn = handCards.filter((cardId: string) => !keepCards.includes(cardId));
         for (const cardId of cardsToReturn) {
           context.zones.moveCard({
             cardId,
-            targetZoneId: deckZone,
             position: "bottom",
+            targetZoneId: deckZone,
           });
         }
 
@@ -171,10 +152,10 @@ export function standardMoves<TState>(
         const drawCount = cardsToReturn.length;
         if (drawCount > 0) {
           context.zones.drawCards({
-            from: deckZone,
-            to: handZone,
             count: drawCount,
+            from: deckZone,
             playerId: context.playerId,
+            to: handZone,
           });
         }
       },
@@ -219,10 +200,8 @@ export function createEndTurnMove<TState>(): GameMoveDefinitions<
   { endTurn: { playerId: PlayerId } }
 >["endTurn"] {
   return {
-    condition: (_state: TState, context: MoveContext) => {
-      // Only current player can end their turn
-      return context.flow?.currentPlayer === context.playerId;
-    },
+    condition: (_state: TState, context: MoveContext) =>
+      context.flow?.currentPlayer === context.playerId,
     reducer: (_draft: Draft<TState>, _context: MoveContext) => {
       // The actual turn transition is handled by FlowManager
       // This move just signals that the player is done

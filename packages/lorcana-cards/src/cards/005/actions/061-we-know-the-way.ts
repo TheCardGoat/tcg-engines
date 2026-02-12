@@ -4,24 +4,27 @@ export const weKnowTheWay: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "shuffle-into-deck",
             target: {
               selector: "chosen",
               count: 1,
               filter: [{ type: "zone", zone: "discard" }],
             },
+            type: "shuffle-into-deck",
           },
           {
-            type: "reveal-top-card",
             target: "CONTROLLER",
+            type: "reveal-top-card",
           },
           {
-            type: "conditional",
             condition: {
               type: "revealed-matches-chosen-name",
+            },
+            else: {
+              type: "put-in-hand",
+              target: "CONTROLLER",
+              source: "deck",
             },
             then: {
               type: "optional",
@@ -31,13 +34,10 @@ export const weKnowTheWay: ActionCard = {
                 cost: "free",
               },
             },
-            else: {
-              type: "put-in-hand",
-              target: "CONTROLLER",
-              source: "deck",
-            },
+            type: "conditional",
           },
         ],
+        type: "sequence",
       },
       id: "3jr-1",
       text: "Shuffle chosen card from your discard into your deck. Reveal the top card of your deck. If it has the same name as the chosen card, you may play the revealed card for free. Otherwise, put it into your hand.",

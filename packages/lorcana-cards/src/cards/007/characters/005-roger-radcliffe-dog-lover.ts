@@ -4,11 +4,9 @@ export const rogerRadcliffeDogLover: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "remove-damage",
           amount: 1,
-          upTo: true,
           target: {
             selector: "chosen",
             count: 1,
@@ -16,16 +14,18 @@ export const rogerRadcliffeDogLover: CharacterCard = {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "remove-damage",
+          upTo: true,
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "1t4-1",
       name: "THERE YOU GO",
       text: "THERE YOU GO Whenever this character quests, you may remove up to 1 damage from each of your Puppy characters.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

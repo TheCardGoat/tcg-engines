@@ -4,10 +4,10 @@ export const adorabeezleWinterpopIceRocketRacer: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "lore",
         modifier: 1,
+        stat: "lore",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "zbp-1",
       text: "KEEP DRIVING While this character has damage, she gets +1 {L}.",

@@ -22,9 +22,9 @@ import { BaseExtractionAdapter } from "./base";
  * Default configuration for Tabstack extraction
  */
 const DEFAULT_CONFIG: ExtractionConfig = {
-  maxContentLength: 50000, // 50k characters
+  maxContentLength: 50_000, // 50k characters
   supportedLanguages: ["en"],
-  extractionTimeoutMs: 60000, // 1 minute
+  extractionTimeoutMs: 60_000, // 1 minute
   validationRules: [],
 };
 
@@ -47,10 +47,7 @@ export interface TabstackClient {
   };
   extract: {
     markdown(options: { url: string }): Promise<{ markdown: string }>;
-    json<T>(options: {
-      url: string;
-      schema: Record<string, unknown>;
-    }): Promise<T>;
+    json<T>(options: { url: string; schema: Record<string, unknown> }): Promise<T>;
   };
 }
 
@@ -159,8 +156,7 @@ export class TabstackExtractionAdapter extends BaseExtractionAdapter {
 
       // Check for exact domain match or subdomain match (e.g., www.youtube.com)
       const isExcludedDomain = excludedDomains.some(
-        (domain) =>
-          parsed.hostname === domain || parsed.hostname.endsWith(`.${domain}`),
+        (domain) => parsed.hostname === domain || parsed.hostname.endsWith(`.${domain}`),
       );
 
       if (isExcludedDomain) {
@@ -192,10 +188,7 @@ export class TabstackExtractionAdapter extends BaseExtractionAdapter {
    *
    * Uses Tabstack's extract.markdown() to get clean article content.
    */
-  async fetchContent(
-    contentId: string,
-    options?: FetchContentOptions,
-  ): Promise<RawContent> {
+  async fetchContent(contentId: string, options?: FetchContentOptions): Promise<RawContent> {
     const client = this.getClient();
 
     // Extract markdown content
@@ -203,13 +196,13 @@ export class TabstackExtractionAdapter extends BaseExtractionAdapter {
 
     return {
       contentId,
+      language: options?.preferredLanguage ?? "en",
+      rawMetadata: {
+        extractedAt: new Date().toISOString(),
+        url: contentId,
+      },
       sourceType: "article",
       textContent: markdown,
-      rawMetadata: {
-        url: contentId,
-        extractedAt: new Date().toISOString(),
-      },
-      language: options?.preferredLanguage ?? "en",
     };
   }
 
@@ -223,56 +216,54 @@ export class TabstackExtractionAdapter extends BaseExtractionAdapter {
 
     // Define schema for metadata extraction
     const metadataSchema = {
-      type: "object",
       properties: {
-        title: { type: "string", description: "Article title" },
         author: { type: "string", description: "Author name" },
-        publishedAt: {
-          type: "string",
-          description: "Publication date in ISO format",
-        },
         description: {
           type: "string",
           description: "Article description or summary",
         },
-        siteName: { type: "string", description: "Website name" },
         imageUrl: { type: "string", description: "Featured image URL" },
-        wordCount: { type: "number", description: "Word count" },
         language: { type: "string", description: "Content language code" },
+        publishedAt: {
+          type: "string",
+          description: "Publication date in ISO format",
+        },
+        siteName: { type: "string", description: "Website name" },
         tags: {
           type: "array",
           items: { type: "string" },
           description: "Article tags or categories",
         },
+        title: { type: "string", description: "Article title" },
+        wordCount: { type: "number", description: "Word count" },
       },
       required: ["title"],
+      type: "object",
     };
 
     const metadata = await client.generate.json<ArticleMetadata>({
-      url: rawContent.contentId,
-      schema: metadataSchema,
       instructions:
         "Extract article metadata including title, author, publication date, and other relevant information.",
+      schema: metadataSchema,
+      url: rawContent.contentId,
     });
 
     return {
-      title: metadata.title,
-      description: metadata.description,
       authorName: metadata.author,
       channelName: metadata.siteName,
       channelUrl: metadata.siteUrl,
       contentLength: rawContent.textContent.length,
-      publishedAt: metadata.publishedAt
-        ? new Date(metadata.publishedAt)
-        : undefined,
-      thumbnailUrl: metadata.imageUrl,
+      description: metadata.description,
       language: metadata.language ?? rawContent.language,
+      publishedAt: metadata.publishedAt ? new Date(metadata.publishedAt) : undefined,
       sourceMetadata: {
         ...metadata,
-        url: rawContent.contentId,
         readingTimeMinutes: metadata.readingTimeMinutes,
         tags: metadata.tags,
+        url: rawContent.contentId,
       },
+      thumbnailUrl: metadata.imageUrl,
+      title: metadata.title,
     };
   }
 
@@ -323,39 +314,26 @@ export class TabstackExtractionAdapter extends BaseExtractionAdapter {
    */
   private getDefaultValidationRules(): ValidationRule[] {
     return [
-      this.createValidationRule(
-        "has_title",
-        "Article must have a title",
-        true,
-        (metadata) => {
-          if (!metadata.title || metadata.title.trim().length === 0) {
-            return {
-              code: "MISSING_TITLE",
-              message: "Article must have a title",
-              field: "title",
-            };
-          }
-          return null;
-        },
-      ),
-      this.createValidationRule(
-        "has_content",
-        "Article must have content",
-        true,
-        (metadata) => {
-          if (
-            metadata.contentLength !== undefined &&
-            metadata.contentLength < 100
-          ) {
-            return {
-              code: "INSUFFICIENT_CONTENT",
-              message: "Article content is too short (minimum 100 characters)",
-              field: "contentLength",
-            };
-          }
-          return null;
-        },
-      ),
+      this.createValidationRule("has_title", "Article must have a title", true, (metadata) => {
+        if (!metadata.title || metadata.title.trim().length === 0) {
+          return {
+            code: "MISSING_TITLE",
+            field: "title",
+            message: "Article must have a title",
+          };
+        }
+        return null;
+      }),
+      this.createValidationRule("has_content", "Article must have content", true, (metadata) => {
+        if (metadata.contentLength !== undefined && metadata.contentLength < 100) {
+          return {
+            code: "INSUFFICIENT_CONTENT",
+            field: "contentLength",
+            message: "Article content is too short (minimum 100 characters)",
+          };
+        }
+        return null;
+      }),
     ];
   }
 }

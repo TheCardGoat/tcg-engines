@@ -4,15 +4,15 @@ export const maidMarianBadmintonAce: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "deal-damage",
         amount: 1,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "opponent",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "deal-damage",
       },
       id: "6at-1",
       text: "GOOD SHOT During an opponent's turn, whenever one of your Ally characters is damaged, deal 1 damage to chosen opposing character.",
@@ -20,9 +20,9 @@ export const maidMarianBadmintonAce: CharacterCard = {
     },
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Resist",
         target: "YOUR_CHARACTERS",
+        type: "gain-keyword",
         value: 1,
       },
       id: "6at-2",

@@ -4,9 +4,9 @@ export const sleepyNoddingOff: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "restriction",
         restriction: "enters-play-exerted",
         target: "SELF",
+        type: "restriction",
       },
       id: "1e7-1",
       name: "YAWN!",

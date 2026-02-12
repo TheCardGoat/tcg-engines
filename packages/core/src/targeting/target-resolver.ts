@@ -9,12 +9,7 @@
 
 import type { CardInstance } from "../cards/card-instance";
 import type { PlayerId } from "../types";
-import type {
-  BaseContext,
-  TargetCount,
-  TargetDSL,
-  TargetingUIHint,
-} from "./target-dsl";
+import type { BaseContext, TargetCount, TargetDSL, TargetingUIHint } from "./target-dsl";
 
 // ============================================================================
 // Resolution Context
@@ -29,10 +24,7 @@ import type {
  * @typeParam TGameState - The game state type
  * @typeParam TCard - The card instance type
  */
-export interface TargetResolutionContext<
-  TGameState,
-  TCard extends CardInstance<unknown>,
-> {
+export interface TargetResolutionContext<TGameState, TCard extends CardInstance<unknown>> {
   /** Current game state */
   state: TGameState;
 
@@ -77,10 +69,7 @@ export interface TargetResolver<
    * @param context - Resolution context
    * @returns Array of cards that are valid targets
    */
-  getValidTargets(
-    target: TTarget,
-    context: TargetResolutionContext<TGameState, TCard>,
-  ): TCard[];
+  getValidTargets(target: TTarget, context: TargetResolutionContext<TGameState, TCard>): TCard[];
 
   /**
    * Check if a specific card is a valid target
@@ -169,11 +158,8 @@ export function validSelection(): TargetValidationResult {
 /**
  * Create a failed validation result
  */
-export function invalidSelection(
-  error: string,
-  issues?: TargetIssue[],
-): TargetValidationResult {
-  return { valid: false, error, issues };
+export function invalidSelection(error: string, issues?: TargetIssue[]): TargetValidationResult {
+  return { error, issues, valid: false };
 }
 
 /**
@@ -197,13 +183,9 @@ export function validateTargetCount(
     if (selectedCount !== count) {
       // Check if there weren't enough available
       if (availableCount < count) {
-        return invalidSelection(
-          `Expected ${count} target(s) but only ${availableCount} available`,
-        );
+        return invalidSelection(`Expected ${count} target(s) but only ${availableCount} available`);
       }
-      return invalidSelection(
-        `Expected exactly ${count} target(s), but got ${selectedCount}`,
-      );
+      return invalidSelection(`Expected exactly ${count} target(s), but got ${selectedCount}`);
     }
     return validSelection();
   }
@@ -219,9 +201,7 @@ export function validateTargetCount(
 
   if ("upTo" in count) {
     if (selectedCount > count.upTo) {
-      return invalidSelection(
-        `Expected at most ${count.upTo} target(s), but got ${selectedCount}`,
-      );
+      return invalidSelection(`Expected at most ${count.upTo} target(s), but got ${selectedCount}`);
     }
     return validSelection();
   }
@@ -238,14 +218,10 @@ export function validateTargetCount(
   if ("between" in count) {
     const [min, max] = count.between;
     if (selectedCount < min) {
-      return invalidSelection(
-        `Expected at least ${min} target(s), but got ${selectedCount}`,
-      );
+      return invalidSelection(`Expected at least ${min} target(s), but got ${selectedCount}`);
     }
     if (selectedCount > max) {
-      return invalidSelection(
-        `Expected at most ${max} target(s), but got ${selectedCount}`,
-      );
+      return invalidSelection(`Expected at most ${max} target(s), but got ${selectedCount}`);
     }
     return validSelection();
   }
@@ -272,8 +248,7 @@ export abstract class BaseTargetResolver<
   TCard extends CardInstance<unknown>,
   TTarget extends TargetDSL<any, any>,
   TContext extends BaseContext = BaseContext,
-> implements TargetResolver<TGameState, TCard, TTarget>
-{
+> implements TargetResolver<TGameState, TCard, TTarget> {
   /**
    * Get all cards in specified zones
    * Game engines override this to access their zone system
@@ -315,10 +290,7 @@ export abstract class BaseTargetResolver<
    */
   protected abstract generateDescription(target: TTarget): string;
 
-  getValidTargets(
-    target: TTarget,
-    context: TargetResolutionContext<TGameState, TCard>,
-  ): TCard[] {
+  getValidTargets(target: TTarget, context: TargetResolutionContext<TGameState, TCard>): TCard[] {
     // Handle self selector
     if (target.selector === "self" && context.sourceCard) {
       return [context.sourceCard];
@@ -328,27 +300,19 @@ export abstract class BaseTargetResolver<
     let candidates = this.getCardsInZones(target.zones, context);
 
     // Apply ownership filter
-    candidates = candidates.filter((card) =>
-      this.matchesOwnership(card, target.owner, context),
-    );
+    candidates = candidates.filter((card) => this.matchesOwnership(card, target.owner, context));
 
     // Apply card type filter
-    candidates = candidates.filter((card) =>
-      this.matchesCardType(card, target.cardTypes, context),
-    );
+    candidates = candidates.filter((card) => this.matchesCardType(card, target.cardTypes, context));
 
     // Apply game-specific filter
     if (target.filter) {
-      candidates = candidates.filter((card) =>
-        this.applyFilter(card, target.filter, context),
-      );
+      candidates = candidates.filter((card) => this.applyFilter(card, target.filter, context));
     }
 
     // Handle excludeSelf
     if (target.excludeSelf && context.sourceCard) {
-      candidates = candidates.filter(
-        (card) => card.id !== context.sourceCard!.id,
-      );
+      candidates = candidates.filter((card) => card.id !== context.sourceCard!.id);
     }
 
     // Handle different targets requirement
@@ -392,8 +356,8 @@ export abstract class BaseTargetResolver<
       const selected = selectedTargets[i];
       if (!selected) {
         issues.push({
-          index: i,
           cardId: "undefined",
+          index: i,
           reason: "Target is undefined",
         });
         continue;
@@ -401,8 +365,8 @@ export abstract class BaseTargetResolver<
 
       if (!validTargets.some((t) => t.id === selected.id)) {
         issues.push({
-          index: i,
           cardId: String(selected.id),
+          index: i,
           reason: "Not a valid target",
         });
       }
@@ -475,12 +439,12 @@ export abstract class BaseTargetResolver<
     }
 
     return {
-      selectionType,
-      minSelections,
-      maxSelections,
-      prompt: this.generateDescription(target),
-      optional: minSelections === 0,
       highlightZones: target.zones || [],
+      maxSelections,
+      minSelections,
+      optional: minSelections === 0,
+      prompt: this.generateDescription(target),
+      selectionType,
     };
   }
 }

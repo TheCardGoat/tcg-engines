@@ -4,9 +4,9 @@ export const youreWelcome: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "draw",
         amount: 2,
         target: "CONTROLLER",
+        type: "draw",
       },
       id: "1my-1",
       text: "Shuffle chosen character, item, or location into their player's deck. That player draws 2 cards.",

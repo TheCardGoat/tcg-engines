@@ -4,15 +4,15 @@ export const dodge: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Ward",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "gain-keyword",
       },
       id: "2c5-1",
       text: "Chosen character gains Ward and Evasive until the start of your next turn.",

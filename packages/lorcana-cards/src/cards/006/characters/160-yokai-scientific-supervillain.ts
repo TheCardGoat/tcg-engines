@@ -13,13 +13,13 @@ export const yokaiScientificSupervillain: CharacterCard = {
     },
     {
       effect: {
-        type: "optional",
-        effect: {
-          type: "play-card",
-          from: "hand",
-          cost: "free",
-        },
         chooser: "CONTROLLER",
+        effect: {
+          cost: "free",
+          from: "hand",
+          type: "play-card",
+        },
+        type: "optional",
       },
       id: "11l-2",
       text: "NEUROTRANSMITTER You may play items named Microbots for free.",
@@ -27,17 +27,17 @@ export const yokaiScientificSupervillain: CharacterCard = {
     },
     {
       effect: {
-        type: "draw",
         amount: 1,
         target: "CONTROLLER",
+        type: "draw",
       },
       id: "11l-3",
       name: "TECHNICAL GAIN",
       text: "TECHNICAL GAIN Whenever this character quests, draw a card for each opposing character with {S}.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

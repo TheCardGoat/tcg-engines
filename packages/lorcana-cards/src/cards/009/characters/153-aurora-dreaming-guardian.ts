@@ -13,9 +13,9 @@ export const auroraDreamingGuardian: CharacterCard = {
     },
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Ward",
         target: "YOUR_CHARACTERS",
+        type: "gain-keyword",
       },
       id: "11z-2",
       name: "PROTECTIVE EMBRACE Your other",

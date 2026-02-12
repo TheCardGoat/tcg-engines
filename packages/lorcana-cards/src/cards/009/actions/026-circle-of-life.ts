@@ -4,10 +4,10 @@ export const circleOfLife: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "play-card",
-        from: "discard",
         cardType: "character",
         cost: "free",
+        from: "discard",
+        type: "play-card",
       },
       id: "1bo-1",
       text: "Sing Together 8 Play a character from your discard for free.",

@@ -5,18 +5,18 @@ import type { CardId, PlayerId, ZoneId } from "../types";
 import type { CardZoneConfig } from "../zones";
 
 // Mock Lorcana game state - SIMPLIFIED!
-type TestGameState = {
+interface TestGameState {
   effects: unknown[];
   bag: unknown[];
   loreScores: Record<string, number>;
-};
+}
 
-type AlternativeCost = {
+interface AlternativeCost {
   type: "shift" | "sing" | "sing-together";
   targetInstanceId: CardId[];
-};
+}
 
-type TestMoves = {
+interface TestMoves {
   // Setup moves
   chooseWhoGoesFirstMove: { playerId: PlayerId };
   alterHand: { playerId: PlayerId; cards: CardId[] };
@@ -43,7 +43,7 @@ type TestMoves = {
   // Standard moves
   passTurn: { playerId: PlayerId };
   concede: { playerId: PlayerId };
-};
+}
 
 // Lorcana move definitions
 const lorcanaMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
@@ -58,14 +58,14 @@ const lorcanaMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
   alterHand: {
     reducer: (_draft, context) => {
       const { zones } = context;
-      const playerId = context.params.playerId;
+      const { playerId } = context.params;
 
       // BEFORE: Manual array manipulation (11 lines)
       // AFTER: Use mulligan utility!
       zones.mulligan({
-        hand: "hand" as ZoneId,
         deck: "deck" as ZoneId,
         drawCount: 7,
+        hand: "hand" as ZoneId,
         playerId,
       });
     },
@@ -74,28 +74,28 @@ const lorcanaMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
   drawCards: {
     reducer: (_draft, context) => {
       const { zones } = context;
-      const playerId = context.params.playerId;
-      const count = context.params.count;
+      const { playerId } = context.params;
+      const { count } = context.params;
 
       // Use engine's drawCards utility
       zones.drawCards({
-        from: "deck" as ZoneId,
-        to: "hand" as ZoneId,
         count,
+        from: "deck" as ZoneId,
         playerId,
+        to: "hand" as ZoneId,
       });
     },
   },
 
   putACardIntoTheInkwell: {
     condition: (state, context) => {
-      const playerId = context.playerId;
+      const { playerId } = context;
       // Use tracker system!
       return !context.trackers?.check("hasInked", playerId);
     },
     reducer: (_draft, context) => {
-      const cardId = context.params.cardId;
-      const playerId = context.playerId;
+      const { cardId } = context.params;
+      const { playerId } = context;
 
       // Move card to inkwell
       context.zones.moveCard({
@@ -110,7 +110,7 @@ const lorcanaMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
 
   playCard: {
     reducer: (_draft, context) => {
-      const cardId = context.params.cardId;
+      const { cardId } = context.params;
 
       // Play card to play area
       context.zones.moveCard({
@@ -122,13 +122,13 @@ const lorcanaMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
 
   quest: {
     condition: (state, context) => {
-      const cardId = context.params.cardId;
+      const { cardId } = context.params;
       // Card hasn't quested this turn
       return !context.trackers?.check(`quested:${cardId}`, context.playerId);
     },
     reducer: (draft, context) => {
-      const cardId = context.params.cardId;
-      const playerId = context.playerId;
+      const { cardId } = context.params;
+      const { playerId } = context;
 
       // Increment lore (simplified - assume 1 lore per quest)
       draft.loreScores[playerId] = (draft.loreScores[playerId] || 0) + 1;
@@ -146,8 +146,8 @@ const lorcanaMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
 
   sing: {
     reducer: (_draft, context) => {
-      const singerId = context.params.singerId;
-      const songId = context.params.songId;
+      const { singerId } = context.params;
+      const { songId } = context.params;
 
       // Exert singer, play song
       context.zones.moveCard({
@@ -159,7 +159,7 @@ const lorcanaMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
 
   singTogether: {
     reducer: (_draft, context) => {
-      const songId = context.params.songId;
+      const { songId } = context.params;
 
       // Play song via sing together
       context.zones.moveCard({
@@ -183,7 +183,7 @@ const lorcanaMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
 
   resolveBag: {
     reducer: (draft, context) => {
-      const bagId = context.params.bagId;
+      const { bagId } = context.params;
       // Remove bag after resolution
       draft.bag = draft.bag.filter((b: any) => b.id !== bagId);
     },
@@ -191,7 +191,7 @@ const lorcanaMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
 
   resolveEffect: {
     reducer: (draft, context) => {
-      const effectId = context.params.effectId;
+      const { effectId } = context.params;
       // Remove effect after resolution
       draft.effects = draft.effects.filter((e: any) => e.id !== effectId);
     },
@@ -216,49 +216,49 @@ const lorcanaMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
 // Lorcana zones (simplified)
 const lorcanaZones: Record<string, CardZoneConfig> = {
   deck: {
+    faceDown: true,
     id: "deck" as ZoneId,
+    maxSize: 60,
     name: "zones.deck",
-    visibility: "secret",
     ordered: true,
     owner: undefined,
-    faceDown: true,
-    maxSize: 60,
-  },
-  hand: {
-    id: "hand" as ZoneId,
-    name: "zones.hand",
-    visibility: "private",
-    ordered: false,
-    owner: undefined,
-    faceDown: false,
-    maxSize: undefined,
-  },
-  inkwell: {
-    id: "inkwell" as ZoneId,
-    name: "zones.inkwell",
-    visibility: "public",
-    ordered: false,
-    owner: undefined,
-    faceDown: true,
-    maxSize: undefined,
-  },
-  play: {
-    id: "play" as ZoneId,
-    name: "zones.play",
-    visibility: "public",
-    ordered: false,
-    owner: undefined,
-    faceDown: false,
-    maxSize: undefined,
+    visibility: "secret",
   },
   discard: {
+    faceDown: false,
     id: "discard" as ZoneId,
+    maxSize: undefined,
     name: "zones.discard",
-    visibility: "public",
     ordered: false,
     owner: undefined,
+    visibility: "public",
+  },
+  hand: {
     faceDown: false,
+    id: "hand" as ZoneId,
     maxSize: undefined,
+    name: "zones.hand",
+    ordered: false,
+    owner: undefined,
+    visibility: "private",
+  },
+  inkwell: {
+    faceDown: true,
+    id: "inkwell" as ZoneId,
+    maxSize: undefined,
+    name: "zones.inkwell",
+    ordered: false,
+    owner: undefined,
+    visibility: "public",
+  },
+  play: {
+    faceDown: false,
+    id: "play" as ZoneId,
+    maxSize: undefined,
+    name: "zones.play",
+    ordered: false,
+    owner: undefined,
+    visibility: "public",
   },
 };
 
@@ -268,30 +268,27 @@ const lorcanaFlow: FlowDefinition<TestGameState> = {
     initialPhase: "beginning",
     phases: {
       beginning: {
-        order: 1,
+        endIf: () => true,
         next: "main",
         onBegin: (_context) => {},
-        endIf: () => true,
-      },
-      main: {
-        order: 2,
-        next: "end",
-        onBegin: (_context) => {},
+        order: 1,
       },
       end: {
-        order: 3,
+        endIf: () => true,
         next: "beginning",
         onBegin: (_context) => {},
-        endIf: () => true,
+        order: 3,
+      },
+      main: {
+        next: "end",
+        onBegin: (_context) => {},
+        order: 2,
       },
     },
   },
 };
 
-export function createMockLorcanaGame(): GameDefinition<
-  TestGameState,
-  TestMoves
-> {
+export function createMockLorcanaGame(): GameDefinition<TestGameState, TestMoves> {
   return {
     name: "Test Lorcana Game",
     zones: lorcanaZones,
@@ -300,8 +297,8 @@ export function createMockLorcanaGame(): GameDefinition<
 
     // Configure engine's tracker system
     trackers: {
-      perTurn: ["hasInked"],
       perPlayer: true,
+      perTurn: ["hasInked"],
     },
 
     /**
@@ -319,8 +316,8 @@ export function createMockLorcanaGame(): GameDefinition<
       }
 
       return {
-        effects: [],
         bag: [],
+        effects: [],
         loreScores,
       };
     },

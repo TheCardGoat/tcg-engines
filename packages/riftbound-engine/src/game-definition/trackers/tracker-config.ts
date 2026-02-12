@@ -18,18 +18,18 @@ export interface TrackerConfig {
  */
 export const TRACKER_CONFIGS: readonly TrackerConfig[] = [
   {
-    name: "turnHistory",
     description: "Tracks turn-by-turn game history",
     enabled: true,
+    name: "turnHistory",
   },
   {
-    name: "damageDealt",
     description: "Tracks damage dealt during the game",
     enabled: true,
+    name: "damageDealt",
   },
   {
-    name: "cardsPlayed",
     description: "Tracks cards played by each player",
     enabled: true,
+    name: "cardsPlayed",
   },
 ] as const;

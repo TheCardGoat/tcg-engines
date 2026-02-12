@@ -1,17 +1,8 @@
-import { createMove, type PlayerId, type ZoneId } from "@tcg/core";
-import type {
-  GundamCardMeta,
-  GundamGameState,
-  GundamMoves,
-} from "../../../types";
+import { type PlayerId, type ZoneId, createMove } from "@tcg/core";
+import type { GundamCardMeta, GundamGameState, GundamMoves } from "../../../types";
 import { gundamZones } from "../../../zones/zone-configs";
 
-export const concede = createMove<
-  GundamGameState,
-  GundamMoves,
-  "concede",
-  GundamCardMeta
->({
+export const concede = createMove<GundamGameState, GundamMoves, "concede", GundamCardMeta>({
   condition: (_state, context) => {
     // Cannot concede during setup phases
     const phase = context.flow?.currentPhase;
@@ -46,15 +37,15 @@ export const concede = createMove<
     }
 
     // Find the opponent (player who is not conceding)
-    const playerIds = Array.from(uniquePlayerIds);
+    const playerIds = [...uniquePlayerIds];
     const winner = playerIds.find((id) => id !== context.playerId);
 
     // Signal game end via context
     // Note: winner may be undefined if no other players have cards (edge case)
     context.endGame?.({
-      winner,
-      reason: "concede",
       metadata: { concedeBy: context.playerId },
+      reason: "concede",
+      winner,
     });
   },
 });

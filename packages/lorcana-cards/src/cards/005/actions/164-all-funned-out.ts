@@ -4,11 +4,11 @@ export const allFunnedOut: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "put-into-inkwell",
-        source: "chosen-character",
-        target: "CONTROLLER",
         exerted: true,
         facedown: true,
+        source: "chosen-character",
+        target: "CONTROLLER",
+        type: "put-into-inkwell",
       },
       id: "1mz-1",
       text: "Put chosen character of yours into your inkwell facedown and exerted.",

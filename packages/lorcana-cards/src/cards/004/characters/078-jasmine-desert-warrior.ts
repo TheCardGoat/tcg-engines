@@ -4,15 +4,15 @@ export const jasmineDesertWarrior: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "discard",
         amount: 1,
-        target: "EACH_OPPONENT",
         chosen: true,
+        target: "EACH_OPPONENT",
+        type: "discard",
       },
       id: "160-1",
       name: "CUNNING MANEUVER When you play this character and",
       text: "CUNNING MANEUVER When you play this character and whenever she's challenged, each opponent chooses and discards a card.",
-      trigger: { event: "play", timing: "when", on: "SELF" },
+      trigger: { event: "play", on: "SELF", timing: "when" },
       type: "triggered",
     },
   ],

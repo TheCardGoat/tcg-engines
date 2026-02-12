@@ -4,9 +4,9 @@ export const grabYourSword: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "deal-damage",
         amount: 2,
         target: "ALL_OPPOSING_CHARACTERS",
+        type: "deal-damage",
       },
       id: "fa7-1",
       text: "Deal 2 damage to each opposing character.",

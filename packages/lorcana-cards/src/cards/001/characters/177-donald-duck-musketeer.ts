@@ -10,9 +10,9 @@ export const donaldDuckMusketeer: CharacterCard = {
     },
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Evasive",
         target: "YOUR_CHARACTERS",
+        type: "gain-keyword",
       },
       id: "1te-2",
       name: "STAY ALERT!",

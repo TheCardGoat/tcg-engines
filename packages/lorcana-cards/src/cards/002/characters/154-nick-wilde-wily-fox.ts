@@ -4,9 +4,8 @@ export const nickWildeWilyFox: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "return-to-hand",
           target: {
             selector: "chosen",
             count: 1,
@@ -14,16 +13,17 @@ export const nickWildeWilyFox: CharacterCard = {
             zones: ["play"],
             cardTypes: ["item"],
           },
+          type: "return-to-hand",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "1uh-1",
       name: "IT'S CALLED A HUSTLE",
       text: "IT'S CALLED A HUSTLE When you play this character, you may return an item card named Pawpsicle from your discard to your hand.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

@@ -4,10 +4,10 @@ export const mickeyMouseEnthusiasticDancer: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: 2,
+        stat: "strength",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "18m-1",
       text: "PERFECT PARTNERS While you have a character named Minnie Mouse in play, this character gets +2 {S}.",

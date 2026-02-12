@@ -4,9 +4,9 @@ export const cruellaDeVilFashionableCruiser: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Evasive",
         target: "SELF",
+        type: "gain-keyword",
       },
       id: "g1s-1",
       text: "NOW GET GOING During your turn, this character gains Evasive.",

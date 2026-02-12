@@ -4,17 +4,17 @@ export const geniePowersUnleashed: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "play-card",
-          from: "hand",
           cost: "free",
           costRestriction: {
             comparison: "less-or-equal",
             value: 5,
           },
+          from: "hand",
+          type: "play-card",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "dgz-1",
       text: "**Shift** 6 (_You may pay 6 {I} to play this on top of one of your characters named Genie._)\n\n**Evasive** _(Only characters with Evasive can challenge this character.)_\n\n**PHENOMENAL COSMIC POWER** Whenever this character quests, you may play an action with cost 5 or less for free.",

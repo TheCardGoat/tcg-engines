@@ -4,16 +4,16 @@ export const chiefBogoCommandingOfficer: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "it's a character card with cost 5 or less",
+          type: "if",
         },
         then: {
-          type: "play-card",
-          from: "hand",
           cost: "free",
+          from: "hand",
+          type: "play-card",
         },
+        type: "conditional",
       },
       id: "17e-1",
       text: "SENDING BACKUP During an opponent's turn, whenever one of your characters with Bodyguard is banished, you may reveal the top card of your deck. If it's a character card with cost 5 or less, you may play that character for free. Otherwise, put it on the top of your deck.",

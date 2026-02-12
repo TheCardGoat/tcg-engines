@@ -16,9 +16,9 @@ export const peterPanShadowFinder: CharacterCard = {
     },
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Rush",
         target: "YOUR_CHARACTERS",
+        type: "gain-keyword",
       },
       id: "g3g-3",
       text: "FLY, OF COURSE! Your other characters with Evasive gain Rush.",

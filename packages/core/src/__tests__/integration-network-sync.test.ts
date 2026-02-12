@@ -17,81 +17,76 @@ import { createPlayerId } from "../types";
  * authoritative multiplayer gameplay.
  */
 
-type MultiplayerGameState = {
-  players: Array<{
+interface MultiplayerGameState {
+  players: {
     id: string;
     name: string;
     hand: string[];
     score: number;
-  }>;
+  }[];
   currentPlayerIndex: number;
   deck: string[];
   turnNumber: number;
   phase: "draw" | "play" | "ended";
-};
+}
 
-type MultiplayerMoves = {
+interface MultiplayerMoves {
   drawCard: Record<string, never>;
   playCard: { cardId: string };
   endTurn: Record<string, never>;
-};
+}
 
 describe("Integration - Network Synchronization", () => {
   describe("Task 16.1: Server-Authoritative Pattern", () => {
     it("should execute move on server and broadcast patches to clients", () => {
-      const moves: GameMoveDefinitions<MultiplayerGameState, MultiplayerMoves> =
-        {
-          drawCard: {
-            reducer: (draft) => {
-              const card = draft.deck.pop();
-              if (card) {
-                const player = draft.players[draft.currentPlayerIndex];
-                if (player) {
-                  player.hand.push(card);
-                }
-              }
-            },
-          },
-          playCard: {
-            reducer: (draft, context) => {
+      const moves: GameMoveDefinitions<MultiplayerGameState, MultiplayerMoves> = {
+        drawCard: {
+          reducer: (draft) => {
+            const card = draft.deck.pop();
+            if (card) {
               const player = draft.players[draft.currentPlayerIndex];
-              if (player && context.params?.cardId) {
-                const cardId = context.params.cardId as string;
-                const cardIndex = player.hand.indexOf(cardId);
-                if (cardIndex >= 0) {
-                  player.hand.splice(cardIndex, 1);
-                  player.score += 1;
-                }
+              if (player) {
+                player.hand.push(card);
               }
-            },
+            }
           },
-          endTurn: {
-            reducer: (draft) => {
-              draft.currentPlayerIndex =
-                (draft.currentPlayerIndex + 1) % draft.players.length;
-              draft.turnNumber += 1;
-            },
+        },
+        endTurn: {
+          reducer: (draft) => {
+            draft.currentPlayerIndex = (draft.currentPlayerIndex + 1) % draft.players.length;
+            draft.turnNumber += 1;
           },
-        };
+        },
+        playCard: {
+          reducer: (draft, context) => {
+            const player = draft.players[draft.currentPlayerIndex];
+            if (player && context.params?.cardId) {
+              const cardId = context.params.cardId as string;
+              const cardIndex = player.hand.indexOf(cardId);
+              if (cardIndex !== -1) {
+                player.hand.splice(cardIndex, 1);
+                player.score += 1;
+              }
+            }
+          },
+        },
+      };
 
-      const gameDefinition: GameDefinition<
-        MultiplayerGameState,
-        MultiplayerMoves
-      > = {
+      const gameDefinition: GameDefinition<MultiplayerGameState, MultiplayerMoves> = {
+        moves,
         name: "Multiplayer Test Game",
         setup: (players) => ({
+          currentPlayerIndex: 0,
+          deck: ["card1", "card2", "card3", "card4", "card5"],
+          phase: "draw",
           players: players.map((p) => ({
             id: p.id,
             name: p.name || "Player",
             hand: [],
             score: 0,
           })),
-          currentPlayerIndex: 0,
-          deck: ["card1", "card2", "card3", "card4", "card5"],
           turnNumber: 1,
-          phase: "draw",
         }),
-        moves,
       };
 
       const players = [
@@ -118,8 +113,8 @@ describe("Integration - Network Synchronization", () => {
 
       // Client 1 sends move to server
       const moveContext = {
-        playerId: createPlayerId("p1"),
         params: {},
+        playerId: createPlayerId("p1"),
       };
 
       // Server executes move
@@ -128,7 +123,7 @@ describe("Integration - Network Synchronization", () => {
       expect(result.success).toBe(true);
       if (result.success) {
         // Server broadcasts patches to all clients
-        const patches = result.patches;
+        const { patches } = result;
 
         // Clients apply patches to synchronize
         client1.applyPatches(patches);
@@ -149,42 +144,38 @@ describe("Integration - Network Synchronization", () => {
     });
 
     it("should reject invalid moves on server before broadcasting", () => {
-      const moves: GameMoveDefinitions<MultiplayerGameState, MultiplayerMoves> =
-        {
-          drawCard: {
-            condition: (state) => state.phase === "draw",
-            reducer: (draft) => {
-              const card = draft.deck.pop();
-              if (card) {
-                const player = draft.players[draft.currentPlayerIndex];
-                if (player) {
-                  player.hand.push(card);
-                }
+      const moves: GameMoveDefinitions<MultiplayerGameState, MultiplayerMoves> = {
+        drawCard: {
+          condition: (state) => state.phase === "draw",
+          reducer: (draft) => {
+            const card = draft.deck.pop();
+            if (card) {
+              const player = draft.players[draft.currentPlayerIndex];
+              if (player) {
+                player.hand.push(card);
               }
-            },
+            }
           },
-          playCard: { reducer: () => {} },
-          endTurn: { reducer: () => {} },
-        };
+        },
+        endTurn: { reducer: () => {} },
+        playCard: { reducer: () => {} },
+      };
 
-      const gameDefinition: GameDefinition<
-        MultiplayerGameState,
-        MultiplayerMoves
-      > = {
+      const gameDefinition: GameDefinition<MultiplayerGameState, MultiplayerMoves> = {
+        moves,
         name: "Validation Test",
         setup: (players) => ({
+          currentPlayerIndex: 0,
+          deck: ["card1"],
+          phase: "play",
           players: players.map((p) => ({
             id: p.id,
             name: p.name || "Player",
             hand: [],
             score: 0,
           })),
-          currentPlayerIndex: 0,
-          deck: ["card1"],
-          turnNumber: 1,
-          phase: "play", // Not "draw" phase
+          turnNumber: 1, // Not "draw" phase
         }),
-        moves,
       };
 
       const players = [{ id: createPlayerId("p1"), name: "Alice" }];
@@ -194,8 +185,8 @@ describe("Integration - Network Synchronization", () => {
 
       // Client attempts invalid move
       const result = server.executeMove("drawCard", {
-        playerId: createPlayerId("p1"),
         params: {},
+        playerId: createPlayerId("p1"),
       });
 
       // Server rejects move
@@ -204,7 +195,7 @@ describe("Integration - Network Synchronization", () => {
       // No patches to broadcast - invalid moves don't have patches
       // Type guard: when success is false, patches property doesn't exist
       if (result.success === false) {
-        // patches property doesn't exist on error result
+        // Patches property doesn't exist on error result
         expect("patches" in result).toBe(false);
       }
 
@@ -215,59 +206,54 @@ describe("Integration - Network Synchronization", () => {
 
   describe("Task 16.2: Network Synchronization Pattern", () => {
     it("should handle multiple moves with incremental patch synchronization", () => {
-      const moves: GameMoveDefinitions<MultiplayerGameState, MultiplayerMoves> =
-        {
-          drawCard: {
-            reducer: (draft) => {
-              const card = draft.deck.pop();
-              if (card) {
-                const player = draft.players[draft.currentPlayerIndex];
-                if (player) {
-                  player.hand.push(card);
-                }
-              }
-            },
-          },
-          playCard: {
-            reducer: (draft, context) => {
+      const moves: GameMoveDefinitions<MultiplayerGameState, MultiplayerMoves> = {
+        drawCard: {
+          reducer: (draft) => {
+            const card = draft.deck.pop();
+            if (card) {
               const player = draft.players[draft.currentPlayerIndex];
-              if (player && context.params?.cardId) {
-                const cardId = context.params.cardId as string;
-                const cardIndex = player.hand.indexOf(cardId);
-                if (cardIndex >= 0) {
-                  player.hand.splice(cardIndex, 1);
-                  player.score += 1;
-                }
+              if (player) {
+                player.hand.push(card);
               }
-            },
+            }
           },
-          endTurn: {
-            reducer: (draft) => {
-              draft.currentPlayerIndex =
-                (draft.currentPlayerIndex + 1) % draft.players.length;
-              draft.turnNumber += 1;
-            },
+        },
+        endTurn: {
+          reducer: (draft) => {
+            draft.currentPlayerIndex = (draft.currentPlayerIndex + 1) % draft.players.length;
+            draft.turnNumber += 1;
           },
-        };
+        },
+        playCard: {
+          reducer: (draft, context) => {
+            const player = draft.players[draft.currentPlayerIndex];
+            if (player && context.params?.cardId) {
+              const cardId = context.params.cardId as string;
+              const cardIndex = player.hand.indexOf(cardId);
+              if (cardIndex !== -1) {
+                player.hand.splice(cardIndex, 1);
+                player.score += 1;
+              }
+            }
+          },
+        },
+      };
 
-      const gameDefinition: GameDefinition<
-        MultiplayerGameState,
-        MultiplayerMoves
-      > = {
+      const gameDefinition: GameDefinition<MultiplayerGameState, MultiplayerMoves> = {
+        moves,
         name: "Incremental Sync Test",
         setup: (players) => ({
+          currentPlayerIndex: 0,
+          deck: ["card1", "card2", "card3"],
+          phase: "draw",
           players: players.map((p) => ({
             id: p.id,
             name: p.name || "Player",
             hand: [],
             score: 0,
           })),
-          currentPlayerIndex: 0,
-          deck: ["card1", "card2", "card3"],
           turnNumber: 1,
-          phase: "draw",
         }),
-        moves,
       };
 
       const players = [
@@ -281,14 +267,14 @@ describe("Integration - Network Synchronization", () => {
       // Simulate 3 moves with incremental synchronization
       const moves_to_execute = [
         { move: "drawCard", params: {} },
-        { move: "playCard", params: { cardId: "card3" } }, // card3 was drawn
+        { move: "playCard", params: { cardId: "card3" } }, // Card3 was drawn
         { move: "endTurn", params: {} },
       ];
 
       for (const moveToExecute of moves_to_execute) {
         const result = server.executeMove(moveToExecute.move, {
-          playerId: createPlayerId("p1"),
           params: moveToExecute.params,
+          playerId: createPlayerId("p1"),
         });
 
         if (result.success) {
@@ -309,47 +295,42 @@ describe("Integration - Network Synchronization", () => {
     });
 
     it("should support batch patch application for reconnecting clients", () => {
-      const moves: GameMoveDefinitions<MultiplayerGameState, MultiplayerMoves> =
-        {
-          drawCard: {
-            reducer: (draft) => {
-              const card = draft.deck.pop();
-              if (card) {
-                const player = draft.players[draft.currentPlayerIndex];
-                if (player) {
-                  player.hand.push(card);
-                }
+      const moves: GameMoveDefinitions<MultiplayerGameState, MultiplayerMoves> = {
+        drawCard: {
+          reducer: (draft) => {
+            const card = draft.deck.pop();
+            if (card) {
+              const player = draft.players[draft.currentPlayerIndex];
+              if (player) {
+                player.hand.push(card);
               }
-            },
+            }
           },
-          playCard: { reducer: () => {} },
-          endTurn: {
-            reducer: (draft) => {
-              draft.currentPlayerIndex =
-                (draft.currentPlayerIndex + 1) % draft.players.length;
-              draft.turnNumber += 1;
-            },
+        },
+        endTurn: {
+          reducer: (draft) => {
+            draft.currentPlayerIndex = (draft.currentPlayerIndex + 1) % draft.players.length;
+            draft.turnNumber += 1;
           },
-        };
+        },
+        playCard: { reducer: () => {} },
+      };
 
-      const gameDefinition: GameDefinition<
-        MultiplayerGameState,
-        MultiplayerMoves
-      > = {
+      const gameDefinition: GameDefinition<MultiplayerGameState, MultiplayerMoves> = {
+        moves,
         name: "Batch Sync Test",
         setup: (players) => ({
+          currentPlayerIndex: 0,
+          deck: ["card1", "card2", "card3", "card4"],
+          phase: "draw",
           players: players.map((p) => ({
             id: p.id,
             name: p.name || "Player",
             hand: [],
             score: 0,
           })),
-          currentPlayerIndex: 0,
-          deck: ["card1", "card2", "card3", "card4"],
           turnNumber: 1,
-          phase: "draw",
         }),
-        moves,
       };
 
       const players = [
@@ -361,16 +342,16 @@ describe("Integration - Network Synchronization", () => {
 
       // Execute 3 moves on server while client is disconnected
       server.executeMove("drawCard", {
-        playerId: createPlayerId("p1"),
         params: {},
+        playerId: createPlayerId("p1"),
       });
       server.executeMove("endTurn", {
-        playerId: createPlayerId("p1"),
         params: {},
+        playerId: createPlayerId("p1"),
       });
       server.executeMove("drawCard", {
-        playerId: createPlayerId("p2"),
         params: {},
+        playerId: createPlayerId("p2"),
       });
 
       // Client reconnects and needs to catch up
@@ -394,46 +375,42 @@ describe("Integration - Network Synchronization", () => {
     });
 
     it("should maintain deterministic state across server and clients", () => {
-      const moves: GameMoveDefinitions<MultiplayerGameState, MultiplayerMoves> =
-        {
-          drawCard: {
-            reducer: (draft, context) => {
-              // Use RNG for deterministic shuffling
-              const rng = context.rng;
-              if (rng && draft.deck.length > 0) {
-                const index = rng.randomInt(0, draft.deck.length - 1);
-                const card = draft.deck.splice(index, 1)[0];
-                if (card) {
-                  const player = draft.players[draft.currentPlayerIndex];
-                  if (player) {
-                    player.hand.push(card);
-                  }
+      const moves: GameMoveDefinitions<MultiplayerGameState, MultiplayerMoves> = {
+        drawCard: {
+          reducer: (draft, context) => {
+            // Use RNG for deterministic shuffling
+            const {rng} = context;
+            if (rng && draft.deck.length > 0) {
+              const index = rng.randomInt(0, draft.deck.length - 1);
+              const card = draft.deck.splice(index, 1)[0];
+              if (card) {
+                const player = draft.players[draft.currentPlayerIndex];
+                if (player) {
+                  player.hand.push(card);
                 }
               }
-            },
+            }
           },
-          playCard: { reducer: () => {} },
-          endTurn: { reducer: () => {} },
-        };
+        },
+        endTurn: { reducer: () => {} },
+        playCard: { reducer: () => {} },
+      };
 
-      const gameDefinition: GameDefinition<
-        MultiplayerGameState,
-        MultiplayerMoves
-      > = {
+      const gameDefinition: GameDefinition<MultiplayerGameState, MultiplayerMoves> = {
+        moves,
         name: "Deterministic Sync Test",
         setup: (players) => ({
+          currentPlayerIndex: 0,
+          deck: ["card1", "card2", "card3", "card4", "card5"],
+          phase: "draw",
           players: players.map((p) => ({
             id: p.id,
             name: p.name || "Player",
             hand: [],
             score: 0,
           })),
-          currentPlayerIndex: 0,
-          deck: ["card1", "card2", "card3", "card4", "card5"],
           turnNumber: 1,
-          phase: "draw",
         }),
-        moves,
       };
 
       const players = [{ id: createPlayerId("p1"), name: "Alice" }];
@@ -448,8 +425,8 @@ describe("Integration - Network Synchronization", () => {
 
       // Execute move on server
       const result = server.executeMove("drawCard", {
-        playerId: createPlayerId("p1"),
         params: {},
+        playerId: createPlayerId("p1"),
       });
 
       if (result.success) {

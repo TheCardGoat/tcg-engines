@@ -13,22 +13,22 @@ export const annaMysticalMajesty: CharacterCard = {
     },
     {
       effect: {
-        type: "exert",
         target: {
-          selector: "all",
+          cardTypes: ["character"],
           count: "all",
           owner: "opponent",
+          selector: "all",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "exert",
       },
       id: "iok-2",
       name: "EXCEPTIONAL POWER",
       text: "EXCEPTIONAL POWER When you play this character, exert all opposing characters.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

@@ -4,8 +4,8 @@ export const teKaHeartless: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-lore",
         amount: 2,
+        type: "gain-lore",
       },
       id: "pfr-1",
       text: "**SEEK THE HEART** During your turn, whenever this character banishes another character in a challenge, you gain 2 lore.",

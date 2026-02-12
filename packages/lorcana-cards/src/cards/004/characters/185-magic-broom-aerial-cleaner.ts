@@ -4,9 +4,9 @@ export const magicBroomAerialCleaner: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Evasive",
         target: "SELF",
+        type: "gain-keyword",
       },
       id: "1wc-1",
       text: "WINGED FOR A DAY During your turn, this character gains Evasive.",

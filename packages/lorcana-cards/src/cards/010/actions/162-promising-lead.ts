@@ -4,12 +4,10 @@ export const promisingLead: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "modify-stat",
-            stat: "lore",
             modifier: 1,
+            stat: "lore",
             target: {
               selector: "chosen",
               count: 1,
@@ -17,14 +15,16 @@ export const promisingLead: ActionCard = {
               zones: ["play"],
               cardTypes: ["character"],
             },
+            type: "modify-stat",
           },
           {
-            type: "gain-keyword",
+            duration: "this-turn",
             keyword: "Support",
             target: "SELF",
-            duration: "this-turn",
+            type: "gain-keyword",
           },
         ],
+        type: "sequence",
       },
       id: "19l-1",
       text: "Chosen character gets +1 {L} and gains Support this turn.",

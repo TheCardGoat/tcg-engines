@@ -4,23 +4,23 @@ export const flynnRiderBreakingAndEntering: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "they don't",
+          type: "if",
         },
         then: {
-          type: "gain-lore",
           amount: 2,
+          type: "gain-lore",
         },
+        type: "conditional",
       },
       id: "o9w-1",
       name: "THIS IS A VERY BIG DAY",
       text: "THIS IS A VERY BIG DAY Whenever this character is challenged, the challenging player may choose and discard a card. If they don't, you gain 2 lore.",
       trigger: {
         event: "challenged",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

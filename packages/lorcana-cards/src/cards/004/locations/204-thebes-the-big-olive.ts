@@ -4,15 +4,15 @@ export const thebesTheBigOlive: LocationCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "YOU CAN MAKE IT HERE... During your turn",
+          type: "if",
         },
         then: {
-          type: "gain-lore",
           amount: 2,
+          type: "gain-lore",
         },
+        type: "conditional",
       },
       id: "niw-1",
       text: "IF YOU CAN MAKE IT HERE... During your turn, whenever a character banishes another character in a challenge while here, gain 2 lore.",

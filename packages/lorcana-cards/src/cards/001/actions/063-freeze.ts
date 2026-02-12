@@ -4,8 +4,8 @@ export const freeze: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "exert",
         target: "CHOSEN_OPPOSING_CHARACTER",
+        type: "exert",
       },
       id: "1cq-1",
       text: "Exert chosen opposing character.",

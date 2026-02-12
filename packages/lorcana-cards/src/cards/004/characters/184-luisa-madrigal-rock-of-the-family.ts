@@ -4,10 +4,10 @@ export const luisaMadrigalRockOfTheFamily: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: 2,
+        stat: "strength",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "10a-1",
       text: "I'M THE STRONG ONE While you have another character in play, this character gets +2 {S}.",

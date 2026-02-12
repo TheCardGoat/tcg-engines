@@ -13,10 +13,10 @@ export const fixitFelixJrNicelandSteward: CharacterCard = {
     },
     {
       effect: {
-        type: "modify-stat",
-        stat: "willpower",
         modifier: 2,
+        stat: "willpower",
         target: "CHOSEN_CHARACTER",
+        type: "modify-stat",
       },
       id: "z1m-2",
       text: "BUILDING TOGETHER Your locations get +2 {W}.",

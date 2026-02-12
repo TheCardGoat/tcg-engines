@@ -4,28 +4,28 @@ export const kaaHypnotizingPython: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "modify-stat",
-            stat: "strength",
             modifier: -2,
+            stat: "strength",
             target: "CHOSEN_CHARACTER",
+            type: "modify-stat",
           },
           {
-            type: "gain-keyword",
             keyword: "Reckless",
             target: "SELF",
+            type: "gain-keyword",
           },
         ],
+        type: "sequence",
       },
       id: "1v1-1",
       name: "LOOK ME IN THE EYE",
       text: "LOOK ME IN THE EYE Whenever this character quests, chosen opposing character gets -2 {S} and gains Reckless until the start of your next turn.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

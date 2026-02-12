@@ -4,10 +4,10 @@ export const roxannePowerlineFan: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: 1,
+        stat: "strength",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "1w5-1",
       text: "CONCERT LOVER While you have a character with Singer in play, this character gets +1 {S} and +1 {L}.",

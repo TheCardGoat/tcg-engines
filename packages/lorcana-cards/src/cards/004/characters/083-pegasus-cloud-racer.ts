@@ -19,24 +19,24 @@ export const pegasusCloudRacer: CharacterCard = {
     },
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you used Shift to play him",
+          type: "if",
         },
         then: {
-          type: "gain-keyword",
           keyword: "Evasive",
           target: "YOUR_CHARACTERS",
+          type: "gain-keyword",
         },
+        type: "conditional",
       },
       id: "1b8-3",
       name: "HOP ON!",
       text: "HOP ON! When you play this character, if you used Shift to play him, your characters gain Evasive until the start of your next turn.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

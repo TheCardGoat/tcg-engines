@@ -4,23 +4,23 @@ export const flotsamUrsulasBaby: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "return-to-hand",
         target: "SELF",
+        type: "return-to-hand",
       },
       id: "1e2-1",
       name: "QUICK ESCAPE",
       text: "QUICK ESCAPE When this character is banished in a challenge, return this card to your hand.",
       trigger: {
         event: "banish",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },
     {
       effect: {
-        type: "return-to-hand",
         target: "SELF",
+        type: "return-to-hand",
       },
       id: "1e2-2",
       text: "OMINOUS PAIR Your characters named Jetsam gain “When this character is banished in a challenge, return this card to your hand.”",

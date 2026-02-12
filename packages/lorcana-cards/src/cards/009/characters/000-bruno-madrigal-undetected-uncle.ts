@@ -11,15 +11,15 @@ export const brunoMadrigalUndetectedUncle: CharacterCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "it's the named card",
+          type: "if",
         },
         then: {
-          type: "gain-lore",
           amount: 3,
+          type: "gain-lore",
         },
+        type: "conditional",
       },
       id: "13f-2",
       text: "YOU JUST HAVE TO SEE IT {E} — Name a card, then reveal the top card of your deck. If it's the named card, put it into your hand and gain 3 lore. Otherwise, put it on the top of your deck.",

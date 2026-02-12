@@ -10,7 +10,7 @@ export function createCardId(): CardId;
 export function createCardId(id: string): CardId;
 export function createCardId(id?: string): CardId {
   // Type assertion is acceptable here as this is the only way to create branded types
-  // biome-ignore lint/suspicious/noExplicitAny: Required for branded type creation
+  // Biome-ignore lint/suspicious/noExplicitAny: Required for branded type creation
   return (id ?? nanoid()) as any;
 }
 
@@ -23,7 +23,7 @@ export function createPlayerId(): PlayerId;
 export function createPlayerId(id: string): PlayerId;
 export function createPlayerId(id?: string): PlayerId {
   // Type assertion is acceptable here as this is the only way to create branded types
-  // biome-ignore lint/suspicious/noExplicitAny: Required for branded type creation
+  // Biome-ignore lint/suspicious/noExplicitAny: Required for branded type creation
   return (id ?? nanoid()) as any;
 }
 
@@ -36,7 +36,7 @@ export function createGameId(): GameId;
 export function createGameId(id: string): GameId;
 export function createGameId(id?: string): GameId {
   // Type assertion is acceptable here as this is the only way to create branded types
-  // biome-ignore lint/suspicious/noExplicitAny: Required for branded type creation
+  // Biome-ignore lint/suspicious/noExplicitAny: Required for branded type creation
   return (id ?? nanoid()) as any;
 }
 
@@ -49,6 +49,6 @@ export function createZoneId(): ZoneId;
 export function createZoneId(id: string): ZoneId;
 export function createZoneId(id?: string): ZoneId {
   // Type assertion is acceptable here as this is the only way to create branded types
-  // biome-ignore lint/suspicious/noExplicitAny: Required for branded type creation
+  // Biome-ignore lint/suspicious/noExplicitAny: Required for branded type creation
   return (id ?? nanoid()) as any;
 }

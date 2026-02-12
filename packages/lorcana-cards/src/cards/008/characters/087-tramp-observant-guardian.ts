@@ -4,17 +4,17 @@ export const trampObservantGuardian: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Ward",
         target: "SELF",
+        type: "gain-keyword",
       },
       id: "fnz-1",
       name: "HOW DO I GET IN?",
       text: "HOW DO I GET IN? When you play this character, chosen character gains Ward until the start of your next turn.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

@@ -19,10 +19,10 @@ export const mickeyMouseBraveLittlePrince: CharacterCard = {
     },
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: 3,
+        stat: "strength",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "cbw-3",
       text: "CROWNING ACHIEVEMENT While this character has a card under him, he gets +3 {S}, +3 {W}, and +3 {L}.",

@@ -4,9 +4,8 @@ export const captainHookCaptainOfTheJollyRoger: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "return-to-hand",
           target: {
             selector: "chosen",
             count: 1,
@@ -14,8 +13,9 @@ export const captainHookCaptainOfTheJollyRoger: CharacterCard = {
             zones: ["play"],
             cardTypes: ["card"],
           },
+          type: "return-to-hand",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "c2l-1",
       text: "**CAPTAIN HOOK** You may return target character to their player's hand.",

@@ -4,9 +4,9 @@ export const greatStoneDragon: ItemCard = {
   abilities: [
     {
       effect: {
-        type: "restriction",
         restriction: "enters-play-exerted",
         target: "SELF",
+        type: "restriction",
       },
       id: "19h-1",
       name: "ASLEEP",
@@ -16,11 +16,11 @@ export const greatStoneDragon: ItemCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "put-into-inkwell",
-        source: "discard",
-        target: "CONTROLLER",
         exerted: true,
         facedown: true,
+        source: "discard",
+        target: "CONTROLLER",
+        type: "put-into-inkwell",
       },
       id: "19h-2",
       text: "AWAKEN {E} — Put a character card from your discard into your inkwell facedown and exerted.",

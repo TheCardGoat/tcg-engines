@@ -4,12 +4,12 @@ export const sugarRushSpeedwayFinishLine: LocationCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
-        effect: {
-          type: "gain-lore",
-          amount: 3,
-        },
         chooser: "CONTROLLER",
+        effect: {
+          amount: 3,
+          type: "gain-lore",
+        },
+        type: "optional",
       },
       id: "cxj-1",
       text: "BRING IT HOME, LITTLE ONE! When you move a character here from another location, you may banish this location to gain 3 lore and draw 3 cards.",

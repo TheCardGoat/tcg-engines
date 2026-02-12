@@ -5,8 +5,8 @@ export const theSorcerersSpellbook: ItemCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "gain-lore",
         amount: 1,
+        type: "gain-lore",
       },
       id: "1pk-1",
       text: "KNOWLEDGE {E}, 1 {I} — Gain 1 lore.",

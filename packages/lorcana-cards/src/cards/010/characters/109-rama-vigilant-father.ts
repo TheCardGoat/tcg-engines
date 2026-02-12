@@ -4,10 +4,9 @@ export const ramaVigilantFather: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "optional",
+            chooser: "CONTROLLER",
             effect: {
               type: "ready",
               target: {
@@ -18,20 +17,21 @@ export const ramaVigilantFather: CharacterCard = {
                 cardTypes: ["character"],
               },
             },
-            chooser: "CONTROLLER",
+            type: "optional",
           },
           {
-            type: "restriction",
+            duration: "this-turn",
             restriction: "cant-quest",
             target: "SELF",
-            duration: "this-turn",
+            type: "restriction",
           },
         ],
+        type: "sequence",
       },
       id: "1d1-1",
       name: "PROTECTION OF THE PACK",
       text: "PROTECTION OF THE PACK Whenever you play another character with 5 {S} or more, you may ready this character. If you do, he can't quest for the rest of this turn.",
-      trigger: { event: "play", timing: "when", on: "SELF" },
+      trigger: { event: "play", on: "SELF", timing: "when" },
       type: "triggered",
     },
   ],

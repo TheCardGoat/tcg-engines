@@ -14,21 +14,21 @@ import { RuleEngine } from "../rule-engine";
  * - Patch generation (11.21-11.24)
  */
 
-type TestGameState = {
-  players: Array<{ id: string; name: string; score: number; hand: string[] }>;
+interface TestGameState {
+  players: { id: string; name: string; score: number; hand: string[] }[];
   currentPlayerIndex: number;
   deck: string[];
   phase: "setup" | "draw" | "play" | "ended";
   turnNumber: number;
   winner?: string;
-};
+}
 
-type TestMoves = {
+interface TestMoves {
   drawCard: Record<string, never>;
   playCard: { cardId: string };
   nextPhase: Record<string, never>;
   endGame: { winnerId: string };
-};
+}
 
 describe("RuleEngine - Move Execution", () => {
   describe("Task 11.7, 11.8, 11.9, 11.10: executeMove", () => {
@@ -45,26 +45,26 @@ describe("RuleEngine - Move Execution", () => {
             }
           },
         },
-        playCard: { reducer: () => {} },
-        nextPhase: { reducer: () => {} },
         endGame: { reducer: () => {} },
+        nextPhase: { reducer: () => {} },
+        playCard: { reducer: () => {} },
       };
 
       const gameDef: GameDefinition<TestGameState, TestMoves> = {
+        moves,
         name: "Test Game",
         setup: (players) => ({
+          currentPlayerIndex: 0,
+          deck: ["card1", "card2", "card3"],
+          phase: "setup",
           players: players.map((p) => ({
             id: p.id,
             name: p.name || "Player",
             score: 0,
             hand: [],
           })),
-          currentPlayerIndex: 0,
-          deck: ["card1", "card2", "card3"],
-          phase: "setup",
           turnNumber: 1,
         }),
-        moves,
       };
 
       const players = [
@@ -74,8 +74,8 @@ describe("RuleEngine - Move Execution", () => {
 
       const engine = new RuleEngine(gameDef, players);
       const result = engine.executeMove("drawCard", {
-        playerId: createPlayerId("p1"),
         params: {},
+        playerId: createPlayerId("p1"),
       });
 
       expect(result.success).toBe(true);
@@ -92,26 +92,26 @@ describe("RuleEngine - Move Execution", () => {
     it("should reject unknown move", () => {
       const moves: GameMoveDefinitions<TestGameState, TestMoves> = {
         drawCard: { reducer: () => {} },
-        playCard: { reducer: () => {} },
-        nextPhase: { reducer: () => {} },
         endGame: { reducer: () => {} },
+        nextPhase: { reducer: () => {} },
+        playCard: { reducer: () => {} },
       };
 
       const gameDef: GameDefinition<TestGameState, TestMoves> = {
+        moves,
         name: "Test Game",
         setup: (players) => ({
+          currentPlayerIndex: 0,
+          deck: [],
+          phase: "setup",
           players: players.map((p) => ({
             id: p.id,
             name: p.name || "Player",
             score: 0,
             hand: [],
           })),
-          currentPlayerIndex: 0,
-          deck: [],
-          phase: "setup",
           turnNumber: 1,
         }),
-        moves,
       };
 
       const players = [
@@ -121,8 +121,8 @@ describe("RuleEngine - Move Execution", () => {
 
       const engine = new RuleEngine(gameDef, players);
       const result = engine.executeMove("unknownMove" as any, {
-        playerId: createPlayerId("p1"),
         params: {},
+        playerId: createPlayerId("p1"),
       });
 
       expect(result.success).toBe(false);
@@ -135,6 +135,8 @@ describe("RuleEngine - Move Execution", () => {
     it("should reject move when condition fails", () => {
       const moves: GameMoveDefinitions<TestGameState, TestMoves> = {
         drawCard: { reducer: () => {} },
+        endGame: { reducer: () => {} },
+        nextPhase: { reducer: () => {} },
         playCard: {
           condition: (state, context) => {
             const player = state.players[state.currentPlayerIndex];
@@ -146,31 +148,29 @@ describe("RuleEngine - Move Execution", () => {
             const cardId = context.params?.cardId as string;
             if (player && cardId) {
               const index = player.hand.indexOf(cardId);
-              if (index >= 0) {
+              if (index !== -1) {
                 player.hand.splice(index, 1);
               }
             }
           },
         },
-        nextPhase: { reducer: () => {} },
-        endGame: { reducer: () => {} },
       };
 
       const gameDef: GameDefinition<TestGameState, TestMoves> = {
+        moves,
         name: "Test Game",
         setup: (players) => ({
+          currentPlayerIndex: 0,
+          deck: [],
+          phase: "setup",
           players: players.map((p) => ({
             id: p.id,
             name: p.name || "Player",
             score: 0,
             hand: [],
           })),
-          currentPlayerIndex: 0,
-          deck: [],
-          phase: "setup",
           turnNumber: 1,
         }),
-        moves,
       };
 
       const players = [
@@ -180,8 +180,8 @@ describe("RuleEngine - Move Execution", () => {
 
       const engine = new RuleEngine(gameDef, players);
       const result = engine.executeMove("playCard", {
-        playerId: createPlayerId("p1"),
         params: { cardId: "card-not-in-hand" },
+        playerId: createPlayerId("p1"),
       });
 
       expect(result.success).toBe(false);
@@ -204,26 +204,26 @@ describe("RuleEngine - Move Execution", () => {
             }
           },
         },
-        playCard: { reducer: () => {} },
-        nextPhase: { reducer: () => {} },
         endGame: { reducer: () => {} },
+        nextPhase: { reducer: () => {} },
+        playCard: { reducer: () => {} },
       };
 
       const gameDef: GameDefinition<TestGameState, TestMoves> = {
+        moves,
         name: "Test Game",
         setup: (players) => ({
+          currentPlayerIndex: 0,
+          deck: ["card1"],
+          phase: "setup",
           players: players.map((p) => ({
             id: p.id,
             name: p.name || "Player",
             score: 0,
             hand: [],
           })),
-          currentPlayerIndex: 0,
-          deck: ["card1"],
-          phase: "setup",
           turnNumber: 1,
         }),
-        moves,
       };
 
       const players = [
@@ -233,8 +233,8 @@ describe("RuleEngine - Move Execution", () => {
 
       const engine = new RuleEngine(gameDef, players);
       const result = engine.executeMove("drawCard", {
-        playerId: createPlayerId("p1"),
         params: {},
+        playerId: createPlayerId("p1"),
       });
 
       expect(result.success).toBe(true);
@@ -257,26 +257,26 @@ describe("RuleEngine - Move Execution", () => {
           condition: (state) => state.deck.length > 0,
           reducer: () => {},
         },
-        playCard: { reducer: () => {} },
-        nextPhase: { reducer: () => {} },
         endGame: { reducer: () => {} },
+        nextPhase: { reducer: () => {} },
+        playCard: { reducer: () => {} },
       };
 
       const gameDef: GameDefinition<TestGameState, TestMoves> = {
+        moves,
         name: "Test Game",
         setup: (players) => ({
+          currentPlayerIndex: 0,
+          deck: ["card1", "card2"],
+          phase: "setup",
           players: players.map((p) => ({
             id: p.id,
             name: p.name || "Player",
             score: 0,
             hand: [],
           })),
-          currentPlayerIndex: 0,
-          deck: ["card1", "card2"],
-          phase: "setup",
           turnNumber: 1,
         }),
-        moves,
       };
 
       const players = [
@@ -286,8 +286,8 @@ describe("RuleEngine - Move Execution", () => {
 
       const engine = new RuleEngine(gameDef, players);
       const canDraw = engine.canExecuteMove("drawCard", {
-        playerId: createPlayerId("p1"),
         params: {},
+        playerId: createPlayerId("p1"),
       });
 
       expect(canDraw).toBe(true);
@@ -299,26 +299,26 @@ describe("RuleEngine - Move Execution", () => {
           condition: (state) => state.deck.length > 0,
           reducer: () => {},
         },
-        playCard: { reducer: () => {} },
-        nextPhase: { reducer: () => {} },
         endGame: { reducer: () => {} },
+        nextPhase: { reducer: () => {} },
+        playCard: { reducer: () => {} },
       };
 
       const gameDef: GameDefinition<TestGameState, TestMoves> = {
+        moves,
         name: "Test Game",
         setup: (players) => ({
           players: players.map((p) => ({
+            hand: [],
             id: p.id,
             name: p.name || "Player",
             score: 0,
-            hand: [],
           })),
           currentPlayerIndex: 0,
           deck: [], // Empty deck
           phase: "setup",
           turnNumber: 1,
         }),
-        moves,
       };
 
       const players = [
@@ -328,8 +328,8 @@ describe("RuleEngine - Move Execution", () => {
 
       const engine = new RuleEngine(gameDef, players);
       const canDraw = engine.canExecuteMove("drawCard", {
-        playerId: createPlayerId("p1"),
         params: {},
+        playerId: createPlayerId("p1"),
       });
 
       expect(canDraw).toBe(false);
@@ -343,26 +343,26 @@ describe("RuleEngine - Move Execution", () => {
             draft.deck.pop();
           },
         },
-        playCard: { reducer: () => {} },
-        nextPhase: { reducer: () => {} },
         endGame: { reducer: () => {} },
+        nextPhase: { reducer: () => {} },
+        playCard: { reducer: () => {} },
       };
 
       const gameDef: GameDefinition<TestGameState, TestMoves> = {
+        moves,
         name: "Test Game",
         setup: (players) => ({
+          currentPlayerIndex: 0,
+          deck: ["card1", "card2"],
+          phase: "setup",
           players: players.map((p) => ({
             id: p.id,
             name: p.name || "Player",
             score: 0,
             hand: [],
           })),
-          currentPlayerIndex: 0,
-          deck: ["card1", "card2"],
-          phase: "setup",
           turnNumber: 1,
         }),
-        moves,
       };
 
       const players = [
@@ -372,8 +372,8 @@ describe("RuleEngine - Move Execution", () => {
 
       const engine = new RuleEngine(gameDef, players);
       engine.canExecuteMove("drawCard", {
-        playerId: createPlayerId("p1"),
         params: {},
+        playerId: createPlayerId("p1"),
       });
 
       // State should be unchanged
@@ -389,6 +389,10 @@ describe("RuleEngine - Move Execution", () => {
           condition: (state) => state.deck.length > 0,
           reducer: () => {},
         },
+        endGame: { reducer: () => {} },
+        nextPhase: {
+          reducer: () => {},
+        },
         playCard: {
           condition: (state) => {
             const player = state.players[state.currentPlayerIndex];
@@ -396,27 +400,23 @@ describe("RuleEngine - Move Execution", () => {
           },
           reducer: () => {},
         },
-        nextPhase: {
-          reducer: () => {},
-        },
-        endGame: { reducer: () => {} },
       };
 
       const gameDef: GameDefinition<TestGameState, TestMoves> = {
+        moves,
         name: "Test Game",
         setup: (players) => ({
+          currentPlayerIndex: 0,
+          deck: ["card1"],
+          phase: "setup",
           players: players.map((p) => ({
             id: p.id,
             name: p.name || "Player",
             score: 0,
             hand: ["card-a"],
           })),
-          currentPlayerIndex: 0,
-          deck: ["card1"],
-          phase: "setup",
           turnNumber: 1,
         }),
-        moves,
       };
 
       const players = [
@@ -441,6 +441,8 @@ describe("RuleEngine - Move Execution", () => {
           condition: (state) => state.deck.length > 0,
           reducer: () => {},
         },
+        endGame: { reducer: () => {} },
+        nextPhase: { reducer: () => {} },
         playCard: {
           condition: (state) => {
             const player = state.players[state.currentPlayerIndex];
@@ -448,25 +450,23 @@ describe("RuleEngine - Move Execution", () => {
           },
           reducer: () => {},
         },
-        nextPhase: { reducer: () => {} },
-        endGame: { reducer: () => {} },
       };
 
       const gameDef: GameDefinition<TestGameState, TestMoves> = {
+        moves,
         name: "Test Game",
         setup: (players) => ({
           players: players.map((p) => ({
+            hand: [],
             id: p.id,
             name: p.name || "Player",
-            score: 0,
-            hand: [], // Empty hand
+            score: 0, // Empty hand
           })),
           currentPlayerIndex: 0,
           deck: [], // Empty deck
           phase: "setup",
           turnNumber: 1,
         }),
-        moves,
       };
 
       const players = [

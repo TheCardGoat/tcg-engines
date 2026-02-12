@@ -4,18 +4,18 @@ export const daisyDuckMusketeerSpy: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "discard",
         amount: 1,
-        target: "EACH_OPPONENT",
         chosen: true,
+        target: "EACH_OPPONENT",
+        type: "discard",
       },
       id: "19a-1",
       name: "INFILTRATION",
       text: "INFILTRATION When you play this character, each opponent chooses and discards a card.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

@@ -4,9 +4,9 @@ export const ticktockRelentlessCrocodile: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Evasive",
         target: "SELF",
+        type: "gain-keyword",
       },
       id: "1qn-1",
       text: "LOOKING FOR LUNCH During your turn, this character gains Evasive while a Pirate character is in play.",

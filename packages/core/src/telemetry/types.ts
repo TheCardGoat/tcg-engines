@@ -29,7 +29,7 @@ export type TelemetryHook = (event: TelemetryEvent) => void;
  * Object defining callbacks for specific event types.
  * Each hook is optional and receives only events of its type.
  */
-export type TelemetryHooks = {
+export interface TelemetryHooks {
   /** Called when a player executes a move */
   onPlayerAction?: (event: PlayerActionEvent) => void;
   /** Called when state changes occur */
@@ -42,14 +42,14 @@ export type TelemetryHooks = {
   onEngineError?: (event: EngineErrorEvent) => void;
   /** Called for performance metrics */
   onPerformance?: (event: PerformanceEvent) => void;
-};
+}
 
 /**
  * Telemetry Options
  *
  * Configuration for TelemetryManager instances.
  */
-export type TelemetryOptions = {
+export interface TelemetryOptions {
   /**
    * Enable/disable telemetry
    *
@@ -65,4 +65,4 @@ export type TelemetryOptions = {
    * Invoked synchronously when events are emitted.
    */
   hooks?: TelemetryHooks;
-};
+}

@@ -8,70 +8,18 @@ import type { TemplateGameMoves, TemplateGameState } from "./types";
  * Each move has an optional condition and a required reducer.
  */
 const moves: GameMoveDefinitions<TemplateGameState, TemplateGameMoves> = {
-  drawCard: {
-    condition: (state) => {
-      const player = state.players[state.currentPlayerIndex];
-      return player !== undefined && state.phase === "draw";
-    },
-    reducer: (draft, context) => {
-      const playerId = context.playerId;
-      const deck = draft.zones.deck[playerId];
-
-      if (deck && deck.length > 0) {
-        const card = deck.pop();
-        if (card) {
-          const hand = draft.zones.hand[playerId];
-          if (hand) {
-            hand.push(card);
-          }
-        }
-      }
-    },
-  },
-
-  playCard: {
-    condition: (state, context) => {
-      if (state.phase !== "main") return false;
-      const cardId = context.params.cardId;
-      if (!cardId) return false;
-
-      const hand = state.zones.hand[context.playerId];
-
-      return hand?.some((c) => c === cardId) ?? false;
-    },
-    reducer: (draft, context) => {
-      const playerId = context.playerId;
-      const cardId = context.params.cardId;
-
-      // Remove from hand
-      const hand = draft.zones.hand[playerId];
-      if (hand) {
-        const index = hand.findIndex((c) => c === cardId);
-        if (index >= 0) {
-          const cardIdInHand = hand[index];
-          hand.splice(index, 1);
-          // Add to field
-          const field = draft.zones.field[playerId];
-          if (field && cardIdInHand) {
-            field.push(cardIdInHand);
-          }
-        }
-      }
-    },
-  },
-
   attack: {
     condition: (state, context) => {
-      if (state.phase !== "main") return false;
+      if (state.phase !== "main") {return false;}
 
-      const attackerId = context.params.attackerId;
+      const {attackerId} = context.params;
       const attacker = state.cards[attackerId];
 
       return attacker !== undefined && !attacker.tapped;
     },
     reducer: (draft, context) => {
-      const attackerId = context.params.attackerId;
-      const targetId = context.params.targetId;
+      const {attackerId} = context.params;
+      const {targetId} = context.params;
 
       // Tap attacker
       const attacker = draft.cards[attackerId];
@@ -87,6 +35,27 @@ const moves: GameMoveDefinitions<TemplateGameState, TemplateGameMoves> = {
     },
   },
 
+  drawCard: {
+    condition: (state) => {
+      const player = state.players[state.currentPlayerIndex];
+      return player !== undefined && state.phase === "draw";
+    },
+    reducer: (draft, context) => {
+      const {playerId} = context;
+      const deck = draft.zones.deck[playerId];
+
+      if (deck && deck.length > 0) {
+        const card = deck.pop();
+        if (card) {
+          const hand = draft.zones.hand[playerId];
+          if (hand) {
+            hand.push(card);
+          }
+        }
+      }
+    },
+  },
+
   endPhase: {
     reducer: (draft) => {
       // Progress phase
@@ -95,8 +64,7 @@ const moves: GameMoveDefinitions<TemplateGameState, TemplateGameMoves> = {
 
       if (currentIndex === phaseOrder.length - 1) {
         // Next player's turn
-        draft.currentPlayerIndex =
-          (draft.currentPlayerIndex + 1) % draft.players.length;
+        draft.currentPlayerIndex = (draft.currentPlayerIndex + 1) % draft.players.length;
         draft.turnNumber += 1;
         draft.phase = "draw";
 
@@ -114,6 +82,37 @@ const moves: GameMoveDefinitions<TemplateGameState, TemplateGameMoves> = {
       }
     },
   },
+
+  playCard: {
+    condition: (state, context) => {
+      if (state.phase !== "main") {return false;}
+      const {cardId} = context.params;
+      if (!cardId) {return false;}
+
+      const hand = state.zones.hand[context.playerId];
+
+      return hand?.some((c) => c === cardId) ?? false;
+    },
+    reducer: (draft, context) => {
+      const {playerId} = context;
+      const {cardId} = context.params;
+
+      // Remove from hand
+      const hand = draft.zones.hand[playerId];
+      if (hand) {
+        const index = hand.findIndex((c) => c === cardId);
+        if (index !== -1) {
+          const cardIdInHand = hand[index];
+          hand.splice(index, 1);
+          // Add to field
+          const field = draft.zones.field[playerId];
+          if (field && cardIdInHand) {
+            field.push(cardIdInHand);
+          }
+        }
+      }
+    },
+  },
 };
 
 /**
@@ -122,59 +121,54 @@ const moves: GameMoveDefinitions<TemplateGameState, TemplateGameMoves> = {
  * The complete game configuration using @tcg/core types.
  * No helper functions - just TypeScript types and plain objects.
  */
-export const templateGameDefinition: GameDefinition<
-  TemplateGameState,
-  TemplateGameMoves
-> = {
-  name: "Template Card Game",
-
-  setup: (players) => ({
-    players: players.map((p) => ({
-      id: p.id as PlayerId,
-      name: p.name || "Player",
-      life: 20,
-    })),
-    currentPlayerIndex: 0,
-    turnNumber: 1,
-    phase: "draw",
-    zones: {
-      deck: Object.fromEntries(players.map((p) => [p.id, []])),
-      hand: Object.fromEntries(players.map((p) => [p.id, []])),
-      field: Object.fromEntries(players.map((p) => [p.id, []])),
-      graveyard: Object.fromEntries(players.map((p) => [p.id, []])),
-    },
-    cards: {},
-  }),
-
-  moves,
-
+export const templateGameDefinition: GameDefinition<TemplateGameState, TemplateGameMoves> = {
   endIf: (state) => {
     const loser = state.players.find((p) => p.life <= 0);
     if (loser) {
       const winner = state.players.find((p) => p.id !== loser.id);
-      return winner
-        ? { winner: winner.id, reason: "Opponent eliminated" }
-        : undefined;
+      return winner ? { reason: "Opponent eliminated", winner: winner.id } : undefined;
     }
     return undefined;
   },
+
+  moves,
+
+  name: "Template Card Game",
 
   playerView: (state, playerId) => ({
     ...state,
     zones: {
       ...state.zones,
-      hand: Object.fromEntries(
-        Object.entries(state.zones.hand).map(([pid, cards]) => [
-          pid,
-          pid === playerId ? cards : [], // Hide opponent hands
-        ]),
-      ),
       deck: Object.fromEntries(
         Object.entries(state.zones.deck).map(([pid, cards]) => [
           pid,
           pid === playerId ? cards : [], // Hide opponent decks
         ]),
       ),
+      hand: Object.fromEntries(
+        Object.entries(state.zones.hand).map(([pid, cards]) => [
+          pid,
+          pid === playerId ? cards : [], // Hide opponent hands
+        ]),
+      ),
+    },
+  }),
+
+  setup: (players) => ({
+    cards: {},
+    currentPlayerIndex: 0,
+    phase: "draw",
+    players: players.map((p) => ({
+      id: p.id as PlayerId,
+      name: p.name || "Player",
+      life: 20,
+    })),
+    turnNumber: 1,
+    zones: {
+      deck: Object.fromEntries(players.map((p) => [p.id, []])),
+      hand: Object.fromEntries(players.map((p) => [p.id, []])),
+      field: Object.fromEntries(players.map((p) => [p.id, []])),
+      graveyard: Object.fromEntries(players.map((p) => [p.id, []])),
     },
   }),
 };

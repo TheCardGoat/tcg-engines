@@ -4,9 +4,8 @@ export const maxGoofRebelliousTeen: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "return-to-hand",
           target: {
             selector: "chosen",
             count: 1,
@@ -14,16 +13,17 @@ export const maxGoofRebelliousTeen: CharacterCard = {
             zones: ["play"],
             cardTypes: ["card"],
           },
+          type: "return-to-hand",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "1va-1",
       name: "PERSONAL SOUNDTRACK",
       text: "PERSONAL SOUNDTRACK When you play this character, you may pay 1 {I} to return a song card with cost 3 or less from your discard to your hand.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

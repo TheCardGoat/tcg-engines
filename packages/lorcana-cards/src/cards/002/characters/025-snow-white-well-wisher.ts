@@ -13,21 +13,21 @@ export const snowWhiteWellWisher: CharacterCard = {
     },
     {
       effect: {
-        type: "optional",
-        effect: {
-          type: "return-from-discard",
-          target: "CONTROLLER",
-          cardType: "character",
-        },
         chooser: "CONTROLLER",
+        effect: {
+          cardType: "character",
+          target: "CONTROLLER",
+          type: "return-from-discard",
+        },
+        type: "optional",
       },
       id: "1fh-2",
       name: "WISHES COME TRUE",
       text: "WISHES COME TRUE Whenever this character quests, you may return a character card from your discard to your hand.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

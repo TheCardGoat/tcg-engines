@@ -4,9 +4,9 @@ export const philoctetesNononsenseInstructor: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Challenger",
         target: "YOUR_CHARACTERS",
+        type: "gain-keyword",
         value: 1,
       },
       id: "1r4-1",
@@ -16,20 +16,20 @@ export const philoctetesNononsenseInstructor: CharacterCard = {
     },
     {
       effect: {
-        type: "gain-lore",
         amount: 1,
+        type: "gain-lore",
       },
       id: "1r4-2",
       name: "SHAMELESS PROMOTER",
       text: "SHAMELESS PROMOTER Whenever you play a Hero character, gain 1 lore.",
       trigger: {
         event: "play",
-        timing: "whenever",
         on: {
-          controller: "you",
           cardType: "character",
           classification: "Hero",
+          controller: "you",
         },
+        timing: "whenever",
       },
       type: "triggered",
     },

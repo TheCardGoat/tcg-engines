@@ -13,16 +13,16 @@ export const baymaxGiantRobot: CharacterCard = {
     },
     {
       effect: {
-        type: "play-card",
         from: "hand",
+        type: "play-card",
       },
       id: "1c2-2",
       name: "FUNCTIONALITY IMPROVED",
       text: "FUNCTIONALITY IMPROVED When you play this character, if you used Shift to play him, remove all damage from him.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

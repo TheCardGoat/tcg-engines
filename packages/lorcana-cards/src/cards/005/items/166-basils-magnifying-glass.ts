@@ -8,10 +8,10 @@ export const basilsMagnifyingGlass: ItemCard = {
         ink: 0,
       },
       effect: {
-        type: "look-at-cards",
         amount: 0,
         source: "deck",
         target: "CONTROLLER",
+        type: "look-at-cards",
       },
       id: "pnm-1",
       name: "FIND WHAT'S HIDDEN",

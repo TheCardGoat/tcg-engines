@@ -4,17 +4,17 @@ export const kakamoraMenacingSailor: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "lose-lore",
         amount: 1,
         target: "EACH_OPPONENT",
+        type: "lose-lore",
       },
       id: "1xv-1",
       name: "PLUNDER",
       text: "PLUNDER When you play this character, each opponent loses 1 lore.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

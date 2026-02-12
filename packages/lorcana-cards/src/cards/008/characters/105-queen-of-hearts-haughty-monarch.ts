@@ -4,10 +4,10 @@ export const queenOfHeartsHaughtyMonarch: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "lore",
         modifier: 3,
+        stat: "lore",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "1dq-1",
       text: "COUNT OFF! While there are 5 or more characters with damage in play, this character gets +3 {L}.",

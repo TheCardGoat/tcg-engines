@@ -4,16 +4,16 @@ export const quickPatch: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "remove-damage",
         amount: 3,
-        upTo: true,
         target: {
-          selector: "chosen",
+          cardTypes: ["location"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["location"],
         },
+        type: "remove-damage",
+        upTo: true,
       },
       id: "r4j-1",
       text: "Remove up to 3 damage from chosen location.",

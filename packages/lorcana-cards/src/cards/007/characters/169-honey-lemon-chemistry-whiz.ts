@@ -4,15 +4,12 @@ export const honeyLemonChemistryWhiz: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you used Shift to play them",
+          type: "if",
         },
         then: {
-          type: "remove-damage",
           amount: 2,
-          upTo: true,
           target: {
             selector: "chosen",
             count: 1,
@@ -20,7 +17,10 @@ export const honeyLemonChemistryWhiz: CharacterCard = {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "remove-damage",
+          upTo: true,
         },
+        type: "conditional",
       },
       id: "1q1-1",
       text: "PRETTY GREAT, HUH? Whenever you play a Floodborn character, if you used Shift to play them, you may remove up to 2 damage from chosen character.",

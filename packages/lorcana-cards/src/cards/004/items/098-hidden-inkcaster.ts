@@ -4,17 +4,17 @@ export const hiddenInkcaster: ItemCard = {
   abilities: [
     {
       effect: {
-        type: "draw",
         amount: 1,
         target: "CONTROLLER",
+        type: "draw",
       },
       id: "164-1",
       name: "FRESH INK",
       text: "FRESH INK When you play this item, draw a card.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

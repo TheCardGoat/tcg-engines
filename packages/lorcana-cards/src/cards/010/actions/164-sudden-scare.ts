@@ -4,21 +4,21 @@ export const suddenScare: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "put-into-inkwell",
+            facedown: true,
             source: "chosen-character",
             target: "OPPONENT",
-            facedown: true,
+            type: "put-into-inkwell",
           },
           {
-            type: "put-into-inkwell",
+            facedown: true,
             source: "hand",
             target: "OPPONENT",
-            facedown: true,
+            type: "put-into-inkwell",
           },
         ],
+        type: "sequence",
       },
       id: "1jz-1",
       text: "Put chosen opposing character into their player's inkwell facedown. That player puts the top card of their deck into their inkwell facedown.",

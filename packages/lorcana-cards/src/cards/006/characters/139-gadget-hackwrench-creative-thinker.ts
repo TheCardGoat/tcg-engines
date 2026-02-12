@@ -4,22 +4,22 @@ export const gadgetHackwrenchCreativeThinker: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "lore",
-        modifier: 1,
-        target: "SELF",
         duration: "this-turn",
+        modifier: 1,
+        stat: "lore",
+        target: "SELF",
+        type: "modify-stat",
       },
       id: "1w4-1",
       name: "BRAINSTORM",
       text: "BRAINSTORM Whenever you play an item, this character gets +1 {L} this turn.",
       trigger: {
         event: "play",
-        timing: "whenever",
         on: {
-          controller: "you",
           cardType: "item",
+          controller: "you",
         },
+        timing: "whenever",
       },
       type: "triggered",
     },

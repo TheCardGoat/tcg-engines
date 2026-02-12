@@ -23,14 +23,7 @@ import { extractNamedAbilityPrefix } from "./preprocessor";
  */
 export interface ClassificationResult {
   /** Classified ability type */
-  type:
-    | "keyword"
-    | "triggered"
-    | "activated"
-    | "static"
-    | "action"
-    | "replacement"
-    | "unknown";
+  type: "keyword" | "triggered" | "activated" | "static" | "action" | "replacement" | "unknown";
 
   /** Confidence score (0-1) */
   confidence: number;
@@ -112,9 +105,7 @@ function isActionEffect(text: string): boolean {
     /^Chosen\s+/i,
   ];
 
-  const startsWithActionVerb = actionVerbs.some((pattern) =>
-    pattern.test(text),
-  );
+  const startsWithActionVerb = actionVerbs.some((pattern) => pattern.test(text));
 
   // Also allow "Chosen player/opponent" actions
   const startsWithChosenAction = /^Chosen\s+(?:player|opponent)/i.test(text);
@@ -293,9 +284,7 @@ function isLikelyStaticAbility(text: string): boolean {
   // Check for "Chosen X gains/gets" patterns (static targeted modifications)
   // E.g., "Chosen character gains Rush" or "Chosen character gains Rush this turn"
   // These are always static abilities (targeted continuous effects)
-  if (
-    text.match(/^Chosen\s+(?:character|item|location)s?\s+(?:gains?|gets?)\s+/i)
-  ) {
+  if (text.match(/^Chosen\s+(?:character|item|location)s?\s+(?:gains?|gets?)\s+/i)) {
     return true;
   }
 

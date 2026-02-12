@@ -5,16 +5,16 @@ export const patchIntimidatingPup: CharacterCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: -2,
+        stat: "strength",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "modify-stat",
       },
       id: "1p9-1",
       text: "BARK {E} — Chosen character gets -2 {S} until the start of your next turn.",

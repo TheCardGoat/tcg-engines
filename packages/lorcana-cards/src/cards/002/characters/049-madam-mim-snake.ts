@@ -4,22 +4,22 @@ export const madamMimSnake: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "return-to-hand",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "return-to-hand",
       },
       id: "1tb-1",
       name: "JUST YOU WAIT",
       text: "JUST YOU WAIT When you play this character, banish her or return another chosen character of yours to your hand.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

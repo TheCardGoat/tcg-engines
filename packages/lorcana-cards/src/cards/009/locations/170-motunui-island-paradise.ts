@@ -4,23 +4,23 @@ export const motunuiIslandParadise: LocationCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "put-into-inkwell",
-          source: "hand",
-          target: "CONTROLLER",
           exerted: true,
           facedown: true,
+          source: "hand",
+          target: "CONTROLLER",
+          type: "put-into-inkwell",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "1ke-1",
       name: "REINCARNATION",
       text: "REINCARNATION Whenever a character is banished while here, you may put that card into your inkwell facedown and exerted.",
       trigger: {
         event: "banish",
-        timing: "whenever",
         on: "ANY_CHARACTER",
+        timing: "whenever",
       },
       type: "triggered",
     },

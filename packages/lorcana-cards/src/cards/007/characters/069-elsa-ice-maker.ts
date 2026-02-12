@@ -13,9 +13,8 @@ export const elsaIceMaker: CharacterCard = {
     },
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "exert",
           target: {
             selector: "chosen",
             count: 1,
@@ -23,16 +22,17 @@ export const elsaIceMaker: CharacterCard = {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "exert",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "1v2-2",
       name: "WINTER WALL",
       text: "WINTER WALL Whenever this character quests, you may exert chosen character. If you do and you have a character named Anna in play, the chosen character can’t ready at the start of their next turn.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

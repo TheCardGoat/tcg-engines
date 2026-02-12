@@ -23,9 +23,7 @@ describe("For-Each Effects", () => {
     });
 
     it("should parse for each character in play (implicit 'you')", () => {
-      const effect = parseEffect(
-        "Gain 1 lore for each character you have in play",
-      );
+      const effect = parseEffect("Gain 1 lore for each character you have in play");
 
       expect(effect).toEqual({
         counter: { controller: "you", type: "characters" },
@@ -38,20 +36,18 @@ describe("For-Each Effects", () => {
     });
 
     it("should parse for each opponent's character", () => {
-      const effect = parseEffect(
-        "Deal 1 damage to chosen character for each opponent's character",
-      );
+      const effect = parseEffect("Deal 1 damage to chosen character for each opponent's character");
 
       expect(effect).toEqual({
         counter: { controller: "opponent", type: "characters" },
         effect: {
           amount: 1,
           target: {
-            selector: "chosen",
+            cardTypes: ["character"],
             count: 1,
             owner: "any",
+            selector: "chosen",
             zones: ["play"],
-            cardTypes: ["character"],
           },
           type: "deal-damage",
         },
@@ -76,9 +72,7 @@ describe("For-Each Effects", () => {
     });
 
     it("should parse for each damaged character in play", () => {
-      const effect = parseEffect(
-        "Gain 2 lore for each damaged character in play",
-      );
+      const effect = parseEffect("Gain 2 lore for each damaged character in play");
 
       expect(effect).toEqual({
         counter: { controller: "any", type: "damaged-characters" },
@@ -107,9 +101,7 @@ describe("For-Each Effects", () => {
     });
 
     it("should parse for each opponent's item", () => {
-      const effect = parseEffect(
-        "Gain 1 lore for each opponent's item in play",
-      );
+      const effect = parseEffect("Gain 1 lore for each opponent's item in play");
 
       expect(effect).toEqual({
         counter: { controller: "opponent", type: "items" },
@@ -139,20 +131,18 @@ describe("For-Each Effects", () => {
 
   describe("For each card in hand", () => {
     it("should parse for each card in your hand", () => {
-      const effect = parseEffect(
-        "Deal 1 damage to chosen character for each card in your hand",
-      );
+      const effect = parseEffect("Deal 1 damage to chosen character for each card in your hand");
 
       expect(effect).toEqual({
         counter: { controller: "you", type: "cards-in-hand" },
         effect: {
           amount: 1,
           target: {
-            selector: "chosen",
+            cardTypes: ["character"],
             count: 1,
             owner: "any",
+            selector: "chosen",
             zones: ["play"],
-            cardTypes: ["character"],
           },
           type: "deal-damage",
         },
@@ -189,9 +179,7 @@ describe("For-Each Effects", () => {
     });
 
     it("should parse for each card in discard pile", () => {
-      const effect = parseEffect(
-        "Draw a card for each card in your discard pile",
-      );
+      const effect = parseEffect("Draw a card for each card in your discard pile");
 
       expect(effect).toEqual({
         counter: { controller: "you", type: "cards-in-discard" },
@@ -207,9 +195,7 @@ describe("For-Each Effects", () => {
 
   describe("For each damage counter", () => {
     it("should parse for each damage on this character", () => {
-      const effect = parseEffect(
-        "Gain 1 lore for each damage counter on this character",
-      );
+      const effect = parseEffect("Gain 1 lore for each damage counter on this character");
 
       expect(effect).toEqual({
         counter: { type: "damage-on-self" },
@@ -236,9 +222,7 @@ describe("For-Each Effects", () => {
     });
 
     it("should parse for each damage on chosen character", () => {
-      const effect = parseEffect(
-        "Gain 1 lore for each damage on chosen character",
-      );
+      const effect = parseEffect("Gain 1 lore for each damage on chosen character");
 
       expect(effect).toEqual({
         counter: { type: "damage-on-target" },
@@ -253,9 +237,7 @@ describe("For-Each Effects", () => {
 
   describe("For each card under", () => {
     it("should parse for each card under this character", () => {
-      const effect = parseEffect(
-        "Gain 2 lore for each card under this character",
-      );
+      const effect = parseEffect("Gain 2 lore for each card under this character");
 
       expect(effect).toEqual({
         counter: { type: "cards-under-self" },
@@ -284,9 +266,7 @@ describe("For-Each Effects", () => {
 
   describe("For each character that sang", () => {
     it("should parse for each character that sang this turn", () => {
-      const effect = parseEffect(
-        "Gain 1 lore for each character that sang this turn",
-      );
+      const effect = parseEffect("Gain 1 lore for each character that sang this turn");
 
       expect(effect).toEqual({
         counter: { thisTurn: true, type: "characters-that-sang" },
@@ -315,19 +295,17 @@ describe("For-Each Effects", () => {
 
   describe("Complex for-each effects", () => {
     it("should parse exert effect for each", () => {
-      const effect = parseEffect(
-        "Exert chosen character for each item you have",
-      );
+      const effect = parseEffect("Exert chosen character for each item you have");
 
       expect(effect).toEqual({
         counter: { controller: "you", type: "items" },
         effect: {
           target: {
-            selector: "chosen",
+            cardTypes: ["character"],
             count: 1,
             owner: "any",
+            selector: "chosen",
             zones: ["play"],
-            cardTypes: ["character"],
           },
           type: "exert",
         },
@@ -336,19 +314,17 @@ describe("For-Each Effects", () => {
     });
 
     it("should parse banish effect for each", () => {
-      const effect = parseEffect(
-        "Banish chosen character for each damaged character",
-      );
+      const effect = parseEffect("Banish chosen character for each damaged character");
 
       expect(effect).toEqual({
         counter: { controller: "any", type: "damaged-characters" },
         effect: {
           target: {
-            selector: "chosen",
+            cardTypes: ["character"],
             count: 1,
             owner: "any",
+            selector: "chosen",
             zones: ["play"],
-            cardTypes: ["character"],
           },
           type: "banish",
         },
@@ -361,19 +337,17 @@ describe("For-Each Effects", () => {
 describe("Repeat Effects", () => {
   describe("Basic repeat patterns", () => {
     it("should parse repeat this 3 times", () => {
-      const effect = parseEffect(
-        "Deal 1 damage to chosen character. Repeat this 3 times",
-      );
+      const effect = parseEffect("Deal 1 damage to chosen character. Repeat this 3 times");
 
       expect(effect).toEqual({
         effect: {
           amount: 1,
           target: {
-            selector: "chosen",
+            cardTypes: ["character"],
             count: 1,
             owner: "any",
+            selector: "chosen",
             zones: ["play"],
-            cardTypes: ["character"],
           },
           type: "deal-damage",
         },
@@ -412,17 +386,15 @@ describe("Repeat Effects", () => {
 
   describe("Optional repeat patterns", () => {
     it("should parse you may repeat this up to 2 times", () => {
-      const effect = parseEffect(
-        "Draw a card. You may repeat this up to 2 times",
-      );
+      const effect = parseEffect("Draw a card. You may repeat this up to 2 times");
 
       expect(effect).toEqual({
         chooser: "CONTROLLER",
         effect: {
           effect: {
-            type: "draw",
             amount: 1,
             target: "CONTROLLER",
+            type: "draw",
           },
           times: 2,
           type: "repeat",
@@ -432,23 +404,21 @@ describe("Repeat Effects", () => {
     });
 
     it("should parse repeat this up to 3 times (implicit optional)", () => {
-      const effect = parseEffect(
-        "Deal 2 damage to chosen character. Repeat this up to 3 times",
-      );
+      const effect = parseEffect("Deal 2 damage to chosen character. Repeat this up to 3 times");
 
       expect(effect).toEqual({
         chooser: "CONTROLLER",
         effect: {
           effect: {
-            type: "deal-damage",
             amount: 2,
             target: {
-              selector: "chosen",
+              cardTypes: ["character"],
               count: 1,
               owner: "any",
+              selector: "chosen",
               zones: ["play"],
-              cardTypes: ["character"],
             },
+            type: "deal-damage",
           },
           times: 3,
           type: "repeat",
@@ -465,11 +435,11 @@ describe("Repeat Effects", () => {
       expect(effect).toEqual({
         effect: {
           target: {
-            selector: "chosen",
+            cardTypes: ["character"],
             count: 1,
             owner: "any",
+            selector: "chosen",
             zones: ["play"],
-            cardTypes: ["character"],
           },
           type: "exert",
         },
@@ -484,11 +454,11 @@ describe("Repeat Effects", () => {
       expect(effect).toEqual({
         effect: {
           target: {
-            selector: "chosen",
+            cardTypes: ["character"],
             count: 1,
             owner: "any",
+            selector: "chosen",
             zones: ["play"],
-            cardTypes: ["character"],
           },
           type: "ready",
         },

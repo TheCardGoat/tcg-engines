@@ -5,9 +5,9 @@ export const obscurosphere: ItemCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "gain-keyword",
         keyword: "Ward",
         target: "YOUR_CHARACTERS",
+        type: "gain-keyword",
       },
       id: "wfc-1",
       text: "EXTRACT OF EMERALD 2 {I}, Banish this item — Your characters gain Ward until the start of your next turn.",

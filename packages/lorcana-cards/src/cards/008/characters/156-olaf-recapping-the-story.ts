@@ -4,19 +4,19 @@ export const olafRecappingTheStory: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
-        modifier: -1,
-        target: "CHOSEN_CHARACTER",
         duration: "this-turn",
+        modifier: -1,
+        stat: "strength",
+        target: "CHOSEN_CHARACTER",
+        type: "modify-stat",
       },
       id: "fgl-1",
       name: "ENDLESS TALE",
       text: "ENDLESS TALE When you play this character, chosen opposing character gets -1 {S} this turn.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

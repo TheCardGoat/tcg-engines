@@ -4,9 +4,8 @@ export const mauricesMachine: ItemCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "return-to-hand",
           target: {
             selector: "chosen",
             count: 1,
@@ -14,13 +13,14 @@ export const mauricesMachine: ItemCard = {
             zones: ["play"],
             cardTypes: ["item"],
           },
+          type: "return-to-hand",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "1fj-1",
       name: "BREAK DOWN",
       text: "BREAK DOWN When this item is banished, you may return an item card with cost 2 or less from your discard to your hand.",
-      trigger: { event: "play", timing: "when", on: "SELF" },
+      trigger: { event: "play", on: "SELF", timing: "when" },
       type: "triggered",
     },
   ],

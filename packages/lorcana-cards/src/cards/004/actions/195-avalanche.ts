@@ -4,9 +4,8 @@ export const avalanche: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "banish",
           target: {
             selector: "chosen",
             count: 1,
@@ -14,8 +13,9 @@ export const avalanche: ActionCard = {
             zones: ["play"],
             cardTypes: ["location"],
           },
+          type: "banish",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "1pv-1",
       text: "Deal 1 damage to each opposing character. You may banish chosen location.",

@@ -4,9 +4,9 @@ export const familyFishingPole: ItemCard = {
   abilities: [
     {
       effect: {
-        type: "restriction",
         restriction: "enters-play-exerted",
         target: "SELF",
+        type: "restriction",
       },
       id: "xac-1",
       name: "WATCH CLOSELY",
@@ -15,8 +15,8 @@ export const familyFishingPole: ItemCard = {
     },
     {
       effect: {
-        type: "gain-lore",
         amount: 2,
+        type: "gain-lore",
       },
       id: "xac-2",
       text: "THE PERFECT CAST {E}, 1 {I}, Banish this item – Return chosen exerted character of yours to your hand to gain 2 lore.",

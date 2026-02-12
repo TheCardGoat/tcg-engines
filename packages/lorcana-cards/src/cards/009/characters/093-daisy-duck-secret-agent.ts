@@ -4,18 +4,18 @@ export const daisyDuckSecretAgent: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "discard",
         amount: 1,
-        target: "EACH_OPPONENT",
         chosen: true,
+        target: "EACH_OPPONENT",
+        type: "discard",
       },
       id: "1wn-1",
       name: "THWART",
       text: "THWART Whenever this character quests, each opponent chooses and discards a card.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

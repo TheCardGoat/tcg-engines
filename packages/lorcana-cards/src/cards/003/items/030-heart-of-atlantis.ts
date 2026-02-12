@@ -5,8 +5,8 @@ export const heartOfAtlantis: ItemCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "play-card",
         from: "hand",
+        type: "play-card",
       },
       id: "zzp-1",
       text: "LIFE GIVER {E} — You pay 2 {I} less for the next character you play this turn.",

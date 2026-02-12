@@ -262,15 +262,6 @@ Title: {title}
  * Processing prompts configuration
  */
 export const SUPADATA_PROCESSING_PROMPTS = {
-  overview: OVERVIEW_SUMMARY_PROMPT,
-  insightful: {
-    list: INSIGHTFUL_LIST_PROMPT,
-    qa: INSIGHTFUL_QA_PROMPT,
-  },
-  funny: {
-    list: FUNNY_LIST_PROMPT,
-    qa: FUNNY_QA_PROMPT,
-  },
   actionable: {
     list: ACTIONABLE_LIST_PROMPT,
     qa: ACTIONABLE_QA_PROMPT,
@@ -279,17 +270,21 @@ export const SUPADATA_PROCESSING_PROMPTS = {
     list: CONTROVERSIAL_LIST_PROMPT,
     qa: CONTROVERSIAL_QA_PROMPT,
   },
+  funny: {
+    list: FUNNY_LIST_PROMPT,
+    qa: FUNNY_QA_PROMPT,
+  },
+  insightful: {
+    list: INSIGHTFUL_LIST_PROMPT,
+    qa: INSIGHTFUL_QA_PROMPT,
+  },
+  overview: OVERVIEW_SUMMARY_PROMPT,
 };
 
 /**
  * Summary types and formats
  */
-export const SUMMARY_TYPES = [
-  "insightful",
-  "funny",
-  "actionable",
-  "controversial",
-] as const;
+export const SUMMARY_TYPES = ["insightful", "funny", "actionable", "controversial"] as const;
 
 export const SUMMARY_FORMATS = ["list", "qa"] as const;
 

@@ -4,17 +4,17 @@ export const hadesLordOfTheUnderworld: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "return-from-discard",
         cardType: "character",
         target: "CONTROLLER",
+        type: "return-from-discard",
       },
       id: "1yp-1",
       name: "WELL OF SOULS",
       text: "WELL OF SOULS When you play this character, return a character card from your discard to your hand.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

@@ -4,10 +4,9 @@ export const makeThePotion: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "choice",
+        optionLabels: ["Banish chosen item.", "Deal 2 damage to chosen damaged character."],
         options: [
           {
-            type: "banish",
             target: {
               selector: "chosen",
               count: 1,
@@ -15,9 +14,9 @@ export const makeThePotion: ActionCard = {
               zones: ["play"],
               cardTypes: ["item"],
             },
+            type: "banish",
           },
           {
-            type: "deal-damage",
             amount: 2,
             target: {
               selector: "chosen",
@@ -26,12 +25,10 @@ export const makeThePotion: ActionCard = {
               zones: ["play"],
               cardTypes: ["character"],
             },
+            type: "deal-damage",
           },
         ],
-        optionLabels: [
-          "Banish chosen item.",
-          "Deal 2 damage to chosen damaged character.",
-        ],
+        type: "choice",
       },
       id: "db6-1",
       text: "Choose one: • Banish chosen item. • Deal 2 damage to chosen damaged character.",

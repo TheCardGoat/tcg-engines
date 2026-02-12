@@ -4,20 +4,20 @@ export const tinkerBellVeryCleverFairy: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "put-into-inkwell",
-          source: "hand",
-          target: "CONTROLLER",
           exerted: true,
           facedown: true,
+          source: "hand",
+          target: "CONTROLLER",
+          type: "put-into-inkwell",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "1y4-1",
       name: "I CAN USE THAT",
       text: "I CAN USE THAT Whenever one of your items is banished, you may put that card into your inkwell facedown and exerted.",
-      trigger: { event: "play", timing: "when", on: "SELF" },
+      trigger: { event: "play", on: "SELF", timing: "when" },
       type: "triggered",
     },
   ],

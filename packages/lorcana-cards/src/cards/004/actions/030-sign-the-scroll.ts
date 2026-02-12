@@ -4,19 +4,19 @@ export const signTheScroll: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "discard",
             amount: 1,
-            target: "EACH_OPPONENT",
             chosen: true,
+            target: "EACH_OPPONENT",
+            type: "discard",
           },
           {
-            type: "gain-lore",
             amount: 2,
+            type: "gain-lore",
           },
         ],
+        type: "sequence",
       },
       id: "ggh-1",
       text: "Each opponent may choose and discard a card. For each opponent who doesn't, you gain 2 lore.",

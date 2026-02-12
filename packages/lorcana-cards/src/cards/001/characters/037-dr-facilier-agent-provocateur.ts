@@ -4,9 +4,8 @@ export const drFacilierAgentProvocateur: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "return-to-hand",
           target: {
             selector: "chosen",
             count: 1,
@@ -14,8 +13,9 @@ export const drFacilierAgentProvocateur: CharacterCard = {
             zones: ["play"],
             cardTypes: ["card"],
           },
+          type: "return-to-hand",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "c3l-1",
       text: "**SLEIGHT OF HAND** When you play this character, you may return target character to their player's hand.",

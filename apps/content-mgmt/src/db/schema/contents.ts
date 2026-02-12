@@ -29,7 +29,7 @@ export interface YouTubeMetadata {
   commentCount?: number;
   thumbnailUrl?: string;
   description?: string;
-  timestampsInDescription?: Array<{ timestamp: string; title: string }>;
+  timestampsInDescription?: { timestamp: string; title: string }[];
 }
 
 /**
@@ -50,10 +50,7 @@ export interface ArticleMetadata {
 /**
  * Content metadata - union of all source-specific metadata types
  */
-export type ContentMetadataJson =
-  | YouTubeMetadata
-  | ArticleMetadata
-  | Record<string, unknown>;
+export type ContentMetadataJson = YouTubeMetadata | ArticleMetadata | Record<string, unknown>;
 
 /**
  * Contents table - Content-agnostic storage for videos, articles, etc.
@@ -82,14 +79,8 @@ export const contents = pgTable(
     publishedAt: timestamp("published_at"),
   },
   (table) => [
-    unique("contents_source_external_unique").on(
-      table.sourceType,
-      table.externalId,
-    ),
-    index("contents_source_external_idx").on(
-      table.sourceType,
-      table.externalId,
-    ),
+    unique("contents_source_external_unique").on(table.sourceType, table.externalId),
+    index("contents_source_external_idx").on(table.sourceType, table.externalId),
     index("contents_created_at_idx").on(table.createdAt),
     index("contents_published_at_idx").on(table.publishedAt),
     index("contents_game_id_created_at_idx").on(table.gameId, table.createdAt),

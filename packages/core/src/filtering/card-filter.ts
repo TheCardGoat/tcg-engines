@@ -6,13 +6,13 @@ import type { PlayerId, ZoneId } from "../types";
  * Can be a direct number (exact match) or an object with comparison operators
  */
 export type NumberFilter =
-  | number // exact match
-  | { eq: number } // equal
-  | { gte: number } // greater than or equal
-  | { lte: number } // less than or equal
-  | { gt: number } // greater than
-  | { lt: number } // less than
-  | { between: [number, number] }; // range [min, max]
+  | number // Exact match
+  | { eq: number } // Equal
+  | { gte: number } // Greater than or equal
+  | { lte: number } // Less than or equal
+  | { gt: number } // Greater than
+  | { lt: number } // Less than
+  | { between: [number, number] }; // Range [min, max]
 
 /**
  * String filter for text comparisons
@@ -23,17 +23,17 @@ export type StringFilter = string | RegExp | string[];
  * Generic property filter that can match any value type
  */
 export type PropertyFilter<T = any> =
-  | T // exact match
-  | { eq: T } // equal
-  | (T extends number ? NumberFilter : never) // numeric operations only for numbers
-  | (T extends string ? StringFilter : never); // string operations only for strings
+  | T // Exact match
+  | { eq: T } // Equal
+  | (T extends number ? NumberFilter : never) // Numeric operations only for numbers
+  | (T extends string ? StringFilter : never); // String operations only for strings
 
 /**
  * Core card filter - only properties ALL cards have
  * All filter properties are optional and combined with AND logic
  * @template TGameState - The game state type
  */
-export type CardFilter<TGameState = unknown> = {
+export interface CardFilter<TGameState = unknown> {
   // Universal card properties (all TCGs have these)
   /** Filter by zone(s) where the card is located */
   zone?: ZoneId | ZoneId[];
@@ -88,4 +88,4 @@ export type CardFilter<TGameState = unknown> = {
   where?: TGameState extends { cards: Record<string, infer TCard> }
     ? (card: TCard, state: TGameState) => boolean
     : (card: CardInstance<unknown>, state: TGameState) => boolean;
-};
+}

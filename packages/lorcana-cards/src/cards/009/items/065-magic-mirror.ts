@@ -7,9 +7,9 @@ export const magicMirror: ItemCard = {
         exert: true,
       },
       effect: {
-        type: "draw",
         amount: 1,
         target: "CONTROLLER",
+        type: "draw",
       },
       id: "6c3-1",
       text: "SPEAK! {E}, 4 {I} — Draw a card.",

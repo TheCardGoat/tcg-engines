@@ -10,23 +10,13 @@ import type {
   PlayerId as CorePlayerId,
   GameMoveDefinitions,
 } from "@tcg/core";
-import type {
-  PlayerId,
-  RiftboundCardMeta,
-  RiftboundGameState,
-  RiftboundMoves,
-} from "../../types";
+import type { PlayerId, RiftboundCardMeta, RiftboundGameState, RiftboundMoves } from "../../types";
 
 /**
  * Turn structure move definitions
  */
 export const turnMoves: Partial<
-  GameMoveDefinitions<
-    RiftboundGameState,
-    RiftboundMoves,
-    RiftboundCardMeta,
-    unknown
-  >
+  GameMoveDefinitions<RiftboundGameState, RiftboundMoves, RiftboundCardMeta, unknown>
 > = {
   /**
    * Advance to next phase
@@ -91,9 +81,9 @@ export const turnMoves: Partial<
 
       // Also use the endGame function if available
       context.endGame?.({
-        winner: opponentId as CorePlayerId,
-        reason: "concede",
         metadata: { concededBy: playerId },
+        reason: "concede",
+        winner: opponentId as CorePlayerId,
       });
     },
   },

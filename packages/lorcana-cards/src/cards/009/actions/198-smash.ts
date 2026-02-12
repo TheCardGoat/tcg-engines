@@ -4,15 +4,15 @@ export const smash: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "deal-damage",
         amount: 3,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "deal-damage",
       },
       id: "dvd-1",
       text: "Deal 3 damage to chosen character.",

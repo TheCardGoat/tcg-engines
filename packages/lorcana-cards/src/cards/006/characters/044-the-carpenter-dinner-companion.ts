@@ -4,9 +4,8 @@ export const theCarpenterDinnerCompanion: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "exert",
           target: {
             selector: "chosen",
             count: 1,
@@ -14,16 +13,17 @@ export const theCarpenterDinnerCompanion: CharacterCard = {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "exert",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "pff-1",
       name: "I'LL GET YOU!",
       text: "I'LL GET YOU! When this character is banished, you may exert chosen character.",
       trigger: {
         event: "banish",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

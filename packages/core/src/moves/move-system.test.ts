@@ -5,32 +5,27 @@ import type { GameMoveDefinition } from "../game-definition/move-definitions";
 import { createMockContext } from "../testing/test-context-factory";
 import type { CardId, PlayerId } from "../types";
 import { createCardId, createPlayerId } from "../types";
-import type {
-  MoveCondition,
-  MoveContext,
-  MoveReducer,
-  MoveResult,
-} from "./move-system";
+import type { MoveCondition, MoveContext, MoveReducer, MoveResult } from "./move-system";
 
 describe("Move System with Validation", () => {
-  type TestGameState = {
+  interface TestGameState {
     players: Record<PlayerId, { life: number; mana: number }>;
     currentPlayer: PlayerId;
     cards: Record<CardId, { name: string; cost: number }>;
-  };
+  }
 
   const player1 = createPlayerId("p1");
   const player2 = createPlayerId("p2");
   const card1 = createCardId("card1");
 
   const initialState: TestGameState = {
+    cards: {
+      [card1]: { cost: 1, name: "Lightning Bolt" },
+    },
+    currentPlayer: player1,
     players: {
       [player1]: { life: 20, mana: 3 },
       [player2]: { life: 20, mana: 3 },
-    },
-    currentPlayer: player1,
-    cards: {
-      [card1]: { name: "Lightning Bolt", cost: 1 },
     },
   };
 
@@ -40,13 +35,12 @@ describe("Move System with Validation", () => {
         draft.players[context.playerId].mana -= 1;
       };
 
-      const condition: MoveCondition<TestGameState> = (state, context) => {
-        return state.players[context.playerId].mana >= 1;
-      };
+      const condition: MoveCondition<TestGameState> = (state, context) =>
+        state.players[context.playerId].mana >= 1;
 
       const moveDef: GameMoveDefinition<TestGameState> = {
-        reducer,
         condition,
+        reducer,
       };
 
       expect(moveDef.reducer).toBe(reducer);
@@ -68,11 +62,11 @@ describe("Move System with Validation", () => {
 
     it("should include metadata in move definition", () => {
       const moveDef: GameMoveDefinition<TestGameState> = {
-        reducer: (draft: Draft<TestGameState>) => draft,
         metadata: {
           category: "draw",
           description: "Draw a card from your deck",
         },
+        reducer: (draft: Draft<TestGameState>) => draft,
       };
 
       expect(moveDef.metadata?.description).toBe("Draw a card from your deck");
@@ -86,8 +80,8 @@ describe("Move System with Validation", () => {
       };
 
       const context: MoveContext = createMockContext({
-        playerId: player1,
         params: {},
+        playerId: player1,
       });
 
       const nextState = produce(initialState, (draft) => {
@@ -107,8 +101,8 @@ describe("Move System with Validation", () => {
       };
 
       const context: MoveContext = createMockContext({
-        playerId: player1,
         params: {},
+        playerId: player1,
         targets: [[player2]],
       });
 
@@ -128,8 +122,8 @@ describe("Move System with Validation", () => {
       };
 
       const context: MoveContext = createMockContext({
-        playerId: player1,
         params: {},
+        playerId: player1,
         sourceCardId: card1,
       });
 
@@ -143,50 +137,38 @@ describe("Move System with Validation", () => {
 
   describe("MoveCondition", () => {
     it("should validate move is legal before execution", () => {
-      const condition: MoveCondition<TestGameState> = (state, context) => {
-        return state.players[context.playerId].mana >= 2;
-      };
+      const condition: MoveCondition<TestGameState> = (state, context) =>
+        state.players[context.playerId].mana >= 2;
 
-      expect(
-        condition(
-          initialState,
-          createMockContext({ playerId: player1, params: {} }),
-        ),
-      ).toBe(true);
+      expect(condition(initialState, createMockContext({ params: {}, playerId: player1 }))).toBe(
+        true,
+      );
 
       const lowManaState = produce(initialState, (draft) => {
         draft.players[player1].mana = 1;
       });
-      expect(
-        condition(
-          lowManaState,
-          createMockContext({ playerId: player1, params: {} }),
-        ),
-      ).toBe(false);
+      expect(condition(lowManaState, createMockContext({ params: {}, playerId: player1 }))).toBe(
+        false,
+      );
     });
 
     it("should access context in condition check", () => {
-      const condition: MoveCondition<TestGameState> = (state, context) => {
-        return state.currentPlayer === context.playerId;
-      };
+      const condition: MoveCondition<TestGameState> = (state, context) =>
+        state.currentPlayer === context.playerId;
 
-      expect(
-        condition(
-          initialState,
-          createMockContext({ playerId: player1, params: {} }),
-        ),
-      ).toBe(true);
-      expect(
-        condition(
-          initialState,
-          createMockContext({ playerId: player2, params: {} }),
-        ),
-      ).toBe(false);
+      expect(condition(initialState, createMockContext({ params: {}, playerId: player1 }))).toBe(
+        true,
+      );
+      expect(condition(initialState, createMockContext({ params: {}, playerId: player2 }))).toBe(
+        false,
+      );
     });
 
     it("should validate based on targets", () => {
       const condition: MoveCondition<TestGameState> = (_state, context) => {
-        if (!context.targets?.[0]) return false;
+        if (!context.targets?.[0]) {
+          return false;
+        }
         const targetId = context.targets[0][0] as PlayerId;
         return targetId !== context.playerId; // Can't target self
       };
@@ -195,8 +177,8 @@ describe("Move System with Validation", () => {
         condition(
           initialState,
           createMockContext({
-            playerId: player1,
             params: {},
+            playerId: player1,
             targets: [[player2]],
           }),
         ),
@@ -206,8 +188,8 @@ describe("Move System with Validation", () => {
         condition(
           initialState,
           createMockContext({
-            playerId: player1,
             params: {},
+            playerId: player1,
             targets: [[player1]],
           }),
         ),
@@ -218,8 +200,8 @@ describe("Move System with Validation", () => {
   describe("MoveResult", () => {
     it("should represent successful move execution", () => {
       const result: MoveResult<TestGameState> = {
-        success: true,
         state: initialState,
+        success: true,
       };
 
       expect(result.success).toBe(true);
@@ -229,8 +211,8 @@ describe("Move System with Validation", () => {
 
     it("should represent failed move with error", () => {
       const result: MoveResult<TestGameState> = {
-        success: false,
         error: "Not enough mana",
+        success: false,
       };
 
       expect(result.success).toBe(false);
@@ -240,16 +222,16 @@ describe("Move System with Validation", () => {
 
     it("should represent failed move with detailed error info", () => {
       const result: MoveResult<TestGameState> = {
-        success: false,
         error: "Invalid target",
         errorCode: "INVALID_TARGET",
-        errorContext: { targetId: "card1", reason: "Already destroyed" },
+        errorContext: { reason: "Already destroyed", targetId: "card1" },
+        success: false,
       };
 
       expect(result.errorCode).toBe("INVALID_TARGET");
       expect(result.errorContext).toEqual({
-        targetId: "card1",
         reason: "Already destroyed",
+        targetId: "card1",
       });
     });
   });
@@ -257,8 +239,8 @@ describe("Move System with Validation", () => {
   describe("MoveContext", () => {
     it("should provide player ID to move", () => {
       const context: MoveContext = createMockContext({
-        playerId: player1,
         params: {},
+        playerId: player1,
       });
 
       expect(context.playerId).toBe(player1);
@@ -266,8 +248,8 @@ describe("Move System with Validation", () => {
 
     it("should provide source card ID", () => {
       const context: MoveContext = createMockContext({
-        playerId: player1,
         params: {},
+        playerId: player1,
         sourceCardId: card1,
       });
 
@@ -276,8 +258,8 @@ describe("Move System with Validation", () => {
 
     it("should provide target selections", () => {
       const context: MoveContext = createMockContext({
-        playerId: player1,
         params: {},
+        playerId: player1,
         targets: [[card1], [player2]],
       });
 
@@ -288,11 +270,11 @@ describe("Move System with Validation", () => {
 
     it("should provide additional data", () => {
       const context: MoveContext = createMockContext({
-        playerId: player1,
         params: {
-          choiceIndex: 2,
           amount: 5,
+          choiceIndex: 2,
         },
+        playerId: player1,
       });
 
       expect(context.params?.choiceIndex).toBe(2);
@@ -302,8 +284,8 @@ describe("Move System with Validation", () => {
     it("should provide timestamp", () => {
       const now = Date.now();
       const context: MoveContext = createMockContext({
-        playerId: player1,
         params: {},
+        playerId: player1,
         timestamp: now,
       });
 
@@ -322,8 +304,8 @@ describe("Move System with Validation", () => {
       };
 
       const context: MoveContext = createMockContext({
-        playerId: player1,
         params: {},
+        playerId: player1,
       });
 
       // Check condition
@@ -350,8 +332,8 @@ describe("Move System with Validation", () => {
       };
 
       const context: MoveContext = createMockContext({
-        playerId: player1,
         params: {},
+        playerId: player1,
       });
 
       const isValid = moveDef.condition?.(initialState, context);
@@ -368,8 +350,8 @@ describe("Move System with Validation", () => {
       };
 
       const context: MoveContext = createMockContext({
-        playerId: player1,
         params: {},
+        playerId: player1,
       });
 
       // No condition means always valid

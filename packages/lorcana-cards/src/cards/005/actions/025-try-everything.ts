@@ -4,10 +4,8 @@ export const tryEverything: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "sequence",
             steps: [
               {
                 type: "remove-damage",
@@ -26,14 +24,16 @@ export const tryEverything: ActionCard = {
                 target: "CHOSEN_CHARACTER",
               },
             ],
+            type: "sequence",
           },
           {
-            type: "restriction",
+            duration: "this-turn",
             restriction: "cant-quest",
             target: "SELF",
-            duration: "this-turn",
+            type: "restriction",
           },
         ],
+        type: "sequence",
       },
       id: "2vk-1",
       text: "Remove up to 3 damage from chosen character and ready them. They can't quest or challenge for the rest of this turn.",

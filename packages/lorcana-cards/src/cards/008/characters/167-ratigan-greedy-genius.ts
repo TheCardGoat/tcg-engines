@@ -10,13 +10,11 @@ export const ratiganGreedyGenius: CharacterCard = {
     },
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you didn't put any cards into your inkwell this turn",
+          type: "if",
         },
         then: {
-          type: "banish",
           target: {
             selector: "self",
             count: 1,
@@ -24,7 +22,9 @@ export const ratiganGreedyGenius: CharacterCard = {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "banish",
         },
+        type: "conditional",
       },
       id: "e9z-2",
       text: "TIME RUNS OUT At the end of your turn, if you didn't put any cards into your inkwell this turn, banish this character.",

@@ -18,10 +18,10 @@ describe("Card Definition", () => {
 
     it("should support optional basePower field", () => {
       const definition: CardDefinition = {
+        basePower: 2,
         id: "grizzly-bears",
         name: "Grizzly Bears",
         type: "creature",
-        basePower: 2,
       };
 
       expect(definition.basePower).toBe(2);
@@ -29,10 +29,10 @@ describe("Card Definition", () => {
 
     it("should support optional baseToughness field", () => {
       const definition: CardDefinition = {
+        baseToughness: 2,
         id: "grizzly-bears",
         name: "Grizzly Bears",
         type: "creature",
-        baseToughness: 2,
       };
 
       expect(definition.baseToughness).toBe(2);
@@ -40,10 +40,10 @@ describe("Card Definition", () => {
 
     it("should support optional baseCost field", () => {
       const definition: CardDefinition = {
+        baseCost: 1,
         id: "fire-bolt",
         name: "Fire Bolt",
         type: "instant",
-        baseCost: 1,
       };
 
       expect(definition.baseCost).toBe(1);
@@ -51,10 +51,10 @@ describe("Card Definition", () => {
 
     it("should support abilities array", () => {
       const definition: CardDefinition = {
+        abilities: ["flying", "vigilance"],
         id: "serra-angel",
         name: "Serra Angel",
         type: "creature",
-        abilities: ["flying", "vigilance"],
       };
 
       expect(definition.abilities).toHaveLength(2);
@@ -64,10 +64,10 @@ describe("Card Definition", () => {
 
     it("should work with empty abilities array", () => {
       const definition: CardDefinition = {
+        abilities: [],
         id: "vanilla-creature",
         name: "Vanilla Creature",
         type: "creature",
-        abilities: [],
       };
 
       expect(definition.abilities).toHaveLength(0);
@@ -75,13 +75,13 @@ describe("Card Definition", () => {
 
     it("should support all fields together", () => {
       const definition: CardDefinition = {
+        abilities: ["flying", "haste"],
+        baseCost: 4,
+        basePower: 4,
+        baseToughness: 4,
         id: "lightning-dragon",
         name: "Lightning Dragon",
         type: "creature",
-        basePower: 4,
-        baseToughness: 4,
-        baseCost: 4,
-        abilities: ["flying", "haste"],
       };
 
       expect(definition.id).toBe("lightning-dragon");
@@ -103,11 +103,11 @@ describe("Card Definition", () => {
 
     it("should register single card definition", () => {
       const definition: CardDefinition = {
+        abilities: [],
+        baseCost: 1,
         id: "fire-bolt",
         name: "Fire Bolt",
         type: "instant",
-        baseCost: 1,
-        abilities: [],
       };
 
       const registry = createCardRegistry([definition]);
@@ -121,20 +121,20 @@ describe("Card Definition", () => {
     it("should register multiple card definitions", () => {
       const definitions: CardDefinition[] = [
         {
+          abilities: [],
+          baseCost: 1,
           id: "fire-bolt",
           name: "Fire Bolt",
           type: "instant",
-          baseCost: 1,
-          abilities: [],
         },
         {
+          abilities: [],
+          baseCost: 2,
+          basePower: 2,
+          baseToughness: 2,
           id: "grizzly-bears",
           name: "Grizzly Bears",
           type: "creature",
-          basePower: 2,
-          baseToughness: 2,
-          baseCost: 2,
-          abilities: [],
         },
       ];
 
@@ -157,18 +157,18 @@ describe("Card Definition", () => {
     it("should overwrite duplicate definitions with last one", () => {
       const definitions: CardDefinition[] = [
         {
+          abilities: [],
+          baseCost: 1,
           id: "fire-bolt",
           name: "Fire Bolt V1",
           type: "instant",
-          baseCost: 1,
-          abilities: [],
         },
         {
+          abilities: [],
+          baseCost: 2,
           id: "fire-bolt",
           name: "Fire Bolt V2",
           type: "instant",
-          baseCost: 2,
-          abilities: [],
         },
       ];
 
@@ -183,10 +183,10 @@ describe("Card Definition", () => {
   describe("CardRegistry.getCard", () => {
     it("should retrieve definition by id", () => {
       const definition: CardDefinition = {
+        abilities: [],
         id: "test-card",
         name: "Test Card",
         type: "creature",
-        abilities: [],
       };
 
       const registry = createCardRegistry([definition]);
@@ -197,10 +197,10 @@ describe("Card Definition", () => {
 
     it("should be case-sensitive for ids", () => {
       const definition: CardDefinition = {
+        abilities: [],
         id: "TestCard",
         name: "Test Card",
         type: "creature",
-        abilities: [],
       };
 
       const registry = createCardRegistry([definition]);
@@ -211,11 +211,11 @@ describe("Card Definition", () => {
 
     it("should handle definitions with zero values", () => {
       const definition: CardDefinition = {
+        abilities: [],
+        baseCost: 0,
         id: "zero-cost",
         name: "Zero Cost Card",
         type: "instant",
-        baseCost: 0,
-        abilities: [],
       };
 
       const registry = createCardRegistry([definition]);
@@ -227,9 +227,7 @@ describe("Card Definition", () => {
 
   describe("CardRegistry additional methods", () => {
     it("should check if card exists with hasCard", () => {
-      const registry = createCardRegistry([
-        { id: "card1", name: "Card 1", type: "creature" },
-      ]);
+      const registry = createCardRegistry([{ id: "card1", name: "Card 1", type: "creature" }]);
 
       expect(registry.hasCard("card1")).toBe(true);
       expect(registry.hasCard("nonexistent")).toBe(false);

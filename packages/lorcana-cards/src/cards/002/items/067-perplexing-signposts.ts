@@ -5,14 +5,14 @@ export const perplexingSignposts: ItemCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "return-to-hand",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "return-to-hand",
       },
       id: "nv1-1",
       text: "TO WONDERLAND Banish this item — Return chosen character of yours to your hand.",

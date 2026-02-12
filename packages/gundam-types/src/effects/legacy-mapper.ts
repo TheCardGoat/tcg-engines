@@ -54,12 +54,12 @@ export function legacyToNewEffect(legacy: BaseEffect): Effect {
   const targeting = extractTargeting(legacy.action);
 
   return {
-    id: legacy.id,
-    category,
-    timing,
     actions,
+    category,
+    id: legacy.id,
     targeting,
     text: legacy.description,
+    timing,
   };
 }
 
@@ -75,16 +75,21 @@ export function legacyToNewEffects(legacy: BaseEffect[]): Effect[] {
  */
 function mapTypeToCategory(type: BaseEffect["type"]): EffectCategory {
   switch (type) {
-    case "ACTIVATED":
+    case "ACTIVATED": {
       return "activated";
-    case "TRIGGERED":
+    }
+    case "TRIGGERED": {
       return "triggered";
-    case "CONSTANT":
+    }
+    case "CONSTANT": {
       return "constant";
-    case "KEYWORD":
+    }
+    case "KEYWORD": {
       return "keyword";
-    case "COMMAND":
+    }
+    case "COMMAND": {
       return "command";
+    }
   }
 }
 
@@ -94,56 +99,68 @@ function mapTypeToCategory(type: BaseEffect["type"]): EffectCategory {
  * Note: The new EffectTiming uses discriminated unions with a `type` field.
  * Some legacy timings don't have direct 1:1 mappings and need approximation.
  */
-function mapLegacyTiming(
-  timing: string,
-  category: EffectCategory,
-): EffectTiming {
+function mapLegacyTiming(timing: string, category: EffectCategory): EffectTiming {
   // Triggered timings
   if (category === "triggered") {
     switch (timing) {
-      case "DEPLOY":
+      case "DEPLOY": {
         return { type: "DEPLOY" };
-      case "ATTACK":
+      }
+      case "ATTACK": {
         return { type: "ATTACK" };
-      case "DESTROYED":
+      }
+      case "DESTROYED": {
         return { type: "DESTROYED" };
-      case "BURST":
-        return { type: "BURST", timing: "after" };
+      }
+      case "BURST": {
+        return { timing: "after", type: "BURST" };
+      }
       case "WHEN_PAIRED":
-      case "WHEN_LINKED":
-        return { type: "DEPLOY" }; // Placeholder: maps to deploy timing
-      case "START_OF_TURN":
+      case "WHEN_LINKED": {
+        return { type: "DEPLOY" };
+      } // Placeholder: maps to deploy timing
+      case "START_OF_TURN": {
         return { type: "START_OF_TURN" };
-      case "END_OF_TURN":
+      }
+      case "END_OF_TURN": {
         return { type: "END_OF_TURN" };
-      default:
-        return { type: "DEPLOY" }; // Default for triggered effects
+      }
+      default: {
+        return { type: "DEPLOY" };
+      } // Default for triggered effects
     }
   }
 
   // Activated timings
   if (category === "activated") {
     switch (timing) {
-      case "MAIN":
+      case "MAIN": {
         return { type: "ACTIVATE_MAIN" };
-      case "ACTION":
+      }
+      case "ACTION": {
         return { type: "ACTIVATE_ACTION" };
-      default:
+      }
+      default: {
         return { type: "ACTIVATE_MAIN" };
+      }
     }
   }
 
   // Command timings
   if (category === "command") {
     switch (timing) {
-      case "MAIN":
+      case "MAIN": {
         return { type: "MAIN" };
-      case "ACTION":
+      }
+      case "ACTION": {
         return { type: "ACTION" };
-      case "BURST":
-        return { type: "BURST", timing: "after" };
-      default:
+      }
+      case "BURST": {
+        return { timing: "after", type: "BURST" };
+      }
+      default: {
         return { type: "MAIN" };
+      }
     }
   }
 
@@ -159,16 +176,21 @@ function mapLegacyTiming(
  */
 function getDefaultTiming(category: EffectCategory): EffectTiming {
   switch (category) {
-    case "triggered":
+    case "triggered": {
       return { type: "DEPLOY" };
-    case "activated":
+    }
+    case "activated": {
       return { type: "ACTIVATE_MAIN" };
-    case "constant":
-      return { type: "MAIN" }; // Continuous effects attached to main phase
-    case "keyword":
-      return { type: "MAIN" }; // Keyword effects attached to main phase
-    case "command":
+    }
+    case "constant": {
       return { type: "MAIN" };
+    } // Continuous effects attached to main phase
+    case "keyword": {
+      return { type: "MAIN" };
+    } // Keyword effects attached to main phase
+    case "command": {
+      return { type: "MAIN" };
+    }
   }
 }
 
@@ -191,150 +213,157 @@ function convertActionToEffectAction(action: LegacyAction): EffectAction[] {
 
   // Map individual action types
   switch (action.type) {
-    case "DRAW":
+    case "DRAW": {
       return [
         {
-          type: "DRAW",
           count: action.value,
           player: "self",
+          type: "DRAW",
         },
       ];
+    }
 
     case "REST": {
-      const targeting = action.target
-        ? convertTargetQueryToTargeting(action.target)
-        : undefined;
+      const targeting = action.target ? convertTargetQueryToTargeting(action.target) : undefined;
       // REST action requires a target, provide default if none specified
       const finalTargeting = targeting ?? {
-        count: 1,
-        validTargets: [],
         chooser: "controller",
+        count: 1,
         timing: "on_resolution",
+        validTargets: [],
       };
       return [
         {
-          type: "REST",
           target: finalTargeting,
+          type: "REST",
         },
       ];
     }
 
     case "STAND": {
-      const targeting = action.target
-        ? convertTargetQueryToTargeting(action.target)
-        : undefined;
+      const targeting = action.target ? convertTargetQueryToTargeting(action.target) : undefined;
       // ACTIVATE action requires a target, provide default if none specified
       const finalTargeting = targeting ?? {
-        count: 1,
-        validTargets: [],
         chooser: "controller",
+        count: 1,
         timing: "on_resolution",
+        validTargets: [],
       };
       return [
         {
-          type: "ACTIVATE",
           target: finalTargeting,
+          type: "ACTIVATE",
         },
       ];
     }
 
-    case "DEPLOY":
+    case "DEPLOY": {
       // Deploy becomes a MOVE_CARD action
       return [
         {
-          type: "MOVE_CARD",
           from: "hand",
+          target: {
+            count: 1,
+            validTargets: [],
+            chooser: "controller",
+            timing: "on_resolution",
+          },
           to: "battleArea",
-          target: {
-            count: 1,
-            validTargets: [],
-            chooser: "controller",
-            timing: "on_resolution",
-          },
-        },
-      ];
-
-    case "ADD_TO_HAND":
-      return [
-        {
           type: "MOVE_CARD",
+        },
+      ];
+    }
+
+    case "ADD_TO_HAND": {
+      return [
+        {
           from: "battleArea",
-          to: "hand",
           target: {
             count: 1,
             validTargets: [],
             chooser: "controller",
             timing: "on_resolution",
           },
+          to: "hand",
+          type: "MOVE_CARD",
         },
       ];
+    }
 
-    case "DISCARD":
+    case "DISCARD": {
       return [
         {
-          type: "DISCARD",
           count: action.value,
           player: "opponent",
+          type: "DISCARD",
         },
       ];
+    }
 
-    case "SEARCH":
+    case "SEARCH": {
       return [
         {
-          type: "SEARCH",
-          destination: action.destination as any,
           count: action.count,
+          destination: action.destination as any,
           filter: {},
           reveal: true,
           shuffleAfter: true,
+          type: "SEARCH",
         },
       ];
+    }
 
-    case "HEAL":
+    case "HEAL": {
       // Heal is not directly in EffectAction - would be handled as DAMAGE with negative amount
       return [];
+    }
 
-    case "DAMAGE":
+    case "DAMAGE": {
       return [
         {
-          type: "DAMAGE",
           amount: action.value,
-          target: "unit",
           damageType: "effect",
+          target: "unit",
+          type: "DAMAGE",
         },
       ];
+    }
 
-    case "MODIFY_STATS":
+    case "MODIFY_STATS": {
       return [
         {
-          type: "MODIFY_STATS",
-          target: {
-            count: 1,
-            validTargets: [],
-            chooser: "controller",
-            timing: "on_resolution",
-          },
           apModifier: action.attribute === "AP" ? action.value : undefined,
-          hpModifier: action.attribute === "HP" ? action.value : undefined,
           duration:
             action.duration === "PERMANENT"
               ? "permanent"
               : action.duration === "END_OF_COMBAT"
                 ? "end_of_combat"
                 : "this_turn",
+          hpModifier: action.attribute === "HP" ? action.value : undefined,
+          target: {
+            count: 1,
+            validTargets: [],
+            chooser: "controller",
+            timing: "on_resolution",
+          },
+          type: "MODIFY_STATS",
         },
       ];
+    }
 
-    case "GAIN_KEYWORDS":
+    case "GAIN_KEYWORDS": {
       // Keywords would need to be mapped to KeywordEffect type
       return [];
+    }
 
-    case "CUSTOM":
+    case "CUSTOM": {
       // Custom actions cannot be converted
       return [];
+    }
 
-    default:
+    default: {
       return [];
+    }
   }
 }
 
@@ -372,20 +401,20 @@ function convertTargetQueryToTargeting(target: any): TargetingSpec | undefined {
   // This is a placeholder for proper conversion
   if (typeof target === "object" && target !== null) {
     return {
-      count: 1,
-      validTargets: [],
       chooser: "controller",
+      count: 1,
       timing: "on_resolution",
+      validTargets: [],
     };
   }
 
   // Array of targets
   if (Array.isArray(target)) {
     return {
-      count: target.length,
-      validTargets: [],
       chooser: "controller",
+      count: target.length,
       timing: "on_resolution",
+      validTargets: [],
     };
   }
 

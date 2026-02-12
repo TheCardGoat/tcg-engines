@@ -4,9 +4,8 @@ export const mrSmeeEfficientCaptain: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "ready",
           target: {
             selector: "chosen",
             count: 1,
@@ -14,19 +13,20 @@ export const mrSmeeEfficientCaptain: CharacterCard = {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "ready",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "1co-1",
       name: "PIPE UP THE CREW",
       text: "PIPE UP THE CREW Whenever you play an action that isn't a song, you may ready chosen Pirate character.",
       trigger: {
         event: "play",
-        timing: "whenever",
         on: {
-          controller: "you",
           cardType: "action",
+          controller: "you",
         },
+        timing: "whenever",
       },
       type: "triggered",
     },

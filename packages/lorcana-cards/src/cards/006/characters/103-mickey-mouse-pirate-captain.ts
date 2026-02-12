@@ -13,11 +13,11 @@ export const mickeyMousePirateCaptain: CharacterCard = {
     },
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
-        modifier: 2,
-        target: "SELF",
         duration: "this-turn",
+        modifier: 2,
+        stat: "strength",
+        target: "SELF",
+        type: "modify-stat",
       },
       id: "adf-2",
       text: 'MARINER’S MIGHT Whenever this character quests, chosen Pirate character gets +2 {S} and gains "This character takes no damage from challenges" this turn.',

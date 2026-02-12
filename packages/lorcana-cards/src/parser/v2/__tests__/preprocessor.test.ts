@@ -6,11 +6,7 @@
  */
 
 import { describe, expect, it } from "bun:test";
-import {
-  extractNamedAbilityPrefix,
-  normalizeText,
-  resolveSymbols,
-} from "../preprocessor";
+import { extractNamedAbilityPrefix, normalizeText, resolveSymbols } from "../preprocessor";
 
 describe("normalizeText", () => {
   it("should trim whitespace", () => {
@@ -96,9 +92,7 @@ describe("extractNamedAbilityPrefix", () => {
   });
 
   it("should return undefined if no ALL CAPS prefix", () => {
-    const result = extractNamedAbilityPrefix(
-      "Whenever this character quests, gain 1 lore.",
-    );
+    const result = extractNamedAbilityPrefix("Whenever this character quests, gain 1 lore.");
     expect(result).toBeUndefined();
   });
 
@@ -119,9 +113,7 @@ describe("extractNamedAbilityPrefix", () => {
 
   describe("edge cases: names with numbers", () => {
     it("should handle names with {d},{d} prefix", () => {
-      const result = extractNamedAbilityPrefix(
-        "{d},{d} MEDICAL PROCEDURES {E} - Choose one:",
-      );
+      const result = extractNamedAbilityPrefix("{d},{d} MEDICAL PROCEDURES {E} - Choose one:");
       expect(result).toEqual({
         name: "MEDICAL PROCEDURES",
         remainingText: "{E} - Choose one:",
@@ -129,9 +121,7 @@ describe("extractNamedAbilityPrefix", () => {
     });
 
     it("should handle names with numeric prefix", () => {
-      const result = extractNamedAbilityPrefix(
-        "1,2 MEDICAL PROCEDURES {E} - Choose one:",
-      );
+      const result = extractNamedAbilityPrefix("1,2 MEDICAL PROCEDURES {E} - Choose one:");
       expect(result).toEqual({
         name: "MEDICAL PROCEDURES",
         remainingText: "{E} - Choose one:",
@@ -161,9 +151,7 @@ describe("extractNamedAbilityPrefix", () => {
     });
 
     it("should handle names with apostrophes", () => {
-      const result = extractNamedAbilityPrefix(
-        "DON'T BE AFRAID Your Puppy characters gain Ward.",
-      );
+      const result = extractNamedAbilityPrefix("DON'T BE AFRAID Your Puppy characters gain Ward.");
       expect(result).toEqual({
         name: "DON'T BE AFRAID",
         remainingText: "Your Puppy characters gain Ward.",
@@ -223,9 +211,7 @@ describe("extractNamedAbilityPrefix", () => {
 
   describe("edge cases: names followed by different text patterns", () => {
     it("should handle name followed by This", () => {
-      const result = extractNamedAbilityPrefix(
-        "HAPPY FACE This item enters play exerted.",
-      );
+      const result = extractNamedAbilityPrefix("HAPPY FACE This item enters play exerted.");
       expect(result).toEqual({
         name: "HAPPY FACE",
         remainingText: "This item enters play exerted.",
@@ -233,9 +219,7 @@ describe("extractNamedAbilityPrefix", () => {
     });
 
     it("should handle name followed by Your", () => {
-      const result = extractNamedAbilityPrefix(
-        "PROUD TO SERVE Your Queen characters gain Ward.",
-      );
+      const result = extractNamedAbilityPrefix("PROUD TO SERVE Your Queen characters gain Ward.");
       expect(result).toEqual({
         name: "PROUD TO SERVE",
         remainingText: "Your Queen characters gain Ward.",
@@ -243,9 +227,7 @@ describe("extractNamedAbilityPrefix", () => {
     });
 
     it("should handle name followed by Characters", () => {
-      const result = extractNamedAbilityPrefix(
-        "MAGICAL POWER Characters get +{d} {L} while here.",
-      );
+      const result = extractNamedAbilityPrefix("MAGICAL POWER Characters get +{d} {L} while here.");
       expect(result).toEqual({
         name: "MAGICAL POWER",
         remainingText: "Characters get +{d} {L} while here.",
@@ -253,9 +235,7 @@ describe("extractNamedAbilityPrefix", () => {
     });
 
     it("should handle name followed by Opponents", () => {
-      const result = extractNamedAbilityPrefix(
-        "GUARDIAN Opponents can't choose your items.",
-      );
+      const result = extractNamedAbilityPrefix("GUARDIAN Opponents can't choose your items.");
       expect(result).toEqual({
         name: "GUARDIAN",
         remainingText: "Opponents can't choose your items.",
@@ -263,9 +243,7 @@ describe("extractNamedAbilityPrefix", () => {
     });
 
     it("should handle name followed by Opposing", () => {
-      const result = extractNamedAbilityPrefix(
-        "PLAYFULNESS Opposing items enter play exerted.",
-      );
+      const result = extractNamedAbilityPrefix("PLAYFULNESS Opposing items enter play exerted.");
       expect(result).toEqual({
         name: "PLAYFULNESS",
         remainingText: "Opposing items enter play exerted.",
@@ -273,9 +251,7 @@ describe("extractNamedAbilityPrefix", () => {
     });
 
     it("should handle name followed by Damage", () => {
-      const result = extractNamedAbilityPrefix(
-        "TRAPPED! Damage counters can't be removed.",
-      );
+      const result = extractNamedAbilityPrefix("TRAPPED! Damage counters can't be removed.");
       expect(result).toEqual({
         name: "TRAPPED!",
         remainingText: "Damage counters can't be removed.",
@@ -283,9 +259,7 @@ describe("extractNamedAbilityPrefix", () => {
     });
 
     it("should handle name followed by Skip", () => {
-      const result = extractNamedAbilityPrefix(
-        "NO MORE BOOKS Skip your turn's Draw step.",
-      );
+      const result = extractNamedAbilityPrefix("NO MORE BOOKS Skip your turn's Draw step.");
       expect(result).toEqual({
         name: "NO MORE BOOKS",
         remainingText: "Skip your turn's Draw step.",
@@ -325,8 +299,7 @@ describe("resolveSymbols", () => {
   });
 
   it("should preserve all symbol types", () => {
-    const text =
-      "{E}, 2 {I} - Deal {d} damage and gain {d} lore. Gets +{d} {S}.";
+    const text = "{E}, 2 {I} - Deal {d} damage and gain {d} lore. Gets +{d} {S}.";
     expect(resolveSymbols(text)).toBe(text);
   });
 

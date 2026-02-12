@@ -4,10 +4,10 @@ export const theGreatIlluminaryRadiantBallroom: LocationCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "lore",
         modifier: 1,
+        stat: "lore",
         target: "CHARACTERS_HERE",
+        type: "modify-stat",
       },
       id: "bsq-1",
       text: "WARM WELCOME Characters with Support get +1 {L} and +2 {W} while here.",

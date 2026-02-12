@@ -4,13 +4,13 @@ export const unconventionalTool: ItemCard = {
   abilities: [
     {
       effect: {
-        type: "play-card",
         from: "hand",
+        type: "play-card",
       },
       id: "qyw-1",
       name: "FIXED IN NO TIME",
       text: "FIXED IN NO TIME When this item is banished, you pay 2 {I} less for the next item you play this turn.",
-      trigger: { event: "play", timing: "when", on: "SELF" },
+      trigger: { event: "play", on: "SELF", timing: "when" },
       type: "triggered",
     },
   ],

@@ -2,42 +2,42 @@ import { describe, expect, it } from "bun:test";
 import { createCardRegistry } from "./card-registry-impl";
 
 describe("CardRegistry Implementation", () => {
-  type TestCardDef = {
+  interface TestCardDef {
     id: string;
     name: string;
     cost: number;
     type: "monster" | "spell" | "trap";
     attack?: number;
     defense?: number;
-  };
+  }
 
   const testCards: Record<string, TestCardDef> = {
     "monster-1": {
+      attack: 3000,
+      cost: 8,
+      defense: 2500,
       id: "monster-1",
       name: "Blue Eyes",
-      cost: 8,
       type: "monster",
-      attack: 3000,
-      defense: 2500,
     },
     "monster-2": {
+      attack: 2500,
+      cost: 7,
+      defense: 2100,
       id: "monster-2",
       name: "Dark Magician",
-      cost: 7,
       type: "monster",
-      attack: 2500,
-      defense: 2100,
     },
     "spell-1": {
+      cost: 1,
       id: "spell-1",
       name: "Lightning Bolt",
-      cost: 1,
       type: "spell",
     },
     "trap-1": {
+      cost: 3,
       id: "trap-1",
       name: "Mirror Force",
-      cost: 3,
       type: "trap",
     },
   };
@@ -191,9 +191,7 @@ describe("CardRegistry Implementation", () => {
     it("should handle predicates on optional properties", () => {
       const registry = createCardRegistry(testCards);
 
-      const withAttack = registry.queryCards(
-        (card) => card.attack !== undefined,
-      );
+      const withAttack = registry.queryCards((card) => card.attack !== undefined);
 
       expect(withAttack).toHaveLength(2);
       expect(withAttack.every((c) => c.type === "monster")).toBe(true);

@@ -4,10 +4,10 @@ export const grumpyBadtempered: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: 1,
+        stat: "strength",
         target: "CHOSEN_CHARACTER",
+        type: "modify-stat",
       },
       id: "11e-1",
       name: "THERE'S TROUBLE A-BREWIN' Your other Seven Dwarfs",

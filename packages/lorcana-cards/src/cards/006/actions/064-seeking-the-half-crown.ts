@@ -4,15 +4,15 @@ export const seekingTheHalfCrown: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "for-each",
         counter: {
-          type: "characters",
           controller: "you",
+          type: "characters",
         },
         effect: {
-          type: "play-card",
           from: "hand",
+          type: "play-card",
         },
+        type: "for-each",
       },
       id: "4qr-1",
       text: "For each Sorcerer character you have in play, you pay 1 {I} less to play this action.",
@@ -20,9 +20,9 @@ export const seekingTheHalfCrown: ActionCard = {
     },
     {
       effect: {
-        type: "draw",
         amount: 2,
         target: "CONTROLLER",
+        type: "draw",
       },
       id: "4qr-2",
       text: "Draw 2 cards.",

@@ -19,9 +19,9 @@ describe("Tribal: Recruit", () => {
         expect.objectContaining({
           effect: expect.objectContaining({
             token: expect.objectContaining({
+              might: 1,
               name: "Recruit",
               type: "unit",
-              might: 1,
             }),
             type: "create-token",
           }),

@@ -8,6 +8,7 @@ import { createCardId, createPlayerId } from "@tcg/core";
 import type { BaseEffectCardDefinition } from "@tcg/gundam-types/effects";
 import type { GundamGameState } from "../../types";
 import {
+  type TargetingContext,
   enumerateValidTargets,
   filterCardsByZone,
   getAllCardsInGame,
@@ -28,7 +29,6 @@ import {
   matchesLevelFilter,
   matchesPropertyFilter,
   matchesStateFilter,
-  type TargetingContext,
   validateTargets,
 } from "../targeting-system";
 
@@ -64,16 +64,11 @@ function createMockGameState(
     transformedZones[zoneType] = {};
     for (const [playerId, zoneData] of Object.entries(playerZones)) {
       transformedZones[zoneType][playerId] = {
+        cards: zoneData.cards,
         config: {
-          id: `${zoneType}-${playerId}`,
-          name: zoneType,
-          visibility: "public",
-          ordered: false,
-          owner: playerId,
           faceDown:
-            zoneType === "deck" ||
-            zoneType === "resourceDeck" ||
-            zoneType === "shieldSection",
+            zoneType === "deck" || zoneType === "resourceDeck" || zoneType === "shieldSection",
+          id: `${zoneType}-${playerId}`,
           maxSize:
             zoneType === "battleArea"
               ? 6
@@ -84,31 +79,34 @@ function createMockGameState(
                   : zoneType === "resourceArea"
                     ? 15
                     : undefined,
+          name: zoneType,
+          ordered: false,
+          owner: playerId,
+          visibility: "public",
         },
-        cards: zoneData.cards,
       };
     }
   }
 
   return {
-    players: players as any,
     currentPlayer: players[0] as any,
-    turn: 1,
-    phase: "main",
-    zones: transformedZones as any,
     gundam: {
       activeResources: {},
-      cardPositions: cardPositions as any,
       attackedThisTurn: [],
-      hasPlayedResourceThisTurn: {},
+      cardDamage: cardDamage as any,
+      cardPositions: cardPositions as any,
       effectStack: {
         stack: [],
         nextInstanceId: 0,
       },
-      temporaryModifiers: temporaryModifiers as any,
-      cardDamage: cardDamage as any,
+      hasPlayedResourceThisTurn: {},
       revealedCards: [],
+      temporaryModifiers: temporaryModifiers as any,
     },
+    phase: "main",
+    players: players as any,
+    turn: 1,
+    zones: transformedZones as any,
   } as GundamGameState;
 }
 
@@ -117,13 +115,13 @@ function createMockCardDefinition(
   overrides: Partial<BaseEffectCardDefinition> = {},
 ): BaseEffectCardDefinition {
   return {
-    id: "card-001" as any,
-    name: "Test Unit",
     cardType: "UNIT",
-    lv: 2,
     cost: 3,
-    text: "Test card",
     effects: [],
+    id: "card-001" as any,
+    lv: 2,
+    name: "Test Unit",
+    text: "Test card",
     ...overrides,
   };
 }
@@ -135,9 +133,9 @@ function createContext(
   cardDefinitions?: Record<string, BaseEffectCardDefinition>,
 ): TargetingContext {
   return {
+    cardDefinitions: cardDefinitions as any,
     controllerId: controllerId as any,
     sourceCardId: sourceCardId as any,
-    cardDefinitions: cardDefinitions as any,
   };
 }
 
@@ -168,7 +166,7 @@ describe("matchesFilter", () => {
       const result = matchesFilter(
         state,
         UNIT_1,
-        { type: "card", zone: "battleArea", owner: "self" },
+        { owner: "self", type: "card", zone: "battleArea" },
         context,
       );
 
@@ -192,7 +190,7 @@ describe("matchesFilter", () => {
       const result = matchesFilter(
         state,
         UNIT_1,
-        { type: "card", zone: "battleArea", owner: "self" },
+        { owner: "self", type: "card", zone: "battleArea" },
         context,
       );
 
@@ -218,7 +216,7 @@ describe("matchesFilter", () => {
       const result = matchesFilter(
         state,
         UNIT_1,
-        { type: "card", owner: "self", state: { rested: true } },
+        { owner: "self", state: { rested: true }, type: "card" },
         context,
       );
 
@@ -242,7 +240,7 @@ describe("matchesFilter", () => {
       const result = matchesFilter(
         state,
         UNIT_1,
-        { type: "card", owner: "self", state: { rested: false } },
+        { owner: "self", state: { rested: false }, type: "card" },
         context,
       );
 
@@ -266,7 +264,7 @@ describe("matchesFilter", () => {
       const result = matchesFilter(
         state,
         UNIT_1,
-        { type: "card", owner: "self", state: { rested: false } },
+        { owner: "self", state: { rested: false }, type: "card" },
         context,
       );
 
@@ -292,7 +290,7 @@ describe("matchesFilter", () => {
       const result = matchesFilter(
         state,
         UNIT_1,
-        { type: "unit", owner: "self", properties: { cardType: "UNIT" } },
+        { owner: "self", properties: { cardType: "UNIT" }, type: "unit" },
         context,
       );
 
@@ -316,7 +314,7 @@ describe("matchesFilter", () => {
       const result = matchesFilter(
         state,
         BASE_1,
-        { type: "unit", owner: "self", properties: { cardType: "UNIT" } },
+        { owner: "self", properties: { cardType: "UNIT" }, type: "unit" },
         context,
       );
 
@@ -343,7 +341,7 @@ describe("matchesFilter", () => {
       const result = matchesFilter(
         state,
         UNIT_1,
-        { type: "card", owner: "self", properties: { color: "Red" } },
+        { owner: "self", properties: { color: "Red" }, type: "card" },
         context,
       );
 
@@ -370,7 +368,7 @@ describe("matchesFilter", () => {
       const result = matchesFilter(
         state,
         UNIT_1,
-        { type: "card", owner: "self", properties: { trait: ["Zeon"] } },
+        { owner: "self", properties: { trait: ["Zeon"] }, type: "card" },
         context,
       );
 
@@ -398,9 +396,9 @@ describe("matchesFilter", () => {
         state,
         UNIT_1,
         {
-          type: "card",
           owner: "self",
           properties: { trait: ["Zeon", "NewType"] },
+          type: "card",
         },
         context,
       );
@@ -440,9 +438,7 @@ describe("matchesFilter", () => {
         [UNIT_1]: createMockCardDefinition({ lv: 2 }),
       };
 
-      expect(matchesLevelFilter(cardDefs[UNIT_1], { min: 1, max: 3 })).toBe(
-        true,
-      );
+      expect(matchesLevelFilter(cardDefs[UNIT_1], { max: 3, min: 1 })).toBe(true);
       expect(matchesLevelFilter(cardDefs[UNIT_1], { exactly: 2 })).toBe(true);
       expect(matchesLevelFilter(cardDefs[UNIT_1], { min: 3 })).toBe(false);
     });
@@ -459,12 +455,7 @@ describe("matchesFilter", () => {
 
       const context = createContext(PLAYER_1, UNIT_1);
 
-      const result = matchesFilter(
-        state,
-        UNIT_1,
-        { type: "card", owner: "self" },
-        context,
-      );
+      const result = matchesFilter(state, UNIT_1, { owner: "self", type: "card" }, context);
 
       expect(result).toBe(true);
     });
@@ -479,12 +470,7 @@ describe("matchesFilter", () => {
 
       const context = createContext(PLAYER_1, UNIT_1);
 
-      const result = matchesFilter(
-        state,
-        UNIT_2,
-        { type: "card", owner: "self" },
-        context,
-      );
+      const result = matchesFilter(state, UNIT_2, { owner: "self", type: "card" }, context);
 
       expect(result).toBe(false);
     });
@@ -499,12 +485,7 @@ describe("matchesFilter", () => {
 
       const context = createContext(PLAYER_1, UNIT_1);
 
-      const result = matchesFilter(
-        state,
-        UNIT_2,
-        { type: "card", owner: "opponent" },
-        context,
-      );
+      const result = matchesFilter(state, UNIT_2, { owner: "opponent", type: "card" }, context);
 
       expect(result).toBe(true);
     });
@@ -519,12 +500,8 @@ describe("matchesFilter", () => {
 
       const context = createContext(PLAYER_1, UNIT_1);
 
-      expect(
-        matchesFilter(state, UNIT_1, { type: "card", owner: "any" }, context),
-      ).toBe(true);
-      expect(
-        matchesFilter(state, UNIT_2, { type: "card", owner: "any" }, context),
-      ).toBe(true);
+      expect(matchesFilter(state, UNIT_1, { owner: "any", type: "card" }, context)).toBe(true);
+      expect(matchesFilter(state, UNIT_2, { owner: "any", type: "card" }, context)).toBe(true);
     });
   });
 
@@ -543,8 +520,8 @@ describe("matchesFilter", () => {
 
       const cardDefs: Record<string, BaseEffectCardDefinition> = {
         [UNIT_1]: createMockCardDefinition({
-          cost: 2,
           cardType: "UNIT",
+          cost: 2,
         }),
       };
 
@@ -555,11 +532,11 @@ describe("matchesFilter", () => {
         state,
         UNIT_1,
         {
+          owner: "self",
+          properties: { cost: { max: 3 } },
+          state: { rested: true },
           type: "unit",
           zone: "battleArea",
-          owner: "self",
-          state: { rested: true },
-          properties: { cost: { max: 3 } },
         },
         context,
       );
@@ -571,11 +548,11 @@ describe("matchesFilter", () => {
         state,
         UNIT_1,
         {
+          owner: "self",
+          properties: { cost: { min: 3 } },
+          state: { rested: true },
           type: "unit",
           zone: "battleArea",
-          owner: "self",
-          state: { rested: true },
-          properties: { cost: { min: 3 } },
         },
         context,
       );
@@ -596,19 +573,15 @@ describe("enumerateValidTargets", () => {
       });
 
       const targetingSpec = {
-        count: 1,
-        validTargets: [{ type: "card", zone: "battleArea", owner: "self" }],
         chooser: "controller" as const,
+        count: 1,
         timing: "on_resolution" as const,
+        validTargets: [{ owner: "self", type: "card", zone: "battleArea" }],
       };
 
       const context = createContext(PLAYER_1, UNIT_1);
 
-      const result = enumerateValidTargets(
-        state,
-        targetingSpec as any,
-        context,
-      );
+      const result = enumerateValidTargets(state, targetingSpec as any, context);
 
       expect(result).toHaveLength(2);
       expect(result).toContain(UNIT_1);
@@ -631,22 +604,18 @@ describe("enumerateValidTargets", () => {
       });
 
       const targetingSpec = {
-        count: 1,
-        validTargets: [
-          { type: "card", zone: "battleArea", owner: "self" },
-          { type: "card", zone: "hand", owner: "opponent" },
-        ],
         chooser: "controller" as const,
+        count: 1,
         timing: "on_resolution" as const,
+        validTargets: [
+          { owner: "self", type: "card", zone: "battleArea" },
+          { owner: "opponent", type: "card", zone: "hand" },
+        ],
       };
 
       const context = createContext(PLAYER_1, UNIT_1);
 
-      const result = enumerateValidTargets(
-        state,
-        targetingSpec as any,
-        context,
-      );
+      const result = enumerateValidTargets(state, targetingSpec as any, context);
 
       expect(result).toHaveLength(2);
       expect(result).toContain(UNIT_1);
@@ -666,27 +635,23 @@ describe("enumerateValidTargets", () => {
       );
 
       const targetingSpec = {
+        chooser: "controller" as const,
         count: 1,
+        timing: "on_resolution" as const,
         validTargets: [
-          { type: "card", zone: "battleArea", owner: "self" },
+          { owner: "self", type: "card", zone: "battleArea" },
           {
-            type: "card",
-            zone: "battleArea",
             owner: "self",
             state: { rested: true },
+            type: "card",
+            zone: "battleArea",
           },
         ],
-        chooser: "controller" as const,
-        timing: "on_resolution" as const,
       };
 
       const context = createContext(PLAYER_1, UNIT_1);
 
-      const result = enumerateValidTargets(
-        state,
-        targetingSpec as any,
-        context,
-      );
+      const result = enumerateValidTargets(state, targetingSpec as any, context);
 
       expect(result).toHaveLength(1);
       expect(result[0]).toBe(UNIT_1);
@@ -703,19 +668,15 @@ describe("enumerateValidTargets", () => {
       });
 
       const targetingSpec = {
-        count: 1,
-        validTargets: [{ type: "card", zone: "battleArea", owner: "self" }],
         chooser: "controller" as const,
+        count: 1,
         timing: "on_resolution" as const,
+        validTargets: [{ owner: "self", type: "card", zone: "battleArea" }],
       };
 
       const context = createContext(PLAYER_1, UNIT_1);
 
-      const result = enumerateValidTargets(
-        state,
-        targetingSpec as any,
-        context,
-      );
+      const result = enumerateValidTargets(state, targetingSpec as any, context);
 
       expect(result).toHaveLength(0);
     });
@@ -733,23 +694,19 @@ describe("validateTargets", () => {
       });
 
       const targetingSpec = {
-        count: 2,
-        validTargets: [{ type: "card", zone: "battleArea", owner: "self" }],
         chooser: "controller" as const,
+        count: 2,
         timing: "on_resolution" as const,
+        validTargets: [{ owner: "self", type: "card", zone: "battleArea" }],
       };
 
       const context = createContext(PLAYER_1, UNIT_1);
 
       // Correct count
-      expect(
-        validateTargets(state, targetingSpec as any, [UNIT_1, UNIT_2], context),
-      ).toBe(true);
+      expect(validateTargets(state, targetingSpec as any, [UNIT_1, UNIT_2], context)).toBe(true);
 
       // Wrong count
-      expect(
-        validateTargets(state, targetingSpec as any, [UNIT_1], context),
-      ).toBe(false);
+      expect(validateTargets(state, targetingSpec as any, [UNIT_1], context)).toBe(false);
     });
 
     it("should validate count range", () => {
@@ -761,47 +718,31 @@ describe("validateTargets", () => {
       });
 
       const targetingSpec = {
-        count: { min: 1, max: 3 },
-        validTargets: [{ type: "card", zone: "battleArea", owner: "self" }],
         chooser: "controller" as const,
+        count: { max: 3, min: 1 },
         timing: "on_resolution" as const,
+        validTargets: [{ owner: "self", type: "card", zone: "battleArea" }],
       };
 
       const context = createContext(PLAYER_1, UNIT_1);
 
       // Valid: min count
-      expect(
-        validateTargets(state, targetingSpec as any, [UNIT_1], context),
-      ).toBe(true);
+      expect(validateTargets(state, targetingSpec as any, [UNIT_1], context)).toBe(true);
 
       // Valid: max count
-      expect(
-        validateTargets(
-          state,
-          targetingSpec as any,
-          [UNIT_1, UNIT_2, UNIT_3],
-          context,
-        ),
-      ).toBe(true);
+      expect(validateTargets(state, targetingSpec as any, [UNIT_1, UNIT_2, UNIT_3], context)).toBe(
+        true,
+      );
 
       // Valid: between min and max
-      expect(
-        validateTargets(state, targetingSpec as any, [UNIT_1, UNIT_2], context),
-      ).toBe(true);
+      expect(validateTargets(state, targetingSpec as any, [UNIT_1, UNIT_2], context)).toBe(true);
 
       // Invalid: below min
-      expect(validateTargets(state, targetingSpec as any, [], context)).toBe(
-        false,
-      );
+      expect(validateTargets(state, targetingSpec as any, [], context)).toBe(false);
 
       // Invalid: above max
       expect(
-        validateTargets(
-          state,
-          targetingSpec as any,
-          [UNIT_1, UNIT_2, UNIT_3, "invalid"],
-          context,
-        ),
+        validateTargets(state, targetingSpec as any, [UNIT_1, UNIT_2, UNIT_3, "invalid"], context),
       ).toBe(false);
     });
   });
@@ -816,23 +757,19 @@ describe("validateTargets", () => {
       });
 
       const targetingSpec = {
-        count: 1,
-        validTargets: [{ type: "card", zone: "battleArea", owner: "self" }],
         chooser: "controller" as const,
+        count: 1,
         timing: "on_resolution" as const,
+        validTargets: [{ owner: "self", type: "card", zone: "battleArea" }],
       };
 
       const context = createContext(PLAYER_1, UNIT_1);
 
       // Valid target
-      expect(
-        validateTargets(state, targetingSpec as any, [UNIT_1], context),
-      ).toBe(true);
+      expect(validateTargets(state, targetingSpec as any, [UNIT_1], context)).toBe(true);
 
       // Invalid target (opponent's card)
-      expect(
-        validateTargets(state, targetingSpec as any, [UNIT_2], context),
-      ).toBe(false);
+      expect(validateTargets(state, targetingSpec as any, [UNIT_2], context)).toBe(false);
     });
   });
 
@@ -846,18 +783,16 @@ describe("validateTargets", () => {
       });
 
       const targetingSpec = {
-        count: 2,
-        validTargets: [{ type: "card", zone: "battleArea", owner: "self" }],
         chooser: "controller" as const,
+        count: 2,
         timing: "on_resolution" as const,
+        validTargets: [{ owner: "self", type: "card", zone: "battleArea" }],
       };
 
       const context = createContext(PLAYER_1, UNIT_1);
 
       // Duplicate targets
-      expect(
-        validateTargets(state, targetingSpec as any, [UNIT_1, UNIT_1], context),
-      ).toBe(false);
+      expect(validateTargets(state, targetingSpec as any, [UNIT_1, UNIT_1], context)).toBe(false);
     });
   });
 });
@@ -907,11 +842,7 @@ describe("zone helpers", () => {
         },
       });
 
-      const result = filterCardsByZone(
-        state,
-        [UNIT_1, UNIT_2, UNIT_3],
-        "battleArea",
-      );
+      const result = filterCardsByZone(state, [UNIT_1, UNIT_2, UNIT_3], "battleArea");
 
       expect(result).toEqual([UNIT_1]);
     });
@@ -949,21 +880,13 @@ describe("zone helpers", () => {
 describe("state helpers", () => {
   describe("isCardRested", () => {
     it("should return true for rested cards", () => {
-      const state = createMockGameState(
-        [PLAYER_1, PLAYER_2],
-        {},
-        { [UNIT_1]: "rested" },
-      );
+      const state = createMockGameState([PLAYER_1, PLAYER_2], {}, { [UNIT_1]: "rested" });
 
       expect(isCardRested(state, UNIT_1)).toBe(true);
     });
 
     it("should return false for active cards", () => {
-      const state = createMockGameState(
-        [PLAYER_1, PLAYER_2],
-        {},
-        { [UNIT_1]: "active" },
-      );
+      const state = createMockGameState([PLAYER_1, PLAYER_2], {}, { [UNIT_1]: "active" });
 
       expect(isCardRested(state, UNIT_1)).toBe(false);
     });
@@ -971,11 +894,7 @@ describe("state helpers", () => {
 
   describe("matchesStateFilter", () => {
     it("should match rested state", () => {
-      const state = createMockGameState(
-        [PLAYER_1, PLAYER_2],
-        {},
-        { [UNIT_1]: "rested" },
-      );
+      const state = createMockGameState([PLAYER_1, PLAYER_2], {}, { [UNIT_1]: "rested" });
 
       expect(matchesStateFilter(state, UNIT_1, { rested: true })).toBe(true);
       expect(matchesStateFilter(state, UNIT_1, { rested: false })).toBe(false);
@@ -989,9 +908,9 @@ describe("state helpers", () => {
         {
           [UNIT_1]: [
             {
-              id: "mod-1" as const,
-              duration: "permanent" as const,
               apModifier: -1,
+              duration: "permanent" as const,
+              id: "mod-1" as const,
               sourceId: UNIT_1,
             },
           ],
@@ -1001,8 +920,8 @@ describe("state helpers", () => {
 
       expect(
         matchesStateFilter(state, UNIT_1, {
-          rested: true,
           damaged: true,
+          rested: true,
         }),
       ).toBe(true);
     });
@@ -1124,13 +1043,9 @@ describe("matchesCardFilter", () => {
       [UNIT_1]: createMockCardDefinition({ cardType: "UNIT" }),
     };
 
-    expect(
-      matchesCardFilter(state, UNIT_1, { cardType: "UNIT" }, cardDefs),
-    ).toBe(true);
+    expect(matchesCardFilter(state, UNIT_1, { cardType: "UNIT" }, cardDefs)).toBe(true);
 
-    expect(
-      matchesCardFilter(state, UNIT_1, { cardType: "BASE" }, cardDefs),
-    ).toBe(false);
+    expect(matchesCardFilter(state, UNIT_1, { cardType: "BASE" }, cardDefs)).toBe(false);
   });
 
   it("should match by name", () => {
@@ -1139,13 +1054,9 @@ describe("matchesCardFilter", () => {
       [UNIT_1]: createMockCardDefinition({ name: "RX-78-2 Gundam" }),
     };
 
-    expect(
-      matchesCardFilter(state, UNIT_1, { name: "RX-78-2 Gundam" }, cardDefs),
-    ).toBe(true);
+    expect(matchesCardFilter(state, UNIT_1, { name: "RX-78-2 Gundam" }, cardDefs)).toBe(true);
 
-    expect(
-      matchesCardFilter(state, UNIT_1, { name: "Zaku II" }, cardDefs),
-    ).toBe(false);
+    expect(matchesCardFilter(state, UNIT_1, { name: "Zaku II" }, cardDefs)).toBe(false);
   });
 
   it("should match by keyword", () => {
@@ -1157,12 +1068,8 @@ describe("matchesCardFilter", () => {
       } as any,
     };
 
-    expect(
-      matchesCardFilter(state, UNIT_1, { hasKeyword: "Repair" }, cardDefs),
-    ).toBe(true);
+    expect(matchesCardFilter(state, UNIT_1, { hasKeyword: "Repair" }, cardDefs)).toBe(true);
 
-    expect(
-      matchesCardFilter(state, UNIT_1, { hasKeyword: "Mobile" }, cardDefs),
-    ).toBe(false);
+    expect(matchesCardFilter(state, UNIT_1, { hasKeyword: "Mobile" }, cardDefs)).toBe(false);
   });
 });

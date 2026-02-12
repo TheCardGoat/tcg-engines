@@ -188,7 +188,7 @@ export interface GrantKeywordEffect {
  */
 export interface GrantKeywordsEffect {
   type: "grant-keywords";
-  keywords: Array<{ keyword: string; value?: number }>;
+  keywords: { keyword: string; value?: number }[];
   target: CharacterTarget;
   duration?: EffectDuration;
 }
@@ -228,7 +228,7 @@ export interface PutOnDeckEffect {
   type: "put-on-deck";
   position?: "top" | "bottom" | "choice";
   order?: "any" | "random";
-  options?: Array<{ position: "top" | "bottom" } | string>;
+  options?: ({ position: "top" | "bottom" } | string)[];
   target?: string;
 }
 

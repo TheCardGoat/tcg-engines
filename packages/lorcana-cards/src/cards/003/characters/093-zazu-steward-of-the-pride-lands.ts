@@ -4,10 +4,10 @@ export const zazuStewardOfThePrideLands: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "lore",
         modifier: 1,
+        stat: "lore",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "18g-1",
       text: "IT'S TIME TO GO! While this character is at a location, he gets +1 {L}.",

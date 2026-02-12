@@ -13,21 +13,21 @@ export const chipNDaleRecoveryRangers: CharacterCard = {
     },
     {
       effect: {
-        type: "optional",
-        effect: {
-          type: "return-from-discard",
-          target: "CONTROLLER",
-          cardType: "character",
-        },
         chooser: "CONTROLLER",
+        effect: {
+          cardType: "character",
+          target: "CONTROLLER",
+          type: "return-from-discard",
+        },
+        type: "optional",
       },
       id: "1bs-3",
       name: "SEARCH AND RESCUE",
       text: "SEARCH AND RESCUE During your turn, whenever a card is put into your inkwell, you may return a character card from your discard to your hand.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

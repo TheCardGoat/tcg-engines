@@ -4,16 +4,16 @@ export const everAsBefore: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "remove-damage",
         amount: 2,
-        upTo: true,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "remove-damage",
+        upTo: true,
       },
       id: "1br-1",
       text: "Remove up to 2 damage from any number of chosen characters.",

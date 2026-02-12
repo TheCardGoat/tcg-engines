@@ -13,9 +13,8 @@ export const simbaSonOfMufasa: CharacterCard = {
     },
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "banish",
           target: {
             selector: "chosen",
             count: 1,
@@ -23,16 +22,17 @@ export const simbaSonOfMufasa: CharacterCard = {
             zones: ["play"],
             cardTypes: ["item"],
           },
+          type: "banish",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "xnq-2",
       name: "FEARSOME ROAR",
       text: "FEARSOME ROAR When you play this character, you may banish chosen item or location.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

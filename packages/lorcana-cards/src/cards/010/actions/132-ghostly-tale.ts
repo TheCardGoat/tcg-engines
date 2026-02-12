@@ -4,14 +4,14 @@ export const ghostlyTale: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "exert",
         target: {
-          selector: "all",
+          cardTypes: ["character"],
           count: "all",
           owner: "opponent",
+          selector: "all",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "exert",
       },
       id: "z6e-1",
       text: "Exert all opposing characters with 2 {S} or less.",

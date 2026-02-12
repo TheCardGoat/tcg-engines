@@ -4,13 +4,11 @@ export const honeyLemonCostumedCatalyst: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you used Shift to play them",
+          type: "if",
         },
         then: {
-          type: "return-to-hand",
           target: {
             selector: "chosen",
             count: 1,
@@ -18,19 +16,21 @@ export const honeyLemonCostumedCatalyst: CharacterCard = {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "return-to-hand",
         },
+        type: "conditional",
       },
       id: "1h9-1",
       name: "LET'S DO THIS!",
       text: "LET'S DO THIS! Whenever you play a Floodborn character, if you used Shift to play them, you may return chosen character to their player's hand.",
       trigger: {
         event: "play",
-        timing: "whenever",
         on: {
-          controller: "you",
           cardType: "character",
           classification: "Floodborn",
+          controller: "you",
         },
+        timing: "whenever",
       },
       type: "triggered",
     },

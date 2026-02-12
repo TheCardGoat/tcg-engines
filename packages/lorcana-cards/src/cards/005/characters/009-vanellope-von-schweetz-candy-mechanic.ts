@@ -4,18 +4,18 @@ export const vanellopeVonSchweetzCandyMechanic: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: -1,
+        stat: "strength",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "18i-1",
       name: "YOU'VE GOT TO PAY TO PLAY",
       text: "YOU'VE GOT TO PAY TO PLAY Whenever this character quests, chosen opposing character gets -1 {S} until the start of your next turn.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

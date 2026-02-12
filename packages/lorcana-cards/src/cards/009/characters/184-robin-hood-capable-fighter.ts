@@ -5,15 +5,15 @@ export const robinHoodCapableFighter: CharacterCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "deal-damage",
         amount: 1,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "deal-damage",
       },
       id: "qi2-1",
       text: "SKIRMISH {E} — Deal 1 damage to chosen character.",

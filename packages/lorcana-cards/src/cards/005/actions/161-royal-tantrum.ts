@@ -4,10 +4,8 @@ export const royalTantrum: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "banish",
             target: {
               selector: "all",
               count: "all",
@@ -15,9 +13,9 @@ export const royalTantrum: ActionCard = {
               zones: ["play"],
               cardTypes: ["item"],
             },
+            type: "banish",
           },
           {
-            type: "for-each",
             counter: {
               type: "items",
               controller: "you",
@@ -27,8 +25,10 @@ export const royalTantrum: ActionCard = {
               amount: 1,
               target: "CONTROLLER",
             },
+            type: "for-each",
           },
         ],
+        type: "sequence",
       },
       id: "96v-1",
       text: "Banish any number of your items, then draw a card for each item banished this way.",

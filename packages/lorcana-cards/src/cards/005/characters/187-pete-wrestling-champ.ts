@@ -4,16 +4,16 @@ export const peteWrestlingChamp: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "it's a character card named Pete",
+          type: "if",
         },
         then: {
-          type: "play-card",
-          from: "hand",
           cost: "free",
+          from: "hand",
+          type: "play-card",
         },
+        type: "conditional",
       },
       id: "pvv-1",
       text: "RE-PETE {E} - Reveal the top card of your deck. If it's a character card named Pete, you may play it for free.",

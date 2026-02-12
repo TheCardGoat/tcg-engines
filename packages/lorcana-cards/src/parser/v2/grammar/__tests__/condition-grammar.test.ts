@@ -37,10 +37,7 @@ describe.skip("Condition Grammar", () => {
 
   describe("conditionClause rule", () => {
     it("parses 'if' condition", () => {
-      const result = parseText(
-        "if you have another character",
-        "conditionClause",
-      );
+      const result = parseText("if you have another character", "conditionClause");
 
       expect(result.errors).toHaveLength(0);
       expect(result.lexErrors).toHaveLength(0);

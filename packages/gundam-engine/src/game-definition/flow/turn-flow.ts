@@ -1,4 +1,4 @@
-import { createPlayerId, type FlowDefinition } from "@tcg/core";
+import { type FlowDefinition, createPlayerId } from "@tcg/core";
 import type { Draft } from "immer";
 import { enqueueBatchEffects } from "../../effects/effect-stack";
 import {
@@ -25,7 +25,6 @@ import type { GundamCardMeta, GundamGameState } from "../../types";
  * The engine automatically handles phase transitions and turn management.
  */
 export const gundamFlow: FlowDefinition<GundamGameState, GundamCardMeta> = {
-  initialGameSegment: "startingAGame",
   gameSegments: {
     /**
      * Starting a Game Segment
@@ -35,8 +34,8 @@ export const gundamFlow: FlowDefinition<GundamGameState, GundamCardMeta> = {
      * - Mulligan phase (Rule 3.1.6)
      */
     startingAGame: {
-      order: 0,
       next: "mainGame",
+      order: 0,
       turn: {
         initialPhase: "chooseFirstPlayer",
         onBegin: (context) => {
@@ -138,11 +137,7 @@ export const gundamFlow: FlowDefinition<GundamGameState, GundamCardMeta> = {
             const turnNum = context.getTurnNumber();
             // This assumes OTP is player_one - needs improvement for robustness
             context.setCurrentPlayer(
-              turnNum % 2 === 1
-                ? otpStr
-                : otpStr === "player_one"
-                  ? "player_two"
-                  : "player_one",
+              turnNum % 2 === 1 ? otpStr : (otpStr === "player_one" ? "player_two" : "player_one"),
             );
           } else {
             // First turn - set to OTP
@@ -160,7 +155,7 @@ export const gundamFlow: FlowDefinition<GundamGameState, GundamCardMeta> = {
            * - Automatically advances to Main phase
            */
           beginning: {
-            order: 1,
+            endIf: () => true,
             next: "main",
             onBegin: (context) => {
               // Ready all cards for the current player
@@ -192,7 +187,7 @@ export const gundamFlow: FlowDefinition<GundamGameState, GundamCardMeta> = {
               // TODO: Draw a card (if not first turn)
               // This requires checking if it's turn 1 and drawing from deck
             },
-            endIf: () => true, // Auto-advance
+            order: 1, // Auto-advance
           },
 
           /**
@@ -201,11 +196,11 @@ export const gundamFlow: FlowDefinition<GundamGameState, GundamCardMeta> = {
            * - Player manually ends phase by passing
            */
           main: {
-            order: 2,
             next: "end",
             onBegin: (_context) => {
               // No automatic actions at start of main phase
             },
+            order: 2,
             // No endIf - player must manually pass to end phase
           },
 
@@ -226,4 +221,5 @@ export const gundamFlow: FlowDefinition<GundamGameState, GundamCardMeta> = {
       },
     },
   },
+  initialGameSegment: "startingAGame",
 };

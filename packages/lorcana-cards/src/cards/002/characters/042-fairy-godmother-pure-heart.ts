@@ -4,9 +4,8 @@ export const fairyGodmotherPureHeart: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "exert",
           target: {
             selector: "chosen",
             count: 1,
@@ -14,19 +13,20 @@ export const fairyGodmotherPureHeart: CharacterCard = {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "exert",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "109-1",
       name: "JUST LEAVE IT TO ME",
       text: "JUST LEAVE IT TO ME Whenever you play a character named Cinderella, you may exert chosen character.",
       trigger: {
         event: "play",
-        timing: "whenever",
         on: {
-          controller: "you",
           cardType: "character",
+          controller: "you",
         },
+        timing: "whenever",
       },
       type: "triggered",
     },

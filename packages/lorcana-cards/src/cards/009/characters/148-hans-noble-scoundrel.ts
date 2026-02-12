@@ -4,23 +4,23 @@ export const hansNobleScoundrel: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "a Princess or Queen character is in play",
+          type: "if",
         },
         then: {
-          type: "gain-lore",
           amount: 1,
+          type: "gain-lore",
         },
+        type: "conditional",
       },
       id: "1wq-1",
       name: "ROYAL SCHEMES",
       text: "ROYAL SCHEMES When you play this character, if a Princess or Queen character is in play, gain 1 lore.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

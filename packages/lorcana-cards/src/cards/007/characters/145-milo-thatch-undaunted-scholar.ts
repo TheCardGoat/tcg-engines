@@ -4,20 +4,20 @@ export const miloThatchUndauntedScholar: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "play-card",
-        from: "hand",
         cardType: "action",
+        from: "hand",
+        type: "play-card",
       },
       id: "1ah-1",
       name: "I'M YOUR GUY",
       text: "I'M YOUR GUY Whenever you play an action, you may give chosen character +2 {S} this turn.",
       trigger: {
         event: "play",
-        timing: "whenever",
         on: {
-          controller: "you",
           cardType: "action",
+          controller: "you",
         },
+        timing: "whenever",
       },
       type: "triggered",
     },

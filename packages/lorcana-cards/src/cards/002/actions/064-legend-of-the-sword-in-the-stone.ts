@@ -4,17 +4,17 @@ export const legendOfTheSwordInTheStone: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
+        duration: "this-turn",
         keyword: "Challenger",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "gain-keyword",
         value: 3,
-        duration: "this-turn",
       },
       id: "t20-1",
       text: "Chosen character gains Challenger +3 this turn.",

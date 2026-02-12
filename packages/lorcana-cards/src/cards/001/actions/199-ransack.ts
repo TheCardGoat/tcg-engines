@@ -4,20 +4,20 @@ export const ransack: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "draw",
             amount: 2,
             target: "CONTROLLER",
+            type: "draw",
           },
           {
-            type: "discard",
             amount: 2,
-            target: "CONTROLLER",
             chosen: true,
+            target: "CONTROLLER",
+            type: "discard",
           },
         ],
+        type: "sequence",
       },
       id: "1ux-1",
       text: "Draw 2 cards, then choose and discard 2 cards.",

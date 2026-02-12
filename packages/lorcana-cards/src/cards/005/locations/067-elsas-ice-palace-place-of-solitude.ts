@@ -4,17 +4,17 @@ export const elsasIcePalacePlaceOfSolitude: LocationCard = {
   abilities: [
     {
       effect: {
-        type: "restriction",
         restriction: "cant-ready",
         target: "SELF",
+        type: "restriction",
       },
       id: "1h5-1",
       name: "ETERNAL WINTER",
       text: "ETERNAL WINTER When you play this location, choose an exerted character. While this location is in play, that character can't ready at the start of their turn.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

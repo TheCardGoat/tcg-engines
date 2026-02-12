@@ -4,12 +4,10 @@ export const restoringTheHeart: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "choice",
+        optionLabels: ["Remove up to 3 damage from chosen character", "location. Draw a card."],
         options: [
           {
-            type: "remove-damage",
             amount: 3,
-            upTo: true,
             target: {
               selector: "chosen",
               count: 1,
@@ -17,17 +15,16 @@ export const restoringTheHeart: ActionCard = {
               zones: ["play"],
               cardTypes: ["character"],
             },
+            type: "remove-damage",
+            upTo: true,
           },
           {
-            type: "draw",
             amount: 1,
             target: "CONTROLLER",
+            type: "draw",
           },
         ],
-        optionLabels: [
-          "Remove up to 3 damage from chosen character",
-          "location. Draw a card.",
-        ],
+        type: "choice",
       },
       id: "inl-1",
       text: "Remove up to 3 damage from chosen character or location. Draw a card.",

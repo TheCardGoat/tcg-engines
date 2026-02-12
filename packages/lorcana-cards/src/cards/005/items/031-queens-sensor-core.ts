@@ -4,15 +4,15 @@ export const queensSensorCore: ItemCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you have a Princess or Queen character in play",
+          type: "if",
         },
         then: {
-          type: "gain-lore",
           amount: 1,
+          type: "gain-lore",
         },
+        type: "conditional",
       },
       id: "1xk-1",
       text: "SYMBOL OF NOBILITY At the start of your turn, if you have a Princess or Queen character in play, gain 1 lore.",
@@ -21,8 +21,8 @@ export const queensSensorCore: ItemCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "reveal-top-card",
         target: "CONTROLLER",
+        type: "reveal-top-card",
       },
       id: "1xk-2",
       text: "ROYAL SEARCH {E}, 2 {I} — Reveal the top card of your deck. If it's a Princess or Queen character card, you may put it into your hand. Otherwise, put it on the top of your deck.",

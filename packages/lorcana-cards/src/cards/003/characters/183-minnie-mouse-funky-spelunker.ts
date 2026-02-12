@@ -4,10 +4,10 @@ export const minnieMouseFunkySpelunker: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: 2,
+        stat: "strength",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "11y-1",
       text: "JOURNEY While this character is at a location, she gets +2 {S}.",

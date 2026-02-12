@@ -4,14 +4,11 @@ export const mrSmeeBumblingMate: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
+          expression: "this character is exerted and you don't have a Captain character in play",
           type: "if",
-          expression:
-            "this character is exerted and you don't have a Captain character in play",
         },
         then: {
-          type: "deal-damage",
           amount: 1,
           target: {
             selector: "self",
@@ -20,7 +17,9 @@ export const mrSmeeBumblingMate: CharacterCard = {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "deal-damage",
         },
+        type: "conditional",
       },
       id: "16t-1",
       text: "OH DEAR, DEAR, DEAR At the end of your turn, if this character is exerted and you don't have a Captain character in play, deal 1 damage to this character.",

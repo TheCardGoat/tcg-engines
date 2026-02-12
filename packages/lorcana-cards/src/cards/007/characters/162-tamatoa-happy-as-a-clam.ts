@@ -4,35 +4,35 @@ export const tamatoaHappyAsAClam: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "return-to-hand",
         target: {
-          selector: "chosen",
+          cardTypes: ["item"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["item"],
         },
+        type: "return-to-hand",
       },
       id: "1i4-1",
       name: "COOLEST COLLECTION",
       text: "COOLEST COLLECTION When you play this character, return up to 2 item cards from your discard to your hand.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "play-card",
-          from: "hand",
           cardType: "item",
           cost: "free",
+          from: "hand",
+          type: "play-card",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "1i4-2",
       text: "I'M BEAUTIFUL, BABY! Whenever this character quests, you may play an item for free.",

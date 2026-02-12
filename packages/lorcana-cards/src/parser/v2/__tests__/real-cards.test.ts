@@ -42,32 +42,28 @@ describe("Real Card Parsing - Set 001", () => {
 
   describe("triggered abilities - When you play", () => {
     it("parses Elsa - Snow Queen", () => {
-      const text =
-        "When you play this character, deal 2 damage to chosen character.";
+      const text = "When you play this character, deal 2 damage to chosen character.";
       const result = parserV2.parseAbility(text);
 
       expect(result).not.toBeNull();
     });
 
     it("parses Maleficent - Monstrous Dragon", () => {
-      const text =
-        "When you play this character, you may banish chosen character.";
+      const text = "When you play this character, you may banish chosen character.";
       const result = parserV2.parseAbility(text);
 
       expect(result).not.toBeNull();
     });
 
     it("parses Aladdin - Prince Ali", () => {
-      const text =
-        "When you play this character, draw 2 cards, then discard 1 card.";
+      const text = "When you play this character, draw 2 cards, then discard 1 card.";
       const result = parserV2.parseAbility(text);
 
       expect(result).not.toBeNull();
     });
 
     it("parses Rapunzel - Gifted with Healing", () => {
-      const text =
-        "When you play this character, look at the top 3 cards of your deck.";
+      const text = "When you play this character, look at the top 3 cards of your deck.";
       const result = parserV2.parseAbility(text);
 
       expect(result).not.toBeNull();
@@ -92,8 +88,7 @@ describe("Real Card Parsing - Set 001", () => {
     });
 
     it("parses Captain Hook - Thinking A Happy Thought", () => {
-      const text =
-        "Whenever one of your characters quests, deal 1 damage to chosen character.";
+      const text = "Whenever one of your characters quests, deal 1 damage to chosen character.";
       const result = parserV2.parseAbility(text);
 
       expect(result).not.toBeNull();
@@ -197,8 +192,7 @@ describe("Real Card Parsing - Set 001", () => {
     });
 
     it("parses look at and put in hand", () => {
-      const text =
-        "Look at the top 5 cards of your deck, put 2 into your hand.";
+      const text = "Look at the top 5 cards of your deck, put 2 into your hand.";
       const result = parserV2.parseAbility(text);
 
       expect(result).not.toBeNull();
@@ -291,8 +285,7 @@ describe("Real Card Parsing - Set 001", () => {
     });
 
     it("parses look and put sequence", () => {
-      const text =
-        "Look at the top 3 cards of your deck. Then put 1 into your hand.";
+      const text = "Look at the top 3 cards of your deck. Then put 1 into your hand.";
       const result = parserV2.parseAbility(text);
 
       expect(result).not.toBeNull();
@@ -342,8 +335,7 @@ describe("Real Card Parsing - Set 001", () => {
     });
 
     it("parses Merlin - Crab for each effect", () => {
-      const text =
-        "When you play this character, gain 1 lore for each character you have in play.";
+      const text = "When you play this character, gain 1 lore for each character you have in play.";
       const result = parserV2.parseAbility(text);
 
       expect(result).not.toBeNull();
@@ -450,8 +442,7 @@ describe("Real Card Parsing - Complex Cards", () => {
     });
 
     it("parses conditional with target", () => {
-      const text =
-        "If you have 3 or more characters in play, deal 2 damage to chosen character.";
+      const text = "If you have 3 or more characters in play, deal 2 damage to chosen character.";
       const result = parserV2.parseAbility(text);
 
       expect(result).not.toBeNull();
@@ -466,9 +457,7 @@ describe("Real Card Parsing - Complex Cards", () => {
     });
 
     it("handles malformed text gracefully", () => {
-      const result = parserV2.parseAbility(
-        "This is not a valid ability text###",
-      );
+      const result = parserV2.parseAbility("This is not a valid ability text###");
 
       // Parser should return null for unparseable text
       expect(result).toBeNull();

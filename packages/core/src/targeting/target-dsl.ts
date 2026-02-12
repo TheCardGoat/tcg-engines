@@ -117,10 +117,7 @@ export interface BaseContext {
  * };
  * ```
  */
-export interface TargetDSL<
-  TFilter = CardFilter,
-  TContext extends BaseContext = BaseContext,
-> {
+export interface TargetDSL<TFilter = CardFilter, TContext extends BaseContext = BaseContext> {
   /** How targets are selected (chosen, all, self, etc.) */
   selector: SelectorScope;
 
@@ -209,29 +206,55 @@ export type PlayerTargetDSL =
  * Extract the minimum count from a TargetCount specification
  */
 export function getMinCount(count: TargetCount | undefined): number {
-  if (count === undefined) return 1;
-  if (count === "all") return 0;
-  if (typeof count === "number") return count;
-  if ("exactly" in count) return count.exactly;
-  if ("upTo" in count) return 0;
-  if ("atLeast" in count) return count.atLeast;
-  if ("between" in count) return count.between[0];
+  if (count === undefined) {
+    return 1;
+  }
+  if (count === "all") {
+    return 0;
+  }
+  if (typeof count === "number") {
+    return count;
+  }
+  if ("exactly" in count) {
+    return count.exactly;
+  }
+  if ("upTo" in count) {
+    return 0;
+  }
+  if ("atLeast" in count) {
+    return count.atLeast;
+  }
+  if ("between" in count) {
+    return count.between[0];
+  }
   return 0;
 }
 
 /**
  * Extract the maximum count from a TargetCount specification
  */
-export function getMaxCount(
-  count: TargetCount | undefined,
-): number | "unlimited" {
-  if (count === undefined) return 1;
-  if (count === "all") return "unlimited";
-  if (typeof count === "number") return count;
-  if ("exactly" in count) return count.exactly;
-  if ("upTo" in count) return count.upTo;
-  if ("atLeast" in count) return "unlimited";
-  if ("between" in count) return count.between[1];
+export function getMaxCount(count: TargetCount | undefined): number | "unlimited" {
+  if (count === undefined) {
+    return 1;
+  }
+  if (count === "all") {
+    return "unlimited";
+  }
+  if (typeof count === "number") {
+    return count;
+  }
+  if ("exactly" in count) {
+    return count.exactly;
+  }
+  if ("upTo" in count) {
+    return count.upTo;
+  }
+  if ("atLeast" in count) {
+    return "unlimited";
+  }
+  if ("between" in count) {
+    return count.between[1];
+  }
   return 1;
 }
 
@@ -264,16 +287,16 @@ export function isMultipleTargetSelector(selector: SelectorScope): boolean {
  * Default target DSL for a single chosen card
  */
 export const DEFAULT_SINGLE_TARGET: Partial<TargetDSL> = {
-  selector: "chosen",
   count: 1,
   owner: "any",
+  selector: "chosen",
 };
 
 /**
  * Default target DSL for self-targeting
  */
 export const DEFAULT_SELF_TARGET: Partial<TargetDSL> = {
-  selector: "self",
-  count: 1,
   context: { self: true },
+  count: 1,
+  selector: "self",
 };

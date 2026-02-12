@@ -6,11 +6,7 @@
 import { describe, expect, it } from "bun:test";
 import type { CstNode } from "chevrotain";
 import type { Effect } from "../../../types";
-import {
-  type EffectParser,
-  atomicEffectParsers,
-  parseAtomicEffect,
-} from "../index";
+import { type EffectParser, atomicEffectParsers, parseAtomicEffect } from "../index";
 
 describe("Effect Parser Registry", () => {
   describe("atomicEffectParsers array", () => {
@@ -314,9 +310,7 @@ describe("Effect Parser Registry", () => {
     it("matches first parsable pattern in text", () => {
       // Note: The registry tries parsers in order and returns first match
       // "play" in "When you play this character" matches playEffectParser
-      const result = parseAtomicEffect(
-        "When you play this character, draw 2 cards",
-      );
+      const result = parseAtomicEffect("When you play this character, draw 2 cards");
 
       // PlayEffectParser matches because "play this character" is in the text
       expect(result).not.toBeNull();
@@ -332,9 +326,7 @@ describe("Effect Parser Registry", () => {
     });
 
     it("handles effect with condition", () => {
-      const result = parseAtomicEffect(
-        "if you have another character, gain 2 lore",
-      );
+      const result = parseAtomicEffect("if you have another character, gain 2 lore");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("gain-lore");
@@ -347,10 +339,7 @@ describe("Effect Parser Registry", () => {
       for (const parser of atomicEffectParsers) {
         // Check pattern property
         expect(parser.pattern).toBeDefined();
-        expect(
-          parser.pattern instanceof RegExp ||
-            typeof parser.pattern === "string",
-        ).toBe(true);
+        expect(parser.pattern instanceof RegExp || typeof parser.pattern === "string").toBe(true);
 
         // Check parse method
         expect(parser.parse).toBeDefined();
@@ -364,13 +353,7 @@ describe("Effect Parser Registry", () => {
     });
 
     it("all parsers return null or Effect object", () => {
-      const testInputs = [
-        "draw 2 cards",
-        "invalid text",
-        "",
-        "gain 1 lore",
-        "random string",
-      ];
+      const testInputs = ["draw 2 cards", "invalid text", "", "gain 1 lore", "random string"];
 
       for (const parser of atomicEffectParsers) {
         for (const input of testInputs) {

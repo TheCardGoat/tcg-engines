@@ -4,23 +4,23 @@ export const sisuUnitingDragon: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "it’s a Dragon character card",
+          type: "if",
         },
         then: {
-          type: "put-on-bottom",
           target: "CHOSEN_CHARACTER",
+          type: "put-on-bottom",
         },
+        type: "conditional",
       },
       id: "ojg-1",
       name: "TRUST BUILDS TRUST",
       text: "TRUST BUILDS TRUST Whenever this character quests, reveal the top card of your deck. If it’s a Dragon character card, put it into your hand and repeat this effect. Otherwise, put it on either the top or the bottom of your deck.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

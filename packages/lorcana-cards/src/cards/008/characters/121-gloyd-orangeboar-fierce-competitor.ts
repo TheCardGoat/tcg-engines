@@ -4,26 +4,26 @@ export const gloydOrangeboarFierceCompetitor: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "lose-lore",
             amount: 1,
             target: "EACH_OPPONENT",
+            type: "lose-lore",
           },
           {
-            type: "gain-lore",
             amount: 1,
+            type: "gain-lore",
           },
         ],
+        type: "sequence",
       },
       id: "1mc-1",
       name: "PUMPKIN SPICE",
       text: "PUMPKIN SPICE When you play this character, each opponent loses 1 lore and you gain 1 lore.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

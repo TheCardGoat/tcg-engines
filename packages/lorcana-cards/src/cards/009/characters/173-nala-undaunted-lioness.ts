@@ -4,21 +4,21 @@ export const nalaUndauntedLioness: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "modify-stat",
-            stat: "lore",
             modifier: 1,
+            stat: "lore",
             target: "SELF",
+            type: "modify-stat",
           },
           {
-            type: "gain-keyword",
             keyword: "Resist",
             target: "SELF",
+            type: "gain-keyword",
             value: 1,
           },
         ],
+        type: "sequence",
       },
       id: "1xs-1",
       text: "DETERMINED DIVERSION While this character has no damage, she gets +1 {L} and gains Resist +1.",

@@ -4,10 +4,10 @@ export const louieOneCoolDuck: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: -1,
+        stat: "strength",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "1h7-1",
       text: "SPRING THE TRAP While this character is being challenged, the challenging character gets -1 {S}.",

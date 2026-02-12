@@ -4,20 +4,20 @@ export const cinderellaTheRightOne: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
-        effect: {
-          type: "gain-lore",
-          amount: 3,
-        },
         chooser: "CONTROLLER",
+        effect: {
+          amount: 3,
+          type: "gain-lore",
+        },
+        type: "optional",
       },
       id: "doc-1",
       name: "IF THE SLIPPER FITS",
       text: "IF THE SLIPPER FITS When you play this character, you may put an item card named The Glass Slipper from your discard on the bottom of your deck to gain 3 lore.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

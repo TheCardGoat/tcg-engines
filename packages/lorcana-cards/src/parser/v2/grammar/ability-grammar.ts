@@ -114,10 +114,7 @@ export class LorcanaAbilityParser extends CstParser {
    * Trigger phrase: "When" or "Whenever" followed by trigger event
    */
   public triggerPhrase = this.RULE("triggerPhrase", () => {
-    this.OR([
-      { ALT: () => this.CONSUME(When) },
-      { ALT: () => this.CONSUME(Whenever) },
-    ]);
+    this.OR([{ ALT: () => this.CONSUME(When) }, { ALT: () => this.CONSUME(Whenever) }]);
     this.SUBRULE(this.triggerEvent);
   });
 
@@ -222,10 +219,7 @@ export class LorcanaAbilityParser extends CstParser {
   public drawEffect = this.RULE("drawEffect", () => {
     this.CONSUME(Draw);
     this.CONSUME(NumberToken);
-    this.OR([
-      { ALT: () => this.CONSUME(Card) },
-      { ALT: () => this.CONSUME(Cards) },
-    ]);
+    this.OR([{ ALT: () => this.CONSUME(Card) }, { ALT: () => this.CONSUME(Cards) }]);
   });
 
   /**
@@ -234,10 +228,7 @@ export class LorcanaAbilityParser extends CstParser {
   public discardEffect = this.RULE("discardEffect", () => {
     this.CONSUME(Discard);
     this.CONSUME(NumberToken);
-    this.OR([
-      { ALT: () => this.CONSUME(Card) },
-      { ALT: () => this.CONSUME(Cards) },
-    ]);
+    this.OR([{ ALT: () => this.CONSUME(Card) }, { ALT: () => this.CONSUME(Cards) }]);
   });
 
   /**
@@ -254,10 +245,7 @@ export class LorcanaAbilityParser extends CstParser {
    * Lore effect: "gain/lose <number> lore"
    */
   public loreEffect = this.RULE("loreEffect", () => {
-    this.OR([
-      { ALT: () => this.CONSUME(Gain) },
-      { ALT: () => this.CONSUME(Lose) },
-    ]);
+    this.OR([{ ALT: () => this.CONSUME(Gain) }, { ALT: () => this.CONSUME(Lose) }]);
     this.CONSUME(NumberToken);
     this.CONSUME(Lore);
   });
@@ -266,14 +254,8 @@ export class LorcanaAbilityParser extends CstParser {
    * Exert effect: "exert/ready chosen character"
    */
   public exertEffect = this.RULE("exertEffect", () => {
-    this.OR([
-      { ALT: () => this.CONSUME(Exert) },
-      { ALT: () => this.CONSUME(Ready) },
-    ]);
-    this.OR2([
-      { ALT: () => this.CONSUME(Chosen) },
-      { ALT: () => this.CONSUME(This) },
-    ]);
+    this.OR([{ ALT: () => this.CONSUME(Exert) }, { ALT: () => this.CONSUME(Ready) }]);
+    this.OR2([{ ALT: () => this.CONSUME(Chosen) }, { ALT: () => this.CONSUME(This) }]);
     this.CONSUME(Character);
   });
 
@@ -281,18 +263,9 @@ export class LorcanaAbilityParser extends CstParser {
    * Banish effect: "banish/return chosen character"
    */
   public banishEffect = this.RULE("banishEffect", () => {
-    this.OR([
-      { ALT: () => this.CONSUME(Banish) },
-      { ALT: () => this.CONSUME(Return) },
-    ]);
-    this.OR2([
-      { ALT: () => this.CONSUME(Chosen) },
-      { ALT: () => this.CONSUME(This) },
-    ]);
-    this.OR3([
-      { ALT: () => this.CONSUME(Character) },
-      { ALT: () => this.CONSUME(Item) },
-    ]);
+    this.OR([{ ALT: () => this.CONSUME(Banish) }, { ALT: () => this.CONSUME(Return) }]);
+    this.OR2([{ ALT: () => this.CONSUME(Chosen) }, { ALT: () => this.CONSUME(This) }]);
+    this.OR3([{ ALT: () => this.CONSUME(Character) }, { ALT: () => this.CONSUME(Item) }]);
   });
 
   /**

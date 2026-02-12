@@ -4,20 +4,20 @@ export const beastHardheaded: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
-        effect: {
-          type: "banish",
-          target: "CHOSEN_CHARACTER",
-        },
         chooser: "CONTROLLER",
+        effect: {
+          target: "CHOSEN_CHARACTER",
+          type: "banish",
+        },
+        type: "optional",
       },
       id: "m8v-1",
       name: "BREAK",
       text: "BREAK When you play this character, you may banish chosen item.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

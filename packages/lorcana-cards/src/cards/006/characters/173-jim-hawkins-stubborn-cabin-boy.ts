@@ -4,11 +4,11 @@ export const jimHawkinsStubbornCabinBoy: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
+        duration: "this-turn",
         keyword: "Challenger",
         target: "SELF",
+        type: "gain-keyword",
         value: 2,
-        duration: "this-turn",
       },
       id: "tx8-1",
       text: "COME HERE, COME HERE, COME HERE! During your turn, whenever a card is put into your inkwell, this character gets Challenger +2 this turn.",

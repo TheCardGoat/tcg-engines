@@ -4,25 +4,25 @@ export const arielDeterminedMermaid: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
-        effect: {
-          type: "discard",
-          amount: 1,
-          target: "CONTROLLER",
-          chosen: true,
-        },
         chooser: "CONTROLLER",
+        effect: {
+          amount: 1,
+          chosen: true,
+          target: "CONTROLLER",
+          type: "discard",
+        },
+        type: "optional",
       },
       id: "gsz-1",
       name: "I WANT MORE",
       text: "I WANT MORE Whenever you play a song, you may draw a card, then choose and discard a card.",
       trigger: {
         event: "play",
-        timing: "whenever",
         on: {
-          controller: "you",
           cardType: "action",
+          controller: "you",
         },
+        timing: "whenever",
       },
       type: "triggered",
     },

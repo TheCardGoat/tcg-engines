@@ -70,18 +70,14 @@ describe("banishEffectParser", () => {
     });
 
     it("parses 'return chosen character to hand' correctly", () => {
-      const result = banishEffectParser.parse(
-        "return chosen character to hand",
-      );
+      const result = banishEffectParser.parse("return chosen character to hand");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("return-to-hand");
     });
 
     it("parses 'return another character to deck' correctly", () => {
-      const result = banishEffectParser.parse(
-        "return another character to deck",
-      );
+      const result = banishEffectParser.parse("return another character to deck");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("return-to-hand");
@@ -141,9 +137,7 @@ describe("banishEffectParser", () => {
     });
 
     it("parses return with multiple spaces", () => {
-      const result = banishEffectParser.parse(
-        "return  this  character  to  hand",
-      );
+      const result = banishEffectParser.parse("return  this  character  to  hand");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("return-to-hand");

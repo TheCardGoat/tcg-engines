@@ -4,10 +4,8 @@ export const breakFree: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "deal-damage",
             amount: 1,
             target: {
               selector: "chosen",
@@ -16,9 +14,9 @@ export const breakFree: ActionCard = {
               zones: ["play"],
               cardTypes: ["character"],
             },
+            type: "deal-damage",
           },
           {
-            type: "sequence",
             steps: [
               {
                 type: "gain-keyword",
@@ -33,8 +31,10 @@ export const breakFree: ActionCard = {
                 duration: "this-turn",
               },
             ],
+            type: "sequence",
           },
         ],
+        type: "sequence",
       },
       id: "10c-1",
       text: "Deal 1 damage to chosen character of yours. They gain Rush and get +1 {S} this turn.",

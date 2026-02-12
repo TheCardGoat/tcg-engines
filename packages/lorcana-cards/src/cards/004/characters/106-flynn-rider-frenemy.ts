@@ -4,16 +4,15 @@ export const flynnRiderFrenemy: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
+          expression: "you have a character in play with more {S} than each opposing character",
           type: "if",
-          expression:
-            "you have a character in play with more {S} than each opposing character",
         },
         then: {
-          type: "gain-lore",
           amount: 3,
+          type: "gain-lore",
         },
+        type: "conditional",
       },
       id: "2t5-1",
       text: "NARROW ADVANTAGE At the start of your turn, if you have a character in play with more {S} than each opposing character, gain 3 lore.",

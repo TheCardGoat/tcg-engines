@@ -11,20 +11,20 @@ export const ursulaWhisperOfVanessa: CharacterCard = {
     },
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "modify-stat",
-            stat: "lore",
             modifier: 1,
+            stat: "lore",
             target: "SELF",
+            type: "modify-stat",
           },
           {
-            type: "gain-keyword",
             keyword: "Evasive",
             target: "SELF",
+            type: "gain-keyword",
           },
         ],
+        type: "sequence",
       },
       id: "86p-2",
       text: "SLIPPERY SPELL While there's a card under this character, she gets +1 {L} and gains Evasive.",

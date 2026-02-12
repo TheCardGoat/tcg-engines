@@ -4,18 +4,18 @@ export const aPiratesLife: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "lose-lore",
             amount: 2,
             target: "EACH_OPPONENT",
+            type: "lose-lore",
           },
           {
-            type: "gain-lore",
             amount: 2,
+            type: "gain-lore",
           },
         ],
+        type: "sequence",
       },
       id: "w74-1",
       text: "Sing Together 6 Each opponent loses 2 lore. You gain 2 lore.",

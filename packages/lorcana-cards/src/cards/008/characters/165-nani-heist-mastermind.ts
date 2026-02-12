@@ -5,17 +5,17 @@ export const naniHeistMastermind: CharacterCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "gain-keyword",
+        duration: "this-turn",
         keyword: "Resist",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "gain-keyword",
         value: 2,
-        duration: "this-turn",
       },
       id: "d2e-1",
       text: "STICK TO THE PLAN {E} — Another chosen character gains Resist +2 this turn.",
@@ -23,9 +23,9 @@ export const naniHeistMastermind: CharacterCard = {
     },
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Support",
         target: "YOUR_CHARACTERS",
+        type: "gain-keyword",
       },
       id: "d2e-2",
       text: "IT'S UP TO YOU, LILO Your characters named Lilo gain Support.",

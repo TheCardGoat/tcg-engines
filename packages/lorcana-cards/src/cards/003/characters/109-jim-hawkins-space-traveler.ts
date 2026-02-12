@@ -4,25 +4,25 @@ export const jimHawkinsSpaceTraveler: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "play-card",
-          from: "hand",
           cost: "free",
           costRestriction: {
             comparison: "less-or-equal",
             value: 4,
           },
+          from: "hand",
+          type: "play-card",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "tdh-1",
       name: "THIS IS IT!",
       text: "THIS IS IT! When you play this character, you may play a location with cost 4 or less for free.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

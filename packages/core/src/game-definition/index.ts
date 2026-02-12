@@ -11,18 +11,8 @@
  * - Supporting types (Player, GameEndResult, FlowDefinition)
  */
 
-export type {
-  GameDefinition,
-  GameEndResult,
-  Player,
-} from "./game-definition";
+export type { GameDefinition, GameEndResult, Player } from "./game-definition";
 
-export type {
-  GameMoveDefinition,
-  GameMoveDefinitions,
-} from "./move-definitions";
+export type { GameMoveDefinition, GameMoveDefinitions } from "./move-definitions";
 
-export {
-  type GameDefinitionValidationResult,
-  validateGameDefinition,
-} from "./validation";
+export { type GameDefinitionValidationResult, validateGameDefinition } from "./validation";

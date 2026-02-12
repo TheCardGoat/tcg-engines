@@ -4,10 +4,10 @@ export const sisuEmboldenedWarrior: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: 1,
+        stat: "strength",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "1df-1",
       text: "SURGE OF POWER This character gets +1 {S} for each card in opponents' hands.",

@@ -4,17 +4,17 @@ export const motherGothelUnderhandedSchemer: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "a character was banished this turn",
+          type: "if",
         },
         then: {
-          type: "modify-stat",
-          stat: "strength",
           modifier: 2,
+          stat: "strength",
           target: "SELF",
+          type: "modify-stat",
         },
+        type: "conditional",
       },
       id: "1au-1",
       text: "SOMEBODY'S GOT TO USE IT If a character was banished this turn, this character gets +2 {S}.",

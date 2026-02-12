@@ -10,9 +10,9 @@ export const namaariMorningMist: CharacterCard = {
     },
     {
       effect: {
-        type: "grant-ability",
         ability: "can-challenge-ready",
         target: "SELF",
+        type: "grant-ability",
       },
       id: "1dg-2",
       name: "BLADES",

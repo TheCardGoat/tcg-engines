@@ -4,10 +4,10 @@ export const scarFinallyKing: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: 1,
+        stat: "strength",
         target: "YOUR_CHARACTERS",
+        type: "modify-stat",
       },
       id: "1vp-1",
       name: "BE GRATEFUL Your Ally",
@@ -16,10 +16,10 @@ export const scarFinallyKing: CharacterCard = {
     },
     {
       effect: {
-        type: "discard",
         amount: 2,
-        target: "CONTROLLER",
         chosen: false,
+        target: "CONTROLLER",
+        type: "discard",
       },
       id: "1vp-2",
       text: "STICK WITH ME At the end of your turn, if this character is exerted, you may draw cards equal to the {S} of chosen Ally character of yours. If you do, choose and discard 2 cards and banish that character.",

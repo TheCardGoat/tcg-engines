@@ -6,23 +6,35 @@
  */
 
 import type { CardId as CoreCardId, GameMoveDefinitions } from "@tcg/core";
-import type {
-  RiftboundCardMeta,
-  RiftboundGameState,
-  RiftboundMoves,
-} from "../../types";
+import type { RiftboundCardMeta, RiftboundGameState, RiftboundMoves } from "../../types";
 
 /**
  * Counter/token move definitions
  */
 export const counterMoves: Partial<
-  GameMoveDefinitions<
-    RiftboundGameState,
-    RiftboundMoves,
-    RiftboundCardMeta,
-    unknown
-  >
+  GameMoveDefinitions<RiftboundGameState, RiftboundMoves, RiftboundCardMeta, unknown>
 > = {
+  addBuff: {
+    reducer: (_draft, context) => {
+      const { cardId } = context.params;
+      context.counters.setFlag(cardId as CoreCardId, "buffed", true);
+    },
+  },
+
+  addDamage: {
+    reducer: (_draft, context) => {
+      const { cardId, amount } = context.params;
+      context.counters.addCounter(cardId as CoreCardId, "damage", amount);
+    },
+  },
+
+  clearDamage: {
+    reducer: (_draft, context) => {
+      const { cardId } = context.params;
+      context.counters.clearCounter(cardId as CoreCardId, "damage");
+    },
+  },
+
   exhaustCard: {
     reducer: (_draft, context) => {
       const { cardId } = context.params;
@@ -37,10 +49,10 @@ export const counterMoves: Partial<
     },
   },
 
-  addDamage: {
+  removeBuff: {
     reducer: (_draft, context) => {
-      const { cardId, amount } = context.params;
-      context.counters.addCounter(cardId as CoreCardId, "damage", amount);
+      const { cardId } = context.params;
+      context.counters.setFlag(cardId as CoreCardId, "buffed", false);
     },
   },
 
@@ -48,27 +60,6 @@ export const counterMoves: Partial<
     reducer: (_draft, context) => {
       const { cardId, amount } = context.params;
       context.counters.removeCounter(cardId as CoreCardId, "damage", amount);
-    },
-  },
-
-  clearDamage: {
-    reducer: (_draft, context) => {
-      const { cardId } = context.params;
-      context.counters.clearCounter(cardId as CoreCardId, "damage");
-    },
-  },
-
-  addBuff: {
-    reducer: (_draft, context) => {
-      const { cardId } = context.params;
-      context.counters.setFlag(cardId as CoreCardId, "buffed", true);
-    },
-  },
-
-  removeBuff: {
-    reducer: (_draft, context) => {
-      const { cardId } = context.params;
-      context.counters.setFlag(cardId as CoreCardId, "buffed", false);
     },
   },
 

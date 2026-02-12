@@ -106,21 +106,15 @@ describe("Keyword Patterns", () => {
 
 describe("Trigger Patterns", () => {
   it("should detect 'When' trigger timing", () => {
-    expect(TRIGGER_PATTERNS.when.test("When you play this character")).toBe(
-      true,
-    );
+    expect(TRIGGER_PATTERNS.when.test("When you play this character")).toBe(true);
   });
 
   it("should detect 'Whenever' trigger timing", () => {
-    expect(
-      TRIGGER_PATTERNS.whenever.test("Whenever this character quests"),
-    ).toBe(true);
+    expect(TRIGGER_PATTERNS.whenever.test("Whenever this character quests")).toBe(true);
   });
 
   it("should detect 'At the start of' trigger timing", () => {
-    expect(TRIGGER_PATTERNS.atStart.test("At the start of your turn")).toBe(
-      true,
-    );
+    expect(TRIGGER_PATTERNS.atStart.test("At the start of your turn")).toBe(true);
   });
 
   it("should detect 'At the end of' trigger timing", () => {
@@ -128,9 +122,7 @@ describe("Trigger Patterns", () => {
   });
 
   it("should detect 'The first time' trigger timing", () => {
-    expect(TRIGGER_PATTERNS.firstTime.test("The first time each turn")).toBe(
-      true,
-    );
+    expect(TRIGGER_PATTERNS.firstTime.test("The first time each turn")).toBe(true);
   });
 });
 
@@ -157,9 +149,7 @@ describe("Cost Patterns", () => {
   it("should detect cost separator patterns", () => {
     expect(COST_PATTERNS.costSeparator.test("{E} - Draw")).toBe(true);
     expect(COST_PATTERNS.costSeparator.test("{E}, 2 {I} - Deal")).toBe(true);
-    expect(COST_PATTERNS.costSeparator.test("Banish this item - Gain")).toBe(
-      true,
-    );
+    expect(COST_PATTERNS.costSeparator.test("Banish this item - Gain")).toBe(true);
   });
 });
 
@@ -182,14 +172,10 @@ describe("classifyAbility", () => {
     const when = classifyAbility("When you play this character, draw 2 cards.");
     expect(when.type).toBe("triggered");
 
-    const whenever = classifyAbility(
-      "Whenever this character quests, gain 1 lore.",
-    );
+    const whenever = classifyAbility("Whenever this character quests, gain 1 lore.");
     expect(whenever.type).toBe("triggered");
 
-    const atStart = classifyAbility(
-      "At the start of your turn, you may draw a card.",
-    );
+    const atStart = classifyAbility("At the start of your turn, you may draw a card.");
     expect(atStart.type).toBe("triggered");
   });
 
@@ -197,9 +183,7 @@ describe("classifyAbility", () => {
     const exert = classifyAbility("{E} - Draw a card.");
     expect(exert.type).toBe("activated");
 
-    const combined = classifyAbility(
-      "{E}, 2 {I} - Deal 3 damage to chosen character.",
-    );
+    const combined = classifyAbility("{E}, 2 {I} - Deal 3 damage to chosen character.");
     expect(combined.type).toBe("activated");
 
     const banish = classifyAbility("Banish this item - Gain 3 lore.");

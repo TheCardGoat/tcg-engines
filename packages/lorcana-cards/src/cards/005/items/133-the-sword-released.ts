@@ -4,17 +4,17 @@ export const theSwordReleased: ItemCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression:
             "you have a character in play with more {S} than each opposing character in play",
+          type: "if",
         },
         then: {
-          type: "lose-lore",
           amount: 1,
           target: "EACH_OPPONENT",
+          type: "lose-lore",
         },
+        type: "conditional",
       },
       id: "fy1-1",
       text: "POWER APPOINTED At the start of your turn, if you have a character in play with more {S} than each opposing character in play, each opponent loses 1 lore and you gain lore equal to the lore lost.",

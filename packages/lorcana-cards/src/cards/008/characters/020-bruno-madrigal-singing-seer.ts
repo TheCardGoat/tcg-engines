@@ -13,18 +13,18 @@ export const brunoMadrigalSingingSeer: CharacterCard = {
     },
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "draw",
           amount: 1,
           target: "CONTROLLER",
+          type: "draw",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "1cp-2",
       name: "BRIGHT FUTURE",
       text: "BRIGHT FUTURE Whenever this character sings a song, you may draw a card for each character you have in play.",
-      trigger: { event: "play", timing: "when", on: "SELF" },
+      trigger: { event: "play", on: "SELF", timing: "when" },
       type: "triggered",
     },
   ],

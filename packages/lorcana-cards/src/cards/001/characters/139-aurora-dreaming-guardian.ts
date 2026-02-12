@@ -11,9 +11,9 @@ export const auroraDreamingGuardian: CharacterCard = {
     },
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Ward",
         target: "YOUR_CHARACTERS",
+        type: "gain-keyword",
       },
       id: "wb5-2",
       text: "**Protective Embrace** Your other characters gain **Ward**. _(Opponents can",

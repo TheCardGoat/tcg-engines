@@ -4,23 +4,23 @@ export const weCouldBeImmortals: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "gain-keyword",
+            duration: "this-turn",
             keyword: "Resist",
             target: "YOUR_CHARACTERS",
+            type: "gain-keyword",
             value: 6,
-            duration: "this-turn",
           },
           {
-            type: "put-into-inkwell",
-            source: "this-card",
-            target: "CONTROLLER",
             exerted: true,
             facedown: true,
+            source: "this-card",
+            target: "CONTROLLER",
+            type: "put-into-inkwell",
           },
         ],
+        type: "sequence",
       },
       id: "ulc-1",
       name: "Your Inventor",

@@ -4,22 +4,22 @@ export const merlinGoat: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "play-card",
             from: "hand",
+            type: "play-card",
           },
           {
-            type: "gain-lore",
             amount: 1,
+            type: "gain-lore",
           },
         ],
+        type: "sequence",
       },
       id: "198-1",
       name: "HERE I COME! When you play this character and",
       text: "HERE I COME! When you play this character and when he leaves play, gain 1 lore.",
-      trigger: { event: "play", timing: "when", on: "SELF" },
+      trigger: { event: "play", on: "SELF", timing: "when" },
       type: "triggered",
     },
   ],

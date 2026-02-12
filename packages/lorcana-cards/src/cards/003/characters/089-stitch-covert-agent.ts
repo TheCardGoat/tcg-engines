@@ -10,9 +10,9 @@ export const stitchCovertAgent: CharacterCard = {
     },
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Ward",
         target: "SELF",
+        type: "gain-keyword",
       },
       id: "1c3-2",
       text: "HIDE While this character is at a location, he gains Ward.",

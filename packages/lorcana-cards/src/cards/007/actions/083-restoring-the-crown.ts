@@ -4,10 +4,8 @@ export const restoringTheCrown: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "exert",
             target: {
               selector: "all",
               count: "all",
@@ -15,12 +13,14 @@ export const restoringTheCrown: ActionCard = {
               zones: ["play"],
               cardTypes: ["character"],
             },
+            type: "exert",
           },
           {
-            type: "gain-lore",
             amount: 2,
+            type: "gain-lore",
           },
         ],
+        type: "sequence",
       },
       id: "1ss-1",
       text: "Exert all opposing characters. Whenever one of your characters banishes another character in a challenge this turn, gain 2 lore.",

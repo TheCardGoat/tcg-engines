@@ -4,14 +4,14 @@ export const heiheiAccidentalExplorer: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "lose-lore",
         amount: 1,
         target: "EACH_OPPONENT",
+        type: "lose-lore",
       },
       id: "j8v-1",
       name: "MINDLESS WANDERING",
       text: "MINDLESS WANDERING Once per turn, when this character moves to a location, each opponent loses 1 lore.",
-      trigger: { event: "play", timing: "when", on: "SELF" },
+      trigger: { event: "play", on: "SELF", timing: "when" },
       type: "triggered",
     },
   ],

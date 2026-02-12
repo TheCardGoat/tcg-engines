@@ -4,16 +4,16 @@ export const bosssOrders: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
+        duration: "this-turn",
         keyword: "Support",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
-        duration: "this-turn",
+        type: "gain-keyword",
       },
       id: "117-1",
       text: "Chosen character gains Support this turn.",

@@ -10,25 +10,25 @@ export const blueFairyRewardingGoodDeeds: CharacterCard = {
     },
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "draw",
           amount: 1,
           target: "CONTROLLER",
+          type: "draw",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "tv6-2",
       name: "ETHEREAL GLOW",
       text: "ETHEREAL GLOW Whenever you play a Floodborn character, you may draw a card.",
       trigger: {
         event: "play",
-        timing: "whenever",
         on: {
-          controller: "you",
           cardType: "character",
           classification: "Floodborn",
+          controller: "you",
         },
+        timing: "whenever",
       },
       type: "triggered",
     },

@@ -27,9 +27,7 @@ import type { CardRegistry } from "./card-registry";
  * ```
  */
 export function createCardRegistry<TCardDefinition>(
-  cards:
-    | Record<string, TCardDefinition>
-    | (TCardDefinition & { id: string })[] = {} as Record<
+  cards: Record<string, TCardDefinition> | (TCardDefinition & { id: string })[] = {} as Record<
     string,
     TCardDefinition
   >,
@@ -45,26 +43,24 @@ export function createCardRegistry<TCardDefinition>(
       )
     : cards;
   return {
+    getAllCards(): TCardDefinition[] {
+      return Object.values(cardsRecord);
+    },
+
     getCard(definitionId: string): TCardDefinition | undefined {
       return cardsRecord[definitionId];
+    },
+
+    getCardCount(): number {
+      return Object.keys(cardsRecord).length;
     },
 
     hasCard(definitionId: string): boolean {
       return definitionId in cardsRecord;
     },
 
-    getAllCards(): TCardDefinition[] {
-      return Object.values(cardsRecord);
-    },
-
-    queryCards(
-      predicate: (card: TCardDefinition) => boolean,
-    ): TCardDefinition[] {
+    queryCards(predicate: (card: TCardDefinition) => boolean): TCardDefinition[] {
       return Object.values(cardsRecord).filter(predicate);
-    },
-
-    getCardCount(): number {
-      return Object.keys(cardsRecord).length;
     },
   };
 }

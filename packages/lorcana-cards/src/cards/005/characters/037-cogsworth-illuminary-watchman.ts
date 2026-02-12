@@ -4,18 +4,18 @@ export const cogsworthIlluminaryWatchman: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
+        duration: "this-turn",
         keyword: "Rush",
         target: "SELF",
-        duration: "this-turn",
+        type: "gain-keyword",
       },
       id: "1n5-1",
       name: "TIME TO MOVE IT!",
       text: "TIME TO MOVE IT! When you play this character, chosen character gains Rush this turn.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

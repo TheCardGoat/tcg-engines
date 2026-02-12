@@ -10,9 +10,9 @@ export const magicBroomSwiftCleaner: CharacterCard = {
     },
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "shuffle-into-deck",
+          intoDeck: "owner",
           target: {
             selector: "chosen",
             count: 1,
@@ -20,9 +20,9 @@ export const magicBroomSwiftCleaner: CharacterCard = {
             zones: ["play"],
             cardTypes: ["card"],
           },
-          intoDeck: "owner",
+          type: "shuffle-into-deck",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "114-2",
       text: "CLEAN THIS, CLEAN THAT When you play this character, you may shuffle all Broom cards from your discard into your deck.",

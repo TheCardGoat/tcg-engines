@@ -4,19 +4,19 @@ export const nothingWeWontDo: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "ready",
             target: "YOUR_CHARACTERS",
+            type: "ready",
           },
           {
-            type: "restriction",
+            duration: "this-turn",
             restriction: "cant-quest",
             target: "SELF",
-            duration: "this-turn",
+            type: "restriction",
           },
         ],
+        type: "sequence",
       },
       id: "1kl-1",
       text: "Sing Together 8 Ready all your characters. For the rest of this turn, they take no damage from challenges and can't quest.",

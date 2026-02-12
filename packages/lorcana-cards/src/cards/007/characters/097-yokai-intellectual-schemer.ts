@@ -4,8 +4,8 @@ export const yokaiIntellectualSchemer: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "play-card",
         from: "hand",
+        type: "play-card",
       },
       id: "8zk-1",
       text: "INNOVATE You pay 1 {I} less to play characters using their Shift ability.",

@@ -4,9 +4,9 @@ export const peterPanNeverLandPrankster: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "restriction",
         restriction: "enters-play-exerted",
         target: "SELF",
+        type: "restriction",
       },
       id: "13z-1",
       name: "LOOK INNOCENT",

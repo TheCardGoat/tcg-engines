@@ -13,9 +13,9 @@
 import type { CardId, PlayerId } from "@tcg/core";
 import type { GundamGameState } from "../types";
 import {
-  createEffectContext,
   type EffectContext,
   type EffectResult,
+  createEffectContext,
   executeEffect,
 } from "./effect-executor";
 import type { AbilityDefinition, Effect } from "./effect-types";
@@ -52,10 +52,7 @@ export type TriggerType =
 export interface TriggeredAbility extends AbilityDefinition {
   readonly type: "triggered";
   readonly trigger: TriggerType;
-  readonly triggerCondition?: (
-    state: GundamGameState,
-    cardId: CardId,
-  ) => boolean;
+  readonly triggerCondition?: (state: GundamGameState, cardId: CardId) => boolean;
   readonly oncePerTurn?: boolean;
 }
 
@@ -72,10 +69,7 @@ export interface ActivatedAbility extends AbilityDefinition {
     readonly sendToTrash?: CardId;
     readonly reveal?: CardId;
   };
-  readonly activationCondition?: (
-    state: GundamGameState,
-    cardId: CardId,
-  ) => boolean;
+  readonly activationCondition?: (state: GundamGameState, cardId: CardId) => boolean;
   readonly oncePerTurn?: boolean;
 }
 
@@ -84,11 +78,7 @@ export interface ActivatedAbility extends AbilityDefinition {
  */
 export interface StaticAbility extends AbilityDefinition {
   readonly type: "static";
-  readonly appliesTo?:
-    | "this"
-    | "each-friendly-unit"
-    | "each-opponent-unit"
-    | "all";
+  readonly appliesTo?: "this" | "each-friendly-unit" | "each-opponent-unit" | "all";
   readonly condition?: (state: GundamGameState, cardId: CardId) => boolean;
 }
 
@@ -104,9 +94,7 @@ export type CardAbility = TriggeredAbility | ActivatedAbility | StaticAbility;
 /**
  * Registry of abilities by card ID
  */
-interface AbilityRegistry {
-  readonly [cardId: string]: readonly CardAbility[];
-}
+type AbilityRegistry = Readonly<Record<string, readonly CardAbility[]>>;
 
 /**
  * In-memory ability registry
@@ -116,10 +104,7 @@ let abilityRegistry: AbilityRegistry = {};
 /**
  * Register abilities for a card
  */
-export function registerAbilities(
-  cardId: string,
-  abilities: readonly CardAbility[],
-): void {
+export function registerAbilities(cardId: string, abilities: readonly CardAbility[]): void {
   abilityRegistry = {
     ...abilityRegistry,
     [cardId]: abilities,
@@ -160,13 +145,15 @@ export interface TriggerEvent {
 export function findMatchingAbilities(
   event: TriggerEvent,
   state: GundamGameState,
-): Array<{ cardId: CardId; ability: CardAbility }> {
-  const matches: Array<{ cardId: CardId; ability: CardAbility }> = [];
+): { cardId: CardId; ability: CardAbility }[] {
+  const matches: { cardId: CardId; ability: CardAbility }[] = [];
 
   // Check all cards in play
   for (const player of state.players) {
     const battleArea = state.zones.battleArea[player];
-    if (!battleArea?.cards) continue;
+    if (!battleArea?.cards) {
+      continue;
+    }
 
     for (const cardId of battleArea.cards) {
       const abilities = getAbilities(cardId);
@@ -174,11 +161,8 @@ export function findMatchingAbilities(
       for (const ability of abilities) {
         if (ability.type === "triggered" && ability.trigger === event.type) {
           // Check trigger condition if present
-          if (
-            !ability.triggerCondition ||
-            ability.triggerCondition(state, cardId)
-          ) {
-            matches.push({ cardId, ability });
+          if (!ability.triggerCondition || ability.triggerCondition(state, cardId)) {
+            matches.push({ ability, cardId });
           }
         }
       }
@@ -216,13 +200,12 @@ export function canActivateAbility(
 ): boolean {
   // Check if player controls the card
   const cardInPlay = isCardInPlay(state, cardId, player);
-  if (!cardInPlay) return false;
+  if (!cardInPlay) {
+    return false;
+  }
 
   // Check activation condition
-  if (
-    ability.activationCondition &&
-    !ability.activationCondition(state, cardId)
-  ) {
+  if (ability.activationCondition && !ability.activationCondition(state, cardId)) {
     return false;
   }
 
@@ -263,12 +246,16 @@ function canPayCost(
 ): boolean {
   if (cost.payResources !== undefined) {
     const activeResources = state.gundam.activeResources[player] ?? 0;
-    if (activeResources < cost.payResources) return false;
+    if (activeResources < cost.payResources) {
+      return false;
+    }
   }
 
   if (cost.discard !== undefined) {
     const handSize = state.zones.hand[player]?.cards.length ?? 0;
-    if (handSize < cost.discard) return false;
+    if (handSize < cost.discard) {
+      return false;
+    }
   }
 
   return true;
@@ -302,12 +289,14 @@ export function executeActivatedAbility(
  */
 export function getStaticAbilities(
   state: GundamGameState,
-): Array<{ cardId: CardId; ability: StaticAbility }> {
-  const staticAbilities: Array<{ cardId: CardId; ability: StaticAbility }> = [];
+): { cardId: CardId; ability: StaticAbility }[] {
+  const staticAbilities: { cardId: CardId; ability: StaticAbility }[] = [];
 
   for (const player of state.players) {
     const battleArea = state.zones.battleArea[player];
-    if (!battleArea?.cards) continue;
+    if (!battleArea?.cards) {
+      continue;
+    }
 
     for (const cardId of battleArea.cards) {
       const abilities = getAbilities(cardId);
@@ -316,7 +305,7 @@ export function getStaticAbilities(
         if (ability.type === "static") {
           // Check condition if present
           if (!ability.condition || ability.condition(state, cardId)) {
-            staticAbilities.push({ cardId, ability });
+            staticAbilities.push({ ability, cardId });
           }
         }
       }
@@ -339,7 +328,7 @@ export function applyStaticModifiers<T>(
   const modifiedValue = baseValue;
 
   for (const { ability } of staticAbilities) {
-    const effect = ability.effect;
+    const { effect } = ability;
 
     // Check if this is a stat modification effect
     if (effect.type === `modify-${property}`) {
@@ -357,11 +346,7 @@ export function applyStaticModifiers<T>(
 /**
  * Check if a card is in play (in battle area or base section)
  */
-function isCardInPlay(
-  state: GundamGameState,
-  cardId: CardId,
-  player: PlayerId,
-): boolean {
+function isCardInPlay(state: GundamGameState, cardId: CardId, player: PlayerId): boolean {
   const battleArea = state.zones.battleArea[player];
   const baseSection = state.zones.baseSection[player];
 
@@ -385,9 +370,9 @@ export function createTriggeredAbility(
   },
 ): TriggeredAbility {
   return {
-    type: "triggered",
-    trigger,
     effect,
+    trigger,
+    type: "triggered",
     ...options,
   };
 }
@@ -406,9 +391,9 @@ export function createActivatedAbility(
   },
 ): ActivatedAbility {
   return {
-    type: "activated",
     cost,
     effect,
+    type: "activated",
     ...options,
   };
 }
@@ -426,8 +411,8 @@ export function createStaticAbility(
   },
 ): StaticAbility {
   return {
-    type: "static",
     effect,
+    type: "static",
     ...options,
   };
 }
@@ -450,12 +435,7 @@ export function processTriggerEvents(
 
     for (const { cardId, ability } of matchingAbilities) {
       if (ability.type === "triggered") {
-        const result = executeTriggeredAbility(
-          cardId,
-          ability,
-          currentState,
-          event.player,
-        );
+        const result = executeTriggeredAbility(cardId, ability, currentState, event.player);
         if (result.success) {
           currentState = result.state;
         }
@@ -472,24 +452,23 @@ export function processTriggerEvents(
 export function getActivatableAbilities(
   state: GundamGameState,
   player: PlayerId,
-): Array<{
+): {
   cardId: CardId;
   ability: ActivatedAbility;
-}> {
-  const activatable: Array<{ cardId: CardId; ability: ActivatedAbility }> = [];
+}[] {
+  const activatable: { cardId: CardId; ability: ActivatedAbility }[] = [];
 
   const battleArea = state.zones.battleArea[player];
-  if (!battleArea?.cards) return activatable;
+  if (!battleArea?.cards) {
+    return activatable;
+  }
 
   for (const cardId of battleArea.cards) {
     const abilities = getAbilities(cardId);
 
     for (const ability of abilities) {
-      if (
-        ability.type === "activated" &&
-        canActivateAbility(cardId, ability, state, player)
-      ) {
-        activatable.push({ cardId, ability });
+      if (ability.type === "activated" && canActivateAbility(cardId, ability, state, player)) {
+        activatable.push({ ability, cardId });
       }
     }
   }

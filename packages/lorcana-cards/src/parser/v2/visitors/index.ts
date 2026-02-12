@@ -6,8 +6,4 @@ export {
   toCondition,
   type VisitorCondition,
 } from "./condition-visitor";
-export {
-  parseTargetFromCst,
-  parseTargetFromText,
-  type Target,
-} from "./target-visitor";
+export { parseTargetFromCst, parseTargetFromText, type Target } from "./target-visitor";

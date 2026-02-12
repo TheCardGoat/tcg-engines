@@ -4,14 +4,14 @@ export const glean: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "banish",
         target: {
-          selector: "chosen",
+          cardTypes: ["item"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["item"],
         },
+        type: "banish",
       },
       id: "wm3-1",
       text: "Banish chosen item. Its player gains 2 lore.",

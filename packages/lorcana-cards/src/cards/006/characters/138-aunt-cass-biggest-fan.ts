@@ -4,19 +4,19 @@ export const auntCassBiggestFan: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "lore",
-        modifier: 1,
-        target: "CHOSEN_CHARACTER",
         duration: "this-turn",
+        modifier: 1,
+        stat: "lore",
+        target: "CHOSEN_CHARACTER",
+        type: "modify-stat",
       },
       id: "1qq-1",
       name: "HAPPY TO HELP",
       text: "HAPPY TO HELP Whenever this character quests, chosen Inventor character gets +1 {L} this turn.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

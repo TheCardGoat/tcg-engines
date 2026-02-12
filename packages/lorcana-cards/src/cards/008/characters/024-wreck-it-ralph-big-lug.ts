@@ -13,10 +13,9 @@ export const wreckitRalphBigLug: CharacterCard = {
     },
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "optional",
+            chooser: "CONTROLLER",
             effect: {
               type: "return-to-hand",
               target: {
@@ -27,18 +26,19 @@ export const wreckitRalphBigLug: CharacterCard = {
                 cardTypes: ["character"],
               },
             },
-            chooser: "CONTROLLER",
+            type: "optional",
           },
           {
-            type: "gain-lore",
             amount: 1,
+            type: "gain-lore",
           },
         ],
+        type: "sequence",
       },
       id: "1ic-2",
       name: "BACK ON TRACK When you play this character and",
       text: "BACK ON TRACK When you play this character and whenever he quests, you may return a Racer character card with cost 6 or less from your discard to your hand. If you do, gain 1 lore.",
-      trigger: { event: "play", timing: "when", on: "SELF" },
+      trigger: { event: "play", on: "SELF", timing: "when" },
       type: "triggered",
     },
   ],

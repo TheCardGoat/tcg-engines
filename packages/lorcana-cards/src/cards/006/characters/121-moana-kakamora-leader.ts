@@ -13,20 +13,20 @@ export const moanaKakamoraLeader: CharacterCard = {
     },
     {
       effect: {
-        type: "optional",
-        effect: {
-          type: "gain-lore",
-          amount: 1,
-        },
         chooser: "CONTROLLER",
+        effect: {
+          amount: 1,
+          type: "gain-lore",
+        },
+        type: "optional",
       },
       id: "cew-2",
       name: "GATHERING FORCES",
       text: "GATHERING FORCES When you play this character, you may move any number of your characters to the same location for free. Gain 1 lore for each character you moved.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

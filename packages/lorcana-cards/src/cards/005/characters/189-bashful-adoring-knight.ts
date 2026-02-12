@@ -4,9 +4,9 @@ export const bashfulAdoringKnight: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Bodyguard",
         target: "SELF",
+        type: "gain-keyword",
       },
       id: "gwv-1",
       text: "IMPRESS THE PRINCESS While you have a character named Snow White in play, this character gains Bodyguard.",

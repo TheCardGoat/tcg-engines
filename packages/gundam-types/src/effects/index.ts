@@ -42,11 +42,7 @@ export type * from "./effect-timing";
 // Keywords
 export type * from "./keywords";
 // Export from targeting.ts for CardFilter and ZoneType
-export type {
-  CardFilter,
-  PropertyCostFilter,
-  ZoneType,
-} from "./targeting";
+export type { CardFilter, PropertyCostFilter, ZoneType } from "./targeting";
 // Targeting System (includes LevelFilter, CardType, Color, CardFilter)
 // Export from targeting-types
 export type {
@@ -66,7 +62,7 @@ export type {
 
 // Card Definitions (for targeting system)
 // NOTE: CommandCardDefinition and UnitCardDefinition are exported from cards/card-types
-// to avoid duplicate exports. Only export unique types here.
+// To avoid duplicate exports. Only export unique types here.
 export type {
   BaseCardDefinition as EffectBaseCardDefinition,
   BaseEffectCardDefinition,
@@ -75,11 +71,7 @@ export type {
 // Effect Definition
 export type * from "./effect-definition";
 // Effect narrowing types
-export type {
-  ActivatedEffect,
-  ConstantEffect,
-  TriggeredEffect,
-} from "./effect-definition";
+export type { ActivatedEffect, ConstantEffect, TriggeredEffect } from "./effect-definition";
 
 // ============================================================================
 // CARD DEFINITIONS
@@ -91,6 +83,6 @@ export type {
 // RawCardDefinition which is the canonical source for card definitions.
 //
 // The types in ./card-definitions.ts are internal and should not be directly
-// imported from this package.
+// Imported from this package.
 //
-// import type { CommandCardDefinition } from "@tcg/gundam-types/cards";
+// Import type { CommandCardDefinition } from "@tcg/gundam-types/cards";

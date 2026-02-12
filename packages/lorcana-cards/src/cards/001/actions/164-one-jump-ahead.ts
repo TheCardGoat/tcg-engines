@@ -4,11 +4,11 @@ export const oneJumpAhead: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "put-into-inkwell",
-        source: "top-of-deck",
-        target: "CONTROLLER",
         exerted: true,
         facedown: true,
+        source: "top-of-deck",
+        target: "CONTROLLER",
+        type: "put-into-inkwell",
       },
       id: "gf6-1",
       text: "_(A character with cost 2 or more can {E} to sing this song for free.)_\nPut the top card of your deck into your inkwell facedown and exerted.",

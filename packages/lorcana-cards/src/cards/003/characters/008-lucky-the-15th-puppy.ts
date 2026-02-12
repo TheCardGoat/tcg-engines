@@ -5,9 +5,8 @@ export const luckyThe15thPuppy: CharacterCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "put-on-bottom",
           target: {
             selector: "all",
             count: "all",
@@ -15,8 +14,9 @@ export const luckyThe15thPuppy: CharacterCard = {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "put-on-bottom",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "5ql-1",
       text: "GOOD AS NEW {E} — Reveal the top 3 cards of your deck. You may put each character card with cost 2 or less into your hand. Put the rest on the bottom of your deck in any order.",
@@ -24,26 +24,26 @@ export const luckyThe15thPuppy: CharacterCard = {
     },
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you have 4 or more other characters in play",
+          type: "if",
         },
         then: {
-          type: "modify-stat",
-          stat: "lore",
-          modifier: 1,
-          target: "YOUR_CHARACTERS",
           duration: "this-turn",
+          modifier: 1,
+          stat: "lore",
+          target: "YOUR_CHARACTERS",
+          type: "modify-stat",
         },
+        type: "conditional",
       },
       id: "5ql-2",
       name: "PUPPY LOVE",
       text: "PUPPY LOVE Whenever this character quests, if you have 4 or more other characters in play, your other characters get +1 {L} this turn.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

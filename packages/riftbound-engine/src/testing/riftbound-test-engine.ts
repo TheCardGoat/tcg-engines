@@ -5,10 +5,7 @@
  */
 
 import type { CardId } from "@tcg/core";
-import {
-  RiftboundEngine,
-  type RiftboundGameConfig,
-} from "../engine/riftbound-engine";
+import { RiftboundEngine, type RiftboundGameConfig } from "../engine/riftbound-engine";
 import type { PlayerId, RiftboundGameState } from "../types";
 
 /**
@@ -20,33 +17,28 @@ function deepMergeState(
   source: Partial<RiftboundGameState>,
 ): RiftboundGameState {
   return {
-    gameId: source.gameId ?? target.gameId,
-    players:
-      source.players !== undefined
-        ? { ...target.players, ...source.players }
-        : target.players,
-    victoryScore: source.victoryScore ?? target.victoryScore,
     battlefields:
       source.battlefields !== undefined
         ? { ...target.battlefields, ...source.battlefields }
         : target.battlefields,
-    runePools:
-      source.runePools !== undefined
-        ? { ...target.runePools, ...source.runePools }
-        : target.runePools,
     conqueredThisTurn:
       source.conqueredThisTurn !== undefined
         ? { ...target.conqueredThisTurn, ...source.conqueredThisTurn }
         : target.conqueredThisTurn,
+    gameId: source.gameId ?? target.gameId,
+    players:
+      source.players !== undefined ? { ...target.players, ...source.players } : target.players,
+    runePools:
+      source.runePools !== undefined
+        ? { ...target.runePools, ...source.runePools }
+        : target.runePools,
     scoredThisTurn:
       source.scoredThisTurn !== undefined
         ? { ...target.scoredThisTurn, ...source.scoredThisTurn }
         : target.scoredThisTurn,
-    turn:
-      source.turn !== undefined
-        ? { ...target.turn, ...source.turn }
-        : target.turn,
     status: source.status ?? target.status,
+    turn: source.turn !== undefined ? { ...target.turn, ...source.turn } : target.turn,
+    victoryScore: source.victoryScore ?? target.victoryScore,
     winner: source.winner !== undefined ? source.winner : target.winner,
   };
 }

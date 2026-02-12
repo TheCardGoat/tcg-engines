@@ -4,20 +4,20 @@ export const geppettoSkilledCraftsman: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
-        effect: {
-          type: "gain-lore",
-          amount: 1,
-        },
         chooser: "CONTROLLER",
+        effect: {
+          amount: 1,
+          type: "gain-lore",
+        },
+        type: "optional",
       },
       id: "1ae-1",
       name: "SEEKING INSPIRATION",
       text: "SEEKING INSPIRATION Whenever this character quests, you may choose and discard any number of item cards to gain 1 lore for each item card discarded this way.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

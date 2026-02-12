@@ -4,17 +4,17 @@ export const ladyTremaineOverbearingMatriarch: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "lose-lore",
         amount: 1,
         target: "EACH_OPPONENT",
+        type: "lose-lore",
       },
       id: "r0v-1",
       name: "NOT FOR YOU",
       text: "NOT FOR YOU When you play this character, each opponent with more lore than you loses 1 lore.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

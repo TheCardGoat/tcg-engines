@@ -4,12 +4,12 @@ export const developYourBrain: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "scry",
         amount: 2,
         destinations: [
-          { zone: "hand", min: 1, max: 1 },
-          { zone: "deck-bottom", remainder: true },
+          { max: 1, min: 1, zone: "hand" },
+          { remainder: true, zone: "deck-bottom" },
         ],
+        type: "scry",
       },
       id: "yy9-1",
       text: "Look at the top 2 cards of your deck. Put one into your hand and the other on the bottom of the deck.",

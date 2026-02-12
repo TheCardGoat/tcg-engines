@@ -5,15 +5,15 @@ export const sleepysFlute: ItemCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you played a song this turn",
+          type: "if",
         },
         then: {
-          type: "gain-lore",
           amount: 1,
+          type: "gain-lore",
         },
+        type: "conditional",
       },
       id: "1aa-1",
       text: "A SILLY SONG {E} — If you played a song this turn, gain 1 lore.",

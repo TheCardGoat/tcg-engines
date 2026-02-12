@@ -13,7 +13,7 @@ Generate expected JSON assertions for each card in a set's test file `packages/l
 - **ONLY** add the expected JSON assertions inside each skipped test
 - Tests will remain skipped (`it.skip`) after this step is complete
 
-The purpose is to document what the parser *should* output for each card, so that when the parser is ready, the tests can be enabled.
+The purpose is to document what the parser _should_ output for each card, so that when the parser is ready, the tests can be enabled.
 
 ## Current State
 
@@ -37,6 +37,7 @@ The purpose is to document what the parser *should* output for each card, so tha
 ### Parser Return Type
 
 Based on `@tcg/lorcana-types`, the parser returns:
+
 ```typescript
 interface MultiParseResult {
   success: boolean;
@@ -45,15 +46,16 @@ interface MultiParseResult {
 }
 
 interface AbilityWithText {
-  ability: Ability;  // KeywordAbility | TriggeredAbility | ActivatedAbility | StaticAbility | ActionAbility
+  ability: Ability; // KeywordAbility | TriggeredAbility | ActivatedAbility | StaticAbility | ActionAbility
   text?: string;
-  name?: string;     // Named ability prefix (ALL CAPS)
+  name?: string; // Named ability prefix (ALL CAPS)
 }
 ```
 
 ### CRITICAL: Accessing Abilities
 
 **The ability object is nested inside `ability` property:**
+
 ```typescript
 // CORRECT - access via .ability
 expect(result.abilities[0].ability).toEqual(...)
@@ -67,6 +69,7 @@ expect(result.abilities[0]).toEqual(...)
 ## Keyword Ability Patterns
 
 ### Simple Keywords (no value)
+
 ```typescript
 import type { KeywordAbilityDefinition } from "@tcg/lorcana-types";
 
@@ -76,12 +79,11 @@ const bodyguard: KeywordAbilityDefinition = {
   keyword: "Bodyguard",
 };
 
-expect(result.abilities[0].ability).toEqual(
-  expect.objectContaining(bodyguard),
-);
+expect(result.abilities[0].ability).toEqual(expect.objectContaining(bodyguard));
 ```
 
 ### Keywords with Value
+
 ```typescript
 import type { KeywordAbilityDefinition } from "@tcg/lorcana-types";
 
@@ -92,12 +94,11 @@ const challenger: KeywordAbilityDefinition = {
   value: 2,
 };
 
-expect(result.abilities[0].ability).toEqual(
-  expect.objectContaining(challenger),
-);
+expect(result.abilities[0].ability).toEqual(expect.objectContaining(challenger));
 ```
 
 ### Shift Keyword (special structure)
+
 ```typescript
 import type { KeywordAbilityDefinition } from "@tcg/lorcana-types";
 
@@ -107,9 +108,7 @@ const shift: KeywordAbilityDefinition = {
   cost: { ink: 5 },
 };
 
-expect(result.abilities[0].ability).toEqual(
-  expect.objectContaining(shift),
-);
+expect(result.abilities[0].ability).toEqual(expect.objectContaining(shift));
 ```
 
 ---
@@ -117,38 +116,42 @@ expect(result.abilities[0].ability).toEqual(
 ## Triggered Ability Patterns
 
 ### Common Trigger Events
-| Text Pattern | Event Value |
-|--------------|-------------|
-| "When you play this character/item" | `play` |
-| "Whenever this character quests" | `quest` |
-| "Whenever this character challenges" | `challenge` |
-| "When this character is challenged" | `challenged` |
-| "When this character is banished" | `banish` |
+
+| Text Pattern                                     | Event Value           |
+| ------------------------------------------------ | --------------------- |
+| "When you play this character/item"              | `play`                |
+| "Whenever this character quests"                 | `quest`               |
+| "Whenever this character challenges"             | `challenge`           |
+| "When this character is challenged"              | `challenged`          |
+| "When this character is banished"                | `banish`              |
 | "When this character is banished in a challenge" | `banish-in-challenge` |
-| "When this character leaves play" | `leave-play` |
-| "At the start of your turn" | `start-of-turn` |
-| "At the end of your turn" | `end-of-turn` |
-| "Whenever you put a card under this character" | `put-card-under` |
-| "Whenever you move a character" | `move` |
-| "Whenever an opponent draws a card" | `draw` |
-| "Whenever you put a card into your inkwell" | `put-into-inkwell` |
+| "When this character leaves play"                | `leave-play`          |
+| "At the start of your turn"                      | `start-of-turn`       |
+| "At the end of your turn"                        | `end-of-turn`         |
+| "Whenever you put a card under this character"   | `put-card-under`      |
+| "Whenever you move a character"                  | `move`                |
+| "Whenever an opponent draws a card"              | `draw`                |
+| "Whenever you put a card into your inkwell"      | `put-into-inkwell`    |
 
 ### Trigger Timing
-| Text Pattern | Timing Value |
-|--------------|--------------|
-| "When..." | `when` |
-| "Whenever..." | `whenever` |
-| "At the start/end..." | `at` |
+
+| Text Pattern          | Timing Value |
+| --------------------- | ------------ |
+| "When..."             | `when`       |
+| "Whenever..."         | `whenever`   |
+| "At the start/end..." | `at`         |
 
 ### Trigger Subject (on)
-| Text Pattern | On Value |
-|--------------|----------|
-| "this character" | `SELF` |
-| "one of your characters" | `YOUR_CHARACTERS` |
-| "another character" | `OTHER_CHARACTERS` |
-| "an opposing character" | `OPPOSING_CHARACTERS` |
+
+| Text Pattern             | On Value              |
+| ------------------------ | --------------------- |
+| "this character"         | `SELF`                |
+| "one of your characters" | `YOUR_CHARACTERS`     |
+| "another character"      | `OTHER_CHARACTERS`    |
+| "an opposing character"  | `OPPOSING_CHARACTERS` |
 
 ### Example Triggered Ability
+
 ```typescript
 import type { TriggeredAbilityDefinition } from "@tcg/lorcana-types";
 
@@ -167,9 +170,7 @@ const abilityName: TriggeredAbilityDefinition = {
   },
 };
 
-expect(result.abilities[0].ability).toEqual(
-  expect.objectContaining(abilityName),
-);
+expect(result.abilities[0].ability).toEqual(expect.objectContaining(abilityName));
 ```
 
 ---
@@ -179,6 +180,7 @@ expect(result.abilities[0].ability).toEqual(
 Static abilities provide continuous effects while in play.
 
 ### Common Static Effects
+
 - `modify-stat` - Strength/Willpower/Lore modifications
 - `restriction` - Can't quest, can't ready, can't be dealt damage, etc.
 - `gain-keyword` - Grants keywords to characters
@@ -187,6 +189,7 @@ Static abilities provide continuous effects while in play.
 - `grant-ability` - Grants activated abilities to characters
 
 ### Example Static Abilities
+
 ```typescript
 import type { StaticAbilityDefinition } from "@tcg/lorcana-types";
 
@@ -202,9 +205,7 @@ const highEnergy: StaticAbilityDefinition = {
   },
 };
 
-expect(result.abilities[0].ability).toEqual(
-  expect.objectContaining(highEnergy),
-);
+expect(result.abilities[0].ability).toEqual(expect.objectContaining(highEnergy));
 
 // Restriction (common: STONE BY DAY)
 const stoneByDay: StaticAbilityDefinition = {
@@ -217,9 +218,7 @@ const stoneByDay: StaticAbilityDefinition = {
   },
 };
 
-expect(result.abilities[0].ability).toEqual(
-  expect.objectContaining(stoneByDay),
-);
+expect(result.abilities[0].ability).toEqual(expect.objectContaining(stoneByDay));
 
 // Grants keyword
 const standFast: StaticAbilityDefinition = {
@@ -233,9 +232,7 @@ const standFast: StaticAbilityDefinition = {
   },
 };
 
-expect(result.abilities[0].ability).toEqual(
-  expect.objectContaining(standFast),
-);
+expect(result.abilities[0].ability).toEqual(expect.objectContaining(standFast));
 ```
 
 ---
@@ -243,17 +240,19 @@ expect(result.abilities[0].ability).toEqual(
 ## Activated Ability Patterns
 
 ### Cost Structure
+
 ```typescript
 import type { AbilityCost } from "@tcg/lorcana-types";
 
 const cost: AbilityCost = {
-  ink: 1,           // {I} cost
-  exert: true,      // {E} - exert this card
+  ink: 1, // {I} cost
+  exert: true, // {E} - exert this card
   banishSelf: true, // "Banish this item/character"
 };
 ```
 
 ### Example Activated Ability
+
 ```typescript
 import type { ActivatedAbilityDefinition } from "@tcg/lorcana-types";
 
@@ -270,9 +269,7 @@ const wildRage: ActivatedAbilityDefinition = {
   },
 };
 
-expect(result.abilities[0].ability).toEqual(
-  expect.objectContaining(wildRage),
-);
+expect(result.abilities[0].ability).toEqual(expect.objectContaining(wildRage));
 ```
 
 ---
@@ -293,9 +290,7 @@ const banishAction: ActionAbilityDefinition = {
   },
 };
 
-expect(result.abilities[0].ability).toEqual(
-  expect.objectContaining(banishAction),
-);
+expect(result.abilities[0].ability).toEqual(expect.objectContaining(banishAction));
 
 // Compound action (multiple effects)
 const compoundAction: ActionAbilityDefinition = {
@@ -309,35 +304,33 @@ const compoundAction: ActionAbilityDefinition = {
   },
 };
 
-expect(result.abilities[0].ability).toEqual(
-  expect.objectContaining(compoundAction),
-);
+expect(result.abilities[0].ability).toEqual(expect.objectContaining(compoundAction));
 ```
 
 ---
 
 ## Common Effect Types
 
-| Effect | Description | Example Text |
-|--------|-------------|--------------|
-| `draw` | Draw cards | "draw a card" |
-| `deal-damage` | Deal damage to target | "deal 2 damage to chosen character" |
-| `put-damage` | Put damage counters | "put 1 damage counter on each..." |
-| `remove-damage` | Remove damage | "remove up to 3 damage" |
-| `move-damage` | Move damage counters | "move all damage counters from..." |
-| `gain-lore` | Gain lore | "gain 2 lore" |
-| `lose-lore` | Opponent loses lore | "each opponent loses 1 lore" |
-| `exert` | Exert a character | "exert chosen character" |
-| `ready` | Ready a character | "ready chosen character" |
-| `banish` | Banish a card | "banish chosen character" |
-| `return-to-hand` | Return to hand | "return a card to your hand" |
-| `modify-stat` | Modify stats | "gets +2 strength" |
-| `gain-keyword` | Grant keyword | "gains Rush this turn" |
-| `restriction` | Apply restriction | "can't quest this turn" |
-| `look-at-top` | Look at top cards | "look at the top 4 cards" |
-| `put-into-inkwell` | Put into inkwell | "put into your inkwell" |
-| `play-card` | Play a card | "play a character for free" |
-| `compound` | Multiple effects | Complex multi-part effects |
+| Effect             | Description           | Example Text                        |
+| ------------------ | --------------------- | ----------------------------------- |
+| `draw`             | Draw cards            | "draw a card"                       |
+| `deal-damage`      | Deal damage to target | "deal 2 damage to chosen character" |
+| `put-damage`       | Put damage counters   | "put 1 damage counter on each..."   |
+| `remove-damage`    | Remove damage         | "remove up to 3 damage"             |
+| `move-damage`      | Move damage counters  | "move all damage counters from..."  |
+| `gain-lore`        | Gain lore             | "gain 2 lore"                       |
+| `lose-lore`        | Opponent loses lore   | "each opponent loses 1 lore"        |
+| `exert`            | Exert a character     | "exert chosen character"            |
+| `ready`            | Ready a character     | "ready chosen character"            |
+| `banish`           | Banish a card         | "banish chosen character"           |
+| `return-to-hand`   | Return to hand        | "return a card to your hand"        |
+| `modify-stat`      | Modify stats          | "gets +2 strength"                  |
+| `gain-keyword`     | Grant keyword         | "gains Rush this turn"              |
+| `restriction`      | Apply restriction     | "can't quest this turn"             |
+| `look-at-top`      | Look at top cards     | "look at the top 4 cards"           |
+| `put-into-inkwell` | Put into inkwell      | "put into your inkwell"             |
+| `play-card`        | Play a card           | "play a character for free"         |
+| `compound`         | Multiple effects      | Complex multi-part effects          |
 
 ---
 
@@ -345,10 +338,10 @@ expect(result.abilities[0].ability).toEqual(
 
 These ability names appear on multiple cards:
 
-| Name | Type | Effect | Found On |
-|------|------|--------|----------|
-| `STONE BY DAY` | static | `restriction: cant-ready` (conditional) | Gargoyle characters |
-| Named triggered | triggered | Various | Most character cards |
+| Name            | Type      | Effect                                  | Found On             |
+| --------------- | --------- | --------------------------------------- | -------------------- |
+| `STONE BY DAY`  | static    | `restriction: cant-ready` (conditional) | Gargoyle characters  |
+| Named triggered | triggered | Various                                 | Most character cards |
 
 ---
 
@@ -359,6 +352,7 @@ These ability names appear on multiple cards:
 ## Verification
 
 After implementation:
+
 ```bash
 bun test packages/lorcana-cards/src/parser/v2/__tests__/card-texts/set-XXX.test.ts
 ```
@@ -409,18 +403,14 @@ it.skip("Baloo - Friend and Guardian: should parse card text", () => {
     type: "keyword",
     keyword: "Bodyguard",
   };
-  expect(result.abilities[0].ability).toEqual(
-    expect.objectContaining(bodyguard),
-  );
+  expect(result.abilities[0].ability).toEqual(expect.objectContaining(bodyguard));
 
   // Second ability: Support
   const support: KeywordAbilityDefinition = {
     type: "keyword",
     keyword: "Support",
   };
-  expect(result.abilities[1].ability).toEqual(
-    expect.objectContaining(support),
-  );
+  expect(result.abilities[1].ability).toEqual(expect.objectContaining(support));
 });
 ```
 
@@ -443,9 +433,7 @@ it.skip("Scrooge McDuck - Cavern Prospector: should parse card text", () => {
     keyword: "Shift",
     cost: { ink: 4 },
   };
-  expect(result.abilities[0].ability).toEqual(
-    expect.objectContaining(shift),
-  );
+  expect(result.abilities[0].ability).toEqual(expect.objectContaining(shift));
 
   // Second ability: SPECULATION (triggered)
   const speculation: TriggeredAbilityDefinition = {
@@ -462,9 +450,7 @@ it.skip("Scrooge McDuck - Cavern Prospector: should parse card text", () => {
       target: "CONTROLLER",
     },
   };
-  expect(result.abilities[1].ability).toEqual(
-    expect.objectContaining(speculation),
-  );
+  expect(result.abilities[1].ability).toEqual(expect.objectContaining(speculation));
 });
 ```
 
@@ -518,12 +504,11 @@ const wildRage: ActivatedAbilityDefinition = {
   },
 };
 
-expect(result.abilities[0].ability).toEqual(
-  expect.objectContaining(wildRage),
-);
+expect(result.abilities[0].ability).toEqual(expect.objectContaining(wildRage));
 ```
 
 **Benefits:**
+
 - **Type safety** - TypeScript validates the structure at compile time
 - **Cleaner tests** - Define the ability once, use in assertion
 - **Immediate feedback** - Wrong structures are caught before running tests
@@ -533,19 +518,20 @@ expect(result.abilities[0].ability).toEqual(
 
 Import from `@tcg/lorcana-types`:
 
-| Type | Use For |
-|------|---------|
-| `KeywordAbilityDefinition` | Rush, Ward, Bodyguard, Challenger +N, Shift, Singer, etc. |
-| `TriggeredAbilityDefinition` | "When you play...", "Whenever this character quests..." |
-| `ActivatedAbilityDefinition` | "{E} - Draw a card", "2 {I} - Deal 3 damage..." |
-| `StaticAbilityDefinition` | "Your characters gain Ward", "This character can't quest" |
-| `ActionAbilityDefinition` | Action card effects |
-| `ReplacementAbilityDefinition` | "If this character would be dealt damage..." |
-| `AbilityDefinition` | Union of all above (when type varies) |
+| Type                           | Use For                                                   |
+| ------------------------------ | --------------------------------------------------------- |
+| `KeywordAbilityDefinition`     | Rush, Ward, Bodyguard, Challenger +N, Shift, Singer, etc. |
+| `TriggeredAbilityDefinition`   | "When you play...", "Whenever this character quests..."   |
+| `ActivatedAbilityDefinition`   | "{E} - Draw a card", "2 {I} - Deal 3 damage..."           |
+| `StaticAbilityDefinition`      | "Your characters gain Ward", "This character can't quest" |
+| `ActionAbilityDefinition`      | Action card effects                                       |
+| `ReplacementAbilityDefinition` | "If this character would be dealt damage..."              |
+| `AbilityDefinition`            | Union of all above (when type varies)                     |
 
 ### Type-Safe Examples
 
 #### Keyword ability
+
 ```typescript
 import type { KeywordAbilityDefinition } from "@tcg/lorcana-types";
 
@@ -554,12 +540,11 @@ const bodyguard: KeywordAbilityDefinition = {
   keyword: "Bodyguard",
 };
 
-expect(result.abilities[0].ability).toEqual(
-  expect.objectContaining(bodyguard),
-);
+expect(result.abilities[0].ability).toEqual(expect.objectContaining(bodyguard));
 ```
 
 #### Keyword with value
+
 ```typescript
 import type { KeywordAbilityDefinition } from "@tcg/lorcana-types";
 
@@ -569,12 +554,11 @@ const singer: KeywordAbilityDefinition = {
   value: 5,
 };
 
-expect(result.abilities[0].ability).toEqual(
-  expect.objectContaining(singer),
-);
+expect(result.abilities[0].ability).toEqual(expect.objectContaining(singer));
 ```
 
 #### Shift keyword
+
 ```typescript
 import type { KeywordAbilityDefinition } from "@tcg/lorcana-types";
 
@@ -584,12 +568,11 @@ const shift: KeywordAbilityDefinition = {
   cost: { ink: 6 },
 };
 
-expect(result.abilities[0].ability).toEqual(
-  expect.objectContaining(shift),
-);
+expect(result.abilities[0].ability).toEqual(expect.objectContaining(shift));
 ```
 
 #### Triggered ability
+
 ```typescript
 import type { TriggeredAbilityDefinition } from "@tcg/lorcana-types";
 
@@ -611,12 +594,11 @@ const castMySpell: TriggeredAbilityDefinition = {
   },
 };
 
-expect(result.abilities[0].ability).toEqual(
-  expect.objectContaining(castMySpell),
-);
+expect(result.abilities[0].ability).toEqual(expect.objectContaining(castMySpell));
 ```
 
 #### Activated ability
+
 ```typescript
 import type { ActivatedAbilityDefinition } from "@tcg/lorcana-types";
 
@@ -634,12 +616,11 @@ const quickShot: ActivatedAbilityDefinition = {
   },
 };
 
-expect(result.abilities[0].ability).toEqual(
-  expect.objectContaining(quickShot),
-);
+expect(result.abilities[0].ability).toEqual(expect.objectContaining(quickShot));
 ```
 
 #### Static ability
+
 ```typescript
 import type { StaticAbilityDefinition } from "@tcg/lorcana-types";
 
@@ -654,12 +635,11 @@ const allForOne: StaticAbilityDefinition = {
   },
 };
 
-expect(result.abilities[0].ability).toEqual(
-  expect.objectContaining(allForOne),
-);
+expect(result.abilities[0].ability).toEqual(expect.objectContaining(allForOne));
 ```
 
 #### Action ability
+
 ```typescript
 import type { ActionAbilityDefinition } from "@tcg/lorcana-types";
 
@@ -672,9 +652,7 @@ const drawCards: ActionAbilityDefinition = {
   },
 };
 
-expect(result.abilities[0].ability).toEqual(
-  expect.objectContaining(drawCards),
-);
+expect(result.abilities[0].ability).toEqual(expect.objectContaining(drawCards));
 ```
 
 ---
@@ -702,9 +680,7 @@ const bodyguard: KeywordAbilityDefinition = {
   keyword: "Bodyguard",
 };
 
-expect(result.abilities[0].ability).toEqual(
-  expect.objectContaining(bodyguard),
-);
+expect(result.abilities[0].ability).toEqual(expect.objectContaining(bodyguard));
 ```
 
 ### DO NOT use single assertions (anti-pattern)
@@ -718,6 +694,7 @@ expect(ability?.trigger?.event).toBe("play");
 ```
 
 Problems:
+
 - Requires `as any` type casting
 - Uses optional chaining (`?.`) which can mask errors
 - Multiple assertions don't clearly show the expected structure

@@ -10,23 +10,8 @@ import { logger } from "../logging";
  * Target object representing what/who is targeted by an effect.
  */
 export interface Target {
-  modifier?:
-    | "your"
-    | "opponent"
-    | "each"
-    | "all"
-    | "another"
-    | "other"
-    | "chosen"
-    | "this";
-  type:
-    | "character"
-    | "item"
-    | "location"
-    | "card"
-    | "cards"
-    | "player"
-    | string;
+  modifier?: "your" | "opponent" | "each" | "all" | "another" | "other" | "chosen" | "this";
+  type: "character" | "item" | "location" | "card" | "cards" | "player" | string;
 }
 
 /**
@@ -127,8 +112,7 @@ export function parseTargetFromText(text: string): Target | null {
     // Compound modifiers (must come before simple modifiers)
     {
       modifier: "chosen opposing",
-      regex:
-        /(?:^|\s)(chosen\s+opposing(?:'s)?)\s+(character|item|location|card)s?/i,
+      regex: /(?:^|\s)(chosen\s+opposing(?:'s)?)\s+(character|item|location|card)s?/i,
     },
     {
       modifier: "chosen your",
@@ -136,8 +120,7 @@ export function parseTargetFromText(text: string): Target | null {
     },
     {
       modifier: "chosen opposing",
-      regex:
-        /(?:^|\s)(opponent(?:'s)?\s+chosen)\s+(character|item|location|card)s?/i,
+      regex: /(?:^|\s)(opponent(?:'s)?\s+chosen)\s+(character|item|location|card)s?/i,
     },
     // Simple modifiers
     {

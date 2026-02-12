@@ -4,20 +4,20 @@ export const lyleTiberiusRourkeCrystallizedMercenary: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "deal-damage",
         amount: 2,
         target: {
-          selector: "all",
+          cardTypes: ["character"],
           count: "all",
           owner: "any",
+          selector: "all",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "deal-damage",
       },
       id: "1ug-1",
       name: "EXPLOSIVE Once",
       text: "EXPLOSIVE Once during your turn, whenever a card is put into your inkwell, deal 2 damage to each character in play.",
-      trigger: { event: "play", timing: "when", on: "SELF" },
+      trigger: { event: "play", on: "SELF", timing: "when" },
       type: "triggered",
     },
   ],

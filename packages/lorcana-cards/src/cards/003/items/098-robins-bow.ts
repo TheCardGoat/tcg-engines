@@ -5,15 +5,15 @@ export const robinsBow: ItemCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "deal-damage",
         amount: 1,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "deal-damage",
       },
       id: "1mp-1",
       text: "FOREST'S GIFT {E} — Deal 1 damage to chosen damaged character or location.",
@@ -21,9 +21,8 @@ export const robinsBow: ItemCard = {
     },
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "ready",
           target: {
             selector: "self",
             count: 1,
@@ -31,13 +30,14 @@ export const robinsBow: ItemCard = {
             zones: ["play"],
             cardTypes: ["item"],
           },
+          type: "ready",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "1mp-2",
       name: "A BIT OF A LARK",
       text: "A BIT OF A LARK Whenever a character of yours named Robin Hood quests, you may ready this item.",
-      trigger: { event: "play", timing: "when", on: "SELF" },
+      trigger: { event: "play", on: "SELF", timing: "when" },
       type: "triggered",
     },
   ],

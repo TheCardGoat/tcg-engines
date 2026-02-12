@@ -13,36 +13,26 @@ import { locationEffectParser } from "../location-effect";
 describe("locationEffectParser", () => {
   describe("text parsing - move to location", () => {
     it("parses 'move chosen character to a location' correctly", () => {
-      const result = locationEffectParser.parse(
-        "move chosen character to a location",
-      );
+      const result = locationEffectParser.parse("move chosen character to a location");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("move-to-location");
-      expect((result as Effect & { character: string }).character).toBe(
-        "CHOSEN_CHARACTER",
-      );
+      expect((result as Effect & { character: string }).character).toBe("CHOSEN_CHARACTER");
       // Cost defaults to "normal" when "for free" is not present
       expect((result as Effect & { cost?: string }).cost).toBe("normal");
     });
 
     it("parses 'move chosen character to a location for free' correctly", () => {
-      const result = locationEffectParser.parse(
-        "move chosen character to a location for free",
-      );
+      const result = locationEffectParser.parse("move chosen character to a location for free");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("move-to-location");
-      expect((result as Effect & { character: string }).character).toBe(
-        "CHOSEN_CHARACTER",
-      );
+      expect((result as Effect & { character: string }).character).toBe("CHOSEN_CHARACTER");
       expect((result as Effect & { cost: string }).cost).toBe("free");
     });
 
     it("parses 'move chosen character of yours to a location' correctly", () => {
-      const result = locationEffectParser.parse(
-        "move chosen character of yours to a location",
-      );
+      const result = locationEffectParser.parse("move chosen character of yours to a location");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("move-to-location");
@@ -53,9 +43,7 @@ describe("locationEffectParser", () => {
 
     it("does not parse 'move this character' - requires 'chosen' in pattern", () => {
       // NOTE: Parser pattern requires "chosen" before character/card
-      const result = locationEffectParser.parse(
-        "move this character to a location",
-      );
+      const result = locationEffectParser.parse("move this character to a location");
 
       expect(result).toBeNull();
     });
@@ -63,9 +51,7 @@ describe("locationEffectParser", () => {
 
   describe("text parsing - move card variations", () => {
     it("parses 'move chosen card to a location' correctly", () => {
-      const result = locationEffectParser.parse(
-        "move chosen card to a location",
-      );
+      const result = locationEffectParser.parse("move chosen card to a location");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("move-to-location");
@@ -73,9 +59,7 @@ describe("locationEffectParser", () => {
 
     it("does not parse 'move a character' - requires 'chosen'", () => {
       // NOTE: Parser requires "chosen" in the pattern
-      const result = locationEffectParser.parse(
-        "move a character to a location",
-      );
+      const result = locationEffectParser.parse("move a character to a location");
 
       expect(result).toBeNull();
     });
@@ -83,27 +67,21 @@ describe("locationEffectParser", () => {
 
   describe("text parsing - case insensitivity", () => {
     it("parses 'MOVE CHOSEN CHARACTER TO A LOCATION' in uppercase", () => {
-      const result = locationEffectParser.parse(
-        "MOVE CHOSEN CHARACTER TO A LOCATION",
-      );
+      const result = locationEffectParser.parse("MOVE CHOSEN CHARACTER TO A LOCATION");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("move-to-location");
     });
 
     it("parses 'Move Chosen Character To A Location' in mixed case", () => {
-      const result = locationEffectParser.parse(
-        "Move Chosen Character To A Location",
-      );
+      const result = locationEffectParser.parse("Move Chosen Character To A Location");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("move-to-location");
     });
 
     it("parses 'mOvE cHoSeN cHaRaCtEr' in random case", () => {
-      const result = locationEffectParser.parse(
-        "mOvE cHoSeN cHaRaCtEr To A lOcAtIoN",
-      );
+      const result = locationEffectParser.parse("mOvE cHoSeN cHaRaCtEr To A lOcAtIoN");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("move-to-location");
@@ -112,27 +90,21 @@ describe("locationEffectParser", () => {
 
   describe("text parsing - whitespace variations", () => {
     it("parses with single spaces", () => {
-      const result = locationEffectParser.parse(
-        "move chosen character to a location",
-      );
+      const result = locationEffectParser.parse("move chosen character to a location");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("move-to-location");
     });
 
     it("parses with multiple spaces", () => {
-      const result = locationEffectParser.parse(
-        "move  chosen  character  to  a  location",
-      );
+      const result = locationEffectParser.parse("move  chosen  character  to  a  location");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("move-to-location");
     });
 
     it("parses with tabs", () => {
-      const result = locationEffectParser.parse(
-        "move\tchosen\tcharacter\tto\ta\tlocation",
-      );
+      const result = locationEffectParser.parse("move\tchosen\tcharacter\tto\ta\tlocation");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("move-to-location");
@@ -198,18 +170,14 @@ describe("locationEffectParser", () => {
     });
 
     it("handles 'move chosen character to location' with extra context", () => {
-      const result = locationEffectParser.parse(
-        "move chosen character to a location",
-      );
+      const result = locationEffectParser.parse("move chosen character to a location");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("move-to-location");
     });
 
     it("cost is 'normal' when 'for free' not present", () => {
-      const result = locationEffectParser.parse(
-        "move chosen character to a location",
-      );
+      const result = locationEffectParser.parse("move chosen character to a location");
 
       expect(result).not.toBeNull();
       // Cost defaults to "normal" when "for free" is not present
@@ -217,18 +185,14 @@ describe("locationEffectParser", () => {
     });
 
     it("handles phrases with additional context", () => {
-      const result = locationEffectParser.parse(
-        "move chosen character you control to a location",
-      );
+      const result = locationEffectParser.parse("move chosen character you control to a location");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("move-to-location");
     });
 
     it("correctly identifies 'CHOSEN_CHARACTER_OF_YOURS' over 'CHOSEN_CHARACTER'", () => {
-      const result = locationEffectParser.parse(
-        "move chosen character of yours to a location",
-      );
+      const result = locationEffectParser.parse("move chosen character of yours to a location");
 
       expect(result).not.toBeNull();
       expect((result as Effect & { character: string }).character).toBe(
@@ -241,9 +205,7 @@ describe("locationEffectParser", () => {
     it("documents that 'this character' is not detected due to pattern requirement", () => {
       // NOTE: The parser logic checks for "this character" but the regex pattern
       // Requires "chosen" before character, so "this character" never matches
-      const result = locationEffectParser.parse(
-        "move this character to a location for free",
-      );
+      const result = locationEffectParser.parse("move this character to a location for free");
 
       expect(result).toBeNull();
     });

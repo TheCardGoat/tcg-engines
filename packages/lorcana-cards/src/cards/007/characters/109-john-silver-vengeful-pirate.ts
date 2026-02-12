@@ -4,15 +4,15 @@ export const johnSilverVengefulPirate: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "an opposing character was damaged this turn",
+          type: "if",
         },
         then: {
-          type: "play-card",
           from: "hand",
+          type: "play-card",
         },
+        type: "conditional",
       },
       id: "1p4-1",
       text: "DRAWN TO A FIGHT If an opposing character was damaged this turn, you pay 2 {I} less to play this character.",
@@ -27,9 +27,8 @@ export const johnSilverVengefulPirate: CharacterCard = {
     },
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "deal-damage",
           amount: 1,
           target: {
             selector: "chosen",
@@ -38,19 +37,20 @@ export const johnSilverVengefulPirate: CharacterCard = {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "deal-damage",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "1p4-3",
       name: "I AIN'T GONE SOFT!",
       text: "I AIN'T GONE SOFT! Whenever you play an action that isn't a song, you may deal 1 damage to chosen character.",
       trigger: {
         event: "play",
-        timing: "whenever",
         on: {
-          controller: "you",
           cardType: "action",
+          controller: "you",
         },
+        timing: "whenever",
       },
       type: "triggered",
     },

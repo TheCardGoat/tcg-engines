@@ -11,33 +11,33 @@ import {
   validateTargetSelection,
 } from "./target-validation";
 
-type TestGameState = {
+interface TestGameState {
   cards: Record<string, CardInstance<{ modifiers: Modifier[] }>>;
-};
+}
 
 describe("Target Validation", () => {
   const registry = createCardRegistry([
     {
+      abilities: [],
+      basePower: 2,
+      baseToughness: 2,
       id: "creature1",
       name: "Creature 1",
       type: "creature",
-      basePower: 2,
-      baseToughness: 2,
-      abilities: [],
     },
     {
+      abilities: [],
+      basePower: 3,
+      baseToughness: 3,
       id: "creature2",
       name: "Creature 2",
       type: "creature",
-      basePower: 3,
-      baseToughness: 3,
-      abilities: [],
     },
     {
+      abilities: [],
       id: "instant",
       name: "Instant",
       type: "instant",
-      abilities: [],
     },
   ]);
 
@@ -47,16 +47,16 @@ describe("Target Validation", () => {
       const player1 = createPlayerId("player-1");
 
       const card: CardInstance<{ modifiers: Modifier[] }> = {
-        id: createCardId("card-1"),
-        definitionId: "creature1",
-        owner: player1,
         controller: player1,
-        zone: playZone,
-        tapped: false,
+        definitionId: "creature1",
         flipped: false,
-        revealed: false,
-        phased: false,
+        id: createCardId("card-1"),
         modifiers: [],
+        owner: player1,
+        phased: false,
+        revealed: false,
+        tapped: false,
+        zone: playZone,
       };
 
       const state: TestGameState = {
@@ -64,14 +64,14 @@ describe("Target Validation", () => {
       };
 
       const targetDef: TargetDefinition = {
-        filter: { zone: playZone, type: "creature" },
         count: 1,
+        filter: { type: "creature", zone: playZone },
       };
 
       const result = isLegalTarget(card, targetDef, state, registry, {
-        sourceCard: card,
         controller: player1,
         previousTargets: [],
+        sourceCard: card,
       });
 
       expect(result).toBe(true);
@@ -82,16 +82,16 @@ describe("Target Validation", () => {
       const player1 = createPlayerId("player-1");
 
       const card: CardInstance<{ modifiers: Modifier[] }> = {
-        id: createCardId("card-1"),
-        definitionId: "instant",
-        owner: player1,
         controller: player1,
-        zone: playZone,
-        tapped: false,
+        definitionId: "instant",
         flipped: false,
-        revealed: false,
-        phased: false,
+        id: createCardId("card-1"),
         modifiers: [],
+        owner: player1,
+        phased: false,
+        revealed: false,
+        tapped: false,
+        zone: playZone,
       };
 
       const state: TestGameState = {
@@ -99,14 +99,14 @@ describe("Target Validation", () => {
       };
 
       const targetDef: TargetDefinition = {
-        filter: { type: "creature" },
         count: 1,
+        filter: { type: "creature" },
       };
 
       const result = isLegalTarget(card, targetDef, state, registry, {
-        sourceCard: card,
         controller: player1,
         previousTargets: [],
+        sourceCard: card,
       });
 
       expect(result).toBe(false);
@@ -117,16 +117,16 @@ describe("Target Validation", () => {
       const player1 = createPlayerId("player-1");
 
       const sourceCard: CardInstance<{ modifiers: Modifier[] }> = {
-        id: createCardId("source"),
-        definitionId: "creature1",
-        owner: player1,
         controller: player1,
-        zone: playZone,
-        tapped: false,
+        definitionId: "creature1",
         flipped: false,
-        revealed: false,
-        phased: false,
+        id: createCardId("source"),
         modifiers: [],
+        owner: player1,
+        phased: false,
+        revealed: false,
+        tapped: false,
+        zone: playZone,
       };
 
       const state: TestGameState = {
@@ -134,15 +134,15 @@ describe("Target Validation", () => {
       };
 
       const targetDef: TargetDefinition = {
-        filter: { type: "creature" },
         count: 1,
+        filter: { type: "creature" },
         restrictions: ["not-self"],
       };
 
       const result = isLegalTarget(sourceCard, targetDef, state, registry, {
-        sourceCard,
         controller: player1,
         previousTargets: [],
+        sourceCard,
       });
 
       expect(result).toBe(false);
@@ -153,16 +153,16 @@ describe("Target Validation", () => {
       const player1 = createPlayerId("player-1");
 
       const sourceCard: CardInstance<{ modifiers: Modifier[] }> = {
-        id: createCardId("source"),
-        definitionId: "creature1",
-        owner: player1,
         controller: player1,
-        zone: playZone,
-        tapped: false,
+        definitionId: "creature1",
         flipped: false,
-        revealed: false,
-        phased: false,
+        id: createCardId("source"),
         modifiers: [],
+        owner: player1,
+        phased: false,
+        revealed: false,
+        tapped: false,
+        zone: playZone,
       };
 
       const state: TestGameState = {
@@ -170,14 +170,14 @@ describe("Target Validation", () => {
       };
 
       const targetDef: TargetDefinition = {
-        filter: { type: "creature" },
         count: 1,
+        filter: { type: "creature" },
       };
 
       const result = isLegalTarget(sourceCard, targetDef, state, registry, {
-        sourceCard,
         controller: player1,
         previousTargets: [],
+        sourceCard,
       });
 
       expect(result).toBe(true);
@@ -188,16 +188,16 @@ describe("Target Validation", () => {
       const player1 = createPlayerId("player-1");
 
       const card: CardInstance<{ modifiers: Modifier[] }> = {
-        id: createCardId("card-1"),
-        definitionId: "creature1",
-        owner: player1,
         controller: player1,
-        zone: playZone,
-        tapped: false,
+        definitionId: "creature1",
         flipped: false,
-        revealed: false,
-        phased: false,
+        id: createCardId("card-1"),
         modifiers: [],
+        owner: player1,
+        phased: false,
+        revealed: false,
+        tapped: false,
+        zone: playZone,
       };
 
       const state: TestGameState = {
@@ -205,15 +205,15 @@ describe("Target Validation", () => {
       };
 
       const targetDef: TargetDefinition = {
-        filter: { type: "creature" },
         count: 1,
+        filter: { type: "creature" },
         restrictions: ["not-controller"],
       };
 
       const result = isLegalTarget(card, targetDef, state, registry, {
-        sourceCard: card,
         controller: player1,
         previousTargets: [],
+        sourceCard: card,
       });
 
       expect(result).toBe(false);
@@ -224,16 +224,16 @@ describe("Target Validation", () => {
       const player1 = createPlayerId("player-1");
 
       const card: CardInstance<{ modifiers: Modifier[] }> = {
-        id: createCardId("card-1"),
-        definitionId: "creature1",
-        owner: player1,
         controller: player1,
-        zone: playZone,
-        tapped: false,
+        definitionId: "creature1",
         flipped: false,
-        revealed: false,
-        phased: false,
+        id: createCardId("card-1"),
         modifiers: [],
+        owner: player1,
+        phased: false,
+        revealed: false,
+        tapped: false,
+        zone: playZone,
       };
 
       const state: TestGameState = {
@@ -241,15 +241,15 @@ describe("Target Validation", () => {
       };
 
       const targetDef: TargetDefinition = {
-        filter: { type: "creature" },
         count: 1,
+        filter: { type: "creature" },
         restrictions: ["not-owner"],
       };
 
       const result = isLegalTarget(card, targetDef, state, registry, {
-        sourceCard: card,
         controller: player1,
         previousTargets: [],
+        sourceCard: card,
       });
 
       expect(result).toBe(false);
@@ -260,29 +260,29 @@ describe("Target Validation", () => {
       const player1 = createPlayerId("player-1");
 
       const card1: CardInstance<{ modifiers: Modifier[] }> = {
-        id: createCardId("card-1"),
-        definitionId: "creature1",
-        owner: player1,
         controller: player1,
-        zone: playZone,
-        tapped: false,
+        definitionId: "creature1",
         flipped: false,
-        revealed: false,
-        phased: false,
+        id: createCardId("card-1"),
         modifiers: [],
+        owner: player1,
+        phased: false,
+        revealed: false,
+        tapped: false,
+        zone: playZone,
       };
 
       const card2: CardInstance<{ modifiers: Modifier[] }> = {
-        id: createCardId("card-2"),
-        definitionId: "creature2",
-        owner: player1,
         controller: player1,
-        zone: playZone,
-        tapped: false,
+        definitionId: "creature2",
         flipped: false,
-        revealed: false,
-        phased: false,
+        id: createCardId("card-2"),
         modifiers: [],
+        owner: player1,
+        phased: false,
+        revealed: false,
+        tapped: false,
+        zone: playZone,
       };
 
       const state: TestGameState = {
@@ -293,32 +293,32 @@ describe("Target Validation", () => {
       };
 
       const targetDef: TargetDefinition = {
-        filter: { type: "creature" },
         count: 2,
+        filter: { type: "creature" },
         restrictions: ["different-targets"],
       };
 
       // First target is always legal
       const result1 = isLegalTarget(card1, targetDef, state, registry, {
-        sourceCard: card1,
         controller: player1,
         previousTargets: [],
+        sourceCard: card1,
       });
       expect(result1).toBe(true);
 
       // Second target must be different
       const result2 = isLegalTarget(card1, targetDef, state, registry, {
-        sourceCard: card1,
         controller: player1,
         previousTargets: [card1],
+        sourceCard: card1,
       });
       expect(result2).toBe(false);
 
       // Different card is legal
       const result3 = isLegalTarget(card2, targetDef, state, registry, {
-        sourceCard: card1,
         controller: player1,
         previousTargets: [card1],
+        sourceCard: card1,
       });
       expect(result3).toBe(true);
     });
@@ -331,40 +331,40 @@ describe("Target Validation", () => {
 
       const cards: CardInstance<{ modifiers: Modifier[] }>[] = [
         {
-          id: createCardId("card-1"),
+          controller: player1,
           definitionId: "creature1",
-          owner: player1,
-          controller: player1,
-          zone: playZone,
-          tapped: false,
           flipped: false,
-          revealed: false,
-          phased: false,
+          id: createCardId("card-1"),
           modifiers: [],
+          owner: player1,
+          phased: false,
+          revealed: false,
+          tapped: false,
+          zone: playZone,
         },
         {
-          id: createCardId("card-2"),
+          controller: player1,
           definitionId: "creature2",
-          owner: player1,
-          controller: player1,
-          zone: playZone,
-          tapped: false,
           flipped: false,
-          revealed: false,
-          phased: false,
+          id: createCardId("card-2"),
           modifiers: [],
+          owner: player1,
+          phased: false,
+          revealed: false,
+          tapped: false,
+          zone: playZone,
         },
         {
-          id: createCardId("card-3"),
-          definitionId: "instant",
-          owner: player1,
           controller: player1,
-          zone: playZone,
-          tapped: false,
+          definitionId: "instant",
           flipped: false,
-          revealed: false,
-          phased: false,
+          id: createCardId("card-3"),
           modifiers: [],
+          owner: player1,
+          phased: false,
+          revealed: false,
+          tapped: false,
+          zone: playZone,
         },
       ];
 
@@ -373,21 +373,18 @@ describe("Target Validation", () => {
       };
 
       const targetDef: TargetDefinition = {
-        filter: { type: "creature" },
         count: 1,
+        filter: { type: "creature" },
       };
 
       const result = getLegalTargets(targetDef, state, registry, {
-        sourceCard: cards[0],
         controller: player1,
         previousTargets: [],
+        sourceCard: cards[0],
       });
 
       expect(result).toHaveLength(2);
-      expect(result.map((c) => c.definitionId).sort()).toEqual([
-        "creature1",
-        "creature2",
-      ]);
+      expect(result.map((c) => c.definitionId).toSorted()).toEqual(["creature1", "creature2"]);
     });
 
     it("should exclude cards that don't meet restrictions", () => {
@@ -395,29 +392,29 @@ describe("Target Validation", () => {
       const player1 = createPlayerId("player-1");
 
       const sourceCard: CardInstance<{ modifiers: Modifier[] }> = {
-        id: createCardId("source"),
-        definitionId: "creature1",
-        owner: player1,
         controller: player1,
-        zone: playZone,
-        tapped: false,
+        definitionId: "creature1",
         flipped: false,
-        revealed: false,
-        phased: false,
+        id: createCardId("source"),
         modifiers: [],
+        owner: player1,
+        phased: false,
+        revealed: false,
+        tapped: false,
+        zone: playZone,
       };
 
       const otherCard: CardInstance<{ modifiers: Modifier[] }> = {
-        id: createCardId("other"),
-        definitionId: "creature2",
-        owner: player1,
         controller: player1,
-        zone: playZone,
-        tapped: false,
+        definitionId: "creature2",
         flipped: false,
-        revealed: false,
-        phased: false,
+        id: createCardId("other"),
         modifiers: [],
+        owner: player1,
+        phased: false,
+        revealed: false,
+        tapped: false,
+        zone: playZone,
       };
 
       const state: TestGameState = {
@@ -428,15 +425,15 @@ describe("Target Validation", () => {
       };
 
       const targetDef: TargetDefinition = {
-        filter: { type: "creature" },
         count: 1,
+        filter: { type: "creature" },
         restrictions: ["not-self"],
       };
 
       const result = getLegalTargets(targetDef, state, registry, {
-        sourceCard,
         controller: player1,
         previousTargets: [],
+        sourceCard,
       });
 
       expect(result).toHaveLength(1);
@@ -448,16 +445,16 @@ describe("Target Validation", () => {
       const player1 = createPlayerId("player-1");
 
       const card: CardInstance<{ modifiers: Modifier[] }> = {
-        id: createCardId("card-1"),
-        definitionId: "instant",
-        owner: player1,
         controller: player1,
-        zone: playZone,
-        tapped: false,
+        definitionId: "instant",
         flipped: false,
-        revealed: false,
-        phased: false,
+        id: createCardId("card-1"),
         modifiers: [],
+        owner: player1,
+        phased: false,
+        revealed: false,
+        tapped: false,
+        zone: playZone,
       };
 
       const state: TestGameState = {
@@ -465,14 +462,14 @@ describe("Target Validation", () => {
       };
 
       const targetDef: TargetDefinition = {
-        filter: { type: "creature" },
         count: 1,
+        filter: { type: "creature" },
       };
 
       const result = getLegalTargets(targetDef, state, registry, {
-        sourceCard: card,
         controller: player1,
         previousTargets: [],
+        sourceCard: card,
       });
 
       expect(result).toHaveLength(0);
@@ -485,16 +482,16 @@ describe("Target Validation", () => {
       const player1 = createPlayerId("player-1");
 
       const card: CardInstance<{ modifiers: Modifier[] }> = {
-        id: createCardId("card-1"),
-        definitionId: "creature1",
-        owner: player1,
         controller: player1,
-        zone: playZone,
-        tapped: false,
+        definitionId: "creature1",
         flipped: false,
-        revealed: false,
-        phased: false,
+        id: createCardId("card-1"),
         modifiers: [],
+        owner: player1,
+        phased: false,
+        revealed: false,
+        tapped: false,
+        zone: playZone,
       };
 
       const state: TestGameState = {
@@ -502,20 +499,14 @@ describe("Target Validation", () => {
       };
 
       const targetDef: TargetDefinition = {
-        filter: { type: "creature" },
         count: 1,
+        filter: { type: "creature" },
       };
 
-      const result = validateTargetSelection(
-        [card],
-        targetDef,
-        state,
-        registry,
-        {
-          sourceCard: card,
-          controller: player1,
-        },
-      );
+      const result = validateTargetSelection([card], targetDef, state, registry, {
+        controller: player1,
+        sourceCard: card,
+      });
 
       expect(result.valid).toBe(true);
     });
@@ -526,28 +517,28 @@ describe("Target Validation", () => {
 
       const cards: CardInstance<{ modifiers: Modifier[] }>[] = [
         {
-          id: createCardId("card-1"),
-          definitionId: "creature1",
-          owner: player1,
           controller: player1,
-          zone: playZone,
-          tapped: false,
+          definitionId: "creature1",
           flipped: false,
-          revealed: false,
-          phased: false,
+          id: createCardId("card-1"),
           modifiers: [],
+          owner: player1,
+          phased: false,
+          revealed: false,
+          tapped: false,
+          zone: playZone,
         },
         {
-          id: createCardId("card-2"),
-          definitionId: "creature2",
-          owner: player1,
           controller: player1,
-          zone: playZone,
-          tapped: false,
+          definitionId: "creature2",
           flipped: false,
-          revealed: false,
-          phased: false,
+          id: createCardId("card-2"),
           modifiers: [],
+          owner: player1,
+          phased: false,
+          revealed: false,
+          tapped: false,
+          zone: playZone,
         },
       ];
 
@@ -556,20 +547,14 @@ describe("Target Validation", () => {
       };
 
       const targetDef: TargetDefinition = {
-        filter: { type: "creature" },
         count: 1,
+        filter: { type: "creature" },
       };
 
-      const result = validateTargetSelection(
-        cards,
-        targetDef,
-        state,
-        registry,
-        {
-          sourceCard: cards[0],
-          controller: player1,
-        },
-      );
+      const result = validateTargetSelection(cards, targetDef, state, registry, {
+        controller: player1,
+        sourceCard: cards[0],
+      });
 
       expect(result.valid).toBe(false);
       expect(result.error).toContain("Expected 1 target");
@@ -581,28 +566,28 @@ describe("Target Validation", () => {
 
       const cards: CardInstance<{ modifiers: Modifier[] }>[] = [
         {
-          id: createCardId("card-1"),
-          definitionId: "creature1",
-          owner: player1,
           controller: player1,
-          zone: playZone,
-          tapped: false,
+          definitionId: "creature1",
           flipped: false,
-          revealed: false,
-          phased: false,
+          id: createCardId("card-1"),
           modifiers: [],
+          owner: player1,
+          phased: false,
+          revealed: false,
+          tapped: false,
+          zone: playZone,
         },
         {
-          id: createCardId("card-2"),
-          definitionId: "creature2",
-          owner: player1,
           controller: player1,
-          zone: playZone,
-          tapped: false,
+          definitionId: "creature2",
           flipped: false,
-          revealed: false,
-          phased: false,
+          id: createCardId("card-2"),
           modifiers: [],
+          owner: player1,
+          phased: false,
+          revealed: false,
+          tapped: false,
+          zone: playZone,
         },
       ];
 
@@ -611,21 +596,15 @@ describe("Target Validation", () => {
       };
 
       const targetDef: TargetDefinition = {
+        count: { max: 3, min: 1 },
         filter: { type: "creature" },
-        count: { min: 1, max: 3 },
       };
 
       // 2 targets is within range
-      const result = validateTargetSelection(
-        cards,
-        targetDef,
-        state,
-        registry,
-        {
-          sourceCard: cards[0],
-          controller: player1,
-        },
-      );
+      const result = validateTargetSelection(cards, targetDef, state, registry, {
+        controller: player1,
+        sourceCard: cards[0],
+      });
 
       expect(result.valid).toBe(true);
     });
@@ -635,16 +614,16 @@ describe("Target Validation", () => {
       const player1 = createPlayerId("player-1");
 
       const card: CardInstance<{ modifiers: Modifier[] }> = {
-        id: createCardId("card-1"),
-        definitionId: "creature1",
-        owner: player1,
         controller: player1,
-        zone: playZone,
-        tapped: false,
+        definitionId: "creature1",
         flipped: false,
-        revealed: false,
-        phased: false,
+        id: createCardId("card-1"),
         modifiers: [],
+        owner: player1,
+        phased: false,
+        revealed: false,
+        tapped: false,
+        zone: playZone,
       };
 
       const state: TestGameState = {
@@ -652,20 +631,14 @@ describe("Target Validation", () => {
       };
 
       const targetDef: TargetDefinition = {
+        count: { max: 4, min: 2 },
         filter: { type: "creature" },
-        count: { min: 2, max: 4 },
       };
 
-      const result = validateTargetSelection(
-        [card],
-        targetDef,
-        state,
-        registry,
-        {
-          sourceCard: card,
-          controller: player1,
-        },
-      );
+      const result = validateTargetSelection([card], targetDef, state, registry, {
+        controller: player1,
+        sourceCard: card,
+      });
 
       expect(result.valid).toBe(false);
       expect(result.error).toContain("at least 2");
@@ -678,16 +651,16 @@ describe("Target Validation", () => {
       const cards: CardInstance<{ modifiers: Modifier[] }>[] = Array.from(
         { length: 5 },
         (_, i) => ({
-          id: createCardId(`card-${i}`),
-          definitionId: "creature1",
-          owner: player1,
           controller: player1,
-          zone: playZone,
-          tapped: false,
+          definitionId: "creature1",
           flipped: false,
-          revealed: false,
-          phased: false,
+          id: createCardId(`card-${i}`),
           modifiers: [],
+          owner: player1,
+          phased: false,
+          revealed: false,
+          tapped: false,
+          zone: playZone,
         }),
       );
 
@@ -696,20 +669,14 @@ describe("Target Validation", () => {
       };
 
       const targetDef: TargetDefinition = {
+        count: { max: 3, min: 1 },
         filter: { type: "creature" },
-        count: { min: 1, max: 3 },
       };
 
-      const result = validateTargetSelection(
-        cards,
-        targetDef,
-        state,
-        registry,
-        {
-          sourceCard: cards[0],
-          controller: player1,
-        },
-      );
+      const result = validateTargetSelection(cards, targetDef, state, registry, {
+        controller: player1,
+        sourceCard: cards[0],
+      });
 
       expect(result.valid).toBe(false);
       expect(result.error).toContain("at most 3");
@@ -721,30 +688,30 @@ describe("Target Validation", () => {
 
       const creatures: CardInstance<{ modifiers: Modifier[] }>[] = [
         {
-          id: createCardId("creature-1"),
-          definitionId: "creature1",
-          owner: player1,
           controller: player1,
-          zone: playZone,
-          tapped: false,
+          definitionId: "creature1",
           flipped: false,
-          revealed: false,
-          phased: false,
+          id: createCardId("creature-1"),
           modifiers: [],
+          owner: player1,
+          phased: false,
+          revealed: false,
+          tapped: false,
+          zone: playZone,
         },
       ];
 
       const instant: CardInstance<{ modifiers: Modifier[] }> = {
-        id: createCardId("instant"),
-        definitionId: "instant",
-        owner: player1,
         controller: player1,
-        zone: playZone,
-        tapped: false,
+        definitionId: "instant",
         flipped: false,
-        revealed: false,
-        phased: false,
+        id: createCardId("instant"),
         modifiers: [],
+        owner: player1,
+        phased: false,
+        revealed: false,
+        tapped: false,
+        zone: playZone,
       };
 
       const state: TestGameState = {
@@ -755,20 +722,14 @@ describe("Target Validation", () => {
       };
 
       const targetDef: TargetDefinition = {
-        filter: { type: "creature" },
         count: 1,
+        filter: { type: "creature" },
       };
 
-      const result = validateTargetSelection(
-        [instant],
-        targetDef,
-        state,
-        registry,
-        {
-          sourceCard: creatures[0],
-          controller: player1,
-        },
-      );
+      const result = validateTargetSelection([instant], targetDef, state, registry, {
+        controller: player1,
+        sourceCard: creatures[0],
+      });
 
       expect(result.valid).toBe(false);
       expect(result.error).toContain("not a legal target");
@@ -782,28 +743,28 @@ describe("Target Validation", () => {
 
       const cards: CardInstance<{ modifiers: Modifier[] }>[] = [
         {
-          id: createCardId("card-1"),
-          definitionId: "creature1",
-          owner: player1,
           controller: player1,
-          zone: playZone,
-          tapped: false,
+          definitionId: "creature1",
           flipped: false,
-          revealed: false,
-          phased: false,
+          id: createCardId("card-1"),
           modifiers: [],
+          owner: player1,
+          phased: false,
+          revealed: false,
+          tapped: false,
+          zone: playZone,
         },
         {
-          id: createCardId("card-2"),
-          definitionId: "creature2",
-          owner: player1,
           controller: player1,
-          zone: playZone,
-          tapped: false,
+          definitionId: "creature2",
           flipped: false,
-          revealed: false,
-          phased: false,
+          id: createCardId("card-2"),
           modifiers: [],
+          owner: player1,
+          phased: false,
+          revealed: false,
+          tapped: false,
+          zone: playZone,
         },
       ];
 
@@ -812,8 +773,8 @@ describe("Target Validation", () => {
       };
 
       const targetDef: TargetDefinition = {
-        filter: { type: "creature" },
         count: 1,
+        filter: { type: "creature" },
       };
 
       const result = enumerateTargetCombinations(
@@ -821,9 +782,9 @@ describe("Target Validation", () => {
         state,
         registry,
         {
-          sourceCard: cards[0],
           controller: player1,
           previousTargets: [],
+          sourceCard: cards[0],
         },
         10,
       );
@@ -839,40 +800,40 @@ describe("Target Validation", () => {
 
       const cards: CardInstance<{ modifiers: Modifier[] }>[] = [
         {
+          controller: player1,
+          definitionId: "creature1",
+          flipped: false,
           id: createCardId("card-1"),
-          definitionId: "creature1",
-          owner: player1,
-          controller: player1,
-          zone: playZone,
-          tapped: false,
-          flipped: false,
-          revealed: false,
-          phased: false,
           modifiers: [],
+          owner: player1,
+          phased: false,
+          revealed: false,
+          tapped: false,
+          zone: playZone,
         },
         {
-          id: createCardId("card-2"),
+          controller: player1,
           definitionId: "creature2",
-          owner: player1,
-          controller: player1,
-          zone: playZone,
-          tapped: false,
           flipped: false,
-          revealed: false,
-          phased: false,
+          id: createCardId("card-2"),
           modifiers: [],
+          owner: player1,
+          phased: false,
+          revealed: false,
+          tapped: false,
+          zone: playZone,
         },
         {
-          id: createCardId("card-3"),
-          definitionId: "creature1",
-          owner: player1,
           controller: player1,
-          zone: playZone,
-          tapped: false,
+          definitionId: "creature1",
           flipped: false,
-          revealed: false,
-          phased: false,
+          id: createCardId("card-3"),
           modifiers: [],
+          owner: player1,
+          phased: false,
+          revealed: false,
+          tapped: false,
+          zone: playZone,
         },
       ];
 
@@ -881,8 +842,8 @@ describe("Target Validation", () => {
       };
 
       const targetDef: TargetDefinition = {
-        filter: { type: "creature" },
         count: 2,
+        filter: { type: "creature" },
         restrictions: ["different-targets"],
       };
 
@@ -891,9 +852,9 @@ describe("Target Validation", () => {
         state,
         registry,
         {
-          sourceCard: cards[0],
           controller: player1,
           previousTargets: [],
+          sourceCard: cards[0],
         },
         10,
       );
@@ -910,16 +871,16 @@ describe("Target Validation", () => {
       const cards: CardInstance<{ modifiers: Modifier[] }>[] = Array.from(
         { length: 10 },
         (_, i) => ({
-          id: createCardId(`card-${i}`),
-          definitionId: "creature1",
-          owner: player1,
           controller: player1,
-          zone: playZone,
-          tapped: false,
+          definitionId: "creature1",
           flipped: false,
-          revealed: false,
-          phased: false,
+          id: createCardId(`card-${i}`),
           modifiers: [],
+          owner: player1,
+          phased: false,
+          revealed: false,
+          tapped: false,
+          zone: playZone,
         }),
       );
 
@@ -928,8 +889,8 @@ describe("Target Validation", () => {
       };
 
       const targetDef: TargetDefinition = {
-        filter: { type: "creature" },
         count: 1,
+        filter: { type: "creature" },
       };
 
       const result = enumerateTargetCombinations(
@@ -937,9 +898,9 @@ describe("Target Validation", () => {
         state,
         registry,
         {
-          sourceCard: cards[0],
           controller: player1,
           previousTargets: [],
+          sourceCard: cards[0],
         },
         5,
       );
@@ -952,16 +913,16 @@ describe("Target Validation", () => {
       const player1 = createPlayerId("player-1");
 
       const card: CardInstance<{ modifiers: Modifier[] }> = {
-        id: createCardId("card-1"),
-        definitionId: "creature1",
-        owner: player1,
         controller: player1,
-        zone: playZone,
-        tapped: false,
+        definitionId: "creature1",
         flipped: false,
-        revealed: false,
-        phased: false,
+        id: createCardId("card-1"),
         modifiers: [],
+        owner: player1,
+        phased: false,
+        revealed: false,
+        tapped: false,
+        zone: playZone,
       };
 
       const state: TestGameState = {
@@ -969,8 +930,8 @@ describe("Target Validation", () => {
       };
 
       const targetDef: TargetDefinition = {
+        count: { max: 1, min: 0 },
         filter: { type: "creature" },
-        count: { min: 0, max: 1 },
       };
 
       const result = enumerateTargetCombinations(
@@ -978,9 +939,9 @@ describe("Target Validation", () => {
         state,
         registry,
         {
-          sourceCard: card,
           controller: player1,
           previousTargets: [],
+          sourceCard: card,
         },
         10,
       );

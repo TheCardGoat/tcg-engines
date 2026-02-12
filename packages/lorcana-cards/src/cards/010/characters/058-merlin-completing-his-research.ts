@@ -11,24 +11,24 @@ export const merlinCompletingHisResearch: CharacterCard = {
     },
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "he had a card under him",
+          type: "if",
         },
         then: {
-          type: "draw",
           amount: 2,
           target: "CONTROLLER",
+          type: "draw",
         },
+        type: "conditional",
       },
       id: "mr7-2",
       name: "LEGACY OF LEARNING",
       text: "LEGACY OF LEARNING When this character is banished in a challenge, if he had a card under him, draw 2 cards.",
       trigger: {
         event: "banish",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

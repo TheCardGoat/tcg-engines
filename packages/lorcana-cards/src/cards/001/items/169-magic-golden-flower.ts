@@ -7,9 +7,9 @@ export const magicGoldenFlower: ItemCard = {
         banishSelf: true,
       },
       effect: {
-        type: "remove-damage",
         amount: 3,
         target: "CHOSEN_CHARACTER",
+        type: "remove-damage",
         upTo: true,
       },
       id: "1dk-1",

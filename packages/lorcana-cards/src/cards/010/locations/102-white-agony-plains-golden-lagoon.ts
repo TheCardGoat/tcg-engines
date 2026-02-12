@@ -4,10 +4,10 @@ export const whiteAgonyPlainsGoldenLagoon: LocationCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "lore",
         modifier: 1,
+        stat: "lore",
         target: "CHOSEN_CHARACTER",
+        type: "modify-stat",
       },
       id: "r72-1",
       text: "PURE LIQUID GOLD This location gets +1 {L} for each character here.",

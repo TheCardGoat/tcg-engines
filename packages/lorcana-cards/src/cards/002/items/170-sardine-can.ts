@@ -4,9 +4,9 @@ export const sardineCan: ItemCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Ward",
         target: "YOUR_CHARACTERS",
+        type: "gain-keyword",
       },
       id: "2oi-1",
       name: "FLIGHT CABIN Your exerted",

@@ -10,22 +10,22 @@ export const scarViciousCheater: CharacterCard = {
     },
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "restriction",
+          duration: "this-turn",
           restriction: "cant-quest",
           target: "SELF",
-          duration: "this-turn",
+          type: "restriction",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "1re-2",
       name: "DADDY ISN'T HERE TO SAVE YOU",
       text: "DADDY ISN'T HERE TO SAVE YOU During your turn, whenever this character banishes another character in a challenge, you may ready this character. He can't quest for the rest of this turn.",
       trigger: {
         event: "banish",
-        timing: "whenever",
         on: "OPPONENT_CHARACTERS",
+        timing: "whenever",
       },
       type: "triggered",
     },

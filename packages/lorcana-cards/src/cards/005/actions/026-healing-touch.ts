@@ -4,12 +4,9 @@ export const healingTouch: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "remove-damage",
             amount: 4,
-            upTo: true,
             target: {
               selector: "chosen",
               count: 1,
@@ -17,13 +14,16 @@ export const healingTouch: ActionCard = {
               zones: ["play"],
               cardTypes: ["character"],
             },
+            type: "remove-damage",
+            upTo: true,
           },
           {
-            type: "draw",
             amount: 1,
             target: "CONTROLLER",
+            type: "draw",
           },
         ],
+        type: "sequence",
       },
       id: "9qq-1",
       text: "Remove up to 4 damage from chosen character. Draw a card.",

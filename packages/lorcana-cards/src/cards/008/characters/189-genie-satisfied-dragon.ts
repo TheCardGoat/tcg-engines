@@ -4,9 +4,9 @@ export const genieSatisfiedDragon: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Evasive",
         target: "SELF",
+        type: "gain-keyword",
       },
       id: "ofy-1",
       text: "BUG CATCHER During your turn, this character gains Evasive.",

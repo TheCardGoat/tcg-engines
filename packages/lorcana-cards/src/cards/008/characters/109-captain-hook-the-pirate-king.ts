@@ -13,22 +13,22 @@ export const captainHookThePirateKing: CharacterCard = {
     },
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "modify-stat",
-            stat: "strength",
             modifier: 2,
+            stat: "strength",
             target: "YOUR_CHARACTERS",
+            type: "modify-stat",
           },
           {
-            type: "gain-keyword",
+            duration: "this-turn",
             keyword: "Resist",
             target: "SELF",
+            type: "gain-keyword",
             value: 2,
-            duration: "this-turn",
           },
         ],
+        type: "sequence",
       },
       id: "1na-2",
       text: "GIVE ’EM ALL YOU GOT! Once during your turn, whenever an opposing character is damaged, your Pirate characters get +2 {S} and gain Resist +2 this turn.",

@@ -4,19 +4,19 @@ export const theBayouMysteriousSwamp: LocationCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
-        effect: {
-          type: "discard",
-          amount: 1,
-          target: "CONTROLLER",
-          chosen: true,
-        },
         chooser: "CONTROLLER",
+        effect: {
+          amount: 1,
+          chosen: true,
+          target: "CONTROLLER",
+          type: "discard",
+        },
+        type: "optional",
       },
       id: "2bw-1",
       name: "SHOW ME THE WAY",
       text: "SHOW ME THE WAY Whenever a character quests while here, you may draw a card, then choose and discard a card.",
-      trigger: { event: "play", timing: "when", on: "SELF" },
+      trigger: { event: "play", on: "SELF", timing: "when" },
       type: "triggered",
     },
   ],

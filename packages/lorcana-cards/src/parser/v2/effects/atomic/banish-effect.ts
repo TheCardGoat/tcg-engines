@@ -5,12 +5,7 @@
 
 import type { CstNode, IToken } from "chevrotain";
 import { logger } from "../../logging";
-import type {
-  BanishEffect,
-  CardTarget,
-  CharacterTarget,
-  ReturnToHandEffect,
-} from "../../types";
+import type { BanishEffect, CardTarget, CharacterTarget, ReturnToHandEffect } from "../../types";
 import { parseTargetFromText } from "../../visitors/target-visitor";
 import type { EffectParser } from "./index";
 
@@ -35,10 +30,7 @@ function convertToCharacterTarget(simpleTarget: {
   const cardType = cardTypeMap[type.toLowerCase()] || type;
 
   // Map modifier to selector and owner
-  const modifierMap: Record<
-    string,
-    { selector: string; owner: string; count: number | "all" }
-  > = {
+  const modifierMap: Record<string, { selector: string; owner: string; count: number | "all" }> = {
     all: { count: "all", owner: "any", selector: "all" },
     an: { count: 1, owner: "any", selector: "chosen" },
     another: { count: 1, owner: "any", selector: "chosen" },
@@ -106,11 +98,7 @@ function parseAllPattern(text: string): CharacterTarget | null {
 
   // Determine owner from modifier
   let owner: any = "any";
-  if (
-    modifier === "opposing" ||
-    modifier === "opponent" ||
-    modifier === "opponent's"
-  ) {
+  if (modifier === "opposing" || modifier === "opponent" || modifier === "opponent's") {
     owner = "opponent";
   }
 
@@ -245,17 +233,12 @@ function parseFromText(text: string): BanishEffect | ReturnToHandEffect | null {
  * Banish effect parser implementation
  */
 export const banishEffectParser: EffectParser = {
-  description:
-    "Parses banish/return effects (e.g., 'banish chosen character', 'banish all items')",
-  parse: (
-    input: CstNode | string,
-  ): BanishEffect | ReturnToHandEffect | null => {
+  description: "Parses banish/return effects (e.g., 'banish chosen character', 'banish all items')",
+  parse: (input: CstNode | string): BanishEffect | ReturnToHandEffect | null => {
     if (typeof input === "string") {
       return parseFromText(input);
     }
-    return parseFromCst(
-      input as { Banish?: IToken[]; Return?: IToken[] } | null | undefined,
-    );
+    return parseFromCst(input as { Banish?: IToken[]; Return?: IToken[] } | null | undefined);
   },
 
   pattern:

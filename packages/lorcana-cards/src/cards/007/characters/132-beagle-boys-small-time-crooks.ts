@@ -4,18 +4,18 @@ export const beagleBoysSmalltimeCrooks: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
+        duration: "this-turn",
         keyword: "Rush",
         target: "SELF",
-        duration: "this-turn",
+        type: "gain-keyword",
       },
       id: "f1x-1",
       name: "HURRY IT UP!",
       text: "HURRY IT UP! Whenever this character quests, chosen character of yours gains Rush and Resist +1 this turn.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

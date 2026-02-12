@@ -13,11 +13,11 @@ export const lumiereFiredUp: CharacterCard = {
     },
     {
       effect: {
-        type: "modify-stat",
-        stat: "lore",
-        modifier: 1,
-        target: "SELF",
         duration: "this-turn",
+        modifier: 1,
+        stat: "lore",
+        target: "SELF",
+        type: "modify-stat",
       },
       id: "1k1-3",
       text: "SACREBLEU!: Whenever one of your items is banished, this character gets +1 {L} this turn.",

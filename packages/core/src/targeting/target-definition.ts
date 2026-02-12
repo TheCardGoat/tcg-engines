@@ -25,7 +25,7 @@ export type TargetCount =
  * Target definition for a move
  * Specifies what can be targeted and how many targets are needed
  */
-export type TargetDefinition = {
+export interface TargetDefinition {
   /** Filter defining valid target cards/entities */
   filter: CardFilter;
 
@@ -34,4 +34,4 @@ export type TargetDefinition = {
 
   /** Optional restrictions on target selection */
   restrictions?: TargetRestriction[];
-};
+}

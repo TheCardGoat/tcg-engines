@@ -4,14 +4,14 @@ export const sailTheAzuriteSea: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "put-into-inkwell",
+          facedown: true,
           source: "hand",
           target: "CONTROLLER",
-          facedown: true,
+          type: "put-into-inkwell",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "yo2-1",
       text: "This turn, you may put an additional card from your hand into your inkwell facedown. Draw a card.",

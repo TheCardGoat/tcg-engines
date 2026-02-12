@@ -4,23 +4,23 @@ export const faZhouWarHero: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "it's the second challenge this turn",
+          type: "if",
         },
         then: {
-          type: "gain-lore",
           amount: 3,
+          type: "gain-lore",
         },
+        type: "conditional",
       },
       id: "1i5-1",
       name: "TRAINING EXERCISES",
       text: "TRAINING EXERCISES Whenever one of your characters challenges another character, if it's the second challenge this turn, gain 3 lore.",
       trigger: {
         event: "banish",
-        timing: "whenever",
         on: "YOUR_OTHER_CHARACTERS",
+        timing: "whenever",
       },
       type: "triggered",
     },

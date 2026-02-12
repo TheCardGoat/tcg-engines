@@ -40,10 +40,7 @@ function convertToCharacterTarget(simpleTarget: {
   const cardType = cardTypeMap[type.toLowerCase()] || type;
 
   // Map modifier to selector and owner
-  const modifierMap: Record<
-    string,
-    { selector: string; owner: string; count: number | "all" }
-  > = {
+  const modifierMap: Record<string, { selector: string; owner: string; count: number | "all" }> = {
     all: { count: "all", owner: "any", selector: "all" },
     an: { count: 1, owner: "any", selector: "chosen" },
     another: { count: 1, owner: "any", selector: "chosen" },
@@ -116,9 +113,7 @@ function parseFromText(text: string): Effect | null {
   // Check for "shuffle into deck"
   if (shuffleIntoDeckPattern.test(text)) {
     // Try to match with target first
-    const match = text.match(
-      /shuffle\s+(.+?)\s+into\s+(?:your\s+|their\s+)?deck/i,
-    );
+    const match = text.match(/shuffle\s+(.+?)\s+into\s+(?:your\s+|their\s+)?deck/i);
     let target: CharacterTarget = "CHOSEN_CHARACTER";
 
     if (match && match[1]) {
@@ -206,8 +201,7 @@ function parseFromText(text: string): Effect | null {
  * Return effect parser implementation
  */
 export const returnEffectParser: EffectParser = {
-  description:
-    "Parses return effects (e.g., 'return to hand', 'shuffle into deck')",
+  description: "Parses return effects (e.g., 'return to hand', 'shuffle into deck')",
   parse: (input: CstNode | string): Effect | null => {
     if (typeof input === "string") {
       return parseFromText(input);

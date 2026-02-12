@@ -4,22 +4,22 @@ export const pepaMadrigalWeatherMaker: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "restriction",
+          duration: "until-start-of-next-turn",
           restriction: "cant-ready",
           target: "SELF",
-          duration: "until-start-of-next-turn",
+          type: "restriction",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "7gu-1",
       name: "IT LOOKS LIKE RAIN",
       text: "IT LOOKS LIKE RAIN When you play this character, you may exert chosen opposing character. That character can't ready at the start of their next turn unless they're at a location.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

@@ -39,12 +39,7 @@ import type { TargetingSpec } from "./targeting";
  * - **command**: Effects from Command cards that resolve when played
  * - **constant**: Continuous effects that are always active while the card is in play
  */
-export type EffectCategory =
-  | "keyword"
-  | "triggered"
-  | "activated"
-  | "command"
-  | "constant";
+export type EffectCategory = "keyword" | "triggered" | "activated" | "command" | "constant";
 
 /**
  * Effect Definition

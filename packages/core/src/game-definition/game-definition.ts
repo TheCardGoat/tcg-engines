@@ -6,26 +6,26 @@ import type { GameMoveDefinitions } from "./move-definitions";
 /**
  * Player information for game setup
  */
-export type Player = {
+export interface Player {
   /** Unique player identifier */
   id: string;
   /** Optional player name for display */
   name?: string;
-};
+}
 
 /**
  * Game end result
  *
  * Returned by endIf when the game has ended.
  */
-export type GameEndResult = {
+export interface GameEndResult {
   /** Winner identifier (player ID or special value like 'draw') */
   winner: string;
   /** Reason for game end (for display/logging) */
   reason: string;
   /** Additional metadata about the game end */
   metadata?: Record<string, unknown>;
-};
+}
 
 /**
  * GameDefinition Type System
@@ -84,12 +84,12 @@ export type GameEndResult = {
  * };
  * ```
  */
-export type GameDefinition<
+export interface GameDefinition<
   TState,
   TMoves extends Record<string, any>,
   TCardDefinition = any,
   TCardMeta = any,
-> = {
+> {
   /**
    * Game name for identification and display
    *
@@ -258,4 +258,4 @@ export type GameDefinition<
    * ```
    */
   telemetryHooks?: TelemetryHooks;
-};
+}

@@ -13,9 +13,9 @@ export const balooCarefreeBear: CharacterCard = {
     },
     {
       effect: {
-        type: "draw",
         amount: 1,
         target: "EACH_PLAYER",
+        type: "draw",
       },
       id: "1vf-3",
       text: "- Each player draws a card.",
@@ -23,10 +23,10 @@ export const balooCarefreeBear: CharacterCard = {
     },
     {
       effect: {
-        type: "discard",
         amount: 1,
-        target: "EACH_PLAYER",
         chosen: true,
+        target: "EACH_PLAYER",
+        type: "discard",
       },
       id: "1vf-4",
       text: "- Each player chooses and discards a card.",

@@ -48,14 +48,14 @@ export function createTestZone(
   const config: CardZoneConfig = {
     id,
     name: `Test Zone ${zoneCounter}`,
-    visibility: "public",
     ordered: false,
+    visibility: "public",
     ...configOverrides,
   };
 
   return {
-    config,
     cards: [...cards],
+    config,
   };
 }
 
@@ -83,15 +83,15 @@ export function createTestDeck(cards: CardId[] = [], owner?: PlayerId): Zone {
   const id = createZoneId(`test-deck-${zoneCounter++}`);
 
   return {
+    cards: [...cards],
     config: {
+      faceDown: true,
       id,
       name: owner ? `${owner} Deck` : "Test Deck",
-      visibility: "secret",
       ordered: true,
-      faceDown: true,
       owner,
+      visibility: "secret",
     },
-    cards: [...cards],
   };
 }
 
@@ -119,15 +119,15 @@ export function createTestHand(cards: CardId[] = [], owner?: PlayerId): Zone {
   const id = createZoneId(`test-hand-${zoneCounter++}`);
 
   return {
+    cards: [...cards],
     config: {
+      faceDown: false,
       id,
       name: owner ? `${owner} Hand` : "Test Hand",
-      visibility: "private",
       ordered: false,
-      faceDown: false,
       owner,
+      visibility: "private",
     },
-    cards: [...cards],
   };
 }
 
@@ -151,22 +151,19 @@ export function createTestHand(cards: CardId[] = [], owner?: PlayerId): Zone {
  * );
  * ```
  */
-export function createTestPlayArea(
-  cards: CardId[] = [],
-  owner?: PlayerId,
-): Zone {
+export function createTestPlayArea(cards: CardId[] = [], owner?: PlayerId): Zone {
   const id = createZoneId(`test-play-area-${zoneCounter++}`);
 
   return {
+    cards: [...cards],
     config: {
+      faceDown: false,
       id,
       name: owner ? `${owner} Play Area` : "Test Play Area",
-      visibility: "public",
       ordered: false,
-      faceDown: false,
       owner,
+      visibility: "public",
     },
-    cards: [...cards],
   };
 }
 
@@ -190,22 +187,19 @@ export function createTestPlayArea(
  * );
  * ```
  */
-export function createTestGraveyard(
-  cards: CardId[] = [],
-  owner?: PlayerId,
-): Zone {
+export function createTestGraveyard(cards: CardId[] = [], owner?: PlayerId): Zone {
   const id = createZoneId(`test-graveyard-${zoneCounter++}`);
 
   return {
+    cards: [...cards],
     config: {
+      faceDown: false,
       id,
       name: owner ? `${owner} Graveyard` : "Test Graveyard",
-      visibility: "public",
       ordered: true,
-      faceDown: false,
       owner,
+      visibility: "public",
     },
-    cards: [...cards],
   };
 }
 

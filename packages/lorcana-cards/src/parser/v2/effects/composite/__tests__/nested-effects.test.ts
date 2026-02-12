@@ -11,8 +11,7 @@ import { parseCompositeEffect } from "../index";
 describe("Nested Composite Effects Integration", () => {
   describe("sequence containing choices", () => {
     it("currently parses as choice due to registration order", () => {
-      const text =
-        "draw 2 cards, then choose one: deal 3 damage; or gain 2 lore";
+      const text = "draw 2 cards, then choose one: deal 3 damage; or gain 2 lore";
 
       const result = parseCompositeEffect(text);
 
@@ -21,7 +20,7 @@ describe("Nested Composite Effects Integration", () => {
       expect(result).not.toBeNull();
       expect(result?.type).toBe("choice");
 
-      const {options} = (result as Effect & { options: Effect[] });
+      const { options } = result as Effect & { options: Effect[] };
       expect(options).toHaveLength(2);
       expect(options[0].type).toBe("deal-damage");
       expect(options[1].type).toBe("gain-lore");
@@ -38,7 +37,7 @@ describe("Nested Composite Effects Integration", () => {
       expect(result).not.toBeNull();
       expect(result?.type).toBe("choice");
 
-      const {options} = (result as Effect & { options: Effect[] });
+      const { options } = result as Effect & { options: Effect[] };
       expect(options).toHaveLength(2);
 
       // Note: Current implementation parses "draw 1 card" and "gain 2 lore" as atomic
@@ -63,15 +62,14 @@ describe("Nested Composite Effects Integration", () => {
 
   describe("conditional containing sequence", () => {
     it("parses conditional with sequence as the effect", () => {
-      const text =
-        "if you have another character, draw 1 card, then gain 1 lore";
+      const text = "if you have another character, draw 1 card, then gain 1 lore";
 
       const result = parseCompositeEffect(text);
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("conditional");
 
-      const {condition} = (result as Effect & { condition: VisitorCondition });
+      const { condition } = result as Effect & { condition: VisitorCondition };
       expect(condition.type).toBe("if");
       expect(condition.expression).toBe("you have another character");
 
@@ -82,8 +80,7 @@ describe("Nested Composite Effects Integration", () => {
 
   describe("for-each containing choice", () => {
     it("currently parses as choice due to registration order", () => {
-      const text =
-        "for each character, choose one: deal 1 damage; or gain 1 lore";
+      const text = "for each character, choose one: deal 1 damage; or gain 1 lore";
 
       const result = parseCompositeEffect(text);
 
@@ -92,7 +89,7 @@ describe("Nested Composite Effects Integration", () => {
       expect(result).not.toBeNull();
       expect(result?.type).toBe("choice");
 
-      const {options} = (result as Effect & { options: Effect[] });
+      const { options } = result as Effect & { options: Effect[] };
       expect(options).toHaveLength(2);
       expect(options[0].type).toBe("deal-damage");
       expect(options[1].type).toBe("gain-lore");
@@ -116,8 +113,7 @@ describe("Nested Composite Effects Integration", () => {
 
   describe("deeply nested structures", () => {
     it("handles three-level nesting (optional of conditional of sequence)", () => {
-      const text =
-        "you may if you have another character, draw 1 card, then gain 1 lore";
+      const text = "you may if you have another character, draw 1 card, then gain 1 lore";
 
       const result = parseCompositeEffect(text);
 
@@ -135,7 +131,7 @@ describe("Nested Composite Effects Integration", () => {
       expect(result).not.toBeNull();
       expect(result?.type).toBe("choice");
 
-      const {options} = (result as Effect & { options: Effect[] });
+      const { options } = result as Effect & { options: Effect[] };
       // Each option may contain nested composite effects
       // Current implementation treats them as atomic text
       expect(options.length).toBeGreaterThan(0);
@@ -217,7 +213,7 @@ describe("Nested Composite Effects Integration", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("choice");
-      const {options} = (result as Effect & { options: Effect[] });
+      const { options } = result as Effect & { options: Effect[] };
       expect(options).toHaveLength(2);
       expect(options[0].type).toBe("deal-damage");
       expect(options[1].type).toBe("deal-damage");
@@ -230,7 +226,7 @@ describe("Nested Composite Effects Integration", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("sequence");
-      const {steps} = (result as Effect & { steps: Effect[] });
+      const { steps } = result as Effect & { steps: Effect[] };
       expect(steps).toHaveLength(2);
       expect(steps[0].type).toBe("draw");
       expect(steps[1].type).toBe("discard");
@@ -254,7 +250,7 @@ describe("Nested Composite Effects Integration", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("for-each");
-      const {effect} = (result as Effect & { effect: Effect });
+      const { effect } = result as Effect & { effect: Effect };
       expect(effect.type).toBe("gain-lore");
     });
   });

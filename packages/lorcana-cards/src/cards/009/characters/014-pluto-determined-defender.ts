@@ -19,16 +19,16 @@ export const plutoDeterminedDefender: CharacterCard = {
     },
     {
       effect: {
-        type: "remove-damage",
         amount: 3,
-        upTo: true,
         target: {
-          selector: "self",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "self",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "remove-damage",
+        upTo: true,
       },
       id: "zh2-3",
       text: "GUARD DOG At the start of your turn, remove up to 3 damage from this character.",

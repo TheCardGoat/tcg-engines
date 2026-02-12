@@ -19,10 +19,10 @@ export const theQueenFairestOfAll: CharacterCard = {
     },
     {
       effect: {
-        type: "modify-stat",
-        stat: "lore",
         modifier: 1,
+        stat: "lore",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "1ho-3",
       text: "REFLECTIONS OF VANITY For each other character named The Queen you have in play, this character gets +1 {L}.",

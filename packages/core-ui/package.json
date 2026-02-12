@@ -1,6 +1,30 @@
 {
   "name": "@tcg/core-ui",
   "version": "0.0.1",
+  "keywords": [
+    "svelte"
+  ],
+  "files": [
+    "dist",
+    "!dist/**/*.test.*",
+    "!dist/**/*.spec.*"
+  ],
+  "type": "module",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "main": "./src/lib/index.ts",
+  "module": "./src/lib/index.ts",
+  "types": "./src/lib/index.ts",
+  "svelte": "./src/lib/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/lib/index.ts",
+      "svelte": "./src/lib/index.ts",
+      "import": "./src/lib/index.ts",
+      "default": "./src/lib/index.ts"
+    }
+  },
   "scripts": {
     "dev": "vite dev",
     "build": "vite build && npm run prepack",
@@ -18,29 +42,13 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
-  "files": [
-    "dist",
-    "!dist/**/*.test.*",
-    "!dist/**/*.spec.*"
-  ],
-  "sideEffects": [
-    "**/*.css"
-  ],
-  "main": "./src/lib/index.ts",
-  "module": "./src/lib/index.ts",
-  "svelte": "./src/lib/index.ts",
-  "types": "./src/lib/index.ts",
-  "type": "module",
-  "exports": {
-    ".": {
-      "types": "./src/lib/index.ts",
-      "svelte": "./src/lib/index.ts",
-      "import": "./src/lib/index.ts",
-      "default": "./src/lib/index.ts"
-    }
-  },
-  "peerDependencies": {
-    "svelte": "5.0.0"
+  "dependencies": {
+    "@iconify/svelte": "^5.0.2",
+    "@unpic/svelte": "^1.0.0",
+    "bits-ui": "^2.14.1",
+    "clsx": "^2.1.1",
+    "daisyui": "^5.5.14",
+    "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "5.0.0",
@@ -71,15 +79,7 @@
     "vitest": "3.2.4",
     "vitest-browser-svelte": "1.1.0"
   },
-  "keywords": [
-    "svelte"
-  ],
-  "dependencies": {
-    "@iconify/svelte": "^5.0.2",
-    "@unpic/svelte": "^1.0.0",
-    "bits-ui": "^2.14.1",
-    "clsx": "^2.1.1",
-    "daisyui": "^5.5.14",
-    "tailwind-merge": "^3.4.0"
+  "peerDependencies": {
+    "svelte": "5.0.0"
   }
 }

@@ -4,14 +4,14 @@ export const iFindEmIFlattenEm: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "banish",
         target: {
-          selector: "all",
+          cardTypes: ["item"],
           count: "all",
           owner: "any",
+          selector: "all",
           zones: ["play"],
-          cardTypes: ["item"],
         },
+        type: "banish",
       },
       id: "1xm-1",
       text: "Banish all items.",

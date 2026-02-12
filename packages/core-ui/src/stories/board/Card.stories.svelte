@@ -4,9 +4,6 @@
   import Card from "$lib/components/board/Card.svelte";
 
   const { Story } = defineMeta({
-    title: "Board/Card",
-    component: Card,
-    tags: ["autodocs"],
     argTypes: {
       tapped: { control: "boolean" },
       faceDown: { control: "boolean" },
@@ -21,9 +18,12 @@
     args: {
       onclick: fn(),
     },
+    component: Card,
     parameters: {
       layout: "centered",
     },
+    tags: ["autodocs"],
+    title: "Board/Card",
   });
 </script>
 

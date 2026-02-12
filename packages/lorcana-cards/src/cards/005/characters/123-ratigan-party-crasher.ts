@@ -19,10 +19,10 @@ export const ratiganPartyCrasher: CharacterCard = {
     },
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: 2,
+        stat: "strength",
         target: "YOUR_CHARACTERS",
+        type: "modify-stat",
       },
       id: "1b4-3",
       name: "DELIGHTFULLY WICKED Your damaged",
