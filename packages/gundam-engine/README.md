@@ -156,7 +156,7 @@ bun run tsc --noEmit
 ### Linting
 
 ```bash
-bun run biome check .
+bun run oxlint --fix ./src
 ```
 
 ## Documentation

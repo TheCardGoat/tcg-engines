@@ -3,73 +3,73 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { liloGalacticHero } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { letTheStormRageOn } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
-// import {
-//   goofyKnightForADay,
-//   mickeyMouseFriendlyFace,
-//   mufasaBetrayedLeader,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { liloGalacticHero } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { letTheStormRageOn } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
+// Import {
+//   GoofyKnightForADay,
+//   MickeyMouseFriendlyFace,
+//   MufasaBetrayedLeader,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Mufasa - Betrayed Leader", () => {
-//   it("**THE SUN WILL SET** When this character is banished, you may reveal the top card of your deck. If it's a character card, you may play that character for free and they enter play exerted. Otherwise, put it on the top of your deck.", () => {
-//     const testStore = new TestStore({
-//       play: [mufasaBetrayedLeader],
-//       deck: [goofyKnightForADay],
+// Describe("Mufasa - Betrayed Leader", () => {
+//   It("**THE SUN WILL SET** When this character is banished, you may reveal the top card of your deck. If it's a character card, you may play that character for free and they enter play exerted. Otherwise, put it on the top of your deck.", () => {
+//     Const testStore = new TestStore({
+//       Play: [mufasaBetrayedLeader],
+//       Deck: [goofyKnightForADay],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(mufasaBetrayedLeader);
-//     const target = testStore.getCard(goofyKnightForADay);
+//     Const cardUnderTest = testStore.getCard(mufasaBetrayedLeader);
+//     Const target = testStore.getCard(goofyKnightForADay);
 //
-//     cardUnderTest.banish();
+//     CardUnderTest.banish();
 //
-//     expect(testStore.stackLayers).toHaveLength(1);
-//     testStore.resolveOptionalAbility();
+//     Expect(testStore.stackLayers).toHaveLength(1);
+//     TestStore.resolveOptionalAbility();
 //
-//     expect(target.zone).toBe("play");
-//     expect(target.meta.exerted).toBe(true);
-//     expect(testStore.getZonesCardCount()).toEqual(
-//       expect.objectContaining({ deck: 0 }),
+//     Expect(target.zone).toBe("play");
+//     Expect(target.meta.exerted).toBe(true);
+//     Expect(testStore.getZonesCardCount()).toEqual(
+//       Expect.objectContaining({ deck: 0 }),
 //     );
 //   });
 // });
 //
-// describe("Regressions", () => {
-//   it("Removed on opponent's turn", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Regressions", () => {
+//   It("Removed on opponent's turn", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: letTheStormRageOn.cost,
-//         hand: [letTheStormRageOn],
-//         deck: [mickeyMouseFriendlyFace, liloGalacticHero],
+//         Inkwell: letTheStormRageOn.cost,
+//         Hand: [letTheStormRageOn],
+//         Deck: [mickeyMouseFriendlyFace, liloGalacticHero],
 //       },
 //       {
-//         play: [mufasaBetrayedLeader],
-//         deck: [goofyKnightForADay],
+//         Play: [mufasaBetrayedLeader],
+//         Deck: [goofyKnightForADay],
 //       },
 //     );
 //
-//     const cardUnderTest = testEngine.getCardModel(mufasaBetrayedLeader);
-//     const target = testEngine.getCardModel(goofyKnightForADay);
-//     const notTarget = testEngine.getCardModel(mickeyMouseFriendlyFace);
+//     Const cardUnderTest = testEngine.getCardModel(mufasaBetrayedLeader);
+//     Const target = testEngine.getCardModel(goofyKnightForADay);
+//     Const notTarget = testEngine.getCardModel(mickeyMouseFriendlyFace);
 //
-//     cardUnderTest.updateCardMeta({
-//       damage: mufasaBetrayedLeader.willpower - 1,
+//     CardUnderTest.updateCardMeta({
+//       Damage: mufasaBetrayedLeader.willpower - 1,
 //     });
 //
-//     await testEngine.playCard(letTheStormRageOn);
-//     await testEngine.resolveTopOfStack({ targets: [cardUnderTest] }, true);
+//     Await testEngine.playCard(letTheStormRageOn);
+//     Await testEngine.resolveTopOfStack({ targets: [cardUnderTest] }, true);
 //
-//     testEngine.changeActivePlayer("player_two");
-//     await testEngine.resolveOptionalAbility();
+//     TestEngine.changeActivePlayer("player_two");
+//     Await testEngine.resolveOptionalAbility();
 //
-//     expect(notTarget.zone).toBe("deck");
-//     expect(target.zone).toBe("play");
-//     expect(target.meta.exerted).toBe(true);
-//     expect(testEngine.getZonesCardCount("player_two")).toEqual(
-//       expect.objectContaining({ deck: 0 }),
+//     Expect(notTarget.zone).toBe("deck");
+//     Expect(target.zone).toBe("play");
+//     Expect(target.meta.exerted).toBe(true);
+//     Expect(testEngine.getZonesCardCount("player_two")).toEqual(
+//       Expect.objectContaining({ deck: 0 }),
 //     );
 //   });
 // });

@@ -19,8 +19,8 @@ describe("Keyword Parser", () => {
 
       expect(result.success).toBe(true);
       expect(result.ability?.ability).toEqual({
-        type: "keyword",
         keyword: "Rush",
+        type: "keyword",
       });
     });
 
@@ -29,8 +29,8 @@ describe("Keyword Parser", () => {
 
       expect(result.success).toBe(true);
       expect(result.ability?.ability).toEqual({
-        type: "keyword",
         keyword: "Ward",
+        type: "keyword",
       });
     });
 
@@ -39,8 +39,8 @@ describe("Keyword Parser", () => {
 
       expect(result.success).toBe(true);
       expect(result.ability?.ability).toEqual({
-        type: "keyword",
         keyword: "Evasive",
+        type: "keyword",
       });
     });
   });
@@ -51,8 +51,8 @@ describe("Keyword Parser", () => {
 
       expect(result.success).toBe(true);
       expect(result.ability?.ability).toEqual({
-        type: "keyword",
         keyword: "Challenger",
+        type: "keyword",
         value: 3,
       });
     });
@@ -83,8 +83,8 @@ describe("Keyword Parser", () => {
 
       expect(result.success).toBe(true);
       expect(result.ability?.ability).toEqual({
-        type: "keyword",
         keyword: "Resist",
+        type: "keyword",
         value: 2,
       });
     });
@@ -105,8 +105,8 @@ describe("Keyword Parser", () => {
 
       expect(result.success).toBe(true);
       expect(result.ability?.ability).toEqual({
-        type: "keyword",
         keyword: "Singer",
+        type: "keyword",
         value: 5,
       });
     });

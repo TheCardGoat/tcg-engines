@@ -3,93 +3,93 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { fishboneQuill } from "@lorcanito/lorcana-engine/cards/001/items/168-fishbone-quill";
-// import { tipoGrowingSon } from "@lorcanito/lorcana-engine/cards/005/characters/157-tipo-growing-son";
-// import { tipoJuniorChipmunk } from "@lorcanito/lorcana-engine/cards/008";
-// import { daisyDuckParanormalInvestigator } from "@lorcanito/lorcana-engine/cards/010";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { fishboneQuill } from "@lorcanito/lorcana-engine/cards/001/items/168-fishbone-quill";
+// Import { tipoGrowingSon } from "@lorcanito/lorcana-engine/cards/005/characters/157-tipo-growing-son";
+// Import { tipoJuniorChipmunk } from "@lorcanito/lorcana-engine/cards/008";
+// Import { daisyDuckParanormalInvestigator } from "@lorcanito/lorcana-engine/cards/010";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Daisy Duck - Paranormal Investigator", () => {
-//   it("does NOT exert opponent cards entering inkwell when Daisy is NOT exerted", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Daisy Duck - Paranormal Investigator", () => {
+//   It("does NOT exert opponent cards entering inkwell when Daisy is NOT exerted", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         play: [fishboneQuill],
-//         hand: [tipoGrowingSon, tipoJuniorChipmunk],
+//         Play: [fishboneQuill],
+//         Hand: [tipoGrowingSon, tipoJuniorChipmunk],
 //       },
 //       {
-//         play: [daisyDuckParanormalInvestigator],
+//         Play: [daisyDuckParanormalInvestigator],
 //       },
 //     );
 //
 //     // Sanity: ensure Daisy starts not exerted
-//     expect(
-//       testEngine.getCardModel(daisyDuckParanormalInvestigator).exerted,
+//     Expect(
+//       TestEngine.getCardModel(daisyDuckParanormalInvestigator).exerted,
 //     ).toBe(false);
 //
 //     // Put a card into the opponent's inkwell — should NOT be exerted because Daisy is not exerted
-//     await testEngine.putIntoInkwell(tipoJuniorChipmunk);
-//     expect(testEngine.getCardModel(tipoJuniorChipmunk).exerted).toBe(false);
+//     Await testEngine.putIntoInkwell(tipoJuniorChipmunk);
+//     Expect(testEngine.getCardModel(tipoJuniorChipmunk).exerted).toBe(false);
 //
 //     // Activate fishbone quill to put card into inkwell again
-//     const fishboneQuillModel = testEngine.getCardModel(fishboneQuill);
-//     const tipoGrowingSonModel = testEngine.getCardModel(tipoGrowingSon);
-//     await fishboneQuillModel.activate();
-//     testEngine.resolveTopOfStack({ targets: [tipoGrowingSonModel] });
-//     expect(tipoGrowingSonModel.exerted).toBe(false);
+//     Const fishboneQuillModel = testEngine.getCardModel(fishboneQuill);
+//     Const tipoGrowingSonModel = testEngine.getCardModel(tipoGrowingSon);
+//     Await fishboneQuillModel.activate();
+//     TestEngine.resolveTopOfStack({ targets: [tipoGrowingSonModel] });
+//     Expect(tipoGrowingSonModel.exerted).toBe(false);
 //   });
 //
-//   it("exerts opponent cards entering inkwell when Daisy IS exerted", async () => {
-//     const testEngine = new TestEngine(
+//   It("exerts opponent cards entering inkwell when Daisy IS exerted", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         play: [fishboneQuill],
-//         hand: [tipoGrowingSon, tipoJuniorChipmunk],
+//         Play: [fishboneQuill],
+//         Hand: [tipoGrowingSon, tipoJuniorChipmunk],
 //       },
 //       {
-//         play: [daisyDuckParanormalInvestigator],
+//         Play: [daisyDuckParanormalInvestigator],
 //       },
 //     );
 //
 //     // Exert Daisy directly in the test harness
-//     await testEngine.exertCard(daisyDuckParanormalInvestigator);
-//     expect(
-//       testEngine.getCardModel(daisyDuckParanormalInvestigator).exerted,
+//     Await testEngine.exertCard(daisyDuckParanormalInvestigator);
+//     Expect(
+//       TestEngine.getCardModel(daisyDuckParanormalInvestigator).exerted,
 //     ).toBe(true);
 //
 //     // Now when a card is put into the opponent's inkwell it should enter exerted
-//     await testEngine.putIntoInkwell(tipoJuniorChipmunk);
-//     expect(testEngine.getCardModel(tipoJuniorChipmunk).exerted).toBe(true);
+//     Await testEngine.putIntoInkwell(tipoJuniorChipmunk);
+//     Expect(testEngine.getCardModel(tipoJuniorChipmunk).exerted).toBe(true);
 //
 //     // Activate fishbone quill to put card into inkwell again
-//     const fishboneQuillModel = testEngine.getCardModel(fishboneQuill);
-//     const tipoGrowingSonModel = testEngine.getCardModel(tipoGrowingSon);
-//     await fishboneQuillModel.activate();
-//     testEngine.resolveTopOfStack({ targets: [tipoGrowingSonModel] });
-//     expect(tipoGrowingSonModel.exerted).toBe(true);
+//     Const fishboneQuillModel = testEngine.getCardModel(fishboneQuill);
+//     Const tipoGrowingSonModel = testEngine.getCardModel(tipoGrowingSon);
+//     Await fishboneQuillModel.activate();
+//     TestEngine.resolveTopOfStack({ targets: [tipoGrowingSonModel] });
+//     Expect(tipoGrowingSonModel.exerted).toBe(true);
 //   });
 //
-//   it("does NOT exert opponent cards entering play when Daisy IS exerted", async () => {
-//     const testEngine = new TestEngine(
+//   It("does NOT exert opponent cards entering play when Daisy IS exerted", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: tipoJuniorChipmunk.cost,
-//         play: [fishboneQuill],
-//         hand: [tipoGrowingSon, tipoJuniorChipmunk],
+//         Inkwell: tipoJuniorChipmunk.cost,
+//         Play: [fishboneQuill],
+//         Hand: [tipoGrowingSon, tipoJuniorChipmunk],
 //       },
 //       {
-//         play: [daisyDuckParanormalInvestigator],
+//         Play: [daisyDuckParanormalInvestigator],
 //       },
 //     );
 //
 //     // Exert Daisy directly in the test harness
-//     await testEngine.exertCard(daisyDuckParanormalInvestigator);
-//     expect(
-//       testEngine.getCardModel(daisyDuckParanormalInvestigator).exerted,
+//     Await testEngine.exertCard(daisyDuckParanormalInvestigator);
+//     Expect(
+//       TestEngine.getCardModel(daisyDuckParanormalInvestigator).exerted,
 //     ).toBe(true);
 //
-//     await testEngine.playCard(tipoJuniorChipmunk);
+//     Await testEngine.playCard(tipoJuniorChipmunk);
 //
 //     // tipoJuniorChipmunk should NOT be exerted
-//     expect(testEngine.getCardModel(tipoJuniorChipmunk).exerted).toBe(false);
+//     Expect(testEngine.getCardModel(tipoJuniorChipmunk).exerted).toBe(false);
 //   });
 // });
 //

@@ -1,35 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const cruellaDeVilMiserableAsUsual: CharacterCard = {
-  id: "cw0",
-  cardType: "character",
-  name: "Cruella De Vil",
-  version: "Miserable as Usual",
-  fullName: "Cruella De Vil - Miserable as Usual",
-  inkType: ["emerald"],
-  franchise: "101 Dalmatians",
-  set: "001",
-  text: "YOU'LL BE SORRY! When this character is challenged and banished, you may return chosen character to their player's hand.",
-  cost: 2,
-  strength: 1,
-  willpower: 3,
-  lore: 1,
-  cardNumber: 72,
-  inkable: true,
-  externalIds: {
-    ravensburger: "2e73f0957919d8b91e9c5a66b5c0b5a5ede4afeb",
-  },
   abilities: [
     {
-      id: "cw0-1",
-      text: "YOU'LL BE SORRY! When this character is challenged and banished, you may return chosen character to their player's hand.",
-      name: "YOU'LL BE SORRY!",
-      type: "triggered",
-      trigger: {
-        event: "challenged",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -38,51 +11,78 @@ export const cruellaDeVilMiserableAsUsual: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "cw0-1",
+      name: "YOU'LL BE SORRY!",
+      text: "YOU'LL BE SORRY! When this character is challenged and banished, you may return chosen character to their player's hand.",
+      trigger: {
+        event: "challenged",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 72,
+  cardType: "character",
   classifications: ["Storyborn", "Villain"],
+  cost: 2,
+  externalIds: {
+    ravensburger: "2e73f0957919d8b91e9c5a66b5c0b5a5ede4afeb",
+  },
+  franchise: "101 Dalmatians",
+  fullName: "Cruella De Vil - Miserable as Usual",
+  id: "cw0",
+  inkType: ["emerald"],
+  inkable: true,
+  lore: 1,
+  name: "Cruella De Vil",
+  set: "001",
+  strength: 1,
+  text: "YOU'LL BE SORRY! When this character is challenged and banished, you may return chosen character to their player's hand.",
+  version: "Miserable as Usual",
+  willpower: 3,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { whenChallengedAndBanished } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import { whenChallengedAndBanished } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const cruellaDeVilMiserableAsUsual: LorcanitoCharacterCard = {
-//   id: "wr1",
+// Export const cruellaDeVilMiserableAsUsual: LorcanitoCharacterCard = {
+//   Id: "wr1",
 //
-//   name: "Cruella De Vil",
-//   title: "Miserable As Usual",
-//   characteristics: ["storyborn", "villain"],
-//   text: "**You'll Be Sorry** When this character is challenged and banished, you may return chosen character to their player's hand.",
-//   type: "character",
-//   abilities: [
-//     whenChallengedAndBanished({
-//       name: "YOU'LL BE SORRY",
-//       text: "When this character is challenged and banished, you may return chosen character to their player's hand.",
-//       optional: true,
-//       effects: [
+//   Name: "Cruella De Vil",
+//   Title: "Miserable As Usual",
+//   Characteristics: ["storyborn", "villain"],
+//   Text: "**You'll Be Sorry** When this character is challenged and banished, you may return chosen character to their player's hand.",
+//   Type: "character",
+//   Abilities: [
+//     WhenChallengedAndBanished({
+//       Name: "YOU'LL BE SORRY",
+//       Text: "When this character is challenged and banished, you may return chosen character to their player's hand.",
+//       Optional: true,
+//       Effects: [
 //         {
-//           type: "move",
-//           to: "hand",
-//           target: chosenCharacter,
+//           Type: "move",
+//           To: "hand",
+//           Target: chosenCharacter,
 //         },
 //       ],
 //     }),
 //   ],
-//   flavour: "When she stops by, misery is company.",
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 2,
-//   strength: 1,
-//   willpower: 3,
-//   lore: 1,
-//   illustrator: "Nicholas Kole",
-//   number: 72,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 492703,
+//   Flavour: "When she stops by, misery is company.",
+//   Inkwell: true,
+//   Colors: ["emerald"],
+//   Cost: 2,
+//   Strength: 1,
+//   Willpower: 3,
+//   Lore: 1,
+//   Illustrator: "Nicholas Kole",
+//   Number: 72,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 492703,
 //   },
-//   rarity: "rare",
+//   Rarity: "rare",
 // };
 //

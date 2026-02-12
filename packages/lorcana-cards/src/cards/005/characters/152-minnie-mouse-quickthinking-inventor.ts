@@ -1,43 +1,43 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/target";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/target";
 //
-// export const minnieMouseQuickthinkingInventor: LorcanitoCharacterCard = {
-//   id: "zsf",
-//   missingTestCase: true,
-//   name: "Minnie Mouse",
-//   title: "Quick-Thinking Inventor",
-//   characteristics: ["hero", "dreamborn", "inventor"],
-//   text: "**CAKE CATAPULT** When you play this character, chosen character gets -2 {S} this turn.",
-//   type: "character",
-//   abilities: [
+// Export const minnieMouseQuickthinkingInventor: LorcanitoCharacterCard = {
+//   Id: "zsf",
+//   MissingTestCase: true,
+//   Name: "Minnie Mouse",
+//   Title: "Quick-Thinking Inventor",
+//   Characteristics: ["hero", "dreamborn", "inventor"],
+//   Text: "**CAKE CATAPULT** When you play this character, chosen character gets -2 {S} this turn.",
+//   Type: "character",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       name: "CAKE CATAPULT",
-//       text: "When you play this character, chosen character gets -2 {S} this turn.",
-//       effects: [
+//       Type: "resolution",
+//       Name: "CAKE CATAPULT",
+//       Text: "When you play this character, chosen character gets -2 {S} this turn.",
+//       Effects: [
 //         {
-//           type: "attribute",
-//           attribute: "strength",
-//           amount: 2,
-//           modifier: "subtract",
-//           target: chosenCharacter,
+//           Type: "attribute",
+//           Attribute: "strength",
+//           Amount: 2,
+//           Modifier: "subtract",
+//           Target: chosenCharacter,
 //         },
 //       ],
 //     },
 //   ],
-//   flavour: "This puts the Frosting Flinger 2000 to shame.",
-//   colors: ["sapphire"],
-//   cost: 1,
-//   strength: 1,
-//   willpower: 2,
-//   lore: 1,
-//   illustrator: "Lauren Levering",
-//   number: 152,
-//   set: "SSK",
-//   externalIds: {
-//     tcgPlayer: 561649,
+//   Flavour: "This puts the Frosting Flinger 2000 to shame.",
+//   Colors: ["sapphire"],
+//   Cost: 1,
+//   Strength: 1,
+//   Willpower: 2,
+//   Lore: 1,
+//   Illustrator: "Lauren Levering",
+//   Number: 152,
+//   Set: "SSK",
+//   ExternalIds: {
+//     TcgPlayer: 561649,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

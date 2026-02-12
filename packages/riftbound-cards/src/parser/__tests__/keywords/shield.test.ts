@@ -11,29 +11,21 @@ import { Abilities, Effects, Targets } from "../helpers";
 describe("Keyword: Shield", () => {
   describe("simple shield", () => {
     it.skip("should parse '[Shield] (+1 :rb_might: while I'm a defender.)'", () => {
-      const result = parseAbilities(
-        "[Shield] (+1 :rb_might: while I'm a defender.)",
-      );
+      const result = parseAbilities("[Shield] (+1 :rb_might: while I'm a defender.)");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
-      expect(result.abilities?.[0]).toEqual(
-        expect.objectContaining(Abilities.shield(1)),
-      );
+      expect(result.abilities?.[0]).toEqual(expect.objectContaining(Abilities.shield(1)));
     });
   });
 
   describe("shield with value", () => {
     it.skip("should parse '[Shield 2] (+2 :rb_might: while I'm a defender.)'", () => {
-      const result = parseAbilities(
-        "[Shield 2] (+2 :rb_might: while I'm a defender.)",
-      );
+      const result = parseAbilities("[Shield 2] (+2 :rb_might: while I'm a defender.)");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
-      expect(result.abilities?.[0]).toEqual(
-        expect.objectContaining(Abilities.shield(2)),
-      );
+      expect(result.abilities?.[0]).toEqual(expect.objectContaining(Abilities.shield(2)));
     });
 
     it.skip("should parse '[Shield 3] (+3 :rb_might: while I'm a defender.)[Tank]'", () => {
@@ -43,12 +35,8 @@ describe("Keyword: Shield", () => {
 
       expect(result.success).toBe(true);
       expect(result.abilities?.length).toBeGreaterThanOrEqual(3);
-      expect(result.abilities?.[0]).toEqual(
-        expect.objectContaining(Abilities.shield(3)),
-      );
-      expect(result.abilities?.[1]).toEqual(
-        expect.objectContaining(Abilities.tank()),
-      );
+      expect(result.abilities?.[0]).toEqual(expect.objectContaining(Abilities.shield(3)));
+      expect(result.abilities?.[1]).toEqual(expect.objectContaining(Abilities.tank()));
     });
 
     it.skip("should parse '[Shield 5] (+5 :rb_might: while I'm a defender.)[Tank]'", () => {
@@ -58,9 +46,7 @@ describe("Keyword: Shield", () => {
 
       expect(result.success).toBe(true);
       expect(result.abilities?.length).toBeGreaterThanOrEqual(3);
-      expect(result.abilities?.[0]).toEqual(
-        expect.objectContaining(Abilities.shield(5)),
-      );
+      expect(result.abilities?.[0]).toEqual(expect.objectContaining(Abilities.shield(5)));
     });
   });
 
@@ -72,12 +58,8 @@ describe("Keyword: Shield", () => {
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(2);
-      expect(result.abilities?.[0]).toEqual(
-        expect.objectContaining(Abilities.assault(2)),
-      );
-      expect(result.abilities?.[1]).toEqual(
-        expect.objectContaining(Abilities.shield(2)),
-      );
+      expect(result.abilities?.[0]).toEqual(expect.objectContaining(Abilities.assault(2)));
+      expect(result.abilities?.[1]).toEqual(expect.objectContaining(Abilities.shield(2)));
     });
 
     it.skip("should parse '[Shield] (+1 :rb_might: while I'm a defender.)[Tank]'", () => {
@@ -87,12 +69,8 @@ describe("Keyword: Shield", () => {
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(2);
-      expect(result.abilities?.[0]).toEqual(
-        expect.objectContaining(Abilities.shield(1)),
-      );
-      expect(result.abilities?.[1]).toEqual(
-        expect.objectContaining(Abilities.tank()),
-      );
+      expect(result.abilities?.[0]).toEqual(expect.objectContaining(Abilities.shield(1)));
+      expect(result.abilities?.[1]).toEqual(expect.objectContaining(Abilities.tank()));
     });
   });
 
@@ -106,10 +84,10 @@ describe("Keyword: Shield", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "static",
           condition: expect.objectContaining({
             type: "while-mighty",
           }),
+          type: "static",
         }),
       );
     });
@@ -125,11 +103,11 @@ describe("Keyword: Shield", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "static",
           effect: expect.objectContaining({
-            type: "grant-keyword",
             keyword: "Shield",
+            type: "grant-keyword",
           }),
+          type: "static",
         }),
       );
     });

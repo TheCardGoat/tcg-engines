@@ -86,7 +86,7 @@ describe("Multi-Ability Text Splitting", () => {
 
     it("should handle partial success when only some abilities parse", () => {
       // This tests that we get warnings for unparseable abilities but still succeed
-      // if at least one ability parses
+      // If at least one ability parses
       const text =
         "Rush\nSOME COMPLEX ABILITY THAT WONT PARSE YET with nested conditionals and multiple clauses that are too complex";
 

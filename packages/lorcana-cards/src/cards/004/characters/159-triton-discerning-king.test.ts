@@ -3,27 +3,27 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { luckyDime } from "@lorcanito/lorcana-engine/cards/003/items/items";
-// import { tritonDiscerningKing } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { luckyDime } from "@lorcanito/lorcana-engine/cards/003/items/items";
+// Import { tritonDiscerningKing } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Triton - Discerning King", () => {
-//   it("**CONSIGN TO THE DEPTHS** {E}, Banish one of your items − Gain 3 lore.", () => {
-//     const testStore = new TestEngine({
+// Describe("Triton - Discerning King", () => {
+//   It("**CONSIGN TO THE DEPTHS** {E}, Banish one of your items − Gain 3 lore.", () => {
+//     Const testStore = new TestEngine({
 //       //inkwell: tritonDiscerningKing.cost,
-//       play: [tritonDiscerningKing, luckyDime],
+//       Play: [tritonDiscerningKing, luckyDime],
 //     });
 //
-//     const cardUnderTest = testStore.getCardModel(tritonDiscerningKing);
+//     Const cardUnderTest = testStore.getCardModel(tritonDiscerningKing);
 //
-//     const target = testStore.getCardModel(luckyDime);
+//     Const target = testStore.getCardModel(luckyDime);
 //
-//     testStore.activateCard(cardUnderTest);
-//     testStore.resolveTopOfStack({ targets: [target] });
+//     TestStore.activateCard(cardUnderTest);
+//     TestStore.resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.zone).toEqual("discard");
-//     expect(testStore.getLoreForPlayer("player_one")).toEqual(3);
+//     Expect(target.zone).toEqual("discard");
+//     Expect(testStore.getLoreForPlayer("player_one")).toEqual(3);
 //   });
 // });
 //

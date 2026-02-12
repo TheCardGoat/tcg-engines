@@ -9,8 +9,8 @@
     "prepack": "svelte-kit sync && svelte-package && publint",
     "check": "bun x @inlang/paraglide-js compile --project ./project.inlang --outdir ./src/lib/paraglide && svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check-types": "npm run check",
-    "format": "bun x @biomejs/biome check --fix --max-diagnostics=none --diagnostic-level=error --linter-enabled=false .",
-    "lint": "bun x @biomejs/biome lint --fix --max-diagnostics=none --diagnostic-level=error .",
+    "format": "bun x oxfmt --write .",
+    "lint": "bun x oxlint --fix .",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
     "test:unit": "bun test",
     "test": "bun test",
@@ -43,7 +43,6 @@
     "svelte": "5.0.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.3.11",
     "@chromatic-com/storybook": "5.0.0",
     "@inlang/paraglide-js": "2.3.2",
     "@playwright/test": "1.55.1",

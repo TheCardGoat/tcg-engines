@@ -5,9 +5,9 @@ import { beastWolfsbane } from "./070-beast-wolfsbane";
 describe("Beast - Wolfsbane", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [beastWolfbane] });
-  //   expect(testEngine.getCardModel(beastWolfbane).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [beastWolfbane] });
+  //   Expect(testEngine.getCardModel(beastWolfbane).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });

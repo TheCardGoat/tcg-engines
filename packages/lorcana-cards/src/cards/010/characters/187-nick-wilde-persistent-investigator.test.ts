@@ -3,20 +3,20 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { nickWildePersistentInvestigator } from "@lorcanito/lorcana-engine/cards/010/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { nickWildePersistentInvestigator } from "@lorcanito/lorcana-engine/cards/010/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Nick Wilde - Persistent Investigator", () => {
-//   it.skip("Shift 3 (You may pay 3 to play this on top of one of your characters named Nick Wilde.) CASE CLOSED During your turn, whenever one of your Detective characters banishes another character in a challenge, draw a card.", async () => {
-//     const testEngine = new TestEngine({
-//       play: [nickWildePersistentInvestigator],
+// Describe("Nick Wilde - Persistent Investigator", () => {
+//   It.skip("Shift 3 (You may pay 3 to play this on top of one of your characters named Nick Wilde.) CASE CLOSED During your turn, whenever one of your Detective characters banishes another character in a challenge, draw a card.", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [nickWildePersistentInvestigator],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(
-//       nickWildePersistentInvestigator,
+//     Const cardUnderTest = testEngine.getCardModel(
+//       NickWildePersistentInvestigator,
 //     );
-//     expect(cardUnderTest.hasShift).toBe(true);
+//     Expect(cardUnderTest.hasShift).toBe(true);
 //   });
 // });
 //

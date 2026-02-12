@@ -5,9 +5,9 @@ import { mickeyMouseDetective } from "./154-mickey-mouse-detective";
 describe("Mickey Mouse - Detective", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [mickeyMouseDetective] });
-  //   expect(testEngine.getCardModel(mickeyMouseDetective).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [mickeyMouseDetective] });
+  //   Expect(testEngine.getCardModel(mickeyMouseDetective).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,39 +17,39 @@ describe("Mickey Mouse - Detective", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   mauriceWorldFamousInventor,
-//   mickeyMouseDetective,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   MauriceWorldFamousInventor,
+//   MickeyMouseDetective,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Mickey Mouse - Detective", () => {
-//   it("**GET A CLUE** When you play this character, you may put the top card of your deck into your inkwell facedown and exerted.", () => {
-//     const testStore = new TestStore({
-//       inkwell: mickeyMouseDetective.cost,
-//       deck: [mauriceWorldFamousInventor],
-//       hand: [mickeyMouseDetective],
+// Describe("Mickey Mouse - Detective", () => {
+//   It("**GET A CLUE** When you play this character, you may put the top card of your deck into your inkwell facedown and exerted.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: mickeyMouseDetective.cost,
+//       Deck: [mauriceWorldFamousInventor],
+//       Hand: [mickeyMouseDetective],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "hand",
-//       mickeyMouseDetective.id,
+//       MickeyMouseDetective.id,
 //     );
 //
-//     const topDeckCard = testStore.getByZoneAndId(
+//     Const topDeckCard = testStore.getByZoneAndId(
 //       "deck",
-//       mauriceWorldFamousInventor.id,
+//       MauriceWorldFamousInventor.id,
 //     );
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({ targets: [topDeckCard] });
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({ targets: [topDeckCard] });
 //
-//     expect(topDeckCard.zone).toEqual("inkwell");
-//     expect(topDeckCard.ready).toEqual(false);
-//     expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
+//     Expect(topDeckCard.zone).toEqual("inkwell");
+//     Expect(topDeckCard.ready).toEqual(false);
+//     Expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
 //   });
 // });
 //

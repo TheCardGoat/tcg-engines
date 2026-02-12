@@ -3,34 +3,34 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { goTheDistance } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
-// import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { goTheDistance } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
+// Import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Go the Distance", () => {
-//   it("Ready chosen damaged character of yours. They can't quest for the rest of this turn. Draw a card.", () => {
-//     const testStore = new TestStore({
-//       inkwell: goTheDistance.cost,
-//       hand: [goTheDistance],
-//       play: [goofyKnightForADay],
-//       deck: 2,
+// Describe("Go the Distance", () => {
+//   It("Ready chosen damaged character of yours. They can't quest for the rest of this turn. Draw a card.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: goTheDistance.cost,
+//       Hand: [goTheDistance],
+//       Play: [goofyKnightForADay],
+//       Deck: 2,
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", goTheDistance.id);
-//     const target = testStore.getByZoneAndId("play", goofyKnightForADay.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", goTheDistance.id);
+//     Const target = testStore.getByZoneAndId("play", goofyKnightForADay.id);
 //
-//     target.updateCardMeta({ damage: 1, exerted: true });
+//     Target.updateCardMeta({ damage: 1, exerted: true });
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveTopOfStack({ targets: [target] });
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.ready).toBe(true);
-//     expect(target.hasQuestRestriction).toEqual(true);
-//     expect(testStore.getZonesCardCount()).toEqual(
-//       expect.objectContaining({
-//         deck: 1,
-//         hand: 1,
+//     Expect(target.ready).toBe(true);
+//     Expect(target.hasQuestRestriction).toEqual(true);
+//     Expect(testStore.getZonesCardCount()).toEqual(
+//       Expect.objectContaining({
+//         Deck: 1,
+//         Hand: 1,
 //       }),
 //     );
 //   });

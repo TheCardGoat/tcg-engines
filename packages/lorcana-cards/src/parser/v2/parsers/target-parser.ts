@@ -43,11 +43,11 @@ export function parseCharacterTarget(text: string): TargetDSL | null {
 
   // Map target string to DSL format
   const result: TargetDSL = {
-    selector: "chosen",
+    cardTypes: ["character"],
     count: 1,
     owner: "any",
+    selector: "chosen",
     zones: ["play"],
-    cardTypes: ["character"],
   };
 
   // Parse modifier from text
@@ -85,7 +85,7 @@ export function parseCharacterTarget(text: string): TargetDSL | null {
     lowerText.includes("each opposing character")
   ) {
     result.selector = "each";
-    result.count = 1; // each means count per target
+    result.count = 1; // Each means count per target
     if (lowerText.includes("opposing")) {
       result.owner = "opponent";
     }
@@ -109,11 +109,11 @@ export function parseItemTarget(text: string): TargetDSL | null {
   }
 
   const result: TargetDSL = {
-    selector: "chosen",
+    cardTypes: ["item"],
     count: 1,
     owner: "any",
+    selector: "chosen",
     zones: ["play"],
-    cardTypes: ["item"],
   };
 
   const lowerText = text.toLowerCase();
@@ -150,11 +150,11 @@ export function parseLocationTarget(text: string): TargetDSL | null {
   }
 
   const result: TargetDSL = {
-    selector: "chosen",
+    cardTypes: ["location"],
     count: 1,
     owner: "any",
+    selector: "chosen",
     zones: ["play"],
-    cardTypes: ["location"],
   };
 
   const lowerText = text.toLowerCase();

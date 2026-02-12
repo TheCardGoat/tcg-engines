@@ -3,32 +3,32 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   annaEagerAcolyte,
-//   rafikiShamanDuelist,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   AnnaEagerAcolyte,
+//   RafikiShamanDuelist,
 // } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Anna - Eager Acolyte", () => {
-//   it("**GROWING POWERS** When you play this character, each opponent choses and exerts on of their ready characters.", () => {
-//     const testStore = new TestStore(
+// Describe("Anna - Eager Acolyte", () => {
+//   It("**GROWING POWERS** When you play this character, each opponent choses and exerts on of their ready characters.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: annaEagerAcolyte.cost,
-//         hand: [annaEagerAcolyte],
+//         Inkwell: annaEagerAcolyte.cost,
+//         Hand: [annaEagerAcolyte],
 //       },
 //       {
-//         play: [rafikiShamanDuelist],
+//         Play: [rafikiShamanDuelist],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getCard(annaEagerAcolyte);
-//     const target = testStore.getCard(rafikiShamanDuelist);
-//     cardUnderTest.playFromHand();
-//     testStore.changePlayer("player_two");
-//     testStore.resolveTopOfStack({ targets: [target] });
+//     Const cardUnderTest = testStore.getCard(annaEagerAcolyte);
+//     Const target = testStore.getCard(rafikiShamanDuelist);
+//     CardUnderTest.playFromHand();
+//     TestStore.changePlayer("player_two");
+//     TestStore.resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.meta.exerted).toBe(true);
+//     Expect(target.meta.exerted).toBe(true);
 //   });
 // });
 //

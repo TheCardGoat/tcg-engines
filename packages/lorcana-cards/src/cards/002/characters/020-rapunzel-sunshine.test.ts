@@ -3,77 +3,77 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   rapunzelSunshine,
-//   snowWhiteWellWisher,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   RapunzelSunshine,
+//   SnowWhiteWellWisher,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Rapunzel - Sunshine", () => {
-//   describe("**MAGIC HAIR** {E} − Remove up to 2 damage from chosen character.", () => {
-//     it("remove 2 damage", () => {
-//       const testStore = new TestStore({
-//         inkwell: rapunzelSunshine.cost,
+// Describe("Rapunzel - Sunshine", () => {
+//   Describe("**MAGIC HAIR** {E} − Remove up to 2 damage from chosen character.", () => {
+//     It("remove 2 damage", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: rapunzelSunshine.cost,
 //
-//         play: [rapunzelSunshine, snowWhiteWellWisher],
+//         Play: [rapunzelSunshine, snowWhiteWellWisher],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         rapunzelSunshine.id,
+//         RapunzelSunshine.id,
 //       );
-//       const damagedChar = testStore.getByZoneAndId(
+//       Const damagedChar = testStore.getByZoneAndId(
 //         "play",
-//         snowWhiteWellWisher.id,
+//         SnowWhiteWellWisher.id,
 //       );
-//       damagedChar.updateCardDamage(2);
-//       expect(damagedChar.meta).toEqual(expect.objectContaining({ damage: 2 }));
+//       DamagedChar.updateCardDamage(2);
+//       Expect(damagedChar.meta).toEqual(expect.objectContaining({ damage: 2 }));
 //
-//       expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
-//       cardUnderTest.activate();
-//       expect(testStore.store.stackLayerStore.layers).toHaveLength(1);
+//       Expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
+//       CardUnderTest.activate();
+//       Expect(testStore.store.stackLayerStore.layers).toHaveLength(1);
 //
-//       const effect = testStore.store.stackLayerStore.layers[0];
-//       if (effect) {
-//         testStore.resolveTopOfStack({
-//           targets: [damagedChar],
+//       Const effect = testStore.store.stackLayerStore.layers[0];
+//       If (effect) {
+//         TestStore.resolveTopOfStack({
+//           Targets: [damagedChar],
 //         });
 //       }
-//       expect(damagedChar.meta).toEqual(expect.objectContaining({ damage: 0 }));
-//       expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
+//       Expect(damagedChar.meta).toEqual(expect.objectContaining({ damage: 0 }));
+//       Expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
 //     });
 //
-//     it("remove 1 damage", () => {
-//       const testStore = new TestStore({
-//         inkwell: rapunzelSunshine.cost,
+//     It("remove 1 damage", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: rapunzelSunshine.cost,
 //
-//         play: [rapunzelSunshine, snowWhiteWellWisher],
+//         Play: [rapunzelSunshine, snowWhiteWellWisher],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         rapunzelSunshine.id,
+//         RapunzelSunshine.id,
 //       );
-//       const damagedChar = testStore.getByZoneAndId(
+//       Const damagedChar = testStore.getByZoneAndId(
 //         "play",
-//         snowWhiteWellWisher.id,
+//         SnowWhiteWellWisher.id,
 //       );
-//       damagedChar.updateCardDamage(1);
-//       expect(damagedChar.meta).toEqual(expect.objectContaining({ damage: 1 }));
+//       DamagedChar.updateCardDamage(1);
+//       Expect(damagedChar.meta).toEqual(expect.objectContaining({ damage: 1 }));
 //
-//       expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
-//       cardUnderTest.activate();
-//       expect(testStore.store.stackLayerStore.layers).toHaveLength(1);
+//       Expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
+//       CardUnderTest.activate();
+//       Expect(testStore.store.stackLayerStore.layers).toHaveLength(1);
 //
-//       const effect = testStore.store.stackLayerStore.layers[0];
-//       if (effect) {
-//         testStore.resolveTopOfStack({
-//           targets: [damagedChar],
+//       Const effect = testStore.store.stackLayerStore.layers[0];
+//       If (effect) {
+//         TestStore.resolveTopOfStack({
+//           Targets: [damagedChar],
 //         });
 //       }
-//       expect(damagedChar.meta).toEqual(expect.objectContaining({ damage: 0 }));
-//       expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
+//       Expect(damagedChar.meta).toEqual(expect.objectContaining({ damage: 0 }));
+//       Expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
 //     });
 //   });
 // });

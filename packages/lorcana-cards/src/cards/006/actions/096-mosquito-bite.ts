@@ -1,24 +1,8 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
 export const mosquitoBite: ActionCard = {
-  id: "1xn",
-  cardType: "action",
-  name: "Mosquito Bite",
-  inkType: ["emerald"],
-  franchise: "Lilo and Stitch",
-  set: "006",
-  text: "Put 1 damage counter on chosen character.",
-  cost: 1,
-  cardNumber: 96,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "fa00070954fa24098d79edb1d418f0e85d50bfc4",
-  },
   abilities: [
     {
-      id: "1xn-1",
-      type: "action",
       effect: {
         type: "put-damage",
         amount: 1,
@@ -30,7 +14,23 @@ export const mosquitoBite: ActionCard = {
           cardTypes: ["character"],
         },
       },
+      id: "1xn-1",
       text: "Put 1 damage counter on chosen character.",
+      type: "action",
     },
   ],
+  cardNumber: 96,
+  cardType: "action",
+  cost: 1,
+  externalIds: {
+    ravensburger: "fa00070954fa24098d79edb1d418f0e85d50bfc4",
+  },
+  franchise: "Lilo and Stitch",
+  id: "1xn",
+  inkType: ["emerald"],
+  inkable: true,
+  missingTests: true,
+  name: "Mosquito Bite",
+  set: "006",
+  text: "Put 1 damage counter on chosen character.",
 };

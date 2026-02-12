@@ -61,8 +61,7 @@ const IF_IM_ALONE_PATTERN = /^if I'm alone,?\s*/i;
 /**
  * Pattern for "If you've discarded a card this turn" condition
  */
-const IF_DISCARDED_THIS_TURN_PATTERN =
-  /^If you've discarded a card this turn,?\s*/i;
+const IF_DISCARDED_THIS_TURN_PATTERN = /^If you've discarded a card this turn,?\s*/i;
 
 /**
  * Pattern for "[Legion]" condition (in activated abilities)
@@ -77,9 +76,7 @@ const LEGION_CONDITION_PATTERN = /^\[Legion\]\s*—?\s*/i;
  * Parse a condition from the start of text
  * Returns the condition and remaining text
  */
-export function parseConditionFromText(
-  text: string,
-): ConditionParseResult | undefined {
+export function parseConditionFromText(text: string): ConditionParseResult | undefined {
   // Try "While I'm [Mighty]"
   const whileMightyMatch = WHILE_MIGHTY_PATTERN.exec(text);
   if (whileMightyMatch) {
@@ -154,7 +151,7 @@ export function parseConditionFromText(
   const ifDiscardedMatch = IF_DISCARDED_THIS_TURN_PATTERN.exec(text);
   if (ifDiscardedMatch) {
     return {
-      condition: { type: "this-turn", event: "discarded" },
+      condition: { event: "discarded", type: "this-turn" },
       remainingText: text.slice(ifDiscardedMatch[0].length),
       startIndex: 0,
     };
@@ -185,9 +182,7 @@ export function parseInlineCondition(text: string): {
   const mightyInlineMatch = text.match(/,\s*if I'm \[Mighty\],?\s*/i);
   if (mightyInlineMatch && mightyInlineMatch.index !== undefined) {
     const beforeCondition = text.slice(0, mightyInlineMatch.index);
-    const afterCondition = text.slice(
-      mightyInlineMatch.index + mightyInlineMatch[0].length,
-    );
+    const afterCondition = text.slice(mightyInlineMatch.index + mightyInlineMatch[0].length);
     return {
       condition: { type: "while-mighty" },
       effectText: beforeCondition + ", " + afterCondition,
@@ -198,9 +193,7 @@ export function parseInlineCondition(text: string): {
   const aloneInlineMatch = text.match(/,\s*if I'm alone,?\s*/i);
   if (aloneInlineMatch && aloneInlineMatch.index !== undefined) {
     const beforeCondition = text.slice(0, aloneInlineMatch.index);
-    const afterCondition = text.slice(
-      aloneInlineMatch.index + aloneInlineMatch[0].length,
-    );
+    const afterCondition = text.slice(aloneInlineMatch.index + aloneInlineMatch[0].length);
     return {
       condition: { type: "while-alone" },
       effectText: beforeCondition + ", " + afterCondition,

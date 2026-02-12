@@ -1,54 +1,54 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
 export const bePrepared: ActionCard = {
-  id: "j9z",
-  cardType: "action",
-  name: "Be Prepared",
-  inkType: ["ruby"],
-  franchise: "Lion King",
-  set: "001",
-  text: "Banish all characters.",
-  actionSubtype: "song",
-  cost: 7,
-  cardNumber: 128,
-  inkable: false,
-  externalIds: {
-    ravensburger: "4579dd841c902f1f7a336b3776c97a974e5f3369",
-  },
   abilities: [
     {
-      id: "j9z-1",
-      text: "Banish all characters.",
-      type: "action",
       effect: {
         type: "banish",
         target: "ALL_CHARACTERS",
       },
+      id: "j9z-1",
+      text: "Banish all characters.",
+      type: "action",
     },
   ],
+  actionSubtype: "song",
+  cardNumber: 128,
+  cardType: "action",
+  cost: 7,
+  externalIds: {
+    ravensburger: "4579dd841c902f1f7a336b3776c97a974e5f3369",
+  },
+  franchise: "Lion King",
+  id: "j9z",
+  inkType: ["ruby"],
+  inkable: false,
+  name: "Be Prepared",
+  set: "001",
+  text: "Banish all characters.",
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const bePrepared: LorcanitoActionCard = {
-//   id: "z06",
-//   name: "Be Prepared",
-//   characteristics: ["action", "song"],
-//   text: "_(A character with cost 7 or more can {E} to sing this\nsong for free.)_\nBanish all characters.",
-//   type: "action",
-//   abilities: [
+// Export const bePrepared: LorcanitoActionCard = {
+//   Id: "z06",
+//   Name: "Be Prepared",
+//   Characteristics: ["action", "song"],
+//   Text: "_(A character with cost 7 or more can {E} to sing this\nsong for free.)_\nBanish all characters.",
+//   Type: "action",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       name: "Be Prepared",
-//       text: "Banish all characters.",
-//       effects: [
+//       Type: "resolution",
+//       Name: "Be Prepared",
+//       Text: "Banish all characters.",
+//       Effects: [
 //         {
-//           type: "banish",
-//           target: {
-//             type: "card",
-//             value: "all",
-//             filters: [
+//           Type: "banish",
+//           Target: {
+//             Type: "card",
+//             Value: "all",
+//             Filters: [
 //               { filter: "zone", value: "play" },
 //               { filter: "type", value: "character" },
 //             ],
@@ -57,15 +57,15 @@ export const bePrepared: ActionCard = {
 //       ],
 //     },
 //   ],
-//   flavour: "Out teeth and ambitions are bared!",
-//   colors: ["ruby"],
-//   cost: 7,
-//   illustrator: "Jared Nickerl",
-//   number: 128,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 506077,
+//   Flavour: "Out teeth and ambitions are bared!",
+//   Colors: ["ruby"],
+//   Cost: 7,
+//   Illustrator: "Jared Nickerl",
+//   Number: 128,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 506077,
 //   },
-//   rarity: "rare",
+//   Rarity: "rare",
 // };
 //

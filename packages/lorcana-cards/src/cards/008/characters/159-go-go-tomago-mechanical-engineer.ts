@@ -1,39 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const goGoTomagoMechanicalEngineer: CharacterCard = {
-  id: "hwg",
-  cardType: "character",
-  name: "Go Go Tomago",
-  version: "Mechanical Engineer",
-  fullName: "Go Go Tomago - Mechanical Engineer",
-  inkType: ["sapphire"],
-  franchise: "Big Hero 6",
-  set: "008",
-  text: "NEED THIS! When you play a Floodborn character on this card, you may put the top card of your deck into your inkwell facedown and exerted.",
-  cost: 2,
-  strength: 1,
-  willpower: 3,
-  lore: 1,
-  cardNumber: 159,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "40846eae71b4a2f0477743719c11a08182d09375",
-  },
   abilities: [
     {
-      id: "hwg-1",
-      type: "triggered",
-      name: "NEED THIS!",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: {
-          controller: "you",
-          cardType: "character",
-          classification: "Floodborn",
-        },
-      },
       effect: {
         type: "optional",
         effect: {
@@ -45,8 +14,39 @@ export const goGoTomagoMechanicalEngineer: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "hwg-1",
+      name: "NEED THIS!",
       text: "NEED THIS! When you play a Floodborn character on this card, you may put the top card of your deck into your inkwell facedown and exerted.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: {
+          controller: "you",
+          cardType: "character",
+          classification: "Floodborn",
+        },
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 159,
+  cardType: "character",
   classifications: ["Storyborn", "Hero", "Inventor"],
+  cost: 2,
+  externalIds: {
+    ravensburger: "40846eae71b4a2f0477743719c11a08182d09375",
+  },
+  franchise: "Big Hero 6",
+  fullName: "Go Go Tomago - Mechanical Engineer",
+  id: "hwg",
+  inkType: ["sapphire"],
+  inkable: true,
+  lore: 1,
+  missingTests: true,
+  name: "Go Go Tomago",
+  set: "008",
+  strength: 1,
+  text: "NEED THIS! When you play a Floodborn character on this card, you may put the top card of your deck into your inkwell facedown and exerted.",
+  version: "Mechanical Engineer",
+  willpower: 3,
 };

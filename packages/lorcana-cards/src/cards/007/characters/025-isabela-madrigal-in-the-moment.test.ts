@@ -3,55 +3,55 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   hesATramp,
-//   isabelaMadrigalInTheMoment,
-//   ladyMissParkAvenue,
-//   soMuchToGive,
-//   theTroubadourMusicalNarrator,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   HesATramp,
+//   IsabelaMadrigalInTheMoment,
+//   LadyMissParkAvenue,
+//   SoMuchToGive,
+//   TheTroubadourMusicalNarrator,
 // } from "@lorcanito/lorcana-engine/cards/007";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Isabela Madrigal - In the Moment", () => {
-//   it("I WILL NOT BE PERFECT Every time one of your characters sings a song, this character cannot be challenged until the start of your next turn.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Isabela Madrigal - In the Moment", () => {
+//   It("I WILL NOT BE PERFECT Every time one of your characters sings a song, this character cannot be challenged until the start of your next turn.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         deck: 2,
-//         inkwell: isabelaMadrigalInTheMoment.cost,
-//         play: [isabelaMadrigalInTheMoment, theTroubadourMusicalNarrator],
-//         hand: [hesATramp, soMuchToGive],
+//         Deck: 2,
+//         Inkwell: isabelaMadrigalInTheMoment.cost,
+//         Play: [isabelaMadrigalInTheMoment, theTroubadourMusicalNarrator],
+//         Hand: [hesATramp, soMuchToGive],
 //       },
 //       {
-//         play: [ladyMissParkAvenue],
+//         Play: [ladyMissParkAvenue],
 //       },
 //     );
-//     const cardUnderTest = testEngine.getCardModel(isabelaMadrigalInTheMoment);
-//     const anotherSinger = testEngine.getCardModel(theTroubadourMusicalNarrator);
-//     const attacker = testEngine.getCardModel(ladyMissParkAvenue);
+//     Const cardUnderTest = testEngine.getCardModel(isabelaMadrigalInTheMoment);
+//     Const anotherSinger = testEngine.getCardModel(theTroubadourMusicalNarrator);
+//     Const attacker = testEngine.getCardModel(ladyMissParkAvenue);
 //
-//     await testEngine.singSong({
-//       singer: theTroubadourMusicalNarrator,
-//       song: hesATramp,
+//     Await testEngine.singSong({
+//       Singer: theTroubadourMusicalNarrator,
+//       Song: hesATramp,
 //     });
-//     await testEngine.resolveTopOfStack({
-//       targets: [theTroubadourMusicalNarrator],
-//     });
-//
-//     expect(cardUnderTest.canBeChallenged(attacker)).toBe(false);
-//
-//     await testEngine.singSong({
-//       singer: isabelaMadrigalInTheMoment,
-//       song: soMuchToGive,
-//     });
-//     await testEngine.resolveTopOfStack({
-//       targets: [isabelaMadrigalInTheMoment],
+//     Await testEngine.resolveTopOfStack({
+//       Targets: [theTroubadourMusicalNarrator],
 //     });
 //
-//     await testEngine.passTurn();
+//     Expect(cardUnderTest.canBeChallenged(attacker)).toBe(false);
 //
-//     expect(cardUnderTest.canBeChallenged(attacker)).toBe(false);
-//     expect(anotherSinger.canBeChallenged(attacker)).toBe(true);
+//     Await testEngine.singSong({
+//       Singer: isabelaMadrigalInTheMoment,
+//       Song: soMuchToGive,
+//     });
+//     Await testEngine.resolveTopOfStack({
+//       Targets: [isabelaMadrigalInTheMoment],
+//     });
+//
+//     Await testEngine.passTurn();
+//
+//     Expect(cardUnderTest.canBeChallenged(attacker)).toBe(false);
+//     Expect(anotherSinger.canBeChallenged(attacker)).toBe(true);
 //   });
 // });
 //

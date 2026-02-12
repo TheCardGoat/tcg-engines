@@ -3,100 +3,100 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   agustinMadrigalClumsyDad,
-//   antonioMadrigalAnimalExpert,
-//   daisyDuckLovelyLady,
-//   sisuEmpoweredSibling,
-//   tongSurvivor,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   AgustinMadrigalClumsyDad,
+//   AntonioMadrigalAnimalExpert,
+//   DaisyDuckLovelyLady,
+//   SisuEmpoweredSibling,
+//   TongSurvivor,
 // } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { iceBlock } from "@lorcanito/lorcana-engine/cards/004/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { iceBlock } from "@lorcanito/lorcana-engine/cards/004/items/items";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Sisu - Empowered Sibling", () => {
-//   it("**LET ME HANDLE THIS!** When you play this character, banish all opposing characters with 2 {S} or less.", () => {
-//     const testStore = new TestStore(
+// Describe("Sisu - Empowered Sibling", () => {
+//   It("**LET ME HANDLE THIS!** When you play this character, banish all opposing characters with 2 {S} or less.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: sisuEmpoweredSibling.cost,
-//         hand: [sisuEmpoweredSibling],
-//         play: [
-//           agustinMadrigalClumsyDad,
-//           daisyDuckLovelyLady,
-//           antonioMadrigalAnimalExpert,
+//         Inkwell: sisuEmpoweredSibling.cost,
+//         Hand: [sisuEmpoweredSibling],
+//         Play: [
+//           AgustinMadrigalClumsyDad,
+//           DaisyDuckLovelyLady,
+//           AntonioMadrigalAnimalExpert,
 //         ],
 //       },
 //       {
-//         play: [
-//           agustinMadrigalClumsyDad,
-//           daisyDuckLovelyLady,
-//           antonioMadrigalAnimalExpert,
+//         Play: [
+//           AgustinMadrigalClumsyDad,
+//           DaisyDuckLovelyLady,
+//           AntonioMadrigalAnimalExpert,
 //         ],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "hand",
-//       sisuEmpoweredSibling.id,
+//       SisuEmpoweredSibling.id,
 //     );
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     expect(
-//       testStore.getByZoneAndId("play", agustinMadrigalClumsyDad.id).zone,
+//     Expect(
+//       TestStore.getByZoneAndId("play", agustinMadrigalClumsyDad.id).zone,
 //     ).toBeTruthy();
-//     expect(
-//       testStore.getByZoneAndId("play", daisyDuckLovelyLady.id).zone,
+//     Expect(
+//       TestStore.getByZoneAndId("play", daisyDuckLovelyLady.id).zone,
 //     ).toBeTruthy();
-//     expect(
-//       testStore.getByZoneAndId("play", antonioMadrigalAnimalExpert.id),
+//     Expect(
+//       TestStore.getByZoneAndId("play", antonioMadrigalAnimalExpert.id),
 //     ).toBeTruthy();
 //
-//     expect(
-//       testStore.getByZoneAndId(
+//     Expect(
+//       TestStore.getByZoneAndId(
 //         "discard",
-//         agustinMadrigalClumsyDad.id,
+//         AgustinMadrigalClumsyDad.id,
 //         "player_two",
 //       ).zone,
 //     ).toEqual("discard");
-//     expect(
-//       testStore.getByZoneAndId("discard", daisyDuckLovelyLady.id, "player_two")
+//     Expect(
+//       TestStore.getByZoneAndId("discard", daisyDuckLovelyLady.id, "player_two")
 //         .zone,
 //     ).toEqual("discard");
-//     expect(
-//       testStore.getByZoneAndId(
+//     Expect(
+//       TestStore.getByZoneAndId(
 //         "play",
-//         antonioMadrigalAnimalExpert.id,
+//         AntonioMadrigalAnimalExpert.id,
 //         "player_two",
 //       ),
 //     ).toBeTruthy();
 //   });
 // });
 //
-// describe("Regression", () => {
-//   it("Should combo correctly with Ice block", () => {
-//     const testStore = new TestStore(
+// Describe("Regression", () => {
+//   It("Should combo correctly with Ice block", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: sisuEmpoweredSibling.cost,
-//         hand: [sisuEmpoweredSibling],
-//         play: [iceBlock],
+//         Inkwell: sisuEmpoweredSibling.cost,
+//         Hand: [sisuEmpoweredSibling],
+//         Play: [iceBlock],
 //       },
 //       {
-//         play: [tongSurvivor],
+//         Play: [tongSurvivor],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getCard(sisuEmpoweredSibling);
-//     const debuff = testStore.getCard(iceBlock);
-//     const target = testStore.getCard(tongSurvivor);
+//     Const cardUnderTest = testStore.getCard(sisuEmpoweredSibling);
+//     Const debuff = testStore.getCard(iceBlock);
+//     Const target = testStore.getCard(tongSurvivor);
 //
-//     debuff.activate();
-//     testStore.resolveTopOfStack({ targets: [target] });
+//     Debuff.activate();
+//     TestStore.resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.strength).toBe(tongSurvivor.strength - 1);
+//     Expect(target.strength).toBe(tongSurvivor.strength - 1);
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     expect(target.zone).toBe("discard");
+//     Expect(target.zone).toBe("discard");
 //   });
 // });
 //

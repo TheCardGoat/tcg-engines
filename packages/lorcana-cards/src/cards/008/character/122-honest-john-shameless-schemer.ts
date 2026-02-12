@@ -1,24 +1,24 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
 //
-// export const honestJohnShamelessSchemer: LorcanitoCharacterCard = {
-//   id: "hq3",
-//   name: "Honest John",
-//   title: "Shameless Schemer",
-//   characteristics: ["storyborn", "villain"],
-//   type: "character",
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 6,
-//   strength: 7,
-//   willpower: 5,
-//   illustrator: "Valentina Graziuso",
-//   number: 122,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 632718,
+// Export const honestJohnShamelessSchemer: LorcanitoCharacterCard = {
+//   Id: "hq3",
+//   Name: "Honest John",
+//   Title: "Shameless Schemer",
+//   Characteristics: ["storyborn", "villain"],
+//   Type: "character",
+//   Inkwell: true,
+//   Colors: ["ruby"],
+//   Cost: 6,
+//   Strength: 7,
+//   Willpower: 5,
+//   Illustrator: "Valentina Graziuso",
+//   Number: 122,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 632718,
 //   },
-//   rarity: "uncommon",
-//   lore: 2,
+//   Rarity: "uncommon",
+//   Lore: 2,
 // };
 //

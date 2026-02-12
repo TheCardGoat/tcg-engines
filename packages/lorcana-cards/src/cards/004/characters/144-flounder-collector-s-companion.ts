@@ -1,54 +1,54 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { supportAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { chosenCharacterOfYours } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { whenYouPlayThisForEachYouPayLess } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { supportAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import { chosenCharacterOfYours } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import { whenYouPlayThisForEachYouPayLess } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 //
-// export const flounderCollectorsCompanion: LorcanitoCharacterCard = {
-//   id: "ti7",
-//   name: "Flounder",
-//   title: "Collector's Companion",
-//   characteristics: ["storyborn", "ally"],
-//   text: "**Support** _(Whenever this character quests, you mad add their {S} to another chosen character's {S} this turn.)_\n\n\n**I'M NOT A GUPPY** If you have a character named Ariel in play, you pay 1 {I} less to play this character.",
-//   type: "character",
-//   abilities: [
-//     supportAbility,
-//     whenYouPlayThisForEachYouPayLess({
-//       name: "I'M NOT A GUPPY",
-//       text: "If you have a character named Ariel in play, you pay 1 {I} less to play this character.",
-//       amount: 1,
-//       conditions: [
+// Export const flounderCollectorsCompanion: LorcanitoCharacterCard = {
+//   Id: "ti7",
+//   Name: "Flounder",
+//   Title: "Collector's Companion",
+//   Characteristics: ["storyborn", "ally"],
+//   Text: "**Support** _(Whenever this character quests, you mad add their {S} to another chosen character's {S} this turn.)_\n\n\n**I'M NOT A GUPPY** If you have a character named Ariel in play, you pay 1 {I} less to play this character.",
+//   Type: "character",
+//   Abilities: [
+//     SupportAbility,
+//     WhenYouPlayThisForEachYouPayLess({
+//       Name: "I'M NOT A GUPPY",
+//       Text: "If you have a character named Ariel in play, you pay 1 {I} less to play this character.",
+//       Amount: 1,
+//       Conditions: [
 //         {
-//           type: "filter",
-//           comparison: {
-//             operator: "gte",
-//             value: 1,
+//           Type: "filter",
+//           Comparison: {
+//             Operator: "gte",
+//             Value: 1,
 //           },
-//           filters: [
+//           Filters: [
 //             ...chosenCharacterOfYours.filters,
 //             {
-//               filter: "attribute",
-//               value: "name",
-//               comparison: { operator: "eq", value: "Ariel" },
+//               Filter: "attribute",
+//               Value: "name",
+//               Comparison: { operator: "eq", value: "Ariel" },
 //             },
 //           ],
 //         },
 //       ],
 //     }),
 //   ],
-//   flavour: '"Ariel, Ariel! You won\'t believe what I found!"',
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 3,
-//   strength: 2,
-//   willpower: 2,
-//   lore: 2,
-//   illustrator: "James C Mulligan",
-//   number: 144,
-//   set: "URR",
-//   externalIds: {
-//     tcgPlayer: 547687,
+//   Flavour: '"Ariel, Ariel! You won\'t believe what I found!"',
+//   Inkwell: true,
+//   Colors: ["sapphire"],
+//   Cost: 3,
+//   Strength: 2,
+//   Willpower: 2,
+//   Lore: 2,
+//   Illustrator: "James C Mulligan",
+//   Number: 144,
+//   Set: "URR",
+//   ExternalIds: {
+//     TcgPlayer: 547687,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

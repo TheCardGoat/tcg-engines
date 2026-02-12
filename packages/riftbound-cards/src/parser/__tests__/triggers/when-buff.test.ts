@@ -17,14 +17,14 @@ describe("Trigger: When Buff", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
+          effect: expect.objectContaining({
+            amount: 1,
+            type: "draw",
+          }),
           trigger: expect.objectContaining({
             event: "buff",
           }),
-          effect: expect.objectContaining({
-            type: "draw",
-            amount: 1,
-          }),
+          type: "triggered",
         }),
       );
     });
@@ -32,23 +32,21 @@ describe("Trigger: When Buff", () => {
 
   describe("might modification effects", () => {
     it.skip("should parse 'When I'm buffed, give me +1 :rb_might: this turn.'", () => {
-      const result = parseAbilities(
-        "When I'm buffed, give me +1 :rb_might: this turn.",
-      );
+      const result = parseAbilities("When I'm buffed, give me +1 :rb_might: this turn.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
+          effect: expect.objectContaining({
+            amount: 1,
+            type: "modify-might",
+          }),
           trigger: expect.objectContaining({
             event: "buff",
             on: "self",
           }),
-          effect: expect.objectContaining({
-            type: "modify-might",
-            amount: 1,
-          }),
+          type: "triggered",
         }),
       );
     });
@@ -62,14 +60,14 @@ describe("Trigger: When Buff", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
+          effect: expect.objectContaining({
+            amount: 1,
+            type: "draw",
+          }),
           trigger: expect.objectContaining({
             event: "spend-buff",
           }),
-          effect: expect.objectContaining({
-            type: "draw",
-            amount: 1,
-          }),
+          type: "triggered",
         }),
       );
     });

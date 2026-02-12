@@ -3,35 +3,35 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   bambiPrinceOfTheForest,
-//   deweyLovableShowoff,
-//   elsaFierceProtector,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   BambiPrinceOfTheForest,
+//   DeweyLovableShowoff,
+//   ElsaFierceProtector,
 // } from "@lorcanito/lorcana-engine/cards/008";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Elsa - Fierce Protector", () => {
-//   it("ICE OVER 1 {I}, Choose and discard a card – Exert chosen opposing character.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Elsa - Fierce Protector", () => {
+//   It("ICE OVER 1 {I}, Choose and discard a card – Exert chosen opposing character.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: 1,
-//         hand: [bambiPrinceOfTheForest],
-//         play: [elsaFierceProtector],
+//         Inkwell: 1,
+//         Hand: [bambiPrinceOfTheForest],
+//         Play: [elsaFierceProtector],
 //       },
 //       {
-//         play: [deweyLovableShowoff],
+//         Play: [deweyLovableShowoff],
 //       },
 //     );
 //
-//     const cardUnderTest = testEngine.getCardModel(elsaFierceProtector);
-//     const cardInHand = testEngine.getCardModel(bambiPrinceOfTheForest);
-//     const targetCard = testEngine.getCardModel(deweyLovableShowoff);
+//     Const cardUnderTest = testEngine.getCardModel(elsaFierceProtector);
+//     Const cardInHand = testEngine.getCardModel(bambiPrinceOfTheForest);
+//     Const targetCard = testEngine.getCardModel(deweyLovableShowoff);
 //
-//     await testEngine.activateCard(cardUnderTest, { costs: [cardInHand] });
-//     await testEngine.resolveTopOfStack({ targets: [targetCard] }, true);
+//     Await testEngine.activateCard(cardUnderTest, { costs: [cardInHand] });
+//     Await testEngine.resolveTopOfStack({ targets: [targetCard] }, true);
 //
-//     expect(targetCard.exerted).toBe(true);
+//     Expect(targetCard.exerted).toBe(true);
 //   });
 // });
 //

@@ -1,38 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const arielDeterminedMermaid: CharacterCard = {
-  id: "gsz",
-  cardType: "character",
-  name: "Ariel",
-  version: "Determined Mermaid",
-  fullName: "Ariel - Determined Mermaid",
-  inkType: ["steel"],
-  franchise: "Little Mermaid",
-  set: "009",
-  text: "I WANT MORE Whenever you play a song, you may draw a card, then choose and discard a card.",
-  cost: 3,
-  strength: 2,
-  willpower: 4,
-  lore: 1,
-  cardNumber: 196,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "3c90f7d78a7f6faad9aeb5edd3c7f5da84a98a4a",
-  },
   abilities: [
     {
-      id: "gsz-1",
-      type: "triggered",
-      name: "I WANT MORE",
-      trigger: {
-        event: "play",
-        timing: "whenever",
-        on: {
-          controller: "you",
-          cardType: "action",
-        },
-      },
       effect: {
         type: "optional",
         effect: {
@@ -43,8 +13,38 @@ export const arielDeterminedMermaid: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "gsz-1",
+      name: "I WANT MORE",
       text: "I WANT MORE Whenever you play a song, you may draw a card, then choose and discard a card.",
+      trigger: {
+        event: "play",
+        timing: "whenever",
+        on: {
+          controller: "you",
+          cardType: "action",
+        },
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 196,
+  cardType: "character",
   classifications: ["Storyborn", "Hero", "Princess"],
+  cost: 3,
+  externalIds: {
+    ravensburger: "3c90f7d78a7f6faad9aeb5edd3c7f5da84a98a4a",
+  },
+  franchise: "Little Mermaid",
+  fullName: "Ariel - Determined Mermaid",
+  id: "gsz",
+  inkType: ["steel"],
+  inkable: true,
+  lore: 1,
+  missingTests: true,
+  name: "Ariel",
+  set: "009",
+  strength: 2,
+  text: "I WANT MORE Whenever you play a song, you may draw a card, then choose and discard a card.",
+  version: "Determined Mermaid",
+  willpower: 4,
 };

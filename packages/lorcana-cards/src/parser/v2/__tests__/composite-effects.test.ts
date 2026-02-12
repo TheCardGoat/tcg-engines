@@ -25,17 +25,17 @@ describe("Composite Effect Parser", () => {
 
       // Step 1: Draw 2 cards
       expect(sequence.steps![0]).toEqual({
-        type: "draw",
         amount: 2,
         target: "CONTROLLER",
+        type: "draw",
       });
 
       // Step 2: Choose and discard a card
       expect(sequence.steps![1]).toEqual({
-        type: "discard",
         amount: 1,
-        target: "CONTROLLER",
         chosen: true,
+        target: "CONTROLLER",
+        type: "discard",
       });
     });
 
@@ -53,22 +53,22 @@ describe("Composite Effect Parser", () => {
 
       // Step 1: Deal 2 damage
       expect(sequence.steps![0]).toEqual({
-        type: "deal-damage",
         amount: 2,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "deal-damage",
       });
 
       // Step 2: Draw a card
       expect(sequence.steps![1]).toEqual({
-        type: "draw",
         amount: 1,
         target: "CONTROLLER",
+        type: "draw",
       });
     });
 
@@ -86,27 +86,27 @@ describe("Composite Effect Parser", () => {
 
       // Step 1: Exert character
       expect(sequence.steps![0]).toEqual({
-        type: "exert",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "opponent",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "exert",
       });
 
       // Step 2: Deal 1 damage
       expect(sequence.steps![1]).toEqual({
-        type: "deal-damage",
         amount: 1,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "opponent",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "deal-damage",
       });
     });
 
@@ -121,14 +121,14 @@ describe("Composite Effect Parser", () => {
       expect(sequence.steps).toHaveLength(2);
 
       expect(sequence.steps![0]).toEqual({
-        type: "gain-lore",
         amount: 2,
+        type: "gain-lore",
       });
 
       expect(sequence.steps![1]).toEqual({
-        type: "draw",
         amount: 2,
         target: "CONTROLLER",
+        type: "draw",
       });
     });
   });
@@ -145,14 +145,14 @@ describe("Composite Effect Parser", () => {
       expect(sequence.steps).toHaveLength(2);
 
       expect(sequence.steps![0]).toEqual({
-        type: "draw",
         amount: 1,
         target: "CONTROLLER",
+        type: "draw",
       });
 
       expect(sequence.steps![1]).toEqual({
-        type: "gain-lore",
         amount: 1,
+        type: "gain-lore",
       });
     });
 
@@ -169,26 +169,26 @@ describe("Composite Effect Parser", () => {
       expect(sequence.steps).toHaveLength(2);
 
       expect(sequence.steps![0]).toEqual({
-        type: "exert",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "exert",
       });
 
       expect(sequence.steps![1]).toEqual({
-        type: "deal-damage",
         amount: 2,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "deal-damage",
       });
     });
 
@@ -203,20 +203,20 @@ describe("Composite Effect Parser", () => {
       expect(sequence.steps).toHaveLength(2);
 
       expect(sequence.steps![0]).toEqual({
-        type: "ready",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "ready",
       });
 
       expect(sequence.steps![1]).toEqual({
-        type: "draw",
         amount: 1,
         target: "CONTROLLER",
+        type: "draw",
       });
     });
   });
@@ -233,14 +233,14 @@ describe("Composite Effect Parser", () => {
       expect(sequence.steps).toHaveLength(2);
 
       expect(sequence.steps![0]).toEqual({
-        type: "draw",
         amount: 1,
         target: "CONTROLLER",
+        type: "draw",
       });
 
       expect(sequence.steps![1]).toEqual({
-        type: "gain-lore",
         amount: 1,
+        type: "gain-lore",
       });
     });
 
@@ -255,14 +255,14 @@ describe("Composite Effect Parser", () => {
       expect(sequence.steps).toHaveLength(2);
 
       expect(sequence.steps![0]).toEqual({
-        type: "gain-lore",
         amount: 2,
+        type: "gain-lore",
       });
 
       expect(sequence.steps![1]).toEqual({
-        type: "draw",
         amount: 1,
         target: "CONTROLLER",
+        type: "draw",
       });
     });
 
@@ -279,27 +279,27 @@ describe("Composite Effect Parser", () => {
       expect(sequence.steps).toHaveLength(2);
 
       expect(sequence.steps![0]).toEqual({
-        type: "deal-damage",
         amount: 2,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "deal-damage",
       });
 
       expect(sequence.steps![1]).toEqual({
-        type: "deal-damage",
         amount: 2,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "deal-damage",
       });
     });
   });
@@ -318,26 +318,26 @@ describe("Composite Effect Parser", () => {
       expect(sequence.steps).toHaveLength(3);
 
       expect(sequence.steps![0]).toEqual({
-        type: "draw",
         amount: 1,
         target: "CONTROLLER",
+        type: "draw",
       });
 
       expect(sequence.steps![1]).toEqual({
-        type: "gain-lore",
         amount: 1,
+        type: "gain-lore",
       });
 
       expect(sequence.steps![2]).toEqual({
-        type: "deal-damage",
         amount: 1,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "deal-damage",
       });
     });
 
@@ -354,25 +354,25 @@ describe("Composite Effect Parser", () => {
       expect(sequence.steps).toHaveLength(3);
 
       expect(sequence.steps![0]).toEqual({
-        type: "gain-lore",
         amount: 1,
+        type: "gain-lore",
       });
 
       expect(sequence.steps![1]).toEqual({
-        type: "draw",
         amount: 1,
         target: "CONTROLLER",
+        type: "draw",
       });
 
       expect(sequence.steps![2]).toEqual({
-        type: "banish",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "banish",
       });
     });
   });
@@ -389,14 +389,14 @@ describe("Composite Effect Parser", () => {
       expect(sequence.steps).toHaveLength(2);
 
       expect(sequence.steps![0]).toEqual({
-        type: "draw",
         amount: 2,
         target: "CONTROLLER",
+        type: "draw",
       });
 
       expect(sequence.steps![1]).toEqual({
-        type: "gain-lore",
         amount: 1,
+        type: "gain-lore",
       });
     });
 
@@ -411,20 +411,20 @@ describe("Composite Effect Parser", () => {
       expect(sequence.steps).toHaveLength(2);
 
       expect(sequence.steps![0]).toEqual({
-        type: "exert",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "exert",
       });
 
       expect(sequence.steps![1]).toEqual({
-        type: "draw",
         amount: 1,
         target: "CONTROLLER",
+        type: "draw",
       });
     });
   });

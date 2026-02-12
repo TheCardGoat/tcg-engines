@@ -1,34 +1,34 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { whenYouPlayThis } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import { chosenOpposingCharacterLoseStrengthUntilNextTurn } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { whenYouPlayThis } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import { chosenOpposingCharacterLoseStrengthUntilNextTurn } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const rhinoOnesixteenthWolf: LorcanitoCharacterCard = {
-//   id: "h4h",
-//   name: "Rhino",
-//   title: "One-Sixteenth Wolf",
-//   characteristics: ["dreamborn", "ally"],
-//   text: "TINY HOWL When you play this character, chosen opposing character gets -1 {S} until the start of your next turn.",
-//   type: "character",
-//   abilities: [
-//     whenYouPlayThis({
-//       name: "TINY HOWL",
-//       text: "When you play this character, chosen opposing character gets -1 {S} until the start of your next turn.",
-//       effects: [chosenOpposingCharacterLoseStrengthUntilNextTurn(1)],
+// Export const rhinoOnesixteenthWolf: LorcanitoCharacterCard = {
+//   Id: "h4h",
+//   Name: "Rhino",
+//   Title: "One-Sixteenth Wolf",
+//   Characteristics: ["dreamborn", "ally"],
+//   Text: "TINY HOWL When you play this character, chosen opposing character gets -1 {S} until the start of your next turn.",
+//   Type: "character",
+//   Abilities: [
+//     WhenYouPlayThis({
+//       Name: "TINY HOWL",
+//       Text: "When you play this character, chosen opposing character gets -1 {S} until the start of your next turn.",
+//       Effects: [chosenOpposingCharacterLoseStrengthUntilNextTurn(1)],
 //     }),
 //   ],
-//   inkwell: true,
-//   colors: ["amber"],
-//   cost: 1,
-//   strength: 1,
-//   willpower: 2,
-//   illustrator: "Ellie Horie",
-//   number: 15,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631359,
+//   Inkwell: true,
+//   Colors: ["amber"],
+//   Cost: 1,
+//   Strength: 1,
+//   Willpower: 2,
+//   Illustrator: "Ellie Horie",
+//   Number: 15,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631359,
 //   },
-//   rarity: "common",
-//   lore: 1,
+//   Rarity: "common",
+//   Lore: 1,
 // };
 //

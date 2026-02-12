@@ -3,51 +3,51 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { pawpsicle } from "@lorcanito/lorcana-engine/cards/002/items/items";
-// import {
-//   lumiereFieryFriend,
-//   mrsPottsEnchantedTeapot,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { pawpsicle } from "@lorcanito/lorcana-engine/cards/002/items/items";
+// Import {
+//   LumiereFieryFriend,
+//   MrsPottsEnchantedTeapot,
 // } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { theWardrobePerceptiveFriend } from "@lorcanito/lorcana-engine/cards/008";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { theWardrobePerceptiveFriend } from "@lorcanito/lorcana-engine/cards/008";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("The Wardrobe - Perceptive Friend", () => {
-//   it("I HAVE JUST THE THING {E}, Choose and discard an item card - Draw 2 cards", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: theWardrobePerceptiveFriend.cost,
-//       play: [theWardrobePerceptiveFriend],
-//       hand: [pawpsicle],
-//       deck: [lumiereFieryFriend, mrsPottsEnchantedTeapot],
+// Describe("The Wardrobe - Perceptive Friend", () => {
+//   It("I HAVE JUST THE THING {E}, Choose and discard an item card - Draw 2 cards", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: theWardrobePerceptiveFriend.cost,
+//       Play: [theWardrobePerceptiveFriend],
+//       Hand: [pawpsicle],
+//       Deck: [lumiereFieryFriend, mrsPottsEnchantedTeapot],
 //     });
 //
-//     await testEngine.activateCard(theWardrobePerceptiveFriend, {
-//       costs: [pawpsicle],
+//     Await testEngine.activateCard(theWardrobePerceptiveFriend, {
+//       Costs: [pawpsicle],
 //     });
 //
-//     expect(testEngine.getCardModel(pawpsicle).zone).toBe("discard");
+//     Expect(testEngine.getCardModel(pawpsicle).zone).toBe("discard");
 //
-//     expect(testEngine.getCardModel(lumiereFieryFriend).zone).toBe("hand");
-//     expect(testEngine.getCardModel(mrsPottsEnchantedTeapot).zone).toBe("hand");
+//     Expect(testEngine.getCardModel(lumiereFieryFriend).zone).toBe("hand");
+//     Expect(testEngine.getCardModel(mrsPottsEnchantedTeapot).zone).toBe("hand");
 //   });
 // });
 //
-// describe("Regression Tests", () => {
-//   it("The Wardrobe - Perceptive Friend should not draw then there's no items in hand", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: theWardrobePerceptiveFriend.cost,
-//       play: [theWardrobePerceptiveFriend],
-//       hand: [mrsPottsEnchantedTeapot],
-//       deck: [lumiereFieryFriend, pawpsicle],
+// Describe("Regression Tests", () => {
+//   It("The Wardrobe - Perceptive Friend should not draw then there's no items in hand", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: theWardrobePerceptiveFriend.cost,
+//       Play: [theWardrobePerceptiveFriend],
+//       Hand: [mrsPottsEnchantedTeapot],
+//       Deck: [lumiereFieryFriend, pawpsicle],
 //     });
 //
-//     await testEngine.activateCard(theWardrobePerceptiveFriend);
+//     Await testEngine.activateCard(theWardrobePerceptiveFriend);
 //
-//     expect(testEngine.stackLayers).toHaveLength(0);
+//     Expect(testEngine.stackLayers).toHaveLength(0);
 //
-//     expect(testEngine.getCardModel(pawpsicle).zone).toBe("deck");
-//     expect(testEngine.getCardModel(lumiereFieryFriend).zone).toBe("deck");
-//     expect(testEngine.getCardModel(mrsPottsEnchantedTeapot).zone).toBe("hand");
+//     Expect(testEngine.getCardModel(pawpsicle).zone).toBe("deck");
+//     Expect(testEngine.getCardModel(lumiereFieryFriend).zone).toBe("deck");
+//     Expect(testEngine.getCardModel(mrsPottsEnchantedTeapot).zone).toBe("hand");
 //   });
 // });
 //

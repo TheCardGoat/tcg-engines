@@ -34,9 +34,9 @@ describe("normalizeText", () => {
 
   describe("Unicode normalization (NFC)", () => {
     it("should normalize composed and decomposed characters to the same form", () => {
-      // é as single character (composed, NFC)
+      // É as single character (composed, NFC)
       const composed = "café";
-      // é as e + combining acute accent (decomposed, NFD)
+      // É as e + combining acute accent (decomposed, NFD)
       const decomposed = "cafe\u0301";
 
       // Both should normalize to the same form (NFC)

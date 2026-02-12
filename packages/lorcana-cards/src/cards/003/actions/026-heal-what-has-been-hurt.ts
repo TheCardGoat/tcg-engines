@@ -1,42 +1,42 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+// Import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const healWhatHasBeenHurt: LorcanitoActionCard = {
-//   id: "ao1",
-//   reprints: ["z47"],
-//   name: "Heal What Has Been Hurt",
-//   characteristics: ["action", "song"],
-//   text: "_(A character with cost 3 or more can {E} to sing this song for free.)_\n \nRemove up to 3 damage from chosen character. Draw a card.",
-//   type: "action",
-//   abilities: [
+// Export const healWhatHasBeenHurt: LorcanitoActionCard = {
+//   Id: "ao1",
+//   Reprints: ["z47"],
+//   Name: "Heal What Has Been Hurt",
+//   Characteristics: ["action", "song"],
+//   Text: "_(A character with cost 3 or more can {E} to sing this song for free.)_\n \nRemove up to 3 damage from chosen character. Draw a card.",
+//   Type: "action",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       name: "Heal What Has Been Hurt",
-//       text: "Remove up to 3 damage from chosen character. Draw a card.",
-//       resolveEffectsIndividually: true,
-//       effects: [
+//       Type: "resolution",
+//       Name: "Heal What Has Been Hurt",
+//       Text: "Remove up to 3 damage from chosen character. Draw a card.",
+//       ResolveEffectsIndividually: true,
+//       Effects: [
 //         {
-//           type: "heal",
-//           amount: 3,
-//           upTo: true,
-//           target: chosenCharacter,
+//           Type: "heal",
+//           Amount: 3,
+//           UpTo: true,
+//           Target: chosenCharacter,
 //         },
-//         drawACard,
+//         DrawACard,
 //       ],
 //     },
 //   ],
-//   flavour: "Let your power shine \nMake the clock reverse . . .",
-//   inkwell: true,
-//   colors: ["amber"],
-//   cost: 3,
-//   illustrator: "Monica Catalano",
-//   number: 26,
-//   set: "ITI",
-//   externalIds: {
-//     tcgPlayer: 532523,
+//   Flavour: "Let your power shine \nMake the clock reverse . . .",
+//   Inkwell: true,
+//   Colors: ["amber"],
+//   Cost: 3,
+//   Illustrator: "Monica Catalano",
+//   Number: 26,
+//   Set: "ITI",
+//   ExternalIds: {
+//     TcgPlayer: 532523,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

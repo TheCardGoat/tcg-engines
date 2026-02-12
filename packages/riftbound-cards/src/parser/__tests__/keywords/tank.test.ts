@@ -11,15 +11,11 @@ import { Abilities, Effects, Triggers } from "../helpers";
 describe("Keyword: Tank", () => {
   describe("simple tank", () => {
     it.skip("should parse '[Tank] (I must be assigned combat damage first.)'", () => {
-      const result = parseAbilities(
-        "[Tank] (I must be assigned combat damage first.)",
-      );
+      const result = parseAbilities("[Tank] (I must be assigned combat damage first.)");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
-      expect(result.abilities?.[0]).toEqual(
-        expect.objectContaining(Abilities.tank()),
-      );
+      expect(result.abilities?.[0]).toEqual(expect.objectContaining(Abilities.tank()));
     });
   });
 
@@ -31,19 +27,17 @@ describe("Keyword: Tank", () => {
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(2);
-      expect(result.abilities?.[0]).toEqual(
-        expect.objectContaining(Abilities.tank()),
-      );
+      expect(result.abilities?.[0]).toEqual(expect.objectContaining(Abilities.tank()));
       expect(result.abilities?.[1]).toEqual(
         expect.objectContaining({
-          type: "triggered",
+          effect: expect.objectContaining({
+            amount: 1,
+            type: "draw",
+          }),
           trigger: expect.objectContaining({
             event: "play-self",
           }),
-          effect: expect.objectContaining({
-            type: "draw",
-            amount: 1,
-          }),
+          type: "triggered",
         }),
       );
     });
@@ -55,17 +49,15 @@ describe("Keyword: Tank", () => {
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(2);
-      expect(result.abilities?.[0]).toEqual(
-        expect.objectContaining(Abilities.tank()),
-      );
+      expect(result.abilities?.[0]).toEqual(expect.objectContaining(Abilities.tank()));
       expect(result.abilities?.[1]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           effect: expect.objectContaining({
-            type: "channel",
             amount: 1,
             exhausted: true,
+            type: "channel",
           }),
+          type: "triggered",
         }),
       );
     });
@@ -79,10 +71,10 @@ describe("Keyword: Tank", () => {
       expect(result.abilities).toHaveLength(2);
       expect(result.abilities?.[1]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           effect: expect.objectContaining({
             type: "move",
           }),
+          type: "triggered",
         }),
       );
     });
@@ -96,9 +88,7 @@ describe("Keyword: Tank", () => {
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(2);
-      expect(result.abilities?.[0]).toEqual(
-        expect.objectContaining(Abilities.tank()),
-      );
+      expect(result.abilities?.[0]).toEqual(expect.objectContaining(Abilities.tank()));
       expect(result.abilities?.[1]).toEqual(
         expect.objectContaining({
           type: "static",
@@ -124,12 +114,8 @@ describe("Keyword: Tank", () => {
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(2);
-      expect(result.abilities?.[0]).toEqual(
-        expect.objectContaining(Abilities.shield(1)),
-      );
-      expect(result.abilities?.[1]).toEqual(
-        expect.objectContaining(Abilities.tank()),
-      );
+      expect(result.abilities?.[0]).toEqual(expect.objectContaining(Abilities.shield(1)));
+      expect(result.abilities?.[1]).toEqual(expect.objectContaining(Abilities.tank()));
     });
 
     it.skip("should parse '[Shield 2][Tank]'", () => {
@@ -150,21 +136,19 @@ describe("Keyword: Tank", () => {
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(3);
-      expect(result.abilities?.[0]).toEqual(
-        expect.objectContaining(Abilities.tank()),
-      );
+      expect(result.abilities?.[0]).toEqual(expect.objectContaining(Abilities.tank()));
       expect(result.abilities?.[1]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           optional: true,
+          type: "triggered",
         }),
       );
       expect(result.abilities?.[2]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           trigger: expect.objectContaining({
             event: "hold",
           }),
+          type: "triggered",
         }),
       );
     });

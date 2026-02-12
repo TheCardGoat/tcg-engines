@@ -3,25 +3,25 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { magicaDeSpellThievingSorceress } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { magicaDeSpellThievingSorceress } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Magica De Spell - Thieving Sorceress", () => {
-//   it.skip("**TELEKINESIS** {E} – Return chosen item with cost equal to or less than this character's {S} to its player's hand.", () => {
-//     const testStore = new TestStore({
-//       inkwell: magicaDeSpellThievingSorceress.cost,
-//       play: [magicaDeSpellThievingSorceress],
+// Describe("Magica De Spell - Thieving Sorceress", () => {
+//   It.skip("**TELEKINESIS** {E} – Return chosen item with cost equal to or less than this character's {S} to its player's hand.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: magicaDeSpellThievingSorceress.cost,
+//       Play: [magicaDeSpellThievingSorceress],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       magicaDeSpellThievingSorceress.id,
+//       MagicaDeSpellThievingSorceress.id,
 //     );
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

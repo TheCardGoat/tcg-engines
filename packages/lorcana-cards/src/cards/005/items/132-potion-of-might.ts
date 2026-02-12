@@ -1,24 +1,8 @@
 import type { ItemCard } from "@tcg/lorcana-types";
 
 export const potionOfMight: ItemCard = {
-  id: "6dr",
-  cardType: "item",
-  name: "Potion of Might",
-  inkType: ["ruby"],
-  franchise: "Snow White",
-  set: "005",
-  text: "VILE CONCOCTION 1 {I}, Banish this item — Chosen character gets +3 {S} this turn. If a Villain character is chosen, they get +4 {S} instead.",
-  cost: 1,
-  cardNumber: 132,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "1700b318b54e8ea7f92fdc144a34b8f49e65ff5b",
-  },
   abilities: [
     {
-      id: "6dr-1",
-      type: "activated",
       cost: { exert: true },
       effect: {
         type: "conditional",
@@ -33,7 +17,23 @@ export const potionOfMight: ItemCard = {
           target: "CHOSEN_CHARACTER",
         },
       },
+      id: "6dr-1",
       text: "VILE CONCOCTION 1 {I}, Banish this item — Chosen character gets +3 {S} this turn. If a Villain character is chosen, they get +4 {S} instead.",
+      type: "activated",
     },
   ],
+  cardNumber: 132,
+  cardType: "item",
+  cost: 1,
+  externalIds: {
+    ravensburger: "1700b318b54e8ea7f92fdc144a34b8f49e65ff5b",
+  },
+  franchise: "Snow White",
+  id: "6dr",
+  inkType: ["ruby"],
+  inkable: true,
+  missingTests: true,
+  name: "Potion of Might",
+  set: "005",
+  text: "VILE CONCOCTION 1 {I}, Banish this item — Chosen character gets +3 {S} this turn. If a Villain character is chosen, they get +4 {S} instead.",
 };

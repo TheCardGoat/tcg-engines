@@ -1,44 +1,17 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const jasmineQueenOfAgrabah: CharacterCard = {
-  id: "8w9",
-  cardType: "character",
-  name: "Jasmine",
-  version: "Queen of Agrabah",
-  fullName: "Jasmine - Queen of Agrabah",
-  inkType: ["sapphire"],
-  franchise: "Aladdin",
-  set: "001",
-  text: "Shift 3 (You may pay 3 {I} to play this on top of one of your characters named Jasmine.)\nCARETAKER When you play this character and whenever she quests, you may remove up to 2 damage from each of your characters.",
-  cost: 5,
-  strength: 2,
-  willpower: 5,
-  lore: 2,
-  cardNumber: 149,
-  inkable: true,
-  externalIds: {
-    ravensburger: "200fff92d3781279a953ae4972866a4954a0ed17",
-  },
   abilities: [
     {
-      id: "8w9-1",
-      text: "Shift 3",
-      type: "keyword",
-      keyword: "Shift",
       cost: {
         ink: 3,
       },
+      id: "8w9-1",
+      keyword: "Shift",
+      text: "Shift 3",
+      type: "keyword",
     },
     {
-      id: "8w9-2",
-      text: "CARETAKER When you play this character and whenever she quests, you may remove up to 2 damage from each of your characters.",
-      name: "CARETAKER",
-      type: "triggered",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -49,37 +22,64 @@ export const jasmineQueenOfAgrabah: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "8w9-2",
+      name: "CARETAKER",
+      text: "CARETAKER When you play this character and whenever she quests, you may remove up to 2 damage from each of your characters.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 149,
+  cardType: "character",
   classifications: ["Floodborn", "Hero", "Princess", "Queen"],
+  cost: 5,
+  externalIds: {
+    ravensburger: "200fff92d3781279a953ae4972866a4954a0ed17",
+  },
+  franchise: "Aladdin",
+  fullName: "Jasmine - Queen of Agrabah",
+  id: "8w9",
+  inkType: ["sapphire"],
+  inkable: true,
+  lore: 2,
+  name: "Jasmine",
+  set: "001",
+  strength: 2,
+  text: "Shift 3 (You may pay 3 {I} to play this on top of one of your characters named Jasmine.)\nCARETAKER When you play this character and whenever she quests, you may remove up to 2 damage from each of your characters.",
+  version: "Queen of Agrabah",
+  willpower: 5,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { shiftAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { whenPlayAndWheneverQuests } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import { shiftAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import { whenPlayAndWheneverQuests } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const jasmineQueenOfAgrabah: LorcanitoCharacterCard = {
-//   id: "a4n",
-//   name: "Jasmine",
-//   title: "Queen of Agrabah",
-//   characteristics: ["floodborn", "hero", "queen", "princess"],
-//   text: "**Shift** 3 _(You may pay 3 * to play this on top of one of your characters named Jasmine.)_\n\n**CARETAKER** When you play this character and whenever she quests, you may remove up to 2 damage from each of your characters.",
-//   type: "character",
-//   abilities: [
+// Export const jasmineQueenOfAgrabah: LorcanitoCharacterCard = {
+//   Id: "a4n",
+//   Name: "Jasmine",
+//   Title: "Queen of Agrabah",
+//   Characteristics: ["floodborn", "hero", "queen", "princess"],
+//   Text: "**Shift** 3 _(You may pay 3 * to play this on top of one of your characters named Jasmine.)_\n\n**CARETAKER** When you play this character and whenever she quests, you may remove up to 2 damage from each of your characters.",
+//   Type: "character",
+//   Abilities: [
 //     ...whenPlayAndWheneverQuests({
-//       name: "Caretaker",
-//       text: "When you play this character and whenever she quests, you may remove up to 2 damage from each of your characters.",
-//       optional: true,
-//       effects: [
+//       Name: "Caretaker",
+//       Text: "When you play this character and whenever she quests, you may remove up to 2 damage from each of your characters.",
+//       Optional: true,
+//       Effects: [
 //         {
-//           type: "heal",
-//           amount: 2,
-//           upTo: true,
-//           target: {
-//             type: "card",
-//             value: "all",
-//             filters: [
+//           Type: "heal",
+//           Amount: 2,
+//           UpTo: true,
+//           Target: {
+//             Type: "card",
+//             Value: "all",
+//             Filters: [
 //               { filter: "zone", value: "play" },
 //               { filter: "owner", value: "self" },
 //               { filter: "type", value: "character" },
@@ -88,20 +88,20 @@ export const jasmineQueenOfAgrabah: CharacterCard = {
 //         },
 //       ],
 //     }),
-//     shiftAbility(3, "Jasmine"),
+//     ShiftAbility(3, "Jasmine"),
 //   ],
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 5,
-//   strength: 2,
-//   willpower: 5,
-//   lore: 2,
-//   illustrator: "Filipe Laurentino",
-//   number: 149,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 508857,
+//   Inkwell: true,
+//   Colors: ["sapphire"],
+//   Cost: 5,
+//   Strength: 2,
+//   Willpower: 5,
+//   Lore: 2,
+//   Illustrator: "Filipe Laurentino",
+//   Number: 149,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 508857,
 //   },
-//   rarity: "rare",
+//   Rarity: "rare",
 // };
 //

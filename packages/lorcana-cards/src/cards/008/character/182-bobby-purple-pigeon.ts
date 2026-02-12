@@ -1,27 +1,27 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { bodyguardAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { bodyguardAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
 //
-// export const bobbyPurplePigeon: LorcanitoCharacterCard = {
-//   id: "hms",
-//   name: "Bobby",
-//   title: "Purple Pigeon",
-//   characteristics: ["storyborn"],
-//   text: "Bodyguard",
-//   type: "character",
-//   abilities: [bodyguardAbility],
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 3,
-//   strength: 4,
-//   willpower: 2,
-//   illustrator: "Adam Fenton",
-//   number: 182,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631471,
+// Export const bobbyPurplePigeon: LorcanitoCharacterCard = {
+//   Id: "hms",
+//   Name: "Bobby",
+//   Title: "Purple Pigeon",
+//   Characteristics: ["storyborn"],
+//   Text: "Bodyguard",
+//   Type: "character",
+//   Abilities: [bodyguardAbility],
+//   Inkwell: true,
+//   Colors: ["steel"],
+//   Cost: 3,
+//   Strength: 4,
+//   Willpower: 2,
+//   Illustrator: "Adam Fenton",
+//   Number: 182,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631471,
 //   },
-//   rarity: "common",
-//   lore: 1,
+//   Rarity: "common",
+//   Lore: 1,
 // };
 //

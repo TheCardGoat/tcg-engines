@@ -3,43 +3,43 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { fourDozenEggs } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
-// import { mulanReflecting } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { fourDozenEggs } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
+// Import { mulanReflecting } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Mulan - Reflecting", () => {
-//   it("shift", () => {
-//     const testStore = new TestStore({
-//       play: [mulanReflecting],
+// Describe("Mulan - Reflecting", () => {
+//   It("shift", () => {
+//     Const testStore = new TestStore({
+//       Play: [mulanReflecting],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("play", mulanReflecting.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("play", mulanReflecting.id);
 //
-//     expect(cardUnderTest.hasShift).toBe(true);
+//     Expect(cardUnderTest.hasShift).toBe(true);
 //   });
 //
-//   it("**HONOR TO THE ANCESTORS** Whenever this character quests, you may reveal the top card of your deck. If it's a song card, you may play it for free. Otherwise, put it on the top of your deck.", () => {
-//     const testStore = new TestStore({
-//       play: [mulanReflecting],
-//       deck: [fourDozenEggs],
+//   It("**HONOR TO THE ANCESTORS** Whenever this character quests, you may reveal the top card of your deck. If it's a song card, you may play it for free. Otherwise, put it on the top of your deck.", () => {
+//     Const testStore = new TestStore({
+//       Play: [mulanReflecting],
+//       Deck: [fourDozenEggs],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("play", mulanReflecting.id);
-//     const target = testStore.getByZoneAndId("deck", fourDozenEggs.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("play", mulanReflecting.id);
+//     Const target = testStore.getByZoneAndId("deck", fourDozenEggs.id);
 //
-//     cardUnderTest.quest();
+//     CardUnderTest.quest();
 //
-//     expect(testStore.stackLayers).toHaveLength(1);
-//     testStore.resolveOptionalAbility();
+//     Expect(testStore.stackLayers).toHaveLength(1);
+//     TestStore.resolveOptionalAbility();
 //
-//     expect(target.zone).toBe("discard");
-//     expect(testStore.getZonesCardCount()).toEqual(
-//       expect.objectContaining({ deck: 0 }),
+//     Expect(target.zone).toBe("discard");
+//     Expect(testStore.getZonesCardCount()).toEqual(
+//       Expect.objectContaining({ deck: 0 }),
 //     );
 //
 //     // Four Dozen Eggs gives resist
-//     expect(cardUnderTest.hasResist).toBe(true);
+//     Expect(cardUnderTest.hasResist).toBe(true);
 //   });
 // });
 //

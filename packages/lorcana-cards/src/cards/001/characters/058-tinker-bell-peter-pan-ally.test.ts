@@ -3,48 +3,48 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   peterPanFearless,
-//   peterPanNeverLanding,
-//   tinkerBellPeterPan,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   PeterPanFearless,
+//   PeterPanNeverLanding,
+//   TinkerBellPeterPan,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { peterPansShadowNotSewnOn } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { peterPansShadowNotSewnOn } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Tinker Bell - Peter Pan's Ally", () => {
-//   it("Evasive", () => {
-//     const testStore = new TestStore({
-//       play: [tinkerBellPeterPan],
+// Describe("Tinker Bell - Peter Pan's Ally", () => {
+//   It("Evasive", () => {
+//     Const testStore = new TestStore({
+//       Play: [tinkerBellPeterPan],
 //     });
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       tinkerBellPeterPan.id,
+//       TinkerBellPeterPan.id,
 //     );
 //
-//     expect(cardUnderTest.hasEvasive).toEqual(true);
+//     Expect(cardUnderTest.hasEvasive).toEqual(true);
 //   });
 //
-//   it("**LOYAL AND DEVOTED** Your characters named Peter Pan gain **Challenger +1.** _(They get +1 {S} while challenging.)_", () => {
-//     const testStore = new TestStore({
-//       play: [
-//         tinkerBellPeterPan,
-//         peterPanFearless,
-//         peterPanNeverLanding,
-//         peterPansShadowNotSewnOn,
+//   It("**LOYAL AND DEVOTED** Your characters named Peter Pan gain **Challenger +1.** _(They get +1 {S} while challenging.)_", () => {
+//     Const testStore = new TestStore({
+//       Play: [
+//         TinkerBellPeterPan,
+//         PeterPanFearless,
+//         PeterPanNeverLanding,
+//         PeterPansShadowNotSewnOn,
 //       ],
 //     });
 //
-//     const peterOne = testStore.getByZoneAndId("play", peterPanFearless.id);
-//     const peterTwo = testStore.getByZoneAndId("play", peterPanNeverLanding.id);
-//     const notPeter = testStore.getByZoneAndId(
+//     Const peterOne = testStore.getByZoneAndId("play", peterPanFearless.id);
+//     Const peterTwo = testStore.getByZoneAndId("play", peterPanNeverLanding.id);
+//     Const notPeter = testStore.getByZoneAndId(
 //       "play",
-//       peterPansShadowNotSewnOn.id,
+//       PeterPansShadowNotSewnOn.id,
 //     );
 //
-//     expect(notPeter.hasChallenger).toEqual(false);
+//     Expect(notPeter.hasChallenger).toEqual(false);
 //     [peterOne, peterTwo].forEach((peter) => {
-//       expect(peter.hasChallenger).toEqual(true);
+//       Expect(peter.hasChallenger).toEqual(true);
 //     });
 //   });
 // });

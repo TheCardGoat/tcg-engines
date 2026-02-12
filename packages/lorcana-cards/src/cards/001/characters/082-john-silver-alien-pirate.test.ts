@@ -5,9 +5,9 @@ import { johnSilverAlienPirate } from "./082-john-silver-alien-pirate";
 describe("John Silver - Alien Pirate", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [johnSilverAlienPirate] });
-  //   expect(testEngine.getCardModel(johnSilverAlienPirate).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [johnSilverAlienPirate] });
+  //   Expect(testEngine.getCardModel(johnSilverAlienPirate).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,81 +17,81 @@ describe("John Silver - Alien Pirate", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   johnSilverAlienPirate,
-//   pascalRapunzelCompanion,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   JohnSilverAlienPirate,
+//   PascalRapunzelCompanion,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("John Silver - Alien Pirate", () => {
-//   describe("Pick Your Fights - When you play this character and whenever he quests, chosen opposing character gains **Reckless** during their next turn.", () => {
-//     it("On play", () => {
-//       const testStore = new TestStore(
+// Describe("John Silver - Alien Pirate", () => {
+//   Describe("Pick Your Fights - When you play this character and whenever he quests, chosen opposing character gains **Reckless** during their next turn.", () => {
+//     It("On play", () => {
+//       Const testStore = new TestStore(
 //         {
-//           deck: 2,
-//           inkwell: johnSilverAlienPirate.cost,
-//           hand: [johnSilverAlienPirate],
+//           Deck: 2,
+//           Inkwell: johnSilverAlienPirate.cost,
+//           Hand: [johnSilverAlienPirate],
 //         },
 //         {
-//           deck: 2,
-//           play: [pascalRapunzelCompanion],
+//           Deck: 2,
+//           Play: [pascalRapunzelCompanion],
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "hand",
-//         johnSilverAlienPirate.id,
+//         JohnSilverAlienPirate.id,
 //       );
-//       const target = testStore.getByZoneAndId(
+//       Const target = testStore.getByZoneAndId(
 //         "play",
-//         pascalRapunzelCompanion.id,
+//         PascalRapunzelCompanion.id,
 //         "player_two",
 //       );
 //
-//       cardUnderTest.playFromHand();
-//       testStore.resolveTopOfStack({ targetId: target.instanceId });
+//       CardUnderTest.playFromHand();
+//       TestStore.resolveTopOfStack({ targetId: target.instanceId });
 //
 //       // Character gets "Reckless" on their turn
-//       expect(target.hasReckless).toBeFalsy();
-//       testStore.passTurn();
-//       expect(target.hasReckless).toBeTruthy();
+//       Expect(target.hasReckless).toBeFalsy();
+//       TestStore.passTurn();
+//       Expect(target.hasReckless).toBeTruthy();
 //
 //       // Character loses "Reckless" when they pass their turn
-//       testStore.passTurn();
-//       expect(target.hasReckless).toBeFalsy();
+//       TestStore.passTurn();
+//       Expect(target.hasReckless).toBeFalsy();
 //     });
 //
-//     it("On quest", () => {
-//       const testStore = new TestStore(
+//     It("On quest", () => {
+//       Const testStore = new TestStore(
 //         {
-//           deck: 2,
-//           inkwell: johnSilverAlienPirate.cost,
-//           play: [johnSilverAlienPirate],
+//           Deck: 2,
+//           Inkwell: johnSilverAlienPirate.cost,
+//           Play: [johnSilverAlienPirate],
 //         },
 //         {
-//           deck: 2,
-//           play: [pascalRapunzelCompanion],
+//           Deck: 2,
+//           Play: [pascalRapunzelCompanion],
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         johnSilverAlienPirate.id,
+//         JohnSilverAlienPirate.id,
 //       );
-//       const target = testStore.getByZoneAndId(
+//       Const target = testStore.getByZoneAndId(
 //         "play",
-//         pascalRapunzelCompanion.id,
+//         PascalRapunzelCompanion.id,
 //         "player_two",
 //       );
 //
-//       cardUnderTest.quest();
-//       testStore.resolveTopOfStack({ targetId: target.instanceId });
+//       CardUnderTest.quest();
+//       TestStore.resolveTopOfStack({ targetId: target.instanceId });
 //
 //       // Character gets "Reckless" on their turn
-//       expect(target.hasReckless).toBeFalsy();
-//       testStore.passTurn();
-//       expect(target.hasReckless).toBeTruthy();
+//       Expect(target.hasReckless).toBeFalsy();
+//       TestStore.passTurn();
+//       Expect(target.hasReckless).toBeTruthy();
 //     });
 //   });
 // });

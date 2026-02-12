@@ -1,10 +1,6 @@
-import { createMove, type ZoneId } from "@tcg/core";
+import { type ZoneId, createMove } from "@tcg/core";
 import { useLorcanaOps } from "../../../operations";
-import type {
-  LorcanaCardMeta,
-  LorcanaGameState,
-  LorcanaMoveParams,
-} from "../../../types";
+import type { LorcanaCardMeta, LorcanaGameState, LorcanaMoveParams } from "../../../types";
 import { and, cardInHand, isMainPhase } from "../../../validators";
 
 /**

@@ -3,42 +3,42 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   emeraldCoil,
-//   kashekimAncientRuler,
-//   suzyMasterSeamstress,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   EmeraldCoil,
+//   KashekimAncientRuler,
+//   SuzyMasterSeamstress,
 // } from "@lorcanito/lorcana-engine/cards/007";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Emerald Coil", () => {
-//   it("SHIMMERING WINGS During your turn, whenever a card is put into your inkwell, chosen character gains Evasive until the start of your next turn. (Only characters with Evasive can challenge them.)", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Emerald Coil", () => {
+//   It("SHIMMERING WINGS During your turn, whenever a card is put into your inkwell, chosen character gains Evasive until the start of your next turn. (Only characters with Evasive can challenge them.)", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         deck: 2,
-//         play: [emeraldCoil, kashekimAncientRuler],
-//         hand: [suzyMasterSeamstress],
+//         Deck: 2,
+//         Play: [emeraldCoil, kashekimAncientRuler],
+//         Hand: [suzyMasterSeamstress],
 //       },
 //       {
-//         deck: 2,
+//         Deck: 2,
 //       },
 //     );
-//     const target = testEngine.getCardModel(kashekimAncientRuler);
+//     Const target = testEngine.getCardModel(kashekimAncientRuler);
 //
-//     expect(target.hasEvasive).toBe(false);
+//     Expect(target.hasEvasive).toBe(false);
 //
-//     await testEngine.putIntoInkwell(suzyMasterSeamstress);
+//     Await testEngine.putIntoInkwell(suzyMasterSeamstress);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({ targets: [kashekimAncientRuler] });
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({ targets: [kashekimAncientRuler] });
 //
-//     expect(target.hasEvasive).toBe(true);
+//     Expect(target.hasEvasive).toBe(true);
 //
-//     await testEngine.passTurn();
-//     expect(target.hasEvasive).toBe(true);
+//     Await testEngine.passTurn();
+//     Expect(target.hasEvasive).toBe(true);
 //
-//     await testEngine.passTurn();
-//     expect(target.hasEvasive).toBe(false);
+//     Await testEngine.passTurn();
+//     Expect(target.hasEvasive).toBe(false);
 //   });
 // });
 //

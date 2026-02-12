@@ -5,9 +5,9 @@ import { jasmineDisguised } from "./148-jasmine-disguised";
 describe("Jasmine - Disguised", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [jasmineDisguised] });
-  //   expect(testEngine.getCardModel(jasmineDisguised).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [jasmineDisguised] });
+  //   Expect(testEngine.getCardModel(jasmineDisguised).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });

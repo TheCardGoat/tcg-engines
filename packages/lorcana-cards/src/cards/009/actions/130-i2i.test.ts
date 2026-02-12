@@ -3,122 +3,122 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { goofyDaredevil } from "@lorcanito/lorcana-engine/cards/001/characters/111-goofy-daredevil";
-// import { hakunaMatata } from "@lorcanito/lorcana-engine/cards/001/songs/027-hakuna-matata";
-// import {
-//   i2i,
-//   maxGoofRockinTeen,
-//   powerlineWorldsGreatestRockStar,
-//   rapunzelSunshine,
-//   roxannePowerlineFan,
-//   stitchRockStar,
-//   theQueenRegalMonarch,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { goofyDaredevil } from "@lorcanito/lorcana-engine/cards/001/characters/111-goofy-daredevil";
+// Import { hakunaMatata } from "@lorcanito/lorcana-engine/cards/001/songs/027-hakuna-matata";
+// Import {
+//   I2i,
+//   MaxGoofRockinTeen,
+//   PowerlineWorldsGreatestRockStar,
+//   RapunzelSunshine,
+//   RoxannePowerlineFan,
+//   StitchRockStar,
+//   TheQueenRegalMonarch,
 // } from "@lorcanito/lorcana-engine/cards/009";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("I2I", () => {
-//   it("Sing Together 9 (Any number of your or your teammates’ characters with total cost 9 or more may {E} to sing this song for free.)", async () => {
-//     const testEngine = new TestEngine({
-//       hand: [i2i],
+// Describe("I2I", () => {
+//   It("Sing Together 9 (Any number of your or your teammates’ characters with total cost 9 or more may {E} to sing this song for free.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Hand: [i2i],
 //     });
 //
-//     expect(testEngine.getCardModel(i2i).hasSingTogether).toBe(true);
+//     Expect(testEngine.getCardModel(i2i).hasSingTogether).toBe(true);
 //   });
 //
-//   it("Each player draws 2 cards and gains 2 lore. If 2 or more characters sang this song, ready them. They can’t quest for the rest of this turn.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: i2i.cost,
-//       hand: [i2i],
+//   It("Each player draws 2 cards and gains 2 lore. If 2 or more characters sang this song, ready them. They can’t quest for the rest of this turn.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: i2i.cost,
+//       Hand: [i2i],
 //     });
 //
-//     await testEngine.playCard(i2i);
+//     Await testEngine.playCard(i2i);
 //
-//     expect(testEngine.getLoreForPlayer("player_one")).toBe(2);
-//     expect(testEngine.getLoreForPlayer("player_two")).toBe(2);
+//     Expect(testEngine.getLoreForPlayer("player_one")).toBe(2);
+//     Expect(testEngine.getLoreForPlayer("player_two")).toBe(2);
 //
-//     expect(testEngine.getCardsByZone("hand", "player_one")).toHaveLength(2);
-//     expect(testEngine.getCardsByZone("hand", "player_two")).toHaveLength(2);
+//     Expect(testEngine.getCardsByZone("hand", "player_one")).toHaveLength(2);
+//     Expect(testEngine.getCardsByZone("hand", "player_two")).toHaveLength(2);
 //   });
 //
-//   it("If 2 or more characters sang this song, ready them. They can’t quest for the rest of this turn.", async () => {
-//     const singers = [roxannePowerlineFan, maxGoofRockinTeen, goofyDaredevil];
-//     const testEngine = new TestEngine({
-//       hand: [i2i],
-//       play: singers,
+//   It("If 2 or more characters sang this song, ready them. They can’t quest for the rest of this turn.", async () => {
+//     Const singers = [roxannePowerlineFan, maxGoofRockinTeen, goofyDaredevil];
+//     Const testEngine = new TestEngine({
+//       Hand: [i2i],
+//       Play: singers,
 //     });
 //
-//     await testEngine.singSongTogether({
-//       song: i2i,
-//       singers: singers,
+//     Await testEngine.singSongTogether({
+//       Song: i2i,
+//       Singers: singers,
 //     });
 //
-//     expect(testEngine.getCardModel(i2i).zone).toBe("discard");
+//     Expect(testEngine.getCardModel(i2i).zone).toBe("discard");
 //
-//     for (const singer of singers) {
-//       const cardModel = testEngine.getCardModel(singer);
-//       expect(cardModel.zone).toBe("play");
-//       expect(cardModel.ready).toBe(true);
-//       expect(cardModel.canQuest).toBe(false);
+//     For (const singer of singers) {
+//       Const cardModel = testEngine.getCardModel(singer);
+//       Expect(cardModel.zone).toBe("play");
+//       Expect(cardModel.ready).toBe(true);
+//       Expect(cardModel.canQuest).toBe(false);
 //     }
 //   });
 //
-//   describe("Regression tests", () => {
-//     it("Doesn't trigger if only one character sings.", async () => {
-//       const singers = [powerlineWorldsGreatestRockStar];
-//       const testEngine = new TestEngine({
-//         deck: [
-//           stitchRockStar,
-//           hakunaMatata,
-//           theQueenRegalMonarch,
-//           rapunzelSunshine,
+//   Describe("Regression tests", () => {
+//     It("Doesn't trigger if only one character sings.", async () => {
+//       Const singers = [powerlineWorldsGreatestRockStar];
+//       Const testEngine = new TestEngine({
+//         Deck: [
+//           StitchRockStar,
+//           HakunaMatata,
+//           TheQueenRegalMonarch,
+//           RapunzelSunshine,
 //         ],
-//         hand: [i2i],
-//         play: singers,
+//         Hand: [i2i],
+//         Play: singers,
 //       });
 //
-//       await testEngine.singSong({
-//         singer: powerlineWorldsGreatestRockStar,
-//         song: i2i,
+//       Await testEngine.singSong({
+//         Singer: powerlineWorldsGreatestRockStar,
+//         Song: i2i,
 //       });
 //
-//       expect(testEngine.getCardModel(i2i).zone).toBe("discard");
+//       Expect(testEngine.getCardModel(i2i).zone).toBe("discard");
 //
-//       for (const singer of singers) {
-//         const cardModel = testEngine.getCardModel(singer);
-//         expect(cardModel.zone).toBe("play");
-//         expect(cardModel.hasQuestRestriction).toBe(false);
-//         expect(cardModel.ready).toBe(false);
+//       For (const singer of singers) {
+//         Const cardModel = testEngine.getCardModel(singer);
+//         Expect(cardModel.zone).toBe("play");
+//         Expect(cardModel.hasQuestRestriction).toBe(false);
+//         Expect(cardModel.ready).toBe(false);
 //       }
 //     });
 //
-//     it.skip("Doesn't trigger if sang by only one character. Powerline - World's Greatest Rock Star interaction", async () => {
-//       const singers = [powerlineWorldsGreatestRockStar];
-//       const testEngine = new TestEngine({
-//         deck: [stitchRockStar, i2i, theQueenRegalMonarch, rapunzelSunshine],
-//         hand: [hakunaMatata],
-//         play: singers,
+//     It.skip("Doesn't trigger if sang by only one character. Powerline - World's Greatest Rock Star interaction", async () => {
+//       Const singers = [powerlineWorldsGreatestRockStar];
+//       Const testEngine = new TestEngine({
+//         Deck: [stitchRockStar, i2i, theQueenRegalMonarch, rapunzelSunshine],
+//         Hand: [hakunaMatata],
+//         Play: singers,
 //       });
 //
-//       await testEngine.singSong({
-//         singer: powerlineWorldsGreatestRockStar,
-//         song: hakunaMatata,
+//       Await testEngine.singSong({
+//         Singer: powerlineWorldsGreatestRockStar,
+//         Song: hakunaMatata,
 //       });
 //
-//       await testEngine.resolveTopOfStack({
-//         scry: {
-//           play: [i2i],
-//           bottom: [stitchRockStar, theQueenRegalMonarch, rapunzelSunshine],
+//       Await testEngine.resolveTopOfStack({
+//         Scry: {
+//           Play: [i2i],
+//           Bottom: [stitchRockStar, theQueenRegalMonarch, rapunzelSunshine],
 //         },
 //       });
 //
-//       expect(testEngine.getCardModel(hakunaMatata).zone).toEqual("discard");
-//       expect(testEngine.getCardModel(i2i).zone).toBe("discard");
+//       Expect(testEngine.getCardModel(hakunaMatata).zone).toEqual("discard");
+//       Expect(testEngine.getCardModel(i2i).zone).toBe("discard");
 //
-//       for (const singer of singers) {
-//         const cardModel = testEngine.getCardModel(singer);
-//         expect(cardModel.zone).toBe("play");
-//         expect(cardModel.ready).toBe(false);
+//       For (const singer of singers) {
+//         Const cardModel = testEngine.getCardModel(singer);
+//         Expect(cardModel.zone).toBe("play");
+//         Expect(cardModel.ready).toBe(false);
 //       }
 //     });
 //   });

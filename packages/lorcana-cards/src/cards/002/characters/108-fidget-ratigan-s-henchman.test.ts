@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { fidgetRatigansHenchman } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { fidgetRatigansHenchman } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Fidget - Ratigan’s Henchman", () => {
-//   it("", () => {
-//     const testStore = new TestStore({
-//       play: [fidgetRatigansHenchman],
+// Describe("Fidget - Ratigan’s Henchman", () => {
+//   It("", () => {
+//     Const testStore = new TestStore({
+//       Play: [fidgetRatigansHenchman],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       fidgetRatigansHenchman.id,
+//       FidgetRatigansHenchman.id,
 //     );
 //
-//     expect(cardUnderTest.hasEvasive).toBe(true);
+//     Expect(cardUnderTest.hasEvasive).toBe(true);
 //   });
 // });
 //

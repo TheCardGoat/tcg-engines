@@ -1,83 +1,83 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const belleInventiveEngineer: CharacterCard = {
-  id: "vuf",
-  cardType: "character",
-  name: "Belle",
-  version: "Inventive Engineer",
-  fullName: "Belle - Inventive Engineer",
-  inkType: ["sapphire"],
-  franchise: "Disney",
-  set: "001",
-  text: "**TINKER** Whenever this character quests, you pay 1 {I} less for the next item you play this turn.",
-  cost: 3,
-  strength: 2,
-  willpower: 3,
-  lore: 2,
-  cardNumber: 141,
-  inkable: true,
-  externalIds: {
-    ravensburger: "",
-  },
   abilities: [
     {
-      type: "action",
-      text: "**TINKER** Whenever this character quests, you pay 1 {I} less for the next item you play this turn.",
-      id: "vuf-1",
       effect: {
         type: "play-card",
         from: "hand",
       },
+      id: "vuf-1",
+      text: "**TINKER** Whenever this character quests, you pay 1 {I} less for the next item you play this turn.",
+      type: "action",
     },
   ],
+  cardNumber: 141,
+  cardType: "character",
   classifications: ["Hero", "Dreamborn", "Inventor", "Princess"],
+  cost: 3,
+  externalIds: {
+    ravensburger: "",
+  },
+  franchise: "Disney",
+  fullName: "Belle - Inventive Engineer",
+  id: "vuf",
+  inkType: ["sapphire"],
+  inkable: true,
+  lore: 2,
+  name: "Belle",
+  set: "001",
+  strength: 2,
+  text: "**TINKER** Whenever this character quests, you pay 1 {I} less for the next item you play this turn.",
+  version: "Inventive Engineer",
+  willpower: 3,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { wheneverQuests } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// Import { wheneverQuests } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
 //
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-// export const belleInventive: LorcanitoCharacterCard = {
-//   id: "vuf",
-//   reprints: ["siv"],
-//   name: "Belle",
-//   title: "Inventive Engineer",
-//   characteristics: ["hero", "dreamborn", "inventor", "princess"],
-//   text: "**TINKER** Whenever this character quests, you pay 1 {I} less for the next item you play this turn.",
-//   type: "character",
-//   abilities: [
-//     wheneverQuests({
-//       name: "Tinker",
-//       text: "Whenever this character quests, you pay 1 {I} less for the next item you play this turn.",
-//       effects: [
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Export const belleInventive: LorcanitoCharacterCard = {
+//   Id: "vuf",
+//   Reprints: ["siv"],
+//   Name: "Belle",
+//   Title: "Inventive Engineer",
+//   Characteristics: ["hero", "dreamborn", "inventor", "princess"],
+//   Text: "**TINKER** Whenever this character quests, you pay 1 {I} less for the next item you play this turn.",
+//   Type: "character",
+//   Abilities: [
+//     WheneverQuests({
+//       Name: "Tinker",
+//       Text: "Whenever this character quests, you pay 1 {I} less for the next item you play this turn.",
+//       Effects: [
 //         {
-//           type: "replacement",
-//           replacement: "cost",
-//           duration: "next",
-//           amount: 1,
-//           target: {
-//             type: "card",
-//             value: "all",
-//             filters: [{ filter: "type", value: "item" }],
+//           Type: "replacement",
+//           Replacement: "cost",
+//           Duration: "next",
+//           Amount: 1,
+//           Target: {
+//             Type: "card",
+//             Value: "all",
+//             Filters: [{ filter: "type", value: "item" }],
 //           },
 //         },
 //       ],
 //     }),
 //   ],
-//   flavour:
+//   Flavour:
 //     "A little ingenuity and a lot of heart will take you far in this world.",
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 3,
-//   strength: 2,
-//   willpower: 3,
-//   lore: 2,
-//   illustrator: "Gabriel Romero / Pix Smith",
-//   number: 141,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 492727,
+//   Inkwell: true,
+//   Colors: ["sapphire"],
+//   Cost: 3,
+//   Strength: 2,
+//   Willpower: 3,
+//   Lore: 2,
+//   Illustrator: "Gabriel Romero / Pix Smith",
+//   Number: 141,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 492727,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

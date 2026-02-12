@@ -73,10 +73,10 @@ function parseFromCst(
   logger.info("Parsed stat modification effect from CST", { modifier, stat });
 
   return {
-    type: "modify-stat",
-    stat,
     modifier,
+    stat,
     target: "CHOSEN_CHARACTER" as CharacterTarget,
+    type: "modify-stat",
   };
 }
 
@@ -109,9 +109,9 @@ function parseFromText(text: string): ModifyStatEffect | null {
     const stat =
       statSymbol === "S"
         ? "strength"
-        : statSymbol === "W"
+        : (statSymbol === "W"
           ? "willpower"
-          : "lore";
+          : "lore");
 
     // Try to determine target from text
     // Order matters: check more specific patterns first
@@ -132,26 +132,26 @@ function parseFromText(text: string): ModifyStatEffect | null {
     } else if (lowerText.includes("chosen character")) {
       // Use detailed target format for "chosen character"
       target = {
-        selector: "chosen",
+        cardTypes: ["character"],
         count: 1,
         owner: "any",
+        selector: "chosen",
         zones: ["play"],
-        cardTypes: ["character"],
       };
     }
 
     logger.info("Parsed stat modification effect from text", {
+      duration,
       modifier,
       stat,
       target,
-      duration,
     });
 
     const effect: ModifyStatEffect = {
-      type: "modify-stat",
-      stat,
       modifier,
+      stat,
       target,
+      type: "modify-stat",
     };
 
     if (duration) {
@@ -191,26 +191,26 @@ function parseFromText(text: string): ModifyStatEffect | null {
     } else if (lowerText.includes("chosen character")) {
       // Use detailed target format for "chosen character"
       target = {
-        selector: "chosen",
+        cardTypes: ["character"],
         count: 1,
         owner: "any",
+        selector: "chosen",
         zones: ["play"],
-        cardTypes: ["character"],
       };
     }
 
     logger.info("Parsed stat modification effect from text", {
+      duration,
       modifier,
       stat,
       target,
-      duration,
     });
 
     const effect: ModifyStatEffect = {
-      type: "modify-stat",
-      stat,
       modifier,
+      stat,
       target,
+      type: "modify-stat",
     };
 
     if (duration) {
@@ -228,11 +228,8 @@ function parseFromText(text: string): ModifyStatEffect | null {
  * Stat modification effect parser implementation
  */
 export const statModEffectParser: EffectParser = {
-  pattern:
-    /gets?\s+([+-]?\d+|[+-]?\{d\})\s+(?:\{([SLW])\}|(strength|willpower|lore))/i,
   description:
     "Parses stat modification effects (e.g., 'gets +2 strength', 'Your characters get +1 {S}')",
-
   parse: (input: CstNode | string): ModifyStatEffect | null => {
     if (typeof input === "string") {
       return parseFromText(input);
@@ -244,4 +241,7 @@ export const statModEffectParser: EffectParser = {
         | undefined,
     );
   },
+
+  pattern:
+    /gets?\s+([+-]?\d+|[+-]?\{d\})\s+(?:\{([SLW])\}|(strength|willpower|lore))/i,
 };

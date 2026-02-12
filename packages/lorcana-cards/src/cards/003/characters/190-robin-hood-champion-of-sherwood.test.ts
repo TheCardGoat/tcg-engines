@@ -3,148 +3,148 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import {
-//   mrSmeeBumblingMate,
-//   robinHoodChampionOfSherwood,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import {
+//   MrSmeeBumblingMate,
+//   RobinHoodChampionOfSherwood,
 // } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Robin Hood - Champion of Sherwood", () => {
-//   describe("**SKILLED COMBATANT** During your turn, whenever this character banishes another character in a challenge, gain 2 lore.", () => {
-//     it("should gain 2 lore when banishes another character in a challenge during your turn", () => {
-//       const testStore = new TestStore(
+// Describe("Robin Hood - Champion of Sherwood", () => {
+//   Describe("**SKILLED COMBATANT** During your turn, whenever this character banishes another character in a challenge, gain 2 lore.", () => {
+//     It("should gain 2 lore when banishes another character in a challenge during your turn", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [robinHoodChampionOfSherwood],
+//           Play: [robinHoodChampionOfSherwood],
 //         },
 //         {
-//           play: [mrSmeeBumblingMate],
+//           Play: [mrSmeeBumblingMate],
 //         },
 //       );
 //
-//       const attacker = testStore.getByZoneAndId(
+//       Const attacker = testStore.getByZoneAndId(
 //         "play",
-//         robinHoodChampionOfSherwood.id,
+//         RobinHoodChampionOfSherwood.id,
 //       );
-//       const defender = testStore.getByZoneAndId(
+//       Const defender = testStore.getByZoneAndId(
 //         "play",
-//         mrSmeeBumblingMate.id,
+//         MrSmeeBumblingMate.id,
 //         "player_two",
 //       );
 //
-//       defender.updateCardMeta({ exerted: true });
+//       Defender.updateCardMeta({ exerted: true });
 //
-//       expect(testStore.store.tableStore.getTable("player_one").lore).toEqual(0);
-//       attacker.challenge(defender);
-//       expect(testStore.store.tableStore.getTable("player_one").lore).toEqual(2);
-//       expect(defender.zone).toEqual("discard");
+//       Expect(testStore.store.tableStore.getTable("player_one").lore).toEqual(0);
+//       Attacker.challenge(defender);
+//       Expect(testStore.store.tableStore.getTable("player_one").lore).toEqual(2);
+//       Expect(defender.zone).toEqual("discard");
 //     });
 //
-//     it("should not gain 2 lore when banishes another character in a challenge during opponents turn", () => {
-//       const testStore = new TestStore(
+//     It("should not gain 2 lore when banishes another character in a challenge during opponents turn", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [robinHoodChampionOfSherwood],
+//           Play: [robinHoodChampionOfSherwood],
 //         },
 //         {
-//           play: [mrSmeeBumblingMate],
+//           Play: [mrSmeeBumblingMate],
 //         },
 //       );
 //
-//       const attacker = testStore.getByZoneAndId(
+//       Const attacker = testStore.getByZoneAndId(
 //         "play",
-//         mrSmeeBumblingMate.id,
+//         MrSmeeBumblingMate.id,
 //         "player_two",
 //       );
-//       const defender = testStore.getByZoneAndId(
+//       Const defender = testStore.getByZoneAndId(
 //         "play",
-//         robinHoodChampionOfSherwood.id,
+//         RobinHoodChampionOfSherwood.id,
 //       );
 //
-//       defender.updateCardMeta({ exerted: true });
-//       attacker.updateCardDamage(2, "add");
+//       Defender.updateCardMeta({ exerted: true });
+//       Attacker.updateCardDamage(2, "add");
 //
-//       expect(testStore.store.tableStore.getTable("player_one").lore).toEqual(0);
-//       attacker.challenge(defender);
-//       expect(testStore.store.tableStore.getTable("player_one").lore).toEqual(0);
+//       Expect(testStore.store.tableStore.getTable("player_one").lore).toEqual(0);
+//       Attacker.challenge(defender);
+//       Expect(testStore.store.tableStore.getTable("player_one").lore).toEqual(0);
 //     });
 //
-//     it("should not trigger from its own banish during challenge", () => {
-//       const testStore = new TestStore(
+//     It("should not trigger from its own banish during challenge", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [robinHoodChampionOfSherwood],
+//           Play: [robinHoodChampionOfSherwood],
 //         },
 //         {
-//           play: [mrSmeeBumblingMate],
+//           Play: [mrSmeeBumblingMate],
 //         },
 //       );
 //
-//       const attacker = testStore.getByZoneAndId(
+//       Const attacker = testStore.getByZoneAndId(
 //         "play",
-//         robinHoodChampionOfSherwood.id,
+//         RobinHoodChampionOfSherwood.id,
 //       );
-//       const defender = testStore.getByZoneAndId(
+//       Const defender = testStore.getByZoneAndId(
 //         "play",
-//         mrSmeeBumblingMate.id,
+//         MrSmeeBumblingMate.id,
 //         "player_two",
 //       );
 //
-//       defender.updateCardMeta({ exerted: true });
+//       Defender.updateCardMeta({ exerted: true });
 //
-//       expect(testStore.store.tableStore.getTable("player_one").lore).toEqual(0);
-//       attacker.challenge(defender);
-//       expect(testStore.store.tableStore.getTable("player_one").lore).toEqual(2);
+//       Expect(testStore.store.tableStore.getTable("player_one").lore).toEqual(0);
+//       Attacker.challenge(defender);
+//       Expect(testStore.store.tableStore.getTable("player_one").lore).toEqual(2);
 //     });
 //   });
 //
-//   describe("**THE GOOD OF OTHERS** When this character is banished in a challenge, you may draw a card.", () => {
-//     it("When is banished in a challenge in your turn, you may draw a card.", async () => {
-//       const testEngine = new TestEngine(
+//   Describe("**THE GOOD OF OTHERS** When this character is banished in a challenge, you may draw a card.", () => {
+//     It("When is banished in a challenge in your turn, you may draw a card.", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           play: [robinHoodChampionOfSherwood],
-//           deck: 1,
+//           Play: [robinHoodChampionOfSherwood],
+//           Deck: 1,
 //         },
 //         {
-//           play: [mrSmeeBumblingMate],
+//           Play: [mrSmeeBumblingMate],
 //         },
 //       );
 //
-//       const attacker = testEngine.getCardModel(robinHoodChampionOfSherwood);
-//       const defender = testEngine.getCardModel(mrSmeeBumblingMate);
+//       Const attacker = testEngine.getCardModel(robinHoodChampionOfSherwood);
+//       Const defender = testEngine.getCardModel(mrSmeeBumblingMate);
 //
-//       attacker.updateCardDamage(3);
-//       defender.updateCardMeta({ exerted: true });
-//       await testEngine.challenge({ attacker, defender });
+//       Attacker.updateCardDamage(3);
+//       Defender.updateCardMeta({ exerted: true });
+//       Await testEngine.challenge({ attacker, defender });
 //
-//       expect(attacker.zone).toEqual("discard");
+//       Expect(attacker.zone).toEqual("discard");
 //
-//       await testEngine.resolveOptionalAbility();
+//       Await testEngine.resolveOptionalAbility();
 //
-//       expect(testEngine.getZonesCardCount().hand).toEqual(1);
+//       Expect(testEngine.getZonesCardCount().hand).toEqual(1);
 //     });
 //
-//     it("When is banished in a challenge you may draw a card.", () => {
-//       const testStore = new TestStore(
+//     It("When is banished in a challenge you may draw a card.", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [robinHoodChampionOfSherwood],
-//           deck: [mrSmeeBumblingMate],
+//           Play: [robinHoodChampionOfSherwood],
+//           Deck: [mrSmeeBumblingMate],
 //         },
 //         {
-//           play: [goofyKnightForADay],
+//           Play: [goofyKnightForADay],
 //         },
 //       );
 //
-//       const attacker = testStore.getCard(goofyKnightForADay);
-//       const defender = testStore.getCard(robinHoodChampionOfSherwood);
+//       Const attacker = testStore.getCard(goofyKnightForADay);
+//       Const defender = testStore.getCard(robinHoodChampionOfSherwood);
 //
-//       defender.updateCardMeta({ exerted: true });
-//       attacker.challenge(defender);
+//       Defender.updateCardMeta({ exerted: true });
+//       Attacker.challenge(defender);
 //
-//       expect(attacker.zone).toEqual("play");
-//       expect(defender.zone).toEqual("discard");
-//       testStore.resolveOptionalAbility();
-//       expect(testStore.getZonesCardCount().hand).toEqual(1);
+//       Expect(attacker.zone).toEqual("play");
+//       Expect(defender.zone).toEqual("discard");
+//       TestStore.resolveOptionalAbility();
+//       Expect(testStore.getZonesCardCount().hand).toEqual(1);
 //     });
 //   });
 // });

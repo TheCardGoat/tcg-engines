@@ -51,9 +51,9 @@ function parseFromText(text: string): MoveToLocationEffect | null {
   logger.info("Parsed move to location effect", { character, isFree });
 
   const effect: MoveToLocationEffect = {
-    type: "move-to-location",
     character,
     cost: isFree ? "free" : "normal",
+    type: "move-to-location",
   };
   return effect;
 }
@@ -62,11 +62,8 @@ function parseFromText(text: string): MoveToLocationEffect | null {
  * Location effect parser implementation
  */
 export const locationEffectParser: EffectParser = {
-  pattern:
-    /move\s+(?:one\s+of\s+your\s+|a\s+character\s+of yours\s+|your\s+|chosen\s+)?(?:characters?|card).*?to\s+(?:a|this)\s+location/i,
   description:
     "Parses location movement effects (e.g., 'move chosen character to a location', 'move a character of yours to a location')",
-
   parse: (input: CstNode | string): MoveToLocationEffect | null => {
     if (typeof input === "string") {
       return parseFromText(input);
@@ -75,4 +72,7 @@ export const locationEffectParser: EffectParser = {
     logger.warn("CST parsing not implemented for location effects");
     return null;
   },
+
+  pattern:
+    /move\s+(?:one\s+of\s+your\s+|a\s+character\s+of yours\s+|your\s+|chosen\s+)?(?:characters?|card).*?to\s+(?:a|this)\s+location/i,
 };

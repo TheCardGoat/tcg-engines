@@ -1,57 +1,57 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const beastWolfsbane: CharacterCard = {
-  id: "njm",
-  cardType: "character",
-  name: "Beast",
-  version: "Wolfsbane",
-  fullName: "Beast - Wolfsbane",
-  inkType: ["emerald"],
-  franchise: "Disney",
-  set: "001",
-  text: "**Rush** _(This character can challenge the turn they",
-  cost: 5,
-  strength: 4,
-  willpower: 4,
-  lore: 2,
+  abilities: [],
   cardNumber: 70,
-  inkable: true,
+  cardType: "character",
+  classifications: ["Hero", "Dreamborn", "Prince"],
+  cost: 5,
   externalIds: {
     ravensburger: "",
   },
-  abilities: [],
-  classifications: ["Hero", "Dreamborn", "Prince"],
+  franchise: "Disney",
+  fullName: "Beast - Wolfsbane",
+  id: "njm",
+  inkType: ["emerald"],
+  inkable: true,
+  lore: 2,
+  name: "Beast",
+  set: "001",
+  strength: 4,
+  text: "**Rush** _(This character can challenge the turn they",
+  version: "Wolfsbane",
+  willpower: 4,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { rushAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import { rushAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const beastWolfbane: LorcanitoCharacterCard = {
-//   id: "njm",
-//   name: "Beast",
-//   title: "Wolfsbane",
-//   characteristics: ["hero", "dreamborn", "prince"],
-//   text: "**Rush** _(This character can challenge the turn they're played.)_\n**Roar** When you play this character, exert all opposing damaged characters.",
-//   type: "character",
-//   abilities: [
-//     whenYouPlayThisCharAbility({
-//       type: "resolution",
-//       name: "ROAR",
-//       text: "When you play this character, exert all opposing damaged characters.",
-//       effects: [
+// Export const beastWolfbane: LorcanitoCharacterCard = {
+//   Id: "njm",
+//   Name: "Beast",
+//   Title: "Wolfsbane",
+//   Characteristics: ["hero", "dreamborn", "prince"],
+//   Text: "**Rush** _(This character can challenge the turn they're played.)_\n**Roar** When you play this character, exert all opposing damaged characters.",
+//   Type: "character",
+//   Abilities: [
+//     WhenYouPlayThisCharAbility({
+//       Type: "resolution",
+//       Name: "ROAR",
+//       Text: "When you play this character, exert all opposing damaged characters.",
+//       Effects: [
 //         {
-//           type: "exert",
-//           exert: true,
-//           target: {
-//             type: "card",
-//             value: "all",
-//             filters: [
+//           Type: "exert",
+//           Exert: true,
+//           Target: {
+//             Type: "card",
+//             Value: "all",
+//             Filters: [
 //               {
-//                 filter: "status",
-//                 value: "damage",
-//                 comparison: { operator: "gte", value: 1 },
+//                 Filter: "status",
+//                 Value: "damage",
+//                 Comparison: { operator: "gte", value: 1 },
 //               },
 //               { filter: "owner", value: "opponent" },
 //               { filter: "type", value: "character" },
@@ -60,20 +60,20 @@ export const beastWolfsbane: CharacterCard = {
 //         },
 //       ],
 //     }),
-//     rushAbility,
+//     RushAbility,
 //   ],
-//   flavour: "I'll take on all of you if I have to!",
-//   colors: ["emerald"],
-//   cost: 5,
-//   strength: 4,
-//   willpower: 4,
-//   lore: 2,
-//   illustrator: "Jeff Murchie",
-//   number: 70,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 501404,
+//   Flavour: "I'll take on all of you if I have to!",
+//   Colors: ["emerald"],
+//   Cost: 5,
+//   Strength: 4,
+//   Willpower: 4,
+//   Lore: 2,
+//   Illustrator: "Jeff Murchie",
+//   Number: 70,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 501404,
 //   },
-//   rarity: "legendary",
+//   Rarity: "legendary",
 // };
 //

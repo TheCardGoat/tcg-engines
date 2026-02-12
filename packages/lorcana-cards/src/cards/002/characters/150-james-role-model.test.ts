@@ -3,40 +3,40 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   goofyKnightForADay,
-//   jamesRoleModel,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   GoofyKnightForADay,
+//   JamesRoleModel,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("James - Role Model", () => {
-//   it("**NEVER, EVER LOSE SIGHT** When this character is banished, you may put this card into your inkwell facedown and exerted.", () => {
-//     const testStore = new TestStore(
+// Describe("James - Role Model", () => {
+//   It("**NEVER, EVER LOSE SIGHT** When this character is banished, you may put this card into your inkwell facedown and exerted.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         play: [jamesRoleModel],
+//         Play: [jamesRoleModel],
 //       },
 //       {
-//         play: [goofyKnightForADay],
+//         Play: [goofyKnightForADay],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId("play", jamesRoleModel.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("play", jamesRoleModel.id);
 //
-//     cardUnderTest.updateCardMeta({ exerted: true });
-//     const attacker = testStore.getByZoneAndId(
+//     CardUnderTest.updateCardMeta({ exerted: true });
+//     Const attacker = testStore.getByZoneAndId(
 //       "play",
-//       goofyKnightForADay.id,
+//       GoofyKnightForADay.id,
 //       "player_two",
 //     );
 //
-//     attacker.challenge(cardUnderTest);
+//     Attacker.challenge(cardUnderTest);
 //
-//     testStore.resolveOptionalAbility();
+//     TestStore.resolveOptionalAbility();
 //
-//     expect(cardUnderTest.zone).toEqual("inkwell");
-//     expect(cardUnderTest.ready).toEqual(false);
-//     expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
+//     Expect(cardUnderTest.zone).toEqual("inkwell");
+//     Expect(cardUnderTest.ready).toEqual(false);
+//     Expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
 //   });
 // });
 //

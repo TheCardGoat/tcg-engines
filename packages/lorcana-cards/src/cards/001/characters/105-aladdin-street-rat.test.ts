@@ -5,9 +5,9 @@ import { aladdinStreetRat } from "./105-aladdin-street-rat";
 describe("Aladdin - Street Rat", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [aladdinStreetRat] });
-  //   expect(testEngine.getCardModel(aladdinStreetRat).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [aladdinStreetRat] });
+  //   Expect(testEngine.getCardModel(aladdinStreetRat).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,28 +17,28 @@ describe("Aladdin - Street Rat", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { aladdinStreetRat } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { aladdinStreetRat } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Aladdin - Street Rat", () => {
-//   describe("**IMPROVISE** When you play this character each opponent loses 1 lore.", () => {
-//     it("Opponent loses lore", () => {
-//       const testStore = new TestStore({
-//         inkwell: aladdinStreetRat.cost,
-//         hand: [aladdinStreetRat],
+// Describe("Aladdin - Street Rat", () => {
+//   Describe("**IMPROVISE** When you play this character each opponent loses 1 lore.", () => {
+//     It("Opponent loses lore", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: aladdinStreetRat.cost,
+//         Hand: [aladdinStreetRat],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "hand",
-//         aladdinStreetRat.id,
+//         AladdinStreetRat.id,
 //       );
 //
-//       testStore.store.tableStore.getTable("player_two").lore = 5;
+//       TestStore.store.tableStore.getTable("player_two").lore = 5;
 //
-//       cardUnderTest.playFromHand();
+//       CardUnderTest.playFromHand();
 //
-//       expect(testStore.store.tableStore.getTable("player_two").lore).toBe(4);
+//       Expect(testStore.store.tableStore.getTable("player_two").lore).toBe(4);
 //     });
 //   });
 // });

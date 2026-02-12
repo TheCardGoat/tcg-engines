@@ -4,20 +4,20 @@ import {
   CHARACTER_TARGET_ENUMS,
   type CharacterTarget,
   type CharacterTargetEnum,
+  ITEM_TARGET_ENUMS,
+  type ItemTargetEnum,
+  LOCATION_TARGET_ENUMS,
+  type LocationTargetEnum,
+  type LorcanaCardTarget,
+  type LorcanaCharacterTarget,
   expandCharacterTarget,
   expandItemTarget,
   expandLocationTarget,
   expandTarget,
   generateTargetDescription,
   getTargetUIHints,
-  ITEM_TARGET_ENUMS,
-  type ItemTargetEnum,
   isCharacterEnum,
   isDSLTarget,
-  LOCATION_TARGET_ENUMS,
-  type LocationTargetEnum,
-  type LorcanaCardTarget,
-  type LorcanaCharacterTarget,
 } from "../index";
 
 describe("Targeting DSL", () => {
@@ -30,9 +30,9 @@ describe("Targeting DSL", () => {
 
     it("should detect DSL objects", () => {
       const dsl: LorcanaCardTarget = {
-        selector: "chosen",
-        count: 1,
         cardType: "character",
+        count: 1,
+        selector: "chosen",
       };
       expect(isDSLTarget(dsl)).toBe(true);
       expect(isDSLTarget("CHOSEN_CHARACTER")).toBe(false);
@@ -43,19 +43,19 @@ describe("Targeting DSL", () => {
     it("should expand SELF enum", () => {
       const expanded = expandCharacterTarget("SELF");
       expect(expanded).toMatchObject({
-        selector: "self",
         cardType: "character",
         context: { self: true },
+        selector: "self",
       });
     });
 
     it("should expand CHOSEN_CHARACTER enum", () => {
       const expanded = expandCharacterTarget("CHOSEN_CHARACTER");
       expect(expanded).toMatchObject({
-        selector: "chosen",
+        cardType: "character",
         count: 1,
         owner: "any",
-        cardType: "character",
+        selector: "chosen",
         zones: ["play"],
       });
     });
@@ -63,10 +63,10 @@ describe("Targeting DSL", () => {
     it("should expand CHOSEN_OPPOSING_CHARACTER enum", () => {
       const expanded = expandCharacterTarget("CHOSEN_OPPOSING_CHARACTER");
       expect(expanded).toMatchObject({
-        selector: "chosen",
+        cardType: "character",
         count: 1,
         owner: "opponent",
-        cardType: "character",
+        selector: "chosen",
         zones: ["play"],
       });
     });
@@ -74,10 +74,10 @@ describe("Targeting DSL", () => {
     it("should expand ALL_OPPOSING_CHARACTERS enum", () => {
       const expanded = expandCharacterTarget("ALL_OPPOSING_CHARACTERS");
       expect(expanded).toMatchObject({
-        selector: "all",
+        cardType: "character",
         count: "all",
         owner: "opponent",
-        cardType: "character",
+        selector: "all",
         zones: ["play"],
       });
     });
@@ -85,31 +85,31 @@ describe("Targeting DSL", () => {
     it("should expand CHOSEN_DAMAGED_CHARACTER enum", () => {
       const expanded = expandCharacterTarget("CHOSEN_DAMAGED_CHARACTER");
       expect(expanded).toMatchObject({
-        selector: "chosen",
-        count: 1,
-        owner: "any",
         cardType: "character",
-        zones: ["play"],
+        count: 1,
         filters: [{ type: "damaged" }],
+        owner: "any",
+        selector: "chosen",
+        zones: ["play"],
       });
     });
 
     it("should expand ANOTHER_CHOSEN_CHARACTER enum", () => {
       const expanded = expandCharacterTarget("ANOTHER_CHOSEN_CHARACTER");
       expect(expanded).toMatchObject({
-        selector: "chosen",
         count: 1,
         excludeSelf: true,
+        selector: "chosen",
       });
     });
 
     it("should return DSL object unchanged", () => {
       const dsl: CharacterTarget = {
-        selector: "chosen",
-        count: 2,
-        owner: "opponent",
         cardType: "character",
+        count: 2,
         filters: [{ type: "exerted" }],
+        owner: "opponent",
+        selector: "chosen",
       };
       const expanded = expandCharacterTarget(dsl);
       expect(expanded).toBe(dsl);
@@ -117,9 +117,7 @@ describe("Targeting DSL", () => {
 
     it("should expand all character enum values", () => {
       for (const enumValue of CHARACTER_TARGET_ENUMS) {
-        const expanded = expandCharacterTarget(
-          enumValue as CharacterTargetEnum,
-        );
+        const expanded = expandCharacterTarget(enumValue as CharacterTargetEnum);
         expect(expanded).toBeDefined();
         expect(expanded.cardType).toBe("character");
       }
@@ -130,10 +128,10 @@ describe("Targeting DSL", () => {
     it("should expand CHOSEN_ITEM enum", () => {
       const expanded = expandItemTarget("CHOSEN_ITEM");
       expect(expanded).toMatchObject({
-        selector: "chosen",
+        cardType: "item",
         count: 1,
         owner: "any",
-        cardType: "item",
+        selector: "chosen",
         zones: ["play"],
       });
     });
@@ -141,9 +139,9 @@ describe("Targeting DSL", () => {
     it("should expand THIS_ITEM enum", () => {
       const expanded = expandItemTarget("THIS_ITEM");
       expect(expanded).toMatchObject({
-        selector: "self",
         cardType: "item",
         context: { self: true },
+        selector: "self",
       });
     });
 
@@ -160,10 +158,10 @@ describe("Targeting DSL", () => {
     it("should expand CHOSEN_LOCATION enum", () => {
       const expanded = expandLocationTarget("CHOSEN_LOCATION");
       expect(expanded).toMatchObject({
-        selector: "chosen",
+        cardType: "location",
         count: 1,
         owner: "any",
-        cardType: "location",
+        selector: "chosen",
         zones: ["play"],
       });
     });
@@ -171,9 +169,9 @@ describe("Targeting DSL", () => {
     it("should expand THIS_LOCATION enum", () => {
       const expanded = expandLocationTarget("THIS_LOCATION");
       expect(expanded).toMatchObject({
-        selector: "self",
         cardType: "location",
         context: { self: true },
+        selector: "self",
       });
     });
 
@@ -217,9 +215,7 @@ describe("Targeting DSL", () => {
 
     it("should have complete ALL_TARGET_ENUMS", () => {
       expect(ALL_TARGET_ENUMS.size).toBe(
-        CHARACTER_TARGET_ENUMS.size +
-          ITEM_TARGET_ENUMS.size +
-          LOCATION_TARGET_ENUMS.size,
+        CHARACTER_TARGET_ENUMS.size + ITEM_TARGET_ENUMS.size + LOCATION_TARGET_ENUMS.size,
       );
     });
   });
@@ -258,14 +254,11 @@ describe("Target Description Generation", () => {
 
   it("should describe complex DSL with filters", () => {
     const dsl: LorcanaCharacterTarget = {
-      selector: "chosen",
-      count: 2,
-      owner: "opponent",
       cardType: "character",
-      filters: [
-        { type: "damaged" },
-        { type: "cost", comparison: "lte", value: 3 },
-      ],
+      count: 2,
+      filters: [{ type: "damaged" }, { comparison: "lte", type: "cost", value: 3 }],
+      owner: "opponent",
+      selector: "chosen",
     };
     const desc = generateTargetDescription(dsl);
     expect(desc).toContain("opposing");
@@ -276,10 +269,10 @@ describe("Target Description Generation", () => {
 
   it("should describe DSL with keyword filter", () => {
     const dsl: LorcanaCharacterTarget = {
-      selector: "all",
-      owner: "you",
       cardType: "character",
-      filters: [{ type: "has-keyword", keyword: "Evasive" }],
+      filters: [{ keyword: "Evasive", type: "has-keyword" }],
+      owner: "you",
+      selector: "all",
     };
     const desc = generateTargetDescription(dsl);
     expect(desc).toContain("your");
@@ -310,9 +303,9 @@ describe("Target UI Hints", () => {
 
   it("should generate multiple selection hints for up-to count", () => {
     const dsl: LorcanaCharacterTarget = {
-      selector: "chosen",
-      count: { upTo: 3 },
       cardType: "character",
+      count: { upTo: 3 },
+      selector: "chosen",
     };
     const hints = getTargetUIHints(dsl);
     expect(hints.selectionType).toBe("multiple");
@@ -340,15 +333,12 @@ describe("Target UI Hints", () => {
 describe("Complex DSL Creation", () => {
   it("should create complex character target", () => {
     const target: LorcanaCardTarget = {
-      selector: "chosen",
-      count: { upTo: 2 },
-      owner: "opponent",
       cardType: "character",
+      count: { upTo: 2 },
+      filters: [{ type: "damaged" }, { comparison: "lte", type: "strength", value: 3 }],
+      owner: "opponent",
+      selector: "chosen",
       zones: ["play"],
-      filters: [
-        { type: "damaged" },
-        { type: "strength", comparison: "lte", value: 3 },
-      ],
     };
 
     expect(target.selector).toBe("chosen");
@@ -358,12 +348,12 @@ describe("Complex DSL Creation", () => {
 
   it("should create target with context reference", () => {
     const target: LorcanaCardTarget = {
-      selector: "self",
       cardType: "character",
       context: {
         self: true,
         triggerSource: false,
       },
+      selector: "self",
     };
 
     expect(target.context?.self).toBe(true);
@@ -371,14 +361,14 @@ describe("Complex DSL Creation", () => {
 
   it("should create target with composite filters", () => {
     const target: LorcanaCardTarget = {
-      selector: "all",
       cardType: "character",
       filters: [
         {
-          type: "or",
           filters: [{ type: "damaged" }, { type: "exerted" }],
+          type: "or",
         },
       ],
+      selector: "all",
     };
 
     expect(target.filters?.[0].type).toBe("or");

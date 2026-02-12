@@ -5,9 +5,9 @@ import { fryingPan } from "./202-frying-pan";
 describe("Frying Pan - undefined", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [fryingPan] });
-  //   expect(testEngine.getCardModel(fryingPan).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [fryingPan] });
+  //   Expect(testEngine.getCardModel(fryingPan).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,44 +17,44 @@ describe("Frying Pan - undefined", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   heiheiBoatSnack,
-//   teKaTheBurningOne,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   HeiheiBoatSnack,
+//   TeKaTheBurningOne,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { fryingPan } from "@lorcanito/lorcana-engine/cards/001/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { fryingPan } from "@lorcanito/lorcana-engine/cards/001/items/items";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Frying Pan", () => {
-//   it("**CLANG!** Banish this item - Chosen character can't challenge during their next turn.", () => {
-//     const testStore = new TestStore(
+// Describe("Frying Pan", () => {
+//   It("**CLANG!** Banish this item - Chosen character can't challenge during their next turn.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         play: [fryingPan, heiheiBoatSnack],
+//         Play: [fryingPan, heiheiBoatSnack],
 //       },
 //       {
-//         play: [teKaTheBurningOne],
+//         Play: [teKaTheBurningOne],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId("play", fryingPan.id);
-//     const attacker = testStore.getByZoneAndId("play", heiheiBoatSnack.id);
-//     const defender = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId("play", fryingPan.id);
+//     Const attacker = testStore.getByZoneAndId("play", heiheiBoatSnack.id);
+//     Const defender = testStore.getByZoneAndId(
 //       "play",
-//       teKaTheBurningOne.id,
+//       TeKaTheBurningOne.id,
 //       "player_two",
 //     );
 //
-//     defender.updateCardMeta({ exerted: true });
+//     Defender.updateCardMeta({ exerted: true });
 //
-//     cardUnderTest.activate();
+//     CardUnderTest.activate();
 //
-//     testStore.resolveTopOfStack({ targetId: attacker.instanceId });
+//     TestStore.resolveTopOfStack({ targetId: attacker.instanceId });
 //
-//     expect(attacker.canChallenge(defender)).toEqual(false);
+//     Expect(attacker.canChallenge(defender)).toEqual(false);
 //
-//     expect(defender.meta.damage).toBeFalsy();
-//     expect(attacker.meta.damage).toBeFalsy();
-//     expect(attacker.ready).toBeTruthy();
+//     Expect(defender.meta.damage).toBeFalsy();
+//     Expect(attacker.meta.damage).toBeFalsy();
+//     Expect(attacker.ready).toBeTruthy();
 //   });
 // });
 //

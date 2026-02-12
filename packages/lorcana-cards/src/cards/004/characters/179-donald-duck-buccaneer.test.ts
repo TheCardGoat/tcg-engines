@@ -3,97 +3,97 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   heiheiBoatSnack,
-//   mauiHeroToAll,
-//   moanaOfMotunui,
-//   teKaHeartless,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   HeiheiBoatSnack,
+//   MauiHeroToAll,
+//   MoanaOfMotunui,
+//   TeKaHeartless,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { donaldDuckBuccaneer } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { donaldDuckBuccaneer } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Donald Duck - Buccaneer", () => {
-//   describe("**BOARDING PARTY** During your turn, whenever this character banishes another character in a challenge, your other characters get +1 {L} this turn.", () => {
-//     it("should deal two damage", async () => {
-//       const otherCharacters = [moanaOfMotunui, mauiHeroToAll];
-//       const testStore = new TestEngine(
+// Describe("Donald Duck - Buccaneer", () => {
+//   Describe("**BOARDING PARTY** During your turn, whenever this character banishes another character in a challenge, your other characters get +1 {L} this turn.", () => {
+//     It("should deal two damage", async () => {
+//       Const otherCharacters = [moanaOfMotunui, mauiHeroToAll];
+//       Const testStore = new TestEngine(
 //         {
-//           play: [donaldDuckBuccaneer, ...otherCharacters],
+//           Play: [donaldDuckBuccaneer, ...otherCharacters],
 //         },
 //         {
-//           play: [heiheiBoatSnack],
+//           Play: [heiheiBoatSnack],
 //         },
 //       );
 //
-//       await testStore.challenge({
-//         attacker: donaldDuckBuccaneer,
-//         defender: heiheiBoatSnack,
-//         exertDefender: true,
+//       Await testStore.challenge({
+//         Attacker: donaldDuckBuccaneer,
+//         Defender: heiheiBoatSnack,
+//         ExertDefender: true,
 //       });
 //
-//       expect(testStore.stackLayers).toHaveLength(0);
-//       for (const character of otherCharacters) {
-//         expect(testStore.getCardModel(character).lore).toEqual(
-//           character.lore + 1,
+//       Expect(testStore.stackLayers).toHaveLength(0);
+//       For (const character of otherCharacters) {
+//         Expect(testStore.getCardModel(character).lore).toEqual(
+//           Character.lore + 1,
 //         );
 //       }
 //     });
 //
-//     it("opponent's don't get the bonus", () => {
-//       const otherCharacters = [moanaOfMotunui, mauiHeroToAll];
-//       const testStore = new TestStore(
+//     It("opponent's don't get the bonus", () => {
+//       Const otherCharacters = [moanaOfMotunui, mauiHeroToAll];
+//       Const testStore = new TestStore(
 //         {
-//           play: [donaldDuckBuccaneer, ...otherCharacters],
+//           Play: [donaldDuckBuccaneer, ...otherCharacters],
 //         },
 //         {
-//           play: [heiheiBoatSnack, teKaHeartless],
+//           Play: [heiheiBoatSnack, teKaHeartless],
 //         },
 //       );
 //
-//       const attacker = testStore.getByZoneAndId("play", donaldDuckBuccaneer.id);
-//       const defender = testStore.getByZoneAndId(
+//       Const attacker = testStore.getByZoneAndId("play", donaldDuckBuccaneer.id);
+//       Const defender = testStore.getByZoneAndId(
 //         "play",
-//         heiheiBoatSnack.id,
+//         HeiheiBoatSnack.id,
 //         "player_two",
 //       );
 //
-//       defender.updateCardMeta({ exerted: true });
+//       Defender.updateCardMeta({ exerted: true });
 //
-//       attacker.challenge(defender);
+//       Attacker.challenge(defender);
 //
-//       const card = testStore.getByZoneAndId(
+//       Const card = testStore.getByZoneAndId(
 //         "play",
-//         teKaHeartless.id,
+//         TeKaHeartless.id,
 //         "player_two",
 //       );
 //
-//       expect(card.lore).not.toEqual((card.lorcanitoCard?.lore || 0) + 1);
+//       Expect(card.lore).not.toEqual((card.lorcanitoCard?.lore || 0) + 1);
 //     });
 //
-//     it("Mulan itself doesn't get the bonus", () => {
-//       const testStore = new TestStore(
+//     It("Mulan itself doesn't get the bonus", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [donaldDuckBuccaneer],
+//           Play: [donaldDuckBuccaneer],
 //         },
 //         {
-//           play: [heiheiBoatSnack, teKaHeartless],
+//           Play: [heiheiBoatSnack, teKaHeartless],
 //         },
 //       );
 //
-//       const attacker = testStore.getByZoneAndId("play", donaldDuckBuccaneer.id);
-//       const defender = testStore.getByZoneAndId(
+//       Const attacker = testStore.getByZoneAndId("play", donaldDuckBuccaneer.id);
+//       Const defender = testStore.getByZoneAndId(
 //         "play",
-//         heiheiBoatSnack.id,
+//         HeiheiBoatSnack.id,
 //         "player_two",
 //       );
 //
-//       defender.updateCardMeta({ exerted: true });
+//       Defender.updateCardMeta({ exerted: true });
 //
-//       attacker.challenge(defender);
+//       Attacker.challenge(defender);
 //
-//       expect(attacker.lore).not.toEqual(
+//       Expect(attacker.lore).not.toEqual(
 //         (attacker.lorcanitoCard?.lore || 0) + 1,
 //       );
 //     });

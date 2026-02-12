@@ -3,48 +3,48 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   beastAggressiveLord,
-//   goliathGuardianOfCastleWyvern,
-//   ichabodCraneBookishSchoolmaster,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   BeastAggressiveLord,
+//   GoliathGuardianOfCastleWyvern,
+//   IchabodCraneBookishSchoolmaster,
 // } from "@lorcanito/lorcana-engine/cards/010";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Ichabod Crane - Bookish Schoolmaster", () => {
-//   it("WELL-READ Whenever this character quests, if you've played a character with cost 5 or more this turn, put the top card of your deck into your inkwell facedown and exerted.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: goliathGuardianOfCastleWyvern.cost,
-//       play: [ichabodCraneBookishSchoolmaster],
-//       hand: [goliathGuardianOfCastleWyvern],
+// Describe("Ichabod Crane - Bookish Schoolmaster", () => {
+//   It("WELL-READ Whenever this character quests, if you've played a character with cost 5 or more this turn, put the top card of your deck into your inkwell facedown and exerted.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: goliathGuardianOfCastleWyvern.cost,
+//       Play: [ichabodCraneBookishSchoolmaster],
+//       Hand: [goliathGuardianOfCastleWyvern],
 //     });
 //
-//     await testEngine.playCard(goliathGuardianOfCastleWyvern);
+//     Await testEngine.playCard(goliathGuardianOfCastleWyvern);
 //
-//     expect(testEngine.getZonesCardCount("player_one").inkwell).toBe(
-//       goliathGuardianOfCastleWyvern.cost,
+//     Expect(testEngine.getZonesCardCount("player_one").inkwell).toBe(
+//       GoliathGuardianOfCastleWyvern.cost,
 //     );
-//     await testEngine.questCard(ichabodCraneBookishSchoolmaster);
-//     expect(testEngine.getZonesCardCount("player_one").inkwell).toBe(
-//       goliathGuardianOfCastleWyvern.cost + 1,
+//     Await testEngine.questCard(ichabodCraneBookishSchoolmaster);
+//     Expect(testEngine.getZonesCardCount("player_one").inkwell).toBe(
+//       GoliathGuardianOfCastleWyvern.cost + 1,
 //     );
 //   });
 //
-//   it("Do not trigger when char with less than 5 str is played", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: beastAggressiveLord.cost,
-//       play: [ichabodCraneBookishSchoolmaster],
-//       hand: [beastAggressiveLord],
+//   It("Do not trigger when char with less than 5 str is played", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: beastAggressiveLord.cost,
+//       Play: [ichabodCraneBookishSchoolmaster],
+//       Hand: [beastAggressiveLord],
 //     });
 //
-//     await testEngine.playCard(beastAggressiveLord);
+//     Await testEngine.playCard(beastAggressiveLord);
 //
-//     expect(testEngine.getZonesCardCount("player_one").inkwell).toBe(
-//       beastAggressiveLord.cost,
+//     Expect(testEngine.getZonesCardCount("player_one").inkwell).toBe(
+//       BeastAggressiveLord.cost,
 //     );
-//     await testEngine.questCard(ichabodCraneBookishSchoolmaster);
-//     expect(testEngine.getZonesCardCount("player_one").inkwell).toBe(
-//       beastAggressiveLord.cost,
+//     Await testEngine.questCard(ichabodCraneBookishSchoolmaster);
+//     Expect(testEngine.getZonesCardCount("player_one").inkwell).toBe(
+//       BeastAggressiveLord.cost,
 //     );
 //   });
 // });

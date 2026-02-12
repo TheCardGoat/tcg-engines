@@ -1,45 +1,45 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { yourOtherCharactersGet } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { yourOtherCharacters } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { yourOtherCharactersGet } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import { yourOtherCharacters } from "@lorcanito/lorcana-engine/abilities/targets";
 //
-// export const lumiereFieryFriend: LorcanitoCharacterCard = {
-//   id: "tok",
-//   reprints: ["bk1"],
-//   name: "Lumiere",
-//   title: "Fiery Friend",
-//   characteristics: ["dreamborn", "ally"],
-//   text: "**FERVENT ADDRESS** Your other characters get +1 {S}.",
-//   type: "character",
-//   abilities: [
-//     yourOtherCharactersGet({
-//       name: "Fervent Address",
-//       text: "Your other characters get +1 {S}.",
-//       effects: [
+// Export const lumiereFieryFriend: LorcanitoCharacterCard = {
+//   Id: "tok",
+//   Reprints: ["bk1"],
+//   Name: "Lumiere",
+//   Title: "Fiery Friend",
+//   Characteristics: ["dreamborn", "ally"],
+//   Text: "**FERVENT ADDRESS** Your other characters get +1 {S}.",
+//   Type: "character",
+//   Abilities: [
+//     YourOtherCharactersGet({
+//       Name: "Fervent Address",
+//       Text: "Your other characters get +1 {S}.",
+//       Effects: [
 //         {
-//           type: "attribute",
-//           attribute: "strength",
-//           amount: 1,
-//           modifier: "add",
-//           target: yourOtherCharacters,
+//           Type: "attribute",
+//           Attribute: "strength",
+//           Amount: 1,
+//           Modifier: "add",
+//           Target: yourOtherCharacters,
 //         },
 //       ],
 //     }),
 //   ],
-//   flavour:
+//   Flavour:
 //     "The invaders are at our gates, mes amis! It's time to show them what we're made of.",
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 2,
-//   strength: 2,
-//   willpower: 2,
-//   lore: 1,
-//   illustrator: "Valentin Palombo",
-//   number: 113,
-//   set: "URR",
-//   externalIds: {
-//     tcgPlayer: 549541,
+//   Inkwell: true,
+//   Colors: ["ruby"],
+//   Cost: 2,
+//   Strength: 2,
+//   Willpower: 2,
+//   Lore: 1,
+//   Illustrator: "Valentin Palombo",
+//   Number: 113,
+//   Set: "URR",
+//   ExternalIds: {
+//     TcgPlayer: 549541,
 //   },
-//   rarity: "rare",
+//   Rarity: "rare",
 // };
 //

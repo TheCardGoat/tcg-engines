@@ -3,86 +3,86 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { liloGalacticHero } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { madamMimElephant } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { liloGalacticHero } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { madamMimElephant } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Madam Mim - Elephant", () => {
-//   it.skip("**A LITTLE GAME** When you play this character, banish her or return another chosen character of yours to your hand.", () => {
-//     const testStore = new TestStore({
-//       inkwell: madamMimElephant.cost,
-//       hand: [madamMimElephant],
+// Describe("Madam Mim - Elephant", () => {
+//   It.skip("**A LITTLE GAME** When you play this character, banish her or return another chosen character of yours to your hand.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: madamMimElephant.cost,
+//       Hand: [madamMimElephant],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(madamMimElephant);
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     Const cardUnderTest = testStore.getCard(madamMimElephant);
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 //
-//   describe("**SNEAKY MOVE** At the start of your turn, you may move up to 2 damage counters from this character to chosen opposing character.", () => {
-//     it("Moves 1 damage counters from Madam Mim to Lilo", () => {
-//       const testStore = new TestStore(
+//   Describe("**SNEAKY MOVE** At the start of your turn, you may move up to 2 damage counters from this character to chosen opposing character.", () => {
+//     It("Moves 1 damage counters from Madam Mim to Lilo", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [liloGalacticHero],
+//           Play: [liloGalacticHero],
 //         },
 //         {
-//           play: [madamMimElephant],
-//           deck: 1,
+//           Play: [madamMimElephant],
+//           Deck: 1,
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getCard(madamMimElephant);
-//       const targetCard = testStore.getCard(liloGalacticHero);
-//       cardUnderTest.updateCardDamage(1);
+//       Const cardUnderTest = testStore.getCard(madamMimElephant);
+//       Const targetCard = testStore.getCard(liloGalacticHero);
+//       CardUnderTest.updateCardDamage(1);
 //
-//       testStore.passTurn();
+//       TestStore.passTurn();
 //
-//       testStore.changePlayer("player_two");
-//       testStore.resolveOptionalAbility();
-//       testStore.resolveTopOfStack({ targets: [targetCard] });
+//       TestStore.changePlayer("player_two");
+//       TestStore.resolveOptionalAbility();
+//       TestStore.resolveTopOfStack({ targets: [targetCard] });
 //
-//       expect(cardUnderTest.damage).toBe(0);
-//       expect(targetCard.damage).toBe(1);
+//       Expect(cardUnderTest.damage).toBe(0);
+//       Expect(targetCard.damage).toBe(1);
 //     });
 //   });
 // });
 //
-// describe("Regression test", () => {
-//   it("Doesn't trigger effect when there's no card to move damage to", () => {
-//     const testStore = new TestStore(
+// Describe("Regression test", () => {
+//   It("Doesn't trigger effect when there's no card to move damage to", () => {
+//     Const testStore = new TestStore(
 //       {
-//         play: [madamMimElephant],
-//         deck: 2,
+//         Play: [madamMimElephant],
+//         Deck: 2,
 //       },
 //       {
-//         deck: 2,
+//         Deck: 2,
 //       },
 //     );
 //
-//     testStore.passTurn();
-//     testStore.passTurn();
+//     TestStore.passTurn();
+//     TestStore.passTurn();
 //
-//     expect(testStore.stackLayers).toHaveLength(0);
+//     Expect(testStore.stackLayers).toHaveLength(0);
 //   });
 //
-//   it("Doesn't trigger effect when there's no damage", () => {
-//     const testStore = new TestStore(
+//   It("Doesn't trigger effect when there's no damage", () => {
+//     Const testStore = new TestStore(
 //       {
-//         play: [madamMimElephant],
-//         deck: 2,
+//         Play: [madamMimElephant],
+//         Deck: 2,
 //       },
 //       {
-//         deck: 2,
-//         play: [liloGalacticHero],
+//         Deck: 2,
+//         Play: [liloGalacticHero],
 //       },
 //     );
 //
-//     testStore.passTurn();
-//     testStore.passTurn();
+//     TestStore.passTurn();
+//     TestStore.passTurn();
 //
-//     expect(testStore.stackLayers).toHaveLength(0);
+//     Expect(testStore.stackLayers).toHaveLength(0);
 //   });
 // });
 //

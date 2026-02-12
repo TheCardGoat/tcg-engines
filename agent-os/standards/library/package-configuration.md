@@ -60,8 +60,8 @@ alwaysApply: true
 ## Build Scripts
 - **typecheck/check-types**: Verify TypeScript types without emitting (e.g., `tsc --noEmit`)
 - **test**: Run full test suite
-- **lint**: Run linter for code quality (e.g., `biome lint`)
-- **format**: Format code consistently (e.g., `biome format`)
+- **lint**: Run linter for code quality (e.g., `oxlint --fix`)
+- **format**: Format code consistently (e.g., `oxfmt --write`)
 - **check**: Run all quality checks (format, lint, typecheck, test) - often orchestrated by turborepo
 - **build**: Only include if package requires compilation (optional for direct source consumption)
 
@@ -75,7 +75,7 @@ alwaysApply: true
 ## Monorepo Specific Fields
 - **Workspace Protocol**: Use `workspace:*` for all internal dependencies
 - **Consistent Versioning**: Keep version consistent (e.g., all packages at "1.0.0")
-- **Shared Configuration**: Reference shared configs (tsconfig, biome, etc.) from root
+- **Shared Configuration**: Reference shared configs (tsconfig, oxfmt/oxlint, etc.) from root
 - **No Publishing Config**: Remove publishConfig, prepack hooks, and npm-specific fields
 - **Internal Only**: Mark clearly that package is for internal consumption
 
@@ -100,8 +100,8 @@ alwaysApply: true
   },
   "scripts": {
     "check-types": "tsc --noEmit",
-    "format": "biome format --write ./src",
-    "lint": "biome lint --fix ./src",
+    "format": "oxfmt --write ./src",
+    "lint": "oxlint --fix ./src",
     "test": "bun test",
     "check": "turbo format lint check-types test"
   },
@@ -110,7 +110,6 @@ alwaysApply: true
     "@tanstack/store": "0.7.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.0.4",
     "@types/bun": "1.2.14",
     "typescript": "5.8.3"
   },

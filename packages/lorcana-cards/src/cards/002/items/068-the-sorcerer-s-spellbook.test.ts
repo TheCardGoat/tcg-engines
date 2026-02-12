@@ -3,26 +3,26 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { theSorcerersSpellbook } from "@lorcanito/lorcana-engine/cards/002/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { theSorcerersSpellbook } from "@lorcanito/lorcana-engine/cards/002/items/items";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("The Sorcerer's Spellbook", () => {
-//   it("**KNOWLEDGE** {E}, 1 {I} − Gain 1 lore.", () => {
-//     const testStore = new TestStore({
-//       inkwell: 1,
-//       play: [theSorcerersSpellbook],
+// Describe("The Sorcerer's Spellbook", () => {
+//   It("**KNOWLEDGE** {E}, 1 {I} − Gain 1 lore.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: 1,
+//       Play: [theSorcerersSpellbook],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       theSorcerersSpellbook.id,
+//       TheSorcerersSpellbook.id,
 //     );
 //
-//     cardUnderTest.activate();
+//     CardUnderTest.activate();
 //
-//     expect(testStore.getPlayerLore()).toEqual(1);
-//     expect(cardUnderTest.ready).toEqual(false);
+//     Expect(testStore.getPlayerLore()).toEqual(1);
+//     Expect(cardUnderTest.ready).toEqual(false);
 //   });
 // });
 //

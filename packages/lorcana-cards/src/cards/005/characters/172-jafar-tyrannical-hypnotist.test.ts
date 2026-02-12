@@ -3,35 +3,35 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { jafarTyrannicalHypnotist } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { jafarTyrannicalHypnotist } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Jafar - Tyrannical Hypnotist", () => {
-//   it.skip("", () => {
-//     const testStore = new TestStore({
-//       inkwell: jafarTyrannicalHypnotist.cost,
-//       play: [jafarTyrannicalHypnotist],
+// Describe("Jafar - Tyrannical Hypnotist", () => {
+//   It.skip("", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: jafarTyrannicalHypnotist.cost,
+//       Play: [jafarTyrannicalHypnotist],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(jafarTyrannicalHypnotist);
+//     Const cardUnderTest = testStore.getCard(jafarTyrannicalHypnotist);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 //
-//   it.skip("Intimidating Gaze", () => {
-//     const testStore = new TestStore({
-//       inkwell: jafarTyrannicalHypnotist.cost,
-//       play: [jafarTyrannicalHypnotist],
+//   It.skip("Intimidating Gaze", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: jafarTyrannicalHypnotist.cost,
+//       Play: [jafarTyrannicalHypnotist],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(jafarTyrannicalHypnotist);
+//     Const cardUnderTest = testStore.getCard(jafarTyrannicalHypnotist);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

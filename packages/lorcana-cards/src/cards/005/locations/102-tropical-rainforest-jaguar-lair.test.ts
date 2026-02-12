@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { tropicalRainforestJaguarLair } from "@lorcanito/lorcana-engine/cards/005/locations/locations";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { tropicalRainforestJaguarLair } from "@lorcanito/lorcana-engine/cards/005/locations/locations";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Tropical Rainforest - Jaguar Lair", () => {
-//   it.skip("**SNACK TIME** Opposing damaged characters gain **Reckless**. _(They can’t quest and must challenge if able.)_", () => {
-//     const testStore = new TestStore({
-//       inkwell: tropicalRainforestJaguarLair.cost,
-//       play: [tropicalRainforestJaguarLair],
+// Describe("Tropical Rainforest - Jaguar Lair", () => {
+//   It.skip("**SNACK TIME** Opposing damaged characters gain **Reckless**. _(They can’t quest and must challenge if able.)_", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: tropicalRainforestJaguarLair.cost,
+//       Play: [tropicalRainforestJaguarLair],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(tropicalRainforestJaguarLair);
+//     Const cardUnderTest = testStore.getCard(tropicalRainforestJaguarLair);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

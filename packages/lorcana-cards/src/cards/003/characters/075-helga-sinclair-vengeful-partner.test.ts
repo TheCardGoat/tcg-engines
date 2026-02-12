@@ -3,25 +3,25 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { helgaSinclairVengefulPartner } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { helgaSinclairVengefulPartner } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Helga Sinclair - Vengeful Partner", () => {
-//   it.skip("**NOTHING PERSONAL** When this character is challenged and banished, banish the challenging character.", () => {
-//     const testStore = new TestStore({
-//       inkwell: helgaSinclairVengefulPartner.cost,
-//       play: [helgaSinclairVengefulPartner],
+// Describe("Helga Sinclair - Vengeful Partner", () => {
+//   It.skip("**NOTHING PERSONAL** When this character is challenged and banished, banish the challenging character.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: helgaSinclairVengefulPartner.cost,
+//       Play: [helgaSinclairVengefulPartner],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       helgaSinclairVengefulPartner.id,
+//       HelgaSinclairVengefulPartner.id,
 //     );
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

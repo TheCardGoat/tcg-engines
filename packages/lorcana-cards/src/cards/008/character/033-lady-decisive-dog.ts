@@ -1,58 +1,58 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
 //
-// import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 //
-// import { wheneverYouPlayACharacter } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-// import { whileConditionThisCharacterGets } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
-// import { thisCharacterGetsStrength } from "@lorcanito/lorcana-engine/effects/effects";
+// Import { wheneverYouPlayACharacter } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// Import { whileConditionThisCharacterGets } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
+// Import { thisCharacterGetsStrength } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const ladyDecisiveDog: LorcanitoCharacterCard = {
-//   id: "ed3",
-//   name: "Lady",
-//   title: "Decisive Dog",
-//   characteristics: ["storyborn", "hero"],
-//   text: "PACK OF HER OWN Whenever you play a character, this character gets +1 {S} this turn.\nTAKE THE LEAD While this character has 3 {S} or more, she gets +2 {L}.",
-//   type: "character",
-//   abilities: [
-//     wheneverYouPlayACharacter({
-//       name: "PACK OF HER OWN",
-//       text: "Whenever you play a character, this character gets +1 {S} this turn.",
-//       effects: [thisCharacterGetsStrength(1)],
+// Export const ladyDecisiveDog: LorcanitoCharacterCard = {
+//   Id: "ed3",
+//   Name: "Lady",
+//   Title: "Decisive Dog",
+//   Characteristics: ["storyborn", "hero"],
+//   Text: "PACK OF HER OWN Whenever you play a character, this character gets +1 {S} this turn.\nTAKE THE LEAD While this character has 3 {S} or more, she gets +2 {L}.",
+//   Type: "character",
+//   Abilities: [
+//     WheneverYouPlayACharacter({
+//       Name: "PACK OF HER OWN",
+//       Text: "Whenever you play a character, this character gets +1 {S} this turn.",
+//       Effects: [thisCharacterGetsStrength(1)],
 //     }),
-//     whileConditionThisCharacterGets({
-//       name: "TAKE THE LEAD",
-//       text: "While this character has 3 {S} or more, she gets +2 {L}.",
-//       conditions: [
+//     WhileConditionThisCharacterGets({
+//       Name: "TAKE THE LEAD",
+//       Text: "While this character has 3 {S} or more, she gets +2 {L}.",
+//       Conditions: [
 //         {
-//           type: "attribute",
-//           attribute: "strength",
-//           comparison: { operator: "gte", value: 3 },
+//           Type: "attribute",
+//           Attribute: "strength",
+//           Comparison: { operator: "gte", value: 3 },
 //         },
 //       ],
-//       effects: [
+//       Effects: [
 //         {
-//           type: "attribute" as const,
-//           attribute: "lore" as const,
-//           amount: 2,
-//           modifier: "add" as const,
-//           target: thisCharacter,
+//           Type: "attribute" as const,
+//           Attribute: "lore" as const,
+//           Amount: 2,
+//           Modifier: "add" as const,
+//           Target: thisCharacter,
 //         },
 //       ],
 //     }),
 //   ],
-//   inkwell: true,
-//   colors: ["amber", "emerald"],
-//   cost: 1,
-//   strength: 0,
-//   willpower: 3,
-//   illustrator: "Therese Vildefall",
-//   number: 33,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631373,
+//   Inkwell: true,
+//   Colors: ["amber", "emerald"],
+//   Cost: 1,
+//   Strength: 0,
+//   Willpower: 3,
+//   Illustrator: "Therese Vildefall",
+//   Number: 33,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631373,
 //   },
-//   rarity: "rare",
-//   lore: 1,
+//   Rarity: "rare",
+//   Lore: 1,
 // };
 //

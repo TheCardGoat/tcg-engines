@@ -3,51 +3,51 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   namaariMorningMist,
-//   robinHoodCapableFighter,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   NamaariMorningMist,
+//   RobinHoodCapableFighter,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Namaari- Morning Mist", () => {
-//   it("Bodyguard", () => {
-//     const testStore = new TestStore({
-//       hand: [namaariMorningMist],
+// Describe("Namaari- Morning Mist", () => {
+//   It("Bodyguard", () => {
+//     Const testStore = new TestStore({
+//       Hand: [namaariMorningMist],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "hand",
-//       namaariMorningMist.id,
+//       NamaariMorningMist.id,
 //     );
 //
-//     expect(cardUnderTest.hasBodyguard).toBe(true);
+//     Expect(cardUnderTest.hasBodyguard).toBe(true);
 //   });
 //
-//   it("**BLADES** This character can challenge ready characters.", () => {
-//     const testStore = new TestStore(
+//   It("**BLADES** This character can challenge ready characters.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         play: [namaariMorningMist],
+//         Play: [namaariMorningMist],
 //       },
 //       { play: [robinHoodCapableFighter] },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       namaariMorningMist.id,
+//       NamaariMorningMist.id,
 //     );
-//     const defender = testStore.getByZoneAndId(
+//     Const defender = testStore.getByZoneAndId(
 //       "play",
-//       robinHoodCapableFighter.id,
+//       RobinHoodCapableFighter.id,
 //       "player_two",
 //     );
 //
-//     expect(cardUnderTest.canChallenge(defender)).toBe(true);
+//     Expect(cardUnderTest.canChallenge(defender)).toBe(true);
 //
-//     cardUnderTest.challenge(defender);
+//     CardUnderTest.challenge(defender);
 //
-//     expect(cardUnderTest.ready).toBe(false);
-//     expect(cardUnderTest.meta.damage).toBe(defender.strength);
+//     Expect(cardUnderTest.ready).toBe(false);
+//     Expect(cardUnderTest.meta.damage).toBe(defender.strength);
 //   });
 // });
 //

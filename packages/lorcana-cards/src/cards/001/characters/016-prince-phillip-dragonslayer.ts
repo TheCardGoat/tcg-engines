@@ -1,35 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const princePhillipDragonslayer: CharacterCard = {
-  id: "152",
-  cardType: "character",
-  name: "Prince Phillip",
-  version: "Dragonslayer",
-  fullName: "Prince Phillip - Dragonslayer",
-  inkType: ["amber"],
-  franchise: "Sleeping Beauty",
-  set: "001",
-  text: "HEROISM When this character challenges and is banished, you may banish the challenged character.",
-  cost: 4,
-  strength: 3,
-  willpower: 3,
-  lore: 2,
-  cardNumber: 16,
-  inkable: false,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "9597388eb1ea9c907abbbf2dda9fea8216bc575b",
-  },
   abilities: [
     {
-      id: "152-1",
-      type: "triggered",
-      name: "HEROISM",
-      trigger: {
-        event: "challenge",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -44,8 +17,35 @@ export const princePhillipDragonslayer: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "152-1",
+      name: "HEROISM",
       text: "HEROISM When this character challenges and is banished, you may banish the challenged character.",
+      trigger: {
+        event: "challenge",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 16,
+  cardType: "character",
   classifications: ["Storyborn", "Hero", "Prince"],
+  cost: 4,
+  externalIds: {
+    ravensburger: "9597388eb1ea9c907abbbf2dda9fea8216bc575b",
+  },
+  franchise: "Sleeping Beauty",
+  fullName: "Prince Phillip - Dragonslayer",
+  id: "152",
+  inkType: ["amber"],
+  inkable: false,
+  lore: 2,
+  missingTests: true,
+  name: "Prince Phillip",
+  set: "001",
+  strength: 3,
+  text: "HEROISM When this character challenges and is banished, you may banish the challenged character.",
+  version: "Dragonslayer",
+  willpower: 3,
 };

@@ -1,39 +1,39 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
-// import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
+// Import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 //
-// export const healingDecanterItem: LorcanitoItemCard = {
-//   id: "t6p",
-//   missingTestCase: true,
-//   name: "Healing Decanter",
-//   characteristics: ["item"],
-//   text: "**RENEWING ESSENCE** {E} – Remove up to 2 damage from chosen character.",
-//   type: "item",
-//   abilities: [
+// Export const healingDecanterItem: LorcanitoItemCard = {
+//   Id: "t6p",
+//   MissingTestCase: true,
+//   Name: "Healing Decanter",
+//   Characteristics: ["item"],
+//   Text: "**RENEWING ESSENCE** {E} – Remove up to 2 damage from chosen character.",
+//   Type: "item",
+//   Abilities: [
 //     {
-//       type: "activated",
-//       costs: [{ type: "exert" }],
-//       name: "RENEWING ESSENCE",
-//       text: "{E} – Remove up to 2 damage from chosen character.",
-//       effects: [
+//       Type: "activated",
+//       Costs: [{ type: "exert" }],
+//       Name: "RENEWING ESSENCE",
+//       Text: "{E} – Remove up to 2 damage from chosen character.",
+//       Effects: [
 //         {
-//           type: "heal",
-//           amount: 2,
-//           upTo: true,
-//           target: chosenCharacter,
+//           Type: "heal",
+//           Amount: 2,
+//           UpTo: true,
+//           Target: chosenCharacter,
 //         },
 //       ],
 //     },
 //   ],
-//   inkwell: true,
-//   colors: ["amber"],
-//   cost: 2,
-//   illustrator: "Alex Accorsi",
-//   number: 30,
-//   set: "SSK",
-//   externalIds: {
-//     tcgPlayer: 560645,
+//   Inkwell: true,
+//   Colors: ["amber"],
+//   Cost: 2,
+//   Illustrator: "Alex Accorsi",
+//   Number: 30,
+//   Set: "SSK",
+//   ExternalIds: {
+//     TcgPlayer: 560645,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

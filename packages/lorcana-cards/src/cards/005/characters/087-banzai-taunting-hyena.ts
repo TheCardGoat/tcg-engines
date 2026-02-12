@@ -1,29 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const banzaiTauntingHyena: CharacterCard = {
-  id: "16q",
-  cardType: "character",
-  name: "Banzai",
-  version: "Taunting Hyena",
-  fullName: "Banzai - Taunting Hyena",
-  inkType: ["emerald"],
-  franchise: "Lion King",
-  set: "005",
-  text: "HERE KITTY, KITTY, KITTY When you play this character, you may exert chosen damaged character.",
-  cost: 2,
-  strength: 2,
-  willpower: 2,
-  lore: 1,
-  cardNumber: 87,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "99fe726d4ae141e3026532d3a15a14a8de9b72c6",
-  },
   abilities: [
     {
-      id: "16q-1",
-      type: "action",
       effect: {
         type: "optional",
         effect: {
@@ -38,8 +17,29 @@ export const banzaiTauntingHyena: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "16q-1",
       text: "HERE KITTY, KITTY, KITTY When you play this character, you may exert chosen damaged character.",
+      type: "action",
     },
   ],
+  cardNumber: 87,
+  cardType: "character",
   classifications: ["Storyborn", "Ally", "Hyena"],
+  cost: 2,
+  externalIds: {
+    ravensburger: "99fe726d4ae141e3026532d3a15a14a8de9b72c6",
+  },
+  franchise: "Lion King",
+  fullName: "Banzai - Taunting Hyena",
+  id: "16q",
+  inkType: ["emerald"],
+  inkable: true,
+  lore: 1,
+  missingTests: true,
+  name: "Banzai",
+  set: "005",
+  strength: 2,
+  text: "HERE KITTY, KITTY, KITTY When you play this character, you may exert chosen damaged character.",
+  version: "Taunting Hyena",
+  willpower: 2,
 };

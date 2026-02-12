@@ -1,50 +1,50 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type {
+// Import type {
 //   AbilityEffect,
 //   LorcanitoActionCard,
 //   ResolutionAbility,
 // } from "@lorcanito/lorcana-engine";
-// import { atEndOfTurnBanishItself } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import {
-//   chosenYourCharacterGetsStrength,
-//   drawACard,
+// Import { atEndOfTurnBanishItself } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import {
+//   ChosenYourCharacterGetsStrength,
+//   DrawACard,
 // } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// const gainAbilityEffect: AbilityEffect = {
-//   type: "ability",
-//   ability: "custom",
-//   modifier: "add",
-//   duration: "turn",
-//   customAbility: atEndOfTurnBanishItself,
-//   target: {
-//     type: "card",
-//     value: "all",
-//     filters: [{ filter: "source", value: "target" }],
+// Const gainAbilityEffect: AbilityEffect = {
+//   Type: "ability",
+//   Ability: "custom",
+//   Modifier: "add",
+//   Duration: "turn",
+//   CustomAbility: atEndOfTurnBanishItself,
+//   Target: {
+//     Type: "card",
+//     Value: "all",
+//     Filters: [{ filter: "source", value: "target" }],
 //   },
 // };
 //
-// const dependentAbilities: ResolutionAbility = {
-//   type: "resolution",
-//   effects: [chosenYourCharacterGetsStrength(5), gainAbilityEffect],
-//   dependentEffects: true,
+// Const dependentAbilities: ResolutionAbility = {
+//   Type: "resolution",
+//   Effects: [chosenYourCharacterGetsStrength(5), gainAbilityEffect],
+//   DependentEffects: true,
 // };
 //
-// export const candyDrift: LorcanitoActionCard = {
-//   id: "sf4",
-//   name: "Candy Drift",
-//   characteristics: ["action"],
-//   text: "Draw a card. Chosen character of yours gets +5 {S} this turn. At the end of your turn, banish them.",
-//   type: "action",
-//   inkwell: true,
-//   colors: ["amber", "ruby"],
-//   cost: 2,
-//   illustrator: "Stefano Spagnuolo",
-//   number: 39,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631377,
+// Export const candyDrift: LorcanitoActionCard = {
+//   Id: "sf4",
+//   Name: "Candy Drift",
+//   Characteristics: ["action"],
+//   Text: "Draw a card. Chosen character of yours gets +5 {S} this turn. At the end of your turn, banish them.",
+//   Type: "action",
+//   Inkwell: true,
+//   Colors: ["amber", "ruby"],
+//   Cost: 2,
+//   Illustrator: "Stefano Spagnuolo",
+//   Number: 39,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631377,
 //   },
-//   rarity: "uncommon",
-//   abilities: [{ type: "resolution", effects: [drawACard] }, dependentAbilities],
+//   Rarity: "uncommon",
+//   Abilities: [{ type: "resolution", effects: [drawACard] }, dependentAbilities],
 // };
 //

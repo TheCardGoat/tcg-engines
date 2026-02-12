@@ -5,9 +5,9 @@ import { fanTheFlames } from "./131-fan-the-flames";
 describe("Fan The Flames - undefined", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [fanTheFlames] });
-  //   expect(testEngine.getCardModel(fanTheFlames).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [fanTheFlames] });
+  //   Expect(testEngine.getCardModel(fanTheFlames).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,33 +17,33 @@ describe("Fan The Flames - undefined", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { fanTheFlames } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
-// import { moanaOfMotunui } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { fanTheFlames } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
+// Import { moanaOfMotunui } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Fan The Flames", () => {
-//   it("Ready chosen character. They can't quest for the rest of this turn.", () => {
-//     const testStore = new TestStore({
-//       inkwell: fanTheFlames.cost,
-//       hand: [fanTheFlames],
-//       play: [moanaOfMotunui],
+// Describe("Fan The Flames", () => {
+//   It("Ready chosen character. They can't quest for the rest of this turn.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: fanTheFlames.cost,
+//       Hand: [fanTheFlames],
+//       Play: [moanaOfMotunui],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", fanTheFlames.id);
-//     const target = testStore.getByZoneAndId("play", moanaOfMotunui.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", fanTheFlames.id);
+//     Const target = testStore.getByZoneAndId("play", moanaOfMotunui.id);
 //
-//     target.updateCardMeta({ exerted: true });
-//     expect(target.meta).toEqual(expect.objectContaining({ exerted: true }));
+//     Target.updateCardMeta({ exerted: true });
+//     Expect(target.meta).toEqual(expect.objectContaining({ exerted: true }));
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     testStore.resolveTopOfStack({
-//       targetId: target.instanceId,
+//     TestStore.resolveTopOfStack({
+//       TargetId: target.instanceId,
 //     });
 //
-//     expect(target.meta).toEqual(expect.objectContaining({ exerted: false }));
-//     expect(target.hasQuestRestriction).toBe(true);
+//     Expect(target.meta).toEqual(expect.objectContaining({ exerted: false }));
+//     Expect(target.hasQuestRestriction).toBe(true);
 //   });
 // });
 //

@@ -219,10 +219,7 @@ export const Triggers = {
   }),
 
   // Add restrictions to a trigger
-  withRestriction: (
-    trigger: Trigger,
-    restriction: TriggerRestriction,
-  ): Trigger => ({
+  withRestriction: (trigger: Trigger, restriction: TriggerRestriction): Trigger => ({
     ...trigger,
     restrictions: [...(trigger.restrictions || []), restriction],
   }),

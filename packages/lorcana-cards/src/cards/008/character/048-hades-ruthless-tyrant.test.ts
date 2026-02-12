@@ -3,29 +3,29 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   hadesRuthlessTyrant,
-//   mickeyMouseGiantMouse,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   HadesRuthlessTyrant,
+//   MickeyMouseGiantMouse,
 // } from "@lorcanito/lorcana-engine/cards/008";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Hades - Ruthless Tyrant", () => {
-//   it("SHORT ON PATIENCE When you play this character and whenever he quests, you may deal 2 damage to another chosen character of yours to draw 2 cards.", async () => {
-//     const testEngine = new TestEngine({
-//       play: [hadesRuthlessTyrant, mickeyMouseGiantMouse],
-//       deck: 7,
+// Describe("Hades - Ruthless Tyrant", () => {
+//   It("SHORT ON PATIENCE When you play this character and whenever he quests, you may deal 2 damage to another chosen character of yours to draw 2 cards.", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [hadesRuthlessTyrant, mickeyMouseGiantMouse],
+//       Deck: 7,
 //     });
 //
-//     await testEngine.questCard(hadesRuthlessTyrant);
-//     await testEngine.acceptOptionalLayer();
-//     await testEngine.resolveTopOfStack({ targets: [mickeyMouseGiantMouse] });
+//     Await testEngine.questCard(hadesRuthlessTyrant);
+//     Await testEngine.acceptOptionalLayer();
+//     Await testEngine.resolveTopOfStack({ targets: [mickeyMouseGiantMouse] });
 //
-//     expect(testEngine.getCardModel(mickeyMouseGiantMouse).damage).toBe(2);
-//     expect(testEngine.getZonesCardCount()).toEqual(
-//       expect.objectContaining({
-//         hand: 2,
-//         deck: 5,
+//     Expect(testEngine.getCardModel(mickeyMouseGiantMouse).damage).toBe(2);
+//     Expect(testEngine.getZonesCardCount()).toEqual(
+//       Expect.objectContaining({
+//         Hand: 2,
+//         Deck: 5,
 //       }),
 //     );
 //   });

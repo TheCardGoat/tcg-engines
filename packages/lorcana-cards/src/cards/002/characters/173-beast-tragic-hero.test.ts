@@ -3,77 +3,77 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { beastTragicHero } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { beastTragicHero } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Beast- Tragic Hero", () => {
-//   describe("IT’S BETTER THIS WAY** At the start of your turn, if this character has no damage, draw a card. Otherwise, he gets +4 {S} this turn.", () => {
-//     it("No damage", () => {
-//       const testEngine = new TestEngine(
+// Describe("Beast- Tragic Hero", () => {
+//   Describe("IT’S BETTER THIS WAY** At the start of your turn, if this character has no damage, draw a card. Otherwise, he gets +4 {S} this turn.", () => {
+//     It("No damage", () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           play: [beastTragicHero],
-//           deck: 3,
+//           Play: [beastTragicHero],
+//           Deck: 3,
 //         },
 //         {
-//           deck: 2,
+//           Deck: 2,
 //         },
 //       );
 //
-//       const cardUnderTest = testEngine.getCardModel(beastTragicHero);
+//       Const cardUnderTest = testEngine.getCardModel(beastTragicHero);
 //
-//       testEngine.passTurn();
-//       testEngine.passTurn();
+//       TestEngine.passTurn();
+//       TestEngine.passTurn();
 //
-//       expect(testEngine.getZonesCardCount().deck).toBe(1);
-//       expect(cardUnderTest.strength).toEqual(beastTragicHero.strength);
+//       Expect(testEngine.getZonesCardCount().deck).toBe(1);
+//       Expect(cardUnderTest.strength).toEqual(beastTragicHero.strength);
 //     });
 //
-//     it("With Damage", () => {
-//       const testEngine = new TestEngine(
+//     It("With Damage", () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           play: [beastTragicHero],
-//           deck: 3,
+//           Play: [beastTragicHero],
+//           Deck: 3,
 //         },
 //         {
-//           deck: 2,
+//           Deck: 2,
 //         },
 //       );
 //
-//       const cardUnderTest = testEngine.getCardModel(beastTragicHero);
-//       cardUnderTest.updateCardDamage(1);
+//       Const cardUnderTest = testEngine.getCardModel(beastTragicHero);
+//       CardUnderTest.updateCardDamage(1);
 //
-//       testEngine.passTurn();
-//       testEngine.passTurn();
+//       TestEngine.passTurn();
+//       TestEngine.passTurn();
 //
-//       expect(cardUnderTest.strength).toEqual(beastTragicHero.strength + 4);
-//       expect(testEngine.getZonesCardCount().deck).toBe(2);
+//       Expect(cardUnderTest.strength).toEqual(beastTragicHero.strength + 4);
+//       Expect(testEngine.getZonesCardCount().deck).toBe(2);
 //     });
 //   });
 // });
 //
-// describe("Regression", () => {
-//   it("Drawing a card when the character was banished", () => {
-//     const testEngine = new TestEngine(
+// Describe("Regression", () => {
+//   It("Drawing a card when the character was banished", () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         deck: 2,
+//         Deck: 2,
 //       },
 //       {
-//         play: [beastTragicHero],
-//         deck: 3,
+//         Play: [beastTragicHero],
+//         Deck: 3,
 //       },
 //     );
 //
-//     const cardUnderTest = testEngine.getCardModel(beastTragicHero);
+//     Const cardUnderTest = testEngine.getCardModel(beastTragicHero);
 //
-//     cardUnderTest.banish();
+//     CardUnderTest.banish();
 //
-//     testEngine.passTurn();
+//     TestEngine.passTurn();
 //
-//     expect(testEngine.getZonesCardCount("player_two")).toEqual(
-//       expect.objectContaining({
-//         deck: 2,
-//         hand: 1,
+//     Expect(testEngine.getZonesCardCount("player_two")).toEqual(
+//       Expect.objectContaining({
+//         Deck: 2,
+//         Hand: 1,
 //       }),
 //     );
 //   });

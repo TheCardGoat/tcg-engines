@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { iagoFakeFlamingo } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { iagoFakeFlamingo } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Iago - Fake Flamingo", () => {
-//   it.skip("", () => {
-//     const testStore = new TestStore({
-//       inkwell: iagoFakeFlamingo.cost,
-//       play: [iagoFakeFlamingo],
+// Describe("Iago - Fake Flamingo", () => {
+//   It.skip("", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: iagoFakeFlamingo.cost,
+//       Play: [iagoFakeFlamingo],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(iagoFakeFlamingo);
+//     Const cardUnderTest = testStore.getCard(iagoFakeFlamingo);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

@@ -3,47 +3,47 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { dragonFire } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
-// import {
-//   goonsMaleficent,
-//   maleficentMonstrousDragon,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { dragonFire } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
+// Import {
+//   GoonsMaleficent,
+//   MaleficentMonstrousDragon,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { montereyJackGoodheartedRanger } from "@lorcanito/lorcana-engine/cards/006";
-// import { mickeyMouseGiantMouse } from "@lorcanito/lorcana-engine/cards/008";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { montereyJackGoodheartedRanger } from "@lorcanito/lorcana-engine/cards/006";
+// Import { mickeyMouseGiantMouse } from "@lorcanito/lorcana-engine/cards/008";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Mickey Mouse - Giant Mouse", () => {
-//   it("Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [mickeyMouseGiantMouse],
+// Describe("Mickey Mouse - Giant Mouse", () => {
+//   It("Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [mickeyMouseGiantMouse],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(mickeyMouseGiantMouse);
-//     expect(cardUnderTest.hasBodyguard).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(mickeyMouseGiantMouse);
+//     Expect(cardUnderTest.hasBodyguard).toBe(true);
 //   });
 //
-//   it("THE BIGGEST STAR EVER When this character is banished, deal 5 damage to each opposing character.", async () => {
-//     const testEngine = new TestEngine(
+//   It("THE BIGGEST STAR EVER When this character is banished, deal 5 damage to each opposing character.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: dragonFire.cost,
-//         play: [mickeyMouseGiantMouse, goonsMaleficent],
-//         hand: [dragonFire],
+//         Inkwell: dragonFire.cost,
+//         Play: [mickeyMouseGiantMouse, goonsMaleficent],
+//         Hand: [dragonFire],
 //       },
 //       {
-//         play: [maleficentMonstrousDragon, montereyJackGoodheartedRanger],
+//         Play: [maleficentMonstrousDragon, montereyJackGoodheartedRanger],
 //       },
 //     );
 //
-//     await testEngine.playCard(dragonFire);
-//     await testEngine.resolveTopOfStack({ targets: [mickeyMouseGiantMouse] });
-//     expect(testEngine.getCardModel(maleficentMonstrousDragon).zone).toBe(
+//     Await testEngine.playCard(dragonFire);
+//     Await testEngine.resolveTopOfStack({ targets: [mickeyMouseGiantMouse] });
+//     Expect(testEngine.getCardModel(maleficentMonstrousDragon).zone).toBe(
 //       "discard",
 //     );
-//     expect(testEngine.getCardModel(montereyJackGoodheartedRanger).damage).toBe(
+//     Expect(testEngine.getCardModel(montereyJackGoodheartedRanger).damage).toBe(
 //       5,
 //     );
-//     expect(testEngine.getCardModel(goonsMaleficent).zone).toBe("play");
+//     Expect(testEngine.getCardModel(goonsMaleficent).zone).toBe("play");
 //   });
 // });
 //

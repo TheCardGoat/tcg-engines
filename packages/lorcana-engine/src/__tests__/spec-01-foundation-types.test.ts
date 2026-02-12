@@ -20,30 +20,23 @@ import {
   isLocation,
   isSong,
 } from "../card-utils";
-import {
-  getCardCounts,
-  getDeckStats,
-  getUniqueInkTypes,
-  validateDeck,
-} from "../deck-validation";
+import { getCardCounts, getDeckStats, getUniqueInkTypes, validateDeck } from "../deck-validation";
 
 // Helper to create mock cards
-function createMockCard(
-  overrides: Partial<LorcanaCardDefinition> = {},
-): LorcanaCardDefinition {
+function createMockCard(overrides: Partial<LorcanaCardDefinition> = {}): LorcanaCardDefinition {
   return {
-    id: `card-${Math.random().toString(36).slice(2)}`,
-    name: "Test Card",
-    version: "Test Version",
-    fullName: "Test Card - Test Version",
-    inkType: ["amber"],
-    cost: 3,
-    inkable: true,
     cardType: "character",
-    strength: 2,
-    willpower: 3,
+    cost: 3,
+    fullName: "Test Card - Test Version",
+    id: `card-${Math.random().toString(36).slice(2)}`,
+    inkType: ["amber"],
+    inkable: true,
     lore: 1,
+    name: "Test Card",
     set: "TFC",
+    strength: 2,
+    version: "Test Version",
+    willpower: 3,
     ...overrides,
   };
 }
@@ -59,11 +52,11 @@ function createValidDeck(
   for (let i = 0; i < halfSize; i++) {
     cards.push(
       createMockCard({
+        fullName: `Character ${i % 15} - Version ${Math.floor(i / 15)}`,
         id: `card-${i}`,
+        inkType: inkType,
         name: `Character ${i % 15}`,
         version: `Version ${Math.floor(i / 15)}`,
-        fullName: `Character ${i % 15} - Version ${Math.floor(i / 15)}`,
-        inkType: inkType,
       }),
     );
   }
@@ -72,11 +65,11 @@ function createValidDeck(
     for (let i = 0; i < 30; i++) {
       cards.push(
         createMockCard({
+          fullName: `Character ${(i % 15) + 15} - Version ${Math.floor(i / 15)}`,
           id: `card-${i + 30}`,
+          inkType: [secondInkType],
           name: `Character ${(i % 15) + 15}`,
           version: `Version ${Math.floor(i / 15)}`,
-          fullName: `Character ${(i % 15) + 15} - Version ${Math.floor(i / 15)}`,
-          inkType: [secondInkType],
         }),
       );
     }
@@ -123,23 +116,23 @@ describe("Spec 1: Foundation & Types", () => {
       for (let i = 0; i < 20; i++) {
         deck.push(
           createMockCard({
+            fullName: `Amber ${i}`,
             id: `amber-${i}`,
             inkType: ["amber"],
-            fullName: `Amber ${i}`,
           }),
         );
         deck.push(
           createMockCard({
+            fullName: `Ruby ${i}`,
             id: `ruby-${i}`,
             inkType: ["ruby"],
-            fullName: `Ruby ${i}`,
           }),
         );
         deck.push(
           createMockCard({
+            fullName: `Sapphire ${i}`,
             id: `sapphire-${i}`,
             inkType: ["sapphire"],
-            fullName: `Sapphire ${i}`,
           }),
         );
       }
@@ -147,9 +140,7 @@ describe("Spec 1: Foundation & Types", () => {
       const result = validateDeck(deck);
 
       expect(result.valid).toBe(false);
-      expect(result.errors.some((e) => e.type === "TOO_MANY_INK_TYPES")).toBe(
-        true,
-      );
+      expect(result.errors.some((e) => e.type === "TOO_MANY_INK_TYPES")).toBe(true);
     });
 
     it("accepts mono-ink deck", () => {
@@ -165,7 +156,7 @@ describe("Spec 1: Foundation & Types", () => {
       const result = validateDeck(deck);
 
       expect(result.valid).toBe(true);
-      expect(getUniqueInkTypes(deck).sort()).toEqual(["amber", "ruby"]);
+      expect(getUniqueInkTypes(deck).toSorted()).toEqual(["amber", "ruby"]);
     });
 
     it("rejects deck with 5+ copies of same full name (Rule 2.1.1.3)", () => {
@@ -173,19 +164,17 @@ describe("Spec 1: Foundation & Types", () => {
       // Replace 5 cards with same full name
       for (let i = 0; i < 5; i++) {
         deck[i] = createMockCard({
+          fullName: "Elsa - Ice Queen",
           id: `elsa-${i}`,
           name: "Elsa",
           version: "Ice Queen",
-          fullName: "Elsa - Ice Queen",
         });
       }
 
       const result = validateDeck(deck);
 
       expect(result.valid).toBe(false);
-      expect(result.errors.some((e) => e.type === "TOO_MANY_COPIES")).toBe(
-        true,
-      );
+      expect(result.errors.some((e) => e.type === "TOO_MANY_COPIES")).toBe(true);
       const copyError = result.errors.find((e) => e.type === "TOO_MANY_COPIES");
       if (copyError && copyError.type === "TOO_MANY_COPIES") {
         expect(copyError.fullName).toBe("Elsa - Ice Queen");
@@ -198,17 +187,15 @@ describe("Spec 1: Foundation & Types", () => {
       // Replace 4 cards with same full name
       for (let i = 0; i < 4; i++) {
         deck[i] = createMockCard({
+          fullName: "Elsa - Ice Queen",
           id: `elsa-${i}`,
           name: "Elsa",
           version: "Ice Queen",
-          fullName: "Elsa - Ice Queen",
         });
       }
 
       const result = validateDeck(deck);
-      const copyErrors = result.errors.filter(
-        (e) => e.type === "TOO_MANY_COPIES",
-      );
+      const copyErrors = result.errors.filter((e) => e.type === "TOO_MANY_COPIES");
 
       expect(copyErrors).toHaveLength(0);
     });
@@ -218,26 +205,24 @@ describe("Spec 1: Foundation & Types", () => {
       // Replace 4 cards with "Elsa - Ice Queen"
       for (let i = 0; i < 4; i++) {
         deck[i] = createMockCard({
+          fullName: "Elsa - Ice Queen",
           id: `elsa-ice-${i}`,
           name: "Elsa",
           version: "Ice Queen",
-          fullName: "Elsa - Ice Queen",
         });
       }
       // Replace 4 more cards with "Elsa - Snow Queen"
       for (let i = 4; i < 8; i++) {
         deck[i] = createMockCard({
+          fullName: "Elsa - Snow Queen",
           id: `elsa-snow-${i}`,
           name: "Elsa",
           version: "Snow Queen",
-          fullName: "Elsa - Snow Queen",
         });
       }
 
       const result = validateDeck(deck);
-      const copyErrors = result.errors.filter(
-        (e) => e.type === "TOO_MANY_COPIES",
-      );
+      const copyErrors = result.errors.filter((e) => e.type === "TOO_MANY_COPIES");
 
       expect(copyErrors).toHaveLength(0);
     });
@@ -247,18 +232,16 @@ describe("Spec 1: Foundation & Types", () => {
       // Replace 10 cards with Microbots (no limit)
       for (let i = 0; i < 10; i++) {
         deck[i] = createMockCard({
+          cardCopyLimit: "no-limit",
+          fullName: "Microbots - Tiny Helpers",
           id: `microbots-${i}`,
           name: "Microbots",
           version: "Tiny Helpers",
-          fullName: "Microbots - Tiny Helpers",
-          cardCopyLimit: "no-limit",
         });
       }
 
       const result = validateDeck(deck);
-      const copyErrors = result.errors.filter(
-        (e) => e.type === "TOO_MANY_COPIES",
-      );
+      const copyErrors = result.errors.filter((e) => e.type === "TOO_MANY_COPIES");
 
       expect(copyErrors).toHaveLength(0);
     });
@@ -268,20 +251,18 @@ describe("Spec 1: Foundation & Types", () => {
       // Replace 3 cards with The Glass Slipper (limit 2)
       for (let i = 0; i < 3; i++) {
         deck[i] = createMockCard({
+          cardCopyLimit: 2,
+          fullName: "The Glass Slipper - Perfect Fit",
           id: `glass-slipper-${i}`,
           name: "The Glass Slipper",
           version: "Perfect Fit",
-          fullName: "The Glass Slipper - Perfect Fit",
-          cardCopyLimit: 2,
         });
       }
 
       const result = validateDeck(deck);
 
       expect(result.valid).toBe(false);
-      expect(result.errors.some((e) => e.type === "TOO_MANY_COPIES")).toBe(
-        true,
-      );
+      expect(result.errors.some((e) => e.type === "TOO_MANY_COPIES")).toBe(true);
       const copyError = result.errors.find((e) => e.type === "TOO_MANY_COPIES");
       if (copyError && copyError.type === "TOO_MANY_COPIES") {
         expect(copyError.fullName).toBe("The Glass Slipper - Perfect Fit");
@@ -295,19 +276,17 @@ describe("Spec 1: Foundation & Types", () => {
       // Replace 2 cards with The Glass Slipper (limit 2)
       for (let i = 0; i < 2; i++) {
         deck[i] = createMockCard({
+          cardCopyLimit: 2,
+          fullName: "The Glass Slipper - Perfect Fit",
           id: `glass-slipper-${i}`,
           name: "The Glass Slipper",
           version: "Perfect Fit",
-          fullName: "The Glass Slipper - Perfect Fit",
-          cardCopyLimit: 2,
         });
       }
 
       const result = validateDeck(deck);
       const copyErrors = result.errors.filter(
-        (e) =>
-          e.type === "TOO_MANY_COPIES" &&
-          e.fullName === "The Glass Slipper - Perfect Fit",
+        (e) => e.type === "TOO_MANY_COPIES" && e.fullName === "The Glass Slipper - Perfect Fit",
       );
 
       expect(copyErrors).toHaveLength(0);
@@ -342,8 +321,8 @@ describe("Spec 1: Foundation & Types", () => {
 
     it("identifies song by actionSubtype (Rule 6.3.3)", () => {
       const card = createMockCard({
-        cardType: "action",
         actionSubtype: "song",
+        cardType: "action",
         strength: undefined,
         willpower: undefined,
       });
@@ -365,10 +344,10 @@ describe("Spec 1: Foundation & Types", () => {
     it("identifies location by cardType (Rule 6.5.1)", () => {
       const card = createMockCard({
         cardType: "location",
-        strength: undefined,
-        willpower: 5,
         lore: 2,
         moveCost: 1,
+        strength: undefined,
+        willpower: 5,
       });
 
       expect(isLocation(card)).toBe(true);
@@ -378,9 +357,9 @@ describe("Spec 1: Foundation & Types", () => {
   describe("Card Anatomy (Rule 6.2)", () => {
     it("generates full name from name + version", () => {
       const card = createMockCard({
+        fullName: "Elsa - Ice Queen",
         name: "Elsa",
         version: "Ice Queen",
-        fullName: "Elsa - Ice Queen",
       });
 
       expect(getFullName(card)).toBe("Elsa - Ice Queen");
@@ -400,9 +379,9 @@ describe("Spec 1: Foundation & Types", () => {
 
     it("handles cards with two names using ampersand (Rule 6.2.4.1)", () => {
       const card = createMockCard({
+        fullName: "Flotsam & Jetsam - Slippery Eels",
         name: "Flotsam & Jetsam",
         version: "Slippery Eels",
-        fullName: "Flotsam & Jetsam - Slippery Eels",
       });
 
       expect(card.name).toBe("Flotsam & Jetsam");
@@ -415,12 +394,12 @@ describe("Spec 1: Foundation & Types", () => {
       const card = createMockCard({
         abilities: [
           {
-            type: "keyword",
-            keyword: "Bodyguard",
             id: "ab1",
+            keyword: "Bodyguard",
             text: "Bodyguard",
+            type: "keyword",
           },
-          { type: "keyword", keyword: "Ward", id: "ab2", text: "Ward" },
+          { id: "ab2", keyword: "Ward", text: "Ward", type: "keyword" },
         ],
       });
 
@@ -433,11 +412,11 @@ describe("Spec 1: Foundation & Types", () => {
       const card = createMockCard({
         abilities: [
           {
-            type: "keyword",
-            keyword: "Challenger",
-            value: 2,
             id: "ab1",
+            keyword: "Challenger",
             text: "Challenger +2",
+            type: "keyword",
+            value: 2,
           },
         ],
       });
@@ -450,24 +429,24 @@ describe("Spec 1: Foundation & Types", () => {
       const card = createMockCard({
         abilities: [
           {
-            type: "keyword",
-            keyword: "Bodyguard",
             id: "ab1",
+            keyword: "Bodyguard",
             text: "Bodyguard",
+            type: "keyword",
           },
           {
-            type: "keyword",
-            keyword: "Challenger",
-            value: 2,
             id: "ab2",
+            keyword: "Challenger",
             text: "Challenger +2",
+            type: "keyword",
+            value: 2,
           },
           {
-            type: "keyword",
-            keyword: "Resist",
-            value: 1,
             id: "ab3",
+            keyword: "Resist",
             text: "Resist +1",
+            type: "keyword",
+            value: 1,
           },
         ],
       });
@@ -480,12 +459,12 @@ describe("Spec 1: Foundation & Types", () => {
       const card = createMockCard({
         abilities: [
           {
-            type: "keyword",
-            keyword: "Shift",
             cost: { ink: 4 },
-            shiftTarget: "Elsa",
             id: "ab1",
+            keyword: "Shift",
+            shiftTarget: "Elsa",
             text: "Shift 4",
+            type: "keyword",
           },
         ],
       });
@@ -498,11 +477,11 @@ describe("Spec 1: Foundation & Types", () => {
       const card = createMockCard({
         abilities: [
           {
-            type: "keyword",
-            keyword: "Singer",
-            value: 5,
             id: "ab1",
+            keyword: "Singer",
             text: "Singer 5",
+            type: "keyword",
+            value: 5,
           },
         ],
       });
@@ -517,7 +496,7 @@ describe("Spec 1: Foundation & Types", () => {
       const stats = getDeckStats(deck);
 
       expect(stats.totalCards).toBe(60);
-      expect(stats.inkTypes.sort()).toEqual(["amber", "ruby"]);
+      expect(stats.inkTypes.toSorted()).toEqual(["amber", "ruby"]);
       expect(stats.cardTypeBreakdown.characters).toBe(60);
     });
 

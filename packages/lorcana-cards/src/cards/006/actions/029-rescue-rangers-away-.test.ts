@@ -3,50 +3,50 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   arielOnHumanLegs,
-//   liloMakingAWish,
-//   mauiDemiGod,
-//   stichtNewDog,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   ArielOnHumanLegs,
+//   LiloMakingAWish,
+//   MauiDemiGod,
+//   StichtNewDog,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { rescueRangersAway } from "@lorcanito/lorcana-engine/cards/006/actions/actions";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { rescueRangersAway } from "@lorcanito/lorcana-engine/cards/006/actions/actions";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Rescue Rangers Away!", () => {
-//   it("Count the number of characters you have in play. Chosen character loses {S} equal to that number until the start of your next turn.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: rescueRangersAway.cost,
-//       hand: [rescueRangersAway],
-//       play: [liloMakingAWish, stichtNewDog, arielOnHumanLegs, mauiDemiGod],
+// Describe("Rescue Rangers Away!", () => {
+//   It("Count the number of characters you have in play. Chosen character loses {S} equal to that number until the start of your next turn.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: rescueRangersAway.cost,
+//       Hand: [rescueRangersAway],
+//       Play: [liloMakingAWish, stichtNewDog, arielOnHumanLegs, mauiDemiGod],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(rescueRangersAway);
-//     const target = testEngine.getCardModel(mauiDemiGod);
+//     Const cardUnderTest = testEngine.getCardModel(rescueRangersAway);
+//     Const target = testEngine.getCardModel(mauiDemiGod);
 //
-//     await testEngine.playCard(cardUnderTest);
-//     await testEngine.resolveTopOfStack({ targets: [target] });
+//     Await testEngine.playCard(cardUnderTest);
+//     Await testEngine.resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.strength).toBe(mauiDemiGod.strength - 4);
+//     Expect(target.strength).toBe(mauiDemiGod.strength - 4);
 //   });
-//   it("Count the number of characters you have in play. Chosen character loses {S} equal to that number until the start of your next turn. (zero case)", async () => {
-//     const testEngine = new TestEngine(
+//   It("Count the number of characters you have in play. Chosen character loses {S} equal to that number until the start of your next turn. (zero case)", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: rescueRangersAway.cost,
-//         hand: [rescueRangersAway],
+//         Inkwell: rescueRangersAway.cost,
+//         Hand: [rescueRangersAway],
 //       },
 //       {
-//         play: [liloMakingAWish, stichtNewDog, arielOnHumanLegs, mauiDemiGod],
+//         Play: [liloMakingAWish, stichtNewDog, arielOnHumanLegs, mauiDemiGod],
 //       },
 //     );
 //
-//     const cardUnderTest = testEngine.getCardModel(rescueRangersAway);
-//     const target = testEngine.getCardModel(mauiDemiGod);
+//     Const cardUnderTest = testEngine.getCardModel(rescueRangersAway);
+//     Const target = testEngine.getCardModel(mauiDemiGod);
 //
-//     await testEngine.playCard(cardUnderTest);
-//     await testEngine.resolveTopOfStack({ targets: [target] });
+//     Await testEngine.playCard(cardUnderTest);
+//     Await testEngine.resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.strength).toBe(mauiDemiGod.strength);
+//     Expect(target.strength).toBe(mauiDemiGod.strength);
 //   });
 // });
 //

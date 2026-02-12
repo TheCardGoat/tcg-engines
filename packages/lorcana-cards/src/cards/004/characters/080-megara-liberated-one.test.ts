@@ -3,27 +3,27 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { herculesHeroInTraining } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { megaraLiberatedOne } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { herculesHeroInTraining } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { megaraLiberatedOne } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Megara - Liberated One", () => {
-//   it("**PEOPLE ALWAYS DO CRAZY THINGS** Whenever you play a character named Hercules, you may ready this character.", () => {
-//     const testEngine = new TestEngine({
-//       inkwell: herculesHeroInTraining.cost,
-//       hand: [herculesHeroInTraining],
-//       play: [megaraLiberatedOne],
+// Describe("Megara - Liberated One", () => {
+//   It("**PEOPLE ALWAYS DO CRAZY THINGS** Whenever you play a character named Hercules, you may ready this character.", () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: herculesHeroInTraining.cost,
+//       Hand: [herculesHeroInTraining],
+//       Play: [megaraLiberatedOne],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(megaraLiberatedOne);
-//     const trigger = testEngine.getCardModel(herculesHeroInTraining);
-//     cardUnderTest.updateCardMeta({ exerted: true });
+//     Const cardUnderTest = testEngine.getCardModel(megaraLiberatedOne);
+//     Const trigger = testEngine.getCardModel(herculesHeroInTraining);
+//     CardUnderTest.updateCardMeta({ exerted: true });
 //
-//     trigger.playFromHand();
+//     Trigger.playFromHand();
 //
-//     testEngine.resolveOptionalAbility();
-//     expect(cardUnderTest.exerted).toEqual(false);
+//     TestEngine.resolveOptionalAbility();
+//     Expect(cardUnderTest.exerted).toEqual(false);
 //   });
 // });
 //

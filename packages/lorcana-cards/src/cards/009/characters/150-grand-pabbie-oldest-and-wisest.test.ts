@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { grandPabbieOldestAndWisest } from "@lorcanito/lorcana-engine/cards/009/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { grandPabbieOldestAndWisest } from "@lorcanito/lorcana-engine/cards/009/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Grand Pabbie - Oldest and Wisest", () => {
-//   it.skip("**ANCIENT INSIGHT** Whenever you remove 1 or more damage from one of your characters, gain 2 lore.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: grandPabbieOldestAndWisest.cost,
-//       play: [grandPabbieOldestAndWisest],
-//       hand: [grandPabbieOldestAndWisest],
+// Describe("Grand Pabbie - Oldest and Wisest", () => {
+//   It.skip("**ANCIENT INSIGHT** Whenever you remove 1 or more damage from one of your characters, gain 2 lore.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: grandPabbieOldestAndWisest.cost,
+//       Play: [grandPabbieOldestAndWisest],
+//       Hand: [grandPabbieOldestAndWisest],
 //     });
 //
-//     await testEngine.playCard(grandPabbieOldestAndWisest);
+//     Await testEngine.playCard(grandPabbieOldestAndWisest);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

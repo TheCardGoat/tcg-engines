@@ -26,10 +26,10 @@ function convertToCharacterTarget(simpleTarget: {
 
   // Map card type to proper name
   const cardTypeMap: Record<string, string> = {
+    card: "card",
     character: "character",
     item: "item",
     location: "location",
-    card: "card",
   };
 
   const cardType = cardTypeMap[type.toLowerCase()] || type;
@@ -39,18 +39,18 @@ function convertToCharacterTarget(simpleTarget: {
     string,
     { selector: string; owner: string; count: number | "all" }
   > = {
-    chosen: { selector: "chosen", owner: "any", count: 1 },
-    "chosen opposing": { selector: "chosen", owner: "opponent", count: 1 },
-    this: { selector: "self", owner: "any", count: 1 },
-    your: { selector: "all", owner: "you", count: "all" },
-    opponent: { selector: "all", owner: "opponent", count: "all" },
-    "opponent's": { selector: "all", owner: "opponent", count: "all" },
-    opposing: { selector: "all", owner: "opponent", count: "all" },
-    another: { selector: "chosen", owner: "any", count: 1 },
-    an: { selector: "chosen", owner: "any", count: 1 },
-    each: { selector: "all", owner: "any", count: "all" },
-    all: { selector: "all", owner: "any", count: "all" },
-    other: { selector: "all", owner: "any", count: "all" },
+    all: { count: "all", owner: "any", selector: "all" },
+    an: { count: 1, owner: "any", selector: "chosen" },
+    another: { count: 1, owner: "any", selector: "chosen" },
+    chosen: { count: 1, owner: "any", selector: "chosen" },
+    "chosen opposing": { count: 1, owner: "opponent", selector: "chosen" },
+    each: { count: "all", owner: "any", selector: "all" },
+    opponent: { count: "all", owner: "opponent", selector: "all" },
+    "opponent's": { count: "all", owner: "opponent", selector: "all" },
+    opposing: { count: "all", owner: "opponent", selector: "all" },
+    other: { count: "all", owner: "any", selector: "all" },
+    this: { count: 1, owner: "any", selector: "self" },
+    your: { count: "all", owner: "you", selector: "all" },
   };
 
   const mapping = modifier
@@ -62,11 +62,11 @@ function convertToCharacterTarget(simpleTarget: {
   const { selector, owner, count } = mapping || modifierMap.chosen;
 
   return {
-    selector: selector as any,
+    cardTypes: [cardType],
     count,
     owner: owner as any,
+    selector: selector as any,
     zones: ["play"],
-    cardTypes: [cardType],
   };
 }
 
@@ -89,13 +89,13 @@ function parseAllPattern(text: string): CharacterTarget | null {
 
   // Map card types
   const cardTypeMap: Record<string, string[]> = {
-    items: ["item"],
-    item: ["item"],
-    characters: ["character"],
-    character: ["character"],
-    locations: ["location"],
-    location: ["location"],
     "actions or songs": ["action", "song"],
+    character: ["character"],
+    characters: ["character"],
+    item: ["item"],
+    items: ["item"],
+    location: ["location"],
+    locations: ["location"],
   };
 
   const cardTypes = cardTypeMap[cardTypeStr];
@@ -115,11 +115,11 @@ function parseAllPattern(text: string): CharacterTarget | null {
   }
 
   return {
-    selector: "all" as any,
+    cardTypes,
     count: "all",
     owner,
+    selector: "all" as any,
     zones: ["play"],
-    cardTypes,
   };
 }
 
@@ -155,13 +155,13 @@ function parseFromCst(
 
   if (isBanish) {
     return {
-      type: "banish",
       target: "CHOSEN_CHARACTER" as CharacterTarget,
+      type: "banish",
     };
   }
   return {
-    type: "return-to-hand",
     target: "CHOSEN_CHARACTER" as CardTarget,
+    type: "return-to-hand",
   };
 }
 
@@ -231,13 +231,13 @@ function parseFromText(text: string): BanishEffect | ReturnToHandEffect | null {
 
   if (isBanish) {
     return {
-      type: "banish",
       target,
+      type: "banish",
     };
   }
   return {
-    type: "return-to-hand",
     target: target as CardTarget,
+    type: "return-to-hand",
   };
 }
 
@@ -245,11 +245,8 @@ function parseFromText(text: string): BanishEffect | ReturnToHandEffect | null {
  * Banish effect parser implementation
  */
 export const banishEffectParser: EffectParser = {
-  pattern:
-    /(banish|return)\s+(all|chosen|this|another|an?)\s+(character|item|location|items|characters|locations)/i,
   description:
     "Parses banish/return effects (e.g., 'banish chosen character', 'banish all items')",
-
   parse: (
     input: CstNode | string,
   ): BanishEffect | ReturnToHandEffect | null => {
@@ -260,4 +257,7 @@ export const banishEffectParser: EffectParser = {
       input as { Banish?: IToken[]; Return?: IToken[] } | null | undefined,
     );
   },
+
+  pattern:
+    /(banish|return)\s+(all|chosen|this|another|an?)\s+(character|item|location|items|characters|locations)/i,
 };

@@ -17,14 +17,14 @@ describe("Trigger: When Played", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
+          effect: expect.objectContaining({
+            amount: 1,
+            type: "draw",
+          }),
           trigger: expect.objectContaining({
             event: "play-self",
           }),
-          effect: expect.objectContaining({
-            type: "draw",
-            amount: 1,
-          }),
+          type: "triggered",
         }),
       );
     });
@@ -36,11 +36,11 @@ describe("Trigger: When Played", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           effect: expect.objectContaining({
-            type: "draw",
             amount: 2,
+            type: "draw",
           }),
+          type: "triggered",
         }),
       );
     });
@@ -63,19 +63,17 @@ describe("Trigger: When Played", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           effect: expect.objectContaining({
-            type: "discard",
             amount: 2,
+            type: "discard",
           }),
+          type: "triggered",
         }),
       );
     });
 
     it.skip("should parse 'When you play me, discard 2, then draw 2.'", () => {
-      const result = parseAbilities(
-        "When you play me, discard 2, then draw 2.",
-      );
+      const result = parseAbilities("When you play me, discard 2, then draw 2.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
@@ -84,28 +82,24 @@ describe("Trigger: When Played", () => {
 
   describe("channel effects", () => {
     it.skip("should parse 'When you play me, channel 1 rune exhausted.'", () => {
-      const result = parseAbilities(
-        "When you play me, channel 1 rune exhausted.",
-      );
+      const result = parseAbilities("When you play me, channel 1 rune exhausted.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           effect: expect.objectContaining({
-            type: "channel",
             amount: 1,
             exhausted: true,
+            type: "channel",
           }),
+          type: "triggered",
         }),
       );
     });
 
     it.skip("should parse 'When you play me, channel 2 runes exhausted.'", () => {
-      const result = parseAbilities(
-        "When you play me, channel 2 runes exhausted.",
-      );
+      const result = parseAbilities("When you play me, channel 2 runes exhausted.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
@@ -122,10 +116,10 @@ describe("Trigger: When Played", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           effect: expect.objectContaining({
             type: "buff",
           }),
+          type: "triggered",
         }),
       );
     });
@@ -150,20 +144,18 @@ describe("Trigger: When Played", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           effect: expect.objectContaining({
-            type: "modify-might",
             amount: -2,
             minimum: 1,
+            type: "modify-might",
           }),
+          type: "triggered",
         }),
       );
     });
 
     it.skip("should parse 'When you play me, give me +3 :rb_might: this turn.'", () => {
-      const result = parseAbilities(
-        "When you play me, give me +3 :rb_might: this turn.",
-      );
+      const result = parseAbilities("When you play me, give me +3 :rb_might: this turn.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
@@ -189,10 +181,10 @@ describe("Trigger: When Played", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           effect: expect.objectContaining({
             type: "create-token",
           }),
+          type: "triggered",
         }),
       );
     });
@@ -226,10 +218,10 @@ describe("Trigger: When Played", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           effect: expect.objectContaining({
             type: "move",
           }),
+          type: "triggered",
         }),
       );
     });
@@ -243,8 +235,8 @@ describe("Trigger: When Played", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           optional: true,
+          type: "triggered",
         }),
       );
     });
@@ -252,27 +244,23 @@ describe("Trigger: When Played", () => {
 
   describe("damage effects", () => {
     it.skip("should parse 'When you play me, deal 2 to a unit at a battlefield.'", () => {
-      const result = parseAbilities(
-        "When you play me, deal 2 to a unit at a battlefield.",
-      );
+      const result = parseAbilities("When you play me, deal 2 to a unit at a battlefield.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           effect: expect.objectContaining({
-            type: "damage",
             amount: 2,
+            type: "damage",
           }),
+          type: "triggered",
         }),
       );
     });
 
     it.skip("should parse 'When you play me, deal 3 to an enemy unit at a battlefield.'", () => {
-      const result = parseAbilities(
-        "When you play me, deal 3 to an enemy unit at a battlefield.",
-      );
+      const result = parseAbilities("When you play me, deal 3 to an enemy unit at a battlefield.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
@@ -287,10 +275,10 @@ describe("Trigger: When Played", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           effect: expect.objectContaining({
             type: "ready",
           }),
+          type: "triggered",
         }),
       );
     });
@@ -306,11 +294,11 @@ describe("Trigger: When Played", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           effect: expect.objectContaining({
-            type: "grant-keyword",
             keyword: "Ganking",
+            type: "grant-keyword",
           }),
+          type: "triggered",
         }),
       );
     });
@@ -324,16 +312,14 @@ describe("Trigger: When Played", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           optional: true,
+          type: "triggered",
         }),
       );
     });
 
     it.skip("should parse 'When you play me, you may pay :rb_energy_1: to draw 1.'", () => {
-      const result = parseAbilities(
-        "When you play me, you may pay :rb_energy_1: to draw 1.",
-      );
+      const result = parseAbilities("When you play me, you may pay :rb_energy_1: to draw 1.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);

@@ -1,35 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const lefouInstigator: CharacterCard = {
-  id: "kll",
-  cardType: "character",
-  name: "LeFou",
-  version: "Instigator",
-  fullName: "LeFou - Instigator",
-  inkType: ["ruby"],
-  franchise: "Beauty and the Beast",
-  set: "009",
-  text: "FAN THE FLAMES When you play this character, ready chosen character. They can't quest for the rest of this turn.",
-  cost: 2,
-  strength: 2,
-  willpower: 2,
-  lore: 1,
-  cardNumber: 103,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "4a3e5d428b7702fa462f17ae49962203afeb1ab5",
-  },
   abilities: [
     {
-      id: "kll-1",
-      type: "triggered",
-      name: "FAN THE FLAMES",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "sequence",
         steps: [
@@ -51,8 +24,35 @@ export const lefouInstigator: CharacterCard = {
           },
         ],
       },
+      id: "kll-1",
+      name: "FAN THE FLAMES",
       text: "FAN THE FLAMES When you play this character, ready chosen character. They can't quest for the rest of this turn.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 103,
+  cardType: "character",
   classifications: ["Dreamborn", "Ally"],
+  cost: 2,
+  externalIds: {
+    ravensburger: "4a3e5d428b7702fa462f17ae49962203afeb1ab5",
+  },
+  franchise: "Beauty and the Beast",
+  fullName: "LeFou - Instigator",
+  id: "kll",
+  inkType: ["ruby"],
+  inkable: true,
+  lore: 1,
+  missingTests: true,
+  name: "LeFou",
+  set: "009",
+  strength: 2,
+  text: "FAN THE FLAMES When you play this character, ready chosen character. They can't quest for the rest of this turn.",
+  version: "Instigator",
+  willpower: 2,
 };

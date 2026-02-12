@@ -3,42 +3,42 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { liloGalacticHero } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { bounce } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
-// import { cinderellaBallroomSensation } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { liloGalacticHero } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { bounce } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
+// Import { cinderellaBallroomSensation } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Bounce", () => {
-//   it("Return chosen character of yours to your hand to return another chosen character to their player's hand.", () => {
-//     const testStore = new TestStore(
+// Describe("Bounce", () => {
+//   It("Return chosen character of yours to your hand to return another chosen character to their player's hand.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: bounce.cost,
-//         hand: [bounce],
-//         play: [cinderellaBallroomSensation],
+//         Inkwell: bounce.cost,
+//         Hand: [bounce],
+//         Play: [cinderellaBallroomSensation],
 //       },
 //       {
-//         play: [liloGalacticHero],
+//         Play: [liloGalacticHero],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", bounce.id);
-//     const target = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", bounce.id);
+//     Const target = testStore.getByZoneAndId(
 //       "play",
-//       cinderellaBallroomSensation.id,
+//       CinderellaBallroomSensation.id,
 //     );
-//     const opponentTarget = testStore.getByZoneAndId(
+//     Const opponentTarget = testStore.getByZoneAndId(
 //       "play",
-//       liloGalacticHero.id,
+//       LiloGalacticHero.id,
 //       "player_two",
 //     );
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveTopOfStack({ targets: [target] }, true);
-//     testStore.resolveTopOfStack({ targets: [opponentTarget] });
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveTopOfStack({ targets: [target] }, true);
+//     TestStore.resolveTopOfStack({ targets: [opponentTarget] });
 //
-//     expect(target.zone).toEqual("hand");
-//     expect(opponentTarget.zone).toEqual("hand");
+//     Expect(target.zone).toEqual("hand");
+//     Expect(opponentTarget.zone).toEqual("hand");
 //   });
 // });
 //

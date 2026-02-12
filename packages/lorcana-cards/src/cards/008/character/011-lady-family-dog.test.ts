@@ -3,53 +3,53 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { goofyDaredevil } from "@lorcanito/lorcana-engine/cards/001/characters/111-goofy-daredevil";
-// import { liloGalacticHero } from "@lorcanito/lorcana-engine/cards/001/characters/184-lilo-galactic-hero";
-// import { liloJuniorCakeDecorator } from "@lorcanito/lorcana-engine/cards/005/characters/008-lilo-junior-cake-decorator";
-// import { trampStreetSmartDog } from "@lorcanito/lorcana-engine/cards/007";
-// import {
-//   hueyReliableLeader,
-//   ladyFamilyDog,
-//   liloCausingAnUproar,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { goofyDaredevil } from "@lorcanito/lorcana-engine/cards/001/characters/111-goofy-daredevil";
+// Import { liloGalacticHero } from "@lorcanito/lorcana-engine/cards/001/characters/184-lilo-galactic-hero";
+// Import { liloJuniorCakeDecorator } from "@lorcanito/lorcana-engine/cards/005/characters/008-lilo-junior-cake-decorator";
+// Import { trampStreetSmartDog } from "@lorcanito/lorcana-engine/cards/007";
+// Import {
+//   HueyReliableLeader,
+//   LadyFamilyDog,
+//   LiloCausingAnUproar,
 // } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { liloBestExplorerEver } from "@lorcanito/lorcana-engine/cards/009";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { liloBestExplorerEver } from "@lorcanito/lorcana-engine/cards/009";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Lady - Family Dog", () => {
-//   it("SOMEONE TO CARE FOR When you play this character, you may play a character with cost 2 or less for free.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: ladyFamilyDog.cost,
-//       hand: [hueyReliableLeader, ladyFamilyDog],
+// Describe("Lady - Family Dog", () => {
+//   It("SOMEONE TO CARE FOR When you play this character, you may play a character with cost 2 or less for free.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: ladyFamilyDog.cost,
+//       Hand: [hueyReliableLeader, ladyFamilyDog],
 //     });
 //
-//     await testEngine.playCard(ladyFamilyDog);
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({ targets: [hueyReliableLeader] });
-//     expect(testEngine.getCardModel(hueyReliableLeader).zone).toEqual("play");
+//     Await testEngine.playCard(ladyFamilyDog);
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({ targets: [hueyReliableLeader] });
+//     Expect(testEngine.getCardModel(hueyReliableLeader).zone).toEqual("play");
 //   });
 //
-//   describe("Regression", () => {
-//     it("Tramp interaction", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: ladyFamilyDog.cost,
-//         play: [
-//           goofyDaredevil,
-//           liloBestExplorerEver,
-//           liloCausingAnUproar,
-//           liloGalacticHero,
-//           liloJuniorCakeDecorator,
+//   Describe("Regression", () => {
+//     It("Tramp interaction", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: ladyFamilyDog.cost,
+//         Play: [
+//           GoofyDaredevil,
+//           LiloBestExplorerEver,
+//           LiloCausingAnUproar,
+//           LiloGalacticHero,
+//           LiloJuniorCakeDecorator,
 //         ],
-//         hand: [hueyReliableLeader, ladyFamilyDog, trampStreetSmartDog],
+//         Hand: [hueyReliableLeader, ladyFamilyDog, trampStreetSmartDog],
 //       });
 //
-//       await testEngine.playCard(ladyFamilyDog);
-//       await testEngine.resolveOptionalAbility();
-//       await testEngine.resolveTopOfStack(
+//       Await testEngine.playCard(ladyFamilyDog);
+//       Await testEngine.resolveOptionalAbility();
+//       Await testEngine.resolveTopOfStack(
 //         { targets: [trampStreetSmartDog] },
-//         true,
+//         True,
 //       );
-//       expect(testEngine.getCardModel(hueyReliableLeader).zone).toEqual("hand");
+//       Expect(testEngine.getCardModel(hueyReliableLeader).zone).toEqual("hand");
 //     });
 //   });
 // });

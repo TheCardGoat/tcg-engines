@@ -1,57 +1,57 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { wheneverPlays } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { wheneverPlays } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
 //
-// export const donaldDuckSleepwalker: LorcanitoCharacterCard = {
-//   id: "kjq",
-//   reprints: ["w9x"],
+// Export const donaldDuckSleepwalker: LorcanitoCharacterCard = {
+//   Id: "kjq",
+//   Reprints: ["w9x"],
 //
-//   name: "Donald Duck",
-//   title: "Sleepwalker",
-//   characteristics: ["storyborn"],
-//   text: "**STARTLED AWAKE** Whenever you play an action, this character gets +2 {S} this turn.",
-//   type: "character",
-//   abilities: [
-//     wheneverPlays({
-//       name: "Startled Awake",
-//       text: "Whenever you play an action, this character gets +2 {S} this turn.",
-//       triggerTarget: {
-//         type: "card",
-//         value: 1,
-//         filters: [
+//   Name: "Donald Duck",
+//   Title: "Sleepwalker",
+//   Characteristics: ["storyborn"],
+//   Text: "**STARTLED AWAKE** Whenever you play an action, this character gets +2 {S} this turn.",
+//   Type: "character",
+//   Abilities: [
+//     WheneverPlays({
+//       Name: "Startled Awake",
+//       Text: "Whenever you play an action, this character gets +2 {S} this turn.",
+//       TriggerTarget: {
+//         Type: "card",
+//         Value: 1,
+//         Filters: [
 //           { filter: "type", value: "action" },
 //           { filter: "characteristics", value: ["action"] },
 //           { filter: "owner", value: "self" },
 //         ],
 //       },
-//       effects: [
+//       Effects: [
 //         {
-//           type: "attribute",
-//           attribute: "strength",
-//           amount: 2,
-//           modifier: "add",
-//           target: {
-//             type: "card",
-//             value: "all",
-//             filters: [{ filter: "source", value: "self" }],
+//           Type: "attribute",
+//           Attribute: "strength",
+//           Amount: 2,
+//           Modifier: "add",
+//           Target: {
+//             Type: "card",
+//             Value: "all",
+//             Filters: [{ filter: "source", value: "self" }],
 //           },
 //         },
 //       ],
 //     }),
 //   ],
-//   flavour: "Heading toward a rude awekening!",
-//   inkwell: true,
-//   colors: ["emerald"],
-//   strength: 0,
-//   cost: 3,
-//   willpower: 5,
-//   lore: 1,
-//   illustrator: "Leonardo Giammichele",
-//   number: 78,
-//   set: "ROF",
-//   externalIds: {
-//     tcgPlayer: 527194,
+//   Flavour: "Heading toward a rude awekening!",
+//   Inkwell: true,
+//   Colors: ["emerald"],
+//   Strength: 0,
+//   Cost: 3,
+//   Willpower: 5,
+//   Lore: 1,
+//   Illustrator: "Leonardo Giammichele",
+//   Number: 78,
+//   Set: "ROF",
+//   ExternalIds: {
+//     TcgPlayer: 527194,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

@@ -3,24 +3,24 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { theFatesOnlyOneEye } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { theFatesOnlyOneEye } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("The Fates - Only One Eye", () => {
-//   it.skip("**ALL WILL BE SEEN** When you play this character, look at the top card of each opponent's deck.", () => {
-//     const testStore = new TestStore({
-//       inkwell: theFatesOnlyOneEye.cost,
-//       hand: [theFatesOnlyOneEye],
+// Describe("The Fates - Only One Eye", () => {
+//   It.skip("**ALL WILL BE SEEN** When you play this character, look at the top card of each opponent's deck.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: theFatesOnlyOneEye.cost,
+//       Hand: [theFatesOnlyOneEye],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "hand",
-//       theFatesOnlyOneEye.id,
+//       TheFatesOnlyOneEye.id,
 //     );
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

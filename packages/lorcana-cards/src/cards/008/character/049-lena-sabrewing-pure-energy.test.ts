@@ -3,42 +3,42 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   deweyLovableShowoff,
-//   lenaSabrewingPureEnergy,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   DeweyLovableShowoff,
+//   LenaSabrewingPureEnergy,
 // } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Lena Sabrewing - Pure Energy", () => {
-//   it("Evasive (Only characters with Evasive can challenge this character.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [lenaSabrewingPureEnergy],
+// Describe("Lena Sabrewing - Pure Energy", () => {
+//   It("Evasive (Only characters with Evasive can challenge this character.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [lenaSabrewingPureEnergy],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(lenaSabrewingPureEnergy);
-//     expect(cardUnderTest.hasEvasive).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(lenaSabrewingPureEnergy);
+//     Expect(cardUnderTest.hasEvasive).toBe(true);
 //   });
 //
-//   it("SUPERNATURAL VENGEANCE {E} – Deal 1 damage to chosen character.", async () => {
-//     const testEngine = new TestEngine(
+//   It("SUPERNATURAL VENGEANCE {E} – Deal 1 damage to chosen character.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         play: [lenaSabrewingPureEnergy],
+//         Play: [lenaSabrewingPureEnergy],
 //       },
 //       {
-//         play: [deweyLovableShowoff],
+//         Play: [deweyLovableShowoff],
 //       },
 //     );
 //
-//     const cardUnderTest = testEngine.getCardModel(lenaSabrewingPureEnergy);
-//     const target = testEngine.getCardModel(deweyLovableShowoff);
+//     Const cardUnderTest = testEngine.getCardModel(lenaSabrewingPureEnergy);
+//     Const target = testEngine.getCardModel(deweyLovableShowoff);
 //
-//     await testEngine.activateCard(cardUnderTest, {
-//       ability: "SUPERNATURAL VENGEANCE",
-//       targets: [target],
+//     Await testEngine.activateCard(cardUnderTest, {
+//       Ability: "SUPERNATURAL VENGEANCE",
+//       Targets: [target],
 //     });
 //
-//     expect(target.damage).toBe(1);
+//     Expect(target.damage).toBe(1);
 //   });
 // });
 //

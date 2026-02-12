@@ -3,24 +3,24 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { rayaGuardianOfTheDragonGem } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { rayaGuardianOfTheDragonGem } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Raya - Guardian of the Dragon Gem", () => {
-//   it.skip("**WE MUST JOIN FORCES** When you play this character, ready chosen character of yours at a location. They can’t quest for the rest of this turn.", () => {
-//     const testStore = new TestStore({
-//       inkwell: rayaGuardianOfTheDragonGem.cost,
-//       hand: [rayaGuardianOfTheDragonGem],
+// Describe("Raya - Guardian of the Dragon Gem", () => {
+//   It.skip("**WE MUST JOIN FORCES** When you play this character, ready chosen character of yours at a location. They can’t quest for the rest of this turn.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: rayaGuardianOfTheDragonGem.cost,
+//       Hand: [rayaGuardianOfTheDragonGem],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "hand",
-//       rayaGuardianOfTheDragonGem.id,
+//       RayaGuardianOfTheDragonGem.id,
 //     );
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

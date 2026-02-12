@@ -5,9 +5,9 @@ import { maleficentMonstrousDragon } from "./113-maleficent-monstrous-dragon";
 describe("Maleficent - Monstrous Dragon", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [maleficentMonstrousDragon] });
-  //   expect(testEngine.getCardModel(maleficentMonstrousDragon).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [maleficentMonstrousDragon] });
+  //   Expect(testEngine.getCardModel(maleficentMonstrousDragon).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,35 +17,35 @@ describe("Maleficent - Monstrous Dragon", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   maleficentMonstrousDragon,
-//   moanaOfMotunui,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   MaleficentMonstrousDragon,
+//   MoanaOfMotunui,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Maleficent Monstrous Dragon", () => {
-//   it("**Dragon Fire** When you play this character, you may banish chosen character.", () => {
-//     const testStore = new TestStore({
-//       inkwell: maleficentMonstrousDragon.cost,
-//       hand: [maleficentMonstrousDragon],
-//       play: [moanaOfMotunui],
+// Describe("Maleficent Monstrous Dragon", () => {
+//   It("**Dragon Fire** When you play this character, you may banish chosen character.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: maleficentMonstrousDragon.cost,
+//       Hand: [maleficentMonstrousDragon],
+//       Play: [moanaOfMotunui],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "hand",
-//       maleficentMonstrousDragon.id,
+//       MaleficentMonstrousDragon.id,
 //     );
-//     const target = testStore.getByZoneAndId("play", moanaOfMotunui.id);
+//     Const target = testStore.getByZoneAndId("play", moanaOfMotunui.id);
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({
-//       targetId: target.instanceId,
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({
+//       TargetId: target.instanceId,
 //     });
 //
-//     expect(target.zone).toEqual("discard");
+//     Expect(target.zone).toEqual("discard");
 //   });
 // });
 //

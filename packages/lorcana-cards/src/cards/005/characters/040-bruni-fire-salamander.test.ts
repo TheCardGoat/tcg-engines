@@ -3,35 +3,35 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { bruniFireSalamander } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { bruniFireSalamander } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Bruni - Fire Salamander", () => {
-//   it.skip("", () => {
-//     const testStore = new TestStore({
-//       inkwell: bruniFireSalamander.cost,
-//       play: [bruniFireSalamander],
+// Describe("Bruni - Fire Salamander", () => {
+//   It.skip("", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: bruniFireSalamander.cost,
+//       Play: [bruniFireSalamander],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(bruniFireSalamander);
+//     Const cardUnderTest = testStore.getCard(bruniFireSalamander);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 //
-//   it.skip("**PARTING GIFT** When this character is banished, you may draw a card.", () => {
-//     const testStore = new TestStore({
-//       inkwell: bruniFireSalamander.cost,
-//       play: [bruniFireSalamander],
+//   It.skip("**PARTING GIFT** When this character is banished, you may draw a card.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: bruniFireSalamander.cost,
+//       Play: [bruniFireSalamander],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(bruniFireSalamander);
+//     Const cardUnderTest = testStore.getCard(bruniFireSalamander);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

@@ -1,51 +1,51 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { whenYouPlayThis } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { whenYouPlayThis } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 //
-// export const kuzcoBoredRoyal: LorcanitoCharacterCard = {
-//   id: "bk2",
-//   name: "Kuzco",
-//   title: "Bored Royal",
-//   characteristics: ["storyborn", "king"],
-//   text: "LLAMA BREATH When you play this character, you may return chosen character, item, or location with cost 2 or less to their player's hand.",
-//   type: "character",
-//   inkwell: true,
-//   colors: ["amethyst"],
-//   cost: 4,
-//   strength: 1,
-//   willpower: 3,
-//   illustrator: "Rachel Elese",
-//   number: 53,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631387,
+// Export const kuzcoBoredRoyal: LorcanitoCharacterCard = {
+//   Id: "bk2",
+//   Name: "Kuzco",
+//   Title: "Bored Royal",
+//   Characteristics: ["storyborn", "king"],
+//   Text: "LLAMA BREATH When you play this character, you may return chosen character, item, or location with cost 2 or less to their player's hand.",
+//   Type: "character",
+//   Inkwell: true,
+//   Colors: ["amethyst"],
+//   Cost: 4,
+//   Strength: 1,
+//   Willpower: 3,
+//   Illustrator: "Rachel Elese",
+//   Number: 53,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631387,
 //   },
-//   rarity: "common",
-//   lore: 1,
-//   abilities: [
-//     whenYouPlayThis({
-//       name: "LLAMA BREATH",
-//       text: "When you play this character, you may return chosen character, item, or location with cost 2 or less to their player's hand.",
-//       optional: true,
-//       effects: [
+//   Rarity: "common",
+//   Lore: 1,
+//   Abilities: [
+//     WhenYouPlayThis({
+//       Name: "LLAMA BREATH",
+//       Text: "When you play this character, you may return chosen character, item, or location with cost 2 or less to their player's hand.",
+//       Optional: true,
+//       Effects: [
 //         {
-//           type: "move",
-//           to: "hand",
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
+//           Type: "move",
+//           To: "hand",
+//           Target: {
+//             Type: "card",
+//             Value: 1,
+//             Filters: [
 //               { filter: "zone", value: "play" },
 //               {
-//                 filter: "type",
-//                 value: ["character", "item", "location"],
+//                 Filter: "type",
+//                 Value: ["character", "item", "location"],
 //               },
 //               {
-//                 filter: "attribute",
-//                 value: "cost",
-//                 comparison: {
-//                   operator: "lte",
-//                   value: 2,
+//                 Filter: "attribute",
+//                 Value: "cost",
+//                 Comparison: {
+//                   Operator: "lte",
+//                   Value: 2,
 //                 },
 //               },
 //             ],

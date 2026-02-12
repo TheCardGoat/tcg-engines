@@ -1,29 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const rayaKumandranRider: CharacterCard = {
-  id: "1dx",
-  cardType: "character",
-  name: "Raya",
-  version: "Kumandran Rider",
-  fullName: "Raya - Kumandran Rider",
-  inkType: ["ruby"],
-  franchise: "Raya and the Last Dragon",
-  set: "006",
-  text: "COME ON, LET'S DO THIS Once during your turn, whenever a card is put into your inkwell, you may ready another chosen character of yours. They can't quest for the rest of this turn.",
-  cost: 4,
-  strength: 3,
-  willpower: 3,
-  lore: 2,
-  cardNumber: 107,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "b3e92dc9fec7a75e1e43f9771888ad399934f8f7",
-  },
   abilities: [
     {
-      id: "1dx-1",
-      type: "action",
       effect: {
         type: "optional",
         effect: {
@@ -34,8 +13,29 @@ export const rayaKumandranRider: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "1dx-1",
       text: "COME ON, LET'S DO THIS Once during your turn, whenever a card is put into your inkwell, you may ready another chosen character of yours. They can't quest for the rest of this turn.",
+      type: "action",
     },
   ],
+  cardNumber: 107,
+  cardType: "character",
   classifications: ["Storyborn", "Hero", "Princess"],
+  cost: 4,
+  externalIds: {
+    ravensburger: "b3e92dc9fec7a75e1e43f9771888ad399934f8f7",
+  },
+  franchise: "Raya and the Last Dragon",
+  fullName: "Raya - Kumandran Rider",
+  id: "1dx",
+  inkType: ["ruby"],
+  inkable: true,
+  lore: 2,
+  missingTests: true,
+  name: "Raya",
+  set: "006",
+  strength: 3,
+  text: "COME ON, LET'S DO THIS Once during your turn, whenever a card is put into your inkwell, you may ready another chosen character of yours. They can't quest for the rest of this turn.",
+  version: "Kumandran Rider",
+  willpower: 3,
 };

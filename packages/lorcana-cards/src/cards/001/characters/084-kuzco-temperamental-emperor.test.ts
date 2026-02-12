@@ -5,9 +5,9 @@ import { kuzcoTemperamentalEmperor } from "./084-kuzco-temperamental-emperor";
 describe("Kuzco - Temperamental Emperor", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [kuzcoTemperamentalEmperor] });
-  //   expect(testEngine.getCardModel(kuzcoTemperamentalEmperor).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [kuzcoTemperamentalEmperor] });
+  //   Expect(testEngine.getCardModel(kuzcoTemperamentalEmperor).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,76 +17,76 @@ describe("Kuzco - Temperamental Emperor", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   kuzcoTemperamentalEmperor,
-//   teKaTheBurningOne,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   KuzcoTemperamentalEmperor,
+//   TeKaTheBurningOne,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Kuzco - Temperamental Emperor", () => {
-//   describe("NO TOUCHY!** When this character is challenged and banished, you may banish the challenging character.", () => {
-//     it.skip("should banish the challenging character", () => {
-//       const testStore = new TestStore(
+// Describe("Kuzco - Temperamental Emperor", () => {
+//   Describe("NO TOUCHY!** When this character is challenged and banished, you may banish the challenging character.", () => {
+//     It.skip("should banish the challenging character", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [teKaTheBurningOne],
+//           Play: [teKaTheBurningOne],
 //         },
 //         {
-//           play: [kuzcoTemperamentalEmperor],
+//           Play: [kuzcoTemperamentalEmperor],
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         kuzcoTemperamentalEmperor.id,
+//         KuzcoTemperamentalEmperor.id,
 //         "player_two",
 //       );
 //
-//       const attacker = testStore.getByZoneAndId("play", teKaTheBurningOne.id);
+//       Const attacker = testStore.getByZoneAndId("play", teKaTheBurningOne.id);
 //
-//       expect(cardUnderTest.zone).toEqual("play");
-//       cardUnderTest.updateCardMeta({ exerted: true });
+//       Expect(cardUnderTest.zone).toEqual("play");
+//       CardUnderTest.updateCardMeta({ exerted: true });
 //
-//       attacker.challenge(cardUnderTest);
-//       testStore.resolveTopOfStack();
+//       Attacker.challenge(cardUnderTest);
+//       TestStore.resolveTopOfStack();
 //
-//       expect(testStore.getZonesCardCount("player_one")).toEqual(
-//         expect.objectContaining({ discard: 1, play: 0 }),
+//       Expect(testStore.getZonesCardCount("player_one")).toEqual(
+//         Expect.objectContaining({ discard: 1, play: 0 }),
 //       );
-//       expect(testStore.getZonesCardCount("player_two")).toEqual(
-//         expect.objectContaining({ discard: 1, play: 0 }),
+//       Expect(testStore.getZonesCardCount("player_two")).toEqual(
+//         Expect.objectContaining({ discard: 1, play: 0 }),
 //       );
 //     });
 //
-//     it.skip("skips banish effect", () => {
-//       const testStore = new TestStore(
+//     It.skip("skips banish effect", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [teKaTheBurningOne],
+//           Play: [teKaTheBurningOne],
 //         },
 //         {
-//           play: [kuzcoTemperamentalEmperor],
+//           Play: [kuzcoTemperamentalEmperor],
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         kuzcoTemperamentalEmperor.id,
+//         KuzcoTemperamentalEmperor.id,
 //         "player_two",
 //       );
 //
-//       const attacker = testStore.getByZoneAndId("play", teKaTheBurningOne.id);
+//       Const attacker = testStore.getByZoneAndId("play", teKaTheBurningOne.id);
 //
-//       expect(cardUnderTest.zone).toEqual("play");
-//       cardUnderTest.updateCardMeta({ exerted: true });
+//       Expect(cardUnderTest.zone).toEqual("play");
+//       CardUnderTest.updateCardMeta({ exerted: true });
 //
-//       attacker.challenge(cardUnderTest);
-//       testStore.resolveTopOfStack();
+//       Attacker.challenge(cardUnderTest);
+//       TestStore.resolveTopOfStack();
 //
-//       expect(testStore.getZonesCardCount("player_one")).toEqual(
-//         expect.objectContaining({ discard: 0, play: 1 }),
+//       Expect(testStore.getZonesCardCount("player_one")).toEqual(
+//         Expect.objectContaining({ discard: 0, play: 1 }),
 //       );
-//       expect(testStore.getZonesCardCount("player_two")).toEqual(
-//         expect.objectContaining({ discard: 1, play: 0 }),
+//       Expect(testStore.getZonesCardCount("player_two")).toEqual(
+//         Expect.objectContaining({ discard: 1, play: 0 }),
 //       );
 //     });
 //   });

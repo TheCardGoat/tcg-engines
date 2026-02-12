@@ -1,25 +1,8 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
 export const weKnowTheWay: ActionCard = {
-  id: "3jr",
-  cardType: "action",
-  name: "We Know the Way",
-  inkType: ["amethyst"],
-  franchise: "Moana",
-  set: "005",
-  text: "Shuffle chosen card from your discard into your deck. Reveal the top card of your deck. If it has the same name as the chosen card, you may play the revealed card for free. Otherwise, put it into your hand.",
-  actionSubtype: "song",
-  cost: 3,
-  cardNumber: 61,
-  inkable: true,
-  externalIds: {
-    ravensburger: "0cca9fb008e3df3430585d8838427da91697bdd4",
-  },
   abilities: [
     {
-      id: "3jr-1",
-      text: "Shuffle chosen card from your discard into your deck. Reveal the top card of your deck. If it has the same name as the chosen card, you may play the revealed card for free. Otherwise, put it into your hand.",
-      type: "action",
       effect: {
         type: "sequence",
         steps: [
@@ -56,6 +39,23 @@ export const weKnowTheWay: ActionCard = {
           },
         ],
       },
+      id: "3jr-1",
+      text: "Shuffle chosen card from your discard into your deck. Reveal the top card of your deck. If it has the same name as the chosen card, you may play the revealed card for free. Otherwise, put it into your hand.",
+      type: "action",
     },
   ],
+  actionSubtype: "song",
+  cardNumber: 61,
+  cardType: "action",
+  cost: 3,
+  externalIds: {
+    ravensburger: "0cca9fb008e3df3430585d8838427da91697bdd4",
+  },
+  franchise: "Moana",
+  id: "3jr",
+  inkType: ["amethyst"],
+  inkable: true,
+  name: "We Know the Way",
+  set: "005",
+  text: "Shuffle chosen card from your discard into your deck. Reveal the top card of your deck. If it has the same name as the chosen card, you may play the revealed card for free. Otherwise, put it into your hand.",
 };

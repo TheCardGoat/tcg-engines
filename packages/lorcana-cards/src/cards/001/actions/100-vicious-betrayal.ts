@@ -1,26 +1,8 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
 export const viciousBetrayal: ActionCard = {
-  id: "e6i",
-  cardType: "action",
-  name: "Vicious Betrayal",
-  version: "undefined",
-  fullName: "Vicious Betrayal - undefined",
-  inkType: ["emerald"],
-  franchise: "Disney",
-  set: "001",
-  text: "Chosen character gets +2 {S} this turn. If a Villain character is chosen, they get +3 {S} instead.",
-  cost: 1,
-  cardNumber: 100,
-  inkable: true,
-  externalIds: {
-    ravensburger: "",
-  },
   abilities: [
     {
-      type: "action",
-      text: "Chosen character gets +2 {S} this turn. If a Villain character is chosen, they get +3 {S} instead.",
-      id: "e6i-1",
       effect: {
         type: "conditional",
         condition: {
@@ -34,47 +16,65 @@ export const viciousBetrayal: ActionCard = {
           target: "CHOSEN_CHARACTER",
         },
       },
+      id: "e6i-1",
+      text: "Chosen character gets +2 {S} this turn. If a Villain character is chosen, they get +3 {S} instead.",
+      type: "action",
     },
   ],
+  cardNumber: 100,
+  cardType: "action",
+  cost: 1,
+  externalIds: {
+    ravensburger: "",
+  },
+  franchise: "Disney",
+  fullName: "Vicious Betrayal - undefined",
+  id: "e6i",
+  inkType: ["emerald"],
+  inkable: true,
+  name: "Vicious Betrayal",
+  set: "001",
+  text: "Chosen character gets +2 {S} this turn. If a Villain character is chosen, they get +3 {S} instead.",
+  version: "undefined",
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-// import type { TargetConditionalEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { TargetConditionalEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
 //
-// export const viciousBetrayal: LorcanitoActionCard = {
-//   id: "e6i",
-//   name: "Vicious Betrayal",
-//   characteristics: ["action"],
-//   text: "Chosen character gets +2 {S} this turn. If a Villain character is chosen, they get +3 {S} instead.",
-//   type: "action",
-//   abilities: [
+// Export const viciousBetrayal: LorcanitoActionCard = {
+//   Id: "e6i",
+//   Name: "Vicious Betrayal",
+//   Characteristics: ["action"],
+//   Text: "Chosen character gets +2 {S} this turn. If a Villain character is chosen, they get +3 {S} instead.",
+//   Type: "action",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       effects: [
+//       Type: "resolution",
+//       Effects: [
 //         {
-//           type: "target-conditional",
-//           autoResolve: false,
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
+//           Type: "target-conditional",
+//           AutoResolve: false,
+//           Target: {
+//             Type: "card",
+//             Value: 1,
+//             Filters: [
 //               { filter: "type", value: "character" },
 //               { filter: "zone", value: "play" },
 //               { filter: "characteristics", value: ["villain"] },
 //             ],
 //           },
-//           effects: [
+//           Effects: [
 //             {
-//               type: "attribute",
-//               attribute: "strength",
-//               amount: 3,
-//               modifier: "add",
-//               duration: "turn",
-//               target: {
-//                 type: "card",
-//                 value: 1,
-//                 filters: [
+//               Type: "attribute",
+//               Attribute: "strength",
+//               Amount: 3,
+//               Modifier: "add",
+//               Duration: "turn",
+//               Target: {
+//                 Type: "card",
+//                 Value: 1,
+//                 Filters: [
 //                   { filter: "type", value: "character" },
 //                   { filter: "zone", value: "play" },
 //                   { filter: "characteristics", value: ["villain"] },
@@ -82,17 +82,17 @@ export const viciousBetrayal: ActionCard = {
 //               },
 //             },
 //           ],
-//           fallback: [
+//           Fallback: [
 //             {
-//               type: "attribute",
-//               attribute: "strength",
-//               amount: 2,
-//               modifier: "add",
-//               duration: "turn",
-//               target: {
-//                 type: "card",
-//                 value: 1,
-//                 filters: [
+//               Type: "attribute",
+//               Attribute: "strength",
+//               Amount: 2,
+//               Modifier: "add",
+//               Duration: "turn",
+//               Target: {
+//                 Type: "card",
+//                 Value: 1,
+//                 Filters: [
 //                   { filter: "type", value: "character" },
 //                   { filter: "zone", value: "play" },
 //                 ],
@@ -103,16 +103,16 @@ export const viciousBetrayal: ActionCard = {
 //       ],
 //     },
 //   ],
-//   flavour: "A true king takes matters into his own claws. −Scar",
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 1,
-//   illustrator: "Michaela Martin",
-//   number: 100,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 506150,
+//   Flavour: "A true king takes matters into his own claws. −Scar",
+//   Inkwell: true,
+//   Colors: ["emerald"],
+//   Cost: 1,
+//   Illustrator: "Michaela Martin",
+//   Number: 100,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 506150,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

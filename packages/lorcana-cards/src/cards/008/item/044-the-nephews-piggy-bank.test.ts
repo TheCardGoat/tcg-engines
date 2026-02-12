@@ -3,55 +3,55 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { donaldDuck } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import {
-//   jumbaJookibaCriticalScientist,
-//   theNephewsPiggyBank,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { donaldDuck } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import {
+//   JumbaJookibaCriticalScientist,
+//   TheNephewsPiggyBank,
 // } from "@lorcanito/lorcana-engine/cards/008";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("The Nephews' Piggy Bank", () => {
-//   it("INSIDE JOB If you have a character named Donald Duck in play, you pay 1 {I} less to play this item.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: theNephewsPiggyBank.cost - 1,
-//       play: [donaldDuck],
-//       hand: [theNephewsPiggyBank],
+// Describe("The Nephews' Piggy Bank", () => {
+//   It("INSIDE JOB If you have a character named Donald Duck in play, you pay 1 {I} less to play this item.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: theNephewsPiggyBank.cost - 1,
+//       Play: [donaldDuck],
+//       Hand: [theNephewsPiggyBank],
 //     });
 //
-//     await testEngine.playCard(theNephewsPiggyBank);
+//     Await testEngine.playCard(theNephewsPiggyBank);
 //
-//     expect(testEngine.getCardModel(theNephewsPiggyBank).zone).toBe("play");
+//     Expect(testEngine.getCardModel(theNephewsPiggyBank).zone).toBe("play");
 //   });
 //
-//   it("PAYOFF {e} – Chosen character gets -1 {S} until the start of your next turn.", async () => {
-//     const testEngine = new TestEngine(
+//   It("PAYOFF {e} – Chosen character gets -1 {S} until the start of your next turn.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         play: [theNephewsPiggyBank],
+//         Play: [theNephewsPiggyBank],
 //       },
 //       {
-//         play: [jumbaJookibaCriticalScientist],
+//         Play: [jumbaJookibaCriticalScientist],
 //       },
 //     );
 //
-//     await testEngine.activateCard(theNephewsPiggyBank, {
-//       targets: [jumbaJookibaCriticalScientist],
+//     Await testEngine.activateCard(theNephewsPiggyBank, {
+//       Targets: [jumbaJookibaCriticalScientist],
 //     });
 //
-//     expect(
-//       testEngine.getCardModel(jumbaJookibaCriticalScientist).strength,
+//     Expect(
+//       TestEngine.getCardModel(jumbaJookibaCriticalScientist).strength,
 //     ).toBe(jumbaJookibaCriticalScientist.strength - 1);
 //
-//     await testEngine.passTurn();
+//     Await testEngine.passTurn();
 //
-//     expect(
-//       testEngine.getCardModel(jumbaJookibaCriticalScientist).strength,
+//     Expect(
+//       TestEngine.getCardModel(jumbaJookibaCriticalScientist).strength,
 //     ).toBe(jumbaJookibaCriticalScientist.strength - 1);
 //
-//     await testEngine.passTurn();
+//     Await testEngine.passTurn();
 //
-//     expect(
-//       testEngine.getCardModel(jumbaJookibaCriticalScientist).strength,
+//     Expect(
+//       TestEngine.getCardModel(jumbaJookibaCriticalScientist).strength,
 //     ).toBe(jumbaJookibaCriticalScientist.strength);
 //   });
 // });

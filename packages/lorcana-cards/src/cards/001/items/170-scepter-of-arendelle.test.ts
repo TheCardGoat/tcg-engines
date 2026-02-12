@@ -5,9 +5,9 @@ import { scepterOfArendelle } from "./170-scepter-of-arendelle";
 describe("Scepter Of Arendelle - undefined", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [scepterOfArendelle] });
-  //   expect(testEngine.getCardModel(scepterOfArendelle).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [scepterOfArendelle] });
+  //   Expect(testEngine.getCardModel(scepterOfArendelle).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });

@@ -1,9 +1,5 @@
 import type { GameDefinition } from "@tcg/core";
-import type {
-  LorcanaCardMeta,
-  LorcanaGameState,
-  LorcanaMoveParams,
-} from "../types";
+import type { LorcanaCardMeta, LorcanaGameState, LorcanaMoveParams } from "../types";
 import { lorcanaFlow } from "./flow/turn-flow";
 import { lorcanaMoves } from "./moves";
 import { setupLorcanaGame } from "./setup/game-setup";
@@ -35,11 +31,11 @@ export const lorcanaGameDefinition: GameDefinition<
   unknown, // Card definitions (to be added)
   LorcanaCardMeta
 > = {
-  name: "Disney Lorcana TCG",
-  zones: lorcanaZones,
+  endIf: checkLoreVictory,
   flow: lorcanaFlow,
   moves: lorcanaMoves,
-  trackers: trackerConfig,
+  name: "Disney Lorcana TCG",
   setup: setupLorcanaGame,
-  endIf: checkLoreVictory,
+  trackers: trackerConfig,
+  zones: lorcanaZones,
 };

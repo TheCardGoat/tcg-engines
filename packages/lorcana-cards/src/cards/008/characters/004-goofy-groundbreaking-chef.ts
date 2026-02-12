@@ -1,28 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const goofyGroundbreakingChef: CharacterCard = {
-  id: "t21",
-  cardType: "character",
-  name: "Goofy",
-  version: "Groundbreaking Chef",
-  fullName: "Goofy - Groundbreaking Chef",
-  inkType: ["amber"],
-  set: "008",
-  text: "PLENTY TO GO AROUND At the end of your turn, you may remove up to 1 damage from each of your other characters. Ready each character you removed damage from this way.",
-  cost: 4,
-  strength: 3,
-  willpower: 4,
-  lore: 2,
-  cardNumber: 4,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "68b90a0038800e642717b1cfd159e7738b522975",
-  },
   abilities: [
     {
-      id: "t21-1",
-      type: "action",
       effect: {
         type: "optional",
         effect: {
@@ -39,8 +19,28 @@ export const goofyGroundbreakingChef: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "t21-1",
       text: "PLENTY TO GO AROUND At the end of your turn, you may remove up to 1 damage from each of your other characters. Ready each character you removed damage from this way.",
+      type: "action",
     },
   ],
+  cardNumber: 4,
+  cardType: "character",
   classifications: ["Storyborn", "Hero"],
+  cost: 4,
+  externalIds: {
+    ravensburger: "68b90a0038800e642717b1cfd159e7738b522975",
+  },
+  fullName: "Goofy - Groundbreaking Chef",
+  id: "t21",
+  inkType: ["amber"],
+  inkable: true,
+  lore: 2,
+  missingTests: true,
+  name: "Goofy",
+  set: "008",
+  strength: 3,
+  text: "PLENTY TO GO AROUND At the end of your turn, you may remove up to 1 damage from each of your other characters. Ready each character you removed damage from this way.",
+  version: "Groundbreaking Chef",
+  willpower: 4,
 };

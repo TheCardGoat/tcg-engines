@@ -3,74 +3,74 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { akelaForestRunner } from "@lorcanito/lorcana-engine/cards/010/characters/characters";
-// import { whiteAgonyPlainsGoldenLagoon } from "@lorcanito/lorcana-engine/cards/010/locations/locations";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { akelaForestRunner } from "@lorcanito/lorcana-engine/cards/010/characters/characters";
+// Import { whiteAgonyPlainsGoldenLagoon } from "@lorcanito/lorcana-engine/cards/010/locations/locations";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe.skip("White Agony Plains - Golden Lagoon", () => {
-//   describe.skip("PURE LIQUID GOLD This location gets +1 for each character here.", () => {
-//     it("should have base willpower of 7 with no characters at the location", () => {
-//       const testStore = new TestStore(
+// Describe.skip("White Agony Plains - Golden Lagoon", () => {
+//   Describe.skip("PURE LIQUID GOLD This location gets +1 for each character here.", () => {
+//     It("should have base willpower of 7 with no characters at the location", () => {
+//       Const testStore = new TestStore(
 //         { play: [whiteAgonyPlainsGoldenLagoon] },
 //         {},
 //       );
 //
-//       const location = testStore.getByZoneAndId(
+//       Const location = testStore.getByZoneAndId(
 //         "play",
-//         whiteAgonyPlainsGoldenLagoon.id,
+//         WhiteAgonyPlainsGoldenLagoon.id,
 //       );
-//       expect(location.willpower).toBe(7);
+//       Expect(location.willpower).toBe(7);
 //     });
 //
-//     it("should have willpower of 8 with 1 character at the location", () => {
-//       const testStore = new TestStore(
+//     It("should have willpower of 8 with 1 character at the location", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [whiteAgonyPlainsGoldenLagoon, akelaForestRunner],
+//           Play: [whiteAgonyPlainsGoldenLagoon, akelaForestRunner],
 //         },
 //         {},
 //       );
 //
 //       // Move character to the location
-//       const character = testStore.getByZoneAndId("play", akelaForestRunner.id);
-//       const location = testStore.getByZoneAndId(
+//       Const character = testStore.getByZoneAndId("play", akelaForestRunner.id);
+//       Const location = testStore.getByZoneAndId(
 //         "play",
-//         whiteAgonyPlainsGoldenLagoon.id,
+//         WhiteAgonyPlainsGoldenLagoon.id,
 //       );
 //
-//       character.enterLocation(location);
+//       Character.enterLocation(location);
 //
 //       // Base willpower (7) + 1 character = 8
-//       expect(location.willpower).toBe(8);
+//       Expect(location.willpower).toBe(8);
 //     });
 //
-//     it("should have willpower of 9 with 2 characters at the location", () => {
-//       const testStore = new TestStore(
+//     It("should have willpower of 9 with 2 characters at the location", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [
-//             whiteAgonyPlainsGoldenLagoon,
-//             akelaForestRunner,
-//             akelaForestRunner,
+//           Play: [
+//             WhiteAgonyPlainsGoldenLagoon,
+//             AkelaForestRunner,
+//             AkelaForestRunner,
 //           ],
 //         },
 //         {},
 //       );
 //
-//       const characters = testStore.store.cardStore.getAllCards.filter(
+//       Const characters = testStore.store.cardStore.getAllCards.filter(
 //         (card) => card.lorcanitoCard?.id === akelaForestRunner.id,
 //       );
-//       const location = testStore.getByZoneAndId(
+//       Const location = testStore.getByZoneAndId(
 //         "play",
-//         whiteAgonyPlainsGoldenLagoon.id,
+//         WhiteAgonyPlainsGoldenLagoon.id,
 //       );
 //
 //       // Move both characters to the location
-//       characters.forEach((character) => {
-//         character.enterLocation(location);
+//       Characters.forEach((character) => {
+//         Character.enterLocation(location);
 //       });
 //
 //       // Base willpower (7) + 2 characters = 9
-//       expect(location.willpower).toBe(9);
+//       Expect(location.willpower).toBe(9);
 //     });
 //   });
 // });

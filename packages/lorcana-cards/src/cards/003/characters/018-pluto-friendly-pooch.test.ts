@@ -3,29 +3,29 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import {
-//   plutoDeterminedDefender,
-//   plutoFriendlyPooch,
+// Import { describe, it } from "@jest/globals";
+// Import {
+//   PlutoDeterminedDefender,
+//   PlutoFriendlyPooch,
 // } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe.skip("Pluto - Friendly Pooch", () => {
-//   it("**GOOD DOG** {E} – You pay 1 {I} less for the next character you play this turn.", () => {
-//     const testStore = new TestStore({
-//       inkwell: plutoDeterminedDefender.cost - 1,
-//       hand: [plutoDeterminedDefender],
-//       play: [plutoFriendlyPooch],
+// Describe.skip("Pluto - Friendly Pooch", () => {
+//   It("**GOOD DOG** {E} – You pay 1 {I} less for the next character you play this turn.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: plutoDeterminedDefender.cost - 1,
+//       Hand: [plutoDeterminedDefender],
+//       Play: [plutoFriendlyPooch],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       plutoFriendlyPooch.id,
+//       PlutoFriendlyPooch.id,
 //     );
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

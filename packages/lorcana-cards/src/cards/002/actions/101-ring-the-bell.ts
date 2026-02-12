@@ -1,24 +1,8 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
 export const ringTheBell: ActionCard = {
-  id: "eam",
-  cardType: "action",
-  name: "Ring the Bell",
-  inkType: ["emerald"],
-  franchise: "Great Mouse Detective",
-  set: "002",
-  text: "Banish chosen damaged character.",
-  cost: 3,
-  cardNumber: 101,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "33859d5b1f672f1eb04078991404e42b82ae7f43",
-  },
   abilities: [
     {
-      id: "eam-1",
-      type: "action",
       effect: {
         type: "banish",
         target: {
@@ -29,7 +13,23 @@ export const ringTheBell: ActionCard = {
           cardTypes: ["character"],
         },
       },
+      id: "eam-1",
       text: "Banish chosen damaged character.",
+      type: "action",
     },
   ],
+  cardNumber: 101,
+  cardType: "action",
+  cost: 3,
+  externalIds: {
+    ravensburger: "33859d5b1f672f1eb04078991404e42b82ae7f43",
+  },
+  franchise: "Great Mouse Detective",
+  id: "eam",
+  inkType: ["emerald"],
+  inkable: true,
+  missingTests: true,
+  name: "Ring the Bell",
+  set: "002",
+  text: "Banish chosen damaged character.",
 };

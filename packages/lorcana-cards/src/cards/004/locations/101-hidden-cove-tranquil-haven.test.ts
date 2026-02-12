@@ -3,69 +3,69 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   mickeyMouseWaywardSorcerer,
-//   minnieMouseBelovedPrincess,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   MickeyMouseWaywardSorcerer,
+//   MinnieMouseBelovedPrincess,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { faLiMulansMother } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { hiddenCoveTranquilHaven } from "@lorcanito/lorcana-engine/cards/004/locations/locations";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { faLiMulansMother } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { hiddenCoveTranquilHaven } from "@lorcanito/lorcana-engine/cards/004/locations/locations";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Hidden Cove - Tranquil Haven", () => {
-//   it("**REVITALIZING WATERS** Characters get +1 {S} and +1 {W}️ while here.", () => {
-//     const testStore = new TestStore(
+// Describe("Hidden Cove - Tranquil Haven", () => {
+//   It("**REVITALIZING WATERS** Characters get +1 {S} and +1 {W}️ while here.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: hiddenCoveTranquilHaven.moveCost * 2,
-//         play: [
-//           hiddenCoveTranquilHaven,
-//           faLiMulansMother,
-//           minnieMouseBelovedPrincess,
+//         Inkwell: hiddenCoveTranquilHaven.moveCost * 2,
+//         Play: [
+//           HiddenCoveTranquilHaven,
+//           FaLiMulansMother,
+//           MinnieMouseBelovedPrincess,
 //         ],
-//         deck: 2,
+//         Deck: 2,
 //       },
 //       {
-//         play: [mickeyMouseWaywardSorcerer],
+//         Play: [mickeyMouseWaywardSorcerer],
 //       },
 //     );
 //
-//     const character = testStore.getCard(faLiMulansMother);
-//     const anotherChar = testStore.getCard(minnieMouseBelovedPrincess);
-//     const location = testStore.getCard(hiddenCoveTranquilHaven);
+//     Const character = testStore.getCard(faLiMulansMother);
+//     Const anotherChar = testStore.getCard(minnieMouseBelovedPrincess);
+//     Const location = testStore.getCard(hiddenCoveTranquilHaven);
 //
-//     expect(character.strength).toEqual(faLiMulansMother.strength);
-//     expect(character.willpower).toEqual(faLiMulansMother.willpower);
+//     Expect(character.strength).toEqual(faLiMulansMother.strength);
+//     Expect(character.willpower).toEqual(faLiMulansMother.willpower);
 //
-//     character.enterLocation(location);
-//     anotherChar.enterLocation(location);
+//     Character.enterLocation(location);
+//     AnotherChar.enterLocation(location);
 //
-//     expect(character.strength).toEqual(faLiMulansMother.strength + 1);
-//     expect(character.willpower).toEqual(faLiMulansMother.willpower + 1);
-//     expect(anotherChar.strength).toEqual(
-//       minnieMouseBelovedPrincess.strength + 1,
+//     Expect(character.strength).toEqual(faLiMulansMother.strength + 1);
+//     Expect(character.willpower).toEqual(faLiMulansMother.willpower + 1);
+//     Expect(anotherChar.strength).toEqual(
+//       MinnieMouseBelovedPrincess.strength + 1,
 //     );
-//     expect(anotherChar.willpower).toEqual(
-//       minnieMouseBelovedPrincess.willpower + 1,
+//     Expect(anotherChar.willpower).toEqual(
+//       MinnieMouseBelovedPrincess.willpower + 1,
 //     );
 //
-//     const defender = testStore.getCard(mickeyMouseWaywardSorcerer);
-//     defender.updateCardMeta({ exerted: true });
+//     Const defender = testStore.getCard(mickeyMouseWaywardSorcerer);
+//     Defender.updateCardMeta({ exerted: true });
 //
-//     anotherChar.challenge(defender);
+//     AnotherChar.challenge(defender);
 //
-//     expect(defender.meta.damage).toBe(minnieMouseBelovedPrincess.strength + 1);
-//     expect(anotherChar.meta.damage).toBe(mickeyMouseWaywardSorcerer.strength);
+//     Expect(defender.meta.damage).toBe(minnieMouseBelovedPrincess.strength + 1);
+//     Expect(anotherChar.meta.damage).toBe(mickeyMouseWaywardSorcerer.strength);
 //   });
 //
-//   it("Doesn't give the bonus to itself", () => {
-//     const testStore = new TestStore({
-//       play: [hiddenCoveTranquilHaven],
+//   It("Doesn't give the bonus to itself", () => {
+//     Const testStore = new TestStore({
+//       Play: [hiddenCoveTranquilHaven],
 //     });
 //
-//     const location = testStore.getCard(hiddenCoveTranquilHaven);
+//     Const location = testStore.getCard(hiddenCoveTranquilHaven);
 //
-//     expect(location.willpower).toBe(hiddenCoveTranquilHaven.willpower);
-//     expect(location.strength).toBe(hiddenCoveTranquilHaven.strength || 0);
+//     Expect(location.willpower).toBe(hiddenCoveTranquilHaven.willpower);
+//     Expect(location.strength).toBe(hiddenCoveTranquilHaven.strength || 0);
 //   });
 // });
 //

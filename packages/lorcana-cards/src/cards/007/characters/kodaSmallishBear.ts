@@ -1,24 +1,24 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const kodaSmallishBear: LorcanitoCharacterCard = {
-//   id: "dgl",
-//   name: "Koda",
-//   title: "Smallish Bear",
-//   characteristics: ["storyborn", "ally"],
-//   type: "character",
-//   inkwell: true,
-//   colors: ["amber"],
-//   cost: 3,
-//   strength: 2,
-//   willpower: 2,
-//   illustrator: "Jeanne Plounevez",
-//   number: 34,
-//   set: "007",
-//   externalIds: {
-//     tcgPlayer: 618719,
+// Export const kodaSmallishBear: LorcanitoCharacterCard = {
+//   Id: "dgl",
+//   Name: "Koda",
+//   Title: "Smallish Bear",
+//   Characteristics: ["storyborn", "ally"],
+//   Type: "character",
+//   Inkwell: true,
+//   Colors: ["amber"],
+//   Cost: 3,
+//   Strength: 2,
+//   Willpower: 2,
+//   Illustrator: "Jeanne Plounevez",
+//   Number: 34,
+//   Set: "007",
+//   ExternalIds: {
+//     TcgPlayer: 618719,
 //   },
-//   rarity: "uncommon",
-//   lore: 3,
+//   Rarity: "uncommon",
+//   Lore: 3,
 // };
 //

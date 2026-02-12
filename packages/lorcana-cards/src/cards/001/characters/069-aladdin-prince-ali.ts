@@ -1,56 +1,56 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const aladdinPrinceAli: CharacterCard = {
-  id: "j5x",
-  cardType: "character",
-  name: "Aladdin",
-  version: "Prince Ali",
-  fullName: "Aladdin - Prince Ali",
-  inkType: ["emerald"],
-  franchise: "Disney",
-  set: "001",
-  text: "**Ward** _(Opponents can",
-  cost: 2,
-  strength: 2,
-  willpower: 2,
-  lore: 1,
+  abilities: [],
   cardNumber: 69,
-  inkable: true,
+  cardType: "character",
+  classifications: ["Hero", "Storyborn", "Prince"],
+  cost: 2,
   externalIds: {
     ravensburger: "",
   },
-  abilities: [],
-  classifications: ["Hero", "Storyborn", "Prince"],
+  franchise: "Disney",
+  fullName: "Aladdin - Prince Ali",
+  id: "j5x",
+  inkType: ["emerald"],
+  inkable: true,
+  lore: 1,
+  name: "Aladdin",
+  set: "001",
+  strength: 2,
+  text: "**Ward** _(Opponents can",
+  version: "Prince Ali",
+  willpower: 2,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { wardAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import { wardAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const aladdinPrinceAli: LorcanitoCharacterCard = {
-//   id: "j5x",
-//   reprints: ["n78"],
+// Export const aladdinPrinceAli: LorcanitoCharacterCard = {
+//   Id: "j5x",
+//   Reprints: ["n78"],
 //
-//   name: "Aladdin",
-//   title: "Prince Ali",
-//   characteristics: ["hero", "storyborn", "prince"],
-//   text: "**Ward** _(Opponents can't choose this character except to challenge.)_",
-//   type: "character",
-//   illustrator: "Lauren Walsh",
-//   abilities: [wardAbility],
-//   flavour:
+//   Name: "Aladdin",
+//   Title: "Prince Ali",
+//   Characteristics: ["hero", "storyborn", "prince"],
+//   Text: "**Ward** _(Opponents can't choose this character except to challenge.)_",
+//   Type: "character",
+//   Illustrator: "Lauren Walsh",
+//   Abilities: [wardAbility],
+//   Flavour:
 //     "Fabulously wealthy. Practically untouchable. Genuinely inauthentic.",
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 2,
-//   strength: 2,
-//   willpower: 2,
-//   lore: 1,
-//   number: 69,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 485361,
+//   Inkwell: true,
+//   Colors: ["emerald"],
+//   Cost: 2,
+//   Strength: 2,
+//   Willpower: 2,
+//   Lore: 1,
+//   Number: 69,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 485361,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

@@ -3,40 +3,40 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { madamMimFox } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import {
-//   brutusFearsomeCrocodile,
-//   deweyLovableShowoff,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { madamMimFox } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import {
+//   BrutusFearsomeCrocodile,
+//   DeweyLovableShowoff,
 // } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Brutus - Fearsome Crocodile", () => {
-//   it("SPITEFUL During your turn, when this character is banished, if one of your characters was damaged this turn, gain 2 lore.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Brutus - Fearsome Crocodile", () => {
+//   It("SPITEFUL During your turn, when this character is banished, if one of your characters was damaged this turn, gain 2 lore.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: brutusFearsomeCrocodile.cost,
-//         play: [brutusFearsomeCrocodile, deweyLovableShowoff],
+//         Inkwell: brutusFearsomeCrocodile.cost,
+//         Play: [brutusFearsomeCrocodile, deweyLovableShowoff],
 //       },
 //       {
-//         play: [madamMimFox],
+//         Play: [madamMimFox],
 //       },
 //     );
 //
-//     const cardUnderTest = testEngine.getCardModel(brutusFearsomeCrocodile);
-//     const otherCard = testEngine.getCardModel(deweyLovableShowoff);
-//     const target = testEngine.getCardModel(madamMimFox);
+//     Const cardUnderTest = testEngine.getCardModel(brutusFearsomeCrocodile);
+//     Const otherCard = testEngine.getCardModel(deweyLovableShowoff);
+//     Const target = testEngine.getCardModel(madamMimFox);
 //
-//     target.exert();
+//     Target.exert();
 //
-//     await testEngine.challenge({
-//       attacker: cardUnderTest,
-//       defender: target,
+//     Await testEngine.challenge({
+//       Attacker: cardUnderTest,
+//       Defender: target,
 //     });
 //
-//     testEngine.setCardDamage(otherCard, 1);
+//     TestEngine.setCardDamage(otherCard, 1);
 //
-//     expect(testEngine.getPlayerLore()).toEqual(2);
+//     Expect(testEngine.getPlayerLore()).toEqual(2);
 //   });
 // });
 //

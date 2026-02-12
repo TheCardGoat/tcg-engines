@@ -3,252 +3,252 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   magicBroomBucketBrigade,
-//   mickeyMouseTrueFriend,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   MagicBroomBucketBrigade,
+//   MickeyMouseTrueFriend,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import {
-//   magicMirror,
-//   ursulaCaldron,
+// Import {
+//   MagicMirror,
+//   UrsulaCaldron,
 // } from "@lorcanito/lorcana-engine/cards/001/items/items";
-// import {
-//   christopherRobinAdventurer,
-//   mickeyMouseFriendlyFace,
+// Import {
+//   ChristopherRobinAdventurer,
+//   MickeyMouseFriendlyFace,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import {
-//   dragonGem,
-//   theSorcerersSpellbook,
+// Import {
+//   DragonGem,
+//   TheSorcerersSpellbook,
 // } from "@lorcanito/lorcana-engine/cards/002/items/items";
-// import { mightSolveAMystery } from "@lorcanito/lorcana-engine/cards/010";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { mightSolveAMystery } from "@lorcanito/lorcana-engine/cards/010";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Might Solve a Mystery", () => {
-//   describe("Look at the top 4 cards of your deck. You may reveal up to 1 character card and up to 1 item card and put them into your hand. Put the rest on the bottom of your deck in any order.", () => {
-//     const deck = [
-//       mickeyMouseTrueFriend,
-//       magicBroomBucketBrigade,
-//       ursulaCaldron,
-//       magicMirror,
-//       christopherRobinAdventurer,
-//       dragonGem,
-//       mickeyMouseFriendlyFace,
-//       theSorcerersSpellbook,
+// Describe("Might Solve a Mystery", () => {
+//   Describe("Look at the top 4 cards of your deck. You may reveal up to 1 character card and up to 1 item card and put them into your hand. Put the rest on the bottom of your deck in any order.", () => {
+//     Const deck = [
+//       MickeyMouseTrueFriend,
+//       MagicBroomBucketBrigade,
+//       UrsulaCaldron,
+//       MagicMirror,
+//       ChristopherRobinAdventurer,
+//       DragonGem,
+//       MickeyMouseFriendlyFace,
+//       TheSorcerersSpellbook,
 //     ];
 //
-//     it("Happy Case - takes 1 character and 1 item to hand, rest go to bottom", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: mightSolveAMystery.cost,
-//         hand: [mightSolveAMystery],
-//         deck: deck,
+//     It("Happy Case - takes 1 character and 1 item to hand, rest go to bottom", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: mightSolveAMystery.cost,
+//         Hand: [mightSolveAMystery],
+//         Deck: deck,
 //       });
 //
-//       await testEngine.playCard(mightSolveAMystery, {
-//         scry: {
-//           hand: [mickeyMouseTrueFriend, ursulaCaldron],
-//           bottom: [magicBroomBucketBrigade, magicMirror],
+//       Await testEngine.playCard(mightSolveAMystery, {
+//         Scry: {
+//           Hand: [mickeyMouseTrueFriend, ursulaCaldron],
+//           Bottom: [magicBroomBucketBrigade, magicMirror],
 //         },
 //       });
 //
 //       // Should have drawn both the character and the item
-//       expect(testEngine.getCardModel(mickeyMouseTrueFriend).zone).toBe("hand");
-//       expect(testEngine.getCardModel(ursulaCaldron).zone).toBe("hand");
+//       Expect(testEngine.getCardModel(mickeyMouseTrueFriend).zone).toBe("hand");
+//       Expect(testEngine.getCardModel(ursulaCaldron).zone).toBe("hand");
 //       // The rest should be on bottom in the order we specified
-//       expect(testEngine.getCardModel(magicBroomBucketBrigade).zone).toBe(
+//       Expect(testEngine.getCardModel(magicBroomBucketBrigade).zone).toBe(
 //         "deck",
 //       );
-//       expect(testEngine.getCardModel(magicMirror).zone).toBe("deck");
+//       Expect(testEngine.getCardModel(magicMirror).zone).toBe("deck");
 //     });
 //
-//     it("Choosing only a character, no item", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: mightSolveAMystery.cost,
-//         hand: [mightSolveAMystery],
-//         deck: deck,
+//     It("Choosing only a character, no item", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: mightSolveAMystery.cost,
+//         Hand: [mightSolveAMystery],
+//         Deck: deck,
 //       });
 //
-//       await testEngine.playCard(mightSolveAMystery, {
-//         scry: {
-//           hand: [christopherRobinAdventurer],
-//           bottom: [
-//             mickeyMouseTrueFriend,
-//             magicBroomBucketBrigade,
-//             ursulaCaldron,
+//       Await testEngine.playCard(mightSolveAMystery, {
+//         Scry: {
+//           Hand: [christopherRobinAdventurer],
+//           Bottom: [
+//             MickeyMouseTrueFriend,
+//             MagicBroomBucketBrigade,
+//             UrsulaCaldron,
 //           ],
 //         },
 //       });
 //
-//       expect(testEngine.getCardModel(christopherRobinAdventurer).zone).toBe(
+//       Expect(testEngine.getCardModel(christopherRobinAdventurer).zone).toBe(
 //         "hand",
 //       );
-//       expect(testEngine.getCardModel(mickeyMouseTrueFriend).zone).toBe("deck");
-//       expect(testEngine.getCardModel(magicBroomBucketBrigade).zone).toBe(
+//       Expect(testEngine.getCardModel(mickeyMouseTrueFriend).zone).toBe("deck");
+//       Expect(testEngine.getCardModel(magicBroomBucketBrigade).zone).toBe(
 //         "deck",
 //       );
-//       expect(testEngine.getCardModel(ursulaCaldron).zone).toBe("deck");
+//       Expect(testEngine.getCardModel(ursulaCaldron).zone).toBe("deck");
 //     });
 //
-//     it("Choosing only an item, no character", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: mightSolveAMystery.cost,
-//         hand: [mightSolveAMystery],
-//         deck: deck,
+//     It("Choosing only an item, no character", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: mightSolveAMystery.cost,
+//         Hand: [mightSolveAMystery],
+//         Deck: deck,
 //       });
 //
-//       await testEngine.playCard(mightSolveAMystery, {
-//         scry: {
-//           hand: [dragonGem],
-//           bottom: [
-//             mickeyMouseTrueFriend,
-//             magicBroomBucketBrigade,
-//             ursulaCaldron,
+//       Await testEngine.playCard(mightSolveAMystery, {
+//         Scry: {
+//           Hand: [dragonGem],
+//           Bottom: [
+//             MickeyMouseTrueFriend,
+//             MagicBroomBucketBrigade,
+//             UrsulaCaldron,
 //           ],
 //         },
 //       });
 //
-//       expect(testEngine.getCardModel(dragonGem).zone).toBe("hand");
-//       expect(testEngine.getCardModel(mickeyMouseTrueFriend).zone).toBe("deck");
-//       expect(testEngine.getCardModel(magicBroomBucketBrigade).zone).toBe(
+//       Expect(testEngine.getCardModel(dragonGem).zone).toBe("hand");
+//       Expect(testEngine.getCardModel(mickeyMouseTrueFriend).zone).toBe("deck");
+//       Expect(testEngine.getCardModel(magicBroomBucketBrigade).zone).toBe(
 //         "deck",
 //       );
-//       expect(testEngine.getCardModel(ursulaCaldron).zone).toBe("deck");
+//       Expect(testEngine.getCardModel(ursulaCaldron).zone).toBe("deck");
 //     });
 //
-//     it("Choosing neither character nor item (all go to bottom)", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: mightSolveAMystery.cost,
-//         hand: [mightSolveAMystery],
-//         deck: deck,
+//     It("Choosing neither character nor item (all go to bottom)", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: mightSolveAMystery.cost,
+//         Hand: [mightSolveAMystery],
+//         Deck: deck,
 //       });
 //
-//       await testEngine.playCard(mightSolveAMystery, {
-//         scry: {
-//           hand: [],
-//           bottom: [
-//             mickeyMouseTrueFriend,
-//             magicBroomBucketBrigade,
-//             ursulaCaldron,
-//             magicMirror,
+//       Await testEngine.playCard(mightSolveAMystery, {
+//         Scry: {
+//           Hand: [],
+//           Bottom: [
+//             MickeyMouseTrueFriend,
+//             MagicBroomBucketBrigade,
+//             UrsulaCaldron,
+//             MagicMirror,
 //           ],
 //         },
 //       });
 //
 //       // All cards should remain in deck
-//       expect(testEngine.getCardModel(mickeyMouseTrueFriend).zone).toBe("deck");
-//       expect(testEngine.getCardModel(magicBroomBucketBrigade).zone).toBe(
+//       Expect(testEngine.getCardModel(mickeyMouseTrueFriend).zone).toBe("deck");
+//       Expect(testEngine.getCardModel(magicBroomBucketBrigade).zone).toBe(
 //         "deck",
 //       );
-//       expect(testEngine.getCardModel(ursulaCaldron).zone).toBe("deck");
-//       expect(testEngine.getCardModel(magicMirror).zone).toBe("deck");
+//       Expect(testEngine.getCardModel(ursulaCaldron).zone).toBe("deck");
+//       Expect(testEngine.getCardModel(magicMirror).zone).toBe("deck");
 //     });
 //
-//     it("Trying to take 2 characters (should only take 1)", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: mightSolveAMystery.cost,
-//         hand: [mightSolveAMystery],
-//         deck: deck,
+//     It("Trying to take 2 characters (should only take 1)", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: mightSolveAMystery.cost,
+//         Hand: [mightSolveAMystery],
+//         Deck: deck,
 //       });
 //
 //       // This test should fail because we're trying to take 2 characters
 //       // The engine should only allow 1 character to be taken
-//       await testEngine.playCard(mightSolveAMystery, {
-//         scry: {
-//           hand: [mickeyMouseTrueFriend], // Only take the first character
-//           bottom: [
-//             christopherRobinAdventurer,
-//             magicBroomBucketBrigade,
-//             ursulaCaldron,
+//       Await testEngine.playCard(mightSolveAMystery, {
+//         Scry: {
+//           Hand: [mickeyMouseTrueFriend], // Only take the first character
+//           Bottom: [
+//             ChristopherRobinAdventurer,
+//             MagicBroomBucketBrigade,
+//             UrsulaCaldron,
 //           ],
 //         },
 //       });
 //
 //       // Only first character should be taken to hand
-//       expect(testEngine.getCardModel(mickeyMouseTrueFriend).zone).toBe("hand");
-//       expect(testEngine.getCardModel(christopherRobinAdventurer).zone).toBe(
+//       Expect(testEngine.getCardModel(mickeyMouseTrueFriend).zone).toBe("hand");
+//       Expect(testEngine.getCardModel(christopherRobinAdventurer).zone).toBe(
 //         "deck",
 //       );
-//       expect(testEngine.getCardModel(magicBroomBucketBrigade).zone).toBe(
+//       Expect(testEngine.getCardModel(magicBroomBucketBrigade).zone).toBe(
 //         "deck",
 //       );
-//       expect(testEngine.getCardModel(ursulaCaldron).zone).toBe("deck");
+//       Expect(testEngine.getCardModel(ursulaCaldron).zone).toBe("deck");
 //     });
 //
-//     it("Trying to take 2 items (should only take 1)", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: mightSolveAMystery.cost,
-//         hand: [mightSolveAMystery],
-//         deck: [ursulaCaldron, magicMirror, dragonGem, theSorcerersSpellbook],
+//     It("Trying to take 2 items (should only take 1)", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: mightSolveAMystery.cost,
+//         Hand: [mightSolveAMystery],
+//         Deck: [ursulaCaldron, magicMirror, dragonGem, theSorcerersSpellbook],
 //       });
 //
 //       // This test should fail because we're trying to take 2 items
 //       // The engine should only allow 1 item to be taken
-//       await testEngine.playCard(mightSolveAMystery, {
-//         scry: {
-//           hand: [ursulaCaldron], // Only take the first item
-//           bottom: [magicMirror, dragonGem, theSorcerersSpellbook],
+//       Await testEngine.playCard(mightSolveAMystery, {
+//         Scry: {
+//           Hand: [ursulaCaldron], // Only take the first item
+//           Bottom: [magicMirror, dragonGem, theSorcerersSpellbook],
 //         },
 //       });
 //
 //       // Only first item should be taken to hand
-//       expect(testEngine.getCardModel(ursulaCaldron).zone).toBe("hand");
-//       expect(testEngine.getCardModel(magicMirror).zone).toBe("deck");
-//       expect(testEngine.getCardModel(dragonGem).zone).toBe("deck");
-//       expect(testEngine.getCardModel(theSorcerersSpellbook).zone).toBe("deck");
+//       Expect(testEngine.getCardModel(ursulaCaldron).zone).toBe("hand");
+//       Expect(testEngine.getCardModel(magicMirror).zone).toBe("deck");
+//       Expect(testEngine.getCardModel(dragonGem).zone).toBe("deck");
+//       Expect(testEngine.getCardModel(theSorcerersSpellbook).zone).toBe("deck");
 //     });
 //
-//     it("Takes 1 character and 1 item (correct limit)", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: mightSolveAMystery.cost,
-//         hand: [mightSolveAMystery],
-//         deck: deck,
+//     It("Takes 1 character and 1 item (correct limit)", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: mightSolveAMystery.cost,
+//         Hand: [mightSolveAMystery],
+//         Deck: deck,
 //       });
 //
-//       await testEngine.playCard(mightSolveAMystery, {
-//         scry: {
-//           hand: [mickeyMouseTrueFriend, ursulaCaldron], // 1 character + 1 item = correct
-//           bottom: [magicBroomBucketBrigade],
+//       Await testEngine.playCard(mightSolveAMystery, {
+//         Scry: {
+//           Hand: [mickeyMouseTrueFriend, ursulaCaldron], // 1 character + 1 item = correct
+//           Bottom: [magicBroomBucketBrigade],
 //         },
 //       });
 //
 //       // Character and item should be taken to hand
-//       expect(testEngine.getCardModel(mickeyMouseTrueFriend).zone).toBe("hand");
-//       expect(testEngine.getCardModel(ursulaCaldron).zone).toBe("hand");
-//       expect(testEngine.getCardModel(magicBroomBucketBrigade).zone).toBe(
+//       Expect(testEngine.getCardModel(mickeyMouseTrueFriend).zone).toBe("hand");
+//       Expect(testEngine.getCardModel(ursulaCaldron).zone).toBe("hand");
+//       Expect(testEngine.getCardModel(magicBroomBucketBrigade).zone).toBe(
 //         "deck",
 //       );
 //     });
 //
-//     it("No valid targets chosen (all go to bottom)", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: mightSolveAMystery.cost,
-//         hand: [mightSolveAMystery],
-//         deck: [
-//           mickeyMouseTrueFriend, // character
-//           ursulaCaldron, // item
-//           magicBroomBucketBrigade, // character
-//           magicMirror, // item
+//     It("No valid targets chosen (all go to bottom)", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: mightSolveAMystery.cost,
+//         Hand: [mightSolveAMystery],
+//         Deck: [
+//           MickeyMouseTrueFriend, // character
+//           UrsulaCaldron, // item
+//           MagicBroomBucketBrigade, // character
+//           MagicMirror, // item
 //         ],
 //       });
 //
-//       await testEngine.playCard(mightSolveAMystery, {
-//         scry: {
-//           hand: [], // Choose to take nothing even though there are valid targets
-//           bottom: [
-//             mickeyMouseTrueFriend,
-//             ursulaCaldron,
-//             magicBroomBucketBrigade,
-//             magicMirror,
+//       Await testEngine.playCard(mightSolveAMystery, {
+//         Scry: {
+//           Hand: [], // Choose to take nothing even though there are valid targets
+//           Bottom: [
+//             MickeyMouseTrueFriend,
+//             UrsulaCaldron,
+//             MagicBroomBucketBrigade,
+//             MagicMirror,
 //           ],
 //         },
 //       });
 //
 //       // All cards should remain in deck (user chose not to take any)
-//       expect(testEngine.getCardModel(mickeyMouseTrueFriend).zone).toBe("deck");
-//       expect(testEngine.getCardModel(ursulaCaldron).zone).toBe("deck");
-//       expect(testEngine.getCardModel(magicBroomBucketBrigade).zone).toBe(
+//       Expect(testEngine.getCardModel(mickeyMouseTrueFriend).zone).toBe("deck");
+//       Expect(testEngine.getCardModel(ursulaCaldron).zone).toBe("deck");
+//       Expect(testEngine.getCardModel(magicBroomBucketBrigade).zone).toBe(
 //         "deck",
 //       );
-//       expect(testEngine.getCardModel(magicMirror).zone).toBe("deck");
+//       Expect(testEngine.getCardModel(magicMirror).zone).toBe("deck");
 //     });
 //   });
 // });

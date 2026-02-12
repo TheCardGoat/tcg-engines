@@ -1,45 +1,45 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { whileThisCharacterHasNoDamageGets } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import { whileThisCharacterHasNoDamageGets } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const lawrenceJealousManservant: LorcanitoCharacterCard = {
-//   id: "ytl",
-//   reprints: ["b85"],
-//   name: "Lawrence",
-//   title: "Jealous Manservant",
-//   characteristics: ["storyborn", "ally"],
-//   text: "**PAYBACK** While this character has no damage, he gets +4 {S}.",
-//   type: "character",
-//   abilities: [
-//     whileThisCharacterHasNoDamageGets({
-//       name: "Payback",
-//       text: "While this character has no damage, he gets +4 {S}.",
-//       effects: [
+// Export const lawrenceJealousManservant: LorcanitoCharacterCard = {
+//   Id: "ytl",
+//   Reprints: ["b85"],
+//   Name: "Lawrence",
+//   Title: "Jealous Manservant",
+//   Characteristics: ["storyborn", "ally"],
+//   Text: "**PAYBACK** While this character has no damage, he gets +4 {S}.",
+//   Type: "character",
+//   Abilities: [
+//     WhileThisCharacterHasNoDamageGets({
+//       Name: "Payback",
+//       Text: "While this character has no damage, he gets +4 {S}.",
+//       Effects: [
 //         {
-//           type: "attribute",
-//           attribute: "strength",
-//           amount: 4,
-//           modifier: "add",
-//           duration: "static",
-//           target: thisCharacter,
+//           Type: "attribute",
+//           Attribute: "strength",
+//           Amount: 4,
+//           Modifier: "add",
+//           Duration: "static",
+//           Target: thisCharacter,
 //         },
 //       ],
 //     }),
 //   ],
-//   flavour: "In this new world, the crown could finally be his.",
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 3,
-//   willpower: 4,
-//   strength: 0,
-//   lore: 2,
-//   illustrator: "Luis Huerta",
-//   number: 186,
-//   set: "ROF",
-//   externalIds: {
-//     tcgPlayer: 527776,
+//   Flavour: "In this new world, the crown could finally be his.",
+//   Inkwell: true,
+//   Colors: ["steel"],
+//   Cost: 3,
+//   Willpower: 4,
+//   Strength: 0,
+//   Lore: 2,
+//   Illustrator: "Luis Huerta",
+//   Number: 186,
+//   Set: "ROF",
+//   ExternalIds: {
+//     TcgPlayer: 527776,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

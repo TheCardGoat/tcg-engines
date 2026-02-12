@@ -3,71 +3,71 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   arthurTrainedSwordsman,
-//   herculesHeroInTraining,
-//   queenOfHeartsCapriciousMonarch,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   ArthurTrainedSwordsman,
+//   HerculesHeroInTraining,
+//   QueenOfHeartsCapriciousMonarch,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { brawl } from "@lorcanito/lorcana-engine/cards/004/actions/actions";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { brawl } from "@lorcanito/lorcana-engine/cards/004/actions/actions";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Queen of Hearts- Capricious Monarch", () => {
-//   describe("**OFF WITH THEIR HEADS!** Whenever an opposing character is banished, you may ready this character.", () => {
-//     it("on challenge", () => {
-//       const testStore = new TestStore(
+// Describe("Queen of Hearts- Capricious Monarch", () => {
+//   Describe("**OFF WITH THEIR HEADS!** Whenever an opposing character is banished, you may ready this character.", () => {
+//     It("on challenge", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [queenOfHeartsCapriciousMonarch, arthurTrainedSwordsman],
+//           Play: [queenOfHeartsCapriciousMonarch, arthurTrainedSwordsman],
 //         },
 //         {
-//           play: [herculesHeroInTraining],
+//           Play: [herculesHeroInTraining],
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getCard(queenOfHeartsCapriciousMonarch);
-//       const target = testStore.getCard(herculesHeroInTraining);
-//       const challenger = testStore.getCard(arthurTrainedSwordsman);
+//       Const cardUnderTest = testStore.getCard(queenOfHeartsCapriciousMonarch);
+//       Const target = testStore.getCard(herculesHeroInTraining);
+//       Const challenger = testStore.getCard(arthurTrainedSwordsman);
 //
-//       cardUnderTest.updateCardMeta({ exerted: true });
-//       expect(cardUnderTest.meta.exerted).toEqual(true);
+//       CardUnderTest.updateCardMeta({ exerted: true });
+//       Expect(cardUnderTest.meta.exerted).toEqual(true);
 //
-//       target.updateCardMeta({ exerted: true });
-//       expect(target.meta.exerted).toEqual(true);
+//       Target.updateCardMeta({ exerted: true });
+//       Expect(target.meta.exerted).toEqual(true);
 //
-//       challenger.challenge(target);
-//       expect(target.zone).toEqual("discard");
+//       Challenger.challenge(target);
+//       Expect(target.zone).toEqual("discard");
 //
-//       testStore.resolveOptionalAbility();
-//       expect(cardUnderTest.meta.exerted).toBeFalsy();
+//       TestStore.resolveOptionalAbility();
+//       Expect(cardUnderTest.meta.exerted).toBeFalsy();
 //     });
 //
-//     it("on removal", () => {
-//       const testStore = new TestStore(
+//     It("on removal", () => {
+//       Const testStore = new TestStore(
 //         {
-//           inkwell: brawl.cost,
-//           hand: [brawl],
-//           play: [queenOfHeartsCapriciousMonarch],
+//           Inkwell: brawl.cost,
+//           Hand: [brawl],
+//           Play: [queenOfHeartsCapriciousMonarch],
 //         },
 //         {
-//           play: [herculesHeroInTraining],
+//           Play: [herculesHeroInTraining],
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getCard(queenOfHeartsCapriciousMonarch);
-//       const target = testStore.getCard(herculesHeroInTraining);
-//       const removal = testStore.getCard(brawl);
+//       Const cardUnderTest = testStore.getCard(queenOfHeartsCapriciousMonarch);
+//       Const target = testStore.getCard(herculesHeroInTraining);
+//       Const removal = testStore.getCard(brawl);
 //
-//       cardUnderTest.updateCardMeta({ exerted: true });
-//       expect(cardUnderTest.meta.exerted).toEqual(true);
+//       CardUnderTest.updateCardMeta({ exerted: true });
+//       Expect(cardUnderTest.meta.exerted).toEqual(true);
 //
-//       removal.playFromHand();
-//       testStore.resolveTopOfStack({ targets: [target] }, true);
+//       Removal.playFromHand();
+//       TestStore.resolveTopOfStack({ targets: [target] }, true);
 //
-//       expect(target.zone).toEqual("discard");
-//       expect(removal.zone).toEqual("discard");
+//       Expect(target.zone).toEqual("discard");
+//       Expect(removal.zone).toEqual("discard");
 //
-//       testStore.resolveOptionalAbility();
-//       expect(cardUnderTest.meta.exerted).toEqual(false);
+//       TestStore.resolveOptionalAbility();
+//       Expect(cardUnderTest.meta.exerted).toEqual(false);
 //     });
 //   });
 // });

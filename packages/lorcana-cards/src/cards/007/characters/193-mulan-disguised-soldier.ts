@@ -1,35 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const mulanDisguisedSoldier: CharacterCard = {
-  id: "1p3",
-  cardType: "character",
-  name: "Mulan",
-  version: "Disguised Soldier",
-  fullName: "Mulan - Disguised Soldier",
-  inkType: ["steel"],
-  franchise: "Mulan",
-  set: "007",
-  text: "WHERE DO I SIGN IN? When you play this character, you may draw a card, then choose and discard a card.",
-  cost: 1,
-  strength: 2,
-  willpower: 1,
-  lore: 1,
-  cardNumber: 193,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "dc468c676e85ae64384d43f7358b0f77eac28102",
-  },
   abilities: [
     {
-      id: "1p3-1",
-      type: "triggered",
-      name: "WHERE DO I SIGN IN?",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -40,8 +13,35 @@ export const mulanDisguisedSoldier: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "1p3-1",
+      name: "WHERE DO I SIGN IN?",
       text: "WHERE DO I SIGN IN? When you play this character, you may draw a card, then choose and discard a card.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 193,
+  cardType: "character",
   classifications: ["Storyborn", "Hero", "Princess"],
+  cost: 1,
+  externalIds: {
+    ravensburger: "dc468c676e85ae64384d43f7358b0f77eac28102",
+  },
+  franchise: "Mulan",
+  fullName: "Mulan - Disguised Soldier",
+  id: "1p3",
+  inkType: ["steel"],
+  inkable: true,
+  lore: 1,
+  missingTests: true,
+  name: "Mulan",
+  set: "007",
+  strength: 2,
+  text: "WHERE DO I SIGN IN? When you play this character, you may draw a card, then choose and discard a card.",
+  version: "Disguised Soldier",
+  willpower: 1,
 };

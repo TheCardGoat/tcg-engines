@@ -81,7 +81,8 @@ packages/your-game-engine/
 │   └── index.ts
 ├── package.json
 ├── tsconfig.json
-├── biome.json
+├── .oxlintrc.json
+├── .oxfmt.json
 ├── turbo.json
 └── README.md
 ```
@@ -100,7 +101,6 @@ packages/your-game-engine/
     "@tcg/core": "workspace:*"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.0.4",
     "@types/bun": "1.2.14",
     "typescript": "5.8.3"
   }

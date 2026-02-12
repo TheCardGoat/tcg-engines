@@ -3,45 +3,45 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { mrSmee } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import {
-//   billyBonesKeeperOfTheMap,
-//   genieCrampedInTheLamp,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { mrSmee } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import {
+//   BillyBonesKeeperOfTheMap,
+//   GenieCrampedInTheLamp,
 // } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { walkThePlank } from "@lorcanito/lorcana-engine/cards/008";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { walkThePlank } from "@lorcanito/lorcana-engine/cards/008";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Walk The Plank!", () => {
-//   it("Your Pirate characters gain '{E} – Banish chosen damaged character' this turn.", async () => {
-//     const pirates = [billyBonesKeeperOfTheMap, mrSmee];
-//     const testEngine = new TestEngine(
+// Describe("Walk The Plank!", () => {
+//   It("Your Pirate characters gain '{E} – Banish chosen damaged character' this turn.", async () => {
+//     Const pirates = [billyBonesKeeperOfTheMap, mrSmee];
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: walkThePlank.cost,
-//         play: pirates,
-//         hand: [walkThePlank],
+//         Inkwell: walkThePlank.cost,
+//         Play: pirates,
+//         Hand: [walkThePlank],
 //       },
 //       {
-//         play: [genieCrampedInTheLamp],
+//         Play: [genieCrampedInTheLamp],
 //       },
 //     );
 //
-//     await testEngine.setCardDamage(genieCrampedInTheLamp, 1);
+//     Await testEngine.setCardDamage(genieCrampedInTheLamp, 1);
 //
-//     for (const pirate of pirates) {
-//       expect(testEngine.getCardModel(pirate).hasActivatedAbility).toEqual(
-//         false,
+//     For (const pirate of pirates) {
+//       Expect(testEngine.getCardModel(pirate).hasActivatedAbility).toEqual(
+//         False,
 //       );
 //     }
 //
-//     await testEngine.playCard(walkThePlank);
+//     Await testEngine.playCard(walkThePlank);
 //
-//     for (const pirate of pirates) {
-//       expect(testEngine.getCardModel(pirate).hasActivatedAbility).toEqual(true);
+//     For (const pirate of pirates) {
+//       Expect(testEngine.getCardModel(pirate).hasActivatedAbility).toEqual(true);
 //     }
 //
-//     await testEngine.activateCard(mrSmee, { targets: [genieCrampedInTheLamp] });
-//     expect(testEngine.getCardModel(genieCrampedInTheLamp).zone).toBe("discard");
+//     Await testEngine.activateCard(mrSmee, { targets: [genieCrampedInTheLamp] });
+//     Expect(testEngine.getCardModel(genieCrampedInTheLamp).zone).toBe("discard");
 //   });
 // });
 //

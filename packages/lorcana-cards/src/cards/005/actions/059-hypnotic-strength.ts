@@ -1,24 +1,8 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
 export const hypnoticStrength: ActionCard = {
-  id: "tu0",
-  cardType: "action",
-  name: "Hypnotic Strength",
-  inkType: ["amethyst"],
-  franchise: "Aladdin",
-  set: "005",
-  text: "Draw a card. Chosen character gains Challenger +2 this turn. (They get +2 {S} while challenging.)",
-  cost: 2,
-  cardNumber: 59,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "02fc9a9247b0b6880e17a7e30bd4b6da98fd0d70",
-  },
   abilities: [
     {
-      id: "tu0-1",
-      type: "action",
       effect: {
         type: "sequence",
         steps: [
@@ -42,7 +26,23 @@ export const hypnoticStrength: ActionCard = {
           },
         ],
       },
+      id: "tu0-1",
       text: "Draw a card. Chosen character gains Challenger +2 this turn.",
+      type: "action",
     },
   ],
+  cardNumber: 59,
+  cardType: "action",
+  cost: 2,
+  externalIds: {
+    ravensburger: "02fc9a9247b0b6880e17a7e30bd4b6da98fd0d70",
+  },
+  franchise: "Aladdin",
+  id: "tu0",
+  inkType: ["amethyst"],
+  inkable: true,
+  missingTests: true,
+  name: "Hypnotic Strength",
+  set: "005",
+  text: "Draw a card. Chosen character gains Challenger +2 this turn. (They get +2 {S} while challenging.)",
 };

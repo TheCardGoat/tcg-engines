@@ -3,275 +3,275 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { neverLandMermaidLagoon } from "@lorcanito/lorcana-engine/cards/003/locations/locations";
-// import { launchpadExceptionalPilot } from "@lorcanito/lorcana-engine/cards/010/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { neverLandMermaidLagoon } from "@lorcanito/lorcana-engine/cards/003/locations/locations";
+// Import { launchpadExceptionalPilot } from "@lorcanito/lorcana-engine/cards/010/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Launchpad - Exceptional Pilot", () => {
-//   describe("OFF THE MAP - Basic Functionality", () => {
-//     it("triggers when character is played and banishes chosen location", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: launchpadExceptionalPilot.cost,
-//         hand: [launchpadExceptionalPilot],
-//         play: [neverLandMermaidLagoon],
+// Describe("Launchpad - Exceptional Pilot", () => {
+//   Describe("OFF THE MAP - Basic Functionality", () => {
+//     It("triggers when character is played and banishes chosen location", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: launchpadExceptionalPilot.cost,
+//         Hand: [launchpadExceptionalPilot],
+//         Play: [neverLandMermaidLagoon],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(launchpadExceptionalPilot);
-//       const target = testEngine.getCardModel(neverLandMermaidLagoon);
+//       Const cardUnderTest = testEngine.getCardModel(launchpadExceptionalPilot);
+//       Const target = testEngine.getCardModel(neverLandMermaidLagoon);
 //
-//       expect(target.zone).toBe("play");
+//       Expect(target.zone).toBe("play");
 //
-//       await testEngine.playCard(cardUnderTest);
-//       await testEngine.resolveOptionalAbility();
-//       await testEngine.resolveTopOfStack({ targets: [target] });
+//       Await testEngine.playCard(cardUnderTest);
+//       Await testEngine.resolveOptionalAbility();
+//       Await testEngine.resolveTopOfStack({ targets: [target] });
 //
-//       expect(target.zone).toBe("discard");
-//       expect(cardUnderTest.zone).toBe("play");
+//       Expect(target.zone).toBe("discard");
+//       Expect(cardUnderTest.zone).toBe("play");
 //     });
 //
-//     it("can banish any location in play", async () => {
-//       const testEngine = new TestEngine(
+//     It("can banish any location in play", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: launchpadExceptionalPilot.cost,
-//           hand: [launchpadExceptionalPilot],
-//           play: [neverLandMermaidLagoon],
+//           Inkwell: launchpadExceptionalPilot.cost,
+//           Hand: [launchpadExceptionalPilot],
+//           Play: [neverLandMermaidLagoon],
 //         },
 //         {
-//           play: [neverLandMermaidLagoon],
+//           Play: [neverLandMermaidLagoon],
 //         },
 //       );
 //
-//       const cardUnderTest = testEngine.getCardModel(
-//         launchpadExceptionalPilot,
+//       Const cardUnderTest = testEngine.getCardModel(
+//         LaunchpadExceptionalPilot,
 //         0,
 //       );
-//       const opponentLocation = testEngine.getCardModel(
-//         neverLandMermaidLagoon,
+//       Const opponentLocation = testEngine.getCardModel(
+//         NeverLandMermaidLagoon,
 //         1,
 //       );
 //
-//       expect(opponentLocation.zone).toBe("play");
+//       Expect(opponentLocation.zone).toBe("play");
 //
-//       await testEngine.playCard(cardUnderTest);
-//       await testEngine.resolveOptionalAbility();
-//       await testEngine.resolveTopOfStack({ targets: [opponentLocation] });
+//       Await testEngine.playCard(cardUnderTest);
+//       Await testEngine.resolveOptionalAbility();
+//       Await testEngine.resolveTopOfStack({ targets: [opponentLocation] });
 //
-//       expect(opponentLocation.zone).toBe("discard");
-//       expect(cardUnderTest.zone).toBe("play");
+//       Expect(opponentLocation.zone).toBe("discard");
+//       Expect(cardUnderTest.zone).toBe("play");
 //     });
 //
-//     it("can banish opponent's locations", async () => {
-//       const testEngine = new TestEngine(
+//     It("can banish opponent's locations", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: launchpadExceptionalPilot.cost,
-//           hand: [launchpadExceptionalPilot],
+//           Inkwell: launchpadExceptionalPilot.cost,
+//           Hand: [launchpadExceptionalPilot],
 //         },
 //         {
-//           play: [neverLandMermaidLagoon],
+//           Play: [neverLandMermaidLagoon],
 //         },
 //       );
 //
-//       const cardUnderTest = testEngine.getCardModel(
-//         launchpadExceptionalPilot,
+//       Const cardUnderTest = testEngine.getCardModel(
+//         LaunchpadExceptionalPilot,
 //         0,
 //       );
-//       const opponentLocation = testEngine.getCardModel(
-//         neverLandMermaidLagoon,
+//       Const opponentLocation = testEngine.getCardModel(
+//         NeverLandMermaidLagoon,
 //         1,
 //       );
 //
-//       expect(opponentLocation.zone).toBe("play");
+//       Expect(opponentLocation.zone).toBe("play");
 //
-//       await testEngine.playCard(cardUnderTest);
-//       await testEngine.resolveOptionalAbility();
-//       await testEngine.resolveTopOfStack({ targets: [opponentLocation] });
+//       Await testEngine.playCard(cardUnderTest);
+//       Await testEngine.resolveOptionalAbility();
+//       Await testEngine.resolveTopOfStack({ targets: [opponentLocation] });
 //
-//       expect(opponentLocation.zone).toBe("discard");
-//       expect(cardUnderTest.zone).toBe("play");
+//       Expect(opponentLocation.zone).toBe("discard");
+//       Expect(cardUnderTest.zone).toBe("play");
 //     });
 //
-//     it("can banish own locations", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: launchpadExceptionalPilot.cost,
-//         hand: [launchpadExceptionalPilot],
-//         play: [neverLandMermaidLagoon],
+//     It("can banish own locations", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: launchpadExceptionalPilot.cost,
+//         Hand: [launchpadExceptionalPilot],
+//         Play: [neverLandMermaidLagoon],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(launchpadExceptionalPilot);
-//       const ownLocation = testEngine.getCardModel(neverLandMermaidLagoon);
+//       Const cardUnderTest = testEngine.getCardModel(launchpadExceptionalPilot);
+//       Const ownLocation = testEngine.getCardModel(neverLandMermaidLagoon);
 //
-//       expect(ownLocation.zone).toBe("play");
+//       Expect(ownLocation.zone).toBe("play");
 //
-//       await testEngine.playCard(cardUnderTest);
-//       await testEngine.resolveOptionalAbility();
-//       await testEngine.resolveTopOfStack({ targets: [ownLocation] });
+//       Await testEngine.playCard(cardUnderTest);
+//       Await testEngine.resolveOptionalAbility();
+//       Await testEngine.resolveTopOfStack({ targets: [ownLocation] });
 //
-//       expect(ownLocation.zone).toBe("discard");
-//       expect(cardUnderTest.zone).toBe("play");
+//       Expect(ownLocation.zone).toBe("discard");
+//       Expect(cardUnderTest.zone).toBe("play");
 //     });
 //   });
 //
-//   describe("OFF THE MAP - Optional Ability", () => {
-//     it("ability is optional - can decline to banish", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: launchpadExceptionalPilot.cost,
-//         hand: [launchpadExceptionalPilot],
-//         play: [neverLandMermaidLagoon],
+//   Describe("OFF THE MAP - Optional Ability", () => {
+//     It("ability is optional - can decline to banish", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: launchpadExceptionalPilot.cost,
+//         Hand: [launchpadExceptionalPilot],
+//         Play: [neverLandMermaidLagoon],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(launchpadExceptionalPilot);
-//       const target = testEngine.getCardModel(neverLandMermaidLagoon);
+//       Const cardUnderTest = testEngine.getCardModel(launchpadExceptionalPilot);
+//       Const target = testEngine.getCardModel(neverLandMermaidLagoon);
 //
-//       await testEngine.playCard(cardUnderTest);
+//       Await testEngine.playCard(cardUnderTest);
 //
 //       // Decline the optional ability
-//       await testEngine.skipTopOfStack();
+//       Await testEngine.skipTopOfStack();
 //
 //       // Location should remain in play
-//       expect(target.zone).toBe("play");
-//       expect(cardUnderTest.zone).toBe("play");
+//       Expect(target.zone).toBe("play");
+//       Expect(cardUnderTest.zone).toBe("play");
 //     });
 //   });
 //
-//   describe("OFF THE MAP - Trigger Conditions", () => {
-//     it("only triggers when Launchpad is played, not other characters", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: 8,
-//         hand: [launchpadExceptionalPilot, launchpadExceptionalPilot],
-//         play: [neverLandMermaidLagoon],
+//   Describe("OFF THE MAP - Trigger Conditions", () => {
+//     It("only triggers when Launchpad is played, not other characters", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: 8,
+//         Hand: [launchpadExceptionalPilot, launchpadExceptionalPilot],
+//         Play: [neverLandMermaidLagoon],
 //       });
 //
-//       const firstLaunchpad = testEngine.getCardModel(
-//         launchpadExceptionalPilot,
+//       Const firstLaunchpad = testEngine.getCardModel(
+//         LaunchpadExceptionalPilot,
 //         0,
 //       );
-//       const secondLaunchpad = testEngine.getCardModel(
-//         launchpadExceptionalPilot,
+//       Const secondLaunchpad = testEngine.getCardModel(
+//         LaunchpadExceptionalPilot,
 //         1,
 //       );
-//       const location = testEngine.getCardModel(neverLandMermaidLagoon);
+//       Const location = testEngine.getCardModel(neverLandMermaidLagoon);
 //
-//       expect(location.zone).toBe("play");
+//       Expect(location.zone).toBe("play");
 //
 //       // Play first Launchpad
-//       await testEngine.playCard(firstLaunchpad);
-//       await testEngine.resolveOptionalAbility();
-//       await testEngine.resolveTopOfStack({ targets: [location] });
+//       Await testEngine.playCard(firstLaunchpad);
+//       Await testEngine.resolveOptionalAbility();
+//       Await testEngine.resolveTopOfStack({ targets: [location] });
 //
-//       expect(location.zone).toBe("discard");
-//       expect(firstLaunchpad.zone).toBe("play");
+//       Expect(location.zone).toBe("discard");
+//       Expect(firstLaunchpad.zone).toBe("play");
 //
 //       // Play second Launchpad (no locations left to banish)
-//       await testEngine.playCard(secondLaunchpad);
+//       Await testEngine.playCard(secondLaunchpad);
 //
 //       // Ability should still trigger but resolve without effect
-//       expect(secondLaunchpad.zone).toBe("play");
+//       Expect(secondLaunchpad.zone).toBe("play");
 //     });
 //
-//     it("does not trigger when character is already in play", async () => {
-//       const testEngine = new TestEngine({
-//         play: [launchpadExceptionalPilot, neverLandMermaidLagoon],
+//     It("does not trigger when character is already in play", async () => {
+//       Const testEngine = new TestEngine({
+//         Play: [launchpadExceptionalPilot, neverLandMermaidLagoon],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(launchpadExceptionalPilot);
-//       const location = testEngine.getCardModel(neverLandMermaidLagoon);
+//       Const cardUnderTest = testEngine.getCardModel(launchpadExceptionalPilot);
+//       Const location = testEngine.getCardModel(neverLandMermaidLagoon);
 //
 //       // Character is already in play, playing it again should not be possible
-//       expect(cardUnderTest.zone).toBe("play");
-//       expect(location.zone).toBe("play");
-//       expect(testEngine.store.stackLayerStore.layers.length).toBe(0);
+//       Expect(cardUnderTest.zone).toBe("play");
+//       Expect(location.zone).toBe("play");
+//       Expect(testEngine.store.stackLayerStore.layers.length).toBe(0);
 //     });
 //   });
 //
-//   describe("OFF THE MAP - Edge Cases", () => {
-//     it("works when no locations are in play", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: launchpadExceptionalPilot.cost,
-//         hand: [launchpadExceptionalPilot],
+//   Describe("OFF THE MAP - Edge Cases", () => {
+//     It("works when no locations are in play", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: launchpadExceptionalPilot.cost,
+//         Hand: [launchpadExceptionalPilot],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(launchpadExceptionalPilot);
+//       Const cardUnderTest = testEngine.getCardModel(launchpadExceptionalPilot);
 //
 //       // Should play successfully even with no valid targets
-//       await testEngine.playCard(cardUnderTest);
+//       Await testEngine.playCard(cardUnderTest);
 //
 //       // Ability should still trigger but resolve without effect
-//       expect(cardUnderTest.zone).toBe("play");
+//       Expect(cardUnderTest.zone).toBe("play");
 //     });
 //
-//     it("only banishes one location per play", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: launchpadExceptionalPilot.cost,
-//         hand: [launchpadExceptionalPilot],
-//         play: [neverLandMermaidLagoon, neverLandMermaidLagoon],
+//     It("only banishes one location per play", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: launchpadExceptionalPilot.cost,
+//         Hand: [launchpadExceptionalPilot],
+//         Play: [neverLandMermaidLagoon, neverLandMermaidLagoon],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(launchpadExceptionalPilot);
-//       const firstLocation = testEngine.getCardModel(neverLandMermaidLagoon, 0);
-//       const secondLocation = testEngine.getCardModel(neverLandMermaidLagoon, 1);
+//       Const cardUnderTest = testEngine.getCardModel(launchpadExceptionalPilot);
+//       Const firstLocation = testEngine.getCardModel(neverLandMermaidLagoon, 0);
+//       Const secondLocation = testEngine.getCardModel(neverLandMermaidLagoon, 1);
 //
-//       await testEngine.playCard(cardUnderTest);
-//       await testEngine.resolveOptionalAbility();
-//       await testEngine.resolveTopOfStack({ targets: [firstLocation] });
+//       Await testEngine.playCard(cardUnderTest);
+//       Await testEngine.resolveOptionalAbility();
+//       Await testEngine.resolveTopOfStack({ targets: [firstLocation] });
 //
 //       // Only first location should be banished
-//       expect(firstLocation.zone).toBe("discard");
-//       expect(secondLocation.zone).toBe("play");
-//       expect(cardUnderTest.zone).toBe("play");
+//       Expect(firstLocation.zone).toBe("discard");
+//       Expect(secondLocation.zone).toBe("play");
+//       Expect(cardUnderTest.zone).toBe("play");
 //     });
 //
-//     it("cannot target characters, only locations", async () => {
-//       const testEngine = new TestEngine(
+//     It("cannot target characters, only locations", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: launchpadExceptionalPilot.cost,
-//           hand: [launchpadExceptionalPilot],
+//           Inkwell: launchpadExceptionalPilot.cost,
+//           Hand: [launchpadExceptionalPilot],
 //         },
 //         {
-//           play: [launchpadExceptionalPilot], // Another character, not a location
+//           Play: [launchpadExceptionalPilot], // Another character, not a location
 //         },
 //       );
 //
-//       const cardUnderTest = testEngine.getCardModel(
-//         launchpadExceptionalPilot,
+//       Const cardUnderTest = testEngine.getCardModel(
+//         LaunchpadExceptionalPilot,
 //         0,
 //       );
-//       const opponentCharacter = testEngine.getCardModel(
-//         launchpadExceptionalPilot,
+//       Const opponentCharacter = testEngine.getCardModel(
+//         LaunchpadExceptionalPilot,
 //         1,
 //       );
 //
-//       await testEngine.playCard(cardUnderTest);
+//       Await testEngine.playCard(cardUnderTest);
 //
 //       // Ability triggers but has no valid targets (no locations in play), so it's skipped
 //       // Both characters should still be in play
-//       expect(cardUnderTest.zone).toBe("play");
-//       expect(opponentCharacter.zone).toBe("play");
+//       Expect(cardUnderTest.zone).toBe("play");
+//       Expect(opponentCharacter.zone).toBe("play");
 //     });
 //   });
 //
-//   describe("OFF THE MAP - Multiple Locations Scenario", () => {
-//     it("allows player to choose which location to banish when multiple are available", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: launchpadExceptionalPilot.cost,
-//         hand: [launchpadExceptionalPilot],
-//         play: [neverLandMermaidLagoon, neverLandMermaidLagoon],
+//   Describe("OFF THE MAP - Multiple Locations Scenario", () => {
+//     It("allows player to choose which location to banish when multiple are available", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: launchpadExceptionalPilot.cost,
+//         Hand: [launchpadExceptionalPilot],
+//         Play: [neverLandMermaidLagoon, neverLandMermaidLagoon],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(launchpadExceptionalPilot);
-//       const location1 = testEngine.getCardModel(neverLandMermaidLagoon, 0);
-//       const location2 = testEngine.getCardModel(neverLandMermaidLagoon, 1);
+//       Const cardUnderTest = testEngine.getCardModel(launchpadExceptionalPilot);
+//       Const location1 = testEngine.getCardModel(neverLandMermaidLagoon, 0);
+//       Const location2 = testEngine.getCardModel(neverLandMermaidLagoon, 1);
 //
-//       await testEngine.playCard(cardUnderTest);
-//       await testEngine.resolveOptionalAbility();
+//       Await testEngine.playCard(cardUnderTest);
+//       Await testEngine.resolveOptionalAbility();
 //
 //       // Choose to banish the second location
-//       await testEngine.resolveTopOfStack({ targets: [location2] });
+//       Await testEngine.resolveTopOfStack({ targets: [location2] });
 //
 //       // Only the chosen location should be banished
-//       expect(location1.zone).toBe("play");
-//       expect(location2.zone).toBe("discard");
-//       expect(cardUnderTest.zone).toBe("play");
+//       Expect(location1.zone).toBe("play");
+//       Expect(location2.zone).toBe("discard");
+//       Expect(cardUnderTest.zone).toBe("play");
 //     });
 //   });
 // });

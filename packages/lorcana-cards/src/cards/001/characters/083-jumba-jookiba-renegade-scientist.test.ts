@@ -5,9 +5,9 @@ import { jumbaJookibaRenegadeScientist } from "./083-jumba-jookiba-renegade-scie
 describe("Jumba Jookiba - Renegade Scientist", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [jumbaJokibaaRenegadeScientist] });
-  //   expect(testEngine.getCardModel(jumbaJokibaaRenegadeScientist).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [jumbaJokibaaRenegadeScientist] });
+  //   Expect(testEngine.getCardModel(jumbaJokibaaRenegadeScientist).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });

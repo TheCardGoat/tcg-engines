@@ -97,11 +97,7 @@ export const createZoneState = (players: PlayerId[]): ZoneState => {
  * addCardToZone(handZone, playerId, cardId);
  * ```
  */
-export const addCardToZone = (
-  zoneState: ZoneState,
-  playerId: PlayerId,
-  cardId: CardId,
-): void => {
+export const addCardToZone = (zoneState: ZoneState, playerId: PlayerId, cardId: CardId): void => {
   if (!zoneState[playerId]) {
     zoneState[playerId] = [];
   }
@@ -199,11 +195,7 @@ export const moveCardBetweenZones = (
  * }
  * ```
  */
-export const isCardInZone = (
-  zoneState: ZoneState,
-  playerId: PlayerId,
-  cardId: CardId,
-): boolean => {
+export const isCardInZone = (zoneState: ZoneState, playerId: PlayerId, cardId: CardId): boolean => {
   const playerZone = zoneState[playerId];
   if (!playerZone) {
     return false;
@@ -228,10 +220,7 @@ export const isCardInZone = (
  * const deckSize = getCardsInZone(deckZone, playerId).length;
  * ```
  */
-export const getCardsInZone = (
-  zoneState: ZoneState,
-  playerId: PlayerId,
-): CardId[] => {
+export const getCardsInZone = (zoneState: ZoneState, playerId: PlayerId): CardId[] => {
   const playerZone = zoneState[playerId];
   if (!playerZone) {
     return [];
@@ -256,12 +245,8 @@ export const getCardsInZone = (
  * const deckSize = getZoneSize(deckZone, playerId);
  * ```
  */
-export const getZoneSize = (
-  zoneState: ZoneState,
-  playerId: PlayerId,
-): number => {
-  return getCardsInZone(zoneState, playerId).length;
-};
+export const getZoneSize = (zoneState: ZoneState, playerId: PlayerId): number =>
+  getCardsInZone(zoneState, playerId).length;
 
 /**
  * Get top card from ordered zone
@@ -284,10 +269,7 @@ export const getZoneSize = (
  * }
  * ```
  */
-export const getTopCard = (
-  zoneState: ZoneState,
-  playerId: PlayerId,
-): CardId | undefined => {
+export const getTopCard = (zoneState: ZoneState, playerId: PlayerId): CardId | undefined => {
   const cards = getCardsInZone(zoneState, playerId);
   return cards[0]; // First card is top
 };
@@ -334,11 +316,7 @@ export const clearZone = (zoneState: ZoneState, playerId: PlayerId): void => {
  * addCardToTop(deckZone, playerId, cardId);
  * ```
  */
-export const addCardToTop = (
-  zoneState: ZoneState,
-  playerId: PlayerId,
-  cardId: CardId,
-): void => {
+export const addCardToTop = (zoneState: ZoneState, playerId: PlayerId, cardId: CardId): void => {
   if (!zoneState[playerId]) {
     zoneState[playerId] = [];
   }
@@ -367,11 +345,7 @@ export const addCardToTop = (
  * addCardToBottom(deckZone, playerId, cardId);
  * ```
  */
-export const addCardToBottom = (
-  zoneState: ZoneState,
-  playerId: PlayerId,
-  cardId: CardId,
-): void => {
+export const addCardToBottom = (zoneState: ZoneState, playerId: PlayerId, cardId: CardId): void => {
   if (!zoneState[playerId]) {
     zoneState[playerId] = [];
   }

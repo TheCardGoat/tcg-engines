@@ -3,15 +3,15 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { nibsLostBoy } from "@lorcanito/lorcana-engine/cards/010/index";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { nibsLostBoy } from "@lorcanito/lorcana-engine/cards/010/index";
 //
-// describe("Nibs - Lost Boy", () => {
-//   it("Has LOOK WHO'S BACK ability", async () => {
-//     const ability = nibsLostBoy.abilities?.find(
+// Describe("Nibs - Lost Boy", () => {
+//   It("Has LOOK WHO'S BACK ability", async () => {
+//     Const ability = nibsLostBoy.abilities?.find(
 //       (a) => a.name === "LOOK WHO'S BACK",
 //     );
-//     expect(ability).toBeDefined();
+//     Expect(ability).toBeDefined();
 //   });
 // });
 //

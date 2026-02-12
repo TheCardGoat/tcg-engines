@@ -1,32 +1,32 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { chosenCharacterGainsSupport } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+// Import { chosenCharacterGainsSupport } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const bosssOrders: LorcanitoActionCard = {
-//   id: "tqk",
-//   name: "Boss's Orders",
-//   characteristics: ["action"],
-//   text: "Chosen character gains **Support** this turn. _(Whenever they quest, you may add their {S} to another chosen character's {S} this turn.)_",
-//   type: "action",
-//   abilities: [
+// Export const bosssOrders: LorcanitoActionCard = {
+//   Id: "tqk",
+//   Name: "Boss's Orders",
+//   Characteristics: ["action"],
+//   Text: "Chosen character gains **Support** this turn. _(Whenever they quest, you may add their {S} to another chosen character's {S} this turn.)_",
+//   Type: "action",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       name: "Boss's Orders",
-//       text: "Chosen character gains **Support** this turn",
-//       effects: [chosenCharacterGainsSupport("turn")],
+//       Type: "resolution",
+//       Name: "Boss's Orders",
+//       Text: "Chosen character gains **Support** this turn",
+//       Effects: [chosenCharacterGainsSupport("turn")],
 //     },
 //   ],
-//   flavour:
+//   Flavour:
 //     "Snoops! I know you can look harder! Find me that lore! \n−Madame Medusa",
-//   inkwell: true,
-//   colors: ["amber"],
-//   cost: 1,
-//   illustrator: "Zuzana Sokolova / Livio Cacciatore",
-//   number: 25,
-//   set: "ITI",
-//   externalIds: {
-//     tcgPlayer: 537888,
+//   Inkwell: true,
+//   Colors: ["amber"],
+//   Cost: 1,
+//   Illustrator: "Zuzana Sokolova / Livio Cacciatore",
+//   Number: 25,
+//   Set: "ITI",
+//   ExternalIds: {
+//     TcgPlayer: 537888,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

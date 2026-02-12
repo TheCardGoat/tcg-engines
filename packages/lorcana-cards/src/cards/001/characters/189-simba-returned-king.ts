@@ -1,84 +1,84 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const simbaReturnedKing: CharacterCard = {
-  id: "nj8",
-  cardType: "character",
-  name: "Simba",
-  version: "Returned King",
-  fullName: "Simba - Returned King",
-  inkType: ["steel"],
-  franchise: "Lion King",
-  set: "001",
-  text: "Challenger +4 (While challenging, this character gets +4 {S}.)\nPOUNCE During your turn, this character gains Evasive. (They can challenge characters with Evasive.)",
-  cost: 7,
-  strength: 4,
-  willpower: 6,
-  lore: 2,
-  cardNumber: 189,
-  inkable: true,
-  externalIds: {
-    ravensburger: "54d1da804f89e6da94d1e9a335acf6a5baa79ff5",
-  },
   abilities: [
     {
       id: "nj8-1",
+      keyword: "Challenger",
       text: "Challenger +4",
       type: "keyword",
-      keyword: "Challenger",
       value: 4,
     },
     {
-      id: "nj8-2",
-      text: "POUNCE During your turn, this character gains Evasive.",
-      name: "POUNCE",
-      type: "static",
       effect: {
         type: "gain-keyword",
         keyword: "Evasive",
         target: "SELF",
         duration: "this-turn",
       },
+      id: "nj8-2",
+      name: "POUNCE",
+      text: "POUNCE During your turn, this character gains Evasive.",
+      type: "static",
     },
   ],
+  cardNumber: 189,
+  cardType: "character",
   classifications: ["Storyborn", "Hero", "King"],
+  cost: 7,
+  externalIds: {
+    ravensburger: "54d1da804f89e6da94d1e9a335acf6a5baa79ff5",
+  },
+  franchise: "Lion King",
+  fullName: "Simba - Returned King",
+  id: "nj8",
+  inkType: ["steel"],
+  inkable: true,
+  lore: 2,
+  name: "Simba",
+  set: "001",
+  strength: 4,
+  text: "Challenger +4 (While challenging, this character gets +4 {S}.)\nPOUNCE During your turn, this character gains Evasive. (They can challenge characters with Evasive.)",
+  version: "Returned King",
+  willpower: 6,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import {
-//   challengerAbility,
-//   duringYourTurnGains,
-//   evasiveAbility,
+// Import {
+//   ChallengerAbility,
+//   DuringYourTurnGains,
+//   EvasiveAbility,
 // } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const simbaReturnedKing: LorcanitoCharacterCard = {
-//   id: "hgu",
-//   name: "Simba",
-//   title: "Returned King",
-//   characteristics: ["hero", "storyborn", "king"],
-//   text: "**Challenger** +4 (While challenging, this character gets\r+4 {S}.)\n**POUNCE** During your turn, this character gains \r**Evasive**. _(They can challenge characters with Evasive.)_",
-//   type: "character",
-//   abilities: [
-//     challengerAbility(4),
-//     duringYourTurnGains(
+// Export const simbaReturnedKing: LorcanitoCharacterCard = {
+//   Id: "hgu",
+//   Name: "Simba",
+//   Title: "Returned King",
+//   Characteristics: ["hero", "storyborn", "king"],
+//   Text: "**Challenger** +4 (While challenging, this character gets\r+4 {S}.)\n**POUNCE** During your turn, this character gains \r**Evasive**. _(They can challenge characters with Evasive.)_",
+//   Type: "character",
+//   Abilities: [
+//     ChallengerAbility(4),
+//     DuringYourTurnGains(
 //       "Pounce",
 //       "During your turn, this character gains **Evasive**. _(They can challenge characters with Evasive.)_",
-//       evasiveAbility,
+//       EvasiveAbility,
 //     ),
 //   ],
-//   flavour: "„I‘ll do whatever it takes to save my kingdom.",
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 7,
-//   strength: 4,
-//   willpower: 6,
-//   lore: 2,
-//   illustrator: "Nicholas Kole",
-//   number: 189,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 492741,
+//   Flavour: "„I‘ll do whatever it takes to save my kingdom.",
+//   Inkwell: true,
+//   Colors: ["steel"],
+//   Cost: 7,
+//   Strength: 4,
+//   Willpower: 6,
+//   Lore: 2,
+//   Illustrator: "Nicholas Kole",
+//   Number: 189,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 492741,
 //   },
-//   rarity: "rare",
+//   Rarity: "rare",
 // };
 //

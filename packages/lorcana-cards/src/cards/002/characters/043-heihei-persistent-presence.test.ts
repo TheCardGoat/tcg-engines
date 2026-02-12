@@ -3,102 +3,102 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { dragonFire } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
-// import {
-//   chipTheTeacupGentleSoul,
-//   heiheiPersistentPresence,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { dragonFire } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
+// Import {
+//   ChipTheTeacupGentleSoul,
+//   HeiheiPersistentPresence,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// export function heiheiPersistenetPresenceTestCases() {
-//   describe("**HE'S BACK!** When this character is banished in a challenge, return this card to your hand.", () => {
-//     it("should not return to hand when banished out of a challenge", () => {
-//       const testStore = new TestStore(
+// Export function heiheiPersistenetPresenceTestCases() {
+//   Describe("**HE'S BACK!** When this character is banished in a challenge, return this card to your hand.", () => {
+//     It("should not return to hand when banished out of a challenge", () => {
+//       Const testStore = new TestStore(
 //         {
-//           inkwell: dragonFire.cost,
-//           hand: [dragonFire],
+//           Inkwell: dragonFire.cost,
+//           Hand: [dragonFire],
 //         },
 //         {
-//           play: [heiheiPersistentPresence],
+//           Play: [heiheiPersistentPresence],
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         heiheiPersistentPresence.id,
+//         HeiheiPersistentPresence.id,
 //         "player_two",
 //       );
-//       const removal = testStore.getByZoneAndId("hand", dragonFire.id);
+//       Const removal = testStore.getByZoneAndId("hand", dragonFire.id);
 //
-//       removal.playFromHand();
-//       testStore.resolveTopOfStack({ targetId: cardUnderTest.instanceId });
+//       Removal.playFromHand();
+//       TestStore.resolveTopOfStack({ targetId: cardUnderTest.instanceId });
 //
-//       expect(cardUnderTest.zone).toEqual("discard");
+//       Expect(cardUnderTest.zone).toEqual("discard");
 //     });
 //
-//     it("as an attacker, should return to hand when banished", () => {
-//       const testStore = new TestStore(
+//     It("as an attacker, should return to hand when banished", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [heiheiPersistentPresence],
+//           Play: [heiheiPersistentPresence],
 //         },
 //         {
-//           play: [chipTheTeacupGentleSoul],
+//           Play: [chipTheTeacupGentleSoul],
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         heiheiPersistentPresence.id,
+//         HeiheiPersistentPresence.id,
 //       );
-//       const defender = testStore.getByZoneAndId(
+//       Const defender = testStore.getByZoneAndId(
 //         "play",
-//         chipTheTeacupGentleSoul.id,
+//         ChipTheTeacupGentleSoul.id,
 //         "player_two",
 //       );
 //
-//       expect(cardUnderTest.zone).toEqual("play");
-//       expect(defender.zone).toEqual("play");
+//       Expect(cardUnderTest.zone).toEqual("play");
+//       Expect(defender.zone).toEqual("play");
 //
-//       defender.updateCardMeta({ exerted: true });
-//       cardUnderTest.challenge(defender);
+//       Defender.updateCardMeta({ exerted: true });
+//       CardUnderTest.challenge(defender);
 //
-//       expect(cardUnderTest.zone).toEqual("hand");
-//       expect(defender.zone).toEqual("discard");
+//       Expect(cardUnderTest.zone).toEqual("hand");
+//       Expect(defender.zone).toEqual("discard");
 //     });
 //
-//     it("as a defender, should return to hand when banished", () => {
-//       const testStore = new TestStore(
+//     It("as a defender, should return to hand when banished", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [chipTheTeacupGentleSoul],
+//           Play: [chipTheTeacupGentleSoul],
 //         },
 //         {
-//           play: [heiheiPersistentPresence],
+//           Play: [heiheiPersistentPresence],
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         heiheiPersistentPresence.id,
+//         HeiheiPersistentPresence.id,
 //         "player_two",
 //       );
-//       const attacker = testStore.getByZoneAndId(
+//       Const attacker = testStore.getByZoneAndId(
 //         "play",
-//         chipTheTeacupGentleSoul.id,
+//         ChipTheTeacupGentleSoul.id,
 //       );
 //
-//       cardUnderTest.updateCardMeta({ exerted: true });
+//       CardUnderTest.updateCardMeta({ exerted: true });
 //
-//       attacker.challenge(cardUnderTest);
-//       testStore.resolveTopOfStack();
+//       Attacker.challenge(cardUnderTest);
+//       TestStore.resolveTopOfStack();
 //
-//       expect(cardUnderTest.zone).toEqual("hand");
-//       expect(attacker.zone).toEqual("discard");
+//       Expect(cardUnderTest.zone).toEqual("hand");
+//       Expect(attacker.zone).toEqual("discard");
 //     });
 //   });
 // }
 //
-// describe("'When this character is banished in a challenge' trigger", () => {
-//   heiheiPersistenetPresenceTestCases();
+// Describe("'When this character is banished in a challenge' trigger", () => {
+//   HeiheiPersistenetPresenceTestCases();
 // });
 //

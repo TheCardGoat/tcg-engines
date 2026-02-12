@@ -17,9 +17,7 @@ describe("Keyword: Quick-Draw", () => {
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(2);
-      expect(result.abilities?.[0]).toEqual(
-        expect.objectContaining(Abilities.quickDraw()),
-      );
+      expect(result.abilities?.[0]).toEqual(expect.objectContaining(Abilities.quickDraw()));
       expect(result.abilities?.[1]).toEqual(
         expect.objectContaining(Abilities.equip(Costs.power("calm"))),
       );
@@ -34,9 +32,7 @@ describe("Keyword: Quick-Draw", () => {
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(2);
-      expect(result.abilities?.[0]).toEqual(
-        expect.objectContaining(Abilities.quickDraw()),
-      );
+      expect(result.abilities?.[0]).toEqual(expect.objectContaining(Abilities.quickDraw()));
       expect(result.abilities?.[1]).toEqual(
         expect.objectContaining(Abilities.equip(Costs.power("fury"))),
       );
@@ -51,9 +47,7 @@ describe("Keyword: Quick-Draw", () => {
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(2);
-      expect(result.abilities?.[0]).toEqual(
-        expect.objectContaining(Abilities.quickDraw()),
-      );
+      expect(result.abilities?.[0]).toEqual(expect.objectContaining(Abilities.quickDraw()));
       expect(result.abilities?.[1]).toEqual(
         expect.objectContaining(Abilities.equip(Costs.power("mind"))),
       );
@@ -68,15 +62,11 @@ describe("Keyword: Quick-Draw", () => {
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(3);
-      expect(result.abilities?.[0]).toEqual(
-        expect.objectContaining(Abilities.quickDraw()),
-      );
+      expect(result.abilities?.[0]).toEqual(expect.objectContaining(Abilities.quickDraw()));
       expect(result.abilities?.[1]).toEqual(
         expect.objectContaining(Abilities.equip(Costs.power("rainbow"))),
       );
-      expect(result.abilities?.[2]).toEqual(
-        expect.objectContaining(Abilities.temporary()),
-      );
+      expect(result.abilities?.[2]).toEqual(expect.objectContaining(Abilities.temporary()));
     });
   });
 
@@ -90,11 +80,11 @@ describe("Keyword: Quick-Draw", () => {
       expect(result.abilities).toHaveLength(2);
       expect(result.abilities?.[1]).toEqual(
         expect.objectContaining({
-          type: "static",
           effect: expect.objectContaining({
-            type: "grant-keyword",
             keyword: "Quick-Draw",
+            type: "grant-keyword",
           }),
+          type: "static",
         }),
       );
     });

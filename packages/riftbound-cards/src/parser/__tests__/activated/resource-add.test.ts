@@ -19,14 +19,14 @@ describe("Activated: Resource Add", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "activated",
           cost: expect.objectContaining({
             exhaust: true,
           }),
           effect: expect.objectContaining({
-            type: "add-resource",
             energy: 1,
+            type: "add-resource",
           }),
+          type: "activated",
         }),
       );
     });
@@ -40,11 +40,11 @@ describe("Activated: Resource Add", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "activated",
           effect: expect.objectContaining({
-            type: "add-resource",
             energy: 2,
+            type: "add-resource",
           }),
+          type: "activated",
         }),
       );
     });
@@ -60,11 +60,11 @@ describe("Activated: Resource Add", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "activated",
           effect: expect.objectContaining({
-            type: "add-resource",
             power: expect.arrayContaining(["fury"]),
+            type: "add-resource",
           }),
+          type: "activated",
         }),
       );
     });
@@ -78,11 +78,11 @@ describe("Activated: Resource Add", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "activated",
           effect: expect.objectContaining({
-            type: "add-resource",
             power: expect.arrayContaining(["calm"]),
+            type: "add-resource",
           }),
+          type: "activated",
         }),
       );
     });
@@ -143,12 +143,12 @@ describe("Activated: Resource Add", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "activated",
           effect: expect.objectContaining({
-            type: "add-resource",
             energy: 1,
             power: expect.arrayContaining(["fury"]),
+            type: "add-resource",
           }),
+          type: "activated",
         }),
       );
     });
@@ -164,11 +164,11 @@ describe("Activated: Resource Add", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "activated",
-          timing: "reaction",
           condition: expect.objectContaining({
             type: "legion",
           }),
+          timing: "reaction",
+          type: "activated",
         }),
       );
     });
@@ -184,10 +184,10 @@ describe("Activated: Resource Add", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "activated",
           effect: expect.objectContaining({
             type: "sequence",
           }),
+          type: "activated",
         }),
       );
     });

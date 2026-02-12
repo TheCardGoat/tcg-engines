@@ -4,7 +4,7 @@
  */
 
 import type { TokenType } from "chevrotain";
-import { createToken, Lexer } from "chevrotain";
+import { Lexer, createToken } from "chevrotain";
 
 // Keywords - Trigger words
 export const When = createToken({ name: "When", pattern: /when/i });
@@ -97,9 +97,9 @@ export const Identifier = createToken({
 
 // Whitespace (skipped)
 export const WhiteSpace = createToken({
+  group: Lexer.SKIPPED,
   name: "WhiteSpace",
   pattern: /\s+/,
-  group: Lexer.SKIPPED,
 });
 
 /**

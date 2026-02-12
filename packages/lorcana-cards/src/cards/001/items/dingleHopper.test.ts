@@ -5,9 +5,9 @@ import { dinglehopperundefined } from "./dingleHopper";
 describe("Dinglehopper - undefined", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [Dinglehopper] });
-  //   expect(testEngine.getCardModel(Dinglehopper).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [Dinglehopper] });
+  //   Expect(testEngine.getCardModel(Dinglehopper).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });

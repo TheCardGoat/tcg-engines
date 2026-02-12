@@ -1,43 +1,43 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { MetaAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { itemsYouControl } from "@lorcanito/lorcana-engine/abilities/target";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { MetaAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import { itemsYouControl } from "@lorcanito/lorcana-engine/abilities/target";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// const whatAMess: MetaAbility = {
-//   type: "static",
-//   ability: "meta",
-//   name: "WHAT A MESS",
-//   text: "During your turn, you may banish chosen item of yours to play this character for free.",
-//   alternativeCosts: [
+// Const whatAMess: MetaAbility = {
+//   Type: "static",
+//   Ability: "meta",
+//   Name: "WHAT A MESS",
+//   Text: "During your turn, you may banish chosen item of yours to play this character for free.",
+//   AlternativeCosts: [
 //     {
-//       type: "card",
-//       action: "banish",
-//       amount: 1,
-//       filters: itemsYouControl,
+//       Type: "card",
+//       Action: "banish",
+//       Amount: 1,
+//       Filters: itemsYouControl,
 //     },
 //   ],
 // };
 //
-// export const belleApprenticeInventor: LorcanitoCharacterCard = {
-//   id: "i9g",
-//   name: "Belle",
-//   title: "Apprentice Inventor",
-//   characteristics: ["storyborn", "hero", "princess", "inventor"],
-//   text: "WHAT A MESS During your turn, you may banish chosen item of yours to play this character for free.",
-//   type: "character",
-//   abilities: [whatAMess],
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 3,
-//   strength: 3,
-//   willpower: 3,
-//   illustrator: "Jochem van Gool",
-//   number: 159,
-//   set: "007",
-//   externalIds: {
-//     tcgPlayer: 619497,
+// Export const belleApprenticeInventor: LorcanitoCharacterCard = {
+//   Id: "i9g",
+//   Name: "Belle",
+//   Title: "Apprentice Inventor",
+//   Characteristics: ["storyborn", "hero", "princess", "inventor"],
+//   Text: "WHAT A MESS During your turn, you may banish chosen item of yours to play this character for free.",
+//   Type: "character",
+//   Abilities: [whatAMess],
+//   Inkwell: true,
+//   Colors: ["sapphire"],
+//   Cost: 3,
+//   Strength: 3,
+//   Willpower: 3,
+//   Illustrator: "Jochem van Gool",
+//   Number: 159,
+//   Set: "007",
+//   ExternalIds: {
+//     TcgPlayer: 619497,
 //   },
-//   rarity: "common",
-//   lore: 1,
+//   Rarity: "common",
+//   Lore: 1,
 // };
 //

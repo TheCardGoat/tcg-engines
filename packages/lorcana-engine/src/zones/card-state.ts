@@ -9,11 +9,7 @@
  */
 
 import type { CardId } from "@tcg/core";
-import type {
-  CardReadyState,
-  LorcanaCardMeta,
-  StackPosition,
-} from "../types/game-state";
+import type { CardReadyState, LorcanaCardMeta, StackPosition } from "../types/game-state";
 
 /**
  * Runtime state for a card instance in play
@@ -36,9 +32,9 @@ export function createCardInstanceState(
 ): CardInstanceState {
   return {
     cardId,
-    state: options?.state ?? "ready",
     damage: 0,
-    isDrying: options?.isDrying ?? true, // Characters start drying
+    isDrying: options?.isDrying ?? true,
+    state: options?.state ?? "ready", // Characters start drying
   };
 }
 
@@ -124,42 +120,34 @@ export function readyCard(cardState: CardInstanceState): CardInstanceState {
 /**
  * Add damage to a card
  */
-export function addDamage(
-  cardState: CardInstanceState,
-  amount: number,
-): CardInstanceState {
-  if (amount < 0) return cardState;
+export function addDamage(cardState: CardInstanceState, amount: number): CardInstanceState {
+  if (amount < 0) {
+    return cardState;
+  }
   return { ...cardState, damage: cardState.damage + amount };
 }
 
 /**
  * Remove damage from a card
  */
-export function removeDamage(
-  cardState: CardInstanceState,
-  amount: number,
-): CardInstanceState {
-  if (amount < 0) return cardState;
+export function removeDamage(cardState: CardInstanceState, amount: number): CardInstanceState {
+  if (amount < 0) {
+    return cardState;
+  }
   return { ...cardState, damage: Math.max(0, cardState.damage - amount) };
 }
 
 /**
  * Set damage to a specific value
  */
-export function setDamage(
-  cardState: CardInstanceState,
-  damage: number,
-): CardInstanceState {
+export function setDamage(cardState: CardInstanceState, damage: number): CardInstanceState {
   return { ...cardState, damage: Math.max(0, damage) };
 }
 
 /**
  * Set drying state
  */
-export function setDrying(
-  cardState: CardInstanceState,
-  isDrying: boolean,
-): CardInstanceState {
+export function setDrying(cardState: CardInstanceState, isDrying: boolean): CardInstanceState {
   return { ...cardState, isDrying };
 }
 
@@ -199,8 +187,8 @@ export function createStack(
     state: "ready",
     isDrying: false, // Shifted cards are not drying
     stackPosition: {
-      isUnder: false,
       cardsUnderneath: [underneathCardState.cardId],
+      isUnder: false,
     },
   };
 

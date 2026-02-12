@@ -3,29 +3,29 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { mrSmeeCaptainOfTheJollyRoger } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { mrSmeeCaptainOfTheJollyRoger } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Mr. Smee - Captain of the Jolly Roger", () => {
-//   it.skip("Shift 4 (You may pay 4 {I} to play this on top of one of your characters named Mr. Smee.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [mrSmeeCaptainOfTheJollyRoger],
+// Describe("Mr. Smee - Captain of the Jolly Roger", () => {
+//   It.skip("Shift 4 (You may pay 4 {I} to play this on top of one of your characters named Mr. Smee.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [mrSmeeCaptainOfTheJollyRoger],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(mrSmeeCaptainOfTheJollyRoger);
-//     expect(cardUnderTest.hasShift).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(mrSmeeCaptainOfTheJollyRoger);
+//     Expect(cardUnderTest.hasShift).toBe(true);
 //   });
 //
-//   it.skip("RAISE THE COLORS When you play this character, you may deal damage to chosen character equal to the number of your other Pirate characters in play.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: mrSmeeCaptainOfTheJollyRoger.cost,
-//       hand: [mrSmeeCaptainOfTheJollyRoger],
+//   It.skip("RAISE THE COLORS When you play this character, you may deal damage to chosen character equal to the number of your other Pirate characters in play.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: mrSmeeCaptainOfTheJollyRoger.cost,
+//       Hand: [mrSmeeCaptainOfTheJollyRoger],
 //     });
 //
-//     await testEngine.playCard(mrSmeeCaptainOfTheJollyRoger);
-//     await testEngine.acceptOptionalLayer();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.playCard(mrSmeeCaptainOfTheJollyRoger);
+//     Await testEngine.acceptOptionalLayer();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

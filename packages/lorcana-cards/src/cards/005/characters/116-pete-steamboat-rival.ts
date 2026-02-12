@@ -1,34 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const peteSteamboatRival: CharacterCard = {
-  id: "nvb",
-  cardType: "character",
-  name: "Pete",
-  version: "Steamboat Rival",
-  fullName: "Pete - Steamboat Rival",
-  inkType: ["ruby"],
-  set: "005",
-  text: "SCRAM! When you play this character, if you have another character named Pete in play, you may banish chosen opposing character.",
-  cost: 7,
-  strength: 6,
-  willpower: 6,
-  lore: 2,
-  cardNumber: 116,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "560738cc26ab41c3b9302243666e56a60e99e4df",
-  },
   abilities: [
     {
-      id: "nvb-1",
-      type: "triggered",
-      name: "SCRAM!",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -43,8 +17,34 @@ export const peteSteamboatRival: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "nvb-1",
+      name: "SCRAM!",
       text: "SCRAM! When you play this character, if you have another character named Pete in play, you may banish chosen opposing character.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 116,
+  cardType: "character",
   classifications: ["Storyborn", "Villain"],
+  cost: 7,
+  externalIds: {
+    ravensburger: "560738cc26ab41c3b9302243666e56a60e99e4df",
+  },
+  fullName: "Pete - Steamboat Rival",
+  id: "nvb",
+  inkType: ["ruby"],
+  inkable: true,
+  lore: 2,
+  missingTests: true,
+  name: "Pete",
+  set: "005",
+  strength: 6,
+  text: "SCRAM! When you play this character, if you have another character named Pete in play, you may banish chosen opposing character.",
+  version: "Steamboat Rival",
+  willpower: 6,
 };

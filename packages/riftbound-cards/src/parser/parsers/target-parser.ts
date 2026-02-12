@@ -4,12 +4,7 @@
  * Parses target descriptions into structured Target objects.
  */
 
-import type {
-  AnyTarget,
-  Quantity,
-  Target,
-  TargetController,
-} from "@tcg/riftbound-types/targeting";
+import type { AnyTarget, Quantity, Target, TargetController } from "@tcg/riftbound-types/targeting";
 
 /**
  * Parse a target string into an AnyTarget object
@@ -38,8 +33,7 @@ export function parseTarget(text: string): AnyTarget {
   }
 
   // Parse "a/an [controller] unit" patterns
-  const unitPattern =
-    /^(?:a|an|that|the)?\s*(friendly\s+|enemy\s+)?(unit|units?)$/i;
+  const unitPattern = /^(?:a|an|that|the)?\s*(friendly\s+|enemy\s+)?(unit|units?)$/i;
   const match = normalized.match(unitPattern);
 
   if (match) {
@@ -64,9 +58,7 @@ export function parseTarget(text: string): AnyTarget {
 /**
  * Parse controller string to TargetController
  */
-function parseController(
-  controllerStr: string | undefined,
-): TargetController | undefined {
+function parseController(controllerStr: string | undefined): TargetController | undefined {
   if (!controllerStr) {
     return undefined;
   }
@@ -124,10 +116,7 @@ export function parseQuantity(text: string): Quantity | undefined {
  * @param targetStr - The target description (e.g., "friendly unit", "enemy units")
  * @returns Target object with quantity
  */
-export function parseTargetWithQuantity(
-  quantityStr: string,
-  targetStr: string,
-): Target {
+export function parseTargetWithQuantity(quantityStr: string, targetStr: string): Target {
   const quantity = parseQuantity(quantityStr);
   const baseTarget = parseTarget(targetStr);
 

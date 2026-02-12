@@ -1,34 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const madHatterGraciousHost: CharacterCard = {
-  id: "hej",
-  cardType: "character",
-  name: "Mad Hatter",
-  version: "Gracious Host",
-  fullName: "Mad Hatter - Gracious Host",
-  inkType: ["emerald"],
-  franchise: "Alice in Wonderland",
-  set: "001",
-  text: "TEA PARTY Whenever this character is challenged, you may draw a card.",
-  cost: 5,
-  strength: 2,
-  willpower: 4,
-  lore: 3,
-  cardNumber: 86,
-  inkable: true,
-  externalIds: {
-    ravensburger: "3eb9c2ef04530dc057f7085a82915ead29d51e4d",
-  },
   abilities: [
     {
-      id: "hej-1",
-      type: "triggered",
-      name: "TEA PARTY",
-      trigger: {
-        event: "challenged",
-        timing: "whenever",
-        on: "SELF",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -38,8 +12,34 @@ export const madHatterGraciousHost: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "hej-1",
+      name: "TEA PARTY",
       text: "TEA PARTY Whenever this character is challenged, you may draw a card.",
+      trigger: {
+        event: "challenged",
+        timing: "whenever",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 86,
+  cardType: "character",
   classifications: ["Storyborn"],
+  cost: 5,
+  externalIds: {
+    ravensburger: "3eb9c2ef04530dc057f7085a82915ead29d51e4d",
+  },
+  franchise: "Alice in Wonderland",
+  fullName: "Mad Hatter - Gracious Host",
+  id: "hej",
+  inkType: ["emerald"],
+  inkable: true,
+  lore: 3,
+  name: "Mad Hatter",
+  set: "001",
+  strength: 2,
+  text: "TEA PARTY Whenever this character is challenged, you may draw a card.",
+  version: "Gracious Host",
+  willpower: 4,
 };

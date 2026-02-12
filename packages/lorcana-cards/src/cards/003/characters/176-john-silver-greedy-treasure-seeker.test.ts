@@ -3,43 +3,43 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { johnSilverGreedyTreasureSeeker } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { rapunzelsTowerSecludedPrison } from "@lorcanito/lorcana-engine/cards/005/locations/locations";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { johnSilverGreedyTreasureSeeker } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { rapunzelsTowerSecludedPrison } from "@lorcanito/lorcana-engine/cards/005/locations/locations";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("John Silver - Greedy Treasure Seeker", () => {
-//   describe("**CHART YOUR OWN COURSE** For each location you have in play, this character gains **Resist** +1 and gets +1 {L}. _(Damage dealt to them is reduced by 1.)_", () => {
-//     it("For each location you have in play, this character gets +1 {L}.", () => {
-//       const testStore = new TestStore({
-//         inkwell: johnSilverGreedyTreasureSeeker.cost,
-//         play: [johnSilverGreedyTreasureSeeker, rapunzelsTowerSecludedPrison],
+// Describe("John Silver - Greedy Treasure Seeker", () => {
+//   Describe("**CHART YOUR OWN COURSE** For each location you have in play, this character gains **Resist** +1 and gets +1 {L}. _(Damage dealt to them is reduced by 1.)_", () => {
+//     It("For each location you have in play, this character gets +1 {L}.", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: johnSilverGreedyTreasureSeeker.cost,
+//         Play: [johnSilverGreedyTreasureSeeker, rapunzelsTowerSecludedPrison],
 //       });
 //
-//       const cardUnderTest = testStore.getCard(johnSilverGreedyTreasureSeeker);
+//       Const cardUnderTest = testStore.getCard(johnSilverGreedyTreasureSeeker);
 //
-//       expect(cardUnderTest.lore).toEqual(
-//         johnSilverGreedyTreasureSeeker.lore + 1,
+//       Expect(cardUnderTest.lore).toEqual(
+//         JohnSilverGreedyTreasureSeeker.lore + 1,
 //       );
 //     });
 //
-//     it("For each location you have in play, this character gains **Resist** +1.", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: rapunzelsTowerSecludedPrison.cost,
-//         play: [johnSilverGreedyTreasureSeeker],
-//         hand: [rapunzelsTowerSecludedPrison],
+//     It("For each location you have in play, this character gains **Resist** +1.", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: rapunzelsTowerSecludedPrison.cost,
+//         Play: [johnSilverGreedyTreasureSeeker],
+//         Hand: [rapunzelsTowerSecludedPrison],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(
-//         johnSilverGreedyTreasureSeeker,
+//       Const cardUnderTest = testEngine.getCardModel(
+//         JohnSilverGreedyTreasureSeeker,
 //       );
 //
-//       expect(cardUnderTest.damageReduction()).toEqual(0);
+//       Expect(cardUnderTest.damageReduction()).toEqual(0);
 //
-//       await testEngine.playCard(rapunzelsTowerSecludedPrison);
+//       Await testEngine.playCard(rapunzelsTowerSecludedPrison);
 //
-//       expect(cardUnderTest.damageReduction()).toEqual(1);
+//       Expect(cardUnderTest.damageReduction()).toEqual(1);
 //     });
 //   });
 // });

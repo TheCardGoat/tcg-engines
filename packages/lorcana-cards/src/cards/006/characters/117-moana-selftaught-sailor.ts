@@ -1,45 +1,45 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
 // // TODO: Once the set is released, we organize the cards by set and type
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { dontHaveCaptainInPlay } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
-// import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { dontHaveCaptainInPlay } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
+// Import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 //
-// export const moanaSelftaughtSailor: LorcanitoCharacterCard = {
-//   id: "hpk",
-//   name: "Moana",
-//   title: "Self-Taught Sailor",
-//   characteristics: ["dreamborn", "hero", "princess", "pirate"],
-//   text: "LEARNING THE ROPES This character can't challenge unless you have a Captain character in play.",
-//   type: "character",
-//   abilities: [
+// Export const moanaSelftaughtSailor: LorcanitoCharacterCard = {
+//   Id: "hpk",
+//   Name: "Moana",
+//   Title: "Self-Taught Sailor",
+//   Characteristics: ["dreamborn", "hero", "princess", "pirate"],
+//   Text: "LEARNING THE ROPES This character can't challenge unless you have a Captain character in play.",
+//   Type: "character",
+//   Abilities: [
 //     {
-//       type: "static",
-//       ability: "effects",
-//       name: "Learning the Ropes",
-//       text: "This character can't challenge unless you have a Captain character in play.",
-//       conditions: [dontHaveCaptainInPlay],
-//       effects: [
+//       Type: "static",
+//       Ability: "effects",
+//       Name: "Learning the Ropes",
+//       Text: "This character can't challenge unless you have a Captain character in play.",
+//       Conditions: [dontHaveCaptainInPlay],
+//       Effects: [
 //         {
-//           type: "restriction",
-//           restriction: "challenge",
-//           duration: "static",
-//           target: thisCharacter,
+//           Type: "restriction",
+//           Restriction: "challenge",
+//           Duration: "static",
+//           Target: thisCharacter,
 //         },
 //       ],
 //     },
 //   ],
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 1,
-//   strength: 3,
-//   willpower: 2,
-//   lore: 1,
-//   illustrator: "Koni",
-//   number: 117,
-//   set: "006",
-//   externalIds: {
-//     tcgPlayer: 591990,
+//   Inkwell: true,
+//   Colors: ["ruby"],
+//   Cost: 1,
+//   Strength: 3,
+//   Willpower: 2,
+//   Lore: 1,
+//   Illustrator: "Koni",
+//   Number: 117,
+//   Set: "006",
+//   ExternalIds: {
+//     TcgPlayer: 591990,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

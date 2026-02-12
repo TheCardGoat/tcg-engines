@@ -5,9 +5,9 @@ import { herculesTrueHero } from "./181-hercules-true-hero";
 describe("Hercules - True Hero", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [herculesTrueHero] });
-  //   expect(testEngine.getCardModel(herculesTrueHero).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [herculesTrueHero] });
+  //   Expect(testEngine.getCardModel(herculesTrueHero).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });

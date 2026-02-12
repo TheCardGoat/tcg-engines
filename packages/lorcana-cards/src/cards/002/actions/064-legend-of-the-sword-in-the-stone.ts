@@ -1,25 +1,8 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
 export const legendOfTheSwordInTheStone: ActionCard = {
-  id: "t20",
-  cardType: "action",
-  name: "Legend of the Sword in the Stone",
-  inkType: ["amethyst"],
-  franchise: "Sword in the Stone",
-  set: "002",
-  text: "Chosen character gains Challenger +3 this turn. (They get +3 {S} while challenging.)",
-  actionSubtype: "song",
-  cost: 2,
-  cardNumber: 64,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "68b837d1794b4887d94e74205c81d1741976d19c",
-  },
   abilities: [
     {
-      id: "t20-1",
-      type: "action",
       effect: {
         type: "gain-keyword",
         keyword: "Challenger",
@@ -33,7 +16,24 @@ export const legendOfTheSwordInTheStone: ActionCard = {
         value: 3,
         duration: "this-turn",
       },
+      id: "t20-1",
       text: "Chosen character gains Challenger +3 this turn.",
+      type: "action",
     },
   ],
+  actionSubtype: "song",
+  cardNumber: 64,
+  cardType: "action",
+  cost: 2,
+  externalIds: {
+    ravensburger: "68b837d1794b4887d94e74205c81d1741976d19c",
+  },
+  franchise: "Sword in the Stone",
+  id: "t20",
+  inkType: ["amethyst"],
+  inkable: true,
+  missingTests: true,
+  name: "Legend of the Sword in the Stone",
+  set: "002",
+  text: "Chosen character gains Challenger +3 this turn. (They get +3 {S} while challenging.)",
 };

@@ -1,29 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const robinHoodUnrivaledArcher: CharacterCard = {
-  id: "dq9",
-  cardType: "character",
-  name: "Robin Hood",
-  version: "Unrivaled Archer",
-  fullName: "Robin Hood - Unrivaled Archer",
-  inkType: ["sapphire"],
-  franchise: "Disney",
-  set: "001",
-  text: "**Feed The Poor** When you play this character, if an opponent has more cards in their hand than you, draw a card./n/n**Good Shot** During your turn, this character gains **Evasive**. (_They can challenge characters with Evasive._)",
-  cost: 6,
-  strength: 4,
-  willpower: 4,
-  lore: 2,
-  cardNumber: 157,
-  inkable: true,
-  externalIds: {
-    ravensburger: "",
-  },
   abilities: [
     {
-      type: "action",
-      text: "**Feed The Poor** When you play this character, if an opponent has more cards in their hand than you, draw a card./n/n**Good Shot** During your turn, this character gains **Evasive**. (_They can challenge characters with Evasive._)",
-      id: "dq9-1",
       effect: {
         type: "conditional",
         condition: {
@@ -36,74 +15,95 @@ export const robinHoodUnrivaledArcher: CharacterCard = {
           target: "CONTROLLER",
         },
       },
+      id: "dq9-1",
+      text: "**Feed The Poor** When you play this character, if an opponent has more cards in their hand than you, draw a card./n/n**Good Shot** During your turn, this character gains **Evasive**. (_They can challenge characters with Evasive._)",
+      type: "action",
     },
   ],
+  cardNumber: 157,
+  cardType: "character",
   classifications: ["Hero", "Storyborn"],
+  cost: 6,
+  externalIds: {
+    ravensburger: "",
+  },
+  franchise: "Disney",
+  fullName: "Robin Hood - Unrivaled Archer",
+  id: "dq9",
+  inkType: ["sapphire"],
+  inkable: true,
+  lore: 2,
+  name: "Robin Hood",
+  set: "001",
+  strength: 4,
+  text: "**Feed The Poor** When you play this character, if an opponent has more cards in their hand than you, draw a card./n/n**Good Shot** During your turn, this character gains **Evasive**. (_They can challenge characters with Evasive._)",
+  version: "Unrivaled Archer",
+  willpower: 4,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { evasiveAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import { whileConditionThisCharacterGains } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-// import type { Condition } from "@lorcanito/lorcana-engine/store/resolvers/conditionResolver";
+// Import { evasiveAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import { whileConditionThisCharacterGains } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { Condition } from "@lorcanito/lorcana-engine/store/resolvers/conditionResolver";
 //
-// export const robinHoodUnrivaledArcher: LorcanitoCharacterCard = {
-//   id: "dq9",
-//   reprints: ["l10"],
-//   name: "Robin Hood",
-//   title: "Unrivaled Archer",
-//   characteristics: ["hero", "storyborn"],
-//   text: "**Feed The Poor** When you play this character, if an opponent has more cards in their hand than you, draw a card./n/n**Good Shot** During your turn, this character gains **Evasive**. (_They can challenge characters with Evasive._)",
-//   type: "character",
-//   abilities: [
-//     whenYouPlayThisCharAbility({
-//       type: "resolution",
-//       name: "Feed The Poor",
-//       text: "When you play this character, if an opponent has more cards in their hand than you, draw a card.",
-//       resolutionConditions: [
+// Export const robinHoodUnrivaledArcher: LorcanitoCharacterCard = {
+//   Id: "dq9",
+//   Reprints: ["l10"],
+//   Name: "Robin Hood",
+//   Title: "Unrivaled Archer",
+//   Characteristics: ["hero", "storyborn"],
+//   Text: "**Feed The Poor** When you play this character, if an opponent has more cards in their hand than you, draw a card./n/n**Good Shot** During your turn, this character gains **Evasive**. (_They can challenge characters with Evasive._)",
+//   Type: "character",
+//   Abilities: [
+//     WhenYouPlayThisCharAbility({
+//       Type: "resolution",
+//       Name: "Feed The Poor",
+//       Text: "When you play this character, if an opponent has more cards in their hand than you, draw a card.",
+//       ResolutionConditions: [
 //         {
-//           type: "hand",
-//           amount: "lt",
+//           Type: "hand",
+//           Amount: "lt",
 //         } as Condition,
 //       ],
-//       effects: [
+//       Effects: [
 //         {
-//           type: "draw",
-//           amount: 1,
-//           target: {
-//             type: "player",
-//             value: "self",
+//           Type: "draw",
+//           Amount: 1,
+//           Target: {
+//             Type: "player",
+//             Value: "self",
 //           },
 //         },
 //       ],
 //     }),
-//     whileConditionThisCharacterGains({
-//       name: "Good Shot",
-//       text: "During your turn, this character gains **Evasive**. (_They can challenge characters with Evasive._)",
-//       ability: evasiveAbility,
-//       conditions: [
+//     WhileConditionThisCharacterGains({
+//       Name: "Good Shot",
+//       Text: "During your turn, this character gains **Evasive**. (_They can challenge characters with Evasive._)",
+//       Ability: evasiveAbility,
+//       Conditions: [
 //         {
-//           type: "during-turn",
-//           value: "self",
+//           Type: "during-turn",
+//           Value: "self",
 //         },
 //       ],
 //     }),
 //   ],
-//   flavour:
+//   Flavour:
 //     '"We never rob. We just sort of borrow a bit from those who can afford it."',
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 6,
-//   strength: 4,
-//   willpower: 4,
-//   lore: 2,
-//   illustrator: "John Loren",
-//   number: 157,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 492707,
+//   Inkwell: true,
+//   Colors: ["sapphire"],
+//   Cost: 6,
+//   Strength: 4,
+//   Willpower: 4,
+//   Lore: 2,
+//   Illustrator: "John Loren",
+//   Number: 157,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 492707,
 //   },
-//   rarity: "super_rare",
+//   Rarity: "super_rare",
 // };
 //

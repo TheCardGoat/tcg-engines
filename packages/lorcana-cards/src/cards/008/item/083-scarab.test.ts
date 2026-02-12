@@ -3,26 +3,26 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   palaceGuardSpectralSentry,
-//   scarab,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   PalaceGuardSpectralSentry,
+//   Scarab,
 // } from "@lorcanito/lorcana-engine/cards/008";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Scarab", () => {
-//   it("SEARCH THE SANDS {E} 2 {I} – Return an Illusion character card from your discard to your hand.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: 2,
-//       play: [scarab],
-//       discard: [palaceGuardSpectralSentry],
+// Describe("Scarab", () => {
+//   It("SEARCH THE SANDS {E} 2 {I} – Return an Illusion character card from your discard to your hand.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: 2,
+//       Play: [scarab],
+//       Discard: [palaceGuardSpectralSentry],
 //     });
 //
-//     await testEngine.activateCard(scarab, {
-//       targets: [palaceGuardSpectralSentry],
+//     Await testEngine.activateCard(scarab, {
+//       Targets: [palaceGuardSpectralSentry],
 //     });
 //
-//     expect(testEngine.getCardModel(palaceGuardSpectralSentry).zone).toBe(
+//     Expect(testEngine.getCardModel(palaceGuardSpectralSentry).zone).toBe(
 //       "hand",
 //     );
 //   });

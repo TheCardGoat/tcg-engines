@@ -1,35 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const madameMedusaTheBoss: CharacterCard = {
-  id: "162",
-  cardType: "character",
-  name: "Madame Medusa",
-  version: "The Boss",
-  fullName: "Madame Medusa - The Boss",
-  inkType: ["ruby"],
-  franchise: "Rescuers",
-  set: "003",
-  text: "THAT TERRIBLE WOMAN When you play this character, banish chosen opposing character with 3 {S} or less.",
-  cost: 6,
-  strength: 4,
-  willpower: 4,
-  lore: 1,
-  cardNumber: 112,
-  inkable: false,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "979f3dc046126dfc16cd552ce9c772ada607ad11",
-  },
   abilities: [
     {
-      id: "162-1",
-      type: "triggered",
-      name: "THAT TERRIBLE WOMAN",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "banish",
         target: {
@@ -40,8 +13,35 @@ export const madameMedusaTheBoss: CharacterCard = {
           cardTypes: ["character"],
         },
       },
+      id: "162-1",
+      name: "THAT TERRIBLE WOMAN",
       text: "THAT TERRIBLE WOMAN When you play this character, banish chosen opposing character with 3 {S} or less.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 112,
+  cardType: "character",
   classifications: ["Storyborn", "Villain"],
+  cost: 6,
+  externalIds: {
+    ravensburger: "979f3dc046126dfc16cd552ce9c772ada607ad11",
+  },
+  franchise: "Rescuers",
+  fullName: "Madame Medusa - The Boss",
+  id: "162",
+  inkType: ["ruby"],
+  inkable: false,
+  lore: 1,
+  missingTests: true,
+  name: "Madame Medusa",
+  set: "003",
+  strength: 4,
+  text: "THAT TERRIBLE WOMAN When you play this character, banish chosen opposing character with 3 {S} or less.",
+  version: "The Boss",
+  willpower: 4,
 };

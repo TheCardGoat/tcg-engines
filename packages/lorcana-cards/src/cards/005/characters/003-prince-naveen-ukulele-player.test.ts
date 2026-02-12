@@ -3,72 +3,72 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   aWholeNewWorld,
-//   hakunaMatata,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   AWholeNewWorld,
+//   HakunaMatata,
 // } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
-// import {
-//   peteGamesReferee,
-//   princeNaveenUkulelePlayer,
+// Import {
+//   PeteGamesReferee,
+//   PrinceNaveenUkulelePlayer,
 // } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Prince Naveen - Ukulele Player", () => {
-//   it("**IT’S BEAUTIFUL NO?** When you play this character, you may play a song with cost 6 or less for free.", () => {
-//     const testStore = new TestStore({
-//       inkwell: princeNaveenUkulelePlayer.cost,
-//       hand: [princeNaveenUkulelePlayer, hakunaMatata],
-//       deck: 2,
+// Describe("Prince Naveen - Ukulele Player", () => {
+//   It("**IT’S BEAUTIFUL NO?** When you play this character, you may play a song with cost 6 or less for free.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: princeNaveenUkulelePlayer.cost,
+//       Hand: [princeNaveenUkulelePlayer, hakunaMatata],
+//       Deck: 2,
 //     });
 //
-//     const cardUnderTest = testStore.getCard(princeNaveenUkulelePlayer);
-//     const targetCard = testStore.getCard(hakunaMatata);
+//     Const cardUnderTest = testStore.getCard(princeNaveenUkulelePlayer);
+//     Const targetCard = testStore.getCard(hakunaMatata);
 //
-//     cardUnderTest.playFromHand();
-//     expect(testStore.stackLayers).toHaveLength(1);
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({ targets: [targetCard] });
-//     expect(targetCard.zone).toBe("discard");
+//     CardUnderTest.playFromHand();
+//     Expect(testStore.stackLayers).toHaveLength(1);
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({ targets: [targetCard] });
+//     Expect(targetCard.zone).toBe("discard");
 //   });
 // });
 //
-// describe("Regressions", () => {
-//   it("Can't play if there's play restrictions", () => {
-//     const testStore = new TestStore(
+// Describe("Regressions", () => {
+//   It("Can't play if there's play restrictions", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: peteGamesReferee.cost,
-//         hand: [peteGamesReferee],
-//         deck: 1,
+//         Inkwell: peteGamesReferee.cost,
+//         Hand: [peteGamesReferee],
+//         Deck: 1,
 //       },
 //       {
-//         inkwell: princeNaveenUkulelePlayer.cost,
-//         hand: [princeNaveenUkulelePlayer, aWholeNewWorld],
-//         deck: 2,
+//         Inkwell: princeNaveenUkulelePlayer.cost,
+//         Hand: [princeNaveenUkulelePlayer, aWholeNewWorld],
+//         Deck: 2,
 //       },
 //     );
 //
-//     const peteRestriction = testStore.getCard(peteGamesReferee);
+//     Const peteRestriction = testStore.getCard(peteGamesReferee);
 //
-//     peteRestriction.playFromHand();
-//     expect(
-//       testStore.store.continuousEffectStore.continuousEffects,
+//     PeteRestriction.playFromHand();
+//     Expect(
+//       TestStore.store.continuousEffectStore.continuousEffects,
 //     ).toHaveLength(1);
 //
-//     testStore.passTurn();
+//     TestStore.passTurn();
 //
-//     testStore.changePlayer("player_two");
-//     const cardUnderTest = testStore.getCard(princeNaveenUkulelePlayer);
-//     const targetCard = testStore.getCard(aWholeNewWorld);
+//     TestStore.changePlayer("player_two");
+//     Const cardUnderTest = testStore.getCard(princeNaveenUkulelePlayer);
+//     Const targetCard = testStore.getCard(aWholeNewWorld);
 //
-//     cardUnderTest.playFromHand();
-//     expect(
-//       testStore.store.continuousEffectStore.continuousEffects,
+//     CardUnderTest.playFromHand();
+//     Expect(
+//       TestStore.store.continuousEffectStore.continuousEffects,
 //     ).toHaveLength(1);
-//     expect(testStore.stackLayers).toHaveLength(1);
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({ targets: [targetCard] });
-//     expect(targetCard.zone).toBe("hand");
+//     Expect(testStore.stackLayers).toHaveLength(1);
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({ targets: [targetCard] });
+//     Expect(targetCard.zone).toBe("hand");
 //   });
 // });
 //

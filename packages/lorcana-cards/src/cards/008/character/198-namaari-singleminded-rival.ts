@@ -1,51 +1,51 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { forEachCardInYourDiscard } from "@lorcanito/lorcana-engine/abilities/amounts";
-// import { atTheStartOfYourTurn } from "@lorcanito/lorcana-engine/abilities/atTheAbilities";
-// import { whenYouPlayThis } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import {
-//   thisCharacterGetsStrength,
-//   youMayDrawThenChooseAndDiscard,
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { forEachCardInYourDiscard } from "@lorcanito/lorcana-engine/abilities/amounts";
+// Import { atTheStartOfYourTurn } from "@lorcanito/lorcana-engine/abilities/atTheAbilities";
+// Import { whenYouPlayThis } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import {
+//   ThisCharacterGetsStrength,
+//   YouMayDrawThenChooseAndDiscard,
 // } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const namaariSinglemindedRival: LorcanitoCharacterCard = {
-//   id: "l8m",
-//   name: "Namaari",
-//   title: "Single-Minded Rival",
-//   characteristics: ["storyborn", "villain", "princess"],
-//   text: "STRATEGIC EDGE When you play this character and at the start of your turn, you may draw a card, then choose and discard a card.\nEXTREME FOCUS This character gets +1 {S} for each card in your discard.",
-//   type: "character",
-//   abilities: [
+// Export const namaariSinglemindedRival: LorcanitoCharacterCard = {
+//   Id: "l8m",
+//   Name: "Namaari",
+//   Title: "Single-Minded Rival",
+//   Characteristics: ["storyborn", "villain", "princess"],
+//   Text: "STRATEGIC EDGE When you play this character and at the start of your turn, you may draw a card, then choose and discard a card.\nEXTREME FOCUS This character gets +1 {S} for each card in your discard.",
+//   Type: "character",
+//   Abilities: [
 //     {
-//       type: "static",
-//       ability: "effects",
-//       name: "EXTREME FOCUS",
-//       text: "This character gets +1 {S} for each card in your discard.",
-//       effects: [thisCharacterGetsStrength(forEachCardInYourDiscard)],
+//       Type: "static",
+//       Ability: "effects",
+//       Name: "EXTREME FOCUS",
+//       Text: "This character gets +1 {S} for each card in your discard.",
+//       Effects: [thisCharacterGetsStrength(forEachCardInYourDiscard)],
 //     },
-//     whenYouPlayThis({
+//     WhenYouPlayThis({
 //       ...youMayDrawThenChooseAndDiscard,
-//       name: "STRATEGIC EDGE",
-//       text: "When you play this character and at the start of your turn, you may draw a card, then choose and discard a card.",
+//       Name: "STRATEGIC EDGE",
+//       Text: "When you play this character and at the start of your turn, you may draw a card, then choose and discard a card.",
 //     }),
-//     atTheStartOfYourTurn({
+//     AtTheStartOfYourTurn({
 //       ...youMayDrawThenChooseAndDiscard,
-//       name: "STRATEGIC EDGE",
-//       text: "When you play this character and at the start of your turn, you may draw a card, then choose and discard a card.",
+//       Name: "STRATEGIC EDGE",
+//       Text: "When you play this character and at the start of your turn, you may draw a card, then choose and discard a card.",
 //     }),
 //   ],
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 5,
-//   strength: 0,
-//   willpower: 5,
-//   illustrator: "Max Ulrichney",
-//   number: 198,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631849,
+//   Inkwell: true,
+//   Colors: ["steel"],
+//   Cost: 5,
+//   Strength: 0,
+//   Willpower: 5,
+//   Illustrator: "Max Ulrichney",
+//   Number: 198,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631849,
 //   },
-//   rarity: "legendary",
-//   lore: 2,
+//   Rarity: "legendary",
+//   Lore: 2,
 // };
 //

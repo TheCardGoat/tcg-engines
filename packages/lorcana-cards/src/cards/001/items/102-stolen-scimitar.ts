@@ -1,25 +1,8 @@
 import type { ItemCard } from "@tcg/lorcana-types";
 
 export const stolenScimitar: ItemCard = {
-  id: "17q",
-  cardType: "item",
-  name: "Stolen Scimitar",
-  inkType: ["emerald"],
-  franchise: "Aladdin",
-  set: "001",
-  text: "SLASH {E} — Chosen character gets +1 {S} this turn. If a character named Aladdin is chosen, he gets +2 {S} instead.",
-  cost: 2,
-  cardNumber: 102,
-  inkable: true,
-  externalIds: {
-    ravensburger: "9d9f18605fc706396f03e12b4ffa1fdb3fcbf504",
-  },
   abilities: [
     {
-      id: "17q-1",
-      text: "SLASH {E} — Chosen character gets +1 {S} this turn. If a character named Aladdin is chosen, he gets +2 {S} instead.",
-      name: "SLASH",
-      type: "activated",
       cost: {
         exert: true,
       },
@@ -42,86 +25,103 @@ export const stolenScimitar: ItemCard = {
           },
         ],
       },
+      id: "17q-1",
+      name: "SLASH",
+      text: "SLASH {E} — Chosen character gets +1 {S} this turn. If a character named Aladdin is chosen, he gets +2 {S} instead.",
+      type: "activated",
     },
   ],
+  cardNumber: 102,
+  cardType: "item",
+  cost: 2,
+  externalIds: {
+    ravensburger: "9d9f18605fc706396f03e12b4ffa1fdb3fcbf504",
+  },
+  franchise: "Aladdin",
+  id: "17q",
+  inkType: ["emerald"],
+  inkable: true,
+  name: "Stolen Scimitar",
+  set: "001",
+  text: "SLASH {E} — Chosen character gets +1 {S} this turn. If a character named Aladdin is chosen, he gets +2 {S} instead.",
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { ActivatedAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-// import type {
+// Import type { ActivatedAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type {
 //   AttributeEffect,
 //   TargetConditionalEffect,
 // } from "@lorcanito/lorcana-engine/effects/effectTypes";
 //
-// const targetingAladdin: AttributeEffect = {
-//   type: "attribute",
-//   attribute: "strength",
-//   amount: 2,
-//   modifier: "add",
-//   duration: "turn",
-//   target: {
-//     type: "card",
-//     value: 1,
-//     filters: [
+// Const targetingAladdin: AttributeEffect = {
+//   Type: "attribute",
+//   Attribute: "strength",
+//   Amount: 2,
+//   Modifier: "add",
+//   Duration: "turn",
+//   Target: {
+//     Type: "card",
+//     Value: 1,
+//     Filters: [
 //       { filter: "type", value: "character" },
 //       { filter: "zone", value: "play" },
 //       {
-//         filter: "attribute",
-//         value: "name",
-//         comparison: { operator: "eq", value: "aladdin" },
+//         Filter: "attribute",
+//         Value: "name",
+//         Comparison: { operator: "eq", value: "aladdin" },
 //       },
 //     ],
 //   },
 // };
 //
-// const notTargetingAladdin: AttributeEffect = {
-//   type: "attribute",
-//   attribute: "strength",
-//   amount: 1,
-//   modifier: "add",
-//   duration: "turn",
-//   target: {
-//     type: "card",
-//     value: 1,
-//     filters: [
+// Const notTargetingAladdin: AttributeEffect = {
+//   Type: "attribute",
+//   Attribute: "strength",
+//   Amount: 1,
+//   Modifier: "add",
+//   Duration: "turn",
+//   Target: {
+//     Type: "card",
+//     Value: 1,
+//     Filters: [
 //       { filter: "type", value: "character" },
 //       { filter: "zone", value: "play" },
 //     ],
 //   },
 // };
 //
-// export const stolenScimitar: LorcanitoItemCard = {
-//   characteristics: ["item"],
-//   id: "h98",
+// Export const stolenScimitar: LorcanitoItemCard = {
+//   Characteristics: ["item"],
+//   Id: "h98",
 //
-//   name: "Stolen Scimitar",
-//   text: "**SLASH** {E} − Chosen character get +1 {S} this turn. If a character named Aladdin is chosen, he gets +2 {S} instead.",
-//   type: "item",
-//   abilities: [
+//   Name: "Stolen Scimitar",
+//   Text: "**SLASH** {E} − Chosen character get +1 {S} this turn. If a character named Aladdin is chosen, he gets +2 {S} instead.",
+//   Type: "item",
+//   Abilities: [
 //     {
-//       type: "activated",
-//       name: "Slash",
-//       text: "Chosen character get +1 {S} this turn. If a character named Aladdin is chosen, he gets +2 {S} instead.",
-//       costs: [{ type: "exert" }],
-//       effects: [
+//       Type: "activated",
+//       Name: "Slash",
+//       Text: "Chosen character get +1 {S} this turn. If a character named Aladdin is chosen, he gets +2 {S} instead.",
+//       Costs: [{ type: "exert" }],
+//       Effects: [
 //         {
-//           type: "target-conditional",
-//           autoResolve: false,
+//           Type: "target-conditional",
+//           AutoResolve: false,
 //           // move condition to a separate object, so the filter is the same
-//           effects: [targetingAladdin],
-//           fallback: [notTargetingAladdin],
+//           Effects: [targetingAladdin],
+//           Fallback: [notTargetingAladdin],
 //           // TODO: Re implement conditional target
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
+//           Target: {
+//             Type: "card",
+//             Value: 1,
+//             Filters: [
 //               { filter: "type", value: "character" },
 //               { filter: "zone", value: "play" },
 //               {
-//                 filter: "attribute",
-//                 value: "name",
-//                 comparison: { operator: "eq", value: "aladdin" },
+//                 Filter: "attribute",
+//                 Value: "name",
+//                 Comparison: { operator: "eq", value: "aladdin" },
 //               },
 //             ],
 //           },
@@ -129,16 +129,16 @@ export const stolenScimitar: ItemCard = {
 //       ],
 //     } as ActivatedAbility,
 //   ],
-//   flavour: "Sometimes you've got to take what you can get.",
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 2,
-//   illustrator: "Kendall Hale",
-//   number: 102,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 507262,
+//   Flavour: "Sometimes you've got to take what you can get.",
+//   Inkwell: true,
+//   Colors: ["emerald"],
+//   Cost: 2,
+//   Illustrator: "Kendall Hale",
+//   Number: 102,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 507262,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

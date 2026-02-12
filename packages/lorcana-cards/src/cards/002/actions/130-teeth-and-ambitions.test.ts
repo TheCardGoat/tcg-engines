@@ -3,46 +3,46 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { teethAndAmbitions } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
-// import {
-//   donaldDuckNotAgain,
-//   goofyKnightForADay,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { teethAndAmbitions } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
+// Import {
+//   DonaldDuckNotAgain,
+//   GoofyKnightForADay,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Teeth and Ambitions", () => {
-//   it("Deal 2 damage to chosen character of yours to deal 2 damage to another chosen character.", () => {
-//     const testStore = new TestStore(
+// Describe("Teeth and Ambitions", () => {
+//   It("Deal 2 damage to chosen character of yours to deal 2 damage to another chosen character.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: teethAndAmbitions.cost,
-//         hand: [teethAndAmbitions],
-//         play: [goofyKnightForADay],
+//         Inkwell: teethAndAmbitions.cost,
+//         Hand: [teethAndAmbitions],
+//         Play: [goofyKnightForADay],
 //       },
 //       { play: [donaldDuckNotAgain] },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "hand",
-//       teethAndAmbitions.id,
+//       TeethAndAmbitions.id,
 //     );
-//     const targetOfYour = testStore.getByZoneAndId(
+//     Const targetOfYour = testStore.getByZoneAndId(
 //       "play",
-//       goofyKnightForADay.id,
+//       GoofyKnightForADay.id,
 //     );
-//     const targetOfOpponent = testStore.getByZoneAndId(
+//     Const targetOfOpponent = testStore.getByZoneAndId(
 //       "play",
-//       donaldDuckNotAgain.id,
+//       DonaldDuckNotAgain.id,
 //       "player_two",
 //     );
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     testStore.resolveTopOfStack({ targets: [targetOfYour] }, true);
-//     expect(targetOfYour.meta.damage).toBe(2);
+//     TestStore.resolveTopOfStack({ targets: [targetOfYour] }, true);
+//     Expect(targetOfYour.meta.damage).toBe(2);
 //
-//     testStore.resolveTopOfStack({ targets: [targetOfOpponent] });
-//     expect(targetOfOpponent.meta.damage).toBe(2);
+//     TestStore.resolveTopOfStack({ targets: [targetOfOpponent] });
+//     Expect(targetOfOpponent.meta.damage).toBe(2);
 //   });
 // });
 //

@@ -1,38 +1,17 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const captainHookThePirateKing: CharacterCard = {
-  id: "1na",
-  cardType: "character",
-  name: "Captain Hook",
-  version: "The Pirate King",
-  fullName: "Captain Hook - The Pirate King",
-  inkType: ["emerald", "steel"],
-  franchise: "Peter Pan",
-  set: "008",
-  text: "Shift 3 (You may pay 3 {I} to play this on top of one of your characters named Captain Hook.)\nGIVE ’EM ALL YOU GOT! Once during your turn, whenever an opposing character is damaged, your Pirate characters get +2 {S} and gain Resist +2 this turn. (Damage dealt to them is reduced by 2.)",
-  cost: 5,
-  strength: 4,
-  willpower: 5,
-  lore: 2,
-  cardNumber: 109,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "d5b15fd6dd19340f237112bdc1e581bdaa0a13ea",
-  },
   abilities: [
     {
-      id: "1na-1",
-      type: "keyword",
-      keyword: "Shift",
       cost: {
         ink: 3,
       },
+      id: "1na-1",
+      keyword: "Shift",
       text: "Shift 3",
+      type: "keyword",
     },
     {
-      id: "1na-2",
-      type: "static",
       effect: {
         type: "sequence",
         steps: [
@@ -51,8 +30,29 @@ export const captainHookThePirateKing: CharacterCard = {
           },
         ],
       },
+      id: "1na-2",
       text: "GIVE ’EM ALL YOU GOT! Once during your turn, whenever an opposing character is damaged, your Pirate characters get +2 {S} and gain Resist +2 this turn.",
+      type: "static",
     },
   ],
+  cardNumber: 109,
+  cardType: "character",
   classifications: ["Floodborn", "Villain", "King", "Pirate", "Captain"],
+  cost: 5,
+  externalIds: {
+    ravensburger: "d5b15fd6dd19340f237112bdc1e581bdaa0a13ea",
+  },
+  franchise: "Peter Pan",
+  fullName: "Captain Hook - The Pirate King",
+  id: "1na",
+  inkType: ["emerald", "steel"],
+  inkable: true,
+  lore: 2,
+  missingTests: true,
+  name: "Captain Hook",
+  set: "008",
+  strength: 4,
+  text: "Shift 3 (You may pay 3 {I} to play this on top of one of your characters named Captain Hook.)\nGIVE ’EM ALL YOU GOT! Once during your turn, whenever an opposing character is damaged, your Pirate characters get +2 {S} and gain Resist +2 this turn. (Damage dealt to them is reduced by 2.)",
+  version: "The Pirate King",
+  willpower: 5,
 };

@@ -1,9 +1,5 @@
 import { createMove } from "@tcg/core";
-import type {
-  LorcanaCardMeta,
-  LorcanaGameState,
-  LorcanaMoveParams,
-} from "../../../types";
+import type { LorcanaCardMeta, LorcanaGameState, LorcanaMoveParams } from "../../../types";
 
 /**
  * Pass Turn
@@ -32,10 +28,7 @@ export const passTurn = createMove<
     }
 
     // Can only pass turn if it's your turn
-    if (
-      context.flow?.currentPlayer &&
-      context.flow.currentPlayer !== context.playerId
-    ) {
+    if (context.flow?.currentPlayer && context.flow.currentPlayer !== context.playerId) {
       return false;
     }
 

@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { beastsMirror } from "@lorcanito/lorcana-engine/cards/009/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { beastsMirror } from "@lorcanito/lorcana-engine/cards/009/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Beast's Mirror", () => {
-//   it.skip("**SHOW ME** {E}, 3 {I} - If you have no cards in your hand, draw a card.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: beastsMirror.cost,
-//       play: [beastsMirror],
-//       hand: [beastsMirror],
+// Describe("Beast's Mirror", () => {
+//   It.skip("**SHOW ME** {E}, 3 {I} - If you have no cards in your hand, draw a card.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: beastsMirror.cost,
+//       Play: [beastsMirror],
+//       Hand: [beastsMirror],
 //     });
 //
-//     await testEngine.playCard(beastsMirror);
+//     Await testEngine.playCard(beastsMirror);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

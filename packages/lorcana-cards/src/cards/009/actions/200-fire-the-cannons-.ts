@@ -1,15 +1,15 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { fireTheCannons as ogFireTheCannons } from "@lorcanito/lorcana-engine/cards/001/actions/197-fire-the-cannons";
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+// Import { fireTheCannons as ogFireTheCannons } from "@lorcanito/lorcana-engine/cards/001/actions/197-fire-the-cannons";
 //
-// export const fireTheCannons: LorcanitoActionCard = {
+// Export const fireTheCannons: LorcanitoActionCard = {
 //   ...ogFireTheCannons,
-//   id: "ooh",
-//   reprints: [ogFireTheCannons.id],
-//   number: 200,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650133,
+//   Id: "ooh",
+//   Reprints: [ogFireTheCannons.id],
+//   Number: 200,
+//   Set: "009",
+//   ExternalIds: {
+//     TcgPlayer: 650133,
 //   },
 // };
 //

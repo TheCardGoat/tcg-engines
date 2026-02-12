@@ -3,65 +3,65 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { pawpsicle } from "@lorcanito/lorcana-engine/cards/002/items/items";
-// import {
-//   kuzcoSelfishEmperor,
-//   monstroWhaleOfAWhale,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { pawpsicle } from "@lorcanito/lorcana-engine/cards/002/items/items";
+// Import {
+//   KuzcoSelfishEmperor,
+//   MonstroWhaleOfAWhale,
 // } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Kuzco - Selfish Emperor", () => {
-//   it("**OUTPLACEMENT** When you play this character, you may put chosen item or location into its player’s inkwell facedown and exerted.<br/>**BY INVITE ONLY** 4 {I} − Your other characters gain **Resist** +1 until the start of your next turn. _(Damage dealt to them is reduced by 1.)_", () => {
-//     const testStore = new TestStore(
+// Describe("Kuzco - Selfish Emperor", () => {
+//   It("**OUTPLACEMENT** When you play this character, you may put chosen item or location into its player’s inkwell facedown and exerted.<br/>**BY INVITE ONLY** 4 {I} − Your other characters gain **Resist** +1 until the start of your next turn. _(Damage dealt to them is reduced by 1.)_", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: kuzcoSelfishEmperor.cost,
-//         hand: [kuzcoSelfishEmperor],
+//         Inkwell: kuzcoSelfishEmperor.cost,
+//         Hand: [kuzcoSelfishEmperor],
 //       },
 //       {
-//         play: [pawpsicle],
-//       },
-//     );
-//
-//     const cardUnderTest = testStore.getCard(kuzcoSelfishEmperor);
-//     const target = testStore.getCard(pawpsicle);
-//
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({ targets: [target] });
-//     expect(testStore.getZonesCardCount("player_two").inkwell).toEqual(1);
-//   });
-//   it("**OUTPLACEMENT** Opt out", () => {
-//     const testStore = new TestStore(
-//       {
-//         inkwell: kuzcoSelfishEmperor.cost,
-//         hand: [kuzcoSelfishEmperor],
-//       },
-//       {
-//         play: [pawpsicle],
+//         Play: [pawpsicle],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getCard(kuzcoSelfishEmperor);
+//     Const cardUnderTest = testStore.getCard(kuzcoSelfishEmperor);
+//     Const target = testStore.getCard(pawpsicle);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     expect(cardUnderTest.zone).toEqual("play");
-//     expect(testStore.getZonesCardCount("player_two").inkwell).toEqual(0);
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({ targets: [target] });
+//     Expect(testStore.getZonesCardCount("player_two").inkwell).toEqual(1);
 //   });
-//   it("**BY INVITE ONLY** 4 {I} − Your other characters gain **Resist** +1 until the start of your next turn. _(Damage dealt to them is reduced by 1.)_", () => {
-//     const testStore = new TestStore({
-//       inkwell: kuzcoSelfishEmperor.cost,
-//       play: [kuzcoSelfishEmperor, monstroWhaleOfAWhale],
+//   It("**OUTPLACEMENT** Opt out", () => {
+//     Const testStore = new TestStore(
+//       {
+//         Inkwell: kuzcoSelfishEmperor.cost,
+//         Hand: [kuzcoSelfishEmperor],
+//       },
+//       {
+//         Play: [pawpsicle],
+//       },
+//     );
+//
+//     Const cardUnderTest = testStore.getCard(kuzcoSelfishEmperor);
+//
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     Expect(cardUnderTest.zone).toEqual("play");
+//     Expect(testStore.getZonesCardCount("player_two").inkwell).toEqual(0);
+//   });
+//   It("**BY INVITE ONLY** 4 {I} − Your other characters gain **Resist** +1 until the start of your next turn. _(Damage dealt to them is reduced by 1.)_", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: kuzcoSelfishEmperor.cost,
+//       Play: [kuzcoSelfishEmperor, monstroWhaleOfAWhale],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(kuzcoSelfishEmperor);
-//     const monstro = testStore.getCard(monstroWhaleOfAWhale);
+//     Const cardUnderTest = testStore.getCard(kuzcoSelfishEmperor);
+//     Const monstro = testStore.getCard(monstroWhaleOfAWhale);
 //
-//     expect(monstro.hasResist).toEqual(false);
-//     cardUnderTest.activate();
-//     expect(monstro.hasResist).toEqual(true);
-//     expect(cardUnderTest.hasResist).toEqual(false);
+//     Expect(monstro.hasResist).toEqual(false);
+//     CardUnderTest.activate();
+//     Expect(monstro.hasResist).toEqual(true);
+//     Expect(cardUnderTest.hasResist).toEqual(false);
 //   });
 // });
 //

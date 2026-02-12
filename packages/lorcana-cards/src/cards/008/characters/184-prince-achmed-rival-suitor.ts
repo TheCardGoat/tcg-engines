@@ -1,35 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const princeAchmedRivalSuitor: CharacterCard = {
-  id: "148",
-  cardType: "character",
-  name: "Prince Achmed",
-  version: "Rival Suitor",
-  fullName: "Prince Achmed - Rival Suitor",
-  inkType: ["steel"],
-  franchise: "Aladdin",
-  set: "008",
-  text: "UNWELCOME PROPOSAL When you play this character, you may exert chosen Princess character.",
-  cost: 2,
-  strength: 2,
-  willpower: 2,
-  lore: 1,
-  cardNumber: 184,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "91094608fd69311fa696ac4e5dd0c37e72dd3e24",
-  },
   abilities: [
     {
-      id: "148-1",
-      type: "triggered",
-      name: "UNWELCOME PROPOSAL",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -44,8 +17,35 @@ export const princeAchmedRivalSuitor: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "148-1",
+      name: "UNWELCOME PROPOSAL",
       text: "UNWELCOME PROPOSAL When you play this character, you may exert chosen Princess character.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 184,
+  cardType: "character",
   classifications: ["Storyborn", "Prince"],
+  cost: 2,
+  externalIds: {
+    ravensburger: "91094608fd69311fa696ac4e5dd0c37e72dd3e24",
+  },
+  franchise: "Aladdin",
+  fullName: "Prince Achmed - Rival Suitor",
+  id: "148",
+  inkType: ["steel"],
+  inkable: true,
+  lore: 1,
+  missingTests: true,
+  name: "Prince Achmed",
+  set: "008",
+  strength: 2,
+  text: "UNWELCOME PROPOSAL When you play this character, you may exert chosen Princess character.",
+  version: "Rival Suitor",
+  willpower: 2,
 };

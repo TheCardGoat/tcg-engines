@@ -88,7 +88,7 @@ export function parseTargetFromCst(ctx: {
     Identifier?: IToken[];
   };
 
-  let type: Target["type"] = "character"; // default
+  let type: Target["type"] = "character"; // Default
 
   if (typeCtx.Character) {
     type = "character";
@@ -126,58 +126,58 @@ export function parseTargetFromText(text: string): Target | null {
   const patterns = [
     // Compound modifiers (must come before simple modifiers)
     {
+      modifier: "chosen opposing",
       regex:
         /(?:^|\s)(chosen\s+opposing(?:'s)?)\s+(character|item|location|card)s?/i,
-      modifier: "chosen opposing",
     },
     {
-      regex: /(?:^|\s)(chosen\s+your)\s+(character|item|location|card)s?/i,
       modifier: "chosen your",
+      regex: /(?:^|\s)(chosen\s+your)\s+(character|item|location|card)s?/i,
     },
     {
+      modifier: "chosen opposing",
       regex:
         /(?:^|\s)(opponent(?:'s)?\s+chosen)\s+(character|item|location|card)s?/i,
-      modifier: "chosen opposing",
     },
     // Simple modifiers
     {
-      regex: /(?:^|\s)(your)\s+(character|item|location|card)s?/i,
       modifier: "your",
+      regex: /(?:^|\s)(your)\s+(character|item|location|card)s?/i,
     },
     {
-      regex: /(?:^|\s)(opponent(?:'s)?)\s+(character|item|location|card)s?/i,
       modifier: "opponent",
+      regex: /(?:^|\s)(opponent(?:'s)?)\s+(character|item|location|card)s?/i,
     },
     {
-      regex: /(?:^|\s)(opposing)\s+(character|item|location|card)s?/i,
       modifier: "opposing",
+      regex: /(?:^|\s)(opposing)\s+(character|item|location|card)s?/i,
     },
     {
-      regex: /(?:^|\s)(each)\s+(character|item|location|card)s?/i,
       modifier: "each",
+      regex: /(?:^|\s)(each)\s+(character|item|location|card)s?/i,
     },
     {
-      regex: /(?:^|\s)(all)\s+(character|item|location|card)s?/i,
       modifier: "all",
+      regex: /(?:^|\s)(all)\s+(character|item|location|card)s?/i,
     },
     {
-      regex: /(?:^|\s)(another)\s+(character|item|location|card)s?/i,
       modifier: "another",
+      regex: /(?:^|\s)(another)\s+(character|item|location|card)s?/i,
     },
     {
-      regex: /(?:^|\s)(other)\s+(character|item|location|card)s?/i,
       modifier: "other",
+      regex: /(?:^|\s)(other)\s+(character|item|location|card)s?/i,
     },
     {
-      regex: /(?:^|\s)(chosen)\s+(character|item|location|card)s?/i,
       modifier: "chosen",
+      regex: /(?:^|\s)(chosen)\s+(character|item|location|card)s?/i,
     },
     {
-      regex: /(?:^|\s)(this)\s+(character|item|location|card)/i,
       modifier: "this",
+      regex: /(?:^|\s)(this)\s+(character|item|location|card)/i,
     },
     // Fallback: just card type without modifier
-    { regex: /(?:^|\s)(character|item|location|card)s?/i, modifier: undefined },
+    { modifier: undefined, regex: /(?:^|\s)(character|item|location|card)s?/i },
   ];
 
   for (const pattern of patterns) {

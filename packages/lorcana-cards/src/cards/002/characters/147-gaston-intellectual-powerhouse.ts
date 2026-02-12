@@ -1,44 +1,17 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const gastonIntellectualPowerhouse: CharacterCard = {
-  id: "14c",
-  cardType: "character",
-  name: "Gaston",
-  version: "Intellectual Powerhouse",
-  fullName: "Gaston - Intellectual Powerhouse",
-  inkType: ["sapphire"],
-  franchise: "Beauty and the Beast",
-  set: "002",
-  text: "Shift 4 (You may pay 4 {I} to play this on top of one of your characters named Gaston.)\nDEVELOPED BRAIN When you play this character, look at the top 3 cards of your deck. You may put one into your hand. Put the rest on the bottom of your deck in any order.",
-  cost: 6,
-  strength: 4,
-  willpower: 4,
-  lore: 3,
-  cardNumber: 147,
-  inkable: false,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "915d35f346eb17d9a3d109dce4edbdff38dfebeb",
-  },
   abilities: [
     {
-      id: "14c-1",
-      type: "keyword",
-      keyword: "Shift",
       cost: {
         ink: 4,
       },
+      id: "14c-1",
+      keyword: "Shift",
       text: "Shift 4",
+      type: "keyword",
     },
     {
-      id: "14c-2",
-      type: "triggered",
-      name: "DEVELOPED BRAIN",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -47,8 +20,35 @@ export const gastonIntellectualPowerhouse: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "14c-2",
+      name: "DEVELOPED BRAIN",
       text: "DEVELOPED BRAIN When you play this character, look at the top 3 cards of your deck. You may put one into your hand. Put the rest on the bottom of your deck in any order.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 147,
+  cardType: "character",
   classifications: ["Floodborn", "Villain"],
+  cost: 6,
+  externalIds: {
+    ravensburger: "915d35f346eb17d9a3d109dce4edbdff38dfebeb",
+  },
+  franchise: "Beauty and the Beast",
+  fullName: "Gaston - Intellectual Powerhouse",
+  id: "14c",
+  inkType: ["sapphire"],
+  inkable: false,
+  lore: 3,
+  missingTests: true,
+  name: "Gaston",
+  set: "002",
+  strength: 4,
+  text: "Shift 4 (You may pay 4 {I} to play this on top of one of your characters named Gaston.)\nDEVELOPED BRAIN When you play this character, look at the top 3 cards of your deck. You may put one into your hand. Put the rest on the bottom of your deck in any order.",
+  version: "Intellectual Powerhouse",
+  willpower: 4,
 };

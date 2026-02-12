@@ -64,8 +64,7 @@ export type KeywordAbilityDefinition = BaseAbilityDefinition & KeywordAbility;
  * }
  */
 export interface TriggeredAbilityDefinition
-  extends BaseAbilityDefinition,
-    Omit<TriggeredAbility, "type"> {
+  extends BaseAbilityDefinition, Omit<TriggeredAbility, "type"> {
   type: "triggered";
 }
 
@@ -81,8 +80,7 @@ export interface TriggeredAbilityDefinition
  * }
  */
 export interface ActivatedAbilityDefinition
-  extends BaseAbilityDefinition,
-    Omit<ActivatedAbility, "type" | "name"> {
+  extends BaseAbilityDefinition, Omit<ActivatedAbility, "type" | "name"> {
   type: "activated";
 }
 
@@ -97,8 +95,7 @@ export interface ActivatedAbilityDefinition
  * }
  */
 export interface StaticAbilityDefinition
-  extends BaseAbilityDefinition,
-    Omit<StaticAbility, "type" | "name"> {
+  extends BaseAbilityDefinition, Omit<StaticAbility, "type" | "name"> {
   type: "static";
 }
 
@@ -112,8 +109,7 @@ export interface StaticAbilityDefinition
  * }
  */
 export interface ActionAbilityDefinition
-  extends BaseAbilityDefinition,
-    Omit<ActionAbility, "type"> {
+  extends BaseAbilityDefinition, Omit<ActionAbility, "type"> {
   type: "action";
 }
 
@@ -128,8 +124,7 @@ export interface ActionAbilityDefinition
  * }
  */
 export interface ReplacementAbilityDefinition
-  extends BaseAbilityDefinition,
-    Omit<ReplacementAbility, "type" | "name"> {
+  extends BaseAbilityDefinition, Omit<ReplacementAbility, "type" | "name"> {
   type: "replacement";
 }
 
@@ -232,11 +227,11 @@ export interface BaseCardProperties {
   };
 
   /** Printing references for cards with multiple printings */
-  printings?: Array<{
+  printings?: {
     set: string;
     collectorNumber: number;
     id: string;
-  }>;
+  }[];
 
   /**
    * Flag indicating that the card logic is not yet fully implemented
@@ -495,8 +490,6 @@ export function isDualInk(card: LorcanaCardDefinition | LorcanaCard): boolean {
 /**
  * Get all ink types from a card
  */
-export function getInkTypes(
-  card: LorcanaCardDefinition | LorcanaCard,
-): InkType[] {
+export function getInkTypes(card: LorcanaCardDefinition | LorcanaCard): InkType[] {
   return card.inkType;
 }

@@ -3,113 +3,113 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   donaldGhostHunter,
-//   theTwinsLostBoys,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   DonaldGhostHunter,
+//   TheTwinsLostBoys,
 // } from "@lorcanito/lorcana-engine/cards/010/index";
-// import { zootopiaPoliceHeadquarters } from "@lorcanito/lorcana-engine/cards/010/locations/203-zootopia-police-headquarters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { zootopiaPoliceHeadquarters } from "@lorcanito/lorcana-engine/cards/010/locations/203-zootopia-police-headquarters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("The Twins - Lost Boys", () => {
-//   describe("TWO FOR ONE", () => {
-//     it("should deal 2 damage when you have a location in play", async () => {
-//       const testEngine = new TestEngine(
+// Describe("The Twins - Lost Boys", () => {
+//   Describe("TWO FOR ONE", () => {
+//     It("should deal 2 damage when you have a location in play", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: theTwinsLostBoys.cost,
-//           hand: [theTwinsLostBoys],
-//           play: [zootopiaPoliceHeadquarters],
+//           Inkwell: theTwinsLostBoys.cost,
+//           Hand: [theTwinsLostBoys],
+//           Play: [zootopiaPoliceHeadquarters],
 //         },
 //         {
-//           play: [donaldGhostHunter],
+//           Play: [donaldGhostHunter],
 //         },
 //       );
 //
-//       const targetCharacter = testEngine.getByZoneAndId(
+//       Const targetCharacter = testEngine.getByZoneAndId(
 //         "play",
-//         donaldGhostHunter.id,
+//         DonaldGhostHunter.id,
 //         "player_two",
 //       );
-//       const initialDamage = targetCharacter.damage;
+//       Const initialDamage = targetCharacter.damage;
 //
-//       await testEngine.playCard(theTwinsLostBoys);
-//       await testEngine.acceptOptionalLayer();
-//       await testEngine.resolveTopOfStack({ targets: [targetCharacter] });
+//       Await testEngine.playCard(theTwinsLostBoys);
+//       Await testEngine.acceptOptionalLayer();
+//       Await testEngine.resolveTopOfStack({ targets: [targetCharacter] });
 //
-//       expect(targetCharacter.damage).toBe(initialDamage + 2);
+//       Expect(targetCharacter.damage).toBe(initialDamage + 2);
 //     });
 //
-//     it("should not trigger when you don't have a location in play", async () => {
-//       const testEngine = new TestEngine(
+//     It("should not trigger when you don't have a location in play", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: theTwinsLostBoys.cost,
-//           hand: [theTwinsLostBoys],
+//           Inkwell: theTwinsLostBoys.cost,
+//           Hand: [theTwinsLostBoys],
 //         },
 //         {
-//           play: [donaldGhostHunter],
+//           Play: [donaldGhostHunter],
 //         },
 //       );
 //
-//       await testEngine.playCard(theTwinsLostBoys);
+//       Await testEngine.playCard(theTwinsLostBoys);
 //
 //       // Since no location is in play, no optional layer should be added
-//       expect(testEngine.store.stackLayerStore.layers.length).toBe(0);
+//       Expect(testEngine.store.stackLayerStore.layers.length).toBe(0);
 //     });
 //
-//     it("should be optional", async () => {
-//       const testEngine = new TestEngine(
+//     It("should be optional", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: theTwinsLostBoys.cost,
-//           hand: [theTwinsLostBoys],
-//           play: [zootopiaPoliceHeadquarters],
+//           Inkwell: theTwinsLostBoys.cost,
+//           Hand: [theTwinsLostBoys],
+//           Play: [zootopiaPoliceHeadquarters],
 //         },
 //         {
-//           play: [donaldGhostHunter],
+//           Play: [donaldGhostHunter],
 //         },
 //       );
 //
-//       const targetCharacter = testEngine.getByZoneAndId(
+//       Const targetCharacter = testEngine.getByZoneAndId(
 //         "play",
-//         donaldGhostHunter.id,
+//         DonaldGhostHunter.id,
 //         "player_two",
 //       );
-//       const initialDamage = targetCharacter.damage;
+//       Const initialDamage = targetCharacter.damage;
 //
-//       await testEngine.playCard(theTwinsLostBoys);
-//       await testEngine.skipTopOfStack();
+//       Await testEngine.playCard(theTwinsLostBoys);
+//       Await testEngine.skipTopOfStack();
 //
-//       expect(targetCharacter.damage).toBe(initialDamage);
+//       Expect(targetCharacter.damage).toBe(initialDamage);
 //     });
 //   });
 //
-//   describe("Stats and basic properties", () => {
-//     it("should have correct stats", () => {
-//       const testEngine = new TestEngine({
-//         play: [theTwinsLostBoys],
+//   Describe("Stats and basic properties", () => {
+//     It("should have correct stats", () => {
+//       Const testEngine = new TestEngine({
+//         Play: [theTwinsLostBoys],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(theTwinsLostBoys);
+//       Const cardUnderTest = testEngine.getCardModel(theTwinsLostBoys);
 //
-//       expect(cardUnderTest.strength).toBe(5);
-//       expect(cardUnderTest.willpower).toBe(5);
-//       expect(cardUnderTest.lore).toBe(2);
-//       expect(cardUnderTest.cost).toBe(6);
+//       Expect(cardUnderTest.strength).toBe(5);
+//       Expect(cardUnderTest.willpower).toBe(5);
+//       Expect(cardUnderTest.lore).toBe(2);
+//       Expect(cardUnderTest.cost).toBe(6);
 //     });
 //
-//     it("should be inkwell card", () => {
-//       expect(theTwinsLostBoys.inkwell).toBe(true);
+//     It("should be inkwell card", () => {
+//       Expect(theTwinsLostBoys.inkwell).toBe(true);
 //     });
 //
-//     it("should have correct characteristics", () => {
-//       expect(theTwinsLostBoys.characteristics).toEqual(["storyborn", "ally"]);
+//     It("should have correct characteristics", () => {
+//       Expect(theTwinsLostBoys.characteristics).toEqual(["storyborn", "ally"]);
 //     });
 //
-//     it("should be steel color", () => {
-//       expect(theTwinsLostBoys.colors).toEqual(["steel"]);
+//     It("should be steel color", () => {
+//       Expect(theTwinsLostBoys.colors).toEqual(["steel"]);
 //     });
 //
-//     it("should be super rare rarity", () => {
-//       expect(theTwinsLostBoys.rarity).toBe("super_rare");
+//     It("should be super rare rarity", () => {
+//       Expect(theTwinsLostBoys.rarity).toBe("super_rare");
 //     });
 //   });
 // });

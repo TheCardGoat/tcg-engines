@@ -48,7 +48,7 @@ export type PlayCardCost =
  * Exhaustive type definition for all Lorcana moves.
  * Each move has explicit, well-typed parameters.
  */
-export type LorcanaMoveParams = {
+export interface LorcanaMoveParams {
   // ===== Setup Moves =====
   /**
    * Choose who goes first
@@ -211,6 +211,6 @@ export type LorcanaMoveParams = {
    * Rule 1.9.1.2: Player can concede at any time
    */
   concede: Record<string, never>;
-};
+}
 
 // LorcanaGameState is exported from game-state.ts - import from there

@@ -11,54 +11,50 @@ import type { LorcanaFilter } from "../lorcana-target-dsl";
 
 // Mock Registry
 const mockRegistry: CardRegistry<LorcanaCardDefinition> = {
-  getCard: (id: string) => {
-    return MOCK_DEFINITIONS[id];
-  },
   getAllCards: () => Object.values(MOCK_DEFINITIONS),
-  hasCard: (id: string) => !!MOCK_DEFINITIONS[id],
-  queryCards: () => [],
+  getCard: (id: string) => MOCK_DEFINITIONS[id],
   getCardCount: () => 0,
+  hasCard: (id: string) => Boolean(MOCK_DEFINITIONS[id]),
+  queryCards: () => [],
 };
 
 const MOCK_DEFINITIONS: Record<string, LorcanaCardDefinition> = {
   "char-1": {
-    id: "char-1",
-    name: "Mickey Mouse",
-    set: "set1",
+    abilities: [{ id: "k1", keyword: "Evasive", text: "Evasive", type: "keyword" }],
     cardType: "character",
     cost: 3,
-    inkable: true,
+    id: "char-1",
     inkType: ["ruby"],
+    inkable: true,
+    lore: 1,
+    name: "Mickey Mouse",
+    set: "set1",
     strength: 3,
     willpower: 3,
-    lore: 1,
-    abilities: [
-      { type: "keyword", keyword: "Evasive", id: "k1", text: "Evasive" },
-    ],
   },
   "char-2": {
+    cardType: "character",
+    classifications: ["Hero"],
+    cost: 5,
     id: "char-2",
+    inkType: ["sapphire"],
+    inkable: false,
+    lore: 2,
     name: "Donald Duck",
     set: "set1",
-    cardType: "character",
-    cost: 5,
-    inkable: false,
-    inkType: ["sapphire"],
     strength: 5,
     willpower: 6,
-    lore: 2,
-    classifications: ["Hero"],
   },
   "loc-1": {
-    id: "loc-1",
-    name: "The Library",
-    set: "set1",
     cardType: "location",
     cost: 2,
-    inkable: true,
+    id: "loc-1",
     inkType: ["amethyst"],
-    moveCost: 1,
+    inkable: true,
     lore: 1,
+    moveCost: 1,
+    name: "The Library",
+    set: "set1",
   },
 };
 
@@ -68,9 +64,9 @@ describe("Filter Resolver", () => {
   describe("Ranking", () => {
     it("should sort filters by rank", () => {
       const filters: LorcanaFilter[] = [
-        { type: "cost", comparison: "eq", value: 3 },
+        { comparison: "eq", type: "cost", value: 3 },
         { type: "ready" },
-        { type: "has-keyword", keyword: "Evasive" },
+        { keyword: "Evasive", type: "has-keyword" },
       ];
 
       const sorted = sortFilters(filters);
@@ -96,56 +92,26 @@ describe("Filter Resolver", () => {
     } as any;
 
     it("should match state filters", () => {
+      expect(matchesLorcanaFilter(char1Instance, { type: "ready" }, mockState, mockRegistry)).toBe(
+        true,
+      );
+      expect(matchesLorcanaFilter(char1Exerted, { type: "ready" }, mockState, mockRegistry)).toBe(
+        false,
+      );
+
+      expect(matchesLorcanaFilter(char1Exerted, { type: "exerted" }, mockState, mockRegistry)).toBe(
+        true,
+      );
+
+      expect(matchesLorcanaFilter(char1Exerted, { type: "damaged" }, mockState, mockRegistry)).toBe(
+        true,
+      );
       expect(
-        matchesLorcanaFilter(
-          char1Instance,
-          { type: "ready" },
-          mockState,
-          mockRegistry,
-        ),
-      ).toBe(true);
-      expect(
-        matchesLorcanaFilter(
-          char1Exerted,
-          { type: "ready" },
-          mockState,
-          mockRegistry,
-        ),
+        matchesLorcanaFilter(char1Instance, { type: "damaged" }, mockState, mockRegistry),
       ).toBe(false);
 
       expect(
-        matchesLorcanaFilter(
-          char1Exerted,
-          { type: "exerted" },
-          mockState,
-          mockRegistry,
-        ),
-      ).toBe(true);
-
-      expect(
-        matchesLorcanaFilter(
-          char1Exerted,
-          { type: "damaged" },
-          mockState,
-          mockRegistry,
-        ),
-      ).toBe(true);
-      expect(
-        matchesLorcanaFilter(
-          char1Instance,
-          { type: "damaged" },
-          mockState,
-          mockRegistry,
-        ),
-      ).toBe(false);
-
-      expect(
-        matchesLorcanaFilter(
-          char1Instance,
-          { type: "undamaged" },
-          mockState,
-          mockRegistry,
-        ),
+        matchesLorcanaFilter(char1Instance, { type: "undamaged" }, mockState, mockRegistry),
       ).toBe(true);
     });
 
@@ -153,7 +119,7 @@ describe("Filter Resolver", () => {
       expect(
         matchesLorcanaFilter(
           char1Instance,
-          { type: "has-keyword", keyword: "Evasive" },
+          { keyword: "Evasive", type: "has-keyword" },
           mockState,
           mockRegistry,
         ),
@@ -161,7 +127,7 @@ describe("Filter Resolver", () => {
       expect(
         matchesLorcanaFilter(
           char1Instance,
-          { type: "has-keyword", keyword: "Rush" },
+          { keyword: "Rush", type: "has-keyword" },
           mockState,
           mockRegistry,
         ),
@@ -174,7 +140,7 @@ describe("Filter Resolver", () => {
       expect(
         matchesLorcanaFilter(
           char2Instance,
-          { type: "has-classification", classification: "Hero" },
+          { classification: "Hero", type: "has-classification" },
           mockState,
           mockRegistry,
         ),
@@ -182,7 +148,7 @@ describe("Filter Resolver", () => {
       expect(
         matchesLorcanaFilter(
           char1Instance,
-          { type: "has-classification", classification: "Hero" },
+          { classification: "Hero", type: "has-classification" },
           mockState,
           mockRegistry,
         ),
@@ -191,7 +157,7 @@ describe("Filter Resolver", () => {
       expect(
         matchesLorcanaFilter(
           char1Instance,
-          { type: "name", equals: "Mickey Mouse" },
+          { equals: "Mickey Mouse", type: "name" },
           mockState,
           mockRegistry,
         ),
@@ -199,7 +165,7 @@ describe("Filter Resolver", () => {
       expect(
         matchesLorcanaFilter(
           char1Instance,
-          { type: "name", contains: "Mickey" },
+          { contains: "Mickey", type: "name" },
           mockState,
           mockRegistry,
         ),
@@ -210,7 +176,7 @@ describe("Filter Resolver", () => {
       expect(
         matchesLorcanaFilter(
           char1Instance,
-          { type: "strength", comparison: "eq", value: 3 },
+          { comparison: "eq", type: "strength", value: 3 },
           mockState,
           mockRegistry,
         ),
@@ -218,7 +184,7 @@ describe("Filter Resolver", () => {
       expect(
         matchesLorcanaFilter(
           char1Instance,
-          { type: "strength", comparison: "gt", value: 2 },
+          { comparison: "gt", type: "strength", value: 2 },
           mockState,
           mockRegistry,
         ),
@@ -226,7 +192,7 @@ describe("Filter Resolver", () => {
       expect(
         matchesLorcanaFilter(
           char1Instance,
-          { type: "strength", comparison: "lt", value: 4 },
+          { comparison: "lt", type: "strength", value: 4 },
           mockState,
           mockRegistry,
         ),
@@ -235,7 +201,7 @@ describe("Filter Resolver", () => {
       expect(
         matchesLorcanaFilter(
           char1Instance,
-          { type: "cost", comparison: "lte", value: 3 },
+          { comparison: "lte", type: "cost", value: 3 },
           mockState,
           mockRegistry,
         ),
@@ -244,33 +210,26 @@ describe("Filter Resolver", () => {
 
     it("should match composite filters", () => {
       const filter: LorcanaFilter = {
+        filters: [{ type: "ready" }, { comparison: "eq", type: "strength", value: 3 }],
         type: "and",
-        filters: [
-          { type: "ready" },
-          { type: "strength", comparison: "eq", value: 3 },
-        ],
       };
-      expect(
-        matchesLorcanaFilter(char1Instance, filter, mockState, mockRegistry),
-      ).toBe(true);
+      expect(matchesLorcanaFilter(char1Instance, filter, mockState, mockRegistry)).toBe(true);
 
       const orFilter: LorcanaFilter = {
-        type: "or",
         filters: [
-          { type: "exerted" }, // false
-          { type: "strength", comparison: "eq", value: 3 }, // true
+          { type: "exerted" }, // False
+          { comparison: "eq", type: "strength", value: 3 }, // True
         ],
+        type: "or",
       };
-      expect(
-        matchesLorcanaFilter(char1Instance, orFilter, mockState, mockRegistry),
-      ).toBe(true);
+      expect(matchesLorcanaFilter(char1Instance, orFilter, mockState, mockRegistry)).toBe(true);
     });
   });
 
   describe("Predicate Creation", () => {
     it("should create working predicate", () => {
       const predicate = createTargetFiltersPredicate(
-        [{ type: "ready" }, { type: "cost", comparison: "eq", value: 3 }],
+        [{ type: "ready" }, { comparison: "eq", type: "cost", value: 3 }],
         mockState,
         mockRegistry,
       );

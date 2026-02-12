@@ -3,45 +3,45 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   sapphireCoil,
-//   steelCoil,
-//   tamatoaHappyAsAClam,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   SapphireCoil,
+//   SteelCoil,
+//   TamatoaHappyAsAClam,
 // } from "@lorcanito/lorcana-engine/cards/007";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Tamatoa - Happy as a Clam", () => {
-//   it("COOLEST COLLECTION When you play this character, return up to 2 item cards from your discard to your hand.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: tamatoaHappyAsAClam.cost,
-//       discard: [steelCoil, sapphireCoil],
-//       hand: [tamatoaHappyAsAClam],
+// Describe("Tamatoa - Happy as a Clam", () => {
+//   It("COOLEST COLLECTION When you play this character, return up to 2 item cards from your discard to your hand.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: tamatoaHappyAsAClam.cost,
+//       Discard: [steelCoil, sapphireCoil],
+//       Hand: [tamatoaHappyAsAClam],
 //     });
 //
-//     await testEngine.playCard(tamatoaHappyAsAClam, {
-//       targets: [sapphireCoil, steelCoil],
+//     Await testEngine.playCard(tamatoaHappyAsAClam, {
+//       Targets: [sapphireCoil, steelCoil],
 //     });
 //
-//     expect(testEngine.getZonesCardCount("player_one")).toEqual(
-//       expect.objectContaining({
-//         hand: 2,
-//         discard: 0,
+//     Expect(testEngine.getZonesCardCount("player_one")).toEqual(
+//       Expect.objectContaining({
+//         Hand: 2,
+//         Discard: 0,
 //       }),
 //     );
 //   });
 //
-//   it.skip("I'M BEAUTIFUL, BABY! Whenever this character quests, you may play an item for free.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: tamatoaHappyAsAClam.cost,
-//       play: [tamatoaHappyAsAClam],
-//       hand: [tamatoaHappyAsAClam],
+//   It.skip("I'M BEAUTIFUL, BABY! Whenever this character quests, you may play an item for free.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: tamatoaHappyAsAClam.cost,
+//       Play: [tamatoaHappyAsAClam],
+//       Hand: [tamatoaHappyAsAClam],
 //     });
 //
-//     await testEngine.playCard(tamatoaHappyAsAClam);
+//     Await testEngine.playCard(tamatoaHappyAsAClam);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

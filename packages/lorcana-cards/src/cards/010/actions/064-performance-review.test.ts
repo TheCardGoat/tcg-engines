@@ -3,136 +3,136 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   bagheeraCautiousExplorer,
-//   bigNoseLovesickPoet,
-//   chefLouisInOverHisHead,
-//   performanceReview,
-//   scroogeMcduckCavernProspector,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   BagheeraCautiousExplorer,
+//   BigNoseLovesickPoet,
+//   ChefLouisInOverHisHead,
+//   PerformanceReview,
+//   ScroogeMcduckCavernProspector,
 // } from "@lorcanito/lorcana-engine/cards/010";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Performance Review", () => {
-//   it("Draw cards equal to chosen ready character's lore value (lore 1)", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: performanceReview.cost,
-//       hand: [performanceReview],
-//       play: [bigNoseLovesickPoet], // Has 1 lore
-//       deck: 5,
+// Describe("Performance Review", () => {
+//   It("Draw cards equal to chosen ready character's lore value (lore 1)", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: performanceReview.cost,
+//       Hand: [performanceReview],
+//       Play: [bigNoseLovesickPoet], // Has 1 lore
+//       Deck: 5,
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(performanceReview);
-//     const targetCharacter = testEngine.getCardModel(bigNoseLovesickPoet);
+//     Const cardUnderTest = testEngine.getCardModel(performanceReview);
+//     Const targetCharacter = testEngine.getCardModel(bigNoseLovesickPoet);
 //
-//     expect(targetCharacter.zone).toBe("play");
-//     expect(targetCharacter.lore).toBe(1);
-//     expect(targetCharacter.ready).toBe(true);
-//     expect(testEngine.getZonesCardCount("player_one").hand).toBe(1);
+//     Expect(targetCharacter.zone).toBe("play");
+//     Expect(targetCharacter.lore).toBe(1);
+//     Expect(targetCharacter.ready).toBe(true);
+//     Expect(testEngine.getZonesCardCount("player_one").hand).toBe(1);
 //
-//     await testEngine.playCard(cardUnderTest);
+//     Await testEngine.playCard(cardUnderTest);
 //
 //     // Resolve the action targeting the character
-//     await testEngine.resolveTopOfStack({ targets: [targetCharacter] }, true);
+//     Await testEngine.resolveTopOfStack({ targets: [targetCharacter] }, true);
 //
 //     // Resolve the exert effect (second layer created by exertChosenCharacter)
-//     await testEngine.resolveTopOfStack({ targets: [targetCharacter] });
+//     Await testEngine.resolveTopOfStack({ targets: [targetCharacter] });
 //
 //     // Character should be exerted after the effect
-//     expect(targetCharacter.exerted).toBe(true);
-//     expect(targetCharacter.ready).toBe(false);
+//     Expect(targetCharacter.exerted).toBe(true);
+//     Expect(targetCharacter.ready).toBe(false);
 //
 //     // Should draw 1 card (equal to character's lore)
-//     expect(testEngine.getZonesCardCount("player_one").hand).toBe(1);
+//     Expect(testEngine.getZonesCardCount("player_one").hand).toBe(1);
 //   });
 //
-//   it("Draw cards equal to chosen ready character's lore value (lore 2)", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: performanceReview.cost,
-//       hand: [performanceReview],
-//       play: [scroogeMcduckCavernProspector], // Has 2 lore
-//       deck: 5,
+//   It("Draw cards equal to chosen ready character's lore value (lore 2)", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: performanceReview.cost,
+//       Hand: [performanceReview],
+//       Play: [scroogeMcduckCavernProspector], // Has 2 lore
+//       Deck: 5,
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(performanceReview);
-//     const targetCharacter = testEngine.getCardModel(
-//       scroogeMcduckCavernProspector,
+//     Const cardUnderTest = testEngine.getCardModel(performanceReview);
+//     Const targetCharacter = testEngine.getCardModel(
+//       ScroogeMcduckCavernProspector,
 //     );
 //
-//     expect(targetCharacter.zone).toBe("play");
-//     expect(targetCharacter.lore).toBe(2);
-//     expect(targetCharacter.ready).toBe(true);
-//     expect(testEngine.getZonesCardCount("player_one").hand).toBe(1);
+//     Expect(targetCharacter.zone).toBe("play");
+//     Expect(targetCharacter.lore).toBe(2);
+//     Expect(targetCharacter.ready).toBe(true);
+//     Expect(testEngine.getZonesCardCount("player_one").hand).toBe(1);
 //
-//     await testEngine.playCard(cardUnderTest);
+//     Await testEngine.playCard(cardUnderTest);
 //
 //     // Resolve the action targeting the character
-//     await testEngine.resolveTopOfStack({ targets: [targetCharacter] }, true);
+//     Await testEngine.resolveTopOfStack({ targets: [targetCharacter] }, true);
 //
 //     // Resolve the exert effect (second layer created by exertChosenCharacter)
-//     await testEngine.resolveTopOfStack({ targets: [targetCharacter] });
+//     Await testEngine.resolveTopOfStack({ targets: [targetCharacter] });
 //
 //     // Character should be exerted after the effect
-//     expect(targetCharacter.exerted).toBe(true);
-//     expect(targetCharacter.ready).toBe(false);
+//     Expect(targetCharacter.exerted).toBe(true);
+//     Expect(targetCharacter.ready).toBe(false);
 //
 //     // Should draw 2 cards (equal to character's lore)
-//     expect(testEngine.getZonesCardCount("player_one").hand).toBe(2);
+//     Expect(testEngine.getZonesCardCount("player_one").hand).toBe(2);
 //   });
 //
-//   it("Draw cards equal to chosen ready character's lore value (lore 3)", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: performanceReview.cost,
-//       hand: [performanceReview],
-//       play: [chefLouisInOverHisHead], // Has 3 lore
-//       deck: 5,
+//   It("Draw cards equal to chosen ready character's lore value (lore 3)", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: performanceReview.cost,
+//       Hand: [performanceReview],
+//       Play: [chefLouisInOverHisHead], // Has 3 lore
+//       Deck: 5,
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(performanceReview);
-//     const targetCharacter = testEngine.getCardModel(chefLouisInOverHisHead);
+//     Const cardUnderTest = testEngine.getCardModel(performanceReview);
+//     Const targetCharacter = testEngine.getCardModel(chefLouisInOverHisHead);
 //
-//     expect(targetCharacter.zone).toBe("play");
-//     expect(targetCharacter.lore).toBe(3);
-//     expect(targetCharacter.ready).toBe(true);
-//     expect(testEngine.getZonesCardCount("player_one").hand).toBe(1);
+//     Expect(targetCharacter.zone).toBe("play");
+//     Expect(targetCharacter.lore).toBe(3);
+//     Expect(targetCharacter.ready).toBe(true);
+//     Expect(testEngine.getZonesCardCount("player_one").hand).toBe(1);
 //
-//     await testEngine.playCard(cardUnderTest);
+//     Await testEngine.playCard(cardUnderTest);
 //
 //     // Resolve the action targeting the character
-//     await testEngine.resolveTopOfStack({ targets: [targetCharacter] }, true);
+//     Await testEngine.resolveTopOfStack({ targets: [targetCharacter] }, true);
 //
 //     // Resolve the exert effect (second layer created by exertChosenCharacter)
-//     await testEngine.resolveTopOfStack({ targets: [targetCharacter] });
+//     Await testEngine.resolveTopOfStack({ targets: [targetCharacter] });
 //
 //     // Character should be exerted after the effect
-//     expect(targetCharacter.exerted).toBe(true);
-//     expect(targetCharacter.ready).toBe(false);
+//     Expect(targetCharacter.exerted).toBe(true);
+//     Expect(targetCharacter.ready).toBe(false);
 //
 //     // Should draw 3 cards (equal to character's lore)
-//     expect(testEngine.getZonesCardCount("player_one").hand).toBe(3);
+//     Expect(testEngine.getZonesCardCount("player_one").hand).toBe(3);
 //   });
 //
-//   it("Can only target ready characters (exerted character should not be valid target)", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: performanceReview.cost,
-//       hand: [performanceReview],
-//       play: [bagheeraCautiousExplorer], // Has 1 lore
+//   It("Can only target ready characters (exerted character should not be valid target)", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: performanceReview.cost,
+//       Hand: [performanceReview],
+//       Play: [bagheeraCautiousExplorer], // Has 1 lore
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(performanceReview);
-//     const character = testEngine.getCardModel(bagheeraCautiousExplorer);
+//     Const cardUnderTest = testEngine.getCardModel(performanceReview);
+//     Const character = testEngine.getCardModel(bagheeraCautiousExplorer);
 //
 //     // Exert the character
-//     character.updateCardMeta({ exerted: true });
+//     Character.updateCardMeta({ exerted: true });
 //
-//     expect(character.zone).toBe("play");
-//     expect(character.ready).toBe(false);
+//     Expect(character.zone).toBe("play");
+//     Expect(character.ready).toBe(false);
 //
-//     await testEngine.playCard(cardUnderTest);
+//     Await testEngine.playCard(cardUnderTest);
 //
 //     // The effect should be marked as invalid because there are no valid ready characters
 //     // Stack should be empty since the effect can't resolve
-//     expect(testEngine.stackLayers.length).toBe(0);
+//     Expect(testEngine.stackLayers.length).toBe(0);
 //   });
 // });
 //

@@ -19,12 +19,12 @@ describe("Spell: Reaction", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "spell",
-          timing: "reaction",
           effect: expect.objectContaining({
-            type: "draw",
             amount: 3,
+            type: "draw",
           }),
+          timing: "reaction",
+          type: "spell",
         }),
       );
     });
@@ -76,13 +76,13 @@ describe("Spell: Reaction", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "spell",
-          timing: "reaction",
           effect: expect.objectContaining({
-            type: "modify-might",
             amount: -4,
             minimum: 1,
+            type: "modify-might",
           }),
+          timing: "reaction",
+          type: "spell",
         }),
       );
     });
@@ -125,11 +125,11 @@ describe("Spell: Reaction", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "spell",
-          timing: "reaction",
           effect: expect.objectContaining({
             type: "counter",
           }),
+          timing: "reaction",
+          type: "spell",
         }),
       );
     });
@@ -172,12 +172,12 @@ describe("Spell: Reaction", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "spell",
-          timing: "reaction",
           effect: expect.objectContaining({
-            type: "damage",
             amount: 1,
+            type: "damage",
           }),
+          timing: "reaction",
+          type: "spell",
         }),
       );
     });
@@ -220,11 +220,11 @@ describe("Spell: Reaction", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "spell",
-          timing: "reaction",
           effect: expect.objectContaining({
             type: "prevent-damage",
           }),
+          timing: "reaction",
+          type: "spell",
         }),
       );
     });
@@ -240,11 +240,11 @@ describe("Spell: Reaction", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "spell",
-          timing: "reaction",
           effect: expect.objectContaining({
             type: "move",
           }),
+          timing: "reaction",
+          type: "spell",
         }),
       );
     });
@@ -291,12 +291,12 @@ describe("Spell: Reaction", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "spell",
-          timing: "reaction",
           effect: expect.objectContaining({
-            type: "gain-control-of-spell",
             newChoices: true,
+            type: "gain-control-of-spell",
           }),
+          timing: "reaction",
+          type: "spell",
         }),
       );
     });

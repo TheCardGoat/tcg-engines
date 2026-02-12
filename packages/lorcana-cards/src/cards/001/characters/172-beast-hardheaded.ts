@@ -1,35 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const beastHardheaded: CharacterCard = {
-  id: "m8v",
-  cardType: "character",
-  name: "Beast",
-  version: "Hardheaded",
-  fullName: "Beast - Hardheaded",
-  inkType: ["steel"],
-  franchise: "Beauty and the Beast",
-  set: "001",
-  text: "BREAK When you play this character, you may banish chosen item.",
-  cost: 5,
-  strength: 4,
-  willpower: 4,
-  lore: 2,
-  cardNumber: 172,
-  inkable: true,
-  externalIds: {
-    ravensburger: "502da9f4533484bfe02fb51fd83498e2d63e3275",
-  },
   abilities: [
     {
-      id: "m8v-1",
-      text: "BREAK When you play this character, you may banish chosen item.",
-      name: "BREAK",
-      type: "triggered",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -38,35 +11,62 @@ export const beastHardheaded: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "m8v-1",
+      name: "BREAK",
+      text: "BREAK When you play this character, you may banish chosen item.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 172,
+  cardType: "character",
   classifications: ["Storyborn", "Hero", "Prince"],
+  cost: 5,
+  externalIds: {
+    ravensburger: "502da9f4533484bfe02fb51fd83498e2d63e3275",
+  },
+  franchise: "Beauty and the Beast",
+  fullName: "Beast - Hardheaded",
+  id: "m8v",
+  inkType: ["steel"],
+  inkable: true,
+  lore: 2,
+  name: "Beast",
+  set: "001",
+  strength: 4,
+  text: "BREAK When you play this character, you may banish chosen item.",
+  version: "Hardheaded",
+  willpower: 4,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const beastHardheaded: LorcanitoCharacterCard = {
-//   id: "sh5",
-//   name: "Beast",
-//   title: "Hardheaded",
-//   characteristics: ["hero", "storyborn", "prince"],
-//   text: "**BREAK** When you play this character, you may banish chosen item card.",
-//   type: "character",
-//   abilities: [
-//     whenYouPlayThisCharAbility({
-//       type: "resolution",
-//       name: "Break",
-//       text: "When you play this character, you may banish chosen item card.",
-//       optional: true,
-//       effects: [
+// Export const beastHardheaded: LorcanitoCharacterCard = {
+//   Id: "sh5",
+//   Name: "Beast",
+//   Title: "Hardheaded",
+//   Characteristics: ["hero", "storyborn", "prince"],
+//   Text: "**BREAK** When you play this character, you may banish chosen item card.",
+//   Type: "character",
+//   Abilities: [
+//     WhenYouPlayThisCharAbility({
+//       Type: "resolution",
+//       Name: "Break",
+//       Text: "When you play this character, you may banish chosen item card.",
+//       Optional: true,
+//       Effects: [
 //         {
-//           type: "banish",
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
+//           Type: "banish",
+//           Target: {
+//             Type: "card",
+//             Value: 1,
+//             Filters: [
 //               { filter: "type", value: "item" },
 //               { filter: "zone", value: "play" },
 //             ],
@@ -75,19 +75,19 @@ export const beastHardheaded: CharacterCard = {
 //       ],
 //     }),
 //   ],
-//   flavour: '"She will never se me as anything... but a monster"',
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 5,
-//   strength: 4,
-//   willpower: 4,
-//   lore: 2,
-//   illustrator: "Cookie",
-//   number: 172,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 508900,
+//   Flavour: '"She will never se me as anything... but a monster"',
+//   Inkwell: true,
+//   Colors: ["steel"],
+//   Cost: 5,
+//   Strength: 4,
+//   Willpower: 4,
+//   Lore: 2,
+//   Illustrator: "Cookie",
+//   Number: 172,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 508900,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

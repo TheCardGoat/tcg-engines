@@ -1,33 +1,8 @@
 import type { ItemCard } from "@tcg/lorcana-types";
 
 export const chemPurse: ItemCard = {
-  id: "1ea",
-  cardType: "item",
-  name: "Chem Purse",
-  inkType: ["emerald"],
-  franchise: "Big Hero 6",
-  set: "008",
-  text: "HERE'S THE BEST PART Whenever you play a character, if you used Shift to play them, they get +4 {S} this turn.",
-  cost: 2,
-  cardNumber: 119,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "b53e4e6943d5cde0bb2744696e3434d34149f381",
-  },
   abilities: [
     {
-      id: "1ea-1",
-      type: "triggered",
-      name: "HERE'S THE BEST PART",
-      trigger: {
-        event: "play",
-        timing: "whenever",
-        on: {
-          controller: "you",
-          cardType: "character",
-        },
-      },
       effect: {
         type: "conditional",
         condition: {
@@ -42,7 +17,32 @@ export const chemPurse: ItemCard = {
           duration: "this-turn",
         },
       },
+      id: "1ea-1",
+      name: "HERE'S THE BEST PART",
       text: "HERE'S THE BEST PART Whenever you play a character, if you used Shift to play them, they get +4 {S} this turn.",
+      trigger: {
+        event: "play",
+        timing: "whenever",
+        on: {
+          controller: "you",
+          cardType: "character",
+        },
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 119,
+  cardType: "item",
+  cost: 2,
+  externalIds: {
+    ravensburger: "b53e4e6943d5cde0bb2744696e3434d34149f381",
+  },
+  franchise: "Big Hero 6",
+  id: "1ea",
+  inkType: ["emerald"],
+  inkable: true,
+  missingTests: true,
+  name: "Chem Purse",
+  set: "008",
+  text: "HERE'S THE BEST PART Whenever you play a character, if you used Shift to play them, they get +4 {S} this turn.",
 };

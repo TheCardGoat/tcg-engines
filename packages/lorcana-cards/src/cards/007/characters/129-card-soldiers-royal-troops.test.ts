@@ -3,32 +3,32 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   bagheeraGuardianJaguar,
-//   cardSoldiersRoyalTroops,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   BagheeraGuardianJaguar,
+//   CardSoldiersRoyalTroops,
 // } from "@lorcanito/lorcana-engine/cards/007";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Card Soldiers - Royal Troops", () => {
-//   it("TAKE POINT While a damaged character is in play, this character gets +2 {S}.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Card Soldiers - Royal Troops", () => {
+//   It("TAKE POINT While a damaged character is in play, this character gets +2 {S}.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         play: [cardSoldiersRoyalTroops],
+//         Play: [cardSoldiersRoyalTroops],
 //       },
 //       {
-//         play: [bagheeraGuardianJaguar],
+//         Play: [bagheeraGuardianJaguar],
 //       },
 //     );
 //
-//     expect(testEngine.getCardModel(cardSoldiersRoyalTroops).strength).toBe(
-//       cardSoldiersRoyalTroops.strength,
+//     Expect(testEngine.getCardModel(cardSoldiersRoyalTroops).strength).toBe(
+//       CardSoldiersRoyalTroops.strength,
 //     );
 //
-//     await testEngine.setCardDamage(bagheeraGuardianJaguar, 1);
+//     Await testEngine.setCardDamage(bagheeraGuardianJaguar, 1);
 //
-//     expect(testEngine.getCardModel(cardSoldiersRoyalTroops).strength).toBe(
-//       cardSoldiersRoyalTroops.strength + 2,
+//     Expect(testEngine.getCardModel(cardSoldiersRoyalTroops).strength).toBe(
+//       CardSoldiersRoyalTroops.strength + 2,
 //     );
 //   });
 // });

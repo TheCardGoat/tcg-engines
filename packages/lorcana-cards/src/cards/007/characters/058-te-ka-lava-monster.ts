@@ -1,27 +1,27 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { challengerAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import { challengerAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const teKaLavaMonster: LorcanitoCharacterCard = {
-//   id: "zzf",
-//   name: "Te Ka",
-//   title: "Lava Monster",
-//   characteristics: ["storyborn", "villain", "deity"],
-//   text: "Challenger +2",
-//   type: "character",
-//   abilities: [challengerAbility(2)],
-//   inkwell: true,
-//   colors: ["amethyst"],
-//   cost: 6,
-//   strength: 5,
-//   willpower: 6,
-//   illustrator: "Max Grecke",
-//   number: 58,
-//   set: "007",
-//   externalIds: {
-//     tcgPlayer: 619436,
+// Export const teKaLavaMonster: LorcanitoCharacterCard = {
+//   Id: "zzf",
+//   Name: "Te Ka",
+//   Title: "Lava Monster",
+//   Characteristics: ["storyborn", "villain", "deity"],
+//   Text: "Challenger +2",
+//   Type: "character",
+//   Abilities: [challengerAbility(2)],
+//   Inkwell: true,
+//   Colors: ["amethyst"],
+//   Cost: 6,
+//   Strength: 5,
+//   Willpower: 6,
+//   Illustrator: "Max Grecke",
+//   Number: 58,
+//   Set: "007",
+//   ExternalIds: {
+//     TcgPlayer: 619436,
 //   },
-//   rarity: "common",
-//   lore: 2,
+//   Rarity: "common",
+//   Lore: 2,
 // };
 //

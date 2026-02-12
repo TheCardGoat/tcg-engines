@@ -5,9 +5,9 @@ import { starkeyHooksHenchman } from "./191-starkey-hooks-henchman";
 describe("Starkey - Hook’s Henchman", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [starkeyHooksHenchman] });
-  //   expect(testEngine.getCardModel(starkeyHooksHenchman).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [starkeyHooksHenchman] });
+  //   Expect(testEngine.getCardModel(starkeyHooksHenchman).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,50 +17,50 @@ describe("Starkey - Hook’s Henchman", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, test } from "@jest/globals";
-// import {
-//   captainColonelsLieutenant,
-//   johnSilverAlienPirate,
-//   starkeyHooksHenchman,
+// Import { describe, expect, test } from "@jest/globals";
+// Import {
+//   CaptainColonelsLieutenant,
+//   JohnSilverAlienPirate,
+//   StarkeyHooksHenchman,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Starkey - Hook's Henchman", () => {
-//   describe("**AYE AYE, CAPTAIN** While you have a Captain character in play, this character gets +1 {L}.", () => {
-//     test("No Captain in play", () => {
-//       const testStore = new TestStore({
-//         play: [starkeyHooksHenchman],
+// Describe("Starkey - Hook's Henchman", () => {
+//   Describe("**AYE AYE, CAPTAIN** While you have a Captain character in play, this character gets +1 {L}.", () => {
+//     Test("No Captain in play", () => {
+//       Const testStore = new TestStore({
+//         Play: [starkeyHooksHenchman],
 //       });
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         starkeyHooksHenchman.id,
+//         StarkeyHooksHenchman.id,
 //       );
 //
-//       expect(cardUnderTest.lore).toEqual(starkeyHooksHenchman.lore);
+//       Expect(cardUnderTest.lore).toEqual(starkeyHooksHenchman.lore);
 //     });
 //
-//     test("With Captain in play", () => {
-//       const testStore = new TestStore({
-//         play: [starkeyHooksHenchman, johnSilverAlienPirate],
+//     Test("With Captain in play", () => {
+//       Const testStore = new TestStore({
+//         Play: [starkeyHooksHenchman, johnSilverAlienPirate],
 //       });
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         starkeyHooksHenchman.id,
+//         StarkeyHooksHenchman.id,
 //       );
 //
-//       expect(cardUnderTest.lore).toEqual(starkeyHooksHenchman.lore + 1);
+//       Expect(cardUnderTest.lore).toEqual(starkeyHooksHenchman.lore + 1);
 //     });
 //
-//     test("With Captain in play", () => {
-//       const testStore = new TestStore({
-//         play: [starkeyHooksHenchman, captainColonelsLieutenant],
+//     Test("With Captain in play", () => {
+//       Const testStore = new TestStore({
+//         Play: [starkeyHooksHenchman, captainColonelsLieutenant],
 //       });
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         starkeyHooksHenchman.id,
+//         StarkeyHooksHenchman.id,
 //       );
 //
-//       expect(cardUnderTest.lore).toEqual(starkeyHooksHenchman.lore + 1);
+//       Expect(cardUnderTest.lore).toEqual(starkeyHooksHenchman.lore + 1);
 //     });
 //   });
 // });

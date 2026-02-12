@@ -1,57 +1,57 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type {
+// Import type {
 //   AbilityEffect,
 //   LorcanitoActionCard,
 //   ResolutionAbility,
 // } from "@lorcanito/lorcana-engine";
-// import { singerTogetherAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import {
-//   allOpposingCharacters,
-//   allYourCharacters,
+// Import { singerTogetherAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import {
+//   AllOpposingCharacters,
+//   AllYourCharacters,
 // } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { readyAndCantQuest } from "@lorcanito/lorcana-engine/effects/effects";
+// Import { readyAndCantQuest } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// const gainsDamageProtection: AbilityEffect = {
-//   type: "ability",
-//   ability: "custom",
-//   modifier: "add",
-//   duration: "turn",
-//   target: allYourCharacters,
-//   customAbility: {
-//     type: "static",
-//     ability: "effects",
-//     effects: [
+// Const gainsDamageProtection: AbilityEffect = {
+//   Type: "ability",
+//   Ability: "custom",
+//   Modifier: "add",
+//   Duration: "turn",
+//   Target: allYourCharacters,
+//   CustomAbility: {
+//     Type: "static",
+//     Ability: "effects",
+//     Effects: [
 //       {
-//         type: "protection",
-//         from: "damage",
-//         as: "attacker",
-//         target: allOpposingCharacters,
+//         Type: "protection",
+//         From: "damage",
+//         As: "attacker",
+//         Target: allOpposingCharacters,
 //       },
 //     ],
 //   },
 // };
 //
-// const ability: ResolutionAbility = {
-//   type: "resolution",
-//   effects: [...readyAndCantQuest(allYourCharacters), gainsDamageProtection],
+// Const ability: ResolutionAbility = {
+//   Type: "resolution",
+//   Effects: [...readyAndCantQuest(allYourCharacters), gainsDamageProtection],
 // };
 //
-// export const nothingWeWontDo: LorcanitoActionCard = {
-//   id: "pm2",
-//   name: "Nothing We Won't Do",
-//   characteristics: ["action", "song"],
-//   text: "Sing Together 8\nReady all your characters. For the rest of this turn, they take no damage from challenges and can't quest.",
-//   type: "action",
-//   abilities: [singerTogetherAbility(8), ability],
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 8,
-//   illustrator: "Jeanne Plattenet",
-//   number: 147,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631447,
+// Export const nothingWeWontDo: LorcanitoActionCard = {
+//   Id: "pm2",
+//   Name: "Nothing We Won't Do",
+//   Characteristics: ["action", "song"],
+//   Text: "Sing Together 8\nReady all your characters. For the rest of this turn, they take no damage from challenges and can't quest.",
+//   Type: "action",
+//   Abilities: [singerTogetherAbility(8), ability],
+//   Inkwell: true,
+//   Colors: ["ruby"],
+//   Cost: 8,
+//   Illustrator: "Jeanne Plattenet",
+//   Number: 147,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631447,
 //   },
-//   rarity: "rare",
+//   Rarity: "rare",
 // };
 //

@@ -1,68 +1,68 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
-// import { atTheStartOfYourTurn } from "@lorcanito/lorcana-engine/abilities/atTheAbilities";
-// import {
-//   revealTopOfDeckPutInHandOrDeck,
-//   youGainLore,
+// Import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
+// Import { atTheStartOfYourTurn } from "@lorcanito/lorcana-engine/abilities/atTheAbilities";
+// Import {
+//   RevealTopOfDeckPutInHandOrDeck,
+//   YouGainLore,
 // } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const queensSensorCoreItem: LorcanitoItemCard = {
-//   id: "rj3",
-//   name: "Queen's Sensor Core",
-//   characteristics: ["item"],
-//   text: "**SYMBOL OF NOBILITY** At the start of your turn, if you have a Princess or Queen character in play, gain 1 lore.\n**ROYAL SEARCH** {E}, 2 {I} – Reveal the top card of your deck. If it’s a Princess or Queen character card, you may put it into your hand. Otherwise, put it on the top of your deck.",
-//   type: "item",
-//   abilities: [
-//     atTheStartOfYourTurn({
-//       name: "SYMBOL OF NOBILITY",
-//       text: "At the start of your turn, if you have a Princess or Queen character in play, gain 1 lore.",
-//       resolutionConditions: [
+// Export const queensSensorCoreItem: LorcanitoItemCard = {
+//   Id: "rj3",
+//   Name: "Queen's Sensor Core",
+//   Characteristics: ["item"],
+//   Text: "**SYMBOL OF NOBILITY** At the start of your turn, if you have a Princess or Queen character in play, gain 1 lore.\n**ROYAL SEARCH** {E}, 2 {I} – Reveal the top card of your deck. If it’s a Princess or Queen character card, you may put it into your hand. Otherwise, put it on the top of your deck.",
+//   Type: "item",
+//   Abilities: [
+//     AtTheStartOfYourTurn({
+//       Name: "SYMBOL OF NOBILITY",
+//       Text: "At the start of your turn, if you have a Princess or Queen character in play, gain 1 lore.",
+//       ResolutionConditions: [
 //         {
-//           type: "filter",
-//           comparison: { operator: "gte", value: 1 },
-//           filters: [
+//           Type: "filter",
+//           Comparison: { operator: "gte", value: 1 },
+//           Filters: [
 //             { filter: "type", value: "character" },
 //             { filter: "zone", value: "play" },
 //             { filter: "owner", value: "self" },
 //             {
-//               filter: "characteristics",
-//               conjunction: "or",
-//               value: ["princess", "queen"],
+//               Filter: "characteristics",
+//               Conjunction: "or",
+//               Value: ["princess", "queen"],
 //             },
 //           ],
 //         },
 //       ],
-//       effects: [youGainLore(1)],
+//       Effects: [youGainLore(1)],
 //     }),
 //     {
-//       type: "activated",
-//       costs: [{ type: "exert" }, { type: "ink", amount: 2 }],
-//       name: "Royal Search",
-//       text: "{E}, 2 {I} – Reveal the top card of your deck. If it’s a Princess or Queen character card, you may put it into your hand. Otherwise, put it on the top of your deck.",
-//       effects: revealTopOfDeckPutInHandOrDeck({
-//         mode: "top",
-//         tutorFilters: [
+//       Type: "activated",
+//       Costs: [{ type: "exert" }, { type: "ink", amount: 2 }],
+//       Name: "Royal Search",
+//       Text: "{E}, 2 {I} – Reveal the top card of your deck. If it’s a Princess or Queen character card, you may put it into your hand. Otherwise, put it on the top of your deck.",
+//       Effects: revealTopOfDeckPutInHandOrDeck({
+//         Mode: "top",
+//         TutorFilters: [
 //           { filter: "type", value: "character" },
 //           { filter: "owner", value: "self" },
 //           {
-//             filter: "characteristics",
-//             conjunction: "or",
-//             value: ["princess", "queen"],
+//             Filter: "characteristics",
+//             Conjunction: "or",
+//             Value: ["princess", "queen"],
 //           },
 //         ],
 //       }),
 //     },
 //   ],
-//   inkwell: true,
-//   colors: ["amber"],
-//   cost: 2,
-//   lore: 1,
-//   illustrator: "Juan Diego Leon",
-//   number: 31,
-//   set: "SSK",
-//   externalIds: {
-//     tcgPlayer: 560914,
+//   Inkwell: true,
+//   Colors: ["amber"],
+//   Cost: 2,
+//   Lore: 1,
+//   Illustrator: "Juan Diego Leon",
+//   Number: 31,
+//   Set: "SSK",
+//   ExternalIds: {
+//     TcgPlayer: 560914,
 //   },
-//   rarity: "rare",
+//   Rarity: "rare",
 // };
 //

@@ -3,31 +3,31 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { madamMimTinyAdversary } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { madamMimTinyAdversary } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Madam Mim - Tiny Adversary", () => {
-//   it.skip("Challenger +1 (While challenging, this character gets +1 {S}.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [madamMimTinyAdversary],
+// Describe("Madam Mim - Tiny Adversary", () => {
+//   It.skip("Challenger +1 (While challenging, this character gets +1 {S}.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [madamMimTinyAdversary],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(madamMimTinyAdversary);
-//     expect(cardUnderTest.hasChallenger).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(madamMimTinyAdversary);
+//     Expect(cardUnderTest.hasChallenger).toBe(true);
 //   });
 //
-//   it.skip("ZIM ZABBERIM ZIM Your other characters gain Challenger +1.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: madamMimTinyAdversary.cost,
-//       play: [madamMimTinyAdversary],
-//       hand: [madamMimTinyAdversary],
+//   It.skip("ZIM ZABBERIM ZIM Your other characters gain Challenger +1.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: madamMimTinyAdversary.cost,
+//       Play: [madamMimTinyAdversary],
+//       Hand: [madamMimTinyAdversary],
 //     });
 //
-//     await testEngine.playCard(madamMimTinyAdversary);
+//     Await testEngine.playCard(madamMimTinyAdversary);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

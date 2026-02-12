@@ -1,24 +1,24 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const berliozMischievousKitten: LorcanitoCharacterCard = {
-//   id: "ow3",
-//   name: "Berlioz",
-//   title: "Mischievous Kitten",
-//   characteristics: ["storyborn", "ally"],
-//   type: "character",
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 3,
-//   strength: 2,
-//   willpower: 5,
-//   illustrator: "Geoffrey Boudout",
-//   number: 99,
-//   set: "007",
-//   externalIds: {
-//     tcgPlayer: 618148,
+// Export const berliozMischievousKitten: LorcanitoCharacterCard = {
+//   Id: "ow3",
+//   Name: "Berlioz",
+//   Title: "Mischievous Kitten",
+//   Characteristics: ["storyborn", "ally"],
+//   Type: "character",
+//   Inkwell: true,
+//   Colors: ["emerald"],
+//   Cost: 3,
+//   Strength: 2,
+//   Willpower: 5,
+//   Illustrator: "Geoffrey Boudout",
+//   Number: 99,
+//   Set: "007",
+//   ExternalIds: {
+//     TcgPlayer: 618148,
 //   },
-//   rarity: "common",
-//   lore: 1,
+//   Rarity: "common",
+//   Lore: 1,
 // };
 //

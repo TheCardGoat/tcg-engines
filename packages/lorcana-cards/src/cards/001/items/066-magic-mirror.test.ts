@@ -5,9 +5,9 @@ import { magicMirrorundefined } from "./066-magic-mirror";
 describe("Magic Mirror - undefined", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [magicMirror] });
-  //   expect(testEngine.getCardModel(magicMirror).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [magicMirror] });
+  //   Expect(testEngine.getCardModel(magicMirror).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,31 +17,31 @@ describe("Magic Mirror - undefined", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   dingleHopper,
-//   magicMirror,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   DingleHopper,
+//   MagicMirror,
 // } from "@lorcanito/lorcana-engine/cards/001/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Magic Mirror", () => {
-//   it("Speak - Drawing one", () => {
-//     const testStore = new TestStore({
-//       deck: [dingleHopper],
-//       play: [magicMirror],
-//       inkwell: [dingleHopper, dingleHopper, dingleHopper, dingleHopper],
+// Describe("Magic Mirror", () => {
+//   It("Speak - Drawing one", () => {
+//     Const testStore = new TestStore({
+//       Deck: [dingleHopper],
+//       Play: [magicMirror],
+//       Inkwell: [dingleHopper, dingleHopper, dingleHopper, dingleHopper],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("play", magicMirror.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("play", magicMirror.id);
 //
-//     expect(
-//       testStore.store.tableStore.getPlayerZone("player_one", "deck")?.cards,
+//     Expect(
+//       TestStore.store.tableStore.getPlayerZone("player_one", "deck")?.cards,
 //     ).toHaveLength(1);
 //
-//     cardUnderTest.activate();
+//     CardUnderTest.activate();
 //
-//     expect(testStore.getZonesCardCount()).toEqual(
-//       expect.objectContaining({ hand: 1, deck: 0 }),
+//     Expect(testStore.getZonesCardCount()).toEqual(
+//       Expect.objectContaining({ hand: 1, deck: 0 }),
 //     );
 //   });
 // });

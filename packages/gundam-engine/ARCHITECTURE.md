@@ -159,7 +159,8 @@ packages/gundam-engine/
 │
 ├── package.json
 ├── tsconfig.json
-├── biome.json
+├── .oxlintrc.json
+├── .oxfmt.json
 ├── bunfig.toml
 ├── README.md
 └── ARCHITECTURE.md

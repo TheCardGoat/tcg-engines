@@ -3,47 +3,47 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   beastWolfbane,
-//   elsaSnowQueen,
-//   moanaOfMotunui,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   BeastWolfbane,
+//   ElsaSnowQueen,
+//   MoanaOfMotunui,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Beast - Wolfbane", () => {
-//   it("**ROAR** When you play this character, exert all opposing damaged characters.", () => {
-//     const testStore = new TestStore(
+// Describe("Beast - Wolfbane", () => {
+//   It("**ROAR** When you play this character, exert all opposing damaged characters.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         hand: [beastWolfbane],
-//         inkwell: beastWolfbane.cost,
+//         Hand: [beastWolfbane],
+//         Inkwell: beastWolfbane.cost,
 //       },
 //       {
-//         play: [moanaOfMotunui, elsaSnowQueen],
+//         Play: [moanaOfMotunui, elsaSnowQueen],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", beastWolfbane.id);
-//     const target = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", beastWolfbane.id);
+//     Const target = testStore.getByZoneAndId(
 //       "play",
-//       moanaOfMotunui.id,
+//       MoanaOfMotunui.id,
 //       "player_two",
 //     );
-//     target.updateCardMeta({ damage: 1 });
-//     const shouldNotBeTarget = testStore.getByZoneAndId(
+//     Target.updateCardMeta({ damage: 1 });
+//     Const shouldNotBeTarget = testStore.getByZoneAndId(
 //       "play",
-//       elsaSnowQueen.id,
+//       ElsaSnowQueen.id,
 //       "player_two",
 //     );
-//     shouldNotBeTarget.updateCardMeta({ damage: 0 });
+//     ShouldNotBeTarget.updateCardMeta({ damage: 0 });
 //
-//     expect(target.ready).toEqual(true);
-//     expect(shouldNotBeTarget.ready).toEqual(true);
+//     Expect(target.ready).toEqual(true);
+//     Expect(shouldNotBeTarget.ready).toEqual(true);
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     expect(target.ready).toEqual(false);
-//     expect(shouldNotBeTarget.ready).toEqual(true);
+//     Expect(target.ready).toEqual(false);
+//     Expect(shouldNotBeTarget.ready).toEqual(true);
 //   });
 // });
 //

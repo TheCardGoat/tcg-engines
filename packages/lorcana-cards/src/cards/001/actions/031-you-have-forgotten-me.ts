@@ -1,59 +1,59 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
 export const youHaveForgottenMe: ActionCard = {
-  id: "1cn",
-  cardType: "action",
-  name: "You Have Forgotten Me",
-  inkType: ["amber"],
-  franchise: "Lion King",
-  set: "001",
-  text: "Each opponent chooses and discards 2 cards.",
-  cost: 4,
-  cardNumber: 31,
-  inkable: true,
-  externalIds: {
-    ravensburger: "af649d5bbf464478b0095af6a2bebd4bf32e467d",
-  },
   abilities: [
     {
-      id: "1cn-1",
-      text: "Each opponent chooses and discards 2 cards.",
-      type: "action",
       effect: {
         type: "discard",
         amount: 2,
         target: "EACH_OPPONENT",
         chosen: true,
       },
+      id: "1cn-1",
+      text: "Each opponent chooses and discards 2 cards.",
+      type: "action",
     },
   ],
+  cardNumber: 31,
+  cardType: "action",
+  cost: 4,
+  externalIds: {
+    ravensburger: "af649d5bbf464478b0095af6a2bebd4bf32e467d",
+  },
+  franchise: "Lion King",
+  id: "1cn",
+  inkType: ["amber"],
+  inkable: true,
+  name: "You Have Forgotten Me",
+  set: "001",
+  text: "Each opponent chooses and discards 2 cards.",
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-// import type { DiscardEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { DiscardEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
 //
-// export const youHaveForgottenMe: LorcanitoActionCard = {
-//   id: "z53",
-//   name: "You Have Forgotten Me",
-//   characteristics: ["action"],
-//   text: "Each opponent chooses and discards 2 cards.",
-//   type: "action",
-//   abilities: [
+// Export const youHaveForgottenMe: LorcanitoActionCard = {
+//   Id: "z53",
+//   Name: "You Have Forgotten Me",
+//   Characteristics: ["action"],
+//   Text: "Each opponent chooses and discards 2 cards.",
+//   Type: "action",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       name: "You Have Forgotten Me",
-//       text: "Each opponent chooses and discards two cards.",
-//       optional: false,
-//       responder: "opponent",
-//       effects: [
+//       Type: "resolution",
+//       Name: "You Have Forgotten Me",
+//       Text: "Each opponent chooses and discards two cards.",
+//       Optional: false,
+//       Responder: "opponent",
+//       Effects: [
 //         {
-//           type: "discard",
-//           amount: 2,
-//           target: {
-//             type: "card",
-//             value: 2,
-//             filters: [
+//           Type: "discard",
+//           Amount: 2,
+//           Target: {
+//             Type: "card",
+//             Value: 2,
+//             Filters: [
 //               { filter: "zone", value: "hand" },
 //               { filter: "owner", value: "self" },
 //             ],
@@ -62,16 +62,16 @@ export const youHaveForgottenMe: ActionCard = {
 //       ],
 //     },
 //   ],
-//   flavour: "You are more than what you have become. \n−Mufasa",
-//   inkwell: true,
-//   colors: ["amber"],
-//   cost: 4,
-//   illustrator: "Alice Pisoni",
-//   number: 31,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 508716,
+//   Flavour: "You are more than what you have become. \n−Mufasa",
+//   Inkwell: true,
+//   Colors: ["amber"],
+//   Cost: 4,
+//   Illustrator: "Alice Pisoni",
+//   Number: 31,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 508716,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

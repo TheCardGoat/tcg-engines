@@ -3,35 +3,35 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { instituteOfTechnologyPrestigiousUniversity } from "@lorcanito/lorcana-engine/cards/006/locations/locations";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { instituteOfTechnologyPrestigiousUniversity } from "@lorcanito/lorcana-engine/cards/006/locations/locations";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Institute of Technology - Prestigious University", () => {
-//   it.skip("WELCOME TO THE LAB Inventor characters get +1 {W} while here.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: instituteOfTechnologyPrestigiousUniversity.cost,
-//       play: [instituteOfTechnologyPrestigiousUniversity],
-//       hand: [instituteOfTechnologyPrestigiousUniversity],
+// Describe("Institute of Technology - Prestigious University", () => {
+//   It.skip("WELCOME TO THE LAB Inventor characters get +1 {W} while here.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: instituteOfTechnologyPrestigiousUniversity.cost,
+//       Play: [instituteOfTechnologyPrestigiousUniversity],
+//       Hand: [instituteOfTechnologyPrestigiousUniversity],
 //     });
 //
-//     await testEngine.playCard(instituteOfTechnologyPrestigiousUniversity);
+//     Await testEngine.playCard(instituteOfTechnologyPrestigiousUniversity);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 //
-//   it.skip("PUSH THE BOUNDARIES At the start of your turn, if you have a character here, gain 1 lore.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: instituteOfTechnologyPrestigiousUniversity.cost,
-//       play: [instituteOfTechnologyPrestigiousUniversity],
-//       hand: [instituteOfTechnologyPrestigiousUniversity],
+//   It.skip("PUSH THE BOUNDARIES At the start of your turn, if you have a character here, gain 1 lore.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: instituteOfTechnologyPrestigiousUniversity.cost,
+//       Play: [instituteOfTechnologyPrestigiousUniversity],
+//       Hand: [instituteOfTechnologyPrestigiousUniversity],
 //     });
 //
-//     await testEngine.playCard(instituteOfTechnologyPrestigiousUniversity);
+//     Await testEngine.playCard(instituteOfTechnologyPrestigiousUniversity);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

@@ -38,8 +38,8 @@ export const Abilities = {
    * @example Abilities.Keyword("Ward")
    */
   Keyword: (keyword: SimpleKeywordType): KeywordAbility => ({
-    type: "keyword",
     keyword,
+    type: "keyword",
   }),
 
   /**
@@ -47,12 +47,9 @@ export const Abilities = {
    *
    * @example Abilities.Keyword("Singer", { value: 5 })
    */
-  KeywordWithValue: (
-    keyword: ValueKeywordType,
-    params: { value: number },
-  ): KeywordAbility => ({
-    type: "keyword",
+  KeywordWithValue: (keyword: ValueKeywordType, params: { value: number }): KeywordAbility => ({
     keyword,
+    type: "keyword",
     value: params.value,
   }),
 
@@ -66,8 +63,8 @@ export const Abilities = {
     keyword: ParameterizedKeywordType,
     params: { value: number; condition?: Condition },
   ): KeywordAbility => ({
-    type: "keyword",
     keyword,
+    type: "keyword",
     value: params.value,
     ...(params.condition && { condition: params.condition }),
   }),
@@ -78,13 +75,10 @@ export const Abilities = {
    * @example Abilities.Shift({ cost: { ink: 5 } })
    * @example Abilities.Shift({ cost: { ink: 3 }, shiftTarget: "Elsa" })
    */
-  Shift: (params: {
-    cost: AbilityCost;
-    shiftTarget?: string;
-  }): ShiftKeywordAbility => ({
-    type: "keyword",
-    keyword: "Shift",
+  Shift: (params: { cost: AbilityCost; shiftTarget?: string }): ShiftKeywordAbility => ({
     cost: params.cost,
+    keyword: "Shift",
+    type: "keyword",
     ...(params.shiftTarget && { shiftTarget: params.shiftTarget }),
   }),
 
@@ -166,7 +160,7 @@ export const Abilities = {
    * ```
    */
   Action: (effect: Effect): ActionAbility => ({
-    type: "action",
     effect,
+    type: "action",
   }),
 };

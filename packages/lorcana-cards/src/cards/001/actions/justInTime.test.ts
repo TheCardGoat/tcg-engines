@@ -5,9 +5,9 @@ import { justInTimeundefined } from "./justInTime";
 describe("Just in Time - undefined", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [JustinTime] });
-  //   expect(testEngine.getCardModel(JustinTime).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [JustinTime] });
+  //   Expect(testEngine.getCardModel(JustinTime).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });

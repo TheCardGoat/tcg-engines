@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { heartOfAtlantis } from "@lorcanito/lorcana-engine/cards/003/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { heartOfAtlantis } from "@lorcanito/lorcana-engine/cards/003/items/items";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Heart of Atlantis", () => {
-//   it.skip("**LIFE GIVER** {E} – You pay 2 {I} less for the next character you play this turn.", () => {
-//     const testStore = new TestStore({
-//       inkwell: heartOfAtlantis.cost,
-//       play: [heartOfAtlantis],
+// Describe("Heart of Atlantis", () => {
+//   It.skip("**LIFE GIVER** {E} – You pay 2 {I} less for the next character you play this turn.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: heartOfAtlantis.cost,
+//       Play: [heartOfAtlantis],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("play", heartOfAtlantis.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("play", heartOfAtlantis.id);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

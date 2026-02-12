@@ -5,9 +5,9 @@ import { suddenChill } from "./098-sudden-chill";
 describe("Sudden Chill - undefined", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [suddenChill] });
-  //   expect(testEngine.getCardModel(suddenChill).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [suddenChill] });
+  //   Expect(testEngine.getCardModel(suddenChill).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,33 +17,33 @@ describe("Sudden Chill - undefined", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { moanaOfMotunui } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { suddenChill } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { moanaOfMotunui } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { suddenChill } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Sudden Chill", () => {
-//   it("Each opponent chooses and discards a card", () => {
-//     const testStore = new TestStore(
+// Describe("Sudden Chill", () => {
+//   It("Each opponent chooses and discards a card", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: suddenChill.cost,
-//         hand: [suddenChill],
+//         Inkwell: suddenChill.cost,
+//         Hand: [suddenChill],
 //       },
 //       { hand: [moanaOfMotunui] },
 //     );
 //
-//     const cardUnderTest = testStore.getCard(suddenChill);
-//     const target = testStore.getCard(moanaOfMotunui);
+//     Const cardUnderTest = testStore.getCard(suddenChill);
+//     Const target = testStore.getCard(moanaOfMotunui);
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     testStore.changePlayer("player_two");
+//     TestStore.changePlayer("player_two");
 //
-//     testStore.resolveTopOfStack({
-//       targets: [target],
+//     TestStore.resolveTopOfStack({
+//       Targets: [target],
 //     });
 //
-//     expect(target.zone).toEqual("discard");
+//     Expect(target.zone).toEqual("discard");
 //   });
 // });
 //

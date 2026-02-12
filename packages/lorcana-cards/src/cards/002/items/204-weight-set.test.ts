@@ -3,59 +3,59 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   cruellaDeVilPerfectlyWretched,
-//   grandPabbieOldestAndWisest,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   CruellaDeVilPerfectlyWretched,
+//   GrandPabbieOldestAndWisest,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { weightSet } from "@lorcanito/lorcana-engine/cards/002/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { weightSet } from "@lorcanito/lorcana-engine/cards/002/items/items";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Weight Set", () => {
-//   describe("**TRAINING** Whenever you play a character with 4 {S} or more, you may pay 1 {I} to draw a card.", () => {
-//     it("should trigger when playing a character with 4 or more strength", () => {
-//       const testStore = new TestStore({
-//         deck: 2,
-//         inkwell: 1 + cruellaDeVilPerfectlyWretched.cost,
-//         hand: [cruellaDeVilPerfectlyWretched],
-//         play: [weightSet],
+// Describe("Weight Set", () => {
+//   Describe("**TRAINING** Whenever you play a character with 4 {S} or more, you may pay 1 {I} to draw a card.", () => {
+//     It("should trigger when playing a character with 4 or more strength", () => {
+//       Const testStore = new TestStore({
+//         Deck: 2,
+//         Inkwell: 1 + cruellaDeVilPerfectlyWretched.cost,
+//         Hand: [cruellaDeVilPerfectlyWretched],
+//         Play: [weightSet],
 //       });
 //
-//       const target = testStore.getByZoneAndId(
+//       Const target = testStore.getByZoneAndId(
 //         "hand",
-//         cruellaDeVilPerfectlyWretched.id,
+//         CruellaDeVilPerfectlyWretched.id,
 //       );
-//       target.playFromHand();
+//       Target.playFromHand();
 //
-//       testStore.resolveOptionalAbility();
+//       TestStore.resolveOptionalAbility();
 //
-//       expect(testStore.getZonesCardCount()).toEqual(
-//         expect.objectContaining({
-//           deck: 1,
-//           hand: 1,
+//       Expect(testStore.getZonesCardCount()).toEqual(
+//         Expect.objectContaining({
+//           Deck: 1,
+//           Hand: 1,
 //         }),
 //       );
 //     });
 //
-//     it("should not trigger when playing a character with less than 4 strength", () => {
-//       const testStore = new TestStore({
-//         deck: 2,
-//         inkwell: 1 + grandPabbieOldestAndWisest.cost,
-//         hand: [grandPabbieOldestAndWisest],
-//         play: [weightSet],
+//     It("should not trigger when playing a character with less than 4 strength", () => {
+//       Const testStore = new TestStore({
+//         Deck: 2,
+//         Inkwell: 1 + grandPabbieOldestAndWisest.cost,
+//         Hand: [grandPabbieOldestAndWisest],
+//         Play: [weightSet],
 //       });
 //
-//       const target = testStore.getByZoneAndId(
+//       Const target = testStore.getByZoneAndId(
 //         "hand",
-//         grandPabbieOldestAndWisest.id,
+//         GrandPabbieOldestAndWisest.id,
 //       );
-//       target.playFromHand();
+//       Target.playFromHand();
 //
-//       expect(testStore.stackLayers).toHaveLength(0);
-//       expect(testStore.getZonesCardCount()).toEqual(
-//         expect.objectContaining({
-//           deck: 2,
-//           hand: 0,
+//       Expect(testStore.stackLayers).toHaveLength(0);
+//       Expect(testStore.getZonesCardCount()).toEqual(
+//         Expect.objectContaining({
+//           Deck: 2,
+//           Hand: 0,
 //         }),
 //       );
 //     });

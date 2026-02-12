@@ -3,28 +3,28 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { kidaProtectorOfAtlantis } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { vincenzoSantoriniTheExplosivesExpert } from "@lorcanito/lorcana-engine/cards/008";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { kidaProtectorOfAtlantis } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { vincenzoSantoriniTheExplosivesExpert } from "@lorcanito/lorcana-engine/cards/008";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Vincenzo Santorini - The Explosives Expert", () => {
-//   it("I JUST LIKE TO BLOW THINGS UP When you play this character, you may deal 3 damage to chosen character.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Vincenzo Santorini - The Explosives Expert", () => {
+//   It("I JUST LIKE TO BLOW THINGS UP When you play this character, you may deal 3 damage to chosen character.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: vincenzoSantoriniTheExplosivesExpert.cost,
-//         hand: [vincenzoSantoriniTheExplosivesExpert],
+//         Inkwell: vincenzoSantoriniTheExplosivesExpert.cost,
+//         Hand: [vincenzoSantoriniTheExplosivesExpert],
 //       },
 //       {
-//         inkwell: 0,
-//         play: [kidaProtectorOfAtlantis],
+//         Inkwell: 0,
+//         Play: [kidaProtectorOfAtlantis],
 //       },
 //     );
 //
-//     await testEngine.playCard(vincenzoSantoriniTheExplosivesExpert);
-//     await testEngine.acceptOptionalLayer();
-//     await testEngine.resolveTopOfStack({ targets: [kidaProtectorOfAtlantis] });
-//     expect(testEngine.getCardModel(kidaProtectorOfAtlantis).damage).toBe(3);
+//     Await testEngine.playCard(vincenzoSantoriniTheExplosivesExpert);
+//     Await testEngine.acceptOptionalLayer();
+//     Await testEngine.resolveTopOfStack({ targets: [kidaProtectorOfAtlantis] });
+//     Expect(testEngine.getCardModel(kidaProtectorOfAtlantis).damage).toBe(3);
 //   });
 // });
 //

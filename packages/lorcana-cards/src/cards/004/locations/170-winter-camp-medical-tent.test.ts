@@ -3,9 +3,9 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
+// Import { describe, it } from "@jest/globals";
 //
-// describe("Winter Camp - Medical Tent", () => {
-//   it("TODO", () => {});
+// Describe("Winter Camp - Medical Tent", () => {
+//   It("TODO", () => {});
 // });
 //

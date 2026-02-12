@@ -5,9 +5,9 @@ import { tangle } from "./133-tangle";
 describe("tangle - undefined", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [tangle] });
-  //   expect(testEngine.getCardModel(tangle).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [tangle] });
+  //   Expect(testEngine.getCardModel(tangle).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,24 +17,24 @@ describe("tangle - undefined", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { tangle } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { tangle } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Tangle", () => {
-//   it("Each opponent loses 1 lore.", () => {
-//     const testStore = new TestStore({
-//       inkwell: tangle.cost,
-//       hand: [tangle],
+// Describe("Tangle", () => {
+//   It("Each opponent loses 1 lore.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: tangle.cost,
+//       Hand: [tangle],
 //     });
 //
-//     testStore.store.tableStore.getTable("player_two").lore = 5;
+//     TestStore.store.tableStore.getTable("player_two").lore = 5;
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", tangle.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", tangle.id);
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     expect(testStore.store.tableStore.getTable("player_two").lore).toBe(4);
+//     Expect(testStore.store.tableStore.getTable("player_two").lore).toBe(4);
 //   });
 // });
 //

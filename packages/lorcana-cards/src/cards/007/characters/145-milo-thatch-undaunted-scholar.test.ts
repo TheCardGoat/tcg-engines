@@ -3,36 +3,36 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { hakunaMatata } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
-// import {
-//   beagleBoysSmalltimeCrooks,
-//   miloThatchUndauntedScholar,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { hakunaMatata } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
+// Import {
+//   BeagleBoysSmalltimeCrooks,
+//   MiloThatchUndauntedScholar,
 // } from "@lorcanito/lorcana-engine/cards/007";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Milo Thatch - Undaunted Scholar", () => {
-//   it("I'M YOUR GUY Whenever you play an action, you may give chosen character +2 {S} this turn.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: miloThatchUndauntedScholar.cost,
-//       play: [miloThatchUndauntedScholar, beagleBoysSmalltimeCrooks],
-//       hand: [hakunaMatata],
+// Describe("Milo Thatch - Undaunted Scholar", () => {
+//   It("I'M YOUR GUY Whenever you play an action, you may give chosen character +2 {S} this turn.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: miloThatchUndauntedScholar.cost,
+//       Play: [miloThatchUndauntedScholar, beagleBoysSmalltimeCrooks],
+//       Hand: [hakunaMatata],
 //     });
 //
-//     await testEngine.singSong({
-//       singer: beagleBoysSmalltimeCrooks,
-//       song: hakunaMatata,
+//     Await testEngine.singSong({
+//       Singer: beagleBoysSmalltimeCrooks,
+//       Song: hakunaMatata,
 //     });
 //
-//     console.log(JSON.stringify(testEngine.stackLayers));
+//     Console.log(JSON.stringify(testEngine.stackLayers));
 //
-//     await testEngine.acceptOptionalLayer();
-//     await testEngine.resolveTopOfStack({
-//       targets: [beagleBoysSmalltimeCrooks],
+//     Await testEngine.acceptOptionalLayer();
+//     Await testEngine.resolveTopOfStack({
+//       Targets: [beagleBoysSmalltimeCrooks],
 //     });
 //
-//     expect(testEngine.getCardModel(beagleBoysSmalltimeCrooks).strength).toBe(
-//       beagleBoysSmalltimeCrooks.strength + 2,
+//     Expect(testEngine.getCardModel(beagleBoysSmalltimeCrooks).strength).toBe(
+//       BeagleBoysSmalltimeCrooks.strength + 2,
 //     );
 //   });
 // });

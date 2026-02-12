@@ -5,9 +5,9 @@ import { genieOnTheJob } from "./075-genie-on-the-job";
 describe("Genie - On the Job", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [genieOnTheJob] });
-  //   expect(testEngine.getCardModel(genieOnTheJob).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [genieOnTheJob] });
+  //   Expect(testEngine.getCardModel(genieOnTheJob).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,92 +17,92 @@ describe("Genie - On the Job", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   genieOnTheJob,
-//   scarShamelessFirebrand,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   GenieOnTheJob,
+//   ScarShamelessFirebrand,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { eyeOfTheFate } from "@lorcanito/lorcana-engine/cards/001/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { eyeOfTheFate } from "@lorcanito/lorcana-engine/cards/001/items/items";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Genie On The Job", () => {
-//   it("DISAPPEAR effect - returning own character", () => {
-//     const testStore = new TestStore({
-//       inkwell: genieOnTheJob.cost,
-//       hand: [genieOnTheJob],
-//       play: [scarShamelessFirebrand],
+// Describe("Genie On The Job", () => {
+//   It("DISAPPEAR effect - returning own character", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: genieOnTheJob.cost,
+//       Hand: [genieOnTheJob],
+//       Play: [scarShamelessFirebrand],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", genieOnTheJob.id);
-//     const target = testStore.getByZoneAndId("play", scarShamelessFirebrand.id);
-//     expect(target.zone).toEqual("play");
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", genieOnTheJob.id);
+//     Const target = testStore.getByZoneAndId("play", scarShamelessFirebrand.id);
+//     Expect(target.zone).toEqual("play");
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({
-//       targetId: target.instanceId,
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({
+//       TargetId: target.instanceId,
 //     });
 //
-//     expect(target.zone).toEqual("hand");
-//     expect(testStore.getZonesCardCount()).toEqual(
-//       expect.objectContaining({ hand: 1, deck: 0, discard: 0, play: 1 }),
+//     Expect(target.zone).toEqual("hand");
+//     Expect(testStore.getZonesCardCount()).toEqual(
+//       Expect.objectContaining({ hand: 1, deck: 0, discard: 0, play: 1 }),
 //     );
 //   });
 //
-//   it("DISAPPEAR effect - returning opponents character", () => {
-//     const testStore = new TestStore(
+//   It("DISAPPEAR effect - returning opponents character", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: genieOnTheJob.cost,
-//         hand: [genieOnTheJob],
+//         Inkwell: genieOnTheJob.cost,
+//         Hand: [genieOnTheJob],
 //       },
 //       {
-//         play: [scarShamelessFirebrand],
+//         Play: [scarShamelessFirebrand],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", genieOnTheJob.id);
-//     const target = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", genieOnTheJob.id);
+//     Const target = testStore.getByZoneAndId(
 //       "play",
-//       scarShamelessFirebrand.id,
+//       ScarShamelessFirebrand.id,
 //       "player_two",
 //     );
-//     expect(target.zone).toEqual("play");
+//     Expect(target.zone).toEqual("play");
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({
-//       targetId: target.instanceId,
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({
+//       TargetId: target.instanceId,
 //     });
 //
-//     expect(target.zone).toEqual("hand");
-//     expect(testStore.getZonesCardCount("player_two")).toEqual(
-//       expect.objectContaining({ hand: 1, deck: 0, discard: 0, play: 0 }),
+//     Expect(target.zone).toEqual("hand");
+//     Expect(testStore.getZonesCardCount("player_two")).toEqual(
+//       Expect.objectContaining({ hand: 1, deck: 0, discard: 0, play: 0 }),
 //     );
 //   });
 //
-//   it.skip("DISAPPEAR effect - no valid target", () => {
-//     const testStore = new TestStore(
+//   It.skip("DISAPPEAR effect - no valid target", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: genieOnTheJob.cost,
-//         hand: [genieOnTheJob],
-//         play: [eyeOfTheFate],
+//         Inkwell: genieOnTheJob.cost,
+//         Hand: [genieOnTheJob],
+//         Play: [eyeOfTheFate],
 //       },
 //       {
-//         play: [eyeOfTheFate],
+//         Play: [eyeOfTheFate],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", genieOnTheJob.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", genieOnTheJob.id);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack();
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack();
 //
-//     expect(testStore.getZonesCardCount()).toEqual(
-//       expect.objectContaining({ hand: 0, deck: 0, discard: 0, play: 2 }),
+//     Expect(testStore.getZonesCardCount()).toEqual(
+//       Expect.objectContaining({ hand: 0, deck: 0, discard: 0, play: 2 }),
 //     );
-//     expect(testStore.getZonesCardCount("player_two")).toEqual(
-//       expect.objectContaining({ hand: 0, deck: 0, discard: 0, play: 1 }),
+//     Expect(testStore.getZonesCardCount("player_two")).toEqual(
+//       Expect.objectContaining({ hand: 0, deck: 0, discard: 0, play: 1 }),
 //     );
 //   });
 // });

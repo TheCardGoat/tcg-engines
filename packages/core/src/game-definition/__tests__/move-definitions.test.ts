@@ -2,10 +2,7 @@ import { describe, expect, it } from "bun:test";
 import { produce } from "immer";
 import type { MoveContext } from "../../moves/move-system";
 import { createMockContext } from "../../testing/test-context-factory";
-import type {
-  GameMoveDefinition,
-  GameMoveDefinitions,
-} from "../move-definitions";
+import type { GameMoveDefinition, GameMoveDefinitions } from "../move-definitions";
 
 /**
  * Test suite for GameMoveDefinitions type system
@@ -19,18 +16,18 @@ import type {
  * - Conditional move execution
  */
 
-type CounterState = {
+interface CounterState {
   count: number;
   player: string;
   locked: boolean;
-};
+}
 
-type CounterMoves = {
+interface CounterMoves {
   increment: { amount: number };
   decrement: { amount: number };
   reset: Record<string, never>;
   setPlayer: { playerId: string };
-};
+}
 
 describe("GameMoveDefinitions - Type System", () => {
   describe("GameMoveDefinition structure", () => {
@@ -63,16 +60,16 @@ describe("GameMoveDefinitions - Type System", () => {
   describe("GameMoveDefinitions exhaustive mapping", () => {
     it("should map all moves in TMoves type", () => {
       const moves: GameMoveDefinitions<CounterState, CounterMoves> = {
-        increment: {
-          reducer: (draft, context) => {
-            const amount = (context.params?.amount as number) || 1;
-            draft.count += amount;
-          },
-        },
         decrement: {
           reducer: (draft, context) => {
             const amount = (context.params?.amount as number) || 1;
             draft.count -= amount;
+          },
+        },
+        increment: {
+          reducer: (draft, context) => {
+            const amount = (context.params?.amount as number) || 1;
+            draft.count += amount;
           },
         },
         reset: {
@@ -87,25 +84,20 @@ describe("GameMoveDefinitions - Type System", () => {
         },
       };
 
-      expect(Object.keys(moves)).toEqual([
-        "increment",
-        "decrement",
-        "reset",
-        "setPlayer",
-      ]);
+      expect(Object.keys(moves)).toEqual(["decrement", "increment", "reset", "setPlayer"]);
     });
 
     it("should enforce that all move names have definitions", () => {
       // TypeScript will error if any move is missing
       const moves: GameMoveDefinitions<CounterState, CounterMoves> = {
-        increment: {
-          reducer: (draft) => {
-            draft.count += 1;
-          },
-        },
         decrement: {
           reducer: (draft) => {
             draft.count -= 1;
+          },
+        },
+        increment: {
+          reducer: (draft) => {
+            draft.count += 1;
           },
         },
         reset: {
@@ -139,13 +131,13 @@ describe("GameMoveDefinitions - Type System", () => {
 
       const initialState: CounterState = {
         count: 5,
-        player: "p1",
         locked: false,
+        player: "p1",
       };
 
       const context: MoveContext = createMockContext({
-        playerId: "p1" as any,
         params: { amount: 3 },
+        playerId: "p1" as any,
       });
 
       const newState = produce(initialState, (draft) => {
@@ -167,13 +159,13 @@ describe("GameMoveDefinitions - Type System", () => {
 
       const initialState: CounterState = {
         count: 0,
-        player: "",
         locked: false,
+        player: "",
       };
 
       const context: MoveContext = createMockContext({
-        playerId: "p1" as any,
         params: {},
+        playerId: "p1" as any,
       });
 
       const newState = produce(initialState, (draft) => {
@@ -182,8 +174,8 @@ describe("GameMoveDefinitions - Type System", () => {
 
       expect(newState).toEqual({
         count: 1,
-        player: "p1",
         locked: true,
+        player: "p1",
       });
     });
   });
@@ -199,19 +191,19 @@ describe("GameMoveDefinitions - Type System", () => {
 
       const unlockedState: CounterState = {
         count: 0,
-        player: "p1",
         locked: false,
+        player: "p1",
       };
 
       const lockedState: CounterState = {
         count: 0,
-        player: "p1",
         locked: true,
+        player: "p1",
       };
 
       const context: MoveContext = createMockContext({
-        playerId: "p1" as any,
         params: {},
+        playerId: "p1" as any,
       });
 
       // Should pass condition
@@ -223,13 +215,8 @@ describe("GameMoveDefinitions - Type System", () => {
 
     it("should support complex conditions", () => {
       const conditionalMove: GameMoveDefinition<CounterState> = {
-        condition: (state, context) => {
-          return (
-            !state.locked &&
-            state.count < 10 &&
-            state.player === context.playerId
-          );
-        },
+        condition: (state, context) =>
+          !state.locked && state.count < 10 && state.player === context.playerId,
         reducer: (draft) => {
           draft.count += 1;
         },
@@ -237,13 +224,13 @@ describe("GameMoveDefinitions - Type System", () => {
 
       const validState: CounterState = {
         count: 5,
-        player: "p1",
         locked: false,
+        player: "p1",
       };
 
       const context: MoveContext = createMockContext({
-        playerId: "p1" as any,
         params: {},
+        playerId: "p1" as any,
       });
 
       expect(conditionalMove.condition?.(validState, context)).toBe(true);
@@ -253,21 +240,17 @@ describe("GameMoveDefinitions - Type System", () => {
         conditionalMove.condition?.(
           validState,
           createMockContext({
-            playerId: "p2" as any,
             params: {},
+            playerId: "p2" as any,
           }),
         ),
       ).toBe(false);
 
       // Locked
-      expect(
-        conditionalMove.condition?.({ ...validState, locked: true }, context),
-      ).toBe(false);
+      expect(conditionalMove.condition?.({ ...validState, locked: true }, context)).toBe(false);
 
       // Count too high
-      expect(
-        conditionalMove.condition?.({ ...validState, count: 10 }, context),
-      ).toBe(false);
+      expect(conditionalMove.condition?.({ ...validState, count: 10 }, context)).toBe(false);
     });
   });
 
@@ -281,8 +264,8 @@ describe("GameMoveDefinitions - Type System", () => {
           draft.locked = true;
 
           // These should cause TypeScript errors:
-          // draft.nonExistent = true;
-          // draft.count = "string";
+          // Draft.nonExistent = true;
+          // Draft.count = "string";
         },
       };
 
@@ -291,13 +274,7 @@ describe("GameMoveDefinitions - Type System", () => {
 
     it("should preserve state type through condition", () => {
       const typedMove: GameMoveDefinition<CounterState> = {
-        condition: (state) => {
-          // TypeScript should know state is CounterState
-          return state.count < 10 && !state.locked;
-
-          // This should cause TypeScript error:
-          // return state.nonExistent;
-        },
+        condition: (state) => state.count < 10 && !state.locked,
         reducer: (draft) => {
           draft.count += 1;
         },
@@ -310,13 +287,13 @@ describe("GameMoveDefinitions - Type System", () => {
   describe("metadata support", () => {
     it("should support optional metadata", () => {
       const metadataMove: GameMoveDefinition<CounterState> = {
-        reducer: (draft) => {
-          draft.count += 1;
-        },
         metadata: {
           category: "counter",
-          tags: ["increment", "basic"],
           priority: 1,
+          tags: ["increment", "basic"],
+        },
+        reducer: (draft) => {
+          draft.count += 1;
         },
       };
 

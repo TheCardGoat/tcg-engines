@@ -3,31 +3,31 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { moanaIslandExplorer } from "@lorcanito/lorcana-engine/cards/007/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { moanaIslandExplorer } from "@lorcanito/lorcana-engine/cards/007/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Moana - Island Explorer", () => {
-//   it.skip("Evasive (Only characters with Evasive can challenge this character.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [moanaIslandExplorer],
+// Describe("Moana - Island Explorer", () => {
+//   It.skip("Evasive (Only characters with Evasive can challenge this character.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [moanaIslandExplorer],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(moanaIslandExplorer);
-//     expect(cardUnderTest.hasEvasive).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(moanaIslandExplorer);
+//     Expect(cardUnderTest.hasEvasive).toBe(true);
 //   });
 //
-//   it.skip("ADVENTUROUS SPIRIT Whenever this character challenges another character, another chosen character of yours gets +3 {S} this turn.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: moanaIslandExplorer.cost,
-//       play: [moanaIslandExplorer],
-//       hand: [moanaIslandExplorer],
+//   It.skip("ADVENTUROUS SPIRIT Whenever this character challenges another character, another chosen character of yours gets +3 {S} this turn.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: moanaIslandExplorer.cost,
+//       Play: [moanaIslandExplorer],
+//       Hand: [moanaIslandExplorer],
 //     });
 //
-//     await testEngine.playCard(moanaIslandExplorer);
+//     Await testEngine.playCard(moanaIslandExplorer);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

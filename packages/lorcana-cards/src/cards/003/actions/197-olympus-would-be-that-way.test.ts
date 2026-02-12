@@ -3,28 +3,28 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { mickeyBraveLittleTailor } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { olympusWouldBeThatWay } from "@lorcanito/lorcana-engine/cards/003/actions/actions";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { mickeyBraveLittleTailor } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { olympusWouldBeThatWay } from "@lorcanito/lorcana-engine/cards/003/actions/actions";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Olympus Would Be That Way", () => {
-//   it("Your characters get +3 {S} this turn while challenging a location.", () => {
-//     const testStore = new TestStore({
-//       inkwell: olympusWouldBeThatWay.cost,
-//       hand: [olympusWouldBeThatWay],
-//       play: [mickeyBraveLittleTailor],
+// Describe("Olympus Would Be That Way", () => {
+//   It("Your characters get +3 {S} this turn while challenging a location.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: olympusWouldBeThatWay.cost,
+//       Hand: [olympusWouldBeThatWay],
+//       Play: [mickeyBraveLittleTailor],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "hand",
-//       olympusWouldBeThatWay.id,
+//       OlympusWouldBeThatWay.id,
 //     );
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveTopOfStack({});
 //
-//     expect(testStore.getZonesCardCount().discard).toBe(1); // Olympus Would Be That Way goes to discard
+//     Expect(testStore.getZonesCardCount().discard).toBe(1); // Olympus Would Be That Way goes to discard
 //   });
 // });
 //

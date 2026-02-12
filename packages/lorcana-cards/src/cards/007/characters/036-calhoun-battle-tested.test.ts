@@ -3,36 +3,36 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   calhounBattletested,
-//   elsaTrustedSister,
-//   madamMimCheatingSpellcaster,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   CalhounBattletested,
+//   ElsaTrustedSister,
+//   MadamMimCheatingSpellcaster,
 // } from "@lorcanito/lorcana-engine/cards/007";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Calhoun - Battle-Tested", () => {
-//   it("TACTICAL ADVANTAGE When you play this character, you may choose and discard a card to give chosen opposing character -3 {S} until the start of your next turn.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Calhoun - Battle-Tested", () => {
+//   It("TACTICAL ADVANTAGE When you play this character, you may choose and discard a card to give chosen opposing character -3 {S} until the start of your next turn.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: calhounBattletested.cost,
-//         hand: [calhounBattletested, elsaTrustedSister],
+//         Inkwell: calhounBattletested.cost,
+//         Hand: [calhounBattletested, elsaTrustedSister],
 //       },
 //       {
-//         play: [madamMimCheatingSpellcaster],
+//         Play: [madamMimCheatingSpellcaster],
 //       },
 //     );
 //
-//     await testEngine.playCard(calhounBattletested);
-//     await testEngine.acceptOptionalLayer();
-//     await testEngine.resolveTopOfStack({ targets: [elsaTrustedSister] }, true);
-//     await testEngine.resolveTopOfStack({
-//       targets: [madamMimCheatingSpellcaster],
+//     Await testEngine.playCard(calhounBattletested);
+//     Await testEngine.acceptOptionalLayer();
+//     Await testEngine.resolveTopOfStack({ targets: [elsaTrustedSister] }, true);
+//     Await testEngine.resolveTopOfStack({
+//       Targets: [madamMimCheatingSpellcaster],
 //     });
 //
-//     expect(testEngine.getCardModel(elsaTrustedSister).zone).toBe("discard");
-//     expect(testEngine.getCardModel(madamMimCheatingSpellcaster).strength).toBe(
-//       madamMimCheatingSpellcaster.strength - 3,
+//     Expect(testEngine.getCardModel(elsaTrustedSister).zone).toBe("discard");
+//     Expect(testEngine.getCardModel(madamMimCheatingSpellcaster).strength).toBe(
+//       MadamMimCheatingSpellcaster.strength - 3,
 //     );
 //   });
 // });

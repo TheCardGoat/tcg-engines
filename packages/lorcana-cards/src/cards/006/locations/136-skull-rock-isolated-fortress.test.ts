@@ -3,35 +3,35 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { skullRockIsolatedFortress } from "@lorcanito/lorcana-engine/cards/006/locations/locations";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { skullRockIsolatedFortress } from "@lorcanito/lorcana-engine/cards/006/locations/locations";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Skull Rock - Isolated Fortress", () => {
-//   it.skip("FAMILIAR GROUND Characters get +1 {S} while here.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: skullRockIsolatedFortress.cost,
-//       play: [skullRockIsolatedFortress],
-//       hand: [skullRockIsolatedFortress],
+// Describe("Skull Rock - Isolated Fortress", () => {
+//   It.skip("FAMILIAR GROUND Characters get +1 {S} while here.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: skullRockIsolatedFortress.cost,
+//       Play: [skullRockIsolatedFortress],
+//       Hand: [skullRockIsolatedFortress],
 //     });
 //
-//     await testEngine.playCard(skullRockIsolatedFortress);
+//     Await testEngine.playCard(skullRockIsolatedFortress);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 //
-//   it.skip("SAFE HAVEN At the start of your turn, if you have a Pirate character here, gain 1 lore.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: skullRockIsolatedFortress.cost,
-//       play: [skullRockIsolatedFortress],
-//       hand: [skullRockIsolatedFortress],
+//   It.skip("SAFE HAVEN At the start of your turn, if you have a Pirate character here, gain 1 lore.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: skullRockIsolatedFortress.cost,
+//       Play: [skullRockIsolatedFortress],
+//       Hand: [skullRockIsolatedFortress],
 //     });
 //
-//     await testEngine.playCard(skullRockIsolatedFortress);
+//     Await testEngine.playCard(skullRockIsolatedFortress);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

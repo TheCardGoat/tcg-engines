@@ -3,84 +3,84 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { judyHoppsOptimisticOfficer } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { gumboPot } from "@lorcanito/lorcana-engine/cards/002/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { judyHoppsOptimisticOfficer } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { gumboPot } from "@lorcanito/lorcana-engine/cards/002/items/items";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Judy Hopps - Optimistic Officer", () => {
-//   describe("**DON'T CALL ME CUTE** When you play this character, you may banish chosen item. Its player draws a card.", () => {
-//     it("banishing your own item", () => {
-//       const testStore = new TestStore({
-//         inkwell: judyHoppsOptimisticOfficer.cost,
-//         hand: [judyHoppsOptimisticOfficer],
-//         play: [gumboPot],
-//         deck: 2,
+// Describe("Judy Hopps - Optimistic Officer", () => {
+//   Describe("**DON'T CALL ME CUTE** When you play this character, you may banish chosen item. Its player draws a card.", () => {
+//     It("banishing your own item", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: judyHoppsOptimisticOfficer.cost,
+//         Hand: [judyHoppsOptimisticOfficer],
+//         Play: [gumboPot],
+//         Deck: 2,
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "hand",
-//         judyHoppsOptimisticOfficer.id,
+//         JudyHoppsOptimisticOfficer.id,
 //       );
-//       const target = testStore.getByZoneAndId("play", gumboPot.id);
+//       Const target = testStore.getByZoneAndId("play", gumboPot.id);
 //
-//       cardUnderTest.playFromHand();
-//       testStore.resolveOptionalAbility();
-//       testStore.resolveTopOfStack({ targets: [target] });
+//       CardUnderTest.playFromHand();
+//       TestStore.resolveOptionalAbility();
+//       TestStore.resolveTopOfStack({ targets: [target] });
 //
-//       expect(target.zone).toEqual("discard");
-//       expect(testStore.getZonesCardCount()).toEqual(
-//         expect.objectContaining({
-//           hand: 1,
-//           deck: 1,
-//           discard: 1,
-//           play: 1,
+//       Expect(target.zone).toEqual("discard");
+//       Expect(testStore.getZonesCardCount()).toEqual(
+//         Expect.objectContaining({
+//           Hand: 1,
+//           Deck: 1,
+//           Discard: 1,
+//           Play: 1,
 //         }),
 //       );
 //     });
 //
-//     it("banishing your opponent's item", () => {
-//       const testStore = new TestStore(
+//     It("banishing your opponent's item", () => {
+//       Const testStore = new TestStore(
 //         {
-//           inkwell: judyHoppsOptimisticOfficer.cost,
-//           hand: [judyHoppsOptimisticOfficer],
-//           deck: 3,
+//           Inkwell: judyHoppsOptimisticOfficer.cost,
+//           Hand: [judyHoppsOptimisticOfficer],
+//           Deck: 3,
 //         },
 //         {
-//           play: [gumboPot],
-//           deck: 2,
+//           Play: [gumboPot],
+//           Deck: 2,
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "hand",
-//         judyHoppsOptimisticOfficer.id,
+//         JudyHoppsOptimisticOfficer.id,
 //       );
-//       const target = testStore.getByZoneAndId(
+//       Const target = testStore.getByZoneAndId(
 //         "play",
-//         gumboPot.id,
+//         GumboPot.id,
 //         "player_two",
 //       );
 //
-//       cardUnderTest.playFromHand();
-//       testStore.resolveOptionalAbility();
-//       testStore.resolveTopOfStack({ targets: [target] });
+//       CardUnderTest.playFromHand();
+//       TestStore.resolveOptionalAbility();
+//       TestStore.resolveTopOfStack({ targets: [target] });
 //
-//       expect(target.zone).toEqual("discard");
+//       Expect(target.zone).toEqual("discard");
 //
-//       expect(testStore.getZonesCardCount()).toEqual(
-//         expect.objectContaining({
-//           hand: 0,
-//           deck: 3,
-//           discard: 0,
-//           play: 1,
+//       Expect(testStore.getZonesCardCount()).toEqual(
+//         Expect.objectContaining({
+//           Hand: 0,
+//           Deck: 3,
+//           Discard: 0,
+//           Play: 1,
 //         }),
 //       );
-//       expect(testStore.getZonesCardCount("player_two")).toEqual(
-//         expect.objectContaining({
-//           hand: 1,
-//           deck: 1,
-//           discard: 1,
+//       Expect(testStore.getZonesCardCount("player_two")).toEqual(
+//         Expect.objectContaining({
+//           Hand: 1,
+//           Deck: 1,
+//           Discard: 1,
 //         }),
 //       );
 //     });

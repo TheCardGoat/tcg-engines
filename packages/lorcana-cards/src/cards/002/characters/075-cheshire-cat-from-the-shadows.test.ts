@@ -3,67 +3,67 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   cheshireCatFromTheShadows,
-//   goofyKnightForADay,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   CheshireCatFromTheShadows,
+//   GoofyKnightForADay,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Cheshire Cat - From the Shadows", () => {
-//   it("Shift", () => {
-//     const testStore = new TestStore({
-//       inkwell: cheshireCatFromTheShadows.cost,
-//       play: [cheshireCatFromTheShadows],
+// Describe("Cheshire Cat - From the Shadows", () => {
+//   It("Shift", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: cheshireCatFromTheShadows.cost,
+//       Play: [cheshireCatFromTheShadows],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       cheshireCatFromTheShadows.id,
+//       CheshireCatFromTheShadows.id,
 //     );
 //
-//     expect(cardUnderTest.hasShift).toBeTruthy();
+//     Expect(cardUnderTest.hasShift).toBeTruthy();
 //   });
 //
-//   it("Evasive", () => {
-//     const testStore = new TestStore({
-//       inkwell: cheshireCatFromTheShadows.cost,
-//       play: [cheshireCatFromTheShadows],
+//   It("Evasive", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: cheshireCatFromTheShadows.cost,
+//       Play: [cheshireCatFromTheShadows],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       cheshireCatFromTheShadows.id,
+//       CheshireCatFromTheShadows.id,
 //     );
 //
-//     expect(cardUnderTest.hasEvasive).toBeTruthy();
+//     Expect(cardUnderTest.hasEvasive).toBeTruthy();
 //   });
 //
-//   it("**WICKED SMILE** {E} − Banish chosen damaged character.", () => {
-//     const testStore = new TestStore(
+//   It("**WICKED SMILE** {E} − Banish chosen damaged character.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: cheshireCatFromTheShadows.cost,
-//         play: [cheshireCatFromTheShadows],
+//         Inkwell: cheshireCatFromTheShadows.cost,
+//         Play: [cheshireCatFromTheShadows],
 //       },
 //       {
-//         play: [goofyKnightForADay],
+//         Play: [goofyKnightForADay],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       cheshireCatFromTheShadows.id,
+//       CheshireCatFromTheShadows.id,
 //     );
-//     const target = testStore.getByZoneAndId(
+//     Const target = testStore.getByZoneAndId(
 //       "play",
-//       goofyKnightForADay.id,
+//       GoofyKnightForADay.id,
 //       "player_two",
 //     );
 //
-//     cardUnderTest.activate();
-//     testStore.resolveTopOfStack({ targets: [target] });
+//     CardUnderTest.activate();
+//     TestStore.resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.zone).toEqual("discard");
+//     Expect(target.zone).toEqual("discard");
 //   });
 // });
 //

@@ -3,23 +3,23 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { elsaGlovesOff } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { elsaGlovesOff } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Elsa - Gloves Off", () => {
-//   it.skip("**Challenger** +3 _(While challenging, this character gets +3 {S})_", () => {
-//     const testStore = new TestStore({
-//       inkwell: elsaGlovesOff.cost,
+// Describe("Elsa - Gloves Off", () => {
+//   It.skip("**Challenger** +3 _(While challenging, this character gets +3 {S})_", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: elsaGlovesOff.cost,
 //
-//       play: [elsaGlovesOff],
+//       Play: [elsaGlovesOff],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", elsaGlovesOff.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", elsaGlovesOff.id);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

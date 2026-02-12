@@ -17,12 +17,12 @@ export function parseKeywordAbility(text: string): ParseResult {
   const ability = parseKeywordAbilityInternal(text);
   if (ability) {
     return {
-      success: true,
       ability: { ability },
+      success: true,
     };
   }
   return {
-    success: false,
     error: "Failed to parse keyword ability",
+    success: false,
   };
 }

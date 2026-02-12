@@ -1,18 +1,18 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import type { ActivatedAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { drawXCards } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import type { ActivatedAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import { drawXCards } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// const iHaveJustTheThing: ActivatedAbility = {
-//   type: "activated",
-//   name: "I HAVE JUST THE THING",
-//   text: "{E}, Choose and discard an item card - Draw 2 cards",
-//   costs: [
+// Const iHaveJustTheThing: ActivatedAbility = {
+//   Type: "activated",
+//   Name: "I HAVE JUST THE THING",
+//   Text: "{E}, Choose and discard an item card - Draw 2 cards",
+//   Costs: [
 //     {
-//       type: "card",
-//       action: "discard",
-//       amount: 1,
-//       filters: [
+//       Type: "card",
+//       Action: "discard",
+//       Amount: 1,
+//       Filters: [
 //         { filter: "type", value: "item" },
 //         { filter: "owner", value: "self" },
 //         { filter: "zone", value: "hand" },
@@ -20,29 +20,29 @@
 //     },
 //     { type: "exert" },
 //   ],
-//   effects: [drawXCards(2)],
+//   Effects: [drawXCards(2)],
 // };
 //
-// export const theWardrobePerceptiveFriend: LorcanitoCharacterCard = {
-//   id: "ogz",
-//   name: "The Wardrobe",
-//   title: "Perceptive Friend",
-//   characteristics: ["storyborn", "ally"],
-//   text: "I HAVE JUST THE THING {E}, Choose and discard an item card - Draw 2 cards",
-//   type: "character",
-//   abilities: [iHaveJustTheThing],
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 4,
-//   strength: 3,
-//   willpower: 4,
-//   illustrator: "Giulia Riva",
-//   number: 160,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631457,
+// Export const theWardrobePerceptiveFriend: LorcanitoCharacterCard = {
+//   Id: "ogz",
+//   Name: "The Wardrobe",
+//   Title: "Perceptive Friend",
+//   Characteristics: ["storyborn", "ally"],
+//   Text: "I HAVE JUST THE THING {E}, Choose and discard an item card - Draw 2 cards",
+//   Type: "character",
+//   Abilities: [iHaveJustTheThing],
+//   Inkwell: true,
+//   Colors: ["sapphire"],
+//   Cost: 4,
+//   Strength: 3,
+//   Willpower: 4,
+//   Illustrator: "Giulia Riva",
+//   Number: 160,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631457,
 //   },
-//   rarity: "common",
-//   lore: 1,
+//   Rarity: "common",
+//   Lore: 1,
 // };
 //

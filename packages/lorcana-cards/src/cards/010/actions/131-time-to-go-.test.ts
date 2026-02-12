@@ -3,60 +3,60 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   robinHoodEphemeralArcher,
-//   timeToGo,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   RobinHoodEphemeralArcher,
+//   TimeToGo,
 // } from "@lorcanito/lorcana-engine/cards/010";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Time to Go!", () => {
-//   describe("Banish chosen character of yours to draw 2 cards. If that character had a card under them, draw 3 cards instead.", () => {
-//     it("Having a card under them", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: timeToGo.cost + 1,
-//         play: [robinHoodEphemeralArcher],
-//         hand: [timeToGo],
-//         deck: 10,
+// Describe("Time to Go!", () => {
+//   Describe("Banish chosen character of yours to draw 2 cards. If that character had a card under them, draw 3 cards instead.", () => {
+//     It("Having a card under them", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: timeToGo.cost + 1,
+//         Play: [robinHoodEphemeralArcher],
+//         Hand: [timeToGo],
+//         Deck: 10,
 //       });
 //
-//       await testEngine.activateCard(robinHoodEphemeralArcher);
-//       expect(
-//         testEngine.getCardModel(robinHoodEphemeralArcher).cardsUnder,
+//       Await testEngine.activateCard(robinHoodEphemeralArcher);
+//       Expect(
+//         TestEngine.getCardModel(robinHoodEphemeralArcher).cardsUnder,
 //       ).toHaveLength(1);
 //
-//       await testEngine.playCard(timeToGo);
+//       Await testEngine.playCard(timeToGo);
 //
-//       await testEngine.resolveTopOfStack({
-//         targets: [robinHoodEphemeralArcher],
+//       Await testEngine.resolveTopOfStack({
+//         Targets: [robinHoodEphemeralArcher],
 //       });
 //
-//       expect(testEngine.getZonesCardCount("player_one")).toEqual(
-//         expect.objectContaining({
-//           deck: 6,
-//           hand: 3,
+//       Expect(testEngine.getZonesCardCount("player_one")).toEqual(
+//         Expect.objectContaining({
+//           Deck: 6,
+//           Hand: 3,
 //         }),
 //       );
 //     });
 //
-//     it("Not having a card under them", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: timeToGo.cost + 1,
-//         play: [robinHoodEphemeralArcher],
-//         hand: [timeToGo],
-//         deck: 10,
+//     It("Not having a card under them", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: timeToGo.cost + 1,
+//         Play: [robinHoodEphemeralArcher],
+//         Hand: [timeToGo],
+//         Deck: 10,
 //       });
 //
-//       await testEngine.playCard(timeToGo);
+//       Await testEngine.playCard(timeToGo);
 //
-//       await testEngine.resolveTopOfStack({
-//         targets: [robinHoodEphemeralArcher],
+//       Await testEngine.resolveTopOfStack({
+//         Targets: [robinHoodEphemeralArcher],
 //       });
 //
-//       expect(testEngine.getZonesCardCount("player_one")).toEqual(
-//         expect.objectContaining({
-//           deck: 8,
-//           hand: 2,
+//       Expect(testEngine.getZonesCardCount("player_one")).toEqual(
+//         Expect.objectContaining({
+//           Deck: 8,
+//           Hand: 2,
 //         }),
 //       );
 //     });

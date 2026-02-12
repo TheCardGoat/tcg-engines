@@ -3,36 +3,36 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   judyHoppsResourcefulRabbit,
-//   principeNaveenCarefreeExplorer,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   JudyHoppsResourcefulRabbit,
+//   PrincipeNaveenCarefreeExplorer,
 // } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Judy Hopps - Resourceful Rabbit", () => {
-//   it("NEED SOME HELP? At the end of your turn, you may ready another chosen character of yours.", async () => {
-//     const testEngine = new TestEngine({
-//       play: [judyHoppsResourcefulRabbit, principeNaveenCarefreeExplorer],
+// Describe("Judy Hopps - Resourceful Rabbit", () => {
+//   It("NEED SOME HELP? At the end of your turn, you may ready another chosen character of yours.", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [judyHoppsResourcefulRabbit, principeNaveenCarefreeExplorer],
 //     });
 //
-//     const target = testEngine.getCardModel(principeNaveenCarefreeExplorer);
+//     Const target = testEngine.getCardModel(principeNaveenCarefreeExplorer);
 //
-//     await testEngine.tapCard(principeNaveenCarefreeExplorer);
+//     Await testEngine.tapCard(principeNaveenCarefreeExplorer);
 //
-//     expect(testEngine.store.turnCount).toBe(0);
-//     await testEngine.passTurn("player_one", true);
-//     expect(testEngine.store.turnCount).toBe(0);
+//     Expect(testEngine.store.turnCount).toBe(0);
+//     Await testEngine.passTurn("player_one", true);
+//     Expect(testEngine.store.turnCount).toBe(0);
 //
-//     await testEngine.acceptOptionalLayer();
+//     Await testEngine.acceptOptionalLayer();
 //
-//     expect(target.ready).toEqual(false);
-//     await testEngine.resolveTopOfStack({ targets: [target] });
-//     expect(target.ready).toEqual(true);
+//     Expect(target.ready).toEqual(false);
+//     Await testEngine.resolveTopOfStack({ targets: [target] });
+//     Expect(target.ready).toEqual(true);
 //
-//     expect(testEngine.store.turnCount).toBe(1);
-//     expect(testEngine.store.priorityPlayer).toBe("player_two");
-//     expect(testEngine.store.turnPlayer).toBe("player_two");
+//     Expect(testEngine.store.turnCount).toBe(1);
+//     Expect(testEngine.store.priorityPlayer).toBe("player_two");
+//     Expect(testEngine.store.turnPlayer).toBe("player_two");
 //   });
 // });
 //

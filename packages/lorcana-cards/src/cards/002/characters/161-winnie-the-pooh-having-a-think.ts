@@ -1,29 +1,29 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { wheneverQuests } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { wheneverQuests } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
 //
-// export const winnieThePoohHavingAThink: LorcanitoCharacterCard = {
-//   id: "o3g",
-//   reprints: ["vvd"],
+// Export const winnieThePoohHavingAThink: LorcanitoCharacterCard = {
+//   Id: "o3g",
+//   Reprints: ["vvd"],
 //
-//   name: "Winnie the Pooh",
-//   title: "Having a Think",
-//   characteristics: ["hero", "storyborn"],
-//   text: "**HUNNY POT** Whenever this character quests, you may put a card from your hand into your inkwell facedown.",
-//   type: "character",
-//   abilities: [
-//     wheneverQuests({
-//       name: "Hunny Pot",
-//       text: "Whenever this character quests, you may put a card from your hand into your inkwell facedown.",
-//       optional: true,
-//       effects: [
+//   Name: "Winnie the Pooh",
+//   Title: "Having a Think",
+//   Characteristics: ["hero", "storyborn"],
+//   Text: "**HUNNY POT** Whenever this character quests, you may put a card from your hand into your inkwell facedown.",
+//   Type: "character",
+//   Abilities: [
+//     WheneverQuests({
+//       Name: "Hunny Pot",
+//       Text: "Whenever this character quests, you may put a card from your hand into your inkwell facedown.",
+//       Optional: true,
+//       Effects: [
 //         {
-//           type: "move",
-//           to: "inkwell",
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
+//           Type: "move",
+//           To: "inkwell",
+//           Target: {
+//             Type: "card",
+//             Value: 1,
+//             Filters: [
 //               { filter: "zone", value: "hand" },
 //               { filter: "owner", value: "self" },
 //             ],
@@ -32,20 +32,20 @@
 //       ],
 //     }),
 //   ],
-//   flavour:
+//   Flavour:
 //     "When he thought, he thought in the most thoughtful way he could think.",
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 3,
-//   strength: 2,
-//   willpower: 3,
-//   lore: 2,
-//   illustrator: "Rianti Hidayat",
-//   number: 161,
-//   set: "ROF",
-//   externalIds: {
-//     tcgPlayer: 527769,
+//   Inkwell: true,
+//   Colors: ["sapphire"],
+//   Cost: 3,
+//   Strength: 2,
+//   Willpower: 3,
+//   Lore: 2,
+//   Illustrator: "Rianti Hidayat",
+//   Number: 161,
+//   Set: "ROF",
+//   ExternalIds: {
+//     TcgPlayer: 527769,
 //   },
-//   rarity: "rare",
+//   Rarity: "rare",
 // };
 //

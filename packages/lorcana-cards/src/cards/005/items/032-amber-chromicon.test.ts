@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { amberChromiconItem } from "@lorcanito/lorcana-engine/cards/005/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { amberChromiconItem } from "@lorcanito/lorcana-engine/cards/005/items/items";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Amber Chromicon", () => {
-//   it.skip("AMBER LIGHT", () => {
-//     const testStore = new TestStore({
-//       inkwell: amberChromiconItem.cost,
-//       play: [amberChromiconItem],
+// Describe("Amber Chromicon", () => {
+//   It.skip("AMBER LIGHT", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: amberChromiconItem.cost,
+//       Play: [amberChromiconItem],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(amberChromiconItem);
+//     Const cardUnderTest = testStore.getCard(amberChromiconItem);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

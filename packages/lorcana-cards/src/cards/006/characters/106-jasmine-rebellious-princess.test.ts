@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { jasmineRebelliousPrincess } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { jasmineRebelliousPrincess } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Jasmine - Rebellious Princess", () => {
-//   it.skip("YOU'LL NEVER MISS IT Whenever this character quests, each opponent loses 1 lore.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: jasmineRebelliousPrincess.cost,
-//       play: [jasmineRebelliousPrincess],
-//       hand: [jasmineRebelliousPrincess],
+// Describe("Jasmine - Rebellious Princess", () => {
+//   It.skip("YOU'LL NEVER MISS IT Whenever this character quests, each opponent loses 1 lore.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: jasmineRebelliousPrincess.cost,
+//       Play: [jasmineRebelliousPrincess],
+//       Hand: [jasmineRebelliousPrincess],
 //     });
 //
-//     await testEngine.playCard(jasmineRebelliousPrincess);
+//     Await testEngine.playCard(jasmineRebelliousPrincess);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

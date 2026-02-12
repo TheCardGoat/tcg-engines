@@ -1,37 +1,37 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { chosenCharacterGetsStrength } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+// Import { chosenCharacterGetsStrength } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const undermine: LorcanitoActionCard = {
-//   id: "hbl",
-//   missingTestCase: true,
-//   name: "Undermine",
-//   characteristics: ["action"],
-//   text: "Chosen opponent chooses and discards a card. Chosen character gets +2 {S} this turn.",
-//   type: "action",
-//   inkwell: true,
-//   colors: ["emerald", "ruby"],
-//   cost: 2,
-//   illustrator: "Luigi Aimè",
-//   number: 117,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631426,
+// Export const undermine: LorcanitoActionCard = {
+//   Id: "hbl",
+//   MissingTestCase: true,
+//   Name: "Undermine",
+//   Characteristics: ["action"],
+//   Text: "Chosen opponent chooses and discards a card. Chosen character gets +2 {S} this turn.",
+//   Type: "action",
+//   Inkwell: true,
+//   Colors: ["emerald", "ruby"],
+//   Cost: 2,
+//   Illustrator: "Luigi Aimè",
+//   Number: 117,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631426,
 //   },
-//   rarity: "uncommon",
-//   abilities: [
+//   Rarity: "uncommon",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       optional: false,
-//       responder: "opponent",
-//       effects: [
+//       Type: "resolution",
+//       Optional: false,
+//       Responder: "opponent",
+//       Effects: [
 //         {
-//           type: "discard",
-//           amount: 1,
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
+//           Type: "discard",
+//           Amount: 1,
+//           Target: {
+//             Type: "card",
+//             Value: 1,
+//             Filters: [
 //               { filter: "zone", value: "hand" },
 //               { filter: "owner", value: "self" },
 //             ],
@@ -40,8 +40,8 @@
 //       ],
 //     },
 //     {
-//       type: "resolution",
-//       effects: [chosenCharacterGetsStrength(2)],
+//       Type: "resolution",
+//       Effects: [chosenCharacterGetsStrength(2)],
 //     },
 //   ],
 // };

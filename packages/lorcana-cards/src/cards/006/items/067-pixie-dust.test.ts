@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { pixieDust } from "@lorcanito/lorcana-engine/cards/006/items/items";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { pixieDust } from "@lorcanito/lorcana-engine/cards/006/items/items";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Pixie Dust", () => {
-//   it.skip("FAITH AND TRUST {E}, {2} {I} - Chosen character gains Challenger +2 and Evasive until the start of your next turn. (While challenging, they get +2 {1}. Only characters with Evasive can challenge them.)", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: pixieDust.cost,
-//       play: [pixieDust],
-//       hand: [pixieDust],
+// Describe("Pixie Dust", () => {
+//   It.skip("FAITH AND TRUST {E}, {2} {I} - Chosen character gains Challenger +2 and Evasive until the start of your next turn. (While challenging, they get +2 {1}. Only characters with Evasive can challenge them.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: pixieDust.cost,
+//       Play: [pixieDust],
+//       Hand: [pixieDust],
 //     });
 //
-//     await testEngine.playCard(pixieDust);
+//     Await testEngine.playCard(pixieDust);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

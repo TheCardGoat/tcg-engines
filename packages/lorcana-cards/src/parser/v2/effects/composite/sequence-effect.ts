@@ -76,17 +76,17 @@ function parseFromText(text: string): SequenceEffect | null {
       if (effect) {
         // Create a repeat effect
         const repeatEffectResult = {
-          type: "repeat",
-          times,
           effect,
+          times,
+          type: "repeat",
         };
 
         // "up to X times" patterns are implicitly optional
         const finalEffect = hasUpTo
           ? {
-              type: "optional",
-              effect: repeatEffectResult,
               chooser: "CONTROLLER",
+              effect: repeatEffectResult,
+              type: "optional",
             }
           : repeatEffectResult;
 
@@ -108,7 +108,7 @@ function parseFromText(text: string): SequenceEffect | null {
     if (text.toLowerCase().includes(separator.toLowerCase())) {
       // Escape special regex characters in the separator
       // This is needed because "." in the separator would match any character
-      const escapedSeparator = separator.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      const escapedSeparator = separator.replace(/[.*+?^${}()|[\]\\]/g, String.raw`\$&`);
 
       // Split while preserving case-insensitive matching
       const regex = new RegExp(escapedSeparator, "gi");
@@ -174,10 +174,10 @@ function parseFromText(text: string): SequenceEffect | null {
 
         if (times !== undefined && !Number.isNaN(times)) {
           logger.debug("Found optional repeat pattern", {
+            isOptional,
             step1,
             step2,
             times,
-            isOptional,
           });
 
           // Parse the first effect
@@ -186,17 +186,17 @@ function parseFromText(text: string): SequenceEffect | null {
           if (firstEffect) {
             // Create a repeat effect that links to the first effect
             const repeatEffect = {
-              type: "repeat",
-              times,
               effect: firstEffect,
+              times,
+              type: "repeat",
             };
 
             // If "You may" is present OR "up to" is present, wrap in optional effect
             const finalEffect = isOptional
               ? {
-                  type: "optional",
-                  effect: repeatEffect,
                   chooser: "CONTROLLER",
+                  effect: repeatEffect,
+                  type: "optional",
                 }
               : repeatEffect;
 
@@ -241,21 +241,21 @@ function parseFromText(text: string): SequenceEffect | null {
         if (times !== undefined && !Number.isNaN(times) && steps.length > 0) {
           // Create a repeat effect that links to the previous effect
           const repeatEffect = {
-            type: "repeat",
+            effect: steps[i - 1],
             times,
-            effect: steps[i - 1], // Link to previous effect
+            type: "repeat", // Link to previous effect
           };
 
           // If "You may" is present, wrap in optional effect
           const finalEffect = isOptional
-            ? { type: "optional", effect: repeatEffect, chooser: "CONTROLLER" }
+            ? { chooser: "CONTROLLER", effect: repeatEffect, type: "optional" }
             : repeatEffect;
 
           // Replace the previous step with the repeat-enhanced version
           steps[i] = finalEffect as any; // Union type of repeat/optional effects
           logger.debug("Successfully parsed repeat-this step", {
-            stepIndex: i,
             finalEffect,
+            stepIndex: i,
           });
           continue;
         }
@@ -273,8 +273,8 @@ function parseFromText(text: string): SequenceEffect | null {
     if (effect) {
       steps.push(effect);
       logger.debug("Successfully parsed sequence step", {
-        stepIndex: i,
         effect,
+        stepIndex: i,
       });
     } else {
       // If any step fails to parse, the entire sequence is invalid
@@ -293,14 +293,14 @@ function parseFromText(text: string): SequenceEffect | null {
   }
 
   logger.info("Parsed sequence effect", {
-    totalSteps: stepTexts.length,
     parsedSteps: steps.length,
     separator: separatorUsed,
+    totalSteps: stepTexts.length,
   });
 
   return {
-    type: "sequence",
     steps,
+    type: "sequence",
   };
 }
 
@@ -317,14 +317,14 @@ function parseFromCst(_ctx: CstNode): SequenceEffect | null {
  * Sequence effect parser implementation
  */
 export const sequenceEffectParser: EffectParser = {
-  pattern: /(.+),\s*then\s+(.+)/i,
   description:
     "Parses sequence effects where multiple effects occur in order (e.g., 'draw 2 cards, then discard 1 card')",
-
   parse: (input: CstNode | string): SequenceEffect | null => {
     if (typeof input === "string") {
       return parseFromText(input);
     }
     return parseFromCst(input);
   },
+
+  pattern: /(.+),\s*then\s+(.+)/i,
 };

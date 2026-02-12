@@ -3,36 +3,36 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   deweyLovableShowoff,
-//   khanWarHorse,
-//   theCoachmanGreedyDeceiver,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   DeweyLovableShowoff,
+//   KhanWarHorse,
+//   TheCoachmanGreedyDeceiver,
 // } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("The Coachman - Greedy Deceiver", () => {
-//   it("RECKLESS RUN While you have 2 or more characters exerted, this character gets +2 {S} and Evasive.", async () => {
-//     const testEngine = new TestEngine({
-//       play: [theCoachmanGreedyDeceiver, deweyLovableShowoff, khanWarHorse],
+// Describe("The Coachman - Greedy Deceiver", () => {
+//   It("RECKLESS RUN While you have 2 or more characters exerted, this character gets +2 {S} and Evasive.", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [theCoachmanGreedyDeceiver, deweyLovableShowoff, khanWarHorse],
 //     });
 //
-//     await testEngine.tapCard(deweyLovableShowoff);
+//     Await testEngine.tapCard(deweyLovableShowoff);
 //
-//     expect(
-//       testEngine.getCardModel(theCoachmanGreedyDeceiver).hasEvasive,
+//     Expect(
+//       TestEngine.getCardModel(theCoachmanGreedyDeceiver).hasEvasive,
 //     ).toEqual(false);
-//     expect(testEngine.getCardModel(theCoachmanGreedyDeceiver).strength).toEqual(
-//       theCoachmanGreedyDeceiver.strength,
+//     Expect(testEngine.getCardModel(theCoachmanGreedyDeceiver).strength).toEqual(
+//       TheCoachmanGreedyDeceiver.strength,
 //     );
 //
-//     await testEngine.tapCard(khanWarHorse);
+//     Await testEngine.tapCard(khanWarHorse);
 //
-//     expect(
-//       testEngine.getCardModel(theCoachmanGreedyDeceiver).hasEvasive,
+//     Expect(
+//       TestEngine.getCardModel(theCoachmanGreedyDeceiver).hasEvasive,
 //     ).toEqual(true);
-//     expect(testEngine.getCardModel(theCoachmanGreedyDeceiver).strength).toEqual(
-//       theCoachmanGreedyDeceiver.strength + 2,
+//     Expect(testEngine.getCardModel(theCoachmanGreedyDeceiver).strength).toEqual(
+//       TheCoachmanGreedyDeceiver.strength + 2,
 //     );
 //   });
 // });

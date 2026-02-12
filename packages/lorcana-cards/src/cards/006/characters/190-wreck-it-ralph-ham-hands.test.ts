@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { wreckitRalphHamHands } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { wreckitRalphHamHands } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Wreck-it Ralph - Ham Hands", () => {
-//   it.skip("I WRECK THINGS Whenever this character quests, you may banish chosen item or location to gain 2 lore.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: wreckitRalphHamHands.cost,
-//       play: [wreckitRalphHamHands],
-//       hand: [wreckitRalphHamHands],
+// Describe("Wreck-it Ralph - Ham Hands", () => {
+//   It.skip("I WRECK THINGS Whenever this character quests, you may banish chosen item or location to gain 2 lore.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: wreckitRalphHamHands.cost,
+//       Play: [wreckitRalphHamHands],
+//       Hand: [wreckitRalphHamHands],
 //     });
 //
-//     await testEngine.playCard(wreckitRalphHamHands);
+//     Await testEngine.playCard(wreckitRalphHamHands);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

@@ -1,29 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const mickeyMouseDetective: CharacterCard = {
-  id: "aec",
-  cardType: "character",
-  name: "Mickey Mouse",
-  version: "Detective",
-  fullName: "Mickey Mouse - Detective",
-  inkType: ["sapphire"],
-  franchise: "Disney",
-  set: "001",
-  text: "**GET A CLUE** When you play this character, you may put the top card of your deck into your inkwell facedown and exerted.",
-  cost: 3,
-  strength: 1,
-  willpower: 3,
-  lore: 1,
-  cardNumber: 154,
-  inkable: true,
-  externalIds: {
-    ravensburger: "",
-  },
   abilities: [
     {
-      type: "action",
-      text: "**GET A CLUE** When you play this character, you may put the top card of your deck into your inkwell facedown and exerted.",
-      id: "aec-1",
       effect: {
         type: "optional",
         effect: {
@@ -35,46 +14,67 @@ export const mickeyMouseDetective: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "aec-1",
+      text: "**GET A CLUE** When you play this character, you may put the top card of your deck into your inkwell facedown and exerted.",
+      type: "action",
     },
   ],
+  cardNumber: 154,
+  cardType: "character",
   classifications: ["Hero", "Dreamborn", "Detective"],
+  cost: 3,
+  externalIds: {
+    ravensburger: "",
+  },
+  franchise: "Disney",
+  fullName: "Mickey Mouse - Detective",
+  id: "aec",
+  inkType: ["sapphire"],
+  inkable: true,
+  lore: 1,
+  name: "Mickey Mouse",
+  set: "001",
+  strength: 1,
+  text: "**GET A CLUE** When you play this character, you may put the top card of your deck into your inkwell facedown and exerted.",
+  version: "Detective",
+  willpower: 3,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-// import { putTopCardOfYourDeckIntoYourInkwellExerted } from "@lorcanito/lorcana-engine/effects/effects";
+// Import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import { putTopCardOfYourDeckIntoYourInkwellExerted } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const mickeyMouseDetective: LorcanitoCharacterCard = {
-//   id: "aec",
-//   reprints: ["crp"],
-//   name: "Mickey Mouse",
-//   title: "Detective",
-//   characteristics: ["hero", "dreamborn", "detective"],
-//   text: "**GET A CLUE** When you play this character, you may put the top card of your deck into your inkwell facedown and exerted.",
-//   type: "character",
-//   abilities: [
-//     whenYouPlayThisCharAbility({
-//       type: "resolution",
-//       name: "Get a Clue",
-//       text: "When you play this character, you may put the top card of your deck into your inkwell facedown and exerted.",
-//       optional: true,
-//       effects: [putTopCardOfYourDeckIntoYourInkwellExerted],
+// Export const mickeyMouseDetective: LorcanitoCharacterCard = {
+//   Id: "aec",
+//   Reprints: ["crp"],
+//   Name: "Mickey Mouse",
+//   Title: "Detective",
+//   Characteristics: ["hero", "dreamborn", "detective"],
+//   Text: "**GET A CLUE** When you play this character, you may put the top card of your deck into your inkwell facedown and exerted.",
+//   Type: "character",
+//   Abilities: [
+//     WhenYouPlayThisCharAbility({
+//       Type: "resolution",
+//       Name: "Get a Clue",
+//       Text: "When you play this character, you may put the top card of your deck into your inkwell facedown and exerted.",
+//       Optional: true,
+//       Effects: [putTopCardOfYourDeckIntoYourInkwellExerted],
 //     }),
 //   ],
-//   flavour:
+//   Flavour:
 //     "Wherever the seaweed had come from, Mickey was sure of one thing: something fishy was going on.",
-//   colors: ["sapphire"],
-//   cost: 3,
-//   strength: 1,
-//   willpower: 3,
-//   lore: 1,
-//   illustrator: "Jared Nickerl",
-//   number: 154,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 508863,
+//   Colors: ["sapphire"],
+//   Cost: 3,
+//   Strength: 1,
+//   Willpower: 3,
+//   Lore: 1,
+//   Illustrator: "Jared Nickerl",
+//   Number: 154,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 508863,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

@@ -27,48 +27,48 @@ describe("Thunderbolt - Wonder Dog", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { princeJohnGreediestOfAll } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { rollyHungryPup } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { thunderboltWonderDog } from "@lorcanito/lorcana-engine/cards/007";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { princeJohnGreediestOfAll } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { rollyHungryPup } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { thunderboltWonderDog } from "@lorcanito/lorcana-engine/cards/007";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Puppy Shift 3 (You may pay 3 {I} to play this on top of one of your Puppy characters.)", () => {
-//   it("should shift in a Puppy character", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: 10,
-//       play: [rollyHungryPup],
-//       hand: [thunderboltWonderDog],
+// Describe("Puppy Shift 3 (You may pay 3 {I} to play this on top of one of your Puppy characters.)", () => {
+//   It("should shift in a Puppy character", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: 10,
+//       Play: [rollyHungryPup],
+//       Hand: [thunderboltWonderDog],
 //     });
 //
-//     const shiftedCard = testEngine.getCardModel(rollyHungryPup);
-//     const shiftCard = testEngine.getCardModel(thunderboltWonderDog);
+//     Const shiftedCard = testEngine.getCardModel(rollyHungryPup);
+//     Const shiftCard = testEngine.getCardModel(thunderboltWonderDog);
 //
-//     expect(shiftCard.canShiftInto(shiftedCard)).toBe(true);
+//     Expect(shiftCard.canShiftInto(shiftedCard)).toBe(true);
 //
-//     shiftCard.shift(shiftedCard);
+//     ShiftCard.shift(shiftedCard);
 //
-//     expect(shiftCard.zone).toBe("play");
-//     expect(shiftedCard.zone).toBe("play");
-//     expect(shiftedCard.meta?.shifter).toBe(shiftCard.instanceId);
-//     expect(shiftCard.meta?.shifted).toBe(shiftedCard.instanceId);
+//     Expect(shiftCard.zone).toBe("play");
+//     Expect(shiftedCard.zone).toBe("play");
+//     Expect(shiftedCard.meta?.shifter).toBe(shiftCard.instanceId);
+//     Expect(shiftCard.meta?.shifted).toBe(shiftedCard.instanceId);
 //   });
-//   it("should not shift in a non-Puppy character", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: 10,
-//       play: [princeJohnGreediestOfAll],
-//       hand: [thunderboltWonderDog],
+//   It("should not shift in a non-Puppy character", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: 10,
+//       Play: [princeJohnGreediestOfAll],
+//       Hand: [thunderboltWonderDog],
 //     });
 //
-//     const shiftedCard = testEngine.getCardModel(princeJohnGreediestOfAll);
-//     const shiftCard = testEngine.getCardModel(thunderboltWonderDog);
+//     Const shiftedCard = testEngine.getCardModel(princeJohnGreediestOfAll);
+//     Const shiftCard = testEngine.getCardModel(thunderboltWonderDog);
 //
-//     expect(shiftCard.canShiftInto(shiftedCard)).toBe(false);
+//     Expect(shiftCard.canShiftInto(shiftedCard)).toBe(false);
 //
-//     shiftCard.shift(shiftedCard);
+//     ShiftCard.shift(shiftedCard);
 //
-//     expect(shiftCard.zone).toBe("hand");
-//     expect(shiftedCard.zone).toBe("play");
+//     Expect(shiftCard.zone).toBe("hand");
+//     Expect(shiftedCard.zone).toBe("play");
 //   });
 // });
 //

@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   chiefTui,
-//   heiheiBoatSnack,
-//   liloMakingAWish,
-//   moanaOfMotunui,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   ChiefTui,
+//   HeiheiBoatSnack,
+//   LiloMakingAWish,
+//   MoanaOfMotunui,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import {
-//   beOurGuest,
-//   friendsOnTheOtherSide,
-//   oneJumpAhead,
-//   reflection,
+// Import {
+//   BeOurGuest,
+//   FriendsOnTheOtherSide,
+//   OneJumpAhead,
+//   Reflection,
 // } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
-// import type { CardModel } from "@lorcanito/lorcana-engine/store/models/CardModel";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import type { CardModel } from "@lorcanito/lorcana-engine/store/models/CardModel";
 //
 // // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
 // // describe("Be Our Guest", () => {

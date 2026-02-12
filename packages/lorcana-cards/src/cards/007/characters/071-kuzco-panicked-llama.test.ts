@@ -3,98 +3,98 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { hadesDoubleDealer } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import {
-//   kuzcoPanickedLlama,
-//   pongoDearOldDad,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { hadesDoubleDealer } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import {
+//   KuzcoPanickedLlama,
+//   PongoDearOldDad,
 // } from "@lorcanito/lorcana-engine/cards/007";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Kuzco - Panicked Llama", () => {
-//   it("Evasive (Only characters with Evasive can challenge this character.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [kuzcoPanickedLlama],
+// Describe("Kuzco - Panicked Llama", () => {
+//   It("Evasive (Only characters with Evasive can challenge this character.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [kuzcoPanickedLlama],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(kuzcoPanickedLlama);
-//     expect(cardUnderTest.hasEvasive).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(kuzcoPanickedLlama);
+//     Expect(cardUnderTest.hasEvasive).toBe(true);
 //   });
 //
-//   describe("WE CAN FIGURE THIS OUT At the start of your turn, choose one: ", () => {
-//     it("• Each player draws a card. ", async () => {
-//       const testEngine = new TestEngine(
+//   Describe("WE CAN FIGURE THIS OUT At the start of your turn, choose one: ", () => {
+//     It("• Each player draws a card. ", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           deck: 3,
+//           Deck: 3,
 //         },
 //         {
-//           deck: 3,
-//           play: [kuzcoPanickedLlama],
+//           Deck: 3,
+//           Play: [kuzcoPanickedLlama],
 //         },
 //       );
 //
-//       await testEngine.passTurn();
-//       await testEngine.resolveOptionalAbility();
-//       await testEngine.resolveTopOfStack({ mode: "1" });
+//       Await testEngine.passTurn();
+//       Await testEngine.resolveOptionalAbility();
+//       Await testEngine.resolveTopOfStack({ mode: "1" });
 //
-//       expect(testEngine.getZonesCardCount("player_one")).toEqual(
-//         expect.objectContaining({
-//           hand: 1,
-//           deck: 2,
+//       Expect(testEngine.getZonesCardCount("player_one")).toEqual(
+//         Expect.objectContaining({
+//           Hand: 1,
+//           Deck: 2,
 //         }),
 //       );
-//       expect(testEngine.getZonesCardCount("player_two")).toEqual(
-//         expect.objectContaining({
-//           hand: 2,
-//           deck: 1,
+//       Expect(testEngine.getZonesCardCount("player_two")).toEqual(
+//         Expect.objectContaining({
+//           Hand: 2,
+//           Deck: 1,
 //         }),
 //       );
 //     });
 //
-//     it("• Each player chooses and discards a card.", async () => {
-//       const testEngine = new TestEngine(
+//     It("• Each player chooses and discards a card.", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           deck: 3,
-//           hand: [hadesDoubleDealer],
+//           Deck: 3,
+//           Hand: [hadesDoubleDealer],
 //         },
 //         {
-//           deck: 3,
-//           play: [kuzcoPanickedLlama],
-//           hand: [pongoDearOldDad],
+//           Deck: 3,
+//           Play: [kuzcoPanickedLlama],
+//           Hand: [pongoDearOldDad],
 //         },
 //       );
 //
-//       await testEngine.passTurn();
-//       await testEngine.resolveTopOfStack({ mode: "2" }, true);
+//       Await testEngine.passTurn();
+//       Await testEngine.resolveTopOfStack({ mode: "2" }, true);
 //
-//       await testEngine.resolveTopOfStack({ targets: [pongoDearOldDad] }, true);
-//       expect(testEngine.getZonesCardCount("player_two")).toEqual(
-//         expect.objectContaining({
-//           hand: 0,
-//           deck: 3,
-//           discard: 1,
+//       Await testEngine.resolveTopOfStack({ targets: [pongoDearOldDad] }, true);
+//       Expect(testEngine.getZonesCardCount("player_two")).toEqual(
+//         Expect.objectContaining({
+//           Hand: 0,
+//           Deck: 3,
+//           Discard: 1,
 //         }),
 //       );
 //
-//       testEngine.changeActivePlayer("player_one");
-//       await testEngine.resolveTopOfStack(
+//       TestEngine.changeActivePlayer("player_one");
+//       Await testEngine.resolveTopOfStack(
 //         { targets: [hadesDoubleDealer] },
-//         true,
+//         True,
 //       );
-//       expect(testEngine.getZonesCardCount("player_one")).toEqual(
-//         expect.objectContaining({
-//           hand: 0,
-//           deck: 3,
-//           discard: 1,
+//       Expect(testEngine.getZonesCardCount("player_one")).toEqual(
+//         Expect.objectContaining({
+//           Hand: 0,
+//           Deck: 3,
+//           Discard: 1,
 //         }),
 //       );
 //
-//       expect(testEngine.stackLayers).toHaveLength(0);
-//       expect(testEngine.getZonesCardCount("player_two")).toEqual(
-//         expect.objectContaining({
+//       Expect(testEngine.stackLayers).toHaveLength(0);
+//       Expect(testEngine.getZonesCardCount("player_two")).toEqual(
+//         Expect.objectContaining({
 //           // After effect resolves they draw
-//           hand: 1,
-//           deck: 2,
+//           Hand: 1,
+//           Deck: 2,
 //         }),
 //       );
 //     });

@@ -3,67 +3,67 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   kuzcoTemperamentalEmperor,
-//   mickeyMouseTrueFriend,
-//   moanaOfMotunui,
-//   teKaTheBurningOne,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   KuzcoTemperamentalEmperor,
+//   MickeyMouseTrueFriend,
+//   MoanaOfMotunui,
+//   TeKaTheBurningOne,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { grabYourSword } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { grabYourSword } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Grab Your Sword", () => {
-//   it("Damages all opponent's characters", () => {
-//     const opponentsCards = [
-//       mickeyMouseTrueFriend,
-//       teKaTheBurningOne,
-//       moanaOfMotunui,
+// Describe("Grab Your Sword", () => {
+//   It("Damages all opponent's characters", () => {
+//     Const opponentsCards = [
+//       MickeyMouseTrueFriend,
+//       TeKaTheBurningOne,
+//       MoanaOfMotunui,
 //     ];
-//     const testStore = new TestStore(
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: grabYourSword.cost,
-//         hand: [grabYourSword],
+//         Inkwell: grabYourSword.cost,
+//         Hand: [grabYourSword],
 //       },
 //       {
-//         play: opponentsCards,
+//         Play: opponentsCards,
 //       },
 //     );
 //
-//     testStore.store.playCardFromHand(
-//       testStore.getByZoneAndId("hand", grabYourSword.id).instanceId,
+//     TestStore.store.playCardFromHand(
+//       TestStore.getByZoneAndId("hand", grabYourSword.id).instanceId,
 //     );
 //
-//     opponentsCards.forEach((card) => {
-//       const cardModel = testStore.getByZoneAndId("play", card.id, "player_two");
-//       expect(cardModel.meta.damage).toEqual(2);
+//     OpponentsCards.forEach((card) => {
+//       Const cardModel = testStore.getByZoneAndId("play", card.id, "player_two");
+//       Expect(cardModel.meta.damage).toEqual(2);
 //     });
 //   });
 // });
 //
-// describe("Regression tests", () => {
-//   it("Should damage characters with ward", async () => {
-//     const opponentsCards = [
-//       mickeyMouseTrueFriend,
-//       kuzcoTemperamentalEmperor,
-//       moanaOfMotunui,
+// Describe("Regression tests", () => {
+//   It("Should damage characters with ward", async () => {
+//     Const opponentsCards = [
+//       MickeyMouseTrueFriend,
+//       KuzcoTemperamentalEmperor,
+//       MoanaOfMotunui,
 //     ];
-//     const testEngine = new TestEngine(
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: grabYourSword.cost,
-//         hand: [grabYourSword],
+//         Inkwell: grabYourSword.cost,
+//         Hand: [grabYourSword],
 //       },
 //       {
-//         play: opponentsCards,
+//         Play: opponentsCards,
 //       },
 //     );
 //
-//     await testEngine.playCard(grabYourSword);
+//     Await testEngine.playCard(grabYourSword);
 //
-//     opponentsCards.forEach((card) => {
-//       const cardModel = testEngine.testStore.getCard(card);
-//       expect(cardModel.meta.damage).toEqual(2);
+//     OpponentsCards.forEach((card) => {
+//       Const cardModel = testEngine.testStore.getCard(card);
+//       Expect(cardModel.meta.damage).toEqual(2);
 //     });
 //   });
 // });

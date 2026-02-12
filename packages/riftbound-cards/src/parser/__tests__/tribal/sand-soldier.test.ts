@@ -19,16 +19,16 @@ describe("Tribal: Sand Soldier", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "static",
           effect: expect.objectContaining({
-            type: "grant-keyword",
             keyword: "Weaponmaster",
             target: expect.objectContaining({
               filter: expect.objectContaining({
                 tag: "Sand Soldier",
               }),
             }),
+            type: "grant-keyword",
           }),
+          type: "static",
         }),
       );
     });
@@ -43,31 +43,27 @@ describe("Tribal: Sand Soldier", () => {
 
   describe("sand soldier tokens", () => {
     it.skip("should parse 'Play a 2 :rb_might: Sand Soldier unit token.'", () => {
-      const result = parseAbilities(
-        "Play a 2 :rb_might: Sand Soldier unit token.",
-      );
+      const result = parseAbilities("Play a 2 :rb_might: Sand Soldier unit token.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "spell",
           effect: expect.objectContaining({
-            type: "create-token",
             token: expect.objectContaining({
               name: "Sand Soldier",
               type: "unit",
               might: 2,
             }),
+            type: "create-token",
           }),
+          type: "spell",
         }),
       );
     });
 
     it.skip("should parse 'Play a 2 :rb_might: Sand Soldier unit token to your base.'", () => {
-      const result = parseAbilities(
-        "Play a 2 :rb_might: Sand Soldier unit token to your base.",
-      );
+      const result = parseAbilities("Play a 2 :rb_might: Sand Soldier unit token to your base.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
@@ -93,10 +89,10 @@ describe("Tribal: Sand Soldier", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "activated",
           effect: expect.objectContaining({
             type: "create-token",
           }),
+          type: "activated",
         }),
       );
     });

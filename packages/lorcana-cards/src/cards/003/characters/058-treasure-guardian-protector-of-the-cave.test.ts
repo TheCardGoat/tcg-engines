@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { treasureGuardianProtectorOfTheCave } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { treasureGuardianProtectorOfTheCave } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Treasure Guardian - Protector of the Cave", () => {
-//   it.skip("**WHO DISTURBS MY SLUMBER?** This character can't challenge or quest unless it is at a location.", () => {
-//     const testStore = new TestStore({
-//       inkwell: treasureGuardianProtectorOfTheCave.cost,
-//       play: [treasureGuardianProtectorOfTheCave],
+// Describe("Treasure Guardian - Protector of the Cave", () => {
+//   It.skip("**WHO DISTURBS MY SLUMBER?** This character can't challenge or quest unless it is at a location.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: treasureGuardianProtectorOfTheCave.cost,
+//       Play: [treasureGuardianProtectorOfTheCave],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(treasureGuardianProtectorOfTheCave);
+//     Const cardUnderTest = testStore.getCard(treasureGuardianProtectorOfTheCave);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

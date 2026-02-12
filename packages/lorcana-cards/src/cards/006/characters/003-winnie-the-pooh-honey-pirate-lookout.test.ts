@@ -3,33 +3,33 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { winnieThePoohHoneyPirateLookout } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { winnieThePoohHoneyPirateLookout } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Winnie the Pooh - Honey Pirate Lookout", () => {
-//   it.skip("Support (Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [winnieThePoohHoneyPirateLookout],
+// Describe("Winnie the Pooh - Honey Pirate Lookout", () => {
+//   It.skip("Support (Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [winnieThePoohHoneyPirateLookout],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(
-//       winnieThePoohHoneyPirateLookout,
+//     Const cardUnderTest = testEngine.getCardModel(
+//       WinnieThePoohHoneyPirateLookout,
 //     );
-//     expect(cardUnderTest.hasSupport).toBe(true);
+//     Expect(cardUnderTest.hasSupport).toBe(true);
 //   });
 //
-//   it.skip("WE'RE PIRATES, YOU SEE Whenever this character quests, the next Pirate character you play this turn costs 1 {I} less.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: winnieThePoohHoneyPirateLookout.cost,
-//       play: [winnieThePoohHoneyPirateLookout],
-//       hand: [winnieThePoohHoneyPirateLookout],
+//   It.skip("WE'RE PIRATES, YOU SEE Whenever this character quests, the next Pirate character you play this turn costs 1 {I} less.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: winnieThePoohHoneyPirateLookout.cost,
+//       Play: [winnieThePoohHoneyPirateLookout],
+//       Hand: [winnieThePoohHoneyPirateLookout],
 //     });
 //
-//     await testEngine.playCard(winnieThePoohHoneyPirateLookout);
+//     Await testEngine.playCard(winnieThePoohHoneyPirateLookout);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

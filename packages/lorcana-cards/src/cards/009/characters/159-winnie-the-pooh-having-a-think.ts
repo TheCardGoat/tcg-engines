@@ -1,35 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const winnieThePoohHavingAThink: CharacterCard = {
-  id: "18k",
-  cardType: "character",
-  name: "Winnie the Pooh",
-  version: "Having a Think",
-  fullName: "Winnie the Pooh - Having a Think",
-  inkType: ["sapphire"],
-  franchise: "Winnie the Pooh",
-  set: "009",
-  text: "HUNNY POT Whenever this character quests, you may put a card from your hand into your inkwell facedown.",
-  cost: 3,
-  strength: 2,
-  willpower: 3,
-  lore: 2,
-  cardNumber: 159,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "a0ac5d7c21c80cd3df94d836790d6e371f81ae76",
-  },
   abilities: [
     {
-      id: "18k-1",
-      type: "triggered",
-      name: "HUNNY POT",
-      trigger: {
-        event: "quest",
-        timing: "whenever",
-        on: "SELF",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -40,8 +13,35 @@ export const winnieThePoohHavingAThink: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "18k-1",
+      name: "HUNNY POT",
       text: "HUNNY POT Whenever this character quests, you may put a card from your hand into your inkwell facedown.",
+      trigger: {
+        event: "quest",
+        timing: "whenever",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 159,
+  cardType: "character",
   classifications: ["Storyborn", "Hero"],
+  cost: 3,
+  externalIds: {
+    ravensburger: "a0ac5d7c21c80cd3df94d836790d6e371f81ae76",
+  },
+  franchise: "Winnie the Pooh",
+  fullName: "Winnie the Pooh - Having a Think",
+  id: "18k",
+  inkType: ["sapphire"],
+  inkable: true,
+  lore: 2,
+  missingTests: true,
+  name: "Winnie the Pooh",
+  set: "009",
+  strength: 2,
+  text: "HUNNY POT Whenever this character quests, you may put a card from your hand into your inkwell facedown.",
+  version: "Having a Think",
+  willpower: 3,
 };

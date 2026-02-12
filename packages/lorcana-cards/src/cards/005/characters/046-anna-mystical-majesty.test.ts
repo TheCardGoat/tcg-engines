@@ -3,35 +3,35 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   annaMysticalMajesty,
-//   monstroWhaleOfAWhale,
-//   vanellopeVonSchweetzCandyMechanic,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   AnnaMysticalMajesty,
+//   MonstroWhaleOfAWhale,
+//   VanellopeVonSchweetzCandyMechanic,
 // } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Anna - Mystical Majesty", () => {
-//   it("**EXCEPTIONAL POWER** When you play this character, exert all opposing characters.", () => {
-//     const testStore = new TestStore(
+// Describe("Anna - Mystical Majesty", () => {
+//   It("**EXCEPTIONAL POWER** When you play this character, exert all opposing characters.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: annaMysticalMajesty.cost,
-//         hand: [annaMysticalMajesty],
+//         Inkwell: annaMysticalMajesty.cost,
+//         Hand: [annaMysticalMajesty],
 //       },
 //       {
-//         play: [vanellopeVonSchweetzCandyMechanic, monstroWhaleOfAWhale],
+//         Play: [vanellopeVonSchweetzCandyMechanic, monstroWhaleOfAWhale],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getCard(annaMysticalMajesty);
-//     const targets = [
-//       testStore.getCard(vanellopeVonSchweetzCandyMechanic),
-//       testStore.getCard(monstroWhaleOfAWhale),
+//     Const cardUnderTest = testStore.getCard(annaMysticalMajesty);
+//     Const targets = [
+//       TestStore.getCard(vanellopeVonSchweetzCandyMechanic),
+//       TestStore.getCard(monstroWhaleOfAWhale),
 //     ];
-//     cardUnderTest.playFromHand();
-//     testStore.resolveTopOfStack({});
-//     targets.forEach((target) => {
-//       expect(target.meta.exerted).toEqual(true);
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveTopOfStack({});
+//     Targets.forEach((target) => {
+//       Expect(target.meta.exerted).toEqual(true);
 //     });
 //   });
 // });

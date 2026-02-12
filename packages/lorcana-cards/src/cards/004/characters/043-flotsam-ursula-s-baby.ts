@@ -1,61 +1,61 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { whenThisCharacterBanishedInAChallenge } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import { returnThisCardToHand } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { whenThisCharacterBanishedInAChallenge } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import { returnThisCardToHand } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const flotsamUrsulasBaby: LorcanitoCharacterCard = {
-//   id: "ha8",
-//   missingTestCase: true,
-//   name: "Flotsam",
-//   title: 'Ursula\'s "Baby"',
-//   characteristics: ["dreamborn", "ally"],
-//   text: '**QUICK ESCAPE** When this character is banished in a challenge, return this card to your hand.\n\n\n**OMINOUS PAIR** Your characters named Jetsam gain "When this character is banished in a challenge, return this card to your hand."',
-//   type: "character",
-//   abilities: [
-//     whenThisCharacterBanishedInAChallenge({
-//       name: "Quick Escape",
-//       text: "When this character is banished in a challenge, return this card to your hand.",
-//       effects: [returnThisCardToHand],
+// Export const flotsamUrsulasBaby: LorcanitoCharacterCard = {
+//   Id: "ha8",
+//   MissingTestCase: true,
+//   Name: "Flotsam",
+//   Title: 'Ursula\'s "Baby"',
+//   Characteristics: ["dreamborn", "ally"],
+//   Text: '**QUICK ESCAPE** When this character is banished in a challenge, return this card to your hand.\n\n\n**OMINOUS PAIR** Your characters named Jetsam gain "When this character is banished in a challenge, return this card to your hand."',
+//   Type: "character",
+//   Abilities: [
+//     WhenThisCharacterBanishedInAChallenge({
+//       Name: "Quick Escape",
+//       Text: "When this character is banished in a challenge, return this card to your hand.",
+//       Effects: [returnThisCardToHand],
 //     }),
 //     {
-//       type: "static",
-//       ability: "gain-ability",
-//       name: "Quick Escape",
-//       text: "When this character is banished in a challenge, return this card to your hand.",
-//       gainedAbility: whenThisCharacterBanishedInAChallenge({
-//         name: "Quick Escape",
-//         text: "When this character is banished in a challenge, return this card to your hand.",
-//         effects: [returnThisCardToHand],
+//       Type: "static",
+//       Ability: "gain-ability",
+//       Name: "Quick Escape",
+//       Text: "When this character is banished in a challenge, return this card to your hand.",
+//       GainedAbility: whenThisCharacterBanishedInAChallenge({
+//         Name: "Quick Escape",
+//         Text: "When this character is banished in a challenge, return this card to your hand.",
+//         Effects: [returnThisCardToHand],
 //       }),
-//       target: {
-//         type: "card",
-//         value: "all",
-//         excludeSelf: true,
-//         filters: [
+//       Target: {
+//         Type: "card",
+//         Value: "all",
+//         ExcludeSelf: true,
+//         Filters: [
 //           { filter: "owner", value: "self" },
 //           { filter: "type", value: "character" },
 //           { filter: "zone", value: "play" },
 //           {
-//             filter: "attribute",
-//             value: "name",
-//             comparison: { operator: "eq", value: "Jetsam" },
+//             Filter: "attribute",
+//             Value: "name",
+//             Comparison: { operator: "eq", value: "Jetsam" },
 //           },
 //         ],
 //       },
 //     },
 //   ],
-//   flavour: "Now the crown <b>and</b> the trident are mine! −Ursula",
-//   colors: ["amethyst"],
-//   cost: 3,
-//   strength: 4,
-//   willpower: 2,
-//   lore: 1,
-//   illustrator: "Brian Kesinger",
-//   number: 43,
-//   set: "URR",
-//   externalIds: {
-//     tcgPlayer: 549467,
+//   Flavour: "Now the crown <b>and</b> the trident are mine! −Ursula",
+//   Colors: ["amethyst"],
+//   Cost: 3,
+//   Strength: 4,
+//   Willpower: 2,
+//   Lore: 1,
+//   Illustrator: "Brian Kesinger",
+//   Number: 43,
+//   Set: "URR",
+//   ExternalIds: {
+//     TcgPlayer: 549467,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

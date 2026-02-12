@@ -3,108 +3,108 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { flynnRiderHisOwnBiggestFan } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { flynnRiderHisOwnBiggestFan } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Flynn Rider - His Own Biggest Fan", () => {
-//   it("Shift", () => {
-//     const testStore = new TestStore({
-//       play: [flynnRiderHisOwnBiggestFan],
+// Describe("Flynn Rider - His Own Biggest Fan", () => {
+//   It("Shift", () => {
+//     Const testStore = new TestStore({
+//       Play: [flynnRiderHisOwnBiggestFan],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       flynnRiderHisOwnBiggestFan.id,
+//       FlynnRiderHisOwnBiggestFan.id,
 //     );
 //
-//     expect(cardUnderTest.hasShift).toEqual(true);
+//     Expect(cardUnderTest.hasShift).toEqual(true);
 //   });
 //
-//   it("Evasive", () => {
-//     const testStore = new TestStore({
-//       play: [flynnRiderHisOwnBiggestFan],
+//   It("Evasive", () => {
+//     Const testStore = new TestStore({
+//       Play: [flynnRiderHisOwnBiggestFan],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       flynnRiderHisOwnBiggestFan.id,
+//       FlynnRiderHisOwnBiggestFan.id,
 //     );
 //
-//     expect(cardUnderTest.hasEvasive).toEqual(true);
+//     Expect(cardUnderTest.hasEvasive).toEqual(true);
 //   });
 //
-//   describe("**ONE LAST, BIG SCORE** This character gets -1 {L} for each card in your opponents' hands.", () => {
-//     it("Zero cards in opponent's hand", () => {
-//       const testStore = new TestStore(
+//   Describe("**ONE LAST, BIG SCORE** This character gets -1 {L} for each card in your opponents' hands.", () => {
+//     It("Zero cards in opponent's hand", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [flynnRiderHisOwnBiggestFan],
+//           Play: [flynnRiderHisOwnBiggestFan],
 //         },
 //         {
-//           hand: [],
+//           Hand: [],
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         flynnRiderHisOwnBiggestFan.id,
+//         FlynnRiderHisOwnBiggestFan.id,
 //       );
 //
-//       expect(cardUnderTest.lore).toEqual(4);
+//       Expect(cardUnderTest.lore).toEqual(4);
 //     });
 //
-//     it("One card in opponent's hand", () => {
-//       const testStore = new TestStore(
+//     It("One card in opponent's hand", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [flynnRiderHisOwnBiggestFan],
+//           Play: [flynnRiderHisOwnBiggestFan],
 //         },
 //         {
-//           hand: 1,
+//           Hand: 1,
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         flynnRiderHisOwnBiggestFan.id,
+//         FlynnRiderHisOwnBiggestFan.id,
 //       );
 //
-//       expect(cardUnderTest.lore).toEqual(3);
+//       Expect(cardUnderTest.lore).toEqual(3);
 //     });
 //
-//     it("Two cards in opponent's hand", () => {
-//       const testStore = new TestStore(
+//     It("Two cards in opponent's hand", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [flynnRiderHisOwnBiggestFan],
+//           Play: [flynnRiderHisOwnBiggestFan],
 //         },
 //         {
-//           hand: 2,
+//           Hand: 2,
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         flynnRiderHisOwnBiggestFan.id,
+//         FlynnRiderHisOwnBiggestFan.id,
 //       );
 //
-//       expect(cardUnderTest.lore).toEqual(2);
+//       Expect(cardUnderTest.lore).toEqual(2);
 //     });
 //
-//     it("Four cards in opponent's hand", () => {
-//       const testStore = new TestStore(
+//     It("Four cards in opponent's hand", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [flynnRiderHisOwnBiggestFan],
+//           Play: [flynnRiderHisOwnBiggestFan],
 //         },
 //         {
-//           hand: 4,
+//           Hand: 4,
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         flynnRiderHisOwnBiggestFan.id,
+//         FlynnRiderHisOwnBiggestFan.id,
 //       );
 //
-//       expect(cardUnderTest.lore).toEqual(0);
+//       Expect(cardUnderTest.lore).toEqual(0);
 //     });
 //   });
 // });

@@ -1,35 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const megaraCaptivatingCynic: CharacterCard = {
-  id: "13g",
-  cardType: "character",
-  name: "Megara",
-  version: "Captivating Cynic",
-  fullName: "Megara - Captivating Cynic",
-  inkType: ["emerald"],
-  franchise: "Hercules",
-  set: "004",
-  text: "SHADY DEAL When you play this character, choose and discard a card or banish this character.",
-  cost: 3,
-  strength: 3,
-  willpower: 6,
-  lore: 2,
-  cardNumber: 79,
-  inkable: false,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "8e31efeb3393cdf6117bf0de38f47c93204d5f89",
-  },
   abilities: [
     {
-      id: "13g-1",
-      type: "triggered",
-      name: "SHADY DEAL",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "choice",
         options: [
@@ -52,8 +25,35 @@ export const megaraCaptivatingCynic: CharacterCard = {
         ],
         optionLabels: ["choose and discard a card", "banish this character."],
       },
+      id: "13g-1",
+      name: "SHADY DEAL",
       text: "SHADY DEAL When you play this character, choose and discard a card or banish this character.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 79,
+  cardType: "character",
   classifications: ["Storyborn", "Ally"],
+  cost: 3,
+  externalIds: {
+    ravensburger: "8e31efeb3393cdf6117bf0de38f47c93204d5f89",
+  },
+  franchise: "Hercules",
+  fullName: "Megara - Captivating Cynic",
+  id: "13g",
+  inkType: ["emerald"],
+  inkable: false,
+  lore: 2,
+  missingTests: true,
+  name: "Megara",
+  set: "004",
+  strength: 3,
+  text: "SHADY DEAL When you play this character, choose and discard a card or banish this character.",
+  version: "Captivating Cynic",
+  willpower: 6,
 };

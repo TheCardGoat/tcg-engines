@@ -3,31 +3,31 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { kidaCreativeThinker } from "@lorcanito/lorcana-engine/cards/007/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { kidaCreativeThinker } from "@lorcanito/lorcana-engine/cards/007/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Kida - Creative Thinker", () => {
-//   it.skip("Ward (Opponents can't choose this character except to challenge.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [kidaCreativeThinker],
+// Describe("Kida - Creative Thinker", () => {
+//   It.skip("Ward (Opponents can't choose this character except to challenge.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [kidaCreativeThinker],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(kidaCreativeThinker);
-//     expect(cardUnderTest.hasWard).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(kidaCreativeThinker);
+//     Expect(cardUnderTest.hasWard).toBe(true);
 //   });
 //
-//   it.skip("KEY TO THE PUZZLE {E} – Look at the top 2 cards of your deck. Put one into your ink supply, face down and exerted, and the other on top of your deck.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: kidaCreativeThinker.cost,
-//       play: [kidaCreativeThinker],
-//       hand: [kidaCreativeThinker],
+//   It.skip("KEY TO THE PUZZLE {E} – Look at the top 2 cards of your deck. Put one into your ink supply, face down and exerted, and the other on top of your deck.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: kidaCreativeThinker.cost,
+//       Play: [kidaCreativeThinker],
+//       Hand: [kidaCreativeThinker],
 //     });
 //
-//     await testEngine.playCard(kidaCreativeThinker);
+//     Await testEngine.playCard(kidaCreativeThinker);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

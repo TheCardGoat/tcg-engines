@@ -3,106 +3,106 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   flashRecordsSpecialist,
-//   mickeyMouseDetective,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   FlashRecordsSpecialist,
+//   MickeyMouseDetective,
 // } from "@lorcanito/lorcana-engine/cards/010/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Flash - Records Specialist", () => {
-//   it("HOLD... YOUR HORSES - This character enters play exerted", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: flashRecordsSpecialist.cost,
-//       hand: [flashRecordsSpecialist],
+// Describe("Flash - Records Specialist", () => {
+//   It("HOLD... YOUR HORSES - This character enters play exerted", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: flashRecordsSpecialist.cost,
+//       Hand: [flashRecordsSpecialist],
 //     });
 //
-//     const flash = testEngine.getCardModel(flashRecordsSpecialist);
+//     Const flash = testEngine.getCardModel(flashRecordsSpecialist);
 //
-//     await testEngine.playCard(flashRecordsSpecialist);
+//     Await testEngine.playCard(flashRecordsSpecialist);
 //
 //     // Flash should enter play exerted
-//     expect(flash.zone).toBe("play");
-//     expect(flash.ready).toBe(false);
+//     Expect(flash.zone).toBe("play");
+//     Expect(flash.ready).toBe(false);
 //   });
 //
-//   it("DEEP RESEARCH - Should give chosen Detective character +2 {S} this turn", async () => {
-//     const testEngine = new TestEngine({
-//       play: [flashRecordsSpecialist, mickeyMouseDetective],
+//   It("DEEP RESEARCH - Should give chosen Detective character +2 {S} this turn", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [flashRecordsSpecialist, mickeyMouseDetective],
 //     });
 //
-//     const flash = testEngine.getCardModel(flashRecordsSpecialist);
-//     const mickey = testEngine.getCardModel(mickeyMouseDetective);
+//     Const flash = testEngine.getCardModel(flashRecordsSpecialist);
+//     Const mickey = testEngine.getCardModel(mickeyMouseDetective);
 //
 //     // Make Flash ready so he can quest
-//     flash.updateCardMeta({ exerted: false });
+//     Flash.updateCardMeta({ exerted: false });
 //
-//     const mickeyOriginalStrength = mickey.strength;
+//     Const mickeyOriginalStrength = mickey.strength;
 //
 //     // Quest with Flash
-//     await testEngine.questCard(flashRecordsSpecialist);
+//     Await testEngine.questCard(flashRecordsSpecialist);
 //
 //     // Accept the optional ability
-//     await testEngine.acceptOptionalAbility();
+//     Await testEngine.acceptOptionalAbility();
 //
 //     // Choose Mickey as the target
-//     await testEngine.resolveTopOfStack({ targets: [mickey] });
+//     Await testEngine.resolveTopOfStack({ targets: [mickey] });
 //
 //     // Mickey should have +2 strength this turn
-//     expect(mickey.strength).toBe(mickeyOriginalStrength + 2);
+//     Expect(mickey.strength).toBe(mickeyOriginalStrength + 2);
 //   });
 //
-//   it("DEEP RESEARCH - Should be optional", async () => {
-//     const testEngine = new TestEngine({
-//       play: [flashRecordsSpecialist, mickeyMouseDetective],
+//   It("DEEP RESEARCH - Should be optional", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [flashRecordsSpecialist, mickeyMouseDetective],
 //     });
 //
-//     const flash = testEngine.getCardModel(flashRecordsSpecialist);
-//     const mickey = testEngine.getCardModel(mickeyMouseDetective);
+//     Const flash = testEngine.getCardModel(flashRecordsSpecialist);
+//     Const mickey = testEngine.getCardModel(mickeyMouseDetective);
 //
 //     // Make Flash ready so he can quest
-//     flash.updateCardMeta({ exerted: false });
+//     Flash.updateCardMeta({ exerted: false });
 //
-//     const mickeyOriginalStrength = mickey.strength;
+//     Const mickeyOriginalStrength = mickey.strength;
 //
 //     // Quest with Flash
-//     await testEngine.questCard(flashRecordsSpecialist);
+//     Await testEngine.questCard(flashRecordsSpecialist);
 //
 //     // Decline the optional ability
-//     await testEngine.skipTopOfStack();
+//     Await testEngine.skipTopOfStack();
 //
 //     // Mickey should still have his original strength
-//     expect(mickey.strength).toBe(mickeyOriginalStrength);
+//     Expect(mickey.strength).toBe(mickeyOriginalStrength);
 //   });
 //
-//   it("DEEP RESEARCH - Should only target Detective characters", async () => {
-//     const testEngine = new TestEngine({
-//       play: [flashRecordsSpecialist, mickeyMouseDetective],
+//   It("DEEP RESEARCH - Should only target Detective characters", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [flashRecordsSpecialist, mickeyMouseDetective],
 //     });
 //
-//     const flash = testEngine.getCardModel(flashRecordsSpecialist);
+//     Const flash = testEngine.getCardModel(flashRecordsSpecialist);
 //
 //     // Make Flash ready
-//     flash.updateCardMeta({ exerted: false });
+//     Flash.updateCardMeta({ exerted: false });
 //
 //     // Quest with Flash
-//     await testEngine.questCard(flashRecordsSpecialist);
-//     await testEngine.acceptOptionalAbility();
+//     Await testEngine.questCard(flashRecordsSpecialist);
+//     Await testEngine.acceptOptionalAbility();
 //
 //     // Verify the ability has Detective filter
-//     const topLayer = testEngine.store.stackLayerStore.topLayer;
-//     expect(topLayer).toBeDefined();
+//     Const topLayer = testEngine.store.stackLayerStore.topLayer;
+//     Expect(topLayer).toBeDefined();
 //
-//     if (topLayer?.ability?.effects) {
-//       const effect = topLayer.ability.effects[0];
-//       if (effect && effect.type === "attribute" && "target" in effect) {
-//         const target = effect.target;
-//         if (target && "filters" in target) {
-//           const detectiveFilter = target.filters?.find(
+//     If (topLayer?.ability?.effects) {
+//       Const effect = topLayer.ability.effects[0];
+//       If (effect && effect.type === "attribute" && "target" in effect) {
+//         Const target = effect.target;
+//         If (target && "filters" in target) {
+//           Const detectiveFilter = target.filters?.find(
 //             (f: any) =>
-//               f.filter === "characteristics" && f.value.includes("detective"),
+//               F.filter === "characteristics" && f.value.includes("detective"),
 //           );
-//           expect(detectiveFilter).toBeDefined();
+//           Expect(detectiveFilter).toBeDefined();
 //         }
 //       }
 //     }

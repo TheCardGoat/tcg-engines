@@ -3,25 +3,25 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { marshmallowTerrifyingSnowman } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { marshmallowTerrifyingSnowman } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Marshmallow - Terrifying Snowman", () => {
-//   it.skip("**BEHEMOTH** This character gets +1 {S} for each card in your hand.", () => {
-//     const testStore = new TestStore({
-//       inkwell: marshmallowTerrifyingSnowman.cost,
-//       play: [marshmallowTerrifyingSnowman],
+// Describe("Marshmallow - Terrifying Snowman", () => {
+//   It.skip("**BEHEMOTH** This character gets +1 {S} for each card in your hand.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: marshmallowTerrifyingSnowman.cost,
+//       Play: [marshmallowTerrifyingSnowman],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       marshmallowTerrifyingSnowman.id,
+//       MarshmallowTerrifyingSnowman.id,
 //     );
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

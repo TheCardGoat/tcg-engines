@@ -3,89 +3,89 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   basilTenaciousMouse,
-//   lenaSabrewingMysteriousDuck,
-//   megaraSecretKeeper,
-//   mickeyMouseDetective,
-//   scarEerilyPrepared,
-//   theBlackCauldron,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   BasilTenaciousMouse,
+//   LenaSabrewingMysteriousDuck,
+//   MegaraSecretKeeper,
+//   MickeyMouseDetective,
+//   ScarEerilyPrepared,
+//   TheBlackCauldron,
 // } from "@lorcanito/lorcana-engine/cards/010/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Lena Sabrewing - Mysterious Duck", () => {
-//   describe("ARCANE CONNECTION - Gain lore when playing if card is under another card", () => {
-//     it("should gain 1 lore when played if you have a character with a card under it", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: lenaSabrewingMysteriousDuck.cost + 5,
-//         hand: [lenaSabrewingMysteriousDuck],
-//         play: [megaraSecretKeeper],
-//         deck: [basilTenaciousMouse, mickeyMouseDetective],
+// Describe("Lena Sabrewing - Mysterious Duck", () => {
+//   Describe("ARCANE CONNECTION - Gain lore when playing if card is under another card", () => {
+//     It("should gain 1 lore when played if you have a character with a card under it", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: lenaSabrewingMysteriousDuck.cost + 5,
+//         Hand: [lenaSabrewingMysteriousDuck],
+//         Play: [megaraSecretKeeper],
+//         Deck: [basilTenaciousMouse, mickeyMouseDetective],
 //       });
 //
 //       // First, put a card under Megara Secret Keeper using her boost ability
-//       await testEngine.activateCard(megaraSecretKeeper);
+//       Await testEngine.activateCard(megaraSecretKeeper);
 //
 //       // Verify Megara has a card under her
-//       const megara = testEngine.getCardModel(megaraSecretKeeper);
-//       expect(megara.cardsUnder).toHaveLength(1);
+//       Const megara = testEngine.getCardModel(megaraSecretKeeper);
+//       Expect(megara.cardsUnder).toHaveLength(1);
 //
-//       const initialLore = testEngine.getLoreForPlayer("player_one");
+//       Const initialLore = testEngine.getLoreForPlayer("player_one");
 //
 //       // Play Lena Sabrewing
-//       await testEngine.playCard(lenaSabrewingMysteriousDuck);
+//       Await testEngine.playCard(lenaSabrewingMysteriousDuck);
 //
-//       const finalLore = testEngine.getLoreForPlayer("player_one");
+//       Const finalLore = testEngine.getLoreForPlayer("player_one");
 //
-//       expect(finalLore).toBe(initialLore + 1);
+//       Expect(finalLore).toBe(initialLore + 1);
 //     });
 //
-//     it("should NOT gain 1 lore when played if you have no character with a card under it", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: lenaSabrewingMysteriousDuck.cost + 5,
-//         hand: [lenaSabrewingMysteriousDuck],
-//         play: [megaraSecretKeeper],
-//         deck: [basilTenaciousMouse, mickeyMouseDetective],
+//     It("should NOT gain 1 lore when played if you have no character with a card under it", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: lenaSabrewingMysteriousDuck.cost + 5,
+//         Hand: [lenaSabrewingMysteriousDuck],
+//         Play: [megaraSecretKeeper],
+//         Deck: [basilTenaciousMouse, mickeyMouseDetective],
 //       });
 //
 //       // Don't put any cards under Megara
-//       const megara = testEngine.getCardModel(megaraSecretKeeper);
-//       expect(megara.cardsUnder).toHaveLength(0);
+//       Const megara = testEngine.getCardModel(megaraSecretKeeper);
+//       Expect(megara.cardsUnder).toHaveLength(0);
 //
-//       const initialLore = testEngine.getLoreForPlayer("player_one");
+//       Const initialLore = testEngine.getLoreForPlayer("player_one");
 //
 //       // Play Lena Sabrewing
-//       await testEngine.playCard(lenaSabrewingMysteriousDuck);
+//       Await testEngine.playCard(lenaSabrewingMysteriousDuck);
 //
-//       const finalLore = testEngine.getLoreForPlayer("player_one");
+//       Const finalLore = testEngine.getLoreForPlayer("player_one");
 //
-//       expect(finalLore).toBe(initialLore);
+//       Expect(finalLore).toBe(initialLore);
 //     });
 //
-//     it("should work when there are multiple cards in the deck to boost", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: lenaSabrewingMysteriousDuck.cost + 5,
-//         hand: [lenaSabrewingMysteriousDuck],
-//         play: [megaraSecretKeeper],
-//         deck: [basilTenaciousMouse, mickeyMouseDetective, scarEerilyPrepared],
+//     It("should work when there are multiple cards in the deck to boost", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: lenaSabrewingMysteriousDuck.cost + 5,
+//         Hand: [lenaSabrewingMysteriousDuck],
+//         Play: [megaraSecretKeeper],
+//         Deck: [basilTenaciousMouse, mickeyMouseDetective, scarEerilyPrepared],
 //       });
 //
 //       // Put a card under Megara (there are multiple cards in deck to choose from)
-//       await testEngine.activateCard(megaraSecretKeeper);
+//       Await testEngine.activateCard(megaraSecretKeeper);
 //
 //       // Verify Megara has a card under her
-//       const megara = testEngine.getCardModel(megaraSecretKeeper);
-//       expect(megara.cardsUnder).toHaveLength(1);
+//       Const megara = testEngine.getCardModel(megaraSecretKeeper);
+//       Expect(megara.cardsUnder).toHaveLength(1);
 //
-//       const initialLore = testEngine.getLoreForPlayer("player_one");
+//       Const initialLore = testEngine.getLoreForPlayer("player_one");
 //
 //       // Play Lena Sabrewing
-//       await testEngine.playCard(lenaSabrewingMysteriousDuck);
+//       Await testEngine.playCard(lenaSabrewingMysteriousDuck);
 //
-//       const finalLore = testEngine.getLoreForPlayer("player_one");
+//       Const finalLore = testEngine.getLoreForPlayer("player_one");
 //
-//       expect(finalLore).toBe(initialLore + 1);
+//       Expect(finalLore).toBe(initialLore + 1);
 //     });
 //   });
 // });

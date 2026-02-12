@@ -3,28 +3,28 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { holdStill } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
-// import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { holdStill } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
+// Import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Hold Still", () => {
-//   it("Remove up to 4 damage from chosen character.", () => {
-//     const testStore = new TestStore({
-//       inkwell: holdStill.cost,
-//       hand: [holdStill],
-//       play: [goofyKnightForADay],
+// Describe("Hold Still", () => {
+//   It("Remove up to 4 damage from chosen character.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: holdStill.cost,
+//       Hand: [holdStill],
+//       Play: [goofyKnightForADay],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", holdStill.id);
-//     const target = testStore.getByZoneAndId("play", goofyKnightForADay.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", holdStill.id);
+//     Const target = testStore.getByZoneAndId("play", goofyKnightForADay.id);
 //
-//     target.updateCardDamage(5);
+//     Target.updateCardDamage(5);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveTopOfStack({ targets: [target] });
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.meta.damage).toBe(1);
+//     Expect(target.meta.damage).toBe(1);
 //   });
 // });
 //

@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { marieFavoredKitten } from "@lorcanito/lorcana-engine/cards/007/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { marieFavoredKitten } from "@lorcanito/lorcana-engine/cards/007/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Marie - Favored Kitten", () => {
-//   it.skip("I'LL SHOW YOU Whenever this character quests, you may give chosen character -2 {S} this turn.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: marieFavoredKitten.cost,
-//       play: [marieFavoredKitten],
-//       hand: [marieFavoredKitten],
+// Describe("Marie - Favored Kitten", () => {
+//   It.skip("I'LL SHOW YOU Whenever this character quests, you may give chosen character -2 {S} this turn.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: marieFavoredKitten.cost,
+//       Play: [marieFavoredKitten],
+//       Hand: [marieFavoredKitten],
 //     });
 //
-//     await testEngine.playCard(marieFavoredKitten);
+//     Await testEngine.playCard(marieFavoredKitten);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

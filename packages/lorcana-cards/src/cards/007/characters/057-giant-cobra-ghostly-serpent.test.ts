@@ -3,66 +3,66 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it, test } from "@jest/globals";
-// import { magicBroomIlluminaryKeeper } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import {
-//   duchessElegantFeline,
-//   giantCobraGhostlySerpent,
+// Import { describe, expect, it, test } from "@jest/globals";
+// Import { magicBroomIlluminaryKeeper } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import {
+//   DuchessElegantFeline,
+//   GiantCobraGhostlySerpent,
 // } from "@lorcanito/lorcana-engine/cards/007";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Giant Cobra - Ghostly Serpent", () => {
-//   it("Vanish (When an opponent chooses this character for an action, banish them.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [giantCobraGhostlySerpent],
+// Describe("Giant Cobra - Ghostly Serpent", () => {
+//   It("Vanish (When an opponent chooses this character for an action, banish them.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [giantCobraGhostlySerpent],
 //     });
 //
-//     expect(testEngine.getCardModel(giantCobraGhostlySerpent).hasVanish).toBe(
-//       true,
+//     Expect(testEngine.getCardModel(giantCobraGhostlySerpent).hasVanish).toBe(
+//       True,
 //     );
 //   });
 //
-//   it("MYSTERIOUS ADVANTAGE When you play this character, you may choose and discard a card to gain 2 lore.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: giantCobraGhostlySerpent.cost,
-//       hand: [giantCobraGhostlySerpent, duchessElegantFeline],
+//   It("MYSTERIOUS ADVANTAGE When you play this character, you may choose and discard a card to gain 2 lore.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: giantCobraGhostlySerpent.cost,
+//       Hand: [giantCobraGhostlySerpent, duchessElegantFeline],
 //     });
 //
-//     await testEngine.playCard(giantCobraGhostlySerpent);
+//     Await testEngine.playCard(giantCobraGhostlySerpent);
 //
-//     await testEngine.acceptOptionalLayer();
-//     await testEngine.resolveTopOfStack({ targets: [duchessElegantFeline] });
+//     Await testEngine.acceptOptionalLayer();
+//     Await testEngine.resolveTopOfStack({ targets: [duchessElegantFeline] });
 //
-//     expect(testEngine.getCardModel(duchessElegantFeline).zone).toEqual(
+//     Expect(testEngine.getCardModel(duchessElegantFeline).zone).toEqual(
 //       "discard",
 //     );
-//     expect(testEngine.getLoreForPlayer()).toBe(2);
+//     Expect(testEngine.getLoreForPlayer()).toBe(2);
 //   });
 // });
 //
-// describe("Regression", () => {
-//   test("Giant Cobra + Broom Interaction", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: giantCobraGhostlySerpent.cost,
-//       hand: [giantCobraGhostlySerpent],
-//       play: [magicBroomIlluminaryKeeper],
-//       deck: [duchessElegantFeline],
+// Describe("Regression", () => {
+//   Test("Giant Cobra + Broom Interaction", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: giantCobraGhostlySerpent.cost,
+//       Hand: [giantCobraGhostlySerpent],
+//       Play: [magicBroomIlluminaryKeeper],
+//       Deck: [duchessElegantFeline],
 //     });
 //
-//     await testEngine.playCard(giantCobraGhostlySerpent);
+//     Await testEngine.playCard(giantCobraGhostlySerpent);
 //
-//     await testEngine.acceptOptionalLayerBySource({
-//       source: magicBroomIlluminaryKeeper,
+//     Await testEngine.acceptOptionalLayerBySource({
+//       Source: magicBroomIlluminaryKeeper,
 //     });
-//     expect(testEngine.getCardModel(magicBroomIlluminaryKeeper).zone).toEqual(
+//     Expect(testEngine.getCardModel(magicBroomIlluminaryKeeper).zone).toEqual(
 //       "discard",
 //     );
 //
-//     await testEngine.acceptOptionalLayer();
-//     await testEngine.resolveTopOfStack({ targets: [duchessElegantFeline] });
+//     Await testEngine.acceptOptionalLayer();
+//     Await testEngine.resolveTopOfStack({ targets: [duchessElegantFeline] });
 //
-//     expect(testEngine.getLoreForPlayer()).toBe(2);
-//     expect(testEngine.getCardModel(duchessElegantFeline).zone).toEqual(
+//     Expect(testEngine.getLoreForPlayer()).toBe(2);
+//     Expect(testEngine.getCardModel(duchessElegantFeline).zone).toEqual(
 //       "discard",
 //     );
 //   });

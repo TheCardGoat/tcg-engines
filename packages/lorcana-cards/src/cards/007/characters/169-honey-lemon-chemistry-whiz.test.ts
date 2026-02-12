@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { honeyLemonChemistryWhiz } from "@lorcanito/lorcana-engine/cards/007/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { honeyLemonChemistryWhiz } from "@lorcanito/lorcana-engine/cards/007/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Honey Lemon - Chemistry Whiz", () => {
-//   it.skip("PRETTY GREAT, HUH? Whenever you play a Floodborn character, if you used Shift to play them, you may remove up to 2 damage from chosen character.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: honeyLemonChemistryWhiz.cost,
-//       play: [honeyLemonChemistryWhiz],
-//       hand: [honeyLemonChemistryWhiz],
+// Describe("Honey Lemon - Chemistry Whiz", () => {
+//   It.skip("PRETTY GREAT, HUH? Whenever you play a Floodborn character, if you used Shift to play them, you may remove up to 2 damage from chosen character.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: honeyLemonChemistryWhiz.cost,
+//       Play: [honeyLemonChemistryWhiz],
+//       Hand: [honeyLemonChemistryWhiz],
 //     });
 //
-//     await testEngine.playCard(honeyLemonChemistryWhiz);
+//     Await testEngine.playCard(honeyLemonChemistryWhiz);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

@@ -3,20 +3,20 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { stabbingtonBrotherWithAPatch } from "@lorcanito/lorcana-engine/cards/007/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { stabbingtonBrotherWithAPatch } from "@lorcanito/lorcana-engine/cards/007/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Stabbington Brother - With a Patch", () => {
-//   it.skip("CRIME OF OPPORTUNITY When you play this character, chosen opponent loses 1 lore.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: stabbingtonBrotherWithAPatch.cost,
-//       hand: [stabbingtonBrotherWithAPatch],
+// Describe("Stabbington Brother - With a Patch", () => {
+//   It.skip("CRIME OF OPPORTUNITY When you play this character, chosen opponent loses 1 lore.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: stabbingtonBrotherWithAPatch.cost,
+//       Hand: [stabbingtonBrotherWithAPatch],
 //     });
 //
-//     await testEngine.playCard(stabbingtonBrotherWithAPatch);
-//     await testEngine.acceptOptionalLayer();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.playCard(stabbingtonBrotherWithAPatch);
+//     Await testEngine.acceptOptionalLayer();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

@@ -3,73 +3,73 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { rayaLeaderOfHeart } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { deweyLovableShowoff } from "@lorcanito/lorcana-engine/cards/008/character/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { rayaLeaderOfHeart } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { deweyLovableShowoff } from "@lorcanito/lorcana-engine/cards/008/character/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Raya - Leader of Heart", () => {
-//   it("Shift", () => {
-//     const testStore = new TestEngine({
-//       play: [rayaLeaderOfHeart],
+// Describe("Raya - Leader of Heart", () => {
+//   It("Shift", () => {
+//     Const testStore = new TestEngine({
+//       Play: [rayaLeaderOfHeart],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       rayaLeaderOfHeart.id,
+//       RayaLeaderOfHeart.id,
 //     );
 //
-//     expect(cardUnderTest.hasShift).toEqual(true);
+//     Expect(cardUnderTest.hasShift).toEqual(true);
 //   });
 //
-//   it("**CHAMPION OF KUMANDRA** Whenever this character challenges a damaged character, she takes no damage from the challenge.", () => {
-//     const testEngine = new TestEngine(
+//   It("**CHAMPION OF KUMANDRA** Whenever this character challenges a damaged character, she takes no damage from the challenge.", () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         play: [rayaLeaderOfHeart],
+//         Play: [rayaLeaderOfHeart],
 //       },
 //       { play: [deweyLovableShowoff] },
 //     );
 //
-//     const cardUnderTest = testEngine.getCardModel(rayaLeaderOfHeart);
+//     Const cardUnderTest = testEngine.getCardModel(rayaLeaderOfHeart);
 //
-//     const target = testEngine.getCardModel(deweyLovableShowoff);
+//     Const target = testEngine.getCardModel(deweyLovableShowoff);
 //
-//     target.exert();
+//     Target.exert();
 //
-//     testEngine.challenge({
-//       attacker: cardUnderTest,
-//       defender: target,
+//     TestEngine.challenge({
+//       Attacker: cardUnderTest,
+//       Defender: target,
 //     });
 //
 //     // This test should check that the card goes to discard since the target is not damaged
-//     expect(cardUnderTest.zone).toEqual("discard");
+//     Expect(cardUnderTest.zone).toEqual("discard");
 //   });
 //
-//   it("**CHAMPION OF KUMANDRA** Damaged character target.", () => {
-//     const testEngine = new TestEngine(
+//   It("**CHAMPION OF KUMANDRA** Damaged character target.", () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         play: [rayaLeaderOfHeart],
+//         Play: [rayaLeaderOfHeart],
 //       },
 //       { play: [deweyLovableShowoff] },
 //     );
 //
-//     const cardUnderTest = testEngine.getCardModel(rayaLeaderOfHeart);
+//     Const cardUnderTest = testEngine.getCardModel(rayaLeaderOfHeart);
 //
-//     const target = testEngine.getCardModel(deweyLovableShowoff);
+//     Const target = testEngine.getCardModel(deweyLovableShowoff);
 //
-//     target.exert();
-//     target.damage = 1;
+//     Target.exert();
+//     Target.damage = 1;
 //
-//     testEngine.challenge({
-//       attacker: cardUnderTest,
-//       defender: target,
+//     TestEngine.challenge({
+//       Attacker: cardUnderTest,
+//       Defender: target,
 //     });
 //
 //     // Raya should stay in play when challenging a damaged character
-//     expect(cardUnderTest.zone).toEqual("play");
+//     Expect(cardUnderTest.zone).toEqual("play");
 //
 //     // And should take no damage from the challenge
-//     expect(cardUnderTest.damage).toEqual(0);
+//     Expect(cardUnderTest.damage).toEqual(0);
 //   });
 // });
 //

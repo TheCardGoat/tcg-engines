@@ -1,40 +1,40 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
-// import { gainAbilityWhileHere } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { whenThisCharacterBanishedInAChallenge } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import { returnThisCardToHand } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
+// Import { gainAbilityWhileHere } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import { whenThisCharacterBanishedInAChallenge } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import { returnThisCardToHand } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const ursulasLairEyeOfTheStorm: LorcanitoLocationCard = {
-//   id: "tj7",
-//   missingTestCase: true,
-//   name: "Ursula's Lair",
-//   title: "Eye of the Storm",
-//   characteristics: ["location"],
-//   text: "**SLIPPERY HALLS** Whenever a characters is banished in a challenge while here, you may return them to your hand. \n\n\n**SEAT OF POWER** Characters named Ursula get +1 {L} while here.",
-//   type: "location",
-//   abilities: [
-//     gainAbilityWhileHere({
-//       name: "Seat of Power",
-//       text: "Characters named Ursula get +1 {L} while here.",
-//       ability: {
-//         type: "static",
-//         ability: "effects",
-//         effects: [
+// Export const ursulasLairEyeOfTheStorm: LorcanitoLocationCard = {
+//   Id: "tj7",
+//   MissingTestCase: true,
+//   Name: "Ursula's Lair",
+//   Title: "Eye of the Storm",
+//   Characteristics: ["location"],
+//   Text: "**SLIPPERY HALLS** Whenever a characters is banished in a challenge while here, you may return them to your hand. \n\n\n**SEAT OF POWER** Characters named Ursula get +1 {L} while here.",
+//   Type: "location",
+//   Abilities: [
+//     GainAbilityWhileHere({
+//       Name: "Seat of Power",
+//       Text: "Characters named Ursula get +1 {L} while here.",
+//       Ability: {
+//         Type: "static",
+//         Ability: "effects",
+//         Effects: [
 //           {
-//             type: "attribute",
-//             attribute: "lore",
-//             amount: 1,
-//             modifier: "add",
-//             duration: "static",
-//             target: {
-//               type: "card",
-//               value: "all",
-//               filters: [
+//             Type: "attribute",
+//             Attribute: "lore",
+//             Amount: 1,
+//             Modifier: "add",
+//             Duration: "static",
+//             Target: {
+//               Type: "card",
+//               Value: "all",
+//               Filters: [
 //                 { filter: "source", value: "self" },
 //                 {
-//                   filter: "attribute",
-//                   value: "name",
-//                   comparison: { operator: "eq", value: "ursula" },
+//                   Filter: "attribute",
+//                   Value: "name",
+//                   Comparison: { operator: "eq", value: "ursula" },
 //                 },
 //               ],
 //             },
@@ -42,28 +42,28 @@
 //         ],
 //       },
 //     }),
-//     gainAbilityWhileHere({
-//       name: "Slippery Halls",
-//       text: "Whenever a characters is banished in a challenge while here, you may return them to your hand.",
-//       ability: whenThisCharacterBanishedInAChallenge({
-//         name: "Slippery Halls",
-//         text: "Whenever a characters is banished in a challenge while here, you may return them to your hand.",
-//         optional: true,
-//         effects: [returnThisCardToHand],
+//     GainAbilityWhileHere({
+//       Name: "Slippery Halls",
+//       Text: "Whenever a characters is banished in a challenge while here, you may return them to your hand.",
+//       Ability: whenThisCharacterBanishedInAChallenge({
+//         Name: "Slippery Halls",
+//         Text: "Whenever a characters is banished in a challenge while here, you may return them to your hand.",
+//         Optional: true,
+//         Effects: [returnThisCardToHand],
 //       }),
 //     }),
 //   ],
-//   colors: ["amethyst"],
-//   cost: 3,
-//   moveCost: 2,
-//   willpower: 6,
-//   lore: 1,
-//   illustrator: "Eri Welli / Sam Burley",
-//   number: 68,
-//   set: "URR",
-//   externalIds: {
-//     tcgPlayer: 547784,
+//   Colors: ["amethyst"],
+//   Cost: 3,
+//   MoveCost: 2,
+//   Willpower: 6,
+//   Lore: 1,
+//   Illustrator: "Eri Welli / Sam Burley",
+//   Number: 68,
+//   Set: "URR",
+//   ExternalIds: {
+//     TcgPlayer: 547784,
 //   },
-//   rarity: "rare",
+//   Rarity: "rare",
 // };
 //

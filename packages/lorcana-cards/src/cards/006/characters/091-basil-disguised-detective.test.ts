@@ -3,52 +3,52 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   basilDisguisedDetective,
-//   kakamoraPiratePitcher,
-//   michaelDarlingPlayfulSwordsman,
-//   rayaKumandranRider,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   BasilDisguisedDetective,
+//   KakamoraPiratePitcher,
+//   MichaelDarlingPlayfulSwordsman,
+//   RayaKumandranRider,
 // } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Basil - Disguised Detective", () => {
-//   it("Shift 4 (You may pay 4 {I} to play this on top of one of your characters named Basil.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [basilDisguisedDetective],
+// Describe("Basil - Disguised Detective", () => {
+//   It("Shift 4 (You may pay 4 {I} to play this on top of one of your characters named Basil.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [basilDisguisedDetective],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(basilDisguisedDetective);
-//     expect(cardUnderTest.hasShift).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(basilDisguisedDetective);
+//     Expect(cardUnderTest.hasShift).toBe(true);
 //   });
 //
-//   it("TWISTS AND TURNS During your turn, whenever a card is put into your inkwell, you may pay 1 {I} to have chosen opponent choose and discard a card.", async () => {
-//     const testEngine = new TestEngine(
+//   It("TWISTS AND TURNS During your turn, whenever a card is put into your inkwell, you may pay 1 {I} to have chosen opponent choose and discard a card.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: 1,
-//         play: [basilDisguisedDetective],
-//         hand: [kakamoraPiratePitcher],
+//         Inkwell: 1,
+//         Play: [basilDisguisedDetective],
+//         Hand: [kakamoraPiratePitcher],
 //       },
 //       {
-//         inkwell: 1,
-//         hand: [rayaKumandranRider, michaelDarlingPlayfulSwordsman],
+//         Inkwell: 1,
+//         Hand: [rayaKumandranRider, michaelDarlingPlayfulSwordsman],
 //       },
 //     );
 //
-//     expect(testEngine.getAvailableInkwellCardCount("player_one")).toBe(1);
-//     await testEngine.putIntoInkwell(kakamoraPiratePitcher);
-//     expect(testEngine.getAvailableInkwellCardCount("player_one")).toBe(2);
+//     Expect(testEngine.getAvailableInkwellCardCount("player_one")).toBe(1);
+//     Await testEngine.putIntoInkwell(kakamoraPiratePitcher);
+//     Expect(testEngine.getAvailableInkwellCardCount("player_one")).toBe(2);
 //
-//     expect(testEngine.stackLayers).toHaveLength(1);
+//     Expect(testEngine.stackLayers).toHaveLength(1);
 //
-//     testEngine.changeActivePlayer("player_one");
-//     await testEngine.resolveOptionalAbility();
+//     TestEngine.changeActivePlayer("player_one");
+//     Await testEngine.resolveOptionalAbility();
 //
-//     testEngine.changeActivePlayer("player_two");
-//     await testEngine.resolveTopOfStack({ targets: [rayaKumandranRider] });
+//     TestEngine.changeActivePlayer("player_two");
+//     Await testEngine.resolveTopOfStack({ targets: [rayaKumandranRider] });
 //
-//     expect(testEngine.getCardModel(rayaKumandranRider).zone).toEqual("discard");
-//     expect(testEngine.stackLayers).toHaveLength(0);
+//     Expect(testEngine.getCardModel(rayaKumandranRider).zone).toEqual("discard");
+//     Expect(testEngine.stackLayers).toHaveLength(0);
 //   });
 // });
 //

@@ -3,36 +3,36 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   balooCarefreeBear,
-//   fergusMcduckScroogesFather,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   BalooCarefreeBear,
+//   FergusMcduckScroogesFather,
 // } from "@lorcanito/lorcana-engine/cards/010/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Fergus McDuck - Scrooge's Father", () => {
-//   it("TOUGHEN UP When you play this character, chosen character of yours gains Ward until the start of your next turn. (Opponents can't choose them except to challenge.)", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: fergusMcduckScroogesFather.cost,
-//       hand: [fergusMcduckScroogesFather],
-//       play: [balooCarefreeBear],
+// Describe("Fergus McDuck - Scrooge's Father", () => {
+//   It("TOUGHEN UP When you play this character, chosen character of yours gains Ward until the start of your next turn. (Opponents can't choose them except to challenge.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: fergusMcduckScroogesFather.cost,
+//       Hand: [fergusMcduckScroogesFather],
+//       Play: [balooCarefreeBear],
 //     });
 //
-//     const target = testEngine.getCardModel(balooCarefreeBear);
-//     expect(target.hasWard).toBe(false);
+//     Const target = testEngine.getCardModel(balooCarefreeBear);
+//     Expect(target.hasWard).toBe(false);
 //
-//     await testEngine.playCard(fergusMcduckScroogesFather);
-//     await testEngine.resolveTopOfStack({ targets: [target] });
+//     Await testEngine.playCard(fergusMcduckScroogesFather);
+//     Await testEngine.resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.hasWard).toBe(true);
+//     Expect(target.hasWard).toBe(true);
 //
-//     testEngine.passTurn();
+//     TestEngine.passTurn();
 //
-//     expect(target.hasWard).toBe(true);
+//     Expect(target.hasWard).toBe(true);
 //
-//     testEngine.passTurn();
+//     TestEngine.passTurn();
 //
-//     expect(target.hasWard).toBe(false);
+//     Expect(target.hasWard).toBe(false);
 //   });
 // });
 //

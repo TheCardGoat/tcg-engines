@@ -36,8 +36,8 @@ function parseFromText(text: string): PlayCardEffect | null {
     logger.info("Parsed play from discard effect", { cardType, isFree });
 
     const effect: PlayCardEffect = {
-      type: "play-card",
       from: "discard",
+      type: "play-card",
     };
     if (cardType) {
       effect.cardType = cardType;
@@ -57,10 +57,10 @@ function parseFromText(text: string): PlayCardEffect | null {
       logger.info("Parsed play cost X or less for free effect", { maxCost });
 
       const effect: PlayCardEffect = {
-        type: "play-card",
-        from: "hand",
         cost: "free",
         costRestriction: { comparison: "less-or-equal", value: maxCost },
+        from: "hand",
+        type: "play-card",
       };
       return effect;
     }
@@ -73,8 +73,8 @@ function parseFromText(text: string): PlayCardEffect | null {
     return null;
   }
 
-  // match[1] is the first word after the article (e.g., "action" from "play an action")
-  // match[2] is an optional second word (e.g., "born" from "play a floodborn")
+  // Match[1] is the first word after the article (e.g., "action" from "play an action")
+  // Match[2] is an optional second word (e.g., "born" from "play a floodborn")
   const cardTypeStr = match[1].toLowerCase();
   const cardType = parseCardType(cardTypeStr);
   const isFree = text.includes("for free");
@@ -82,8 +82,8 @@ function parseFromText(text: string): PlayCardEffect | null {
   logger.info("Parsed play effect from text", { cardType, isFree });
 
   const effect: PlayCardEffect = {
-    type: "play-card",
     from: "hand",
+    type: "play-card",
   };
   if (cardType) {
     effect.cardType = cardType;
@@ -98,11 +98,8 @@ function parseFromText(text: string): PlayCardEffect | null {
  * Play effect parser implementation
  */
 export const playEffectParser: EffectParser = {
-  pattern:
-    /play\s+(?:a\s+)?(?:character|action|item|card)|play\s+.*?from\s+discard/i,
   description:
     "Parses play card effects (e.g., 'play a character for free', 'play from discard')",
-
   parse: (input: CstNode | string): PlayCardEffect | null => {
     if (typeof input === "string") {
       return parseFromText(input);
@@ -111,4 +108,7 @@ export const playEffectParser: EffectParser = {
     logger.warn("CST parsing not implemented for play effects");
     return null;
   },
+
+  pattern:
+    /play\s+(?:a\s+)?(?:character|action|item|card)|play\s+.*?from\s+discard/i,
 };

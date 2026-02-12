@@ -1,47 +1,47 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { opponent, self } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { whenYouPlayThisCharacter } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { opponent, self } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import { whenYouPlayThisCharacter } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 //
-// export const gloydOrangeboarFierceCompetitor: LorcanitoCharacterCard = {
-//   id: "imz",
-//   name: "Gloyd Orangeboar",
-//   title: "Fierce Competitor",
-//   characteristics: ["storyborn", "ally", "racer"],
-//   text: "PUMPKIN SPICE When you play this character, each opponent loses 1 lore and you gain 1 lore.",
-//   type: "character",
-//   abilities: [
-//     whenYouPlayThisCharacter({
-//       name: "PUMPKIN SPICE",
-//       text: "When you play this character, each opponent loses 1 lore and you gain 1 lore.",
-//       effects: [
+// Export const gloydOrangeboarFierceCompetitor: LorcanitoCharacterCard = {
+//   Id: "imz",
+//   Name: "Gloyd Orangeboar",
+//   Title: "Fierce Competitor",
+//   Characteristics: ["storyborn", "ally", "racer"],
+//   Text: "PUMPKIN SPICE When you play this character, each opponent loses 1 lore and you gain 1 lore.",
+//   Type: "character",
+//   Abilities: [
+//     WhenYouPlayThisCharacter({
+//       Name: "PUMPKIN SPICE",
+//       Text: "When you play this character, each opponent loses 1 lore and you gain 1 lore.",
+//       Effects: [
 //         {
-//           type: "lore",
-//           modifier: "subtract",
-//           amount: 1,
-//           target: opponent,
+//           Type: "lore",
+//           Modifier: "subtract",
+//           Amount: 1,
+//           Target: opponent,
 //         },
 //         {
-//           type: "lore",
-//           modifier: "add",
-//           amount: 1,
-//           target: self,
+//           Type: "lore",
+//           Modifier: "add",
+//           Amount: 1,
+//           Target: self,
 //         },
 //       ],
 //     }),
 //   ],
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 3,
-//   strength: 1,
-//   willpower: 2,
-//   illustrator: "Rudy Hill // Denny Minonne",
-//   number: 121,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631705,
+//   Inkwell: true,
+//   Colors: ["ruby"],
+//   Cost: 3,
+//   Strength: 1,
+//   Willpower: 2,
+//   Illustrator: "Rudy Hill // Denny Minonne",
+//   Number: 121,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631705,
 //   },
-//   rarity: "common",
-//   lore: 1,
+//   Rarity: "common",
+//   Lore: 1,
 // };
 //

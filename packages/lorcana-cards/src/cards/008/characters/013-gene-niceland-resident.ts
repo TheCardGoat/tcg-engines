@@ -1,35 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const geneNicelandResident: CharacterCard = {
-  id: "mcz",
-  cardType: "character",
-  name: "Gene",
-  version: "Niceland Resident",
-  fullName: "Gene - Niceland Resident",
-  inkType: ["amber"],
-  franchise: "Wreck It Ralph",
-  set: "008",
-  text: "I GUESS YOU EARNED THIS Whenever this character quests, you may remove up to 2 damage from chosen character.",
-  cost: 1,
-  strength: 1,
-  willpower: 2,
-  lore: 1,
-  cardNumber: 13,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "509735c520ba2565357da084b01feb2f43038387",
-  },
   abilities: [
     {
-      id: "mcz-1",
-      type: "triggered",
-      name: "I GUESS YOU EARNED THIS",
-      trigger: {
-        event: "quest",
-        timing: "whenever",
-        on: "SELF",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -46,8 +19,35 @@ export const geneNicelandResident: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "mcz-1",
+      name: "I GUESS YOU EARNED THIS",
       text: "I GUESS YOU EARNED THIS Whenever this character quests, you may remove up to 2 damage from chosen character.",
+      trigger: {
+        event: "quest",
+        timing: "whenever",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 13,
+  cardType: "character",
   classifications: ["Storyborn"],
+  cost: 1,
+  externalIds: {
+    ravensburger: "509735c520ba2565357da084b01feb2f43038387",
+  },
+  franchise: "Wreck It Ralph",
+  fullName: "Gene - Niceland Resident",
+  id: "mcz",
+  inkType: ["amber"],
+  inkable: true,
+  lore: 1,
+  missingTests: true,
+  name: "Gene",
+  set: "008",
+  strength: 1,
+  text: "I GUESS YOU EARNED THIS Whenever this character quests, you may remove up to 2 damage from chosen character.",
+  version: "Niceland Resident",
+  willpower: 2,
 };

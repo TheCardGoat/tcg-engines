@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { dinnerBell } from "@lorcanito/lorcana-engine/cards/009/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { dinnerBell } from "@lorcanito/lorcana-engine/cards/009/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Dinner Bell", () => {
-//   it.skip("**YOU KNOW WHAT HAPPENS** {E}, 2 {I} − Draw cards equal to the damage on chosen character of yours, then banish them.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: dinnerBell.cost,
-//       play: [dinnerBell],
-//       hand: [dinnerBell],
+// Describe("Dinner Bell", () => {
+//   It.skip("**YOU KNOW WHAT HAPPENS** {E}, 2 {I} − Draw cards equal to the damage on chosen character of yours, then banish them.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: dinnerBell.cost,
+//       Play: [dinnerBell],
+//       Hand: [dinnerBell],
 //     });
 //
-//     await testEngine.playCard(dinnerBell);
+//     Await testEngine.playCard(dinnerBell);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

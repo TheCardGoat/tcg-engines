@@ -3,83 +3,83 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   bibbidiBobbidiBoo,
-//   hypnotize,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   BibbidiBobbidiBoo,
+//   Hypnotize,
 // } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Hypnotize", () => {
-//   it("Each opponent chooses and discards a card. Draw a card.", () => {
-//     const testStore = new TestStore(
+// Describe("Hypnotize", () => {
+//   It("Each opponent chooses and discards a card. Draw a card.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         deck: 2,
-//         inkwell: hypnotize.cost,
-//         hand: [hypnotize],
+//         Deck: 2,
+//         Inkwell: hypnotize.cost,
+//         Hand: [hypnotize],
 //       },
 //       {
-//         deck: 2,
-//         hand: [bibbidiBobbidiBoo],
+//         Deck: 2,
+//         Hand: [bibbidiBobbidiBoo],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", hypnotize.id);
-//     const target = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", hypnotize.id);
+//     Const target = testStore.getByZoneAndId(
 //       "hand",
-//       bibbidiBobbidiBoo.id,
+//       BibbidiBobbidiBoo.id,
 //       "player_two",
 //     );
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveTopOfStack({}, true);
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveTopOfStack({}, true);
 //
-//     testStore.changePlayer("player_two");
-//     testStore.resolveTopOfStack({ targets: [target] });
+//     TestStore.changePlayer("player_two");
+//     TestStore.resolveTopOfStack({ targets: [target] });
 //
-//     expect(testStore.getZonesCardCount("player_two")).toEqual(
-//       expect.objectContaining({
-//         hand: 0,
-//         deck: 2,
-//         discard: 1,
+//     Expect(testStore.getZonesCardCount("player_two")).toEqual(
+//       Expect.objectContaining({
+//         Hand: 0,
+//         Deck: 2,
+//         Discard: 1,
 //       }),
 //     );
-//     expect(testStore.getZonesCardCount("player_one")).toEqual(
-//       expect.objectContaining({
-//         hand: 1,
-//         deck: 1,
+//     Expect(testStore.getZonesCardCount("player_one")).toEqual(
+//       Expect.objectContaining({
+//         Hand: 1,
+//         Deck: 1,
 //       }),
 //     );
 //   });
 //
-//   it("Opponent no cards in hand, should still draw", () => {
-//     const testEngine = new TestEngine(
+//   It("Opponent no cards in hand, should still draw", () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         deck: 2,
-//         inkwell: hypnotize.cost,
-//         hand: [hypnotize],
+//         Deck: 2,
+//         Inkwell: hypnotize.cost,
+//         Hand: [hypnotize],
 //       },
 //       {
-//         deck: 2,
-//         hand: [],
+//         Deck: 2,
+//         Hand: [],
 //       },
 //     );
 //
-//     testEngine.playCard(hypnotize);
-//     testEngine.resolveTopOfStack({});
+//     TestEngine.playCard(hypnotize);
+//     TestEngine.resolveTopOfStack({});
 //
-//     expect(testEngine.getZonesCardCount("player_two")).toEqual(
-//       expect.objectContaining({
-//         hand: 0,
-//         deck: 2,
-//         discard: 0,
+//     Expect(testEngine.getZonesCardCount("player_two")).toEqual(
+//       Expect.objectContaining({
+//         Hand: 0,
+//         Deck: 2,
+//         Discard: 0,
 //       }),
 //     );
-//     expect(testEngine.getZonesCardCount("player_one")).toEqual(
-//       expect.objectContaining({
-//         hand: 1,
-//         deck: 1,
+//     Expect(testEngine.getZonesCardCount("player_one")).toEqual(
+//       Expect.objectContaining({
+//         Hand: 1,
+//         Deck: 1,
 //       }),
 //     );
 //   });

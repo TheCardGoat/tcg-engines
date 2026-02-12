@@ -1,50 +1,50 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
-// import { chosenOpposingCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
+// Import { chosenOpposingCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 //
-// export const iceSpikes: LorcanitoItemCard = {
-//   id: "jvt",
-//   missingTestCase: true,
-//   name: "Ice Spikes",
-//   characteristics: ["item"],
-//   text: "HOLD STILL When you play this item, exert chosen opposing character.\nIT'S STUCK {E}, 1 {I} – Exert chosen opposing item. It can't ready at the start of its next turn.",
-//   type: "item",
-//   inkwell: true,
-//   colors: ["amethyst", "sapphire"],
-//   cost: 2,
-//   illustrator: "Priya Kakati",
-//   number: 84,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631405,
+// Export const iceSpikes: LorcanitoItemCard = {
+//   Id: "jvt",
+//   MissingTestCase: true,
+//   Name: "Ice Spikes",
+//   Characteristics: ["item"],
+//   Text: "HOLD STILL When you play this item, exert chosen opposing character.\nIT'S STUCK {E}, 1 {I} – Exert chosen opposing item. It can't ready at the start of its next turn.",
+//   Type: "item",
+//   Inkwell: true,
+//   Colors: ["amethyst", "sapphire"],
+//   Cost: 2,
+//   Illustrator: "Priya Kakati",
+//   Number: 84,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631405,
 //   },
-//   rarity: "uncommon",
-//   abilities: [
+//   Rarity: "uncommon",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       name: "HOLD STILL",
-//       text: "When you play this item, exert chosen opposing character.",
-//       effects: [
+//       Type: "resolution",
+//       Name: "HOLD STILL",
+//       Text: "When you play this item, exert chosen opposing character.",
+//       Effects: [
 //         {
-//           type: "exert",
-//           exert: true,
-//           target: chosenOpposingCharacter,
+//           Type: "exert",
+//           Exert: true,
+//           Target: chosenOpposingCharacter,
 //         },
 //       ],
 //     },
 //     {
-//       type: "activated",
-//       name: "IT'S STUCK",
-//       text: "{E}, 1 {I} – Exert chosen opposing item. It can't ready at the start of its next turn.",
-//       costs: [{ type: "exert" }, { type: "ink", amount: 1 }],
-//       effects: [
+//       Type: "activated",
+//       Name: "IT'S STUCK",
+//       Text: "{E}, 1 {I} – Exert chosen opposing item. It can't ready at the start of its next turn.",
+//       Costs: [{ type: "exert" }, { type: "ink", amount: 1 }],
+//       Effects: [
 //         {
-//           type: "exert",
-//           exert: true,
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
+//           Type: "exert",
+//           Exert: true,
+//           Target: {
+//             Type: "card",
+//             Value: 1,
+//             Filters: [
 //               { filter: "type", value: "item" },
 //               { filter: "zone", value: "play" },
 //               { filter: "owner", value: "opponent" },
@@ -52,13 +52,13 @@
 //           },
 //         },
 //         {
-//           type: "restriction",
-//           restriction: "ready-at-start-of-turn",
-//           duration: "next_turn",
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
+//           Type: "restriction",
+//           Restriction: "ready-at-start-of-turn",
+//           Duration: "next_turn",
+//           Target: {
+//             Type: "card",
+//             Value: 1,
+//             Filters: [
 //               { filter: "type", value: "item" },
 //               { filter: "zone", value: "play" },
 //               { filter: "owner", value: "opponent" },

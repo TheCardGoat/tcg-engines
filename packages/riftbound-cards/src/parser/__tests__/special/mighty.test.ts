@@ -19,10 +19,10 @@ describe("Special: Mighty", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "static",
           condition: expect.objectContaining({
             type: "while-mighty",
           }),
+          type: "static",
         }),
       );
     });
@@ -38,11 +38,11 @@ describe("Special: Mighty", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "keyword",
-          keyword: "Deathknell",
           condition: expect.objectContaining({
             type: "while-mighty",
           }),
+          keyword: "Deathknell",
+          type: "keyword",
         }),
       );
     });
@@ -87,10 +87,10 @@ describe("Special: Mighty", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           trigger: expect.objectContaining({
             event: "become-mighty",
           }),
+          type: "triggered",
         }),
       );
     });

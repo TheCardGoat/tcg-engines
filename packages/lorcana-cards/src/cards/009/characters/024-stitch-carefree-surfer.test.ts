@@ -3,20 +3,20 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { stitchCarefreeSurfer } from "@lorcanito/lorcana-engine/cards/009/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { stitchCarefreeSurfer } from "@lorcanito/lorcana-engine/cards/009/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Stitch - Carefree Surfer", () => {
-//   it.skip("**OHANA** When you play this character, if you have 2 or more other characters in play, you may draw 2 cards.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: stitchCarefreeSurfer.cost,
-//       hand: [stitchCarefreeSurfer],
+// Describe("Stitch - Carefree Surfer", () => {
+//   It.skip("**OHANA** When you play this character, if you have 2 or more other characters in play, you may draw 2 cards.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: stitchCarefreeSurfer.cost,
+//       Hand: [stitchCarefreeSurfer],
 //     });
 //
-//     await testEngine.playCard(stitchCarefreeSurfer);
-//     await testEngine.acceptOptionalLayer();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.playCard(stitchCarefreeSurfer);
+//     Await testEngine.acceptOptionalLayer();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

@@ -3,24 +3,24 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { doloresMadrigalEasyListener } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { doloresMadrigalEasyListener } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Dolores Madrigal - Easy Listener", () => {
-//   it.skip("**MAGICAL INFORMANT** When you play this character, if an opponent has an exerted character in play, you may draw a card.", () => {
-//     const testStore = new TestStore({
-//       inkwell: doloresMadrigalEasyListener.cost,
-//       hand: [doloresMadrigalEasyListener],
+// Describe("Dolores Madrigal - Easy Listener", () => {
+//   It.skip("**MAGICAL INFORMANT** When you play this character, if an opponent has an exerted character in play, you may draw a card.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: doloresMadrigalEasyListener.cost,
+//       Hand: [doloresMadrigalEasyListener],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "hand",
-//       doloresMadrigalEasyListener.id,
+//       DoloresMadrigalEasyListener.id,
 //     );
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

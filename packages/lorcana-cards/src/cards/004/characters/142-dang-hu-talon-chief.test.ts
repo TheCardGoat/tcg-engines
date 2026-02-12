@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { dangHuTalonChief } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { dangHuTalonChief } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Dang Hu - Talon Chief", () => {
-//   it.skip("**YOU BETTER TALK FAST** Your other Villain characters gain **Support.** _(Whenever they quest, you mad add their {S} to another chosen character's {S} this turn.)_", () => {
-//     const testStore = new TestStore({
-//       inkwell: dangHuTalonChief.cost,
-//       play: [dangHuTalonChief],
+// Describe("Dang Hu - Talon Chief", () => {
+//   It.skip("**YOU BETTER TALK FAST** Your other Villain characters gain **Support.** _(Whenever they quest, you mad add their {S} to another chosen character's {S} this turn.)_", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: dangHuTalonChief.cost,
+//       Play: [dangHuTalonChief],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("play", dangHuTalonChief.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("play", dangHuTalonChief.id);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

@@ -3,34 +3,34 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   mowgliManCub,
-//   suddenScare,
-//   webbyVanderquackKnowledgeSeeker,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   MowgliManCub,
+//   SuddenScare,
+//   WebbyVanderquackKnowledgeSeeker,
 // } from "@lorcanito/lorcana-engine/cards/010";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Sudden Scare", () => {
-//   it("Put chosen opposing character into their player's inkwell facedown. That player puts the top card of their deck into their inkwell facedown.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Sudden Scare", () => {
+//   It("Put chosen opposing character into their player's inkwell facedown. That player puts the top card of their deck into their inkwell facedown.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: suddenScare.cost,
-//         hand: [suddenScare],
+//         Inkwell: suddenScare.cost,
+//         Hand: [suddenScare],
 //       },
 //       {
-//         play: [mowgliManCub],
-//         deck: [webbyVanderquackKnowledgeSeeker],
+//         Play: [mowgliManCub],
+//         Deck: [webbyVanderquackKnowledgeSeeker],
 //       },
 //     );
 //
-//     await testEngine.playCard(suddenScare);
+//     Await testEngine.playCard(suddenScare);
 //
-//     const targetCharacter = testEngine.getCardModel(mowgliManCub);
-//     await testEngine.resolveTopOfStack({ targets: [targetCharacter] }, true); // Use skipAssertion
+//     Const targetCharacter = testEngine.getCardModel(mowgliManCub);
+//     Await testEngine.resolveTopOfStack({ targets: [targetCharacter] }, true); // Use skipAssertion
 //
-//     expect(testEngine.getCardModel(mowgliManCub).zone).toBe("inkwell");
-//     expect(testEngine.getCardModel(webbyVanderquackKnowledgeSeeker).zone).toBe(
+//     Expect(testEngine.getCardModel(mowgliManCub).zone).toBe("inkwell");
+//     Expect(testEngine.getCardModel(webbyVanderquackKnowledgeSeeker).zone).toBe(
 //       "inkwell",
 //     );
 //   });

@@ -38,7 +38,7 @@ function parseCardTypeFilter(text: string): ScryCardFilter | null {
   // Check for card types
   const cardType = parseCardType(lowerText);
   if (cardType) {
-    return { type: "card-type", cardType };
+    return { cardType, type: "card-type" };
   }
 
   return null;
@@ -60,7 +60,7 @@ function parseClassificationFilter(text: string): ScryCardFilter | null {
         classification.toLowerCase(),
       )
     ) {
-      return { type: "classification", classification };
+      return { classification, type: "classification" };
     }
   }
   return null;
@@ -74,8 +74,8 @@ function parseCostFilter(text: string): ScryCardFilter | null {
   const match = text.match(costPattern);
   if (match) {
     return {
-      type: "cost-comparison",
       comparison: "less-or-equal",
+      type: "cost-comparison",
       value: Number.parseInt(match[1], 10),
     };
   }
@@ -87,9 +87,9 @@ function parseCostFilter(text: string): ScryCardFilter | null {
  */
 function combineFilters(filters: ScryCardFilter[]): ScryCardFilter | undefined {
   const validFilters = filters.filter(Boolean);
-  if (validFilters.length === 0) return undefined;
-  if (validFilters.length === 1) return validFilters[0];
-  return { type: "and", filters: validFilters };
+  if (validFilters.length === 0) {return undefined;}
+  if (validFilters.length === 1) {return validFilters[0];}
+  return { filters: validFilters, type: "and" };
 }
 
 /**
@@ -104,7 +104,7 @@ function parseRemainderDestination(text: string): ScryDestination {
     lowerText.includes("put the rest into your discard") ||
     lowerText.includes("rest in your discard")
   ) {
-    return { zone: "discard", remainder: true };
+    return { remainder: true, zone: "discard" };
   }
 
   // Check for top of deck
@@ -114,11 +114,11 @@ function parseRemainderDestination(text: string): ScryDestination {
     lowerText.includes("put the rest on the top") ||
     lowerText.includes("put the rest on top")
   ) {
-    return { zone: "deck-top", remainder: true, ordering: "player-choice" };
+    return { ordering: "player-choice", remainder: true, zone: "deck-top" };
   }
 
   // Default: bottom of deck
-  return { zone: "deck-bottom", remainder: true, ordering: "player-choice" };
+  return { ordering: "player-choice", remainder: true, zone: "deck-bottom" };
 }
 
 /**
@@ -138,15 +138,15 @@ function parseMayRevealPattern(
 
     // Parse card type
     const typeFilter = parseCardTypeFilter(typeText);
-    if (typeFilter) filters.push(typeFilter);
+    if (typeFilter) {filters.push(typeFilter);}
 
     // Parse classification
     const classFilter = parseClassificationFilter(typeText);
-    if (classFilter) filters.push(classFilter);
+    if (classFilter) {filters.push(classFilter);}
 
     // Parse cost
     const costFilter = parseCostFilter(text);
-    if (costFilter) filters.push(costFilter);
+    if (costFilter) {filters.push(costFilter);}
 
     return {
       filter: combineFilters(filters),
@@ -162,13 +162,13 @@ function parseMayRevealPattern(
     const filters: ScryCardFilter[] = [];
 
     const typeFilter = parseCardTypeFilter(typeText);
-    if (typeFilter) filters.push(typeFilter);
+    if (typeFilter) {filters.push(typeFilter);}
 
     const classFilter = parseClassificationFilter(typeText);
-    if (classFilter) filters.push(classFilter);
+    if (classFilter) {filters.push(classFilter);}
 
     const costFilter = parseCostFilter(text);
-    if (costFilter) filters.push(costFilter);
+    if (costFilter) {filters.push(costFilter);}
 
     return {
       filter: combineFilters(filters),
@@ -215,7 +215,7 @@ function parseScryEffect(text: string): ScryEffect | null {
   // Extract amount of cards to look at
   const amountPattern = /look\s+at\s+the\s+top\s+(\d+)\s+cards?/i;
   const amountMatch = text.match(amountPattern);
-  if (!amountMatch) return null;
+  if (!amountMatch) {return null;}
 
   const amount = Number.parseInt(amountMatch[1], 10);
   const destinations: ScryDestination[] = [];
@@ -236,18 +236,18 @@ function parseScryEffect(text: string): ScryEffect | null {
     const revealInfo = parseMayRevealPattern(text);
     if (revealInfo) {
       destinations.push({
-        zone: "play",
-        min: 0,
-        max: revealInfo.max,
-        filter: revealInfo.filter,
         cost: "free",
+        filter: revealInfo.filter,
+        max: revealInfo.max,
+        min: 0,
         reveal: true,
+        zone: "play",
       });
     }
     destinations.push(parseRemainderDestination(text));
 
     logger.info("Parsed scry with play for free", { amount, destinations });
-    return { type: "scry", amount, target, destinations };
+    return { amount, destinations, target, type: "scry" };
   }
 
   // ========================================================================
@@ -260,21 +260,21 @@ function parseScryEffect(text: string): ScryEffect | null {
       lowerText.includes("put one into your hand") ||
       lowerText.includes("put 1 into your hand")
     ) {
-      destinations.push({ zone: "hand", min: 1, max: 1 });
+      destinations.push({ max: 1, min: 1, zone: "hand" });
     }
 
     // Add inkwell destination
     const isExerted =
       lowerText.includes("exerted") || lowerText.includes("facedown");
     destinations.push({
-      zone: "inkwell",
-      remainder: true,
       exerted: isExerted,
       facedown: true,
+      remainder: true,
+      zone: "inkwell",
     });
 
     logger.info("Parsed scry with inkwell", { amount, destinations });
-    return { type: "scry", amount, target, destinations };
+    return { amount, destinations, target, type: "scry" };
   }
 
   // ========================================================================
@@ -295,16 +295,16 @@ function parseScryEffect(text: string): ScryEffect | null {
       const type1 = multiMatch[2].trim();
       const filter1Filters: ScryCardFilter[] = [];
       const typeFilter1 = parseCardTypeFilter(type1);
-      if (typeFilter1) filter1Filters.push(typeFilter1);
+      if (typeFilter1) {filter1Filters.push(typeFilter1);}
       const classFilter1 = parseClassificationFilter(type1);
-      if (classFilter1) filter1Filters.push(classFilter1);
+      if (classFilter1) {filter1Filters.push(classFilter1);}
 
       destinations.push({
-        zone: "hand",
-        min: 0,
-        max: max1,
         filter: combineFilters(filter1Filters),
+        max: max1,
+        min: 0,
         reveal: true,
+        zone: "hand",
       });
 
       // Second filter
@@ -312,32 +312,32 @@ function parseScryEffect(text: string): ScryEffect | null {
       const type2 = multiMatch[4].trim();
       const filter2Filters: ScryCardFilter[] = [];
       const typeFilter2 = parseCardTypeFilter(type2);
-      if (typeFilter2) filter2Filters.push(typeFilter2);
+      if (typeFilter2) {filter2Filters.push(typeFilter2);}
       const classFilter2 = parseClassificationFilter(type2);
-      if (classFilter2) filter2Filters.push(classFilter2);
+      if (classFilter2) {filter2Filters.push(classFilter2);}
 
       destinations.push({
-        zone: "hand",
-        min: 0,
-        max: max2,
         filter: combineFilters(filter2Filters),
+        max: max2,
+        min: 0,
         reveal: true,
+        zone: "hand",
       });
     } else {
       // Single filter
       destinations.push({
-        zone: "hand",
-        min: 0,
-        max: revealInfo.max,
         filter: revealInfo.filter,
+        max: revealInfo.max,
+        min: 0,
         reveal: true,
+        zone: "hand",
       });
     }
 
     destinations.push(parseRemainderDestination(text));
 
     logger.info("Parsed scry with reveal to hand", { amount, destinations });
-    return { type: "scry", amount, target, destinations };
+    return { amount, destinations, target, type: "scry" };
   }
 
   // ========================================================================
@@ -349,11 +349,11 @@ function parseScryEffect(text: string): ScryEffect | null {
   const handMatch = text.match(handPattern);
   if (handMatch) {
     const handCount = handMatch[1] ? Number.parseInt(handMatch[1], 10) : 1;
-    destinations.push({ zone: "hand", min: handCount, max: handCount });
+    destinations.push({ max: handCount, min: handCount, zone: "hand" });
     destinations.push(parseRemainderDestination(text));
 
     logger.info("Parsed scry with hand destination", { amount, destinations });
-    return { type: "scry", amount, target, destinations };
+    return { amount, destinations, target, type: "scry" };
   }
 
   // ========================================================================
@@ -364,11 +364,11 @@ function parseScryEffect(text: string): ScryEffect | null {
     lowerText.includes("on either the top or the bottom") ||
     lowerText.includes("top or bottom")
   ) {
-    destinations.push({ zone: "deck-top", min: 0, max: 1 });
-    destinations.push({ zone: "deck-bottom", remainder: true });
+    destinations.push({ max: 1, min: 0, zone: "deck-top" });
+    destinations.push({ remainder: true, zone: "deck-bottom" });
 
     logger.info("Parsed scry with top/bottom choice", { amount, destinations });
-    return { type: "scry", amount, target, destinations };
+    return { amount, destinations, target, type: "scry" };
   }
 
   // ========================================================================
@@ -381,13 +381,13 @@ function parseScryEffect(text: string): ScryEffect | null {
     lowerText.includes("put them on the top")
   ) {
     destinations.push({
-      zone: "deck-top",
-      remainder: true,
       ordering: "player-choice",
+      remainder: true,
+      zone: "deck-top",
     });
 
     logger.info("Parsed scry with reorder on top", { amount, destinations });
-    return { type: "scry", amount, target, destinations };
+    return { amount, destinations, target, type: "scry" };
   }
 
   // ========================================================================
@@ -395,13 +395,13 @@ function parseScryEffect(text: string): ScryEffect | null {
   // Fall back to putting all on bottom
   // ========================================================================
   destinations.push({
-    zone: "deck-bottom",
-    remainder: true,
     ordering: "player-choice",
+    remainder: true,
+    zone: "deck-bottom",
   });
 
   logger.info("Parsed basic scry effect", { amount, destinations });
-  return { type: "scry", amount, target, destinations };
+  return { amount, destinations, target, type: "scry" };
 }
 
 // ============================================================================
@@ -429,9 +429,9 @@ function parseSearchDeckEffect(text: string): SearchDeckEffect | null {
       logger.info("Parsed search deck and shuffle effect", { cardType });
 
       const effect: SearchDeckEffect = {
-        type: "search-deck",
         putInto: "hand",
         shuffle: true,
+        type: "search-deck",
       };
       if (cardType) {
         effect.cardType = cardType;
@@ -457,9 +457,9 @@ function parseSearchDeckEffect(text: string): SearchDeckEffect | null {
       logger.info("Parsed search deck and put effect", { cardType, putInto });
 
       const effect: SearchDeckEffect = {
-        type: "search-deck",
         putInto,
         shuffle: false,
+        type: "search-deck",
       };
       if (cardType) {
         effect.cardType = cardType;
@@ -478,9 +478,9 @@ function parseSearchDeckEffect(text: string): SearchDeckEffect | null {
       logger.info("Parsed search deck effect", { cardType });
 
       const effect: SearchDeckEffect = {
-        type: "search-deck",
         putInto: "hand",
         shuffle: false,
+        type: "search-deck",
       };
       if (cardType) {
         effect.cardType = cardType;
@@ -505,13 +505,13 @@ function parseFromText(text: string): SearchDeckEffect | ScryEffect | null {
   // Try scry effect first (look at top X cards)
   if (/look\s+at\s+the\s+top/i.test(text)) {
     const scryEffect = parseScryEffect(text);
-    if (scryEffect) return scryEffect;
+    if (scryEffect) {return scryEffect;}
   }
 
   // Try search deck effect
   if (/search\s+your\s+deck/i.test(text)) {
     const searchEffect = parseSearchDeckEffect(text);
-    if (searchEffect) return searchEffect;
+    if (searchEffect) {return searchEffect;}
   }
 
   logger.debug("Search/scry effect pattern did not match");
@@ -522,10 +522,8 @@ function parseFromText(text: string): SearchDeckEffect | ScryEffect | null {
  * Search/Scry effect parser implementation
  */
 export const searchEffectParser: EffectParser = {
-  pattern: /search\s+your\s+deck|look\s+at\s+the\s+top/i,
   description:
     "Parses search and scry effects (e.g., 'search your deck', 'look at the top 3 cards')",
-
   parse: (input: CstNode | string): SearchDeckEffect | ScryEffect | null => {
     if (typeof input === "string") {
       return parseFromText(input);
@@ -534,4 +532,6 @@ export const searchEffectParser: EffectParser = {
     logger.warn("CST parsing not implemented for search effects");
     return null;
   },
+
+  pattern: /search\s+your\s+deck|look\s+at\s+the\s+top/i,
 };

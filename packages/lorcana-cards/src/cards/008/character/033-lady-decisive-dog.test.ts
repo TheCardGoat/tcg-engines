@@ -3,92 +3,92 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   denahiImpatientHunter,
-//   ladyMissParkAvenue,
-//   trampEnterprisingDog,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   DenahiImpatientHunter,
+//   LadyMissParkAvenue,
+//   TrampEnterprisingDog,
 // } from "@lorcanito/lorcana-engine/cards/007";
-// import {
-//   druunRavenousPlague,
-//   ladyDecisiveDog,
-//   trampObservantGuardian,
-//   wasabiAlwaysPrepared,
+// Import {
+//   DruunRavenousPlague,
+//   LadyDecisiveDog,
+//   TrampObservantGuardian,
+//   WasabiAlwaysPrepared,
 // } from "@lorcanito/lorcana-engine/cards/008";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Lady - Decisive Dog", () => {
-//   it("TAKE THE LEAD While this character has 3 {S} or more, she gets +2 {L}. + PACK OF HER OWN Whenever you play a character, this character gets +1 {S} this turn.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: 4,
-//       play: [ladyDecisiveDog],
-//       hand: [trampEnterprisingDog, trampObservantGuardian],
+// Describe("Lady - Decisive Dog", () => {
+//   It("TAKE THE LEAD While this character has 3 {S} or more, she gets +2 {L}. + PACK OF HER OWN Whenever you play a character, this character gets +1 {S} this turn.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: 4,
+//       Play: [ladyDecisiveDog],
+//       Hand: [trampEnterprisingDog, trampObservantGuardian],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(ladyDecisiveDog);
+//     Const cardUnderTest = testEngine.getCardModel(ladyDecisiveDog);
 //
-//     expect(cardUnderTest.strength).toBe(0);
-//     expect(cardUnderTest.lore).toBe(1);
+//     Expect(cardUnderTest.strength).toBe(0);
+//     Expect(cardUnderTest.lore).toBe(1);
 //
-//     await testEngine.playCard(trampObservantGuardian);
-//     await testEngine.resolveTopOfStack({ targets: [cardUnderTest] });
+//     Await testEngine.playCard(trampObservantGuardian);
+//     Await testEngine.resolveTopOfStack({ targets: [cardUnderTest] });
 //
-//     expect(cardUnderTest.strength).toBe(1);
-//     expect(cardUnderTest.lore).toBe(1);
+//     Expect(cardUnderTest.strength).toBe(1);
+//     Expect(cardUnderTest.lore).toBe(1);
 //
-//     await testEngine.playCard(trampEnterprisingDog);
-//     await testEngine.resolveTopOfStack({ targets: [cardUnderTest] });
+//     Await testEngine.playCard(trampEnterprisingDog);
+//     Await testEngine.resolveTopOfStack({ targets: [cardUnderTest] });
 //
 //     // Lady +1 {S} & Tramp +2 {S}
-//     expect(cardUnderTest.strength).toBe(4);
-//     expect(cardUnderTest.lore).toBe(3);
+//     Expect(cardUnderTest.strength).toBe(4);
+//     Expect(cardUnderTest.lore).toBe(3);
 //   });
 // });
 //
-// describe("Lady - Decisive Dog", () => {
-//   it("Shifting her should keep the strenght but not the lore gained", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell:
-//         denahiImpatientHunter.cost +
-//         ladyDecisiveDog.cost +
-//         druunRavenousPlague.cost +
-//         wasabiAlwaysPrepared.cost +
+// Describe("Lady - Decisive Dog", () => {
+//   It("Shifting her should keep the strenght but not the lore gained", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell:
+//         DenahiImpatientHunter.cost +
+//         LadyDecisiveDog.cost +
+//         DruunRavenousPlague.cost +
+//         WasabiAlwaysPrepared.cost +
 //         4 +
 //         3,
-//       play: [ladyDecisiveDog],
-//       hand: [
-//         denahiImpatientHunter,
-//         druunRavenousPlague,
-//         ladyMissParkAvenue,
-//         wasabiAlwaysPrepared,
+//       Play: [ladyDecisiveDog],
+//       Hand: [
+//         DenahiImpatientHunter,
+//         DruunRavenousPlague,
+//         LadyMissParkAvenue,
+//         WasabiAlwaysPrepared,
 //       ],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(ladyDecisiveDog);
+//     Const cardUnderTest = testEngine.getCardModel(ladyDecisiveDog);
 //
-//     expect(cardUnderTest.strength).toBe(0);
-//     expect(cardUnderTest.lore).toBe(1);
+//     Expect(cardUnderTest.strength).toBe(0);
+//     Expect(cardUnderTest.lore).toBe(1);
 //
-//     await testEngine.playCard(druunRavenousPlague);
-//     expect(cardUnderTest.strength).toBe(ladyDecisiveDog.strength + 1);
-//     expect(cardUnderTest.lore).toBe(1);
+//     Await testEngine.playCard(druunRavenousPlague);
+//     Expect(cardUnderTest.strength).toBe(ladyDecisiveDog.strength + 1);
+//     Expect(cardUnderTest.lore).toBe(1);
 //
-//     await testEngine.playCard(denahiImpatientHunter);
-//     expect(cardUnderTest.strength).toBe(ladyDecisiveDog.strength + 2);
-//     expect(cardUnderTest.lore).toBe(1);
+//     Await testEngine.playCard(denahiImpatientHunter);
+//     Expect(cardUnderTest.strength).toBe(ladyDecisiveDog.strength + 2);
+//     Expect(cardUnderTest.lore).toBe(1);
 //
-//     await testEngine.playCard(wasabiAlwaysPrepared);
-//     expect(cardUnderTest.strength).toBe(ladyDecisiveDog.strength + 3);
-//     expect(cardUnderTest.lore).toBe(3);
+//     Await testEngine.playCard(wasabiAlwaysPrepared);
+//     Expect(cardUnderTest.strength).toBe(ladyDecisiveDog.strength + 3);
+//     Expect(cardUnderTest.lore).toBe(3);
 //
-//     const { shifter } = await testEngine.shiftCard({
-//       shifted: ladyDecisiveDog,
-//       shifter: ladyMissParkAvenue,
+//     Const { shifter } = await testEngine.shiftCard({
+//       Shifted: ladyDecisiveDog,
+//       Shifter: ladyMissParkAvenue,
 //     });
-//     await testEngine.skipTopOfStack();
+//     Await testEngine.skipTopOfStack();
 //
-//     expect(shifter.lore).toBe(ladyMissParkAvenue.lore);
-//     expect(shifter.strength).toBe(ladyMissParkAvenue.strength + 3);
+//     Expect(shifter.lore).toBe(ladyMissParkAvenue.lore);
+//     Expect(shifter.strength).toBe(ladyMissParkAvenue.strength + 3);
 //   });
 // });
 //

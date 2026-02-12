@@ -3,25 +3,25 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { gyroGearlooseGadgetGenius } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { gyroGearlooseGadgetGenius } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Gyro Gearloose - Gadget Genius", () => {
-//   it.skip("**FOLLOW THE TWISTS OF MY GENIUS BRAIN** {E} - Put an item card from your discard to the top of your deck.", () => {
-//     const testStore = new TestStore({
-//       inkwell: gyroGearlooseGadgetGenius.cost,
-//       play: [gyroGearlooseGadgetGenius],
+// Describe("Gyro Gearloose - Gadget Genius", () => {
+//   It.skip("**FOLLOW THE TWISTS OF MY GENIUS BRAIN** {E} - Put an item card from your discard to the top of your deck.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: gyroGearlooseGadgetGenius.cost,
+//       Play: [gyroGearlooseGadgetGenius],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       gyroGearlooseGadgetGenius.id,
+//       GyroGearlooseGadgetGenius.id,
 //     );
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

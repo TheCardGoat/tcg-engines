@@ -1,35 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const magicBroomDancingDuster: CharacterCard = {
-  id: "1k5",
-  cardType: "character",
-  name: "Magic Broom",
-  version: "Dancing Duster",
-  fullName: "Magic Broom - Dancing Duster",
-  inkType: ["amethyst"],
-  franchise: "Fantasia",
-  set: "003",
-  text: "POWER CLEAN When you play this character, if you have a Sorcerer character in play, you may exert chosen opposing character. They can't ready at the start of their next turn.",
-  cost: 6,
-  strength: 3,
-  willpower: 3,
-  lore: 1,
-  cardNumber: 44,
-  inkable: false,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "cb2138848bcc8eaa3b83ee763a9e79f2de568321",
-  },
   abilities: [
     {
-      id: "1k5-1",
-      type: "triggered",
-      name: "POWER CLEAN",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "conditional",
         condition: {
@@ -43,8 +16,35 @@ export const magicBroomDancingDuster: CharacterCard = {
           duration: "until-start-of-next-turn",
         },
       },
+      id: "1k5-1",
+      name: "POWER CLEAN",
       text: "POWER CLEAN When you play this character, if you have a Sorcerer character in play, you may exert chosen opposing character. They can't ready at the start of their next turn.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 44,
+  cardType: "character",
   classifications: ["Dreamborn", "Broom"],
+  cost: 6,
+  externalIds: {
+    ravensburger: "cb2138848bcc8eaa3b83ee763a9e79f2de568321",
+  },
+  franchise: "Fantasia",
+  fullName: "Magic Broom - Dancing Duster",
+  id: "1k5",
+  inkType: ["amethyst"],
+  inkable: false,
+  lore: 1,
+  missingTests: true,
+  name: "Magic Broom",
+  set: "003",
+  strength: 3,
+  text: "POWER CLEAN When you play this character, if you have a Sorcerer character in play, you may exert chosen opposing character. They can't ready at the start of their next turn.",
+  version: "Dancing Duster",
+  willpower: 3,
 };

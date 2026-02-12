@@ -1,35 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const scarBetrayer: CharacterCard = {
-  id: "1rc",
-  cardType: "character",
-  name: "Scar",
-  version: "Betrayer",
-  fullName: "Scar - Betrayer",
-  inkType: ["ruby"],
-  franchise: "Lion King",
-  set: "005",
-  text: "LONG LIVE THE KING When you play this character, you may banish chosen character named Mufasa.",
-  cost: 5,
-  strength: 6,
-  willpower: 3,
-  lore: 2,
-  cardNumber: 109,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "e32abffa68664089a138943286790c91aa3b29ed",
-  },
   abilities: [
     {
-      id: "1rc-1",
-      type: "triggered",
-      name: "LONG LIVE THE KING",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -44,8 +17,35 @@ export const scarBetrayer: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "1rc-1",
+      name: "LONG LIVE THE KING",
       text: "LONG LIVE THE KING When you play this character, you may banish chosen character named Mufasa.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 109,
+  cardType: "character",
   classifications: ["Storyborn", "Villain"],
+  cost: 5,
+  externalIds: {
+    ravensburger: "e32abffa68664089a138943286790c91aa3b29ed",
+  },
+  franchise: "Lion King",
+  fullName: "Scar - Betrayer",
+  id: "1rc",
+  inkType: ["ruby"],
+  inkable: true,
+  lore: 2,
+  missingTests: true,
+  name: "Scar",
+  set: "005",
+  strength: 6,
+  text: "LONG LIVE THE KING When you play this character, you may banish chosen character named Mufasa.",
+  version: "Betrayer",
+  willpower: 3,
 };

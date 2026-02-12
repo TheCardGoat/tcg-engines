@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { captainAmeliaFirstInCommand } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { captainAmeliaFirstInCommand } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Captain Amelia - First in Command", () => {
-//   it.skip("**DISCIPLINE** During your turn, this character gains **Evasive**. _(They can challenge characters with Evasive.)_", () => {
-//     const testStore = new TestStore({
-//       inkwell: captainAmeliaFirstInCommand.cost,
-//       play: [captainAmeliaFirstInCommand],
+// Describe("Captain Amelia - First in Command", () => {
+//   It.skip("**DISCIPLINE** During your turn, this character gains **Evasive**. _(They can challenge characters with Evasive.)_", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: captainAmeliaFirstInCommand.cost,
+//       Play: [captainAmeliaFirstInCommand],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(captainAmeliaFirstInCommand);
+//     Const cardUnderTest = testStore.getCard(captainAmeliaFirstInCommand);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

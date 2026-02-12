@@ -3,44 +3,44 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { peterPanFearless } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { peteBadGuy } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { peteWrestlingChamp } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { peterPanFearless } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { peteBadGuy } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { peteWrestlingChamp } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Pete - Wrestling Champ", () => {
-//   describe("**RE-PETE** {E} - Reveal the top card of your deck. If it’s a character card named Pete, you may play it for free.", () => {
-//     it("Pete on top", () => {
-//       const testStore = new TestStore({
-//         play: [peteWrestlingChamp],
-//         deck: [peteBadGuy],
+// Describe("Pete - Wrestling Champ", () => {
+//   Describe("**RE-PETE** {E} - Reveal the top card of your deck. If it’s a character card named Pete, you may play it for free.", () => {
+//     It("Pete on top", () => {
+//       Const testStore = new TestStore({
+//         Play: [peteWrestlingChamp],
+//         Deck: [peteBadGuy],
 //       });
 //
-//       const cardUnderTest = testStore.getCard(peteWrestlingChamp);
+//       Const cardUnderTest = testStore.getCard(peteWrestlingChamp);
 //
-//       const target = testStore.getCard(peteBadGuy);
+//       Const target = testStore.getCard(peteBadGuy);
 //
-//       cardUnderTest.activate();
-//       testStore.resolveOptionalAbility();
+//       CardUnderTest.activate();
+//       TestStore.resolveOptionalAbility();
 //
-//       expect(target.zone).toEqual("play");
+//       Expect(target.zone).toEqual("play");
 //     });
 //
-//     it("Peter Pan on top", () => {
-//       const testStore = new TestStore({
-//         play: [peteWrestlingChamp],
-//         deck: [peterPanFearless],
+//     It("Peter Pan on top", () => {
+//       Const testStore = new TestStore({
+//         Play: [peteWrestlingChamp],
+//         Deck: [peterPanFearless],
 //       });
 //
-//       const cardUnderTest = testStore.getCard(peteWrestlingChamp);
+//       Const cardUnderTest = testStore.getCard(peteWrestlingChamp);
 //
-//       const target = testStore.getCard(peterPanFearless);
+//       Const target = testStore.getCard(peterPanFearless);
 //
-//       cardUnderTest.activate();
+//       CardUnderTest.activate();
 //
-//       expect(target.zone).toEqual("deck");
-//       expect(target.meta.revealed).toEqual(true);
+//       Expect(target.zone).toEqual("deck");
+//       Expect(target.meta.revealed).toEqual(true);
 //     });
 //   });
 // });

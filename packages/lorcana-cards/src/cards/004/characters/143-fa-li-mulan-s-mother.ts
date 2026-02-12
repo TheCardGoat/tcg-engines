@@ -1,25 +1,25 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
 //
-// export const faLiMulansMother: LorcanitoCharacterCard = {
-//   id: "u1g",
-//   name: "Fa Li",
-//   title: "Mulan's Mother",
-//   characteristics: ["storyborn", "mentor"],
-//   type: "character",
-//   flavour: "When far from home, Mulan often thinks of her calming presence.",
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 1,
-//   strength: 1,
-//   willpower: 3,
-//   lore: 1,
-//   illustrator: "Sarah Schmidt",
-//   number: 143,
-//   set: "URR",
-//   externalIds: {
-//     tcgPlayer: 549527,
+// Export const faLiMulansMother: LorcanitoCharacterCard = {
+//   Id: "u1g",
+//   Name: "Fa Li",
+//   Title: "Mulan's Mother",
+//   Characteristics: ["storyborn", "mentor"],
+//   Type: "character",
+//   Flavour: "When far from home, Mulan often thinks of her calming presence.",
+//   Inkwell: true,
+//   Colors: ["sapphire"],
+//   Cost: 1,
+//   Strength: 1,
+//   Willpower: 3,
+//   Lore: 1,
+//   Illustrator: "Sarah Schmidt",
+//   Number: 143,
+//   Set: "URR",
+//   ExternalIds: {
+//     TcgPlayer: 549527,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

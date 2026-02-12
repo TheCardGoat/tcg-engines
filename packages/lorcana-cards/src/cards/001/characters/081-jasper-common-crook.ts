@@ -1,52 +1,52 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const jasperCommonCrook: CharacterCard = {
-  id: "agw",
-  cardType: "character",
-  name: "Jasper",
-  version: "Common Crook",
-  fullName: "Jasper - Common Crook",
-  inkType: ["emerald"],
-  franchise: "Disney",
-  set: "001",
-  text: "**PUPPYNAPPING** Whenever this character quests, chosen opposing character can",
-  cost: 3,
-  strength: 2,
-  willpower: 4,
-  lore: 1,
+  abilities: [],
   cardNumber: 81,
-  inkable: true,
+  cardType: "character",
+  classifications: ["Storyborn", "Ally"],
+  cost: 3,
   externalIds: {
     ravensburger: "",
   },
-  abilities: [],
-  classifications: ["Storyborn", "Ally"],
+  franchise: "Disney",
+  fullName: "Jasper - Common Crook",
+  id: "agw",
+  inkType: ["emerald"],
+  inkable: true,
+  lore: 1,
+  name: "Jasper",
+  set: "001",
+  strength: 2,
+  text: "**PUPPYNAPPING** Whenever this character quests, chosen opposing character can",
+  version: "Common Crook",
+  willpower: 4,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { wheneverQuests } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import { wheneverQuests } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const jasperCommonCrook: LorcanitoCharacterCard = {
-//   id: "agw",
-//   name: "Jasper",
-//   title: "Common Crook",
-//   characteristics: ["storyborn", "ally"],
-//   text: "**PUPPYNAPPING** Whenever this character quests, chosen opposing character can't quest during their next turn.",
-//   type: "character",
-//   abilities: [
-//     wheneverQuests({
-//       name: "Puppynapping",
-//       text: "Whenever this character quests, chosen opposing character can't quest during their next turn.",
-//       effects: [
+// Export const jasperCommonCrook: LorcanitoCharacterCard = {
+//   Id: "agw",
+//   Name: "Jasper",
+//   Title: "Common Crook",
+//   Characteristics: ["storyborn", "ally"],
+//   Text: "**PUPPYNAPPING** Whenever this character quests, chosen opposing character can't quest during their next turn.",
+//   Type: "character",
+//   Abilities: [
+//     WheneverQuests({
+//       Name: "Puppynapping",
+//       Text: "Whenever this character quests, chosen opposing character can't quest during their next turn.",
+//       Effects: [
 //         {
-//           type: "restriction",
-//           restriction: "quest",
-//           duration: "next_turn",
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
+//           Type: "restriction",
+//           Restriction: "quest",
+//           Duration: "next_turn",
+//           Target: {
+//             Type: "card",
+//             Value: 1,
+//             Filters: [
 //               { filter: "type", value: "character" },
 //               { filter: "zone", value: "play" },
 //               { filter: "owner", value: "opponent" },
@@ -56,19 +56,19 @@ export const jasperCommonCrook: CharacterCard = {
 //       ],
 //     }),
 //   ],
-//   flavour: "Now, look here, Horace, I warned you about thinkin.",
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 3,
-//   strength: 2,
-//   willpower: 4,
-//   lore: 1,
-//   illustrator: "Jochem Van Gool",
-//   number: 81,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 507498,
+//   Flavour: "Now, look here, Horace, I warned you about thinkin.",
+//   Inkwell: true,
+//   Colors: ["emerald"],
+//   Cost: 3,
+//   Strength: 2,
+//   Willpower: 4,
+//   Lore: 1,
+//   Illustrator: "Jochem Van Gool",
+//   Number: 81,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 507498,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

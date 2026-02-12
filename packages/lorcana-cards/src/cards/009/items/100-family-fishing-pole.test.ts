@@ -3,45 +3,45 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { deweyLovableShowoff } from "@lorcanito/lorcana-engine/cards/008";
-// import { familyFishingPole } from "@lorcanito/lorcana-engine/cards/009/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { deweyLovableShowoff } from "@lorcanito/lorcana-engine/cards/008";
+// Import { familyFishingPole } from "@lorcanito/lorcana-engine/cards/009/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Family Fishing Pole", () => {
-//   it("WATCH CLOSELY This item enters play exerted.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: familyFishingPole.cost,
-//       hand: [familyFishingPole],
+// Describe("Family Fishing Pole", () => {
+//   It("WATCH CLOSELY This item enters play exerted.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: familyFishingPole.cost,
+//       Hand: [familyFishingPole],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(familyFishingPole);
+//     Const cardUnderTest = testEngine.getCardModel(familyFishingPole);
 //
-//     await testEngine.playCard(cardUnderTest);
+//     Await testEngine.playCard(cardUnderTest);
 //
-//     expect(cardUnderTest.exerted).toBe(true);
+//     Expect(cardUnderTest.exerted).toBe(true);
 //   });
 //
-//   it("THE PERFECT CAST {E}, 1 {I}, Banish this item – Return chosen exerted character of yours to your hand to gain 2 lore.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: 1,
-//       play: [familyFishingPole, deweyLovableShowoff],
+//   It("THE PERFECT CAST {E}, 1 {I}, Banish this item – Return chosen exerted character of yours to your hand to gain 2 lore.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: 1,
+//       Play: [familyFishingPole, deweyLovableShowoff],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(familyFishingPole);
-//     const targetCard = testEngine.getCardModel(deweyLovableShowoff);
-//     targetCard.exert();
+//     Const cardUnderTest = testEngine.getCardModel(familyFishingPole);
+//     Const targetCard = testEngine.getCardModel(deweyLovableShowoff);
+//     TargetCard.exert();
 //
 //     // await testEngine.activateCard(cardUnderTest);
 //
-//     cardUnderTest.activate("THE PERFECT CAST");
+//     CardUnderTest.activate("THE PERFECT CAST");
 //
 //     // await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({ targets: [targetCard] });
+//     Await testEngine.resolveTopOfStack({ targets: [targetCard] });
 //
-//     expect(cardUnderTest.zone).toBe("discard");
-//     expect(targetCard.zone).toBe("hand");
-//     expect(testEngine.getPlayerLore()).toBe(2);
+//     Expect(cardUnderTest.zone).toBe("discard");
+//     Expect(targetCard.zone).toBe("hand");
+//     Expect(testEngine.getPlayerLore()).toBe(2);
 //   });
 // });
 //

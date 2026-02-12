@@ -3,37 +3,37 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   mirabelMadrigalMusicallyTalented,
-//   soMuchToGive,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   MirabelMadrigalMusicallyTalented,
+//   SoMuchToGive,
 // } from "@lorcanito/lorcana-engine/cards/007";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Mirabel Madrigal - Musically Talented", () => {
-//   it("Shift 4 (You may pay 4 {I} to play this on top of one of your characters named Mirabel Madrigal.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [mirabelMadrigalMusicallyTalented],
+// Describe("Mirabel Madrigal - Musically Talented", () => {
+//   It("Shift 4 (You may pay 4 {I} to play this on top of one of your characters named Mirabel Madrigal.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [mirabelMadrigalMusicallyTalented],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(
-//       mirabelMadrigalMusicallyTalented,
+//     Const cardUnderTest = testEngine.getCardModel(
+//       MirabelMadrigalMusicallyTalented,
 //     );
-//     expect(cardUnderTest.hasShift).toBe(true);
+//     Expect(cardUnderTest.hasShift).toBe(true);
 //   });
 //
-//   it("HER OWN SPECIAL GIFT Whenever this character quests, you may return a song card with cost 3 or less from your discard to your hand.", async () => {
-//     const testEngine = new TestEngine({
-//       play: [mirabelMadrigalMusicallyTalented],
-//       discard: [soMuchToGive],
+//   It("HER OWN SPECIAL GIFT Whenever this character quests, you may return a song card with cost 3 or less from your discard to your hand.", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [mirabelMadrigalMusicallyTalented],
+//       Discard: [soMuchToGive],
 //     });
 //
-//     await testEngine.questCard(mirabelMadrigalMusicallyTalented);
+//     Await testEngine.questCard(mirabelMadrigalMusicallyTalented);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({ targets: [soMuchToGive] });
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({ targets: [soMuchToGive] });
 //
-//     expect(testEngine.getCardModel(soMuchToGive).zone).toBe("hand");
+//     Expect(testEngine.getCardModel(soMuchToGive).zone).toBe("hand");
 //   });
 // });
 //

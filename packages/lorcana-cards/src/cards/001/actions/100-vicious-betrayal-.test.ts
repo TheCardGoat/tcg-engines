@@ -2,45 +2,45 @@
 // /**
 //  * @jest-environment node
 //  */
-// import { describe, expect, it } from "@jest/globals";
-// import { viciousBetrayal } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
-// import {
-//   moanaOfMotunui,
-//   teKaTheBurningOne,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { viciousBetrayal } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
+// Import {
+//   MoanaOfMotunui,
+//   TeKaTheBurningOne,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Vicious Betrayal", () => {
-//   it("[Non Villain] Chosen character gets +2 {S} this turn.", () => {
-//     const testStore = new TestStore({
-//       inkwell: viciousBetrayal.cost,
-//       hand: [viciousBetrayal],
-//       play: [moanaOfMotunui],
+// Describe("Vicious Betrayal", () => {
+//   It("[Non Villain] Chosen character gets +2 {S} this turn.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: viciousBetrayal.cost,
+//       Hand: [viciousBetrayal],
+//       Play: [moanaOfMotunui],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", viciousBetrayal.id);
-//     const target = testStore.getByZoneAndId("play", moanaOfMotunui.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", viciousBetrayal.id);
+//     Const target = testStore.getByZoneAndId("play", moanaOfMotunui.id);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveTopOfStack({ targetId: target.instanceId });
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveTopOfStack({ targetId: target.instanceId });
 //
-//     expect(target.strength).toEqual((target.lorcanitoCard.strength || 0) + 2);
+//     Expect(target.strength).toEqual((target.lorcanitoCard.strength || 0) + 2);
 //   });
 //
-//   it("[Villain] Chosen character gets +2 {S} this turn.", () => {
-//     const testStore = new TestStore({
-//       inkwell: viciousBetrayal.cost,
-//       hand: [viciousBetrayal],
-//       play: [teKaTheBurningOne],
+//   It("[Villain] Chosen character gets +2 {S} this turn.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: viciousBetrayal.cost,
+//       Hand: [viciousBetrayal],
+//       Play: [teKaTheBurningOne],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", viciousBetrayal.id);
-//     const target = testStore.getByZoneAndId("play", teKaTheBurningOne.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", viciousBetrayal.id);
+//     Const target = testStore.getByZoneAndId("play", teKaTheBurningOne.id);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveTopOfStack({ targetId: target.instanceId });
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveTopOfStack({ targetId: target.instanceId });
 //
-//     expect(target.strength).toEqual((target.lorcanitoCard.strength || 0) + 3);
+//     Expect(target.strength).toEqual((target.lorcanitoCard.strength || 0) + 3);
 //   });
 // });
 //

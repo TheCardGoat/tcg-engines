@@ -3,20 +3,20 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { razoulMenacingGuard } from "@lorcanito/lorcana-engine/cards/007/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { razoulMenacingGuard } from "@lorcanito/lorcana-engine/cards/007/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Razoul - Menacing Guard", () => {
-//   it.skip("MY ORDERS COME FROM JAFAR When you play this character, if you have a character named Jafar in play, you may banish chosen item.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: razoulMenacingGuard.cost,
-//       hand: [razoulMenacingGuard],
+// Describe("Razoul - Menacing Guard", () => {
+//   It.skip("MY ORDERS COME FROM JAFAR When you play this character, if you have a character named Jafar in play, you may banish chosen item.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: razoulMenacingGuard.cost,
+//       Hand: [razoulMenacingGuard],
 //     });
 //
-//     await testEngine.playCard(razoulMenacingGuard);
-//     await testEngine.acceptOptionalLayer();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.playCard(razoulMenacingGuard);
+//     Await testEngine.acceptOptionalLayer();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

@@ -1,54 +1,54 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { duringOpponentsTurn } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
-// import { wheneverOneOfYouCharactersIsBanished } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { duringOpponentsTurn } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
+// Import { wheneverOneOfYouCharactersIsBanished } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
 //
-// export const chiefBogoCommandingOfficer: LorcanitoCharacterCard = {
-//   id: "g07",
-//   name: "Chief Bogo",
-//   title: "Commanding Officer",
-//   characteristics: ["storyborn"],
-//   text: "SENDING BACKUP During an opponent's turn, whenever one of your characters with Bodyguard is banished, you may reveal the top card of your deck. If it's a character card with cost 5 or less, you may play that character for free. Otherwise, put it on the top of your deck.",
-//   type: "character",
-//   inkwell: true,
-//   colors: ["amber"],
-//   cost: 6,
-//   strength: 5,
-//   willpower: 5,
-//   illustrator: "Nicola Savioli",
-//   number: 18,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631362,
+// Export const chiefBogoCommandingOfficer: LorcanitoCharacterCard = {
+//   Id: "g07",
+//   Name: "Chief Bogo",
+//   Title: "Commanding Officer",
+//   Characteristics: ["storyborn"],
+//   Text: "SENDING BACKUP During an opponent's turn, whenever one of your characters with Bodyguard is banished, you may reveal the top card of your deck. If it's a character card with cost 5 or less, you may play that character for free. Otherwise, put it on the top of your deck.",
+//   Type: "character",
+//   Inkwell: true,
+//   Colors: ["amber"],
+//   Cost: 6,
+//   Strength: 5,
+//   Willpower: 5,
+//   Illustrator: "Nicola Savioli",
+//   Number: 18,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631362,
 //   },
-//   rarity: "legendary",
-//   lore: 1,
-//   abilities: [
-//     wheneverOneOfYouCharactersIsBanished({
-//       name: "SENDING BACKUP",
-//       text: "During an opponent's turn, whenever one of your characters with Bodyguard is banished, you may reveal the top card of your deck. If it's a character card with cost 5 or less, you may play that character for free. Otherwise, put it on the top of your deck.",
-//       optional: true,
-//       conditions: [duringOpponentsTurn],
-//       triggerTarget: [
+//   Rarity: "legendary",
+//   Lore: 1,
+//   Abilities: [
+//     WheneverOneOfYouCharactersIsBanished({
+//       Name: "SENDING BACKUP",
+//       Text: "During an opponent's turn, whenever one of your characters with Bodyguard is banished, you may reveal the top card of your deck. If it's a character card with cost 5 or less, you may play that character for free. Otherwise, put it on the top of your deck.",
+//       Optional: true,
+//       Conditions: [duringOpponentsTurn],
+//       TriggerTarget: [
 //         { filter: "owner", value: "self" },
 //         { filter: "type", value: "character" },
 //         { filter: "ability", value: "bodyguard" },
 //       ],
-//       effects: [
+//       Effects: [
 //         {
-//           type: "reveal-and-play",
-//           putInto: "deck",
-//           exerted: false,
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
+//           Type: "reveal-and-play",
+//           PutInto: "deck",
+//           Exerted: false,
+//           Target: {
+//             Type: "card",
+//             Value: 1,
+//             Filters: [
 //               { filter: "type", value: "character" },
 //               { filter: "owner", value: "self" },
 //               {
-//                 filter: "attribute",
-//                 value: "cost",
-//                 comparison: { operator: "lte", value: 5 },
+//                 Filter: "attribute",
+//                 Value: "cost",
+//                 Comparison: { operator: "lte", value: 5 },
 //               },
 //             ],
 //           },

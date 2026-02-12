@@ -3,27 +3,27 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   billTheLizardChimneySweep,
-//   deweyLovableShowoff,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   BillTheLizardChimneySweep,
+//   DeweyLovableShowoff,
 // } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Bill The Lizard - Chimney Sweep", () => {
-//   it("NOTHING TO IT While another character in play has damage, this character gains Evasive. (Only characters with Evasive can challenge them.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [billTheLizardChimneySweep, deweyLovableShowoff],
+// Describe("Bill The Lizard - Chimney Sweep", () => {
+//   It("NOTHING TO IT While another character in play has damage, this character gains Evasive. (Only characters with Evasive can challenge them.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [billTheLizardChimneySweep, deweyLovableShowoff],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(billTheLizardChimneySweep);
-//     const otherCard = testEngine.getCardModel(deweyLovableShowoff);
+//     Const cardUnderTest = testEngine.getCardModel(billTheLizardChimneySweep);
+//     Const otherCard = testEngine.getCardModel(deweyLovableShowoff);
 //
-//     expect(cardUnderTest.hasEvasive).toBe(false);
+//     Expect(cardUnderTest.hasEvasive).toBe(false);
 //
-//     await testEngine.setCardDamage(otherCard, 1);
+//     Await testEngine.setCardDamage(otherCard, 1);
 //
-//     expect(cardUnderTest.hasEvasive).toBe(true);
+//     Expect(cardUnderTest.hasEvasive).toBe(true);
 //   });
 // });
 //

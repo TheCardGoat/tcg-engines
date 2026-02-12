@@ -3,72 +3,72 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { arielSpectacularSinger } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { theQueensCastleMirrorChamber } from "@lorcanito/lorcana-engine/cards/003/locations/locations";
-// import { tipoGrowingSon } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { restoringTheHeart } from "@lorcanito/lorcana-engine/cards/007/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { arielSpectacularSinger } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { theQueensCastleMirrorChamber } from "@lorcanito/lorcana-engine/cards/003/locations/locations";
+// Import { tipoGrowingSon } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { restoringTheHeart } from "@lorcanito/lorcana-engine/cards/007/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Restoring The Heart", () => {
-//   it.skip("Draw a card", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: restoringTheHeart.cost,
-//       hand: [restoringTheHeart],
-//       deck: [tipoGrowingSon],
+// Describe("Restoring The Heart", () => {
+//   It.skip("Draw a card", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: restoringTheHeart.cost,
+//       Hand: [restoringTheHeart],
+//       Deck: [tipoGrowingSon],
 //     });
 //
-//     await testEngine.playCard(restoringTheHeart);
+//     Await testEngine.playCard(restoringTheHeart);
 //
-//     expect(testEngine.getZonesCardCount().hand).toEqual(1);
+//     Expect(testEngine.getZonesCardCount().hand).toEqual(1);
 //   });
 //
-//   it("Remove up to 3 damage from chosen character", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: restoringTheHeart.cost,
-//       hand: [restoringTheHeart],
-//       deck: [arielSpectacularSinger],
-//       play: [tipoGrowingSon],
+//   It("Remove up to 3 damage from chosen character", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: restoringTheHeart.cost,
+//       Hand: [restoringTheHeart],
+//       Deck: [arielSpectacularSinger],
+//       Play: [tipoGrowingSon],
 //     });
 //
-//     const tipo = testEngine.getCardModel(tipoGrowingSon);
+//     Const tipo = testEngine.getCardModel(tipoGrowingSon);
 //
-//     tipo.updateCardDamage(2, "add");
+//     Tipo.updateCardDamage(2, "add");
 //
-//     await testEngine.playCard(restoringTheHeart);
+//     Await testEngine.playCard(restoringTheHeart);
 //
-//     expect(tipo.damage).toBe(0);
+//     Expect(tipo.damage).toBe(0);
 //   });
 //
-//   it("Remove up to 3 damage from chosen location", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: restoringTheHeart.cost,
-//       hand: [restoringTheHeart],
-//       deck: [arielSpectacularSinger],
-//       play: [theQueensCastleMirrorChamber],
+//   It("Remove up to 3 damage from chosen location", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: restoringTheHeart.cost,
+//       Hand: [restoringTheHeart],
+//       Deck: [arielSpectacularSinger],
+//       Play: [theQueensCastleMirrorChamber],
 //     });
 //
-//     const location = testEngine.getCardModel(theQueensCastleMirrorChamber);
+//     Const location = testEngine.getCardModel(theQueensCastleMirrorChamber);
 //
-//     location.updateCardDamage(3, "add");
+//     Location.updateCardDamage(3, "add");
 //
-//     await testEngine.playCard(restoringTheHeart);
-//     await testEngine.resolveTopOfStack({ targets: [location] });
+//     Await testEngine.playCard(restoringTheHeart);
+//     Await testEngine.resolveTopOfStack({ targets: [location] });
 //
-//     expect(location.damage).toBe(0);
+//     Expect(location.damage).toBe(0);
 //   });
 //
-//   it.skip("No targets available should give you a card draw", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: restoringTheHeart.cost,
-//       hand: [restoringTheHeart],
-//       deck: 4,
+//   It.skip("No targets available should give you a card draw", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: restoringTheHeart.cost,
+//       Hand: [restoringTheHeart],
+//       Deck: 4,
 //     });
 //
-//     await testEngine.playCard(restoringTheHeart);
+//     Await testEngine.playCard(restoringTheHeart);
 //
-//     expect(testEngine.getZonesCardCount().hand).toEqual(1);
-//     expect(testEngine.getZonesCardCount().deck).toEqual(3);
+//     Expect(testEngine.getZonesCardCount().hand).toEqual(1);
+//     Expect(testEngine.getZonesCardCount().deck).toEqual(3);
 //   });
 // });
 //

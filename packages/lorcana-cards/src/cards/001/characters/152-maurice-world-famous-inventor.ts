@@ -1,53 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const mauriceWorldfamousInventor: CharacterCard = {
-  id: "x5f",
-  cardType: "character",
-  name: "Maurice",
-  version: "World-Famous Inventor",
-  fullName: "Maurice - World-Famous Inventor",
-  inkType: ["sapphire"],
-  franchise: "Beauty and the Beast",
-  set: "001",
-  text: "GIVE IT A TRY Whenever this character quests, you pay 2 {I} less for the next item you play this turn.\nIT WORKS! Whenever you play an item, you may draw a card.",
-  cost: 6,
-  strength: 2,
-  willpower: 7,
-  lore: 2,
-  cardNumber: 152,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "777a87e05133c7c929f30c24ced7fa867c084c8e",
-  },
   abilities: [
     {
+      effect: {
+        type: "play-card",
+        from: "hand",
+      },
       id: "x5f-1",
-      type: "triggered",
       name: "GIVE IT A TRY",
+      text: "GIVE IT A TRY Whenever this character quests, you pay 2 {I} less for the next item you play this turn.",
       trigger: {
         event: "quest",
         timing: "whenever",
         on: "SELF",
       },
-      effect: {
-        type: "play-card",
-        from: "hand",
-      },
-      text: "GIVE IT A TRY Whenever this character quests, you pay 2 {I} less for the next item you play this turn.",
+      type: "triggered",
     },
     {
-      id: "x5f-2",
-      type: "triggered",
-      name: "IT WORKS!",
-      trigger: {
-        event: "play",
-        timing: "whenever",
-        on: {
-          controller: "you",
-          cardType: "item",
-        },
-      },
       effect: {
         type: "optional",
         effect: {
@@ -57,8 +27,38 @@ export const mauriceWorldfamousInventor: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "x5f-2",
+      name: "IT WORKS!",
       text: "IT WORKS! Whenever you play an item, you may draw a card.",
+      trigger: {
+        event: "play",
+        timing: "whenever",
+        on: {
+          controller: "you",
+          cardType: "item",
+        },
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 152,
+  cardType: "character",
   classifications: ["Dreamborn", "Mentor", "Inventor"],
+  cost: 6,
+  externalIds: {
+    ravensburger: "777a87e05133c7c929f30c24ced7fa867c084c8e",
+  },
+  franchise: "Beauty and the Beast",
+  fullName: "Maurice - World-Famous Inventor",
+  id: "x5f",
+  inkType: ["sapphire"],
+  inkable: true,
+  lore: 2,
+  missingTests: true,
+  name: "Maurice",
+  set: "001",
+  strength: 2,
+  text: "GIVE IT A TRY Whenever this character quests, you pay 2 {I} less for the next item you play this turn.\nIT WORKS! Whenever you play an item, you may draw a card.",
+  version: "World-Famous Inventor",
+  willpower: 7,
 };

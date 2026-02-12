@@ -3,52 +3,52 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   agustinMadrigalClumsyDad,
-//   antonioMadrigalAnimalExpert,
-//   camiloMadrigalPrankster,
-//   doloresMadrigalEasyListener,
-//   julietaMadrigalExcellentCook,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   AgustinMadrigalClumsyDad,
+//   AntonioMadrigalAnimalExpert,
+//   CamiloMadrigalPrankster,
+//   DoloresMadrigalEasyListener,
+//   JulietaMadrigalExcellentCook,
 // } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { mirabelMadrigalFamilyGatherer } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { mirabelMadrigalFamilyGatherer } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Mirabel Madrigal - Family Gatherer", () => {
-//   describe("**NOT WITHOUT MY FAMILY** You can’t play this character unless you have 5 or more characters in play.", () => {
-//     it("Can't be played with fewer than 5 characters in play", () => {
-//       const testEngine = new TestEngine({
-//         inkwell: mirabelMadrigalFamilyGatherer.cost,
-//         hand: [mirabelMadrigalFamilyGatherer],
-//         play: [],
+// Describe("Mirabel Madrigal - Family Gatherer", () => {
+//   Describe("**NOT WITHOUT MY FAMILY** You can’t play this character unless you have 5 or more characters in play.", () => {
+//     It("Can't be played with fewer than 5 characters in play", () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: mirabelMadrigalFamilyGatherer.cost,
+//         Hand: [mirabelMadrigalFamilyGatherer],
+//         Play: [],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(
-//         mirabelMadrigalFamilyGatherer,
+//       Const cardUnderTest = testEngine.getCardModel(
+//         MirabelMadrigalFamilyGatherer,
 //       );
-//       testEngine.playCard(mirabelMadrigalFamilyGatherer);
-//       expect(cardUnderTest.zone).toEqual("hand");
+//       TestEngine.playCard(mirabelMadrigalFamilyGatherer);
+//       Expect(cardUnderTest.zone).toEqual("hand");
 //     });
 //
-//     it("Can be played with 5 or more characters in play", () => {
-//       const testEngine = new TestEngine({
-//         inkwell: mirabelMadrigalFamilyGatherer.cost,
-//         hand: [mirabelMadrigalFamilyGatherer],
-//         play: [
-//           agustinMadrigalClumsyDad,
-//           camiloMadrigalPrankster,
-//           antonioMadrigalAnimalExpert,
-//           doloresMadrigalEasyListener,
-//           julietaMadrigalExcellentCook,
+//     It("Can be played with 5 or more characters in play", () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: mirabelMadrigalFamilyGatherer.cost,
+//         Hand: [mirabelMadrigalFamilyGatherer],
+//         Play: [
+//           AgustinMadrigalClumsyDad,
+//           CamiloMadrigalPrankster,
+//           AntonioMadrigalAnimalExpert,
+//           DoloresMadrigalEasyListener,
+//           JulietaMadrigalExcellentCook,
 //         ],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(
-//         mirabelMadrigalFamilyGatherer,
+//       Const cardUnderTest = testEngine.getCardModel(
+//         MirabelMadrigalFamilyGatherer,
 //       );
 //
-//       testEngine.playCard(mirabelMadrigalFamilyGatherer);
-//       expect(cardUnderTest.zone).toEqual("play");
+//       TestEngine.playCard(mirabelMadrigalFamilyGatherer);
+//       Expect(cardUnderTest.zone).toEqual("play");
 //     });
 //   });
 // });

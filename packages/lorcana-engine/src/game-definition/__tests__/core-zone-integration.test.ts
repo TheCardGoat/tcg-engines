@@ -50,8 +50,8 @@ describe("Core Zone Integration for Lorcana", () => {
         createZone({
           id: createZoneId("hand"),
           name: "Hand",
-          visibility: "private",
           ordered: false,
+          visibility: "private",
         }),
       );
 
@@ -65,45 +65,45 @@ describe("Core Zone Integration for Lorcana", () => {
       const [player1] = createTestPlayers("player1");
 
       const deckZone = createZone({
+        faceDown: true,
         id: createZoneId("deck"),
         name: "Deck",
-        visibility: "secret",
         ordered: true,
         owner: player1,
-        faceDown: true,
+        visibility: "secret",
       });
 
       const handZone = createZone({
         id: createZoneId("hand"),
         name: "Hand",
-        visibility: "private",
         ordered: false,
         owner: player1,
+        visibility: "private",
       });
 
       const playZone = createZone({
         id: createZoneId("play"),
         name: "Play",
-        visibility: "public",
         ordered: false,
         owner: player1,
+        visibility: "public",
       });
 
       const discardZone = createZone({
         id: createZoneId("discard"),
         name: "Discard",
-        visibility: "public",
         ordered: true,
         owner: player1,
+        visibility: "public",
       });
 
       const inkwellZone = createZone({
+        faceDown: true,
         id: createZoneId("inkwell"),
         name: "Inkwell",
-        visibility: "secret",
         ordered: false,
         owner: player1,
-        faceDown: true,
+        visibility: "secret",
       });
 
       expect(deckZone.config.visibility).toBe("secret");
@@ -123,9 +123,9 @@ describe("Core Zone Integration for Lorcana", () => {
       const handZone = createZone({
         id: createZoneId("hand"),
         name: "Hand",
-        visibility: "private",
         ordered: false,
         owner: player1,
+        visibility: "private",
       });
 
       const updatedHand = addCard(handZone, card1);
@@ -142,9 +142,9 @@ describe("Core Zone Integration for Lorcana", () => {
       let handZone = createZone({
         id: createZoneId("hand"),
         name: "Hand",
-        visibility: "private",
         ordered: false,
         owner: player1,
+        visibility: "private",
       });
 
       handZone = addCard(handZone, card1);
@@ -162,26 +162,22 @@ describe("Core Zone Integration for Lorcana", () => {
       let handZone = createZone({
         id: createZoneId("hand"),
         name: "Hand",
-        visibility: "private",
         ordered: false,
         owner: player1,
+        visibility: "private",
       });
 
       const playZone = createZone({
         id: createZoneId("play"),
         name: "Play",
-        visibility: "public",
         ordered: false,
         owner: player1,
+        visibility: "public",
       });
 
       handZone = addCard(handZone, card1);
 
-      const { fromZone: updatedHand, toZone: updatedPlay } = moveCard(
-        handZone,
-        playZone,
-        card1,
-      );
+      const { fromZone: updatedHand, toZone: updatedPlay } = moveCard(handZone, playZone, card1);
 
       expect(updatedHand.cards).toEqual([]);
       expect(updatedPlay.cards).toEqual([card1]);
@@ -197,9 +193,9 @@ describe("Core Zone Integration for Lorcana", () => {
       let handZone = createZone({
         id: createZoneId("hand"),
         name: "Hand",
-        visibility: "private",
         ordered: false,
         owner: player1,
+        visibility: "private",
       });
 
       handZone = addCard(handZone, card1);
@@ -217,9 +213,9 @@ describe("Core Zone Integration for Lorcana", () => {
       let handZone = createZone({
         id: createZoneId("hand"),
         name: "Hand",
-        visibility: "private",
         ordered: false,
         owner: player1,
+        visibility: "private",
       });
 
       handZone = addCard(handZone, card1);
@@ -239,9 +235,9 @@ describe("Core Zone Integration for Lorcana", () => {
       let deckZone = createZone({
         id: createZoneId("deck"),
         name: "Deck",
-        visibility: "secret",
         ordered: true,
         owner: player1,
+        visibility: "secret",
       });
 
       deckZone = addCard(deckZone, card1);
@@ -258,9 +254,9 @@ describe("Core Zone Integration for Lorcana", () => {
       let deckZone = createZone({
         id: createZoneId("deck"),
         name: "Deck",
-        visibility: "secret",
         ordered: true,
         owner: player1,
+        visibility: "secret",
       });
 
       deckZone = addCard(deckZone, topCard);
@@ -279,9 +275,9 @@ describe("Core Zone Integration for Lorcana", () => {
       let deckZone = createZone({
         id: createZoneId("deck"),
         name: "Deck",
-        visibility: "secret",
         ordered: true,
         owner: player1,
+        visibility: "secret",
       });
 
       deckZone = addCard(deckZone, card1);
@@ -299,9 +295,9 @@ describe("Core Zone Integration for Lorcana", () => {
       let deckZone = createZone({
         id: createZoneId("deck"),
         name: "Deck",
-        visibility: "secret",
         ordered: true,
         owner: player1,
+        visibility: "secret",
       });
 
       deckZone = addCard(deckZone, card1);
@@ -319,9 +315,9 @@ describe("Core Zone Integration for Lorcana", () => {
       let handZone = createZone({
         id: createZoneId("hand"),
         name: "Hand",
-        visibility: "private",
         ordered: false,
         owner: player1,
+        visibility: "private",
       });
 
       handZone = addCard(handZone, card1);
@@ -343,17 +339,17 @@ describe("Core Zone Integration for Lorcana", () => {
       let deckZone = createZone({
         id: createZoneId("deck"),
         name: "Deck",
-        visibility: "secret",
         ordered: true,
         owner: player1,
+        visibility: "secret",
       });
 
       const handZone = createZone({
         id: createZoneId("hand"),
         name: "Hand",
-        visibility: "private",
         ordered: false,
         owner: player1,
+        visibility: "private",
       });
 
       deckZone = addCard(deckZone, topCard);
@@ -361,11 +357,7 @@ describe("Core Zone Integration for Lorcana", () => {
       deckZone = addCard(deckZone, card3);
 
       // Draw top card
-      const { fromZone: updatedDeck, toZone: updatedHand } = moveCard(
-        deckZone,
-        handZone,
-        topCard,
-      );
+      const { fromZone: updatedDeck, toZone: updatedHand } = moveCard(deckZone, handZone, topCard);
 
       expect(getZoneSize(updatedDeck)).toBe(2);
       expect(updatedHand.cards).toContain(topCard);
@@ -378,17 +370,17 @@ describe("Core Zone Integration for Lorcana", () => {
       let handZone = createZone({
         id: createZoneId("hand"),
         name: "Hand",
-        visibility: "private",
         ordered: false,
         owner: player1,
+        visibility: "private",
       });
 
       const playZone = createZone({
         id: createZoneId("play"),
         name: "Play",
-        visibility: "public",
         ordered: false,
         owner: player1,
+        visibility: "public",
       });
 
       handZone = addCard(handZone, character);
@@ -410,17 +402,17 @@ describe("Core Zone Integration for Lorcana", () => {
       let playZone = createZone({
         id: createZoneId("play"),
         name: "Play",
-        visibility: "public",
         ordered: false,
         owner: player1,
+        visibility: "public",
       });
 
       const discardZone = createZone({
         id: createZoneId("discard"),
         name: "Discard",
-        visibility: "public",
         ordered: true,
         owner: player1,
+        visibility: "public",
       });
 
       playZone = addCard(playZone, character);
@@ -442,18 +434,18 @@ describe("Core Zone Integration for Lorcana", () => {
       let handZone = createZone({
         id: createZoneId("hand"),
         name: "Hand",
-        visibility: "private",
         ordered: false,
         owner: player1,
+        visibility: "private",
       });
 
       const inkwellZone = createZone({
+        faceDown: true,
         id: createZoneId("inkwell"),
         name: "Inkwell",
-        visibility: "secret",
         ordered: false,
         owner: player1,
-        faceDown: true,
+        visibility: "secret",
       });
 
       handZone = addCard(handZone, inkableCard);
@@ -478,9 +470,9 @@ describe("Core Zone Integration for Lorcana", () => {
       let deckZone = createZone({
         id: createZoneId("deck"),
         name: "Deck",
-        visibility: "secret",
         ordered: true,
         owner: player1,
+        visibility: "secret",
       });
 
       // Deck has some cards
@@ -507,9 +499,9 @@ describe("Core Zone Integration for Lorcana", () => {
       const originalZone = createZone({
         id: createZoneId("hand"),
         name: "Hand",
-        visibility: "private",
         ordered: false,
         owner: player1,
+        visibility: "private",
       });
 
       const updatedZone = addCard(originalZone, card1);
@@ -525,17 +517,17 @@ describe("Core Zone Integration for Lorcana", () => {
       let handZone = createZone({
         id: createZoneId("hand"),
         name: "Hand",
-        visibility: "private",
         ordered: false,
         owner: player1,
+        visibility: "private",
       });
 
       const playZone = createZone({
         id: createZoneId("play"),
         name: "Play",
-        visibility: "public",
         ordered: false,
         owner: player1,
+        visibility: "public",
       });
 
       handZone = addCard(handZone, card1);

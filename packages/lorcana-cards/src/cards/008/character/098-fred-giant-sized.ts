@@ -1,73 +1,73 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { shiftAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { self } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { wheneverQuests } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-// import type { CardEffectTarget } from "@lorcanito/lorcana-engine/effects/effectTargets";
-// import type { RevealFromTopUntilCardEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+// Import { shiftAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import { self } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import { wheneverQuests } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { CardEffectTarget } from "@lorcanito/lorcana-engine/effects/effectTargets";
+// Import type { RevealFromTopUntilCardEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
 //
-// const floodBornCharInYourDeck: CardEffectTarget = {
-//   type: "card",
-//   value: "all",
-//   filters: [
+// Const floodBornCharInYourDeck: CardEffectTarget = {
+//   Type: "card",
+//   Value: "all",
+//   Filters: [
 //     { filter: "type", value: "character" },
 //     { filter: "characteristics", value: ["floodborn"] },
 //   ],
 // };
 //
-// const revealTopCardEffect: RevealFromTopUntilCardEffect = {
-//   type: "reveal-from-top-until",
-//   target: floodBornCharInYourDeck,
-//   onTargetMatchEffects: [
+// Const revealTopCardEffect: RevealFromTopUntilCardEffect = {
+//   Type: "reveal-from-top-until",
+//   Target: floodBornCharInYourDeck,
+//   OnTargetMatchEffects: [
 //     {
-//       type: "create-layer-based-on-target",
-//       filters: floodBornCharInYourDeck.filters,
+//       Type: "create-layer-based-on-target",
+//       Filters: floodBornCharInYourDeck.filters,
 //       // TODO: get rid of target
-//       target: floodBornCharInYourDeck,
-//       effects: [
+//       Target: floodBornCharInYourDeck,
+//       Effects: [
 //         {
-//           type: "move",
-//           to: "hand",
-//           target: floodBornCharInYourDeck,
+//           Type: "move",
+//           To: "hand",
+//           Target: floodBornCharInYourDeck,
 //         },
 //       ],
 //     },
 //   ],
 // };
 //
-// export const fredGiantsized: LorcanitoCharacterCard = {
-//   id: "fgp",
-//   name: "Fred",
-//   title: "Giant-Sized",
-//   characteristics: ["floodborn", "hero"],
-//   text: "Shift 5\n\nI LIKE WHERE THIS IS HEADING Whenever this character quests, reveal cards from the top of your deck until you reveal a Floodborn character card. Put that card into your hand and shuffle the rest into your deck.",
-//   type: "character",
-//   abilities: [
-//     shiftAbility(5, "Fred"),
-//     wheneverQuests({
-//       name: "I LIKE WHERE THIS IS HEADING",
-//       text: "Whenever this character quests, reveal cards from the top of your deck until you reveal a Floodborn character card. Put that card into your hand and shuffle the rest into your deck.",
-//       effects: [
-//         revealTopCardEffect,
+// Export const fredGiantsized: LorcanitoCharacterCard = {
+//   Id: "fgp",
+//   Name: "Fred",
+//   Title: "Giant-Sized",
+//   Characteristics: ["floodborn", "hero"],
+//   Text: "Shift 5\n\nI LIKE WHERE THIS IS HEADING Whenever this character quests, reveal cards from the top of your deck until you reveal a Floodborn character card. Put that card into your hand and shuffle the rest into your deck.",
+//   Type: "character",
+//   Abilities: [
+//     ShiftAbility(5, "Fred"),
+//     WheneverQuests({
+//       Name: "I LIKE WHERE THIS IS HEADING",
+//       Text: "Whenever this character quests, reveal cards from the top of your deck until you reveal a Floodborn character card. Put that card into your hand and shuffle the rest into your deck.",
+//       Effects: [
+//         RevealTopCardEffect,
 //         {
-//           type: "shuffle-deck",
-//           target: self,
+//           Type: "shuffle-deck",
+//           Target: self,
 //         },
 //       ],
 //     }),
 //   ],
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 7,
-//   strength: 5,
-//   willpower: 6,
-//   illustrator: "Jules Dubost",
-//   number: 98,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 632710,
+//   Inkwell: true,
+//   Colors: ["emerald"],
+//   Cost: 7,
+//   Strength: 5,
+//   Willpower: 6,
+//   Illustrator: "Jules Dubost",
+//   Number: 98,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 632710,
 //   },
-//   rarity: "rare",
-//   lore: 3,
+//   Rarity: "rare",
+//   Lore: 3,
 // };
 //

@@ -3,51 +3,51 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { brawl } from "@lorcanito/lorcana-engine/cards/004/actions/actions";
-// import { elsaTheFifthSpirit } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import {
-//   deweyLovableShowoff,
-//   donKarnageAirPirateLeader,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { brawl } from "@lorcanito/lorcana-engine/cards/004/actions/actions";
+// Import { elsaTheFifthSpirit } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import {
+//   DeweyLovableShowoff,
+//   DonKarnageAirPirateLeader,
 // } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Don Karnage - Air Pirate Leader", () => {
-//   it.skip("Evasive (Only characters with Evasive can challenge this character.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [donKarnageAirPirateLeader],
+// Describe("Don Karnage - Air Pirate Leader", () => {
+//   It.skip("Evasive (Only characters with Evasive can challenge this character.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [donKarnageAirPirateLeader],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(donKarnageAirPirateLeader);
-//     expect(cardUnderTest.hasEvasive).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(donKarnageAirPirateLeader);
+//     Expect(cardUnderTest.hasEvasive).toBe(true);
 //   });
 //
-//   it("SCORNFUL TAUNT Whenever you play an action that isn’t a song, chosen opposing character gains Reckless during their next turn. (They can’t quest and must challenge if able.)", async () => {
-//     const testEngine = new TestEngine(
+//   It("SCORNFUL TAUNT Whenever you play an action that isn’t a song, chosen opposing character gains Reckless during their next turn. (They can’t quest and must challenge if able.)", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: brawl.cost,
-//         play: [donKarnageAirPirateLeader, deweyLovableShowoff],
-//         hand: [brawl],
+//         Inkwell: brawl.cost,
+//         Play: [donKarnageAirPirateLeader, deweyLovableShowoff],
+//         Hand: [brawl],
 //       },
 //       {
-//         play: [elsaTheFifthSpirit],
+//         Play: [elsaTheFifthSpirit],
 //       },
 //     );
 //
-//     const cardActionItem = testEngine.getCardModel(elsaTheFifthSpirit);
-//     const action = testEngine.getCardModel(brawl);
-//     const target = testEngine.getCardModel(deweyLovableShowoff);
+//     Const cardActionItem = testEngine.getCardModel(elsaTheFifthSpirit);
+//     Const action = testEngine.getCardModel(brawl);
+//     Const target = testEngine.getCardModel(deweyLovableShowoff);
 //
-//     expect(target.hasReckless).toEqual(false);
+//     Expect(target.hasReckless).toEqual(false);
 //
-//     await testEngine.playCard(action);
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({ targets: [cardActionItem] }, true);
-//     await testEngine.resolveTopOfStack({ targets: [target] }, true);
+//     Await testEngine.playCard(action);
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({ targets: [cardActionItem] }, true);
+//     Await testEngine.resolveTopOfStack({ targets: [target] }, true);
 //
-//     await testEngine.passTurn();
-//     testEngine.changeActivePlayer();
-//     expect(target.hasReckless).toEqual(true);
+//     Await testEngine.passTurn();
+//     TestEngine.changeActivePlayer();
+//     Expect(target.hasReckless).toEqual(true);
 //   });
 // });
 //

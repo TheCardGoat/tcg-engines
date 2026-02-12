@@ -1,41 +1,14 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const shereKhanFearsomeTiger: CharacterCard = {
-  id: "1gj",
-  cardType: "character",
-  name: "Shere Khan",
-  version: "Fearsome Tiger",
-  fullName: "Shere Khan - Fearsome Tiger",
-  inkType: ["emerald"],
-  franchise: "Jungle Book",
-  set: "010",
-  text: "Evasive (Only characters with Evasive can challenge this character.)\nON THE HUNT Whenever this character quests, banish chosen opposing damaged character. Then, you may put 1 damage counter on another chosen character.",
-  cost: 6,
-  strength: 5,
-  willpower: 4,
-  lore: 2,
-  cardNumber: 88,
-  inkable: false,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "bd5700db4398aef9046429719282594d5034b5a8",
-  },
   abilities: [
     {
       id: "1gj-1",
-      type: "keyword",
       keyword: "Evasive",
       text: "Evasive",
+      type: "keyword",
     },
     {
-      id: "1gj-2",
-      type: "triggered",
-      name: "ON THE HUNT",
-      trigger: {
-        event: "quest",
-        timing: "whenever",
-        on: "SELF",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -51,8 +24,35 @@ export const shereKhanFearsomeTiger: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "1gj-2",
+      name: "ON THE HUNT",
       text: "ON THE HUNT Whenever this character quests, banish chosen opposing damaged character. Then, you may put 1 damage counter on another chosen character.",
+      trigger: {
+        event: "quest",
+        timing: "whenever",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 88,
+  cardType: "character",
   classifications: ["Storyborn", "Villain"],
+  cost: 6,
+  externalIds: {
+    ravensburger: "bd5700db4398aef9046429719282594d5034b5a8",
+  },
+  franchise: "Jungle Book",
+  fullName: "Shere Khan - Fearsome Tiger",
+  id: "1gj",
+  inkType: ["emerald"],
+  inkable: false,
+  lore: 2,
+  missingTests: true,
+  name: "Shere Khan",
+  set: "010",
+  strength: 5,
+  text: "Evasive (Only characters with Evasive can challenge this character.)\nON THE HUNT Whenever this character quests, banish chosen opposing damaged character. Then, you may put 1 damage counter on another chosen character.",
+  version: "Fearsome Tiger",
+  willpower: 4,
 };

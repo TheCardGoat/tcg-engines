@@ -3,24 +3,24 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { mickeyBraveLittleTailor } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { showTheWay } from "@lorcanito/lorcana-engine/cards/006";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { mickeyBraveLittleTailor } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { showTheWay } from "@lorcanito/lorcana-engine/cards/006";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe.skip("Show The Way", () => {
-//   it("Your characters get +2 {S} this turn.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: 10,
-//       play: [mickeyBraveLittleTailor],
-//       hand: [showTheWay],
+// Describe.skip("Show The Way", () => {
+//   It("Your characters get +2 {S} this turn.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: 10,
+//       Play: [mickeyBraveLittleTailor],
+//       Hand: [showTheWay],
 //     });
 //
-//     await testEngine.playCard(showTheWay);
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.playCard(showTheWay);
+//     Await testEngine.resolveTopOfStack({});
 //
-//     expect(testEngine.getCardModel(mickeyBraveLittleTailor).strength).toBe(
-//       mickeyBraveLittleTailor.strength + 2,
+//     Expect(testEngine.getCardModel(mickeyBraveLittleTailor).strength).toBe(
+//       MickeyBraveLittleTailor.strength + 2,
 //     );
 //   });
 // });

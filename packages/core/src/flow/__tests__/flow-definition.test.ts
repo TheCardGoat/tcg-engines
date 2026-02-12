@@ -16,7 +16,7 @@ import type {
  * Following the user's requirements for flexible turn/phase/step progression.
  */
 
-type TestGameState = {
+interface TestGameState {
   currentPlayer: number;
   players: Array<{ id: string; ready: boolean }>;
   turnCount: number;
@@ -24,7 +24,7 @@ type TestGameState = {
   step?: string;
   phaseCount: number;
   stepCount: number;
-};
+}
 
 describe("FlowDefinition Type", () => {
   describe("FlowContext API", () => {
@@ -35,27 +35,6 @@ describe("FlowDefinition Type", () => {
       // - current flow information (current phase, step, turn, player, game segment)
 
       const mockContext: FlowContext<TestGameState> = {
-        state: {} as Draft<TestGameState>,
-        game: {
-          setOTP: () => {},
-          getOTP: () => undefined,
-          setChoosingFirstPlayer: () => {},
-          getChoosingFirstPlayer: () => undefined,
-          setPendingMulligan: () => {},
-          getPendingMulligan: () => [],
-          addPendingMulligan: () => {},
-          removePendingMulligan: () => {},
-        },
-        zones: {
-          moveCard: () => {},
-          getCardsInZone: () => [],
-          shuffleZone: () => {},
-          getCardZone: () => undefined,
-          drawCards: () => [],
-          mulligan: () => {},
-          bulkMove: () => [],
-          createDeck: () => [],
-        },
         cards: {
           getCardMeta: () => ({}),
           updateCardMeta: () => {},
@@ -67,12 +46,33 @@ describe("FlowDefinition Type", () => {
         endPhase: () => {},
         endStep: () => {},
         endTurn: () => {},
+        game: {
+          setOTP: () => {},
+          getOTP: () => undefined,
+          setChoosingFirstPlayer: () => {},
+          getChoosingFirstPlayer: () => undefined,
+          setPendingMulligan: () => {},
+          getPendingMulligan: () => [],
+          addPendingMulligan: () => {},
+          removePendingMulligan: () => {},
+        },
         getCurrentGameSegment: () => "mainGame",
         getCurrentPhase: () => "main",
-        getCurrentStep: () => undefined,
         getCurrentPlayer: () => "player-1",
+        getCurrentStep: () => undefined,
         getTurnNumber: () => 1,
         setCurrentPlayer: () => {},
+        state: {} as Draft<TestGameState>,
+        zones: {
+          moveCard: () => {},
+          getCardsInZone: () => [],
+          shuffleZone: () => {},
+          getCardZone: () => undefined,
+          drawCards: () => [],
+          mulligan: () => {},
+          bulkMove: () => [],
+          createDeck: () => [],
+        },
       };
 
       expect(mockContext.endGameSegment).toBeDefined();
@@ -106,10 +106,7 @@ describe("FlowDefinition Type", () => {
     it("should support automatic turn end with endIf", () => {
       // Task 9.7: endIf for automatic transitions
       const turnDef: TurnDefinition<TestGameState> = {
-        endIf: (context) => {
-          // Can check state and return boolean
-          return context.state.phaseCount >= 4;
-        },
+        endIf: (context) => context.state.phaseCount >= 4,
       };
 
       expect(turnDef.endIf).toBeDefined();
@@ -133,24 +130,24 @@ describe("FlowDefinition Type", () => {
       // User requirement: "phases, when the current phase ends, the next phase from the same player will start"
       const turnDef: TurnDefinition<TestGameState> = {
         phases: {
+          draw: {
+            order: 1,
+            next: "main",
+          },
+          end: {
+            order: 3,
+            next: undefined, // No next phase, turn ends
+          },
+          main: {
+            order: 2,
+            next: "end",
+          },
           ready: {
             order: 0,
             next: "draw",
             onEnd: (context) => {
               context.state.phase = "draw";
             },
-          },
-          draw: {
-            order: 1,
-            next: "main",
-          },
-          main: {
-            order: 2,
-            next: "end",
-          },
-          end: {
-            order: 3,
-            next: undefined, // No next phase, turn ends
           },
         },
       };
@@ -164,13 +161,13 @@ describe("FlowDefinition Type", () => {
   describe("PhaseDefinition", () => {
     it("should support lifecycle hooks", () => {
       const phaseDef: PhaseDefinition<TestGameState> = {
-        order: 0,
         onBegin: (context) => {
           context.state.phaseCount += 1;
         },
         onEnd: (context) => {
           context.state.phase = "completed";
         },
+        order: 0,
       };
 
       expect(phaseDef.onBegin).toBeDefined();
@@ -179,11 +176,11 @@ describe("FlowDefinition Type", () => {
 
     it("should support automatic phase end", () => {
       const phaseDef: PhaseDefinition<TestGameState> = {
-        order: 0,
         endIf: (context) => {
           // Phase automatically ends when condition is true
           return context.state.players.every((p) => p.ready);
         },
+        order: 0,
       };
 
       expect(phaseDef.endIf).toBeDefined();
@@ -191,13 +188,13 @@ describe("FlowDefinition Type", () => {
 
     it("should support programmatic phase end", () => {
       const phaseDef: PhaseDefinition<TestGameState> = {
-        order: 0,
         onBegin: (context) => {
           // Can call endPhase() from within phase
           if (context.state.players.length === 0) {
             context.endPhase();
           }
         },
+        order: 0,
       };
 
       expect(phaseDef.onBegin).toBeDefined();
@@ -208,6 +205,10 @@ describe("FlowDefinition Type", () => {
       const phaseDef: PhaseDefinition<TestGameState> = {
         order: 2,
         steps: {
+          damage: {
+            order: 2,
+            next: undefined, // Ends the combat phase
+          },
           declare: {
             order: 0,
             next: "target",
@@ -215,10 +216,6 @@ describe("FlowDefinition Type", () => {
           target: {
             order: 1,
             next: "damage",
-          },
-          damage: {
-            order: 2,
-            next: undefined, // Ends the combat phase
           },
         },
       };
@@ -231,13 +228,13 @@ describe("FlowDefinition Type", () => {
   describe("StepDefinition", () => {
     it("should support lifecycle hooks", () => {
       const stepDef: StepDefinition<TestGameState> = {
-        order: 0,
         onBegin: (context) => {
           context.state.stepCount += 1;
         },
         onEnd: (context) => {
           context.state.step = undefined;
         },
+        order: 0,
       };
 
       expect(stepDef.onBegin).toBeDefined();
@@ -246,10 +243,10 @@ describe("FlowDefinition Type", () => {
 
     it("should support automatic step end", () => {
       const stepDef: StepDefinition<TestGameState> = {
-        order: 0,
         endIf: (context) => {
           return context.state.stepCount >= 3;
         },
+        order: 0,
       };
 
       expect(stepDef.endIf).toBeDefined();
@@ -257,12 +254,12 @@ describe("FlowDefinition Type", () => {
 
     it("should support programmatic step end", () => {
       const stepDef: StepDefinition<TestGameState> = {
-        order: 0,
         onBegin: (context) => {
           if (context.state.players.length === 0) {
             context.endStep();
           }
         },
+        order: 0,
       };
 
       expect(stepDef.onBegin).toBeDefined();
@@ -278,25 +275,24 @@ describe("FlowDefinition Type", () => {
             turn: {
               onBegin: (context) => {
                 context.state.currentPlayer =
-                  (context.state.currentPlayer + 1) %
-                  context.state.players.length;
+                  (context.state.currentPlayer + 1) % context.state.players.length;
               },
               phases: {
-                ready: {
-                  order: 0,
-                  next: "draw",
-                },
                 draw: {
                   order: 1,
                   next: "main",
+                },
+                end: {
+                  order: 3,
+                  next: undefined,
                 },
                 main: {
                   order: 2,
                   next: "end",
                 },
-                end: {
-                  order: 3,
-                  next: undefined,
+                ready: {
+                  order: 0,
+                  next: "draw",
                 },
               },
             },
@@ -343,6 +339,10 @@ describe("FlowDefinition Type", () => {
                 context.state.currentPlayer = 0;
               },
               phases: {
+                combat: {
+                  order: 1,
+                  next: undefined,
+                },
                 main: {
                   order: 0,
                   next: "combat",
@@ -363,10 +363,6 @@ describe("FlowDefinition Type", () => {
                     },
                   },
                 },
-                combat: {
-                  order: 1,
-                  next: undefined,
-                },
               },
             },
           },
@@ -374,9 +370,7 @@ describe("FlowDefinition Type", () => {
       };
 
       expect(flowWithCustom.gameSegments.mainGame.turn.onEnd).toBeDefined();
-      expect(
-        flowWithCustom.gameSegments.mainGame.turn.phases?.main.steps,
-      ).toBeDefined();
+      expect(flowWithCustom.gameSegments.mainGame.turn.phases?.main.steps).toBeDefined();
     });
   });
 
@@ -389,7 +383,7 @@ describe("FlowDefinition Type", () => {
             order: 1,
             turn: {
               onBegin: (context) => {
-                // context.state should be Draft<TestGameState>
+                // Context.state should be Draft<TestGameState>
                 context.state.turnCount += 1;
                 context.state.currentPlayer = 0;
                 // @ts-expect-error - nonexistent property should error
@@ -405,7 +399,6 @@ describe("FlowDefinition Type", () => {
 
     it("should provide type-safe FlowContext", () => {
       const phaseDef: PhaseDefinition<TestGameState> = {
-        order: 0,
         onBegin: (context) => {
           // All FlowContext methods should be type-safe
           const phase: string | undefined = context.getCurrentPhase();
@@ -419,6 +412,7 @@ describe("FlowDefinition Type", () => {
             expect(typeof phase).toBe("string");
           }
         },
+        order: 0,
       };
 
       expect(phaseDef).toBeDefined();

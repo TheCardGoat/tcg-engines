@@ -17,15 +17,15 @@ describe("Trigger: At Start of Turn", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
+          effect: expect.objectContaining({
+            amount: 1,
+            type: "draw",
+          }),
           trigger: expect.objectContaining({
             event: "start-of-turn",
             timing: "at",
           }),
-          effect: expect.objectContaining({
-            type: "draw",
-            amount: 1,
-          }),
+          type: "triggered",
         }),
       );
     });
@@ -33,20 +33,18 @@ describe("Trigger: At Start of Turn", () => {
 
   describe("channel effects", () => {
     it.skip("should parse 'At the start of your turn, channel 1 rune exhausted.'", () => {
-      const result = parseAbilities(
-        "At the start of your turn, channel 1 rune exhausted.",
-      );
+      const result = parseAbilities("At the start of your turn, channel 1 rune exhausted.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           effect: expect.objectContaining({
-            type: "channel",
             amount: 1,
             exhausted: true,
+            type: "channel",
           }),
+          type: "triggered",
         }),
       );
     });
@@ -62,10 +60,10 @@ describe("Trigger: At Start of Turn", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           effect: expect.objectContaining({
             type: "buff",
           }),
+          type: "triggered",
         }),
       );
     });
@@ -81,10 +79,10 @@ describe("Trigger: At Start of Turn", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           effect: expect.objectContaining({
             type: "create-token",
           }),
+          type: "triggered",
         }),
       );
     });
@@ -92,18 +90,16 @@ describe("Trigger: At Start of Turn", () => {
 
   describe("beginning phase triggers", () => {
     it.skip("should parse 'At the start of your Beginning Phase, draw 1.'", () => {
-      const result = parseAbilities(
-        "At the start of your Beginning Phase, draw 1.",
-      );
+      const result = parseAbilities("At the start of your Beginning Phase, draw 1.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           trigger: expect.objectContaining({
             event: "beginning-phase",
           }),
+          type: "triggered",
         }),
       );
     });

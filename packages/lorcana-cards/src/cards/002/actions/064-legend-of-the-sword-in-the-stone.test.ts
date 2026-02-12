@@ -3,37 +3,37 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { legendOfTheSwordInTheStone } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
-// import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { legendOfTheSwordInTheStone } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
+// Import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Legend of the Sword in the Stone", () => {
-//   it("Chosen character gains **Challenger** +3 this turn.", () => {
-//     const testStore = new TestStore(
+// Describe("Legend of the Sword in the Stone", () => {
+//   It("Chosen character gains **Challenger** +3 this turn.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: legendOfTheSwordInTheStone.cost,
-//         hand: [legendOfTheSwordInTheStone],
-//         play: [goofyKnightForADay],
+//         Inkwell: legendOfTheSwordInTheStone.cost,
+//         Hand: [legendOfTheSwordInTheStone],
+//         Play: [goofyKnightForADay],
 //       },
 //       {
-//         deck: 1,
+//         Deck: 1,
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "hand",
-//       legendOfTheSwordInTheStone.id,
+//       LegendOfTheSwordInTheStone.id,
 //     );
-//     const target = testStore.getByZoneAndId("play", goofyKnightForADay.id);
+//     Const target = testStore.getByZoneAndId("play", goofyKnightForADay.id);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveTopOfStack({ targets: [target] });
-//     expect(target.hasChallenger).toBe(true);
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveTopOfStack({ targets: [target] });
+//     Expect(target.hasChallenger).toBe(true);
 //
-//     testStore.passTurn();
+//     TestStore.passTurn();
 //
-//     expect(target.hasChallenger).toBe(false);
+//     Expect(target.hasChallenger).toBe(false);
 //   });
 // });
 //

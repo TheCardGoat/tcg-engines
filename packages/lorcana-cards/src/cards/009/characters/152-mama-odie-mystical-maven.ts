@@ -1,38 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const mamaOdieMysticalMaven: CharacterCard = {
-  id: "1gz",
-  cardType: "character",
-  name: "Mama Odie",
-  version: "Mystical Maven",
-  fullName: "Mama Odie - Mystical Maven",
-  inkType: ["sapphire"],
-  franchise: "Princess and the Frog",
-  set: "009",
-  text: "THIS GOING TO BE GOOD Whenever you play a song, you may put the top card of your deck into your inkwell facedown and exerted.",
-  cost: 3,
-  strength: 1,
-  willpower: 3,
-  lore: 1,
-  cardNumber: 152,
-  inkable: false,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "bef7418632eb34baeafeaecab51aad74cb7191b3",
-  },
   abilities: [
     {
-      id: "1gz-1",
-      type: "triggered",
-      name: "THIS GOING TO BE GOOD",
-      trigger: {
-        event: "play",
-        timing: "whenever",
-        on: {
-          controller: "you",
-          cardType: "action",
-        },
-      },
       effect: {
         type: "optional",
         effect: {
@@ -44,8 +14,38 @@ export const mamaOdieMysticalMaven: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "1gz-1",
+      name: "THIS GOING TO BE GOOD",
       text: "THIS GOING TO BE GOOD Whenever you play a song, you may put the top card of your deck into your inkwell facedown and exerted.",
+      trigger: {
+        event: "play",
+        timing: "whenever",
+        on: {
+          controller: "you",
+          cardType: "action",
+        },
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 152,
+  cardType: "character",
   classifications: ["Storyborn", "Mentor"],
+  cost: 3,
+  externalIds: {
+    ravensburger: "bef7418632eb34baeafeaecab51aad74cb7191b3",
+  },
+  franchise: "Princess and the Frog",
+  fullName: "Mama Odie - Mystical Maven",
+  id: "1gz",
+  inkType: ["sapphire"],
+  inkable: false,
+  lore: 1,
+  missingTests: true,
+  name: "Mama Odie",
+  set: "009",
+  strength: 1,
+  text: "THIS GOING TO BE GOOD Whenever you play a song, you may put the top card of your deck into your inkwell facedown and exerted.",
+  version: "Mystical Maven",
+  willpower: 3,
 };

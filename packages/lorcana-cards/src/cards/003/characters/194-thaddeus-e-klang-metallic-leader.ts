@@ -1,35 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const thaddeusEKlangMetallicLeader: CharacterCard = {
-  id: "195",
-  cardType: "character",
-  name: "Thaddeus E. Klang",
-  version: "Metallic Leader",
-  fullName: "Thaddeus E. Klang - Metallic Leader",
-  inkType: ["steel"],
-  franchise: "Talespin",
-  set: "003",
-  text: "MY TEETH ARE SHARPER Whenever this character quests while at a location, you may deal 1 damage to chosen character.",
-  cost: 5,
-  strength: 3,
-  willpower: 5,
-  lore: 2,
-  cardNumber: 194,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "a2af14e26b21124ff42b71b213aff52299d8770a",
-  },
   abilities: [
     {
-      id: "195-1",
-      type: "triggered",
-      name: "MY TEETH ARE SHARPER",
-      trigger: {
-        event: "quest",
-        timing: "whenever",
-        on: "SELF",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -45,8 +18,35 @@ export const thaddeusEKlangMetallicLeader: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "195-1",
+      name: "MY TEETH ARE SHARPER",
       text: "MY TEETH ARE SHARPER Whenever this character quests while at a location, you may deal 1 damage to chosen character.",
+      trigger: {
+        event: "quest",
+        timing: "whenever",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 194,
+  cardType: "character",
   classifications: ["Storyborn", "Villain"],
+  cost: 5,
+  externalIds: {
+    ravensburger: "a2af14e26b21124ff42b71b213aff52299d8770a",
+  },
+  franchise: "Talespin",
+  fullName: "Thaddeus E. Klang - Metallic Leader",
+  id: "195",
+  inkType: ["steel"],
+  inkable: true,
+  lore: 2,
+  missingTests: true,
+  name: "Thaddeus E. Klang",
+  set: "003",
+  strength: 3,
+  text: "MY TEETH ARE SHARPER Whenever this character quests while at a location, you may deal 1 damage to chosen character.",
+  version: "Metallic Leader",
+  willpower: 5,
 };

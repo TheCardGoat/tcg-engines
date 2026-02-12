@@ -1,40 +1,40 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { whenChallenged } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import { getStrengthThisChallenge } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { whenChallenged } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import { getStrengthThisChallenge } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const louieOneCoolDuck: LorcanitoCharacterCard = {
-//   id: "hxc",
-//   name: "Louie",
-//   title: "One Cool Duck",
-//   characteristics: ["storyborn", "ally"],
-//   text: "SPRING THE TRAP While this character is being challenged, the challenging character gets -1 {S}.",
-//   type: "character",
-//   abilities: [
-//     whenChallenged({
-//       name: "SPRING THE TRAP",
-//       text: "While this character is being challenged, the challenging character gets -1 {S}.",
-//       effects: [
-//         getStrengthThisChallenge(-1, {
-//           type: "card",
-//           value: "all",
-//           filters: [{ filter: "challenge", value: "attacker" }],
+// Export const louieOneCoolDuck: LorcanitoCharacterCard = {
+//   Id: "hxc",
+//   Name: "Louie",
+//   Title: "One Cool Duck",
+//   Characteristics: ["storyborn", "ally"],
+//   Text: "SPRING THE TRAP While this character is being challenged, the challenging character gets -1 {S}.",
+//   Type: "character",
+//   Abilities: [
+//     WhenChallenged({
+//       Name: "SPRING THE TRAP",
+//       Text: "While this character is being challenged, the challenging character gets -1 {S}.",
+//       Effects: [
+//         GetStrengthThisChallenge(-1, {
+//           Type: "card",
+//           Value: "all",
+//           Filters: [{ filter: "challenge", value: "attacker" }],
 //         }),
 //       ],
 //     }),
 //   ],
-//   inkwell: true,
-//   colors: ["amber"],
-//   cost: 3,
-//   strength: 2,
-//   willpower: 3,
-//   illustrator: "Federico Maria Cugliari",
-//   number: 1,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 633427,
+//   Inkwell: true,
+//   Colors: ["amber"],
+//   Cost: 3,
+//   Strength: 2,
+//   Willpower: 3,
+//   Illustrator: "Federico Maria Cugliari",
+//   Number: 1,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 633427,
 //   },
-//   rarity: "uncommon",
-//   lore: 2,
+//   Rarity: "uncommon",
+//   Lore: 2,
 // };
 //

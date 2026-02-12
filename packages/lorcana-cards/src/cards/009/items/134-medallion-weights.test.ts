@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { medallionWeights } from "@lorcanito/lorcana-engine/cards/009/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { medallionWeights } from "@lorcanito/lorcana-engine/cards/009/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Medallion Weights", () => {
-//   it.skip("**DISCIPLINE AND STRENGTH** {E}, 2 {I} - Chosen character gets +2 {S} this turn. Whenever they challenge another character this turn, you may draw a card.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: medallionWeights.cost,
-//       play: [medallionWeights],
-//       hand: [medallionWeights],
+// Describe("Medallion Weights", () => {
+//   It.skip("**DISCIPLINE AND STRENGTH** {E}, 2 {I} - Chosen character gets +2 {S} this turn. Whenever they challenge another character this turn, you may draw a card.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: medallionWeights.cost,
+//       Play: [medallionWeights],
+//       Hand: [medallionWeights],
 //     });
 //
-//     await testEngine.playCard(medallionWeights);
+//     Await testEngine.playCard(medallionWeights);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

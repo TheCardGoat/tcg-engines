@@ -3,27 +3,27 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { showMeMore } from "@lorcanito/lorcana-engine/cards/007";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { showMeMore } from "@lorcanito/lorcana-engine/cards/007";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Show Me More!", () => {
-//   it("Each player draws 3 cards", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Show Me More!", () => {
+//   It("Each player draws 3 cards", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: showMeMore.cost,
-//         hand: [showMeMore],
-//         deck: 5,
+//         Inkwell: showMeMore.cost,
+//         Hand: [showMeMore],
+//         Deck: 5,
 //       },
 //       {
-//         deck: 5,
+//         Deck: 5,
 //       },
 //     );
 //
-//     await testEngine.playCard(showMeMore);
+//     Await testEngine.playCard(showMeMore);
 //
-//     expect(testEngine.getZonesCardCount("player_one").hand).toBe(3);
-//     expect(testEngine.getZonesCardCount("player_two").hand).toBe(3);
+//     Expect(testEngine.getZonesCardCount("player_one").hand).toBe(3);
+//     Expect(testEngine.getZonesCardCount("player_two").hand).toBe(3);
 //   });
 // });
 //

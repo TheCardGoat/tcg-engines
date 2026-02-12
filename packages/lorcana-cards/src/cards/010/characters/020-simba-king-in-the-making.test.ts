@@ -3,94 +3,94 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { mufasaBetrayedLeader } from "@lorcanito/lorcana-engine/cards/002/characters/014-mufasa-betrayed-leader";
-// import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/180-goofy-knight-for-a-day";
-// import {
-//   inscrutableMap,
-//   simbaKingInTheMaking,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { mufasaBetrayedLeader } from "@lorcanito/lorcana-engine/cards/002/characters/014-mufasa-betrayed-leader";
+// Import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/180-goofy-knight-for-a-day";
+// Import {
+//   InscrutableMap,
+//   SimbaKingInTheMaking,
 // } from "@lorcanito/lorcana-engine/cards/010";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Simba - King in the Making", () => {
-//   it("Boost 3 (Once during your turn, you may pay 3 to put the top card of your deck facedown under this character.) ", async () => {
-//     const testEngine = new TestEngine({
-//       play: [simbaKingInTheMaking],
+// Describe("Simba - King in the Making", () => {
+//   It("Boost 3 (Once during your turn, you may pay 3 to put the top card of your deck facedown under this character.) ", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [simbaKingInTheMaking],
 //     });
 //
-//     expect(testEngine.getCardModel(simbaKingInTheMaking).hasBoost).toBe(true);
+//     Expect(testEngine.getCardModel(simbaKingInTheMaking).hasBoost).toBe(true);
 //   });
 //
-//   describe("TIMELY ALLIANCE Whenever you put a card under this character, you may reveal the top card of your deck. If it's a character card, you may play that character for free and they enter play exerted. Otherwise, put it on the bottom of your deck.", () => {
-//     it("Top card is a character", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: 3,
-//         play: [simbaKingInTheMaking],
-//         deck: [inscrutableMap, goofyKnightForADay, mufasaBetrayedLeader],
+//   Describe("TIMELY ALLIANCE Whenever you put a card under this character, you may reveal the top card of your deck. If it's a character card, you may play that character for free and they enter play exerted. Otherwise, put it on the bottom of your deck.", () => {
+//     It("Top card is a character", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: 3,
+//         Play: [simbaKingInTheMaking],
+//         Deck: [inscrutableMap, goofyKnightForADay, mufasaBetrayedLeader],
 //       });
 //
-//       await testEngine.activateCard(simbaKingInTheMaking);
+//       Await testEngine.activateCard(simbaKingInTheMaking);
 //
-//       const boostedCard = testEngine.getCardModel(mufasaBetrayedLeader);
-//       const cardUnderTest = testEngine.getCardModel(simbaKingInTheMaking);
+//       Const boostedCard = testEngine.getCardModel(mufasaBetrayedLeader);
+//       Const cardUnderTest = testEngine.getCardModel(simbaKingInTheMaking);
 //
-//       expect(cardUnderTest.cardsUnder).toHaveLength(1);
-//       expect(boostedCard.isUnder(cardUnderTest));
+//       Expect(cardUnderTest.cardsUnder).toHaveLength(1);
+//       Expect(boostedCard.isUnder(cardUnderTest));
 //
-//       const topDeckCard = testEngine.getCardModel(goofyKnightForADay);
+//       Const topDeckCard = testEngine.getCardModel(goofyKnightForADay);
 //
-//       expect(topDeckCard.zone).toBe("deck");
+//       Expect(topDeckCard.zone).toBe("deck");
 //
 //       // Accept TIMELY ALLIANCE optional ability
-//       await testEngine.acceptOptionalAbility();
+//       Await testEngine.acceptOptionalAbility();
 //
 //       // Resolve scry: choose to play the character
-//       await testEngine.resolveTopOfStack(
+//       Await testEngine.resolveTopOfStack(
 //         {
-//           scry: {
-//             play: [goofyKnightForADay],
+//           Scry: {
+//             Play: [goofyKnightForADay],
 //           },
 //         },
-//         true,
+//         True,
 //       );
 //
-//       expect(topDeckCard.zone).toBe("play");
-//       expect(topDeckCard.exerted).toBe(true);
+//       Expect(topDeckCard.zone).toBe("play");
+//       Expect(topDeckCard.exerted).toBe(true);
 //     });
 //
-//     it("Top card is NOT a character", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: 3,
-//         play: [simbaKingInTheMaking],
-//         deck: [goofyKnightForADay, inscrutableMap, mufasaBetrayedLeader],
+//     It("Top card is NOT a character", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: 3,
+//         Play: [simbaKingInTheMaking],
+//         Deck: [goofyKnightForADay, inscrutableMap, mufasaBetrayedLeader],
 //       });
 //
-//       await testEngine.activateCard(simbaKingInTheMaking);
+//       Await testEngine.activateCard(simbaKingInTheMaking);
 //
-//       const boostedCard = testEngine.getCardModel(mufasaBetrayedLeader);
-//       const cardUnderTest = testEngine.getCardModel(simbaKingInTheMaking);
+//       Const boostedCard = testEngine.getCardModel(mufasaBetrayedLeader);
+//       Const cardUnderTest = testEngine.getCardModel(simbaKingInTheMaking);
 //
-//       expect(cardUnderTest.cardsUnder).toHaveLength(1);
-//       expect(boostedCard.isUnder(cardUnderTest));
+//       Expect(cardUnderTest.cardsUnder).toHaveLength(1);
+//       Expect(boostedCard.isUnder(cardUnderTest));
 //
-//       const topDeckCard = testEngine.getCardModel(inscrutableMap);
+//       Const topDeckCard = testEngine.getCardModel(inscrutableMap);
 //
-//       expect(topDeckCard.zone).toBe("deck");
+//       Expect(topDeckCard.zone).toBe("deck");
 //
 //       // Accept TIMELY ALLIANCE optional ability
-//       await testEngine.acceptOptionalAbility();
+//       Await testEngine.acceptOptionalAbility();
 //
 //       // Resolve scry: inscrutableMap is not a character, so put it on bottom
-//       await testEngine.resolveTopOfStack(
+//       Await testEngine.resolveTopOfStack(
 //         {
-//           scry: {
-//             bottom: [inscrutableMap],
+//           Scry: {
+//             Bottom: [inscrutableMap],
 //           },
 //         },
-//         true,
+//         True,
 //       );
 //
-//       expect(topDeckCard.zone).toBe("deck");
+//       Expect(topDeckCard.zone).toBe("deck");
 //     });
 //   });
 // });

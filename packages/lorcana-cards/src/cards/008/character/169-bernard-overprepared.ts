@@ -1,59 +1,59 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { self } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { whenYouPlayThis } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { self } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import { whenYouPlayThis } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 //
-// export const bernardOverprepared: LorcanitoCharacterCard = {
-//   id: "d5e",
-//   name: "Bernard",
-//   title: "Over-Prepared",
-//   characteristics: ["storyborn", "hero"],
-//   text: "GO DOWN THERE AND INVESTIGATE When you play this character, if you have an Ally character in play, you may draw a card.",
-//   type: "character",
-//   abilities: [
-//     whenYouPlayThis({
-//       name: "GO DOWN THERE AND INVESTIGATE",
-//       text: "When you play this character, if you have an Ally character in play, you may draw a card.",
-//       optional: true,
-//       conditions: [
+// Export const bernardOverprepared: LorcanitoCharacterCard = {
+//   Id: "d5e",
+//   Name: "Bernard",
+//   Title: "Over-Prepared",
+//   Characteristics: ["storyborn", "hero"],
+//   Text: "GO DOWN THERE AND INVESTIGATE When you play this character, if you have an Ally character in play, you may draw a card.",
+//   Type: "character",
+//   Abilities: [
+//     WhenYouPlayThis({
+//       Name: "GO DOWN THERE AND INVESTIGATE",
+//       Text: "When you play this character, if you have an Ally character in play, you may draw a card.",
+//       Optional: true,
+//       Conditions: [
 //         {
-//           type: "filter",
-//           filters: [
+//           Type: "filter",
+//           Filters: [
 //             { filter: "owner", value: "self" },
 //             { filter: "zone", value: "play" },
 //             {
-//               filter: "type",
-//               value: "character",
+//               Filter: "type",
+//               Value: "character",
 //             },
 //             {
-//               filter: "characteristics",
-//               value: ["ally"],
+//               Filter: "characteristics",
+//               Value: ["ally"],
 //             },
 //           ],
-//           comparison: { operator: "gte", value: 1 },
+//           Comparison: { operator: "gte", value: 1 },
 //         },
 //       ],
-//       effects: [
+//       Effects: [
 //         {
-//           type: "draw",
-//           amount: 1,
-//           target: self,
+//           Type: "draw",
+//           Amount: 1,
+//           Target: self,
 //         },
 //       ],
 //     }),
 //   ],
-//   inkwell: false,
-//   colors: ["sapphire", "steel"],
-//   cost: 2,
-//   strength: 2,
-//   willpower: 2,
-//   illustrator: "McKay Anderson",
-//   number: 169,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631465,
+//   Inkwell: false,
+//   Colors: ["sapphire", "steel"],
+//   Cost: 2,
+//   Strength: 2,
+//   Willpower: 2,
+//   Illustrator: "McKay Anderson",
+//   Number: 169,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631465,
 //   },
-//   rarity: "uncommon",
-//   lore: 1,
+//   Rarity: "uncommon",
+//   Lore: 1,
 // };
 //

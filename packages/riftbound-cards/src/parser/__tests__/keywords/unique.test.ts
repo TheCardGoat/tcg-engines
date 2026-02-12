@@ -17,9 +17,7 @@ describe("Keyword: Unique", () => {
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(2);
-      expect(result.abilities?.[0]).toEqual(
-        expect.objectContaining(Abilities.unique()),
-      );
+      expect(result.abilities?.[0]).toEqual(expect.objectContaining(Abilities.unique()));
       expect(result.abilities?.[1]).toEqual(
         expect.objectContaining(Abilities.equip(Costs.power("rainbow"))),
       );
@@ -34,21 +32,19 @@ describe("Keyword: Unique", () => {
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(3);
-      expect(result.abilities?.[0]).toEqual(
-        expect.objectContaining(Abilities.unique()),
-      );
+      expect(result.abilities?.[0]).toEqual(expect.objectContaining(Abilities.unique()));
       expect(result.abilities?.[1]).toEqual(
         expect.objectContaining(Abilities.equip(Costs.power("rainbow"))),
       );
       expect(result.abilities?.[2]).toEqual(
         expect.objectContaining({
-          type: "triggered",
-          trigger: expect.objectContaining({
-            event: "play-self",
-          }),
           effect: expect.objectContaining({
             type: "ready",
           }),
+          trigger: expect.objectContaining({
+            event: "play-self",
+          }),
+          type: "triggered",
         }),
       );
     });

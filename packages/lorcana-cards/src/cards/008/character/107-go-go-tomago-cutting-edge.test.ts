@@ -3,58 +3,58 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { goGoTomagoDartingDynamo } from "@lorcanito/lorcana-engine/cards/006";
-// import { goGoTomagoCuttingEdge } from "@lorcanito/lorcana-engine/cards/008";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { goGoTomagoDartingDynamo } from "@lorcanito/lorcana-engine/cards/006";
+// Import { goGoTomagoCuttingEdge } from "@lorcanito/lorcana-engine/cards/008";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Go Go Tomago - Cutting Edge", () => {
-//   it("Shift 4)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [goGoTomagoCuttingEdge],
+// Describe("Go Go Tomago - Cutting Edge", () => {
+//   It("Shift 4)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [goGoTomagoCuttingEdge],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(goGoTomagoCuttingEdge);
-//     expect(cardUnderTest.hasShift).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(goGoTomagoCuttingEdge);
+//     Expect(cardUnderTest.hasShift).toBe(true);
 //   });
 //
-//   it("Evasive (Only characters with Evasive can challenge this character.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [goGoTomagoCuttingEdge],
+//   It("Evasive (Only characters with Evasive can challenge this character.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [goGoTomagoCuttingEdge],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(goGoTomagoCuttingEdge);
-//     console.log(JSON.stringify(cardUnderTest.nativeAbilities()));
-//     expect(cardUnderTest.hasEvasive).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(goGoTomagoCuttingEdge);
+//     Console.log(JSON.stringify(cardUnderTest.nativeAbilities()));
+//     Expect(cardUnderTest.hasEvasive).toBe(true);
 //   });
 //
-//   it("ZERO RESISTANCE When you play this character, if you used Shift to play her, you may put chosen character into their player's inkwell facedown and exerted.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: goGoTomagoCuttingEdge.cost,
-//       hand: [goGoTomagoCuttingEdge],
-//       play: [goGoTomagoDartingDynamo],
+//   It("ZERO RESISTANCE When you play this character, if you used Shift to play her, you may put chosen character into their player's inkwell facedown and exerted.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: goGoTomagoCuttingEdge.cost,
+//       Hand: [goGoTomagoCuttingEdge],
+//       Play: [goGoTomagoDartingDynamo],
 //     });
 //
-//     await testEngine.shiftCard({
-//       shifter: goGoTomagoCuttingEdge,
-//       shifted: goGoTomagoDartingDynamo,
+//     Await testEngine.shiftCard({
+//       Shifter: goGoTomagoCuttingEdge,
+//       Shifted: goGoTomagoDartingDynamo,
 //     });
-//     const cardUnderTest = testEngine.getCardModel(goGoTomagoCuttingEdge);
-//     console.log(JSON.stringify(cardUnderTest.nativeAbilities()));
+//     Const cardUnderTest = testEngine.getCardModel(goGoTomagoCuttingEdge);
+//     Console.log(JSON.stringify(cardUnderTest.nativeAbilities()));
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({ targets: [goGoTomagoCuttingEdge] });
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({ targets: [goGoTomagoCuttingEdge] });
 //
-//     expect(testEngine.getTotalInkwellCardCount("player_one")).toBe(
-//       goGoTomagoCuttingEdge.cost + 2,
+//     Expect(testEngine.getTotalInkwellCardCount("player_one")).toBe(
+//       GoGoTomagoCuttingEdge.cost + 2,
 //     );
-//     expect(testEngine.getCardModel(goGoTomagoDartingDynamo).zone).toBe(
+//     Expect(testEngine.getCardModel(goGoTomagoDartingDynamo).zone).toBe(
 //       "inkwell",
 //     );
 //
-//     expect(testEngine.getCardModel(goGoTomagoCuttingEdge).zone).toBe("inkwell");
+//     Expect(testEngine.getCardModel(goGoTomagoCuttingEdge).zone).toBe("inkwell");
 //
-//     expect(testEngine.getAvailableInkwellCardCount("player_one")).toBe(0);
+//     Expect(testEngine.getAvailableInkwellCardCount("player_one")).toBe(0);
 //   });
 // });
 //

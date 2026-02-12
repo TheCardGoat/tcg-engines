@@ -3,139 +3,139 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   liloMakingAWish,
-//   stichtCarefreeSurfer,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   LiloMakingAWish,
+//   StichtCarefreeSurfer,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { princeJohnGreediestOfAll } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { cursedMerfolkUrsulasHandiwork } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { princeJohnGreediestOfAll } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { cursedMerfolkUrsulasHandiwork } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Cursed Merfolk - Ursula's Handiwork", () => {
-//   it("**POOR SOULS** Whenever this character is challenged, each opponent chooses and discards a card.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Cursed Merfolk - Ursula's Handiwork", () => {
+//   It("**POOR SOULS** Whenever this character is challenged, each opponent chooses and discards a card.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         play: [liloMakingAWish],
-//         hand: [stichtCarefreeSurfer],
-//         deck: 1,
+//         Play: [liloMakingAWish],
+//         Hand: [stichtCarefreeSurfer],
+//         Deck: 1,
 //       },
 //       {
-//         play: [cursedMerfolkUrsulasHandiwork],
-//         deck: 1,
+//         Play: [cursedMerfolkUrsulasHandiwork],
+//         Deck: 1,
 //       },
 //     );
 //
-//     await testEngine.tapCard(cursedMerfolkUrsulasHandiwork);
+//     Await testEngine.tapCard(cursedMerfolkUrsulasHandiwork);
 //
-//     await testEngine.challenge({
-//       attacker: liloMakingAWish,
-//       defender: cursedMerfolkUrsulasHandiwork,
+//     Await testEngine.challenge({
+//       Attacker: liloMakingAWish,
+//       Defender: cursedMerfolkUrsulasHandiwork,
 //     });
 //
-//     expect(testEngine.stackLayers).toHaveLength(1);
-//     await testEngine.resolveTopOfStack({ targets: [stichtCarefreeSurfer] });
+//     Expect(testEngine.stackLayers).toHaveLength(1);
+//     Await testEngine.resolveTopOfStack({ targets: [stichtCarefreeSurfer] });
 //
-//     expect(testEngine.getZonesCardCount("player_one").hand).toBe(0);
-//     expect(testEngine.getCardModel(cursedMerfolkUrsulasHandiwork).zone).toBe(
+//     Expect(testEngine.getZonesCardCount("player_one").hand).toBe(0);
+//     Expect(testEngine.getCardModel(cursedMerfolkUrsulasHandiwork).zone).toBe(
 //       "discard",
 //     );
 //   });
 // });
 //
-// describe("Regression - Prince John Interaction, Cursed Merfolk is not getting banished", () => {
-//   it("Not having card to discard", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Regression - Prince John Interaction, Cursed Merfolk is not getting banished", () => {
+//   It("Not having card to discard", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         play: [liloMakingAWish],
-//         deck: 1,
+//         Play: [liloMakingAWish],
+//         Deck: 1,
 //       },
 //       {
-//         play: [cursedMerfolkUrsulasHandiwork, princeJohnGreediestOfAll],
-//         deck: 2,
+//         Play: [cursedMerfolkUrsulasHandiwork, princeJohnGreediestOfAll],
+//         Deck: 2,
 //       },
 //     );
 //
-//     await testEngine.tapCard(cursedMerfolkUrsulasHandiwork);
+//     Await testEngine.tapCard(cursedMerfolkUrsulasHandiwork);
 //
-//     await testEngine.challenge({
-//       attacker: liloMakingAWish,
-//       defender: cursedMerfolkUrsulasHandiwork,
+//     Await testEngine.challenge({
+//       Attacker: liloMakingAWish,
+//       Defender: cursedMerfolkUrsulasHandiwork,
 //     });
 //
-//     expect(testEngine.stackLayers).toHaveLength(0);
+//     Expect(testEngine.stackLayers).toHaveLength(0);
 //
-//     expect(testEngine.getCardModel(cursedMerfolkUrsulasHandiwork).zone).toBe(
+//     Expect(testEngine.getCardModel(cursedMerfolkUrsulasHandiwork).zone).toBe(
 //       "discard",
 //     );
 //   });
 //
-//   it("Accepting the draw", async () => {
-//     const testEngine = new TestEngine(
+//   It("Accepting the draw", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         play: [liloMakingAWish],
-//         hand: [stichtCarefreeSurfer],
-//         deck: 1,
+//         Play: [liloMakingAWish],
+//         Hand: [stichtCarefreeSurfer],
+//         Deck: 1,
 //       },
 //       {
-//         play: [cursedMerfolkUrsulasHandiwork, princeJohnGreediestOfAll],
-//         deck: 2,
+//         Play: [cursedMerfolkUrsulasHandiwork, princeJohnGreediestOfAll],
+//         Deck: 2,
 //       },
 //     );
 //
-//     await testEngine.tapCard(cursedMerfolkUrsulasHandiwork);
+//     Await testEngine.tapCard(cursedMerfolkUrsulasHandiwork);
 //
-//     await testEngine.challenge({
-//       attacker: liloMakingAWish,
-//       defender: cursedMerfolkUrsulasHandiwork,
+//     Await testEngine.challenge({
+//       Attacker: liloMakingAWish,
+//       Defender: cursedMerfolkUrsulasHandiwork,
 //     });
 //
-//     expect(testEngine.stackLayers).toHaveLength(1);
-//     await testEngine.resolveTopOfStack(
+//     Expect(testEngine.stackLayers).toHaveLength(1);
+//     Await testEngine.resolveTopOfStack(
 //       { targets: [stichtCarefreeSurfer] },
-//       true,
+//       True,
 //     );
 //
-//     testEngine.changeActivePlayer("player_two");
-//     await testEngine.resolveOptionalAbility();
+//     TestEngine.changeActivePlayer("player_two");
+//     Await testEngine.resolveOptionalAbility();
 //
-//     expect(testEngine.getZonesCardCount("player_one").hand).toBe(0);
-//     expect(testEngine.getCardModel(cursedMerfolkUrsulasHandiwork).zone).toBe(
+//     Expect(testEngine.getZonesCardCount("player_one").hand).toBe(0);
+//     Expect(testEngine.getCardModel(cursedMerfolkUrsulasHandiwork).zone).toBe(
 //       "discard",
 //     );
 //   });
 //
-//   it("Skipping the draw", async () => {
-//     const testEngine = new TestEngine(
+//   It("Skipping the draw", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         play: [liloMakingAWish],
-//         hand: [stichtCarefreeSurfer],
-//         deck: 1,
+//         Play: [liloMakingAWish],
+//         Hand: [stichtCarefreeSurfer],
+//         Deck: 1,
 //       },
 //       {
-//         play: [cursedMerfolkUrsulasHandiwork, princeJohnGreediestOfAll],
-//         deck: 2,
+//         Play: [cursedMerfolkUrsulasHandiwork, princeJohnGreediestOfAll],
+//         Deck: 2,
 //       },
 //     );
 //
-//     await testEngine.tapCard(cursedMerfolkUrsulasHandiwork);
+//     Await testEngine.tapCard(cursedMerfolkUrsulasHandiwork);
 //
-//     await testEngine.challenge({
-//       attacker: liloMakingAWish,
-//       defender: cursedMerfolkUrsulasHandiwork,
+//     Await testEngine.challenge({
+//       Attacker: liloMakingAWish,
+//       Defender: cursedMerfolkUrsulasHandiwork,
 //     });
 //
-//     expect(testEngine.stackLayers).toHaveLength(1);
-//     await testEngine.resolveTopOfStack(
+//     Expect(testEngine.stackLayers).toHaveLength(1);
+//     Await testEngine.resolveTopOfStack(
 //       { targets: [stichtCarefreeSurfer] },
-//       true,
+//       True,
 //     );
 //
-//     testEngine.changeActivePlayer("player_two");
-//     await testEngine.skipTopOfStack();
+//     TestEngine.changeActivePlayer("player_two");
+//     Await testEngine.skipTopOfStack();
 //
-//     expect(testEngine.getZonesCardCount("player_one").hand).toBe(0);
-//     expect(testEngine.getCardModel(cursedMerfolkUrsulasHandiwork).zone).toBe(
+//     Expect(testEngine.getZonesCardCount("player_one").hand).toBe(0);
+//     Expect(testEngine.getCardModel(cursedMerfolkUrsulasHandiwork).zone).toBe(
 //       "discard",
 //     );
 //   });

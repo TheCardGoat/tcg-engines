@@ -1,31 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const merlinRabbit: CharacterCard = {
-  id: "11g",
-  cardType: "character",
-  name: "Merlin",
-  version: "Rabbit",
-  fullName: "Merlin - Rabbit",
-  inkType: ["amethyst"],
-  franchise: "Sword in the Stone",
-  set: "002",
-  text: "HOPPITY HIP! When you play this character and when he leaves play, you may draw a card.",
-  cost: 4,
-  strength: 2,
-  willpower: 3,
-  lore: 1,
-  cardNumber: 52,
-  inkable: false,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "870378cfa4dc54ffbdf2cb2d60a56e9cf782a4ee",
-  },
   abilities: [
     {
-      id: "11g-1",
-      type: "triggered",
-      name: "HOPPITY HIP! When you play this character and",
-      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "optional",
         effect: {
@@ -35,8 +12,31 @@ export const merlinRabbit: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "11g-1",
+      name: "HOPPITY HIP! When you play this character and",
       text: "HOPPITY HIP! When you play this character and when he leaves play, you may draw a card.",
+      trigger: { event: "play", timing: "when", on: "SELF" },
+      type: "triggered",
     },
   ],
+  cardNumber: 52,
+  cardType: "character",
   classifications: ["Storyborn", "Mentor", "Sorcerer"],
+  cost: 4,
+  externalIds: {
+    ravensburger: "870378cfa4dc54ffbdf2cb2d60a56e9cf782a4ee",
+  },
+  franchise: "Sword in the Stone",
+  fullName: "Merlin - Rabbit",
+  id: "11g",
+  inkType: ["amethyst"],
+  inkable: false,
+  lore: 1,
+  missingTests: true,
+  name: "Merlin",
+  set: "002",
+  strength: 2,
+  text: "HOPPITY HIP! When you play this character and when he leaves play, you may draw a card.",
+  version: "Rabbit",
+  willpower: 3,
 };

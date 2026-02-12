@@ -101,6 +101,5 @@ export const createGameId = (value: string): GameId => {
  * @param value - Value to check
  * @returns True if value is a non-empty string
  */
-export const isNonEmptyString = (value: unknown): value is string => {
-  return typeof value === "string" && value.length > 0;
-};
+export const isNonEmptyString = (value: unknown): value is string =>
+  typeof value === "string" && value.length > 0;

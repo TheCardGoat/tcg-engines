@@ -3,30 +3,30 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   monstroWhaleOfAWhale,
-//   scroopOdiousMutineer,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   MonstroWhaleOfAWhale,
+//   ScroopOdiousMutineer,
 // } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Scroop - Odious Mutineer", () => {
-//   it("**DO SAY HELLO TO MR. ARROW** When you play this character, you may pay 3 {I} to banish chosen damaged character.", () => {
-//     const testStore = new TestStore({
-//       inkwell: scroopOdiousMutineer.cost + 3,
-//       hand: [scroopOdiousMutineer],
-//       play: [monstroWhaleOfAWhale],
+// Describe("Scroop - Odious Mutineer", () => {
+//   It("**DO SAY HELLO TO MR. ARROW** When you play this character, you may pay 3 {I} to banish chosen damaged character.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: scroopOdiousMutineer.cost + 3,
+//       Hand: [scroopOdiousMutineer],
+//       Play: [monstroWhaleOfAWhale],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(scroopOdiousMutineer);
-//     const target = testStore.getCard(monstroWhaleOfAWhale);
-//     target.updateCardMeta({ damage: 2 });
+//     Const cardUnderTest = testStore.getCard(scroopOdiousMutineer);
+//     Const target = testStore.getCard(monstroWhaleOfAWhale);
+//     Target.updateCardMeta({ damage: 2 });
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({ targets: [target] });
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.zone).toBe("discard");
+//     Expect(target.zone).toBe("discard");
 //   });
 // });
 //

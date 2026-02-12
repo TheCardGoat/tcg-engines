@@ -3,20 +3,20 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { captainHookCaptainOfTheJollyRoger } from "@lorcanito/lorcana-engine/cards/009/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { captainHookCaptainOfTheJollyRoger } from "@lorcanito/lorcana-engine/cards/009/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Captain Hook - Captain of the Jolly Roger", () => {
-//   it.skip("**DOUBLE THE POWDER!** When you play this character, you may return an action card named Fire the Cannons! from your discard to your hand.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: captainHookCaptainOfTheJollyRoger.cost,
-//       hand: [captainHookCaptainOfTheJollyRoger],
+// Describe("Captain Hook - Captain of the Jolly Roger", () => {
+//   It.skip("**DOUBLE THE POWDER!** When you play this character, you may return an action card named Fire the Cannons! from your discard to your hand.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: captainHookCaptainOfTheJollyRoger.cost,
+//       Hand: [captainHookCaptainOfTheJollyRoger],
 //     });
 //
-//     await testEngine.playCard(captainHookCaptainOfTheJollyRoger);
-//     await testEngine.acceptOptionalLayer();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.playCard(captainHookCaptainOfTheJollyRoger);
+//     Await testEngine.acceptOptionalLayer();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

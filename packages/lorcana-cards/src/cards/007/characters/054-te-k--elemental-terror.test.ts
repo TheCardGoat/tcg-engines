@@ -3,54 +3,54 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { teKaTheBurningOne } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { annaMysticalMajesty } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import {
-//   mufasaAmongTheStars,
-//   teKaElementalTerror,
-//   thomasOmalleyFelineCharmer,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { teKaTheBurningOne } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { annaMysticalMajesty } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import {
+//   MufasaAmongTheStars,
+//   TeKaElementalTerror,
+//   ThomasOmalleyFelineCharmer,
 // } from "@lorcanito/lorcana-engine/cards/007";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Te Kā - Elemental Terror", () => {
-//   it("Shift 7 (You may pay 7 {I} to play this on top of one of your characters named Te Kā.)", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: teKaElementalTerror.cost,
-//       play: [teKaTheBurningOne],
-//       hand: [teKaElementalTerror],
+// Describe("Te Kā - Elemental Terror", () => {
+//   It("Shift 7 (You may pay 7 {I} to play this on top of one of your characters named Te Kā.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: teKaElementalTerror.cost,
+//       Play: [teKaTheBurningOne],
+//       Hand: [teKaElementalTerror],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(teKaElementalTerror);
-//     expect(cardUnderTest.hasShift).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(teKaElementalTerror);
+//     Expect(cardUnderTest.hasShift).toBe(true);
 //
-//     await testEngine.shiftCard({
-//       shifted: teKaTheBurningOne,
-//       shifter: teKaElementalTerror,
+//     Await testEngine.shiftCard({
+//       Shifted: teKaTheBurningOne,
+//       Shifter: teKaElementalTerror,
 //     });
 //
-//     expect(testEngine.getCardZone(teKaElementalTerror)).toBe("play");
+//     Expect(testEngine.getCardZone(teKaElementalTerror)).toBe("play");
 //   });
 //
-//   it("ANCIENT RAGE During your turn, whenever an opposing character is exerted, banish them.", async () => {
-//     const testEngine = new TestEngine(
+//   It("ANCIENT RAGE During your turn, whenever an opposing character is exerted, banish them.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: annaMysticalMajesty.cost,
-//         hand: [annaMysticalMajesty],
-//         play: [teKaElementalTerror],
+//         Inkwell: annaMysticalMajesty.cost,
+//         Hand: [annaMysticalMajesty],
+//         Play: [teKaElementalTerror],
 //       },
 //       {
-//         play: [mufasaAmongTheStars, thomasOmalleyFelineCharmer],
+//         Play: [mufasaAmongTheStars, thomasOmalleyFelineCharmer],
 //       },
 //     );
 //
 //     // Anna exerts all opposing characters
-//     await testEngine.playCard(annaMysticalMajesty);
-//     testEngine.changeActivePlayer("player_two");
-//     await testEngine.acceptOptionalLayer();
+//     Await testEngine.playCard(annaMysticalMajesty);
+//     TestEngine.changeActivePlayer("player_two");
+//     Await testEngine.acceptOptionalLayer();
 //
-//     expect(testEngine.getCardZone(mufasaAmongTheStars)).toBe("discard");
-//     expect(testEngine.getCardZone(thomasOmalleyFelineCharmer)).toBe("discard");
+//     Expect(testEngine.getCardZone(mufasaAmongTheStars)).toBe("discard");
+//     Expect(testEngine.getCardZone(thomasOmalleyFelineCharmer)).toBe("discard");
 //   });
 // });
 //

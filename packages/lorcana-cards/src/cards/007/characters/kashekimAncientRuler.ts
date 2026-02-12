@@ -1,24 +1,24 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const kashekimAncientRuler: LorcanitoCharacterCard = {
-//   id: "hdd",
-//   name: "Kashekim",
-//   title: "Ancient Ruler",
-//   characteristics: ["storyborn", "king"],
-//   type: "character",
-//   inkwell: true,
-//   colors: ["amethyst"],
-//   cost: 3,
-//   strength: 4,
-//   willpower: 3,
-//   illustrator: "Jocelyn Sepulveda",
-//   number: 77,
-//   set: "007",
-//   externalIds: {
-//     tcgPlayer: 618268,
+// Export const kashekimAncientRuler: LorcanitoCharacterCard = {
+//   Id: "hdd",
+//   Name: "Kashekim",
+//   Title: "Ancient Ruler",
+//   Characteristics: ["storyborn", "king"],
+//   Type: "character",
+//   Inkwell: true,
+//   Colors: ["amethyst"],
+//   Cost: 3,
+//   Strength: 4,
+//   Willpower: 3,
+//   Illustrator: "Jocelyn Sepulveda",
+//   Number: 77,
+//   Set: "007",
+//   ExternalIds: {
+//     TcgPlayer: 618268,
 //   },
-//   rarity: "uncommon",
-//   lore: 1,
+//   Rarity: "uncommon",
+//   Lore: 1,
 // };
 //

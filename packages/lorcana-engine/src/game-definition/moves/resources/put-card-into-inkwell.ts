@@ -1,9 +1,5 @@
-import { createMove, type ZoneId } from "@tcg/core";
-import type {
-  LorcanaCardMeta,
-  LorcanaGameState,
-  LorcanaMoveParams,
-} from "../../../types";
+import { type ZoneId, createMove } from "@tcg/core";
+import type { LorcanaCardMeta, LorcanaGameState, LorcanaMoveParams } from "../../../types";
 import {
   and,
   cardInHand,
@@ -32,8 +28,7 @@ export const putACardIntoTheInkwell = createMove<
   condition: and(
     isMainPhase(),
     (state, context) => cardInHand(context.params.cardId)(state, context),
-    (state, context) =>
-      cardOwnedByPlayer(context.params.cardId)(state, context),
+    (state, context) => cardOwnedByPlayer(context.params.cardId)(state, context),
     hasNotUsedAction("hasInked"),
   ),
   reducer: (_draft, context) => {

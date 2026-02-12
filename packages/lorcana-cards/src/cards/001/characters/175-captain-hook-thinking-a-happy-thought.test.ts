@@ -5,9 +5,9 @@ import { captainHookThinkingAHappyThought } from "./175-captain-hook-thinking-a-
 describe("Captain Hook - Thinking a Happy Thought", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [captainHookThinkingAHappyThought] });
-  //   expect(testEngine.getCardModel(captainHookThinkingAHappyThought).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [captainHookThinkingAHappyThought] });
+  //   Expect(testEngine.getCardModel(captainHookThinkingAHappyThought).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,160 +17,160 @@ describe("Captain Hook - Thinking a Happy Thought", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   captainHookForcefulDuelist,
-//   captainHookThinkingAHappyThought,
-//   hansSchemingPrince,
-//   maleficentSorceress,
-//   moanaOfMotunui,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   CaptainHookForcefulDuelist,
+//   CaptainHookThinkingAHappyThought,
+//   HansSchemingPrince,
+//   MaleficentSorceress,
+//   MoanaOfMotunui,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Captain Hook - Thinking a Happy Thought", () => {
-//   describe("**STOLEN DUST** Characters with cost 3 or less can't challenge this character.", () => {
-//     it("Characters with cost 3 or less can't challenge THIS character.", () => {
-//       const testStore = new TestStore(
+// Describe("Captain Hook - Thinking a Happy Thought", () => {
+//   Describe("**STOLEN DUST** Characters with cost 3 or less can't challenge this character.", () => {
+//     It("Characters with cost 3 or less can't challenge THIS character.", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [maleficentSorceress],
+//           Play: [maleficentSorceress],
 //         },
 //         {
-//           play: [captainHookThinkingAHappyThought],
+//           Play: [captainHookThinkingAHappyThought],
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         captainHookThinkingAHappyThought.id,
+//         CaptainHookThinkingAHappyThought.id,
 //         "player_two",
 //       );
-//       const attacker = testStore.getByZoneAndId("play", maleficentSorceress.id);
+//       Const attacker = testStore.getByZoneAndId("play", maleficentSorceress.id);
 //
-//       cardUnderTest.updateCardMeta({ exerted: true });
+//       CardUnderTest.updateCardMeta({ exerted: true });
 //
-//       attacker.challenge(cardUnderTest);
+//       Attacker.challenge(cardUnderTest);
 //
-//       expect(cardUnderTest.zone).toEqual("play");
-//       expect(cardUnderTest.meta.damage).toBeFalsy();
+//       Expect(cardUnderTest.zone).toEqual("play");
+//       Expect(cardUnderTest.meta.damage).toBeFalsy();
 //
-//       expect(attacker.zone).toEqual("play");
-//       expect(attacker.meta.damage).toBeFalsy();
-//       expect(attacker.lorcanitoCard.cost).toEqual(3);
+//       Expect(attacker.zone).toEqual("play");
+//       Expect(attacker.meta.damage).toBeFalsy();
+//       Expect(attacker.lorcanitoCard.cost).toEqual(3);
 //     });
 //
-//     it("Characters with cost 3 or less can challenge OTHER character.", () => {
-//       const testStore = new TestStore(
+//     It("Characters with cost 3 or less can challenge OTHER character.", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [maleficentSorceress],
+//           Play: [maleficentSorceress],
 //         },
 //         {
-//           play: [captainHookThinkingAHappyThought, moanaOfMotunui],
+//           Play: [captainHookThinkingAHappyThought, moanaOfMotunui],
 //         },
 //       );
 //
-//       const defender = testStore.getByZoneAndId(
+//       Const defender = testStore.getByZoneAndId(
 //         "play",
-//         moanaOfMotunui.id,
+//         MoanaOfMotunui.id,
 //         "player_two",
 //       );
-//       const attacker = testStore.getByZoneAndId("play", maleficentSorceress.id);
+//       Const attacker = testStore.getByZoneAndId("play", maleficentSorceress.id);
 //
-//       defender.updateCardMeta({ exerted: true });
+//       Defender.updateCardMeta({ exerted: true });
 //
-//       attacker.challenge(defender);
+//       Attacker.challenge(defender);
 //
-//       expect(defender.zone).toEqual("play");
-//       expect(defender.meta.damage).toBeTruthy();
+//       Expect(defender.zone).toEqual("play");
+//       Expect(defender.meta.damage).toBeTruthy();
 //
-//       expect(attacker.zone).toEqual("play");
-//       expect(attacker.meta.damage).toBeTruthy();
-//       expect(attacker.lorcanitoCard.cost).toEqual(3);
+//       Expect(attacker.zone).toEqual("play");
+//       Expect(attacker.meta.damage).toBeTruthy();
+//       Expect(attacker.lorcanitoCard.cost).toEqual(3);
 //     });
 //
-//     it("Characters with cost 4 or more can challenge this character.", () => {
-//       const testStore = new TestStore(
+//     It("Characters with cost 4 or more can challenge this character.", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [hansSchemingPrince],
+//           Play: [hansSchemingPrince],
 //         },
 //         {
-//           play: [captainHookThinkingAHappyThought],
+//           Play: [captainHookThinkingAHappyThought],
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         captainHookThinkingAHappyThought.id,
+//         CaptainHookThinkingAHappyThought.id,
 //         "player_two",
 //       );
-//       const attacker = testStore.getByZoneAndId("play", hansSchemingPrince.id);
+//       Const attacker = testStore.getByZoneAndId("play", hansSchemingPrince.id);
 //
-//       cardUnderTest.updateCardMeta({ exerted: true });
+//       CardUnderTest.updateCardMeta({ exerted: true });
 //
-//       attacker.challenge(cardUnderTest);
+//       Attacker.challenge(cardUnderTest);
 //
-//       expect(cardUnderTest.zone).toEqual("play");
-//       expect(cardUnderTest.meta.damage).toBeTruthy();
+//       Expect(cardUnderTest.zone).toEqual("play");
+//       Expect(cardUnderTest.meta.damage).toBeTruthy();
 //
-//       expect(attacker.zone).toEqual("play");
-//       expect(attacker.meta.damage).toBeTruthy();
-//       expect(attacker.lorcanitoCard.cost).toEqual(4);
+//       Expect(attacker.zone).toEqual("play");
+//       Expect(attacker.meta.damage).toBeTruthy();
+//       Expect(attacker.lorcanitoCard.cost).toEqual(4);
 //     });
 //   });
 //
-//   it("**Shift** 3 _(You may pay 3 {I} to play this on top of one of your characters named Captain Hook.)_", () => {
-//     const testStore = new TestStore({
-//       inkwell: 3,
-//       hand: [captainHookThinkingAHappyThought],
-//       play: [captainHookForcefulDuelist],
+//   It("**Shift** 3 _(You may pay 3 {I} to play this on top of one of your characters named Captain Hook.)_", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: 3,
+//       Hand: [captainHookThinkingAHappyThought],
+//       Play: [captainHookForcefulDuelist],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "hand",
-//       captainHookThinkingAHappyThought.id,
+//       CaptainHookThinkingAHappyThought.id,
 //     );
-//     const target = testStore.getByZoneAndId(
+//     Const target = testStore.getByZoneAndId(
 //       "play",
-//       captainHookForcefulDuelist.id,
+//       CaptainHookForcefulDuelist.id,
 //     );
 //
-//     testStore.store.shiftCard(cardUnderTest.instanceId, target.instanceId);
+//     TestStore.store.shiftCard(cardUnderTest.instanceId, target.instanceId);
 //
-//     expect(cardUnderTest.zone).toEqual("play");
-//     expect(cardUnderTest.meta.shifted).toEqual(target.instanceId);
-//     expect(target.meta.shifter).toEqual(cardUnderTest.instanceId);
-//     expect(
-//       testStore.store.tableStore.getTable("player_one").inkAvailable(),
+//     Expect(cardUnderTest.zone).toEqual("play");
+//     Expect(cardUnderTest.meta.shifted).toEqual(target.instanceId);
+//     Expect(target.meta.shifter).toEqual(cardUnderTest.instanceId);
+//     Expect(
+//       TestStore.store.tableStore.getTable("player_one").inkAvailable(),
 //     ).toEqual(0);
 //   });
 //
-//   it("**Challenger** +3 _(While challenging, this character gets +3 {S}.)_", () => {
-//     const testStore = new TestStore(
+//   It("**Challenger** +3 _(While challenging, this character gets +3 {S}.)_", () => {
+//     Const testStore = new TestStore(
 //       {
-//         play: [captainHookThinkingAHappyThought],
+//         Play: [captainHookThinkingAHappyThought],
 //       },
 //       {
-//         play: [moanaOfMotunui],
+//         Play: [moanaOfMotunui],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       captainHookThinkingAHappyThought.id,
+//       CaptainHookThinkingAHappyThought.id,
 //     );
-//     const defender = testStore.getByZoneAndId(
+//     Const defender = testStore.getByZoneAndId(
 //       "play",
-//       moanaOfMotunui.id,
+//       MoanaOfMotunui.id,
 //       "player_two",
 //     );
 //
-//     defender.updateCardMeta({ exerted: true });
+//     Defender.updateCardMeta({ exerted: true });
 //
-//     cardUnderTest.challenge(defender);
+//     CardUnderTest.challenge(defender);
 //
-//     expect(defender.meta.damage).toEqual(
+//     Expect(defender.meta.damage).toEqual(
 //       (cardUnderTest.lorcanitoCard.strength || 0) + 3,
 //     );
-//     expect(cardUnderTest.hasChallenger).toEqual(true);
+//     Expect(cardUnderTest.hasChallenger).toEqual(true);
 //   });
 // });
 //

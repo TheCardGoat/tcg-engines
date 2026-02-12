@@ -3,38 +3,38 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   pascalInquisitivePet,
-//   rapunzelAppreciativeArtist,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   PascalInquisitivePet,
+//   RapunzelAppreciativeArtist,
 // } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Rapunzel - Appreciative Artist", () => {
-//   it("**PERCEPTIVE PARTNER** While you have a character named Pascal in play, this character gains **Ward.** _(Opponents can't chose them except to challenge.)_", async () => {
+// Describe("Rapunzel - Appreciative Artist", () => {
+//   It("**PERCEPTIVE PARTNER** While you have a character named Pascal in play, this character gains **Ward.** _(Opponents can't chose them except to challenge.)_", async () => {
 //     // Setup test with only Rapunzel in play
-//     const testEngine = new TestEngine({
-//       inkwell: rapunzelAppreciativeArtist.cost,
-//       play: [rapunzelAppreciativeArtist],
+//     Const testEngine = new TestEngine({
+//       Inkwell: rapunzelAppreciativeArtist.cost,
+//       Play: [rapunzelAppreciativeArtist],
 //     });
 //
-//     const rapunzelCard = testEngine.getCardModel(rapunzelAppreciativeArtist);
+//     Const rapunzelCard = testEngine.getCardModel(rapunzelAppreciativeArtist);
 //
 //     // Test initial state (without Pascal)
-//     expect(rapunzelCard.hasWard).toBe(false);
+//     Expect(rapunzelCard.hasWard).toBe(false);
 //
 //     // Setup test with both Rapunzel and Pascal in play
-//     const testEngineWithPascal = new TestEngine({
-//       inkwell: rapunzelAppreciativeArtist.cost,
-//       play: [rapunzelAppreciativeArtist, pascalInquisitivePet],
+//     Const testEngineWithPascal = new TestEngine({
+//       Inkwell: rapunzelAppreciativeArtist.cost,
+//       Play: [rapunzelAppreciativeArtist, pascalInquisitivePet],
 //     });
 //
-//     const rapunzelCardWithPascal = testEngineWithPascal.getCardModel(
-//       rapunzelAppreciativeArtist,
+//     Const rapunzelCardWithPascal = testEngineWithPascal.getCardModel(
+//       RapunzelAppreciativeArtist,
 //     );
 //
 //     // Test state with Pascal in play
-//     expect(rapunzelCardWithPascal.hasWard).toBe(true);
+//     Expect(rapunzelCardWithPascal.hasWard).toBe(true);
 //   });
 // });
 //

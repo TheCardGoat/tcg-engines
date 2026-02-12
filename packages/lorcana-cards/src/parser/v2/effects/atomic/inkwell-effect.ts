@@ -72,9 +72,9 @@ function parseFromText(text: string): PutIntoInkwellEffect | null {
   }
 
   const effect: PutIntoInkwellEffect = {
-    type: "put-into-inkwell",
     source,
     target,
+    type: "put-into-inkwell",
   };
 
   if (exerted) {
@@ -94,11 +94,8 @@ function parseFromText(text: string): PutIntoInkwellEffect | null {
  * Inkwell effect parser implementation
  */
 export const inkwellEffectParser: EffectParser = {
-  pattern:
-    /(?:put|add)(?:.*?)into\s+(?:your\s+|their\s+|their\s+player's\s+)?inkwell/i,
   description:
     "Parses inkwell effects (e.g., 'put into your inkwell', 'add to inkwell', 'put into their player's inkwell')",
-
   parse: (input: CstNode | string): PutIntoInkwellEffect | null => {
     if (typeof input === "string") {
       return parseFromText(input);
@@ -107,4 +104,7 @@ export const inkwellEffectParser: EffectParser = {
     logger.warn("CST parsing not implemented for inkwell effects");
     return null;
   },
+
+  pattern:
+    /(?:put|add)(?:.*?)into\s+(?:your\s+|their\s+|their\s+player's\s+)?inkwell/i,
 };

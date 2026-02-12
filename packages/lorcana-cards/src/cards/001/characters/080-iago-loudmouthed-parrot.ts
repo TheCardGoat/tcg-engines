@@ -1,56 +1,56 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const iagoLoudmouthedParrot: CharacterCard = {
-  id: "s1f",
-  cardType: "character",
-  name: "Iago",
-  version: "Loud-Mouthed Parrot",
-  fullName: "Iago - Loud-Mouthed Parrot",
-  inkType: ["emerald"],
-  franchise: "Disney",
-  set: "001",
-  text: "**YOU GOT A PROBLEM** {E} − Chosen character gains **Reckless** during their next turn. _(They can",
-  cost: 3,
-  strength: 1,
-  willpower: 4,
-  lore: 1,
+  abilities: [],
   cardNumber: 80,
-  inkable: true,
+  cardType: "character",
+  classifications: ["Storyborn", "Ally"],
+  cost: 3,
   externalIds: {
     ravensburger: "",
   },
-  abilities: [],
-  classifications: ["Storyborn", "Ally"],
+  franchise: "Disney",
+  fullName: "Iago - Loud-Mouthed Parrot",
+  id: "s1f",
+  inkType: ["emerald"],
+  inkable: true,
+  lore: 1,
+  name: "Iago",
+  set: "001",
+  strength: 1,
+  text: "**YOU GOT A PROBLEM** {E} − Chosen character gains **Reckless** during their next turn. _(They can",
+  version: "Loud-Mouthed Parrot",
+  willpower: 4,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { ActivatedAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-// import type { AbilityEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+// Import type { ActivatedAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { AbilityEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
 //
-// export const iagoLoudMouthedParrot: LorcanitoCharacterCard = {
-//   id: "s1f",
-//   name: "Iago",
-//   title: "Loud-Mouthed Parrot",
-//   characteristics: ["storyborn", "ally"],
-//   text: "**YOU GOT A PROBLEM** {E} − Chosen character gains **Reckless** during their next turn. _(They can't quest and must challenge if able.)_",
-//   type: "character",
-//   abilities: [
+// Export const iagoLoudMouthedParrot: LorcanitoCharacterCard = {
+//   Id: "s1f",
+//   Name: "Iago",
+//   Title: "Loud-Mouthed Parrot",
+//   Characteristics: ["storyborn", "ally"],
+//   Text: "**YOU GOT A PROBLEM** {E} − Chosen character gains **Reckless** during their next turn. _(They can't quest and must challenge if able.)_",
+//   Type: "character",
+//   Abilities: [
 //     {
-//       type: "activated",
-//       name: "YOU GOT A PROBLEM?",
-//       text: "{E} − Chosen character gains **Reckless** during their next turn. _(They can't quest and must challenge if able.)_",
-//       costs: [{ type: "exert" }],
-//       effects: [
+//       Type: "activated",
+//       Name: "YOU GOT A PROBLEM?",
+//       Text: "{E} − Chosen character gains **Reckless** during their next turn. _(They can't quest and must challenge if able.)_",
+//       Costs: [{ type: "exert" }],
+//       Effects: [
 //         {
-//           type: "ability",
-//           ability: "reckless",
-//           modifier: "add",
-//           duration: "next_turn",
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
+//           Type: "ability",
+//           Ability: "reckless",
+//           Modifier: "add",
+//           Duration: "next_turn",
+//           Target: {
+//             Type: "card",
+//             Value: 1,
+//             Filters: [
 //               { filter: "zone", value: "play" },
 //               { filter: "owner", value: "opponent" },
 //               { filter: "type", value: "character" },
@@ -60,18 +60,18 @@ export const iagoLoudmouthedParrot: CharacterCard = {
 //       ],
 //     } as ActivatedAbility,
 //   ],
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 3,
-//   strength: 1,
-//   willpower: 4,
-//   lore: 1,
-//   illustrator: "Brian Weisz",
-//   number: 80,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 497207,
+//   Inkwell: true,
+//   Colors: ["emerald"],
+//   Cost: 3,
+//   Strength: 1,
+//   Willpower: 4,
+//   Lore: 1,
+//   Illustrator: "Brian Weisz",
+//   Number: 80,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 497207,
 //   },
-//   rarity: "rare",
+//   Rarity: "rare",
 // };
 //

@@ -18,7 +18,7 @@ import { all008Cards } from "../cards/008";
 import { all009Cards } from "../cards/009";
 import { all010Cards } from "../cards/010";
 
-type Card = {
+interface Card {
   id: string;
   name: string;
   version?: string;
@@ -26,28 +26,28 @@ type Card = {
   text?: string;
   cardNumber: number;
   set: string;
-};
+}
 
 const setData: { setNumber: string; cards: Card[] }[] = [
-  { setNumber: "001", cards: all001Cards as Card[] },
-  { setNumber: "002", cards: all002Cards as Card[] },
-  { setNumber: "003", cards: all003Cards as Card[] },
-  { setNumber: "004", cards: all004Cards as Card[] },
-  { setNumber: "005", cards: all005Cards as Card[] },
-  { setNumber: "006", cards: all006Cards as Card[] },
-  { setNumber: "007", cards: all007Cards as Card[] },
-  { setNumber: "008", cards: all008Cards as Card[] },
-  { setNumber: "009", cards: all009Cards as Card[] },
-  { setNumber: "010", cards: all010Cards as Card[] },
+  { cards: all001Cards as Card[], setNumber: "001" },
+  { cards: all002Cards as Card[], setNumber: "002" },
+  { cards: all003Cards as Card[], setNumber: "003" },
+  { cards: all004Cards as Card[], setNumber: "004" },
+  { cards: all005Cards as Card[], setNumber: "005" },
+  { cards: all006Cards as Card[], setNumber: "006" },
+  { cards: all007Cards as Card[], setNumber: "007" },
+  { cards: all008Cards as Card[], setNumber: "008" },
+  { cards: all009Cards as Card[], setNumber: "009" },
+  { cards: all010Cards as Card[], setNumber: "010" },
 ];
 
 function escapeString(str: string): string {
   return str
-    .replace(/\\/g, "\\\\")
-    .replace(/"/g, '\\"')
-    .replace(/\n/g, "\\n")
-    .replace(/\r/g, "\\r")
-    .replace(/\t/g, "\\t");
+    .replace(/\\/g, String.raw`\\`)
+    .replace(/"/g, String.raw`\"`)
+    .replace(/\n/g, String.raw`\n`)
+    .replace(/\r/g, String.raw`\r`)
+    .replace(/\t/g, String.raw`\t`);
 }
 
 function getCardDisplayName(card: Card): string {
@@ -63,7 +63,7 @@ function getCardDisplayName(card: Card): string {
 function generateTestFile(setNumber: string, cards: Card[]): string {
   const cardsWithText = cards.filter((card) => card.text && card.text.trim());
 
-  const sortedCards = cardsWithText.sort((a, b) => a.cardNumber - b.cardNumber);
+  const sortedCards = cardsWithText.toSorted((a, b) => a.cardNumber - b.cardNumber);
 
   const testCases = sortedCards.map((card) => {
     const displayName = getCardDisplayName(card);
@@ -108,7 +108,7 @@ function main() {
     const content = generateTestFile(setNumber, cards);
     const outputPath = path.join(outputDir, `set-${setNumber}.test.ts`);
 
-    fs.writeFileSync(outputPath, content, "utf-8");
+    fs.writeFileSync(outputPath, content, "utf8");
     console.log(
       `Generated ${outputPath} with ${cardsWithText.length} test cases`,
     );

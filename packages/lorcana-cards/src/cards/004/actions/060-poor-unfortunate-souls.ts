@@ -1,44 +1,44 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { withCostXorLess } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+// Import { withCostXorLess } from "@lorcanito/lorcana-engine/abilities/targets";
 //
-// export const poorUnfortunateSouls: LorcanitoActionCard = {
-//   id: "d2i",
-//   reprints: ["k1n"],
-//   name: "Poor Unfortunate Souls",
-//   characteristics: ["action", "song"],
-//   text: "_(A character with cost 2 or more can {E} to sing this song for free.)_\n\n\nReturn a character, item or location with cost 2 or less to their player's hand.",
-//   type: "action",
-//   abilities: [
+// Export const poorUnfortunateSouls: LorcanitoActionCard = {
+//   Id: "d2i",
+//   Reprints: ["k1n"],
+//   Name: "Poor Unfortunate Souls",
+//   Characteristics: ["action", "song"],
+//   Text: "_(A character with cost 2 or more can {E} to sing this song for free.)_\n\n\nReturn a character, item or location with cost 2 or less to their player's hand.",
+//   Type: "action",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       effects: [
+//       Type: "resolution",
+//       Effects: [
 //         {
-//           type: "move",
-//           to: "hand",
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
+//           Type: "move",
+//           To: "hand",
+//           Target: {
+//             Type: "card",
+//             Value: 1,
+//             Filters: [
 //               { filter: "type", value: ["character", "location", "item"] },
 //               { filter: "zone", value: "play" },
-//               withCostXorLess(2),
+//               WithCostXorLess(2),
 //             ],
 //           },
 //         },
 //       ],
 //     },
 //   ],
-//   flavour: "It's sad but true",
-//   inkwell: true,
-//   colors: ["amethyst"],
-//   cost: 2,
-//   illustrator: "Denny Minonne",
-//   number: 60,
-//   set: "URR",
-//   externalIds: {
-//     tcgPlayer: 550518,
+//   Flavour: "It's sad but true",
+//   Inkwell: true,
+//   Colors: ["amethyst"],
+//   Cost: 2,
+//   Illustrator: "Denny Minonne",
+//   Number: 60,
+//   Set: "URR",
+//   ExternalIds: {
+//     TcgPlayer: 550518,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

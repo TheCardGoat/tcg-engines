@@ -1,35 +1,14 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const magicBroomSwiftCleaner: CharacterCard = {
-  id: "114",
-  cardType: "character",
-  name: "Magic Broom",
-  version: "Swift Cleaner",
-  fullName: "Magic Broom - Swift Cleaner",
-  inkType: ["amethyst"],
-  franchise: "Fantasia",
-  set: "003",
-  text: "Rush (This character can challenge the turn they're played.)\nCLEAN THIS, CLEAN THAT When you play this character, you may shuffle all Broom cards from your discard into your deck.",
-  cost: 5,
-  strength: 4,
-  willpower: 4,
-  lore: 2,
-  cardNumber: 45,
-  inkable: false,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "869358d9f809656d6013e88df0dee2b50724aab8",
-  },
   abilities: [
     {
       id: "114-1",
-      type: "keyword",
       keyword: "Rush",
       text: "Rush",
+      type: "keyword",
     },
     {
-      id: "114-2",
-      type: "action",
       effect: {
         type: "optional",
         effect: {
@@ -45,8 +24,29 @@ export const magicBroomSwiftCleaner: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "114-2",
       text: "CLEAN THIS, CLEAN THAT When you play this character, you may shuffle all Broom cards from your discard into your deck.",
+      type: "action",
     },
   ],
+  cardNumber: 45,
+  cardType: "character",
   classifications: ["Dreamborn", "Broom"],
+  cost: 5,
+  externalIds: {
+    ravensburger: "869358d9f809656d6013e88df0dee2b50724aab8",
+  },
+  franchise: "Fantasia",
+  fullName: "Magic Broom - Swift Cleaner",
+  id: "114",
+  inkType: ["amethyst"],
+  inkable: false,
+  lore: 2,
+  missingTests: true,
+  name: "Magic Broom",
+  set: "003",
+  strength: 4,
+  text: "Rush (This character can challenge the turn they're played.)\nCLEAN THIS, CLEAN THAT When you play this character, you may shuffle all Broom cards from your discard into your deck.",
+  version: "Swift Cleaner",
+  willpower: 4,
 };

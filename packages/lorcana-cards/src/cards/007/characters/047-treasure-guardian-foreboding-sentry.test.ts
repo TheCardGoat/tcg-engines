@@ -3,50 +3,50 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { madamMimSnake } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import {
-//   rajahGhostlyTiger,
-//   treasureGuardianForebodingSentry,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { madamMimSnake } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import {
+//   RajahGhostlyTiger,
+//   TreasureGuardianForebodingSentry,
 // } from "@lorcanito/lorcana-engine/cards/007";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Treasure Guardian - Foreboding Sentry", () => {
-//   it("UNTOLD TREASURE When you play this character, if you have an Illusion character in play, you may draw a card.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: treasureGuardianForebodingSentry.cost,
-//       hand: [treasureGuardianForebodingSentry],
-//       play: [rajahGhostlyTiger],
-//       deck: [madamMimSnake],
+// Describe("Treasure Guardian - Foreboding Sentry", () => {
+//   It("UNTOLD TREASURE When you play this character, if you have an Illusion character in play, you may draw a card.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: treasureGuardianForebodingSentry.cost,
+//       Hand: [treasureGuardianForebodingSentry],
+//       Play: [rajahGhostlyTiger],
+//       Deck: [madamMimSnake],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(
-//       treasureGuardianForebodingSentry,
+//     Const cardUnderTest = testEngine.getCardModel(
+//       TreasureGuardianForebodingSentry,
 //     );
 //
-//     expect(testEngine.getZonesCardCount().hand).toEqual(1);
-//     await testEngine.playCard(cardUnderTest);
-//     expect(testEngine.getZonesCardCount().hand).toEqual(0);
-//     await testEngine.resolveOptionalAbility();
-//     expect(testEngine.getZonesCardCount().hand).toEqual(1);
+//     Expect(testEngine.getZonesCardCount().hand).toEqual(1);
+//     Await testEngine.playCard(cardUnderTest);
+//     Expect(testEngine.getZonesCardCount().hand).toEqual(0);
+//     Await testEngine.resolveOptionalAbility();
+//     Expect(testEngine.getZonesCardCount().hand).toEqual(1);
 //   });
 //
-//   it("Regression - ensure card is not drawn on non-illusion characters", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: treasureGuardianForebodingSentry.cost,
-//       hand: [treasureGuardianForebodingSentry],
-//       play: [madamMimSnake],
+//   It("Regression - ensure card is not drawn on non-illusion characters", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: treasureGuardianForebodingSentry.cost,
+//       Hand: [treasureGuardianForebodingSentry],
+//       Play: [madamMimSnake],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(
-//       treasureGuardianForebodingSentry,
+//     Const cardUnderTest = testEngine.getCardModel(
+//       TreasureGuardianForebodingSentry,
 //     );
 //
-//     expect(testEngine.getZonesCardCount().hand).toEqual(1);
-//     await testEngine.playCard(cardUnderTest);
-//     expect(testEngine.getZonesCardCount().hand).toEqual(0);
-//     expect(testEngine.stackLayers).toHaveLength(0);
-//     expect(testEngine.getZonesCardCount().hand).toEqual(0);
+//     Expect(testEngine.getZonesCardCount().hand).toEqual(1);
+//     Await testEngine.playCard(cardUnderTest);
+//     Expect(testEngine.getZonesCardCount().hand).toEqual(0);
+//     Expect(testEngine.stackLayers).toHaveLength(0);
+//     Expect(testEngine.getZonesCardCount().hand).toEqual(0);
 //   });
 // });
 //

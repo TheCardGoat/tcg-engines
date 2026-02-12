@@ -34,11 +34,11 @@ describe("returnEffectParser", () => {
       expect(result).not.toBeNull();
       expect(result?.type).toBe("return-to-hand");
       expect((result as Effect & { target: unknown }).target).toEqual({
-        selector: "chosen",
+        cardTypes: ["character"],
         count: 1,
         owner: "any",
+        selector: "chosen",
         zones: ["play"],
-        cardTypes: ["character"],
       });
     });
 
@@ -112,11 +112,11 @@ describe("returnEffectParser", () => {
       expect(result).not.toBeNull();
       expect(result?.type).toBe("shuffle-into-deck");
       expect((result as Effect & { target: unknown }).target).toEqual({
-        selector: "chosen",
+        cardTypes: ["character"],
         count: 1,
         owner: "any",
+        selector: "chosen",
         zones: ["play"],
-        cardTypes: ["character"],
       });
     });
 

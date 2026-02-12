@@ -3,34 +3,34 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   monstroWhaleOfAWhale,
-//   tananaWiseWoman,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   MonstroWhaleOfAWhale,
+//   TananaWiseWoman,
 // } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Tanana - Wise Woman", () => {
-//   it("**YOUR BROTHERS NEED GUIDANCE** When you play this character, you may remove up to 1 damage from chosen character or location.", () => {
-//     const testStore = new TestStore(
+// Describe("Tanana - Wise Woman", () => {
+//   It("**YOUR BROTHERS NEED GUIDANCE** When you play this character, you may remove up to 1 damage from chosen character or location.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: tananaWiseWoman.cost,
-//         hand: [tananaWiseWoman],
+//         Inkwell: tananaWiseWoman.cost,
+//         Hand: [tananaWiseWoman],
 //       },
 //       {
-//         play: [monstroWhaleOfAWhale],
+//         Play: [monstroWhaleOfAWhale],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getCard(tananaWiseWoman);
-//     const monstro = testStore.getCard(monstroWhaleOfAWhale);
-//     monstro.updateCardDamage(1);
+//     Const cardUnderTest = testStore.getCard(tananaWiseWoman);
+//     Const monstro = testStore.getCard(monstroWhaleOfAWhale);
+//     Monstro.updateCardDamage(1);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({ targets: [monstro] });
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({ targets: [monstro] });
 //
-//     expect(monstro.damage).toBe(0);
+//     Expect(monstro.damage).toBe(0);
 //   });
 // });
 //

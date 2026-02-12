@@ -3,39 +3,39 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   donaldDuck,
-//   donaldDuckMusketeer,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   DonaldDuck,
+//   DonaldDuckMusketeer,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { daisyDuckSecretAgent } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { daisyDuckSecretAgent } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Daisy Duck - Secret Agent", () => {
-//   it("**THWART** Whenever this character quests, each opponent chooses and discards a card.", () => {
-//     const testStore = new TestStore(
+// Describe("Daisy Duck - Secret Agent", () => {
+//   It("**THWART** Whenever this character quests, each opponent chooses and discards a card.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         play: [daisyDuckSecretAgent],
+//         Play: [daisyDuckSecretAgent],
 //       },
 //       {
-//         hand: [donaldDuck, donaldDuckMusketeer],
+//         Hand: [donaldDuck, donaldDuckMusketeer],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       daisyDuckSecretAgent.id,
+//       DaisyDuckSecretAgent.id,
 //     );
-//     const target = testStore.getByZoneAndId(
+//     Const target = testStore.getByZoneAndId(
 //       "hand",
-//       donaldDuck.id,
+//       DonaldDuck.id,
 //       "player_two",
 //     );
 //
-//     cardUnderTest.quest();
-//     testStore.changePlayer().resolveTopOfStack({ targets: [target] });
+//     CardUnderTest.quest();
+//     TestStore.changePlayer().resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.zone).toEqual("discard");
+//     Expect(target.zone).toEqual("discard");
 //   });
 // });
 //

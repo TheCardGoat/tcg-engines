@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { queenOfHeartsWonderlandEmpress } from "@lorcanito/lorcana-engine/cards/009/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { queenOfHeartsWonderlandEmpress } from "@lorcanito/lorcana-engine/cards/009/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Queen of Hearts - Wonderland Empress", () => {
-//   it.skip("**ALL WAYS HERE ARE MY WAYS** Whenever this character quests, your other Villain characters get +1 {L} this turn.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: queenOfHeartsWonderlandEmpress.cost,
-//       play: [queenOfHeartsWonderlandEmpress],
-//       hand: [queenOfHeartsWonderlandEmpress],
+// Describe("Queen of Hearts - Wonderland Empress", () => {
+//   It.skip("**ALL WAYS HERE ARE MY WAYS** Whenever this character quests, your other Villain characters get +1 {L} this turn.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: queenOfHeartsWonderlandEmpress.cost,
+//       Play: [queenOfHeartsWonderlandEmpress],
+//       Hand: [queenOfHeartsWonderlandEmpress],
 //     });
 //
-//     await testEngine.playCard(queenOfHeartsWonderlandEmpress);
+//     Await testEngine.playCard(queenOfHeartsWonderlandEmpress);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

@@ -1,48 +1,48 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type {
+// Import type {
 //   LorcanitoActionCard,
 //   ResolutionAbility,
 // } from "@lorcanito/lorcana-engine";
-// import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 //
-// const lightTheFuseAbility: ResolutionAbility = {
-//   type: "resolution",
-//   effects: [
+// Const lightTheFuseAbility: ResolutionAbility = {
+//   Type: "resolution",
+//   Effects: [
 //     {
-//       type: "damage",
-//       amount: {
-//         dynamic: true,
-//         filters: [
+//       Type: "damage",
+//       Amount: {
+//         Dynamic: true,
+//         Filters: [
 //           { filter: "type", value: "character" },
 //           { filter: "zone", value: "play" },
 //           { filter: "owner", value: "self" },
 //           {
-//             filter: "status",
-//             value: "exerted",
+//             Filter: "status",
+//             Value: "exerted",
 //           },
 //         ],
 //       },
-//       target: chosenCharacter,
+//       Target: chosenCharacter,
 //     },
 //   ],
 // };
 //
-// export const lightTheFuse: LorcanitoActionCard = {
-//   id: "cep",
-//   name: "Light The Fuse",
-//   characteristics: ["action"],
-//   text: "Deal 1 damage to chosen character for each exerted character you have in play.",
-//   type: "action",
-//   inkwell: false,
-//   colors: ["ruby", "steel"],
-//   cost: 1,
-//   illustrator: "Kenneth Anderson",
-//   number: 149,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631449,
+// Export const lightTheFuse: LorcanitoActionCard = {
+//   Id: "cep",
+//   Name: "Light The Fuse",
+//   Characteristics: ["action"],
+//   Text: "Deal 1 damage to chosen character for each exerted character you have in play.",
+//   Type: "action",
+//   Inkwell: false,
+//   Colors: ["ruby", "steel"],
+//   Cost: 1,
+//   Illustrator: "Kenneth Anderson",
+//   Number: 149,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631449,
 //   },
-//   rarity: "uncommon",
-//   abilities: [lightTheFuseAbility],
+//   Rarity: "uncommon",
+//   Abilities: [lightTheFuseAbility],
 // };
 //

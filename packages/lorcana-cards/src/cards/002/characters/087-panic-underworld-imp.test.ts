@@ -3,55 +3,55 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { aladdinCorneredSwordman } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import {
-//   painUnderworldImp,
-//   panicUnderworldImp,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { aladdinCorneredSwordman } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import {
+//   PainUnderworldImp,
+//   PanicUnderworldImp,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Panic - Underworld Imp", () => {
-//   describe("**I CAN HANDLE IT** When you play this character, chosen character gets +2 {S} this turn. If the chosen character is named Pain, he gets +4 {S} instead.", () => {
-//     it("Targets Pain", () => {
-//       const testStore = new TestStore({
-//         inkwell: panicUnderworldImp.cost,
-//         hand: [panicUnderworldImp],
-//         play: [painUnderworldImp],
+// Describe("Panic - Underworld Imp", () => {
+//   Describe("**I CAN HANDLE IT** When you play this character, chosen character gets +2 {S} this turn. If the chosen character is named Pain, he gets +4 {S} instead.", () => {
+//     It("Targets Pain", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: panicUnderworldImp.cost,
+//         Hand: [panicUnderworldImp],
+//         Play: [painUnderworldImp],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "hand",
-//         panicUnderworldImp.id,
+//         PanicUnderworldImp.id,
 //       );
-//       const target = testStore.getByZoneAndId("play", painUnderworldImp.id);
+//       Const target = testStore.getByZoneAndId("play", painUnderworldImp.id);
 //
-//       cardUnderTest.playFromHand();
-//       testStore.resolveTopOfStack({ targets: [target] });
+//       CardUnderTest.playFromHand();
+//       TestStore.resolveTopOfStack({ targets: [target] });
 //
-//       expect(target.strength).toBe(painUnderworldImp.strength + 4);
+//       Expect(target.strength).toBe(painUnderworldImp.strength + 4);
 //     });
 //
-//     it("NOT Targeting Pain", () => {
-//       const testStore = new TestStore({
-//         inkwell: panicUnderworldImp.cost,
-//         hand: [panicUnderworldImp],
-//         play: [aladdinCorneredSwordman],
+//     It("NOT Targeting Pain", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: panicUnderworldImp.cost,
+//         Hand: [panicUnderworldImp],
+//         Play: [aladdinCorneredSwordman],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "hand",
-//         panicUnderworldImp.id,
+//         PanicUnderworldImp.id,
 //       );
-//       const target = testStore.getByZoneAndId(
+//       Const target = testStore.getByZoneAndId(
 //         "play",
-//         aladdinCorneredSwordman.id,
+//         AladdinCorneredSwordman.id,
 //       );
 //
-//       cardUnderTest.playFromHand();
-//       testStore.resolveTopOfStack({ targets: [target] });
+//       CardUnderTest.playFromHand();
+//       TestStore.resolveTopOfStack({ targets: [target] });
 //
-//       expect(target.strength).toBe(aladdinCorneredSwordman.strength + 2);
+//       Expect(target.strength).toBe(aladdinCorneredSwordman.strength + 2);
 //     });
 //   });
 // });

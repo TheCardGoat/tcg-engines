@@ -3,25 +3,25 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { thaddeusEKlangMetalHead } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { thaddeusEKlangMetalHead } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Thaddeus E. Klang - Metal Head", () => {
-//   it.skip("**SHARP JAW** Whenever this character quests while at a location, you may deal 1 damage to chosen character.", () => {
-//     const testStore = new TestStore({
-//       inkwell: thaddeusEKlangMetalHead.cost,
-//       play: [thaddeusEKlangMetalHead],
+// Describe("Thaddeus E. Klang - Metal Head", () => {
+//   It.skip("**SHARP JAW** Whenever this character quests while at a location, you may deal 1 damage to chosen character.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: thaddeusEKlangMetalHead.cost,
+//       Play: [thaddeusEKlangMetalHead],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       thaddeusEKlangMetalHead.id,
+//       ThaddeusEKlangMetalHead.id,
 //     );
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

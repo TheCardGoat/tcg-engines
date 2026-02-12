@@ -1,43 +1,17 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const jafarDreadnought: CharacterCard = {
-  id: "22g",
-  cardType: "character",
-  name: "Jafar",
-  version: "Dreadnought",
-  fullName: "Jafar - Dreadnought",
-  inkType: ["steel"],
-  franchise: "Aladdin",
-  set: "002",
-  text: "Shift 2 (You may pay 2 {I} to play this on top of one of your characters named Jafar.)\nNOW WHERE WERE WE? During your turn, whenever this character banishes another character in a challenge, you may draw a card.",
-  cost: 4,
-  strength: 3,
-  willpower: 4,
-  lore: 1,
-  cardNumber: 183,
-  inkable: true,
-  externalIds: {
-    ravensburger: "077493459c0e7e98dc94b63ce4fbe302e7b7ce6f",
-  },
   abilities: [
     {
-      id: "22g-1",
-      type: "keyword",
-      keyword: "Shift",
       cost: {
         ink: 2,
       },
+      id: "22g-1",
+      keyword: "Shift",
       text: "Shift 2",
+      type: "keyword",
     },
     {
-      id: "22g-2",
-      type: "triggered",
-      name: "NOW WHERE WERE WE?",
-      trigger: {
-        event: "banish",
-        timing: "whenever",
-        on: "OPPONENT_CHARACTERS",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -47,8 +21,34 @@ export const jafarDreadnought: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "22g-2",
+      name: "NOW WHERE WERE WE?",
       text: "NOW WHERE WERE WE? During your turn, whenever this character banishes another character in a challenge, you may draw a card.",
+      trigger: {
+        event: "banish",
+        timing: "whenever",
+        on: "OPPONENT_CHARACTERS",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 183,
+  cardType: "character",
   classifications: ["Floodborn", "Villain", "Sorcerer"],
+  cost: 4,
+  externalIds: {
+    ravensburger: "077493459c0e7e98dc94b63ce4fbe302e7b7ce6f",
+  },
+  franchise: "Aladdin",
+  fullName: "Jafar - Dreadnought",
+  id: "22g",
+  inkType: ["steel"],
+  inkable: true,
+  lore: 1,
+  name: "Jafar",
+  set: "002",
+  strength: 3,
+  text: "Shift 2 (You may pay 2 {I} to play this on top of one of your characters named Jafar.)\nNOW WHERE WERE WE? During your turn, whenever this character banishes another character in a challenge, you may draw a card.",
+  version: "Dreadnought",
+  willpower: 4,
 };

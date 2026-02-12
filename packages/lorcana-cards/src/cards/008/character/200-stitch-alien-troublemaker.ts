@@ -1,38 +1,38 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { duringYourTurnWheneverBanishesCharacterInChallenge } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import {
-//   drawACard,
-//   youGainLore,
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { duringYourTurnWheneverBanishesCharacterInChallenge } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import {
+//   DrawACard,
+//   YouGainLore,
 // } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const stitchAlienTroublemaker: LorcanitoCharacterCard = {
-//   id: "yvo",
-//   name: "Stitch",
-//   title: "Alien Troublemaker",
-//   characteristics: ["storyborn", "hero", "alien"],
-//   text: "I WIN! During your turn, whenever this character banishes another character in a challenge, you may draw a card and gain 1 lore.",
-//   type: "character",
-//   abilities: [
-//     duringYourTurnWheneverBanishesCharacterInChallenge({
-//       name: "I WIN!",
-//       text: "During your turn, whenever this character banishes another character in a challenge, you may draw a card and gain 1 lore.",
-//       optional: true,
-//       effects: [drawACard, youGainLore(1)],
+// Export const stitchAlienTroublemaker: LorcanitoCharacterCard = {
+//   Id: "yvo",
+//   Name: "Stitch",
+//   Title: "Alien Troublemaker",
+//   Characteristics: ["storyborn", "hero", "alien"],
+//   Text: "I WIN! During your turn, whenever this character banishes another character in a challenge, you may draw a card and gain 1 lore.",
+//   Type: "character",
+//   Abilities: [
+//     DuringYourTurnWheneverBanishesCharacterInChallenge({
+//       Name: "I WIN!",
+//       Text: "During your turn, whenever this character banishes another character in a challenge, you may draw a card and gain 1 lore.",
+//       Optional: true,
+//       Effects: [drawACard, youGainLore(1)],
 //     }),
 //   ],
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 4,
-//   strength: 3,
-//   willpower: 4,
-//   illustrator: "Jeanne Plounevez / Theonidas",
-//   number: 200,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631332,
+//   Inkwell: true,
+//   Colors: ["steel"],
+//   Cost: 4,
+//   Strength: 3,
+//   Willpower: 4,
+//   Illustrator: "Jeanne Plounevez / Theonidas",
+//   Number: 200,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631332,
 //   },
-//   rarity: "rare",
-//   lore: 1,
+//   Rarity: "rare",
+//   Lore: 1,
 // };
 //

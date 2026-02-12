@@ -1,39 +1,39 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { wheneverOneOfYourCharChallengesAnotherChar } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-// import { youGainLore } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { wheneverOneOfYourCharChallengesAnotherChar } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// Import { youGainLore } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const shereKhanMenacingPredator: LorcanitoCharacterCard = {
-//   id: "uep",
-//   reprints: ["nzy"],
+// Export const shereKhanMenacingPredator: LorcanitoCharacterCard = {
+//   Id: "uep",
+//   Reprints: ["nzy"],
 //
-//   name: "Shere Khan",
-//   title: "Menacing Predator",
-//   characteristics: ["storyborn", "villain"],
-//   text: "**DON'T INSULT MY INTELLIGENCE** Whenever one of your characters challenges another character, gain 1 lore.",
-//   type: "character",
-//   abilities: [
-//     wheneverOneOfYourCharChallengesAnotherChar({
-//       optional: true,
-//       name: "Don't Insult My Intelligence",
-//       text: "Whenever one of your characters challenges another character, gain 1 lore.",
-//       effects: [youGainLore(1)],
+//   Name: "Shere Khan",
+//   Title: "Menacing Predator",
+//   Characteristics: ["storyborn", "villain"],
+//   Text: "**DON'T INSULT MY INTELLIGENCE** Whenever one of your characters challenges another character, gain 1 lore.",
+//   Type: "character",
+//   Abilities: [
+//     WheneverOneOfYourCharChallengesAnotherChar({
+//       Optional: true,
+//       Name: "Don't Insult My Intelligence",
+//       Text: "Whenever one of your characters challenges another character, gain 1 lore.",
+//       Effects: [youGainLore(1)],
 //     }),
 //   ],
-//   flavour:
+//   Flavour:
 //     "The sixth Rule of Villainy: Keep your mind sharp and your claws sharper.",
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 3,
-//   strength: 3,
-//   willpower: 3,
-//   lore: 1,
-//   illustrator: "M. Robert Davies / L. Giammichele",
-//   number: 126,
-//   set: "ROF",
-//   externalIds: {
-//     tcgPlayer: 526857,
+//   Inkwell: true,
+//   Colors: ["ruby"],
+//   Cost: 3,
+//   Strength: 3,
+//   Willpower: 3,
+//   Lore: 1,
+//   Illustrator: "M. Robert Davies / L. Giammichele",
+//   Number: 126,
+//   Set: "ROF",
+//   ExternalIds: {
+//     TcgPlayer: 526857,
 //   },
-//   rarity: "rare",
+//   Rarity: "rare",
 // };
 //

@@ -31,31 +31,31 @@ describe("Prince Naveen - Vigilant First Mate", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { princeNaveenVigilantFirstMate } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { princeNaveenVigilantFirstMate } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Prince Naveen - Vigilant First Mate", () => {
-//   it.skip("Shift 3 (You may pay 3 {I} to play this on top of one of your characters named Prince Naveen.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [princeNaveenVigilantFirstMate],
+// Describe("Prince Naveen - Vigilant First Mate", () => {
+//   It.skip("Shift 3 (You may pay 3 {I} to play this on top of one of your characters named Prince Naveen.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [princeNaveenVigilantFirstMate],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(
-//       princeNaveenVigilantFirstMate,
+//     Const cardUnderTest = testEngine.getCardModel(
+//       PrinceNaveenVigilantFirstMate,
 //     );
-//     expect(cardUnderTest.hasShift).toBe(true);
+//     Expect(cardUnderTest.hasShift).toBe(true);
 //   });
 //
-//   it.skip("Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [princeNaveenVigilantFirstMate],
+//   It.skip("Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [princeNaveenVigilantFirstMate],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(
-//       princeNaveenVigilantFirstMate,
+//     Const cardUnderTest = testEngine.getCardModel(
+//       PrinceNaveenVigilantFirstMate,
 //     );
-//     expect(cardUnderTest.hasBodyguard).toBe(true);
+//     Expect(cardUnderTest.hasBodyguard).toBe(true);
 //   });
 // });
 //

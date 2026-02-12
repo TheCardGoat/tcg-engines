@@ -3,165 +3,165 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   donaldDuck,
-//   teKaTheBurningOne,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   DonaldDuck,
+//   TeKaTheBurningOne,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { grabYourSword } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
-// import { letTheStormRageOn } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
-// import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { belleAccomplishedMystic } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { mosquitoBite } from "@lorcanito/lorcana-engine/cards/006";
-// import { balooOlIronPaws } from "@lorcanito/lorcana-engine/cards/007";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { grabYourSword } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
+// Import { letTheStormRageOn } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
+// Import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { belleAccomplishedMystic } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { mosquitoBite } from "@lorcanito/lorcana-engine/cards/006";
+// Import { balooOlIronPaws } from "@lorcanito/lorcana-engine/cards/007";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Baloo - Ol' Iron Paws", () => {
-//   describe("FIGHT LIKE A BEAR Your characters with 7 {S} or more can't be dealt damage.", () => {
-//     it("Only gives effect while in play", async () => {
-//       const testEngine = new TestEngine({
-//         play: [goofyKnightForADay],
-//         hand: [balooOlIronPaws],
-//         inkwell: balooOlIronPaws.cost,
+// Describe("Baloo - Ol' Iron Paws", () => {
+//   Describe("FIGHT LIKE A BEAR Your characters with 7 {S} or more can't be dealt damage.", () => {
+//     It("Only gives effect while in play", async () => {
+//       Const testEngine = new TestEngine({
+//         Play: [goofyKnightForADay],
+//         Hand: [balooOlIronPaws],
+//         Inkwell: balooOlIronPaws.cost,
 //       });
 //
-//       expect(
-//         testEngine.getCardModel(goofyKnightForADay).hasDamageDealtRestriction,
+//       Expect(
+//         TestEngine.getCardModel(goofyKnightForADay).hasDamageDealtRestriction,
 //       ).toBe(false);
 //
-//       await testEngine.playCard(balooOlIronPaws);
+//       Await testEngine.playCard(balooOlIronPaws);
 //
-//       expect(
-//         testEngine.getCardModel(goofyKnightForADay).hasDamageDealtRestriction,
+//       Expect(
+//         TestEngine.getCardModel(goofyKnightForADay).hasDamageDealtRestriction,
 //       ).toBe(true);
 //     });
 //
-//     it("As Attacker", async () => {
-//       const testEngine = new TestEngine(
+//     It("As Attacker", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           play: [balooOlIronPaws, goofyKnightForADay],
+//           Play: [balooOlIronPaws, goofyKnightForADay],
 //         },
 //         {
-//           play: [teKaTheBurningOne],
+//           Play: [teKaTheBurningOne],
 //         },
 //       );
 //
-//       const attacker = testEngine.getCardModel(goofyKnightForADay);
-//       const defender = testEngine.getCardModel(teKaTheBurningOne);
-//       expect(attacker.hasDamageDealtRestriction).toBe(true);
+//       Const attacker = testEngine.getCardModel(goofyKnightForADay);
+//       Const defender = testEngine.getCardModel(teKaTheBurningOne);
+//       Expect(attacker.hasDamageDealtRestriction).toBe(true);
 //
-//       await testEngine.challenge({
-//         attacker: goofyKnightForADay,
-//         defender: teKaTheBurningOne,
-//         exertDefender: true,
+//       Await testEngine.challenge({
+//         Attacker: goofyKnightForADay,
+//         Defender: teKaTheBurningOne,
+//         ExertDefender: true,
 //       });
 //
-//       expect(attacker.damage).toBe(0);
-//       expect(defender.zone).toBe("discard");
+//       Expect(attacker.damage).toBe(0);
+//       Expect(defender.zone).toBe("discard");
 //     });
 //
-//     it("As Defender", async () => {
-//       const testEngine = new TestEngine(
+//     It("As Defender", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           play: [teKaTheBurningOne],
+//           Play: [teKaTheBurningOne],
 //         },
 //         {
-//           play: [balooOlIronPaws, goofyKnightForADay],
+//           Play: [balooOlIronPaws, goofyKnightForADay],
 //         },
 //       );
 //
-//       const attacker = testEngine.getCardModel(teKaTheBurningOne);
-//       const defender = testEngine.getCardModel(goofyKnightForADay);
-//       expect(defender.hasDamageDealtRestriction).toBe(true);
+//       Const attacker = testEngine.getCardModel(teKaTheBurningOne);
+//       Const defender = testEngine.getCardModel(goofyKnightForADay);
+//       Expect(defender.hasDamageDealtRestriction).toBe(true);
 //
-//       await testEngine.challenge({
-//         attacker: teKaTheBurningOne,
-//         defender: goofyKnightForADay,
-//         exertDefender: true,
+//       Await testEngine.challenge({
+//         Attacker: teKaTheBurningOne,
+//         Defender: goofyKnightForADay,
+//         ExertDefender: true,
 //       });
 //
-//       expect(defender.damage).toBe(0);
-//       expect(attacker.zone).toBe("discard");
+//       Expect(defender.damage).toBe(0);
+//       Expect(attacker.zone).toBe("discard");
 //     });
 //
-//     it("Damage from a single target card", async () => {
-//       const testEngine = new TestEngine(
+//     It("Damage from a single target card", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: letTheStormRageOn.cost,
-//           hand: [letTheStormRageOn],
+//           Inkwell: letTheStormRageOn.cost,
+//           Hand: [letTheStormRageOn],
 //         },
 //         {
-//           play: [balooOlIronPaws, goofyKnightForADay],
+//           Play: [balooOlIronPaws, goofyKnightForADay],
 //         },
 //       );
 //
-//       const target = testEngine.getCardModel(goofyKnightForADay);
-//       await testEngine.playCard(letTheStormRageOn, {
-//         targets: [goofyKnightForADay],
+//       Const target = testEngine.getCardModel(goofyKnightForADay);
+//       Await testEngine.playCard(letTheStormRageOn, {
+//         Targets: [goofyKnightForADay],
 //       });
-//       expect(target.damage).toBe(0);
+//       Expect(target.damage).toBe(0);
 //     });
 //
-//     it("Damage from a multi target cards", async () => {
-//       const testEngine = new TestEngine(
+//     It("Damage from a multi target cards", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: grabYourSword.cost,
-//           hand: [grabYourSword],
+//           Inkwell: grabYourSword.cost,
+//           Hand: [grabYourSword],
 //         },
 //         {
-//           play: [balooOlIronPaws, goofyKnightForADay],
+//           Play: [balooOlIronPaws, goofyKnightForADay],
 //         },
 //       );
 //
-//       const target = testEngine.getCardModel(goofyKnightForADay);
-//       await testEngine.playCard(grabYourSword);
-//       expect(target.damage).toBe(0);
+//       Const target = testEngine.getCardModel(goofyKnightForADay);
+//       Await testEngine.playCard(grabYourSword);
+//       Expect(target.damage).toBe(0);
 //     });
 //
-//     it("Does not prevent 'put' damage effects", async () => {
-//       const testEngine = new TestEngine(
+//     It("Does not prevent 'put' damage effects", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: mosquitoBite.cost,
-//           hand: [mosquitoBite],
+//           Inkwell: mosquitoBite.cost,
+//           Hand: [mosquitoBite],
 //         },
 //         {
-//           play: [balooOlIronPaws, goofyKnightForADay],
+//           Play: [balooOlIronPaws, goofyKnightForADay],
 //         },
 //       );
 //
-//       const target = testEngine.getCardModel(goofyKnightForADay);
-//       await testEngine.playCard(mosquitoBite, {
-//         targets: [goofyKnightForADay],
+//       Const target = testEngine.getCardModel(goofyKnightForADay);
+//       Await testEngine.playCard(mosquitoBite, {
+//         Targets: [goofyKnightForADay],
 //       });
-//       expect(target.damage).toBe(1);
+//       Expect(target.damage).toBe(1);
 //     });
 //
-//     it("Does not prevent 'move' damage effects", async () => {
-//       const testEngine = new TestEngine(
+//     It("Does not prevent 'move' damage effects", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: belleAccomplishedMystic.cost,
-//           play: [donaldDuck],
-//           hand: [belleAccomplishedMystic],
+//           Inkwell: belleAccomplishedMystic.cost,
+//           Play: [donaldDuck],
+//           Hand: [belleAccomplishedMystic],
 //         },
 //         {
-//           play: [balooOlIronPaws, goofyKnightForADay],
+//           Play: [balooOlIronPaws, goofyKnightForADay],
 //         },
 //       );
 //
-//       await testEngine.setCardDamage(donaldDuck, 2);
-//       await testEngine.playCard(
-//         belleAccomplishedMystic,
+//       Await testEngine.setCardDamage(donaldDuck, 2);
+//       Await testEngine.playCard(
+//         BelleAccomplishedMystic,
 //         {
-//           targets: [donaldDuck],
+//           Targets: [donaldDuck],
 //         },
-//         true,
+//         True,
 //       );
-//       await testEngine.resolveTopOfStack({
-//         targets: [goofyKnightForADay],
+//       Await testEngine.resolveTopOfStack({
+//         Targets: [goofyKnightForADay],
 //       });
 //
-//       expect(testEngine.getCardModel(donaldDuck).damage).toBe(0);
-//       expect(testEngine.getCardModel(goofyKnightForADay).damage).toBe(2);
+//       Expect(testEngine.getCardModel(donaldDuck).damage).toBe(0);
+//       Expect(testEngine.getCardModel(goofyKnightForADay).damage).toBe(2);
 //     });
 //   });
 // });

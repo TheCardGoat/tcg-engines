@@ -1,44 +1,44 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import {
-//   resistAbility,
-//   shiftAbility,
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import {
+//   ResistAbility,
+//   ShiftAbility,
 // } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { whileConditionThisCharacterGains } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
+// Import { whileConditionThisCharacterGains } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
 //
-// export const rhinoPowerHamster: LorcanitoCharacterCard = {
-//   id: "x98",
-//   name: "Rhino",
-//   title: "Power Hamster",
-//   characteristics: ["floodborn", "ally"],
-//   text: "Shift 2 (You may pay 2 {I} to play this on top of one of your characters named Rhino.)\nEPIC BALL OF AWESOME While this character has no damage, he gains Resist +2. (Damage dealt to them is reduced by 2.)",
-//   type: "character",
-//   abilities: [
-//     shiftAbility(2, "Rhino"),
-//     whileConditionThisCharacterGains({
-//       name: "EPIC BALL OF AWESOME",
-//       text: "While this character has no damage, he gains Resist +2. (Damage dealt to them is reduced by 2.)",
-//       ability: resistAbility(2),
-//       conditions: [
+// Export const rhinoPowerHamster: LorcanitoCharacterCard = {
+//   Id: "x98",
+//   Name: "Rhino",
+//   Title: "Power Hamster",
+//   Characteristics: ["floodborn", "ally"],
+//   Text: "Shift 2 (You may pay 2 {I} to play this on top of one of your characters named Rhino.)\nEPIC BALL OF AWESOME While this character has no damage, he gains Resist +2. (Damage dealt to them is reduced by 2.)",
+//   Type: "character",
+//   Abilities: [
+//     ShiftAbility(2, "Rhino"),
+//     WhileConditionThisCharacterGains({
+//       Name: "EPIC BALL OF AWESOME",
+//       Text: "While this character has no damage, he gains Resist +2. (Damage dealt to them is reduced by 2.)",
+//       Ability: resistAbility(2),
+//       Conditions: [
 //         {
-//           type: "damage",
-//           comparison: { operator: "eq", value: 0 },
+//           Type: "damage",
+//           Comparison: { operator: "eq", value: 0 },
 //         },
 //       ],
 //     }),
 //   ],
-//   inkwell: true,
-//   colors: ["amber", "steel"],
-//   cost: 4,
-//   strength: 4,
-//   willpower: 3,
-//   illustrator: "Leonardo Giammichele",
-//   number: 30,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631700,
+//   Inkwell: true,
+//   Colors: ["amber", "steel"],
+//   Cost: 4,
+//   Strength: 4,
+//   Willpower: 3,
+//   Illustrator: "Leonardo Giammichele",
+//   Number: 30,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631700,
 //   },
-//   rarity: "super_rare",
-//   lore: 2,
+//   Rarity: "super_rare",
+//   Lore: 2,
 // };
 //

@@ -1,24 +1,24 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const gaetanMoliereTheMole: LorcanitoCharacterCard = {
-//   id: "otx",
-//   name: "Gaetan Moliere",
-//   title: "The Mole",
-//   characteristics: ["storyborn", "ally"],
-//   type: "character",
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 3,
-//   strength: 3,
-//   willpower: 4,
-//   illustrator: "Sualo Nate",
-//   number: 158,
-//   set: "007",
-//   externalIds: {
-//     tcgPlayer: 619496,
+// Export const gaetanMoliereTheMole: LorcanitoCharacterCard = {
+//   Id: "otx",
+//   Name: "Gaetan Moliere",
+//   Title: "The Mole",
+//   Characteristics: ["storyborn", "ally"],
+//   Type: "character",
+//   Inkwell: true,
+//   Colors: ["sapphire"],
+//   Cost: 3,
+//   Strength: 3,
+//   Willpower: 4,
+//   Illustrator: "Sualo Nate",
+//   Number: 158,
+//   Set: "007",
+//   ExternalIds: {
+//     TcgPlayer: 619496,
 //   },
-//   rarity: "uncommon",
-//   lore: 1,
+//   Rarity: "uncommon",
+//   Lore: 1,
 // };
 //

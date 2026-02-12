@@ -1,39 +1,39 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { wheneverTargetPlays } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-// import { dealDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import { wheneverTargetPlays } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// Import { dealDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const princeJohnFraidycat: LorcanitoCharacterCard = {
-//   id: "ed5",
-//   name: "Prince John",
-//   title: "Fraidy-Cat",
-//   characteristics: ["storyborn", "villain", "prince"],
-//   text: "HELP! HELP! Whenever an opponent plays a character, deal 1 damage to this character.",
-//   type: "character",
-//   inkwell: false,
-//   colors: ["ruby"],
-//   cost: 3,
-//   strength: 5,
-//   willpower: 5,
-//   illustrator: "Denny Minonne",
-//   number: 146,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631446,
+// Export const princeJohnFraidycat: LorcanitoCharacterCard = {
+//   Id: "ed5",
+//   Name: "Prince John",
+//   Title: "Fraidy-Cat",
+//   Characteristics: ["storyborn", "villain", "prince"],
+//   Text: "HELP! HELP! Whenever an opponent plays a character, deal 1 damage to this character.",
+//   Type: "character",
+//   Inkwell: false,
+//   Colors: ["ruby"],
+//   Cost: 3,
+//   Strength: 5,
+//   Willpower: 5,
+//   Illustrator: "Denny Minonne",
+//   Number: 146,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631446,
 //   },
-//   rarity: "rare",
-//   lore: 1,
-//   abilities: [
-//     wheneverTargetPlays({
-//       name: "HELP! HELP!",
-//       text: "Whenever an opponent plays a character, deal 1 damage to this character.",
-//       triggerFilter: [
+//   Rarity: "rare",
+//   Lore: 1,
+//   Abilities: [
+//     WheneverTargetPlays({
+//       Name: "HELP! HELP!",
+//       Text: "Whenever an opponent plays a character, deal 1 damage to this character.",
+//       TriggerFilter: [
 //         { filter: "owner", value: "opponent" },
 //         { filter: "type", value: "character" },
 //         { filter: "zone", value: "play" },
 //       ],
-//       effects: [dealDamageEffect(1, thisCharacter)],
+//       Effects: [dealDamageEffect(1, thisCharacter)],
 //     }),
 //   ],
 // };

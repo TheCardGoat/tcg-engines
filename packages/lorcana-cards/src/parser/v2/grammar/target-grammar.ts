@@ -29,7 +29,7 @@ import {
  * accessing protected parser methods which TypeScript cannot type properly.
  */
 export function addTargetRules(parser: CstParser): void {
-  // biome-ignore lint/suspicious/noExplicitAny: Chevrotain mixin requires accessing protected methods
+  // Biome-ignore lint/suspicious/noExplicitAny: Chevrotain mixin requires accessing protected methods
   const p = parser as any;
 
   /**
@@ -70,7 +70,7 @@ export function addTargetRules(parser: CstParser): void {
 
     // Handle possessive "'s" for opponent's
     p.OPTION(() => {
-      p.CONSUME(Identifier); // catches "'s" or "s"
+      p.CONSUME(Identifier); // Catches "'s" or "s"
     });
   });
 

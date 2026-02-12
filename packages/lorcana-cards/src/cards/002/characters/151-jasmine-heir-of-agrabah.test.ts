@@ -3,44 +3,44 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { donaldDuckMusketeer } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { jasmineHeirOfAgrabah } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { donaldDuckMusketeer } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { jasmineHeirOfAgrabah } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Jasmine - Heir of Agrabah", () => {
-//   it("**I'M A FAST LEARNER** When you play this character, remove up to 1 damage from chosen character of yours.", () => {
-//     const testStore = new TestStore({
-//       inkwell: jasmineHeirOfAgrabah.cost,
-//       hand: [jasmineHeirOfAgrabah],
-//       play: [donaldDuckMusketeer],
+// Describe("Jasmine - Heir of Agrabah", () => {
+//   It("**I'M A FAST LEARNER** When you play this character, remove up to 1 damage from chosen character of yours.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: jasmineHeirOfAgrabah.cost,
+//       Hand: [jasmineHeirOfAgrabah],
+//       Play: [donaldDuckMusketeer],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(jasmineHeirOfAgrabah);
-//     const target = testStore.getByZoneAndId("play", donaldDuckMusketeer.id);
+//     Const cardUnderTest = testStore.getCard(jasmineHeirOfAgrabah);
+//     Const target = testStore.getByZoneAndId("play", donaldDuckMusketeer.id);
 //
-//     target.updateCardMeta({ damage: 2 });
+//     Target.updateCardMeta({ damage: 2 });
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     testStore.resolveTopOfStack({ targetId: target.instanceId });
+//     TestStore.resolveTopOfStack({ targetId: target.instanceId });
 //
-//     expect(cardUnderTest.zone).toEqual("play");
-//     expect(target.meta.damage).toEqual(1);
+//     Expect(cardUnderTest.zone).toEqual("play");
+//     Expect(target.meta.damage).toEqual(1);
 //   });
 // });
 //
-// describe("Regression", () => {
-//   it("Should not get people stuck when playing alone", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: jasmineHeirOfAgrabah.cost,
-//       hand: [jasmineHeirOfAgrabah],
+// Describe("Regression", () => {
+//   It("Should not get people stuck when playing alone", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: jasmineHeirOfAgrabah.cost,
+//       Hand: [jasmineHeirOfAgrabah],
 //     });
 //
-//     await testEngine.playCard(jasmineHeirOfAgrabah);
+//     Await testEngine.playCard(jasmineHeirOfAgrabah);
 //
-//     expect(testEngine.stackLayers).toHaveLength(0);
+//     Expect(testEngine.stackLayers).toHaveLength(0);
 //   });
 // });
 //

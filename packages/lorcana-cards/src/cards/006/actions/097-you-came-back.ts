@@ -1,24 +1,8 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
 export const youCameBack: ActionCard = {
-  id: "1dw",
-  cardType: "action",
-  name: "You Came Back",
-  inkType: ["emerald"],
-  franchise: "Lilo and Stitch",
-  set: "006",
-  text: "Ready chosen character.",
-  cost: 3,
-  cardNumber: 97,
-  inkable: false,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "b2698b79ffc3b73ed2fbd0eb78ade15a624dace1",
-  },
   abilities: [
     {
-      id: "1dw-1",
-      type: "action",
       effect: {
         type: "ready",
         target: {
@@ -29,7 +13,23 @@ export const youCameBack: ActionCard = {
           cardTypes: ["character"],
         },
       },
+      id: "1dw-1",
       text: "Ready chosen character.",
+      type: "action",
     },
   ],
+  cardNumber: 97,
+  cardType: "action",
+  cost: 3,
+  externalIds: {
+    ravensburger: "b2698b79ffc3b73ed2fbd0eb78ade15a624dace1",
+  },
+  franchise: "Lilo and Stitch",
+  id: "1dw",
+  inkType: ["emerald"],
+  inkable: false,
+  missingTests: true,
+  name: "You Came Back",
+  set: "006",
+  text: "Ready chosen character.",
 };

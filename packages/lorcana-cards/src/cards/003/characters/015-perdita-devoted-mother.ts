@@ -1,29 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const perditaDevotedMother: CharacterCard = {
-  id: "1dc",
-  cardType: "character",
-  name: "Perdita",
-  version: "Devoted Mother",
-  fullName: "Perdita - Devoted Mother",
-  inkType: ["amber"],
-  franchise: "101 Dalmatians",
-  set: "003",
-  text: "COME ALONG, CHILDREN When you play this character and whenever she quests, you may play a character with cost 2 or less from your discard for free.",
-  cost: 6,
-  strength: 1,
-  willpower: 6,
-  lore: 2,
-  cardNumber: 15,
-  inkable: false,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "b1005675a4c65117f039b0b5707c31167707af7b",
-  },
   abilities: [
     {
-      id: "1dc-1",
-      type: "action",
       effect: {
         type: "optional",
         effect: {
@@ -33,8 +12,29 @@ export const perditaDevotedMother: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "1dc-1",
       text: "COME ALONG, CHILDREN When you play this character and whenever she quests, you may play a character with cost 2 or less from your discard for free.",
+      type: "action",
     },
   ],
+  cardNumber: 15,
+  cardType: "character",
   classifications: ["Storyborn", "Hero"],
+  cost: 6,
+  externalIds: {
+    ravensburger: "b1005675a4c65117f039b0b5707c31167707af7b",
+  },
+  franchise: "101 Dalmatians",
+  fullName: "Perdita - Devoted Mother",
+  id: "1dc",
+  inkType: ["amber"],
+  inkable: false,
+  lore: 2,
+  missingTests: true,
+  name: "Perdita",
+  set: "003",
+  strength: 1,
+  text: "COME ALONG, CHILDREN When you play this character and whenever she quests, you may play a character with cost 2 or less from your discard for free.",
+  version: "Devoted Mother",
+  willpower: 6,
 };

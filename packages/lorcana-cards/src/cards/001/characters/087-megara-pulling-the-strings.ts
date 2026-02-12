@@ -1,29 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const megaraPullingTheStrings: CharacterCard = {
-  id: "kv6",
-  cardType: "character",
-  name: "Megara",
-  version: "Pulling the Strings",
-  fullName: "Megara - Pulling the Strings",
-  inkType: ["emerald"],
-  franchise: "Disney",
-  set: "001",
-  text: "**WONDER BOY** When you play this character, chosen character gets +2 {S} this turn.",
-  cost: 2,
-  strength: 2,
-  willpower: 1,
-  lore: 1,
-  cardNumber: 87,
-  inkable: true,
-  externalIds: {
-    ravensburger: "",
-  },
   abilities: [
     {
-      type: "action",
-      text: "**WONDER BOY** When you play this character, chosen character gets +2 {S} this turn.",
-      id: "kv6-1",
       effect: {
         type: "modify-stat",
         stat: "strength",
@@ -31,39 +10,60 @@ export const megaraPullingTheStrings: CharacterCard = {
         target: "SELF",
         duration: "this-turn",
       },
+      id: "kv6-1",
+      text: "**WONDER BOY** When you play this character, chosen character gets +2 {S} this turn.",
+      type: "action",
     },
   ],
+  cardNumber: 87,
+  cardType: "character",
   classifications: ["Dreamborn", "Ally"],
+  cost: 2,
+  externalIds: {
+    ravensburger: "",
+  },
+  franchise: "Disney",
+  fullName: "Megara - Pulling the Strings",
+  id: "kv6",
+  inkType: ["emerald"],
+  inkable: true,
+  lore: 1,
+  name: "Megara",
+  set: "001",
+  strength: 2,
+  text: "**WONDER BOY** When you play this character, chosen character gets +2 {S} this turn.",
+  version: "Pulling the Strings",
+  willpower: 1,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const megaraPullingTheStrings: LorcanitoCharacterCard = {
-//   id: "kv6",
-//   reprints: ["g7m"],
-//   name: "Megara",
-//   title: "Pulling the Strings",
-//   characteristics: ["dreamborn", "ally"],
-//   text: "**WONDER BOY** When you play this character, chosen character gets +2 {S} this turn.",
-//   type: "character",
-//   illustrator: "Aubrey Archer",
-//   abilities: [
-//     whenYouPlayThisCharAbility({
-//       type: "resolution",
-//       name: "Wonder Boy",
-//       text: "When you play this character, chosen character gets +2 {S} this turn.",
-//       effects: [
+// Export const megaraPullingTheStrings: LorcanitoCharacterCard = {
+//   Id: "kv6",
+//   Reprints: ["g7m"],
+//   Name: "Megara",
+//   Title: "Pulling the Strings",
+//   Characteristics: ["dreamborn", "ally"],
+//   Text: "**WONDER BOY** When you play this character, chosen character gets +2 {S} this turn.",
+//   Type: "character",
+//   Illustrator: "Aubrey Archer",
+//   Abilities: [
+//     WhenYouPlayThisCharAbility({
+//       Type: "resolution",
+//       Name: "Wonder Boy",
+//       Text: "When you play this character, chosen character gets +2 {S} this turn.",
+//       Effects: [
 //         {
-//           type: "attribute",
-//           attribute: "strength",
-//           amount: 2,
-//           modifier: "add",
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
+//           Type: "attribute",
+//           Attribute: "strength",
+//           Amount: 2,
+//           Modifier: "add",
+//           Target: {
+//             Type: "card",
+//             Value: 1,
+//             Filters: [
 //               { filter: "type", value: "character" },
 //               { filter: "zone", value: "play" },
 //             ],
@@ -72,19 +72,19 @@ export const megaraPullingTheStrings: CharacterCard = {
 //       ],
 //     }),
 //   ],
-//   flavour:
+//   Flavour:
 //     "A deal's a deal. But falling in love was never supposed to be part of it.",
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 2,
-//   strength: 2,
-//   willpower: 1,
-//   lore: 1,
-//   number: 87,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 507124,
+//   Inkwell: true,
+//   Colors: ["emerald"],
+//   Cost: 2,
+//   Strength: 2,
+//   Willpower: 1,
+//   Lore: 1,
+//   Number: 87,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 507124,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

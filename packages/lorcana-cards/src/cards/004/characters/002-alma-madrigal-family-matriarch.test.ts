@@ -3,41 +3,41 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   liloMakingAWish,
-//   stichtNewDog,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   LiloMakingAWish,
+//   StichtNewDog,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import {
-//   aladdinBraveRescuer,
-//   almaMadrigalFamilyMatriarch,
+// Import {
+//   AladdinBraveRescuer,
+//   AlmaMadrigalFamilyMatriarch,
 // } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { luisaMadrigalEntertainingMuscle } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { luisaMadrigalEntertainingMuscle } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Alma Madrigal - Family Matriarch", () => {
-//   it("**ALL AT THE TABLE** When you play this character, look at your deck. You may reveal a Madrigal character card. Shuffle your deck and put that card on top of your deck.", () => {
-//     const testStore = new TestStore({
-//       inkwell: almaMadrigalFamilyMatriarch.cost,
-//       hand: [almaMadrigalFamilyMatriarch],
-//       deck: [
-//         liloMakingAWish,
-//         stichtNewDog,
-//         luisaMadrigalEntertainingMuscle,
-//         aladdinBraveRescuer,
+// Describe("Alma Madrigal - Family Matriarch", () => {
+//   It("**ALL AT THE TABLE** When you play this character, look at your deck. You may reveal a Madrigal character card. Shuffle your deck and put that card on top of your deck.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: almaMadrigalFamilyMatriarch.cost,
+//       Hand: [almaMadrigalFamilyMatriarch],
+//       Deck: [
+//         LiloMakingAWish,
+//         StichtNewDog,
+//         LuisaMadrigalEntertainingMuscle,
+//         AladdinBraveRescuer,
 //       ],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(almaMadrigalFamilyMatriarch);
-//     const target = testStore.getCard(luisaMadrigalEntertainingMuscle);
-//     cardUnderTest.playFromHand();
+//     Const cardUnderTest = testStore.getCard(almaMadrigalFamilyMatriarch);
+//     Const target = testStore.getCard(luisaMadrigalEntertainingMuscle);
+//     CardUnderTest.playFromHand();
 //
-//     testStore.resolveTopOfStack({ targets: [target] });
+//     TestStore.resolveTopOfStack({ targets: [target] });
 //
-//     testStore.passTurn();
-//     testStore.passTurn();
+//     TestStore.passTurn();
+//     TestStore.passTurn();
 //
-//     expect(target.zone).toEqual("hand");
+//     Expect(target.zone).toEqual("hand");
 //   });
 // });
 //

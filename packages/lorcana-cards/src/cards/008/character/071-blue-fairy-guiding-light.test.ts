@@ -3,27 +3,27 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { blueFairyGuidingLight } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { blueFairyGuidingLight } from "@lorcanito/lorcana-engine/cards/008/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Blue Fairy - Guiding Light", () => {
-//   it.skip("Evasive (Only characters with Evasive can challenge this character.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [blueFairyGuidingLight],
+// Describe("Blue Fairy - Guiding Light", () => {
+//   It.skip("Evasive (Only characters with Evasive can challenge this character.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [blueFairyGuidingLight],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(blueFairyGuidingLight);
-//     expect(cardUnderTest.hasEvasive).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(blueFairyGuidingLight);
+//     Expect(cardUnderTest.hasEvasive).toBe(true);
 //   });
 //
-//   it.skip("Support (Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [blueFairyGuidingLight],
+//   It.skip("Support (Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [blueFairyGuidingLight],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(blueFairyGuidingLight);
-//     expect(cardUnderTest.hasSupport).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(blueFairyGuidingLight);
+//     Expect(cardUnderTest.hasSupport).toBe(true);
 //   });
 // });
 //

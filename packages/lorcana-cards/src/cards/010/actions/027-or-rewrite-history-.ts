@@ -1,53 +1,53 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 //
-// export const orRewriteHistory: LorcanitoActionCard = {
-//   id: "srx",
-//   missingTestCase: false,
-//   name: "Or Rewrite History!",
-//   characteristics: ["action", "song"],
-//   text: "Return a character card from your discard to your hand.",
-//   type: "action",
-//   inkwell: true,
-//   colors: ["amber"],
-//   cost: 3,
-//   illustrator: "Carlos Gomes Cabral",
-//   number: 27,
-//   set: "010",
-//   externalIds: {
-//     tcgPlayer: 659463,
+// Export const orRewriteHistory: LorcanitoActionCard = {
+//   Id: "srx",
+//   MissingTestCase: false,
+//   Name: "Or Rewrite History!",
+//   Characteristics: ["action", "song"],
+//   Text: "Return a character card from your discard to your hand.",
+//   Type: "action",
+//   Inkwell: true,
+//   Colors: ["amber"],
+//   Cost: 3,
+//   Illustrator: "Carlos Gomes Cabral",
+//   Number: 27,
+//   Set: "010",
+//   ExternalIds: {
+//     TcgPlayer: 659463,
 //   },
-//   rarity: "uncommon",
-//   abilities: [
+//   Rarity: "uncommon",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       effects: [
+//       Type: "resolution",
+//       Effects: [
 //         {
-//           type: "move",
-//           to: "hand",
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
+//           Type: "move",
+//           To: "hand",
+//           Target: {
+//             Type: "card",
+//             Value: 1,
+//             Filters: [
 //               {
-//                 filter: "type",
-//                 value: "character",
+//                 Filter: "type",
+//                 Value: "character",
 //               },
 //               {
-//                 filter: "zone",
-//                 value: "discard",
+//                 Filter: "zone",
+//                 Value: "discard",
 //               },
 //               {
-//                 filter: "owner",
-//                 value: "self",
+//                 Filter: "owner",
+//                 Value: "self",
 //               },
 //             ],
 //           },
 //         },
 //       ],
-//       resolveEffectsIndividually: false,
-//       dependentEffects: false,
-//       text: "Return a character card from your discard to your hand.",
+//       ResolveEffectsIndividually: false,
+//       DependentEffects: false,
+//       Text: "Return a character card from your discard to your hand.",
 //     },
 //   ],
 // };

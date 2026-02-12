@@ -5,9 +5,9 @@ import { captainHookCaptainOfTheJollyRoger } from "./173-captain-hook-captain-of
 describe("Captain Hook - Captain of the Jolly Roger", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [captainHookCaptainOfTheJollyRoger] });
-  //   expect(testEngine.getCardModel(captainHookCaptainOfTheJollyRoger).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [captainHookCaptainOfTheJollyRoger] });
+  //   Expect(testEngine.getCardModel(captainHookCaptainOfTheJollyRoger).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });

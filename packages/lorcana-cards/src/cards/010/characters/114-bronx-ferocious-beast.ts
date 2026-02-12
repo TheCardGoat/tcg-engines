@@ -1,35 +1,14 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const bronxFerociousBeast: CharacterCard = {
-  id: "ews",
-  cardType: "character",
-  name: "Bronx",
-  version: "Ferocious Beast",
-  fullName: "Bronx - Ferocious Beast",
-  inkType: ["ruby"],
-  franchise: "Gargoyles",
-  set: "010",
-  text: "Reckless (This character can't quest and must challenge each turn if able.)\nSTONE BY DAY If you have 3 or more cards in your hand, this character can't ready.",
-  cost: 3,
-  strength: 6,
-  willpower: 4,
-  lore: 0,
-  cardNumber: 114,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "35bd1b5cebc36f804337eb70b555bf8033e5ada9",
-  },
   abilities: [
     {
       id: "ews-1",
-      type: "keyword",
       keyword: "Reckless",
       text: "Reckless",
+      type: "keyword",
     },
     {
-      id: "ews-2",
-      type: "action",
       effect: {
         type: "conditional",
         condition: {
@@ -42,8 +21,29 @@ export const bronxFerociousBeast: CharacterCard = {
           target: "SELF",
         },
       },
+      id: "ews-2",
       text: "STONE BY DAY If you have 3 or more cards in your hand, this character can't ready.",
+      type: "action",
     },
   ],
+  cardNumber: 114,
+  cardType: "character",
   classifications: ["Storyborn", "Ally", "Gargoyle"],
+  cost: 3,
+  externalIds: {
+    ravensburger: "35bd1b5cebc36f804337eb70b555bf8033e5ada9",
+  },
+  franchise: "Gargoyles",
+  fullName: "Bronx - Ferocious Beast",
+  id: "ews",
+  inkType: ["ruby"],
+  inkable: true,
+  lore: 0,
+  missingTests: true,
+  name: "Bronx",
+  set: "010",
+  strength: 6,
+  text: "Reckless (This character can't quest and must challenge each turn if able.)\nSTONE BY DAY If you have 3 or more cards in your hand, this character can't ready.",
+  version: "Ferocious Beast",
+  willpower: 4,
 };

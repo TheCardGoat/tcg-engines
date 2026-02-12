@@ -19,16 +19,16 @@ describe("Conditional Effect Parser", () => {
       );
 
       expect(result).toMatchObject({
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you have a character named Elsa",
+          type: "if",
         },
         then: {
-          type: "draw",
           amount: 1,
           target: "CONTROLLER",
+          type: "draw",
         },
+        type: "conditional",
       });
       expect((result as { else?: unknown }).else).toBeUndefined();
     });
@@ -39,15 +39,15 @@ describe("Conditional Effect Parser", () => {
       );
 
       expect(result).toMatchObject({
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you have 3 or more items",
+          type: "if",
         },
         then: {
-          type: "deal-damage",
           amount: 3,
+          type: "deal-damage",
         },
+        type: "conditional",
       });
       // Verify target object is present in then effect
       expect(
@@ -59,15 +59,15 @@ describe("Conditional Effect Parser", () => {
       const result = parseEffect("If you have no cards in hand, gain 2 lore");
 
       expect(result).toMatchObject({
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you have no cards in hand",
+          type: "if",
         },
         then: {
-          type: "gain-lore",
           amount: 2,
+          type: "gain-lore",
         },
+        type: "conditional",
       });
     });
   });
@@ -79,19 +79,19 @@ describe("Conditional Effect Parser", () => {
       );
 
       expect(result).toMatchObject({
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you have 3 or more items",
-        },
-        then: {
-          type: "deal-damage",
-          amount: 3,
+          type: "if",
         },
         else: {
-          type: "deal-damage",
           amount: 2,
+          type: "deal-damage",
         },
+        then: {
+          amount: 3,
+          type: "deal-damage",
+        },
+        type: "conditional",
       });
     });
 
@@ -101,19 +101,19 @@ describe("Conditional Effect Parser", () => {
       );
 
       expect(result).toMatchObject({
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you have no cards in hand",
-        },
-        then: {
-          type: "gain-lore",
-          amount: 2,
+          type: "if",
         },
         else: {
-          type: "gain-lore",
           amount: 1,
+          type: "gain-lore",
         },
+        then: {
+          amount: 2,
+          type: "gain-lore",
+        },
+        type: "conditional",
       });
     });
   });
@@ -123,16 +123,16 @@ describe("Conditional Effect Parser", () => {
       const result = parseEffect("If this character has damage, draw a card");
 
       expect(result).toMatchObject({
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "this character has damage",
+          type: "if",
         },
         then: {
-          type: "draw",
           amount: 1,
           target: "CONTROLLER",
+          type: "draw",
         },
+        type: "conditional",
       });
     });
 
@@ -142,16 +142,16 @@ describe("Conditional Effect Parser", () => {
       );
 
       expect(result).toMatchObject({
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "this character has no damage",
+          type: "if",
         },
         then: {
-          type: "draw",
           amount: 2,
           target: "CONTROLLER",
+          type: "draw",
         },
+        type: "conditional",
       });
     });
   });
@@ -163,16 +163,16 @@ describe("Conditional Effect Parser", () => {
       );
 
       expect(result).toMatchObject({
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "an opponent has more lore than you",
+          type: "if",
         },
         then: {
-          type: "draw",
           amount: 2,
           target: "CONTROLLER",
+          type: "draw",
         },
+        type: "conditional",
       });
     });
 
@@ -182,15 +182,15 @@ describe("Conditional Effect Parser", () => {
       );
 
       expect(result).toMatchObject({
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "an opponent has no characters",
+          type: "if",
         },
         then: {
-          type: "gain-lore",
           amount: 3,
+          type: "gain-lore",
         },
+        type: "conditional",
       });
     });
   });
@@ -202,16 +202,16 @@ describe("Conditional Effect Parser", () => {
       );
 
       expect(result).toMatchObject({
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you have 3 or more characters in play",
+          type: "if",
         },
         then: {
-          type: "draw",
           amount: 1,
           target: "CONTROLLER",
+          type: "draw",
         },
+        type: "conditional",
       });
     });
   });
@@ -223,16 +223,16 @@ describe("Conditional Effect Parser", () => {
       );
 
       expect(result).toMatchObject({
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you have a Floodborn character",
+          type: "if",
         },
         then: {
-          type: "draw",
           amount: 2,
           target: "CONTROLLER",
+          type: "draw",
         },
+        type: "conditional",
       });
     });
 
@@ -242,19 +242,19 @@ describe("Conditional Effect Parser", () => {
       );
 
       expect(result).toMatchObject({
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you have an item",
-        },
-        then: {
-          type: "deal-damage",
-          amount: 2,
+          type: "if",
         },
         else: {
-          type: "deal-damage",
           amount: 1,
+          type: "deal-damage",
         },
+        then: {
+          amount: 2,
+          type: "deal-damage",
+        },
+        type: "conditional",
       });
     });
   });

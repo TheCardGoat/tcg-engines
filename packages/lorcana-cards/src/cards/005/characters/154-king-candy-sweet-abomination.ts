@@ -1,44 +1,17 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const kingCandySweetAbomination: CharacterCard = {
-  id: "q61",
-  cardType: "character",
-  name: "King Candy",
-  version: "Sweet Abomination",
-  fullName: "King Candy - Sweet Abomination",
-  inkType: ["sapphire"],
-  franchise: "Wreck It Ralph",
-  set: "005",
-  text: "Shift 3 (You may pay 3 {I} to play this on top of one of your characters named King Candy.)\nCHANGING THE CODE When you play this character, you may draw 2 cards, then put a card from your hand on the bottom of your deck.",
-  cost: 5,
-  strength: 3,
-  willpower: 3,
-  lore: 2,
-  cardNumber: 154,
-  inkable: false,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "5e50dc86485330fa31a424a5ef8789c56472efd4",
-  },
   abilities: [
     {
-      id: "q61-1",
-      type: "keyword",
-      keyword: "Shift",
       cost: {
         ink: 3,
       },
+      id: "q61-1",
+      keyword: "Shift",
       text: "Shift 3",
+      type: "keyword",
     },
     {
-      id: "q61-2",
-      type: "triggered",
-      name: "CHANGING THE CODE",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -53,8 +26,35 @@ export const kingCandySweetAbomination: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "q61-2",
+      name: "CHANGING THE CODE",
       text: "CHANGING THE CODE When you play this character, you may draw 2 cards, then put a card from your hand on the bottom of your deck.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 154,
+  cardType: "character",
   classifications: ["Floodborn", "Villain", "King", "Racer"],
+  cost: 5,
+  externalIds: {
+    ravensburger: "5e50dc86485330fa31a424a5ef8789c56472efd4",
+  },
+  franchise: "Wreck It Ralph",
+  fullName: "King Candy - Sweet Abomination",
+  id: "q61",
+  inkType: ["sapphire"],
+  inkable: false,
+  lore: 2,
+  missingTests: true,
+  name: "King Candy",
+  set: "005",
+  strength: 3,
+  text: "Shift 3 (You may pay 3 {I} to play this on top of one of your characters named King Candy.)\nCHANGING THE CODE When you play this character, you may draw 2 cards, then put a card from your hand on the bottom of your deck.",
+  version: "Sweet Abomination",
+  willpower: 3,
 };

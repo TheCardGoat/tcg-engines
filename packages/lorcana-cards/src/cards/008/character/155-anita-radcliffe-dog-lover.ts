@@ -1,45 +1,45 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { whenYouPlayThis } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import { chosenCharacterGainsResist } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { whenYouPlayThis } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import { chosenCharacterGainsResist } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const anitaRadcliffeDogLover: LorcanitoCharacterCard = {
-//   id: "cir",
-//   name: "Anita Radcliffe",
-//   title: "Dog Lover",
-//   characteristics: ["storyborn", "ally"],
-//   text: "I'LL TAKE CARE OF YOU When you play this character, you may give chosen Puppy character Resist +1 until the start of your next turn. (Damage dealt to them is reduced by 1.)",
-//   type: "character",
-//   abilities: [
-//     whenYouPlayThis({
-//       name: "I'LL TAKE CARE OF YOU",
-//       text: "When you play this character, you may give chosen Puppy character Resist +1 until the start of your next turn. (Damage dealt to them is reduced by 1.)",
-//       optional: true,
-//       target: {
-//         type: "card",
-//         value: 1,
-//         filters: [
+// Export const anitaRadcliffeDogLover: LorcanitoCharacterCard = {
+//   Id: "cir",
+//   Name: "Anita Radcliffe",
+//   Title: "Dog Lover",
+//   Characteristics: ["storyborn", "ally"],
+//   Text: "I'LL TAKE CARE OF YOU When you play this character, you may give chosen Puppy character Resist +1 until the start of your next turn. (Damage dealt to them is reduced by 1.)",
+//   Type: "character",
+//   Abilities: [
+//     WhenYouPlayThis({
+//       Name: "I'LL TAKE CARE OF YOU",
+//       Text: "When you play this character, you may give chosen Puppy character Resist +1 until the start of your next turn. (Damage dealt to them is reduced by 1.)",
+//       Optional: true,
+//       Target: {
+//         Type: "card",
+//         Value: 1,
+//         Filters: [
 //           { filter: "characteristics", value: ["puppy"] },
 //           { filter: "zone", value: "play" },
 //           { filter: "owner", value: "self" },
 //           { filter: "type", value: "character" },
 //         ],
 //       },
-//       effects: [chosenCharacterGainsResist(1, "next_turn")],
+//       Effects: [chosenCharacterGainsResist(1, "next_turn")],
 //     }),
 //   ],
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 3,
-//   strength: 3,
-//   willpower: 3,
-//   illustrator: "Carmine Pucci",
-//   number: 155,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 633100,
+//   Inkwell: true,
+//   Colors: ["sapphire"],
+//   Cost: 3,
+//   Strength: 3,
+//   Willpower: 3,
+//   Illustrator: "Carmine Pucci",
+//   Number: 155,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 633100,
 //   },
-//   rarity: "common",
-//   lore: 1,
+//   Rarity: "common",
+//   Lore: 1,
 // };
 //

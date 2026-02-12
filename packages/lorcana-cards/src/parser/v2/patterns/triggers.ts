@@ -87,14 +87,14 @@ export const TRIGGER_EVENT_PATTERNS = {
  * Combined trigger patterns export
  */
 export const TRIGGER_PATTERNS = {
-  when: WHEN_PATTERN,
-  whenever: WHENEVER_PATTERN,
-  atStart: AT_START_PATTERN,
   atEnd: AT_END_PATTERN,
-  firstTime: FIRST_TIME_PATTERN,
-  oncePerTurnTrigger: ONCE_PER_TURN_TRIGGER_PATTERN,
+  atStart: AT_START_PATTERN,
   duringYourTurnTrigger: DURING_YOUR_TURN_TRIGGER_PATTERN,
   events: TRIGGER_EVENT_PATTERNS,
+  firstTime: FIRST_TIME_PATTERN,
+  oncePerTurnTrigger: ONCE_PER_TURN_TRIGGER_PATTERN,
+  when: WHEN_PATTERN,
+  whenever: WHENEVER_PATTERN,
 } as const;
 
 /**

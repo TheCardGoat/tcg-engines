@@ -3,24 +3,24 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { criKeeLuckyCricket } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { criKeeLuckyCricket } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Cri-Kee - Lucky Cricket", () => {
-//   it.skip("**SPREADING GOOD FORTUNE** When you play this character, your other characters get +3 {S} this turn.", () => {
-//     const testStore = new TestStore({
-//       inkwell: criKeeLuckyCricket.cost,
-//       hand: [criKeeLuckyCricket],
+// Describe("Cri-Kee - Lucky Cricket", () => {
+//   It.skip("**SPREADING GOOD FORTUNE** When you play this character, your other characters get +3 {S} this turn.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: criKeeLuckyCricket.cost,
+//       Hand: [criKeeLuckyCricket],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "hand",
-//       criKeeLuckyCricket.id,
+//       CriKeeLuckyCricket.id,
 //     );
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

@@ -11,18 +11,16 @@ import { Abilities } from "../helpers";
 describe("Static: Might Modifier", () => {
   describe("self might bonus", () => {
     it.skip("should parse 'I have +1 :rb_might: for each friendly gear.'", () => {
-      const result = parseAbilities(
-        "I have +1 :rb_might: for each friendly gear.",
-      );
+      const result = parseAbilities("I have +1 :rb_might: for each friendly gear.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "static",
           effect: expect.objectContaining({
             type: "modify-might",
           }),
+          type: "static",
         }),
       );
     });
@@ -39,19 +37,17 @@ describe("Static: Might Modifier", () => {
 
   describe("other units might bonus", () => {
     it.skip("should parse 'Other friendly units have +1 :rb_might: here.'", () => {
-      const result = parseAbilities(
-        "Other friendly units have +1 :rb_might: here.",
-      );
+      const result = parseAbilities("Other friendly units have +1 :rb_might: here.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "static",
           effect: expect.objectContaining({
-            type: "modify-might",
             amount: 1,
+            type: "modify-might",
           }),
+          type: "static",
         }),
       );
     });
@@ -83,10 +79,10 @@ describe("Static: Might Modifier", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "static",
           condition: expect.objectContaining({
             type: "spent-power",
           }),
+          type: "static",
         }),
       );
     });

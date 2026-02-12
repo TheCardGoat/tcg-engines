@@ -3,125 +3,125 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   cinderellaGentleAndKind,
-//   johnSilverAlienPirate,
-//   moanaOfMotunui,
-//   rapunzelGiftedWithHealing,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   CinderellaGentleAndKind,
+//   JohnSilverAlienPirate,
+//   MoanaOfMotunui,
+//   RapunzelGiftedWithHealing,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { hakunaMatata } from "@lorcanito/lorcana-engine/cards/001/songs/027-hakuna-matata";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { hakunaMatata } from "@lorcanito/lorcana-engine/cards/001/songs/027-hakuna-matata";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Moana Of Motunui", () => {
-//   describe("We Can Fix It", () => {
-//     it("Ready All OTHER Princess", () => {
-//       const testStore = new TestStore({
-//         play: [
-//           moanaOfMotunui,
-//           cinderellaGentleAndKind,
-//           rapunzelGiftedWithHealing,
+// Describe("Moana Of Motunui", () => {
+//   Describe("We Can Fix It", () => {
+//     It("Ready All OTHER Princess", () => {
+//       Const testStore = new TestStore({
+//         Play: [
+//           MoanaOfMotunui,
+//           CinderellaGentleAndKind,
+//           RapunzelGiftedWithHealing,
 //         ],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId("play", moanaOfMotunui.id);
-//       const target = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId("play", moanaOfMotunui.id);
+//       Const target = testStore.getByZoneAndId(
 //         "play",
-//         cinderellaGentleAndKind.id,
+//         CinderellaGentleAndKind.id,
 //       );
-//       const anotherTarget = testStore.getByZoneAndId(
+//       Const anotherTarget = testStore.getByZoneAndId(
 //         "play",
-//         rapunzelGiftedWithHealing.id,
+//         RapunzelGiftedWithHealing.id,
 //       );
 //
-//       cardUnderTest.updateCardMeta({ exerted: false });
-//       target.updateCardMeta({ exerted: true });
-//       anotherTarget.updateCardMeta({ exerted: true });
+//       CardUnderTest.updateCardMeta({ exerted: false });
+//       Target.updateCardMeta({ exerted: true });
+//       AnotherTarget.updateCardMeta({ exerted: true });
 //
-//       expect(testStore.getByZoneAndId("play", moanaOfMotunui.id).meta).toEqual(
-//         expect.objectContaining({ exerted: false }),
+//       Expect(testStore.getByZoneAndId("play", moanaOfMotunui.id).meta).toEqual(
+//         Expect.objectContaining({ exerted: false }),
 //       );
 //
-//       cardUnderTest.quest();
-//       testStore.resolveOptionalAbility();
+//       CardUnderTest.quest();
+//       TestStore.resolveOptionalAbility();
 //
-//       expect(target.meta).toEqual(expect.objectContaining({ exerted: false }));
-//       expect(anotherTarget.meta).toEqual(
-//         expect.objectContaining({ exerted: false }),
+//       Expect(target.meta).toEqual(expect.objectContaining({ exerted: false }));
+//       Expect(anotherTarget.meta).toEqual(
+//         Expect.objectContaining({ exerted: false }),
 //       );
-//       expect(cardUnderTest.meta).toEqual(
-//         expect.objectContaining({ exerted: true }),
+//       Expect(cardUnderTest.meta).toEqual(
+//         Expect.objectContaining({ exerted: true }),
 //       );
 //     });
 //
-//     it("Should ready only princesses", () => {
-//       const testStore = new TestStore({
-//         play: [
-//           moanaOfMotunui,
-//           cinderellaGentleAndKind,
-//           rapunzelGiftedWithHealing,
-//           johnSilverAlienPirate,
+//     It("Should ready only princesses", () => {
+//       Const testStore = new TestStore({
+//         Play: [
+//           MoanaOfMotunui,
+//           CinderellaGentleAndKind,
+//           RapunzelGiftedWithHealing,
+//           JohnSilverAlienPirate,
 //         ],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId("play", moanaOfMotunui.id);
-//       const target = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId("play", moanaOfMotunui.id);
+//       Const target = testStore.getByZoneAndId(
 //         "play",
-//         cinderellaGentleAndKind.id,
+//         CinderellaGentleAndKind.id,
 //       );
-//       const anotherTarget = testStore.getByZoneAndId(
+//       Const anotherTarget = testStore.getByZoneAndId(
 //         "play",
-//         rapunzelGiftedWithHealing.id,
+//         RapunzelGiftedWithHealing.id,
 //       );
-//       const shouldNoBeTarget = testStore.getByZoneAndId(
+//       Const shouldNoBeTarget = testStore.getByZoneAndId(
 //         "play",
-//         johnSilverAlienPirate.id,
+//         JohnSilverAlienPirate.id,
 //       );
-//       cardUnderTest.updateCardMeta({ exerted: false });
-//       target.updateCardMeta({ exerted: true });
-//       anotherTarget.updateCardMeta({ exerted: true });
-//       shouldNoBeTarget.updateCardMeta({ exerted: true });
-//       expect(testStore.getByZoneAndId("play", moanaOfMotunui.id).meta).toEqual(
-//         expect.objectContaining({ exerted: false }),
+//       CardUnderTest.updateCardMeta({ exerted: false });
+//       Target.updateCardMeta({ exerted: true });
+//       AnotherTarget.updateCardMeta({ exerted: true });
+//       ShouldNoBeTarget.updateCardMeta({ exerted: true });
+//       Expect(testStore.getByZoneAndId("play", moanaOfMotunui.id).meta).toEqual(
+//         Expect.objectContaining({ exerted: false }),
 //       );
 //
-//       cardUnderTest.quest();
+//       CardUnderTest.quest();
 //
-//       testStore.resolveTopOfStack();
+//       TestStore.resolveTopOfStack();
 //
-//       expect(
-//         testStore.getByZoneAndId("play", cinderellaGentleAndKind.id).meta,
+//       Expect(
+//         TestStore.getByZoneAndId("play", cinderellaGentleAndKind.id).meta,
 //       ).toEqual(expect.objectContaining({ exerted: false }));
-//       expect(
-//         testStore.getByZoneAndId("play", rapunzelGiftedWithHealing.id).meta,
+//       Expect(
+//         TestStore.getByZoneAndId("play", rapunzelGiftedWithHealing.id).meta,
 //       ).toEqual(expect.objectContaining({ exerted: false }));
-//       expect(
-//         testStore.getByZoneAndId("play", johnSilverAlienPirate.id).meta,
+//       Expect(
+//         TestStore.getByZoneAndId("play", johnSilverAlienPirate.id).meta,
 //       ).toEqual(expect.objectContaining({ exerted: true }));
 //     });
 //   });
 //
-//   describe("Regression", () => {
-//     it("Readied princess are unable to sing", async () => {
-//       const testEngine = new TestEngine({
-//         play: [moanaOfMotunui, cinderellaGentleAndKind],
-//         hand: [hakunaMatata],
+//   Describe("Regression", () => {
+//     It("Readied princess are unable to sing", async () => {
+//       Const testEngine = new TestEngine({
+//         Play: [moanaOfMotunui, cinderellaGentleAndKind],
+//         Hand: [hakunaMatata],
 //       });
 //
-//       await testEngine.tapCard(cinderellaGentleAndKind);
-//       await testEngine.questCard(moanaOfMotunui);
+//       Await testEngine.tapCard(cinderellaGentleAndKind);
+//       Await testEngine.questCard(moanaOfMotunui);
 //
-//       await testEngine.acceptOptionalLayer();
+//       Await testEngine.acceptOptionalLayer();
 //
-//       await testEngine.singSong({
-//         singer: cinderellaGentleAndKind,
-//         song: hakunaMatata,
+//       Await testEngine.singSong({
+//         Singer: cinderellaGentleAndKind,
+//         Song: hakunaMatata,
 //       });
 //
-//       expect(testEngine.getCardModel(hakunaMatata).zone).toEqual("discard");
-//       expect(testEngine.getCardModel(cinderellaGentleAndKind).ready).toEqual(
-//         false,
+//       Expect(testEngine.getCardModel(hakunaMatata).zone).toEqual("discard");
+//       Expect(testEngine.getCardModel(cinderellaGentleAndKind).ready).toEqual(
+//         False,
 //       );
 //     });
 //   });

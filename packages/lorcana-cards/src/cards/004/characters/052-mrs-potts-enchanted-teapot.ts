@@ -1,35 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const mrsPottsEnchantedTeapot: CharacterCard = {
-  id: "1mj",
-  cardType: "character",
-  name: "Mrs. Potts",
-  version: "Enchanted Teapot",
-  fullName: "Mrs. Potts - Enchanted Teapot",
-  inkType: ["amethyst"],
-  franchise: "Beauty and the Beast",
-  set: "004",
-  text: "IT'LL TURN OUT ALL RIGHT When you play this character, if you have a character named Lumiere or Cogsworth in play, you may draw a card.",
-  cost: 4,
-  strength: 3,
-  willpower: 4,
-  lore: 2,
-  cardNumber: 52,
-  inkable: true,
-  externalIds: {
-    ravensburger: "d2fc1a97d9660d223273dc3416d8fa2ad2e68950",
-  },
   abilities: [
     {
-      id: "1mj-1",
-      text: "IT'LL TURN OUT ALL RIGHT When you play this character, if you have a character named Lumiere or Cogsworth in play, you may draw a card.",
-      name: "IT'LL TURN OUT ALL RIGHT",
-      type: "triggered",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "conditional",
         condition: {
@@ -43,46 +16,73 @@ export const mrsPottsEnchantedTeapot: CharacterCard = {
           target: "CONTROLLER",
         },
       },
+      id: "1mj-1",
+      name: "IT'LL TURN OUT ALL RIGHT",
+      text: "IT'LL TURN OUT ALL RIGHT When you play this character, if you have a character named Lumiere or Cogsworth in play, you may draw a card.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 52,
+  cardType: "character",
   classifications: ["Storyborn", "Ally"],
+  cost: 4,
+  externalIds: {
+    ravensburger: "d2fc1a97d9660d223273dc3416d8fa2ad2e68950",
+  },
+  franchise: "Beauty and the Beast",
+  fullName: "Mrs. Potts - Enchanted Teapot",
+  id: "1mj",
+  inkType: ["amethyst"],
+  inkable: true,
+  lore: 2,
+  name: "Mrs. Potts",
+  set: "004",
+  strength: 3,
+  text: "IT'LL TURN OUT ALL RIGHT When you play this character, if you have a character named Lumiere or Cogsworth in play, you may draw a card.",
+  version: "Enchanted Teapot",
+  willpower: 4,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { ifYouHaveCharacterNamed } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
-// import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { ifYouHaveCharacterNamed } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
+// Import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const mrsPottsEnchantedTeapot: LorcanitoCharacterCard = {
-//   id: "rxo",
-//   missingTestCase: true,
-//   name: "Mrs. Potts",
-//   title: "Enchanted Teapot",
-//   characteristics: ["storyborn", "ally"],
-//   text: "**IT'LL TURN OUT ALL RIGHT** When you play this characters, if you have a character named Lumiere or Cogsworth in play, you may draw a card.",
-//   type: "character",
-//   abilities: [
+// Export const mrsPottsEnchantedTeapot: LorcanitoCharacterCard = {
+//   Id: "rxo",
+//   MissingTestCase: true,
+//   Name: "Mrs. Potts",
+//   Title: "Enchanted Teapot",
+//   Characteristics: ["storyborn", "ally"],
+//   Text: "**IT'LL TURN OUT ALL RIGHT** When you play this characters, if you have a character named Lumiere or Cogsworth in play, you may draw a card.",
+//   Type: "character",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       name: "It'll Turn Out All Right",
-//       text: "When you play this characters, if you have a character named Lumiere or Cogsworth in play, you may draw a card.",
-//       conditions: [ifYouHaveCharacterNamed(["Lumiere", "Cogsworth"])],
-//       optional: true,
-//       effects: [drawACard],
+//       Type: "resolution",
+//       Name: "It'll Turn Out All Right",
+//       Text: "When you play this characters, if you have a character named Lumiere or Cogsworth in play, you may draw a card.",
+//       Conditions: [ifYouHaveCharacterNamed(["Lumiere", "Cogsworth"])],
+//       Optional: true,
+//       Effects: [drawACard],
 //     },
 //   ],
-//   inkwell: true,
-//   colors: ["amethyst"],
-//   cost: 4,
-//   strength: 3,
-//   willpower: 4,
-//   lore: 2,
-//   illustrator: "Verionica Di Lorenzo / Livic Cacciatore",
-//   number: 52,
-//   set: "URR",
-//   externalIds: {
-//     tcgPlayer: 549620,
+//   Inkwell: true,
+//   Colors: ["amethyst"],
+//   Cost: 4,
+//   Strength: 3,
+//   Willpower: 4,
+//   Lore: 2,
+//   Illustrator: "Verionica Di Lorenzo / Livic Cacciatore",
+//   Number: 52,
+//   Set: "URR",
+//   ExternalIds: {
+//     TcgPlayer: 549620,
 //   },
-//   rarity: "rare",
+//   Rarity: "rare",
 // };
 //

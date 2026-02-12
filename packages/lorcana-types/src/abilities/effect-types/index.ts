@@ -38,11 +38,7 @@ export type {
   ReplacementEffect,
   StaticEffect,
 } from "./combined-types";
-export {
-  isControlFlowEffect,
-  isScryEffect,
-  targetsCharacters,
-} from "./combined-types";
+export { isControlFlowEffect, isScryEffect, targetsCharacters } from "./combined-types";
 // Control flow effects
 export type {
   ChoiceEffect,

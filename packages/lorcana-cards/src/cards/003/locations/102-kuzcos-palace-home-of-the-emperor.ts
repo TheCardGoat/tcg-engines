@@ -1,30 +1,8 @@
 import type { LocationCard } from "@tcg/lorcana-types";
 
 export const kuzcosPalaceHomeOfTheEmperor: LocationCard = {
-  id: "aae",
-  cardType: "location",
-  name: "Kuzco's Palace",
-  version: "Home of the Emperor",
-  fullName: "Kuzco's Palace - Home of the Emperor",
-  inkType: ["emerald"],
-  franchise: "Emperors New Groove",
-  set: "003",
-  text: "CITY WALLS Whenever a character is challenged and banished while here, banish the challenging character.",
-  cost: 3,
-  moveCost: 3,
-  lore: 0,
-  cardNumber: 102,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "2514f81045d67354a0f53e0031f8831ef08f7714",
-  },
   abilities: [
     {
-      id: "aae-1",
-      type: "triggered",
-      name: "CITY WALLS",
-      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "banish",
         target: {
@@ -35,7 +13,29 @@ export const kuzcosPalaceHomeOfTheEmperor: LocationCard = {
           cardTypes: ["character"],
         },
       },
+      id: "aae-1",
+      name: "CITY WALLS",
       text: "CITY WALLS Whenever a character is challenged and banished while here, banish the challenging character.",
+      trigger: { event: "play", timing: "when", on: "SELF" },
+      type: "triggered",
     },
   ],
+  cardNumber: 102,
+  cardType: "location",
+  cost: 3,
+  externalIds: {
+    ravensburger: "2514f81045d67354a0f53e0031f8831ef08f7714",
+  },
+  franchise: "Emperors New Groove",
+  fullName: "Kuzco's Palace - Home of the Emperor",
+  id: "aae",
+  inkType: ["emerald"],
+  inkable: true,
+  lore: 0,
+  missingTests: true,
+  moveCost: 3,
+  name: "Kuzco's Palace",
+  set: "003",
+  text: "CITY WALLS Whenever a character is challenged and banished while here, banish the challenging character.",
+  version: "Home of the Emperor",
 };

@@ -3,51 +3,51 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { worldsGreatestCriminalMind } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
-// import {
-//   goofyKnightForADay,
-//   pachaVillageLeader,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { worldsGreatestCriminalMind } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
+// Import {
+//   GoofyKnightForADay,
+//   PachaVillageLeader,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("World's Greatest Criminal Mind", () => {
-//   it("Banish chosen character with 5 {S} or more.", () => {
-//     const testStore = new TestStore({
-//       inkwell: worldsGreatestCriminalMind.cost,
-//       hand: [worldsGreatestCriminalMind],
-//       play: [goofyKnightForADay],
+// Describe("World's Greatest Criminal Mind", () => {
+//   It("Banish chosen character with 5 {S} or more.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: worldsGreatestCriminalMind.cost,
+//       Hand: [worldsGreatestCriminalMind],
+//       Play: [goofyKnightForADay],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "hand",
-//       worldsGreatestCriminalMind.id,
+//       WorldsGreatestCriminalMind.id,
 //     );
-//     const target = testStore.getByZoneAndId("play", goofyKnightForADay.id);
+//     Const target = testStore.getByZoneAndId("play", goofyKnightForADay.id);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveTopOfStack({ targets: [target] });
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.zone).toEqual("discard");
+//     Expect(target.zone).toEqual("discard");
 //   });
 //
-//   it("Can't banish  character with less than 5 {S}.", () => {
-//     const testStore = new TestStore({
-//       inkwell: worldsGreatestCriminalMind.cost,
-//       hand: [worldsGreatestCriminalMind],
-//       play: [pachaVillageLeader],
+//   It("Can't banish  character with less than 5 {S}.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: worldsGreatestCriminalMind.cost,
+//       Hand: [worldsGreatestCriminalMind],
+//       Play: [pachaVillageLeader],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "hand",
-//       worldsGreatestCriminalMind.id,
+//       WorldsGreatestCriminalMind.id,
 //     );
-//     const target = testStore.getByZoneAndId("play", pachaVillageLeader.id);
+//     Const target = testStore.getByZoneAndId("play", pachaVillageLeader.id);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveTopOfStack({ targets: [target] });
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.zone).toEqual("play");
+//     Expect(target.zone).toEqual("play");
 //   });
 // });
 //

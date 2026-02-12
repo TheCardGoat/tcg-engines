@@ -3,18 +3,18 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { teKaLavaMonster } from "@lorcanito/lorcana-engine/cards/007/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { teKaLavaMonster } from "@lorcanito/lorcana-engine/cards/007/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Te Ka - Lava Monster", () => {
-//   it.skip("Challenger +2 (While challenging, this character gets +2 {S}).", async () => {
-//     const testEngine = new TestEngine({
-//       play: [teKaLavaMonster],
+// Describe("Te Ka - Lava Monster", () => {
+//   It.skip("Challenger +2 (While challenging, this character gets +2 {S}).", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [teKaLavaMonster],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(teKaLavaMonster);
-//     expect(cardUnderTest.hasChallenger).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(teKaLavaMonster);
+//     Expect(cardUnderTest.hasChallenger).toBe(true);
 //   });
 // });
 //

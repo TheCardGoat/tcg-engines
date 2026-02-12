@@ -1,35 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const kakamoraLongrangeSpecialist: CharacterCard = {
-  id: "10z",
-  cardType: "character",
-  name: "Kakamora",
-  version: "Long-Range Specialist",
-  fullName: "Kakamora - Long-Range Specialist",
-  inkType: ["steel"],
-  franchise: "Moana",
-  set: "006",
-  text: "A LITTLE HELP When you play this character, if you have another Pirate character in play, you may deal 1 damage to chosen character or location.",
-  cost: 1,
-  strength: 0,
-  willpower: 2,
-  lore: 1,
-  cardNumber: 171,
-  inkable: false,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "854ac978a94ec987ff018655c529e3e0c8c5aaa7",
-  },
   abilities: [
     {
-      id: "10z-1",
-      type: "triggered",
-      name: "A LITTLE HELP",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "conditional",
         condition: {
@@ -48,8 +21,35 @@ export const kakamoraLongrangeSpecialist: CharacterCard = {
           },
         },
       },
+      id: "10z-1",
+      name: "A LITTLE HELP",
       text: "A LITTLE HELP When you play this character, if you have another Pirate character in play, you may deal 1 damage to chosen character or location.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 171,
+  cardType: "character",
   classifications: ["Storyborn", "Pirate"],
+  cost: 1,
+  externalIds: {
+    ravensburger: "854ac978a94ec987ff018655c529e3e0c8c5aaa7",
+  },
+  franchise: "Moana",
+  fullName: "Kakamora - Long-Range Specialist",
+  id: "10z",
+  inkType: ["steel"],
+  inkable: false,
+  lore: 1,
+  missingTests: true,
+  name: "Kakamora",
+  set: "006",
+  strength: 0,
+  text: "A LITTLE HELP When you play this character, if you have another Pirate character in play, you may deal 1 damage to chosen character or location.",
+  version: "Long-Range Specialist",
+  willpower: 2,
 };

@@ -3,173 +3,173 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { balooFriendAndGuardian } from "@lorcanito/lorcana-engine/cards/010/characters/characters";
-// import { dragonFire } from "@lorcanito/lorcana-engine/cards/010/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { balooFriendAndGuardian } from "@lorcanito/lorcana-engine/cards/010/characters/characters";
+// Import { dragonFire } from "@lorcanito/lorcana-engine/cards/010/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Dragon Fire", () => {
-//   it("should banish chosen opposing character when played", () => {
-//     const testStore = new TestStore(
+// Describe("Dragon Fire", () => {
+//   It("should banish chosen opposing character when played", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: dragonFire.cost,
-//         hand: [dragonFire],
+//         Inkwell: dragonFire.cost,
+//         Hand: [dragonFire],
 //       },
 //       {
-//         play: [balooFriendAndGuardian],
+//         Play: [balooFriendAndGuardian],
 //       },
 //     );
 //
-//     const dragonFireCard = testStore.getCard(dragonFire);
-//     const target = testStore.getCard(balooFriendAndGuardian);
+//     Const dragonFireCard = testStore.getCard(dragonFire);
+//     Const target = testStore.getCard(balooFriendAndGuardian);
 //
-//     expect(target.zone).toBe("play");
+//     Expect(target.zone).toBe("play");
 //
-//     dragonFireCard.playFromHand();
-//     testStore.resolveTopOfStack({ targets: [target] });
+//     DragonFireCard.playFromHand();
+//     TestStore.resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.zone).toBe("discard");
+//     Expect(target.zone).toBe("discard");
 //   });
 //
-//   it("should banish chosen own character when played", () => {
-//     const testStore = new TestStore({
-//       inkwell: dragonFire.cost,
-//       hand: [dragonFire],
-//       play: [balooFriendAndGuardian],
+//   It("should banish chosen own character when played", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: dragonFire.cost,
+//       Hand: [dragonFire],
+//       Play: [balooFriendAndGuardian],
 //     });
 //
-//     const dragonFireCard = testStore.getCard(dragonFire);
-//     const target = testStore.getCard(balooFriendAndGuardian);
+//     Const dragonFireCard = testStore.getCard(dragonFire);
+//     Const target = testStore.getCard(balooFriendAndGuardian);
 //
-//     expect(target.zone).toBe("play");
+//     Expect(target.zone).toBe("play");
 //
-//     dragonFireCard.playFromHand();
-//     testStore.resolveTopOfStack({ targets: [target] });
+//     DragonFireCard.playFromHand();
+//     TestStore.resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.zone).toBe("discard");
+//     Expect(target.zone).toBe("discard");
 //   });
 //
-//   it("should work with multiple characters to choose from", () => {
-//     const testStore = new TestStore(
+//   It("should work with multiple characters to choose from", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: dragonFire.cost,
-//         hand: [dragonFire],
-//         play: [balooFriendAndGuardian],
+//         Inkwell: dragonFire.cost,
+//         Hand: [dragonFire],
+//         Play: [balooFriendAndGuardian],
 //       },
 //       {
-//         play: [balooFriendAndGuardian],
+//         Play: [balooFriendAndGuardian],
 //       },
 //     );
 //
-//     const dragonFireCard = testStore.getCard(dragonFire);
-//     const ownCharacter = testStore.getByZoneAndId(
+//     Const dragonFireCard = testStore.getCard(dragonFire);
+//     Const ownCharacter = testStore.getByZoneAndId(
 //       "play",
-//       balooFriendAndGuardian.id,
+//       BalooFriendAndGuardian.id,
 //       "player_one",
 //     );
-//     const opposingCharacter = testStore.getByZoneAndId(
+//     Const opposingCharacter = testStore.getByZoneAndId(
 //       "play",
-//       balooFriendAndGuardian.id,
+//       BalooFriendAndGuardian.id,
 //       "player_two",
 //     );
 //
-//     expect(ownCharacter.zone).toBe("play");
-//     expect(opposingCharacter.zone).toBe("play");
+//     Expect(ownCharacter.zone).toBe("play");
+//     Expect(opposingCharacter.zone).toBe("play");
 //
-//     dragonFireCard.playFromHand();
-//     testStore.resolveTopOfStack({ targets: [opposingCharacter] });
+//     DragonFireCard.playFromHand();
+//     TestStore.resolveTopOfStack({ targets: [opposingCharacter] });
 //
-//     expect(ownCharacter.zone).toBe("play");
-//     expect(opposingCharacter.zone).toBe("discard");
+//     Expect(ownCharacter.zone).toBe("play");
+//     Expect(opposingCharacter.zone).toBe("discard");
 //   });
 //
-//   it("should allow choosing which character to banish when multiple targets exist", () => {
-//     const testStore = new TestStore(
+//   It("should allow choosing which character to banish when multiple targets exist", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: dragonFire.cost,
-//         hand: [dragonFire],
-//         play: [balooFriendAndGuardian],
+//         Inkwell: dragonFire.cost,
+//         Hand: [dragonFire],
+//         Play: [balooFriendAndGuardian],
 //       },
 //       {
-//         play: [balooFriendAndGuardian],
+//         Play: [balooFriendAndGuardian],
 //       },
 //     );
 //
-//     const dragonFireCard = testStore.getCard(dragonFire);
-//     const ownCharacter = testStore.getByZoneAndId(
+//     Const dragonFireCard = testStore.getCard(dragonFire);
+//     Const ownCharacter = testStore.getByZoneAndId(
 //       "play",
-//       balooFriendAndGuardian.id,
+//       BalooFriendAndGuardian.id,
 //       "player_one",
 //     );
-//     const opposingCharacter = testStore.getByZoneAndId(
+//     Const opposingCharacter = testStore.getByZoneAndId(
 //       "play",
-//       balooFriendAndGuardian.id,
+//       BalooFriendAndGuardian.id,
 //       "player_two",
 //     );
 //
-//     expect(ownCharacter.zone).toBe("play");
-//     expect(opposingCharacter.zone).toBe("play");
+//     Expect(ownCharacter.zone).toBe("play");
+//     Expect(opposingCharacter.zone).toBe("play");
 //
-//     dragonFireCard.playFromHand();
-//     testStore.resolveTopOfStack({ targets: [ownCharacter] });
+//     DragonFireCard.playFromHand();
+//     TestStore.resolveTopOfStack({ targets: [ownCharacter] });
 //
-//     expect(ownCharacter.zone).toBe("discard");
-//     expect(opposingCharacter.zone).toBe("play");
+//     Expect(ownCharacter.zone).toBe("discard");
+//     Expect(opposingCharacter.zone).toBe("play");
 //   });
 //
-//   it("should cost 5 ink to play", () => {
-//     const testStore = new TestStore({
-//       inkwell: dragonFire.cost,
-//       hand: [dragonFire],
+//   It("should cost 5 ink to play", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: dragonFire.cost,
+//       Hand: [dragonFire],
 //     });
 //
-//     const dragonFireCard = testStore.getCard(dragonFire);
+//     Const dragonFireCard = testStore.getCard(dragonFire);
 //
-//     expect(
-//       testStore.store.tableStore
+//     Expect(
+//       TestStore.store.tableStore
 //         .getPlayerZone("player_one", "inkwell")
 //         ?.inkAvailable(),
 //     ).toBe(5);
 //
-//     dragonFireCard.playFromHand();
+//     DragonFireCard.playFromHand();
 //
 //     // Card should be played and ink should be spent
-//     expect(dragonFireCard.zone).toBe("discard"); // Actions go to discard after being played
-//     expect(
-//       testStore.store.tableStore
+//     Expect(dragonFireCard.zone).toBe("discard"); // Actions go to discard after being played
+//     Expect(
+//       TestStore.store.tableStore
 //         .getPlayerZone("player_one", "inkwell")
 //         ?.inkAvailable(),
 //     ).toBe(0);
 //   });
 //
-//   it("should have correct card properties", () => {
-//     expect(dragonFire.name).toBe("Dragon Fire");
-//     expect(dragonFire.type).toBe("action");
-//     expect(dragonFire.cost).toBe(5);
-//     expect(dragonFire.colors).toContain("ruby");
-//     expect(dragonFire.set).toBe("010");
-//     expect(dragonFire.number).toBe(133);
-//     expect(dragonFire.rarity).toBe("uncommon");
-//     expect(dragonFire.text).toBe("Banish chosen character.");
+//   It("should have correct card properties", () => {
+//     Expect(dragonFire.name).toBe("Dragon Fire");
+//     Expect(dragonFire.type).toBe("action");
+//     Expect(dragonFire.cost).toBe(5);
+//     Expect(dragonFire.colors).toContain("ruby");
+//     Expect(dragonFire.set).toBe("010");
+//     Expect(dragonFire.number).toBe(133);
+//     Expect(dragonFire.rarity).toBe("uncommon");
+//     Expect(dragonFire.text).toBe("Banish chosen character.");
 //   });
 //
-//   it("should reference original card as reprint", () => {
-//     expect(dragonFire.reprints).toContain("buy"); // Original dragon-fire ID
+//   It("should reference original card as reprint", () => {
+//     Expect(dragonFire.reprints).toContain("buy"); // Original dragon-fire ID
 //   });
 //
-//   it("should handle empty board state with auto-resolution", () => {
-//     const testStore = new TestStore({
-//       inkwell: dragonFire.cost,
-//       hand: [dragonFire],
+//   It("should handle empty board state with auto-resolution", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: dragonFire.cost,
+//       Hand: [dragonFire],
 //     });
 //
-//     const dragonFireCard = testStore.getCard(dragonFire);
+//     Const dragonFireCard = testStore.getCard(dragonFire);
 //
-//     dragonFireCard.playFromHand();
+//     DragonFireCard.playFromHand();
 //
 //     // Should be able to play the card even with no characters in play
-//     expect(dragonFireCard.zone).toBe("discard");
+//     Expect(dragonFireCard.zone).toBe("discard");
 //
 //     // When no valid targets exist, the ability should auto-resolve automatically
 //   });

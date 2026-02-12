@@ -5,9 +5,9 @@ import { aladdinPrinceAli } from "./069-aladdin-prince-ali";
 describe("Aladdin - Prince Ali", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [aladdinPrinceAli] });
-  //   expect(testEngine.getCardModel(aladdinPrinceAli).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [aladdinPrinceAli] });
+  //   Expect(testEngine.getCardModel(aladdinPrinceAli).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });

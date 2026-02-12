@@ -3,63 +3,63 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { giantCobraGhostlySerpent } from "@lorcanito/lorcana-engine/cards/007";
-// import {
-//   deweyLovableShowoff,
-//   pullTheLever,
-//   theSultanRoyalApparition,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { giantCobraGhostlySerpent } from "@lorcanito/lorcana-engine/cards/007";
+// Import {
+//   DeweyLovableShowoff,
+//   PullTheLever,
+//   TheSultanRoyalApparition,
 // } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("The Sultan - Royal Apparition", () => {
-//   it("COMMANDING PRESENCE Whenever one of your Illusion characters quests, exert chosen opposing character.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("The Sultan - Royal Apparition", () => {
+//   It("COMMANDING PRESENCE Whenever one of your Illusion characters quests, exert chosen opposing character.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         play: [theSultanRoyalApparition, giantCobraGhostlySerpent],
+//         Play: [theSultanRoyalApparition, giantCobraGhostlySerpent],
 //       },
 //       {
-//         play: [deweyLovableShowoff],
+//         Play: [deweyLovableShowoff],
 //       },
 //     );
 //
-//     const cardUnderTest = testEngine.getCardModel(theSultanRoyalApparition);
-//     const target = testEngine.getCardModel(giantCobraGhostlySerpent);
-//     const target2 = testEngine.getCardModel(deweyLovableShowoff);
+//     Const cardUnderTest = testEngine.getCardModel(theSultanRoyalApparition);
+//     Const target = testEngine.getCardModel(giantCobraGhostlySerpent);
+//     Const target2 = testEngine.getCardModel(deweyLovableShowoff);
 //
-//     expect(target2.exerted).toEqual(false);
+//     Expect(target2.exerted).toEqual(false);
 //
-//     await testEngine.questCard(target);
+//     Await testEngine.questCard(target);
 //
 //     // await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({ targets: [target2] });
+//     Await testEngine.resolveTopOfStack({ targets: [target2] });
 //
-//     expect(target2.exerted).toEqual(true);
+//     Expect(target2.exerted).toEqual(true);
 //   });
 // });
 //
-// describe("Regression tests", () => {
-//   it("Vanish (When an opponent chooses this character for an action, banish them.)", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Regression tests", () => {
+//   It("Vanish (When an opponent chooses this character for an action, banish them.)", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: pullTheLever.cost,
-//         hand: [pullTheLever],
-//         deck: 10,
+//         Inkwell: pullTheLever.cost,
+//         Hand: [pullTheLever],
+//         Deck: 10,
 //       },
 //       {
-//         play: [theSultanRoyalApparition],
+//         Play: [theSultanRoyalApparition],
 //       },
 //     );
-//     await testEngine.playCard(pullTheLever, { mode: "1" });
+//     Await testEngine.playCard(pullTheLever, { mode: "1" });
 //
-//     expect(testEngine.getZonesCardCount()).toEqual(
-//       expect.objectContaining({
-//         hand: 2,
-//         deck: 8,
+//     Expect(testEngine.getZonesCardCount()).toEqual(
+//       Expect.objectContaining({
+//         Hand: 2,
+//         Deck: 8,
 //       }),
 //     );
 //
-//     expect(testEngine.getCardModel(theSultanRoyalApparition).zone).toEqual(
+//     Expect(testEngine.getCardModel(theSultanRoyalApparition).zone).toEqual(
 //       "play",
 //     );
 //   });

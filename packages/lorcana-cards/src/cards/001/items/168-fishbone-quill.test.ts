@@ -5,9 +5,9 @@ import { fishboneQuill } from "./168-fishbone-quill";
 describe("Fishbone Quill - undefined", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [fishboneQuill] });
-  //   expect(testEngine.getCardModel(fishboneQuill).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [fishboneQuill] });
+  //   Expect(testEngine.getCardModel(fishboneQuill).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,50 +17,50 @@ describe("Fishbone Quill - undefined", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   dingleHopper,
-//   fishboneQuill,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   DingleHopper,
+//   FishboneQuill,
 // } from "@lorcanito/lorcana-engine/cards/001/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Fishbone Quill", () => {
-//   it("Go Ahead And Sign", () => {
-//     const testStore = new TestStore({
-//       hand: [dingleHopper],
-//       play: [fishboneQuill],
+// Describe("Fishbone Quill", () => {
+//   It("Go Ahead And Sign", () => {
+//     Const testStore = new TestStore({
+//       Hand: [dingleHopper],
+//       Play: [fishboneQuill],
 //     });
-//     const store = testStore.store;
-//     const tableStore = store.tableStore;
+//     Const store = testStore.store;
+//     Const tableStore = store.tableStore;
 //
-//     const cardUnderTest = testStore.getByZoneAndId("play", fishboneQuill.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("play", fishboneQuill.id);
 //
-//     expect(
-//       tableStore.getPlayerZone("player_one", "inkwell")?.cards,
+//     Expect(
+//       TableStore.getPlayerZone("player_one", "inkwell")?.cards,
 //     ).toHaveLength(0);
-//     expect(tableStore.getPlayerZone("player_one", "hand")?.cards).toHaveLength(
+//     Expect(tableStore.getPlayerZone("player_one", "hand")?.cards).toHaveLength(
 //       1,
 //     );
 //
-//     cardUnderTest.activate();
+//     CardUnderTest.activate();
 //
-//     const effect = store.stackLayerStore.layers[0];
-//     if (effect) {
-//       const target = testStore.getByZoneAndId("hand", dingleHopper.id);
+//     Const effect = store.stackLayerStore.layers[0];
+//     If (effect) {
+//       Const target = testStore.getByZoneAndId("hand", dingleHopper.id);
 //
-//       testStore.store.stackLayerStore.resolveTopOfStack({
-//         targets: [target],
+//       TestStore.store.stackLayerStore.resolveTopOfStack({
+//         Targets: [target],
 //       });
 //     }
 //
-//     expect(
-//       tableStore.getPlayerZone("player_one", "inkwell")?.cards,
+//     Expect(
+//       TableStore.getPlayerZone("player_one", "inkwell")?.cards,
 //     ).toHaveLength(1);
-//     expect(tableStore.getPlayerZone("player_one", "hand")?.cards).toHaveLength(
+//     Expect(tableStore.getPlayerZone("player_one", "hand")?.cards).toHaveLength(
 //       0,
 //     );
-//     expect(testStore.getCard(dingleHopper).meta.exerted).toBeFalsy();
-//     expect(store.stackLayerStore.layers).toHaveLength(0);
+//     Expect(testStore.getCard(dingleHopper).meta.exerted).toBeFalsy();
+//     Expect(store.stackLayerStore.layers).toHaveLength(0);
 //   });
 // });
 //

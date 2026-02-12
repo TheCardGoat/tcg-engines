@@ -3,77 +3,77 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   amberCoil,
-//   baymaxsChargingStation,
-//   belleMechanicExtraordinaire,
-//   rubyCoil,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   AmberCoil,
+//   BaymaxsChargingStation,
+//   BelleMechanicExtraordinaire,
+//   RubyCoil,
 // } from "@lorcanito/lorcana-engine/cards/007";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Belle - Mechanic Extraordinaire", () => {
-//   it("Shift 7", async () => {
-//     const testEngine = new TestEngine({
-//       play: [belleMechanicExtraordinaire],
+// Describe("Belle - Mechanic Extraordinaire", () => {
+//   It("Shift 7", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [belleMechanicExtraordinaire],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(belleMechanicExtraordinaire);
-//     expect(cardUnderTest.hasShift).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(belleMechanicExtraordinaire);
+//     Expect(cardUnderTest.hasShift).toBe(true);
 //   });
 //
-//   it("SALVAGE For each item card in your discard, you pay 1 {I} less to play this character using her Shift ability.", async () => {
-//     const discard = [baymaxsChargingStation, amberCoil, rubyCoil];
-//     const testEngine = new TestEngine({
-//       discard: discard,
-//       hand: [belleMechanicExtraordinaire],
+//   It("SALVAGE For each item card in your discard, you pay 1 {I} less to play this character using her Shift ability.", async () => {
+//     Const discard = [baymaxsChargingStation, amberCoil, rubyCoil];
+//     Const testEngine = new TestEngine({
+//       Discard: discard,
+//       Hand: [belleMechanicExtraordinaire],
 //     });
 //
-//     expect(
-//       testEngine.getCardModel(belleMechanicExtraordinaire).shiftInkCost,
+//     Expect(
+//       TestEngine.getCardModel(belleMechanicExtraordinaire).shiftInkCost,
 //     ).toBe(7 - discard.length);
 //   });
 //
-//   describe("REPURPOSE Whenever this character quests, you may put up to 3 item cards from your discard on the bottom of your deck to gain 1 lore for each item card moved this way.", () => {
-//     it("Moving 3", async () => {
-//       const discard = [baymaxsChargingStation, amberCoil, rubyCoil];
+//   Describe("REPURPOSE Whenever this character quests, you may put up to 3 item cards from your discard on the bottom of your deck to gain 1 lore for each item card moved this way.", () => {
+//     It("Moving 3", async () => {
+//       Const discard = [baymaxsChargingStation, amberCoil, rubyCoil];
 //
-//       const testEngine = new TestEngine({
-//         discard,
-//         play: [belleMechanicExtraordinaire],
+//       Const testEngine = new TestEngine({
+//         Discard,
+//         Play: [belleMechanicExtraordinaire],
 //       });
 //
-//       await testEngine.questCard(belleMechanicExtraordinaire, {
-//         targets: discard,
+//       Await testEngine.questCard(belleMechanicExtraordinaire, {
+//         Targets: discard,
 //       });
 //
-//       expect(testEngine.getLoreForPlayer()).toBe(
-//         discard.length + belleMechanicExtraordinaire.lore,
+//       Expect(testEngine.getLoreForPlayer()).toBe(
+//         Discard.length + belleMechanicExtraordinaire.lore,
 //       );
 //
-//       for (const card of discard) {
-//         expect(testEngine.getCardModel(card).zone).toBe("deck");
+//       For (const card of discard) {
+//         Expect(testEngine.getCardModel(card).zone).toBe("deck");
 //       }
 //     });
 //
-//     it("Moving 1", async () => {
-//       const discard = [baymaxsChargingStation];
+//     It("Moving 1", async () => {
+//       Const discard = [baymaxsChargingStation];
 //
-//       const testEngine = new TestEngine({
-//         discard,
-//         play: [belleMechanicExtraordinaire],
+//       Const testEngine = new TestEngine({
+//         Discard,
+//         Play: [belleMechanicExtraordinaire],
 //       });
 //
-//       await testEngine.questCard(belleMechanicExtraordinaire, {
-//         targets: discard,
+//       Await testEngine.questCard(belleMechanicExtraordinaire, {
+//         Targets: discard,
 //       });
 //
-//       expect(testEngine.getLoreForPlayer()).toBe(
-//         discard.length + belleMechanicExtraordinaire.lore,
+//       Expect(testEngine.getLoreForPlayer()).toBe(
+//         Discard.length + belleMechanicExtraordinaire.lore,
 //       );
 //
-//       for (const card of discard) {
-//         expect(testEngine.getCardModel(card).zone).toBe("deck");
+//       For (const card of discard) {
+//         Expect(testEngine.getCardModel(card).zone).toBe("deck");
 //       }
 //     });
 //   });

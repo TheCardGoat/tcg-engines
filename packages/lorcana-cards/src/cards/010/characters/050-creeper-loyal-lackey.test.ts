@@ -3,93 +3,93 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { creeperLoyalLackey } from "@lorcanito/lorcana-engine/cards/010/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { creeperLoyalLackey } from "@lorcanito/lorcana-engine/cards/010/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Creeper - Loyal Lackey", () => {
-//   it("should be a vanilla character with correct stats and no special abilities", () => {
-//     const testEngine = new TestEngine({
-//       play: [creeperLoyalLackey],
+// Describe("Creeper - Loyal Lackey", () => {
+//   It("should be a vanilla character with correct stats and no special abilities", () => {
+//     Const testEngine = new TestEngine({
+//       Play: [creeperLoyalLackey],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(creeperLoyalLackey);
+//     Const cardUnderTest = testEngine.getCardModel(creeperLoyalLackey);
 //
 //     // Verify card is in play
-//     expect(cardUnderTest.zone).toBe("play");
+//     Expect(cardUnderTest.zone).toBe("play");
 //
 //     // Verify base stats
-//     expect(cardUnderTest.lorcanitoCard.cost).toBe(6);
-//     expect(cardUnderTest.lorcanitoCard.strength).toBe(5);
-//     expect(cardUnderTest.lorcanitoCard.willpower).toBe(4);
-//     expect(cardUnderTest.lorcanitoCard.lore).toBe(4);
+//     Expect(cardUnderTest.lorcanitoCard.cost).toBe(6);
+//     Expect(cardUnderTest.lorcanitoCard.strength).toBe(5);
+//     Expect(cardUnderTest.lorcanitoCard.willpower).toBe(4);
+//     Expect(cardUnderTest.lorcanitoCard.lore).toBe(4);
 //
 //     // Verify characteristics
-//     expect(cardUnderTest.lorcanitoCard.characteristics).toContain("storyborn");
-//     expect(cardUnderTest.lorcanitoCard.characteristics).toContain("ally");
+//     Expect(cardUnderTest.lorcanitoCard.characteristics).toContain("storyborn");
+//     Expect(cardUnderTest.lorcanitoCard.characteristics).toContain("ally");
 //
 //     // Verify color and inkwell
-//     expect(cardUnderTest.lorcanitoCard.colors).toContain("amethyst");
-//     expect(cardUnderTest.lorcanitoCard.inkwell).toBe(true);
+//     Expect(cardUnderTest.lorcanitoCard.colors).toContain("amethyst");
+//     Expect(cardUnderTest.lorcanitoCard.inkwell).toBe(true);
 //
 //     // Verify no special abilities
-//     expect(cardUnderTest.lorcanitoCard.abilities).toEqual([]);
+//     Expect(cardUnderTest.lorcanitoCard.abilities).toEqual([]);
 //   });
 //
-//   it("should be able to quest for lore", async () => {
-//     const testEngine = new TestEngine({
-//       play: [creeperLoyalLackey],
+//   It("should be able to quest for lore", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [creeperLoyalLackey],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(creeperLoyalLackey);
+//     Const cardUnderTest = testEngine.getCardModel(creeperLoyalLackey);
 //
-//     const initialLore = testEngine.store.tableStore.getTable("player_one").lore;
+//     Const initialLore = testEngine.store.tableStore.getTable("player_one").lore;
 //
-//     cardUnderTest.quest();
+//     CardUnderTest.quest();
 //
-//     expect(testEngine.store.tableStore.getTable("player_one").lore).toBe(
-//       initialLore + 4,
+//     Expect(testEngine.store.tableStore.getTable("player_one").lore).toBe(
+//       InitialLore + 4,
 //     );
-//     expect(cardUnderTest.meta.exerted).toBe(true);
+//     Expect(cardUnderTest.meta.exerted).toBe(true);
 //   });
 //
-//   it("should be playable from hand with correct ink cost", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: creeperLoyalLackey.cost,
-//       hand: [creeperLoyalLackey],
+//   It("should be playable from hand with correct ink cost", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: creeperLoyalLackey.cost,
+//       Hand: [creeperLoyalLackey],
 //     });
 //
-//     const cardModel = testEngine.getCardModel(creeperLoyalLackey);
+//     Const cardModel = testEngine.getCardModel(creeperLoyalLackey);
 //
-//     expect(cardModel.zone).toBe("hand");
+//     Expect(cardModel.zone).toBe("hand");
 //
-//     await testEngine.playCard(creeperLoyalLackey);
+//     Await testEngine.playCard(creeperLoyalLackey);
 //
-//     expect(cardModel.zone).toBe("play");
-//     expect(
-//       testEngine.store.tableStore.getTable("player_one").inkAvailable(),
+//     Expect(cardModel.zone).toBe("play");
+//     Expect(
+//       TestEngine.store.tableStore.getTable("player_one").inkAvailable(),
 //     ).toBe(0);
 //   });
 //
-//   it("should be able to be used as ink", async () => {
-//     const testEngine = new TestEngine({
-//       hand: [creeperLoyalLackey],
+//   It("should be able to be used as ink", async () => {
+//     Const testEngine = new TestEngine({
+//       Hand: [creeperLoyalLackey],
 //     });
 //
-//     const cardModel = testEngine.getCardModel(creeperLoyalLackey);
+//     Const cardModel = testEngine.getCardModel(creeperLoyalLackey);
 //
-//     expect(cardModel.zone).toBe("hand");
-//     expect(cardModel.lorcanitoCard.inkwell).toBe(true);
+//     Expect(cardModel.zone).toBe("hand");
+//     Expect(cardModel.lorcanitoCard.inkwell).toBe(true);
 //
-//     const initialInkwellSize =
-//       testEngine.store.tableStore.getTable("player_one").zones.inkwell.cards
+//     Const initialInkwellSize =
+//       TestEngine.store.tableStore.getTable("player_one").zones.inkwell.cards
 //         .length;
 //
-//     cardModel.addToInkwell();
+//     CardModel.addToInkwell();
 //
-//     expect(cardModel.zone).toBe("inkwell");
-//     expect(
-//       testEngine.store.tableStore.getTable("player_one").zones.inkwell.cards
+//     Expect(cardModel.zone).toBe("inkwell");
+//     Expect(
+//       TestEngine.store.tableStore.getTable("player_one").zones.inkwell.cards
 //         .length,
 //     ).toBe(initialInkwellSize + 1);
 //   });

@@ -3,7 +3,7 @@
   "exclude": ["node_modules", "src/legacy-cards"],
   "compilerOptions": {
     "types": ["bun-types"],
-    "target": "ES2022",
+    "target": "ES2023",
     "module": "ESNext",
     "moduleResolution": "bundler",
     "esModuleInterop": true,

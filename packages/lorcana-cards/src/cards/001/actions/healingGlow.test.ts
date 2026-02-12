@@ -5,9 +5,9 @@ import { healingGlowundefined } from "./healingGlow";
 describe("Healing Glow - undefined", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [HealingGlow] });
-  //   expect(testEngine.getCardModel(HealingGlow).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [HealingGlow] });
+  //   Expect(testEngine.getCardModel(HealingGlow).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });

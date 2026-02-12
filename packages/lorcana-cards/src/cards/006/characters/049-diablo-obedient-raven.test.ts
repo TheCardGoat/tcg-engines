@@ -3,64 +3,64 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { fireTheCannons } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
-// import { brawl } from "@lorcanito/lorcana-engine/cards/004/actions/actions";
-// import { diabloDevotedHerald } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { diabloObedientRaven } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { fireTheCannons } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
+// Import { brawl } from "@lorcanito/lorcana-engine/cards/004/actions/actions";
+// Import { diabloDevotedHerald } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { diabloObedientRaven } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Diablo - Obedient Raven", () => {
-//   describe("FLY, MY PET! When this character is banished, you may draw a card.", () => {
-//     it("should draw a card when banished", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: fireTheCannons.cost,
-//         play: [diabloObedientRaven],
-//         hand: [fireTheCannons],
-//         deck: 2,
+// Describe("Diablo - Obedient Raven", () => {
+//   Describe("FLY, MY PET! When this character is banished, you may draw a card.", () => {
+//     It("should draw a card when banished", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: fireTheCannons.cost,
+//         Play: [diabloObedientRaven],
+//         Hand: [fireTheCannons],
+//         Deck: 2,
 //       });
 //
-//       await testEngine.playCard(
-//         fireTheCannons,
+//       Await testEngine.playCard(
+//         FireTheCannons,
 //         {
-//           targets: [diabloObedientRaven],
+//           Targets: [diabloObedientRaven],
 //         },
-//         true,
+//         True,
 //       );
 //
-//       await testEngine.resolveOptionalAbility();
+//       Await testEngine.resolveOptionalAbility();
 //
-//       expect(testEngine.getZonesCardCount()).toEqual(
-//         expect.objectContaining({
-//           hand: 1,
-//           deck: 1,
+//       Expect(testEngine.getZonesCardCount()).toEqual(
+//         Expect.objectContaining({
+//           Hand: 1,
+//           Deck: 1,
 //         }),
 //       );
 //     });
 //
-//     it("should not draw a card when banished after shifting", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: fireTheCannons.cost,
-//         play: [diabloObedientRaven],
-//         hand: [diabloDevotedHerald, brawl, fireTheCannons],
-//         deck: 2,
+//     It("should not draw a card when banished after shifting", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: fireTheCannons.cost,
+//         Play: [diabloObedientRaven],
+//         Hand: [diabloDevotedHerald, brawl, fireTheCannons],
+//         Deck: 2,
 //       });
 //
-//       await testEngine.shiftCard({
-//         shifted: diabloObedientRaven,
-//         shifter: diabloDevotedHerald,
-//         costs: [brawl],
+//       Await testEngine.shiftCard({
+//         Shifted: diabloObedientRaven,
+//         Shifter: diabloDevotedHerald,
+//         Costs: [brawl],
 //       });
 //
-//       await testEngine.playCard(fireTheCannons, {
-//         targets: [diabloDevotedHerald],
+//       Await testEngine.playCard(fireTheCannons, {
+//         Targets: [diabloDevotedHerald],
 //       });
 //
-//       expect(testEngine.stackLayers).toHaveLength(0);
-//       expect(testEngine.getZonesCardCount()).toEqual(
-//         expect.objectContaining({
-//           hand: 0,
-//           deck: 2,
+//       Expect(testEngine.stackLayers).toHaveLength(0);
+//       Expect(testEngine.getZonesCardCount()).toEqual(
+//         Expect.objectContaining({
+//           Hand: 0,
+//           Deck: 2,
 //         }),
 //       );
 //     });

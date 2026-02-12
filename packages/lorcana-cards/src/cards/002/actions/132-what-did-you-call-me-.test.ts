@@ -3,43 +3,43 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { whatDidYouCallMe } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
-// import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { whatDidYouCallMe } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
+// Import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("What did you call me?", () => {
-//   it("[NON DAMAGED] Chosen damaged character gets +3 {S} this turn.", () => {
-//     const testStore = new TestStore({
-//       inkwell: whatDidYouCallMe.cost,
-//       hand: [whatDidYouCallMe],
-//       play: [goofyKnightForADay],
+// Describe("What did you call me?", () => {
+//   It("[NON DAMAGED] Chosen damaged character gets +3 {S} this turn.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: whatDidYouCallMe.cost,
+//       Hand: [whatDidYouCallMe],
+//       Play: [goofyKnightForADay],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", whatDidYouCallMe.id);
-//     const target = testStore.getByZoneAndId("play", goofyKnightForADay.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", whatDidYouCallMe.id);
+//     Const target = testStore.getByZoneAndId("play", goofyKnightForADay.id);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveTopOfStack({ targets: [target] });
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.strength).toBe(goofyKnightForADay.strength);
+//     Expect(target.strength).toBe(goofyKnightForADay.strength);
 //   });
 //
-//   it("Chosen damaged character gets +3 {S} this turn.", () => {
-//     const testStore = new TestStore({
-//       inkwell: whatDidYouCallMe.cost,
-//       hand: [whatDidYouCallMe],
-//       play: [goofyKnightForADay],
+//   It("Chosen damaged character gets +3 {S} this turn.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: whatDidYouCallMe.cost,
+//       Hand: [whatDidYouCallMe],
+//       Play: [goofyKnightForADay],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", whatDidYouCallMe.id);
-//     const target = testStore.getByZoneAndId("play", goofyKnightForADay.id);
-//     target.updateCardDamage(1);
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", whatDidYouCallMe.id);
+//     Const target = testStore.getByZoneAndId("play", goofyKnightForADay.id);
+//     Target.updateCardDamage(1);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveTopOfStack({ targets: [target] });
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.strength).toBe(goofyKnightForADay.strength + 3);
+//     Expect(target.strength).toBe(goofyKnightForADay.strength + 3);
 //   });
 // });
 //

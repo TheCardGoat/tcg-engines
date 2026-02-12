@@ -3,43 +3,43 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { letTheStormRageOn } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
-// import { beastTragicHero } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { cheshireCatPerplexingFeline } from "@lorcanito/lorcana-engine/cards/007/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { letTheStormRageOn } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
+// Import { beastTragicHero } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { cheshireCatPerplexingFeline } from "@lorcanito/lorcana-engine/cards/007/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("MAD GRIN When you play this character, you may deal 2 damage to chosen damaged character.", () => {
-//   it.skip("should deal 2 damage to chosend damaged character, when played", async () => {
-//     const testEngine = new TestEngine(
+// Describe("MAD GRIN When you play this character, you may deal 2 damage to chosen damaged character.", () => {
+//   It.skip("should deal 2 damage to chosend damaged character, when played", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: 10,
-//         hand: [cheshireCatPerplexingFeline, letTheStormRageOn],
+//         Inkwell: 10,
+//         Hand: [cheshireCatPerplexingFeline, letTheStormRageOn],
 //       },
 //       {
-//         play: [beastTragicHero],
+//         Play: [beastTragicHero],
 //       },
 //     );
 //
-//     await testEngine.playCard(cheshireCatPerplexingFeline);
-//     const cardTarget = testEngine.getCardModel(beastTragicHero);
-//     expect(cardTarget.damage).toEqual(0);
-//     await testEngine.playCard(
-//       letTheStormRageOn,
+//     Await testEngine.playCard(cheshireCatPerplexingFeline);
+//     Const cardTarget = testEngine.getCardModel(beastTragicHero);
+//     Expect(cardTarget.damage).toEqual(0);
+//     Await testEngine.playCard(
+//       LetTheStormRageOn,
 //       {
-//         targets: [beastTragicHero],
+//         Targets: [beastTragicHero],
 //       },
-//       true,
+//       True,
 //     );
-//     expect(cardTarget.damage).toEqual(2);
-//     await testEngine.playCard(
-//       beastTragicHero,
+//     Expect(cardTarget.damage).toEqual(2);
+//     Await testEngine.playCard(
+//       BeastTragicHero,
 //       {
-//         targets: [beastTragicHero],
+//         Targets: [beastTragicHero],
 //       },
-//       true,
+//       True,
 //     );
-//     expect(cardTarget.damage).toEqual(2);
+//     Expect(cardTarget.damage).toEqual(2);
 //   });
 // });
 //

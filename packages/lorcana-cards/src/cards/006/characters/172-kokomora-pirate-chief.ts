@@ -1,62 +1,62 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
 // // TODO: Once the set is released, we organize the cards by set and type
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import {
-//   chosenCardFromYourHand,
-//   chosenCharacterOrLocation,
-//   thisCharacter,
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import {
+//   ChosenCardFromYourHand,
+//   ChosenCharacterOrLocation,
+//   ThisCharacter,
 // } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { wheneverQuests } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-// import {
-//   dealDamageEffect,
-//   drawACard,
+// Import { wheneverQuests } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// Import {
+//   DealDamageEffect,
+//   DrawACard,
 // } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const kokomoraPirateChief: LorcanitoCharacterCard = {
-//   id: "lcy",
-//   name: "Kakamora",
-//   title: "Pirate Chief",
-//   characteristics: ["storyborn", "pirate", "captain"],
-//   text: "COCONUT LEADER Whenever this character quests, you may draw a card. Then, choose and discard a card to deal 1 damage to chosen character or location. If a Pirate character card was discarded, deal 3 damage to that character or location instead.",
-//   type: "character",
-//   abilities: [
-//     wheneverQuests({
-//       name: "Coconut Leader",
-//       text: "Whenever this character quests, you may draw a card. Then, choose and discard a card to deal 1 damage to chosen character or location. If a Pirate character card was discarded, deal 3 damage to that character or location instead.",
-//       optional: true,
-//       resolveEffectsIndividually: true,
-//       effects: [
-//         drawACard,
+// Export const kokomoraPirateChief: LorcanitoCharacterCard = {
+//   Id: "lcy",
+//   Name: "Kakamora",
+//   Title: "Pirate Chief",
+//   Characteristics: ["storyborn", "pirate", "captain"],
+//   Text: "COCONUT LEADER Whenever this character quests, you may draw a card. Then, choose and discard a card to deal 1 damage to chosen character or location. If a Pirate character card was discarded, deal 3 damage to that character or location instead.",
+//   Type: "character",
+//   Abilities: [
+//     WheneverQuests({
+//       Name: "Coconut Leader",
+//       Text: "Whenever this character quests, you may draw a card. Then, choose and discard a card to deal 1 damage to chosen character or location. If a Pirate character card was discarded, deal 3 damage to that character or location instead.",
+//       Optional: true,
+//       ResolveEffectsIndividually: true,
+//       Effects: [
+//         DrawACard,
 //         {
-//           type: "discard",
-//           amount: 1,
-//           target: chosenCardFromYourHand,
-//           afterEffect: [
+//           Type: "discard",
+//           Amount: 1,
+//           Target: chosenCardFromYourHand,
+//           AfterEffect: [
 //             {
-//               type: "create-layer-based-on-target",
-//               filters: [{ filter: "characteristics", value: ["pirate"] }],
+//               Type: "create-layer-based-on-target",
+//               Filters: [{ filter: "characteristics", value: ["pirate"] }],
 //               // TODO: get rid of target
-//               target: thisCharacter,
-//               effects: [dealDamageEffect(3, chosenCharacterOrLocation)],
-//               fallback: [dealDamageEffect(1, chosenCharacterOrLocation)],
+//               Target: thisCharacter,
+//               Effects: [dealDamageEffect(3, chosenCharacterOrLocation)],
+//               Fallback: [dealDamageEffect(1, chosenCharacterOrLocation)],
 //             },
 //           ],
 //         },
 //       ],
 //     }),
 //   ],
-//   inkwell: false,
-//   colors: ["steel"],
-//   cost: 7,
-//   strength: 4,
-//   willpower: 6,
-//   lore: 2,
-//   illustrator: "Juan Diego Leon",
-//   number: 172,
-//   set: "006",
-//   externalIds: {
-//     tcgPlayer: 593018,
+//   Inkwell: false,
+//   Colors: ["steel"],
+//   Cost: 7,
+//   Strength: 4,
+//   Willpower: 6,
+//   Lore: 2,
+//   Illustrator: "Juan Diego Leon",
+//   Number: 172,
+//   Set: "006",
+//   ExternalIds: {
+//     TcgPlayer: 593018,
 //   },
-//   rarity: "rare",
+//   Rarity: "rare",
 // };
 //

@@ -1,71 +1,71 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
 export const cutToTheChase: ActionCard = {
-  id: "5a0",
-  cardType: "action",
-  name: "Cut to the Chase",
-  inkType: ["ruby"],
-  set: "001",
-  text: "Chosen character gains Rush this turn. (They can challenge the turn they're played.)",
-  cost: 2,
-  cardNumber: 129,
-  inkable: true,
-  externalIds: {
-    ravensburger: "13057e6bb6112157b88c4ebbaec83cc1a20d9e5c",
-  },
   abilities: [
     {
-      id: "5a0-1",
-      text: "Chosen character gains Rush this turn.",
-      type: "static",
       effect: {
         type: "gain-keyword",
         keyword: "Rush",
         target: "CHOSEN_CHARACTER",
         duration: "this-turn",
       },
+      id: "5a0-1",
+      text: "Chosen character gains Rush this turn.",
+      type: "static",
     },
   ],
+  cardNumber: 129,
+  cardType: "action",
+  cost: 2,
+  externalIds: {
+    ravensburger: "13057e6bb6112157b88c4ebbaec83cc1a20d9e5c",
+  },
+  id: "5a0",
+  inkType: ["ruby"],
+  inkable: true,
+  name: "Cut to the Chase",
+  set: "001",
+  text: "Chosen character gains Rush this turn. (They can challenge the turn they're played.)",
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-// import type { AbilityEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+// Import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { AbilityEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
 //
-// export const cutToTheChase: LorcanitoActionCard = {
-//   id: "cei",
-//   name: "Cut to the Chase",
-//   characteristics: ["action"],
-//   text: "Chosen character gains **Rush** this turn. _(They can challenge the turn they're played.)_",
-//   type: "action",
-//   abilities: [
+// Export const cutToTheChase: LorcanitoActionCard = {
+//   Id: "cei",
+//   Name: "Cut to the Chase",
+//   Characteristics: ["action"],
+//   Text: "Chosen character gains **Rush** this turn. _(They can challenge the turn they're played.)_",
+//   Type: "action",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       name: "Cut to the Chase",
-//       text: "Chosen character gains **Rush** this turn. _(They can challenge the turn they're played.)_",
-//       effects: [
+//       Type: "resolution",
+//       Name: "Cut to the Chase",
+//       Text: "Chosen character gains **Rush** this turn. _(They can challenge the turn they're played.)_",
+//       Effects: [
 //         {
-//           type: "ability",
-//           ability: "rush",
-//           modifier: "add",
-//           duration: "turn",
-//           until: true,
-//           target: chosenCharacter,
+//           Type: "ability",
+//           Ability: "rush",
+//           Modifier: "add",
+//           Duration: "turn",
+//           Until: true,
+//           Target: chosenCharacter,
 //         } as AbilityEffect,
 //       ],
 //     },
 //   ],
-//   flavour: "Surprise!",
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 2,
-//   illustrator: "Ellie Horie",
-//   number: 129,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 508615,
+//   Flavour: "Surprise!",
+//   Inkwell: true,
+//   Colors: ["ruby"],
+//   Cost: 2,
+//   Illustrator: "Ellie Horie",
+//   Number: 129,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 508615,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

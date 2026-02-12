@@ -56,13 +56,13 @@ export const SHIFT_PATTERN =
  * Combined keyword patterns export
  */
 export const KEYWORD_PATTERNS = {
-  simpleKeyword: SIMPLE_KEYWORD_PATTERN,
+  boost: BOOST_PATTERN,
   challenger: CHALLENGER_PATTERN,
   resist: RESIST_PATTERN,
-  singer: SINGER_PATTERN,
-  singTogether: SING_TOGETHER_PATTERN,
-  boost: BOOST_PATTERN,
   shift: SHIFT_PATTERN,
+  simpleKeyword: SIMPLE_KEYWORD_PATTERN,
+  singTogether: SING_TOGETHER_PATTERN,
+  singer: SINGER_PATTERN,
 } as const;
 
 /**

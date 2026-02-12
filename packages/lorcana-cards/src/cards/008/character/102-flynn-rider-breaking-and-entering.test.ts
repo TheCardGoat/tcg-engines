@@ -3,99 +3,99 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   flynnRiderBreakingAndEntering,
-//   montereyJackDefiantProtector,
-//   wasabiAlwaysPrepared,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   FlynnRiderBreakingAndEntering,
+//   MontereyJackDefiantProtector,
+//   WasabiAlwaysPrepared,
 // } from "@lorcanito/lorcana-engine/cards/008";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Flynn Rider - Breaking and Entering", () => {
-//   describe("THIS IS A VERY BIG DAY Whenever this character is challenged, the challenging player may choose and discard a card. If they don’t, you gain 2 lore.", () => {
-//     it("Discarding a card", async () => {
-//       const testEngine = new TestEngine(
+// Describe("Flynn Rider - Breaking and Entering", () => {
+//   Describe("THIS IS A VERY BIG DAY Whenever this character is challenged, the challenging player may choose and discard a card. If they don’t, you gain 2 lore.", () => {
+//     It("Discarding a card", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           play: [wasabiAlwaysPrepared],
-//           hand: [montereyJackDefiantProtector],
+//           Play: [wasabiAlwaysPrepared],
+//           Hand: [montereyJackDefiantProtector],
 //         },
 //         {
-//           play: [flynnRiderBreakingAndEntering],
+//           Play: [flynnRiderBreakingAndEntering],
 //         },
 //       );
 //
-//       await testEngine.challenge({
-//         defender: flynnRiderBreakingAndEntering,
-//         attacker: wasabiAlwaysPrepared,
-//         exertDefender: true,
+//       Await testEngine.challenge({
+//         Defender: flynnRiderBreakingAndEntering,
+//         Attacker: wasabiAlwaysPrepared,
+//         ExertDefender: true,
 //       });
 //
-//       await testEngine.resolveTopOfStack(
+//       Await testEngine.resolveTopOfStack(
 //         {
-//           mode: "1",
+//           Mode: "1",
 //         },
-//         true,
+//         True,
 //       );
-//       await testEngine.resolveTopOfStack({
-//         targets: [montereyJackDefiantProtector],
+//       Await testEngine.resolveTopOfStack({
+//         Targets: [montereyJackDefiantProtector],
 //       });
 //
-//       expect(testEngine.getCardModel(montereyJackDefiantProtector).zone).toBe(
+//       Expect(testEngine.getCardModel(montereyJackDefiantProtector).zone).toBe(
 //         "discard",
 //       );
-//       expect(testEngine.getPlayerLore()).toBe(0);
-//       expect(testEngine.getPlayerLore("player_two")).toBe(0);
+//       Expect(testEngine.getPlayerLore()).toBe(0);
+//       Expect(testEngine.getPlayerLore("player_two")).toBe(0);
 //     });
 //
-//     it("gain lore", async () => {
-//       const testEngine = new TestEngine(
+//     It("gain lore", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           play: [wasabiAlwaysPrepared],
-//           hand: [montereyJackDefiantProtector],
+//           Play: [wasabiAlwaysPrepared],
+//           Hand: [montereyJackDefiantProtector],
 //         },
 //         {
-//           play: [flynnRiderBreakingAndEntering],
+//           Play: [flynnRiderBreakingAndEntering],
 //         },
 //       );
 //
-//       await testEngine.challenge({
-//         defender: flynnRiderBreakingAndEntering,
-//         attacker: wasabiAlwaysPrepared,
-//         exertDefender: true,
+//       Await testEngine.challenge({
+//         Defender: flynnRiderBreakingAndEntering,
+//         Attacker: wasabiAlwaysPrepared,
+//         ExertDefender: true,
 //       });
 //
-//       await testEngine.resolveTopOfStack({
-//         mode: "2",
+//       Await testEngine.resolveTopOfStack({
+//         Mode: "2",
 //       });
 //
-//       expect(testEngine.getCardModel(montereyJackDefiantProtector).zone).toBe(
+//       Expect(testEngine.getCardModel(montereyJackDefiantProtector).zone).toBe(
 //         "hand",
 //       );
-//       expect(testEngine.getPlayerLore("player_two")).toBe(2);
+//       Expect(testEngine.getPlayerLore("player_two")).toBe(2);
 //     });
 //   });
 // });
 //
-// describe("Regression Test", () => {
-//   it("Should not trigger when opponent has no cards", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Regression Test", () => {
+//   It("Should not trigger when opponent has no cards", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         play: [wasabiAlwaysPrepared],
-//         hand: [],
+//         Play: [wasabiAlwaysPrepared],
+//         Hand: [],
 //       },
 //       {
-//         play: [flynnRiderBreakingAndEntering],
+//         Play: [flynnRiderBreakingAndEntering],
 //       },
 //     );
 //
-//     await testEngine.challenge({
-//       defender: flynnRiderBreakingAndEntering,
-//       attacker: wasabiAlwaysPrepared,
-//       exertDefender: true,
+//     Await testEngine.challenge({
+//       Defender: flynnRiderBreakingAndEntering,
+//       Attacker: wasabiAlwaysPrepared,
+//       ExertDefender: true,
 //     });
 //
-//     expect(testEngine.stackLayers).toHaveLength(0);
-//     expect(testEngine.getPlayerLore("player_two")).toBe(0);
+//     Expect(testEngine.stackLayers).toHaveLength(0);
+//     Expect(testEngine.getPlayerLore("player_two")).toBe(0);
 //   });
 // });
 //

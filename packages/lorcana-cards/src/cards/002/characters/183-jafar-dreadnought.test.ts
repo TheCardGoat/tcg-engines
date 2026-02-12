@@ -3,38 +3,38 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { liloMakingAWish } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { jafarDreadnought } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { liloMakingAWish } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { jafarDreadnought } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Jafar- Dreadnought", () => {
-//   it("**NOW WHERE WERE WE?** During your turn, whenever this character banishes another character in a challenge, you may draw a card.", () => {
-//     const testStore = new TestStore(
+// Describe("Jafar- Dreadnought", () => {
+//   It("**NOW WHERE WERE WE?** During your turn, whenever this character banishes another character in a challenge, you may draw a card.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         play: [jafarDreadnought],
-//         deck: 2,
+//         Play: [jafarDreadnought],
+//         Deck: 2,
 //       },
 //       {
-//         play: [liloMakingAWish],
+//         Play: [liloMakingAWish],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId("play", jafarDreadnought.id);
-//     const target = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId("play", jafarDreadnought.id);
+//     Const target = testStore.getByZoneAndId(
 //       "play",
-//       liloMakingAWish.id,
+//       LiloMakingAWish.id,
 //       "player_two",
 //     );
-//     target.updateCardMeta({ exerted: true });
+//     Target.updateCardMeta({ exerted: true });
 //
-//     cardUnderTest.challenge(target);
-//     testStore.resolveOptionalAbility();
+//     CardUnderTest.challenge(target);
+//     TestStore.resolveOptionalAbility();
 //
-//     expect(testStore.getZonesCardCount()).toEqual(
-//       expect.objectContaining({
-//         hand: 1,
-//         deck: 1,
+//     Expect(testStore.getZonesCardCount()).toEqual(
+//       Expect.objectContaining({
+//         Hand: 1,
+//         Deck: 1,
 //       }),
 //     );
 //   });

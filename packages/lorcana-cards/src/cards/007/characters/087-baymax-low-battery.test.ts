@@ -3,21 +3,21 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { baymaxLowBattery } from "@lorcanito/lorcana-engine/cards/007/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { baymaxLowBattery } from "@lorcanito/lorcana-engine/cards/007/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("SHHHHH This character enters play exerted.", () => {
-//   it("should enter exerted", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: 10,
-//       play: [],
-//       hand: [baymaxLowBattery],
+// Describe("SHHHHH This character enters play exerted.", () => {
+//   It("should enter exerted", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: 10,
+//       Play: [],
+//       Hand: [baymaxLowBattery],
 //     });
 //
-//     await testEngine.playCard(baymaxLowBattery);
+//     Await testEngine.playCard(baymaxLowBattery);
 //
-//     expect(testEngine.getCardModel(baymaxLowBattery).meta.exerted).toBeTruthy();
+//     Expect(testEngine.getCardModel(baymaxLowBattery).meta.exerted).toBeTruthy();
 //   });
 // });
 //

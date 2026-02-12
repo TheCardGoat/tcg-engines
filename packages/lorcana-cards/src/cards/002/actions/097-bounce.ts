@@ -1,24 +1,8 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
 export const bounce: ActionCard = {
-  id: "1fq",
-  cardType: "action",
-  name: "Bounce",
-  inkType: ["emerald"],
-  franchise: "Winnie the Pooh",
-  set: "002",
-  text: "Return chosen character of yours to your hand to return another chosen character to their player's hand.",
-  cost: 2,
-  cardNumber: 97,
-  inkable: false,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "b85b9b0d27f8d3a0741d01cb289b25aab4f498e3",
-  },
   abilities: [
     {
-      id: "1fq-1",
-      type: "action",
       effect: {
         type: "return-to-hand",
         target: {
@@ -29,7 +13,23 @@ export const bounce: ActionCard = {
           cardTypes: ["character"],
         },
       },
+      id: "1fq-1",
       text: "Return chosen character of yours to your hand to return another chosen character to their player's hand.",
+      type: "action",
     },
   ],
+  cardNumber: 97,
+  cardType: "action",
+  cost: 2,
+  externalIds: {
+    ravensburger: "b85b9b0d27f8d3a0741d01cb289b25aab4f498e3",
+  },
+  franchise: "Winnie the Pooh",
+  id: "1fq",
+  inkType: ["emerald"],
+  inkable: false,
+  missingTests: true,
+  name: "Bounce",
+  set: "002",
+  text: "Return chosen character of yours to your hand to return another chosen character to their player's hand.",
 };

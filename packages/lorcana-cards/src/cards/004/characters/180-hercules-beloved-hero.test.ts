@@ -3,21 +3,21 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { herculesBelovedHero } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { herculesBelovedHero } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Hercules - Beloved Hero", () => {
-//   it.skip("**Bodyguard** _(This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)_**Resist +1** _(Damage dealt to this character is reduced by 1.)_", () => {
-//     const testStore = new TestStore({
-//       play: [herculesBelovedHero],
+// Describe("Hercules - Beloved Hero", () => {
+//   It.skip("**Bodyguard** _(This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)_**Resist +1** _(Damage dealt to this character is reduced by 1.)_", () => {
+//     Const testStore = new TestStore({
+//       Play: [herculesBelovedHero],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       herculesBelovedHero.id,
+//       HerculesBelovedHero.id,
 //     );
-//     expect(cardUnderTest.hasBodyguard).toBe(true);
+//     Expect(cardUnderTest.hasBodyguard).toBe(true);
 //   });
 // });
 //

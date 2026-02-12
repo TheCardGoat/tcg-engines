@@ -3,57 +3,57 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   perditaDeterminedMother,
-//   rollyChubbyPuppy,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   PerditaDeterminedMother,
+//   RollyChubbyPuppy,
 // } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Rolly - Chubby Puppy", () => {
-//   it("Support (Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [rollyChubbyPuppy],
+// Describe("Rolly - Chubby Puppy", () => {
+//   It("Support (Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [rollyChubbyPuppy],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(rollyChubbyPuppy);
-//     expect(cardUnderTest.hasSupport).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(rollyChubbyPuppy);
+//     Expect(cardUnderTest.hasSupport).toBe(true);
 //   });
 //
-//   it("ADORABLE ANTICS When you play this character, you may put a character card from your discard in your inkwell facedown and exerted.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: rollyChubbyPuppy.cost,
-//       hand: [rollyChubbyPuppy],
-//       discard: [perditaDeterminedMother],
+//   It("ADORABLE ANTICS When you play this character, you may put a character card from your discard in your inkwell facedown and exerted.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: rollyChubbyPuppy.cost,
+//       Hand: [rollyChubbyPuppy],
+//       Discard: [perditaDeterminedMother],
 //     });
 //
-//     await testEngine.playCard(rollyChubbyPuppy);
-//     await testEngine.acceptOptionalLayer();
-//     await testEngine.resolveTopOfStack({ targets: [perditaDeterminedMother] });
-//     expect(testEngine.getCardModel(perditaDeterminedMother).zone).toBe(
+//     Await testEngine.playCard(rollyChubbyPuppy);
+//     Await testEngine.acceptOptionalLayer();
+//     Await testEngine.resolveTopOfStack({ targets: [perditaDeterminedMother] });
+//     Expect(testEngine.getCardModel(perditaDeterminedMother).zone).toBe(
 //       "inkwell",
 //     );
-//     expect(testEngine.getCardModel(perditaDeterminedMother).meta.exerted).toBe(
-//       true,
+//     Expect(testEngine.getCardModel(perditaDeterminedMother).meta.exerted).toBe(
+//       True,
 //     );
 //   });
 //
-//   it("ADORABLE ANTICS When you play this character, you may put a character card from your discard in your inkwell facedown and exerted.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: rollyChubbyPuppy.cost,
-//       hand: [rollyChubbyPuppy],
-//       discard: [perditaDeterminedMother],
+//   It("ADORABLE ANTICS When you play this character, you may put a character card from your discard in your inkwell facedown and exerted.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: rollyChubbyPuppy.cost,
+//       Hand: [rollyChubbyPuppy],
+//       Discard: [perditaDeterminedMother],
 //     });
 //
-//     await testEngine.playCard(rollyChubbyPuppy);
-//     await testEngine.acceptOptionalLayer();
-//     await testEngine.resolveTopOfStack({ targets: [perditaDeterminedMother] });
+//     Await testEngine.playCard(rollyChubbyPuppy);
+//     Await testEngine.acceptOptionalLayer();
+//     Await testEngine.resolveTopOfStack({ targets: [perditaDeterminedMother] });
 //
-//     expect(testEngine.getCardModel(perditaDeterminedMother).zone).toBe(
+//     Expect(testEngine.getCardModel(perditaDeterminedMother).zone).toBe(
 //       "inkwell",
 //     );
-//     expect(testEngine.getCardModel(perditaDeterminedMother).meta.exerted).toBe(
-//       true,
+//     Expect(testEngine.getCardModel(perditaDeterminedMother).meta.exerted).toBe(
+//       True,
 //     );
 //   });
 // });

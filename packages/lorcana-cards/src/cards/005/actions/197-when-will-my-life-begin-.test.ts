@@ -3,38 +3,38 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { liloMakingAWish } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { pinocchioOnTheRun } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { whenWillMyLifeBegin } from "@lorcanito/lorcana-engine/cards/005/actions/actions";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { liloMakingAWish } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { pinocchioOnTheRun } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { whenWillMyLifeBegin } from "@lorcanito/lorcana-engine/cards/005/actions/actions";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("When Will My Life Begin?", () => {
-//   it("Chosen character can’t challenge during their next turn. Draw a card.", () => {
-//     const testStore = new TestStore(
+// Describe("When Will My Life Begin?", () => {
+//   It("Chosen character can’t challenge during their next turn. Draw a card.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: whenWillMyLifeBegin.cost,
-//         hand: [whenWillMyLifeBegin],
-//         play: [pinocchioOnTheRun],
-//         deck: 1,
+//         Inkwell: whenWillMyLifeBegin.cost,
+//         Hand: [whenWillMyLifeBegin],
+//         Play: [pinocchioOnTheRun],
+//         Deck: 1,
 //       },
 //       {
-//         play: [liloMakingAWish],
+//         Play: [liloMakingAWish],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getCard(whenWillMyLifeBegin);
-//     const target = testStore.getCard(liloMakingAWish);
-//     const defender = testStore.getCard(pinocchioOnTheRun);
-//     defender.updateCardMeta({ exerted: true });
+//     Const cardUnderTest = testStore.getCard(whenWillMyLifeBegin);
+//     Const target = testStore.getCard(liloMakingAWish);
+//     Const defender = testStore.getCard(pinocchioOnTheRun);
+//     Defender.updateCardMeta({ exerted: true });
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveTopOfStack({ targets: [target] });
-//     expect(testStore.getZonesCardCount().hand).toEqual(1);
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveTopOfStack({ targets: [target] });
+//     Expect(testStore.getZonesCardCount().hand).toEqual(1);
 //
-//     testStore.passTurn();
+//     TestStore.passTurn();
 //
-//     expect(target.canChallenge(defender)).toEqual(false);
+//     Expect(target.canChallenge(defender)).toEqual(false);
 //   });
 // });
 //

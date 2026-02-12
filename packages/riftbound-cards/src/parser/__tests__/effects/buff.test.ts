@@ -19,10 +19,10 @@ describe("Effect: Buff", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "spell",
           effect: expect.objectContaining({
             type: "buff",
           }),
+          type: "spell",
         }),
       );
     });
@@ -45,13 +45,13 @@ describe("Effect: Buff", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "spell",
           effect: expect.objectContaining({
-            type: "spend-buff",
             then: expect.objectContaining({
               type: "draw",
             }),
+            type: "spend-buff",
           }),
+          type: "spell",
         }),
       );
     });

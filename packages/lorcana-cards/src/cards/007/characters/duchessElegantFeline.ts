@@ -1,24 +1,24 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const duchessElegantFeline: LorcanitoCharacterCard = {
-//   id: "h4t",
-//   name: "Duchess",
-//   title: "Elegant Feline",
-//   characteristics: ["storyborn", "hero"],
-//   type: "character",
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 2,
-//   strength: 3,
-//   willpower: 2,
-//   illustrator: "Therese Vildefall",
-//   number: 112,
-//   set: "007",
-//   externalIds: {
-//     tcgPlayer: 618153,
+// Export const duchessElegantFeline: LorcanitoCharacterCard = {
+//   Id: "h4t",
+//   Name: "Duchess",
+//   Title: "Elegant Feline",
+//   Characteristics: ["storyborn", "hero"],
+//   Type: "character",
+//   Inkwell: true,
+//   Colors: ["emerald"],
+//   Cost: 2,
+//   Strength: 3,
+//   Willpower: 2,
+//   Illustrator: "Therese Vildefall",
+//   Number: 112,
+//   Set: "007",
+//   ExternalIds: {
+//     TcgPlayer: 618153,
 //   },
-//   rarity: "uncommon",
-//   lore: 1,
+//   Rarity: "uncommon",
+//   Lore: 1,
 // };
 //

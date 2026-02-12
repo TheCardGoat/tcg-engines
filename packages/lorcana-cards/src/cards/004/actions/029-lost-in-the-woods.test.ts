@@ -3,33 +3,33 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   mickeyBraveLittleTailor,
-//   simbaProtectiveCub,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   MickeyBraveLittleTailor,
+//   SimbaProtectiveCub,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { lostInTheWoods } from "@lorcanito/lorcana-engine/cards/004/actions/actions";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { lostInTheWoods } from "@lorcanito/lorcana-engine/cards/004/actions/actions";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Lost in the Woods", () => {
-//   it("_(A character with cost 4 or more can {E} to sing this song for free.)_All opposing characters get -2 {S} until the start of your next turn.", () => {
-//     const testStore = new TestStore(
+// Describe("Lost in the Woods", () => {
+//   It("_(A character with cost 4 or more can {E} to sing this song for free.)_All opposing characters get -2 {S} until the start of your next turn.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: lostInTheWoods.cost,
-//         hand: [lostInTheWoods],
+//         Inkwell: lostInTheWoods.cost,
+//         Hand: [lostInTheWoods],
 //       },
 //       {
-//         play: [mickeyBraveLittleTailor, simbaProtectiveCub],
+//         Play: [mickeyBraveLittleTailor, simbaProtectiveCub],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", lostInTheWoods.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", lostInTheWoods.id);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveTopOfStack({});
 //
 //     // Test that the effect is applied (continuous effect should be active)
-//     expect(testStore.getZonesCardCount().discard).toBe(1); // Lost in the Woods goes to discard
+//     Expect(testStore.getZonesCardCount().discard).toBe(1); // Lost in the Woods goes to discard
 //   });
 // });
 //

@@ -28,130 +28,129 @@ import type {
 /**
  * Mapping from character enum shortcuts to full DSL
  */
-const CHARACTER_ENUM_EXPANSIONS: Record<CharacterTargetEnum, CharacterTarget> =
-  {
-    // Self-referential
-    SELF: {
-      selector: "self",
-      cardType: "character",
-      context: { self: true },
-    },
-    THIS_CHARACTER: {
-      selector: "self",
-      cardType: "character",
-      context: { self: true },
-    },
+const CHARACTER_ENUM_EXPANSIONS: Record<CharacterTargetEnum, CharacterTarget> = {
+  // Self-referential
+  SELF: {
+    cardType: "character",
+    context: { self: true },
+    selector: "self",
+  },
+  THIS_CHARACTER: {
+    cardType: "character",
+    context: { self: true },
+    selector: "self",
+  },
 
-    // Chosen (single target, player choice)
-    CHOSEN_CHARACTER: {
-      selector: "chosen",
-      count: 1,
-      owner: "any",
-      cardType: "character",
-      zones: ["play"],
-    },
-    CHOSEN_OPPOSING_CHARACTER: {
-      selector: "chosen",
-      count: 1,
-      owner: "opponent",
-      cardType: "character",
-      zones: ["play"],
-    },
-    CHOSEN_CHARACTER_OF_YOURS: {
-      selector: "chosen",
-      count: 1,
-      owner: "you",
-      cardType: "character",
-      zones: ["play"],
-    },
-    ANOTHER_CHOSEN_CHARACTER: {
-      selector: "chosen",
-      count: 1,
-      owner: "any",
-      cardType: "character",
-      zones: ["play"],
-      excludeSelf: true,
-    },
-    ANOTHER_CHOSEN_CHARACTER_OF_YOURS: {
-      selector: "chosen",
-      count: 1,
-      owner: "you",
-      cardType: "character",
-      zones: ["play"],
-      excludeSelf: true,
-    },
+  // Chosen (single target, player choice)
+  CHOSEN_CHARACTER: {
+    cardType: "character",
+    count: 1,
+    owner: "any",
+    selector: "chosen",
+    zones: ["play"],
+  },
+  CHOSEN_OPPOSING_CHARACTER: {
+    cardType: "character",
+    count: 1,
+    owner: "opponent",
+    selector: "chosen",
+    zones: ["play"],
+  },
+  CHOSEN_CHARACTER_OF_YOURS: {
+    cardType: "character",
+    count: 1,
+    owner: "you",
+    selector: "chosen",
+    zones: ["play"],
+  },
+  ANOTHER_CHOSEN_CHARACTER: {
+    cardType: "character",
+    count: 1,
+    excludeSelf: true,
+    owner: "any",
+    selector: "chosen",
+    zones: ["play"],
+  },
+  ANOTHER_CHOSEN_CHARACTER_OF_YOURS: {
+    cardType: "character",
+    count: 1,
+    excludeSelf: true,
+    owner: "you",
+    selector: "chosen",
+    zones: ["play"],
+  },
 
-    // All/Each (multiple targets, automatic)
-    ALL_CHARACTERS: {
-      selector: "all",
-      count: "all",
-      owner: "any",
-      cardType: "character",
-      zones: ["play"],
-    },
-    ALL_OPPOSING_CHARACTERS: {
-      selector: "all",
-      count: "all",
-      owner: "opponent",
-      cardType: "character",
-      zones: ["play"],
-    },
-    YOUR_CHARACTERS: {
-      selector: "all",
-      count: "all",
-      owner: "you",
-      cardType: "character",
-      zones: ["play"],
-    },
-    YOUR_OTHER_CHARACTERS: {
-      selector: "all",
-      count: "all",
-      owner: "you",
-      cardType: "character",
-      zones: ["play"],
-      excludeSelf: true,
-    },
-    EACH_CHARACTER: {
-      selector: "each",
-      count: "all",
-      owner: "any",
-      cardType: "character",
-      zones: ["play"],
-    },
-    EACH_OPPOSING_CHARACTER: {
-      selector: "each",
-      count: "all",
-      owner: "opponent",
-      cardType: "character",
-      zones: ["play"],
-    },
+  // All/Each (multiple targets, automatic)
+  ALL_CHARACTERS: {
+    cardType: "character",
+    count: "all",
+    owner: "any",
+    selector: "all",
+    zones: ["play"],
+  },
+  ALL_OPPOSING_CHARACTERS: {
+    cardType: "character",
+    count: "all",
+    owner: "opponent",
+    selector: "all",
+    zones: ["play"],
+  },
+  YOUR_CHARACTERS: {
+    cardType: "character",
+    count: "all",
+    owner: "you",
+    selector: "all",
+    zones: ["play"],
+  },
+  YOUR_OTHER_CHARACTERS: {
+    cardType: "character",
+    count: "all",
+    excludeSelf: true,
+    owner: "you",
+    selector: "all",
+    zones: ["play"],
+  },
+  EACH_CHARACTER: {
+    cardType: "character",
+    count: "all",
+    owner: "any",
+    selector: "each",
+    zones: ["play"],
+  },
+  EACH_OPPOSING_CHARACTER: {
+    cardType: "character",
+    count: "all",
+    owner: "opponent",
+    selector: "each",
+    zones: ["play"],
+  },
 
-    // Damaged variants
-    CHOSEN_DAMAGED_CHARACTER: {
-      selector: "chosen",
-      count: 1,
-      owner: "any",
-      cardType: "character",
-      zones: ["play"],
-      filters: [{ type: "damaged" }],
-    },
-    CHOSEN_OPPOSING_DAMAGED_CHARACTER: {
-      selector: "chosen",
-      count: 1,
-      owner: "opponent",
-      cardType: "character",
-      zones: ["play"],
-      filters: [{ type: "damaged" }],
-    },
-    ALL_OPPOSING_DAMAGED_CHARACTERS: {
-      selector: "all",
-      count: "all",
-      owner: "opponent",
-      cardType: "character",
-      zones: ["play"],
-      filters: [{ type: "damaged" }],
-    },
-  };
+  // Damaged variants
+  CHOSEN_DAMAGED_CHARACTER: {
+    cardType: "character",
+    count: 1,
+    filters: [{ type: "damaged" }],
+    owner: "any",
+    selector: "chosen",
+    zones: ["play"],
+  },
+  CHOSEN_OPPOSING_DAMAGED_CHARACTER: {
+    cardType: "character",
+    count: 1,
+    filters: [{ type: "damaged" }],
+    owner: "opponent",
+    selector: "chosen",
+    zones: ["play"],
+  },
+  ALL_OPPOSING_DAMAGED_CHARACTERS: {
+    cardType: "character",
+    count: "all",
+    filters: [{ type: "damaged" }],
+    owner: "opponent",
+    selector: "all",
+    zones: ["play"],
+  },
+};
 
 // ============================================================================
 // Item Target Expansions
@@ -161,45 +160,45 @@ const CHARACTER_ENUM_EXPANSIONS: Record<CharacterTargetEnum, CharacterTarget> =
  * Mapping from item enum shortcuts to full DSL
  */
 const ITEM_ENUM_EXPANSIONS: Record<ItemTargetEnum, ItemTarget> = {
-  CHOSEN_ITEM: {
-    selector: "chosen",
-    count: 1,
-    owner: "any",
-    cardType: "item",
-    zones: ["play"],
-  },
-  CHOSEN_OPPOSING_ITEM: {
-    selector: "chosen",
-    count: 1,
-    owner: "opponent",
-    cardType: "item",
-    zones: ["play"],
-  },
-  YOUR_ITEMS: {
-    selector: "all",
-    count: "all",
-    owner: "you",
-    cardType: "item",
-    zones: ["play"],
-  },
   ALL_ITEMS: {
-    selector: "all",
+    cardType: "item",
     count: "all",
     owner: "any",
-    cardType: "item",
+    selector: "all",
     zones: ["play"],
   },
   ALL_OPPOSING_ITEMS: {
-    selector: "all",
+    cardType: "item",
     count: "all",
     owner: "opponent",
+    selector: "all",
+    zones: ["play"],
+  },
+  CHOSEN_ITEM: {
     cardType: "item",
+    count: 1,
+    owner: "any",
+    selector: "chosen",
+    zones: ["play"],
+  },
+  CHOSEN_OPPOSING_ITEM: {
+    cardType: "item",
+    count: 1,
+    owner: "opponent",
+    selector: "chosen",
     zones: ["play"],
   },
   THIS_ITEM: {
-    selector: "self",
     cardType: "item",
     context: { self: true },
+    selector: "self",
+  },
+  YOUR_ITEMS: {
+    cardType: "item",
+    count: "all",
+    owner: "you",
+    selector: "all",
+    zones: ["play"],
   },
 };
 
@@ -211,38 +210,38 @@ const ITEM_ENUM_EXPANSIONS: Record<ItemTargetEnum, ItemTarget> = {
  * Mapping from location enum shortcuts to full DSL
  */
 const LOCATION_ENUM_EXPANSIONS: Record<LocationTargetEnum, LocationTarget> = {
+  ALL_OPPOSING_LOCATIONS: {
+    cardType: "location",
+    count: "all",
+    owner: "opponent",
+    selector: "all",
+    zones: ["play"],
+  },
   CHOSEN_LOCATION: {
-    selector: "chosen",
+    cardType: "location",
     count: 1,
     owner: "any",
-    cardType: "location",
+    selector: "chosen",
     zones: ["play"],
   },
   CHOSEN_OPPOSING_LOCATION: {
-    selector: "chosen",
+    cardType: "location",
     count: 1,
     owner: "opponent",
-    cardType: "location",
-    zones: ["play"],
-  },
-  YOUR_LOCATIONS: {
-    selector: "all",
-    count: "all",
-    owner: "you",
-    cardType: "location",
-    zones: ["play"],
-  },
-  ALL_OPPOSING_LOCATIONS: {
-    selector: "all",
-    count: "all",
-    owner: "opponent",
-    cardType: "location",
+    selector: "chosen",
     zones: ["play"],
   },
   THIS_LOCATION: {
-    selector: "self",
     cardType: "location",
     context: { self: true },
+    selector: "self",
+  },
+  YOUR_LOCATIONS: {
+    cardType: "location",
+    count: "all",
+    owner: "you",
+    selector: "all",
+    zones: ["play"],
   },
 };
 
@@ -253,9 +252,7 @@ const LOCATION_ENUM_EXPANSIONS: Record<LocationTargetEnum, LocationTarget> = {
 /**
  * Check if a character target is an enum (vs DSL object)
  */
-export function isCharacterEnum(
-  target: LorcanaCharacterTarget,
-): target is CharacterTargetEnum {
+export function isCharacterEnum(target: LorcanaCharacterTarget): target is CharacterTargetEnum {
   return typeof target === "string" && target in CHARACTER_ENUM_EXPANSIONS;
 }
 
@@ -265,9 +262,7 @@ export function isCharacterEnum(
  * @param target - Character target (enum or DSL)
  * @returns Full DSL representation
  */
-export function expandCharacterTarget(
-  target: LorcanaCharacterTarget,
-): CharacterTarget {
+export function expandCharacterTarget(target: LorcanaCharacterTarget): CharacterTarget {
   if (isCharacterEnum(target)) {
     const expansion = CHARACTER_ENUM_EXPANSIONS[target];
     if (!expansion) {
@@ -281,9 +276,7 @@ export function expandCharacterTarget(
 /**
  * Check if an item target is an enum
  */
-export function isItemEnum(
-  target: LorcanaItemTarget,
-): target is ItemTargetEnum {
+export function isItemEnum(target: LorcanaItemTarget): target is ItemTargetEnum {
   return typeof target === "string" && target in ITEM_ENUM_EXPANSIONS;
 }
 
@@ -304,18 +297,14 @@ export function expandItemTarget(target: LorcanaItemTarget): ItemTarget {
 /**
  * Check if a location target is an enum
  */
-export function isLocationEnum(
-  target: LorcanaLocationTarget,
-): target is LocationTargetEnum {
+export function isLocationEnum(target: LorcanaLocationTarget): target is LocationTargetEnum {
   return typeof target === "string" && target in LOCATION_ENUM_EXPANSIONS;
 }
 
 /**
  * Expand a location target enum to full DSL
  */
-export function expandLocationTarget(
-  target: LorcanaLocationTarget,
-): LocationTarget {
+export function expandLocationTarget(target: LorcanaLocationTarget): LocationTarget {
   if (isLocationEnum(target)) {
     const expansion = LOCATION_ENUM_EXPANSIONS[target];
     if (!expansion) {
@@ -359,23 +348,17 @@ export function expandTarget(
 /**
  * Set of all valid character target enum values
  */
-export const CHARACTER_TARGET_ENUMS = new Set<string>(
-  Object.keys(CHARACTER_ENUM_EXPANSIONS),
-);
+export const CHARACTER_TARGET_ENUMS = new Set<string>(Object.keys(CHARACTER_ENUM_EXPANSIONS));
 
 /**
  * Set of all valid item target enum values
  */
-export const ITEM_TARGET_ENUMS = new Set<string>(
-  Object.keys(ITEM_ENUM_EXPANSIONS),
-);
+export const ITEM_TARGET_ENUMS = new Set<string>(Object.keys(ITEM_ENUM_EXPANSIONS));
 
 /**
  * Set of all valid location target enum values
  */
-export const LOCATION_TARGET_ENUMS = new Set<string>(
-  Object.keys(LOCATION_ENUM_EXPANSIONS),
-);
+export const LOCATION_TARGET_ENUMS = new Set<string>(Object.keys(LOCATION_ENUM_EXPANSIONS));
 
 /**
  * Set of all valid target enum values

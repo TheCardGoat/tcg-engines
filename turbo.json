@@ -1,7 +1,7 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "globalEnv": ["NODE_ENV", "CI", "AGENT"],
-  "globalDependencies": ["biome.json", "tsconfig.json", "turbo.json"],
+  "globalDependencies": [".oxlintrc.json", ".oxfmt.json", "tsconfig.json", "turbo.json"],
   "tasks": {
     "topo": {
       "dependsOn": ["^topo"],

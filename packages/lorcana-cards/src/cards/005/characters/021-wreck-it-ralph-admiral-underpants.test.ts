@@ -3,30 +3,30 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   vanellopeVonSchweetzSugarRushChamp,
-//   wreckitRalphAdmiralUnderpants,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   VanellopeVonSchweetzSugarRushChamp,
+//   WreckitRalphAdmiralUnderpants,
 // } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Wreck-It Ralph - Admiral Underpants", () => {
-//   describe("**I’VE GOT THE COOLEST FRIEND** When you play this character, return a character card from your discard to your hand. If that card is a Princess character card, gain 2 lore.", () => {
-//     it("Returning a princess", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: wreckitRalphAdmiralUnderpants.cost,
-//         hand: [wreckitRalphAdmiralUnderpants],
-//         discard: [vanellopeVonSchweetzSugarRushChamp],
-//         lore: 0,
+// Describe("Wreck-It Ralph - Admiral Underpants", () => {
+//   Describe("**I’VE GOT THE COOLEST FRIEND** When you play this character, return a character card from your discard to your hand. If that card is a Princess character card, gain 2 lore.", () => {
+//     It("Returning a princess", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: wreckitRalphAdmiralUnderpants.cost,
+//         Hand: [wreckitRalphAdmiralUnderpants],
+//         Discard: [vanellopeVonSchweetzSugarRushChamp],
+//         Lore: 0,
 //       });
 //
-//       await testEngine.playCard(wreckitRalphAdmiralUnderpants, {
-//         targets: [vanellopeVonSchweetzSugarRushChamp],
+//       Await testEngine.playCard(wreckitRalphAdmiralUnderpants, {
+//         Targets: [vanellopeVonSchweetzSugarRushChamp],
 //       });
 //
-//       expect(testEngine.getPlayerLore()).toEqual(2);
-//       expect(
-//         testEngine.getCardModel(vanellopeVonSchweetzSugarRushChamp).zone,
+//       Expect(testEngine.getPlayerLore()).toEqual(2);
+//       Expect(
+//         TestEngine.getCardModel(vanellopeVonSchweetzSugarRushChamp).zone,
 //       ).toBe("hand");
 //     });
 //   });

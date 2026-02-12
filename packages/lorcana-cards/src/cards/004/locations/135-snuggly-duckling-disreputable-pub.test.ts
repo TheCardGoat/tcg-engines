@@ -3,91 +3,91 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   hadesMeticulousPlotter,
-//   sisuWiseFriend,
-//   tongSurvivor,
-//   tukTukCuriousPartner,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   HadesMeticulousPlotter,
+//   SisuWiseFriend,
+//   TongSurvivor,
+//   TukTukCuriousPartner,
 // } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { snugglyDucklingDisreputablePub } from "@lorcanito/lorcana-engine/cards/004/locations/locations";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { snugglyDucklingDisreputablePub } from "@lorcanito/lorcana-engine/cards/004/locations/locations";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Snuggly Duckling - Disreputable Pub", () => {
-//   describe("**ROUTINE RUCKUS** Whenever a character with 3 {S} or more challenges another character while here, gain 1 lore. If the challenging character has 6 {S} or more, gain 3 lore instead.", () => {
-//     it("should not gain lore when a character with 2 {S} challenges another character", async () => {
-//       const testEngine = new TestEngine(
+// Describe("Snuggly Duckling - Disreputable Pub", () => {
+//   Describe("**ROUTINE RUCKUS** Whenever a character with 3 {S} or more challenges another character while here, gain 1 lore. If the challenging character has 6 {S} or more, gain 3 lore instead.", () => {
+//     It("should not gain lore when a character with 2 {S} challenges another character", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: snugglyDucklingDisreputablePub.moveCost,
-//           play: [snugglyDucklingDisreputablePub, tukTukCuriousPartner],
+//           Inkwell: snugglyDucklingDisreputablePub.moveCost,
+//           Play: [snugglyDucklingDisreputablePub, tukTukCuriousPartner],
 //         },
 //         {
-//           play: [hadesMeticulousPlotter],
+//           Play: [hadesMeticulousPlotter],
 //         },
 //       );
 //
-//       await testEngine.tapCard(hadesMeticulousPlotter);
-//       await testEngine.moveToLocation({
-//         location: snugglyDucklingDisreputablePub,
-//         character: tukTukCuriousPartner,
+//       Await testEngine.tapCard(hadesMeticulousPlotter);
+//       Await testEngine.moveToLocation({
+//         Location: snugglyDucklingDisreputablePub,
+//         Character: tukTukCuriousPartner,
 //       });
 //
-//       await testEngine.challenge({
-//         attacker: tukTukCuriousPartner,
-//         defender: hadesMeticulousPlotter,
+//       Await testEngine.challenge({
+//         Attacker: tukTukCuriousPartner,
+//         Defender: hadesMeticulousPlotter,
 //       });
 //
-//       expect(testEngine.getPlayerLore()).toBe(0);
+//       Expect(testEngine.getPlayerLore()).toBe(0);
 //     });
 //
-//     it("should gain 1 lore when a character with 3 {S} challenges another character", async () => {
-//       const testEngine = new TestEngine(
+//     It("should gain 1 lore when a character with 3 {S} challenges another character", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: snugglyDucklingDisreputablePub.moveCost,
-//           play: [snugglyDucklingDisreputablePub, tongSurvivor],
+//           Inkwell: snugglyDucklingDisreputablePub.moveCost,
+//           Play: [snugglyDucklingDisreputablePub, tongSurvivor],
 //         },
 //         {
-//           play: [hadesMeticulousPlotter],
+//           Play: [hadesMeticulousPlotter],
 //         },
 //       );
 //
-//       await testEngine.tapCard(hadesMeticulousPlotter);
-//       await testEngine.moveToLocation({
-//         location: snugglyDucklingDisreputablePub,
-//         character: tongSurvivor,
+//       Await testEngine.tapCard(hadesMeticulousPlotter);
+//       Await testEngine.moveToLocation({
+//         Location: snugglyDucklingDisreputablePub,
+//         Character: tongSurvivor,
 //       });
 //
-//       await testEngine.challenge({
-//         attacker: tongSurvivor,
-//         defender: hadesMeticulousPlotter,
+//       Await testEngine.challenge({
+//         Attacker: tongSurvivor,
+//         Defender: hadesMeticulousPlotter,
 //       });
 //
-//       expect(testEngine.getPlayerLore()).toBe(1);
+//       Expect(testEngine.getPlayerLore()).toBe(1);
 //     });
 //
-//     it("should gain 3 lore when a character with 6 {S} challenges another character", async () => {
-//       const testEngine = new TestEngine(
+//     It("should gain 3 lore when a character with 6 {S} challenges another character", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: snugglyDucklingDisreputablePub.moveCost,
-//           play: [snugglyDucklingDisreputablePub, sisuWiseFriend],
+//           Inkwell: snugglyDucklingDisreputablePub.moveCost,
+//           Play: [snugglyDucklingDisreputablePub, sisuWiseFriend],
 //         },
 //         {
-//           play: [hadesMeticulousPlotter],
+//           Play: [hadesMeticulousPlotter],
 //         },
 //       );
 //
-//       await testEngine.tapCard(hadesMeticulousPlotter);
-//       await testEngine.moveToLocation({
-//         location: snugglyDucklingDisreputablePub,
-//         character: sisuWiseFriend,
+//       Await testEngine.tapCard(hadesMeticulousPlotter);
+//       Await testEngine.moveToLocation({
+//         Location: snugglyDucklingDisreputablePub,
+//         Character: sisuWiseFriend,
 //       });
 //
-//       await testEngine.challenge({
-//         attacker: sisuWiseFriend,
-//         defender: hadesMeticulousPlotter,
+//       Await testEngine.challenge({
+//         Attacker: sisuWiseFriend,
+//         Defender: hadesMeticulousPlotter,
 //       });
 //
-//       expect(testEngine.getPlayerLore()).toBe(3);
+//       Expect(testEngine.getPlayerLore()).toBe(3);
 //     });
 //   });
 // });

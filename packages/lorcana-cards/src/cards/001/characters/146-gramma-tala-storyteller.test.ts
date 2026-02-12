@@ -5,9 +5,9 @@ import { grammaTalaStoryteller } from "./146-gramma-tala-storyteller";
 describe("Gramma Tala - Storyteller", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [grammaTalaStoryteller] });
-  //   expect(testEngine.getCardModel(grammaTalaStoryteller).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [grammaTalaStoryteller] });
+  //   Expect(testEngine.getCardModel(grammaTalaStoryteller).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,43 +17,43 @@ describe("Gramma Tala - Storyteller", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   grammaTalaStoryteller,
-//   mauriceWorldFamousInventor,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   GrammaTalaStoryteller,
+//   MauriceWorldFamousInventor,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Gramma Tala - Storyteller", () => {
-//   it("**I WILL BE WITH YOU** When this character is banished, you may put this card into your inkwell facedown and exerted.", () => {
-//     const testStore = new TestStore(
+// Describe("Gramma Tala - Storyteller", () => {
+//   It("**I WILL BE WITH YOU** When this character is banished, you may put this card into your inkwell facedown and exerted.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: grammaTalaStoryteller.cost,
-//         play: [grammaTalaStoryteller],
+//         Inkwell: grammaTalaStoryteller.cost,
+//         Play: [grammaTalaStoryteller],
 //       },
 //       {
-//         play: [mauriceWorldFamousInventor],
+//         Play: [mauriceWorldFamousInventor],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       grammaTalaStoryteller.id,
+//       GrammaTalaStoryteller.id,
 //     );
 //
-//     cardUnderTest.updateCardMeta({ exerted: true });
-//     const attacker = testStore.getByZoneAndId(
+//     CardUnderTest.updateCardMeta({ exerted: true });
+//     Const attacker = testStore.getByZoneAndId(
 //       "play",
-//       mauriceWorldFamousInventor.id,
+//       MauriceWorldFamousInventor.id,
 //       "player_two",
 //     );
 //
-//     attacker.challenge(cardUnderTest);
-//     testStore.resolveOptionalAbility();
+//     Attacker.challenge(cardUnderTest);
+//     TestStore.resolveOptionalAbility();
 //
-//     expect(cardUnderTest.zone).toEqual("inkwell");
-//     expect(cardUnderTest.ready).toEqual(false);
-//     expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
+//     Expect(cardUnderTest.zone).toEqual("inkwell");
+//     Expect(cardUnderTest.ready).toEqual(false);
+//     Expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
 //   });
 // });
 //

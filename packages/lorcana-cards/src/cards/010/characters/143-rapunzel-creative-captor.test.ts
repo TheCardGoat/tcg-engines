@@ -3,20 +3,20 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { rapunzelCreativeCaptor } from "@lorcanito/lorcana-engine/cards/010/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { rapunzelCreativeCaptor } from "@lorcanito/lorcana-engine/cards/010/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Rapunzel - Creative Captor", () => {
-//   it.skip("ENSNARL When you play this character, chosen opposing character gets -3 this turn.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: rapunzelCreativeCaptor.cost,
-//       hand: [rapunzelCreativeCaptor],
+// Describe("Rapunzel - Creative Captor", () => {
+//   It.skip("ENSNARL When you play this character, chosen opposing character gets -3 this turn.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: rapunzelCreativeCaptor.cost,
+//       Hand: [rapunzelCreativeCaptor],
 //     });
 //
-//     await testEngine.playCard(rapunzelCreativeCaptor);
-//     await testEngine.acceptOptionalLayer();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.playCard(rapunzelCreativeCaptor);
+//     Await testEngine.acceptOptionalLayer();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

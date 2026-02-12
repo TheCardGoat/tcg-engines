@@ -1,41 +1,41 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
-// import { propertyStaticAbilities } from "../../../abilities/propertyStaticAbilities";
+// Import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
+// Import { propertyStaticAbilities } from "../../../abilities/propertyStaticAbilities";
 //
-// export const casaMadrigalCasita: LorcanitoLocationCard = {
-//   id: "x5c",
-//   reprints: ["jx4"],
-//   missingTestCase: true,
-//   name: "Casa Madrigal",
-//   title: "Casita",
-//   characteristics: ["location"],
-//   text: "**OUR HOME** At the start of your turn, if you have a character here, gain 1 lore.",
-//   type: "location",
-//   abilities: [
-//     propertyStaticAbilities({
-//       name: "Our Home",
-//       text: "At the start of your turn, if you have a character here, gain 1 lore.",
-//       conditions: [
+// Export const casaMadrigalCasita: LorcanitoLocationCard = {
+//   Id: "x5c",
+//   Reprints: ["jx4"],
+//   MissingTestCase: true,
+//   Name: "Casa Madrigal",
+//   Title: "Casita",
+//   Characteristics: ["location"],
+//   Text: "**OUR HOME** At the start of your turn, if you have a character here, gain 1 lore.",
+//   Type: "location",
+//   Abilities: [
+//     PropertyStaticAbilities({
+//       Name: "Our Home",
+//       Text: "At the start of your turn, if you have a character here, gain 1 lore.",
+//       Conditions: [
 //         {
-//           type: "chars-at-location",
-//           comparison: { operator: "gte", value: 1 },
+//           Type: "chars-at-location",
+//           Comparison: { operator: "gte", value: 1 },
 //         },
 //       ],
-//       attribute: "lore",
-//       amount: 1,
+//       Attribute: "lore",
+//       Amount: 1,
 //     }),
 //   ],
-//   inkwell: true,
-//   colors: ["amethyst"],
-//   cost: 1,
-//   moveCost: 1,
-//   willpower: 6,
-//   illustrator: "Rachel Elese",
-//   number: 67,
-//   set: "URR",
-//   externalIds: {
-//     tcgPlayer: 548207,
+//   Inkwell: true,
+//   Colors: ["amethyst"],
+//   Cost: 1,
+//   MoveCost: 1,
+//   Willpower: 6,
+//   Illustrator: "Rachel Elese",
+//   Number: 67,
+//   Set: "URR",
+//   ExternalIds: {
+//     TcgPlayer: 548207,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

@@ -3,94 +3,94 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   mauriceWorldFamousInventor,
-//   tinkerBellTinyTactician,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   MauriceWorldFamousInventor,
+//   TinkerBellTinyTactician,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { ursulaShellNecklace } from "@lorcanito/lorcana-engine/cards/001/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { ursulaShellNecklace } from "@lorcanito/lorcana-engine/cards/001/items/items";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Maurice - World-Famous Inventor", () => {
-//   it("Give it a try: Whenever this character quests, you pay 2 {I} less for the next item you play this turn.", () => {
-//     const testStore = new TestStore({
-//       inkwell: ursulaShellNecklace.cost - 2,
-//       hand: [ursulaShellNecklace],
-//       play: [mauriceWorldFamousInventor],
+// Describe("Maurice - World-Famous Inventor", () => {
+//   It("Give it a try: Whenever this character quests, you pay 2 {I} less for the next item you play this turn.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: ursulaShellNecklace.cost - 2,
+//       Hand: [ursulaShellNecklace],
+//       Play: [mauriceWorldFamousInventor],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       mauriceWorldFamousInventor.id,
+//       MauriceWorldFamousInventor.id,
 //     );
 //
-//     const target = testStore.getByZoneAndId("hand", ursulaShellNecklace.id);
+//     Const target = testStore.getByZoneAndId("hand", ursulaShellNecklace.id);
 //
-//     cardUnderTest.quest();
-//     target.playFromHand();
+//     CardUnderTest.quest();
+//     Target.playFromHand();
 //
-//     expect(target.zone).toEqual("play");
-//     expect(
-//       testStore.store.tableStore.getTable("player_one").inkAvailable(),
+//     Expect(target.zone).toEqual("play");
+//     Expect(
+//       TestStore.store.tableStore.getTable("player_one").inkAvailable(),
 //     ).toEqual(0);
 //   });
 //
-//   describe("It works!: Whenever you play an item, you may draw a card.", () => {
-//     it("It works! - player plays an item", () => {
-//       const testStore = new TestStore({
-//         inkwell: ursulaShellNecklace.cost,
-//         deck: [tinkerBellTinyTactician],
-//         hand: [ursulaShellNecklace],
-//         play: [mauriceWorldFamousInventor],
+//   Describe("It works!: Whenever you play an item, you may draw a card.", () => {
+//     It("It works! - player plays an item", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: ursulaShellNecklace.cost,
+//         Deck: [tinkerBellTinyTactician],
+//         Hand: [ursulaShellNecklace],
+//         Play: [mauriceWorldFamousInventor],
 //       });
 //
-//       const target = testStore.getByZoneAndId("hand", ursulaShellNecklace.id);
+//       Const target = testStore.getByZoneAndId("hand", ursulaShellNecklace.id);
 //
-//       target.playFromHand();
-//       testStore.resolveTopOfStack();
+//       Target.playFromHand();
+//       TestStore.resolveTopOfStack();
 //
-//       expect(target.zone).toEqual("play");
-//       expect(testStore.getZonesCardCount().hand).toEqual(1);
+//       Expect(target.zone).toEqual("play");
+//       Expect(testStore.getZonesCardCount().hand).toEqual(1);
 //     });
 //
-//     it("It works! - Opponent play an item", () => {
-//       const testStore = new TestStore(
+//     It("It works! - Opponent play an item", () => {
+//       Const testStore = new TestStore(
 //         {
-//           inkwell: ursulaShellNecklace.cost,
-//           deck: [tinkerBellTinyTactician],
-//           hand: [ursulaShellNecklace],
+//           Inkwell: ursulaShellNecklace.cost,
+//           Deck: [tinkerBellTinyTactician],
+//           Hand: [ursulaShellNecklace],
 //         },
 //         {
-//           play: [mauriceWorldFamousInventor],
+//           Play: [mauriceWorldFamousInventor],
 //         },
 //       );
 //
-//       const target = testStore.getByZoneAndId("hand", ursulaShellNecklace.id);
+//       Const target = testStore.getByZoneAndId("hand", ursulaShellNecklace.id);
 //
-//       target.playFromHand();
+//       Target.playFromHand();
 //
-//       expect(target.zone).toEqual("play");
-//       expect(testStore.getZonesCardCount().hand).toEqual(0);
-//       expect(testStore.getZonesCardCount("player_two").hand).toEqual(0);
-//       expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
+//       Expect(target.zone).toEqual("play");
+//       Expect(testStore.getZonesCardCount().hand).toEqual(0);
+//       Expect(testStore.getZonesCardCount("player_two").hand).toEqual(0);
+//       Expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
 //     });
 //
-//     it("It works! - Skip Effect", () => {
-//       const testStore = new TestStore({
-//         inkwell: ursulaShellNecklace.cost,
-//         deck: [tinkerBellTinyTactician],
-//         hand: [ursulaShellNecklace],
-//         play: [mauriceWorldFamousInventor],
+//     It("It works! - Skip Effect", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: ursulaShellNecklace.cost,
+//         Deck: [tinkerBellTinyTactician],
+//         Hand: [ursulaShellNecklace],
+//         Play: [mauriceWorldFamousInventor],
 //       });
 //
-//       const target = testStore.getByZoneAndId("hand", ursulaShellNecklace.id);
+//       Const target = testStore.getByZoneAndId("hand", ursulaShellNecklace.id);
 //
-//       target.playFromHand();
-//       testStore.resolveTopOfStack({ skip: true });
+//       Target.playFromHand();
+//       TestStore.resolveTopOfStack({ skip: true });
 //
-//       expect(target.zone).toEqual("play");
-//       expect(testStore.getZonesCardCount().hand).toEqual(0);
-//       expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
+//       Expect(target.zone).toEqual("play");
+//       Expect(testStore.getZonesCardCount().hand).toEqual(0);
+//       Expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
 //     });
 //   });
 // });

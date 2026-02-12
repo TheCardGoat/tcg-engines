@@ -5,9 +5,9 @@ import { beastundefined } from "./201-beast-mirror";
 describe("Beast - undefined", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [beastMirror] });
-  //   expect(testEngine.getCardModel(beastMirror).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [beastMirror] });
+  //   Expect(testEngine.getCardModel(beastMirror).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,57 +17,57 @@ describe("Beast - undefined", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   beastMirror,
-//   dingleHopper,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   BeastMirror,
+//   DingleHopper,
 // } from "@lorcanito/lorcana-engine/cards/001/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Beast Mirror", () => {
-//   describe("Show Me - If you have no cards in your hand, draw a card.", () => {
-//     it("Empty hand", () => {
-//       const testStore = new TestStore({
-//         deck: 1,
-//         inkwell: 4,
-//         play: [beastMirror],
+// Describe("Beast Mirror", () => {
+//   Describe("Show Me - If you have no cards in your hand, draw a card.", () => {
+//     It("Empty hand", () => {
+//       Const testStore = new TestStore({
+//         Deck: 1,
+//         Inkwell: 4,
+//         Play: [beastMirror],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId("play", beastMirror.id);
+//       Const cardUnderTest = testStore.getByZoneAndId("play", beastMirror.id);
 //
-//       expect(
-//         testStore.store.tableStore.getPlayerZone("player_one", "deck")?.cards,
+//       Expect(
+//         TestStore.store.tableStore.getPlayerZone("player_one", "deck")?.cards,
 //       ).toHaveLength(1);
 //
-//       cardUnderTest.activate();
+//       CardUnderTest.activate();
 //
-//       expect(
-//         testStore.store.tableStore.getPlayerZone("player_one", "deck")?.cards,
+//       Expect(
+//         TestStore.store.tableStore.getPlayerZone("player_one", "deck")?.cards,
 //       ).toHaveLength(0);
 //     });
 //
-//     it("Non Empty hand", () => {
-//       const testStore = new TestStore({
-//         deck: 1,
-//         play: [beastMirror],
-//         hand: [dingleHopper],
-//         inkwell: 3,
+//     It("Non Empty hand", () => {
+//       Const testStore = new TestStore({
+//         Deck: 1,
+//         Play: [beastMirror],
+//         Hand: [dingleHopper],
+//         Inkwell: 3,
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId("play", beastMirror.id);
+//       Const cardUnderTest = testStore.getByZoneAndId("play", beastMirror.id);
 //
-//       expect(
-//         testStore.store.tableStore.getPlayerZone("player_one", "deck")?.cards,
+//       Expect(
+//         TestStore.store.tableStore.getPlayerZone("player_one", "deck")?.cards,
 //       ).toHaveLength(1);
 //
-//       cardUnderTest.activate();
+//       CardUnderTest.activate();
 //
 //       // expect(cardUnderTest.ready).toBeFalsy();
-//       expect(
-//         testStore.store.tableStore.getPlayerZone("player_one", "deck")?.cards,
+//       Expect(
+//         TestStore.store.tableStore.getPlayerZone("player_one", "deck")?.cards,
 //       ).toHaveLength(1);
-//       expect(
-//         testStore.store.tableStore.getPlayerZone("player_one", "hand")?.cards,
+//       Expect(
+//         TestStore.store.tableStore.getPlayerZone("player_one", "hand")?.cards,
 //       ).toHaveLength(1);
 //     });
 //   });

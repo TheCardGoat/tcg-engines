@@ -1,45 +1,45 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { ifYouHaveACardInYourDiscardNamed } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
-// import { self } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { whenYouPlayThis } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { ifYouHaveACardInYourDiscardNamed } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
+// Import { self } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import { whenYouPlayThis } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 //
-// export const yzmaOnEdge: LorcanitoCharacterCard = {
-//   id: "q93",
-//   name: "Yzma",
-//   title: "On Edge",
-//   characteristics: ["storyborn", "villain", "sorcerer"],
-//   text: "WHY DO WE EVEN HAVE THAT LEVER? When you play this character, if you have a card named Pull the Lever! in your discard, you may search your deck for a card named Wrong Lever! and reveal that card to all players. Put that card into your hand and shuffle your deck.",
-//   type: "character",
-//   abilities: [
-//     whenYouPlayThis({
-//       name: "WHY DO WE EVEN HAVE THAT LEVER?",
-//       text: "When you play this character, if you have a card named Pull the Lever! in your discard, you may search your deck for a card named Wrong Lever! and reveal that card to all players. Put that card into your hand and shuffle your deck.",
-//       optional: true,
-//       conditions: [ifYouHaveACardInYourDiscardNamed("Pull the Lever!")],
-//       resolveEffectsIndividually: true,
-//       effects: [
+// Export const yzmaOnEdge: LorcanitoCharacterCard = {
+//   Id: "q93",
+//   Name: "Yzma",
+//   Title: "On Edge",
+//   Characteristics: ["storyborn", "villain", "sorcerer"],
+//   Text: "WHY DO WE EVEN HAVE THAT LEVER? When you play this character, if you have a card named Pull the Lever! in your discard, you may search your deck for a card named Wrong Lever! and reveal that card to all players. Put that card into your hand and shuffle your deck.",
+//   Type: "character",
+//   Abilities: [
+//     WhenYouPlayThis({
+//       Name: "WHY DO WE EVEN HAVE THAT LEVER?",
+//       Text: "When you play this character, if you have a card named Pull the Lever! in your discard, you may search your deck for a card named Wrong Lever! and reveal that card to all players. Put that card into your hand and shuffle your deck.",
+//       Optional: true,
+//       Conditions: [ifYouHaveACardInYourDiscardNamed("Pull the Lever!")],
+//       ResolveEffectsIndividually: true,
+//       Effects: [
 //         {
-//           type: "shuffle-deck",
-//           target: self,
+//           Type: "shuffle-deck",
+//           Target: self,
 //         },
 //         {
-//           type: "move",
-//           to: "hand",
-//           isPrivate: false,
-//           shouldRevealMoved: true,
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
+//           Type: "move",
+//           To: "hand",
+//           IsPrivate: false,
+//           ShouldRevealMoved: true,
+//           Target: {
+//             Type: "card",
+//             Value: 1,
+//             Filters: [
 //               { filter: "zone", value: "deck" },
 //               { filter: "owner", value: "self" },
 //               {
-//                 filter: "attribute",
-//                 value: "name",
-//                 comparison: {
-//                   operator: "eq",
-//                   value: "Wrong Lever!",
+//                 Filter: "attribute",
+//                 Value: "name",
+//                 Comparison: {
+//                   Operator: "eq",
+//                   Value: "Wrong Lever!",
 //                 },
 //               },
 //             ],
@@ -48,18 +48,18 @@
 //       ],
 //     }),
 //   ],
-//   inkwell: false,
-//   colors: ["amethyst", "emerald"],
-//   cost: 6,
-//   strength: 3,
-//   willpower: 6,
-//   illustrator: "Julien Yvardis",
-//   number: 68,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631681,
+//   Inkwell: false,
+//   Colors: ["amethyst", "emerald"],
+//   Cost: 6,
+//   Strength: 3,
+//   Willpower: 6,
+//   Illustrator: "Julien Yvardis",
+//   Number: 68,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631681,
 //   },
-//   rarity: "super_rare",
-//   lore: 2,
+//   Rarity: "super_rare",
+//   Lore: 2,
 // };
 //

@@ -3,43 +3,43 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { fangRiverCity } from "@lorcanito/lorcana-engine/cards/003/locations/locations";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { fangRiverCity } from "@lorcanito/lorcana-engine/cards/003/locations/locations";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Fang - River City", () => {
-//   describe("**SURROUNDED BY WATER** Characters gain **Ward** and **Evasive** while here. _(Opponents can't choose them except to challenge. Only characters with Evasive can challenge them.)_", () => {
-//     it("Characters gain **Ward** and **Evasive** while here.", () => {
-//       const testStore = new TestStore({
-//         inkwell: fangRiverCity.moveCost,
-//         play: [fangRiverCity, goofyKnightForADay],
+// Describe("Fang - River City", () => {
+//   Describe("**SURROUNDED BY WATER** Characters gain **Ward** and **Evasive** while here. _(Opponents can't choose them except to challenge. Only characters with Evasive can challenge them.)_", () => {
+//     It("Characters gain **Ward** and **Evasive** while here.", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: fangRiverCity.moveCost,
+//         Play: [fangRiverCity, goofyKnightForADay],
 //       });
 //
-//       const cardUnderTest = testStore.getCard(fangRiverCity);
-//       const targetCard = testStore.getCard(goofyKnightForADay);
+//       Const cardUnderTest = testStore.getCard(fangRiverCity);
+//       Const targetCard = testStore.getCard(goofyKnightForADay);
 //
-//       expect(targetCard.hasWard).toBe(false);
+//       Expect(targetCard.hasWard).toBe(false);
 //
-//       targetCard.enterLocation(cardUnderTest);
+//       TargetCard.enterLocation(cardUnderTest);
 //
-//       expect(targetCard.hasWard).toBe(true);
+//       Expect(targetCard.hasWard).toBe(true);
 //     });
 //
-//     it("Characters gain **Evasive** while here.", () => {
-//       const testStore = new TestStore({
-//         inkwell: fangRiverCity.moveCost,
-//         play: [fangRiverCity, goofyKnightForADay],
+//     It("Characters gain **Evasive** while here.", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: fangRiverCity.moveCost,
+//         Play: [fangRiverCity, goofyKnightForADay],
 //       });
 //
-//       const cardUnderTest = testStore.getCard(fangRiverCity);
-//       const targetCard = testStore.getCard(goofyKnightForADay);
+//       Const cardUnderTest = testStore.getCard(fangRiverCity);
+//       Const targetCard = testStore.getCard(goofyKnightForADay);
 //
-//       expect(targetCard.hasEvasive).toBe(false);
+//       Expect(targetCard.hasEvasive).toBe(false);
 //
-//       targetCard.enterLocation(cardUnderTest);
+//       TargetCard.enterLocation(cardUnderTest);
 //
-//       expect(targetCard.hasEvasive).toBe(true);
+//       Expect(targetCard.hasEvasive).toBe(true);
 //     });
 //   });
 // });

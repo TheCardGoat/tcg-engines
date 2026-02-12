@@ -3,90 +3,90 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { smash } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
-// import { deweyLovableShowoff } from "@lorcanito/lorcana-engine/cards/008";
-// import {
-//   mickeyMouseDetective,
-//   olafHelpingHand,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { smash } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
+// Import { deweyLovableShowoff } from "@lorcanito/lorcana-engine/cards/008";
+// Import {
+//   MickeyMouseDetective,
+//   OlafHelpingHand,
 // } from "@lorcanito/lorcana-engine/cards/010/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Olaf - Helping Hand", () => {
-//   it("SECOND CHANCE - Should trigger when character is banished", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: smash.cost,
-//       play: [olafHelpingHand, deweyLovableShowoff],
-//       hand: [smash],
+// Describe("Olaf - Helping Hand", () => {
+//   It("SECOND CHANCE - Should trigger when character is banished", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: smash.cost,
+//       Play: [olafHelpingHand, deweyLovableShowoff],
+//       Hand: [smash],
 //     });
 //
-//     const olaf = testEngine.getCardModel(olafHelpingHand);
-//     const dewey = testEngine.getCardModel(deweyLovableShowoff);
+//     Const olaf = testEngine.getCardModel(olafHelpingHand);
+//     Const dewey = testEngine.getCardModel(deweyLovableShowoff);
 //
-//     expect(olaf.zone).toBe("play");
-//     expect(dewey.zone).toBe("play");
+//     Expect(olaf.zone).toBe("play");
+//     Expect(dewey.zone).toBe("play");
 //
 //     // Banish Olaf with Smash
-//     await testEngine.playCard(smash, { targets: [olaf] }, true);
+//     Await testEngine.playCard(smash, { targets: [olaf] }, true);
 //
 //     // Olaf is banished
-//     expect(olaf.zone).toBe("discard");
+//     Expect(olaf.zone).toBe("discard");
 //
 //     // SECOND CHANCE ability should trigger
-//     expect(testEngine.store.stackLayerStore.layers).toHaveLength(1);
+//     Expect(testEngine.store.stackLayerStore.layers).toHaveLength(1);
 //
 //     // Accept the optional ability and choose Dewey to return to hand
-//     await testEngine.acceptOptionalAbility();
-//     await testEngine.resolveTopOfStack({ targets: [dewey] });
+//     Await testEngine.acceptOptionalAbility();
+//     Await testEngine.resolveTopOfStack({ targets: [dewey] });
 //
 //     // Dewey should be returned to hand
-//     expect(dewey.zone).toBe("hand");
+//     Expect(dewey.zone).toBe("hand");
 //   });
 //
-//   it("SECOND CHANCE - Should be optional", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: smash.cost,
-//       play: [olafHelpingHand, deweyLovableShowoff],
-//       hand: [smash],
+//   It("SECOND CHANCE - Should be optional", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: smash.cost,
+//       Play: [olafHelpingHand, deweyLovableShowoff],
+//       Hand: [smash],
 //     });
 //
-//     const olaf = testEngine.getCardModel(olafHelpingHand);
-//     const dewey = testEngine.getCardModel(deweyLovableShowoff);
+//     Const olaf = testEngine.getCardModel(olafHelpingHand);
+//     Const dewey = testEngine.getCardModel(deweyLovableShowoff);
 //
-//     expect(dewey.zone).toBe("play");
+//     Expect(dewey.zone).toBe("play");
 //
 //     // Banish Olaf with Smash
-//     await testEngine.playCard(smash, { targets: [olaf] }, true);
+//     Await testEngine.playCard(smash, { targets: [olaf] }, true);
 //
 //     // Decline the optional ability
-//     await testEngine.skipTopOfStack();
+//     Await testEngine.skipTopOfStack();
 //
 //     // Dewey should remain in play
-//     expect(dewey.zone).toBe("play");
+//     Expect(dewey.zone).toBe("play");
 //   });
 //
-//   it("SECOND CHANCE - Should work when multiple characters in play", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: smash.cost,
-//       play: [olafHelpingHand, deweyLovableShowoff, mickeyMouseDetective],
-//       hand: [smash],
+//   It("SECOND CHANCE - Should work when multiple characters in play", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: smash.cost,
+//       Play: [olafHelpingHand, deweyLovableShowoff, mickeyMouseDetective],
+//       Hand: [smash],
 //     });
 //
-//     const olaf = testEngine.getCardModel(olafHelpingHand);
-//     const dewey = testEngine.getCardModel(deweyLovableShowoff);
-//     const mickey = testEngine.getCardModel(mickeyMouseDetective);
+//     Const olaf = testEngine.getCardModel(olafHelpingHand);
+//     Const dewey = testEngine.getCardModel(deweyLovableShowoff);
+//     Const mickey = testEngine.getCardModel(mickeyMouseDetective);
 //
 //     // Use Smash to banish Olaf
-//     await testEngine.playCard(smash, { targets: [olaf] }, true);
+//     Await testEngine.playCard(smash, { targets: [olaf] }, true);
 //
 //     // Accept and choose Mickey to return to hand
-//     await testEngine.acceptOptionalAbility();
-//     await testEngine.resolveTopOfStack({ targets: [mickey] });
+//     Await testEngine.acceptOptionalAbility();
+//     Await testEngine.resolveTopOfStack({ targets: [mickey] });
 //
 //     // Mickey should be in hand, Dewey still in play
-//     expect(mickey.zone).toBe("hand");
-//     expect(dewey.zone).toBe("play");
-//     expect(olaf.zone).toBe("discard");
+//     Expect(mickey.zone).toBe("hand");
+//     Expect(dewey.zone).toBe("play");
+//     Expect(olaf.zone).toBe("discard");
 //   });
 // });
 //

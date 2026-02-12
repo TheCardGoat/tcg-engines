@@ -3,28 +3,28 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   deweyLovableShowoff,
-//   thumperYoungBunny,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   DeweyLovableShowoff,
+//   ThumperYoungBunny,
 // } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Thumper - Young Bunny", () => {
-//   it("YOU CAN DO IT! {E} – Chosen character gets +3 {S} this turn.", async () => {
-//     const testEngine = new TestEngine({
-//       play: [thumperYoungBunny, deweyLovableShowoff],
+// Describe("Thumper - Young Bunny", () => {
+//   It("YOU CAN DO IT! {E} – Chosen character gets +3 {S} this turn.", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [thumperYoungBunny, deweyLovableShowoff],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(thumperYoungBunny);
-//     const target = testEngine.getCardModel(deweyLovableShowoff);
+//     Const cardUnderTest = testEngine.getCardModel(thumperYoungBunny);
+//     Const target = testEngine.getCardModel(deweyLovableShowoff);
 //
-//     await testEngine.activateCard(cardUnderTest, {
-//       ability: "YOU CAN DO IT!",
-//       targets: [target],
+//     Await testEngine.activateCard(cardUnderTest, {
+//       Ability: "YOU CAN DO IT!",
+//       Targets: [target],
 //     });
 //
-//     expect(target.strength).toBe(deweyLovableShowoff.strength + 3);
+//     Expect(target.strength).toBe(deweyLovableShowoff.strength + 3);
 //   });
 // });
 //

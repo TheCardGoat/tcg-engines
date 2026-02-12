@@ -8,11 +8,11 @@ describe("isCardOfType", () => {
       const isCreature = isCardOfType("creature");
 
       const creature: CardDefinition = {
+        basePower: 5,
+        baseToughness: 5,
         id: "dragon-1",
         name: "Dragon",
         type: "creature",
-        basePower: 5,
-        baseToughness: 5,
       };
 
       const instant: CardDefinition = {
@@ -76,11 +76,7 @@ describe("isCardOfType", () => {
       const creatures = cards.filter(isCreature);
 
       expect(creatures).toHaveLength(3);
-      expect(creatures.map((c) => c.name)).toEqual([
-        "Dragon",
-        "Goblin",
-        "Angel",
-      ]);
+      expect(creatures.map((c) => c.name)).toEqual(["Dragon", "Goblin", "Angel"]);
     });
 
     it("should work with Array.some and Array.every", () => {
@@ -89,9 +85,7 @@ describe("isCardOfType", () => {
         { id: "2", name: "Goblin", type: "creature" },
       ];
 
-      const allCreatures: CardDefinition[] = [
-        { id: "3", name: "Angel", type: "creature" },
-      ];
+      const allCreatures: CardDefinition[] = [{ id: "3", name: "Angel", type: "creature" }];
 
       const isCreature = isCardOfType("creature");
 
@@ -104,11 +98,11 @@ describe("isCardOfType", () => {
   describe("type narrowing", () => {
     it("should narrow types in conditional blocks", () => {
       const card: CardDefinition = {
+        basePower: 5,
+        baseToughness: 5,
         id: "dragon-1",
         name: "Dragon",
         type: "creature",
-        basePower: 5,
-        baseToughness: 5,
       };
 
       const isCreature = isCardOfType("creature");
@@ -131,10 +125,10 @@ describe("isCardOfType", () => {
       const isCommand = isCardOfType<GundamCard>("command");
 
       const unit: GundamCard = {
+        basePower: 3,
         id: "gundam-1",
         name: "RX-78-2 Gundam",
         type: "unit",
-        basePower: 3,
       };
 
       const command: GundamCard = {
@@ -158,10 +152,10 @@ describe("isCardOfType", () => {
       const isAction = isCardOfType<LorcanaCard>("action");
 
       const character: LorcanaCard = {
+        basePower: 4,
         id: "mickey-1",
         name: "Mickey Mouse - Brave Little Tailor",
         type: "character",
-        basePower: 4,
       };
 
       const action: LorcanaCard = {
@@ -207,7 +201,7 @@ describe("isCardOfType", () => {
       const uppercaseCard: CardDefinition = {
         id: "1",
         name: "Card",
-        type: "Creature", // uppercase C
+        type: "Creature", // Uppercase C
       };
       const lowercaseCard: CardDefinition = {
         id: "2",
@@ -222,10 +216,10 @@ describe("isCardOfType", () => {
 
   describe("performance", () => {
     it("should be efficient for large arrays", () => {
-      const cards: CardDefinition[] = Array.from({ length: 10000 }, (_, i) => ({
+      const cards: CardDefinition[] = Array.from({ length: 10_000 }, (_, i) => ({
         id: `card-${i}`,
         name: `Card ${i}`,
-        type: i % 3 === 0 ? "creature" : i % 3 === 1 ? "instant" : "sorcery",
+        type: i % 3 === 0 ? "creature" : (i % 3 === 1 ? "instant" : "sorcery"),
       }));
 
       const isCreature = isCardOfType("creature");

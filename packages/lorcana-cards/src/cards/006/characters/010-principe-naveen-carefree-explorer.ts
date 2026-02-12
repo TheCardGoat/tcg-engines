@@ -1,25 +1,25 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
 // // TODO: Once the set is released, we organize the cards by set and type
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
 //
-// export const principeNaveenCarefreeExplorer: LorcanitoCharacterCard = {
-//   id: "kgi",
-//   name: "Prince Naveen",
-//   title: "Carefree Explorer",
-//   characteristics: ["storyborn", "hero", "prince"],
-//   type: "character",
-//   inkwell: true,
-//   colors: ["amber"],
-//   cost: 2,
-//   strength: 2,
-//   willpower: 3,
-//   lore: 1,
-//   illustrator: "Luca Pinielli",
-//   number: 10,
-//   set: "006",
-//   externalIds: {
-//     tcgPlayer: 593038,
+// Export const principeNaveenCarefreeExplorer: LorcanitoCharacterCard = {
+//   Id: "kgi",
+//   Name: "Prince Naveen",
+//   Title: "Carefree Explorer",
+//   Characteristics: ["storyborn", "hero", "prince"],
+//   Type: "character",
+//   Inkwell: true,
+//   Colors: ["amber"],
+//   Cost: 2,
+//   Strength: 2,
+//   Willpower: 3,
+//   Lore: 1,
+//   Illustrator: "Luca Pinielli",
+//   Number: 10,
+//   Set: "006",
+//   ExternalIds: {
+//     TcgPlayer: 593038,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

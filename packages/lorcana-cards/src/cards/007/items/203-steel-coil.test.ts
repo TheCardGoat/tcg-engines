@@ -3,50 +3,50 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   kashekimAncientRuler,
-//   kodaSmallishBear,
-//   steelCoil,
-//   suzyMasterSeamstress,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   KashekimAncientRuler,
+//   KodaSmallishBear,
+//   SteelCoil,
+//   SuzyMasterSeamstress,
 // } from "@lorcanito/lorcana-engine/cards/007";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Steel Coil", () => {
-//   it("METALLIC FLOW During your turn, whenever a card is put into your inkwell, you may draw a card, then choose and discard a card.", async () => {
-//     const testEngine = new TestEngine({
-//       deck: [kodaSmallishBear],
-//       play: [steelCoil],
-//       hand: [suzyMasterSeamstress, kashekimAncientRuler],
+// Describe("Steel Coil", () => {
+//   It("METALLIC FLOW During your turn, whenever a card is put into your inkwell, you may draw a card, then choose and discard a card.", async () => {
+//     Const testEngine = new TestEngine({
+//       Deck: [kodaSmallishBear],
+//       Play: [steelCoil],
+//       Hand: [suzyMasterSeamstress, kashekimAncientRuler],
 //     });
 //
-//     await testEngine.putIntoInkwell(suzyMasterSeamstress);
+//     Await testEngine.putIntoInkwell(suzyMasterSeamstress);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({ targets: [kashekimAncientRuler] });
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({ targets: [kashekimAncientRuler] });
 //
-//     expect(testEngine.getCardModel(suzyMasterSeamstress).zone).toBe("inkwell");
-//     expect(testEngine.getCardModel(kashekimAncientRuler).zone).toBe("discard");
-//     expect(testEngine.getCardModel(kodaSmallishBear).zone).toBe("hand");
+//     Expect(testEngine.getCardModel(suzyMasterSeamstress).zone).toBe("inkwell");
+//     Expect(testEngine.getCardModel(kashekimAncientRuler).zone).toBe("discard");
+//     Expect(testEngine.getCardModel(kodaSmallishBear).zone).toBe("hand");
 //   });
 // });
 //
-// describe("Regression", () => {
-//   it("should be able to discard the card that was drawn", async () => {
-//     const testEngine = new TestEngine({
-//       deck: [kodaSmallishBear],
-//       play: [steelCoil],
-//       hand: [suzyMasterSeamstress, kashekimAncientRuler],
+// Describe("Regression", () => {
+//   It("should be able to discard the card that was drawn", async () => {
+//     Const testEngine = new TestEngine({
+//       Deck: [kodaSmallishBear],
+//       Play: [steelCoil],
+//       Hand: [suzyMasterSeamstress, kashekimAncientRuler],
 //     });
 //
-//     await testEngine.putIntoInkwell(suzyMasterSeamstress);
+//     Await testEngine.putIntoInkwell(suzyMasterSeamstress);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({ targets: [kodaSmallishBear] });
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({ targets: [kodaSmallishBear] });
 //
-//     expect(testEngine.getCardModel(suzyMasterSeamstress).zone).toBe("inkwell");
-//     expect(testEngine.getCardModel(kashekimAncientRuler).zone).toBe("hand");
-//     expect(testEngine.getCardModel(kodaSmallishBear).zone).toBe("discard");
+//     Expect(testEngine.getCardModel(suzyMasterSeamstress).zone).toBe("inkwell");
+//     Expect(testEngine.getCardModel(kashekimAncientRuler).zone).toBe("hand");
+//     Expect(testEngine.getCardModel(kodaSmallishBear).zone).toBe("discard");
 //   });
 // });
 //

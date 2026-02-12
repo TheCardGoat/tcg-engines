@@ -55,8 +55,8 @@ export interface ParseAbilitiesResult {
 export function parseAbilityText(text: string): ParseResult {
   if (!text || text.trim().length === 0) {
     return {
-      success: false,
       error: "Empty ability text",
+      success: false,
     };
   }
 
@@ -65,8 +65,8 @@ export function parseAbilityText(text: string): ParseResult {
 
   // TODO: Implement proper ability parsing using TDD
   return {
-    success: false,
     error: "Parser not yet implemented",
+    success: false,
   };
 }
 
@@ -136,23 +136,20 @@ export function buildAbilityWithText(
  * }
  * ```
  */
-export function parseAbilities(
-  text: string,
-  _options?: ParserOptions,
-): ParseAbilitiesResult {
+export function parseAbilities(text: string, _options?: ParserOptions): ParseAbilitiesResult {
   // Placeholder implementation - parser will be implemented using TDD
   if (!text || text.trim().length === 0) {
     return {
-      success: false,
       error: "Empty ability text",
+      success: false,
     };
   }
 
   // TODO: Implement proper parser using TDD
   // The tests will guide the implementation
   return {
-    success: false,
     error: "Parser not yet implemented",
+    success: false,
   };
 }
 

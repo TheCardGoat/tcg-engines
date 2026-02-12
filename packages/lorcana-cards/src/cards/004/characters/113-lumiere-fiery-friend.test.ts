@@ -3,76 +3,76 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   auroraTranquilPrincess,
-//   lumiereFieryFriend,
-//   pegasusFlyingSteed,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   AuroraTranquilPrincess,
+//   LumiereFieryFriend,
+//   PegasusFlyingSteed,
 // } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Lumiere - Fiery Friend", () => {
-//   it("**FERVENT ADDRESS** Your other characters get +1 {S}.", () => {
-//     const testStore = new TestStore(
+// Describe("Lumiere - Fiery Friend", () => {
+//   It("**FERVENT ADDRESS** Your other characters get +1 {S}.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: lumiereFieryFriend.cost,
-//         hand: [lumiereFieryFriend],
-//         play: [pegasusFlyingSteed],
+//         Inkwell: lumiereFieryFriend.cost,
+//         Hand: [lumiereFieryFriend],
+//         Play: [pegasusFlyingSteed],
 //       },
 //       {
-//         deck: 1,
+//         Deck: 1,
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getCard(lumiereFieryFriend);
-//     const target = testStore.getCard(pegasusFlyingSteed);
+//     Const cardUnderTest = testStore.getCard(lumiereFieryFriend);
+//     Const target = testStore.getCard(pegasusFlyingSteed);
 //
-//     expect(target.strength).toBe(pegasusFlyingSteed.strength);
+//     Expect(target.strength).toBe(pegasusFlyingSteed.strength);
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     expect(target.strength).toBe(pegasusFlyingSteed.strength + 1);
+//     Expect(target.strength).toBe(pegasusFlyingSteed.strength + 1);
 //
-//     testStore.passTurn();
+//     TestStore.passTurn();
 //
-//     expect(target.strength).toBe(pegasusFlyingSteed.strength + 1);
+//     Expect(target.strength).toBe(pegasusFlyingSteed.strength + 1);
 //   });
 //
-//   it("Gives strength to characters with ward", () => {
-//     const testStore = new TestStore({
-//       play: [lumiereFieryFriend, auroraTranquilPrincess],
+//   It("Gives strength to characters with ward", () => {
+//     Const testStore = new TestStore({
+//       Play: [lumiereFieryFriend, auroraTranquilPrincess],
 //     });
 //
-//     const target = testStore.getCard(auroraTranquilPrincess);
-//     expect(target.strength).toBe(auroraTranquilPrincess.strength + 1);
+//     Const target = testStore.getCard(auroraTranquilPrincess);
+//     Expect(target.strength).toBe(auroraTranquilPrincess.strength + 1);
 //   });
 // });
 //
-// describe("Regression Tests", () => {
-//   it("Doesn't give bonus to enemies", () => {
-//     const testStore = new TestStore(
+// Describe("Regression Tests", () => {
+//   It("Doesn't give bonus to enemies", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: lumiereFieryFriend.cost,
-//         hand: [lumiereFieryFriend],
+//         Inkwell: lumiereFieryFriend.cost,
+//         Hand: [lumiereFieryFriend],
 //       },
 //       {
-//         play: [auroraTranquilPrincess],
-//         deck: 1,
+//         Play: [auroraTranquilPrincess],
+//         Deck: 1,
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getCard(lumiereFieryFriend);
-//     const target = testStore.getCard(auroraTranquilPrincess);
+//     Const cardUnderTest = testStore.getCard(lumiereFieryFriend);
+//     Const target = testStore.getCard(auroraTranquilPrincess);
 //
-//     expect(target.strength).toBe(auroraTranquilPrincess.strength);
+//     Expect(target.strength).toBe(auroraTranquilPrincess.strength);
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     expect(target.strength).toBe(auroraTranquilPrincess.strength);
+//     Expect(target.strength).toBe(auroraTranquilPrincess.strength);
 //
-//     testStore.passTurn();
+//     TestStore.passTurn();
 //
-//     expect(target.strength).toBe(auroraTranquilPrincess.strength);
+//     Expect(target.strength).toBe(auroraTranquilPrincess.strength);
 //   });
 // });
 //

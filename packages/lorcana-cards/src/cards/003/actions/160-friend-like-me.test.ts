@@ -3,58 +3,58 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   liloMakingAWish,
-//   mauiDemiGod,
-//   stichtNewDog,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   LiloMakingAWish,
+//   MauiDemiGod,
+//   StichtNewDog,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { friendLikeMe } from "@lorcanito/lorcana-engine/cards/003/actions/actions";
-// import { jimHawkinsSpaceTraveler } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import {
-//   cinderellaMelodyWeaver,
-//   rayaFierceProtector,
+// Import { friendLikeMe } from "@lorcanito/lorcana-engine/cards/003/actions/actions";
+// Import { jimHawkinsSpaceTraveler } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import {
+//   CinderellaMelodyWeaver,
+//   RayaFierceProtector,
 // } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Friend Like Me", () => {
-//   it("_(A character with cost 5 or more can exert to sing this song for free.)_Each player puts the top 3 cards of their deck into their inkwell facedown and exerted.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Friend Like Me", () => {
+//   It("_(A character with cost 5 or more can exert to sing this song for free.)_Each player puts the top 3 cards of their deck into their inkwell facedown and exerted.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: friendLikeMe.cost,
-//         hand: [friendLikeMe],
-//         deck: [
-//           cinderellaMelodyWeaver,
-//           rayaFierceProtector,
-//           jimHawkinsSpaceTraveler,
+//         Inkwell: friendLikeMe.cost,
+//         Hand: [friendLikeMe],
+//         Deck: [
+//           CinderellaMelodyWeaver,
+//           RayaFierceProtector,
+//           JimHawkinsSpaceTraveler,
 //         ],
 //       },
 //       {
-//         deck: [liloMakingAWish, stichtNewDog, mauiDemiGod],
+//         Deck: [liloMakingAWish, stichtNewDog, mauiDemiGod],
 //       },
 //     );
 //
-//     const cardUnderTest = testEngine.getCardModel(friendLikeMe);
-//     const selfTopDeckCards = [
-//       testEngine.getCardModel(cinderellaMelodyWeaver),
-//       testEngine.getCardModel(rayaFierceProtector),
-//       testEngine.getCardModel(jimHawkinsSpaceTraveler),
+//     Const cardUnderTest = testEngine.getCardModel(friendLikeMe);
+//     Const selfTopDeckCards = [
+//       TestEngine.getCardModel(cinderellaMelodyWeaver),
+//       TestEngine.getCardModel(rayaFierceProtector),
+//       TestEngine.getCardModel(jimHawkinsSpaceTraveler),
 //     ];
 //
-//     const opponentTopDeckCards = [
-//       testEngine.getCardModel(liloMakingAWish),
-//       testEngine.getCardModel(stichtNewDog),
-//       testEngine.getCardModel(mauiDemiGod),
+//     Const opponentTopDeckCards = [
+//       TestEngine.getCardModel(liloMakingAWish),
+//       TestEngine.getCardModel(stichtNewDog),
+//       TestEngine.getCardModel(mauiDemiGod),
 //     ];
 //
-//     await testEngine.playCard(cardUnderTest);
-//     selfTopDeckCards.forEach((card) => {
-//       expect(card.zone).toEqual("inkwell");
-//       expect(card.ready).toEqual(false);
+//     Await testEngine.playCard(cardUnderTest);
+//     SelfTopDeckCards.forEach((card) => {
+//       Expect(card.zone).toEqual("inkwell");
+//       Expect(card.ready).toEqual(false);
 //     });
-//     opponentTopDeckCards.forEach((card) => {
-//       expect(card.zone).toEqual("inkwell");
-//       expect(card.ready).toEqual(false);
+//     OpponentTopDeckCards.forEach((card) => {
+//       Expect(card.zone).toEqual("inkwell");
+//       Expect(card.ready).toEqual(false);
 //     });
 //   });
 // });

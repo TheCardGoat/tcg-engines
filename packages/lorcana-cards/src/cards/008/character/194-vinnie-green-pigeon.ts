@@ -1,42 +1,42 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { self } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { whenYourOtherCharactersIsBanished } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { self } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import { whenYourOtherCharactersIsBanished } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 //
-// export const vinnieGreenPigeon: LorcanitoCharacterCard = {
-//   id: "n1g",
-//   name: "Vinnie",
-//   title: "Green Pigeon",
-//   characteristics: ["storyborn"],
-//   text: "LEARNING EXPERIENCE During an opponent's turn, whenever one of your other characters is banished, gain 1 lore.",
-//   type: "character",
-//   abilities: [
-//     whenYourOtherCharactersIsBanished({
-//       name: "LEARNING EXPERIENCE",
-//       text: "During an opponent's turn, whenever one of your other characters is banished, gain 1 lore.",
-//       conditions: [{ type: "during-turn", value: "opponent" }],
-//       effects: [
+// Export const vinnieGreenPigeon: LorcanitoCharacterCard = {
+//   Id: "n1g",
+//   Name: "Vinnie",
+//   Title: "Green Pigeon",
+//   Characteristics: ["storyborn"],
+//   Text: "LEARNING EXPERIENCE During an opponent's turn, whenever one of your other characters is banished, gain 1 lore.",
+//   Type: "character",
+//   Abilities: [
+//     WhenYourOtherCharactersIsBanished({
+//       Name: "LEARNING EXPERIENCE",
+//       Text: "During an opponent's turn, whenever one of your other characters is banished, gain 1 lore.",
+//       Conditions: [{ type: "during-turn", value: "opponent" }],
+//       Effects: [
 //         {
-//           type: "lore",
-//           modifier: "add",
-//           amount: 1,
-//           target: self,
+//           Type: "lore",
+//           Modifier: "add",
+//           Amount: 1,
+//           Target: self,
 //         },
 //       ],
 //     }),
 //   ],
-//   inkwell: false,
-//   colors: ["steel"],
-//   cost: 3,
-//   strength: 1,
-//   willpower: 4,
-//   illustrator: "Cam Kendell",
-//   number: 194,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631479,
+//   Inkwell: false,
+//   Colors: ["steel"],
+//   Cost: 3,
+//   Strength: 1,
+//   Willpower: 4,
+//   Illustrator: "Cam Kendell",
+//   Number: 194,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631479,
 //   },
-//   rarity: "rare",
-//   lore: 1,
+//   Rarity: "rare",
+//   Lore: 1,
 // };
 //

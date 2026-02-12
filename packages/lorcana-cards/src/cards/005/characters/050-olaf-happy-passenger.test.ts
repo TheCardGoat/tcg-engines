@@ -3,38 +3,38 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { pinocchioOnTheRun } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { sisuEmboldenedWarrior } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { olafHappyPassenger } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { pinocchioOnTheRun } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { sisuEmboldenedWarrior } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { olafHappyPassenger } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Olaf - Happy Passenger", () => {
-//   it("**CLEAR THE PATH** For each exerted character opponents have in play, you pay 1 {I} less to play this character.<br/>**Evasive** _(Only characters with Evasive can challenge this character.)_", () => {
-//     const testStore = new TestStore(
+// Describe("Olaf - Happy Passenger", () => {
+//   It("**CLEAR THE PATH** For each exerted character opponents have in play, you pay 1 {I} less to play this character.<br/>**Evasive** _(Only characters with Evasive can challenge this character.)_", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: olafHappyPassenger.cost,
-//         hand: [olafHappyPassenger],
+//         Inkwell: olafHappyPassenger.cost,
+//         Hand: [olafHappyPassenger],
 //       },
 //       {
-//         play: [pinocchioOnTheRun, sisuEmboldenedWarrior],
+//         Play: [pinocchioOnTheRun, sisuEmboldenedWarrior],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getCard(olafHappyPassenger);
-//     const damagedCards = [
-//       testStore.getCard(pinocchioOnTheRun),
-//       testStore.getCard(sisuEmboldenedWarrior),
+//     Const cardUnderTest = testStore.getCard(olafHappyPassenger);
+//     Const damagedCards = [
+//       TestStore.getCard(pinocchioOnTheRun),
+//       TestStore.getCard(sisuEmboldenedWarrior),
 //     ];
 //
-//     damagedCards.forEach((card) => {
-//       card.updateCardMeta({ exerted: true });
+//     DamagedCards.forEach((card) => {
+//       Card.updateCardMeta({ exerted: true });
 //     });
 //
-//     cardUnderTest.playFromHand();
-//     expect(cardUnderTest.zone).toEqual("play");
-//     expect(testStore.getAvailableInkwellCardCount()).toEqual(
-//       olafHappyPassenger.cost - (olafHappyPassenger.cost - damagedCards.length),
+//     CardUnderTest.playFromHand();
+//     Expect(cardUnderTest.zone).toEqual("play");
+//     Expect(testStore.getAvailableInkwellCardCount()).toEqual(
+//       OlafHappyPassenger.cost - (olafHappyPassenger.cost - damagedCards.length),
 //     );
 //   });
 // });

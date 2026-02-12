@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { dodge } from "@lorcanito/lorcana-engine/cards/004/actions/actions";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { dodge } from "@lorcanito/lorcana-engine/cards/004/actions/actions";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Dodge!", () => {
-//   it.skip("Chosen character gains **Ward** and **Evasive** until the start of your next turn. _(Opponents can't choose them except to challenge. Only characters with Evasive can challenge them.)_", () => {
-//     const testStore = new TestStore({
-//       inkwell: dodge.cost,
-//       hand: [dodge],
+// Describe("Dodge!", () => {
+//   It.skip("Chosen character gains **Ward** and **Evasive** until the start of your next turn. _(Opponents can't choose them except to challenge. Only characters with Evasive can challenge them.)_", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: dodge.cost,
+//       Hand: [dodge],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", dodge.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", dodge.id);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

@@ -1,35 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const moanaChosenByTheOcean: CharacterCard = {
-  id: "176",
-  cardType: "character",
-  name: "Moana",
-  version: "Chosen by the Ocean",
-  fullName: "Moana - Chosen by the Ocean",
-  inkType: ["ruby"],
-  franchise: "Moana",
-  set: "001",
-  text: "THIS IS NOT WHO YOU ARE When you play this character, you may banish chosen character named Te Kā.",
-  cost: 5,
-  strength: 2,
-  willpower: 6,
-  lore: 2,
-  cardNumber: 117,
-  inkable: true,
-  externalIds: {
-    ravensburger: "045c9d82ec1f6de1fc7e93d21807204b5adf2985",
-  },
   abilities: [
     {
-      id: "176-1",
-      text: "THIS IS NOT WHO YOU ARE When you play this character, you may banish chosen character named Te Kā.",
-      name: "THIS IS NOT WHO YOU ARE",
-      type: "triggered",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -38,42 +11,69 @@ export const moanaChosenByTheOcean: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "176-1",
+      name: "THIS IS NOT WHO YOU ARE",
+      text: "THIS IS NOT WHO YOU ARE When you play this character, you may banish chosen character named Te Kā.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 117,
+  cardType: "character",
   classifications: ["Storyborn", "Hero", "Princess"],
+  cost: 5,
+  externalIds: {
+    ravensburger: "045c9d82ec1f6de1fc7e93d21807204b5adf2985",
+  },
+  franchise: "Moana",
+  fullName: "Moana - Chosen by the Ocean",
+  id: "176",
+  inkType: ["ruby"],
+  inkable: true,
+  lore: 2,
+  name: "Moana",
+  set: "001",
+  strength: 2,
+  text: "THIS IS NOT WHO YOU ARE When you play this character, you may banish chosen character named Te Kā.",
+  version: "Chosen by the Ocean",
+  willpower: 6,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const moanChosenByTheOcean: LorcanitoCharacterCard = {
-//   id: "w14",
-//   name: "Moana",
-//   title: "Chosen by the Ocean",
-//   characteristics: ["hero", "storyborn", "princess"],
-//   text: "**THIS IS NOT WHO YOU ARE** When you play this character, you may banish chosen character named Te Ka.",
-//   type: "character",
-//   illustrator: "Tanisha Cherislin",
-//   abilities: [
-//     whenYouPlayThisCharAbility({
-//       optional: true,
-//       name: "THIS IS NOT WHO YOU ARE",
-//       text: "When you play this character, you may banish chosen character named Te Ka.",
-//       type: "resolution",
-//       effects: [
+// Export const moanChosenByTheOcean: LorcanitoCharacterCard = {
+//   Id: "w14",
+//   Name: "Moana",
+//   Title: "Chosen by the Ocean",
+//   Characteristics: ["hero", "storyborn", "princess"],
+//   Text: "**THIS IS NOT WHO YOU ARE** When you play this character, you may banish chosen character named Te Ka.",
+//   Type: "character",
+//   Illustrator: "Tanisha Cherislin",
+//   Abilities: [
+//     WhenYouPlayThisCharAbility({
+//       Optional: true,
+//       Name: "THIS IS NOT WHO YOU ARE",
+//       Text: "When you play this character, you may banish chosen character named Te Ka.",
+//       Type: "resolution",
+//       Effects: [
 //         {
-//           type: "banish",
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
+//           Type: "banish",
+//           Target: {
+//             Type: "card",
+//             Value: 1,
+//             Filters: [
 //               { filter: "type", value: "character" },
 //               { filter: "zone", value: "play" },
 //               {
-//                 filter: "attribute",
-//                 value: "name",
-//                 comparison: { operator: "eq", value: "Te Ka" },
+//                 Filter: "attribute",
+//                 Value: "name",
+//                 Comparison: { operator: "eq", value: "Te Ka" },
 //               },
 //             ],
 //           },
@@ -81,18 +81,18 @@ export const moanaChosenByTheOcean: CharacterCard = {
 //       ],
 //     }),
 //   ],
-//   flavour: "You know who you are.",
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 5,
-//   strength: 2,
-//   willpower: 6,
-//   lore: 2,
-//   number: 117,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 508786,
+//   Flavour: "You know who you are.",
+//   Inkwell: true,
+//   Colors: ["ruby"],
+//   Cost: 5,
+//   Strength: 2,
+//   Willpower: 6,
+//   Lore: 2,
+//   Number: 117,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 508786,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

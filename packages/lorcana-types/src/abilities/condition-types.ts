@@ -14,11 +14,7 @@
  */
 
 import type { CardType } from "../cards/card-types";
-import type {
-  CharacterTarget,
-  ComparisonOperator,
-  TargetZone,
-} from "./target-types";
+import type { CharacterTarget, ComparisonOperator, TargetZone } from "./target-types";
 
 // ============================================================================
 // Character/Card Existence Conditions - Strict Variants
@@ -327,9 +323,7 @@ export interface HasLocationCountCondition {
 /**
  * Combined type for location existence conditions
  */
-export type HasLocationCondition =
-  | HasNamedLocationCondition
-  | HasLocationCountCondition;
+export type HasLocationCondition = HasNamedLocationCondition | HasLocationCountCondition;
 
 /**
  * Check if this character is at a location
@@ -365,9 +359,7 @@ export interface DamageComparisonCondition {
 /**
  * Combined type for damage conditions
  */
-export type HasDamageCondition =
-  | HasAnyDamageCondition
-  | DamageComparisonCondition;
+export type HasDamageCondition = HasAnyDamageCondition | DamageComparisonCondition;
 
 /**
  * Check if this character has no damage
@@ -598,9 +590,7 @@ export interface ThisTurnCountCondition {
 /**
  * Combined type for this-turn conditions
  */
-export type ThisTurnCondition =
-  | ThisTurnHappenedCondition
-  | ThisTurnCountCondition;
+export type ThisTurnCondition = ThisTurnHappenedCondition | ThisTurnCountCondition;
 
 /**
  * Check whose turn it is
@@ -1040,7 +1030,7 @@ export function hasCharacterNamed(
   name: string,
   controller: "you" | "opponent" | "any" = "you",
 ): HasNamedCharacterCondition {
-  return { type: "has-named-character", name, controller };
+  return { controller, name, type: "has-named-character" };
 }
 
 /**
@@ -1051,9 +1041,9 @@ export function hasCharacterWithClassification(
   controller: "you" | "opponent" | "any" = "you",
 ): HasCharacterWithClassificationCondition {
   return {
-    type: "has-character-with-classification",
     classification,
     controller,
+    type: "has-character-with-classification",
   };
 }
 
@@ -1064,7 +1054,7 @@ export function hasCharacterWithKeyword(
   keyword: string,
   controller: "you" | "opponent" | "any" = "you",
 ): HasCharacterWithKeywordCondition {
-  return { type: "has-character-with-keyword", keyword, controller };
+  return { controller, keyword, type: "has-character-with-keyword" };
 }
 
 /**
@@ -1076,10 +1066,10 @@ export function hasCharacterCount(
   comparison: ComparisonOperator = "greater-or-equal",
 ): HasCharacterCountCondition {
   return {
-    type: "has-character-count",
-    controller,
     comparison,
+    controller,
     count,
+    type: "has-character-count",
   };
 }
 
@@ -1093,11 +1083,11 @@ export function resourceCount(
   comparison: ComparisonOperator = "greater-or-equal",
 ): ResourceCountCondition {
   return {
-    type: "resource-count",
-    what,
-    controller,
     comparison,
+    controller,
+    type: "resource-count",
     value,
+    what,
   };
 }
 
@@ -1129,7 +1119,7 @@ export function thisTurnHappened(
   event: ThisTurnEvent,
   who: "you" | "opponent" = "you",
 ): ThisTurnHappenedCondition {
-  return { type: "this-turn-happened", event, who };
+  return { event, type: "this-turn-happened", who };
 }
 
 /**
@@ -1152,14 +1142,14 @@ export function youMay(): PlayerChoiceCondition {
  * Create an "and" condition
  */
 export function and(...conditions: Condition[]): AndCondition {
-  return { type: "and", conditions };
+  return { conditions, type: "and" };
 }
 
 /**
  * Create an "or" condition
  */
 export function or(...conditions: Condition[]): OrCondition {
-  return { type: "or", conditions };
+  return { conditions, type: "or" };
 }
 
 // ============================================================================
@@ -1172,28 +1162,20 @@ export function or(...conditions: Condition[]): OrCondition {
 export function isLogicalCondition(
   condition: Condition,
 ): condition is AndCondition | OrCondition | NotCondition {
-  return (
-    condition.type === "and" ||
-    condition.type === "or" ||
-    condition.type === "not"
-  );
+  return condition.type === "and" || condition.type === "or" || condition.type === "not";
 }
 
 /**
  * Check if condition is a player choice ("you may")
  */
-export function isPlayerChoice(
-  condition: Condition,
-): condition is PlayerChoiceCondition {
+export function isPlayerChoice(condition: Condition): condition is PlayerChoiceCondition {
   return condition.type === "player-choice";
 }
 
 /**
  * Check if condition requires a count comparison
  */
-export function isCountCondition(
-  condition: Condition,
-): condition is CountCondition {
+export function isCountCondition(condition: Condition): condition is CountCondition {
   return (
     condition.type === "resource-count" ||
     condition.type === "keyword-character-count" ||

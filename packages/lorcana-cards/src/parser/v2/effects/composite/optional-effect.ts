@@ -61,9 +61,9 @@ function parseFromText(text: string): OptionalEffect | SequenceEffect | null {
     }
 
     const optionalStep: OptionalEffect = {
-      type: "optional",
-      effect: firstStepEffect,
       chooser: "CONTROLLER",
+      effect: firstStepEffect,
+      type: "optional",
     };
 
     // Parse second step
@@ -79,8 +79,8 @@ function parseFromText(text: string): OptionalEffect | SequenceEffect | null {
     });
 
     return {
-      type: "sequence",
       steps: [optionalStep, secondStep],
+      type: "sequence",
     };
   }
 
@@ -95,9 +95,9 @@ function parseFromText(text: string): OptionalEffect | SequenceEffect | null {
   logger.info("Parsed optional effect", { effect });
 
   return {
-    type: "optional",
-    effect,
     chooser: "CONTROLLER",
+    effect,
+    type: "optional",
   };
 }
 
@@ -114,14 +114,14 @@ function parseFromCst(_ctx: CstNode): OptionalEffect | null {
  * Optional effect parser implementation
  */
 export const optionalEffectParser: EffectParser = {
-  pattern: /you\s+may\s+/i,
   description:
     "Parses optional effects where player can choose to execute (e.g., 'You may draw 2 cards')",
-
   parse: (input: CstNode | string): OptionalEffect | SequenceEffect | null => {
     if (typeof input === "string") {
       return parseFromText(input);
     }
     return parseFromCst(input);
   },
+
+  pattern: /you\s+may\s+/i,
 };

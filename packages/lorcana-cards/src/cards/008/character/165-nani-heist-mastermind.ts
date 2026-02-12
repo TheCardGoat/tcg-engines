@@ -1,45 +1,45 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import {
-//   type ActivatedAbility,
-//   supportAbility,
-//   yourCharactersNamedGain,
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import {
+//   Type ActivatedAbility,
+//   SupportAbility,
+//   YourCharactersNamedGain,
 // } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { chosenCharacterGainsResist } from "@lorcanito/lorcana-engine/effects/effects";
+// Import { chosenCharacterGainsResist } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const naniHeistMastermind: LorcanitoCharacterCard = {
-//   id: "z0x",
-//   name: "Nani",
-//   title: "Heist Mastermind",
-//   characteristics: ["storyborn", "hero"],
-//   text: "STICK TO THE PLAN {E} – Another chosen character gains Resist +2 this turn. (Damage dealt to them is reduced by 2.)\nIT'S UP TO YOU, LILO Your characters named Lilo gain Support. (Whenever they quest, you may add their {S} to another chosen character's {S} this turn.)",
-//   type: "character",
-//   abilities: [
+// Export const naniHeistMastermind: LorcanitoCharacterCard = {
+//   Id: "z0x",
+//   Name: "Nani",
+//   Title: "Heist Mastermind",
+//   Characteristics: ["storyborn", "hero"],
+//   Text: "STICK TO THE PLAN {E} – Another chosen character gains Resist +2 this turn. (Damage dealt to them is reduced by 2.)\nIT'S UP TO YOU, LILO Your characters named Lilo gain Support. (Whenever they quest, you may add their {S} to another chosen character's {S} this turn.)",
+//   Type: "character",
+//   Abilities: [
 //     {
-//       type: "activated",
-//       name: "STICK TO THE PLAN",
-//       text: "Another chosen character gains Resist +2 this turn. (Damage dealt to them is reduced by 2.)",
-//       costs: [{ type: "exert" }],
-//       responder: "self",
-//       effects: [chosenCharacterGainsResist(2)],
+//       Type: "activated",
+//       Name: "STICK TO THE PLAN",
+//       Text: "Another chosen character gains Resist +2 this turn. (Damage dealt to them is reduced by 2.)",
+//       Costs: [{ type: "exert" }],
+//       Responder: "self",
+//       Effects: [chosenCharacterGainsResist(2)],
 //     } as ActivatedAbility,
-//     yourCharactersNamedGain({
-//       name: "Lilo",
-//       ability: supportAbility,
+//     YourCharactersNamedGain({
+//       Name: "Lilo",
+//       Ability: supportAbility,
 //     }),
 //   ],
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 4,
-//   strength: 3,
-//   willpower: 3,
-//   illustrator: "Alex Accorsi",
-//   number: 165,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631462,
+//   Inkwell: true,
+//   Colors: ["sapphire"],
+//   Cost: 4,
+//   Strength: 3,
+//   Willpower: 3,
+//   Illustrator: "Alex Accorsi",
+//   Number: 165,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631462,
 //   },
-//   rarity: "rare",
-//   lore: 1,
+//   Rarity: "rare",
+//   Lore: 1,
 // };
 //

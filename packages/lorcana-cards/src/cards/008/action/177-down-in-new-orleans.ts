@@ -1,58 +1,58 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type {
+// Import type {
 //   LorcanitoActionCard,
 //   ResolutionAbility,
 //   TargetFilter,
 // } from "@lorcanito/lorcana-engine";
-// import { self } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import { self } from "@lorcanito/lorcana-engine/abilities/targets";
 //
-// const downInNewOrleansFilter: TargetFilter[] = [
+// Const downInNewOrleansFilter: TargetFilter[] = [
 //   { filter: "owner", value: "self" },
 //   { filter: "zone", value: "deck" },
 //   { filter: "type", value: ["character", "item", "location"] },
 //   {
-//     filter: "attribute",
-//     value: "cost",
-//     comparison: { operator: "lte", value: 6 },
+//     Filter: "attribute",
+//     Value: "cost",
+//     Comparison: { operator: "lte", value: 6 },
 //   },
 // ];
 //
-// const downInNewOrleansAbility: ResolutionAbility = {
-//   type: "resolution",
-//   effects: [
+// Const downInNewOrleansAbility: ResolutionAbility = {
+//   Type: "resolution",
+//   Effects: [
 //     {
-//       type: "scry",
-//       amount: 3,
-//       mode: "bottom",
-//       shouldRevealTutored: true,
-//       playExerted: false,
-//       target: self,
-//       limits: {
-//         bottom: 3,
-//         play: 1,
+//       Type: "scry",
+//       Amount: 3,
+//       Mode: "bottom",
+//       ShouldRevealTutored: true,
+//       PlayExerted: false,
+//       Target: self,
+//       Limits: {
+//         Bottom: 3,
+//         Play: 1,
 //       },
-//       playFilters: downInNewOrleansFilter,
-//       tutorFilters: downInNewOrleansFilter,
+//       PlayFilters: downInNewOrleansFilter,
+//       TutorFilters: downInNewOrleansFilter,
 //     },
 //   ],
 // };
 //
-// export const downInNewOrleans: LorcanitoActionCard = {
-//   id: "py1",
-//   name: "Down In New Orleans",
-//   characteristics: ["action", "song"],
-//   text: "Look at the top 3 cards of your deck. You may reveal a character, item, or location card with cost 6 or less and play it for free. Put the rest on the bottom of your deck in any order.",
-//   type: "action",
-//   inkwell: false,
-//   colors: ["sapphire"],
-//   cost: 6,
-//   illustrator: "Robin Chung",
-//   number: 177,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631845,
+// Export const downInNewOrleans: LorcanitoActionCard = {
+//   Id: "py1",
+//   Name: "Down In New Orleans",
+//   Characteristics: ["action", "song"],
+//   Text: "Look at the top 3 cards of your deck. You may reveal a character, item, or location card with cost 6 or less and play it for free. Put the rest on the bottom of your deck in any order.",
+//   Type: "action",
+//   Inkwell: false,
+//   Colors: ["sapphire"],
+//   Cost: 6,
+//   Illustrator: "Robin Chung",
+//   Number: 177,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631845,
 //   },
-//   rarity: "super_rare",
-//   abilities: [downInNewOrleansAbility],
+//   Rarity: "super_rare",
+//   Abilities: [downInNewOrleansAbility],
 // };
 //

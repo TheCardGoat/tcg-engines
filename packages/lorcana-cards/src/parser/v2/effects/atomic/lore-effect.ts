@@ -51,14 +51,14 @@ function parseFromCst(
 
   if (isGain) {
     return {
-      type: "gain-lore",
       amount,
+      type: "gain-lore",
     };
   }
   return {
-    type: "lose-lore",
     amount,
     target: "OPPONENT",
+    type: "lose-lore",
   };
 }
 
@@ -110,14 +110,14 @@ function parseFromText(text: string): GainLoreEffect | LoseLoreEffect | null {
 
   if (isGain) {
     return {
-      type: "gain-lore",
       amount,
+      type: "gain-lore",
     };
   }
   return {
-    type: "lose-lore",
     amount,
     target,
+    type: "lose-lore",
   };
 }
 
@@ -125,10 +125,8 @@ function parseFromText(text: string): GainLoreEffect | LoseLoreEffect | null {
  * Lore effect parser implementation
  */
 export const loreEffectParser: EffectParser = {
-  pattern: /(gain|(?:each opponent )?lose(?:s)?)\s+(\d+|\{d\})\s+lore/i,
   description:
     "Parses lore gain/loss effects (e.g., 'gain 2 lore', 'each opponent loses {d} lore')",
-
   parse: (input: CstNode | string): Effect | null => {
     if (typeof input === "string") {
       return parseFromText(input);
@@ -140,4 +138,6 @@ export const loreEffectParser: EffectParser = {
         | undefined,
     );
   },
+
+  pattern: /(gain|(?:each opponent )?lose(?:s)?)\s+(\d+|\{d\})\s+lore/i,
 };

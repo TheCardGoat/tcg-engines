@@ -65,22 +65,17 @@ export function isLocation(card: LorcanaCardDefinition): boolean {
 /**
  * Helper to get all keyword abilities from a card
  */
-function getKeywordAbilities(
-  card: LorcanaCardDefinition,
-): KeywordAbilityDefinition[] {
-  if (!card.abilities) return [];
-  return card.abilities.filter(
-    (a): a is KeywordAbilityDefinition => a.type === "keyword",
-  );
+function getKeywordAbilities(card: LorcanaCardDefinition): KeywordAbilityDefinition[] {
+  if (!card.abilities) {
+    return [];
+  }
+  return card.abilities.filter((a): a is KeywordAbilityDefinition => a.type === "keyword");
 }
 
 /**
  * Check if a card has a specific keyword
  */
-export function hasKeyword(
-  card: LorcanaCardDefinition,
-  keyword: string,
-): boolean {
+export function hasKeyword(card: LorcanaCardDefinition, keyword: string): boolean {
   return getKeywordAbilities(card).some((k) => k.keyword === keyword);
 }
 
@@ -95,7 +90,9 @@ export function getKeywordValue(
   const kw = getKeywordAbilities(card).find(
     (k) => k.keyword === keyword && isParameterizedKeywordAbility(k),
   );
-  if (!(kw && isParameterizedKeywordAbility(kw))) return null;
+  if (!(kw && isParameterizedKeywordAbility(kw))) {
+    return null;
+  }
   return kw.value;
 }
 
@@ -119,9 +116,7 @@ export function getTotalKeyword(
 /**
  * Get all keywords on a card (as KeywordAbility objects)
  */
-export function getAllKeywords(
-  card: LorcanaCardDefinition,
-): KeywordAbilityDefinition[] {
+export function getAllKeywords(card: LorcanaCardDefinition): KeywordAbilityDefinition[] {
   return getKeywordAbilities(card);
 }
 
@@ -141,7 +136,9 @@ export function getShiftCost(card: LorcanaCardDefinition): number | null {
   const shift = getKeywordAbilities(card).find(
     (k) => k.keyword === "Shift" && isShiftKeywordAbility(k),
   );
-  if (!(shift && isShiftKeywordAbility(shift))) return null;
+  if (!(shift && isShiftKeywordAbility(shift))) {
+    return null;
+  }
 
   // Assuming 'ink' cost for now as per previous types
   if ("ink" in shift.cost) {
@@ -157,7 +154,9 @@ export function getShiftTargetName(card: LorcanaCardDefinition): string | null {
   const shift = getKeywordAbilities(card).find(
     (k) => k.keyword === "Shift" && isShiftKeywordAbility(k),
   );
-  if (!(shift && isShiftKeywordAbility(shift))) return null;
+  if (!(shift && isShiftKeywordAbility(shift))) {
+    return null;
+  }
   return shift.shiftTarget ?? null;
 }
 
@@ -168,20 +167,22 @@ export function getSingerValue(card: LorcanaCardDefinition): number | null {
   const singer = getKeywordAbilities(card).find(
     (k) => k.keyword === "Singer" && isValueKeywordAbility(k),
   );
-  if (!(singer && isValueKeywordAbility(singer))) return null;
+  if (!(singer && isValueKeywordAbility(singer))) {
+    return null;
+  }
   return singer.value;
 }
 
 /**
  * Get the Sing Together value if present
  */
-export function getSingTogetherValue(
-  card: LorcanaCardDefinition,
-): number | null {
+export function getSingTogetherValue(card: LorcanaCardDefinition): number | null {
   const singTogether = getKeywordAbilities(card).find(
     (k) => k.keyword === "SingTogether" && isValueKeywordAbility(k),
   );
-  if (!(singTogether && isValueKeywordAbility(singTogether))) return null;
+  if (!(singTogether && isValueKeywordAbility(singTogether))) {
+    return null;
+  }
   return singTogether.value;
 }
 
@@ -273,10 +274,7 @@ export function getMoveCost(card: LorcanaCardDefinition): number | null {
  * Check if two cards have the same name (ignoring version)
  * Used for Shift targeting
  */
-export function hasSameName(
-  card1: LorcanaCardDefinition,
-  card2: LorcanaCardDefinition,
-): boolean {
+export function hasSameName(card1: LorcanaCardDefinition, card2: LorcanaCardDefinition): boolean {
   return card1.name === card2.name;
 }
 
@@ -292,11 +290,13 @@ export function hasAmpersandName(card: LorcanaCardDefinition): boolean {
  * Get both name parts for cards with ampersand (Rule 6.2.4.1)
  * Returns null if card doesn't have ampersand name
  */
-export function getAmpersandNames(
-  card: LorcanaCardDefinition,
-): [string, string] | null {
-  if (!hasAmpersandName(card)) return null;
+export function getAmpersandNames(card: LorcanaCardDefinition): [string, string] | null {
+  if (!hasAmpersandName(card)) {
+    return null;
+  }
   const parts = card.name.split(" & ");
-  if (parts.length !== 2) return null;
+  if (parts.length !== 2) {
+    return null;
+  }
   return [parts[0], parts[1]];
 }

@@ -1,31 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const sheriffOfNottinghamCorruptOfficial: CharacterCard = {
-  id: "1mi",
-  cardType: "character",
-  name: "Sheriff of Nottingham",
-  version: "Corrupt Official",
-  fullName: "Sheriff of Nottingham - Corrupt Official",
-  inkType: ["steel"],
-  franchise: "Robin Hood",
-  set: "003",
-  text: "TAXES SHOULD HURT Whenever you discard a card, you may deal 1 damage to chosen opposing character.",
-  cost: 4,
-  strength: 2,
-  willpower: 4,
-  lore: 1,
-  cardNumber: 191,
-  inkable: false,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "d20d32a55ec2df0ff6790459048a6633003d8cd3",
-  },
   abilities: [
     {
-      id: "1mi-1",
-      type: "triggered",
-      name: "TAXES SHOULD HURT",
-      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "optional",
         effect: {
@@ -41,8 +18,31 @@ export const sheriffOfNottinghamCorruptOfficial: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "1mi-1",
+      name: "TAXES SHOULD HURT",
       text: "TAXES SHOULD HURT Whenever you discard a card, you may deal 1 damage to chosen opposing character.",
+      trigger: { event: "play", timing: "when", on: "SELF" },
+      type: "triggered",
     },
   ],
+  cardNumber: 191,
+  cardType: "character",
   classifications: ["Dreamborn", "Villain"],
+  cost: 4,
+  externalIds: {
+    ravensburger: "d20d32a55ec2df0ff6790459048a6633003d8cd3",
+  },
+  franchise: "Robin Hood",
+  fullName: "Sheriff of Nottingham - Corrupt Official",
+  id: "1mi",
+  inkType: ["steel"],
+  inkable: false,
+  lore: 1,
+  missingTests: true,
+  name: "Sheriff of Nottingham",
+  set: "003",
+  strength: 2,
+  text: "TAXES SHOULD HURT Whenever you discard a card, you may deal 1 damage to chosen opposing character.",
+  version: "Corrupt Official",
+  willpower: 4,
 };

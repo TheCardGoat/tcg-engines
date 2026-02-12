@@ -3,55 +3,55 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { andThenAlongCameZeus } from "@lorcanito/lorcana-engine/cards/003/actions/actions";
-// import {
-//   magicaDeSpellAmbitiousWitch,
-//   theFirebirdForceOfDestruction,
-//   ursulaDeceiver,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { andThenAlongCameZeus } from "@lorcanito/lorcana-engine/cards/003/actions/actions";
+// Import {
+//   MagicaDeSpellAmbitiousWitch,
+//   TheFirebirdForceOfDestruction,
+//   UrsulaDeceiver,
 // } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Ursula - Deceiver", () => {
-//   it("**YOU'LL NEVER EVEN MISS IT** When you play this character, chosen opponent reveals their hand and discards a song card of your choice.", () => {
-//     const testStore = new TestStore(
+// Describe("Ursula - Deceiver", () => {
+//   It("**YOU'LL NEVER EVEN MISS IT** When you play this character, chosen opponent reveals their hand and discards a song card of your choice.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: ursulaDeceiver.cost,
-//         hand: [ursulaDeceiver],
+//         Inkwell: ursulaDeceiver.cost,
+//         Hand: [ursulaDeceiver],
 //       },
 //       {
-//         hand: [
-//           magicaDeSpellAmbitiousWitch,
-//           theFirebirdForceOfDestruction,
-//           andThenAlongCameZeus,
+//         Hand: [
+//           MagicaDeSpellAmbitiousWitch,
+//           TheFirebirdForceOfDestruction,
+//           AndThenAlongCameZeus,
 //         ],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", ursulaDeceiver.id);
-//     const target = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", ursulaDeceiver.id);
+//     Const target = testStore.getByZoneAndId(
 //       "hand",
-//       andThenAlongCameZeus.id,
+//       AndThenAlongCameZeus.id,
 //       "player_two",
 //     );
-//     const targets = [
-//       testStore.getByZoneAndId(
+//     Const targets = [
+//       TestStore.getByZoneAndId(
 //         "hand",
-//         magicaDeSpellAmbitiousWitch.id,
+//         MagicaDeSpellAmbitiousWitch.id,
 //         "player_two",
 //       ),
-//       testStore.getByZoneAndId(
+//       TestStore.getByZoneAndId(
 //         "hand",
-//         theFirebirdForceOfDestruction.id,
+//         TheFirebirdForceOfDestruction.id,
 //         "player_two",
 //       ),
 //     ];
-//     cardUnderTest.playFromHand();
-//     testStore.resolveTopOfStack({ targets: [target] });
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.zone).toEqual("discard");
-//     targets.forEach((card) => {
-//       expect(card.meta.revealed).toEqual(true);
+//     Expect(target.zone).toEqual("discard");
+//     Targets.forEach((card) => {
+//       Expect(card.meta.revealed).toEqual(true);
 //     });
 //   });
 // });

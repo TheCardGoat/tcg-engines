@@ -100,8 +100,8 @@ export {
   isFreeCost,
   isItemTargetQuery,
   // Note: KeywordType, SimpleKeywordType, ParameterizedKeywordType, ValueKeywordType, ComplexKeywordType
-  // and isSimpleKeyword, isParameterizedKeyword, isValueKeyword, isShiftKeyword, isComplexKeyword
-  // are exported from ./types/keywords.ts
+  // And isSimpleKeyword, isParameterizedKeyword, isValueKeyword, isShiftKeyword, isComplexKeyword
+  // Are exported from ./types/keywords.ts
   isKeywordAbility,
   isLocationTargetQuery,
   isLogicalCondition,

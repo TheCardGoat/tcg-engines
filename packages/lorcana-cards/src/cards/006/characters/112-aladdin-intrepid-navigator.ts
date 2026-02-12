@@ -1,25 +1,25 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
 // // TODO: Once the set is released, we organize the cards by set and type
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
 //
-// export const aladdinIntrepidNavigator: LorcanitoCharacterCard = {
-//   id: "j94",
-//   name: "Aladdin",
-//   title: "Fearless Navigator",
-//   characteristics: ["storyborn", "hero", "prince"],
-//   type: "character",
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 2,
-//   strength: 2,
-//   willpower: 3,
-//   lore: 1,
-//   illustrator: "Lava Hidzebaar",
-//   number: 112,
-//   set: "006",
-//   externalIds: {
-//     tcgPlayer: 592998,
+// Export const aladdinIntrepidNavigator: LorcanitoCharacterCard = {
+//   Id: "j94",
+//   Name: "Aladdin",
+//   Title: "Fearless Navigator",
+//   Characteristics: ["storyborn", "hero", "prince"],
+//   Type: "character",
+//   Inkwell: true,
+//   Colors: ["ruby"],
+//   Cost: 2,
+//   Strength: 2,
+//   Willpower: 3,
+//   Lore: 1,
+//   Illustrator: "Lava Hidzebaar",
+//   Number: 112,
+//   Set: "006",
+//   ExternalIds: {
+//     TcgPlayer: 592998,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

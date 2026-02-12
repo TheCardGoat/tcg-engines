@@ -3,74 +3,74 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   liloMakingAWish,
-//   stichtNewDog,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   LiloMakingAWish,
+//   StichtNewDog,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { isabelaMadrigalGoldenChild } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { isabelaMadrigalGoldenChild } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Isabela Madrigal - Golden Child", () => {
-//   it("**LEAVE IT TO ME** Whenever this character quests, your other characters can't quest for the rest of this turn.", () => {
-//     const testStore = new TestStore({
-//       play: [isabelaMadrigalGoldenChild, liloMakingAWish, stichtNewDog],
+// Describe("Isabela Madrigal - Golden Child", () => {
+//   It("**LEAVE IT TO ME** Whenever this character quests, your other characters can't quest for the rest of this turn.", () => {
+//     Const testStore = new TestStore({
+//       Play: [isabelaMadrigalGoldenChild, liloMakingAWish, stichtNewDog],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(isabelaMadrigalGoldenChild);
-//     const liloMakingAWishCard = testStore.getCard(liloMakingAWish);
-//     const stichtNewDogCard = testStore.getCard(stichtNewDog);
+//     Const cardUnderTest = testStore.getCard(isabelaMadrigalGoldenChild);
+//     Const liloMakingAWishCard = testStore.getCard(liloMakingAWish);
+//     Const stichtNewDogCard = testStore.getCard(stichtNewDog);
 //
-//     expect(stichtNewDogCard.hasQuestRestriction).toEqual(false);
-//     expect(liloMakingAWishCard.hasQuestRestriction).toEqual(false);
+//     Expect(stichtNewDogCard.hasQuestRestriction).toEqual(false);
+//     Expect(liloMakingAWishCard.hasQuestRestriction).toEqual(false);
 //
-//     cardUnderTest.quest();
+//     CardUnderTest.quest();
 //
-//     expect(stichtNewDogCard.hasQuestRestriction).toEqual(true);
-//     expect(liloMakingAWishCard.hasQuestRestriction).toEqual(true);
+//     Expect(stichtNewDogCard.hasQuestRestriction).toEqual(true);
+//     Expect(liloMakingAWishCard.hasQuestRestriction).toEqual(true);
 //   });
 //
-//   it("**LADIES FIRST** During your turn, if no other character has quested this turn, this character gets +3 {L}.", async () => {
-//     const testEngine = new TestEngine({
-//       play: [isabelaMadrigalGoldenChild, liloMakingAWish, stichtNewDog],
+//   It("**LADIES FIRST** During your turn, if no other character has quested this turn, this character gets +3 {L}.", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [isabelaMadrigalGoldenChild, liloMakingAWish, stichtNewDog],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(isabelaMadrigalGoldenChild);
-//     const liloMakingAWishCard = testEngine.getCardModel(liloMakingAWish);
-//     const stichtNewDogCard = testEngine.getCardModel(stichtNewDog);
+//     Const cardUnderTest = testEngine.getCardModel(isabelaMadrigalGoldenChild);
+//     Const liloMakingAWishCard = testEngine.getCardModel(liloMakingAWish);
+//     Const stichtNewDogCard = testEngine.getCardModel(stichtNewDog);
 //
-//     expect(cardUnderTest.lore).toEqual(4);
+//     Expect(cardUnderTest.lore).toEqual(4);
 //
-//     await testEngine.questCard(isabelaMadrigalGoldenChild);
+//     Await testEngine.questCard(isabelaMadrigalGoldenChild);
 //
-//     expect(cardUnderTest.lore).toEqual(4);
-//     expect(stichtNewDogCard.hasQuestRestriction).toEqual(true);
-//     expect(liloMakingAWishCard.hasQuestRestriction).toEqual(true);
+//     Expect(cardUnderTest.lore).toEqual(4);
+//     Expect(stichtNewDogCard.hasQuestRestriction).toEqual(true);
+//     Expect(liloMakingAWishCard.hasQuestRestriction).toEqual(true);
 //   });
 //
-//   it("**LADIES FIRST** During your turn, if no other character has quested this turn, this character gets +3 {L}.", async () => {
-//     const testEngine = new TestEngine({
-//       play: [isabelaMadrigalGoldenChild, liloMakingAWish, stichtNewDog],
+//   It("**LADIES FIRST** During your turn, if no other character has quested this turn, this character gets +3 {L}.", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [isabelaMadrigalGoldenChild, liloMakingAWish, stichtNewDog],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(isabelaMadrigalGoldenChild);
-//     const liloMakingAWishCard = testEngine.getCardModel(liloMakingAWish);
-//     const stichtNewDogCard = testEngine.getCardModel(stichtNewDog);
+//     Const cardUnderTest = testEngine.getCardModel(isabelaMadrigalGoldenChild);
+//     Const liloMakingAWishCard = testEngine.getCardModel(liloMakingAWish);
+//     Const stichtNewDogCard = testEngine.getCardModel(stichtNewDog);
 //
-//     expect(cardUnderTest.lore).toEqual(4);
+//     Expect(cardUnderTest.lore).toEqual(4);
 //
-//     await testEngine.questCard(liloMakingAWishCard);
+//     Await testEngine.questCard(liloMakingAWishCard);
 //
-//     expect(cardUnderTest.lore).toEqual(1);
+//     Expect(cardUnderTest.lore).toEqual(1);
 //
-//     expect(stichtNewDogCard.hasQuestRestriction).toEqual(false);
-//     expect(liloMakingAWishCard.hasQuestRestriction).toEqual(false);
+//     Expect(stichtNewDogCard.hasQuestRestriction).toEqual(false);
+//     Expect(liloMakingAWishCard.hasQuestRestriction).toEqual(false);
 //
-//     await testEngine.questCard(cardUnderTest);
+//     Await testEngine.questCard(cardUnderTest);
 //
-//     expect(stichtNewDogCard.hasQuestRestriction).toEqual(true);
-//     expect(liloMakingAWishCard.hasQuestRestriction).toEqual(true);
+//     Expect(stichtNewDogCard.hasQuestRestriction).toEqual(true);
+//     Expect(liloMakingAWishCard.hasQuestRestriction).toEqual(true);
 //   });
 // });
 //

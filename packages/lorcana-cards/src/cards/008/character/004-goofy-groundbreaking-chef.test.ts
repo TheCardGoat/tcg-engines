@@ -3,70 +3,70 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { goofyMusketeer } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { mrSmeeBumblingMate } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { goofyMusketeerSwordsman } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { goofyFlyingFool } from "@lorcanito/lorcana-engine/cards/006";
-// import { goofyGroundbreakingChef } from "@lorcanito/lorcana-engine/cards/008";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { goofyMusketeer } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { mrSmeeBumblingMate } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { goofyMusketeerSwordsman } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { goofyFlyingFool } from "@lorcanito/lorcana-engine/cards/006";
+// Import { goofyGroundbreakingChef } from "@lorcanito/lorcana-engine/cards/008";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Goofy - Groundbreaking Chef", () => {
-//   it("PLENTY TO GO AROUND At the end of your turn, you may remove up to 1 damage from each of your other characters. Ready each character you removed damage from this way.", async () => {
-//     const shouldUntap = [
-//       goofyMusketeerSwordsman,
-//       goofyKnightForADay,
-//       goofyFlyingFool,
+// Describe("Goofy - Groundbreaking Chef", () => {
+//   It("PLENTY TO GO AROUND At the end of your turn, you may remove up to 1 damage from each of your other characters. Ready each character you removed damage from this way.", async () => {
+//     Const shouldUntap = [
+//       GoofyMusketeerSwordsman,
+//       GoofyKnightForADay,
+//       GoofyFlyingFool,
 //     ];
-//     const shouldNotUntap = [goofyGroundbreakingChef, goofyMusketeer];
+//     Const shouldNotUntap = [goofyGroundbreakingChef, goofyMusketeer];
 //
-//     const testEngine = new TestEngine({
-//       play: [...shouldNotUntap, ...shouldUntap],
+//     Const testEngine = new TestEngine({
+//       Play: [...shouldNotUntap, ...shouldUntap],
 //     });
 //
 //     // The effect says your other characters, so Goofy Groundbreaking Chef should not be included
-//     await testEngine.setCardDamage(goofyGroundbreakingChef, 1);
-//     for (const card of shouldUntap) {
-//       await testEngine.setCardDamage(card, 1);
+//     Await testEngine.setCardDamage(goofyGroundbreakingChef, 1);
+//     For (const card of shouldUntap) {
+//       Await testEngine.setCardDamage(card, 1);
 //     }
 //
-//     for (const card of [...shouldUntap, ...shouldNotUntap]) {
-//       await testEngine.tapCard(card);
+//     For (const card of [...shouldUntap, ...shouldNotUntap]) {
+//       Await testEngine.tapCard(card);
 //     }
 //
-//     expect(testEngine.store.turnCount).toEqual(0);
-//     await testEngine.passTurn();
-//     testEngine.changeActivePlayer("player_one");
-//     await testEngine.acceptOptionalLayer();
-//     expect(testEngine.store.turnCount).toEqual(1);
+//     Expect(testEngine.store.turnCount).toEqual(0);
+//     Await testEngine.passTurn();
+//     TestEngine.changeActivePlayer("player_one");
+//     Await testEngine.acceptOptionalLayer();
+//     Expect(testEngine.store.turnCount).toEqual(1);
 //
-//     for (const card of shouldUntap) {
-//       expect(testEngine.getCardModel(card).damage).toEqual(0);
-//       expect(testEngine.getCardModel(card).exerted).toEqual(false);
+//     For (const card of shouldUntap) {
+//       Expect(testEngine.getCardModel(card).damage).toEqual(0);
+//       Expect(testEngine.getCardModel(card).exerted).toEqual(false);
 //     }
 //
-//     for (const card of shouldNotUntap) {
-//       expect(testEngine.getCardModel(card).exerted).toEqual(true);
+//     For (const card of shouldNotUntap) {
+//       Expect(testEngine.getCardModel(card).exerted).toEqual(true);
 //     }
 //
-//     expect(testEngine.getCardModel(goofyGroundbreakingChef).damage).toEqual(1);
+//     Expect(testEngine.getCardModel(goofyGroundbreakingChef).damage).toEqual(1);
 //   });
 // });
 //
-// describe("Regression tests for Goofy - Groundbreaking Chef", () => {
-//   it("Goofy + Mr Smee", async () => {
-//     const testEngine = new TestEngine({
-//       play: [goofyGroundbreakingChef, mrSmeeBumblingMate],
+// Describe("Regression tests for Goofy - Groundbreaking Chef", () => {
+//   It("Goofy + Mr Smee", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [goofyGroundbreakingChef, mrSmeeBumblingMate],
 //     });
 //
-//     await testEngine.setCardDamage(mrSmeeBumblingMate, 1);
-//     await testEngine.tapCard(mrSmeeBumblingMate);
+//     Await testEngine.setCardDamage(mrSmeeBumblingMate, 1);
+//     Await testEngine.tapCard(mrSmeeBumblingMate);
 //
-//     await testEngine.passTurn();
-//     testEngine.changeActivePlayer("player_one");
-//     await testEngine.acceptOptionalLayerBySource({
-//       source: goofyGroundbreakingChef,
+//     Await testEngine.passTurn();
+//     TestEngine.changeActivePlayer("player_one");
+//     Await testEngine.acceptOptionalLayerBySource({
+//       Source: goofyGroundbreakingChef,
 //     });
 //     // await testEngine.acceptOptionalLayerBySource({
 //     //   source: mrSmeeBumblingMate,
@@ -74,8 +74,8 @@
 //
 //     // We should first trigger Goofy Groundbreaking Chef's ability, which will remove 1 damage from Mr Smee and ready Mr Smee
 //     // Given Mr Smee is ready, his ability should NOT trigger and it won't cause one damage to himself.
-//     expect(testEngine.getCardModel(mrSmeeBumblingMate).damage).toEqual(0);
-//     expect(testEngine.stackLayers).toHaveLength(0);
+//     Expect(testEngine.getCardModel(mrSmeeBumblingMate).damage).toEqual(0);
+//     Expect(testEngine.stackLayers).toHaveLength(0);
 //   });
 // });
 //

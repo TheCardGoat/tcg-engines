@@ -1,37 +1,37 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+// Import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 //
-// export const twitterpated: LorcanitoActionCard = {
-//   id: "aku",
-//   name: "Twitterpated",
-//   characteristics: ["action"],
-//   text: "Chosen character gains Evasive until the start of your next turn.",
-//   type: "action",
-//   abilities: [
+// Export const twitterpated: LorcanitoActionCard = {
+//   Id: "aku",
+//   Name: "Twitterpated",
+//   Characteristics: ["action"],
+//   Text: "Chosen character gains Evasive until the start of your next turn.",
+//   Type: "action",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       effects: [
+//       Type: "resolution",
+//       Effects: [
 //         {
-//           type: "ability",
-//           ability: "evasive",
-//           modifier: "add",
-//           duration: "next_turn",
-//           until: true,
-//           target: chosenCharacter,
+//           Type: "ability",
+//           Ability: "evasive",
+//           Modifier: "add",
+//           Duration: "next_turn",
+//           Until: true,
+//           Target: chosenCharacter,
 //         },
 //       ],
 //     },
 //   ],
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 1,
-//   illustrator: "Omar Lozano",
-//   number: 150,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631450,
+//   Inkwell: true,
+//   Colors: ["ruby"],
+//   Cost: 1,
+//   Illustrator: "Omar Lozano",
+//   Number: 150,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631450,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

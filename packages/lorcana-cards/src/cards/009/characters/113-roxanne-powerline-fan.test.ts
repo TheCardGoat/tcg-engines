@@ -3,29 +3,29 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   powerlineWorldsGreatestRockStar,
-//   roxannePowerlineFan,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   PowerlineWorldsGreatestRockStar,
+//   RoxannePowerlineFan,
 // } from "@lorcanito/lorcana-engine/cards/009";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Roxanne - Powerline Fan", () => {
-//   it("CONCERT LOVER While you have a character with Singer in play, this character gets +1 {S} and +1 {L}.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: powerlineWorldsGreatestRockStar.cost,
-//       play: [roxannePowerlineFan],
-//       hand: [powerlineWorldsGreatestRockStar],
+// Describe("Roxanne - Powerline Fan", () => {
+//   It("CONCERT LOVER While you have a character with Singer in play, this character gets +1 {S} and +1 {L}.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: powerlineWorldsGreatestRockStar.cost,
+//       Play: [roxannePowerlineFan],
+//       Hand: [powerlineWorldsGreatestRockStar],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(roxannePowerlineFan);
-//     expect(cardUnderTest.strength).toBe(roxannePowerlineFan.strength);
-//     expect(cardUnderTest.lore).toBe(roxannePowerlineFan.lore);
+//     Const cardUnderTest = testEngine.getCardModel(roxannePowerlineFan);
+//     Expect(cardUnderTest.strength).toBe(roxannePowerlineFan.strength);
+//     Expect(cardUnderTest.lore).toBe(roxannePowerlineFan.lore);
 //
-//     await testEngine.playCard(powerlineWorldsGreatestRockStar);
+//     Await testEngine.playCard(powerlineWorldsGreatestRockStar);
 //
-//     expect(cardUnderTest.strength).toBe(roxannePowerlineFan.strength + 1);
-//     expect(cardUnderTest.lore).toBe(roxannePowerlineFan.lore + 1);
+//     Expect(cardUnderTest.strength).toBe(roxannePowerlineFan.strength + 1);
+//     Expect(cardUnderTest.lore).toBe(roxannePowerlineFan.lore + 1);
 //   });
 // });
 //

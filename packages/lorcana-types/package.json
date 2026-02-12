@@ -26,8 +26,8 @@
     "build": "tsc --noEmit && mkdir -p dist",
     "typecheck": "tsc --noEmit",
     "check-types": "tsc --noEmit",
-    "format": "bun x @biomejs/biome check --fix --max-diagnostics=none --diagnostic-level=error --linter-enabled=false ./src",
-    "lint": "bun x @biomejs/biome lint --fix --max-diagnostics=none --diagnostic-level=error ./src",
+    "format": "bun x oxfmt --write ./src",
+    "lint": "bun x oxlint --fix ./src",
     "test": "echo 'No tests for types-only package'",
     "check": "turbo format lint check-types"
   },
@@ -36,7 +36,6 @@
     "@tcg/core-types": "workspace:*"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.3.11",
     "@types/bun": "1.2.14",
     "typescript": "5.8.3"
   },

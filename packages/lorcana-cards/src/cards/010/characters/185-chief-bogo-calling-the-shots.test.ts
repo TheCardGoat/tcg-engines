@@ -3,136 +3,136 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   chiefBogoCallingTheShots,
-//   herculesMightyLeader,
-//   mickeyMouseAmberChampion,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   ChiefBogoCallingTheShots,
+//   HerculesMightyLeader,
+//   MickeyMouseAmberChampion,
 // } from "@lorcanito/lorcana-engine/cards/010/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Chief Bogo - Calling the Shots", () => {
-//   describe("MY JURISDICTION - During your turn, this character can't be dealt damage", () => {
-//     it("should not take damage during your turn", () => {
-//       const testEngine = new TestEngine(
+// Describe("Chief Bogo - Calling the Shots", () => {
+//   Describe("MY JURISDICTION - During your turn, this character can't be dealt damage", () => {
+//     It("should not take damage during your turn", () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: chiefBogoCallingTheShots.cost + herculesMightyLeader.cost,
-//           hand: [herculesMightyLeader],
-//           play: [chiefBogoCallingTheShots],
+//           Inkwell: chiefBogoCallingTheShots.cost + herculesMightyLeader.cost,
+//           Hand: [herculesMightyLeader],
+//           Play: [chiefBogoCallingTheShots],
 //         },
 //         {
-//           play: [],
+//           Play: [],
 //         },
 //       );
 //
-//       const cardUnderTest = testEngine.getCardModel(chiefBogoCallingTheShots);
-//       const hercules = testEngine.getCardModel(herculesMightyLeader);
+//       Const cardUnderTest = testEngine.getCardModel(chiefBogoCallingTheShots);
+//       Const hercules = testEngine.getCardModel(herculesMightyLeader);
 //
-//       testEngine.playCard(hercules);
-//       hercules.exert();
+//       TestEngine.playCard(hercules);
+//       Hercules.exert();
 //
 //       // During our turn, try to deal damage to Chief Bogo with a damage source
-//       cardUnderTest.updateCardDamage(2, "add", hercules);
+//       CardUnderTest.updateCardDamage(2, "add", hercules);
 //
 //       // Should not take damage during our turn
-//       expect(cardUnderTest.damage).toBe(0);
+//       Expect(cardUnderTest.damage).toBe(0);
 //     });
 //
-//     it("should take damage during opponent's turn", () => {
-//       const testEngine = new TestEngine(
+//     It("should take damage during opponent's turn", () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           play: [chiefBogoCallingTheShots],
+//           Play: [chiefBogoCallingTheShots],
 //         },
 //         {
-//           inkwell: herculesMightyLeader.cost,
-//           hand: [herculesMightyLeader],
+//           Inkwell: herculesMightyLeader.cost,
+//           Hand: [herculesMightyLeader],
 //         },
 //       );
 //
-//       const cardUnderTest = testEngine.getCardModel(chiefBogoCallingTheShots);
+//       Const cardUnderTest = testEngine.getCardModel(chiefBogoCallingTheShots);
 //
 //       // Pass turn to opponent
-//       testEngine.passTurn();
+//       TestEngine.passTurn();
 //
-//       const hercules = testEngine.getCardModel(herculesMightyLeader);
-//       testEngine.playCard(hercules);
-//       hercules.exert();
+//       Const hercules = testEngine.getCardModel(herculesMightyLeader);
+//       TestEngine.playCard(hercules);
+//       Hercules.exert();
 //
 //       // During opponent's turn, deal damage to Chief Bogo with a damage source
-//       cardUnderTest.updateCardDamage(2, "add", hercules);
+//       CardUnderTest.updateCardDamage(2, "add", hercules);
 //
 //       // Should take damage during opponent's turn
-//       expect(cardUnderTest.damage).toBe(2);
+//       Expect(cardUnderTest.damage).toBe(2);
 //     });
 //   });
 //
-//   describe("DEPUTIZE - Your other characters gain the Detective classification", () => {
-//     it("should grant Detective classification to other characters", () => {
-//       const testEngine = new TestEngine({
-//         play: [chiefBogoCallingTheShots, mickeyMouseAmberChampion],
+//   Describe("DEPUTIZE - Your other characters gain the Detective classification", () => {
+//     It("should grant Detective classification to other characters", () => {
+//       Const testEngine = new TestEngine({
+//         Play: [chiefBogoCallingTheShots, mickeyMouseAmberChampion],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(chiefBogoCallingTheShots);
-//       const otherCharacter = testEngine.getCardModel(mickeyMouseAmberChampion);
+//       Const cardUnderTest = testEngine.getCardModel(chiefBogoCallingTheShots);
+//       Const otherCharacter = testEngine.getCardModel(mickeyMouseAmberChampion);
 //
 //       // Mickey Mouse should not have Detective classification initially in the card definition
-//       expect(
-//         otherCharacter.lorcanitoCard.characteristics.includes("detective"),
+//       Expect(
+//         OtherCharacter.lorcanitoCard.characteristics.includes("detective"),
 //       ).toBe(false);
 //
 //       // Check if Mickey Mouse has gained the Detective classification from Chief Bogo
-//       const hasDetective = otherCharacter.characteristics.includes("detective");
-//       expect(hasDetective).toBe(true);
+//       Const hasDetective = otherCharacter.characteristics.includes("detective");
+//       Expect(hasDetective).toBe(true);
 //     });
 //
-//     it("should not grant Detective classification to itself", () => {
-//       const testEngine = new TestEngine({
-//         play: [chiefBogoCallingTheShots],
+//     It("should not grant Detective classification to itself", () => {
+//       Const testEngine = new TestEngine({
+//         Play: [chiefBogoCallingTheShots],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(chiefBogoCallingTheShots);
+//       Const cardUnderTest = testEngine.getCardModel(chiefBogoCallingTheShots);
 //
 //       // Chief Bogo should still only have its original characteristics
-//       const characteristicsCount = cardUnderTest.characteristics.length;
-//       const originalCount = chiefBogoCallingTheShots.characteristics.length;
+//       Const characteristicsCount = cardUnderTest.characteristics.length;
+//       Const originalCount = chiefBogoCallingTheShots.characteristics.length;
 //
 //       // Should not have extra Detective from its own ability
-//       expect(characteristicsCount).toBe(originalCount);
+//       Expect(characteristicsCount).toBe(originalCount);
 //     });
 //
-//     it("should remove Detective classification when Chief Bogo leaves play", () => {
-//       const testEngine = new TestEngine({
-//         play: [chiefBogoCallingTheShots, mickeyMouseAmberChampion],
+//     It("should remove Detective classification when Chief Bogo leaves play", () => {
+//       Const testEngine = new TestEngine({
+//         Play: [chiefBogoCallingTheShots, mickeyMouseAmberChampion],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(chiefBogoCallingTheShots);
-//       const otherCharacter = testEngine.getCardModel(mickeyMouseAmberChampion);
+//       Const cardUnderTest = testEngine.getCardModel(chiefBogoCallingTheShots);
+//       Const otherCharacter = testEngine.getCardModel(mickeyMouseAmberChampion);
 //
 //       // Mickey Mouse should have Detective classification while Chief Bogo is in play
-//       expect(otherCharacter.characteristics.includes("detective")).toBe(true);
+//       Expect(otherCharacter.characteristics.includes("detective")).toBe(true);
 //
 //       // Banish Chief Bogo
-//       cardUnderTest.moveTo("discard");
+//       CardUnderTest.moveTo("discard");
 //
 //       // Mickey Mouse should no longer have Detective classification
-//       expect(otherCharacter.characteristics.includes("detective")).toBe(false);
+//       Expect(otherCharacter.characteristics.includes("detective")).toBe(false);
 //     });
 //
-//     it("should grant Detective classification to characters played after Chief Bogo", () => {
-//       const testEngine = new TestEngine({
-//         inkwell: mickeyMouseAmberChampion.cost,
-//         play: [chiefBogoCallingTheShots],
-//         hand: [mickeyMouseAmberChampion],
+//     It("should grant Detective classification to characters played after Chief Bogo", () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: mickeyMouseAmberChampion.cost,
+//         Play: [chiefBogoCallingTheShots],
+//         Hand: [mickeyMouseAmberChampion],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(chiefBogoCallingTheShots);
+//       Const cardUnderTest = testEngine.getCardModel(chiefBogoCallingTheShots);
 //
 //       // Play Mickey Mouse after Chief Bogo is already in play
-//       const mickey = testEngine.getCardModel(mickeyMouseAmberChampion);
-//       testEngine.playCard(mickey);
+//       Const mickey = testEngine.getCardModel(mickeyMouseAmberChampion);
+//       TestEngine.playCard(mickey);
 //
 //       // Mickey Mouse should have Detective classification
-//       expect(mickey.characteristics.includes("detective")).toBe(true);
+//       Expect(mickey.characteristics.includes("detective")).toBe(true);
 //     });
 //   });
 // });

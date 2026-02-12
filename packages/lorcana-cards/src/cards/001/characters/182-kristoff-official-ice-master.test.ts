@@ -5,9 +5,9 @@ import { kristoffOfficialIceMaster } from "./182-kristoff-official-ice-master";
 describe("Kristoff - Official Ice Master", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [kristoff] });
-  //   expect(testEngine.getCardModel(kristoff).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [kristoff] });
+  //   Expect(testEngine.getCardModel(kristoff).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });

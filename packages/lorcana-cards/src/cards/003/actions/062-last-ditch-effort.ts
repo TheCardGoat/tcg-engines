@@ -1,48 +1,48 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import {
-//   chosenCharacterOfYours,
-//   chosenOpposingCharacter,
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+// Import {
+//   ChosenCharacterOfYours,
+//   ChosenOpposingCharacter,
 // } from "@lorcanito/lorcana-engine/abilities/targets";
 //
-// export const lastDitchEffort: LorcanitoActionCard = {
-//   id: "b2t",
-//   reprints: ["qq2"],
-//   name: "Last-Ditch Effort",
-//   characteristics: ["action"],
-//   text: "Exert chosen opposing character. Then chosen character of yours gains **Challenger** +2 this turn. (They get +2 {S} while challenging.)",
-//   type: "action",
-//   abilities: [
+// Export const lastDitchEffort: LorcanitoActionCard = {
+//   Id: "b2t",
+//   Reprints: ["qq2"],
+//   Name: "Last-Ditch Effort",
+//   Characteristics: ["action"],
+//   Text: "Exert chosen opposing character. Then chosen character of yours gains **Challenger** +2 this turn. (They get +2 {S} while challenging.)",
+//   Type: "action",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       resolveEffectsIndividually: true,
-//       effects: [
+//       Type: "resolution",
+//       ResolveEffectsIndividually: true,
+//       Effects: [
 //         {
-//           type: "exert",
-//           exert: true,
-//           target: chosenOpposingCharacter,
+//           Type: "exert",
+//           Exert: true,
+//           Target: chosenOpposingCharacter,
 //         },
 //         {
-//           type: "ability",
-//           ability: "challenger",
-//           amount: 2,
-//           modifier: "add",
-//           duration: "turn",
-//           until: true,
-//           target: chosenCharacterOfYours,
+//           Type: "ability",
+//           Ability: "challenger",
+//           Amount: 2,
+//           Modifier: "add",
+//           Duration: "turn",
+//           Until: true,
+//           Target: chosenCharacterOfYours,
 //         },
 //       ],
 //     },
 //   ],
-//   flavour: "I got your back",
-//   colors: ["amethyst"],
-//   cost: 3,
-//   illustrator: "Ian MacDonald",
-//   number: 62,
-//   set: "ITI",
-//   externalIds: {
-//     tcgPlayer: 538230,
+//   Flavour: "I got your back",
+//   Colors: ["amethyst"],
+//   Cost: 3,
+//   Illustrator: "Ian MacDonald",
+//   Number: 62,
+//   Set: "ITI",
+//   ExternalIds: {
+//     TcgPlayer: 538230,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

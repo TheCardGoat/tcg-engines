@@ -3,34 +3,34 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { stampede } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
-// import { aladdinHeroicOutlaw } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { stampede } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
+// Import { aladdinHeroicOutlaw } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Stampede", () => {
-//   it("Deal 2 damage to chosen damaged character.", () => {
-//     const testStore = new TestStore({
-//       inkwell: stampede.cost,
-//       hand: [stampede],
-//       play: [aladdinHeroicOutlaw],
+// Describe("Stampede", () => {
+//   It("Deal 2 damage to chosen damaged character.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: stampede.cost,
+//       Hand: [stampede],
+//       Play: [aladdinHeroicOutlaw],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", stampede.id);
-//     const target = testStore.getByZoneAndId("play", aladdinHeroicOutlaw.id);
-//     target.updateCardMeta({ damage: 2 });
-//     expect(
-//       testStore.getByZoneAndId("play", aladdinHeroicOutlaw.id).meta,
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", stampede.id);
+//     Const target = testStore.getByZoneAndId("play", aladdinHeroicOutlaw.id);
+//     Target.updateCardMeta({ damage: 2 });
+//     Expect(
+//       TestStore.getByZoneAndId("play", aladdinHeroicOutlaw.id).meta,
 //     ).toEqual(expect.objectContaining({ damage: 2 }));
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     testStore.resolveTopOfStack({
-//       targetId: target.instanceId,
+//     TestStore.resolveTopOfStack({
+//       TargetId: target.instanceId,
 //     });
 //
-//     expect(
-//       testStore.getByZoneAndId("play", aladdinHeroicOutlaw.id).meta,
+//     Expect(
+//       TestStore.getByZoneAndId("play", aladdinHeroicOutlaw.id).meta,
 //     ).toEqual(expect.objectContaining({ damage: 4 }));
 //   });
 // });

@@ -1,10 +1,4 @@
-import {
-  createRemoteJWKSet,
-  errors,
-  type JWTPayload,
-  type JWTVerifyResult,
-  jwtVerify,
-} from "jose";
+import { type JWTPayload, type JWTVerifyResult, createRemoteJWKSet, errors, jwtVerify } from "jose";
 import { z } from "zod";
 import { env } from "../config/env";
 
@@ -14,8 +8,8 @@ import { env } from "../config/env";
  * This ensures runtime type safety for the JWT payload
  */
 const AuthPayloadSchema = z.object({
+  email: z.string().email(),
   id: z.string().min(1),
-  email: z.email(),
   name: z.string().optional(),
   subscriptionTier: z.string().optional(),
 });
@@ -67,9 +61,9 @@ export function clearJWKSCache(): void {
  * JWT verification options
  */
 const JWT_VERIFY_OPTIONS = {
-  issuer: env.AUTH_SERVICE_URL,
   audience: env.AUTH_SERVICE_URL,
-  clockTolerance: 30, // 30 seconds tolerance for clock skew between services
+  clockTolerance: 30,
+  issuer: env.AUTH_SERVICE_URL, // 30 seconds tolerance for clock skew between services
 };
 
 /**
@@ -82,10 +76,7 @@ function validatePayload(payload: JWTPayload): AuthPayload | null {
   const result = AuthPayloadSchema.safeParse(payload);
   if (!result.success) {
     if (env.NODE_ENV !== "production") {
-      console.error(
-        "JWT payload validation failed:",
-        JSON.stringify(result.error),
-      );
+      console.error("JWT payload validation failed:", JSON.stringify(result.error));
     }
     return null;
   }
@@ -109,16 +100,10 @@ function validatePayload(payload: JWTPayload): AuthPayload | null {
  * }
  * ```
  */
-export async function verifyAuthToken(
-  token: string,
-): Promise<AuthPayload | null> {
+export async function verifyAuthToken(token: string): Promise<AuthPayload | null> {
   try {
     const JWKS = getJWKS();
-    const result: JWTVerifyResult = await jwtVerify(
-      token,
-      JWKS,
-      JWT_VERIFY_OPTIONS,
-    );
+    const result: JWTVerifyResult = await jwtVerify(token, JWKS, JWT_VERIFY_OPTIONS);
 
     return validatePayload(result.payload);
   } catch (error) {
@@ -133,11 +118,7 @@ export async function verifyAuthToken(
 
       try {
         const JWKS = getJWKS();
-        const result: JWTVerifyResult = await jwtVerify(
-          token,
-          JWKS,
-          JWT_VERIFY_OPTIONS,
-        );
+        const result: JWTVerifyResult = await jwtVerify(token, JWKS, JWT_VERIFY_OPTIONS);
 
         return validatePayload(result.payload);
       } catch {

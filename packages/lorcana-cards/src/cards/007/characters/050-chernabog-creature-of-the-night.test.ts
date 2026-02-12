@@ -3,93 +3,93 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { chernabogCreatureOfTheNight } from "@lorcanito/lorcana-engine/cards/007/index";
-// import {
-//   archimedesResourcefulOwl,
-//   deweyLovableShowoff,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { chernabogCreatureOfTheNight } from "@lorcanito/lorcana-engine/cards/007/index";
+// Import {
+//   ArchimedesResourcefulOwl,
+//   DeweyLovableShowoff,
 // } from "@lorcanito/lorcana-engine/cards/008";
-// import { cardEffectTargetPredicate } from "@lorcanito/lorcana-engine/effects/effectTargets";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { cardEffectTargetPredicate } from "@lorcanito/lorcana-engine/effects/effectTargets";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Chernabog - Creature of the Night", () => {
-//   it("MIDNIGHT FESTIVITIES When you play this character, each opponent chooses one of their readied characters and exhausts it. Characters exhausted this way do not ready at the start of their next turn.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Chernabog - Creature of the Night", () => {
+//   It("MIDNIGHT FESTIVITIES When you play this character, each opponent chooses one of their readied characters and exhausts it. Characters exhausted this way do not ready at the start of their next turn.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: chernabogCreatureOfTheNight.cost,
-//         hand: [chernabogCreatureOfTheNight],
+//         Inkwell: chernabogCreatureOfTheNight.cost,
+//         Hand: [chernabogCreatureOfTheNight],
 //       },
 //       {
-//         play: [deweyLovableShowoff],
+//         Play: [deweyLovableShowoff],
 //       },
 //     );
 //
-//     const target = testEngine.getCardModel(deweyLovableShowoff);
-//     expect(target.exerted).toBe(false);
+//     Const target = testEngine.getCardModel(deweyLovableShowoff);
+//     Expect(target.exerted).toBe(false);
 //
-//     await testEngine.playCard(chernabogCreatureOfTheNight);
+//     Await testEngine.playCard(chernabogCreatureOfTheNight);
 //
-//     testEngine.changeActivePlayer("player_two");
-//     await testEngine.resolveTopOfStack({ targets: [target] });
+//     TestEngine.changeActivePlayer("player_two");
+//     Await testEngine.resolveTopOfStack({ targets: [target] });
 //
 //     // Character should be exerted
-//     expect(target.exerted).toBe(true);
+//     Expect(target.exerted).toBe(true);
 //   });
 //
-//   it("should only allow opponent to choose ready characters, not already exerted ones", async () => {
+//   It("should only allow opponent to choose ready characters, not already exerted ones", async () => {
 //     // Arrange: Set up game where opponent has both ready and exerted characters
-//     const testEngine = new TestEngine(
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: chernabogCreatureOfTheNight.cost,
-//         hand: [chernabogCreatureOfTheNight],
+//         Inkwell: chernabogCreatureOfTheNight.cost,
+//         Hand: [chernabogCreatureOfTheNight],
 //       },
 //       {
-//         play: [deweyLovableShowoff, archimedesResourcefulOwl],
+//         Play: [deweyLovableShowoff, archimedesResourcefulOwl],
 //       },
 //     );
 //
-//     const readyCharacter = testEngine.getCardModel(deweyLovableShowoff);
-//     const exertedCharacter = testEngine.getCardModel(archimedesResourcefulOwl);
+//     Const readyCharacter = testEngine.getCardModel(deweyLovableShowoff);
+//     Const exertedCharacter = testEngine.getCardModel(archimedesResourcefulOwl);
 //
 //     // Exert one character before playing Chernabog
-//     exertedCharacter.exert();
-//     expect(readyCharacter.exerted).toBe(false);
-//     expect(exertedCharacter.exerted).toBe(true);
+//     ExertedCharacter.exert();
+//     Expect(readyCharacter.exerted).toBe(false);
+//     Expect(exertedCharacter.exerted).toBe(true);
 //
 //     // Act: Play Chernabog
-//     await testEngine.playCard(chernabogCreatureOfTheNight);
+//     Await testEngine.playCard(chernabogCreatureOfTheNight);
 //
 //     // Switch to opponent's perspective
-//     testEngine.changeActivePlayer("player_two");
+//     TestEngine.changeActivePlayer("player_two");
 //
 //     // Verify that the stack layer has the ready filter in its target
-//     const topLayer = testEngine.store.stackLayerStore.topLayer;
-//     expect(topLayer).toBeTruthy();
+//     Const topLayer = testEngine.store.stackLayerStore.topLayer;
+//     Expect(topLayer).toBeTruthy();
 //
 //     // Check that the exert effect has the ready filter
-//     const effects = topLayer?.ability.effects || [];
-//     const exertEffect = effects.find((e) => e.type === "exert");
-//     expect(exertEffect).toBeTruthy();
+//     Const effects = topLayer?.ability.effects || [];
+//     Const exertEffect = effects.find((e) => e.type === "exert");
+//     Expect(exertEffect).toBeTruthy();
 //
-//     if (
-//       exertEffect &&
+//     If (
+//       ExertEffect &&
 //       "target" in exertEffect &&
-//       cardEffectTargetPredicate(exertEffect.target)
+//       CardEffectTargetPredicate(exertEffect.target)
 //     ) {
-//       const targetFilters = exertEffect.target.filters || [];
-//       const hasReadyFilter = targetFilters.some(
+//       Const targetFilters = exertEffect.target.filters || [];
+//       Const hasReadyFilter = targetFilters.some(
 //         (filter) => filter.filter === "status" && filter.value === "ready",
 //       );
-//       expect(hasReadyFilter).toBe(true);
+//       Expect(hasReadyFilter).toBe(true);
 //     }
 //
 //     // Resolve with the ready character (this should work)
-//     await testEngine.resolveTopOfStack({ targets: [readyCharacter] });
+//     Await testEngine.resolveTopOfStack({ targets: [readyCharacter] });
 //
 //     // Assert: Only the ready character should be exerted
-//     expect(readyCharacter.exerted).toBe(true);
+//     Expect(readyCharacter.exerted).toBe(true);
 //     // The already exerted character should remain exerted (not double-exerted)
-//     expect(exertedCharacter.exerted).toBe(true);
+//     Expect(exertedCharacter.exerted).toBe(true);
 //   });
 // });
 //

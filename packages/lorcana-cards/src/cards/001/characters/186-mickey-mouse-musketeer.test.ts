@@ -5,9 +5,9 @@ import { mickeyMouseMusketeer } from "./186-mickey-mouse-musketeer";
 describe("Mickey Mouse - Musketeer", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [mickeyMouseMusketeer] });
-  //   expect(testEngine.getCardModel(mickeyMouseMusketeer).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [mickeyMouseMusketeer] });
+  //   Expect(testEngine.getCardModel(mickeyMouseMusketeer).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,70 +17,70 @@ describe("Mickey Mouse - Musketeer", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   donaldDuckMusketeer,
-//   goofyMusketeer,
-//   jumbaJokibaaRenegadeScientist,
-//   lefouBumbler,
-//   mickeyMouseMusketeer,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   DonaldDuckMusketeer,
+//   GoofyMusketeer,
+//   JumbaJokibaaRenegadeScientist,
+//   LefouBumbler,
+//   MickeyMouseMusketeer,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Mickey Mouse - Musketeer", () => {
-//   describe("**ALL FOR ONE** Your other Musketeer characters get +1 {S}.", () => {
-//     it("Your other Musketeer characters get +1 {S}.", () => {
-//       const testStore = new TestStore({
-//         play: [mickeyMouseMusketeer, donaldDuckMusketeer, goofyMusketeer],
+// Describe("Mickey Mouse - Musketeer", () => {
+//   Describe("**ALL FOR ONE** Your other Musketeer characters get +1 {S}.", () => {
+//     It("Your other Musketeer characters get +1 {S}.", () => {
+//       Const testStore = new TestStore({
+//         Play: [mickeyMouseMusketeer, donaldDuckMusketeer, goofyMusketeer],
 //       });
 //
-//       const target = testStore.getByZoneAndId("play", donaldDuckMusketeer.id);
-//       const anotherTarget = testStore.getByZoneAndId("play", goofyMusketeer.id);
+//       Const target = testStore.getByZoneAndId("play", donaldDuckMusketeer.id);
+//       Const anotherTarget = testStore.getByZoneAndId("play", goofyMusketeer.id);
 //
-//       expect(target.strength).toEqual((target.lorcanitoCard.strength || 0) + 1);
-//       expect(anotherTarget.strength).toEqual(
+//       Expect(target.strength).toEqual((target.lorcanitoCard.strength || 0) + 1);
+//       Expect(anotherTarget.strength).toEqual(
 //         (anotherTarget.lorcanitoCard.strength || 0) + 1,
 //       );
 //     });
 //
-//     it("Mickey and non-musketeers don't get the bonus", () => {
-//       const testStore = new TestStore({
-//         play: [
-//           mickeyMouseMusketeer,
-//           lefouBumbler,
-//           jumbaJokibaaRenegadeScientist,
+//     It("Mickey and non-musketeers don't get the bonus", () => {
+//       Const testStore = new TestStore({
+//         Play: [
+//           MickeyMouseMusketeer,
+//           LefouBumbler,
+//           JumbaJokibaaRenegadeScientist,
 //         ],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         mickeyMouseMusketeer.id,
+//         MickeyMouseMusketeer.id,
 //       );
-//       const target = testStore.getByZoneAndId("play", lefouBumbler.id);
-//       const anotherTarget = testStore.getByZoneAndId(
+//       Const target = testStore.getByZoneAndId("play", lefouBumbler.id);
+//       Const anotherTarget = testStore.getByZoneAndId(
 //         "play",
-//         jumbaJokibaaRenegadeScientist.id,
+//         JumbaJokibaaRenegadeScientist.id,
 //       );
 //
-//       expect(cardUnderTest.strength).toEqual(cardUnderTest.strength);
-//       expect(target.strength).toEqual(target.lorcanitoCard.strength);
-//       expect(anotherTarget.strength).toEqual(
-//         anotherTarget.lorcanitoCard.strength,
+//       Expect(cardUnderTest.strength).toEqual(cardUnderTest.strength);
+//       Expect(target.strength).toEqual(target.lorcanitoCard.strength);
+//       Expect(anotherTarget.strength).toEqual(
+//         AnotherTarget.lorcanitoCard.strength,
 //       );
 //     });
 //   });
 //
-//   it("**Bodyguard** _(This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)_", () => {
-//     const testStore = new TestStore({
-//       play: [mickeyMouseMusketeer],
+//   It("**Bodyguard** _(This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)_", () => {
+//     Const testStore = new TestStore({
+//       Play: [mickeyMouseMusketeer],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       mickeyMouseMusketeer.id,
+//       MickeyMouseMusketeer.id,
 //     );
 //
-//     expect(cardUnderTest.hasBodyguard).toBe(true);
+//     Expect(cardUnderTest.hasBodyguard).toBe(true);
 //   });
 // });
 //

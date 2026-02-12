@@ -1,35 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const honeyLemonChemicalGenius: CharacterCard = {
-  id: "q86",
-  cardType: "character",
-  name: "Honey Lemon",
-  version: "Chemical Genius",
-  fullName: "Honey Lemon - Chemical Genius",
-  inkType: ["emerald"],
-  franchise: "Big Hero 6",
-  set: "006",
-  text: "HERE'S THE BEST PART When you play this character, you may pay 2 {I} to have each opponent choose and discard a card.",
-  cost: 2,
-  strength: 1,
-  willpower: 1,
-  lore: 2,
-  cardNumber: 74,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "5e86a95c6d5233fcd709d4134f62d1bdc511f8d1",
-  },
   abilities: [
     {
-      id: "q86-1",
-      type: "triggered",
-      name: "HERE'S THE BEST PART",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -40,8 +13,35 @@ export const honeyLemonChemicalGenius: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "q86-1",
+      name: "HERE'S THE BEST PART",
       text: "HERE'S THE BEST PART When you play this character, you may pay 2 {I} to have each opponent choose and discard a card.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 74,
+  cardType: "character",
   classifications: ["Storyborn", "Hero", "Inventor"],
+  cost: 2,
+  externalIds: {
+    ravensburger: "5e86a95c6d5233fcd709d4134f62d1bdc511f8d1",
+  },
+  franchise: "Big Hero 6",
+  fullName: "Honey Lemon - Chemical Genius",
+  id: "q86",
+  inkType: ["emerald"],
+  inkable: true,
+  lore: 2,
+  missingTests: true,
+  name: "Honey Lemon",
+  set: "006",
+  strength: 1,
+  text: "HERE'S THE BEST PART When you play this character, you may pay 2 {I} to have each opponent choose and discard a card.",
+  version: "Chemical Genius",
+  willpower: 1,
 };

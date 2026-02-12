@@ -3,31 +3,31 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   donaldDuckFocusedFlatfoot,
-//   tipoGrowingSon,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   DonaldDuckFocusedFlatfoot,
+//   TipoGrowingSon,
 // } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Donald Duck - Focused Flatfoot", () => {
-//   it("**BAFFLING MYSTERY** When you play this character, you may put the top card of your deck into your inkwell facedown and exerted.", () => {
-//     const testStore = new TestStore({
-//       inkwell: donaldDuckFocusedFlatfoot.cost,
-//       hand: [donaldDuckFocusedFlatfoot],
-//       deck: [tipoGrowingSon],
+// Describe("Donald Duck - Focused Flatfoot", () => {
+//   It("**BAFFLING MYSTERY** When you play this character, you may put the top card of your deck into your inkwell facedown and exerted.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: donaldDuckFocusedFlatfoot.cost,
+//       Hand: [donaldDuckFocusedFlatfoot],
+//       Deck: [tipoGrowingSon],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(donaldDuckFocusedFlatfoot);
-//     const topDeckCard = testStore.getCard(tipoGrowingSon);
+//     Const cardUnderTest = testStore.getCard(donaldDuckFocusedFlatfoot);
+//     Const topDeckCard = testStore.getCard(tipoGrowingSon);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({ targets: [topDeckCard] });
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({ targets: [topDeckCard] });
 //
-//     expect(topDeckCard.zone).toEqual("inkwell");
-//     expect(topDeckCard.ready).toEqual(false);
-//     expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
+//     Expect(topDeckCard.zone).toEqual("inkwell");
+//     Expect(topDeckCard.ready).toEqual(false);
+//     Expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
 //   });
 // });
 //

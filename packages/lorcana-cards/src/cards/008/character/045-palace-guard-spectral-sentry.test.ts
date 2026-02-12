@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { palaceGuardSpectralSentry } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { palaceGuardSpectralSentry } from "@lorcanito/lorcana-engine/cards/008/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Palace Guard - Spectral Sentry", () => {
-//   it.skip("Vanish (When an opponent chooses this character for an action, banish them.)", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: palaceGuardSpectralSentry.cost,
-//       play: [palaceGuardSpectralSentry],
-//       hand: [palaceGuardSpectralSentry],
+// Describe("Palace Guard - Spectral Sentry", () => {
+//   It.skip("Vanish (When an opponent chooses this character for an action, banish them.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: palaceGuardSpectralSentry.cost,
+//       Play: [palaceGuardSpectralSentry],
+//       Hand: [palaceGuardSpectralSentry],
 //     });
 //
-//     await testEngine.playCard(palaceGuardSpectralSentry);
+//     Await testEngine.playCard(palaceGuardSpectralSentry);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

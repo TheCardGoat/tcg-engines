@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { heartOfTeFiti } from "@lorcanito/lorcana-engine/cards/003/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { heartOfTeFiti } from "@lorcanito/lorcana-engine/cards/003/items/items";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Heart of Te Fiti", () => {
-//   it.skip("**CREATE LIFE** {E}, 2 {I} – Put the top card of your deck into your inkwell facedown and exerted.", () => {
-//     const testStore = new TestStore({
-//       inkwell: heartOfTeFiti.cost,
-//       play: [heartOfTeFiti],
+// Describe("Heart of Te Fiti", () => {
+//   It.skip("**CREATE LIFE** {E}, 2 {I} – Put the top card of your deck into your inkwell facedown and exerted.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: heartOfTeFiti.cost,
+//       Play: [heartOfTeFiti],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(heartOfTeFiti);
+//     Const cardUnderTest = testStore.getCard(heartOfTeFiti);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

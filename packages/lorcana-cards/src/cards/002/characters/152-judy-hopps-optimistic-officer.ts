@@ -1,50 +1,50 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { chosenItem } from "@lorcanito/lorcana-engine/abilities/target";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-// import type { BanishEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+// Import { chosenItem } from "@lorcanito/lorcana-engine/abilities/target";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { BanishEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
 //
-// export const judyHoppsOptimisticOfficer: LorcanitoCharacterCard = {
-//   id: "xdx",
-//   reprints: ["bcu"],
-//   name: "Judy Hopps",
-//   title: "Optimistic Officer",
-//   characteristics: ["hero", "storyborn"],
-//   text: "**DON'T CALL ME CUTE** When you play this character, you may banish chosen item. Its player draws a card.",
-//   type: "character",
-//   abilities: [
+// Export const judyHoppsOptimisticOfficer: LorcanitoCharacterCard = {
+//   Id: "xdx",
+//   Reprints: ["bcu"],
+//   Name: "Judy Hopps",
+//   Title: "Optimistic Officer",
+//   Characteristics: ["hero", "storyborn"],
+//   Text: "**DON'T CALL ME CUTE** When you play this character, you may banish chosen item. Its player draws a card.",
+//   Type: "character",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       name: "Don't Call me Cute",
-//       text: "When you play this character, you may banish chosen item. Its player draws a card.",
-//       optional: true,
-//       dependentEffects: true,
-//       effects: [
+//       Type: "resolution",
+//       Name: "Don't Call me Cute",
+//       Text: "When you play this character, you may banish chosen item. Its player draws a card.",
+//       Optional: true,
+//       DependentEffects: true,
+//       Effects: [
 //         {
-//           type: "banish",
-//           target: chosenItem,
+//           Type: "banish",
+//           Target: chosenItem,
 //         } as BanishEffect,
 //         {
-//           type: "draw",
-//           amount: 1,
-//           target: { type: "player", value: "target_owner" },
+//           Type: "draw",
+//           Amount: 1,
+//           Target: { type: "player", value: "target_owner" },
 //         },
 //       ],
 //     },
 //   ],
-//   flavour:
+//   Flavour:
 //     "I'll get to the bottom of what happened with that locked lorebook. You can count on me!",
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 3,
-//   strength: 2,
-//   willpower: 3,
-//   lore: 2,
-//   illustrator: "Arianna Rea",
-//   number: 152,
-//   set: "ROF",
-//   externalIds: {
-//     tcgPlayer: 526398,
+//   Inkwell: true,
+//   Colors: ["sapphire"],
+//   Cost: 3,
+//   Strength: 2,
+//   Willpower: 3,
+//   Lore: 2,
+//   Illustrator: "Arianna Rea",
+//   Number: 152,
+//   Set: "ROF",
+//   ExternalIds: {
+//     TcgPlayer: 526398,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

@@ -3,21 +3,21 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { moanaUndeterredVoyager } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { moanaUndeterredVoyager } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Moana - Undeterred Voyager", () => {
-//   it.skip("**Evasive** _(Only characters with Evasive can challenge this character.)_", () => {
-//     const testStore = new TestStore({
-//       play: [moanaUndeterredVoyager],
+// Describe("Moana - Undeterred Voyager", () => {
+//   It.skip("**Evasive** _(Only characters with Evasive can challenge this character.)_", () => {
+//     Const testStore = new TestStore({
+//       Play: [moanaUndeterredVoyager],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       moanaUndeterredVoyager.id,
+//       MoanaUndeterredVoyager.id,
 //     );
-//     expect(cardUnderTest.hasEvasive).toBe(true);
+//     Expect(cardUnderTest.hasEvasive).toBe(true);
 //   });
 // });
 //

@@ -18,22 +18,22 @@ describe("HeiHei - Protective Rooster", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { heiheiProtectiveRooster } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { heiheiProtectiveRooster } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("HeiHei - Protective Rooster", () => {
-//   it.skip("", () => {
-//     const testStore = new TestStore({
-//       inkwell: heiheiProtectiveRooster.cost,
-//       play: [heiheiProtectiveRooster],
+// Describe("HeiHei - Protective Rooster", () => {
+//   It.skip("", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: heiheiProtectiveRooster.cost,
+//       Play: [heiheiProtectiveRooster],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(heiheiProtectiveRooster);
+//     Const cardUnderTest = testStore.getCard(heiheiProtectiveRooster);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

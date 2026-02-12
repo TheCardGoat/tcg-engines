@@ -1,46 +1,46 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { singerAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { eachOpposingCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { wheneverYouPlayASong } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { singerAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import { eachOpposingCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import { wheneverYouPlayASong } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
 //
-// export const tianaNaturalTalent: LorcanitoCharacterCard = {
-//   id: "ke9",
-//   name: "Tiana",
-//   title: "Natural Talent",
-//   characteristics: ["storyborn", "hero", "princess"],
-//   text: "Singer 6 (This character counts as cost 6 to sing songs.)\nCAPTIVATING MELODY Whenever you play a song, each opposing character gets -1 {S} until the start of your next turn.",
-//   type: "character",
-//   abilities: [
-//     singerAbility(6),
-//     wheneverYouPlayASong({
-//       name: "CAPTIVATING MELODY",
-//       text: "Whenever you play a song, each opposing character gets -1 {S} until the start of your next turn.",
-//       effects: [
+// Export const tianaNaturalTalent: LorcanitoCharacterCard = {
+//   Id: "ke9",
+//   Name: "Tiana",
+//   Title: "Natural Talent",
+//   Characteristics: ["storyborn", "hero", "princess"],
+//   Text: "Singer 6 (This character counts as cost 6 to sing songs.)\nCAPTIVATING MELODY Whenever you play a song, each opposing character gets -1 {S} until the start of your next turn.",
+//   Type: "character",
+//   Abilities: [
+//     SingerAbility(6),
+//     WheneverYouPlayASong({
+//       Name: "CAPTIVATING MELODY",
+//       Text: "Whenever you play a song, each opposing character gets -1 {S} until the start of your next turn.",
+//       Effects: [
 //         {
-//           type: "attribute",
-//           attribute: "strength",
-//           amount: 1,
-//           modifier: "subtract",
-//           duration: "next_turn",
-//           until: true,
-//           target: eachOpposingCharacter,
+//           Type: "attribute",
+//           Attribute: "strength",
+//           Amount: 1,
+//           Modifier: "subtract",
+//           Duration: "next_turn",
+//           Until: true,
+//           Target: eachOpposingCharacter,
 //         },
 //       ],
 //     }),
 //   ],
-//   inkwell: false,
-//   colors: ["amber"],
-//   cost: 4,
-//   strength: 2,
-//   willpower: 4,
-//   illustrator: "Milica Cetkovic",
-//   number: 9,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631333,
+//   Inkwell: false,
+//   Colors: ["amber"],
+//   Cost: 4,
+//   Strength: 2,
+//   Willpower: 4,
+//   Illustrator: "Milica Cetkovic",
+//   Number: 9,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631333,
 //   },
-//   rarity: "rare",
-//   lore: 1,
+//   Rarity: "rare",
+//   Lore: 1,
 // };
 //

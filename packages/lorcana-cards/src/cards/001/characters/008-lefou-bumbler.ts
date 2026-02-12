@@ -1,78 +1,78 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const lefouBumbler: CharacterCard = {
-  id: "9i4",
-  cardType: "character",
-  name: "LeFou",
-  version: "Bumbler",
-  fullName: "LeFou - Bumbler",
-  inkType: ["amber"],
-  franchise: "Beauty and the Beast",
-  set: "001",
-  text: "LOYAL If you have a character named Gaston in play, you pay 1 {I} less to play this character.",
-  cost: 2,
-  strength: 1,
-  willpower: 2,
-  lore: 2,
-  cardNumber: 8,
-  inkable: true,
-  externalIds: {
-    ravensburger: "224000dbb0cebd90c025c1855cfddd5fe747691f",
-  },
   abilities: [
     {
-      id: "9i4-1",
-      text: "LOYAL If you have a character named Gaston in play, you pay 1 {I} less to play this character.",
-      name: "LOYAL",
-      type: "static",
-      effect: {
-        type: "cost-reduction",
-        amount: 1,
-        cardType: "character",
-      },
       condition: {
         type: "has-named-character",
         name: "Gaston",
         controller: "you",
       },
+      effect: {
+        type: "cost-reduction",
+        amount: 1,
+        cardType: "character",
+      },
+      id: "9i4-1",
+      name: "LOYAL",
+      text: "LOYAL If you have a character named Gaston in play, you pay 1 {I} less to play this character.",
+      type: "static",
     },
   ],
+  cardNumber: 8,
+  cardType: "character",
   classifications: ["Storyborn", "Ally"],
+  cost: 2,
+  externalIds: {
+    ravensburger: "224000dbb0cebd90c025c1855cfddd5fe747691f",
+  },
+  franchise: "Beauty and the Beast",
+  fullName: "LeFou - Bumbler",
+  id: "9i4",
+  inkType: ["amber"],
+  inkable: true,
+  lore: 2,
+  name: "LeFou",
+  set: "001",
+  strength: 1,
+  text: "LOYAL If you have a character named Gaston in play, you pay 1 {I} less to play this character.",
+  version: "Bumbler",
+  willpower: 2,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { ifYouHaveCharacterNamed } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
-// import { whenYouPlayThisForEachYouPayLess } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import { ifYouHaveCharacterNamed } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
+// Import { whenYouPlayThisForEachYouPayLess } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const lefouBumbler: LorcanitoCharacterCard = {
-//   id: "eal",
-//   name: "Lefou",
-//   title: "Bumbler",
-//   characteristics: ["storyborn", "ally"],
-//   text: "**LOYAL** If you have a character named Gaston in play, you pay 1 {I} less to play this character.",
-//   type: "character",
-//   abilities: [
-//     whenYouPlayThisForEachYouPayLess({
-//       name: "Loyal",
-//       text: "If you have a character named Gaston in play, you pay 1 {I} less to play this character.",
-//       amount: 1,
-//       conditions: [ifYouHaveCharacterNamed("Gaston")],
+// Export const lefouBumbler: LorcanitoCharacterCard = {
+//   Id: "eal",
+//   Name: "Lefou",
+//   Title: "Bumbler",
+//   Characteristics: ["storyborn", "ally"],
+//   Text: "**LOYAL** If you have a character named Gaston in play, you pay 1 {I} less to play this character.",
+//   Type: "character",
+//   Abilities: [
+//     WhenYouPlayThisForEachYouPayLess({
+//       Name: "Loyal",
+//       Text: "If you have a character named Gaston in play, you pay 1 {I} less to play this character.",
+//       Amount: 1,
+//       Conditions: [ifYouHaveCharacterNamed("Gaston")],
 //     }),
 //   ],
-//   flavour: "You need a good toady to be a proper bad guy.",
-//   inkwell: true,
-//   colors: ["amber"],
-//   cost: 2,
-//   strength: 1,
-//   willpower: 2,
-//   lore: 2,
-//   illustrator: "Andrey Chomak",
-//   number: 8,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 492738,
+//   Flavour: "You need a good toady to be a proper bad guy.",
+//   Inkwell: true,
+//   Colors: ["amber"],
+//   Cost: 2,
+//   Strength: 1,
+//   Willpower: 2,
+//   Lore: 2,
+//   Illustrator: "Andrey Chomak",
+//   Number: 8,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 492738,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

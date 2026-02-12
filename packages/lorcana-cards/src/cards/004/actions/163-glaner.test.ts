@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { glean } from "@lorcanito/lorcana-engine/cards/004/actions/actions";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { glean } from "@lorcanito/lorcana-engine/cards/004/actions/actions";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Glaner", () => {
-//   it.skip("Choisissez un objet et bannissez-le. Son propriétaire gagne 2 éclats de Lore.", () => {
-//     const testStore = new TestStore({
-//       inkwell: glean.cost,
-//       hand: [glean],
+// Describe("Glaner", () => {
+//   It.skip("Choisissez un objet et bannissez-le. Son propriétaire gagne 2 éclats de Lore.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: glean.cost,
+//       Hand: [glean],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", glean.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", glean.id);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

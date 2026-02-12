@@ -3,60 +3,60 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   donaldDuckMusketeer,
-//   goofyMusketeer,
-//   scarShamelessFirebrand,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   DonaldDuckMusketeer,
+//   GoofyMusketeer,
+//   ScarShamelessFirebrand,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Goofy - Musketeer", () => {
-//   describe("**When you play this character, you may remove up to 2 damage from each of your Musketeer characters**", () => {
-//     it("Healing 2 damage from one character", () => {
-//       const testStore = new TestStore({
-//         inkwell: goofyMusketeer.cost,
-//         hand: [goofyMusketeer],
-//         play: [donaldDuckMusketeer],
+// Describe("Goofy - Musketeer", () => {
+//   Describe("**When you play this character, you may remove up to 2 damage from each of your Musketeer characters**", () => {
+//     It("Healing 2 damage from one character", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: goofyMusketeer.cost,
+//         Hand: [goofyMusketeer],
+//         Play: [donaldDuckMusketeer],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId("hand", goofyMusketeer.id);
-//       const target = testStore.getByZoneAndId("play", donaldDuckMusketeer.id);
+//       Const cardUnderTest = testStore.getByZoneAndId("hand", goofyMusketeer.id);
+//       Const target = testStore.getByZoneAndId("play", donaldDuckMusketeer.id);
 //
-//       target.updateCardMeta({ damage: 2 });
+//       Target.updateCardMeta({ damage: 2 });
 //
-//       cardUnderTest.playFromHand({ bodyguard: true });
+//       CardUnderTest.playFromHand({ bodyguard: true });
 //
-//       testStore.resolveTopOfStack();
+//       TestStore.resolveTopOfStack();
 //
-//       expect(cardUnderTest.zone).toEqual("play");
-//       expect(target.meta.damage).toEqual(0);
+//       Expect(cardUnderTest.zone).toEqual("play");
+//       Expect(target.meta.damage).toEqual(0);
 //     });
 //
-//     it("Healing 2 damage only to muskeeter characters", () => {
-//       const testStore = new TestStore({
-//         inkwell: goofyMusketeer.cost,
-//         hand: [goofyMusketeer],
-//         play: [donaldDuckMusketeer, scarShamelessFirebrand],
+//     It("Healing 2 damage only to muskeeter characters", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: goofyMusketeer.cost,
+//         Hand: [goofyMusketeer],
+//         Play: [donaldDuckMusketeer, scarShamelessFirebrand],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId("hand", goofyMusketeer.id);
-//       const target = testStore.getByZoneAndId("play", donaldDuckMusketeer.id);
-//       const shouldNotBeTarget = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId("hand", goofyMusketeer.id);
+//       Const target = testStore.getByZoneAndId("play", donaldDuckMusketeer.id);
+//       Const shouldNotBeTarget = testStore.getByZoneAndId(
 //         "play",
-//         scarShamelessFirebrand.id,
+//         ScarShamelessFirebrand.id,
 //       );
 //
-//       target.updateCardMeta({ damage: 2 });
-//       shouldNotBeTarget.updateCardMeta({ damage: 2 });
+//       Target.updateCardMeta({ damage: 2 });
+//       ShouldNotBeTarget.updateCardMeta({ damage: 2 });
 //
-//       cardUnderTest.playFromHand({ bodyguard: true });
+//       CardUnderTest.playFromHand({ bodyguard: true });
 //
-//       testStore.resolveTopOfStack();
+//       TestStore.resolveTopOfStack();
 //
-//       expect(cardUnderTest.zone).toEqual("play");
-//       expect(target.meta.damage).toEqual(0);
-//       expect(shouldNotBeTarget.meta.damage).toEqual(2);
+//       Expect(cardUnderTest.zone).toEqual("play");
+//       Expect(target.meta.damage).toEqual(0);
+//       Expect(shouldNotBeTarget.meta.damage).toEqual(2);
 //     });
 //   });
 // });

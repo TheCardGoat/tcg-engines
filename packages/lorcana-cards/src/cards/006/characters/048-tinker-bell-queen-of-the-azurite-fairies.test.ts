@@ -3,44 +3,44 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { tinkerBellQueenOfTheAzuriteFairies } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { tinkerBellQueenOfTheAzuriteFairies } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Tinker Bell - Queen of the Azurite Fairies", () => {
-//   it("Shift 5 (You may pay 5 {I} to play this on top of one of your characters named Tinker Bell.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [tinkerBellQueenOfTheAzuriteFairies],
+// Describe("Tinker Bell - Queen of the Azurite Fairies", () => {
+//   It("Shift 5 (You may pay 5 {I} to play this on top of one of your characters named Tinker Bell.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [tinkerBellQueenOfTheAzuriteFairies],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(
-//       tinkerBellQueenOfTheAzuriteFairies,
+//     Const cardUnderTest = testEngine.getCardModel(
+//       TinkerBellQueenOfTheAzuriteFairies,
 //     );
-//     expect(cardUnderTest.hasShift).toBe(true);
+//     Expect(cardUnderTest.hasShift).toBe(true);
 //   });
 //
-//   it("Evasive (Only characters with Evasive can challenge this character.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [tinkerBellQueenOfTheAzuriteFairies],
+//   It("Evasive (Only characters with Evasive can challenge this character.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [tinkerBellQueenOfTheAzuriteFairies],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(
-//       tinkerBellQueenOfTheAzuriteFairies,
+//     Const cardUnderTest = testEngine.getCardModel(
+//       TinkerBellQueenOfTheAzuriteFairies,
 //     );
-//     expect(cardUnderTest.hasEvasive).toBe(true);
+//     Expect(cardUnderTest.hasEvasive).toBe(true);
 //   });
 //
-//   it.skip("SHINING EXAMPLE Whenever this character quests, your other Fairy characters get +1 {L} this turn.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: tinkerBellQueenOfTheAzuriteFairies.cost,
-//       play: [tinkerBellQueenOfTheAzuriteFairies],
-//       hand: [tinkerBellQueenOfTheAzuriteFairies],
+//   It.skip("SHINING EXAMPLE Whenever this character quests, your other Fairy characters get +1 {L} this turn.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: tinkerBellQueenOfTheAzuriteFairies.cost,
+//       Play: [tinkerBellQueenOfTheAzuriteFairies],
+//       Hand: [tinkerBellQueenOfTheAzuriteFairies],
 //     });
 //
-//     await testEngine.playCard(tinkerBellQueenOfTheAzuriteFairies);
+//     Await testEngine.playCard(tinkerBellQueenOfTheAzuriteFairies);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

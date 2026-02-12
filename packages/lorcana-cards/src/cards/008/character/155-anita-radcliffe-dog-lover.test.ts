@@ -3,32 +3,32 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   anitaRadcliffeDogLover,
-//   patchPlayfulPup,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   AnitaRadcliffeDogLover,
+//   PatchPlayfulPup,
 // } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Anita Radcliffe - Dog Lover", () => {
-//   it("I'LL TAKE CARE OF YOU When you play this character, you may give chosen Puppy character Resist +1 until the start of your next turn. (Damage dealt to them is reduced by 1.)", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: anitaRadcliffeDogLover.cost,
-//       hand: [anitaRadcliffeDogLover],
-//       play: [patchPlayfulPup],
+// Describe("Anita Radcliffe - Dog Lover", () => {
+//   It("I'LL TAKE CARE OF YOU When you play this character, you may give chosen Puppy character Resist +1 until the start of your next turn. (Damage dealt to them is reduced by 1.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: anitaRadcliffeDogLover.cost,
+//       Hand: [anitaRadcliffeDogLover],
+//       Play: [patchPlayfulPup],
 //     });
 //
-//     expect(testEngine.getCardModel(patchPlayfulPup).hasResist).toBe(false);
+//     Expect(testEngine.getCardModel(patchPlayfulPup).hasResist).toBe(false);
 //
-//     await testEngine.playCard(anitaRadcliffeDogLover);
-//     await testEngine.acceptOptionalLayer();
-//     await testEngine.resolveTopOfStack({ targets: [patchPlayfulPup] });
+//     Await testEngine.playCard(anitaRadcliffeDogLover);
+//     Await testEngine.acceptOptionalLayer();
+//     Await testEngine.resolveTopOfStack({ targets: [patchPlayfulPup] });
 //
-//     expect(testEngine.getCardModel(patchPlayfulPup).hasResist).toBe(true);
-//     testEngine.passTurn();
-//     expect(testEngine.getCardModel(patchPlayfulPup).hasResist).toBe(true);
-//     testEngine.passTurn();
-//     expect(testEngine.getCardModel(patchPlayfulPup).hasResist).toBe(false);
+//     Expect(testEngine.getCardModel(patchPlayfulPup).hasResist).toBe(true);
+//     TestEngine.passTurn();
+//     Expect(testEngine.getCardModel(patchPlayfulPup).hasResist).toBe(true);
+//     TestEngine.passTurn();
+//     Expect(testEngine.getCardModel(patchPlayfulPup).hasResist).toBe(false);
 //   });
 // });
 //

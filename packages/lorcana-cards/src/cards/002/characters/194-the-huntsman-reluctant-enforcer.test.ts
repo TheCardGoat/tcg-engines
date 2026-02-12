@@ -3,42 +3,42 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   cobraBubblesSimpleEducator,
-//   theHuntsmanReluctantEnforcer,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   CobraBubblesSimpleEducator,
+//   TheHuntsmanReluctantEnforcer,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("The Huntsman- Reluctant Enforcer", () => {
-//   it("**CHANGE OF HEART** Whenever this character quests, you may draw a card, then choose and discard a card.", () => {
-//     const testStore = new TestStore({
-//       deck: [cobraBubblesSimpleEducator],
-//       play: [theHuntsmanReluctantEnforcer],
+// Describe("The Huntsman- Reluctant Enforcer", () => {
+//   It("**CHANGE OF HEART** Whenever this character quests, you may draw a card, then choose and discard a card.", () => {
+//     Const testStore = new TestStore({
+//       Deck: [cobraBubblesSimpleEducator],
+//       Play: [theHuntsmanReluctantEnforcer],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       theHuntsmanReluctantEnforcer.id,
+//       TheHuntsmanReluctantEnforcer.id,
 //     );
 //
-//     cardUnderTest.quest();
+//     CardUnderTest.quest();
 //
-//     testStore.resolveOptionalAbility();
+//     TestStore.resolveOptionalAbility();
 //
-//     expect(testStore.getZonesCardCount()).toEqual(
-//       expect.objectContaining({ hand: 1, deck: 0, play: 1, discard: 0 }),
+//     Expect(testStore.getZonesCardCount()).toEqual(
+//       Expect.objectContaining({ hand: 1, deck: 0, play: 1, discard: 0 }),
 //     );
 //
-//     const aCardToDiscard = testStore.getByZoneAndId(
+//     Const aCardToDiscard = testStore.getByZoneAndId(
 //       "hand",
-//       cobraBubblesSimpleEducator.id,
+//       CobraBubblesSimpleEducator.id,
 //     );
-//     testStore.resolveTopOfStack({
-//       targets: [aCardToDiscard],
+//     TestStore.resolveTopOfStack({
+//       Targets: [aCardToDiscard],
 //     });
-//     expect(testStore.getZonesCardCount()).toEqual(
-//       expect.objectContaining({ hand: 0, deck: 0, play: 1, discard: 1 }),
+//     Expect(testStore.getZonesCardCount()).toEqual(
+//       Expect.objectContaining({ hand: 0, deck: 0, play: 1, discard: 1 }),
 //     );
 //   });
 // });

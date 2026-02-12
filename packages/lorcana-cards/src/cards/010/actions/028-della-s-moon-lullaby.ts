@@ -1,45 +1,45 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { chosenOpposingCharacter } from "@lorcanito/lorcana-engine/abilities/target";
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+// Import { chosenOpposingCharacter } from "@lorcanito/lorcana-engine/abilities/target";
 //
-// export const dellasMoonLullaby: LorcanitoActionCard = {
-//   id: "pql",
-//   name: "Della's Moon Lullaby",
-//   characteristics: ["action", "song"],
-//   text: "Chosen opposing character gets -2 {S} until the start of your next turn. Draw a card.",
-//   type: "action",
-//   inkwell: true,
-//   colors: ["amber"],
-//   cost: 2,
-//   illustrator: "Beatrice Blue / Otto Paredes",
-//   number: 28,
-//   set: "010",
-//   externalIds: {
-//     tcgPlayer: 658444,
+// Export const dellasMoonLullaby: LorcanitoActionCard = {
+//   Id: "pql",
+//   Name: "Della's Moon Lullaby",
+//   Characteristics: ["action", "song"],
+//   Text: "Chosen opposing character gets -2 {S} until the start of your next turn. Draw a card.",
+//   Type: "action",
+//   Inkwell: true,
+//   Colors: ["amber"],
+//   Cost: 2,
+//   Illustrator: "Beatrice Blue / Otto Paredes",
+//   Number: 28,
+//   Set: "010",
+//   ExternalIds: {
+//     TcgPlayer: 658444,
 //   },
-//   rarity: "common",
-//   abilities: [
+//   Rarity: "common",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       resolveEffectsIndividually: false,
-//       dependentEffects: false,
-//       text: "Chosen opposing character gets -2 until the start of your next turn. Draw a card.",
-//       effects: [
+//       Type: "resolution",
+//       ResolveEffectsIndividually: false,
+//       DependentEffects: false,
+//       Text: "Chosen opposing character gets -2 until the start of your next turn. Draw a card.",
+//       Effects: [
 //         {
-//           type: "attribute",
-//           attribute: "strength",
-//           amount: 2,
-//           modifier: "subtract",
-//           duration: "next_turn",
-//           until: true,
-//           target: chosenOpposingCharacter,
+//           Type: "attribute",
+//           Attribute: "strength",
+//           Amount: 2,
+//           Modifier: "subtract",
+//           Duration: "next_turn",
+//           Until: true,
+//           Target: chosenOpposingCharacter,
 //         },
 //         {
-//           type: "draw",
-//           amount: 1,
-//           target: {
-//             type: "player",
-//             value: "self",
+//           Type: "draw",
+//           Amount: 1,
+//           Target: {
+//             Type: "player",
+//             Value: "self",
 //           },
 //         },
 //       ],

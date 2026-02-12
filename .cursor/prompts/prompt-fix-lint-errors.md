@@ -35,7 +35,7 @@ Your sole objective is to eliminate all linting errors within the specific packa
     3.  Do NOT attempt to modify global or other packages' configuration files.
 *   **Mandatory Validation Tool:** The `{lintCommand}` (specifically, `bunx turbo lint --filter=@lorcanito/simulator`) is your *exclusive* tool for error checking and validation. Base all your decisions about the presence or absence of linting errors within the target package solely on its output.
 *   **Focused Error Interpretation:** When analyzing the output of the lint command, concentrate *only* on errors reported for the package(s) matching `{targetPackageFilter}`. Ignore errors reported for other packages in the mono-repo unless they are a direct result of your changes within the target package (which should ideally not happen if adhering to the package boundary).
-*    **DO not use ESLint:** use biome instead.
+*    **DO not use ESLint:** use oxlint instead.
 **Inputs You Will Use:**
 
 *   The linting command: `{lintCommand}` (which is `bunx turbo lint --filter=@lorcanito/simulator`).

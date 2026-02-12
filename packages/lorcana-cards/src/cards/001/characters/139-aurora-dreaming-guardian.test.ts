@@ -5,9 +5,9 @@ import { auroraDreamingGuardian } from "./139-aurora-dreaming-guardian";
 describe("Aurora - Dreaming Guardian", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [auroraDreamingGuardian] });
-  //   expect(testEngine.getCardModel(auroraDreamingGuardian).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [auroraDreamingGuardian] });
+  //   Expect(testEngine.getCardModel(auroraDreamingGuardian).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -16,62 +16,62 @@ describe("Aurora - Dreaming Guardian", () => {
 // /**
 //  * @jest-environment node
 //  */
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   auroraDreamingGuardian,
-//   megaraPullingTheStrings,
-//   mickeyMouseTrueFriend,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   AuroraDreamingGuardian,
+//   MegaraPullingTheStrings,
+//   MickeyMouseTrueFriend,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Aurora - Dreaming Guardian", () => {
-//   describe("**Protective Embrace** Your other characters gain **Ward**. _(Opponents can't choose them except to challenge.)_", () => {
-//     it("Other characters gain ward", () => {
-//       const testStore = new TestStore({
-//         play: [
-//           megaraPullingTheStrings,
-//           mickeyMouseTrueFriend,
-//           auroraDreamingGuardian,
+// Describe("Aurora - Dreaming Guardian", () => {
+//   Describe("**Protective Embrace** Your other characters gain **Ward**. _(Opponents can't choose them except to challenge.)_", () => {
+//     It("Other characters gain ward", () => {
+//       Const testStore = new TestStore({
+//         Play: [
+//           MegaraPullingTheStrings,
+//           MickeyMouseTrueFriend,
+//           AuroraDreamingGuardian,
 //         ],
 //       });
 //
-//       const target = testStore.getByZoneAndId(
+//       Const target = testStore.getByZoneAndId(
 //         "play",
-//         megaraPullingTheStrings.id,
+//         MegaraPullingTheStrings.id,
 //       );
-//       const anotherTarget = testStore.getByZoneAndId(
+//       Const anotherTarget = testStore.getByZoneAndId(
 //         "play",
-//         mickeyMouseTrueFriend.id,
+//         MickeyMouseTrueFriend.id,
 //       );
 //
-//       expect(target.hasWard).toEqual(true);
-//       expect(anotherTarget.hasWard).toEqual(true);
+//       Expect(target.hasWard).toEqual(true);
+//       Expect(anotherTarget.hasWard).toEqual(true);
 //     });
 //
-//     it("Aurora herself doesn't have ward", () => {
-//       const testStore = new TestStore({
-//         play: [auroraDreamingGuardian],
+//     It("Aurora herself doesn't have ward", () => {
+//       Const testStore = new TestStore({
+//         Play: [auroraDreamingGuardian],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         auroraDreamingGuardian.id,
+//         AuroraDreamingGuardian.id,
 //       );
 //
-//       expect(cardUnderTest.hasWard).toEqual(false);
+//       Expect(cardUnderTest.hasWard).toEqual(false);
 //     });
 //
-//     it("Two Auroras give ward to one another", () => {
-//       const testStore = new TestStore({
-//         play: [auroraDreamingGuardian, auroraDreamingGuardian],
+//     It("Two Auroras give ward to one another", () => {
+//       Const testStore = new TestStore({
+//         Play: [auroraDreamingGuardian, auroraDreamingGuardian],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         auroraDreamingGuardian.id,
+//         AuroraDreamingGuardian.id,
 //       );
 //
-//       expect(cardUnderTest.hasWard).toEqual(true);
+//       Expect(cardUnderTest.hasWard).toEqual(true);
 //     });
 //   });
 // });

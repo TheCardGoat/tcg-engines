@@ -3,39 +3,39 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "bun:test";
-// import { theMostDiabolicalScheme } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
-// import {
-//   gastonBaritoneBully,
-//   goofyKnightForADay,
+// Import { describe, expect, it } from "bun:test";
+// Import { theMostDiabolicalScheme } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
+// Import {
+//   GastonBaritoneBully,
+//   GoofyKnightForADay,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("The Most Diabolical Scheme", () => {
-//   it("Banish chosen Villain of yours to banish chosen character.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("The Most Diabolical Scheme", () => {
+//   It("Banish chosen Villain of yours to banish chosen character.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: theMostDiabolicalScheme.cost,
-//         hand: [theMostDiabolicalScheme],
-//         play: [gastonBaritoneBully],
+//         Inkwell: theMostDiabolicalScheme.cost,
+//         Hand: [theMostDiabolicalScheme],
+//         Play: [gastonBaritoneBully],
 //       },
 //       {
-//         play: [goofyKnightForADay],
+//         Play: [goofyKnightForADay],
 //       },
 //     );
 //
-//     await testEngine.playCard(theMostDiabolicalScheme);
+//     Await testEngine.playCard(theMostDiabolicalScheme);
 //
-//     await testEngine.resolveTopOfStack(
+//     Await testEngine.resolveTopOfStack(
 //       { targets: [gastonBaritoneBully] },
-//       true,
+//       True,
 //     );
-//     expect(testEngine.getCardModel(gastonBaritoneBully).zone).toEqual(
+//     Expect(testEngine.getCardModel(gastonBaritoneBully).zone).toEqual(
 //       "discard",
 //     );
 //
-//     await testEngine.resolveTopOfStack({ targets: [goofyKnightForADay] });
-//     expect(testEngine.getCardModel(goofyKnightForADay).zone).toEqual("discard");
+//     Await testEngine.resolveTopOfStack({ targets: [goofyKnightForADay] });
+//     Expect(testEngine.getCardModel(goofyKnightForADay).zone).toEqual("discard");
 //   });
 // });
 //

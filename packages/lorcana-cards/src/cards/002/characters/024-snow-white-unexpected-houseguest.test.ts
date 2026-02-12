@@ -3,25 +3,25 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { snowWhiteUnexpectedHouseGuest } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { snowWhiteUnexpectedHouseGuest } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Snow White - Unexpected Houseguest", () => {
-//   it.skip("How Do You Do?", () => {
-//     const testStore = new TestStore({
-//       inkwell: snowWhiteUnexpectedHouseGuest.cost,
-//       play: [snowWhiteUnexpectedHouseGuest],
+// Describe("Snow White - Unexpected Houseguest", () => {
+//   It.skip("How Do You Do?", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: snowWhiteUnexpectedHouseGuest.cost,
+//       Play: [snowWhiteUnexpectedHouseGuest],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       snowWhiteUnexpectedHouseGuest.id,
+//       SnowWhiteUnexpectedHouseGuest.id,
 //     );
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

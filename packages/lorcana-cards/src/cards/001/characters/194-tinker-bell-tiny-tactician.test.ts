@@ -5,9 +5,9 @@ import { tinkerBellTinyTactician } from "./194-tinker-bell-tiny-tactician";
 describe("Tinker Bell - Tiny Tactician", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [tinkerBellTinyTactician] });
-  //   expect(testEngine.getCardModel(tinkerBellTinyTactician).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [tinkerBellTinyTactician] });
+  //   Expect(testEngine.getCardModel(tinkerBellTinyTactician).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,41 +17,41 @@ describe("Tinker Bell - Tiny Tactician", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { youHaveForgottenMe } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
-// import {
-//   aladdinHeroicOutlaw,
-//   magicBroomBucketBrigade,
-//   simbaFutureKing,
-//   tinkerBellTinyTactician,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { youHaveForgottenMe } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
+// Import {
+//   AladdinHeroicOutlaw,
+//   MagicBroomBucketBrigade,
+//   SimbaFutureKing,
+//   TinkerBellTinyTactician,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Tinker Bell - Tiny Tactician", () => {
-//   it("**Battle plans** {E} - Draw a card, then choose and discard a card.", () => {
-//     const testStore = new TestStore({
-//       deck: [magicBroomBucketBrigade, youHaveForgottenMe],
-//       play: [tinkerBellTinyTactician],
-//       hand: [simbaFutureKing, aladdinHeroicOutlaw],
+// Describe("Tinker Bell - Tiny Tactician", () => {
+//   It("**Battle plans** {E} - Draw a card, then choose and discard a card.", () => {
+//     Const testStore = new TestStore({
+//       Deck: [magicBroomBucketBrigade, youHaveForgottenMe],
+//       Play: [tinkerBellTinyTactician],
+//       Hand: [simbaFutureKing, aladdinHeroicOutlaw],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       tinkerBellTinyTactician.id,
+//       TinkerBellTinyTactician.id,
 //     );
 //
-//     const aCardToDiscard = testStore.getByZoneAndId(
+//     Const aCardToDiscard = testStore.getByZoneAndId(
 //       "hand",
-//       aladdinHeroicOutlaw.id,
+//       AladdinHeroicOutlaw.id,
 //     );
 //
-//     cardUnderTest.activate();
-//     testStore.resolveTopOfStack({
-//       targets: [aCardToDiscard],
+//     CardUnderTest.activate();
+//     TestStore.resolveTopOfStack({
+//       Targets: [aCardToDiscard],
 //     });
 //
-//     expect(testStore.getZonesCardCount()).toEqual(
-//       expect.objectContaining({ hand: 2, deck: 1, play: 1, discard: 1 }),
+//     Expect(testStore.getZonesCardCount()).toEqual(
+//       Expect.objectContaining({ hand: 2, deck: 1, play: 1, discard: 1 }),
 //     );
 //   });
 // });

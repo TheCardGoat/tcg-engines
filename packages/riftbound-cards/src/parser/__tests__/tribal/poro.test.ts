@@ -19,16 +19,16 @@ describe("Tribal: Poro", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "static",
           effect: expect.objectContaining({
-            type: "grant-keyword",
             keyword: "Shield",
             target: expect.objectContaining({
               filter: expect.objectContaining({
                 tag: "Poro",
               }),
             }),
+            type: "grant-keyword",
           }),
+          type: "static",
         }),
       );
     });
@@ -45,9 +45,7 @@ describe("Tribal: Poro", () => {
 
   describe("poro conditional", () => {
     it.skip("should parse 'I enter ready if you control another Poro.'", () => {
-      const result = parseAbilities(
-        "I enter ready if you control another Poro.",
-      );
+      const result = parseAbilities("I enter ready if you control another Poro.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);

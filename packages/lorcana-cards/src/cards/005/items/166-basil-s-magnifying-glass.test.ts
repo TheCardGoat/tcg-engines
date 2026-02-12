@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { basilsMagnifyingGlass } from "@lorcanito/lorcana-engine/cards/005/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { basilsMagnifyingGlass } from "@lorcanito/lorcana-engine/cards/005/items/items";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Basil's Magnifying Glass", () => {
-//   it.skip("FIND WHAT’S HIDDEN", () => {
-//     const testStore = new TestStore({
-//       inkwell: basilsMagnifyingGlass.cost,
-//       play: [basilsMagnifyingGlass],
+// Describe("Basil's Magnifying Glass", () => {
+//   It.skip("FIND WHAT’S HIDDEN", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: basilsMagnifyingGlass.cost,
+//       Play: [basilsMagnifyingGlass],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(basilsMagnifyingGlass);
+//     Const cardUnderTest = testStore.getCard(basilsMagnifyingGlass);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

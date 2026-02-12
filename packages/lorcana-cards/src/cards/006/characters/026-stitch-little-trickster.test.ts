@@ -3,40 +3,40 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   stitchAlienBuccaneer,
-//   stitchLittleTrickster,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   StitchAlienBuccaneer,
+//   StitchLittleTrickster,
 // } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Stitch - Little Trickster", () => {
-//   it("NEED A HAND? 1 {I} - This character gets +1 {S} this turn.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: 6,
-//       play: [stitchLittleTrickster],
-//       hand: [stitchAlienBuccaneer],
+// Describe("Stitch - Little Trickster", () => {
+//   It("NEED A HAND? 1 {I} - This character gets +1 {S} this turn.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: 6,
+//       Play: [stitchLittleTrickster],
+//       Hand: [stitchAlienBuccaneer],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(stitchLittleTrickster);
+//     Const cardUnderTest = testEngine.getCardModel(stitchLittleTrickster);
 //
-//     await testEngine.activateCard(stitchLittleTrickster);
-//     expect(cardUnderTest.strength).toBe(stitchLittleTrickster.strength + 1);
-//     expect(testEngine.stackLayers).toHaveLength(0);
+//     Await testEngine.activateCard(stitchLittleTrickster);
+//     Expect(cardUnderTest.strength).toBe(stitchLittleTrickster.strength + 1);
+//     Expect(testEngine.stackLayers).toHaveLength(0);
 //
-//     await testEngine.activateCard(stitchLittleTrickster);
-//     expect(cardUnderTest.strength).toBe(stitchLittleTrickster.strength + 2);
-//     expect(testEngine.stackLayers).toHaveLength(0);
+//     Await testEngine.activateCard(stitchLittleTrickster);
+//     Expect(cardUnderTest.strength).toBe(stitchLittleTrickster.strength + 2);
+//     Expect(testEngine.stackLayers).toHaveLength(0);
 //
-//     const { shifter } = await testEngine.shiftCard({
-//       shifted: stitchLittleTrickster,
-//       shifter: stitchAlienBuccaneer,
+//     Const { shifter } = await testEngine.shiftCard({
+//       Shifted: stitchLittleTrickster,
+//       Shifter: stitchAlienBuccaneer,
 //     });
 //
-//     await testEngine.skipTopOfStack();
-//     expect(testEngine.stackLayers).toHaveLength(0);
+//     Await testEngine.skipTopOfStack();
+//     Expect(testEngine.stackLayers).toHaveLength(0);
 //
-//     expect(shifter.strength).toBe(stitchAlienBuccaneer.strength + 2);
+//     Expect(shifter.strength).toBe(stitchAlienBuccaneer.strength + 2);
 //   });
 // });
 //

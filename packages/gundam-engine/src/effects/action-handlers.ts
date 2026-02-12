@@ -88,10 +88,7 @@ const CARD_DEFINITIONS: Record<string, CardDefinition> = {};
  * @param cardId - Card ID
  * @param definition - Card definition to register
  */
-export function registerCardDefinition(
-  cardId: CardId,
-  definition: CardDefinition,
-): void {
+export function registerCardDefinition(cardId: CardId, definition: CardDefinition): void {
   CARD_DEFINITIONS[cardId] = definition;
 }
 
@@ -198,10 +195,7 @@ export function resetModifierCounter(): void {
  * @param state - Current game state
  * @returns The opponent's player ID, or null if not found
  */
-export function getOpponentPlayer(
-  playerId: PlayerId,
-  state: GundamGameState,
-): PlayerId | null {
+export function getOpponentPlayer(playerId: PlayerId, state: GundamGameState): PlayerId | null {
   const opponent = state.players.find((p) => p !== playerId);
   return opponent ?? null;
 }
@@ -237,7 +231,7 @@ export function findCardZone(
     for (const zoneType of zoneTypes) {
       const zone = state.zones[zoneType][player];
       if (isCardInZone(zone, cardId)) {
-        return { zone: zoneType, owner: player };
+        return { owner: player, zone: zoneType };
       }
     }
   }
@@ -317,11 +311,7 @@ export function getCardDamage(cardId: CardId, state: GundamGameState): number {
  * @param cardId - Card to damage
  * @param amount - Damage amount to set
  */
-export function setCardDamage(
-  draft: GundamGameState,
-  cardId: CardId,
-  amount: number,
-): void {
+export function setCardDamage(draft: GundamGameState, cardId: CardId, amount: number): void {
   // Ensure cardDamage object exists
   if (!draft.gundam.cardDamage) {
     draft.gundam.cardDamage = {};
@@ -353,10 +343,7 @@ export function getCardHP(cardId: CardId): number | undefined {
  * @param state - Current game state
  * @returns True if damage >= HP, false otherwise
  */
-export function hasLethalDamage(
-  cardId: CardId,
-  state: GundamGameState,
-): boolean {
+export function hasLethalDamage(cardId: CardId, state: GundamGameState): boolean {
   const hp = getCardHP(cardId);
   if (hp === undefined) {
     return false; // No HP defined, cannot have lethal damage
@@ -403,7 +390,7 @@ export function handleDrawAction(
   draft.zones.hand[targetPlayer] = newHand;
 
   // Note: Empty deck handling (game loss condition) will be added in T5
-  // when we implement the full game loop
+  // When we implement the full game loop
 }
 
 /**
@@ -426,10 +413,10 @@ export function handleDamageAction(
   // Use the number of pre-resolved targets if available, otherwise default to 1
   const resolvedCount = context.targets?.length ?? 1;
   const defaultTargetSpec: TargetingSpec = {
-    count: resolvedCount,
-    validTargets: [{ type: action.target, owner: "opponent" }],
     chooser: "controller",
+    count: resolvedCount,
     timing: "on_resolution",
+    validTargets: [{ owner: "opponent", type: action.target }],
   };
 
   // Handle the case where targetSelector might be a TargetFilter
@@ -437,10 +424,10 @@ export function handleDamageAction(
   if (action.targetSelector) {
     // If targetSelector is provided, wrap it in a TargetingSpec
     targetingSpec = {
-      count: resolvedCount,
-      validTargets: [action.targetSelector],
       chooser: "controller",
+      count: resolvedCount,
       timing: "on_resolution",
+      validTargets: [action.targetSelector],
     };
   } else {
     targetingSpec = defaultTargetSpec;
@@ -473,11 +460,7 @@ export function handleDamageAction(
       const trashZone = draft.zones.trash[owner];
 
       // Move card to trash
-      const { fromZone: newSource, toZone: newTrash } = moveCard(
-        sourceZone,
-        trashZone,
-        targetId,
-      );
+      const { fromZone: newSource, toZone: newTrash } = moveCard(sourceZone, trashZone, targetId);
 
       draft.zones.shieldSection[owner] = newSource;
       draft.zones.trash[owner] = newTrash;
@@ -492,11 +475,7 @@ export function handleDamageAction(
         const sourceZone = draft.zones[zone][owner];
         const trashZone = draft.zones.trash[owner];
 
-        const { fromZone: newSource, toZone: newTrash } = moveCard(
-          sourceZone,
-          trashZone,
-          targetId,
-        );
+        const { fromZone: newSource, toZone: newTrash } = moveCard(sourceZone, trashZone, targetId);
 
         draft.zones[zone][owner] = newSource;
         draft.zones.trash[owner] = newTrash;
@@ -535,12 +514,7 @@ export function handleRestAction(
   for (const targetId of targets) {
     // Check if card is in a position-supporting zone
     const zoneInfo = findCardZone(targetId, draft);
-    if (
-      !(
-        zoneInfo &&
-        ["battleArea", "resourceArea", "baseSection"].includes(zoneInfo.zone)
-      )
-    ) {
+    if (!(zoneInfo && ["battleArea", "resourceArea", "baseSection"].includes(zoneInfo.zone))) {
       continue; // Card not in a position-supporting zone
     }
 
@@ -568,12 +542,7 @@ export function handleActivateAction(
   for (const targetId of targets) {
     // Check if card is in a position-supporting zone
     const zoneInfo = findCardZone(targetId, draft);
-    if (
-      !(
-        zoneInfo &&
-        ["battleArea", "resourceArea", "baseSection"].includes(zoneInfo.zone)
-      )
-    ) {
+    if (!(zoneInfo && ["battleArea", "resourceArea", "baseSection"].includes(zoneInfo.zone))) {
       continue; // Card not in a position-supporting zone
     }
 
@@ -624,26 +593,15 @@ export function handleMoveCardAction(
   }
 
   // Move the card
-  const { fromZone: newSource, toZone: newDest } = moveCard(
-    sourceZone,
-    destZone,
-    cardId,
-  );
+  const { fromZone: newSource, toZone: newDest } = moveCard(sourceZone, destZone, cardId);
 
   draft.zones[action.from][owner] = newSource;
   draft.zones[action.to][owner] = newDest;
 
   // Clear card position if moving out of position-supporting zone
-  const positionSupportingZones: ZoneType[] = [
-    "battleArea",
-    "resourceArea",
-    "baseSection",
-  ];
+  const positionSupportingZones = new Set<ZoneType>(["battleArea", "resourceArea", "baseSection"]);
 
-  if (
-    positionSupportingZones.includes(action.from) &&
-    !positionSupportingZones.includes(action.to)
-  ) {
+  if (positionSupportingZones.has(action.from) && !positionSupportingZones.has(action.to)) {
     delete draft.gundam.cardPositions[cardId];
   }
 }
@@ -667,7 +625,7 @@ export function handleDestroyAction(
   const targets = resolveSimpleTarget(action.target, context, draft);
 
   // Track destroyed cards with their owners for trigger detection
-  const destroyedCards: Array<{ cardId: CardId; owner: PlayerId }> = [];
+  const destroyedCards: { cardId: CardId; owner: PlayerId }[] = [];
 
   // First pass: find all cards and their zones, detect triggers BEFORE destruction
   // This ensures trigger detection sees the cards in their original zones
@@ -682,9 +640,7 @@ export function handleDestroyAction(
   // Detect and enqueue 【Destroyed】 triggered effects BEFORE moving cards
   // This is important because trigger detection scans the battle area
   // Import locally to avoid circular dependencies
-  const {
-    detectAndEnqueueDestroyedTriggers,
-  } = require("./trigger-integration");
+  const { detectAndEnqueueDestroyedTriggers } = require("./trigger-integration");
   for (const { cardId, owner } of destroyedCards) {
     detectAndEnqueueDestroyedTriggers(draft, cardId, owner);
   }
@@ -704,11 +660,7 @@ export function handleDestroyAction(
     const sourceZone = draft.zones[fromZone][owner];
 
     // Move card to trash
-    const { fromZone: newSource, toZone: newTrash } = moveCard(
-      sourceZone,
-      trashZone,
-      cardId,
-    );
+    const { fromZone: newSource, toZone: newTrash } = moveCard(sourceZone, trashZone, cardId);
 
     draft.zones[fromZone][owner] = newSource;
     draft.zones.trash[owner] = newTrash;
@@ -784,11 +736,7 @@ export function handleDiscardAction(
       continue; // Card no longer in hand
     }
 
-    const { fromZone: newHand, toZone: newTrash } = moveCard(
-      currentHand,
-      currentTrash,
-      cardId,
-    );
+    const { fromZone: newHand, toZone: newTrash } = moveCard(currentHand, currentTrash, cardId);
 
     currentHand = newHand;
     currentTrash = newTrash;
@@ -822,33 +770,36 @@ export function handleModifyStatsAction(
   for (const cardId of targets) {
     // Create modifier based on duration
     const baseModifier = {
-      id: createModifierId("stat-mod"),
-      sourceId: context.sourceCardId,
       apModifier: action.apModifier,
       hpModifier: action.hpModifier,
+      id: createModifierId("stat-mod"),
+      sourceId: context.sourceCardId,
     };
 
     let modifier: TemporaryModifier;
 
     switch (action.duration) {
-      case "this_turn":
+      case "this_turn": {
         modifier = {
           ...baseModifier,
           duration: "end_of_turn",
         };
         break;
-      case "end_of_combat":
+      }
+      case "end_of_combat": {
         modifier = {
           ...baseModifier,
           duration: "end_of_combat",
         };
         break;
-      case "permanent":
+      }
+      case "permanent": {
         modifier = {
           ...baseModifier,
           duration: "permanent",
         };
         break;
+      }
     }
 
     // Initialize modifiers array if needed
@@ -884,9 +835,9 @@ export function handleGrantKeywordAction(
   for (const cardId of targets) {
     // Create modifier based on duration
     const baseModifier = {
+      grantedKeywords: [action.keyword],
       id: createModifierId("keyword-grant"),
       sourceId: context.sourceCardId,
-      grantedKeywords: [action.keyword],
     };
 
     let modifier: TemporaryModifier;
@@ -894,8 +845,8 @@ export function handleGrantKeywordAction(
     if (action.duration === "while_condition") {
       modifier = {
         ...baseModifier,
-        duration: "while_condition",
         condition: action.condition ?? "",
+        duration: "while_condition",
       };
     } else if (action.duration === "this_turn") {
       modifier = {
@@ -903,7 +854,7 @@ export function handleGrantKeywordAction(
         duration: "end_of_turn",
       };
     } else {
-      // permanent
+      // Permanent
       modifier = {
         ...baseModifier,
         duration: "permanent",
@@ -939,10 +890,7 @@ function cardMatchesFilter(cardId: CardId, filter: CardFilter): boolean {
   }
 
   // Check card type
-  if (
-    filter.cardType !== undefined &&
-    definition.cardType !== filter.cardType
-  ) {
+  if (filter.cardType !== undefined && definition.cardType !== filter.cardType) {
     return false;
   }
 
@@ -954,9 +902,7 @@ function cardMatchesFilter(cardId: CardId, filter: CardFilter): boolean {
   // Check traits - all specified traits must be present
   if (filter.trait !== undefined && filter.trait.length > 0) {
     const cardTraits = definition.traits ?? [];
-    const hasAllTraits = filter.trait.every((trait: string) =>
-      cardTraits.includes(trait),
-    );
+    const hasAllTraits = filter.trait.every((trait: string) => cardTraits.includes(trait));
     if (!hasAllTraits) {
       return false;
     }
@@ -964,17 +910,14 @@ function cardMatchesFilter(cardId: CardId, filter: CardFilter): boolean {
 
   // Check name (exact match or contains)
   if (filter.name !== undefined) {
-    if (
-      filter.name !== definition.name &&
-      !definition.name.includes(filter.name)
-    ) {
+    if (filter.name !== definition.name && !definition.name.includes(filter.name)) {
       return false;
     }
   }
 
   // Check cost range
   if (filter.cost !== undefined) {
-    const cost = definition.cost;
+    const { cost } = definition;
     if (filter.cost.exactly !== undefined && cost !== filter.cost.exactly) {
       return false;
     }
@@ -988,7 +931,7 @@ function cardMatchesFilter(cardId: CardId, filter: CardFilter): boolean {
 
   // Check level range
   if (filter.level !== undefined) {
-    const level = definition.level;
+    const { level } = definition;
     if (filter.level.exactly !== undefined && level !== filter.level.exactly) {
       return false;
     }
@@ -1055,11 +998,7 @@ export function handleSearchAction(
   let currentDest = destZone;
 
   for (const cardId of toMove) {
-    const { fromZone: newSource, toZone: newDest } = moveCard(
-      currentSource,
-      currentDest,
-      cardId,
-    );
+    const { fromZone: newSource, toZone: newDest } = moveCard(currentSource, currentDest, cardId);
 
     currentSource = newSource;
     currentDest = newDest;
@@ -1073,10 +1012,7 @@ export function handleSearchAction(
     // Use deterministic seed based on source card ID and effect instance
     // This ensures consistent shuffling for replays
     const seed = `search-${context.sourceCardId}-${draft.gundam.effectStack.nextInstanceId}`;
-    draft.zones[sourceZoneType][context.controllerId] = shuffle(
-      currentSource,
-      seed,
-    );
+    draft.zones[sourceZoneType][context.controllerId] = shuffle(currentSource, seed);
   }
 }
 
@@ -1105,36 +1041,46 @@ export function executeAction(
   context: ActionContext,
 ): void {
   switch (action.type) {
-    case "DRAW":
+    case "DRAW": {
       handleDrawAction(draft, action, context);
       break;
-    case "DAMAGE":
+    }
+    case "DAMAGE": {
       handleDamageAction(draft, action, context);
       break;
-    case "REST":
+    }
+    case "REST": {
       handleRestAction(draft, action, context);
       break;
-    case "ACTIVATE":
+    }
+    case "ACTIVATE": {
       handleActivateAction(draft, action, context);
       break;
-    case "MOVE_CARD":
+    }
+    case "MOVE_CARD": {
       handleMoveCardAction(draft, action, context);
       break;
-    case "DESTROY":
+    }
+    case "DESTROY": {
       handleDestroyAction(draft, action, context);
       break;
-    case "DISCARD":
+    }
+    case "DISCARD": {
       handleDiscardAction(draft, action, context);
       break;
-    case "MODIFY_STATS":
+    }
+    case "MODIFY_STATS": {
       handleModifyStatsAction(draft, action, context);
       break;
-    case "GRANT_KEYWORD":
+    }
+    case "GRANT_KEYWORD": {
       handleGrantKeywordAction(draft, action, context);
       break;
-    case "SEARCH":
+    }
+    case "SEARCH": {
       handleSearchAction(draft, action, context);
       break;
+    }
     default: {
       // TypeScript exhaustiveness check ensures all cases are handled
       const _exhaustiveCheck: never = action;

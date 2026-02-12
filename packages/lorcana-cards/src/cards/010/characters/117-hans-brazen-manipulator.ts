@@ -1,39 +1,18 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const hansBrazenManipulator: CharacterCard = {
-  id: "bkr",
-  cardType: "character",
-  name: "Hans",
-  version: "Brazen Manipulator",
-  fullName: "Hans - Brazen Manipulator",
-  inkType: ["ruby"],
-  franchise: "Frozen",
-  set: "010",
-  text: "JOSTLING FOR POWER King and Queen characters can't quest.\nGROWING INFLUENCE At the start of your turn, if an opponent has 2 or more ready characters in play, gain 2 lore.",
-  cost: 6,
-  strength: 6,
-  willpower: 4,
-  lore: 2,
-  cardNumber: 117,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "29b94bb0bba4c19bd7f17b07feb835bdef4029ef",
-  },
   abilities: [
     {
-      id: "bkr-1",
-      type: "action",
       effect: {
         type: "restriction",
         restriction: "cant-quest",
         target: "SELF",
       },
+      id: "bkr-1",
       text: "JOSTLING FOR POWER King and Queen characters can't quest.",
+      type: "action",
     },
     {
-      id: "bkr-2",
-      type: "action",
       effect: {
         type: "conditional",
         condition: {
@@ -45,8 +24,29 @@ export const hansBrazenManipulator: CharacterCard = {
           amount: 2,
         },
       },
+      id: "bkr-2",
       text: "GROWING INFLUENCE At the start of your turn, if an opponent has 2 or more ready characters in play, gain 2 lore.",
+      type: "action",
     },
   ],
+  cardNumber: 117,
+  cardType: "character",
   classifications: ["Storyborn", "Villain", "Prince"],
+  cost: 6,
+  externalIds: {
+    ravensburger: "29b94bb0bba4c19bd7f17b07feb835bdef4029ef",
+  },
+  franchise: "Frozen",
+  fullName: "Hans - Brazen Manipulator",
+  id: "bkr",
+  inkType: ["ruby"],
+  inkable: true,
+  lore: 2,
+  missingTests: true,
+  name: "Hans",
+  set: "010",
+  strength: 6,
+  text: "JOSTLING FOR POWER King and Queen characters can't quest.\nGROWING INFLUENCE At the start of your turn, if an opponent has 2 or more ready characters in play, gain 2 lore.",
+  version: "Brazen Manipulator",
+  willpower: 4,
 };

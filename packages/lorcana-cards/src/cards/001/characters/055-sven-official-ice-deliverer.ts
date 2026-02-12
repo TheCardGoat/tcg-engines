@@ -1,51 +1,51 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const svenOfficialIceDeliverer: CharacterCard = {
-  id: "kar",
-  cardType: "character",
-  name: "Sven",
-  version: "Official Ice Deliverer",
-  fullName: "Sven - Official Ice Deliverer",
-  inkType: ["amethyst"],
-  franchise: "Disney",
-  set: "001",
-  text: "",
-  cost: 6,
-  strength: 5,
-  willpower: 7,
-  lore: 1,
+  abilities: [],
   cardNumber: 55,
-  inkable: true,
+  cardType: "character",
+  classifications: ["Storyborn", "Ally"],
+  cost: 6,
   externalIds: {
     ravensburger: "",
   },
-  abilities: [],
-  classifications: ["Storyborn", "Ally"],
+  franchise: "Disney",
+  fullName: "Sven - Official Ice Deliverer",
+  id: "kar",
+  inkType: ["amethyst"],
+  inkable: true,
+  lore: 1,
+  name: "Sven",
+  set: "001",
+  strength: 5,
+  text: "",
+  version: "Official Ice Deliverer",
+  willpower: 7,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const svenOficialIceDeliverer: LorcanitoCharacterCard = {
-//   id: "kar",
-//   reprints: ["tf5"],
-//   name: "Sven",
-//   title: "Official Ice Deliverer",
-//   characteristics: ["storyborn", "ally"],
-//   type: "character",
-//   flavour: "Reindeer comin’ through!\n−Kristoff",
-//   inkwell: true,
-//   colors: ["amethyst"],
-//   cost: 6,
-//   strength: 5,
-//   willpower: 7,
-//   lore: 1,
-//   illustrator: "Jared Nickerl",
-//   number: 55,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 502010,
+// Export const svenOficialIceDeliverer: LorcanitoCharacterCard = {
+//   Id: "kar",
+//   Reprints: ["tf5"],
+//   Name: "Sven",
+//   Title: "Official Ice Deliverer",
+//   Characteristics: ["storyborn", "ally"],
+//   Type: "character",
+//   Flavour: "Reindeer comin’ through!\n−Kristoff",
+//   Inkwell: true,
+//   Colors: ["amethyst"],
+//   Cost: 6,
+//   Strength: 5,
+//   Willpower: 7,
+//   Lore: 1,
+//   Illustrator: "Jared Nickerl",
+//   Number: 55,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 502010,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

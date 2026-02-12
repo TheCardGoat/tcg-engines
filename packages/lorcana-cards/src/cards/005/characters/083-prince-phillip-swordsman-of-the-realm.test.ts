@@ -3,34 +3,34 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { princePhillipSwordsmanOfTheRealm } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { princePhillipSwordsmanOfTheRealm } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Prince Phillip - Swordsman of the Realm", () => {
-//   it.skip("**SLAYER OF DRAGONS** When you play this character, banish chosen opposing Dragon character.", () => {
-//     const testStore = new TestStore({
-//       inkwell: princePhillipSwordsmanOfTheRealm.cost,
-//       hand: [princePhillipSwordsmanOfTheRealm],
+// Describe("Prince Phillip - Swordsman of the Realm", () => {
+//   It.skip("**SLAYER OF DRAGONS** When you play this character, banish chosen opposing Dragon character.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: princePhillipSwordsmanOfTheRealm.cost,
+//       Hand: [princePhillipSwordsmanOfTheRealm],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(princePhillipSwordsmanOfTheRealm);
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     Const cardUnderTest = testStore.getCard(princePhillipSwordsmanOfTheRealm);
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 //
-//   it.skip("**PRESSING THE ADVANTAGE** When he challenges a damaged character, ready this character after the challenge.", () => {
-//     const testStore = new TestStore({
-//       inkwell: princePhillipSwordsmanOfTheRealm.cost,
-//       play: [princePhillipSwordsmanOfTheRealm],
+//   It.skip("**PRESSING THE ADVANTAGE** When he challenges a damaged character, ready this character after the challenge.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: princePhillipSwordsmanOfTheRealm.cost,
+//       Play: [princePhillipSwordsmanOfTheRealm],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(princePhillipSwordsmanOfTheRealm);
+//     Const cardUnderTest = testStore.getCard(princePhillipSwordsmanOfTheRealm);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

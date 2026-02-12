@@ -3,197 +3,197 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   basilTenaciousMouse,
-//   gurgiAppleLover,
-//   mickeyMouseDetective,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   BasilTenaciousMouse,
+//   GurgiAppleLover,
+//   MickeyMouseDetective,
 // } from "@lorcanito/lorcana-engine/cards/010/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Basil - Tenacious Mouse", () => {
-//   describe("HOLD YOUR GROUND", () => {
-//     it("should have the ability defined with correct structure", () => {
-//       const ability = basilTenaciousMouse.abilities?.find(
+// Describe("Basil - Tenacious Mouse", () => {
+//   Describe("HOLD YOUR GROUND", () => {
+//     It("should have the ability defined with correct structure", () => {
+//       Const ability = basilTenaciousMouse.abilities?.find(
 //         (a) => "name" in a && a.name === "HOLD YOUR GROUND",
 //       );
 //
-//       expect(ability).toBeDefined();
+//       Expect(ability).toBeDefined();
 //
-//       if (ability && "effects" in ability && Array.isArray(ability.effects)) {
-//         const resistEffect = ability.effects[0] as any;
-//         expect(resistEffect.type).toBe("ability");
-//         expect(resistEffect.ability).toBe("resist");
-//         expect(resistEffect.amount).toBe(1);
-//         expect(resistEffect.duration).toBe("next_turn");
+//       If (ability && "effects" in ability && Array.isArray(ability.effects)) {
+//         Const resistEffect = ability.effects[0] as any;
+//         Expect(resistEffect.type).toBe("ability");
+//         Expect(resistEffect.ability).toBe("resist");
+//         Expect(resistEffect.amount).toBe(1);
+//         Expect(resistEffect.duration).toBe("next_turn");
 //       }
 //     });
 //
-//     it("should trigger when you play another Detective character", () => {
-//       const ability = basilTenaciousMouse.abilities?.find(
+//     It("should trigger when you play another Detective character", () => {
+//       Const ability = basilTenaciousMouse.abilities?.find(
 //         (a) => "name" in a && a.name === "HOLD YOUR GROUND",
 //       );
 //
-//       expect(ability).toBeDefined();
+//       Expect(ability).toBeDefined();
 //
-//       if (
-//         ability &&
+//       If (
+//         Ability &&
 //         "trigger" in ability &&
-//         ability.trigger &&
-//         typeof ability.trigger === "object" &&
+//         Ability.trigger &&
+//         Typeof ability.trigger === "object" &&
 //         "on" in ability.trigger
 //       ) {
-//         expect(ability.trigger.on).toBe("play");
+//         Expect(ability.trigger.on).toBe("play");
 //       }
 //     });
 //
-//     it("should apply effect to this character", () => {
-//       const ability = basilTenaciousMouse.abilities?.find(
+//     It("should apply effect to this character", () => {
+//       Const ability = basilTenaciousMouse.abilities?.find(
 //         (a) => "name" in a && a.name === "HOLD YOUR GROUND",
 //       );
 //
-//       expect(ability).toBeDefined();
+//       Expect(ability).toBeDefined();
 //
-//       if (ability && "effects" in ability && Array.isArray(ability.effects)) {
-//         const resistEffect = ability.effects[0] as any;
-//         expect(resistEffect.target).toBeDefined();
+//       If (ability && "effects" in ability && Array.isArray(ability.effects)) {
+//         Const resistEffect = ability.effects[0] as any;
+//         Expect(resistEffect.target).toBeDefined();
 //       }
 //     });
 //
-//     it("should grant Resist +1 to Basil when another Detective is played", async () => {
-//       const testEngine = new TestEngine(
+//     It("should grant Resist +1 to Basil when another Detective is played", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: mickeyMouseDetective.cost,
-//           hand: [mickeyMouseDetective],
-//           play: [basilTenaciousMouse],
+//           Inkwell: mickeyMouseDetective.cost,
+//           Hand: [mickeyMouseDetective],
+//           Play: [basilTenaciousMouse],
 //         },
 //         {},
 //       );
 //
-//       const basilModel = testEngine.getCardModel(basilTenaciousMouse);
+//       Const basilModel = testEngine.getCardModel(basilTenaciousMouse);
 //
 //       // Basil should not have resist initially
-//       expect(basilModel.hasResist).toBe(false);
+//       Expect(basilModel.hasResist).toBe(false);
 //
-//       await testEngine.playCard(mickeyMouseDetective);
+//       Await testEngine.playCard(mickeyMouseDetective);
 //
 //       // Resolve Mickey's optional "GET A CLUE" ability by declining it
-//       await testEngine.resolveOptionalAbility();
+//       Await testEngine.resolveOptionalAbility();
 //
 //       // Basil's "HOLD YOUR GROUND" ability should auto-resolve after the optional ability
 //       // After playing another Detective, Basil should have Resist +1
-//       expect(basilModel.hasResist).toBe(true);
+//       Expect(basilModel.hasResist).toBe(true);
 //     });
 //
-//     it.skip("should NOT trigger when Basil himself is played (excludeSelf)", async () => {
-//       const testEngine = new TestEngine(
+//     It.skip("should NOT trigger when Basil himself is played (excludeSelf)", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: basilTenaciousMouse.cost,
-//           hand: [basilTenaciousMouse],
+//           Inkwell: basilTenaciousMouse.cost,
+//           Hand: [basilTenaciousMouse],
 //         },
 //         {},
 //       );
 //
-//       await testEngine.playCard(basilTenaciousMouse);
+//       Await testEngine.playCard(basilTenaciousMouse);
 //
-//       const basilModel = testEngine.getCardModel(basilTenaciousMouse);
+//       Const basilModel = testEngine.getCardModel(basilTenaciousMouse);
 //
 //       // Card text says "whenever you play another Detective character"
 //       // The word "another" means it should NOT trigger on itself
 //       // FIXME: This test is currently failing due to an issue with excludeSelf in triggerTarget
 //       // The implementation needs to be fixed to properly exclude self from triggering
-//       expect(basilModel.hasResist).toBe(false);
+//       Expect(basilModel.hasResist).toBe(false);
 //     });
 //
-//     it("should NOT trigger when playing a non-Detective character", async () => {
-//       const testEngine = new TestEngine(
+//     It("should NOT trigger when playing a non-Detective character", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: gurgiAppleLover.cost,
-//           hand: [gurgiAppleLover],
-//           play: [basilTenaciousMouse],
+//           Inkwell: gurgiAppleLover.cost,
+//           Hand: [gurgiAppleLover],
+//           Play: [basilTenaciousMouse],
 //         },
 //         {},
 //       );
 //
-//       const basilModel = testEngine.getCardModel(basilTenaciousMouse);
+//       Const basilModel = testEngine.getCardModel(basilTenaciousMouse);
 //
 //       // Initially Basil should not have resist
-//       expect(basilModel.hasResist).toBe(false);
+//       Expect(basilModel.hasResist).toBe(false);
 //
-//       await testEngine.playCard(gurgiAppleLover);
+//       Await testEngine.playCard(gurgiAppleLover);
 //
 //       // Skip Gurgi's optional "HAPPY DAY" ability
-//       await testEngine.skipTopOfStack();
+//       Await testEngine.skipTopOfStack();
 //
 //       // Gurgi is not a detective, so Basil's ability should not have triggered
-//       expect(basilModel.hasResist).toBe(false);
+//       Expect(basilModel.hasResist).toBe(false);
 //     });
 //
-//     it("resist should last until the start of your next turn", async () => {
-//       const testEngine = new TestEngine(
+//     It("resist should last until the start of your next turn", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: mickeyMouseDetective.cost,
-//           hand: [mickeyMouseDetective],
-//           play: [basilTenaciousMouse],
+//           Inkwell: mickeyMouseDetective.cost,
+//           Hand: [mickeyMouseDetective],
+//           Play: [basilTenaciousMouse],
 //         },
 //         {},
 //       );
 //
-//       const basilModel = testEngine.getCardModel(basilTenaciousMouse);
+//       Const basilModel = testEngine.getCardModel(basilTenaciousMouse);
 //
-//       await testEngine.playCard(mickeyMouseDetective);
+//       Await testEngine.playCard(mickeyMouseDetective);
 //
 //       // Resolve Mickey's optional "GET A CLUE" ability by declining it
-//       await testEngine.resolveOptionalAbility();
+//       Await testEngine.resolveOptionalAbility();
 //
-//       expect(basilModel.hasResist).toBe(true);
+//       Expect(basilModel.hasResist).toBe(true);
 //
 //       // Pass turn to opponent
-//       await testEngine.passTurn();
+//       Await testEngine.passTurn();
 //
 //       // During opponent's turn, Basil should still have resist
-//       expect(basilModel.hasResist).toBe(true);
+//       Expect(basilModel.hasResist).toBe(true);
 //
 //       // Pass back to your turn
-//       await testEngine.passTurn();
+//       Await testEngine.passTurn();
 //
 //       // At the start of your next turn, resist should be removed
-//       expect(basilModel.hasResist).toBe(false);
+//       Expect(basilModel.hasResist).toBe(false);
 //     });
 //   });
 //
-//   describe("Stats and basic properties", () => {
-//     it("should have correct stats", () => {
-//       const testEngine = new TestEngine({
-//         play: [basilTenaciousMouse],
+//   Describe("Stats and basic properties", () => {
+//     It("should have correct stats", () => {
+//       Const testEngine = new TestEngine({
+//         Play: [basilTenaciousMouse],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(basilTenaciousMouse);
+//       Const cardUnderTest = testEngine.getCardModel(basilTenaciousMouse);
 //
-//       expect(cardUnderTest.strength).toBe(3);
-//       expect(cardUnderTest.willpower).toBe(2);
-//       expect(cardUnderTest.lore).toBe(2);
-//       expect(cardUnderTest.cost).toBe(3);
+//       Expect(cardUnderTest.strength).toBe(3);
+//       Expect(cardUnderTest.willpower).toBe(2);
+//       Expect(cardUnderTest.lore).toBe(2);
+//       Expect(cardUnderTest.cost).toBe(3);
 //     });
 //
-//     it("should be inkwell card", () => {
-//       expect(basilTenaciousMouse.inkwell).toBe(true);
+//     It("should be inkwell card", () => {
+//       Expect(basilTenaciousMouse.inkwell).toBe(true);
 //     });
 //
-//     it("should have correct characteristics for Detective synergy", () => {
-//       expect(basilTenaciousMouse.characteristics).toEqual([
+//     It("should have correct characteristics for Detective synergy", () => {
+//       Expect(basilTenaciousMouse.characteristics).toEqual([
 //         "dreamborn",
 //         "hero",
 //         "detective",
 //       ]);
 //     });
 //
-//     it("should be steel color", () => {
-//       expect(basilTenaciousMouse.colors).toEqual(["steel"]);
+//     It("should be steel color", () => {
+//       Expect(basilTenaciousMouse.colors).toEqual(["steel"]);
 //     });
 //
-//     it("should be common rarity", () => {
-//       expect(basilTenaciousMouse.rarity).toBe("common");
+//     It("should be common rarity", () => {
+//       Expect(basilTenaciousMouse.rarity).toBe("common");
 //     });
 //   });
 // });

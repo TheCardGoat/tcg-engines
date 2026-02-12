@@ -65,23 +65,23 @@ function parseFromText(text: string): ConditionalEffect | null {
 
     // Convert VisitorCondition to full Condition type
     const condition: Condition = toCondition(parsedCondition) || {
-      type: "has-character-count",
-      controller: "you",
       comparison: "greater-or-equal",
+      controller: "you",
       count: 0,
+      type: "has-character-count",
     };
 
     logger.info("Parsed conditional effect with 'else' branch", {
       condition,
-      then: thenEffect,
       else: elseEffect,
+      then: thenEffect,
     });
 
     return {
-      type: "conditional",
       condition,
-      then: thenEffect,
       else: elseEffect,
+      then: thenEffect,
+      type: "conditional",
     };
   }
 
@@ -114,10 +114,10 @@ function parseFromText(text: string): ConditionalEffect | null {
 
   // Convert VisitorCondition to full Condition type
   const condition: Condition = toCondition(parsedCondition) || {
-    type: "has-character-count",
-    controller: "you",
     comparison: "greater-or-equal",
+    controller: "you",
     count: 0,
+    type: "has-character-count",
   };
 
   logger.info("Parsed conditional effect", {
@@ -126,9 +126,9 @@ function parseFromText(text: string): ConditionalEffect | null {
   });
 
   return {
-    type: "conditional",
     condition,
     then: thenEffect,
+    type: "conditional",
   };
 }
 
@@ -149,10 +149,8 @@ function parseFromCst(_ctx: {
  * Conditional effect parser implementation
  */
 export const conditionalEffectParser: EffectParser = {
-  pattern: /(?:.+\.\s+)?if\s+[^,]+,/i,
   description:
     "Parses conditional effects that only execute if a condition is met (e.g., 'if you have another character, gain 2 lore') and 'instead' clauses (e.g., 'Gain 1 lore. If X, gain 2 lore instead')",
-
   parse: (input: CstNode | string): ConditionalEffect | null => {
     if (typeof input === "string") {
       return parseFromText(input);
@@ -161,4 +159,6 @@ export const conditionalEffectParser: EffectParser = {
       input as { conditionClause?: CstNode[]; effectPhrase?: CstNode[] },
     );
   },
+
+  pattern: /(?:.+\.\s+)?if\s+[^,]+,/i,
 };

@@ -1,35 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const edLaughingHyena: CharacterCard = {
-  id: "1ez",
-  cardType: "character",
-  name: "Ed",
-  version: "Laughing Hyena",
-  fullName: "Ed - Laughing Hyena",
-  inkType: ["emerald"],
-  franchise: "Lion King",
-  set: "005",
-  text: "CAUSE A PANIC When you play this character, you may deal 2 damage to chosen damaged character.",
-  cost: 3,
-  strength: 2,
-  willpower: 3,
-  lore: 1,
-  cardNumber: 74,
-  inkable: false,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "b7b8cf126ca56fb72ae47f7dc67180a793b855e2",
-  },
   abilities: [
     {
-      id: "1ez-1",
-      type: "triggered",
-      name: "CAUSE A PANIC",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -45,8 +18,35 @@ export const edLaughingHyena: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "1ez-1",
+      name: "CAUSE A PANIC",
       text: "CAUSE A PANIC When you play this character, you may deal 2 damage to chosen damaged character.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 74,
+  cardType: "character",
   classifications: ["Storyborn", "Ally", "Hyena"],
+  cost: 3,
+  externalIds: {
+    ravensburger: "b7b8cf126ca56fb72ae47f7dc67180a793b855e2",
+  },
+  franchise: "Lion King",
+  fullName: "Ed - Laughing Hyena",
+  id: "1ez",
+  inkType: ["emerald"],
+  inkable: false,
+  lore: 1,
+  missingTests: true,
+  name: "Ed",
+  set: "005",
+  strength: 2,
+  text: "CAUSE A PANIC When you play this character, you may deal 2 damage to chosen damaged character.",
+  version: "Laughing Hyena",
+  willpower: 3,
 };

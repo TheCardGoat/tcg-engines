@@ -3,64 +3,64 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   arthurWizardsApprentice,
-//   chipTheTeacupGentleSoul,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   ArthurWizardsApprentice,
+//   ChipTheTeacupGentleSoul,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Arthur - Wizard's Apprentice", () => {
-//   describe("**STUDENT** Whenever this character quests, you may return another chosen character of yours to your hand to gain 2 lore.", () => {
-//     it("returning character to hand should give 2 lore", () => {
-//       const testStore = new TestStore({
-//         inkwell: arthurWizardsApprentice.cost,
-//         play: [arthurWizardsApprentice, chipTheTeacupGentleSoul],
+// Describe("Arthur - Wizard's Apprentice", () => {
+//   Describe("**STUDENT** Whenever this character quests, you may return another chosen character of yours to your hand to gain 2 lore.", () => {
+//     It("returning character to hand should give 2 lore", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: arthurWizardsApprentice.cost,
+//         Play: [arthurWizardsApprentice, chipTheTeacupGentleSoul],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         arthurWizardsApprentice.id,
+//         ArthurWizardsApprentice.id,
 //       );
-//       const target = testStore.getByZoneAndId(
+//       Const target = testStore.getByZoneAndId(
 //         "play",
-//         chipTheTeacupGentleSoul.id,
+//         ChipTheTeacupGentleSoul.id,
 //       );
 //
-//       cardUnderTest.quest();
-//       testStore.resolveOptionalAbility();
-//       expect(testStore.stackLayers).toHaveLength(1);
+//       CardUnderTest.quest();
+//       TestStore.resolveOptionalAbility();
+//       Expect(testStore.stackLayers).toHaveLength(1);
 //
-//       testStore.resolveTopOfStack({ targets: [target] });
+//       TestStore.resolveTopOfStack({ targets: [target] });
 //
-//       expect(target.zone).toBe("hand");
-//       expect(testStore.store.tableStore.getTable().lore).toBe(
+//       Expect(target.zone).toBe("hand");
+//       Expect(testStore.store.tableStore.getTable().lore).toBe(
 //         2 + arthurWizardsApprentice.lore,
 //       );
 //     });
 //
-//     it("Not returning character to hand should NOT give 2 lore", () => {
-//       const testStore = new TestStore({
-//         inkwell: arthurWizardsApprentice.cost,
-//         play: [arthurWizardsApprentice, chipTheTeacupGentleSoul],
+//     It("Not returning character to hand should NOT give 2 lore", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: arthurWizardsApprentice.cost,
+//         Play: [arthurWizardsApprentice, chipTheTeacupGentleSoul],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         arthurWizardsApprentice.id,
+//         ArthurWizardsApprentice.id,
 //       );
-//       const target = testStore.getByZoneAndId(
+//       Const target = testStore.getByZoneAndId(
 //         "play",
-//         chipTheTeacupGentleSoul.id,
+//         ChipTheTeacupGentleSoul.id,
 //       );
 //
-//       cardUnderTest.quest();
-//       testStore.skipOptionalAbility();
+//       CardUnderTest.quest();
+//       TestStore.skipOptionalAbility();
 //
-//       expect(target.zone).toBe("play");
-//       expect(cardUnderTest.zone).toBe("play");
-//       expect(testStore.store.tableStore.getTable().lore).toBe(
-//         arthurWizardsApprentice.lore,
+//       Expect(target.zone).toBe("play");
+//       Expect(cardUnderTest.zone).toBe("play");
+//       Expect(testStore.store.tableStore.getTable().lore).toBe(
+//         ArthurWizardsApprentice.lore,
 //       );
 //     });
 //   });

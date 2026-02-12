@@ -3,25 +3,25 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { motherGothelWitheredAndWicked } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { motherGothelWitheredAndWicked } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Mother Gothel - Withered and Wicked", () => {
-//   it("**WHAT HAVE YOU DONE?!** This character enters play with 3 damage.", () => {
-//     const testStore = new TestStore({
-//       inkwell: motherGothelWitheredAndWicked.cost,
-//       hand: [motherGothelWitheredAndWicked],
+// Describe("Mother Gothel - Withered and Wicked", () => {
+//   It("**WHAT HAVE YOU DONE?!** This character enters play with 3 damage.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: motherGothelWitheredAndWicked.cost,
+//       Hand: [motherGothelWitheredAndWicked],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "hand",
-//       motherGothelWitheredAndWicked.id,
+//       MotherGothelWitheredAndWicked.id,
 //     );
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     expect(cardUnderTest.damage).toEqual(3);
+//     Expect(cardUnderTest.damage).toEqual(3);
 //   });
 // });
 //

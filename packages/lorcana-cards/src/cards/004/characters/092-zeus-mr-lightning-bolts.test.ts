@@ -3,41 +3,41 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   beastWounded,
-//   herculesClumsyKid,
-//   zeusMrLightningBolts,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   BeastWounded,
+//   HerculesClumsyKid,
+//   ZeusMrLightningBolts,
 // } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Zeus - Mr. Lightning Bolts", () => {
-//   it("**TARGET PRACTICE** Whenever this character challenges another character, he gets + {S} equal to the {S} of chosen character this turn.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Zeus - Mr. Lightning Bolts", () => {
+//   It("**TARGET PRACTICE** Whenever this character challenges another character, he gets + {S} equal to the {S} of chosen character this turn.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         play: [zeusMrLightningBolts],
+//         Play: [zeusMrLightningBolts],
 //       },
 //       {
-//         play: [beastWounded, herculesClumsyKid],
+//         Play: [beastWounded, herculesClumsyKid],
 //       },
 //     );
 //
-//     const cardUnderTest = testEngine.getCardModel(zeusMrLightningBolts);
+//     Const cardUnderTest = testEngine.getCardModel(zeusMrLightningBolts);
 //
-//     await testEngine.challenge({
-//       attacker: zeusMrLightningBolts,
-//       defender: beastWounded,
-//       exertDefender: true,
+//     Await testEngine.challenge({
+//       Attacker: zeusMrLightningBolts,
+//       Defender: beastWounded,
+//       ExertDefender: true,
 //     });
 //
-//     expect(cardUnderTest.strength).toBe(zeusMrLightningBolts.strength);
-//     await testEngine.resolveTopOfStack({ targets: [herculesClumsyKid] });
-//     expect(cardUnderTest.strength).toBe(
-//       zeusMrLightningBolts.strength + herculesClumsyKid.strength,
+//     Expect(cardUnderTest.strength).toBe(zeusMrLightningBolts.strength);
+//     Await testEngine.resolveTopOfStack({ targets: [herculesClumsyKid] });
+//     Expect(cardUnderTest.strength).toBe(
+//       ZeusMrLightningBolts.strength + herculesClumsyKid.strength,
 //     );
 //
-//     await testEngine.passTurn();
-//     expect(cardUnderTest.strength).toBe(zeusMrLightningBolts.strength);
+//     Await testEngine.passTurn();
+//     Expect(cardUnderTest.strength).toBe(zeusMrLightningBolts.strength);
 //   });
 // });
 //

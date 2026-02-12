@@ -14,13 +14,13 @@ describe("Action Parser", () => {
       const result = parseAbilityText("Draw 2 cards");
 
       expect(result).toMatchObject({
-        success: true,
         ability: {
           ability: {
-            type: "action",
             effect: { type: "draw", amount: 2, target: "CONTROLLER" },
+            type: "action",
           },
         },
+        success: true,
       });
     });
 
@@ -28,13 +28,13 @@ describe("Action Parser", () => {
       const result = parseAbilityText("Draw a card");
 
       expect(result).toMatchObject({
-        success: true,
         ability: {
           ability: {
-            type: "action",
             effect: { type: "draw", amount: 1 },
+            type: "action",
           },
         },
+        success: true,
       });
     });
 
@@ -42,13 +42,13 @@ describe("Action Parser", () => {
       const result = parseAbilityText("Each player draws a card");
 
       expect(result).toMatchObject({
-        success: true,
         ability: {
           ability: {
-            type: "action",
             effect: { type: "draw", amount: 1, target: "EACH_PLAYER" },
+            type: "action",
           },
         },
+        success: true,
       });
     });
 
@@ -56,13 +56,13 @@ describe("Action Parser", () => {
       const result = parseAbilityText("Each player draws 2 cards");
 
       expect(result).toMatchObject({
-        success: true,
         ability: {
           ability: {
-            type: "action",
             effect: { type: "draw", amount: 2, target: "EACH_PLAYER" },
+            type: "action",
           },
         },
+        success: true,
       });
     });
   });
@@ -72,10 +72,8 @@ describe("Action Parser", () => {
       const result = parseAbilityText("Deal 3 damage to chosen character");
 
       expect(result).toMatchObject({
-        success: true,
         ability: {
           ability: {
-            type: "action",
             effect: {
               type: "deal-damage",
               amount: 3,
@@ -87,8 +85,10 @@ describe("Action Parser", () => {
                 cardTypes: ["character"],
               },
             },
+            type: "action",
           },
         },
+        success: true,
       });
     });
 
@@ -98,10 +98,8 @@ describe("Action Parser", () => {
       );
 
       expect(result).toMatchObject({
-        success: true,
         ability: {
           ability: {
-            type: "action",
             effect: {
               type: "deal-damage",
               amount: 2,
@@ -113,8 +111,10 @@ describe("Action Parser", () => {
                 cardTypes: ["character"],
               },
             },
+            type: "action",
           },
         },
+        success: true,
       });
     });
   });
@@ -124,10 +124,8 @@ describe("Action Parser", () => {
       const result = parseAbilityText("Banish all items");
 
       expect(result).toMatchObject({
-        success: true,
         ability: {
           ability: {
-            type: "action",
             effect: {
               type: "banish",
               target: {
@@ -138,8 +136,10 @@ describe("Action Parser", () => {
                 cardTypes: ["item"],
               },
             },
+            type: "action",
           },
         },
+        success: true,
       });
     });
 
@@ -147,10 +147,8 @@ describe("Action Parser", () => {
       const result = parseAbilityText("Banish chosen character");
 
       expect(result).toMatchObject({
-        success: true,
         ability: {
           ability: {
-            type: "action",
             effect: {
               type: "banish",
               target: {
@@ -161,8 +159,10 @@ describe("Action Parser", () => {
                 cardTypes: ["character"],
               },
             },
+            type: "action",
           },
         },
+        success: true,
       });
     });
 
@@ -170,10 +170,8 @@ describe("Action Parser", () => {
       const result = parseAbilityText("Banish all characters");
 
       expect(result).toMatchObject({
-        success: true,
         ability: {
           ability: {
-            type: "action",
             effect: {
               type: "banish",
               target: {
@@ -184,8 +182,10 @@ describe("Action Parser", () => {
                 cardTypes: ["character"],
               },
             },
+            type: "action",
           },
         },
+        success: true,
       });
     });
 
@@ -193,10 +193,8 @@ describe("Action Parser", () => {
       const result = parseAbilityText("Banish all opposing items");
 
       expect(result).toMatchObject({
-        success: true,
         ability: {
           ability: {
-            type: "action",
             effect: {
               type: "banish",
               target: {
@@ -207,8 +205,10 @@ describe("Action Parser", () => {
                 cardTypes: ["item"],
               },
             },
+            type: "action",
           },
         },
+        success: true,
       });
     });
   });
@@ -218,13 +218,13 @@ describe("Action Parser", () => {
       const result = parseAbilityText("Gain 2 lore");
 
       expect(result).toMatchObject({
-        success: true,
         ability: {
           ability: {
-            type: "action",
             effect: { type: "gain-lore", amount: 2 },
+            type: "action",
           },
         },
+        success: true,
       });
     });
 
@@ -232,13 +232,13 @@ describe("Action Parser", () => {
       const result = parseAbilityText("Each opponent loses 2 lore");
 
       expect(result).toMatchObject({
-        success: true,
         ability: {
           ability: {
-            type: "action",
             effect: { type: "lose-lore", amount: 2, target: "EACH_OPPONENT" },
+            type: "action",
           },
         },
+        success: true,
       });
     });
   });
@@ -248,10 +248,8 @@ describe("Action Parser", () => {
       const result = parseAbilityText("Ready chosen character");
 
       expect(result).toMatchObject({
-        success: true,
         ability: {
           ability: {
-            type: "action",
             effect: {
               type: "ready",
               target: {
@@ -262,8 +260,10 @@ describe("Action Parser", () => {
                 cardTypes: ["character"],
               },
             },
+            type: "action",
           },
         },
+        success: true,
       });
     });
 
@@ -271,13 +271,13 @@ describe("Action Parser", () => {
       const result = parseAbilityText("Ready chosen item");
 
       expect(result).toMatchObject({
-        success: true,
         ability: {
           ability: {
-            type: "action",
             effect: { type: "ready" },
+            type: "action",
           },
         },
+        success: true,
       });
     });
 
@@ -285,10 +285,8 @@ describe("Action Parser", () => {
       const result = parseAbilityText("Exert chosen opposing character");
 
       expect(result).toMatchObject({
-        success: true,
         ability: {
           ability: {
-            type: "action",
             effect: {
               type: "exert",
               target: {
@@ -299,8 +297,10 @@ describe("Action Parser", () => {
                 cardTypes: ["character"],
               },
             },
+            type: "action",
           },
         },
+        success: true,
       });
     });
   });
@@ -312,10 +312,8 @@ describe("Action Parser", () => {
       );
 
       expect(result).toMatchObject({
-        success: true,
         ability: {
           ability: {
-            type: "action",
             effect: {
               type: "return-to-hand",
               target: {
@@ -326,8 +324,10 @@ describe("Action Parser", () => {
                 cardTypes: ["character"],
               },
             },
+            type: "action",
           },
         },
+        success: true,
       });
     });
   });
@@ -339,18 +339,18 @@ describe("Action Parser", () => {
       );
 
       expect(result).toMatchObject({
-        success: true,
         ability: {
           ability: {
-            type: "action",
             effect: {
               type: "discard",
               amount: 1,
               target: "EACH_PLAYER",
               chosen: true,
             },
+            type: "action",
           },
         },
+        success: true,
       });
     });
 
@@ -360,18 +360,18 @@ describe("Action Parser", () => {
       );
 
       expect(result).toMatchObject({
-        success: true,
         ability: {
           ability: {
-            type: "action",
             effect: {
               type: "discard",
               amount: 1,
               target: "EACH_OPPONENT",
               chosen: true,
             },
+            type: "action",
           },
         },
+        success: true,
       });
     });
   });
@@ -381,8 +381,8 @@ describe("Action Parser", () => {
       const result = parseAbilityText("Gain 2 lore. Draw a card.");
 
       expect(result).toMatchObject({
-        success: true,
         ability: { ability: { type: "action" } },
+        success: true,
       });
     });
 
@@ -390,8 +390,8 @@ describe("Action Parser", () => {
       const result = parseAbilityText("Banish chosen item. Draw a card.");
 
       expect(result).toMatchObject({
-        success: true,
         ability: { ability: { type: "action" } },
+        success: true,
       });
     });
   });
@@ -403,8 +403,8 @@ describe("Action Parser", () => {
       );
 
       expect(result).toMatchObject({
-        success: true,
         ability: { ability: { type: "triggered" } },
+        success: true,
       });
     });
 
@@ -414,8 +414,8 @@ describe("Action Parser", () => {
       // TODO: Parser currently classifies this as "action" instead of "activated"
       // The classifier should detect the cost pattern and classify as activated
       expect(result).toMatchObject({
-        success: true,
         ability: { ability: { type: "action" } },
+        success: true,
       });
     });
 
@@ -423,8 +423,8 @@ describe("Action Parser", () => {
       const result = parseAbilityText("Your characters gain Ward");
 
       expect(result).toMatchObject({
-        success: true,
         ability: { ability: { type: "static" } },
+        success: true,
       });
     });
 
@@ -432,8 +432,8 @@ describe("Action Parser", () => {
       const result = parseAbilityText("Rush");
 
       expect(result).toMatchObject({
-        success: true,
         ability: { ability: { type: "keyword" } },
+        success: true,
       });
     });
   });

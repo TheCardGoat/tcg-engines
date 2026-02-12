@@ -3,60 +3,60 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { dragonFire } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
-// import { mrSnoopsBetrayedPartner } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { dragonFire } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
+// Import { mrSnoopsBetrayedPartner } from "@lorcanito/lorcana-engine/cards/008/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Mr. Snoops - Betrayed Partner", () => {
-//   describe("DOUBLE-CROSSING CROOK! During your turn, when this character is banished, you may draw a card.", () => {
-//     it("Your turn", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: dragonFire.cost,
-//         play: [mrSnoopsBetrayedPartner],
-//         hand: [dragonFire],
-//         deck: 10,
+// Describe("Mr. Snoops - Betrayed Partner", () => {
+//   Describe("DOUBLE-CROSSING CROOK! During your turn, when this character is banished, you may draw a card.", () => {
+//     It("Your turn", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: dragonFire.cost,
+//         Play: [mrSnoopsBetrayedPartner],
+//         Hand: [dragonFire],
+//         Deck: 10,
 //       });
 //
-//       await testEngine.playCard(
-//         dragonFire,
+//       Await testEngine.playCard(
+//         DragonFire,
 //         {
-//           targets: [mrSnoopsBetrayedPartner],
+//           Targets: [mrSnoopsBetrayedPartner],
 //         },
-//         true,
+//         True,
 //       );
 //
-//       await testEngine.resolveOptionalAbility();
+//       Await testEngine.resolveOptionalAbility();
 //
-//       expect(testEngine.getZonesCardCount()).toEqual(
-//         expect.objectContaining({
-//           deck: 9,
-//           hand: 1,
+//       Expect(testEngine.getZonesCardCount()).toEqual(
+//         Expect.objectContaining({
+//           Deck: 9,
+//           Hand: 1,
 //         }),
 //       );
 //     });
 //
-//     it("Opponent's turn", async () => {
-//       const testEngine = new TestEngine(
+//     It("Opponent's turn", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: dragonFire.cost,
-//           hand: [dragonFire],
+//           Inkwell: dragonFire.cost,
+//           Hand: [dragonFire],
 //         },
 //         {
-//           play: [mrSnoopsBetrayedPartner],
-//           deck: 10,
+//           Play: [mrSnoopsBetrayedPartner],
+//           Deck: 10,
 //         },
 //       );
 //
-//       await testEngine.playCard(
-//         dragonFire,
+//       Await testEngine.playCard(
+//         DragonFire,
 //         {
-//           targets: [mrSnoopsBetrayedPartner],
+//           Targets: [mrSnoopsBetrayedPartner],
 //         },
-//         true,
+//         True,
 //       );
 //
-//       expect(testEngine.stackLayers).toHaveLength(0);
+//       Expect(testEngine.stackLayers).toHaveLength(0);
 //     });
 //   });
 // });

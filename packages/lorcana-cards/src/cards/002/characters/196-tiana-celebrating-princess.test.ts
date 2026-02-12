@@ -3,128 +3,128 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { grabYourSword } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
-// import { tianaCelebratingPrincess } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { grabYourSword } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
+// Import { tianaCelebratingPrincess } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Tiana- Celebrating Princess", () => {
-//   it("Resist 2", () => {
-//     const testStore = new TestStore({
-//       play: [tianaCelebratingPrincess],
+// Describe("Tiana- Celebrating Princess", () => {
+//   It("Resist 2", () => {
+//     Const testStore = new TestStore({
+//       Play: [tianaCelebratingPrincess],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       tianaCelebratingPrincess.id,
+//       TianaCelebratingPrincess.id,
 //     );
 //
-//     expect(cardUnderTest.hasResist).toEqual(true);
+//     Expect(cardUnderTest.hasResist).toEqual(true);
 //   });
 //
-//   describe("**WHAT YOU GIVE IS WHAT YOU GET** While this character is exerted and you have no cards in your hand, opponents can’t play actions.", () => {
-//     it("Exerted, No Cards in Hand", () => {
-//       const testStore = new TestStore(
+//   Describe("**WHAT YOU GIVE IS WHAT YOU GET** While this character is exerted and you have no cards in your hand, opponents can’t play actions.", () => {
+//     It("Exerted, No Cards in Hand", () => {
+//       Const testStore = new TestStore(
 //         { hand: [grabYourSword], inkwell: grabYourSword.cost },
 //         {
-//           play: [tianaCelebratingPrincess],
+//           Play: [tianaCelebratingPrincess],
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         tianaCelebratingPrincess.id,
+//         TianaCelebratingPrincess.id,
 //         "player_two",
 //       );
-//       cardUnderTest.updateCardMeta({ exerted: true });
+//       CardUnderTest.updateCardMeta({ exerted: true });
 //
-//       const actionCard = testStore.getByZoneAndId("hand", grabYourSword.id);
-//       actionCard.playFromHand();
+//       Const actionCard = testStore.getByZoneAndId("hand", grabYourSword.id);
+//       ActionCard.playFromHand();
 //
-//       expect(testStore.getZonesCardCount()).toEqual(
-//         expect.objectContaining({
-//           discard: 0,
-//           hand: 1,
+//       Expect(testStore.getZonesCardCount()).toEqual(
+//         Expect.objectContaining({
+//           Discard: 0,
+//           Hand: 1,
 //         }),
 //       );
 //     });
 //
-//     it("Exerted, With Cards in Hand", () => {
-//       const testStore = new TestStore(
+//     It("Exerted, With Cards in Hand", () => {
+//       Const testStore = new TestStore(
 //         { hand: [grabYourSword], inkwell: grabYourSword.cost },
 //         {
-//           play: [tianaCelebratingPrincess],
-//           hand: 1,
+//           Play: [tianaCelebratingPrincess],
+//           Hand: 1,
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         tianaCelebratingPrincess.id,
+//         TianaCelebratingPrincess.id,
 //         "player_two",
 //       );
-//       cardUnderTest.updateCardMeta({ exerted: true });
+//       CardUnderTest.updateCardMeta({ exerted: true });
 //
-//       const actionCard = testStore.getByZoneAndId("hand", grabYourSword.id);
-//       actionCard.playFromHand();
+//       Const actionCard = testStore.getByZoneAndId("hand", grabYourSword.id);
+//       ActionCard.playFromHand();
 //
-//       expect(testStore.getZonesCardCount()).toEqual(
-//         expect.objectContaining({
-//           discard: 1,
-//           hand: 0,
+//       Expect(testStore.getZonesCardCount()).toEqual(
+//         Expect.objectContaining({
+//           Discard: 1,
+//           Hand: 0,
 //         }),
 //       );
 //     });
 //
-//     it("Ready, No Cards in Hand", () => {
-//       const testStore = new TestStore(
+//     It("Ready, No Cards in Hand", () => {
+//       Const testStore = new TestStore(
 //         { hand: [grabYourSword], inkwell: grabYourSword.cost },
 //         {
-//           play: [tianaCelebratingPrincess],
+//           Play: [tianaCelebratingPrincess],
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         tianaCelebratingPrincess.id,
+//         TianaCelebratingPrincess.id,
 //         "player_two",
 //       );
-//       cardUnderTest.updateCardMeta({ exerted: false });
+//       CardUnderTest.updateCardMeta({ exerted: false });
 //
-//       const actionCard = testStore.getByZoneAndId("hand", grabYourSword.id);
-//       actionCard.playFromHand();
+//       Const actionCard = testStore.getByZoneAndId("hand", grabYourSword.id);
+//       ActionCard.playFromHand();
 //
-//       expect(testStore.getZonesCardCount()).toEqual(
-//         expect.objectContaining({
-//           discard: 1,
-//           hand: 0,
+//       Expect(testStore.getZonesCardCount()).toEqual(
+//         Expect.objectContaining({
+//           Discard: 1,
+//           Hand: 0,
 //         }),
 //       );
 //     });
 //
-//     it("Ready, With Cards in Hand", () => {
-//       const testStore = new TestStore(
+//     It("Ready, With Cards in Hand", () => {
+//       Const testStore = new TestStore(
 //         { hand: [grabYourSword], inkwell: grabYourSword.cost },
 //         {
-//           play: [tianaCelebratingPrincess],
-//           hand: 1,
+//           Play: [tianaCelebratingPrincess],
+//           Hand: 1,
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         tianaCelebratingPrincess.id,
+//         TianaCelebratingPrincess.id,
 //         "player_two",
 //       );
-//       cardUnderTest.updateCardMeta({ exerted: false });
+//       CardUnderTest.updateCardMeta({ exerted: false });
 //
-//       const actionCard = testStore.getByZoneAndId("hand", grabYourSword.id);
-//       actionCard.playFromHand();
+//       Const actionCard = testStore.getByZoneAndId("hand", grabYourSword.id);
+//       ActionCard.playFromHand();
 //
-//       expect(testStore.getZonesCardCount()).toEqual(
-//         expect.objectContaining({
-//           discard: 1,
-//           hand: 0,
+//       Expect(testStore.getZonesCardCount()).toEqual(
+//         Expect.objectContaining({
+//           Discard: 1,
+//           Hand: 0,
 //         }),
 //       );
 //     });

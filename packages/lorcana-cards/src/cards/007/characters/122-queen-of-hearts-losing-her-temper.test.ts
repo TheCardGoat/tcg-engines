@@ -3,24 +3,24 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { queenOfHeartsLosingHerTemper } from "@lorcanito/lorcana-engine/cards/007";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { queenOfHeartsLosingHerTemper } from "@lorcanito/lorcana-engine/cards/007";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Queen Of Hearts - Losing Her Temper", () => {
-//   it("ROYAL PAIN While this character has damage, she gets +3 {S}.", async () => {
-//     const testEngine = new TestEngine({
-//       play: [queenOfHeartsLosingHerTemper],
+// Describe("Queen Of Hearts - Losing Her Temper", () => {
+//   It("ROYAL PAIN While this character has damage, she gets +3 {S}.", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [queenOfHeartsLosingHerTemper],
 //     });
 //
-//     expect(testEngine.getCardModel(queenOfHeartsLosingHerTemper).strength).toBe(
-//       queenOfHeartsLosingHerTemper.strength,
+//     Expect(testEngine.getCardModel(queenOfHeartsLosingHerTemper).strength).toBe(
+//       QueenOfHeartsLosingHerTemper.strength,
 //     );
 //
-//     await testEngine.setCardDamage(queenOfHeartsLosingHerTemper, 1);
+//     Await testEngine.setCardDamage(queenOfHeartsLosingHerTemper, 1);
 //
-//     expect(testEngine.getCardModel(queenOfHeartsLosingHerTemper).strength).toBe(
-//       queenOfHeartsLosingHerTemper.strength + 3,
+//     Expect(testEngine.getCardModel(queenOfHeartsLosingHerTemper).strength).toBe(
+//       QueenOfHeartsLosingHerTemper.strength + 3,
 //     );
 //   });
 // });

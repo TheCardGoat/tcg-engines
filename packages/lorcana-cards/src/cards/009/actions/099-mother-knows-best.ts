@@ -1,25 +1,8 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
 export const motherKnowsBest: ActionCard = {
-  id: "17a",
-  cardType: "action",
-  name: "Mother Knows Best",
-  inkType: ["emerald"],
-  franchise: "Tangled",
-  set: "009",
-  text: "Return chosen character to their player's hand.",
-  actionSubtype: "song",
-  cost: 3,
-  cardNumber: 99,
-  inkable: false,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "9b13536dce3331ad25596984ff3b7f2f4a66b1f4",
-  },
   abilities: [
     {
-      id: "17a-1",
-      type: "action",
       effect: {
         type: "return-to-hand",
         target: {
@@ -30,7 +13,24 @@ export const motherKnowsBest: ActionCard = {
           cardTypes: ["character"],
         },
       },
+      id: "17a-1",
       text: "Return chosen character to their player's hand.",
+      type: "action",
     },
   ],
+  actionSubtype: "song",
+  cardNumber: 99,
+  cardType: "action",
+  cost: 3,
+  externalIds: {
+    ravensburger: "9b13536dce3331ad25596984ff3b7f2f4a66b1f4",
+  },
+  franchise: "Tangled",
+  id: "17a",
+  inkType: ["emerald"],
+  inkable: false,
+  missingTests: true,
+  name: "Mother Knows Best",
+  set: "009",
+  text: "Return chosen character to their player's hand.",
 };

@@ -3,301 +3,301 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   dragonFire,
-//   fireTheCannons,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   DragonFire,
+//   FireTheCannons,
 // } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
-// import {
-//   drFacilierAgentProvocateur,
-//   heiheiBoatSnack,
-//   mauiHeroToAll,
-//   mickeyMouseTrueFriend,
+// Import {
+//   DrFacilierAgentProvocateur,
+//   HeiheiBoatSnack,
+//   MauiHeroToAll,
+//   MickeyMouseTrueFriend,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Dr. Facilier - Agent Provocateur", () => {
-//   describe("Into the Shadows: Whenever one of your other characters is banished in a challenge, you may return that card to your hand.", () => {
-//     it("returns attacker character to hand", () => {
-//       const testStore = new TestStore(
+// Describe("Dr. Facilier - Agent Provocateur", () => {
+//   Describe("Into the Shadows: Whenever one of your other characters is banished in a challenge, you may return that card to your hand.", () => {
+//     It("returns attacker character to hand", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [heiheiBoatSnack, drFacilierAgentProvocateur],
+//           Play: [heiheiBoatSnack, drFacilierAgentProvocateur],
 //         },
 //         {
-//           play: [mickeyMouseTrueFriend],
+//           Play: [mickeyMouseTrueFriend],
 //         },
 //       );
 //
-//       const attacker = testStore.getByZoneAndId("play", heiheiBoatSnack.id);
-//       const defender = testStore.getByZoneAndId(
+//       Const attacker = testStore.getByZoneAndId("play", heiheiBoatSnack.id);
+//       Const defender = testStore.getByZoneAndId(
 //         "play",
-//         mickeyMouseTrueFriend.id,
+//         MickeyMouseTrueFriend.id,
 //         "player_two",
 //       );
 //
-//       defender.updateCardMeta({ exerted: true });
+//       Defender.updateCardMeta({ exerted: true });
 //
-//       attacker.challenge(defender);
-//       testStore.resolveTopOfStack();
+//       Attacker.challenge(defender);
+//       TestStore.resolveTopOfStack();
 //
-//       expect(testStore.getZonesCardCount("player_one")).toEqual(
-//         expect.objectContaining({ hand: 1, play: 1 }),
+//       Expect(testStore.getZonesCardCount("player_one")).toEqual(
+//         Expect.objectContaining({ hand: 1, play: 1 }),
 //       );
 //     });
 //
-//     it("returns defender character to hand", () => {
-//       const testStore = new TestStore(
+//     It("returns defender character to hand", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [mickeyMouseTrueFriend],
+//           Play: [mickeyMouseTrueFriend],
 //         },
 //         {
-//           play: [heiheiBoatSnack, drFacilierAgentProvocateur],
+//           Play: [heiheiBoatSnack, drFacilierAgentProvocateur],
 //         },
 //       );
 //
-//       const attacker = testStore.getByZoneAndId(
+//       Const attacker = testStore.getByZoneAndId(
 //         "play",
-//         mickeyMouseTrueFriend.id,
+//         MickeyMouseTrueFriend.id,
 //       );
-//       const defender = testStore.getByZoneAndId(
+//       Const defender = testStore.getByZoneAndId(
 //         "play",
-//         heiheiBoatSnack.id,
+//         HeiheiBoatSnack.id,
 //         "player_two",
 //       );
 //
-//       defender.updateCardMeta({ exerted: true });
+//       Defender.updateCardMeta({ exerted: true });
 //
-//       attacker.challenge(defender);
-//       testStore.changePlayer("player_two");
-//       testStore.resolveTopOfStack();
+//       Attacker.challenge(defender);
+//       TestStore.changePlayer("player_two");
+//       TestStore.resolveTopOfStack();
 //
-//       expect(testStore.getZonesCardCount("player_two")).toEqual(
-//         expect.objectContaining({ hand: 1, play: 1 }),
+//       Expect(testStore.getZonesCardCount("player_two")).toEqual(
+//         Expect.objectContaining({ hand: 1, play: 1 }),
 //       );
 //     });
 //
-//     it("lets player skip the effect", () => {
-//       const testStore = new TestStore(
+//     It("lets player skip the effect", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [mickeyMouseTrueFriend],
+//           Play: [mickeyMouseTrueFriend],
 //         },
 //         {
-//           play: [heiheiBoatSnack, drFacilierAgentProvocateur],
+//           Play: [heiheiBoatSnack, drFacilierAgentProvocateur],
 //         },
 //       );
 //
-//       const attacker = testStore.getByZoneAndId(
+//       Const attacker = testStore.getByZoneAndId(
 //         "play",
-//         mickeyMouseTrueFriend.id,
+//         MickeyMouseTrueFriend.id,
 //       );
-//       const defender = testStore.getByZoneAndId(
+//       Const defender = testStore.getByZoneAndId(
 //         "play",
-//         heiheiBoatSnack.id,
+//         HeiheiBoatSnack.id,
 //         "player_two",
 //       );
 //
-//       defender.updateCardMeta({ exerted: true });
+//       Defender.updateCardMeta({ exerted: true });
 //
-//       attacker.challenge(defender);
+//       Attacker.challenge(defender);
 //
-//       testStore.changePlayer("player_two");
-//       testStore.resolveTopOfStack({ skip: true });
+//       TestStore.changePlayer("player_two");
+//       TestStore.resolveTopOfStack({ skip: true });
 //
-//       expect(testStore.getZonesCardCount("player_two")).toEqual(
-//         expect.objectContaining({ discard: 1, play: 1 }),
+//       Expect(testStore.getZonesCardCount("player_two")).toEqual(
+//         Expect.objectContaining({ discard: 1, play: 1 }),
 //       );
 //     });
 //
-//     it("doesn't return itself to hand", () => {
-//       const testStore = new TestStore(
+//     It("doesn't return itself to hand", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [mauiHeroToAll],
+//           Play: [mauiHeroToAll],
 //         },
 //         {
-//           play: [heiheiBoatSnack, drFacilierAgentProvocateur],
+//           Play: [heiheiBoatSnack, drFacilierAgentProvocateur],
 //         },
 //       );
 //
-//       const attacker = testStore.getByZoneAndId("play", mauiHeroToAll.id);
-//       const defender = testStore.getByZoneAndId(
+//       Const attacker = testStore.getByZoneAndId("play", mauiHeroToAll.id);
+//       Const defender = testStore.getByZoneAndId(
 //         "play",
-//         drFacilierAgentProvocateur.id,
+//         DrFacilierAgentProvocateur.id,
 //         "player_two",
 //       );
 //
-//       defender.updateCardMeta({ exerted: true });
+//       Defender.updateCardMeta({ exerted: true });
 //
-//       attacker.challenge(defender);
-//       expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
+//       Attacker.challenge(defender);
+//       Expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
 //
-//       expect(testStore.getZonesCardCount("player_two")).toEqual(
-//         expect.objectContaining({ discard: 1, play: 1 }),
+//       Expect(testStore.getZonesCardCount("player_two")).toEqual(
+//         Expect.objectContaining({ discard: 1, play: 1 }),
 //       );
 //     });
 //
-//     it("doesn't return card to hand if it's banished outside a challenge", async () => {
-//       const testEngine = new TestEngine(
+//     It("doesn't return card to hand if it's banished outside a challenge", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: fireTheCannons.cost,
-//           hand: [fireTheCannons],
+//           Inkwell: fireTheCannons.cost,
+//           Hand: [fireTheCannons],
 //         },
 //         {
-//           play: [heiheiBoatSnack, drFacilierAgentProvocateur],
+//           Play: [heiheiBoatSnack, drFacilierAgentProvocateur],
 //         },
 //       );
 //
-//       await testEngine.playCard(fireTheCannons);
-//       await testEngine.resolveTopOfStack({ targets: [heiheiBoatSnack] });
+//       Await testEngine.playCard(fireTheCannons);
+//       Await testEngine.resolveTopOfStack({ targets: [heiheiBoatSnack] });
 //
-//       expect(testEngine.testStore.getZonesCardCount("player_two")).toEqual(
-//         expect.objectContaining({ discard: 1, play: 1 }),
+//       Expect(testEngine.testStore.getZonesCardCount("player_two")).toEqual(
+//         Expect.objectContaining({ discard: 1, play: 1 }),
 //       );
 //     });
 //
-//     it("Doesn't return self when banished outside of a challenge", () => {
-//       const testStore = new TestStore(
+//     It("Doesn't return self when banished outside of a challenge", () => {
+//       Const testStore = new TestStore(
 //         {
-//           hand: [dragonFire],
-//           inkwell: dragonFire.cost,
+//           Hand: [dragonFire],
+//           Inkwell: dragonFire.cost,
 //         },
 //         {
-//           play: [drFacilierAgentProvocateur],
+//           Play: [drFacilierAgentProvocateur],
 //         },
 //       );
 //
-//       const removal = testStore.getByZoneAndId("hand", dragonFire.id);
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const removal = testStore.getByZoneAndId("hand", dragonFire.id);
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         drFacilierAgentProvocateur.id,
+//         DrFacilierAgentProvocateur.id,
 //         "player_two",
 //       );
 //
-//       removal.playFromHand();
+//       Removal.playFromHand();
 //
-//       testStore.resolveTopOfStack({
-//         targetId: cardUnderTest.instanceId,
+//       TestStore.resolveTopOfStack({
+//         TargetId: cardUnderTest.instanceId,
 //       });
 //
-//       expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
-//       expect(cardUnderTest.zone).toEqual("discard");
+//       Expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
+//       Expect(cardUnderTest.zone).toEqual("discard");
 //     });
 //
-//     describe("Opponent's chars should not be affected by Into the Shadows", () => {
-//       it("doesn't return attacker character to hand", () => {
-//         const testStore = new TestStore(
+//     Describe("Opponent's chars should not be affected by Into the Shadows", () => {
+//       It("doesn't return attacker character to hand", () => {
+//         Const testStore = new TestStore(
 //           {
-//             play: [mickeyMouseTrueFriend, drFacilierAgentProvocateur],
+//             Play: [mickeyMouseTrueFriend, drFacilierAgentProvocateur],
 //           },
 //           {
-//             play: [heiheiBoatSnack],
+//             Play: [heiheiBoatSnack],
 //           },
 //         );
 //
-//         const attacker = testStore.getByZoneAndId(
+//         Const attacker = testStore.getByZoneAndId(
 //           "play",
-//           mickeyMouseTrueFriend.id,
+//           MickeyMouseTrueFriend.id,
 //         );
-//         const defender = testStore.getByZoneAndId(
+//         Const defender = testStore.getByZoneAndId(
 //           "play",
-//           heiheiBoatSnack.id,
+//           HeiheiBoatSnack.id,
 //           "player_two",
 //         );
 //
-//         defender.updateCardMeta({ exerted: true });
+//         Defender.updateCardMeta({ exerted: true });
 //
-//         attacker.challenge(defender);
+//         Attacker.challenge(defender);
 //
-//         expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
-//         expect(defender.isDead).toEqual(true);
+//         Expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
+//         Expect(defender.isDead).toEqual(true);
 //       });
 //
-//       it("doesn't return defender character to hand", () => {
-//         const testStore = new TestStore(
+//       It("doesn't return defender character to hand", () => {
+//         Const testStore = new TestStore(
 //           {
-//             play: [mickeyMouseTrueFriend, drFacilierAgentProvocateur],
+//             Play: [mickeyMouseTrueFriend, drFacilierAgentProvocateur],
 //           },
 //           {
-//             play: [heiheiBoatSnack],
+//             Play: [heiheiBoatSnack],
 //           },
 //         );
 //
-//         const attacker = testStore.getByZoneAndId(
+//         Const attacker = testStore.getByZoneAndId(
 //           "play",
-//           mickeyMouseTrueFriend.id,
+//           MickeyMouseTrueFriend.id,
 //         );
-//         const defender = testStore.getByZoneAndId(
+//         Const defender = testStore.getByZoneAndId(
 //           "play",
-//           heiheiBoatSnack.id,
+//           HeiheiBoatSnack.id,
 //           "player_two",
 //         );
 //
-//         defender.updateCardMeta({ exerted: true });
+//         Defender.updateCardMeta({ exerted: true });
 //
-//         attacker.challenge(defender);
+//         Attacker.challenge(defender);
 //
-//         expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
-//         expect(defender.isDead).toEqual(true);
+//         Expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
+//         Expect(defender.isDead).toEqual(true);
 //       });
 //     });
 //   });
 //
-//   describe("Regression", () => {
-//     it("When Dr. Facilier is banished, his effect should not trigger.", async () => {
-//       const testEngine = new TestEngine(
+//   Describe("Regression", () => {
+//     It("When Dr. Facilier is banished, his effect should not trigger.", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           play: [mickeyMouseTrueFriend, mauiHeroToAll],
-//           hand: [dragonFire],
-//           inkwell: dragonFire.cost,
+//           Play: [mickeyMouseTrueFriend, mauiHeroToAll],
+//           Hand: [dragonFire],
+//           Inkwell: dragonFire.cost,
 //         },
 //         {
-//           play: [
-//             heiheiBoatSnack,
-//             drFacilierAgentProvocateur,
-//             drFacilierAgentProvocateur,
+//           Play: [
+//             HeiheiBoatSnack,
+//             DrFacilierAgentProvocateur,
+//             DrFacilierAgentProvocateur,
 //           ],
 //         },
 //       );
 //
-//       const firstFacilier = testEngine.getCardModel(
-//         drFacilierAgentProvocateur,
+//       Const firstFacilier = testEngine.getCardModel(
+//         DrFacilierAgentProvocateur,
 //         0,
 //       );
 //
 //       // Removing the first Dr. Facilier from play, using an action.
-//       await testEngine.playCard(dragonFire, { targets: [firstFacilier] });
+//       Await testEngine.playCard(dragonFire, { targets: [firstFacilier] });
 //
-//       expect(testEngine.store.stackLayerStore.layers).toHaveLength(0);
-//       expect(firstFacilier.zone).toEqual("discard");
+//       Expect(testEngine.store.stackLayerStore.layers).toHaveLength(0);
+//       Expect(firstFacilier.zone).toEqual("discard");
 //
-//       const secondFacilier = testEngine.getCardModel(
-//         drFacilierAgentProvocateur,
+//       Const secondFacilier = testEngine.getCardModel(
+//         DrFacilierAgentProvocateur,
 //         1,
 //       );
-//       secondFacilier.updateCardMeta({ exerted: true });
+//       SecondFacilier.updateCardMeta({ exerted: true });
 //
 //       // Removing second Facilier from play, using a challenge.
-//       await testEngine.challenge({
-//         attacker: mauiHeroToAll,
-//         defender: secondFacilier,
+//       Await testEngine.challenge({
+//         Attacker: mauiHeroToAll,
+//         Defender: secondFacilier,
 //       });
 //
-//       expect(testEngine.store.stackLayerStore.layers).toHaveLength(0);
-//       expect(secondFacilier.zone).toEqual("discard");
+//       Expect(testEngine.store.stackLayerStore.layers).toHaveLength(0);
+//       Expect(secondFacilier.zone).toEqual("discard");
 //
-//       await testEngine.tapCard(heiheiBoatSnack);
+//       Await testEngine.tapCard(heiheiBoatSnack);
 //
 //       // And lastly, challenging another char to make sure the effect doesn't trigger.
-//       await testEngine.challenge({
-//         attacker: mickeyMouseTrueFriend,
-//         defender: heiheiBoatSnack,
+//       Await testEngine.challenge({
+//         Attacker: mickeyMouseTrueFriend,
+//         Defender: heiheiBoatSnack,
 //       });
 //
-//       expect(testEngine.store.stackLayerStore.layers).toHaveLength(0);
-//       expect(testEngine.getCardModel(heiheiBoatSnack).isDead).toEqual(true);
+//       Expect(testEngine.store.stackLayerStore.layers).toHaveLength(0);
+//       Expect(testEngine.getCardModel(heiheiBoatSnack).isDead).toEqual(true);
 //
-//       expect(testEngine.getZonesCardCount("player_two")).toEqual(
-//         expect.objectContaining({ discard: 3 }),
+//       Expect(testEngine.getZonesCardCount("player_two")).toEqual(
+//         Expect.objectContaining({ discard: 3 }),
 //       );
 //     });
 //   });

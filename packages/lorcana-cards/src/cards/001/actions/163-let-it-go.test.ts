@@ -5,9 +5,9 @@ import { letItGo } from "./163-let-it-go";
 describe("Let It Go - undefined", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [letItGo] });
-  //   expect(testEngine.getCardModel(letItGo).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [letItGo] });
+  //   Expect(testEngine.getCardModel(letItGo).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,66 +17,66 @@ describe("Let It Go - undefined", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { moanaOfMotunui } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { letItGo } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { moanaOfMotunui } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { letItGo } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Let it Go", () => {
-//   it("Adds your own char to inkwell", () => {
-//     const testStore = new TestStore({
-//       inkwell: letItGo.cost,
-//       hand: [letItGo],
-//       play: [moanaOfMotunui],
+// Describe("Let it Go", () => {
+//   It("Adds your own char to inkwell", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: letItGo.cost,
+//       Hand: [letItGo],
+//       Play: [moanaOfMotunui],
 //     });
-//     const store = testStore.store;
-//     const tableStore = store.tableStore;
+//     Const store = testStore.store;
+//     Const tableStore = store.tableStore;
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", letItGo.id);
-//     const target = testStore.getByZoneAndId("play", moanaOfMotunui.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", letItGo.id);
+//     Const target = testStore.getByZoneAndId("play", moanaOfMotunui.id);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveTopOfStack({
-//       targets: [target],
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveTopOfStack({
+//       Targets: [target],
 //     });
 //
-//     expect(
-//       tableStore.getPlayerZone("player_one", "inkwell")?.cards,
+//     Expect(
+//       TableStore.getPlayerZone("player_one", "inkwell")?.cards,
 //     ).toHaveLength(letItGo.cost + 1);
-//     expect(target.zone).toEqual("inkwell");
-//     expect(target.ready).toBeFalsy();
+//     Expect(target.zone).toEqual("inkwell");
+//     Expect(target.ready).toBeFalsy();
 //   });
 //
-//   it("Adds opponent's char to inkwell", () => {
-//     const testStore = new TestStore(
+//   It("Adds opponent's char to inkwell", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: letItGo.cost,
-//         hand: [letItGo],
+//         Inkwell: letItGo.cost,
+//         Hand: [letItGo],
 //       },
 //       {
-//         play: [moanaOfMotunui],
+//         Play: [moanaOfMotunui],
 //       },
 //     );
-//     const store = testStore.store;
-//     const tableStore = store.tableStore;
+//     Const store = testStore.store;
+//     Const tableStore = store.tableStore;
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", letItGo.id);
-//     const target = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", letItGo.id);
+//     Const target = testStore.getByZoneAndId(
 //       "play",
-//       moanaOfMotunui.id,
+//       MoanaOfMotunui.id,
 //       "player_two",
 //     );
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveTopOfStack({
-//       targetId: target.instanceId,
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveTopOfStack({
+//       TargetId: target.instanceId,
 //     });
 //
-//     expect(
-//       tableStore.getPlayerZone("player_two", "inkwell")?.cards,
+//     Expect(
+//       TableStore.getPlayerZone("player_two", "inkwell")?.cards,
 //     ).toHaveLength(1);
-//     expect(target.zone).toEqual("inkwell");
-//     expect(target.ready).toBeFalsy();
+//     Expect(target.zone).toEqual("inkwell");
+//     Expect(target.ready).toBeFalsy();
 //   });
 // });
 //

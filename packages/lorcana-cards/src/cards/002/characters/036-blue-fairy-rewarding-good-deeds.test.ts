@@ -3,60 +3,60 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   blueFairyRewardingGoodDeeds,
-//   cobraBubblesSimpleEducator,
-//   herculesDivineHero,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   BlueFairyRewardingGoodDeeds,
+//   CobraBubblesSimpleEducator,
+//   HerculesDivineHero,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Blue Fairy - Rewarding Good Deeds", () => {
-//   describe("**ETHEREAL GLOW** Whenever you play a Floodborn character, you may draw a card.", () => {
-//     it("Playing a floodborn", () => {
-//       const testStore = new TestStore({
-//         inkwell: herculesDivineHero.cost,
-//         hand: [herculesDivineHero],
-//         play: [blueFairyRewardingGoodDeeds],
-//         deck: 2,
+// Describe("Blue Fairy - Rewarding Good Deeds", () => {
+//   Describe("**ETHEREAL GLOW** Whenever you play a Floodborn character, you may draw a card.", () => {
+//     It("Playing a floodborn", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: herculesDivineHero.cost,
+//         Hand: [herculesDivineHero],
+//         Play: [blueFairyRewardingGoodDeeds],
+//         Deck: 2,
 //       });
 //
-//       const floodbornChar = testStore.getByZoneAndId(
+//       Const floodbornChar = testStore.getByZoneAndId(
 //         "hand",
-//         herculesDivineHero.id,
+//         HerculesDivineHero.id,
 //       );
 //
-//       floodbornChar.playFromHand();
-//       testStore.resolveOptionalAbility();
+//       FloodbornChar.playFromHand();
+//       TestStore.resolveOptionalAbility();
 //
-//       expect(testStore.getZonesCardCount()).toEqual(
-//         expect.objectContaining({
-//           hand: 1,
-//           deck: 1,
+//       Expect(testStore.getZonesCardCount()).toEqual(
+//         Expect.objectContaining({
+//           Hand: 1,
+//           Deck: 1,
 //         }),
 //       );
 //     });
 //
-//     it("Playing a NON floodborn", () => {
-//       const testStore = new TestStore({
-//         inkwell: cobraBubblesSimpleEducator.cost,
-//         hand: [cobraBubblesSimpleEducator],
-//         play: [blueFairyRewardingGoodDeeds],
-//         deck: 2,
+//     It("Playing a NON floodborn", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: cobraBubblesSimpleEducator.cost,
+//         Hand: [cobraBubblesSimpleEducator],
+//         Play: [blueFairyRewardingGoodDeeds],
+//         Deck: 2,
 //       });
 //
-//       const storybornChar = testStore.getByZoneAndId(
+//       Const storybornChar = testStore.getByZoneAndId(
 //         "hand",
-//         cobraBubblesSimpleEducator.id,
+//         CobraBubblesSimpleEducator.id,
 //       );
 //
-//       storybornChar.playFromHand();
+//       StorybornChar.playFromHand();
 //
-//       expect(testStore.stackLayers).toHaveLength(0);
-//       expect(testStore.getZonesCardCount()).toEqual(
-//         expect.objectContaining({
-//           hand: 0,
-//           deck: 2,
+//       Expect(testStore.stackLayers).toHaveLength(0);
+//       Expect(testStore.getZonesCardCount()).toEqual(
+//         Expect.objectContaining({
+//           Hand: 0,
+//           Deck: 2,
 //         }),
 //       );
 //     });

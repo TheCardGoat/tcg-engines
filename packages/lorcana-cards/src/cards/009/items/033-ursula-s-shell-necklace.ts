@@ -1,15 +1,15 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
-// import { ursulaShellNecklace as ogUrsulaShellNecklace } from "@lorcanito/lorcana-engine/cards/001/items/034-ursula-shell-necklace";
+// Import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
+// Import { ursulaShellNecklace as ogUrsulaShellNecklace } from "@lorcanito/lorcana-engine/cards/001/items/034-ursula-shell-necklace";
 //
-// export const ursulasShellNecklace: LorcanitoItemCard = {
+// Export const ursulasShellNecklace: LorcanitoItemCard = {
 //   ...ogUrsulaShellNecklace,
-//   id: "nm0",
-//   reprints: [ogUrsulaShellNecklace.id],
-//   number: 33,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 649980,
+//   Id: "nm0",
+//   Reprints: [ogUrsulaShellNecklace.id],
+//   Number: 33,
+//   Set: "009",
+//   ExternalIds: {
+//     TcgPlayer: 649980,
 //   },
 // };
 //

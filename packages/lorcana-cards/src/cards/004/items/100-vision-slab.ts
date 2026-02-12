@@ -1,25 +1,8 @@
 import type { ItemCard } from "@tcg/lorcana-types";
 
 export const visionSlab: ItemCard = {
-  id: "1s5",
-  cardType: "item",
-  name: "Vision Slab",
-  inkType: ["emerald"],
-  franchise: "Encanto",
-  set: "004",
-  text: "DANGER REVEALED At the start of your turn, if an opposing character has damage, gain 1 lore.\nTRAPPED! Damage counters can't be removed.",
-  cost: 3,
-  cardNumber: 100,
-  inkable: true,
-  missingImplementation: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "e6d57ae690cdbb13b3985f7a1f47b40c2fd61080",
-  },
   abilities: [
     {
-      id: "1s5-1",
-      type: "action",
       effect: {
         type: "conditional",
         condition: {
@@ -31,7 +14,24 @@ export const visionSlab: ItemCard = {
           amount: 1,
         },
       },
+      id: "1s5-1",
       text: "DANGER REVEALED At the start of your turn, if an opposing character has damage, gain 1 lore.",
+      type: "action",
     },
   ],
+  cardNumber: 100,
+  cardType: "item",
+  cost: 3,
+  externalIds: {
+    ravensburger: "e6d57ae690cdbb13b3985f7a1f47b40c2fd61080",
+  },
+  franchise: "Encanto",
+  id: "1s5",
+  inkType: ["emerald"],
+  inkable: true,
+  missingImplementation: true,
+  missingTests: true,
+  name: "Vision Slab",
+  set: "004",
+  text: "DANGER REVEALED At the start of your turn, if an opposing character has damage, gain 1 lore.\nTRAPPED! Damage counters can't be removed.",
 };

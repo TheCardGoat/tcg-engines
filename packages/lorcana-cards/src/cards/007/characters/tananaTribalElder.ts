@@ -1,24 +1,24 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const tananaTribalElder: LorcanitoCharacterCard = {
-//   id: "sui",
-//   name: "Tanana",
-//   title: "Tribal Elder",
-//   characteristics: ["storyborn", "ally"],
-//   type: "character",
-//   inkwell: true,
-//   colors: ["amethyst"],
-//   cost: 4,
-//   strength: 4,
-//   willpower: 4,
-//   illustrator: "Fujita Kazuyoshi",
-//   number: 46,
-//   set: "007",
-//   externalIds: {
-//     tcgPlayer: 618695,
+// Export const tananaTribalElder: LorcanitoCharacterCard = {
+//   Id: "sui",
+//   Name: "Tanana",
+//   Title: "Tribal Elder",
+//   Characteristics: ["storyborn", "ally"],
+//   Type: "character",
+//   Inkwell: true,
+//   Colors: ["amethyst"],
+//   Cost: 4,
+//   Strength: 4,
+//   Willpower: 4,
+//   Illustrator: "Fujita Kazuyoshi",
+//   Number: 46,
+//   Set: "007",
+//   ExternalIds: {
+//     TcgPlayer: 618695,
 //   },
-//   rarity: "common",
-//   lore: 1,
+//   Rarity: "common",
+//   Lore: 1,
 // };
 //

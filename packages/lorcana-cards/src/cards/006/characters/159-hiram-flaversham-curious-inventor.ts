@@ -1,25 +1,25 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
 // // TODO: Once the set is released, we organize the cards by set and type
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
 //
-// export const hiramFlavershamCuriousInventor: LorcanitoCharacterCard = {
-//   id: "h7c",
-//   name: "Hiram Flaversham",
-//   title: "Intrigued Inventor",
-//   characteristics: ["storyborn", "ally", "inventor"],
-//   type: "character",
-//   inkwell: false,
-//   colors: ["sapphire"],
-//   cost: 2,
-//   strength: 0,
-//   willpower: 2,
-//   lore: 3,
-//   illustrator: "Stefano Spagnuolo",
-//   number: 159,
-//   set: "006",
-//   externalIds: {
-//     tcgPlayer: 593013,
+// Export const hiramFlavershamCuriousInventor: LorcanitoCharacterCard = {
+//   Id: "h7c",
+//   Name: "Hiram Flaversham",
+//   Title: "Intrigued Inventor",
+//   Characteristics: ["storyborn", "ally", "inventor"],
+//   Type: "character",
+//   Inkwell: false,
+//   Colors: ["sapphire"],
+//   Cost: 2,
+//   Strength: 0,
+//   Willpower: 2,
+//   Lore: 3,
+//   Illustrator: "Stefano Spagnuolo",
+//   Number: 159,
+//   Set: "006",
+//   ExternalIds: {
+//     TcgPlayer: 593013,
 //   },
-//   rarity: "rare",
+//   Rarity: "rare",
 // };
 //

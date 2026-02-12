@@ -3,49 +3,49 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   liloMakingAWish,
-//   mickeyMouseDetective,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   LiloMakingAWish,
+//   MickeyMouseDetective,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import {
-//   dalmatianPuppyTailWagger,
-//   fantasticalAndMagical,
-//   puaProtectivePig,
+// Import {
+//   DalmatianPuppyTailWagger,
+//   FantasticalAndMagical,
+//   PuaProtectivePig,
 // } from "@lorcanito/lorcana-engine/cards/008";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Fantastical And Magical", () => {
-//   it("Sing Together 9", async () => {
-//     const testEngine = new TestEngine({
-//       hand: [fantasticalAndMagical],
+// Describe("Fantastical And Magical", () => {
+//   It("Sing Together 9", async () => {
+//     Const testEngine = new TestEngine({
+//       Hand: [fantasticalAndMagical],
 //     });
 //
-//     const cardModel = testEngine.getCardModel(fantasticalAndMagical);
+//     Const cardModel = testEngine.getCardModel(fantasticalAndMagical);
 //
-//     expect(cardModel.hasSingTogether).toEqual(true);
+//     Expect(cardModel.hasSingTogether).toEqual(true);
 //   });
 //
-//   it("For each character that sang this song, draw a card and gain 1 lore.", async () => {
-//     const cardsInPlay = [
-//       puaProtectivePig, // Cost 3
-//       mickeyMouseDetective, // Cost 3
-//       dalmatianPuppyTailWagger, // Cost 2
-//       liloMakingAWish, // Cost 1
+//   It("For each character that sang this song, draw a card and gain 1 lore.", async () => {
+//     Const cardsInPlay = [
+//       PuaProtectivePig, // Cost 3
+//       MickeyMouseDetective, // Cost 3
+//       DalmatianPuppyTailWagger, // Cost 2
+//       LiloMakingAWish, // Cost 1
 //     ];
-//     const testEngine = new TestEngine({
-//       hand: [fantasticalAndMagical],
-//       play: cardsInPlay,
-//       deck: 10,
+//     Const testEngine = new TestEngine({
+//       Hand: [fantasticalAndMagical],
+//       Play: cardsInPlay,
+//       Deck: 10,
 //     });
 //
-//     await testEngine.singSongTogether({
-//       song: fantasticalAndMagical,
-//       singers: cardsInPlay,
+//     Await testEngine.singSongTogether({
+//       Song: fantasticalAndMagical,
+//       Singers: cardsInPlay,
 //     });
 //
-//     expect(testEngine.getPlayerLore("player_one")).toEqual(cardsInPlay.length);
-//     expect(testEngine.getZonesCardCount().hand).toEqual(cardsInPlay.length);
+//     Expect(testEngine.getPlayerLore("player_one")).toEqual(cardsInPlay.length);
+//     Expect(testEngine.getZonesCardCount().hand).toEqual(cardsInPlay.length);
 //   });
 // });
 //

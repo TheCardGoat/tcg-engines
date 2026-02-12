@@ -1,58 +1,58 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import {
-//   type ActivatedAbility,
-//   wardAbility,
+// Import {
+//   Type ActivatedAbility,
+//   WardAbility,
 // } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { self } from "@lorcanito/lorcana-engine/abilities/targets";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-// import type { ScryEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+// Import { self } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { ScryEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
 //
-// const scry: ScryEffect = {
-//   type: "scry",
-//   amount: 2,
-//   mode: "inkwell",
-//   shouldRevealTutored: false,
-//   target: self,
-//   tutorFilters: [
+// Const scry: ScryEffect = {
+//   Type: "scry",
+//   Amount: 2,
+//   Mode: "inkwell",
+//   ShouldRevealTutored: false,
+//   Target: self,
+//   TutorFilters: [
 //     { filter: "owner", value: "self" },
 //     { filter: "zone", value: "deck" },
 //   ],
-//   limits: {
-//     bottom: 0,
-//     hand: 0,
-//     top: 1,
-//     inkwell: 1,
+//   Limits: {
+//     Bottom: 0,
+//     Hand: 0,
+//     Top: 1,
+//     Inkwell: 1,
 //   },
 // };
 //
-// const keyToThePuzzle: ActivatedAbility = {
-//   type: "activated",
-//   name: "KEY TO THE PUZZLE",
-//   text: "{E} – Look at the top 2 cards of your deck. Put one into your inkwell facedown and exerted, and the other on top of your deck.",
-//   costs: [{ type: "exert" }],
-//   effects: [scry],
+// Const keyToThePuzzle: ActivatedAbility = {
+//   Type: "activated",
+//   Name: "KEY TO THE PUZZLE",
+//   Text: "{E} – Look at the top 2 cards of your deck. Put one into your inkwell facedown and exerted, and the other on top of your deck.",
+//   Costs: [{ type: "exert" }],
+//   Effects: [scry],
 // };
 //
-// export const kidaCreativeThinker: LorcanitoCharacterCard = {
-//   id: "m5r",
-//   name: "Kida",
-//   title: "Creative Thinker",
-//   characteristics: ["storyborn", "hero", "princess"],
-//   text: "Ward\nKEY TO THE PUZZLE {E} – Look at the top 2 cards of your deck. Put one into your inkwell  facedown and exerted, and the other on top of your deck.",
-//   type: "character",
-//   abilities: [wardAbility, keyToThePuzzle],
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 4,
-//   strength: 3,
-//   willpower: 3,
-//   illustrator: "Jennifer Park / Leonardo Giammichele",
-//   number: 164,
-//   set: "007",
-//   externalIds: {
-//     tcgPlayer: 619501,
+// Export const kidaCreativeThinker: LorcanitoCharacterCard = {
+//   Id: "m5r",
+//   Name: "Kida",
+//   Title: "Creative Thinker",
+//   Characteristics: ["storyborn", "hero", "princess"],
+//   Text: "Ward\nKEY TO THE PUZZLE {E} – Look at the top 2 cards of your deck. Put one into your inkwell  facedown and exerted, and the other on top of your deck.",
+//   Type: "character",
+//   Abilities: [wardAbility, keyToThePuzzle],
+//   Inkwell: true,
+//   Colors: ["sapphire"],
+//   Cost: 4,
+//   Strength: 3,
+//   Willpower: 3,
+//   Illustrator: "Jennifer Park / Leonardo Giammichele",
+//   Number: 164,
+//   Set: "007",
+//   ExternalIds: {
+//     TcgPlayer: 619501,
 //   },
-//   rarity: "rare",
-//   lore: 1,
+//   Rarity: "rare",
+//   Lore: 1,
 // };
 //

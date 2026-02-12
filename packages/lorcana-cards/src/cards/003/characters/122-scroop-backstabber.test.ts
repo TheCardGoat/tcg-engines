@@ -3,25 +3,25 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { scroopBackstabber } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { scroopBackstabber } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Scroop - Backstabber", () => {
-//   it.skip("**BRUTE** While this character has damage, he gets +3 {S}.", () => {
-//     const testStore = new TestStore({
-//       inkwell: scroopBackstabber.cost,
-//       play: [scroopBackstabber],
+// Describe("Scroop - Backstabber", () => {
+//   It.skip("**BRUTE** While this character has damage, he gets +3 {S}.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: scroopBackstabber.cost,
+//       Play: [scroopBackstabber],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       scroopBackstabber.id,
+//       ScroopBackstabber.id,
 //     );
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

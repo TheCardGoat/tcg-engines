@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { annaTruehearted } from "@lorcanito/lorcana-engine/cards/009/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { annaTruehearted } from "@lorcanito/lorcana-engine/cards/009/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Anna - True-Hearted", () => {
-//   it.skip("**LET ME HELP YOU** Whenever this character quests, your other Hero characters get +1 {L} this turn.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: annaTruehearted.cost,
-//       play: [annaTruehearted],
-//       hand: [annaTruehearted],
+// Describe("Anna - True-Hearted", () => {
+//   It.skip("**LET ME HELP YOU** Whenever this character quests, your other Hero characters get +1 {L} this turn.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: annaTruehearted.cost,
+//       Play: [annaTruehearted],
+//       Hand: [annaTruehearted],
 //     });
 //
-//     await testEngine.playCard(annaTruehearted);
+//     Await testEngine.playCard(annaTruehearted);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

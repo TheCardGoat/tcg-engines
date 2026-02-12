@@ -1,29 +1,29 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
-// import { wheneverACharacterQuestsWhileHere } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// Import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
+// Import { wheneverACharacterQuestsWhileHere } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
 //
-// export const theUnderworldRiverStyx: LorcanitoLocationCard = {
-//   id: "ez0",
-//   missingTestCase: true,
-//   name: "The Underworld",
-//   title: "River Styx",
-//   characteristics: ["location"],
-//   text: "**SAVE A SOUL** Whenever a character quests while here, you may pay 3 {I} to return a character card from your discard to your hand.",
-//   type: "location",
-//   abilities: [
-//     wheneverACharacterQuestsWhileHere({
-//       name: "Save a Soul",
-//       text: "Whenever a character quests while here, you may pay 3 {I} to return a character card from your discard to your hand.",
-//       optional: true,
-//       costs: [{ type: "ink", amount: 3 }],
-//       effects: [
+// Export const theUnderworldRiverStyx: LorcanitoLocationCard = {
+//   Id: "ez0",
+//   MissingTestCase: true,
+//   Name: "The Underworld",
+//   Title: "River Styx",
+//   Characteristics: ["location"],
+//   Text: "**SAVE A SOUL** Whenever a character quests while here, you may pay 3 {I} to return a character card from your discard to your hand.",
+//   Type: "location",
+//   Abilities: [
+//     WheneverACharacterQuestsWhileHere({
+//       Name: "Save a Soul",
+//       Text: "Whenever a character quests while here, you may pay 3 {I} to return a character card from your discard to your hand.",
+//       Optional: true,
+//       Costs: [{ type: "ink", amount: 3 }],
+//       Effects: [
 //         {
-//           type: "move",
-//           to: "hand",
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
+//           Type: "move",
+//           To: "hand",
+//           Target: {
+//             Type: "card",
+//             Value: 1,
+//             Filters: [
 //               { filter: "type", value: "character" },
 //               { filter: "zone", value: "discard" },
 //               { filter: "owner", value: "self" },
@@ -33,18 +33,18 @@
 //       ],
 //     }),
 //   ],
-//   inkwell: true,
-//   colors: ["amber"],
-//   cost: 2,
-//   moveCost: 2,
-//   willpower: 6,
-//   lore: 1,
-//   illustrator: "Jeremy Adams",
-//   number: 34,
-//   set: "URR",
-//   externalIds: {
-//     tcgPlayer: 550564,
+//   Inkwell: true,
+//   Colors: ["amber"],
+//   Cost: 2,
+//   MoveCost: 2,
+//   Willpower: 6,
+//   Lore: 1,
+//   Illustrator: "Jeremy Adams",
+//   Number: 34,
+//   Set: "URR",
+//   ExternalIds: {
+//     TcgPlayer: 550564,
 //   },
-//   rarity: "rare",
+//   Rarity: "rare",
 // };
 //

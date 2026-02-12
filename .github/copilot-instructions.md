@@ -42,8 +42,8 @@ bun run ci-check           # All checks (format, lint, types, test)
 bun run check-types
 
 # Linting/Formatting
-bun run lint               # Biome linter
-bun run format             # Biome formatter
+bun run lint               # oxlint linter
+bun run format             # oxfmt formatter
 ```
 
 ## App-Specific Context
@@ -75,7 +75,7 @@ When working in specific apps, check their documentation:
 
 ✅ **Always**:
 - Write tests before implementation (TDD)
-- Use Biome for linting (not ESLint)
+- Use oxlint for linting
 - Preserve existing code and functionality
 - Make file-by-file changes
 - Ask user before running long-running commands

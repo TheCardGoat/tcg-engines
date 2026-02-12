@@ -3,44 +3,44 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { yokaiScientificSupervillain } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { yokaiScientificSupervillain } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Yokai - Scientific Supervillain", () => {
-//   it.skip("Shift 6 (You may pay 6 {I} to play this on top of one of your characters named Yokai.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [yokaiScientificSupervillain],
+// Describe("Yokai - Scientific Supervillain", () => {
+//   It.skip("Shift 6 (You may pay 6 {I} to play this on top of one of your characters named Yokai.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [yokaiScientificSupervillain],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(yokaiScientificSupervillain);
-//     expect(cardUnderTest.hasShift).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(yokaiScientificSupervillain);
+//     Expect(cardUnderTest.hasShift).toBe(true);
 //   });
 //
-//   it.skip("NEUROTRANSMITTER You may play items named Microbots for free.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: yokaiScientificSupervillain.cost,
-//       play: [yokaiScientificSupervillain],
-//       hand: [yokaiScientificSupervillain],
+//   It.skip("NEUROTRANSMITTER You may play items named Microbots for free.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: yokaiScientificSupervillain.cost,
+//       Play: [yokaiScientificSupervillain],
+//       Hand: [yokaiScientificSupervillain],
 //     });
 //
-//     await testEngine.playCard(yokaiScientificSupervillain);
+//     Await testEngine.playCard(yokaiScientificSupervillain);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 //
-//   it.skip("TECHNICAL GAIN Whenever this character quests, draw a card for each opposing character with {S}.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: yokaiScientificSupervillain.cost,
-//       play: [yokaiScientificSupervillain],
-//       hand: [yokaiScientificSupervillain],
+//   It.skip("TECHNICAL GAIN Whenever this character quests, draw a card for each opposing character with {S}.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: yokaiScientificSupervillain.cost,
+//       Play: [yokaiScientificSupervillain],
+//       Hand: [yokaiScientificSupervillain],
 //     });
 //
-//     await testEngine.playCard(yokaiScientificSupervillain);
+//     Await testEngine.playCard(yokaiScientificSupervillain);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

@@ -1,47 +1,47 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { ActivatedAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { ActivatedAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const lantern: LorcanitoItemCard = {
-//   characteristics: ["item"],
-//   id: "ub2",
-//   reprints: ["aa1"],
+// Export const lantern: LorcanitoItemCard = {
+//   Characteristics: ["item"],
+//   Id: "ub2",
+//   Reprints: ["aa1"],
 //
-//   name: "Lantern",
-//   text: "**BIRTHDAY LIGHTS** {E} - You pay 1 {I} less for the next character you play this turn.",
-//   type: "item",
-//   abilities: [
+//   Name: "Lantern",
+//   Text: "**BIRTHDAY LIGHTS** {E} - You pay 1 {I} less for the next character you play this turn.",
+//   Type: "item",
+//   Abilities: [
 //     {
-//       type: "activated",
-//       name: "Birthday Lights",
-//       text: "{E} - You pay 1 {I} less for the next character you play this turn.",
-//       optional: false,
-//       costs: [{ type: "exert" }],
-//       effects: [
+//       Type: "activated",
+//       Name: "Birthday Lights",
+//       Text: "{E} - You pay 1 {I} less for the next character you play this turn.",
+//       Optional: false,
+//       Costs: [{ type: "exert" }],
+//       Effects: [
 //         {
-//           type: "replacement",
-//           replacement: "cost",
-//           duration: "next",
-//           amount: 1,
-//           target: {
-//             type: "card",
-//             value: "all",
-//             filters: [{ filter: "type", value: "character" }],
+//           Type: "replacement",
+//           Replacement: "cost",
+//           Duration: "next",
+//           Amount: 1,
+//           Target: {
+//             Type: "card",
+//             Value: "all",
+//             Filters: [{ filter: "type", value: "character" }],
 //           },
 //         },
 //       ],
 //     } as ActivatedAbility,
 //   ],
-//   flavour:
+//   Flavour:
 //     "Lanterns fill the sky on one special night, beacons of hope and love.",
-//   colors: ["amber"],
-//   cost: 2,
-//   illustrator: "Eri Welli",
-//   number: 33,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 493500,
+//   Colors: ["amber"],
+//   Cost: 2,
+//   Illustrator: "Eri Welli",
+//   Number: 33,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 493500,
 //   },
-//   rarity: "rare",
+//   Rarity: "rare",
 // };
 //

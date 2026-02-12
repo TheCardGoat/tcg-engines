@@ -3,42 +3,42 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { smash } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
-// import { merlinGoat } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { smash } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
+// Import { merlinGoat } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Merlin - Goat", () => {
-//   describe("**HERE I COME!** When you play this character and when he leaves play, gain 1 lore.", () => {
-//     it("When you play", () => {
-//       const testStore = new TestStore({
-//         inkwell: merlinGoat.cost,
-//         hand: [merlinGoat],
+// Describe("Merlin - Goat", () => {
+//   Describe("**HERE I COME!** When you play this character and when he leaves play, gain 1 lore.", () => {
+//     It("When you play", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: merlinGoat.cost,
+//         Hand: [merlinGoat],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId("hand", merlinGoat.id);
+//       Const cardUnderTest = testStore.getByZoneAndId("hand", merlinGoat.id);
 //
-//       expect(testStore.store.tableStore.getTable("player_one").lore).toEqual(0);
+//       Expect(testStore.store.tableStore.getTable("player_one").lore).toEqual(0);
 //
-//       cardUnderTest.playFromHand();
+//       CardUnderTest.playFromHand();
 //
-//       expect(testStore.store.tableStore.getTable("player_one").lore).toEqual(1);
+//       Expect(testStore.store.tableStore.getTable("player_one").lore).toEqual(1);
 //     });
 //
-//     it("When he leaves play", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: smash.cost,
-//         hand: [smash],
-//         play: [merlinGoat],
+//     It("When he leaves play", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: smash.cost,
+//         Hand: [smash],
+//         Play: [merlinGoat],
 //       });
 //
-//       await testEngine.playCard(smash);
-//       await testEngine.resolveTopOfStack({
-//         targets: [merlinGoat],
+//       Await testEngine.playCard(smash);
+//       Await testEngine.resolveTopOfStack({
+//         Targets: [merlinGoat],
 //       });
 //
-//       expect(testEngine.getLoreForPlayer()).toEqual(1);
+//       Expect(testEngine.getLoreForPlayer()).toEqual(1);
 //     });
 //   });
 // });

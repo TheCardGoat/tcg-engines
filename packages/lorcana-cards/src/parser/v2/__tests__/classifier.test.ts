@@ -78,25 +78,25 @@ describe("Classifier Priority Order", () => {
     it("should classify simple keyword abilities", () => {
       const result = classifyAbility("Rush");
       expect(result.type).toBe("keyword");
-      expect(result.confidence).toBe(1.0);
+      expect(result.confidence).toBe(1);
     });
 
     it("should classify parameterized keyword abilities", () => {
       const result = classifyAbility("Challenger +3");
       expect(result.type).toBe("keyword");
-      expect(result.confidence).toBe(1.0);
+      expect(result.confidence).toBe(1);
     });
 
     it("should classify Shift keyword abilities", () => {
       const result = classifyAbility("Shift 5");
       expect(result.type).toBe("keyword");
-      expect(result.confidence).toBe(1.0);
+      expect(result.confidence).toBe(1);
     });
 
     it("should classify Singer keyword abilities", () => {
       const result = classifyAbility("Singer 4");
       expect(result.type).toBe("keyword");
-      expect(result.confidence).toBe(1.0);
+      expect(result.confidence).toBe(1);
     });
   });
 

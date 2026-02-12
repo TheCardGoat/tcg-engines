@@ -3,51 +3,51 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   mickeyMouseLeaderOfTheBand,
-//   princeEricSeafaringPrince,
-//   ursulaVanessa,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   MickeyMouseLeaderOfTheBand,
+//   PrinceEricSeafaringPrince,
+//   UrsulaVanessa,
 // } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Mickey Mouse - Leader of the Band", () => {
-//   it("**Support** _(Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)_", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: mickeyMouseLeaderOfTheBand.cost,
-//       play: [mickeyMouseLeaderOfTheBand, ursulaVanessa],
+// Describe("Mickey Mouse - Leader of the Band", () => {
+//   It("**Support** _(Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)_", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: mickeyMouseLeaderOfTheBand.cost,
+//       Play: [mickeyMouseLeaderOfTheBand, ursulaVanessa],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(mickeyMouseLeaderOfTheBand);
-//     const target = testEngine.getCardModel(ursulaVanessa);
+//     Const cardUnderTest = testEngine.getCardModel(mickeyMouseLeaderOfTheBand);
+//     Const target = testEngine.getCardModel(ursulaVanessa);
 //
-//     expect(cardUnderTest.hasAbility("support")).toBe(true);
-//     cardUnderTest.quest();
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({ targets: [target] }, true);
+//     Expect(cardUnderTest.hasAbility("support")).toBe(true);
+//     CardUnderTest.quest();
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({ targets: [target] }, true);
 //
-//     expect(target.strength).toBe(3);
+//     Expect(target.strength).toBe(3);
 //   });
-//   it("When you play this character, chosen character gains **Support ** this turn.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: mickeyMouseLeaderOfTheBand.cost,
-//       play: [ursulaVanessa, princeEricSeafaringPrince],
-//       hand: [mickeyMouseLeaderOfTheBand],
+//   It("When you play this character, chosen character gains **Support ** this turn.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: mickeyMouseLeaderOfTheBand.cost,
+//       Play: [ursulaVanessa, princeEricSeafaringPrince],
+//       Hand: [mickeyMouseLeaderOfTheBand],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(mickeyMouseLeaderOfTheBand);
-//     const target = testEngine.getCardModel(ursulaVanessa);
-//     const target2 = testEngine.getCardModel(princeEricSeafaringPrince);
+//     Const cardUnderTest = testEngine.getCardModel(mickeyMouseLeaderOfTheBand);
+//     Const target = testEngine.getCardModel(ursulaVanessa);
+//     Const target2 = testEngine.getCardModel(princeEricSeafaringPrince);
 //
-//     cardUnderTest.playFromHand();
-//     await testEngine.resolveTopOfStack({ targets: [target] }, true);
-//     expect(target.hasAbility("support")).toBe(true);
+//     CardUnderTest.playFromHand();
+//     Await testEngine.resolveTopOfStack({ targets: [target] }, true);
+//     Expect(target.hasAbility("support")).toBe(true);
 //
-//     target.quest();
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({ targets: [target2] }, true);
+//     Target.quest();
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({ targets: [target2] }, true);
 //
-//     expect(target2.strength).toBe(4);
+//     Expect(target2.strength).toBe(4);
 //   });
 // });
 //

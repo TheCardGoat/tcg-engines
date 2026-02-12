@@ -1,43 +1,43 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { chosenCharacterOfYours } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { whenYouPlayThisCharacter } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { chosenCharacterOfYours } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import { whenYouPlayThisCharacter } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 //
-// export const fergusMcduckScroogesFather: LorcanitoCharacterCard = {
-//   id: "pkp",
-//   name: "Fergus McDuck",
-//   title: "Scrooge's Father",
-//   characteristics: ["storyborn", "mentor"],
-//   text: "TOUGHEN UP When you play this character, chosen character of yours gains Ward until the start of your next turn. (Opponents can't choose them except to challenge.)",
-//   type: "character",
-//   abilities: [
-//     whenYouPlayThisCharacter({
-//       name: "TOUGHEN UP",
-//       text: "When you play this character, chosen character of yours gains Ward until the start of your next turn. (Opponents can't choose them except to challenge.)",
-//       effects: [
+// Export const fergusMcduckScroogesFather: LorcanitoCharacterCard = {
+//   Id: "pkp",
+//   Name: "Fergus McDuck",
+//   Title: "Scrooge's Father",
+//   Characteristics: ["storyborn", "mentor"],
+//   Text: "TOUGHEN UP When you play this character, chosen character of yours gains Ward until the start of your next turn. (Opponents can't choose them except to challenge.)",
+//   Type: "character",
+//   Abilities: [
+//     WhenYouPlayThisCharacter({
+//       Name: "TOUGHEN UP",
+//       Text: "When you play this character, chosen character of yours gains Ward until the start of your next turn. (Opponents can't choose them except to challenge.)",
+//       Effects: [
 //         {
-//           type: "ability",
-//           ability: "ward",
-//           duration: "next_turn",
-//           until: true,
-//           modifier: "add",
-//           target: chosenCharacterOfYours,
+//           Type: "ability",
+//           Ability: "ward",
+//           Duration: "next_turn",
+//           Until: true,
+//           Modifier: "add",
+//           Target: chosenCharacterOfYours,
 //         },
 //       ],
 //     }),
 //   ],
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 3,
-//   strength: 3,
-//   willpower: 2,
-//   illustrator: "Kenneth Anderson",
-//   number: 144,
-//   set: "010",
-//   externalIds: {
-//     tcgPlayer: 659601,
+//   Inkwell: true,
+//   Colors: ["sapphire"],
+//   Cost: 3,
+//   Strength: 3,
+//   Willpower: 2,
+//   Illustrator: "Kenneth Anderson",
+//   Number: 144,
+//   Set: "010",
+//   ExternalIds: {
+//     TcgPlayer: 659601,
 //   },
-//   rarity: "common",
-//   lore: 2,
+//   Rarity: "common",
+//   Lore: 2,
 // };
 //

@@ -3,80 +3,80 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { mickeyBraveLittleTailor } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { webbyVanderquackKnowledgeSeeker } from "@lorcanito/lorcana-engine/cards/010/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { mickeyBraveLittleTailor } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { webbyVanderquackKnowledgeSeeker } from "@lorcanito/lorcana-engine/cards/010/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Webby Vanderquack - Knowledge Seeker", () => {
-//   it("I'VE READ ABOUT THIS - Character should have correct base stats", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: webbyVanderquackKnowledgeSeeker.cost,
-//       hand: [webbyVanderquackKnowledgeSeeker],
+// Describe("Webby Vanderquack - Knowledge Seeker", () => {
+//   It("I'VE READ ABOUT THIS - Character should have correct base stats", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: webbyVanderquackKnowledgeSeeker.cost,
+//       Hand: [webbyVanderquackKnowledgeSeeker],
 //     });
 //
-//     const cardUnderTest = testEngine.getByZoneAndId(
+//     Const cardUnderTest = testEngine.getByZoneAndId(
 //       "hand",
-//       webbyVanderquackKnowledgeSeeker.id,
+//       WebbyVanderquackKnowledgeSeeker.id,
 //     );
 //
 //     // Check base stats
-//     expect(cardUnderTest.cost).toBe(3);
-//     expect(cardUnderTest.strength).toBe(1);
-//     expect(cardUnderTest.willpower).toBe(6);
-//     expect(cardUnderTest.lore).toBe(1);
+//     Expect(cardUnderTest.cost).toBe(3);
+//     Expect(cardUnderTest.strength).toBe(1);
+//     Expect(cardUnderTest.willpower).toBe(6);
+//     Expect(cardUnderTest.lore).toBe(1);
 //   });
 //
-//   it("I'VE READ ABOUT THIS - Gets no bonus when there are no characters or locations with cards under them", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: webbyVanderquackKnowledgeSeeker.cost,
-//       play: [webbyVanderquackKnowledgeSeeker, mickeyBraveLittleTailor],
-//       hand: [webbyVanderquackKnowledgeSeeker],
+//   It("I'VE READ ABOUT THIS - Gets no bonus when there are no characters or locations with cards under them", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: webbyVanderquackKnowledgeSeeker.cost,
+//       Play: [webbyVanderquackKnowledgeSeeker, mickeyBraveLittleTailor],
+//       Hand: [webbyVanderquackKnowledgeSeeker],
 //     });
 //
-//     const cardUnderTest = testEngine.getByZoneAndId(
+//     Const cardUnderTest = testEngine.getByZoneAndId(
 //       "hand",
-//       webbyVanderquackKnowledgeSeeker.id,
+//       WebbyVanderquackKnowledgeSeeker.id,
 //     );
 //
 //     // Play Webby
-//     await testEngine.playCard(cardUnderTest);
+//     Await testEngine.playCard(cardUnderTest);
 //
 //     // No cards under any characters or locations - should have base lore
-//     const webbyInPlay = testEngine.getByZoneAndId(
+//     Const webbyInPlay = testEngine.getByZoneAndId(
 //       "play",
-//       webbyVanderquackKnowledgeSeeker.id,
+//       WebbyVanderquackKnowledgeSeeker.id,
 //     );
-//     expect(webbyInPlay.lore).toBe(webbyVanderquackKnowledgeSeeker.lore);
+//     Expect(webbyInPlay.lore).toBe(webbyVanderquackKnowledgeSeeker.lore);
 //   });
 //
-//   it("I'VE READ ABOUT THIS - Ability should be present and functional", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: webbyVanderquackKnowledgeSeeker.cost,
-//       hand: [webbyVanderquackKnowledgeSeeker],
+//   It("I'VE READ ABOUT THIS - Ability should be present and functional", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: webbyVanderquackKnowledgeSeeker.cost,
+//       Hand: [webbyVanderquackKnowledgeSeeker],
 //     });
 //
-//     const cardUnderTest = testEngine.getByZoneAndId(
+//     Const cardUnderTest = testEngine.getByZoneAndId(
 //       "hand",
-//       webbyVanderquackKnowledgeSeeker.id,
+//       WebbyVanderquackKnowledgeSeeker.id,
 //     );
 //
 //     // Check that the ability is present
-//     expect(webbyVanderquackKnowledgeSeeker.abilities).toBeDefined();
-//     expect(webbyVanderquackKnowledgeSeeker.abilities?.length).toBeGreaterThan(
+//     Expect(webbyVanderquackKnowledgeSeeker.abilities).toBeDefined();
+//     Expect(webbyVanderquackKnowledgeSeeker.abilities?.length).toBeGreaterThan(
 //       0,
 //     );
-//     expect(webbyVanderquackKnowledgeSeeker.abilities?.[0]?.name).toBe(
+//     Expect(webbyVanderquackKnowledgeSeeker.abilities?.[0]?.name).toBe(
 //       "I'VE READ ABOUT THIS",
 //     );
 //
 //     // Check that the character is playable
-//     await testEngine.playCard(cardUnderTest);
-//     const webbyInPlay = testEngine.getByZoneAndId(
+//     Await testEngine.playCard(cardUnderTest);
+//     Const webbyInPlay = testEngine.getByZoneAndId(
 //       "play",
-//       webbyVanderquackKnowledgeSeeker.id,
+//       WebbyVanderquackKnowledgeSeeker.id,
 //     );
-//     expect(webbyInPlay.zone).toBe("play");
+//     Expect(webbyInPlay.zone).toBe("play");
 //   });
 // });
 //

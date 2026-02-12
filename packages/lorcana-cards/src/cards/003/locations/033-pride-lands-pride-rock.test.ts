@@ -3,51 +3,51 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { simbaFutureKing } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { mufasaChampionOfThePrideLands } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { prideLandsPrideRock } from "@lorcanito/lorcana-engine/cards/003/locations/locations";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { simbaFutureKing } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { mufasaChampionOfThePrideLands } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { prideLandsPrideRock } from "@lorcanito/lorcana-engine/cards/003/locations/locations";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Pride Lands - Pride Rock", () => {
-//   it.skip("**WE ARE ALL CONNECTED** Characters get +2 {W} while here.**LION HOME** If you have a Prince or King character here, you pay 1 {I} less to play characters.", () => {
-//     const testStore = new TestStore({
-//       inkwell: prideLandsPrideRock.cost,
-//       play: [prideLandsPrideRock],
+// Describe("Pride Lands - Pride Rock", () => {
+//   It.skip("**WE ARE ALL CONNECTED** Characters get +2 {W} while here.**LION HOME** If you have a Prince or King character here, you pay 1 {I} less to play characters.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: prideLandsPrideRock.cost,
+//       Play: [prideLandsPrideRock],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       prideLandsPrideRock.id,
+//       PrideLandsPrideRock.id,
 //     );
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 //
-//   it("**LION HOME** If you have a Prince or King character here, you pay 1 {I} less to play characters.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell:
-//         prideLandsPrideRock.moveCost + mufasaChampionOfThePrideLands.cost - 1,
-//       play: [prideLandsPrideRock, simbaFutureKing],
-//       hand: [mufasaChampionOfThePrideLands],
+//   It("**LION HOME** If you have a Prince or King character here, you pay 1 {I} less to play characters.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell:
+//         PrideLandsPrideRock.moveCost + mufasaChampionOfThePrideLands.cost - 1,
+//       Play: [prideLandsPrideRock, simbaFutureKing],
+//       Hand: [mufasaChampionOfThePrideLands],
 //     });
 //
-//     const cardToPlayFromHand = testEngine.getCardModel(
-//       mufasaChampionOfThePrideLands,
+//     Const cardToPlayFromHand = testEngine.getCardModel(
+//       MufasaChampionOfThePrideLands,
 //     );
 //
-//     expect(cardToPlayFromHand.cost).toBe(mufasaChampionOfThePrideLands.cost);
+//     Expect(cardToPlayFromHand.cost).toBe(mufasaChampionOfThePrideLands.cost);
 //
-//     await testEngine.moveToLocation({
-//       location: prideLandsPrideRock,
-//       character: simbaFutureKing,
+//     Await testEngine.moveToLocation({
+//       Location: prideLandsPrideRock,
+//       Character: simbaFutureKing,
 //     });
 //
-//     expect(cardToPlayFromHand.cost).toBe(
-//       mufasaChampionOfThePrideLands.cost - 1,
+//     Expect(cardToPlayFromHand.cost).toBe(
+//       MufasaChampionOfThePrideLands.cost - 1,
 //     );
 //   });
 // });

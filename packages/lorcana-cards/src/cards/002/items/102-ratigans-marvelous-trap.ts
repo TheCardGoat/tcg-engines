@@ -1,31 +1,31 @@
 import type { ItemCard } from "@tcg/lorcana-types";
 
 export const ratigansMarvelousTrap: ItemCard = {
-  id: "1wo",
-  cardType: "item",
-  name: "Ratigan's Marvelous Trap",
-  inkType: ["emerald"],
-  franchise: "Great Mouse Detective",
-  set: "002",
-  text: "SNAP! BOOM! TWANG! Banish this item — Each opponent loses 2 lore.",
-  cost: 3,
-  cardNumber: 102,
-  inkable: false,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "f7d80a26f58d881fa3db9124289c55a934cd1782",
-  },
   abilities: [
     {
-      id: "1wo-1",
-      type: "activated",
       cost: { exert: true },
       effect: {
         type: "lose-lore",
         amount: 2,
         target: "EACH_OPPONENT",
       },
+      id: "1wo-1",
       text: "SNAP! BOOM! TWANG! Banish this item — Each opponent loses 2 lore.",
+      type: "activated",
     },
   ],
+  cardNumber: 102,
+  cardType: "item",
+  cost: 3,
+  externalIds: {
+    ravensburger: "f7d80a26f58d881fa3db9124289c55a934cd1782",
+  },
+  franchise: "Great Mouse Detective",
+  id: "1wo",
+  inkType: ["emerald"],
+  inkable: false,
+  missingTests: true,
+  name: "Ratigan's Marvelous Trap",
+  set: "002",
+  text: "SNAP! BOOM! TWANG! Banish this item — Each opponent loses 2 lore.",
 };

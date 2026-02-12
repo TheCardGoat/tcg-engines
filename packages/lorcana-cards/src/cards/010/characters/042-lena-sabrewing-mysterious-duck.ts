@@ -1,35 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const lenaSabrewingMysteriousDuck: CharacterCard = {
-  id: "ejj",
-  cardType: "character",
-  name: "Lena Sabrewing",
-  version: "Mysterious Duck",
-  fullName: "Lena Sabrewing - Mysterious Duck",
-  inkType: ["amethyst"],
-  franchise: "Ducktales",
-  set: "010",
-  text: "ARCANE CONNECTION When you play this character, if you have a character or location in play with a card under them, gain 1 lore.",
-  cost: 4,
-  strength: 3,
-  willpower: 3,
-  lore: 2,
-  cardNumber: 42,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "3469f66d9abd9774d62799182860eab98d987ad2",
-  },
   abilities: [
     {
-      id: "ejj-1",
-      type: "triggered",
-      name: "ARCANE CONNECTION",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "conditional",
         condition: {
@@ -42,8 +15,35 @@ export const lenaSabrewingMysteriousDuck: CharacterCard = {
           amount: 1,
         },
       },
+      id: "ejj-1",
+      name: "ARCANE CONNECTION",
       text: "ARCANE CONNECTION When you play this character, if you have a character or location in play with a card under them, gain 1 lore.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 42,
+  cardType: "character",
   classifications: ["Storyborn", "Ally", "Sorcerer"],
+  cost: 4,
+  externalIds: {
+    ravensburger: "3469f66d9abd9774d62799182860eab98d987ad2",
+  },
+  franchise: "Ducktales",
+  fullName: "Lena Sabrewing - Mysterious Duck",
+  id: "ejj",
+  inkType: ["amethyst"],
+  inkable: true,
+  lore: 2,
+  missingTests: true,
+  name: "Lena Sabrewing",
+  set: "010",
+  strength: 3,
+  text: "ARCANE CONNECTION When you play this character, if you have a character or location in play with a card under them, gain 1 lore.",
+  version: "Mysterious Duck",
+  willpower: 3,
 };

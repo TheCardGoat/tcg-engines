@@ -3,55 +3,55 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   cinderellaBallroomSensation,
-//   fairyGodmotherPureHeart,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   CinderellaBallroomSensation,
+//   FairyGodmotherPureHeart,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Fairy Godmother - Pure Heart", () => {
-//   describe("**JUST LEAVE IT TO ME** Whenever you play a character named Cinderella, you may exert chosen character.", () => {
-//     it("Play a character named Cinderella", () => {
-//       const testStore = new TestStore({
-//         inkwell: cinderellaBallroomSensation.cost,
-//         hand: [cinderellaBallroomSensation],
-//         play: [fairyGodmotherPureHeart],
+// Describe("Fairy Godmother - Pure Heart", () => {
+//   Describe("**JUST LEAVE IT TO ME** Whenever you play a character named Cinderella, you may exert chosen character.", () => {
+//     It("Play a character named Cinderella", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: cinderellaBallroomSensation.cost,
+//         Hand: [cinderellaBallroomSensation],
+//         Play: [fairyGodmotherPureHeart],
 //       });
 //
-//       const cardToTriggerEffect = testStore.getByZoneAndId(
+//       Const cardToTriggerEffect = testStore.getByZoneAndId(
 //         "hand",
-//         cinderellaBallroomSensation.id,
+//         CinderellaBallroomSensation.id,
 //       );
-//       const target = testStore.getByZoneAndId(
+//       Const target = testStore.getByZoneAndId(
 //         "play",
-//         fairyGodmotherPureHeart.id,
+//         FairyGodmotherPureHeart.id,
 //       );
 //
-//       cardToTriggerEffect.playFromHand();
-//       testStore.resolveOptionalAbility();
-//       testStore.resolveTopOfStack({ targets: [target] });
-//       expect(target.ready).toBeFalsy();
+//       CardToTriggerEffect.playFromHand();
+//       TestStore.resolveOptionalAbility();
+//       TestStore.resolveTopOfStack({ targets: [target] });
+//       Expect(target.ready).toBeFalsy();
 //     });
 //
-//     it("Play a character not named Cinderella", () => {
-//       const testStore = new TestStore({
-//         inkwell: fairyGodmotherPureHeart.cost,
-//         hand: [fairyGodmotherPureHeart],
-//         play: [fairyGodmotherPureHeart],
+//     It("Play a character not named Cinderella", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: fairyGodmotherPureHeart.cost,
+//         Hand: [fairyGodmotherPureHeart],
+//         Play: [fairyGodmotherPureHeart],
 //       });
 //
-//       const cardToNotTriggerEffect = testStore.getByZoneAndId(
+//       Const cardToNotTriggerEffect = testStore.getByZoneAndId(
 //         "hand",
-//         fairyGodmotherPureHeart.id,
+//         FairyGodmotherPureHeart.id,
 //       );
-//       const target = testStore.getByZoneAndId(
+//       Const target = testStore.getByZoneAndId(
 //         "play",
-//         fairyGodmotherPureHeart.id,
+//         FairyGodmotherPureHeart.id,
 //       );
 //
-//       cardToNotTriggerEffect.playFromHand();
-//       expect(target.ready).toBeTruthy();
+//       CardToNotTriggerEffect.playFromHand();
+//       Expect(target.ready).toBeTruthy();
 //     });
 //   });
 // });

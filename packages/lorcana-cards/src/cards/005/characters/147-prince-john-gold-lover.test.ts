@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { princeJohnGoldLover } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { princeJohnGoldLover } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Prince John - Gold Lover", () => {
-//   it.skip("**BEAUTIFUL, LOVELY TAXES** {E} – Play an item from your hand or discard with cost 5 or less for free, exerted.", () => {
-//     const testStore = new TestStore({
-//       inkwell: princeJohnGoldLover.cost,
-//       play: [princeJohnGoldLover],
+// Describe("Prince John - Gold Lover", () => {
+//   It.skip("**BEAUTIFUL, LOVELY TAXES** {E} – Play an item from your hand or discard with cost 5 or less for free, exerted.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: princeJohnGoldLover.cost,
+//       Play: [princeJohnGoldLover],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(princeJohnGoldLover);
+//     Const cardUnderTest = testStore.getCard(princeJohnGoldLover);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

@@ -1,29 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const pongoDeterminedFather: CharacterCard = {
-  id: "1ve",
-  cardType: "character",
-  name: "Pongo",
-  version: "Determined Father",
-  fullName: "Pongo - Determined Father",
-  inkType: ["amber"],
-  franchise: "101 Dalmatians",
-  set: "009",
-  text: "TWILIGHT BARK Once during your turn, you may pay 2 {I} to reveal the top card of your deck. If it's a character card, put it into your hand. Otherwise, put it on the bottom of your deck.",
-  cost: 3,
-  strength: 3,
-  willpower: 2,
-  lore: 1,
-  cardNumber: 2,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "f2e3f62dba601d0b7718e2d5a5a6d161f72cd084",
-  },
   abilities: [
     {
-      id: "1ve-1",
-      type: "action",
       effect: {
         type: "conditional",
         condition: {
@@ -35,8 +14,29 @@ export const pongoDeterminedFather: CharacterCard = {
           target: "CHOSEN_CHARACTER",
         },
       },
+      id: "1ve-1",
       text: "TWILIGHT BARK Once during your turn, you may pay 2 {I} to reveal the top card of your deck. If it's a character card, put it into your hand. Otherwise, put it on the bottom of your deck.",
+      type: "action",
     },
   ],
+  cardNumber: 2,
+  cardType: "character",
   classifications: ["Storyborn", "Hero"],
+  cost: 3,
+  externalIds: {
+    ravensburger: "f2e3f62dba601d0b7718e2d5a5a6d161f72cd084",
+  },
+  franchise: "101 Dalmatians",
+  fullName: "Pongo - Determined Father",
+  id: "1ve",
+  inkType: ["amber"],
+  inkable: true,
+  lore: 1,
+  missingTests: true,
+  name: "Pongo",
+  set: "009",
+  strength: 3,
+  text: "TWILIGHT BARK Once during your turn, you may pay 2 {I} to reveal the top card of your deck. If it's a character card, put it into your hand. Otherwise, put it on the bottom of your deck.",
+  version: "Determined Father",
+  willpower: 2,
 };

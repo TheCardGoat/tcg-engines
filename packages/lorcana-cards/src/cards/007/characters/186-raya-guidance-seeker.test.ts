@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { rayaGuidanceSeeker } from "@lorcanito/lorcana-engine/cards/007";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { rayaGuidanceSeeker } from "@lorcanito/lorcana-engine/cards/007";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Raya - Guidance Seeker", () => {
-//   it.skip("A GREATER PURPOSE During your turn, whenever a card is put into your inkwell, this character gains Resist +1 until the start of your next turn. (Damage dealt to them is reduced by 1.)", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: rayaGuidanceSeeker.cost,
-//       play: [rayaGuidanceSeeker],
-//       hand: [rayaGuidanceSeeker],
+// Describe("Raya - Guidance Seeker", () => {
+//   It.skip("A GREATER PURPOSE During your turn, whenever a card is put into your inkwell, this character gains Resist +1 until the start of your next turn. (Damage dealt to them is reduced by 1.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: rayaGuidanceSeeker.cost,
+//       Play: [rayaGuidanceSeeker],
+//       Hand: [rayaGuidanceSeeker],
 //     });
 //
-//     await testEngine.playCard(rayaGuidanceSeeker);
+//     Await testEngine.playCard(rayaGuidanceSeeker);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

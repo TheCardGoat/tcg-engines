@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { anastasiaBossyStepsister } from "@lorcanito/lorcana-engine/cards/007/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { anastasiaBossyStepsister } from "@lorcanito/lorcana-engine/cards/007/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Anastasia - Bossy Stepsister", () => {
-//   it.skip("OH, I HATE THIS! Whenever this character is challenged, the challenging player chooses and discards a card.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: anastasiaBossyStepsister.cost,
-//       play: [anastasiaBossyStepsister],
-//       hand: [anastasiaBossyStepsister],
+// Describe("Anastasia - Bossy Stepsister", () => {
+//   It.skip("OH, I HATE THIS! Whenever this character is challenged, the challenging player chooses and discards a card.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: anastasiaBossyStepsister.cost,
+//       Play: [anastasiaBossyStepsister],
+//       Hand: [anastasiaBossyStepsister],
 //     });
 //
-//     await testEngine.playCard(anastasiaBossyStepsister);
+//     Await testEngine.playCard(anastasiaBossyStepsister);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

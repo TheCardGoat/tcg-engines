@@ -3,32 +3,32 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { mickeyMouseTrueFriend } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { mickeyMouseFoodFightDefender } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { princeJohnFraidycat } from "@lorcanito/lorcana-engine/cards/008";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { mickeyMouseTrueFriend } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { mickeyMouseFoodFightDefender } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { princeJohnFraidycat } from "@lorcanito/lorcana-engine/cards/008";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Prince John - Fraidy-Cat", () => {
-//   it("HELP! HELP! Whenever an opponent plays a character, deal 1 damage to this character.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Prince John - Fraidy-Cat", () => {
+//   It("HELP! HELP! Whenever an opponent plays a character, deal 1 damage to this character.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: mickeyMouseTrueFriend.cost + mickeyMouseFoodFightDefender.cost,
-//         hand: [mickeyMouseTrueFriend, mickeyMouseFoodFightDefender],
+//         Inkwell: mickeyMouseTrueFriend.cost + mickeyMouseFoodFightDefender.cost,
+//         Hand: [mickeyMouseTrueFriend, mickeyMouseFoodFightDefender],
 //       },
 //       {
-//         play: [princeJohnFraidycat],
+//         Play: [princeJohnFraidycat],
 //       },
 //     );
 //
-//     const cardUnderTest = testEngine.getCardModel(princeJohnFraidycat);
-//     expect(cardUnderTest.damage).toEqual(0);
+//     Const cardUnderTest = testEngine.getCardModel(princeJohnFraidycat);
+//     Expect(cardUnderTest.damage).toEqual(0);
 //
-//     await testEngine.playCard(mickeyMouseTrueFriend);
-//     expect(cardUnderTest.damage).toEqual(1);
+//     Await testEngine.playCard(mickeyMouseTrueFriend);
+//     Expect(cardUnderTest.damage).toEqual(1);
 //
-//     await testEngine.playCard(mickeyMouseFoodFightDefender);
-//     expect(cardUnderTest.damage).toEqual(2);
+//     Await testEngine.playCard(mickeyMouseFoodFightDefender);
+//     Expect(cardUnderTest.damage).toEqual(2);
 //   });
 // });
 //

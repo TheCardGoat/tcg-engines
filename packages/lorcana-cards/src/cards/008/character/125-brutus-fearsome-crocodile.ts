@@ -1,50 +1,50 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { whenThisCharacterBanished } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import { youGainLore } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { whenThisCharacterBanished } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import { youGainLore } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const brutusFearsomeCrocodile: LorcanitoCharacterCard = {
-//   id: "xuo",
-//   name: "Brutus",
-//   title: "Fearsome Crocodile",
-//   characteristics: ["storyborn", "ally"],
-//   text: "SPITEFUL During your turn, when this character is banished, if one of your characters was damaged this turn, gain 2 lore.",
-//   type: "character",
-//   abilities: [
-//     whenThisCharacterBanished({
-//       name: "SPITEFUL",
-//       text: "During your turn, when this character is banished, if one of your characters was damaged this turn, gain 2 lore.",
-//       conditions: [
+// Export const brutusFearsomeCrocodile: LorcanitoCharacterCard = {
+//   Id: "xuo",
+//   Name: "Brutus",
+//   Title: "Fearsome Crocodile",
+//   Characteristics: ["storyborn", "ally"],
+//   Text: "SPITEFUL During your turn, when this character is banished, if one of your characters was damaged this turn, gain 2 lore.",
+//   Type: "character",
+//   Abilities: [
+//     WhenThisCharacterBanished({
+//       Name: "SPITEFUL",
+//       Text: "During your turn, when this character is banished, if one of your characters was damaged this turn, gain 2 lore.",
+//       Conditions: [
 //         {
-//           type: "during-turn",
-//           value: "self",
+//           Type: "during-turn",
+//           Value: "self",
 //         },
 //         {
-//           type: "this-turn",
-//           value: "was-damaged",
-//           target: "self",
-//           comparison: { operator: "gte", value: 1 },
-//           filters: [
+//           Type: "this-turn",
+//           Value: "was-damaged",
+//           Target: "self",
+//           Comparison: { operator: "gte", value: 1 },
+//           Filters: [
 //             { filter: "type", value: "character" },
 //             { filter: "owner", value: "self" },
 //           ],
 //         },
 //       ],
-//       effects: [youGainLore(2)],
+//       Effects: [youGainLore(2)],
 //     }),
 //   ],
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 4,
-//   strength: 4,
-//   willpower: 3,
-//   illustrator: "Teresita OJ / SOG",
-//   number: 125,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 633431,
+//   Inkwell: true,
+//   Colors: ["ruby"],
+//   Cost: 4,
+//   Strength: 4,
+//   Willpower: 3,
+//   Illustrator: "Teresita OJ / SOG",
+//   Number: 125,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 633431,
 //   },
-//   rarity: "common",
-//   lore: 1,
+//   Rarity: "common",
+//   Lore: 1,
 // };
 //

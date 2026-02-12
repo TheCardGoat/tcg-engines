@@ -3,25 +3,25 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { heiheiAccidentalExplorer } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { heiheiAccidentalExplorer } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("HeiHei - Accidental Explorer", () => {
-//   it.skip("**MINDLESS WANDERING** Once per turn, when this character moves to a location, each opponent loses 1 lore.", () => {
-//     const testStore = new TestStore({
-//       inkwell: heiheiAccidentalExplorer.cost,
-//       play: [heiheiAccidentalExplorer],
+// Describe("HeiHei - Accidental Explorer", () => {
+//   It.skip("**MINDLESS WANDERING** Once per turn, when this character moves to a location, each opponent loses 1 lore.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: heiheiAccidentalExplorer.cost,
+//       Play: [heiheiAccidentalExplorer],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       heiheiAccidentalExplorer.id,
+//       HeiheiAccidentalExplorer.id,
 //     );
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

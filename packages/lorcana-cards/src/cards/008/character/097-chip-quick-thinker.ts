@@ -1,35 +1,35 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { whenYouPlayThisCharacter } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import { discardACard } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { whenYouPlayThisCharacter } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import { discardACard } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const chipQuickThinker: LorcanitoCharacterCard = {
-//   id: "p4b",
-//   name: "Chip",
-//   title: "Quick Thinker",
-//   characteristics: ["storyborn", "hero"],
-//   text: "I'LL HANDLE IT When you play this character, choose an opponent to discard a card.",
-//   type: "character",
-//   abilities: [
-//     whenYouPlayThisCharacter({
-//       name: "I'LL HANDLE IT",
-//       text: "When you play this character, choose an opponent to discard a card.",
-//       responder: "opponent",
-//       effects: [discardACard],
+// Export const chipQuickThinker: LorcanitoCharacterCard = {
+//   Id: "p4b",
+//   Name: "Chip",
+//   Title: "Quick Thinker",
+//   Characteristics: ["storyborn", "hero"],
+//   Text: "I'LL HANDLE IT When you play this character, choose an opponent to discard a card.",
+//   Type: "character",
+//   Abilities: [
+//     WhenYouPlayThisCharacter({
+//       Name: "I'LL HANDLE IT",
+//       Text: "When you play this character, choose an opponent to discard a card.",
+//       Responder: "opponent",
+//       Effects: [discardACard],
 //     }),
 //   ],
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 4,
-//   strength: 3,
-//   willpower: 2,
-//   illustrator: "Brian Weiss",
-//   number: 97,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631346,
+//   Inkwell: true,
+//   Colors: ["emerald"],
+//   Cost: 4,
+//   Strength: 3,
+//   Willpower: 2,
+//   Illustrator: "Brian Weiss",
+//   Number: 97,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631346,
 //   },
-//   rarity: "uncommon",
-//   lore: 1,
+//   Rarity: "uncommon",
+//   Lore: 1,
 // };
 //

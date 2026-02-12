@@ -3,32 +3,32 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   kingCandySugarRushNightmare,
-//   louieOneCoolDuck,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   KingCandySugarRushNightmare,
+//   LouieOneCoolDuck,
 // } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Louie - One Cool Duck", () => {
-//   it("SPRING THE TRAP While this character is being challenged, the challenging character gets -1 {S}.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Louie - One Cool Duck", () => {
+//   It("SPRING THE TRAP While this character is being challenged, the challenging character gets -1 {S}.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         play: [kingCandySugarRushNightmare],
+//         Play: [kingCandySugarRushNightmare],
 //       },
 //       {
-//         play: [louieOneCoolDuck],
+//         Play: [louieOneCoolDuck],
 //       },
 //     );
 //
-//     await testEngine.challenge({
-//       attacker: kingCandySugarRushNightmare,
-//       defender: louieOneCoolDuck,
-//       exertDefender: true,
+//     Await testEngine.challenge({
+//       Attacker: kingCandySugarRushNightmare,
+//       Defender: louieOneCoolDuck,
+//       ExertDefender: true,
 //     });
 //
-//     expect(testEngine.getCardModel(louieOneCoolDuck).damage).toBe(
-//       kingCandySugarRushNightmare.strength - 1,
+//     Expect(testEngine.getCardModel(louieOneCoolDuck).damage).toBe(
+//       KingCandySugarRushNightmare.strength - 1,
 //     );
 //   });
 // });

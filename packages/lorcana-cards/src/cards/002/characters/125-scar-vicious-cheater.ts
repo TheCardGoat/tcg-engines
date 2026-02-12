@@ -1,41 +1,14 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const scarViciousCheater: CharacterCard = {
-  id: "1re",
-  cardType: "character",
-  name: "Scar",
-  version: "Vicious Cheater",
-  fullName: "Scar - Vicious Cheater",
-  inkType: ["ruby"],
-  franchise: "Lion King",
-  set: "002",
-  text: "Rush (This character can challenge the turn they're played.)\nDADDY ISN'T HERE TO SAVE YOU During your turn, whenever this character banishes another character in a challenge, you may ready this character. He can't quest for the rest of this turn.",
-  cost: 7,
-  strength: 6,
-  willpower: 5,
-  lore: 2,
-  cardNumber: 125,
-  inkable: false,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "e36200725d9e116115b62410d83a714d9c837c7a",
-  },
   abilities: [
     {
       id: "1re-1",
-      type: "keyword",
       keyword: "Rush",
       text: "Rush",
+      type: "keyword",
     },
     {
-      id: "1re-2",
-      type: "triggered",
-      name: "DADDY ISN'T HERE TO SAVE YOU",
-      trigger: {
-        event: "banish",
-        timing: "whenever",
-        on: "OPPONENT_CHARACTERS",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -46,8 +19,35 @@ export const scarViciousCheater: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "1re-2",
+      name: "DADDY ISN'T HERE TO SAVE YOU",
       text: "DADDY ISN'T HERE TO SAVE YOU During your turn, whenever this character banishes another character in a challenge, you may ready this character. He can't quest for the rest of this turn.",
+      trigger: {
+        event: "banish",
+        timing: "whenever",
+        on: "OPPONENT_CHARACTERS",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 125,
+  cardType: "character",
   classifications: ["Storyborn", "Villain"],
+  cost: 7,
+  externalIds: {
+    ravensburger: "e36200725d9e116115b62410d83a714d9c837c7a",
+  },
+  franchise: "Lion King",
+  fullName: "Scar - Vicious Cheater",
+  id: "1re",
+  inkType: ["ruby"],
+  inkable: false,
+  lore: 2,
+  missingTests: true,
+  name: "Scar",
+  set: "002",
+  strength: 6,
+  text: "Rush (This character can challenge the turn they're played.)\nDADDY ISN'T HERE TO SAVE YOU During your turn, whenever this character banishes another character in a challenge, you may ready this character. He can't quest for the rest of this turn.",
+  version: "Vicious Cheater",
+  willpower: 5,
 };

@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { improvise } from "@lorcanito/lorcana-engine/cards/009/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { improvise } from "@lorcanito/lorcana-engine/cards/009/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Improvise", () => {
-//   it.skip("Chosen character gets +1 {S} this turn. Draw a card.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: improvise.cost,
-//       play: [improvise],
-//       hand: [improvise],
+// Describe("Improvise", () => {
+//   It.skip("Chosen character gets +1 {S} this turn. Draw a card.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: improvise.cost,
+//       Play: [improvise],
+//       Hand: [improvise],
 //     });
 //
-//     await testEngine.playCard(improvise);
+//     Await testEngine.playCard(improvise);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

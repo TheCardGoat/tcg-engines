@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { rapunzelsTowerSecludedPrison } from "@lorcanito/lorcana-engine/cards/005/locations/locations";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { rapunzelsTowerSecludedPrison } from "@lorcanito/lorcana-engine/cards/005/locations/locations";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Rapunzel's Tower - Secluded Prison", () => {
-//   it.skip("**SAFE AND SOUND** Characters get +3 {W}️ while here.", () => {
-//     const testStore = new TestStore({
-//       inkwell: rapunzelsTowerSecludedPrison.cost,
-//       play: [rapunzelsTowerSecludedPrison],
+// Describe("Rapunzel's Tower - Secluded Prison", () => {
+//   It.skip("**SAFE AND SOUND** Characters get +3 {W}️ while here.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: rapunzelsTowerSecludedPrison.cost,
+//       Play: [rapunzelsTowerSecludedPrison],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(rapunzelsTowerSecludedPrison);
+//     Const cardUnderTest = testStore.getCard(rapunzelsTowerSecludedPrison);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

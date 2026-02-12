@@ -75,12 +75,9 @@ export function isSimpleKeyword(keyword: Keyword): keyword is SimpleKeyword {
 /**
  * Check if a keyword is a parameterized keyword (Challenger or Resist)
  */
-export function isParameterizedKeyword(
-  keyword: Keyword,
-): keyword is ParameterizedKeyword {
+export function isParameterizedKeyword(keyword: Keyword): keyword is ParameterizedKeyword {
   return (
-    typeof keyword === "object" &&
-    (keyword.type === "Challenger" || keyword.type === "Resist")
+    typeof keyword === "object" && (keyword.type === "Challenger" || keyword.type === "Resist")
   );
 }
 
@@ -90,9 +87,7 @@ export function isParameterizedKeyword(
 export function isComplexKeyword(keyword: Keyword): keyword is ComplexKeyword {
   return (
     typeof keyword === "object" &&
-    (keyword.type === "Shift" ||
-      keyword.type === "Singer" ||
-      keyword.type === "SingTogether")
+    (keyword.type === "Shift" || keyword.type === "Singer" || keyword.type === "SingTogether")
   );
 }
 
@@ -109,11 +104,10 @@ export function getKeywordTypeName(keyword: Keyword): KeywordType {
 /**
  * Check if a keyword array contains a specific keyword type
  */
-export function hasKeywordType(
-  keywords: Keyword[] | undefined,
-  type: KeywordType,
-): boolean {
-  if (!keywords) return false;
+export function hasKeywordType(keywords: Keyword[] | undefined, type: KeywordType): boolean {
+  if (!keywords) {
+    return false;
+  }
   return keywords.some((k) => getKeywordTypeName(k) === type);
 }
 
@@ -125,10 +119,12 @@ export function getKeywordValue(
   keywords: Keyword[] | undefined,
   type: "Challenger" | "Resist",
 ): number | null {
-  if (!keywords) return null;
-  const keyword = keywords.find(
-    (k) => typeof k === "object" && k.type === type,
-  ) as ParameterizedKeyword | undefined;
+  if (!keywords) {
+    return null;
+  }
+  const keyword = keywords.find((k) => typeof k === "object" && k.type === type) as
+    | ParameterizedKeyword
+    | undefined;
   return keyword?.value ?? null;
 }
 
@@ -139,22 +135,21 @@ export function getTotalKeywordValue(
   keywords: Keyword[] | undefined,
   type: "Challenger" | "Resist",
 ): number {
-  if (!keywords) return 0;
+  if (!keywords) {
+    return 0;
+  }
   return keywords
-    .filter(
-      (k): k is ParameterizedKeyword =>
-        typeof k === "object" && k.type === type,
-    )
+    .filter((k): k is ParameterizedKeyword => typeof k === "object" && k.type === type)
     .reduce((sum, k) => sum + k.value, 0);
 }
 
 /**
  * Get Shift keyword data if present
  */
-export function getShiftKeyword(
-  keywords: Keyword[] | undefined,
-): ShiftKeyword | null {
-  if (!keywords) return null;
+export function getShiftKeyword(keywords: Keyword[] | undefined): ShiftKeyword | null {
+  if (!keywords) {
+    return null;
+  }
   const keyword = keywords.find(
     (k): k is ShiftKeyword => typeof k === "object" && k.type === "Shift",
   );
@@ -165,7 +160,9 @@ export function getShiftKeyword(
  * Get Singer keyword value if present
  */
 export function getSingerValue(keywords: Keyword[] | undefined): number | null {
-  if (!keywords) return null;
+  if (!keywords) {
+    return null;
+  }
   const keyword = keywords.find(
     (k): k is SingerKeyword => typeof k === "object" && k.type === "Singer",
   );
@@ -175,13 +172,12 @@ export function getSingerValue(keywords: Keyword[] | undefined): number | null {
 /**
  * Get Sing Together keyword value if present
  */
-export function getSingTogetherValue(
-  keywords: Keyword[] | undefined,
-): number | null {
-  if (!keywords) return null;
+export function getSingTogetherValue(keywords: Keyword[] | undefined): number | null {
+  if (!keywords) {
+    return null;
+  }
   const keyword = keywords.find(
-    (k): k is SingTogetherKeyword =>
-      typeof k === "object" && k.type === "SingTogether",
+    (k): k is SingTogetherKeyword => typeof k === "object" && k.type === "SingTogether",
   );
   return keyword?.value ?? null;
 }

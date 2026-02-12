@@ -5,9 +5,9 @@ import { madHatterGraciousHost } from "./086-mad-hatter-gracious-host";
 describe("Mad Hatter - Gracious Host", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [madHatterGraciousHost] });
-  //   expect(testEngine.getCardModel(madHatterGraciousHost).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [madHatterGraciousHost] });
+  //   Expect(testEngine.getCardModel(madHatterGraciousHost).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,47 +17,47 @@ describe("Mad Hatter - Gracious Host", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "bun:test";
-// import {
-//   madHatterGraciousHost,
-//   magicBroomBucketBrigade,
-//   mauriceWorldFamousInventor,
+// Import { describe, expect, it } from "bun:test";
+// Import {
+//   MadHatterGraciousHost,
+//   MagicBroomBucketBrigade,
+//   MauriceWorldFamousInventor,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Mad Hatter - Gracious Host", () => {
-//   it("**TEA PARTY** Whenever this character is challenged, you may draw a card.", () => {
-//     const testStore = new TestStore(
+// Describe("Mad Hatter - Gracious Host", () => {
+//   It("**TEA PARTY** Whenever this character is challenged, you may draw a card.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         play: [mauriceWorldFamousInventor],
+//         Play: [mauriceWorldFamousInventor],
 //       },
 //       {
-//         deck: [magicBroomBucketBrigade],
-//         play: [madHatterGraciousHost],
+//         Deck: [magicBroomBucketBrigade],
+//         Play: [madHatterGraciousHost],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       madHatterGraciousHost.id,
+//       MadHatterGraciousHost.id,
 //       "player_two",
 //     );
 //
-//     const attacker = testStore.getByZoneAndId(
+//     Const attacker = testStore.getByZoneAndId(
 //       "play",
-//       mauriceWorldFamousInventor.id,
+//       MauriceWorldFamousInventor.id,
 //     );
 //
-//     cardUnderTest.updateCardMeta({ exerted: true });
-//     attacker.challenge(cardUnderTest);
+//     CardUnderTest.updateCardMeta({ exerted: true });
+//     Attacker.challenge(cardUnderTest);
 //
-//     testStore.changePlayer().resolveTopOfStack();
+//     TestStore.changePlayer().resolveTopOfStack();
 //
-//     expect(testStore.getZonesCardCount("player_one")).toEqual(
-//       expect.objectContaining({ hand: 0, deck: 0 }),
+//     Expect(testStore.getZonesCardCount("player_one")).toEqual(
+//       Expect.objectContaining({ hand: 0, deck: 0 }),
 //     );
-//     expect(testStore.getZonesCardCount("player_two")).toEqual(
-//       expect.objectContaining({ hand: 1, deck: 0 }),
+//     Expect(testStore.getZonesCardCount("player_two")).toEqual(
+//       Expect.objectContaining({ hand: 1, deck: 0 }),
 //     );
 //   });
 // });

@@ -3,31 +3,31 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { jebidiahFarnsworthExpeditionCook } from "@lorcanito/lorcana-engine/cards/007/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { jebidiahFarnsworthExpeditionCook } from "@lorcanito/lorcana-engine/cards/007/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Jebidiah Farnsworth - Expedition Cook", () => {
-//   it.skip("Support (Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [jebidiahFarnsworthExpeditionCook],
+// Describe("Jebidiah Farnsworth - Expedition Cook", () => {
+//   It.skip("Support (Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [jebidiahFarnsworthExpeditionCook],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(
-//       jebidiahFarnsworthExpeditionCook,
+//     Const cardUnderTest = testEngine.getCardModel(
+//       JebidiahFarnsworthExpeditionCook,
 //     );
-//     expect(cardUnderTest.hasSupport).toBe(true);
+//     Expect(cardUnderTest.hasSupport).toBe(true);
 //   });
 //
-//   it.skip("I GOT YOUR FOUR BASIC FOOD GROUPS When you play this character, chosen character gains Resist +1 until the start of your next turn. (Damage dealt to them is reduced by 1.)", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: jebidiahFarnsworthExpeditionCook.cost,
-//       hand: [jebidiahFarnsworthExpeditionCook],
+//   It.skip("I GOT YOUR FOUR BASIC FOOD GROUPS When you play this character, chosen character gains Resist +1 until the start of your next turn. (Damage dealt to them is reduced by 1.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: jebidiahFarnsworthExpeditionCook.cost,
+//       Hand: [jebidiahFarnsworthExpeditionCook],
 //     });
 //
-//     await testEngine.playCard(jebidiahFarnsworthExpeditionCook);
-//     await testEngine.acceptOptionalLayer();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.playCard(jebidiahFarnsworthExpeditionCook);
+//     Await testEngine.acceptOptionalLayer();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

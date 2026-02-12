@@ -1,35 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const nanaCanineCaregiver: CharacterCard = {
-  id: "1lc",
-  cardType: "character",
-  name: "Nana",
-  version: "Canine Caregiver",
-  fullName: "Nana - Canine Caregiver",
-  inkType: ["amethyst"],
-  franchise: "Peter Pan",
-  set: "010",
-  text: "HELPFUL INSTINCTS When you play this character, you may choose and discard a card to return chosen character with cost 2 or less to their player's hand.",
-  cost: 3,
-  strength: 3,
-  willpower: 3,
-  lore: 1,
-  cardNumber: 53,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "ceb423f003d728f152e41e23d2b982872ccc8463",
-  },
   abilities: [
     {
-      id: "1lc-1",
-      type: "triggered",
-      name: "HELPFUL INSTINCTS",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -44,8 +17,35 @@ export const nanaCanineCaregiver: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "1lc-1",
+      name: "HELPFUL INSTINCTS",
       text: "HELPFUL INSTINCTS When you play this character, you may choose and discard a card to return chosen character with cost 2 or less to their player's hand.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 53,
+  cardType: "character",
   classifications: ["Storyborn", "Ally"],
+  cost: 3,
+  externalIds: {
+    ravensburger: "ceb423f003d728f152e41e23d2b982872ccc8463",
+  },
+  franchise: "Peter Pan",
+  fullName: "Nana - Canine Caregiver",
+  id: "1lc",
+  inkType: ["amethyst"],
+  inkable: true,
+  lore: 1,
+  missingTests: true,
+  name: "Nana",
+  set: "010",
+  strength: 3,
+  text: "HELPFUL INSTINCTS When you play this character, you may choose and discard a card to return chosen character with cost 2 or less to their player's hand.",
+  version: "Canine Caregiver",
+  willpower: 3,
 };

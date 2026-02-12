@@ -3,9 +3,9 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
+// Import { describe, it } from "@jest/globals";
 //
-// describe("Forbidden Mountain - Maleficent's Castle", () => {
-//   it("TODO", () => {});
+// Describe("Forbidden Mountain - Maleficent's Castle", () => {
+//   It("TODO", () => {});
 // });
 //

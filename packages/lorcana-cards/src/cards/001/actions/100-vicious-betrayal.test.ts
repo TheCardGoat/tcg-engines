@@ -5,9 +5,9 @@ import { viciousBetrayal } from "./100-vicious-betrayal";
 describe("Vicious Betrayal - undefined", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [viciousBetrayal] });
-  //   expect(testEngine.getCardModel(viciousBetrayal).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [viciousBetrayal] });
+  //   Expect(testEngine.getCardModel(viciousBetrayal).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });

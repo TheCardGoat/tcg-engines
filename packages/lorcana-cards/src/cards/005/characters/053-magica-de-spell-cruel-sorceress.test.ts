@@ -3,133 +3,133 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   mickeyMouseDetective,
-//   moanaOfMotunui,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   MickeyMouseDetective,
+//   MoanaOfMotunui,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import {
-//   aWholeNewWorld,
-//   hakunaMatata,
-//   suddenChill,
+// Import {
+//   AWholeNewWorld,
+//   HakunaMatata,
+//   SuddenChill,
 // } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
-// import { theBareNecessities } from "@lorcanito/lorcana-engine/cards/003/actions/actions";
-// import {
-//   annaDiplomaticQueen,
-//   magicaDeSpellCruelSorceress,
+// Import { theBareNecessities } from "@lorcanito/lorcana-engine/cards/003/actions/actions";
+// Import {
+//   AnnaDiplomaticQueen,
+//   MagicaDeSpellCruelSorceress,
 // } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Magica De Spell - Cruel Sorceress", () => {
-//   it("**PLAYING WITH POWER** During opponents' turns, if an effect would cause you to discard one or more cards from your hand, you don't discard.", () => {
-//     const testStore = new TestStore(
+// Describe("Magica De Spell - Cruel Sorceress", () => {
+//   It("**PLAYING WITH POWER** During opponents' turns, if an effect would cause you to discard one or more cards from your hand, you don't discard.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: suddenChill.cost,
-//         hand: [suddenChill],
+//         Inkwell: suddenChill.cost,
+//         Hand: [suddenChill],
 //       },
 //       {
-//         hand: [moanaOfMotunui],
-//         play: [magicaDeSpellCruelSorceress],
+//         Hand: [moanaOfMotunui],
+//         Play: [magicaDeSpellCruelSorceress],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", suddenChill.id);
-//     const target = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", suddenChill.id);
+//     Const target = testStore.getByZoneAndId(
 //       "hand",
-//       moanaOfMotunui.id,
+//       MoanaOfMotunui.id,
 //       "player_two",
 //     );
 //
-//     cardUnderTest.playFromHand();
-//     testStore.changePlayer().resolveTopOfStack({
-//       targets: [target],
+//     CardUnderTest.playFromHand();
+//     TestStore.changePlayer().resolveTopOfStack({
+//       Targets: [target],
 //     });
 //
-//     expect(target.zone).toEqual("hand");
+//     Expect(target.zone).toEqual("hand");
 //   });
 // });
 //
-// describe("Regression", () => {
-//   it("'A whole new world' interaction.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Regression", () => {
+//   It("'A whole new world' interaction.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: aWholeNewWorld.cost,
-//         hand: [aWholeNewWorld],
-//         deck: 10,
+//         Inkwell: aWholeNewWorld.cost,
+//         Hand: [aWholeNewWorld],
+//         Deck: 10,
 //       },
 //       {
-//         deck: 10,
-//         hand: [moanaOfMotunui, mickeyMouseDetective],
-//         play: [magicaDeSpellCruelSorceress],
+//         Deck: 10,
+//         Hand: [moanaOfMotunui, mickeyMouseDetective],
+//         Play: [magicaDeSpellCruelSorceress],
 //       },
 //     );
 //
-//     await testEngine.playCard(aWholeNewWorld);
+//     Await testEngine.playCard(aWholeNewWorld);
 //
-//     expect(testEngine.getCardModel(moanaOfMotunui).zone).toEqual("hand");
-//     expect(testEngine.getCardModel(mickeyMouseDetective).zone).toEqual("hand");
-//     expect(testEngine.getZonesCardCount("player_two")).toEqual(
-//       expect.objectContaining({
-//         hand: 9, // The card is still in hand
-//         deck: 3,
+//     Expect(testEngine.getCardModel(moanaOfMotunui).zone).toEqual("hand");
+//     Expect(testEngine.getCardModel(mickeyMouseDetective).zone).toEqual("hand");
+//     Expect(testEngine.getZonesCardCount("player_two")).toEqual(
+//       Expect.objectContaining({
+//         Hand: 9, // The card is still in hand
+//         Deck: 3,
 //       }),
 //     );
 //   });
 //
-//   it("'The Bare Necessities' interaction.", async () => {
-//     const testEngine = new TestEngine(
+//   It("'The Bare Necessities' interaction.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: theBareNecessities.cost,
-//         hand: [theBareNecessities],
-//         play: [magicaDeSpellCruelSorceress],
+//         Inkwell: theBareNecessities.cost,
+//         Hand: [theBareNecessities],
+//         Play: [magicaDeSpellCruelSorceress],
 //       },
 //       {
-//         hand: [hakunaMatata],
+//         Hand: [hakunaMatata],
 //       },
 //     );
 //
-//     await testEngine.playCard(theBareNecessities, { targets: [hakunaMatata] });
+//     Await testEngine.playCard(theBareNecessities, { targets: [hakunaMatata] });
 //
-//     expect(testEngine.getCardModel(hakunaMatata).zone).toEqual("discard");
+//     Expect(testEngine.getCardModel(hakunaMatata).zone).toEqual("discard");
 //   });
 //
-//   it("Anna Diplomatic Queen Interaction", () => {
-//     const testStore = new TestEngine(
+//   It("Anna Diplomatic Queen Interaction", () => {
+//     Const testStore = new TestEngine(
 //       {
-//         inkwell: annaDiplomaticQueen.cost + 2,
-//         hand: [annaDiplomaticQueen],
+//         Inkwell: annaDiplomaticQueen.cost + 2,
+//         Hand: [annaDiplomaticQueen],
 //       },
 //       {
-//         hand: [moanaOfMotunui],
-//         play: [magicaDeSpellCruelSorceress],
+//         Hand: [moanaOfMotunui],
+//         Play: [magicaDeSpellCruelSorceress],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "hand",
-//       annaDiplomaticQueen.id,
+//       AnnaDiplomaticQueen.id,
 //     );
-//     const target = testStore.getByZoneAndId(
+//     Const target = testStore.getByZoneAndId(
 //       "hand",
-//       moanaOfMotunui.id,
+//       MoanaOfMotunui.id,
 //       "player_two",
 //     );
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
 //     // testStore.stackLayers.map(x => console.log("------- " + x.description));
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({ mode: "1" }, true);
-//     console.log("----------1---------");
-//     testStore.changeActivePlayer();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({ mode: "1" }, true);
+//     Console.log("----------1---------");
+//     TestStore.changeActivePlayer();
 //
-//     testStore.resolveTopOfStack({
-//       targets: [target],
+//     TestStore.resolveTopOfStack({
+//       Targets: [target],
 //     });
-//     console.log("----------2---------");
+//     Console.log("----------2---------");
 //
-//     expect(target.zone).toEqual("hand");
+//     Expect(target.zone).toEqual("hand");
 //   });
 // });
 //

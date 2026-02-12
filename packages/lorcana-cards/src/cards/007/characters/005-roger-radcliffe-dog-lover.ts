@@ -1,35 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const rogerRadcliffeDogLover: CharacterCard = {
-  id: "1t4",
-  cardType: "character",
-  name: "Roger Radcliffe",
-  version: "Dog Lover",
-  fullName: "Roger Radcliffe - Dog Lover",
-  inkType: ["amber"],
-  franchise: "101 Dalmatians",
-  set: "007",
-  text: "THERE YOU GO Whenever this character quests, you may remove up to 1 damage from each of your Puppy characters.",
-  cost: 1,
-  strength: 1,
-  willpower: 2,
-  lore: 1,
-  cardNumber: 5,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "eac2ac31d2370e8bb57973ee953fec1616cdcb05",
-  },
   abilities: [
     {
-      id: "1t4-1",
-      type: "triggered",
-      name: "THERE YOU GO",
-      trigger: {
-        event: "quest",
-        timing: "whenever",
-        on: "SELF",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -46,8 +19,35 @@ export const rogerRadcliffeDogLover: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "1t4-1",
+      name: "THERE YOU GO",
       text: "THERE YOU GO Whenever this character quests, you may remove up to 1 damage from each of your Puppy characters.",
+      trigger: {
+        event: "quest",
+        timing: "whenever",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 5,
+  cardType: "character",
   classifications: ["Storyborn", "Ally"],
+  cost: 1,
+  externalIds: {
+    ravensburger: "eac2ac31d2370e8bb57973ee953fec1616cdcb05",
+  },
+  franchise: "101 Dalmatians",
+  fullName: "Roger Radcliffe - Dog Lover",
+  id: "1t4",
+  inkType: ["amber"],
+  inkable: true,
+  lore: 1,
+  missingTests: true,
+  name: "Roger Radcliffe",
+  set: "007",
+  strength: 1,
+  text: "THERE YOU GO Whenever this character quests, you may remove up to 1 damage from each of your Puppy characters.",
+  version: "Dog Lover",
+  willpower: 2,
 };

@@ -3,36 +3,36 @@
 //  * @jest-environment node
 //  */
 //
-// import { expect, it } from "@jest/globals";
-// import {
-//   mauiDemiGod,
-//   princePhillipDragonSlayer,
+// Import { expect, it } from "@jest/globals";
+// Import {
+//   MauiDemiGod,
+//   PrincePhillipDragonSlayer,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// export const princePhillipTestCase = async () => {
-//   const testStore = new TestEngine(
+// Export const princePhillipTestCase = async () => {
+//   Const testStore = new TestEngine(
 //     {
-//       play: [princePhillipDragonSlayer],
+//       Play: [princePhillipDragonSlayer],
 //     },
 //     {
-//       play: [mauiDemiGod],
+//       Play: [mauiDemiGod],
 //     },
 //   );
 //
-//   await testStore.challenge({
-//     attacker: princePhillipDragonSlayer,
-//     defender: mauiDemiGod,
-//     exertDefender: true,
+//   Await testStore.challenge({
+//     Attacker: princePhillipDragonSlayer,
+//     Defender: mauiDemiGod,
+//     ExertDefender: true,
 //   });
 //
-//   expect(testStore.getCardModel(princePhillipDragonSlayer).zone).toEqual(
+//   Expect(testStore.getCardModel(princePhillipDragonSlayer).zone).toEqual(
 //     "discard",
 //   );
-//   expect(testStore.getCardModel(mauiDemiGod).zone).toEqual("discard");
+//   Expect(testStore.getCardModel(mauiDemiGod).zone).toEqual("discard");
 // };
 //
-// it("Prince Phillip Dragon Slayer", async () => {
-//   await princePhillipTestCase();
+// It("Prince Phillip Dragon Slayer", async () => {
+//   Await princePhillipTestCase();
 // });
 //

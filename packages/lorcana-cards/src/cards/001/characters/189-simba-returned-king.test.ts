@@ -5,9 +5,9 @@ import { simbaReturnedKing } from "./189-simba-returned-king";
 describe("Simba - Returned King", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [simbaReturnedKing] });
-  //   expect(testEngine.getCardModel(simbaReturnedKing).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [simbaReturnedKing] });
+  //   Expect(testEngine.getCardModel(simbaReturnedKing).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,45 +17,45 @@ describe("Simba - Returned King", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { simbaReturnedKing } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { simbaReturnedKing } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Simba - Returned King", () => {
-//   describe("POUNCE: During your turn, this character gains **Evasive**.", () => {
-//     it("During your turn.", () => {
-//       const testStore = new TestStore(
+// Describe("Simba - Returned King", () => {
+//   Describe("POUNCE: During your turn, this character gains **Evasive**.", () => {
+//     It("During your turn.", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [simbaReturnedKing],
+//           Play: [simbaReturnedKing],
 //         },
 //         {
-//           play: [simbaReturnedKing],
+//           Play: [simbaReturnedKing],
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         simbaReturnedKing.id,
+//         SimbaReturnedKing.id,
 //       );
 //
-//       expect(cardUnderTest.hasEvasive).toBeTruthy();
+//       Expect(cardUnderTest.hasEvasive).toBeTruthy();
 //     });
 //
-//     it("During opponent's turn.", () => {
-//       const testStore = new TestStore(
+//     It("During opponent's turn.", () => {
+//       Const testStore = new TestStore(
 //         {},
 //         {
-//           play: [simbaReturnedKing],
+//           Play: [simbaReturnedKing],
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         simbaReturnedKing.id,
+//         SimbaReturnedKing.id,
 //         "player_two",
 //       );
 //
-//       expect(cardUnderTest.hasEvasive).toBeFalsy();
+//       Expect(cardUnderTest.hasEvasive).toBeFalsy();
 //     });
 //   });
 // });

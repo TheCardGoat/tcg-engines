@@ -1,35 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const hansThirteenthInLine: CharacterCard = {
-  id: "1ro",
-  cardType: "character",
-  name: "Hans",
-  version: "Thirteenth in Line",
-  fullName: "Hans - Thirteenth in Line",
-  inkType: ["steel"],
-  franchise: "Frozen",
-  set: "001",
-  text: "STAGE A LITTLE ACCIDENT Whenever this character quests, you may deal 1 damage to chosen character.",
-  cost: 4,
-  strength: 3,
-  willpower: 3,
-  lore: 2,
-  cardNumber: 180,
-  inkable: true,
-  externalIds: {
-    ravensburger: "e57dd5df690f5083848c5ffe191627af870b3985",
-  },
   abilities: [
     {
-      id: "1ro-1",
-      text: "STAGE A LITTLE ACCIDENT Whenever this character quests, you may deal 1 damage to chosen character.",
-      name: "STAGE A LITTLE ACCIDENT",
-      type: "triggered",
-      trigger: {
-        event: "quest",
-        timing: "whenever",
-        on: "SELF",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -39,35 +12,62 @@ export const hansThirteenthInLine: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "1ro-1",
+      name: "STAGE A LITTLE ACCIDENT",
+      text: "STAGE A LITTLE ACCIDENT Whenever this character quests, you may deal 1 damage to chosen character.",
+      trigger: {
+        event: "quest",
+        timing: "whenever",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 180,
+  cardType: "character",
   classifications: ["Storyborn", "Villain", "Prince"],
+  cost: 4,
+  externalIds: {
+    ravensburger: "e57dd5df690f5083848c5ffe191627af870b3985",
+  },
+  franchise: "Frozen",
+  fullName: "Hans - Thirteenth in Line",
+  id: "1ro",
+  inkType: ["steel"],
+  inkable: true,
+  lore: 2,
+  name: "Hans",
+  set: "001",
+  strength: 3,
+  text: "STAGE A LITTLE ACCIDENT Whenever this character quests, you may deal 1 damage to chosen character.",
+  version: "Thirteenth in Line",
+  willpower: 3,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { wheneverQuests } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import { wheneverQuests } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const hansThirteenthInLine: LorcanitoCharacterCard = {
-//   id: "p2r",
-//   name: "Hans",
-//   title: "Thirteenth in Line",
-//   characteristics: ["storyborn", "villain", "prince"],
-//   text: "**STAGE LITTLE ACCIDENT** Whenever this character quests, you may deal 1 damage to chosen character.",
-//   type: "character",
-//   abilities: [
-//     wheneverQuests({
-//       name: "STAGE LITTLE ACCIDENT",
-//       text: "Whenever this character quests, you may deal 1 damage to chosen character.",
-//       optional: true,
-//       effects: [
+// Export const hansThirteenthInLine: LorcanitoCharacterCard = {
+//   Id: "p2r",
+//   Name: "Hans",
+//   Title: "Thirteenth in Line",
+//   Characteristics: ["storyborn", "villain", "prince"],
+//   Text: "**STAGE LITTLE ACCIDENT** Whenever this character quests, you may deal 1 damage to chosen character.",
+//   Type: "character",
+//   Abilities: [
+//     WheneverQuests({
+//       Name: "STAGE LITTLE ACCIDENT",
+//       Text: "Whenever this character quests, you may deal 1 damage to chosen character.",
+//       Optional: true,
+//       Effects: [
 //         {
-//           type: "damage",
-//           amount: 1,
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
+//           Type: "damage",
+//           Amount: 1,
+//           Target: {
+//             Type: "card",
+//             Value: 1,
+//             Filters: [
 //               { filter: "type", value: "character" },
 //               { filter: "zone", value: "play" },
 //             ],
@@ -76,19 +76,19 @@ export const hansThirteenthInLine: CharacterCard = {
 //       ],
 //     }),
 //   ],
-//   flavour: "Tired of being last, he decided to cut the line.",
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 4,
-//   strength: 3,
-//   willpower: 3,
-//   lore: 2,
-//   illustrator: "Kendall Hale",
-//   number: 180,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 506823,
+//   Flavour: "Tired of being last, he decided to cut the line.",
+//   Inkwell: true,
+//   Colors: ["steel"],
+//   Cost: 4,
+//   Strength: 3,
+//   Willpower: 3,
+//   Lore: 2,
+//   Illustrator: "Kendall Hale",
+//   Number: 180,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 506823,
 //   },
-//   rarity: "super_rare",
+//   Rarity: "super_rare",
 // };
 //

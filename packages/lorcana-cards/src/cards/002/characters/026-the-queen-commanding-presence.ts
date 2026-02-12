@@ -1,44 +1,17 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const theQueenCommandingPresence: CharacterCard = {
-  id: "5hw",
-  cardType: "character",
-  name: "The Queen",
-  version: "Commanding Presence",
-  fullName: "The Queen - Commanding Presence",
-  inkType: ["amber"],
-  franchise: "Snow White",
-  set: "002",
-  text: "Shift 2 (You may pay 2 {I} to play this on top of one of your characters named The Queen.)\nWHO IS THE FAIREST? Whenever this character quests, chosen opposing character gets -4 {S} this turn and chosen character gets +4 {S} this turn.",
-  cost: 5,
-  strength: 4,
-  willpower: 3,
-  lore: 2,
-  cardNumber: 26,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "13cfc5ee51d21b9da1620a64f0c80751cd3ffc82",
-  },
   abilities: [
     {
-      id: "5hw-1",
-      type: "keyword",
-      keyword: "Shift",
       cost: {
         ink: 2,
       },
+      id: "5hw-1",
+      keyword: "Shift",
       text: "Shift 2",
+      type: "keyword",
     },
     {
-      id: "5hw-2",
-      type: "triggered",
-      name: "WHO IS THE FAIREST?",
-      trigger: {
-        event: "quest",
-        timing: "whenever",
-        on: "SELF",
-      },
       effect: {
         type: "sequence",
         steps: [
@@ -64,8 +37,35 @@ export const theQueenCommandingPresence: CharacterCard = {
           },
         ],
       },
+      id: "5hw-2",
+      name: "WHO IS THE FAIREST?",
       text: "WHO IS THE FAIREST? Whenever this character quests, chosen opposing character gets -4 {S} this turn and chosen character gets +4 {S} this turn.",
+      trigger: {
+        event: "quest",
+        timing: "whenever",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 26,
+  cardType: "character",
   classifications: ["Floodborn", "Villain", "Queen"],
+  cost: 5,
+  externalIds: {
+    ravensburger: "13cfc5ee51d21b9da1620a64f0c80751cd3ffc82",
+  },
+  franchise: "Snow White",
+  fullName: "The Queen - Commanding Presence",
+  id: "5hw",
+  inkType: ["amber"],
+  inkable: true,
+  lore: 2,
+  missingTests: true,
+  name: "The Queen",
+  set: "002",
+  strength: 4,
+  text: "Shift 2 (You may pay 2 {I} to play this on top of one of your characters named The Queen.)\nWHO IS THE FAIREST? Whenever this character quests, chosen opposing character gets -4 {S} this turn and chosen character gets +4 {S} this turn.",
+  version: "Commanding Presence",
+  willpower: 3,
 };

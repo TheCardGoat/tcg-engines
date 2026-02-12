@@ -4,11 +4,7 @@ import type { CardOperations } from "../operations/card-operations";
 import type { GameOperations } from "../operations/game-operations";
 import type { ZoneOperations } from "../operations/zone-operations";
 import type { TelemetryManager } from "../telemetry";
-import type {
-  FlowContext,
-  FlowDefinition,
-  GameSegmentDefinition,
-} from "./flow-definition";
+import type { FlowContext, FlowDefinition, GameSegmentDefinition } from "./flow-definition";
 
 /**
  * Task 9.4: FlowManager - Flow orchestration
@@ -48,31 +44,31 @@ type FlowEvent =
 /**
  * Flow state snapshot for querying
  */
-export type FlowStateSnapshot = {
+export interface FlowStateSnapshot {
   gameSegment?: string;
   phase?: string;
   step?: string;
   turn: number;
   currentPlayer?: string;
-};
+}
 
 /**
  * Serializable flow state for persistence
  *
  * Use case: Save game state to database for later replay/restoration
  */
-export type SerializedFlowState = {
+export interface SerializedFlowState {
   currentGameSegment?: string;
   currentPhase?: string;
   currentStep?: string;
   turnNumber: number;
   currentPlayer?: string;
-};
+}
 
 /**
  * Options for FlowManager construction
  */
-export type FlowManagerOptions<TCardMeta = any> = {
+export interface FlowManagerOptions<TCardMeta = any> {
   /** Skip initialization hooks (used when restoring from serialized state) */
   skipInitialization?: boolean;
   /** Restore from serialized flow state */
@@ -91,17 +87,14 @@ export type FlowManagerOptions<TCardMeta = any> = {
   logger?: Logger;
   /** Telemetry manager for event tracking */
   telemetry?: TelemetryManager;
-};
+}
 
 /**
  * Task 9.4: FlowManager implementation
  */
 export class FlowManager<TState, TCardMeta = any> {
   private flowDefinition: FlowDefinition<TState, TCardMeta>;
-  private normalizedGameSegments: Record<
-    string,
-    GameSegmentDefinition<TState, TCardMeta>
-  >;
+  private normalizedGameSegments: Record<string, GameSegmentDefinition<TState, TCardMeta>>;
   private initialGameSegment?: string;
   private gameState: TState;
   private currentGameSegment?: string;
@@ -206,9 +199,9 @@ export class FlowManager<TState, TCardMeta = any> {
     return {
       currentGameSegment: this.currentGameSegment,
       currentPhase: this.currentPhase,
+      currentPlayer: this.currentPlayer,
       currentStep: this.currentStep,
       turnNumber: this.turnNumber,
-      currentPlayer: this.currentPlayer,
     };
   }
 
@@ -219,11 +212,10 @@ export class FlowManager<TState, TCardMeta = any> {
     const gameSegments = this.normalizedGameSegments;
 
     // Determine initial game segment
-    const sortedGameSegments = Object.entries(gameSegments).sort(
+    const sortedGameSegments = Object.entries(gameSegments).toSorted(
       ([, a], [, b]) => a.order - b.order,
     );
-    this.currentGameSegment =
-      this.initialGameSegment ?? sortedGameSegments[0]?.[0];
+    this.currentGameSegment = this.initialGameSegment ?? sortedGameSegments[0]?.[0];
 
     if (!this.currentGameSegment) {
       throw new Error("No game segments defined in flow definition");
@@ -238,25 +230,20 @@ export class FlowManager<TState, TCardMeta = any> {
     this.executeHook(gameSegmentDef.onBegin);
 
     // Initialize turn structure for this game segment
-    const phases = gameSegmentDef.turn.phases;
+    const {phases} = gameSegmentDef.turn;
     if (phases) {
-      const sortedPhases = Object.entries(phases).sort(
-        ([, a], [, b]) => a.order - b.order,
-      );
-      this.currentPhase =
-        gameSegmentDef.turn.initialPhase ?? sortedPhases[0]?.[0];
+      const sortedPhases = Object.entries(phases).toSorted(([, a], [, b]) => a.order - b.order);
+      this.currentPhase = gameSegmentDef.turn.initialPhase ?? sortedPhases[0]?.[0];
 
       // Check for steps in initial phase
       if (this.currentPhase) {
         const initialPhaseDef = phases[this.currentPhase];
         if (initialPhaseDef?.steps) {
-          const sortedSteps = Object.entries(initialPhaseDef.steps).sort(
-            ([, a], [, b]) => {
-              const aOrder = a?.order ?? 0;
-              const bOrder = b?.order ?? 0;
-              return aOrder - bOrder;
-            },
-          );
+          const sortedSteps = Object.entries(initialPhaseDef.steps).toSorted(([, a], [, b]) => {
+            const aOrder = a?.order ?? 0;
+            const bOrder = b?.order ?? 0;
+            return aOrder - bOrder;
+          });
           this.currentStep = initialPhaseDef.initialStep ?? sortedSteps[0]?.[0];
         }
       }
@@ -285,10 +272,8 @@ export class FlowManager<TState, TCardMeta = any> {
   /**
    * Task 9.5: Execute a lifecycle hook with FlowContext
    */
-  private executeHook(
-    hook: ((context: FlowContext<TState>) => void) | undefined,
-  ): void {
-    if (!hook) return;
+  private executeHook(hook: ((context: FlowContext<TState>) => void) | undefined): void {
+    if (!hook) {return;}
 
     this.gameState = produce(this.gameState, (draft) => {
       const context = this.createFlowContext(draft);
@@ -358,73 +343,68 @@ export class FlowManager<TState, TCardMeta = any> {
     cards: CardOperations<TCardMeta>;
   } {
     const stubGameOperations: GameOperations = {
-      setOTP: () => {},
-      getOTP: () => undefined,
-      setChoosingFirstPlayer: () => {},
-      getChoosingFirstPlayer: () => undefined,
-      setPendingMulligan: () => {
-        console.log("stub called");
-      },
-      getPendingMulligan: () => [],
       addPendingMulligan: () => {
         console.log("stub called");
       },
+      getChoosingFirstPlayer: () => undefined,
+      getOTP: () => undefined,
+      getPendingMulligan: () => [],
       removePendingMulligan: () => {
+        console.log("stub called");
+      },
+      setChoosingFirstPlayer: () => {},
+      setOTP: () => {},
+      setPendingMulligan: () => {
         console.log("stub called");
       },
     };
 
     const stubZoneOperations: ZoneOperations = {
+      bulkMove: () => [],
+      createDeck: () => [],
+      drawCards: () => [],
+      getCardZone: () => undefined,
+      getCardsInZone: () => [],
       moveCard: () => {
         console.log("stub called");
       },
-      getCardsInZone: () => [],
-      shuffleZone: () => {
-        console.log("stub called");
-      },
-      getCardZone: () => undefined,
-      drawCards: () => [],
       mulligan: () => {
         console.log("stub called");
       },
-      bulkMove: () => [],
-      createDeck: () => [],
+      shuffleZone: () => {
+        console.log("stub called");
+      },
     };
 
     const stubCardOperations: CardOperations<TCardMeta> = {
       getCardMeta: () => ({}) as TCardMeta,
-      updateCardMeta: () => {
-        console.log("stub called");
-      },
-      setCardMeta: () => {
-        console.log("stub called");
-      },
       getCardOwner: () => {
         console.log("stub called");
         return undefined;
       },
       queryCards: () => [],
+      setCardMeta: () => {
+        console.log("stub called");
+      },
+      updateCardMeta: () => {
+        console.log("stub called");
+      },
     };
 
     return {
+      cards: stubCardOperations,
       game: stubGameOperations,
       zones: stubZoneOperations,
-      cards: stubCardOperations,
     };
   }
 
   /**
    * Task 9.9: Create FlowContext for hooks
    */
-  private createFlowContext(
-    draft: Draft<TState>,
-  ): FlowContext<TState, TCardMeta> {
+  private createFlowContext(draft: Draft<TState>): FlowContext<TState, TCardMeta> {
     const stubs = this.createStubOperations();
 
     return {
-      state: draft,
-      game: this.gameOperations || stubs.game,
-      zones: this.zoneOperations || stubs.zones,
       cards: this.cardOperations || stubs.cards,
       endGameSegment: () => {
         this.pendingEndGameSegment = true;
@@ -438,14 +418,17 @@ export class FlowManager<TState, TCardMeta = any> {
       endTurn: () => {
         this.pendingEndTurn = true;
       },
+      game: this.gameOperations || stubs.game,
       getCurrentGameSegment: () => this.currentGameSegment,
       getCurrentPhase: () => this.currentPhase,
-      getCurrentStep: () => this.currentStep,
       getCurrentPlayer: () => this.currentPlayer ?? "",
+      getCurrentStep: () => this.currentStep,
       getTurnNumber: () => this.turnNumber,
       setCurrentPlayer: (playerId?: string) => {
         this.currentPlayer = playerId;
       },
+      state: draft,
+      zones: this.zoneOperations || stubs.zones,
     };
   }
 
@@ -453,13 +436,13 @@ export class FlowManager<TState, TCardMeta = any> {
    * Task 9.7: Check and execute endIf conditions
    */
   public checkEndConditions(): void {
-    if (!this.currentGameSegment) return;
+    if (!this.currentGameSegment) {return;}
 
     const gameSegments = this.normalizedGameSegments;
     const gameSegmentDef = gameSegments[this.currentGameSegment];
-    if (!gameSegmentDef) return;
+    if (!gameSegmentDef) {return;}
 
-    const phases = gameSegmentDef.turn.phases;
+    const {phases} = gameSegmentDef.turn;
 
     // Check step endIf
     if (this.currentPhase && this.currentStep && phases) {
@@ -544,14 +527,14 @@ export class FlowManager<TState, TCardMeta = any> {
    * Task 9.13: Transition to next step
    */
   private transitionToNextStep(): void {
-    if (!this.currentGameSegment) return;
+    if (!this.currentGameSegment) {return;}
 
     const gameSegments = this.normalizedGameSegments;
     const gameSegmentDef = gameSegments[this.currentGameSegment];
-    if (!gameSegmentDef) return;
+    if (!gameSegmentDef) {return;}
 
-    const phases = gameSegmentDef.turn.phases;
-    if (!(this.currentPhase && this.currentStep && phases)) return;
+    const {phases} = gameSegmentDef.turn;
+    if (!(this.currentPhase && this.currentStep && phases)) {return;}
 
     // Set guard to prevent nested transitions
     this.isTransitioning = true;
@@ -589,14 +572,14 @@ export class FlowManager<TState, TCardMeta = any> {
    * Task 9.13: Transition to next phase
    */
   private transitionToNextPhase(): void {
-    if (!this.currentGameSegment) return;
+    if (!this.currentGameSegment) {return;}
 
     const gameSegments = this.normalizedGameSegments;
     const gameSegmentDef = gameSegments[this.currentGameSegment];
-    if (!gameSegmentDef) return;
+    if (!gameSegmentDef) {return;}
 
-    const phases = gameSegmentDef.turn.phases;
-    if (!(this.currentPhase && phases)) return;
+    const {phases} = gameSegmentDef.turn;
+    if (!(this.currentPhase && phases)) {return;}
 
     // Set guard to prevent nested transitions
     this.isTransitioning = true;
@@ -628,17 +611,17 @@ export class FlowManager<TState, TCardMeta = any> {
 
       // Emit telemetry event
       this.telemetry?.emitEvent({
-        type: "flowTransition",
-        transitionType: "phase",
         from: previousPhase,
-        to: this.currentPhase,
-        turn: this.turnNumber,
         timestamp: Date.now(),
+        to: this.currentPhase,
+        transitionType: "phase",
+        turn: this.turnNumber,
+        type: "flowTransition",
       });
 
       // Initialize steps if any
       if (nextPhaseDef.steps) {
-        const sortedSteps = Object.entries(nextPhaseDef.steps).sort(
+        const sortedSteps = Object.entries(nextPhaseDef.steps).toSorted(
           ([, a], [, b]) => a.order - b.order,
         );
         this.currentStep = nextPhaseDef.initialStep ?? sortedSteps[0]?.[0];
@@ -665,16 +648,16 @@ export class FlowManager<TState, TCardMeta = any> {
    * Transition to next turn
    */
   private transitionToNextTurn(): void {
-    if (!this.currentGameSegment) return;
+    if (!this.currentGameSegment) {return;}
 
     const gameSegments = this.normalizedGameSegments;
     const gameSegmentDef = gameSegments[this.currentGameSegment];
-    if (!gameSegmentDef) return;
+    if (!gameSegmentDef) {return;}
 
     // Set guard to prevent nested transitions
     this.isTransitioning = true;
 
-    const phases = gameSegmentDef.turn.phases;
+    const {phases} = gameSegmentDef.turn;
 
     // Execute step onEnd if in step
     if (this.currentPhase && this.currentStep && phases) {
@@ -705,33 +688,30 @@ export class FlowManager<TState, TCardMeta = any> {
 
     // Log turn transition (INFO level)
     this.logger?.info("Turn transition", {
-      turn: previousTurn,
       nextTurn: this.turnNumber,
+      turn: previousTurn,
     });
 
     // Emit telemetry event
     this.telemetry?.emitEvent({
-      type: "flowTransition",
-      transitionType: "turn",
       from: `turn-${previousTurn}`,
-      to: `turn-${this.turnNumber}`,
-      turn: this.turnNumber,
       timestamp: Date.now(),
+      to: `turn-${this.turnNumber}`,
+      transitionType: "turn",
+      turn: this.turnNumber,
+      type: "flowTransition",
     });
 
     // Reset to first phase
     if (phases) {
-      const sortedPhases = Object.entries(phases).sort(
-        ([, a], [, b]) => a.order - b.order,
-      );
-      this.currentPhase =
-        gameSegmentDef.turn.initialPhase ?? sortedPhases[0]?.[0];
+      const sortedPhases = Object.entries(phases).toSorted(([, a], [, b]) => a.order - b.order);
+      this.currentPhase = gameSegmentDef.turn.initialPhase ?? sortedPhases[0]?.[0];
 
       // Initialize steps
       if (this.currentPhase) {
         const phaseDef = phases[this.currentPhase];
         if (phaseDef?.steps) {
-          const sortedSteps = Object.entries(phaseDef.steps).sort(
+          const sortedSteps = Object.entries(phaseDef.steps).toSorted(
             ([, a], [, b]) => a.order - b.order,
           );
           this.currentStep = phaseDef.initialStep ?? sortedSteps[0]?.[0];
@@ -766,16 +746,16 @@ export class FlowManager<TState, TCardMeta = any> {
    * Transition to next game segment
    */
   private transitionToNextGameSegment(): void {
-    if (!this.currentGameSegment) return;
+    if (!this.currentGameSegment) {return;}
 
     const gameSegments = this.normalizedGameSegments;
     const gameSegmentDef = gameSegments[this.currentGameSegment];
-    if (!gameSegmentDef) return;
+    if (!gameSegmentDef) {return;}
 
     // Set guard to prevent nested transitions
     this.isTransitioning = true;
 
-    const phases = gameSegmentDef.turn.phases;
+    const {phases} = gameSegmentDef.turn;
 
     // Execute step onEnd if in step
     if (this.currentPhase && this.currentStep && phases) {
@@ -815,16 +795,16 @@ export class FlowManager<TState, TCardMeta = any> {
 
       // Emit telemetry event
       this.telemetry?.emitEvent({
-        type: "flowTransition",
-        transitionType: "segment",
         from: previousSegment || "none",
-        to: this.currentGameSegment || "none",
-        turn: this.turnNumber,
         timestamp: Date.now(),
+        to: this.currentGameSegment || "none",
+        transitionType: "segment",
+        turn: this.turnNumber,
+        type: "flowTransition",
       });
 
       // Reset turn number for new game segment (optional - depends on game rules)
-      // this.turnNumber = 1;
+      // This.turnNumber = 1;
 
       // Execute game segment onBegin
       this.executeHook(nextGameSegmentDef.onBegin);
@@ -832,17 +812,14 @@ export class FlowManager<TState, TCardMeta = any> {
       // Initialize turn structure for new game segment
       const nextPhases = nextGameSegmentDef.turn.phases;
       if (nextPhases) {
-        const sortedPhases = Object.entries(nextPhases).sort(
-          ([, a], [, b]) => a.order - b.order,
-        );
-        this.currentPhase =
-          nextGameSegmentDef.turn.initialPhase ?? sortedPhases[0]?.[0];
+        const sortedPhases = Object.entries(nextPhases).toSorted(([, a], [, b]) => a.order - b.order);
+        this.currentPhase = nextGameSegmentDef.turn.initialPhase ?? sortedPhases[0]?.[0];
 
         // Initialize steps
         if (this.currentPhase) {
           const phaseDef = nextPhases[this.currentPhase];
           if (phaseDef?.steps) {
-            const sortedSteps = Object.entries(phaseDef.steps).sort(
+            const sortedSteps = Object.entries(phaseDef.steps).toSorted(
               ([, a], [, b]) => a.order - b.order,
             );
             this.currentStep = phaseDef.initialStep ?? sortedSteps[0]?.[0];
@@ -1002,23 +979,28 @@ export class FlowManager<TState, TCardMeta = any> {
   send(event: FlowEvent): void {
     switch (event.type) {
       case "NEXT_GAME_SEGMENT":
-      case "END_GAME_SEGMENT":
+      case "END_GAME_SEGMENT": {
         this.nextGameSegment();
         break;
+      }
       case "NEXT_PHASE":
-      case "END_PHASE":
+      case "END_PHASE": {
         this.nextPhase();
         break;
+      }
       case "END_STEP":
-      case "NEXT_STEP":
+      case "NEXT_STEP": {
         this.nextStep();
         break;
-      case "END_TURN":
+      }
+      case "END_TURN": {
         this.nextTurn();
         break;
-      case "STATE_UPDATED":
+      }
+      case "STATE_UPDATED": {
         this.checkEndConditions();
         break;
+      }
     }
   }
 

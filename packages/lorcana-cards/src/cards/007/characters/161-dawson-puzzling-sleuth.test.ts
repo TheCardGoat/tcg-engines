@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { dawsonPuzzlingSleuth } from "@lorcanito/lorcana-engine/cards/007/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { dawsonPuzzlingSleuth } from "@lorcanito/lorcana-engine/cards/007/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Dawson - Puzzling Sleuth", () => {
-//   it.skip("BE SENSIBLE Once during your turn, whenever a card is put into your inkwell, look at the top card of your deck. You may put it on either the top or the bottom of your deck.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: dawsonPuzzlingSleuth.cost,
-//       play: [dawsonPuzzlingSleuth],
-//       hand: [dawsonPuzzlingSleuth],
+// Describe("Dawson - Puzzling Sleuth", () => {
+//   It.skip("BE SENSIBLE Once during your turn, whenever a card is put into your inkwell, look at the top card of your deck. You may put it on either the top or the bottom of your deck.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: dawsonPuzzlingSleuth.cost,
+//       Play: [dawsonPuzzlingSleuth],
+//       Hand: [dawsonPuzzlingSleuth],
 //     });
 //
-//     await testEngine.playCard(dawsonPuzzlingSleuth);
+//     Await testEngine.playCard(dawsonPuzzlingSleuth);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

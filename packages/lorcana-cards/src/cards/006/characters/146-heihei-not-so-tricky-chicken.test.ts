@@ -3,33 +3,33 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { heiheiNotsotrickyChicken } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { heiheiNotsotrickyChicken } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Heihei - Not-So-Tricky Chicken", () => {
-//   it.skip("EAT ANYTHING When you play this character, exert chosen opposing item. It can't ready at the start of its next turn.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: heiheiNotsotrickyChicken.cost,
-//       hand: [heiheiNotsotrickyChicken],
+// Describe("Heihei - Not-So-Tricky Chicken", () => {
+//   It.skip("EAT ANYTHING When you play this character, exert chosen opposing item. It can't ready at the start of its next turn.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: heiheiNotsotrickyChicken.cost,
+//       Hand: [heiheiNotsotrickyChicken],
 //     });
 //
-//     await testEngine.playCard(heiheiNotsotrickyChicken);
-//     await testEngine.acceptOptionalLayer();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.playCard(heiheiNotsotrickyChicken);
+//     Await testEngine.acceptOptionalLayer();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 //
-//   it.skip("OUT TO LUNCH During your turn, this character gains Evasive. (They can challenge characters with Evasive.)", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: heiheiNotsotrickyChicken.cost,
-//       play: [heiheiNotsotrickyChicken],
-//       hand: [heiheiNotsotrickyChicken],
+//   It.skip("OUT TO LUNCH During your turn, this character gains Evasive. (They can challenge characters with Evasive.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: heiheiNotsotrickyChicken.cost,
+//       Play: [heiheiNotsotrickyChicken],
+//       Hand: [heiheiNotsotrickyChicken],
 //     });
 //
-//     await testEngine.playCard(heiheiNotsotrickyChicken);
+//     Await testEngine.playCard(heiheiNotsotrickyChicken);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

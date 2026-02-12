@@ -3,40 +3,40 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { yenSidPowerfulSorcerer } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { yenSidPowerfulSorcerer } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Yen Sid - Powerful Sorcerer", () => {
-//   it.skip("**TIMELY INTERVENTION** When you play this character, if you have a character named Magic Broom in play, you may draw a card.", () => {
-//     const testStore = new TestStore({
-//       inkwell: yenSidPowerfulSorcerer.cost,
-//       hand: [yenSidPowerfulSorcerer],
+// Describe("Yen Sid - Powerful Sorcerer", () => {
+//   It.skip("**TIMELY INTERVENTION** When you play this character, if you have a character named Magic Broom in play, you may draw a card.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: yenSidPowerfulSorcerer.cost,
+//       Hand: [yenSidPowerfulSorcerer],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "hand",
-//       yenSidPowerfulSorcerer.id,
+//       YenSidPowerfulSorcerer.id,
 //     );
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 //
-//   it.skip("**ARCANE STUDY** While you have 2 or more Broom characters in play, this character gets +2 {L}.", () => {
-//     const testStore = new TestStore({
-//       inkwell: yenSidPowerfulSorcerer.cost,
-//       play: [yenSidPowerfulSorcerer],
+//   It.skip("**ARCANE STUDY** While you have 2 or more Broom characters in play, this character gets +2 {L}.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: yenSidPowerfulSorcerer.cost,
+//       Play: [yenSidPowerfulSorcerer],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       yenSidPowerfulSorcerer.id,
+//       YenSidPowerfulSorcerer.id,
 //     );
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

@@ -3,24 +3,24 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { pepaMadrigalWeatherMaker } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { pepaMadrigalWeatherMaker } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Pepa Madrigal - Weather Maker", () => {
-//   it.skip("**IT LOOKS LIKE RAIN** When you play this character, you may exert chosen opposing character. That character can't ready at the start of their next turn unless you're at a location.", () => {
-//     const testStore = new TestStore({
-//       inkwell: pepaMadrigalWeatherMaker.cost,
-//       hand: [pepaMadrigalWeatherMaker],
+// Describe("Pepa Madrigal - Weather Maker", () => {
+//   It.skip("**IT LOOKS LIKE RAIN** When you play this character, you may exert chosen opposing character. That character can't ready at the start of their next turn unless you're at a location.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: pepaMadrigalWeatherMaker.cost,
+//       Hand: [pepaMadrigalWeatherMaker],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "hand",
-//       pepaMadrigalWeatherMaker.id,
+//       PepaMadrigalWeatherMaker.id,
 //     );
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

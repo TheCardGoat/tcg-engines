@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { brunosReturn } from "@lorcanito/lorcana-engine/cards/009/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { brunosReturn } from "@lorcanito/lorcana-engine/cards/009/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Bruno's Return", () => {
-//   it.skip("Return a character card from your discard to your hand. Then remove up to 2 damage from chosen character.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: brunosReturn.cost,
-//       play: [brunosReturn],
-//       hand: [brunosReturn],
+// Describe("Bruno's Return", () => {
+//   It.skip("Return a character card from your discard to your hand. Then remove up to 2 damage from chosen character.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: brunosReturn.cost,
+//       Play: [brunosReturn],
+//       Hand: [brunosReturn],
 //     });
 //
-//     await testEngine.playCard(brunosReturn);
+//     Await testEngine.playCard(brunosReturn);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

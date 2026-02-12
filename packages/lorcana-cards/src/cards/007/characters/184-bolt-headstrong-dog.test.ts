@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { boltHeadstrongDog } from "@lorcanito/lorcana-engine/cards/007/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { boltHeadstrongDog } from "@lorcanito/lorcana-engine/cards/007/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Bolt - Headstrong Dog", () => {
-//   it.skip("THERE'S NO TURNING BACK Whenever this character quests, if he has no damage, you may draw a card, then choose and discard a card.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: boltHeadstrongDog.cost,
-//       play: [boltHeadstrongDog],
-//       hand: [boltHeadstrongDog],
+// Describe("Bolt - Headstrong Dog", () => {
+//   It.skip("THERE'S NO TURNING BACK Whenever this character quests, if he has no damage, you may draw a card, then choose and discard a card.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: boltHeadstrongDog.cost,
+//       Play: [boltHeadstrongDog],
+//       Hand: [boltHeadstrongDog],
 //     });
 //
-//     await testEngine.playCard(boltHeadstrongDog);
+//     Await testEngine.playCard(boltHeadstrongDog);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

@@ -5,9 +5,9 @@ import { cheshireCatNotAllThere } from "./071-cheshire-cat-not-all-there";
 describe("Cheshire Cat - Not All There", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [cheshireCat] });
-  //   expect(testEngine.getCardModel(cheshireCat).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [cheshireCat] });
+  //   Expect(testEngine.getCardModel(cheshireCat).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,45 +17,45 @@ describe("Cheshire Cat - Not All There", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   cheshireCat,
-//   teKaTheBurningOne,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   CheshireCat,
+//   TeKaTheBurningOne,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// export const cheshireCatNotAllThereTestCase = async () => {
-//   const testEngine = new TestEngine(
+// Export const cheshireCatNotAllThereTestCase = async () => {
+//   Const testEngine = new TestEngine(
 //     {
-//       play: [teKaTheBurningOne],
+//       Play: [teKaTheBurningOne],
 //     },
 //     {
-//       play: [cheshireCat],
+//       Play: [cheshireCat],
 //     },
 //   );
 //
-//   const cardUnderTest = testEngine.getCardModel(cheshireCat);
-//   const attacker = testEngine.getCardModel(teKaTheBurningOne);
+//   Const cardUnderTest = testEngine.getCardModel(cheshireCat);
+//   Const attacker = testEngine.getCardModel(teKaTheBurningOne);
 //
-//   expect(cardUnderTest.zone).toEqual("play");
-//   cardUnderTest.updateCardMeta({ exerted: true });
+//   Expect(cardUnderTest.zone).toEqual("play");
+//   CardUnderTest.updateCardMeta({ exerted: true });
 //
-//   await testEngine.challenge({
-//     attacker: attacker,
-//     defender: cardUnderTest,
+//   Await testEngine.challenge({
+//     Attacker: attacker,
+//     Defender: cardUnderTest,
 //   });
 //
-//   expect(testEngine.getZonesCardCount("player_one")).toEqual(
-//     expect.objectContaining({ discard: 1, play: 0 }),
+//   Expect(testEngine.getZonesCardCount("player_one")).toEqual(
+//     Expect.objectContaining({ discard: 1, play: 0 }),
 //   );
-//   expect(testEngine.getZonesCardCount("player_two")).toEqual(
-//     expect.objectContaining({ discard: 1, play: 0 }),
+//   Expect(testEngine.getZonesCardCount("player_two")).toEqual(
+//     Expect.objectContaining({ discard: 1, play: 0 }),
 //   );
 // };
 //
-// describe("Cheshire Cat - Not All There", () => {
-//   it("**Lose something?** When this character is challenged and banished, banish the challenging character.", () => {
-//     cheshireCatNotAllThereTestCase();
+// Describe("Cheshire Cat - Not All There", () => {
+//   It("**Lose something?** When this character is challenged and banished, banish the challenging character.", () => {
+//     CheshireCatNotAllThereTestCase();
 //   });
 // });
 //

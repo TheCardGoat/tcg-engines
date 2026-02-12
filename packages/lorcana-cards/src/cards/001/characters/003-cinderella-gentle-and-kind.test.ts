@@ -3,33 +3,33 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   arielOnHumanLegs,
-//   cinderellaGentleAndKind,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   ArielOnHumanLegs,
+//   CinderellaGentleAndKind,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Cinderella - Gentle And Kind", () => {
-//   describe("{E}− Remove up to 3 damage from chosen Princess character.", () => {
-//     it("Healing 3 damage from princess character", () => {
-//       const testStore = new TestStore({
-//         play: [cinderellaGentleAndKind, arielOnHumanLegs],
+// Describe("Cinderella - Gentle And Kind", () => {
+//   Describe("{E}− Remove up to 3 damage from chosen Princess character.", () => {
+//     It("Healing 3 damage from princess character", () => {
+//       Const testStore = new TestStore({
+//         Play: [cinderellaGentleAndKind, arielOnHumanLegs],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         cinderellaGentleAndKind.id,
+//         CinderellaGentleAndKind.id,
 //       );
-//       const target = testStore.getByZoneAndId("play", arielOnHumanLegs.id);
+//       Const target = testStore.getByZoneAndId("play", arielOnHumanLegs.id);
 //
-//       target.updateCardMeta({ damage: 4 });
+//       Target.updateCardMeta({ damage: 4 });
 //
-//       cardUnderTest.activate();
+//       CardUnderTest.activate();
 //
-//       testStore.resolveTopOfStack({ targetId: target.instanceId });
+//       TestStore.resolveTopOfStack({ targetId: target.instanceId });
 //
-//       expect(target.meta.damage).toEqual(1);
+//       Expect(target.meta.damage).toEqual(1);
 //     });
 //   });
 // });

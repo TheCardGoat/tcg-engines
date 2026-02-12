@@ -3,125 +3,125 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { elsaQueenRegent } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { mrSmeeBumblingMate } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import {
-//   captainHookForcefulDuelist,
-//   captainHookThePirateKing,
-//   deweyLovableShowoff,
-//   hueyReliableLeader,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { elsaQueenRegent } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { mrSmeeBumblingMate } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import {
+//   CaptainHookForcefulDuelist,
+//   CaptainHookThePirateKing,
+//   DeweyLovableShowoff,
+//   HueyReliableLeader,
 // } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Captain Hook - The Pirate King", () => {
-//   it("SHIFT 3 (You may pay 3 {I} to play this on top of one of your characters named Captain Hook.)", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: captainHookThePirateKing.cost,
-//       play: [captainHookForcefulDuelist],
-//       hand: [captainHookThePirateKing],
+// Describe("Captain Hook - The Pirate King", () => {
+//   It("SHIFT 3 (You may pay 3 {I} to play this on top of one of your characters named Captain Hook.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: captainHookThePirateKing.cost,
+//       Play: [captainHookForcefulDuelist],
+//       Hand: [captainHookThePirateKing],
 //     });
 //
-//     await testEngine.shiftCard({
-//       shifter: captainHookThePirateKing,
-//       shifted: captainHookForcefulDuelist,
+//     Await testEngine.shiftCard({
+//       Shifter: captainHookThePirateKing,
+//       Shifted: captainHookForcefulDuelist,
 //     });
 //   });
 //
-//   describe("GIVE 'EM ALL YOU GOT! Once during your turn, whenever an opposing character is damaged, your Pirate characters get +2 {S} and gain Resist +2 this turn. (Damage dealt to them is reduced by 2.)", () => {
-//     it("should increase strength and grant resist to all Pirates when an opposing character is damaged", async () => {
-//       const testEngine = new TestEngine(
+//   Describe("GIVE 'EM ALL YOU GOT! Once during your turn, whenever an opposing character is damaged, your Pirate characters get +2 {S} and gain Resist +2 this turn. (Damage dealt to them is reduced by 2.)", () => {
+//     It("should increase strength and grant resist to all Pirates when an opposing character is damaged", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: captainHookThePirateKing.cost,
-//           play: [
-//             captainHookThePirateKing,
-//             mrSmeeBumblingMate,
-//             deweyLovableShowoff,
+//           Inkwell: captainHookThePirateKing.cost,
+//           Play: [
+//             CaptainHookThePirateKing,
+//             MrSmeeBumblingMate,
+//             DeweyLovableShowoff,
 //           ],
 //         },
 //         {
-//           play: [elsaQueenRegent],
+//           Play: [elsaQueenRegent],
 //         },
 //       );
 //
-//       const cardUnderTest = testEngine.getCardModel(captainHookThePirateKing);
-//       const otherPirate = testEngine.getCardModel(mrSmeeBumblingMate);
-//       const noPirate = testEngine.getCardModel(deweyLovableShowoff);
-//       const oppoCard = testEngine.getCardModel(elsaQueenRegent);
+//       Const cardUnderTest = testEngine.getCardModel(captainHookThePirateKing);
+//       Const otherPirate = testEngine.getCardModel(mrSmeeBumblingMate);
+//       Const noPirate = testEngine.getCardModel(deweyLovableShowoff);
+//       Const oppoCard = testEngine.getCardModel(elsaQueenRegent);
 //
-//       testEngine.setCardDamage(oppoCard, 1);
+//       TestEngine.setCardDamage(oppoCard, 1);
 //
-//       expect(cardUnderTest.strength).toEqual(
-//         captainHookThePirateKing.strength + 2,
+//       Expect(cardUnderTest.strength).toEqual(
+//         CaptainHookThePirateKing.strength + 2,
 //       );
-//       expect(otherPirate.strength).toEqual(mrSmeeBumblingMate.strength + 2);
-//       expect(noPirate.strength).toEqual(deweyLovableShowoff.strength);
+//       Expect(otherPirate.strength).toEqual(mrSmeeBumblingMate.strength + 2);
+//       Expect(noPirate.strength).toEqual(deweyLovableShowoff.strength);
 //
-//       expect(cardUnderTest.hasResist).toEqual(true);
-//       expect(otherPirate.hasResist).toEqual(true);
-//       expect(noPirate.hasResist).toEqual(false);
+//       Expect(cardUnderTest.hasResist).toEqual(true);
+//       Expect(otherPirate.hasResist).toEqual(true);
+//       Expect(noPirate.hasResist).toEqual(false);
 //
 //       // Verify happens only once per turn
-//       testEngine.setCardDamage(oppoCard, 2);
+//       TestEngine.setCardDamage(oppoCard, 2);
 //
-//       expect(cardUnderTest.strength).toEqual(
-//         captainHookThePirateKing.strength + 2,
+//       Expect(cardUnderTest.strength).toEqual(
+//         CaptainHookThePirateKing.strength + 2,
 //       );
-//       expect(otherPirate.strength).toEqual(mrSmeeBumblingMate.strength + 2);
-//       expect(noPirate.strength).toEqual(deweyLovableShowoff.strength);
+//       Expect(otherPirate.strength).toEqual(mrSmeeBumblingMate.strength + 2);
+//       Expect(noPirate.strength).toEqual(deweyLovableShowoff.strength);
 //     });
 //
-//     it("should not increase strength during an opposing player's turn", async () => {
-//       const testEngine = new TestEngine(
+//     It("should not increase strength during an opposing player's turn", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           play: [elsaQueenRegent],
+//           Play: [elsaQueenRegent],
 //         },
 //         {
-//           play: [
-//             captainHookThePirateKing,
-//             mrSmeeBumblingMate,
-//             deweyLovableShowoff,
+//           Play: [
+//             CaptainHookThePirateKing,
+//             MrSmeeBumblingMate,
+//             DeweyLovableShowoff,
 //           ],
 //         },
 //       );
 //
-//       const cardUnderTest = testEngine.getCardModel(captainHookThePirateKing);
-//       const otherPirate = testEngine.getCardModel(mrSmeeBumblingMate);
-//       const noPirate = testEngine.getCardModel(deweyLovableShowoff);
-//       const oppoCard = testEngine.getCardModel(elsaQueenRegent);
+//       Const cardUnderTest = testEngine.getCardModel(captainHookThePirateKing);
+//       Const otherPirate = testEngine.getCardModel(mrSmeeBumblingMate);
+//       Const noPirate = testEngine.getCardModel(deweyLovableShowoff);
+//       Const oppoCard = testEngine.getCardModel(elsaQueenRegent);
 //
-//       testEngine.setCardDamage(oppoCard, 1);
+//       TestEngine.setCardDamage(oppoCard, 1);
 //
-//       expect(cardUnderTest.strength).toEqual(captainHookThePirateKing.strength);
-//       expect(otherPirate.strength).toEqual(mrSmeeBumblingMate.strength);
-//       expect(noPirate.strength).toEqual(deweyLovableShowoff.strength);
+//       Expect(cardUnderTest.strength).toEqual(captainHookThePirateKing.strength);
+//       Expect(otherPirate.strength).toEqual(mrSmeeBumblingMate.strength);
+//       Expect(noPirate.strength).toEqual(deweyLovableShowoff.strength);
 //
-//       expect(cardUnderTest.hasResist).toEqual(false);
-//       expect(otherPirate.hasResist).toEqual(false);
-//       expect(noPirate.hasResist).toEqual(false);
+//       Expect(cardUnderTest.hasResist).toEqual(false);
+//       Expect(otherPirate.hasResist).toEqual(false);
+//       Expect(noPirate.hasResist).toEqual(false);
 //     });
 //
-//     it("challenging pirate should not gain resist before damage", async () => {
-//       const testEngine = new TestEngine(
+//     It("challenging pirate should not gain resist before damage", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           play: [captainHookThePirateKing, mrSmeeBumblingMate],
+//           Play: [captainHookThePirateKing, mrSmeeBumblingMate],
 //         },
 //         {
-//           play: [hueyReliableLeader],
+//           Play: [hueyReliableLeader],
 //         },
 //       );
 //
-//       const cardUnderTest = testEngine.getCardModel(mrSmeeBumblingMate);
-//       const oppoCard = testEngine.getCardModel(hueyReliableLeader);
+//       Const cardUnderTest = testEngine.getCardModel(mrSmeeBumblingMate);
+//       Const oppoCard = testEngine.getCardModel(hueyReliableLeader);
 //
-//       await testEngine.challenge({
-//         attacker: cardUnderTest,
-//         defender: oppoCard,
-//         exertDefender: true,
+//       Await testEngine.challenge({
+//         Attacker: cardUnderTest,
+//         Defender: oppoCard,
+//         ExertDefender: true,
 //       });
 //
 //       // Smee should have 2 damage after the challenge (not 0 as though resist applied)
-//       expect(cardUnderTest.damage).toEqual(2);
+//       Expect(cardUnderTest.damage).toEqual(2);
 //     });
 //   });
 // });

@@ -3,63 +3,63 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { zeroToHero } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
-// import {
-//   arthurTrainedSwordsman,
-//   cheshireCatAlwaysGrinning,
-//   feliciaAlwaysHungry,
-//   flynnRiderConfidentVagabond,
-//   littleJohnLoyalFriend,
-//   rabbitReluctantHost,
-//   ratiganCriminalMastermind,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { zeroToHero } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
+// Import {
+//   ArthurTrainedSwordsman,
+//   CheshireCatAlwaysGrinning,
+//   FeliciaAlwaysHungry,
+//   FlynnRiderConfidentVagabond,
+//   LittleJohnLoyalFriend,
+//   RabbitReluctantHost,
+//   RatiganCriminalMastermind,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import {
-//   fangCrossbow,
-//   pawpsicle,
+// Import {
+//   FangCrossbow,
+//   Pawpsicle,
 // } from "@lorcanito/lorcana-engine/cards/002/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Zero To Hero", () => {
-//   describe("Count the number of characters you have in play. You pay that amount of {I} less for the next character you play this turn.", () => {
-//     it("One character in play", () => {
-//       const testStore = new TestStore({
-//         inkwell: zeroToHero.cost,
-//         hand: [zeroToHero, feliciaAlwaysHungry],
-//         play: [pawpsicle, arthurTrainedSwordsman],
+// Describe("Zero To Hero", () => {
+//   Describe("Count the number of characters you have in play. You pay that amount of {I} less for the next character you play this turn.", () => {
+//     It("One character in play", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: zeroToHero.cost,
+//         Hand: [zeroToHero, feliciaAlwaysHungry],
+//         Play: [pawpsicle, arthurTrainedSwordsman],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId("hand", zeroToHero.id);
-//       const target = testStore.getByZoneAndId("hand", feliciaAlwaysHungry.id);
+//       Const cardUnderTest = testStore.getByZoneAndId("hand", zeroToHero.id);
+//       Const target = testStore.getByZoneAndId("hand", feliciaAlwaysHungry.id);
 //
-//       cardUnderTest.playFromHand();
-//       target.playFromHand();
+//       CardUnderTest.playFromHand();
+//       Target.playFromHand();
 //
-//       expect(target.zone).toEqual("play");
+//       Expect(target.zone).toEqual("play");
 //     });
 //
-//     it("Five character in play", () => {
-//       const testStore = new TestStore({
-//         inkwell: zeroToHero.cost,
-//         hand: [zeroToHero, rabbitReluctantHost],
-//         play: [
-//           pawpsicle,
-//           fangCrossbow,
-//           arthurTrainedSwordsman,
-//           cheshireCatAlwaysGrinning,
-//           flynnRiderConfidentVagabond,
-//           littleJohnLoyalFriend,
-//           ratiganCriminalMastermind,
+//     It("Five character in play", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: zeroToHero.cost,
+//         Hand: [zeroToHero, rabbitReluctantHost],
+//         Play: [
+//           Pawpsicle,
+//           FangCrossbow,
+//           ArthurTrainedSwordsman,
+//           CheshireCatAlwaysGrinning,
+//           FlynnRiderConfidentVagabond,
+//           LittleJohnLoyalFriend,
+//           RatiganCriminalMastermind,
 //         ],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId("hand", zeroToHero.id);
-//       const target = testStore.getByZoneAndId("hand", rabbitReluctantHost.id);
+//       Const cardUnderTest = testStore.getByZoneAndId("hand", zeroToHero.id);
+//       Const target = testStore.getByZoneAndId("hand", rabbitReluctantHost.id);
 //
-//       cardUnderTest.playFromHand();
-//       target.playFromHand();
+//       CardUnderTest.playFromHand();
+//       Target.playFromHand();
 //
-//       expect(target.zone).toEqual("play");
+//       Expect(target.zone).toEqual("play");
 //     });
 //   });
 // });

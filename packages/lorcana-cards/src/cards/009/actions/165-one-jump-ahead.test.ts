@@ -3,35 +3,35 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { oneJumpAhead } from "@lorcanito/lorcana-engine/cards/009/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { oneJumpAhead } from "@lorcanito/lorcana-engine/cards/009/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("One Jump Ahead", () => {
-//   it.skip("_(A character with cost 2 or more can {E} to sing this song for free.)_", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: oneJumpAhead.cost,
-//       play: [oneJumpAhead],
-//       hand: [oneJumpAhead],
+// Describe("One Jump Ahead", () => {
+//   It.skip("_(A character with cost 2 or more can {E} to sing this song for free.)_", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: oneJumpAhead.cost,
+//       Play: [oneJumpAhead],
+//       Hand: [oneJumpAhead],
 //     });
 //
-//     await testEngine.playCard(oneJumpAhead);
+//     Await testEngine.playCard(oneJumpAhead);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 //
-//   it.skip("Put the top card of your deck into your inkwell facedown and exerted.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: oneJumpAhead.cost,
-//       play: [oneJumpAhead],
-//       hand: [oneJumpAhead],
+//   It.skip("Put the top card of your deck into your inkwell facedown and exerted.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: oneJumpAhead.cost,
+//       Play: [oneJumpAhead],
+//       Hand: [oneJumpAhead],
 //     });
 //
-//     await testEngine.playCard(oneJumpAhead);
+//     Await testEngine.playCard(oneJumpAhead);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

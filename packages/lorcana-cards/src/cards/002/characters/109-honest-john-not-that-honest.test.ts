@@ -3,34 +3,34 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   herculesDivineHero,
-//   honestJohnNotThatHonest,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   HerculesDivineHero,
+//   HonestJohnNotThatHonest,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Honest John - Not That Honest", () => {
-//   it("**EASY STREET** Whenever you play a Floodborn character, each opponent loses 1 lore.", () => {
-//     const testStore = new TestStore(
+// Describe("Honest John - Not That Honest", () => {
+//   It("**EASY STREET** Whenever you play a Floodborn character, each opponent loses 1 lore.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: herculesDivineHero.cost,
-//         hand: [herculesDivineHero],
-//         play: [honestJohnNotThatHonest],
+//         Inkwell: herculesDivineHero.cost,
+//         Hand: [herculesDivineHero],
+//         Play: [honestJohnNotThatHonest],
 //       },
 //       {
-//         lore: 3,
+//         Lore: 3,
 //       },
 //     );
 //
-//     const floodbornChar = testStore.getByZoneAndId(
+//     Const floodbornChar = testStore.getByZoneAndId(
 //       "hand",
-//       herculesDivineHero.id,
+//       HerculesDivineHero.id,
 //     );
 //
-//     expect(testStore.getPlayerLore("player_two")).toEqual(3);
-//     floodbornChar.playFromHand();
-//     expect(testStore.getPlayerLore("player_two")).toEqual(2);
+//     Expect(testStore.getPlayerLore("player_two")).toEqual(3);
+//     FloodbornChar.playFromHand();
+//     Expect(testStore.getPlayerLore("player_two")).toEqual(2);
 //   });
 // });
 //

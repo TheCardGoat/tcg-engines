@@ -1,24 +1,8 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
 export const visionOfTheFuture: ActionCard = {
-  id: "xym",
-  cardType: "action",
-  name: "Vision of the Future",
-  inkType: ["sapphire"],
-  franchise: "Sword in the Stone",
-  set: "005",
-  text: "Look at the top 5 cards of your deck. Put one into your hand and the rest on the bottom of your deck in any order.",
-  cost: 2,
-  cardNumber: 160,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "0366689dbfdf33fe2cb12178345f2f0b38c13555",
-  },
   abilities: [
     {
-      id: "xym-1",
-      type: "action",
       effect: {
         type: "sequence",
         steps: [
@@ -40,7 +24,23 @@ export const visionOfTheFuture: ActionCard = {
           },
         ],
       },
+      id: "xym-1",
       text: "Look at the top 5 cards of your deck. Put one into your hand and the rest on the bottom of your deck in any order.",
+      type: "action",
     },
   ],
+  cardNumber: 160,
+  cardType: "action",
+  cost: 2,
+  externalIds: {
+    ravensburger: "0366689dbfdf33fe2cb12178345f2f0b38c13555",
+  },
+  franchise: "Sword in the Stone",
+  id: "xym",
+  inkType: ["sapphire"],
+  inkable: true,
+  missingTests: true,
+  name: "Vision of the Future",
+  set: "005",
+  text: "Look at the top 5 cards of your deck. Put one into your hand and the rest on the bottom of your deck in any order.",
 };

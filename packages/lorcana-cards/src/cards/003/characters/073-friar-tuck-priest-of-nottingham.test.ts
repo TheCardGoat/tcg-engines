@@ -3,116 +3,116 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   liloGalacticHero,
-//   mickeyMouseDetective,
-//   stichtNewDog,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   LiloGalacticHero,
+//   MickeyMouseDetective,
+//   StichtNewDog,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { friarTuckPriestOfNottingham } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { friarTuckPriestOfNottingham } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Friar Tuck - Priest of Nottingham", () => {
-//   describe("**YOU THIEVING SCOUNDREL** When you play this character, the player or players with the most cards in their hand chooses and discards a card.", () => {
-//     it("Same amount of cards in hand", async () => {
-//       const testEngine = new TestEngine(
+// Describe("Friar Tuck - Priest of Nottingham", () => {
+//   Describe("**YOU THIEVING SCOUNDREL** When you play this character, the player or players with the most cards in their hand chooses and discards a card.", () => {
+//     It("Same amount of cards in hand", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: friarTuckPriestOfNottingham.cost,
-//           hand: [friarTuckPriestOfNottingham, liloGalacticHero],
-//           deck: 5,
+//           Inkwell: friarTuckPriestOfNottingham.cost,
+//           Hand: [friarTuckPriestOfNottingham, liloGalacticHero],
+//           Deck: 5,
 //         },
 //         {
-//           hand: [stichtNewDog],
-//           deck: 5,
+//           Hand: [stichtNewDog],
+//           Deck: 5,
 //         },
 //       );
 //
-//       await testEngine.playCard(friarTuckPriestOfNottingham);
-//       expect(testEngine.stackLayers).toHaveLength(2);
+//       Await testEngine.playCard(friarTuckPriestOfNottingham);
+//       Expect(testEngine.stackLayers).toHaveLength(2);
 //
-//       testEngine.changeActivePlayer("player_one");
-//       expect(testEngine.store.priorityPlayer).toEqual("player_one");
-//       await testEngine.resolveTopOfStack(
+//       TestEngine.changeActivePlayer("player_one");
+//       Expect(testEngine.store.priorityPlayer).toEqual("player_one");
+//       Await testEngine.resolveTopOfStack(
 //         {
-//           targets: [liloGalacticHero],
-//           layerId: testEngine.getLayerIdForPlayer("player_one"),
+//           Targets: [liloGalacticHero],
+//           LayerId: testEngine.getLayerIdForPlayer("player_one"),
 //         },
-//         true,
+//         True,
 //       );
-//       expect(testEngine.getZonesCardCount("player_one").hand).toEqual(0);
+//       Expect(testEngine.getZonesCardCount("player_one").hand).toEqual(0);
 //
-//       testEngine.changeActivePlayer("player_two");
-//       expect(testEngine.store.priorityPlayer).toEqual("player_two");
-//       await testEngine.resolveTopOfStack({ targets: [stichtNewDog] });
-//       expect(testEngine.getZonesCardCount("player_two").hand).toEqual(0);
+//       TestEngine.changeActivePlayer("player_two");
+//       Expect(testEngine.store.priorityPlayer).toEqual("player_two");
+//       Await testEngine.resolveTopOfStack({ targets: [stichtNewDog] });
+//       Expect(testEngine.getZonesCardCount("player_two").hand).toEqual(0);
 //     });
 //
-//     it("No cards in hand", async () => {
-//       const testEngine = new TestEngine(
+//     It("No cards in hand", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: friarTuckPriestOfNottingham.cost,
-//           hand: [friarTuckPriestOfNottingham],
-//           deck: 5,
+//           Inkwell: friarTuckPriestOfNottingham.cost,
+//           Hand: [friarTuckPriestOfNottingham],
+//           Deck: 5,
 //         },
 //         {
-//           deck: 5,
-//         },
-//       );
-//
-//       await testEngine.playCard(friarTuckPriestOfNottingham);
-//       expect(testEngine.stackLayers).toHaveLength(0);
-//
-//       expect(testEngine.getZonesCardCount("player_one").hand).toEqual(0);
-//       expect(testEngine.getZonesCardCount("player_two").hand).toEqual(0);
-//     });
-//
-//     it("opponent has more", async () => {
-//       const testEngine = new TestEngine(
-//         {
-//           inkwell: friarTuckPriestOfNottingham.cost,
-//           hand: [friarTuckPriestOfNottingham, liloGalacticHero],
-//           deck: 5,
-//         },
-//         {
-//           hand: [stichtNewDog, mickeyMouseDetective],
-//           deck: 5,
+//           Deck: 5,
 //         },
 //       );
 //
-//       await testEngine.playCard(friarTuckPriestOfNottingham);
-//       expect(testEngine.stackLayers).toHaveLength(1);
+//       Await testEngine.playCard(friarTuckPriestOfNottingham);
+//       Expect(testEngine.stackLayers).toHaveLength(0);
 //
-//       testEngine.changeActivePlayer("player_two");
-//       await testEngine.resolveTopOfStack({ targets: [stichtNewDog] }, true);
-//
-//       expect(testEngine.getZonesCardCount("player_one").hand).toEqual(1);
-//       expect(testEngine.getZonesCardCount("player_two").hand).toEqual(1);
+//       Expect(testEngine.getZonesCardCount("player_one").hand).toEqual(0);
+//       Expect(testEngine.getZonesCardCount("player_two").hand).toEqual(0);
 //     });
 //
-//     it("active player has more", async () => {
-//       const testEngine = new TestEngine(
+//     It("opponent has more", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: friarTuckPriestOfNottingham.cost,
-//           hand: [
-//             friarTuckPriestOfNottingham,
-//             liloGalacticHero,
-//             mickeyMouseDetective,
+//           Inkwell: friarTuckPriestOfNottingham.cost,
+//           Hand: [friarTuckPriestOfNottingham, liloGalacticHero],
+//           Deck: 5,
+//         },
+//         {
+//           Hand: [stichtNewDog, mickeyMouseDetective],
+//           Deck: 5,
+//         },
+//       );
+//
+//       Await testEngine.playCard(friarTuckPriestOfNottingham);
+//       Expect(testEngine.stackLayers).toHaveLength(1);
+//
+//       TestEngine.changeActivePlayer("player_two");
+//       Await testEngine.resolveTopOfStack({ targets: [stichtNewDog] }, true);
+//
+//       Expect(testEngine.getZonesCardCount("player_one").hand).toEqual(1);
+//       Expect(testEngine.getZonesCardCount("player_two").hand).toEqual(1);
+//     });
+//
+//     It("active player has more", async () => {
+//       Const testEngine = new TestEngine(
+//         {
+//           Inkwell: friarTuckPriestOfNottingham.cost,
+//           Hand: [
+//             FriarTuckPriestOfNottingham,
+//             LiloGalacticHero,
+//             MickeyMouseDetective,
 //           ],
-//           deck: 5,
+//           Deck: 5,
 //         },
 //         {
-//           hand: [stichtNewDog],
-//           deck: 5,
+//           Hand: [stichtNewDog],
+//           Deck: 5,
 //         },
 //       );
 //
-//       await testEngine.playCard(friarTuckPriestOfNottingham);
-//       expect(testEngine.stackLayers).toHaveLength(1);
+//       Await testEngine.playCard(friarTuckPriestOfNottingham);
+//       Expect(testEngine.stackLayers).toHaveLength(1);
 //
-//       await testEngine.resolveTopOfStack({ targets: [liloGalacticHero] }, true);
+//       Await testEngine.resolveTopOfStack({ targets: [liloGalacticHero] }, true);
 //
-//       expect(testEngine.getZonesCardCount("player_one").hand).toEqual(1);
-//       expect(testEngine.getZonesCardCount("player_two").hand).toEqual(1);
+//       Expect(testEngine.getZonesCardCount("player_one").hand).toEqual(1);
+//       Expect(testEngine.getZonesCardCount("player_two").hand).toEqual(1);
 //     });
 //   });
 // });

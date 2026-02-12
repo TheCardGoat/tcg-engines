@@ -3,46 +3,46 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { liShangNewlyPromoted } from "@lorcanito/lorcana-engine/cards/007/characters/characters";
-// import { mulanChargingAhead } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { liShangNewlyPromoted } from "@lorcanito/lorcana-engine/cards/007/characters/characters";
+// Import { mulanChargingAhead } from "@lorcanito/lorcana-engine/cards/008/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Mulan - Charging Ahead", () => {
-//   it("Reckless (This character can’t quest and must challenge each turn if able.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [mulanChargingAhead],
+// Describe("Mulan - Charging Ahead", () => {
+//   It("Reckless (This character can’t quest and must challenge each turn if able.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [mulanChargingAhead],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(mulanChargingAhead);
-//     expect(cardUnderTest.hasReckless).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(mulanChargingAhead);
+//     Expect(cardUnderTest.hasReckless).toBe(true);
 //   });
 //
-//   it("BURST OF SPEED During your turn, this character gains Evasive. (They can challenge characters with Evasive.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [mulanChargingAhead],
+//   It("BURST OF SPEED During your turn, this character gains Evasive. (They can challenge characters with Evasive.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [mulanChargingAhead],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(mulanChargingAhead);
-//     expect(cardUnderTest.hasEvasive).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(mulanChargingAhead);
+//     Expect(cardUnderTest.hasEvasive).toBe(true);
 //
-//     await testEngine.passTurn();
+//     Await testEngine.passTurn();
 //
-//     expect(cardUnderTest.hasEvasive).toBe(false);
+//     Expect(cardUnderTest.hasEvasive).toBe(false);
 //   });
 //
-//   it("LONG RANGE This character can challenge ready characters.", async () => {
-//     const testEngine = new TestEngine(
+//   It("LONG RANGE This character can challenge ready characters.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         play: [mulanChargingAhead],
+//         Play: [mulanChargingAhead],
 //       },
 //       {
-//         play: [liShangNewlyPromoted],
+//         Play: [liShangNewlyPromoted],
 //       },
 //     );
 //
-//     expect(
-//       testEngine.getCardModel(mulanChargingAhead).canChallengeReadyCharacters,
+//     Expect(
+//       TestEngine.getCardModel(mulanChargingAhead).canChallengeReadyCharacters,
 //     ).toBe(true);
 //   });
 // });

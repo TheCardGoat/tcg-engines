@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { onYourFeetNow } from "@lorcanito/lorcana-engine/cards/003/actions/actions";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { onYourFeetNow } from "@lorcanito/lorcana-engine/cards/003/actions/actions";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("On Your Feet! Now!", () => {
-//   it.skip("Ready all your characters and deal 1 damage to each of them. They can't quest for the rest of this turn.", () => {
-//     const testStore = new TestStore({
-//       inkwell: onYourFeetNow.cost,
-//       hand: [onYourFeetNow],
+// Describe("On Your Feet! Now!", () => {
+//   It.skip("Ready all your characters and deal 1 damage to each of them. They can't quest for the rest of this turn.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: onYourFeetNow.cost,
+//       Hand: [onYourFeetNow],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(onYourFeetNow);
+//     Const cardUnderTest = testStore.getCard(onYourFeetNow);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

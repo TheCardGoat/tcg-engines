@@ -3,37 +3,37 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { pinocchioTalkativePuppet } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { pinocchioTalkativePuppet } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Pinocchio - Talkative Puppet", () => {
-//   it("**TELLING LIES** When you play this character, you may exert chosen opposing character.", () => {
-//     const testStore = new TestStore(
+// Describe("Pinocchio - Talkative Puppet", () => {
+//   It("**TELLING LIES** When you play this character, you may exert chosen opposing character.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: pinocchioTalkativePuppet.cost,
-//         hand: [pinocchioTalkativePuppet],
+//         Inkwell: pinocchioTalkativePuppet.cost,
+//         Hand: [pinocchioTalkativePuppet],
 //       },
 //       {
-//         play: [pinocchioTalkativePuppet],
+//         Play: [pinocchioTalkativePuppet],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "hand",
-//       pinocchioTalkativePuppet.id,
+//       PinocchioTalkativePuppet.id,
 //     );
 //
-//     const target = testStore.getByZoneAndId(
+//     Const target = testStore.getByZoneAndId(
 //       "play",
-//       pinocchioTalkativePuppet.id,
+//       PinocchioTalkativePuppet.id,
 //       "player_two",
 //     );
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({ targets: [target] });
-//     expect(target.ready).toBeFalsy();
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({ targets: [target] });
+//     Expect(target.ready).toBeFalsy();
 //   });
 // });
 //

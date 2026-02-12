@@ -3,21 +3,21 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { princePhillipGallantDefender } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { princePhillipGallantDefender } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Prince Phillip - Gallant Defender", () => {
-//   it.skip("**Support** _(Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)_ **BEST DEFENSE** Whenver one of your characters is chosen for **Support**, they gain **Resist** +1 this turn. _(Damage dealt to them is reduced by 1.)_", () => {
-//     const testStore = new TestStore({
-//       play: [princePhillipGallantDefender],
+// Describe("Prince Phillip - Gallant Defender", () => {
+//   It.skip("**Support** _(Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)_ **BEST DEFENSE** Whenver one of your characters is chosen for **Support**, they gain **Resist** +1 this turn. _(Damage dealt to them is reduced by 1.)_", () => {
+//     Const testStore = new TestStore({
+//       Play: [princePhillipGallantDefender],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       princePhillipGallantDefender.id,
+//       PrincePhillipGallantDefender.id,
 //     );
-//     expect(cardUnderTest.hasSupport).toBe(true);
+//     Expect(cardUnderTest.hasSupport).toBe(true);
 //   });
 // });
 //

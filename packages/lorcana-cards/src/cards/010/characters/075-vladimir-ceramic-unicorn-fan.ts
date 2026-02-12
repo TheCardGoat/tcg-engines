@@ -1,35 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const vladimirCeramicUnicornFan: CharacterCard = {
-  id: "j0l",
-  cardType: "character",
-  name: "Vladimir",
-  version: "Ceramic Unicorn Fan",
-  fullName: "Vladimir - Ceramic Unicorn Fan",
-  inkType: ["emerald"],
-  franchise: "Tangled",
-  set: "010",
-  text: "HIGH STANDARDS Whenever this character quests, you may banish chosen item.",
-  cost: 6,
-  strength: 5,
-  willpower: 6,
-  lore: 2,
-  cardNumber: 75,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "44893592a58c77ecae29739f2439ac935a0ee03b",
-  },
   abilities: [
     {
-      id: "j0l-1",
-      type: "triggered",
-      name: "HIGH STANDARDS",
-      trigger: {
-        event: "quest",
-        timing: "whenever",
-        on: "SELF",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -44,8 +17,35 @@ export const vladimirCeramicUnicornFan: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "j0l-1",
+      name: "HIGH STANDARDS",
       text: "HIGH STANDARDS Whenever this character quests, you may banish chosen item.",
+      trigger: {
+        event: "quest",
+        timing: "whenever",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 75,
+  cardType: "character",
   classifications: ["Storyborn", "Ally"],
+  cost: 6,
+  externalIds: {
+    ravensburger: "44893592a58c77ecae29739f2439ac935a0ee03b",
+  },
+  franchise: "Tangled",
+  fullName: "Vladimir - Ceramic Unicorn Fan",
+  id: "j0l",
+  inkType: ["emerald"],
+  inkable: true,
+  lore: 2,
+  missingTests: true,
+  name: "Vladimir",
+  set: "010",
+  strength: 5,
+  text: "HIGH STANDARDS Whenever this character quests, you may banish chosen item.",
+  version: "Ceramic Unicorn Fan",
+  willpower: 6,
 };

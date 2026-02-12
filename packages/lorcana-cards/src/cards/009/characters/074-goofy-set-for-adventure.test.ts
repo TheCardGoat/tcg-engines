@@ -3,40 +3,40 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { theLibraryAGiftForBelle } from "@lorcanito/lorcana-engine/cards/005/locations/068-the-library-a-gift-for-belle";
-// import { deweyLovableShowoff } from "@lorcanito/lorcana-engine/cards/008";
-// import { goofySetForAdventure } from "@lorcanito/lorcana-engine/cards/009";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { theLibraryAGiftForBelle } from "@lorcanito/lorcana-engine/cards/005/locations/068-the-library-a-gift-for-belle";
+// Import { deweyLovableShowoff } from "@lorcanito/lorcana-engine/cards/008";
+// Import { goofySetForAdventure } from "@lorcanito/lorcana-engine/cards/009";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Goofy - Set for Adventure", () => {
-//   it("FAMILY VACATION Once during your turn, whenever this character moves to a location, you may move one of your other characters to that location for free. If you do, draw a card.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: goofySetForAdventure.cost,
-//       play: [
-//         goofySetForAdventure,
-//         theLibraryAGiftForBelle,
-//         deweyLovableShowoff,
+// Describe("Goofy - Set for Adventure", () => {
+//   It("FAMILY VACATION Once during your turn, whenever this character moves to a location, you may move one of your other characters to that location for free. If you do, draw a card.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: goofySetForAdventure.cost,
+//       Play: [
+//         GoofySetForAdventure,
+//         TheLibraryAGiftForBelle,
+//         DeweyLovableShowoff,
 //       ],
 //     });
 //
-//     await testEngine.moveToLocation({
-//       location: theLibraryAGiftForBelle,
-//       character: goofySetForAdventure,
+//     Await testEngine.moveToLocation({
+//       Location: theLibraryAGiftForBelle,
+//       Character: goofySetForAdventure,
 //     });
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack(
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack(
 //       { targets: [deweyLovableShowoff] },
-//       true,
+//       True,
 //     );
-//     await testEngine.resolveTopOfStack({ targets: [theLibraryAGiftForBelle] });
+//     Await testEngine.resolveTopOfStack({ targets: [theLibraryAGiftForBelle] });
 //
-//     const location = testEngine.getCardModel(theLibraryAGiftForBelle);
+//     Const location = testEngine.getCardModel(theLibraryAGiftForBelle);
 //
-//     expect(location.getCardsAtLocation).toHaveLength(2);
-//     expect(
-//       testEngine.getCardModel(deweyLovableShowoff).isAtLocation(location),
+//     Expect(location.getCardsAtLocation).toHaveLength(2);
+//     Expect(
+//       TestEngine.getCardModel(deweyLovableShowoff).isAtLocation(location),
 //     ).toBe(true);
 //   });
 // });

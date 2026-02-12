@@ -11,36 +11,32 @@ import { Effects } from "../helpers";
 describe("Effect: Recall", () => {
   describe("recall self", () => {
     it.skip("should parse 'Recall me.'", () => {
-      const result = parseAbilities(
-        "Recall me. (Send me to base. This isn't a move.)",
-      );
+      const result = parseAbilities("Recall me. (Send me to base. This isn't a move.)");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "spell",
           effect: expect.objectContaining({
             type: "recall",
           }),
+          type: "spell",
         }),
       );
     });
 
     it.skip("should parse 'Recall me exhausted.'", () => {
-      const result = parseAbilities(
-        "Recall me exhausted. (Send me to base. This isn't a move.)",
-      );
+      const result = parseAbilities("Recall me exhausted. (Send me to base. This isn't a move.)");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "spell",
           effect: expect.objectContaining({
-            type: "recall",
             exhausted: true,
+            type: "recall",
           }),
+          type: "spell",
         }),
       );
     });
@@ -48,9 +44,7 @@ describe("Effect: Recall", () => {
 
   describe("recall target", () => {
     it.skip("should parse 'Recall a unit.'", () => {
-      const result = parseAbilities(
-        "Recall a unit. (Send it to base. This isn't a move.)",
-      );
+      const result = parseAbilities("Recall a unit. (Send it to base. This isn't a move.)");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);

@@ -5,9 +5,9 @@ import { swordOfTruth } from "./136-sword-of-truth";
 describe("Sword of Truth - undefined", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [swordOfTruth] });
-  //   expect(testEngine.getCardModel(swordOfTruth).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [swordOfTruth] });
+  //   Expect(testEngine.getCardModel(swordOfTruth).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });

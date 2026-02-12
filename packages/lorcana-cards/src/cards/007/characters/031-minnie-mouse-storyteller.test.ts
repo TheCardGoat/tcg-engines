@@ -3,75 +3,75 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   liloMakingAWish,
-//   mauiHeroToAll,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   LiloMakingAWish,
+//   MauiHeroToAll,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { pawpsicle } from "@lorcanito/lorcana-engine/cards/002/items/items";
-// import { chernabogsFollowersCreaturesOfEvil } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { daisyDuckDonaldsDate } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { minnieMouseStoryteller } from "@lorcanito/lorcana-engine/cards/007";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { pawpsicle } from "@lorcanito/lorcana-engine/cards/002/items/items";
+// Import { chernabogsFollowersCreaturesOfEvil } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { daisyDuckDonaldsDate } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { minnieMouseStoryteller } from "@lorcanito/lorcana-engine/cards/007";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Minnie Mouse - Storyteller", () => {
-//   it("GATHER AROUND Whenever you play a character, this character gets +1 {L} this turn.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell:
-//         daisyDuckDonaldsDate.cost +
-//         chernabogsFollowersCreaturesOfEvil.cost +
-//         pawpsicle.cost,
-//       play: [minnieMouseStoryteller],
-//       hand: [
-//         daisyDuckDonaldsDate,
-//         chernabogsFollowersCreaturesOfEvil,
-//         pawpsicle,
+// Describe("Minnie Mouse - Storyteller", () => {
+//   It("GATHER AROUND Whenever you play a character, this character gets +1 {L} this turn.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell:
+//         DaisyDuckDonaldsDate.cost +
+//         ChernabogsFollowersCreaturesOfEvil.cost +
+//         Pawpsicle.cost,
+//       Play: [minnieMouseStoryteller],
+//       Hand: [
+//         DaisyDuckDonaldsDate,
+//         ChernabogsFollowersCreaturesOfEvil,
+//         Pawpsicle,
 //       ],
 //     });
 //
-//     const minnie = testEngine.getCardModel(minnieMouseStoryteller);
+//     Const minnie = testEngine.getCardModel(minnieMouseStoryteller);
 //
-//     await testEngine.playCard(daisyDuckDonaldsDate);
-//     expect(minnie.lore).toBe(1);
-//     await testEngine.playCard(chernabogsFollowersCreaturesOfEvil);
-//     expect(minnie.lore).toBe(2);
-//     await testEngine.playCard(pawpsicle);
-//     expect(minnie.lore).toBe(2);
+//     Await testEngine.playCard(daisyDuckDonaldsDate);
+//     Expect(minnie.lore).toBe(1);
+//     Await testEngine.playCard(chernabogsFollowersCreaturesOfEvil);
+//     Expect(minnie.lore).toBe(2);
+//     Await testEngine.playCard(pawpsicle);
+//     Expect(minnie.lore).toBe(2);
 //   });
 //
-//   it("JUST ONE MORE Whenever this character quests, chosen opposing character loses {S} equal to this character's {L} until the start of your next turn.", async () => {
-//     const testEngine = new TestEngine(
+//   It("JUST ONE MORE Whenever this character quests, chosen opposing character loses {S} equal to this character's {L} until the start of your next turn.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell:
-//           daisyDuckDonaldsDate.cost +
-//           chernabogsFollowersCreaturesOfEvil.cost +
-//           liloMakingAWish.cost,
-//         play: [minnieMouseStoryteller],
-//         hand: [
-//           daisyDuckDonaldsDate,
-//           chernabogsFollowersCreaturesOfEvil,
-//           liloMakingAWish,
+//         Inkwell:
+//           DaisyDuckDonaldsDate.cost +
+//           ChernabogsFollowersCreaturesOfEvil.cost +
+//           LiloMakingAWish.cost,
+//         Play: [minnieMouseStoryteller],
+//         Hand: [
+//           DaisyDuckDonaldsDate,
+//           ChernabogsFollowersCreaturesOfEvil,
+//           LiloMakingAWish,
 //         ],
 //       },
 //       { play: [mauiHeroToAll] },
 //     );
 //
-//     const minnie = testEngine.getCardModel(minnieMouseStoryteller);
-//     const maui = testEngine.getCardModel(mauiHeroToAll);
+//     Const minnie = testEngine.getCardModel(minnieMouseStoryteller);
+//     Const maui = testEngine.getCardModel(mauiHeroToAll);
 //
-//     await testEngine.playCard(daisyDuckDonaldsDate);
-//     await testEngine.playCard(chernabogsFollowersCreaturesOfEvil);
-//     await testEngine.playCard(liloMakingAWish);
+//     Await testEngine.playCard(daisyDuckDonaldsDate);
+//     Await testEngine.playCard(chernabogsFollowersCreaturesOfEvil);
+//     Await testEngine.playCard(liloMakingAWish);
 //
-//     minnie.quest();
+//     Minnie.quest();
 //
-//     expect(maui.strength).toBe(mauiHeroToAll.strength);
-//     await testEngine.resolveTopOfStack({ targets: [maui] });
-//     expect(maui.strength).toBe(mauiHeroToAll.strength - 3);
+//     Expect(maui.strength).toBe(mauiHeroToAll.strength);
+//     Await testEngine.resolveTopOfStack({ targets: [maui] });
+//     Expect(maui.strength).toBe(mauiHeroToAll.strength - 3);
 //
-//     await testEngine.passTurn();
+//     Await testEngine.passTurn();
 //
-//     expect(maui.strength).toBe(mauiHeroToAll.strength - 3);
+//     Expect(maui.strength).toBe(mauiHeroToAll.strength - 3);
 //   });
 // });
 //

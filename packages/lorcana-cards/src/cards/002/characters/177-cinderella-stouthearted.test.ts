@@ -3,67 +3,67 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { grabYourSword } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
-// import {
-//   christopherRobinAdventurer,
-//   cinderellaStouthearted,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { grabYourSword } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
+// Import {
+//   ChristopherRobinAdventurer,
+//   CinderellaStouthearted,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Cinderella- Stouthearted", () => {
-//   it("Shift", () => {
-//     const testStore = new TestStore({
-//       play: [cinderellaStouthearted],
+// Describe("Cinderella- Stouthearted", () => {
+//   It("Shift", () => {
+//     Const testStore = new TestStore({
+//       Play: [cinderellaStouthearted],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       cinderellaStouthearted.id,
+//       CinderellaStouthearted.id,
 //     );
 //
-//     expect(cardUnderTest.hasShift).toBeTruthy();
+//     Expect(cardUnderTest.hasShift).toBeTruthy();
 //   });
 //
-//   it("Resist", () => {
-//     const testStore = new TestStore({
-//       play: [cinderellaStouthearted],
+//   It("Resist", () => {
+//     Const testStore = new TestStore({
+//       Play: [cinderellaStouthearted],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       cinderellaStouthearted.id,
+//       CinderellaStouthearted.id,
 //     );
 //
-//     expect(cardUnderTest.hasResist).toBeTruthy();
+//     Expect(cardUnderTest.hasResist).toBeTruthy();
 //   });
 //
-//   it("**THE SINGING SWORD** Whenever you play a song, this character may challenge ready characters this turn.", () => {
-//     const testStore = new TestStore(
+//   It("**THE SINGING SWORD** Whenever you play a song, this character may challenge ready characters this turn.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: grabYourSword.cost,
-//         hand: [grabYourSword],
-//         play: [cinderellaStouthearted],
+//         Inkwell: grabYourSword.cost,
+//         Hand: [grabYourSword],
+//         Play: [cinderellaStouthearted],
 //       },
 //       { play: [christopherRobinAdventurer] },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       cinderellaStouthearted.id,
+//       CinderellaStouthearted.id,
 //     );
-//     const defender = testStore.getByZoneAndId(
+//     Const defender = testStore.getByZoneAndId(
 //       "play",
-//       christopherRobinAdventurer.id,
+//       ChristopherRobinAdventurer.id,
 //       "player_two",
 //     );
-//     const song = testStore.getByZoneAndId("hand", grabYourSword.id);
+//     Const song = testStore.getByZoneAndId("hand", grabYourSword.id);
 //
-//     expect(cardUnderTest.canChallenge(defender)).toBeFalsy();
+//     Expect(cardUnderTest.canChallenge(defender)).toBeFalsy();
 //
-//     song.playFromHand();
+//     Song.playFromHand();
 //
-//     expect(cardUnderTest.canChallenge(defender)).toBeTruthy();
+//     Expect(cardUnderTest.canChallenge(defender)).toBeTruthy();
 //   });
 // });
 //

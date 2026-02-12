@@ -38,8 +38,8 @@ export const Costs = {
    * Create an exhaust with energy cost
    */
   exhaustAndEnergy: (energy: number): Cost => ({
-    exhaust: true,
     energy,
+    exhaust: true,
   }),
 
   /**

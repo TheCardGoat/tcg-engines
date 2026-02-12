@@ -3,31 +3,31 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   kashekimAncientRuler,
-//   rubyCoil,
-//   suzyMasterSeamstress,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   KashekimAncientRuler,
+//   RubyCoil,
+//   SuzyMasterSeamstress,
 // } from "@lorcanito/lorcana-engine/cards/007";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Ruby Coil", () => {
-//   it("CRIMSON SPARK During your turn, whenever a card is put into your inkwell, chosen character gets +2 {S} this turn.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: rubyCoil.cost,
-//       play: [rubyCoil, kashekimAncientRuler],
-//       hand: [suzyMasterSeamstress],
+// Describe("Ruby Coil", () => {
+//   It("CRIMSON SPARK During your turn, whenever a card is put into your inkwell, chosen character gets +2 {S} this turn.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: rubyCoil.cost,
+//       Play: [rubyCoil, kashekimAncientRuler],
+//       Hand: [suzyMasterSeamstress],
 //     });
-//     const target = testEngine.getCardModel(kashekimAncientRuler);
+//     Const target = testEngine.getCardModel(kashekimAncientRuler);
 //
-//     expect(target.strength).toBe(kashekimAncientRuler.strength);
+//     Expect(target.strength).toBe(kashekimAncientRuler.strength);
 //
-//     await testEngine.putIntoInkwell(suzyMasterSeamstress);
+//     Await testEngine.putIntoInkwell(suzyMasterSeamstress);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({ targets: [kashekimAncientRuler] });
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({ targets: [kashekimAncientRuler] });
 //
-//     expect(target.strength).toBe(kashekimAncientRuler.strength + 2);
+//     Expect(target.strength).toBe(kashekimAncientRuler.strength + 2);
 //   });
 // });
 //

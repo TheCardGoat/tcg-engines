@@ -3,32 +3,32 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   deweyLovableShowoff,
-//   dormouseEasilyAgitated,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   DeweyLovableShowoff,
+//   DormouseEasilyAgitated,
 // } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Dormouse - Easily Agitated", () => {
-//   it("VERY RUDE INDEED When you play this character, you may put 1 damage counter on chosen character.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Dormouse - Easily Agitated", () => {
+//   It("VERY RUDE INDEED When you play this character, you may put 1 damage counter on chosen character.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: dormouseEasilyAgitated.cost,
-//         hand: [dormouseEasilyAgitated],
+//         Inkwell: dormouseEasilyAgitated.cost,
+//         Hand: [dormouseEasilyAgitated],
 //       },
 //       {
-//         play: [deweyLovableShowoff],
+//         Play: [deweyLovableShowoff],
 //       },
 //     );
 //
-//     const target = testEngine.getCardModel(deweyLovableShowoff);
+//     Const target = testEngine.getCardModel(deweyLovableShowoff);
 //
-//     await testEngine.playCard(dormouseEasilyAgitated);
-//     await testEngine.acceptOptionalLayer();
-//     await testEngine.resolveTopOfStack({ targets: [target] });
+//     Await testEngine.playCard(dormouseEasilyAgitated);
+//     Await testEngine.acceptOptionalLayer();
+//     Await testEngine.resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.damage).toEqual(1);
+//     Expect(target.damage).toEqual(1);
 //   });
 // });
 //

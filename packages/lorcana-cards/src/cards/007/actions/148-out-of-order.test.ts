@@ -3,24 +3,24 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { arielSpectacularSinger } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { outOfOrder } from "@lorcanito/lorcana-engine/cards/007";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { arielSpectacularSinger } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { outOfOrder } from "@lorcanito/lorcana-engine/cards/007";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Out Of Order", () => {
-//   it("Banish chosen character", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: outOfOrder.cost,
-//       hand: [outOfOrder],
-//       play: [arielSpectacularSinger],
+// Describe("Out Of Order", () => {
+//   It("Banish chosen character", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: outOfOrder.cost,
+//       Hand: [outOfOrder],
+//       Play: [arielSpectacularSinger],
 //     });
 //
-//     await testEngine.playCard(outOfOrder, {
-//       targets: [arielSpectacularSinger],
+//     Await testEngine.playCard(outOfOrder, {
+//       Targets: [arielSpectacularSinger],
 //     });
 //
-//     expect(testEngine.getCardModel(arielSpectacularSinger).zone).toBe(
+//     Expect(testEngine.getCardModel(arielSpectacularSinger).zone).toBe(
 //       "discard",
 //     );
 //   });

@@ -3,44 +3,44 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { jasmineDisguised } from "@lorcanito/lorcana-engine/cards/001/characters/148-jasmine-disguised";
-// import { jasmineFearlessPrincess } from "@lorcanito/lorcana-engine/cards/009";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { jasmineDisguised } from "@lorcanito/lorcana-engine/cards/001/characters/148-jasmine-disguised";
+// Import { jasmineFearlessPrincess } from "@lorcanito/lorcana-engine/cards/009";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Jasmine - Fearless Princess", () => {
-//   it("TAKE THE LEAP During your turn, this character gains Evasive. (They can challenge characters with Evasive.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [jasmineFearlessPrincess],
+// Describe("Jasmine - Fearless Princess", () => {
+//   It("TAKE THE LEAP During your turn, this character gains Evasive. (They can challenge characters with Evasive.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [jasmineFearlessPrincess],
 //     });
 //
-//     expect(testEngine.getCardModel(jasmineFearlessPrincess).hasEvasive).toBe(
-//       true,
+//     Expect(testEngine.getCardModel(jasmineFearlessPrincess).hasEvasive).toBe(
+//       True,
 //     );
 //
-//     await testEngine.passTurn();
+//     Await testEngine.passTurn();
 //
-//     expect(testEngine.getCardModel(jasmineFearlessPrincess).hasEvasive).toBe(
-//       false,
+//     Expect(testEngine.getCardModel(jasmineFearlessPrincess).hasEvasive).toBe(
+//       False,
 //     );
 //   });
 //
-//   it("NOW'S MY CHANCE Choose and discard a card — This character gains Challenger +3 this turn. (They get +3 {S} while challenging.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [jasmineFearlessPrincess],
-//       hand: [jasmineDisguised],
+//   It("NOW'S MY CHANCE Choose and discard a card — This character gains Challenger +3 this turn. (They get +3 {S} while challenging.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [jasmineFearlessPrincess],
+//       Hand: [jasmineDisguised],
 //     });
 //
-//     expect(testEngine.getCardModel(jasmineFearlessPrincess).hasChallenger).toBe(
-//       false,
+//     Expect(testEngine.getCardModel(jasmineFearlessPrincess).hasChallenger).toBe(
+//       False,
 //     );
 //
-//     await testEngine.activateCard(jasmineFearlessPrincess, {
-//       costs: [jasmineDisguised],
+//     Await testEngine.activateCard(jasmineFearlessPrincess, {
+//       Costs: [jasmineDisguised],
 //     });
 //
-//     expect(testEngine.getCardModel(jasmineFearlessPrincess).hasChallenger).toBe(
-//       true,
+//     Expect(testEngine.getCardModel(jasmineFearlessPrincess).hasChallenger).toBe(
+//       True,
 //     );
 //   });
 // });

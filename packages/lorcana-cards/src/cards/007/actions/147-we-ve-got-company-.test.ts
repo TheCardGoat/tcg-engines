@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { weveGotCompany } from "@lorcanito/lorcana-engine/cards/007/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { weveGotCompany } from "@lorcanito/lorcana-engine/cards/007/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("We've Got Company!", () => {
-//   it.skip("Ready all your characters. They gain Reckless this turn. (They can't quest and must challenge if able.)", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: weveGotCompany.cost,
-//       play: [weveGotCompany],
-//       hand: [weveGotCompany],
+// Describe("We've Got Company!", () => {
+//   It.skip("Ready all your characters. They gain Reckless this turn. (They can't quest and must challenge if able.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: weveGotCompany.cost,
+//       Play: [weveGotCompany],
+//       Hand: [weveGotCompany],
 //     });
 //
-//     await testEngine.playCard(weveGotCompany);
+//     Await testEngine.playCard(weveGotCompany);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

@@ -1,29 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const tinkerBellGiantFairy: CharacterCard = {
-  id: "kvc",
-  cardType: "character",
-  name: "Tinker Bell",
-  version: "Giant Fairy",
-  fullName: "Tinker Bell - Giant Fairy",
-  inkType: ["steel"],
-  franchise: "Disney",
-  set: "001",
-  text: "**Shift** 4 (_You may pay 4 {I} to play this on top of one of your characters named Tinker Bell._)\n**ROCK THE BOAT** When you play this character, deal 1 damage to each opposing character.\n\n**PUNY PIRATE!** During your turn, whenever this character banishes another character in a challenge, you may deal 2 damage to chosen opposing character.",
-  cost: 6,
-  strength: 4,
-  willpower: 5,
-  lore: 2,
-  cardNumber: 193,
-  inkable: true,
-  externalIds: {
-    ravensburger: "",
-  },
   abilities: [
     {
-      type: "action",
-      id: "c3s-1",
-      text: "**FAIRY DUST** When you play this character, you may deal 1 damage to each opposing character.",
       effect: {
         type: "optional",
         effect: {
@@ -39,68 +18,89 @@ export const tinkerBellGiantFairy: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "c3s-1",
+      text: "**FAIRY DUST** When you play this character, you may deal 1 damage to each opposing character.",
+      type: "action",
     },
   ],
+  cardNumber: 193,
+  cardType: "character",
   classifications: ["Floodborn", "Ally", "Fairy"],
+  cost: 6,
+  externalIds: {
+    ravensburger: "",
+  },
+  franchise: "Disney",
+  fullName: "Tinker Bell - Giant Fairy",
+  id: "kvc",
+  inkType: ["steel"],
+  inkable: true,
+  lore: 2,
+  name: "Tinker Bell",
+  set: "001",
+  strength: 4,
+  text: "**Shift** 4 (_You may pay 4 {I} to play this on top of one of your characters named Tinker Bell._)\n**ROCK THE BOAT** When you play this character, deal 1 damage to each opposing character.\n\n**PUNY PIRATE!** During your turn, whenever this character banishes another character in a challenge, you may deal 2 damage to chosen opposing character.",
+  version: "Giant Fairy",
+  willpower: 5,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { shiftAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import {
-//   chosenOpposingCharacter,
-//   eachOpposingCharacter,
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { shiftAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import {
+//   ChosenOpposingCharacter,
+//   EachOpposingCharacter,
 // } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import { wheneverBanishesAnotherCharacterInChallenge } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// Import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import { wheneverBanishesAnotherCharacterInChallenge } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
 //
-// export const tinkerBellGiantFairy: LorcanitoCharacterCard = {
-//   id: "kvc",
-//   reprints: ["rtd"],
-//   name: "Tinker Bell",
-//   title: "Giant Fairy",
-//   characteristics: ["floodborn", "ally", "fairy"],
-//   text: "**Shift** 4 (_You may pay 4 {I} to play this on top of one of your characters named Tinker Bell._)\n**ROCK THE BOAT** When you play this character, deal 1 damage to each opposing character.\n\n**PUNY PIRATE!** During your turn, whenever this character banishes another character in a challenge, you may deal 2 damage to chosen opposing character.",
-//   type: "character",
-//   abilities: [
-//     whenYouPlayThisCharAbility({
-//       type: "resolution",
-//       name: "Rock the Boat",
-//       text: "When you play this character, deal 1 damage to each opposing character.",
-//       effects: [
+// Export const tinkerBellGiantFairy: LorcanitoCharacterCard = {
+//   Id: "kvc",
+//   Reprints: ["rtd"],
+//   Name: "Tinker Bell",
+//   Title: "Giant Fairy",
+//   Characteristics: ["floodborn", "ally", "fairy"],
+//   Text: "**Shift** 4 (_You may pay 4 {I} to play this on top of one of your characters named Tinker Bell._)\n**ROCK THE BOAT** When you play this character, deal 1 damage to each opposing character.\n\n**PUNY PIRATE!** During your turn, whenever this character banishes another character in a challenge, you may deal 2 damage to chosen opposing character.",
+//   Type: "character",
+//   Abilities: [
+//     WhenYouPlayThisCharAbility({
+//       Type: "resolution",
+//       Name: "Rock the Boat",
+//       Text: "When you play this character, deal 1 damage to each opposing character.",
+//       Effects: [
 //         {
-//           type: "damage",
-//           amount: 1,
-//           target: eachOpposingCharacter,
+//           Type: "damage",
+//           Amount: 1,
+//           Target: eachOpposingCharacter,
 //         },
 //       ],
 //     }),
-//     wheneverBanishesAnotherCharacterInChallenge({
-//       name: "Puny Pirate!",
-//       text: "During your turn, whenever this character banishes another character in a challenge, you may deal 2 damage to chosen opposing character.",
-//       optional: true,
-//       effects: [
+//     WheneverBanishesAnotherCharacterInChallenge({
+//       Name: "Puny Pirate!",
+//       Text: "During your turn, whenever this character banishes another character in a challenge, you may deal 2 damage to chosen opposing character.",
+//       Optional: true,
+//       Effects: [
 //         {
-//           type: "damage",
-//           amount: 2,
-//           target: chosenOpposingCharacter,
+//           Type: "damage",
+//           Amount: 2,
+//           Target: chosenOpposingCharacter,
 //         },
 //       ],
 //     }),
-//     shiftAbility(4, "Tinker Bell"),
+//     ShiftAbility(4, "Tinker Bell"),
 //   ],
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 6,
-//   strength: 4,
-//   willpower: 5,
-//   lore: 2,
-//   illustrator: "Cookie",
-//   number: 193,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 503357,
+//   Inkwell: true,
+//   Colors: ["steel"],
+//   Cost: 6,
+//   Strength: 4,
+//   Willpower: 5,
+//   Lore: 2,
+//   Illustrator: "Cookie",
+//   Number: 193,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 503357,
 //   },
-//   rarity: "super_rare",
+//   Rarity: "super_rare",
 // };
 //

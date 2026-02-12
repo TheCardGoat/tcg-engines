@@ -1,18 +1,14 @@
 import { afterEach, beforeEach, describe, expect, it } from "bun:test";
 import { createPlayerId } from "@tcg/core";
-import {
-  LorcanaTestEngine,
-  PLAYER_ONE,
-  PLAYER_TWO,
-} from "../../../testing/lorcana-test-engine";
+import { LorcanaTestEngine, PLAYER_ONE, PLAYER_TWO } from "../../../testing/lorcana-test-engine";
 
 describe("Move: Quest", () => {
   let testEngine: LorcanaTestEngine;
 
   beforeEach(() => {
     testEngine = new LorcanaTestEngine(
-      { hand: 5, deck: 10, play: 2, inkwell: 0 }, // Player one with characters in play
-      { hand: 5, deck: 10, play: 2, inkwell: 0 }, // Player two with characters in play
+      { deck: 10, hand: 5, inkwell: 0, play: 2 }, // Player one with characters in play
+      { deck: 10, hand: 5, inkwell: 0, play: 2 }, // Player two with characters in play
       { skipPreGame: false },
     );
 
@@ -33,16 +29,16 @@ describe("Move: Quest", () => {
 
     // Player two takes their turn (beginning -> main -> end -> next turn)
     testEngine.changeActivePlayer(PLAYER_TWO);
-    testEngine.passTurn(); // beginning -> main
-    testEngine.passTurn(); // main -> end -> turn 3 beginning -> main (player_one)
+    testEngine.passTurn(); // Beginning -> main
+    testEngine.passTurn(); // Main -> end -> turn 3 beginning -> main (player_one)
 
     // Player one takes their turn
     testEngine.changeActivePlayer(PLAYER_ONE);
-    testEngine.passTurn(); // main -> end -> turn 4 beginning -> main (player_two)
+    testEngine.passTurn(); // Main -> end -> turn 4 beginning -> main (player_two)
 
     // Back to player two, now characters have been through a turn cycle
     testEngine.changeActivePlayer(PLAYER_TWO);
-    testEngine.passTurn(); // main -> end -> turn 5 beginning -> main (player_one)
+    testEngine.passTurn(); // Main -> end -> turn 5 beginning -> main (player_one)
 
     // Now on player_one's turn with characters no longer summoning sick
     testEngine.changeActivePlayer(PLAYER_ONE);
@@ -97,10 +93,7 @@ describe("Move: Quest", () => {
 
       // Character should be marked as quested
       const ctx = testEngine.getCtx();
-      const hasQuested = ctx.trackers?.check(
-        `quested:${character}`,
-        createPlayerId(PLAYER_ONE),
-      );
+      const hasQuested = ctx.trackers?.check(`quested:${character}`, createPlayerId(PLAYER_ONE));
       expect(hasQuested).toBe(true);
     });
 
@@ -127,8 +120,8 @@ describe("Move: Quest", () => {
     it("should reject questing with drying (just played) characters", () => {
       // Create a fresh engine without passing turns
       const freshEngine = new LorcanaTestEngine(
-        { hand: 5, deck: 10, play: 1 },
-        { hand: 5, deck: 10 },
+        { deck: 10, hand: 5, play: 1 },
+        { deck: 10, hand: 5 },
         { skipPreGame: false },
       );
 
@@ -148,10 +141,10 @@ describe("Move: Quest", () => {
 
       // Try to quest - should fail
       const result = freshEngine.engine.executeMove("quest", {
-        playerId: createPlayerId(PLAYER_ONE),
         params: {
           cardId: dryingChar,
         },
+        playerId: createPlayerId(PLAYER_ONE),
       });
 
       expect(result.success).toBe(false);
@@ -185,10 +178,10 @@ describe("Move: Quest", () => {
 
       // Try to quest again with exerted character - should fail
       const result = testEngine.engine.executeMove("quest", {
-        playerId: createPlayerId(PLAYER_ONE),
         params: {
           cardId: character,
         },
+        playerId: createPlayerId(PLAYER_ONE),
       });
 
       expect(result.success).toBe(false);
@@ -225,10 +218,10 @@ describe("Move: Quest", () => {
 
       // Try to quest again - should fail due to tracker
       const result = testEngine.engine.executeMove("quest", {
-        playerId: createPlayerId(PLAYER_ONE),
         params: {
           cardId: character,
         },
+        playerId: createPlayerId(PLAYER_ONE),
       });
 
       expect(result.success).toBe(false);
@@ -261,10 +254,10 @@ describe("Move: Quest", () => {
       const opponentChar = opponentPlay[0];
 
       const result = testEngine.engine.executeMove("quest", {
-        playerId: createPlayerId(PLAYER_ONE),
         params: {
           cardId: opponentChar,
         },
+        playerId: createPlayerId(PLAYER_ONE),
       });
 
       expect(result.success).toBe(false);
@@ -275,10 +268,10 @@ describe("Move: Quest", () => {
       const charInHand = hand[0];
 
       const result = testEngine.engine.executeMove("quest", {
-        playerId: createPlayerId(PLAYER_ONE),
         params: {
           cardId: charInHand,
         },
+        playerId: createPlayerId(PLAYER_ONE),
       });
 
       expect(result.success).toBe(false);
@@ -289,10 +282,10 @@ describe("Move: Quest", () => {
       const charInDeck = deck[0];
 
       const result = testEngine.engine.executeMove("quest", {
-        playerId: createPlayerId(PLAYER_ONE),
         params: {
           cardId: charInDeck,
         },
+        playerId: createPlayerId(PLAYER_ONE),
       });
 
       expect(result.success).toBe(false);
@@ -300,10 +293,10 @@ describe("Move: Quest", () => {
 
     it("should reject invalid card IDs", () => {
       const result = testEngine.engine.executeMove("quest", {
-        playerId: createPlayerId(PLAYER_ONE),
         params: {
           cardId: "invalid-card-id-12345",
         },
+        playerId: createPlayerId(PLAYER_ONE),
       });
 
       expect(result.success).toBe(false);
@@ -405,7 +398,9 @@ describe("Move: Quest", () => {
 
         // Quest with available characters
         for (const char of playZone) {
-          if (lore >= 20) break;
+          if (lore >= 20) {
+            break;
+          }
 
           try {
             testEngine.quest(char);
@@ -414,7 +409,9 @@ describe("Move: Quest", () => {
         }
 
         // Stop if we've reached 20 lore (game ended)
-        if (lore >= 20) break;
+        if (lore >= 20) {
+          break;
+        }
 
         // Pass turns to reset characters
         testEngine.passTurn();

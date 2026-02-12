@@ -3,41 +3,41 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { mickeyMouseTrueFriend } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { queenOfHeartsQuickTempered } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { mickeyMouseTrueFriend } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { queenOfHeartsQuickTempered } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Queen of Hearts - Quick-Tempered", () => {
-//   it("**ROYALE RAGE** When you play this character, deal 1 damage to chosen damaged opposing character.", () => {
-//     const testStore = new TestStore(
+// Describe("Queen of Hearts - Quick-Tempered", () => {
+//   It("**ROYALE RAGE** When you play this character, deal 1 damage to chosen damaged opposing character.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: queenOfHeartsQuickTempered.cost,
-//         hand: [queenOfHeartsQuickTempered],
+//         Inkwell: queenOfHeartsQuickTempered.cost,
+//         Hand: [queenOfHeartsQuickTempered],
 //       },
 //       {
-//         play: [mickeyMouseTrueFriend],
+//         Play: [mickeyMouseTrueFriend],
 //       },
 //     );
 //
-//     const target = testStore.getByZoneAndId(
+//     Const target = testStore.getByZoneAndId(
 //       "play",
-//       mickeyMouseTrueFriend.id,
+//       MickeyMouseTrueFriend.id,
 //       "player_two",
 //     );
-//     target.updateCardMeta({ damage: 1 });
-//     expect(target.meta).toEqual(expect.objectContaining({ damage: 1 }));
+//     Target.updateCardMeta({ damage: 1 });
+//     Expect(target.meta).toEqual(expect.objectContaining({ damage: 1 }));
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "hand",
-//       queenOfHeartsQuickTempered.id,
+//       QueenOfHeartsQuickTempered.id,
 //     );
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveTopOfStack({ targets: [target] });
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.meta).toEqual(expect.objectContaining({ damage: 2 }));
-//     expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
+//     Expect(target.meta).toEqual(expect.objectContaining({ damage: 2 }));
+//     Expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
 //   });
 // });
 //

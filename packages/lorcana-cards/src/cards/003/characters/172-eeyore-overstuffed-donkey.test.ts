@@ -3,23 +3,23 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { eeyoreOverstuffedDonkey } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { eeyoreOverstuffedDonkey } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Eeyore - Overstuffed Donkey", () => {
-//   it("**Resist** +1 _(Damage dealt to this character is reduced by 1.)_", () => {
-//     const testStore = new TestStore({
-//       inkwell: eeyoreOverstuffedDonkey.cost,
-//       play: [eeyoreOverstuffedDonkey],
+// Describe("Eeyore - Overstuffed Donkey", () => {
+//   It("**Resist** +1 _(Damage dealt to this character is reduced by 1.)_", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: eeyoreOverstuffedDonkey.cost,
+//       Play: [eeyoreOverstuffedDonkey],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       eeyoreOverstuffedDonkey.id,
+//       EeyoreOverstuffedDonkey.id,
 //     );
 //
-//     expect(cardUnderTest.hasResist).toBe(true);
+//     Expect(cardUnderTest.hasResist).toBe(true);
 //   });
 // });
 //

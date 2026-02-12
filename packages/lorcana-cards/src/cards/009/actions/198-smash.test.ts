@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { smash } from "@lorcanito/lorcana-engine/cards/009/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { smash } from "@lorcanito/lorcana-engine/cards/009/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Smash", () => {
-//   it.skip("Deal 3 damage to chosen character.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: smash.cost,
-//       play: [smash],
-//       hand: [smash],
+// Describe("Smash", () => {
+//   It.skip("Deal 3 damage to chosen character.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: smash.cost,
+//       Play: [smash],
+//       Hand: [smash],
 //     });
 //
-//     await testEngine.playCard(smash);
+//     Await testEngine.playCard(smash);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

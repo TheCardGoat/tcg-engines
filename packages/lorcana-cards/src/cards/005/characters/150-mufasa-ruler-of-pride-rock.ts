@@ -1,35 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const mufasaRulerOfPrideRock: CharacterCard = {
-  id: "163",
-  cardType: "character",
-  name: "Mufasa",
-  version: "Ruler of Pride Rock",
-  fullName: "Mufasa - Ruler of Pride Rock",
-  inkType: ["sapphire"],
-  franchise: "Lion King",
-  set: "005",
-  text: "A DELICATE BALANCE When you play this character, exert all cards in your inkwell, then return 2 cards at random from your inkwell to your hand.\nEVERYTHING THE LIGHT TOUCHES Whenever this character quests, ready all cards in your inkwell.",
-  cost: 8,
-  strength: 4,
-  willpower: 9,
-  lore: 4,
-  cardNumber: 150,
-  inkable: false,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "97ba44b060278c8f2f5f75a9a77b64ea977369c1",
-  },
   abilities: [
     {
-      id: "163-1",
-      type: "triggered",
-      name: "A DELICATE BALANCE",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "sequence",
         steps: [
@@ -55,17 +28,17 @@ export const mufasaRulerOfPrideRock: CharacterCard = {
           },
         ],
       },
+      id: "163-1",
+      name: "A DELICATE BALANCE",
       text: "A DELICATE BALANCE When you play this character, exert all cards in your inkwell, then return 2 cards at random from your inkwell to your hand.",
-    },
-    {
-      id: "163-2",
-      type: "triggered",
-      name: "EVERYTHING THE LIGHT TOUCHES",
       trigger: {
-        event: "quest",
-        timing: "whenever",
+        event: "play",
+        timing: "when",
         on: "SELF",
       },
+      type: "triggered",
+    },
+    {
       effect: {
         type: "ready",
         target: {
@@ -76,8 +49,35 @@ export const mufasaRulerOfPrideRock: CharacterCard = {
           cardTypes: ["card"],
         },
       },
+      id: "163-2",
+      name: "EVERYTHING THE LIGHT TOUCHES",
       text: "EVERYTHING THE LIGHT TOUCHES Whenever this character quests, ready all cards in your inkwell.",
+      trigger: {
+        event: "quest",
+        timing: "whenever",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 150,
+  cardType: "character",
   classifications: ["Storyborn", "Mentor", "King"],
+  cost: 8,
+  externalIds: {
+    ravensburger: "97ba44b060278c8f2f5f75a9a77b64ea977369c1",
+  },
+  franchise: "Lion King",
+  fullName: "Mufasa - Ruler of Pride Rock",
+  id: "163",
+  inkType: ["sapphire"],
+  inkable: false,
+  lore: 4,
+  missingTests: true,
+  name: "Mufasa",
+  set: "005",
+  strength: 4,
+  text: "A DELICATE BALANCE When you play this character, exert all cards in your inkwell, then return 2 cards at random from your inkwell to your hand.\nEVERYTHING THE LIGHT TOUCHES Whenever this character quests, ready all cards in your inkwell.",
+  version: "Ruler of Pride Rock",
+  willpower: 9,
 };

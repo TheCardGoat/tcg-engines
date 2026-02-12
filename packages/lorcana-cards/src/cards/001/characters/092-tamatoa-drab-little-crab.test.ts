@@ -5,9 +5,9 @@ import { tamatoaDrabLittleCrab } from "./092-tamatoa-drab-little-crab";
 describe("Tamatoa - Drab Little Crab", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [tamatoaDrabLittleCrab] });
-  //   expect(testEngine.getCardModel(tamatoaDrabLittleCrab).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [tamatoaDrabLittleCrab] });
+  //   Expect(testEngine.getCardModel(tamatoaDrabLittleCrab).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });

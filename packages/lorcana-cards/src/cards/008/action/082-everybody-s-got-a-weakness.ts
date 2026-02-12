@@ -1,32 +1,32 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import {
-//   chosenOpposingCharacter,
-//   yourCharacters,
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+// Import {
+//   ChosenOpposingCharacter,
+//   YourCharacters,
 // } from "@lorcanito/lorcana-engine/abilities/targets";
-// import {
-//   drawXCards,
-//   moveDamageEffect,
+// Import {
+//   DrawXCards,
+//   MoveDamageEffect,
 // } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const everybodysGotAWeakness: LorcanitoActionCard = {
-//   id: "j44",
-//   name: "Everybody's Got A Weakness",
-//   characteristics: ["action"],
-//   text: "Move 1 damage counter from each damaged character you have in play to chosen opposing character. Draw a card for each damage counter moved this way.",
-//   type: "action",
-//   abilities: [
+// Export const everybodysGotAWeakness: LorcanitoActionCard = {
+//   Id: "j44",
+//   Name: "Everybody's Got A Weakness",
+//   Characteristics: ["action"],
+//   Text: "Move 1 damage counter from each damaged character you have in play to chosen opposing character. Draw a card for each damage counter moved this way.",
+//   Type: "action",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       effects: [
-//         moveDamageEffect({
-//           amount: 1,
-//           from: yourCharacters,
-//           to: chosenOpposingCharacter,
+//       Type: "resolution",
+//       Effects: [
+//         MoveDamageEffect({
+//           Amount: 1,
+//           From: yourCharacters,
+//           To: chosenOpposingCharacter,
 //         }),
-//         drawXCards({
-//           dynamic: true,
-//           filters: [
+//         DrawXCards({
+//           Dynamic: true,
+//           Filters: [
 //             { filter: "type", value: "character" },
 //             { filter: "zone", value: "play" },
 //             { filter: "owner", value: "self" },
@@ -36,15 +36,15 @@
 //       ],
 //     },
 //   ],
-//   inkwell: true,
-//   colors: ["amethyst"],
-//   cost: 4,
-//   illustrator: "Linh Dang",
-//   number: 82,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631832,
+//   Inkwell: true,
+//   Colors: ["amethyst"],
+//   Cost: 4,
+//   Illustrator: "Linh Dang",
+//   Number: 82,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631832,
 //   },
-//   rarity: "rare",
+//   Rarity: "rare",
 // };
 //

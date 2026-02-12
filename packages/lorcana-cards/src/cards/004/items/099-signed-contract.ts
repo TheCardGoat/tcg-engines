@@ -1,35 +1,35 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
-// import { wheneverOpponentPlaysASong } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-// import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
+// Import { wheneverOpponentPlaysASong } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// Import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const signedContract: LorcanitoItemCard = {
-//   id: "nxy",
-//   reprints: ["no1"],
-//   missingTestCase: true,
-//   name: "Signed Contract",
-//   characteristics: ["item"],
-//   text: "**FINE PRINT** Whenever an opponent plays a song, you may draw a card.",
-//   type: "item",
-//   abilities: [
-//     wheneverOpponentPlaysASong({
-//       name: "FINE PRINT",
-//       text: "Whenever an opponent plays a song, you may draw a card.",
-//       optional: true,
-//       effects: [drawACard],
+// Export const signedContract: LorcanitoItemCard = {
+//   Id: "nxy",
+//   Reprints: ["no1"],
+//   MissingTestCase: true,
+//   Name: "Signed Contract",
+//   Characteristics: ["item"],
+//   Text: "**FINE PRINT** Whenever an opponent plays a song, you may draw a card.",
+//   Type: "item",
+//   Abilities: [
+//     WheneverOpponentPlaysASong({
+//       Name: "FINE PRINT",
+//       Text: "Whenever an opponent plays a song, you may draw a card.",
+//       Optional: true,
+//       Effects: [drawACard],
 //     }),
 //   ],
-//   flavour:
+//   Flavour:
 //     '"I Would love to help you, of course, but there\'s the little matter of the contract..."\n−Ursula',
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 2,
-//   illustrator: "Andrew Peka",
-//   number: 99,
-//   set: "URR",
-//   externalIds: {
-//     tcgPlayer: 547679,
+//   Inkwell: true,
+//   Colors: ["emerald"],
+//   Cost: 2,
+//   Illustrator: "Andrew Peka",
+//   Number: 99,
+//   Set: "URR",
+//   ExternalIds: {
+//     TcgPlayer: 547679,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

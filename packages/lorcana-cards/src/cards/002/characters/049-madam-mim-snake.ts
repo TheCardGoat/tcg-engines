@@ -1,35 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const madamMimSnake: CharacterCard = {
-  id: "1tb",
-  cardType: "character",
-  name: "Madam Mim",
-  version: "Snake",
-  fullName: "Madam Mim - Snake",
-  inkType: ["amethyst"],
-  franchise: "Sword in the Stone",
-  set: "002",
-  text: "JUST YOU WAIT When you play this character, banish her or return another chosen character of yours to your hand.",
-  cost: 2,
-  strength: 3,
-  willpower: 3,
-  lore: 1,
-  cardNumber: 49,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "ecab4fc40a795437b551bd71d462df6cbe7b0bce",
-  },
   abilities: [
     {
-      id: "1tb-1",
-      type: "triggered",
-      name: "JUST YOU WAIT",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "return-to-hand",
         target: {
@@ -40,8 +13,35 @@ export const madamMimSnake: CharacterCard = {
           cardTypes: ["character"],
         },
       },
+      id: "1tb-1",
+      name: "JUST YOU WAIT",
       text: "JUST YOU WAIT When you play this character, banish her or return another chosen character of yours to your hand.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 49,
+  cardType: "character",
   classifications: ["Storyborn", "Villain", "Sorcerer"],
+  cost: 2,
+  externalIds: {
+    ravensburger: "ecab4fc40a795437b551bd71d462df6cbe7b0bce",
+  },
+  franchise: "Sword in the Stone",
+  fullName: "Madam Mim - Snake",
+  id: "1tb",
+  inkType: ["amethyst"],
+  inkable: true,
+  lore: 1,
+  missingTests: true,
+  name: "Madam Mim",
+  set: "002",
+  strength: 3,
+  text: "JUST YOU WAIT When you play this character, banish her or return another chosen character of yours to your hand.",
+  version: "Snake",
+  willpower: 3,
 };

@@ -1,55 +1,55 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { atTheStartOfYourTurn } from "@lorcanito/lorcana-engine/abilities/atTheAbilities";
-// import {
-//   chosenCharacter,
-//   thisCharacter,
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { atTheStartOfYourTurn } from "@lorcanito/lorcana-engine/abilities/atTheAbilities";
+// Import {
+//   ChosenCharacter,
+//   ThisCharacter,
 // } from "@lorcanito/lorcana-engine/abilities/targets";
 //
-// export const camiloMadrigalPrankster: LorcanitoCharacterCard = {
-//   id: "oct",
-//   reprints: ["bij"],
-//   missingTestCase: true,
-//   name: "Camilo Madrigal",
-//   title: "Prankster",
-//   characteristics: ["storyborn", "ally", "madrigal"],
-//   text: "**MANY FORMS** At the start of your turn, you may chose one:\n\n\n• This character gets +1 {L} this turn.\n\n\n• This character gain **Challenger** +2 this turn. _(While challenging, this character gets +2 {S}.)_",
-//   type: "character",
-//   abilities: [
-//     atTheStartOfYourTurn({
-//       name: "Many Forms",
-//       text: "At the start of your turn, you may chose one:\n\n\n• This character gets +1 {L} this turn.\n\n\n• This character gain **Challenger** +2 this turn. _(While challenging, this character gets +2 {S}.)_",
-//       effects: [
+// Export const camiloMadrigalPrankster: LorcanitoCharacterCard = {
+//   Id: "oct",
+//   Reprints: ["bij"],
+//   MissingTestCase: true,
+//   Name: "Camilo Madrigal",
+//   Title: "Prankster",
+//   Characteristics: ["storyborn", "ally", "madrigal"],
+//   Text: "**MANY FORMS** At the start of your turn, you may chose one:\n\n\n• This character gets +1 {L} this turn.\n\n\n• This character gain **Challenger** +2 this turn. _(While challenging, this character gets +2 {S}.)_",
+//   Type: "character",
+//   Abilities: [
+//     AtTheStartOfYourTurn({
+//       Name: "Many Forms",
+//       Text: "At the start of your turn, you may chose one:\n\n\n• This character gets +1 {L} this turn.\n\n\n• This character gain **Challenger** +2 this turn. _(While challenging, this character gets +2 {S}.)_",
+//       Effects: [
 //         {
-//           type: "modal",
+//           Type: "modal",
 //           // TODO: Get rid of target
-//           target: chosenCharacter,
-//           modes: [
+//           Target: chosenCharacter,
+//           Modes: [
 //             {
-//               id: "1",
-//               text: "This character gets +1 {L} this turn.",
-//               effects: [
+//               Id: "1",
+//               Text: "This character gets +1 {L} this turn.",
+//               Effects: [
 //                 {
-//                   type: "attribute",
-//                   attribute: "lore",
-//                   amount: 1,
-//                   modifier: "add",
-//                   duration: "turn",
-//                   target: thisCharacter,
+//                   Type: "attribute",
+//                   Attribute: "lore",
+//                   Amount: 1,
+//                   Modifier: "add",
+//                   Duration: "turn",
+//                   Target: thisCharacter,
 //                 },
 //               ],
 //             },
 //             {
-//               id: "2",
-//               text: "This character gain **Challenger** +2 this turn.",
-//               effects: [
+//               Id: "2",
+//               Text: "This character gain **Challenger** +2 this turn.",
+//               Effects: [
 //                 {
-//                   type: "ability",
-//                   ability: "challenger",
-//                   amount: 2,
-//                   modifier: "add",
-//                   duration: "turn",
-//                   target: thisCharacter,
+//                   Type: "ability",
+//                   Ability: "challenger",
+//                   Amount: 2,
+//                   Modifier: "add",
+//                   Duration: "turn",
+//                   Target: thisCharacter,
 //                 },
 //               ],
 //             },
@@ -58,18 +58,18 @@
 //       ],
 //     }),
 //   ],
-//   inkwell: true,
-//   colors: ["amethyst"],
-//   cost: 4,
-//   strength: 2,
-//   willpower: 5,
-//   lore: 1,
-//   illustrator: "Emily Abeydeera",
-//   number: 40,
-//   set: "URR",
-//   externalIds: {
-//     tcgPlayer: 548203,
+//   Inkwell: true,
+//   Colors: ["amethyst"],
+//   Cost: 4,
+//   Strength: 2,
+//   Willpower: 5,
+//   Lore: 1,
+//   Illustrator: "Emily Abeydeera",
+//   Number: 40,
+//   Set: "URR",
+//   ExternalIds: {
+//     TcgPlayer: 548203,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

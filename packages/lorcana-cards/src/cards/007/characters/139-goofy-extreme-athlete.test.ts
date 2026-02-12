@@ -3,31 +3,31 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { goofyExtremeAthlete } from "@lorcanito/lorcana-engine/cards/007/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { goofyExtremeAthlete } from "@lorcanito/lorcana-engine/cards/007/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Goofy - Extreme Athlete", () => {
-//   it.skip("Evasive (Only characters with Evasive can challenge this character.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [goofyExtremeAthlete],
+// Describe("Goofy - Extreme Athlete", () => {
+//   It.skip("Evasive (Only characters with Evasive can challenge this character.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [goofyExtremeAthlete],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(goofyExtremeAthlete);
-//     expect(cardUnderTest.hasEvasive).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(goofyExtremeAthlete);
+//     Expect(cardUnderTest.hasEvasive).toBe(true);
 //   });
 //
-//   it.skip("STAR POWER Whenever this character challenges another character, your other characters get +1 {L} this turn.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: goofyExtremeAthlete.cost,
-//       play: [goofyExtremeAthlete],
-//       hand: [goofyExtremeAthlete],
+//   It.skip("STAR POWER Whenever this character challenges another character, your other characters get +1 {L} this turn.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: goofyExtremeAthlete.cost,
+//       Play: [goofyExtremeAthlete],
+//       Hand: [goofyExtremeAthlete],
 //     });
 //
-//     await testEngine.playCard(goofyExtremeAthlete);
+//     Await testEngine.playCard(goofyExtremeAthlete);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

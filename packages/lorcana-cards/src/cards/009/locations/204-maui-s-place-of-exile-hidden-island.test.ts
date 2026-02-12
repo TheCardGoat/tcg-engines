@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { mauisPlaceOfExileHiddenIsland } from "@lorcanito/lorcana-engine/cards/009/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { mauisPlaceOfExileHiddenIsland } from "@lorcanito/lorcana-engine/cards/009/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Maui's Place of Exile - Hidden Island", () => {
-//   it.skip("**ISOLATED** Characters gain **Resist** +1 while here. _(Damage dealt to them is reduced by 1.)_", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: mauisPlaceOfExileHiddenIsland.cost,
-//       play: [mauisPlaceOfExileHiddenIsland],
-//       hand: [mauisPlaceOfExileHiddenIsland],
+// Describe("Maui's Place of Exile - Hidden Island", () => {
+//   It.skip("**ISOLATED** Characters gain **Resist** +1 while here. _(Damage dealt to them is reduced by 1.)_", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: mauisPlaceOfExileHiddenIsland.cost,
+//       Play: [mauisPlaceOfExileHiddenIsland],
+//       Hand: [mauisPlaceOfExileHiddenIsland],
 //     });
 //
-//     await testEngine.playCard(mauisPlaceOfExileHiddenIsland);
+//     Await testEngine.playCard(mauisPlaceOfExileHiddenIsland);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

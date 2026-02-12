@@ -1,26 +1,8 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
 export const justInTimeundefined: ActionCard = {
-  id: "gir",
-  cardType: "action",
-  name: "Just in Time",
-  version: "undefined",
-  fullName: "Just in Time - undefined",
-  inkType: ["amber"],
-  franchise: "Disney",
-  set: "001",
-  text: "You may play a character with cost 5 or less for free.",
-  cost: 3,
-  cardNumber: 29,
-  inkable: true,
-  externalIds: {
-    ravensburger: "",
-  },
   abilities: [
     {
-      type: "action",
-      text: "You may play a character with cost 5 or less for free.",
-      id: "gir-1",
       effect: {
         type: "optional",
         effect: {
@@ -34,6 +16,24 @@ export const justInTimeundefined: ActionCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "gir-1",
+      text: "You may play a character with cost 5 or less for free.",
+      type: "action",
     },
   ],
+  cardNumber: 29,
+  cardType: "action",
+  cost: 3,
+  externalIds: {
+    ravensburger: "",
+  },
+  franchise: "Disney",
+  fullName: "Just in Time - undefined",
+  id: "gir",
+  inkType: ["amber"],
+  inkable: true,
+  name: "Just in Time",
+  set: "001",
+  text: "You may play a character with cost 5 or less for free.",
+  version: "undefined",
 };

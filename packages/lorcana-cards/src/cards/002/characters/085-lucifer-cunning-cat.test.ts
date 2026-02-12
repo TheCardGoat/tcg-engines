@@ -3,68 +3,68 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   luciferCunningCat,
-//   painUnderworldImp,
-//   panicUnderworldImp,
-//   peteBadGuy,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   LuciferCunningCat,
+//   PainUnderworldImp,
+//   PanicUnderworldImp,
+//   PeteBadGuy,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { NnPuppies } from "@lorcanito/lorcana-engine/cards/003/actions/actions";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { NnPuppies } from "@lorcanito/lorcana-engine/cards/003/actions/actions";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Lucifer - Cunning Cat", () => {
-//   describe("**MOUSE CATCHER** When you play this character, each opponent chooses and discards either 2 cards or 1 action card.", () => {
-//     it("Discard action card", async () => {
-//       const testEngine = new TestEngine(
+// Describe("Lucifer - Cunning Cat", () => {
+//   Describe("**MOUSE CATCHER** When you play this character, each opponent chooses and discards either 2 cards or 1 action card.", () => {
+//     It("Discard action card", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: luciferCunningCat.cost,
-//           hand: [luciferCunningCat],
+//           Inkwell: luciferCunningCat.cost,
+//           Hand: [luciferCunningCat],
 //         },
 //         {
-//           hand: [panicUnderworldImp, painUnderworldImp, peteBadGuy, NnPuppies],
+//           Hand: [panicUnderworldImp, painUnderworldImp, peteBadGuy, NnPuppies],
 //         },
 //       );
 //
-//       await testEngine.playCard(luciferCunningCat);
+//       Await testEngine.playCard(luciferCunningCat);
 //
-//       testEngine.changeActivePlayer("player_two");
-//       await testEngine.resolveTopOfStack({ targets: [NnPuppies] });
+//       TestEngine.changeActivePlayer("player_two");
+//       Await testEngine.resolveTopOfStack({ targets: [NnPuppies] });
 //
-//       expect(testEngine.stackLayers).toHaveLength(0);
-//       expect(testEngine.getCardModel(NnPuppies).zone).toEqual("discard");
-//       expect(testEngine.store.priorityPlayer).toEqual("player_one");
+//       Expect(testEngine.stackLayers).toHaveLength(0);
+//       Expect(testEngine.getCardModel(NnPuppies).zone).toEqual("discard");
+//       Expect(testEngine.store.priorityPlayer).toEqual("player_one");
 //     });
 //
-//     it("Discard a NON-action card", async () => {
-//       const testEngine = new TestEngine(
+//     It("Discard a NON-action card", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: luciferCunningCat.cost,
-//           hand: [luciferCunningCat],
+//           Inkwell: luciferCunningCat.cost,
+//           Hand: [luciferCunningCat],
 //         },
 //         {
-//           hand: [panicUnderworldImp, painUnderworldImp, peteBadGuy, NnPuppies],
+//           Hand: [panicUnderworldImp, painUnderworldImp, peteBadGuy, NnPuppies],
 //         },
 //       );
 //
-//       await testEngine.playCard(luciferCunningCat);
-//       expect(testEngine.store.priorityPlayer).toEqual("player_two");
-//       testEngine.changeActivePlayer("player_two");
+//       Await testEngine.playCard(luciferCunningCat);
+//       Expect(testEngine.store.priorityPlayer).toEqual("player_two");
+//       TestEngine.changeActivePlayer("player_two");
 //
-//       await testEngine.resolveTopOfStack(
+//       Await testEngine.resolveTopOfStack(
 //         { targets: [painUnderworldImp] },
-//         true,
+//         True,
 //       );
-//       expect(testEngine.stackLayers).toHaveLength(1);
-//       expect(testEngine.store.priorityPlayer).toEqual("player_two");
-//       expect(testEngine.getCardModel(painUnderworldImp).zone).toEqual(
+//       Expect(testEngine.stackLayers).toHaveLength(1);
+//       Expect(testEngine.store.priorityPlayer).toEqual("player_two");
+//       Expect(testEngine.getCardModel(painUnderworldImp).zone).toEqual(
 //         "discard",
 //       );
 //
-//       await testEngine.resolveTopOfStack({ targets: [panicUnderworldImp] });
-//       expect(testEngine.stackLayers).toHaveLength(0);
-//       expect(testEngine.store.priorityPlayer).toEqual("player_one");
-//       expect(testEngine.getCardModel(panicUnderworldImp).zone).toEqual(
+//       Await testEngine.resolveTopOfStack({ targets: [panicUnderworldImp] });
+//       Expect(testEngine.stackLayers).toHaveLength(0);
+//       Expect(testEngine.store.priorityPlayer).toEqual("player_one");
+//       Expect(testEngine.getCardModel(panicUnderworldImp).zone).toEqual(
 //         "discard",
 //       );
 //     });

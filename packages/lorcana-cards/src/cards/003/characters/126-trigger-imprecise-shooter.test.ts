@@ -3,25 +3,25 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { triggerImpreciseShooter } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { triggerImpreciseShooter } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Trigger - Imprecise Shooter", () => {
-//   it.skip("**MY OL' BETSY** Your characters named Nutsy gain +1 {L}.", () => {
-//     const testStore = new TestStore({
-//       inkwell: triggerImpreciseShooter.cost,
-//       play: [triggerImpreciseShooter],
+// Describe("Trigger - Imprecise Shooter", () => {
+//   It.skip("**MY OL' BETSY** Your characters named Nutsy gain +1 {L}.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: triggerImpreciseShooter.cost,
+//       Play: [triggerImpreciseShooter],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       triggerImpreciseShooter.id,
+//       TriggerImpreciseShooter.id,
 //     );
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

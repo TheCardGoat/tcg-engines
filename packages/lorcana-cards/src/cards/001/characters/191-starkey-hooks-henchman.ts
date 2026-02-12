@@ -1,77 +1,77 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const starkeyHooksHenchman: CharacterCard = {
-  id: "187",
-  cardType: "character",
-  name: "Starkey",
-  version: "Hook’s Henchman",
-  fullName: "Starkey - Hook’s Henchman",
-  inkType: ["steel"],
-  franchise: "Peter Pan",
-  set: "001",
-  text: "AYE AYE, CAPTAIN While you have a Captain character in play, this character gets +1 {L}.",
-  cost: 5,
-  strength: 5,
-  willpower: 4,
-  lore: 1,
-  cardNumber: 191,
-  inkable: true,
-  externalIds: {
-    ravensburger: "9f1a143825dcb63a6c7b8c8ce3c50df1302b8c9c",
-  },
   abilities: [
     {
-      id: "187-1",
-      text: "AYE AYE, CAPTAIN While you have a Captain character in play, this character gets +1 {L}.",
-      name: "AYE AYE, CAPTAIN",
-      type: "static",
       effect: {
         type: "modify-stat",
         stat: "lore",
         modifier: 1,
         target: "SELF",
       },
+      id: "187-1",
+      name: "AYE AYE, CAPTAIN",
+      text: "AYE AYE, CAPTAIN While you have a Captain character in play, this character gets +1 {L}.",
+      type: "static",
     },
   ],
+  cardNumber: 191,
+  cardType: "character",
   classifications: ["Storyborn", "Ally", "Pirate"],
+  cost: 5,
+  externalIds: {
+    ravensburger: "9f1a143825dcb63a6c7b8c8ce3c50df1302b8c9c",
+  },
+  franchise: "Peter Pan",
+  fullName: "Starkey - Hook’s Henchman",
+  id: "187",
+  inkType: ["steel"],
+  inkable: true,
+  lore: 1,
+  name: "Starkey",
+  set: "001",
+  strength: 5,
+  text: "AYE AYE, CAPTAIN While you have a Captain character in play, this character gets +1 {L}.",
+  version: "Hook’s Henchman",
+  willpower: 4,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { haveCaptainInPlay } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
-// import { whileConditionThisCharacterGets } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import { haveCaptainInPlay } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
+// Import { whileConditionThisCharacterGets } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const starkeyHooksHenchman: LorcanitoCharacterCard = {
-//   id: "wxx",
+// Export const starkeyHooksHenchman: LorcanitoCharacterCard = {
+//   Id: "wxx",
 //
-//   name: "Starkey",
-//   title: "Hook's Henchman",
-//   characteristics: ["storyborn", "pirate", "ally"],
-//   text: "**AYE AYE, CAPTAIN** While you have a Captain character in play, this character gets +1 {L}.",
-//   type: "character",
-//   abilities: [
-//     whileConditionThisCharacterGets({
-//       name: "Ay Aye, Captain",
-//       text: "While you have a Captain character in play, this character gets +1 {L}.",
-//       conditions: [haveCaptainInPlay],
-//       attribute: "lore",
-//       amount: 1,
+//   Name: "Starkey",
+//   Title: "Hook's Henchman",
+//   Characteristics: ["storyborn", "pirate", "ally"],
+//   Text: "**AYE AYE, CAPTAIN** While you have a Captain character in play, this character gets +1 {L}.",
+//   Type: "character",
+//   Abilities: [
+//     WhileConditionThisCharacterGets({
+//       Name: "Ay Aye, Captain",
+//       Text: "While you have a Captain character in play, this character gets +1 {L}.",
+//       Conditions: [haveCaptainInPlay],
+//       Attribute: "lore",
+//       Amount: 1,
 //     }),
 //   ],
-//   flavour:
+//   Flavour:
 //     "A pirate must be tough, loyal, and strong. Smart doesn't even make the list.",
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 5,
-//   strength: 5,
-//   willpower: 4,
-//   lore: 1,
-//   illustrator: "Leonardo Giammichele",
-//   number: 191,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 508947,
+//   Inkwell: true,
+//   Colors: ["steel"],
+//   Cost: 5,
+//   Strength: 5,
+//   Willpower: 4,
+//   Lore: 1,
+//   Illustrator: "Leonardo Giammichele",
+//   Number: 191,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 508947,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

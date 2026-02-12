@@ -3,146 +3,146 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   donaldDuck,
-//   tamatoaDrabLittleCrab,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   DonaldDuck,
+//   TamatoaDrabLittleCrab,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { bibbidiBobbidiBoo } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
-// import {
-//   cheshireCatAlwaysGrinning,
-//   flynnRiderConfidentVagabond,
+// Import { bibbidiBobbidiBoo } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
+// Import {
+//   CheshireCatAlwaysGrinning,
+//   FlynnRiderConfidentVagabond,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// const greenCost2 = cheshireCatAlwaysGrinning;
-// const anotherGreenCost2 = tamatoaDrabLittleCrab;
-// const greenCost1 = flynnRiderConfidentVagabond;
-// const redCost2 = donaldDuck;
+// Const greenCost2 = cheshireCatAlwaysGrinning;
+// Const anotherGreenCost2 = tamatoaDrabLittleCrab;
+// Const greenCost1 = flynnRiderConfidentVagabond;
+// Const redCost2 = donaldDuck;
 //
 // // TODO: I don't have a good idea on how to solve this effect
-// describe("Bibbidi Bobbidi Boo", () => {
-//   describe("Return chosen character of yours to your hand to play another character with the same cost or less for free.", () => {
-//     it("should be able to play a character with the same cost, and same color", () => {
-//       const testStore = new TestStore({
-//         inkwell: bibbidiBobbidiBoo.cost,
-//         hand: [bibbidiBobbidiBoo, greenCost2],
-//         play: [anotherGreenCost2],
+// Describe("Bibbidi Bobbidi Boo", () => {
+//   Describe("Return chosen character of yours to your hand to play another character with the same cost or less for free.", () => {
+//     It("should be able to play a character with the same cost, and same color", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: bibbidiBobbidiBoo.cost,
+//         Hand: [bibbidiBobbidiBoo, greenCost2],
+//         Play: [anotherGreenCost2],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "hand",
-//         bibbidiBobbidiBoo.id,
+//         BibbidiBobbidiBoo.id,
 //       );
-//       const cardFromReturn = testStore.getByZoneAndId(
+//       Const cardFromReturn = testStore.getByZoneAndId(
 //         "play",
-//         anotherGreenCost2.id,
+//         AnotherGreenCost2.id,
 //       );
-//       const cardToPlay = testStore.getByZoneAndId("hand", greenCost2.id);
-//       cardUnderTest.playFromHand();
+//       Const cardToPlay = testStore.getByZoneAndId("hand", greenCost2.id);
+//       CardUnderTest.playFromHand();
 //
-//       testStore.resolveTopOfStack({ targets: [cardFromReturn] }, true);
-//       expect(cardFromReturn.zone).toEqual("hand");
+//       TestStore.resolveTopOfStack({ targets: [cardFromReturn] }, true);
+//       Expect(cardFromReturn.zone).toEqual("hand");
 //
-//       testStore.resolveTopOfStack({ targets: [cardToPlay] });
-//       expect(cardToPlay.zone).toEqual("play");
+//       TestStore.resolveTopOfStack({ targets: [cardToPlay] });
+//       Expect(cardToPlay.zone).toEqual("play");
 //
-//       expect(testStore.stackLayers).toHaveLength(0);
+//       Expect(testStore.stackLayers).toHaveLength(0);
 //     });
 //
-//     it("should be able to play a character with the lower cost, and same color", () => {
-//       const testStore = new TestStore({
-//         inkwell: bibbidiBobbidiBoo.cost,
-//         hand: [bibbidiBobbidiBoo, greenCost1],
-//         play: [greenCost2],
+//     It("should be able to play a character with the lower cost, and same color", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: bibbidiBobbidiBoo.cost,
+//         Hand: [bibbidiBobbidiBoo, greenCost1],
+//         Play: [greenCost2],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "hand",
-//         bibbidiBobbidiBoo.id,
+//         BibbidiBobbidiBoo.id,
 //       );
-//       const cardToReturn = testStore.getByZoneAndId("play", greenCost2.id);
-//       const cardToPlay = testStore.getByZoneAndId("hand", greenCost1.id);
+//       Const cardToReturn = testStore.getByZoneAndId("play", greenCost2.id);
+//       Const cardToPlay = testStore.getByZoneAndId("hand", greenCost1.id);
 //
-//       cardUnderTest.playFromHand();
-//       testStore.resolveTopOfStack({ targets: [cardToReturn] }, true);
-//       expect(cardToReturn.zone).toEqual("hand");
+//       CardUnderTest.playFromHand();
+//       TestStore.resolveTopOfStack({ targets: [cardToReturn] }, true);
+//       Expect(cardToReturn.zone).toEqual("hand");
 //
-//       testStore.resolveTopOfStack({ targets: [cardToPlay] });
-//       expect(cardToPlay.zone).toEqual("play");
+//       TestStore.resolveTopOfStack({ targets: [cardToPlay] });
+//       Expect(cardToPlay.zone).toEqual("play");
 //
-//       expect(testStore.stackLayers).toHaveLength(0);
+//       Expect(testStore.stackLayers).toHaveLength(0);
 //     });
 //
-//     it.skip("should NOT be able to play a character with a higher cost", () => {
-//       const testStore = new TestStore({
-//         inkwell: bibbidiBobbidiBoo.cost,
-//         hand: [bibbidiBobbidiBoo, greenCost2],
-//         play: [greenCost1],
+//     It.skip("should NOT be able to play a character with a higher cost", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: bibbidiBobbidiBoo.cost,
+//         Hand: [bibbidiBobbidiBoo, greenCost2],
+//         Play: [greenCost1],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "hand",
-//         bibbidiBobbidiBoo.id,
+//         BibbidiBobbidiBoo.id,
 //       );
-//       const cardToReturn = testStore.getByZoneAndId("play", greenCost1.id);
-//       const cardToPlay = testStore.getByZoneAndId("hand", greenCost2.id);
+//       Const cardToReturn = testStore.getByZoneAndId("play", greenCost1.id);
+//       Const cardToPlay = testStore.getByZoneAndId("hand", greenCost2.id);
 //
-//       cardUnderTest.playFromHand();
-//       testStore.resolveTopOfStack({ targets: [cardToReturn] }, true);
-//       expect(cardToReturn.zone).toEqual("hand");
+//       CardUnderTest.playFromHand();
+//       TestStore.resolveTopOfStack({ targets: [cardToReturn] }, true);
+//       Expect(cardToReturn.zone).toEqual("hand");
 //
-//       testStore.resolveTopOfStack({ targets: [cardToPlay] });
-//       expect(cardToPlay.zone).toEqual("hand");
+//       TestStore.resolveTopOfStack({ targets: [cardToPlay] });
+//       Expect(cardToPlay.zone).toEqual("hand");
 //
-//       expect(testStore.stackLayers).toHaveLength(0);
+//       Expect(testStore.stackLayers).toHaveLength(0);
 //     });
 //
-//     it.skip("should NOT be able to play a character with a different color and same cost", () => {
-//       const testStore = new TestStore({
-//         inkwell: bibbidiBobbidiBoo.cost,
-//         hand: [bibbidiBobbidiBoo, greenCost2],
-//         play: [redCost2],
+//     It.skip("should NOT be able to play a character with a different color and same cost", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: bibbidiBobbidiBoo.cost,
+//         Hand: [bibbidiBobbidiBoo, greenCost2],
+//         Play: [redCost2],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "hand",
-//         bibbidiBobbidiBoo.id,
+//         BibbidiBobbidiBoo.id,
 //       );
-//       const cardToReturn = testStore.getByZoneAndId("play", redCost2.id);
-//       const cardToPlay = testStore.getByZoneAndId("hand", greenCost2.id);
+//       Const cardToReturn = testStore.getByZoneAndId("play", redCost2.id);
+//       Const cardToPlay = testStore.getByZoneAndId("hand", greenCost2.id);
 //
-//       cardUnderTest.playFromHand();
-//       testStore.resolveTopOfStack({ targets: [cardToReturn] }, true);
-//       expect(cardToReturn.zone).toEqual("hand");
+//       CardUnderTest.playFromHand();
+//       TestStore.resolveTopOfStack({ targets: [cardToReturn] }, true);
+//       Expect(cardToReturn.zone).toEqual("hand");
 //
-//       testStore.resolveTopOfStack({ targets: [cardToPlay] });
-//       expect(cardToPlay.zone).toEqual("hand");
+//       TestStore.resolveTopOfStack({ targets: [cardToPlay] });
+//       Expect(cardToPlay.zone).toEqual("hand");
 //
-//       expect(testStore.stackLayers).toHaveLength(0);
+//       Expect(testStore.stackLayers).toHaveLength(0);
 //     });
 //
-//     it.skip("should NOT be able to play again the same character", () => {
-//       const testStore = new TestStore({
-//         inkwell: bibbidiBobbidiBoo.cost,
-//         hand: [bibbidiBobbidiBoo, greenCost1],
-//         play: [greenCost2],
+//     It.skip("should NOT be able to play again the same character", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: bibbidiBobbidiBoo.cost,
+//         Hand: [bibbidiBobbidiBoo, greenCost1],
+//         Play: [greenCost2],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "hand",
-//         bibbidiBobbidiBoo.id,
+//         BibbidiBobbidiBoo.id,
 //       );
-//       const target = testStore.getByZoneAndId("play", greenCost2.id);
+//       Const target = testStore.getByZoneAndId("play", greenCost2.id);
 //
-//       cardUnderTest.playFromHand();
-//       testStore.resolveTopOfStack({ targets: [target] }, true);
-//       expect(target.zone).toEqual("hand");
+//       CardUnderTest.playFromHand();
+//       TestStore.resolveTopOfStack({ targets: [target] }, true);
+//       Expect(target.zone).toEqual("hand");
 //
-//       testStore.resolveTopOfStack({ targets: [target] });
-//       expect(target.zone).toEqual("hand");
+//       TestStore.resolveTopOfStack({ targets: [target] });
+//       Expect(target.zone).toEqual("hand");
 //
-//       expect(testStore.stackLayers).toHaveLength(0);
+//       Expect(testStore.stackLayers).toHaveLength(0);
 //     });
 //   });
 // });

@@ -1,46 +1,46 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { atTheEndOfYourTurn } from "@lorcanito/lorcana-engine/abilities/atTheAbilities";
-// import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { atTheEndOfYourTurn } from "@lorcanito/lorcana-engine/abilities/atTheAbilities";
+// Import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 //
-// export const goldenHarpEnchanterOfTheLand: LorcanitoCharacterCard = {
-//   id: "ph6",
-//   name: "Golden Harp",
-//   title: "Enchanter of the Land",
-//   characteristics: ["storyborn", "ally"],
-//   text: "**STOLEN AWAY** At the end of your turn, if you didn't play a song this turn, banish this character.",
-//   type: "character",
-//   abilities: [
-//     atTheEndOfYourTurn({
-//       name: "**STOLEN AWAY**",
-//       text: "At the end of your turn, if you didn't play a song this turn, banish this character.",
-//       effects: [
+// Export const goldenHarpEnchanterOfTheLand: LorcanitoCharacterCard = {
+//   Id: "ph6",
+//   Name: "Golden Harp",
+//   Title: "Enchanter of the Land",
+//   Characteristics: ["storyborn", "ally"],
+//   Text: "**STOLEN AWAY** At the end of your turn, if you didn't play a song this turn, banish this character.",
+//   Type: "character",
+//   Abilities: [
+//     AtTheEndOfYourTurn({
+//       Name: "**STOLEN AWAY**",
+//       Text: "At the end of your turn, if you didn't play a song this turn, banish this character.",
+//       Effects: [
 //         {
-//           type: "banish",
-//           target: thisCharacter,
+//           Type: "banish",
+//           Target: thisCharacter,
 //         },
 //       ],
-//       conditions: [
+//       Conditions: [
 //         {
-//           type: "played-songs",
-//           value: false,
+//           Type: "played-songs",
+//           Value: false,
 //         },
 //       ],
 //     }),
 //   ],
-//   flavour: "You'll miss her when she's gone.",
-//   inkwell: true,
-//   colors: ["amber"],
-//   cost: 1,
-//   strength: 1,
-//   willpower: 4,
-//   lore: 2,
-//   illustrator: "Andrea Parisi",
-//   number: 11,
-//   set: "URR",
-//   externalIds: {
-//     tcgPlayer: 549623,
+//   Flavour: "You'll miss her when she's gone.",
+//   Inkwell: true,
+//   Colors: ["amber"],
+//   Cost: 1,
+//   Strength: 1,
+//   Willpower: 4,
+//   Lore: 2,
+//   Illustrator: "Andrea Parisi",
+//   Number: 11,
+//   Set: "URR",
+//   ExternalIds: {
+//     TcgPlayer: 549623,
 //   },
-//   rarity: "rare",
+//   Rarity: "rare",
 // };
 //

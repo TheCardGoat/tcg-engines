@@ -1,39 +1,17 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const hadesKingOfOlympus: CharacterCard = {
-  id: "1e5",
-  cardType: "character",
-  name: "Hades",
-  version: "King of Olympus",
-  fullName: "Hades - King of Olympus",
-  inkType: ["amber"],
-  franchise: "Hercules",
-  set: "001",
-  text: "Shift 6 (You may pay 6 {I} to play this on top of one of your characters named Hades.)\nSINISTER PLOT This character gets +1 {L} for each other Villain character you have in play.",
-  cost: 8,
-  strength: 6,
-  willpower: 7,
-  lore: 1,
-  cardNumber: 5,
-  inkable: false,
-  externalIds: {
-    ravensburger: "b49576fe526d49f6abcdf5af9e3eb03f64505194",
-  },
   abilities: [
     {
-      id: "1e5-1",
-      text: "Shift 6",
-      type: "keyword",
-      keyword: "Shift",
       cost: {
         ink: 6,
       },
+      id: "1e5-1",
+      keyword: "Shift",
+      text: "Shift 6",
+      type: "keyword",
     },
     {
-      id: "1e5-2",
-      text: "SINISTER PLOT This character gets +1 {L} for each other Villain character you have in play.",
-      name: "SINISTER PLOT",
-      type: "static",
       effect: {
         type: "modify-stat",
         stat: "lore",
@@ -44,38 +22,60 @@ export const hadesKingOfOlympus: CharacterCard = {
         },
         target: "SELF",
       },
+      id: "1e5-2",
+      name: "SINISTER PLOT",
+      text: "SINISTER PLOT This character gets +1 {L} for each other Villain character you have in play.",
+      type: "static",
     },
   ],
+  cardNumber: 5,
+  cardType: "character",
   classifications: ["Floodborn", "Villain", "King", "Deity"],
+  cost: 8,
+  externalIds: {
+    ravensburger: "b49576fe526d49f6abcdf5af9e3eb03f64505194",
+  },
+  franchise: "Hercules",
+  fullName: "Hades - King of Olympus",
+  id: "1e5",
+  inkType: ["amber"],
+  inkable: false,
+  lore: 1,
+  name: "Hades",
+  set: "001",
+  strength: 6,
+  text: "Shift 6 (You may pay 6 {I} to play this on top of one of your characters named Hades.)\nSINISTER PLOT This character gets +1 {L} for each other Villain character you have in play.",
+  version: "King of Olympus",
+  willpower: 7,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { shiftAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import { shiftAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const hadesKingOfOlympus: LorcanitoCharacterCard = {
-//   id: "j9i",
-//   name: "Hades",
-//   title: "King of Olympus",
-//   characteristics: ["floodborn", "villain", "king", "deity"],
-//   text: "**Shift** 6 (_You may pay 6 {I} to play this on top of one of your characters named Hades._)\n**Sinister plot** This character gets +1 {L} for every other Villain character you have in play.",
-//   type: "character",
-//   abilities: [
+// Export const hadesKingOfOlympus: LorcanitoCharacterCard = {
+//   Id: "j9i",
+//   Name: "Hades",
+//   Title: "King of Olympus",
+//   Characteristics: ["floodborn", "villain", "king", "deity"],
+//   Text: "**Shift** 6 (_You may pay 6 {I} to play this on top of one of your characters named Hades._)\n**Sinister plot** This character gets +1 {L} for every other Villain character you have in play.",
+//   Type: "character",
+//   Abilities: [
 //     {
-//       type: "static",
-//       ability: "effects",
-//       name: "Sinister plot",
-//       text: "This character gets +1 {L} for every other Villain character you have in play.",
-//       effects: [
+//       Type: "static",
+//       Ability: "effects",
+//       Name: "Sinister plot",
+//       Text: "This character gets +1 {L} for every other Villain character you have in play.",
+//       Effects: [
 //         {
-//           type: "attribute",
-//           attribute: "lore",
-//           modifier: "add",
-//           target: thisCharacter,
-//           amount: {
-//             dynamic: true,
-//             filters: [
+//           Type: "attribute",
+//           Attribute: "lore",
+//           Modifier: "add",
+//           Target: thisCharacter,
+//           Amount: {
+//             Dynamic: true,
+//             Filters: [
 //               { filter: "zone", value: "play" },
 //               { filter: "type", value: "character" },
 //               { filter: "owner", value: "self" },
@@ -85,20 +85,20 @@ export const hadesKingOfOlympus: CharacterCard = {
 //         },
 //       ],
 //     },
-//     shiftAbility(6, "Hades"),
+//     ShiftAbility(6, "Hades"),
 //   ],
-//   flavour: "Oh hey, I'm gonna need new business cards.",
-//   colors: ["amber"],
-//   cost: 8,
-//   strength: 6,
-//   willpower: 7,
-//   lore: 1,
-//   illustrator: "Alex Accorsi",
-//   number: 5,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 516775,
+//   Flavour: "Oh hey, I'm gonna need new business cards.",
+//   Colors: ["amber"],
+//   Cost: 8,
+//   Strength: 6,
+//   Willpower: 7,
+//   Lore: 1,
+//   Illustrator: "Alex Accorsi",
+//   Number: 5,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 516775,
 //   },
-//   rarity: "rare",
+//   Rarity: "rare",
 // };
 //

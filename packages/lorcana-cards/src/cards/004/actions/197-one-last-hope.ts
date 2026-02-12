@@ -1,70 +1,70 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type {
+// Import type {
 //   LorcanitoActionCard,
 //   TargetConditionalEffect,
 // } from "@lorcanito/lorcana-engine";
-// import { chosenCharacterGainsResist } from "@lorcanito/lorcana-engine/effects/effects";
+// Import { chosenCharacterGainsResist } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// const targetHero = {
-//   type: "card",
-//   value: 1,
-//   filters: [
+// Const targetHero = {
+//   Type: "card",
+//   Value: 1,
+//   Filters: [
 //     { filter: "type", value: "character" },
 //     { filter: "zone", value: "play" },
 //     {
-//       filter: "characteristics",
-//       value: ["hero"],
+//       Filter: "characteristics",
+//       Value: ["hero"],
 //     },
 //   ],
 // };
 //
-// export const oneLastHope: LorcanitoActionCard = {
-//   id: "b2r",
-//   reprints: ["i3n"],
-//   name: "One Last Hope",
-//   characteristics: ["action", "song"],
-//   text: "_(A character with cost 3 or more can {E} to sing this song for free.)_\n\n\nChosen character gains **Resist** +2 until the start of your next turn. If a Hero character is chosen, they may also challenge ready characters this turn. _(Damage dealt to them is reduced by 2.)_",
-//   type: "action",
-//   abilities: [
+// Export const oneLastHope: LorcanitoActionCard = {
+//   Id: "b2r",
+//   Reprints: ["i3n"],
+//   Name: "One Last Hope",
+//   Characteristics: ["action", "song"],
+//   Text: "_(A character with cost 3 or more can {E} to sing this song for free.)_\n\n\nChosen character gains **Resist** +2 until the start of your next turn. If a Hero character is chosen, they may also challenge ready characters this turn. _(Damage dealt to them is reduced by 2.)_",
+//   Type: "action",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       effects: [
+//       Type: "resolution",
+//       Effects: [
 //         {
-//           type: "target-conditional",
-//           effects: [
+//           Type: "target-conditional",
+//           Effects: [
 //             {
-//               type: "ability",
-//               ability: "challenge_ready_chars",
-//               modifier: "add",
-//               duration: "turn",
-//               until: true,
-//               target: targetHero,
+//               Type: "ability",
+//               Ability: "challenge_ready_chars",
+//               Modifier: "add",
+//               Duration: "turn",
+//               Until: true,
+//               Target: targetHero,
 //             },
 //             {
-//               type: "ability",
-//               ability: "resist",
-//               amount: 2,
-//               modifier: "add",
-//               duration: "next_turn",
-//               until: true,
-//               target: targetHero,
+//               Type: "ability",
+//               Ability: "resist",
+//               Amount: 2,
+//               Modifier: "add",
+//               Duration: "next_turn",
+//               Until: true,
+//               Target: targetHero,
 //             },
 //           ],
-//           fallback: [chosenCharacterGainsResist(2)],
+//           Fallback: [chosenCharacterGainsResist(2)],
 //           // TODO: Re implement conditional target
-//           target: targetHero,
+//           Target: targetHero,
 //         } as TargetConditionalEffect,
 //       ],
 //     },
 //   ],
-//   colors: ["steel"],
-//   cost: 3,
-//   illustrator: "Alice Pisoni",
-//   number: 197,
-//   set: "URR",
-//   externalIds: {
-//     tcgPlayer: 549616,
+//   Colors: ["steel"],
+//   Cost: 3,
+//   Illustrator: "Alice Pisoni",
+//   Number: 197,
+//   Set: "URR",
+//   ExternalIds: {
+//     TcgPlayer: 549616,
 //   },
-//   rarity: "rare",
+//   Rarity: "rare",
 // };
 //

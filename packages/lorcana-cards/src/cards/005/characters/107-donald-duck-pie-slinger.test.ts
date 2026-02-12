@@ -3,42 +3,42 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { donaldDuck } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { donaldDuckPieSlinger } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { donaldDuck } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { donaldDuckPieSlinger } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Donald Duck - Pie Slinger", () => {
-//   it("**HUMBLE PIE** When you play this character, if you used **Shift** to play him, each opponent loses 2 lore.", () => {
-//     const testStore = new TestStore({
-//       inkwell: donaldDuckPieSlinger.cost,
-//       hand: [donaldDuckPieSlinger],
-//       play: [donaldDuck],
+// Describe("Donald Duck - Pie Slinger", () => {
+//   It("**HUMBLE PIE** When you play this character, if you used **Shift** to play him, each opponent loses 2 lore.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: donaldDuckPieSlinger.cost,
+//       Hand: [donaldDuckPieSlinger],
+//       Play: [donaldDuck],
 //     });
 //
-//     testStore.store.tableStore.getTable("player_two").updateLore(5);
+//     TestStore.store.tableStore.getTable("player_two").updateLore(5);
 //
-//     const cardUnderTest = testStore.getCard(donaldDuckPieSlinger);
-//     const target = testStore.getCard(donaldDuck);
+//     Const cardUnderTest = testStore.getCard(donaldDuckPieSlinger);
+//     Const target = testStore.getCard(donaldDuck);
 //
-//     cardUnderTest.shift(target);
+//     CardUnderTest.shift(target);
 //
-//     expect(testStore.store.tableStore.getTable("player_two").lore).toBe(3);
+//     Expect(testStore.store.tableStore.getTable("player_two").lore).toBe(3);
 //   });
 //
-//   it("**RAGING DUCK** While an opponent has 10 or more lore, this character gets +6 {S}.", () => {
-//     const testStore = new TestStore({
-//       play: [donaldDuckPieSlinger],
+//   It("**RAGING DUCK** While an opponent has 10 or more lore, this character gets +6 {S}.", () => {
+//     Const testStore = new TestStore({
+//       Play: [donaldDuckPieSlinger],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(donaldDuckPieSlinger);
+//     Const cardUnderTest = testStore.getCard(donaldDuckPieSlinger);
 //
-//     expect(cardUnderTest.strength).toBe(donaldDuckPieSlinger.strength);
+//     Expect(cardUnderTest.strength).toBe(donaldDuckPieSlinger.strength);
 //
-//     testStore.store.tableStore.getTable("player_two").updateLore(10);
+//     TestStore.store.tableStore.getTable("player_two").updateLore(10);
 //
-//     expect(testStore.store.tableStore.getTable("player_two").lore).toBe(10);
-//     expect(cardUnderTest.strength).toBe(donaldDuckPieSlinger.strength + 6);
+//     Expect(testStore.store.tableStore.getTable("player_two").lore).toBe(10);
+//     Expect(cardUnderTest.strength).toBe(donaldDuckPieSlinger.strength + 6);
 //   });
 // });
 //

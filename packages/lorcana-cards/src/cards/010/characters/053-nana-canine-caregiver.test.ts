@@ -3,37 +3,37 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/180-goofy-knight-for-a-day";
-// import {
-//   nanaCanineCaregiver,
-//   violetSabrewingSeniorJuniorWoodchuck,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/180-goofy-knight-for-a-day";
+// Import {
+//   NanaCanineCaregiver,
+//   VioletSabrewingSeniorJuniorWoodchuck,
 // } from "@lorcanito/lorcana-engine/cards/010";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Nana - Canine Caregiver", () => {
-//   it("HELPFUL INSTINCTS When you play this character, you may choose and discard a card to return chosen character with cost 2 or less to their player's hand.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Nana - Canine Caregiver", () => {
+//   It("HELPFUL INSTINCTS When you play this character, you may choose and discard a card to return chosen character with cost 2 or less to their player's hand.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: nanaCanineCaregiver.cost,
-//         hand: [nanaCanineCaregiver, goofyKnightForADay],
+//         Inkwell: nanaCanineCaregiver.cost,
+//         Hand: [nanaCanineCaregiver, goofyKnightForADay],
 //       },
 //       {
-//         play: [violetSabrewingSeniorJuniorWoodchuck],
+//         Play: [violetSabrewingSeniorJuniorWoodchuck],
 //       },
 //     );
 //
-//     await testEngine.playCard(nanaCanineCaregiver);
-//     await testEngine.acceptOptionalLayer();
+//     Await testEngine.playCard(nanaCanineCaregiver);
+//     Await testEngine.acceptOptionalLayer();
 //
-//     await testEngine.resolveTopOfStack({ targets: [goofyKnightForADay] }, true);
-//     expect(testEngine.getCardModel(goofyKnightForADay).zone).toBe("discard");
+//     Await testEngine.resolveTopOfStack({ targets: [goofyKnightForADay] }, true);
+//     Expect(testEngine.getCardModel(goofyKnightForADay).zone).toBe("discard");
 //
-//     await testEngine.resolveTopOfStack({
-//       targets: [violetSabrewingSeniorJuniorWoodchuck],
+//     Await testEngine.resolveTopOfStack({
+//       Targets: [violetSabrewingSeniorJuniorWoodchuck],
 //     });
-//     expect(
-//       testEngine.getCardModel(violetSabrewingSeniorJuniorWoodchuck).zone,
+//     Expect(
+//       TestEngine.getCardModel(violetSabrewingSeniorJuniorWoodchuck).zone,
 //     ).toBe("hand");
 //   });
 // });

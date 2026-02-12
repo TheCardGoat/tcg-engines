@@ -3,91 +3,91 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { dragonFire } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
-// import {
-//   gustavTheGiantTerrorOfTheKingdom,
-//   miloThatchCleverCartographer,
-//   starkeyDeviousPirate,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { dragonFire } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
+// Import {
+//   GustavTheGiantTerrorOfTheKingdom,
+//   MiloThatchCleverCartographer,
+//   StarkeyDeviousPirate,
 // } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Gustav the Giant - Terror of the Kingdom", () => {
-//   it("**ALL TIED UP** This character enters play exerted and can't ready at the start of your turn.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Gustav the Giant - Terror of the Kingdom", () => {
+//   It("**ALL TIED UP** This character enters play exerted and can't ready at the start of your turn.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: gustavTheGiantTerrorOfTheKingdom.cost,
-//         hand: [gustavTheGiantTerrorOfTheKingdom],
-//         deck: 1,
+//         Inkwell: gustavTheGiantTerrorOfTheKingdom.cost,
+//         Hand: [gustavTheGiantTerrorOfTheKingdom],
+//         Deck: 1,
 //       },
 //       {
-//         deck: 1,
+//         Deck: 1,
 //       },
 //     );
 //
-//     const cardUnderTest = await testEngine.playCard(
-//       gustavTheGiantTerrorOfTheKingdom,
+//     Const cardUnderTest = await testEngine.playCard(
+//       GustavTheGiantTerrorOfTheKingdom,
 //     );
 //
-//     expect(cardUnderTest.exerted).toBe(true);
+//     Expect(cardUnderTest.exerted).toBe(true);
 //
-//     await testEngine.passTurn();
-//     await testEngine.passTurn();
+//     Await testEngine.passTurn();
+//     Await testEngine.passTurn();
 //
-//     expect(cardUnderTest.exerted).toBe(true);
+//     Expect(cardUnderTest.exerted).toBe(true);
 //   });
 //
-//   describe("**BREAK FREE** During your turn, whenever one of your other characters banishes another character in a challenge, you may ready this character.", () => {
-//     it("Banished in a challenge", async () => {
-//       const testEngine = new TestEngine(
+//   Describe("**BREAK FREE** During your turn, whenever one of your other characters banishes another character in a challenge, you may ready this character.", () => {
+//     It("Banished in a challenge", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           play: [gustavTheGiantTerrorOfTheKingdom, starkeyDeviousPirate],
+//           Play: [gustavTheGiantTerrorOfTheKingdom, starkeyDeviousPirate],
 //         },
 //         {
-//           play: [miloThatchCleverCartographer],
+//           Play: [miloThatchCleverCartographer],
 //         },
 //       );
 //
-//       const cardUnderTest = await testEngine.tapCard(
-//         gustavTheGiantTerrorOfTheKingdom,
+//       Const cardUnderTest = await testEngine.tapCard(
+//         GustavTheGiantTerrorOfTheKingdom,
 //       );
-//       const defender = await testEngine.tapCard(miloThatchCleverCartographer);
+//       Const defender = await testEngine.tapCard(miloThatchCleverCartographer);
 //
-//       await testEngine.challenge({
-//         attacker: starkeyDeviousPirate,
-//         defender: miloThatchCleverCartographer,
+//       Await testEngine.challenge({
+//         Attacker: starkeyDeviousPirate,
+//         Defender: miloThatchCleverCartographer,
 //       });
-//       await testEngine.resolveOptionalAbility();
+//       Await testEngine.resolveOptionalAbility();
 //
-//       expect(defender.zone).toBe("discard");
-//       expect(cardUnderTest.exerted).toBe(false);
+//       Expect(defender.zone).toBe("discard");
+//       Expect(cardUnderTest.exerted).toBe(false);
 //     });
 //
-//     it("Banished by an action card", async () => {
-//       const testEngine = new TestEngine(
+//     It("Banished by an action card", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: dragonFire.cost,
-//           hand: [dragonFire],
-//           play: [gustavTheGiantTerrorOfTheKingdom],
+//           Inkwell: dragonFire.cost,
+//           Hand: [dragonFire],
+//           Play: [gustavTheGiantTerrorOfTheKingdom],
 //         },
 //         {
-//           play: [miloThatchCleverCartographer],
+//           Play: [miloThatchCleverCartographer],
 //         },
 //       );
 //
-//       const cardUnderTest = await testEngine.tapCard(
-//         gustavTheGiantTerrorOfTheKingdom,
+//       Const cardUnderTest = await testEngine.tapCard(
+//         GustavTheGiantTerrorOfTheKingdom,
 //       );
 //
-//       await testEngine.playCard(dragonFire, {
-//         targets: [miloThatchCleverCartographer],
+//       Await testEngine.playCard(dragonFire, {
+//         Targets: [miloThatchCleverCartographer],
 //       });
 //
-//       expect(testEngine.getCardModel(miloThatchCleverCartographer).zone).toBe(
+//       Expect(testEngine.getCardModel(miloThatchCleverCartographer).zone).toBe(
 //         "discard",
 //       );
-//       expect(testEngine.stackLayers).toHaveLength(0);
-//       expect(cardUnderTest.exerted).toBe(true);
+//       Expect(testEngine.stackLayers).toHaveLength(0);
+//       Expect(cardUnderTest.exerted).toBe(true);
 //     });
 //   });
 // });

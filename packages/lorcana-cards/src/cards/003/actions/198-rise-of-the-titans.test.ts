@@ -3,43 +3,43 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { riseOfTheTitans } from "@lorcanito/lorcana-engine/cards/003/actions/actions";
-// import { cleansingRainwater } from "@lorcanito/lorcana-engine/cards/003/items/items";
-// import { agrabahMarketplace } from "@lorcanito/lorcana-engine/cards/003/locations/locations";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { riseOfTheTitans } from "@lorcanito/lorcana-engine/cards/003/actions/actions";
+// Import { cleansingRainwater } from "@lorcanito/lorcana-engine/cards/003/items/items";
+// Import { agrabahMarketplace } from "@lorcanito/lorcana-engine/cards/003/locations/locations";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Rise of the Titans", () => {
-//   it("Banish chosen item.", () => {
-//     const testStore = new TestStore({
-//       inkwell: riseOfTheTitans.cost,
-//       hand: [riseOfTheTitans],
-//       play: [cleansingRainwater],
+// Describe("Rise of the Titans", () => {
+//   It("Banish chosen item.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: riseOfTheTitans.cost,
+//       Hand: [riseOfTheTitans],
+//       Play: [cleansingRainwater],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", riseOfTheTitans.id);
-//     const target = testStore.getByZoneAndId("play", cleansingRainwater.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", riseOfTheTitans.id);
+//     Const target = testStore.getByZoneAndId("play", cleansingRainwater.id);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveTopOfStack({ targets: [target] });
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.zone).toEqual("discard");
+//     Expect(target.zone).toEqual("discard");
 //   });
 //
-//   it("Banish chosen location.", () => {
-//     const testStore = new TestStore({
-//       inkwell: riseOfTheTitans.cost,
-//       hand: [riseOfTheTitans],
-//       play: [agrabahMarketplace],
+//   It("Banish chosen location.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: riseOfTheTitans.cost,
+//       Hand: [riseOfTheTitans],
+//       Play: [agrabahMarketplace],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", riseOfTheTitans.id);
-//     const target = testStore.getByZoneAndId("play", agrabahMarketplace.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", riseOfTheTitans.id);
+//     Const target = testStore.getByZoneAndId("play", agrabahMarketplace.id);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveTopOfStack({ targets: [target] });
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.zone).toEqual("discard");
+//     Expect(target.zone).toEqual("discard");
 //   });
 // });
 //

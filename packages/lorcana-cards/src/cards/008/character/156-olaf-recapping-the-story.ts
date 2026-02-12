@@ -1,44 +1,44 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { chosenOpposingCharacter } from "@lorcanito/lorcana-engine/abilities/target";
-// import { whenYouPlayThisCharacter } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { chosenOpposingCharacter } from "@lorcanito/lorcana-engine/abilities/target";
+// Import { whenYouPlayThisCharacter } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 //
-// export const olafRecappingTheStory: LorcanitoCharacterCard = {
-//   id: "wkn",
-//   name: "Olaf",
-//   title: "Recapping the Story",
-//   characteristics: ["storyborn", "ally"],
-//   text: "ENDLESS TALE When you play this character, chosen opposing character gets -1 {S} this turn.",
-//   type: "character",
-//   abilities: [
-//     whenYouPlayThisCharacter({
-//       name: "ENDLESS TALE",
-//       text: "When you play this character, chosen opposing character gets -1 {S} this turn.",
-//       effects: [
+// Export const olafRecappingTheStory: LorcanitoCharacterCard = {
+//   Id: "wkn",
+//   Name: "Olaf",
+//   Title: "Recapping the Story",
+//   Characteristics: ["storyborn", "ally"],
+//   Text: "ENDLESS TALE When you play this character, chosen opposing character gets -1 {S} this turn.",
+//   Type: "character",
+//   Abilities: [
+//     WhenYouPlayThisCharacter({
+//       Name: "ENDLESS TALE",
+//       Text: "When you play this character, chosen opposing character gets -1 {S} this turn.",
+//       Effects: [
 //         {
-//           type: "attribute",
-//           attribute: "strength",
-//           amount: 1,
-//           modifier: "subtract",
-//           duration: "turn",
-//           until: true,
-//           target: chosenOpposingCharacter,
+//           Type: "attribute",
+//           Attribute: "strength",
+//           Amount: 1,
+//           Modifier: "subtract",
+//           Duration: "turn",
+//           Until: true,
+//           Target: chosenOpposingCharacter,
 //         },
 //       ],
 //     }),
 //   ],
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 1,
-//   strength: 2,
-//   willpower: 1,
-//   illustrator: "Matt Chapman",
-//   number: 156,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631454,
+//   Inkwell: true,
+//   Colors: ["sapphire"],
+//   Cost: 1,
+//   Strength: 2,
+//   Willpower: 1,
+//   Illustrator: "Matt Chapman",
+//   Number: 156,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631454,
 //   },
-//   rarity: "common",
-//   lore: 1,
+//   Rarity: "common",
+//   Lore: 1,
 // };
 //

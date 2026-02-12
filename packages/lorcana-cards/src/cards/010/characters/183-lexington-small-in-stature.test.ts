@@ -3,125 +3,125 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   basilTenaciousMouse,
-//   lexingtonSmallInStature,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   BasilTenaciousMouse,
+//   LexingtonSmallInStature,
 // } from "@lorcanito/lorcana-engine/cards/010/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Lexington - Small in Stature", () => {
-//   describe("Alert", () => {
-//     it("should have Alert ability", () => {
-//       const testEngine = new TestEngine({
-//         play: [lexingtonSmallInStature],
+// Describe("Lexington - Small in Stature", () => {
+//   Describe("Alert", () => {
+//     It("should have Alert ability", () => {
+//       Const testEngine = new TestEngine({
+//         Play: [lexingtonSmallInStature],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(lexingtonSmallInStature);
-//       expect(cardUnderTest.hasAlert).toBe(true);
+//       Const cardUnderTest = testEngine.getCardModel(lexingtonSmallInStature);
+//       Expect(cardUnderTest.hasAlert).toBe(true);
 //     });
 //
-//     it("should have Alert ability with correct type", () => {
-//       const ability = lexingtonSmallInStature.abilities?.find(
+//     It("should have Alert ability with correct type", () => {
+//       Const ability = lexingtonSmallInStature.abilities?.find(
 //         (a) =>
 //           "type" in a &&
-//           a.type === "static" &&
+//           A.type === "static" &&
 //           "ability" in a &&
-//           a.ability === "alert",
+//           A.ability === "alert",
 //       );
 //
-//       expect(ability).toBeDefined();
-//       if (ability && "ability" in ability) {
-//         expect(ability.ability).toBe("alert");
+//       Expect(ability).toBeDefined();
+//       If (ability && "ability" in ability) {
+//         Expect(ability.ability).toBe("alert");
 //       }
 //     });
 //   });
 //
-//   describe("STONE BY DAY", () => {
-//     it("should have STONE BY DAY ability that restricts readying when you have 3+ cards in hand", () => {
-//       const testEngine = new TestEngine({
-//         play: [lexingtonSmallInStature],
+//   Describe("STONE BY DAY", () => {
+//     It("should have STONE BY DAY ability that restricts readying when you have 3+ cards in hand", () => {
+//       Const testEngine = new TestEngine({
+//         Play: [lexingtonSmallInStature],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(lexingtonSmallInStature);
+//       Const cardUnderTest = testEngine.getCardModel(lexingtonSmallInStature);
 //
 //       // Should have the STONE BY DAY static ability in card definition
-//       const stoneByDayAbility = lexingtonSmallInStature.abilities?.find(
+//       Const stoneByDayAbility = lexingtonSmallInStature.abilities?.find(
 //         (ability) => "name" in ability && ability.name === "STONE BY DAY",
 //       );
-//       expect(stoneByDayAbility).toBeDefined();
-//       if (stoneByDayAbility && "type" in stoneByDayAbility) {
-//         expect(stoneByDayAbility.type).toBe("static");
+//       Expect(stoneByDayAbility).toBeDefined();
+//       If (stoneByDayAbility && "type" in stoneByDayAbility) {
+//         Expect(stoneByDayAbility.type).toBe("static");
 //       }
 //     });
 //
-//     it("STONE BY DAY ability should be defined with correct text", () => {
-//       const testEngine = new TestEngine({
-//         play: [lexingtonSmallInStature],
+//     It("STONE BY DAY ability should be defined with correct text", () => {
+//       Const testEngine = new TestEngine({
+//         Play: [lexingtonSmallInStature],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(lexingtonSmallInStature);
+//       Const cardUnderTest = testEngine.getCardModel(lexingtonSmallInStature);
 //
-//       const stoneByDayAbility = lexingtonSmallInStature.abilities?.find(
+//       Const stoneByDayAbility = lexingtonSmallInStature.abilities?.find(
 //         (ability) => "name" in ability && ability.name === "STONE BY DAY",
 //       );
 //
-//       if (stoneByDayAbility && "text" in stoneByDayAbility) {
-//         expect(stoneByDayAbility.text).toBe(
+//       If (stoneByDayAbility && "text" in stoneByDayAbility) {
+//         Expect(stoneByDayAbility.text).toBe(
 //           "If you have 3 or more cards in your hand, this character can't ready.",
 //         );
 //       }
 //     });
 //
-//     it("should have Stone By Day ability defined", () => {
-//       const ability = lexingtonSmallInStature.abilities?.find(
+//     It("should have Stone By Day ability defined", () => {
+//       Const ability = lexingtonSmallInStature.abilities?.find(
 //         (a) => "name" in a && a.name === "STONE BY DAY",
 //       );
 //
-//       expect(ability).toBeDefined();
-//       if (
-//         ability &&
+//       Expect(ability).toBeDefined();
+//       If (
+//         Ability &&
 //         "type" in ability &&
-//         ability.type === "static" &&
+//         Ability.type === "static" &&
 //         "ability" in ability
 //       ) {
-//         expect(ability.ability).toBe("effects");
+//         Expect(ability.ability).toBe("effects");
 //       }
 //     });
 //   });
 //
-//   describe("Stats and basic properties", () => {
-//     it("should have correct stats", () => {
-//       const testEngine = new TestEngine({
-//         play: [lexingtonSmallInStature],
+//   Describe("Stats and basic properties", () => {
+//     It("should have correct stats", () => {
+//       Const testEngine = new TestEngine({
+//         Play: [lexingtonSmallInStature],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(lexingtonSmallInStature);
+//       Const cardUnderTest = testEngine.getCardModel(lexingtonSmallInStature);
 //
-//       expect(cardUnderTest.strength).toBe(4);
-//       expect(cardUnderTest.willpower).toBe(4);
-//       expect(cardUnderTest.lore).toBe(1);
-//       expect(cardUnderTest.cost).toBe(3);
+//       Expect(cardUnderTest.strength).toBe(4);
+//       Expect(cardUnderTest.willpower).toBe(4);
+//       Expect(cardUnderTest.lore).toBe(1);
+//       Expect(cardUnderTest.cost).toBe(3);
 //     });
 //
-//     it("should be inkwell card", () => {
-//       expect(lexingtonSmallInStature.inkwell).toBe(true);
+//     It("should be inkwell card", () => {
+//       Expect(lexingtonSmallInStature.inkwell).toBe(true);
 //     });
 //
-//     it("should have correct characteristics", () => {
-//       expect(lexingtonSmallInStature.characteristics).toEqual([
+//     It("should have correct characteristics", () => {
+//       Expect(lexingtonSmallInStature.characteristics).toEqual([
 //         "storyborn",
 //         "ally",
 //         "gargoyle",
 //       ]);
 //     });
 //
-//     it("should be steel color", () => {
-//       expect(lexingtonSmallInStature.colors).toEqual(["steel"]);
+//     It("should be steel color", () => {
+//       Expect(lexingtonSmallInStature.colors).toEqual(["steel"]);
 //     });
 //
-//     it("should be uncommon rarity", () => {
-//       expect(lexingtonSmallInStature.rarity).toBe("uncommon");
+//     It("should be uncommon rarity", () => {
+//       Expect(lexingtonSmallInStature.rarity).toBe("uncommon");
 //     });
 //   });
 // });

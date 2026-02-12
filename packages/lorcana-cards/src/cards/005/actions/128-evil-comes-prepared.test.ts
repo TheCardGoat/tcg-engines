@@ -3,80 +3,80 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { theQueenRegalMonarch } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { evilComesPrepared } from "@lorcanito/lorcana-engine/cards/005/actions/actions";
-// import { deweyLovableShowoff } from "@lorcanito/lorcana-engine/cards/008/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { theQueenRegalMonarch } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { evilComesPrepared } from "@lorcanito/lorcana-engine/cards/005/actions/actions";
+// Import { deweyLovableShowoff } from "@lorcanito/lorcana-engine/cards/008/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Evil Comes Prepared", () => {
-//   it("Ready chosen character of yours. They can’t quest for the rest of this turn. If a Villain character is chosen, gain 1 lore.", () => {
-//     const testEngine = new TestEngine({
-//       inkwell: evilComesPrepared.cost,
-//       hand: [evilComesPrepared],
-//       play: [deweyLovableShowoff],
+// Describe("Evil Comes Prepared", () => {
+//   It("Ready chosen character of yours. They can’t quest for the rest of this turn. If a Villain character is chosen, gain 1 lore.", () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: evilComesPrepared.cost,
+//       Hand: [evilComesPrepared],
+//       Play: [deweyLovableShowoff],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(evilComesPrepared);
-//     const targetCard = testEngine.getCardModel(deweyLovableShowoff);
+//     Const cardUnderTest = testEngine.getCardModel(evilComesPrepared);
+//     Const targetCard = testEngine.getCardModel(deweyLovableShowoff);
 //
-//     targetCard.exert();
-//     expect(targetCard.exerted).toBe(true);
+//     TargetCard.exert();
+//     Expect(targetCard.exerted).toBe(true);
 //
-//     testEngine.playCard(cardUnderTest);
+//     TestEngine.playCard(cardUnderTest);
 //
-//     testEngine.resolveTopOfStack({ targets: [targetCard] });
-//     expect(targetCard.exerted).toBe(false);
+//     TestEngine.resolveTopOfStack({ targets: [targetCard] });
+//     Expect(targetCard.exerted).toBe(false);
 //
-//     expect(targetCard.hasQuestRestriction).toBe(true);
+//     Expect(targetCard.hasQuestRestriction).toBe(true);
 //
-//     expect(testEngine.getPlayerLore()).toEqual(0);
+//     Expect(testEngine.getPlayerLore()).toEqual(0);
 //   });
 //
-//   it("If a Villain character is chosen, gain 1 lore.", () => {
-//     const testEngine = new TestEngine({
-//       inkwell: evilComesPrepared.cost,
-//       hand: [evilComesPrepared],
-//       play: [theQueenRegalMonarch],
+//   It("If a Villain character is chosen, gain 1 lore.", () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: evilComesPrepared.cost,
+//       Hand: [evilComesPrepared],
+//       Play: [theQueenRegalMonarch],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(evilComesPrepared);
-//     const targetCard = testEngine.getCardModel(theQueenRegalMonarch);
+//     Const cardUnderTest = testEngine.getCardModel(evilComesPrepared);
+//     Const targetCard = testEngine.getCardModel(theQueenRegalMonarch);
 //
-//     targetCard.exert();
-//     expect(targetCard.exerted).toBe(true);
+//     TargetCard.exert();
+//     Expect(targetCard.exerted).toBe(true);
 //
-//     testEngine.playCard(cardUnderTest);
+//     TestEngine.playCard(cardUnderTest);
 //
-//     testEngine.resolveTopOfStack({ targets: [targetCard] });
-//     expect(targetCard.exerted).toBe(false);
+//     TestEngine.resolveTopOfStack({ targets: [targetCard] });
+//     Expect(targetCard.exerted).toBe(false);
 //
-//     expect(targetCard.hasQuestRestriction).toBe(true);
+//     Expect(targetCard.hasQuestRestriction).toBe(true);
 //
-//     expect(testEngine.getPlayerLore()).toEqual(1);
+//     Expect(testEngine.getPlayerLore()).toEqual(1);
 //   });
 //
-//   it("If a Villain character not chosen but in play, gain 0 lore.", () => {
-//     const testEngine = new TestEngine({
-//       inkwell: evilComesPrepared.cost,
-//       hand: [evilComesPrepared],
-//       play: [theQueenRegalMonarch, deweyLovableShowoff],
+//   It("If a Villain character not chosen but in play, gain 0 lore.", () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: evilComesPrepared.cost,
+//       Hand: [evilComesPrepared],
+//       Play: [theQueenRegalMonarch, deweyLovableShowoff],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(evilComesPrepared);
-//     const targetCard = testEngine.getCardModel(deweyLovableShowoff);
+//     Const cardUnderTest = testEngine.getCardModel(evilComesPrepared);
+//     Const targetCard = testEngine.getCardModel(deweyLovableShowoff);
 //
-//     targetCard.exert();
-//     expect(targetCard.exerted).toBe(true);
+//     TargetCard.exert();
+//     Expect(targetCard.exerted).toBe(true);
 //
-//     testEngine.playCard(cardUnderTest);
+//     TestEngine.playCard(cardUnderTest);
 //
-//     testEngine.resolveTopOfStack({ targets: [targetCard] });
-//     expect(targetCard.exerted).toBe(false);
+//     TestEngine.resolveTopOfStack({ targets: [targetCard] });
+//     Expect(targetCard.exerted).toBe(false);
 //
-//     expect(targetCard.hasQuestRestriction).toBe(true);
+//     Expect(targetCard.hasQuestRestriction).toBe(true);
 //
-//     expect(testEngine.getPlayerLore()).toEqual(0);
+//     Expect(testEngine.getPlayerLore()).toEqual(0);
 //   });
 // });
 //

@@ -3,61 +3,61 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   goofyKnightForADay,
-//   merlinCrab,
-//   yzmaWithoutBeautySleep,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   GoofyKnightForADay,
+//   MerlinCrab,
+//   YzmaWithoutBeautySleep,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Merlin - Crab", () => {
-//   describe("**READY OR NOT!** When you play this character and when he leaves play, chosen character gains **Challenger** +3 this turn. _(They get +3 {S} while challenging.)_", () => {
-//     it("When you play", () => {
-//       const testStore = new TestStore({
-//         inkwell: merlinCrab.cost,
-//         hand: [merlinCrab],
-//         play: [yzmaWithoutBeautySleep],
+// Describe("Merlin - Crab", () => {
+//   Describe("**READY OR NOT!** When you play this character and when he leaves play, chosen character gains **Challenger** +3 this turn. _(They get +3 {S} while challenging.)_", () => {
+//     It("When you play", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: merlinCrab.cost,
+//         Hand: [merlinCrab],
+//         Play: [yzmaWithoutBeautySleep],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId("hand", merlinCrab.id);
-//       const target = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId("hand", merlinCrab.id);
+//       Const target = testStore.getByZoneAndId(
 //         "play",
-//         yzmaWithoutBeautySleep.id,
+//         YzmaWithoutBeautySleep.id,
 //       );
 //
-//       expect(target.hasChallenger).toEqual(false);
+//       Expect(target.hasChallenger).toEqual(false);
 //
-//       cardUnderTest.playFromHand();
-//       testStore.resolveTopOfStack({ targets: [target] });
+//       CardUnderTest.playFromHand();
+//       TestStore.resolveTopOfStack({ targets: [target] });
 //
-//       expect(target.hasChallenger).toEqual(true);
+//       Expect(target.hasChallenger).toEqual(true);
 //     });
 //
-//     it("When he leaves play", () => {
-//       const testStore = new TestStore(
+//     It("When he leaves play", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [merlinCrab],
-//           deck: 1,
+//           Play: [merlinCrab],
+//           Deck: 1,
 //         },
 //         { play: [goofyKnightForADay] },
 //       );
 //
-//       const defender = testStore.getByZoneAndId(
+//       Const defender = testStore.getByZoneAndId(
 //         "play",
-//         goofyKnightForADay.id,
+//         GoofyKnightForADay.id,
 //         "player_two",
 //       );
-//       const attacker = testStore.getByZoneAndId("play", merlinCrab.id);
+//       Const attacker = testStore.getByZoneAndId("play", merlinCrab.id);
 //
-//       defender.updateCardMeta({ exerted: true });
+//       Defender.updateCardMeta({ exerted: true });
 //
-//       expect(defender.hasChallenger).toEqual(false);
+//       Expect(defender.hasChallenger).toEqual(false);
 //
-//       attacker.challenge(defender);
-//       testStore.resolveTopOfStack({ targets: [defender] });
+//       Attacker.challenge(defender);
+//       TestStore.resolveTopOfStack({ targets: [defender] });
 //
-//       expect(defender.hasChallenger).toEqual(true);
+//       Expect(defender.hasChallenger).toEqual(true);
 //     });
 //   });
 // });

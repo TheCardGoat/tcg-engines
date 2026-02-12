@@ -3,48 +3,48 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { princeJohnFalseKing } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { princeJohnFalseKing } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Prince John - False King", () => {
-//   describe("**COLLECT TAXES** Whenever this character quests, each opponent with more Lore than you loses 2 Lore.", () => {
-//     it("Same lore", async () => {
-//       const testEngine = new TestEngine(
+// Describe("Prince John - False King", () => {
+//   Describe("**COLLECT TAXES** Whenever this character quests, each opponent with more Lore than you loses 2 Lore.", () => {
+//     It("Same lore", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           play: [princeJohnFalseKing],
-//           lore: 8,
+//           Play: [princeJohnFalseKing],
+//           Lore: 8,
 //         },
 //         {
-//           lore: 10,
+//           Lore: 10,
 //         },
 //       );
 //
-//       await testEngine.questCard(princeJohnFalseKing);
+//       Await testEngine.questCard(princeJohnFalseKing);
 //
-//       expect(testEngine.getLoreForPlayer("player_one")).toEqual(
+//       Expect(testEngine.getLoreForPlayer("player_one")).toEqual(
 //         8 + princeJohnFalseKing.lore,
 //       );
-//       expect(testEngine.getLoreForPlayer("player_two")).toEqual(10);
+//       Expect(testEngine.getLoreForPlayer("player_two")).toEqual(10);
 //     });
 //
-//     it("Opponent with more lore", async () => {
-//       const testEngine = new TestEngine(
+//     It("Opponent with more lore", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           play: [princeJohnFalseKing],
-//           lore: 8,
+//           Play: [princeJohnFalseKing],
+//           Lore: 8,
 //         },
 //         {
-//           lore: 12,
+//           Lore: 12,
 //         },
 //       );
 //
-//       await testEngine.questCard(princeJohnFalseKing);
+//       Await testEngine.questCard(princeJohnFalseKing);
 //
-//       expect(testEngine.getLoreForPlayer("player_one")).toEqual(
+//       Expect(testEngine.getLoreForPlayer("player_one")).toEqual(
 //         8 + princeJohnFalseKing.lore,
 //       );
-//       expect(testEngine.getLoreForPlayer("player_two")).toEqual(12 - 2);
+//       Expect(testEngine.getLoreForPlayer("player_two")).toEqual(12 - 2);
 //     });
 //   });
 // });

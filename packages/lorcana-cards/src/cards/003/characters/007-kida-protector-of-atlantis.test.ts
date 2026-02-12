@@ -3,55 +3,55 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   kidaProtectorOfAtlantis,
-//   kingLouieBandleader,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   KidaProtectorOfAtlantis,
+//   KingLouieBandleader,
 // } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Kida - Protector of Atlantis", () => {
-//   it("**Shift** 3 _(You may pay 3 {I} to play this on top of one of your characters named Kida.)_**PERHAPS WE CAN SAVE OUR FUTURE** When you play this character, all characters get -3 {S} until the start of your next turn.", () => {
-//     const testStore = new TestStore({
-//       play: [kidaProtectorOfAtlantis],
+// Describe("Kida - Protector of Atlantis", () => {
+//   It("**Shift** 3 _(You may pay 3 {I} to play this on top of one of your characters named Kida.)_**PERHAPS WE CAN SAVE OUR FUTURE** When you play this character, all characters get -3 {S} until the start of your next turn.", () => {
+//     Const testStore = new TestStore({
+//       Play: [kidaProtectorOfAtlantis],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       kidaProtectorOfAtlantis.id,
+//       KidaProtectorOfAtlantis.id,
 //     );
-//     expect(cardUnderTest.hasShift).toBe(true);
+//     Expect(cardUnderTest.hasShift).toBe(true);
 //   });
 //
-//   it("**PERHAPS WE CAN SAVE OUR FUTURE** When you play this character, all characters get -3 {S} until the start of your next turn.", () => {
-//     const testStore = new TestStore(
+//   It("**PERHAPS WE CAN SAVE OUR FUTURE** When you play this character, all characters get -3 {S} until the start of your next turn.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: kidaProtectorOfAtlantis.cost,
-//         hand: [kidaProtectorOfAtlantis],
-//         deck: 1,
+//         Inkwell: kidaProtectorOfAtlantis.cost,
+//         Hand: [kidaProtectorOfAtlantis],
+//         Deck: 1,
 //       },
 //       {
-//         play: [kingLouieBandleader],
-//         deck: 1,
+//         Play: [kingLouieBandleader],
+//         Deck: 1,
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getCard(kidaProtectorOfAtlantis);
-//     const targetCard = testStore.getCard(kingLouieBandleader);
+//     Const cardUnderTest = testStore.getCard(kidaProtectorOfAtlantis);
+//     Const targetCard = testStore.getCard(kingLouieBandleader);
 //
-//     cardUnderTest.play();
-//     expect(targetCard.strength).toBe(kingLouieBandleader.strength - 3);
-//     expect(cardUnderTest.strength).toBe(kidaProtectorOfAtlantis.strength - 3);
+//     CardUnderTest.play();
+//     Expect(targetCard.strength).toBe(kingLouieBandleader.strength - 3);
+//     Expect(cardUnderTest.strength).toBe(kidaProtectorOfAtlantis.strength - 3);
 //
-//     testStore.passTurn();
+//     TestStore.passTurn();
 //
-//     expect(targetCard.strength).toBe(kingLouieBandleader.strength - 3);
-//     expect(cardUnderTest.strength).toBe(kidaProtectorOfAtlantis.strength - 3);
+//     Expect(targetCard.strength).toBe(kingLouieBandleader.strength - 3);
+//     Expect(cardUnderTest.strength).toBe(kidaProtectorOfAtlantis.strength - 3);
 //
-//     testStore.passTurn();
+//     TestStore.passTurn();
 //
-//     expect(targetCard.strength).toBe(kingLouieBandleader.strength);
-//     expect(cardUnderTest.strength).toBe(kidaProtectorOfAtlantis.strength);
+//     Expect(targetCard.strength).toBe(kingLouieBandleader.strength);
+//     Expect(cardUnderTest.strength).toBe(kidaProtectorOfAtlantis.strength);
 //   });
 // });
 //

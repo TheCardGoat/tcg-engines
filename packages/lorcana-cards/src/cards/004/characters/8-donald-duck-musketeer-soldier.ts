@@ -1,45 +1,45 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { bodyguardAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { bodyguardAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 //
-// export const donaldDuckMusketeerSoldier: LorcanitoCharacterCard = {
-//   id: "xjt",
-//   name: "Donald Duck",
-//   title: "Musketeer Soldier",
-//   characteristics: ["hero", "dreamborn", "musketeer"],
-//   text: "**Bodyguard** _(This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)_\n\n\n**WAIT FOR ME!** When you play this character, chosen character gets +1 {L} this turn.",
-//   type: "character",
-//   abilities: [
-//     bodyguardAbility,
+// Export const donaldDuckMusketeerSoldier: LorcanitoCharacterCard = {
+//   Id: "xjt",
+//   Name: "Donald Duck",
+//   Title: "Musketeer Soldier",
+//   Characteristics: ["hero", "dreamborn", "musketeer"],
+//   Text: "**Bodyguard** _(This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)_\n\n\n**WAIT FOR ME!** When you play this character, chosen character gets +1 {L} this turn.",
+//   Type: "character",
+//   Abilities: [
+//     BodyguardAbility,
 //     {
-//       type: "resolution",
-//       name: "WAIT FOR ME!",
-//       text: "When you play this character, chosen character gets +1 {L} this turn.",
-//       effects: [
+//       Type: "resolution",
+//       Name: "WAIT FOR ME!",
+//       Text: "When you play this character, chosen character gets +1 {L} this turn.",
+//       Effects: [
 //         {
-//           type: "attribute",
-//           attribute: "lore",
-//           amount: 1,
-//           modifier: "add",
-//           duration: "turn",
-//           target: chosenCharacter,
+//           Type: "attribute",
+//           Attribute: "lore",
+//           Amount: 1,
+//           Modifier: "add",
+//           Duration: "turn",
+//           Target: chosenCharacter,
 //         },
 //       ],
 //     },
 //   ],
-//   inkwell: true,
-//   colors: ["amber"],
-//   cost: 3,
-//   strength: 2,
-//   willpower: 3,
-//   lore: 1,
-//   illustrator: "Jochem van Gool",
-//   number: 8,
-//   set: "URR",
-//   externalIds: {
-//     tcgPlayer: 550556,
+//   Inkwell: true,
+//   Colors: ["amber"],
+//   Cost: 3,
+//   Strength: 2,
+//   Willpower: 3,
+//   Lore: 1,
+//   Illustrator: "Jochem van Gool",
+//   Number: 8,
+//   Set: "URR",
+//   ExternalIds: {
+//     TcgPlayer: 550556,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

@@ -1,26 +1,8 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
 export const smashundefined: ActionCard = {
-  id: "ub4",
-  cardType: "action",
-  name: "Smash",
-  version: "undefined",
-  fullName: "Smash - undefined",
-  inkType: ["steel"],
-  franchise: "Disney",
-  set: "001",
-  text: "Deal 3 damage to chosen character.",
-  cost: 3,
-  cardNumber: 200,
-  inkable: true,
-  externalIds: {
-    ravensburger: "",
-  },
   abilities: [
     {
-      type: "action",
-      id: "ub4-1",
-      text: "Deal 3 damage to chosen character.",
       effect: {
         type: "deal-damage",
         amount: 3,
@@ -32,33 +14,51 @@ export const smashundefined: ActionCard = {
           cardTypes: ["character"],
         },
       },
+      id: "ub4-1",
+      text: "Deal 3 damage to chosen character.",
+      type: "action",
     },
   ],
+  cardNumber: 200,
+  cardType: "action",
+  cost: 3,
+  externalIds: {
+    ravensburger: "",
+  },
+  franchise: "Disney",
+  fullName: "Smash - undefined",
+  id: "ub4",
+  inkType: ["steel"],
+  inkable: true,
+  name: "Smash",
+  set: "001",
+  text: "Deal 3 damage to chosen character.",
+  version: "undefined",
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const smash: LorcanitoActionCard = {
-//   id: "ub4",
-//   reprints: ["zfz"],
-//   name: "Smash",
-//   characteristics: ["action"],
-//   text: "Deal 3 damage to chosen character.",
-//   type: "action",
-//   abilities: [
+// Export const smash: LorcanitoActionCard = {
+//   Id: "ub4",
+//   Reprints: ["zfz"],
+//   Name: "Smash",
+//   Characteristics: ["action"],
+//   Text: "Deal 3 damage to chosen character.",
+//   Type: "action",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       name: "Smash",
-//       text: "Deal 3 damage to chosen character.",
-//       effects: [
+//       Type: "resolution",
+//       Name: "Smash",
+//       Text: "Deal 3 damage to chosen character.",
+//       Effects: [
 //         {
-//           type: "damage",
-//           amount: 3,
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
+//           Type: "damage",
+//           Amount: 3,
+//           Target: {
+//             Type: "card",
+//             Value: 1,
+//             Filters: [
 //               { filter: "type", value: "character" },
 //               { filter: "zone", value: "play" },
 //             ],
@@ -67,16 +67,16 @@ export const smashundefined: ActionCard = {
 //       ],
 //     },
 //   ],
-//   flavour: '"Go away!"',
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 3,
-//   illustrator: "Simangaliso Sibaya",
-//   number: 200,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 508943,
+//   Flavour: '"Go away!"',
+//   Inkwell: true,
+//   Colors: ["steel"],
+//   Cost: 3,
+//   Illustrator: "Simangaliso Sibaya",
+//   Number: 200,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 508943,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

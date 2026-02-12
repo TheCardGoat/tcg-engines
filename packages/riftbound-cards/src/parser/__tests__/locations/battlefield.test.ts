@@ -17,13 +17,13 @@ describe("Location: Battlefield", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "spell",
           effect: expect.objectContaining({
-            type: "damage",
             target: expect.objectContaining({
               location: "battlefield",
             }),
+            type: "damage",
           }),
+          type: "spell",
         }),
       );
     });
@@ -64,20 +64,18 @@ describe("Location: Battlefield", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "static",
           effect: expect.objectContaining({
             target: expect.objectContaining({
               location: "here",
             }),
           }),
+          type: "static",
         }),
       );
     });
 
     it.skip("should parse 'Play a 1 :rb_might: Recruit unit token here.'", () => {
-      const result = parseAbilities(
-        "Play a 1 :rb_might: Recruit unit token here.",
-      );
+      const result = parseAbilities("Play a 1 :rb_might: Recruit unit token here.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
@@ -104,9 +102,7 @@ describe("Location: Battlefield", () => {
 
   describe("enemy battlefield", () => {
     it.skip("should parse 'You may play me to an occupied enemy battlefield.'", () => {
-      const result = parseAbilities(
-        "You may play me to an occupied enemy battlefield.",
-      );
+      const result = parseAbilities("You may play me to an occupied enemy battlefield.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);

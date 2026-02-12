@@ -5,9 +5,9 @@ import { befuddle } from "./062-befuddle";
 describe("Befuddle - undefined", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [befuddle] });
-  //   expect(testEngine.getCardModel(befuddle).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [befuddle] });
+  //   Expect(testEngine.getCardModel(befuddle).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,114 +17,114 @@ describe("Befuddle - undefined", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { befuddle } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
-// import { simbaProtectiveCub } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { shieldOfVirtue } from "@lorcanito/lorcana-engine/cards/001/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { befuddle } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
+// Import { simbaProtectiveCub } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { shieldOfVirtue } from "@lorcanito/lorcana-engine/cards/001/items/items";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Befuddle", () => {
-//   it("Return an opponent character with cost 2.", () => {
-//     const testStore = new TestStore(
+// Describe("Befuddle", () => {
+//   It("Return an opponent character with cost 2.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: befuddle.cost,
-//         hand: [befuddle],
+//         Inkwell: befuddle.cost,
+//         Hand: [befuddle],
 //       },
 //       {
-//         play: [simbaProtectiveCub],
+//         Play: [simbaProtectiveCub],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", befuddle.id);
-//     const target = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", befuddle.id);
+//     Const target = testStore.getByZoneAndId(
 //       "play",
-//       simbaProtectiveCub.id,
+//       SimbaProtectiveCub.id,
 //       "player_two",
 //     );
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     testStore.resolveTopOfStack({
-//       targets: [target],
+//     TestStore.resolveTopOfStack({
+//       Targets: [target],
 //     });
 //
-//     expect(target.zone).toEqual("hand");
-//     expect(testStore.getZonesCardCount("player_two")).toEqual(
-//       expect.objectContaining({ hand: 1, deck: 0, discard: 0, play: 0 }),
+//     Expect(target.zone).toEqual("hand");
+//     Expect(testStore.getZonesCardCount("player_two")).toEqual(
+//       Expect.objectContaining({ hand: 1, deck: 0, discard: 0, play: 0 }),
 //     );
 //   });
 //
-//   it("Return self character with cost 2.", () => {
-//     const testStore = new TestStore({
-//       inkwell: befuddle.cost,
-//       hand: [befuddle],
-//       play: [simbaProtectiveCub],
+//   It("Return self character with cost 2.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: befuddle.cost,
+//       Hand: [befuddle],
+//       Play: [simbaProtectiveCub],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", befuddle.id);
-//     const target = testStore.getByZoneAndId("play", simbaProtectiveCub.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", befuddle.id);
+//     Const target = testStore.getByZoneAndId("play", simbaProtectiveCub.id);
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     testStore.resolveTopOfStack({
-//       targetId: target.instanceId,
+//     TestStore.resolveTopOfStack({
+//       TargetId: target.instanceId,
 //     });
 //
-//     expect(target.zone).toEqual("hand");
-//     expect(testStore.getZonesCardCount()).toEqual(
-//       expect.objectContaining({ hand: 1, deck: 0, discard: 1, play: 0 }),
+//     Expect(target.zone).toEqual("hand");
+//     Expect(testStore.getZonesCardCount()).toEqual(
+//       Expect.objectContaining({ hand: 1, deck: 0, discard: 1, play: 0 }),
 //     );
 //   });
 //
-//   it("Return an opponent item with cost 2.", () => {
-//     const testStore = new TestStore(
+//   It("Return an opponent item with cost 2.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: befuddle.cost,
-//         hand: [befuddle],
+//         Inkwell: befuddle.cost,
+//         Hand: [befuddle],
 //       },
 //       {
-//         play: [shieldOfVirtue],
+//         Play: [shieldOfVirtue],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", befuddle.id);
-//     const target = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", befuddle.id);
+//     Const target = testStore.getByZoneAndId(
 //       "play",
-//       shieldOfVirtue.id,
+//       ShieldOfVirtue.id,
 //       "player_two",
 //     );
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     testStore.resolveTopOfStack({
-//       targetId: target.instanceId,
+//     TestStore.resolveTopOfStack({
+//       TargetId: target.instanceId,
 //     });
 //
-//     expect(target.zone).toEqual("hand");
-//     expect(testStore.getZonesCardCount("player_two")).toEqual(
-//       expect.objectContaining({ hand: 1, deck: 0, discard: 0, play: 0 }),
+//     Expect(target.zone).toEqual("hand");
+//     Expect(testStore.getZonesCardCount("player_two")).toEqual(
+//       Expect.objectContaining({ hand: 1, deck: 0, discard: 0, play: 0 }),
 //     );
 //   });
 //
-//   it("Return self item with cost 2.", () => {
-//     const testStore = new TestStore({
-//       inkwell: befuddle.cost,
-//       hand: [befuddle],
-//       play: [shieldOfVirtue],
+//   It("Return self item with cost 2.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: befuddle.cost,
+//       Hand: [befuddle],
+//       Play: [shieldOfVirtue],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", befuddle.id);
-//     const target = testStore.getByZoneAndId("play", shieldOfVirtue.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", befuddle.id);
+//     Const target = testStore.getByZoneAndId("play", shieldOfVirtue.id);
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     testStore.resolveTopOfStack({
-//       targetId: target.instanceId,
+//     TestStore.resolveTopOfStack({
+//       TargetId: target.instanceId,
 //     });
 //
-//     expect(target.zone).toEqual("hand");
-//     expect(testStore.getZonesCardCount()).toEqual(
-//       expect.objectContaining({ hand: 1, deck: 0, discard: 1, play: 0 }),
+//     Expect(target.zone).toEqual("hand");
+//     Expect(testStore.getZonesCardCount()).toEqual(
+//       Expect.objectContaining({ hand: 1, deck: 0, discard: 1, play: 0 }),
 //     );
 //   });
 // });

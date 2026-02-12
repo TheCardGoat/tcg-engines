@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { fireTheCannons } from "@lorcanito/lorcana-engine/cards/009/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { fireTheCannons } from "@lorcanito/lorcana-engine/cards/009/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Fire the Cannons!", () => {
-//   it.skip("Deal 2 damage to chosen character.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: fireTheCannons.cost,
-//       play: [fireTheCannons],
-//       hand: [fireTheCannons],
+// Describe("Fire the Cannons!", () => {
+//   It.skip("Deal 2 damage to chosen character.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: fireTheCannons.cost,
+//       Play: [fireTheCannons],
+//       Hand: [fireTheCannons],
 //     });
 //
-//     await testEngine.playCard(fireTheCannons);
+//     Await testEngine.playCard(fireTheCannons);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

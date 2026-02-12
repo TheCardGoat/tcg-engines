@@ -5,9 +5,9 @@ import { jafarKeeperOfSecrets } from "./044-jafar-keeper-of-secrets";
 describe("Jafar - Keeper of Secrets", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [jafarKeeperOfSecrets] });
-  //   expect(testEngine.getCardModel(jafarKeeperOfSecrets).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [jafarKeeperOfSecrets] });
+  //   Expect(testEngine.getCardModel(jafarKeeperOfSecrets).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,32 +17,32 @@ describe("Jafar - Keeper of Secrets", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { jafarKeeperOfSecrets } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { jafarKeeperOfSecrets } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Jafar - Keeper of Secrets", () => {
-//   it("**HIDDEN WONDERS** This character gets +1 {S} for each card in your hand.", () => {
-//     const testStore = new TestStore({
-//       deck: 10,
-//       play: [jafarKeeperOfSecrets],
+// Describe("Jafar - Keeper of Secrets", () => {
+//   It("**HIDDEN WONDERS** This character gets +1 {S} for each card in your hand.", () => {
+//     Const testStore = new TestStore({
+//       Deck: 10,
+//       Play: [jafarKeeperOfSecrets],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       jafarKeeperOfSecrets.id,
+//       JafarKeeperOfSecrets.id,
 //     );
 //
-//     expect(cardUnderTest.strength).toEqual(0);
+//     Expect(cardUnderTest.strength).toEqual(0);
 //
-//     testStore.store.drawCard("player_one");
-//     expect(cardUnderTest.strength).toEqual(1);
+//     TestStore.store.drawCard("player_one");
+//     Expect(cardUnderTest.strength).toEqual(1);
 //
-//     testStore.store.drawCard("player_one");
-//     expect(cardUnderTest.strength).toEqual(2);
+//     TestStore.store.drawCard("player_one");
+//     Expect(cardUnderTest.strength).toEqual(2);
 //
-//     testStore.store.drawCard("player_one");
-//     expect(cardUnderTest.strength).toEqual(3);
+//     TestStore.store.drawCard("player_one");
+//     Expect(cardUnderTest.strength).toEqual(3);
 //   });
 // });
 //

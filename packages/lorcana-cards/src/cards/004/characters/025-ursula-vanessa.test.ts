@@ -3,18 +3,18 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { ursulaVanessa } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { ursulaVanessa } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Ursula - Vanessa", () => {
-//   it("**Singer** 4 _(This character counts as cost 4 to sing songs.)_", () => {
-//     const testStore = new TestStore({
-//       play: [ursulaVanessa],
+// Describe("Ursula - Vanessa", () => {
+//   It("**Singer** 4 _(This character counts as cost 4 to sing songs.)_", () => {
+//     Const testStore = new TestStore({
+//       Play: [ursulaVanessa],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("play", ursulaVanessa.id);
-//     expect(cardUnderTest.hasSinger).toBe(true);
+//     Const cardUnderTest = testStore.getByZoneAndId("play", ursulaVanessa.id);
+//     Expect(cardUnderTest.hasSinger).toBe(true);
 //   });
 // });
 //

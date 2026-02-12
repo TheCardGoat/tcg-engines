@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { jafarKeeperOfSecrets } from "@lorcanito/lorcana-engine/cards/009/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { jafarKeeperOfSecrets } from "@lorcanito/lorcana-engine/cards/009/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Jafar - Keeper of Secrets", () => {
-//   it.skip("**HIDDEN WONDERS** This character gets +1 {S} for each card in your hand.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: jafarKeeperOfSecrets.cost,
-//       play: [jafarKeeperOfSecrets],
-//       hand: [jafarKeeperOfSecrets],
+// Describe("Jafar - Keeper of Secrets", () => {
+//   It.skip("**HIDDEN WONDERS** This character gets +1 {S} for each card in your hand.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: jafarKeeperOfSecrets.cost,
+//       Play: [jafarKeeperOfSecrets],
+//       Hand: [jafarKeeperOfSecrets],
 //     });
 //
-//     await testEngine.playCard(jafarKeeperOfSecrets);
+//     Await testEngine.playCard(jafarKeeperOfSecrets);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

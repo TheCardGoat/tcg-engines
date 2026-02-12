@@ -30,9 +30,9 @@ function parseFromText(text: string): DiscardEffect | null {
     logger.info("Parsed each opponent discards hand effect");
 
     return {
-      type: "discard",
       amount: -1,
       target: "EACH_OPPONENT",
+      type: "discard",
     };
   }
 
@@ -41,9 +41,9 @@ function parseFromText(text: string): DiscardEffect | null {
     logger.info("Parsed discard your hand effect");
 
     return {
-      type: "discard",
       amount: -1,
       target: "CONTROLLER",
+      type: "discard",
     };
   }
 
@@ -55,11 +55,8 @@ function parseFromText(text: string): DiscardEffect | null {
  * Discard hand effect parser implementation
  */
 export const discardHandEffectParser: EffectParser = {
-  pattern:
-    /(?:each\s+(?:player|opponent)\s+discards?(?:\s+their)?\s+hand|discard\s+(?:your\s+)?hand)/i,
   description:
     "Parses discard hand effects (e.g., 'each player discards their hand', 'discard your hand')",
-
   parse: (input: CstNode | string): DiscardEffect | null => {
     if (typeof input === "string") {
       return parseFromText(input);
@@ -68,4 +65,7 @@ export const discardHandEffectParser: EffectParser = {
     logger.warn("CST parsing not implemented for discard hand effects");
     return null;
   },
+
+  pattern:
+    /(?:each\s+(?:player|opponent)\s+discards?(?:\s+their)?\s+hand|discard\s+(?:your\s+)?hand)/i,
 };

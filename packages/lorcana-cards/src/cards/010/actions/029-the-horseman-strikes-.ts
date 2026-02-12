@@ -1,38 +1,38 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { chosenCharacterWithEvasive } from "@lorcanito/lorcana-engine/abilities/target";
-// import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+// Import { chosenCharacterWithEvasive } from "@lorcanito/lorcana-engine/abilities/target";
+// Import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const theHorsemanStrikes: LorcanitoActionCard = {
-//   id: "uka",
-//   name: "The Horseman Strikes!",
-//   characteristics: ["action"],
-//   text: "Draw a card. You may banish chosen character with Evasive.",
-//   type: "action",
-//   inkwell: true,
-//   colors: ["amber"],
-//   cost: 3,
-//   illustrator: "Jaime Puga",
-//   number: 29,
-//   set: "010",
-//   externalIds: {
-//     tcgPlayer: 660036,
+// Export const theHorsemanStrikes: LorcanitoActionCard = {
+//   Id: "uka",
+//   Name: "The Horseman Strikes!",
+//   Characteristics: ["action"],
+//   Text: "Draw a card. You may banish chosen character with Evasive.",
+//   Type: "action",
+//   Inkwell: true,
+//   Colors: ["amber"],
+//   Cost: 3,
+//   Illustrator: "Jaime Puga",
+//   Number: 29,
+//   Set: "010",
+//   ExternalIds: {
+//     TcgPlayer: 660036,
 //   },
-//   rarity: "rare",
-//   abilities: [
+//   Rarity: "rare",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       text: "Draw a card.",
-//       effects: [drawACard],
+//       Type: "resolution",
+//       Text: "Draw a card.",
+//       Effects: [drawACard],
 //     },
 //     {
-//       type: "resolution",
-//       optional: true,
-//       text: "You may banish chosen character with Evasive.",
-//       effects: [
+//       Type: "resolution",
+//       Optional: true,
+//       Text: "You may banish chosen character with Evasive.",
+//       Effects: [
 //         {
-//           type: "banish",
-//           target: chosenCharacterWithEvasive,
+//           Type: "banish",
+//           Target: chosenCharacterWithEvasive,
 //         },
 //       ],
 //     },

@@ -3,51 +3,51 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { magicBroomBucketBrigade } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import {
-//   magicBroomAerialCleaner,
-//   mickeyMousePlayfulSorcerer,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { magicBroomBucketBrigade } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import {
+//   MagicBroomAerialCleaner,
+//   MickeyMousePlayfulSorcerer,
 // } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Mickey Mouse - Playful Sorcerer", () => {
-//   it("**SWEEP AWAY** When you play this character, deal damage to chosen character equal to the number of Broom characters you have in play.", () => {
-//     const testEngine = new TestEngine({
-//       inkwell: mickeyMousePlayfulSorcerer.cost,
-//       hand: [mickeyMousePlayfulSorcerer],
-//       play: [magicBroomBucketBrigade, magicBroomAerialCleaner],
+// Describe("Mickey Mouse - Playful Sorcerer", () => {
+//   It("**SWEEP AWAY** When you play this character, deal damage to chosen character equal to the number of Broom characters you have in play.", () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: mickeyMousePlayfulSorcerer.cost,
+//       Hand: [mickeyMousePlayfulSorcerer],
+//       Play: [magicBroomBucketBrigade, magicBroomAerialCleaner],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(mickeyMousePlayfulSorcerer);
-//     const target = testEngine.getCardModel(magicBroomAerialCleaner);
-//     const expectedDamage = testEngine.getZonesCardCount().play;
+//     Const cardUnderTest = testEngine.getCardModel(mickeyMousePlayfulSorcerer);
+//     Const target = testEngine.getCardModel(magicBroomAerialCleaner);
+//     Const expectedDamage = testEngine.getZonesCardCount().play;
 //
-//     cardUnderTest.playFromHand();
-//     testEngine.resolveTopOfStack({ targets: [target] });
+//     CardUnderTest.playFromHand();
+//     TestEngine.resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.meta.damage).toEqual(expectedDamage);
+//     Expect(target.meta.damage).toEqual(expectedDamage);
 //   });
 //
-//   it("**SWEEP AWAY** When you play this character, deal damage to chosen character equal to the number of Broom characters you have in play.", () => {
-//     const testEngine = new TestEngine(
+//   It("**SWEEP AWAY** When you play this character, deal damage to chosen character equal to the number of Broom characters you have in play.", () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: mickeyMousePlayfulSorcerer.cost,
-//         hand: [mickeyMousePlayfulSorcerer],
+//         Inkwell: mickeyMousePlayfulSorcerer.cost,
+//         Hand: [mickeyMousePlayfulSorcerer],
 //       },
 //       {
-//         play: [magicBroomBucketBrigade, magicBroomAerialCleaner],
+//         Play: [magicBroomBucketBrigade, magicBroomAerialCleaner],
 //       },
 //     );
 //
-//     const cardUnderTest = testEngine.getCardModel(mickeyMousePlayfulSorcerer);
-//     const target = testEngine.getCardModel(magicBroomAerialCleaner);
-//     const expectedDamage = testEngine.getZonesCardCount().play;
+//     Const cardUnderTest = testEngine.getCardModel(mickeyMousePlayfulSorcerer);
+//     Const target = testEngine.getCardModel(magicBroomAerialCleaner);
+//     Const expectedDamage = testEngine.getZonesCardCount().play;
 //
-//     cardUnderTest.playFromHand();
-//     testEngine.resolveTopOfStack({ targets: [target] });
+//     CardUnderTest.playFromHand();
+//     TestEngine.resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.meta.damage).toEqual(expectedDamage);
+//     Expect(target.meta.damage).toEqual(expectedDamage);
 //   });
 // });
 //

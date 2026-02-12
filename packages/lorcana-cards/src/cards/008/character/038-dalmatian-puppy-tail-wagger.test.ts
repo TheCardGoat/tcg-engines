@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { dalmatianPuppyTailWagger } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { dalmatianPuppyTailWagger } from "@lorcanito/lorcana-engine/cards/008/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Dalmatian Puppy - Tail Wagger", () => {
-//   it.skip("WHERE DID THEY ALL COME FROM? You may have up to 99 copies of Dalmatian Puppy - Tail Wagger in your deck.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: dalmatianPuppyTailWagger.cost,
-//       play: [dalmatianPuppyTailWagger],
-//       hand: [dalmatianPuppyTailWagger],
+// Describe("Dalmatian Puppy - Tail Wagger", () => {
+//   It.skip("WHERE DID THEY ALL COME FROM? You may have up to 99 copies of Dalmatian Puppy - Tail Wagger in your deck.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: dalmatianPuppyTailWagger.cost,
+//       Play: [dalmatianPuppyTailWagger],
+//       Hand: [dalmatianPuppyTailWagger],
 //     });
 //
-//     await testEngine.playCard(dalmatianPuppyTailWagger);
+//     Await testEngine.playCard(dalmatianPuppyTailWagger);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

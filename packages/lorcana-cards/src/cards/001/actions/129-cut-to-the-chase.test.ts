@@ -5,9 +5,9 @@ import { cutToTheChase } from "./129-cut-to-the-chase";
 describe("Cut to the Chase - undefined", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [cutToTheChase] });
-  //   expect(testEngine.getCardModel(cutToTheChase).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [cutToTheChase] });
+  //   Expect(testEngine.getCardModel(cutToTheChase).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -16,26 +16,26 @@ describe("Cut to the Chase - undefined", () => {
 // /**
 //  * @jest-environment node
 //  */
-// import { describe, expect, it } from "@jest/globals";
-// import { cutToTheChase } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
-// import { moanaOfMotunui } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { cutToTheChase } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
+// Import { moanaOfMotunui } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Cut to the Chase", () => {
-//   it("Chosen character gains **Rush** this turn.", () => {
-//     const testStore = new TestStore({
-//       inkwell: cutToTheChase.cost,
-//       hand: [cutToTheChase],
-//       play: [moanaOfMotunui],
+// Describe("Cut to the Chase", () => {
+//   It("Chosen character gains **Rush** this turn.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: cutToTheChase.cost,
+//       Hand: [cutToTheChase],
+//       Play: [moanaOfMotunui],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", cutToTheChase.id);
-//     const target = testStore.getByZoneAndId("play", moanaOfMotunui.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", cutToTheChase.id);
+//     Const target = testStore.getByZoneAndId("play", moanaOfMotunui.id);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveTopOfStack({ targetId: target.instanceId });
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveTopOfStack({ targetId: target.instanceId });
 //
-//     expect(target.hasRush).toEqual(true);
+//     Expect(target.hasRush).toEqual(true);
 //   });
 // });
 //

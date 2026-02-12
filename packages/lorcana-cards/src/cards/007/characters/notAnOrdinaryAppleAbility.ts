@@ -1,48 +1,48 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { ActivatedAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { anyCard, self } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import type { ActivatedAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import { anyCard, self } from "@lorcanito/lorcana-engine/abilities/targets";
 //
-// export const notAnOrdinaryAppleAbility: ActivatedAbility = {
-//   type: "activated",
-//   costs: [{ type: "exert" }],
-//   name: "NOT AN ORDINARY APPLE",
-//   text: "Choose 3 cards in an opponent's discard and put them under their deck to gain 3 lore. If you moved at least 1 Princess this way, gain 4 lore instead.",
-//   effects: [
+// Export const notAnOrdinaryAppleAbility: ActivatedAbility = {
+//   Type: "activated",
+//   Costs: [{ type: "exert" }],
+//   Name: "NOT AN ORDINARY APPLE",
+//   Text: "Choose 3 cards in an opponent's discard and put them under their deck to gain 3 lore. If you moved at least 1 Princess this way, gain 4 lore instead.",
+//   Effects: [
 //     {
-//       type: "move",
-//       to: "deck",
-//       bottom: true,
-//       target: {
-//         type: "card",
-//         value: 3,
-//         filters: [
+//       Type: "move",
+//       To: "deck",
+//       Bottom: true,
+//       Target: {
+//         Type: "card",
+//         Value: 3,
+//         Filters: [
 //           { filter: "zone", value: "discard" },
 //           { filter: "owner", value: "opponent" },
 //         ],
 //       },
-//       afterEffect: [
+//       AfterEffect: [
 //         {
-//           type: "create-layer-based-on-target",
-//           target: anyCard, // TODO: Revisit this
-//           filters: [{ filter: "characteristics", value: ["princess"] }],
-//           numberOfMatchingTargets: {
-//             operator: "gte",
-//             value: 1,
+//           Type: "create-layer-based-on-target",
+//           Target: anyCard, // TODO: Revisit this
+//           Filters: [{ filter: "characteristics", value: ["princess"] }],
+//           NumberOfMatchingTargets: {
+//             Operator: "gte",
+//             Value: 1,
 //           },
-//           effects: [
+//           Effects: [
 //             {
-//               type: "lore",
-//               amount: 4,
-//               modifier: "add",
-//               target: self,
+//               Type: "lore",
+//               Amount: 4,
+//               Modifier: "add",
+//               Target: self,
 //             },
 //           ],
-//           fallback: [
+//           Fallback: [
 //             {
-//               type: "lore",
-//               amount: 3, // Changed from 4 to 3 as per the card text
-//               modifier: "add",
-//               target: self,
+//               Type: "lore",
+//               Amount: 3, // Changed from 4 to 3 as per the card text
+//               Modifier: "add",
+//               Target: self,
 //             },
 //           ],
 //         },

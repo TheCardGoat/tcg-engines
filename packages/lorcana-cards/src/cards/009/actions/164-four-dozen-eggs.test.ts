@@ -3,48 +3,48 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { fourDozenEggs } from "@lorcanito/lorcana-engine/cards/009/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { fourDozenEggs } from "@lorcanito/lorcana-engine/cards/009/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Four Dozen Eggs", () => {
-//   it.skip("_(A character with cost 4 or more can {E} to sing this", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: fourDozenEggs.cost,
-//       play: [fourDozenEggs],
-//       hand: [fourDozenEggs],
+// Describe("Four Dozen Eggs", () => {
+//   It.skip("_(A character with cost 4 or more can {E} to sing this", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: fourDozenEggs.cost,
+//       Play: [fourDozenEggs],
+//       Hand: [fourDozenEggs],
 //     });
 //
-//     await testEngine.playCard(fourDozenEggs);
+//     Await testEngine.playCard(fourDozenEggs);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 //
-//   it.skip("song for free.)_", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: fourDozenEggs.cost,
-//       play: [fourDozenEggs],
-//       hand: [fourDozenEggs],
+//   It.skip("song for free.)_", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: fourDozenEggs.cost,
+//       Play: [fourDozenEggs],
+//       Hand: [fourDozenEggs],
 //     });
 //
-//     await testEngine.playCard(fourDozenEggs);
+//     Await testEngine.playCard(fourDozenEggs);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 //
-//   it.skip("Your characters gain **Resist** +2 until the start of your next turn. _(Damage dealt to them is reduced by 2.)_", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: fourDozenEggs.cost,
-//       play: [fourDozenEggs],
-//       hand: [fourDozenEggs],
+//   It.skip("Your characters gain **Resist** +2 until the start of your next turn. _(Damage dealt to them is reduced by 2.)_", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: fourDozenEggs.cost,
+//       Play: [fourDozenEggs],
+//       Hand: [fourDozenEggs],
 //     });
 //
-//     await testEngine.playCard(fourDozenEggs);
+//     Await testEngine.playCard(fourDozenEggs);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

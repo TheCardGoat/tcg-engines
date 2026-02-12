@@ -51,10 +51,7 @@ export type Classification = (typeof CLASSIFICATIONS)[number];
  * Check if a value is a valid classification
  */
 export function isClassification(value: unknown): value is Classification {
-  return (
-    typeof value === "string" &&
-    CLASSIFICATIONS.includes(value as Classification)
-  );
+  return typeof value === "string" && CLASSIFICATIONS.includes(value as Classification);
 }
 
 /**

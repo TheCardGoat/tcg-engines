@@ -3,46 +3,46 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   arielSpectacularSinger,
-//   mickeyBraveLittleTailor,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   ArielSpectacularSinger,
+//   MickeyBraveLittleTailor,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { mrSmeeBumblingMate } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { pegNaturalPerformer } from "@lorcanito/lorcana-engine/cards/007/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { mrSmeeBumblingMate } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { pegNaturalPerformer } from "@lorcanito/lorcana-engine/cards/007/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Peg - Born for the stage", () => {
-//   describe("CAPTIVE AUDIENCE {E} – If you have at least 3 other characters in play, draw a card.", () => {
-//     it("Draws a card if there are at least 3 other characters in play.", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: pegNaturalPerformer.cost,
-//         play: [
-//           pegNaturalPerformer,
-//           mrSmeeBumblingMate,
-//           mrSmeeBumblingMate,
-//           mrSmeeBumblingMate,
+// Describe("Peg - Born for the stage", () => {
+//   Describe("CAPTIVE AUDIENCE {E} – If you have at least 3 other characters in play, draw a card.", () => {
+//     It("Draws a card if there are at least 3 other characters in play.", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: pegNaturalPerformer.cost,
+//         Play: [
+//           PegNaturalPerformer,
+//           MrSmeeBumblingMate,
+//           MrSmeeBumblingMate,
+//           MrSmeeBumblingMate,
 //         ],
-//         hand: [],
-//         deck: [arielSpectacularSinger, mickeyBraveLittleTailor],
+//         Hand: [],
+//         Deck: [arielSpectacularSinger, mickeyBraveLittleTailor],
 //       });
 //
-//       await testEngine.activateCard(pegNaturalPerformer);
+//       Await testEngine.activateCard(pegNaturalPerformer);
 //
-//       expect(testEngine.getZonesCardCount("player_one").hand).toBe(1);
+//       Expect(testEngine.getZonesCardCount("player_one").hand).toBe(1);
 //     });
 //
-//     it("Does not draw a card if there are less than 3 other characters in play.", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: pegNaturalPerformer.cost,
-//         play: [pegNaturalPerformer, mrSmeeBumblingMate, mrSmeeBumblingMate],
-//         hand: [],
-//         deck: [arielSpectacularSinger, mickeyBraveLittleTailor],
+//     It("Does not draw a card if there are less than 3 other characters in play.", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: pegNaturalPerformer.cost,
+//         Play: [pegNaturalPerformer, mrSmeeBumblingMate, mrSmeeBumblingMate],
+//         Hand: [],
+//         Deck: [arielSpectacularSinger, mickeyBraveLittleTailor],
 //       });
 //
-//       await testEngine.activateCard(pegNaturalPerformer);
+//       Await testEngine.activateCard(pegNaturalPerformer);
 //
-//       expect(testEngine.getZonesCardCount("player_one").hand).toBe(0);
+//       Expect(testEngine.getZonesCardCount("player_one").hand).toBe(0);
 //     });
 //   });
 // });

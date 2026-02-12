@@ -1,11 +1,7 @@
 import { describe, expect, it } from "bun:test";
 import { createCardId, createPlayerId, createZoneId } from "../types";
 import { createZone } from "./zone-factory";
-import {
-  createPlayerZones,
-  getCardZone,
-  moveCardInState,
-} from "./zone-state-helpers";
+import { createPlayerZones, getCardZone, moveCardInState } from "./zone-state-helpers";
 
 describe("Zone State Helpers", () => {
   describe("createPlayerZones", () => {
@@ -80,21 +76,21 @@ describe("Zone State Helpers", () => {
       const cardId = createCardId("card-1");
 
       const state = {
+        deck: createZone({
+          id: createZoneId("deck"),
+          name: "Deck",
+          ordered: true,
+          visibility: "secret",
+        }),
         hand: createZone(
           {
             id: createZoneId("hand"),
             name: "Hand",
-            visibility: "private",
             ordered: false,
+            visibility: "private",
           },
           [cardId, createCardId("card-2")],
         ),
-        deck: createZone({
-          id: createZoneId("deck"),
-          name: "Deck",
-          visibility: "secret",
-          ordered: true,
-        }),
       };
 
       const newState = moveCardInState(state, "hand", "deck", cardId);
@@ -109,29 +105,29 @@ describe("Zone State Helpers", () => {
       const cardId = createCardId("card-1");
 
       const state = {
-        hand: createZone(
-          {
-            id: createZoneId("hand"),
-            name: "Hand",
-            visibility: "private",
-            ordered: false,
-          },
-          [cardId],
-        ),
         deck: createZone({
           id: createZoneId("deck"),
           name: "Deck",
-          visibility: "secret",
           ordered: true,
+          visibility: "secret",
         }),
         graveyard: createZone(
           {
             id: createZoneId("graveyard"),
             name: "Graveyard",
-            visibility: "public",
             ordered: true,
+            visibility: "public",
           },
           [createCardId("card-3")],
+        ),
+        hand: createZone(
+          {
+            id: createZoneId("hand"),
+            name: "Hand",
+            ordered: false,
+            visibility: "private",
+          },
+          [cardId],
         ),
       };
 
@@ -145,21 +141,21 @@ describe("Zone State Helpers", () => {
       const cardId = createCardId("card-1");
 
       const state = {
+        deck: createZone({
+          id: createZoneId("deck"),
+          name: "Deck",
+          ordered: true,
+          visibility: "secret",
+        }),
         hand: createZone(
           {
             id: createZoneId("hand"),
             name: "Hand",
-            visibility: "private",
             ordered: false,
+            visibility: "private",
           },
           [cardId],
         ),
-        deck: createZone({
-          id: createZoneId("deck"),
-          name: "Deck",
-          visibility: "secret",
-          ordered: true,
-        }),
       };
 
       const originalHandCards = state.hand.cards;
@@ -177,23 +173,23 @@ describe("Zone State Helpers", () => {
       const cardId = createCardId("card-1");
 
       const state = {
-        hand: createZone(
-          {
-            id: createZoneId("hand"),
-            name: "Hand",
-            visibility: "private",
-            ordered: false,
-          },
-          [cardId],
-        ),
         deck: createZone(
           {
             id: createZoneId("deck"),
             name: "Deck",
-            visibility: "secret",
             ordered: true,
+            visibility: "secret",
           },
           [createCardId("card-2")],
+        ),
+        hand: createZone(
+          {
+            id: createZoneId("hand"),
+            name: "Hand",
+            ordered: false,
+            visibility: "private",
+          },
+          [cardId],
         ),
       };
 
@@ -209,21 +205,21 @@ describe("Zone State Helpers", () => {
       const cardId = createCardId("card-1");
 
       const state = {
+        deck: createZone({
+          id: createZoneId("deck"),
+          name: "Deck",
+          ordered: true,
+          visibility: "secret",
+        }),
         hand: createZone(
           {
             id: createZoneId("hand"),
             name: "Hand",
-            visibility: "private",
             ordered: false,
+            visibility: "private",
           },
           [cardId, createCardId("card-2")],
         ),
-        deck: createZone({
-          id: createZoneId("deck"),
-          name: "Deck",
-          visibility: "secret",
-          ordered: true,
-        }),
       };
 
       const zoneName = getCardZone(state, cardId);
@@ -235,23 +231,23 @@ describe("Zone State Helpers", () => {
       const cardId = createCardId("card-3");
 
       const state = {
-        hand: createZone(
-          {
-            id: createZoneId("hand"),
-            name: "Hand",
-            visibility: "private",
-            ordered: false,
-          },
-          [createCardId("card-1")],
-        ),
         deck: createZone(
           {
             id: createZoneId("deck"),
             name: "Deck",
-            visibility: "secret",
             ordered: true,
+            visibility: "secret",
           },
           [createCardId("card-2"), cardId],
+        ),
+        hand: createZone(
+          {
+            id: createZoneId("hand"),
+            name: "Hand",
+            ordered: false,
+            visibility: "private",
+          },
+          [createCardId("card-1")],
         ),
       };
 
@@ -262,21 +258,21 @@ describe("Zone State Helpers", () => {
 
     it("should return undefined when card not found", () => {
       const state = {
+        deck: createZone({
+          id: createZoneId("deck"),
+          name: "Deck",
+          ordered: true,
+          visibility: "secret",
+        }),
         hand: createZone(
           {
             id: createZoneId("hand"),
             name: "Hand",
-            visibility: "private",
             ordered: false,
+            visibility: "private",
           },
           [createCardId("card-1")],
         ),
-        deck: createZone({
-          id: createZoneId("deck"),
-          name: "Deck",
-          visibility: "secret",
-          ordered: true,
-        }),
       };
 
       const zoneName = getCardZone(state, createCardId("missing"));
@@ -288,21 +284,21 @@ describe("Zone State Helpers", () => {
       const cardId = createCardId("card-1");
 
       const state = {
-        hand: createZone(
-          {
-            id: createZoneId("hand"),
-            name: "Hand",
-            visibility: "private",
-            ordered: false,
-          },
-          [cardId],
-        ),
         deck: createZone(
           {
             id: createZoneId("deck"),
             name: "Deck",
-            visibility: "secret",
             ordered: true,
+            visibility: "secret",
+          },
+          [cardId],
+        ),
+        hand: createZone(
+          {
+            id: createZoneId("hand"),
+            name: "Hand",
+            ordered: false,
+            visibility: "private",
           },
           [cardId],
         ),
@@ -310,22 +306,22 @@ describe("Zone State Helpers", () => {
 
       const zoneName = getCardZone(state, cardId);
 
-      expect(zoneName).toBe("hand");
+      expect(zoneName).toBe("deck");
     });
 
     it("should handle empty zones", () => {
       const state = {
-        hand: createZone({
-          id: createZoneId("hand"),
-          name: "Hand",
-          visibility: "private",
-          ordered: false,
-        }),
         deck: createZone({
           id: createZoneId("deck"),
           name: "Deck",
-          visibility: "secret",
           ordered: true,
+          visibility: "secret",
+        }),
+        hand: createZone({
+          id: createZoneId("hand"),
+          name: "Hand",
+          ordered: false,
+          visibility: "private",
         }),
       };
 

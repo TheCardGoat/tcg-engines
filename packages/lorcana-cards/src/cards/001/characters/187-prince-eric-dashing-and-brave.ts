@@ -1,74 +1,74 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const princeEricDashingAndBrave: CharacterCard = {
-  id: "omx",
-  cardType: "character",
-  name: "Prince Eric",
-  version: "Dashing and Brave",
-  fullName: "Prince Eric - Dashing and Brave",
-  inkType: ["steel"],
-  franchise: "Disney",
-  set: "001",
-  text: "**Challenger** +2 _(While challenging, this character gets +2 {S}.)_",
-  cost: 2,
-  strength: 1,
-  willpower: 3,
-  lore: 1,
-  cardNumber: 187,
-  inkable: true,
-  externalIds: {
-    ravensburger: "",
-  },
   abilities: [
     {
-      type: "action",
-      text: "**Challenger** +2 _(While challenging, this character gets +2 {S}.)_",
-      id: "omx-1",
       effect: {
         type: "modify-stat",
         stat: "strength",
         modifier: 2,
         target: "SELF",
       },
+      id: "omx-1",
+      text: "**Challenger** +2 _(While challenging, this character gets +2 {S}.)_",
+      type: "action",
     },
   ],
+  cardNumber: 187,
+  cardType: "character",
   classifications: ["Hero", "Storyborn", "Prince"],
+  cost: 2,
+  externalIds: {
+    ravensburger: "",
+  },
+  franchise: "Disney",
+  fullName: "Prince Eric - Dashing and Brave",
+  id: "omx",
+  inkType: ["steel"],
+  inkable: true,
+  lore: 1,
+  name: "Prince Eric",
+  set: "001",
+  strength: 1,
+  text: "**Challenger** +2 _(While challenging, this character gets +2 {S}.)_",
+  version: "Dashing and Brave",
+  willpower: 3,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { ChallengerAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { ChallengerAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const priceEricDashingAndBrave: LorcanitoCharacterCard = {
-//   id: "omx",
-//   reprints: ["rfl"],
+// Export const priceEricDashingAndBrave: LorcanitoCharacterCard = {
+//   Id: "omx",
+//   Reprints: ["rfl"],
 //
-//   name: "Prince Eric",
-//   title: "Dashing and Brave",
-//   characteristics: ["hero", "storyborn", "prince"],
-//   text: "**Challenger** +2 _(While challenging, this character gets +2 {S}.)_",
-//   type: "character",
-//   abilities: [
+//   Name: "Prince Eric",
+//   Title: "Dashing and Brave",
+//   Characteristics: ["hero", "storyborn", "prince"],
+//   Text: "**Challenger** +2 _(While challenging, this character gets +2 {S}.)_",
+//   Type: "character",
+//   Abilities: [
 //     {
-//       type: "static",
-//       ability: "challenger",
-//       value: 2,
-//       text: "**Challenger** +2 (_When challenging, this character get +2 {S}._)",
+//       Type: "static",
+//       Ability: "challenger",
+//       Value: 2,
+//       Text: "**Challenger** +2 (_When challenging, this character get +2 {S}._)",
 //     } as ChallengerAbility,
 //   ],
-//   flavour: "I lost her once! I'm not gonna lose her again!",
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 2,
-//   strength: 1,
-//   willpower: 3,
-//   lore: 1,
-//   illustrator: "Cristian Romero",
-//   number: 187,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 508933,
+//   Flavour: "I lost her once! I'm not gonna lose her again!",
+//   Inkwell: true,
+//   Colors: ["steel"],
+//   Cost: 2,
+//   Strength: 1,
+//   Willpower: 3,
+//   Lore: 1,
+//   Illustrator: "Cristian Romero",
+//   Number: 187,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 508933,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

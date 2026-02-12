@@ -3,134 +3,134 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/180-goofy-knight-for-a-day";
-// import {
-//   emilyQuackfasterLevelheadedLibrarian,
-//   littleJohnImpermanentOutlaw,
-//   simbaKingInTheMaking,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/180-goofy-knight-for-a-day";
+// Import {
+//   EmilyQuackfasterLevelheadedLibrarian,
+//   LittleJohnImpermanentOutlaw,
+//   SimbaKingInTheMaking,
 // } from "@lorcanito/lorcana-engine/cards/010/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Emily Quackfaster - Level-Headed Librarian", () => {
-//   describe("RECOMMENDED READING - When you play this character, you may put the top card of your deck facedown under one of your characters or locations with Boost.", () => {
-//     it("should allow putting top card of deck under a character with Boost when played", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: emilyQuackfasterLevelheadedLibrarian.cost,
-//         hand: [emilyQuackfasterLevelheadedLibrarian],
-//         deck: 5,
-//         play: [simbaKingInTheMaking], // Has Boost 3 ability
+// Describe("Emily Quackfaster - Level-Headed Librarian", () => {
+//   Describe("RECOMMENDED READING - When you play this character, you may put the top card of your deck facedown under one of your characters or locations with Boost.", () => {
+//     It("should allow putting top card of deck under a character with Boost when played", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: emilyQuackfasterLevelheadedLibrarian.cost,
+//         Hand: [emilyQuackfasterLevelheadedLibrarian],
+//         Deck: 5,
+//         Play: [simbaKingInTheMaking], // Has Boost 3 ability
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(
-//         emilyQuackfasterLevelheadedLibrarian,
+//       Const cardUnderTest = testEngine.getCardModel(
+//         EmilyQuackfasterLevelheadedLibrarian,
 //       );
-//       const boostCharacter = testEngine.getCardModel(simbaKingInTheMaking);
+//       Const boostCharacter = testEngine.getCardModel(simbaKingInTheMaking);
 //
 //       // Initially, Simba should have no cards under him
-//       expect(boostCharacter.cardsUnder.length).toBe(0);
+//       Expect(boostCharacter.cardsUnder.length).toBe(0);
 //
 //       // Play Emily Quackfaster
-//       await testEngine.playCard(cardUnderTest);
+//       Await testEngine.playCard(cardUnderTest);
 //
 //       // Accept the optional trigger
-//       await testEngine.acceptOptionalLayer();
+//       Await testEngine.acceptOptionalLayer();
 //
 //       // Select Simba as the target to put the card under
-//       await testEngine.resolveTopOfStack({ targets: [boostCharacter] }, true);
+//       Await testEngine.resolveTopOfStack({ targets: [boostCharacter] }, true);
 //
 //       // Skip Simba's TIMELY ALLIANCE trigger (it tries to trigger when a card is put under him)
-//       await testEngine.skipTopOfStack();
+//       Await testEngine.skipTopOfStack();
 //
 //       // Verify card was put under Simba
-//       expect(boostCharacter.cardsUnder.length).toBe(1);
+//       Expect(boostCharacter.cardsUnder.length).toBe(1);
 //     });
 //
-//     it("should be optional - can decline the trigger", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: emilyQuackfasterLevelheadedLibrarian.cost,
-//         hand: [emilyQuackfasterLevelheadedLibrarian],
-//         deck: 5,
-//         play: [simbaKingInTheMaking],
+//     It("should be optional - can decline the trigger", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: emilyQuackfasterLevelheadedLibrarian.cost,
+//         Hand: [emilyQuackfasterLevelheadedLibrarian],
+//         Deck: 5,
+//         Play: [simbaKingInTheMaking],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(
-//         emilyQuackfasterLevelheadedLibrarian,
+//       Const cardUnderTest = testEngine.getCardModel(
+//         EmilyQuackfasterLevelheadedLibrarian,
 //       );
-//       const boostCharacter = testEngine.getCardModel(simbaKingInTheMaking);
+//       Const boostCharacter = testEngine.getCardModel(simbaKingInTheMaking);
 //
-//       expect(boostCharacter.cardsUnder.length).toBe(0);
+//       Expect(boostCharacter.cardsUnder.length).toBe(0);
 //
 //       // Play Emily Quackfaster
-//       await testEngine.playCard(cardUnderTest);
+//       Await testEngine.playCard(cardUnderTest);
 //
 //       // Decline the optional trigger
-//       await testEngine.skipTopOfStack();
+//       Await testEngine.skipTopOfStack();
 //
 //       // No card should be put under Simba
-//       expect(boostCharacter.cardsUnder.length).toBe(0);
+//       Expect(boostCharacter.cardsUnder.length).toBe(0);
 //     });
 //
-//     it("should NOT trigger if there are no characters or locations with Boost in play", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: emilyQuackfasterLevelheadedLibrarian.cost,
-//         hand: [emilyQuackfasterLevelheadedLibrarian],
-//         deck: 5,
-//         play: [], // No characters with Boost
+//     It("should NOT trigger if there are no characters or locations with Boost in play", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: emilyQuackfasterLevelheadedLibrarian.cost,
+//         Hand: [emilyQuackfasterLevelheadedLibrarian],
+//         Deck: 5,
+//         Play: [], // No characters with Boost
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(
-//         emilyQuackfasterLevelheadedLibrarian,
+//       Const cardUnderTest = testEngine.getCardModel(
+//         EmilyQuackfasterLevelheadedLibrarian,
 //       );
 //
 //       // Play Emily Quackfaster
-//       await testEngine.playCard(cardUnderTest);
+//       Await testEngine.playCard(cardUnderTest);
 //
 //       // Should be able to accept optional without targets (no valid targets available)
-//       await testEngine.acceptOptionalLayer();
+//       Await testEngine.acceptOptionalLayer();
 //
 //       // Verify Emily is in play
-//       expect(cardUnderTest.zone).toBe("play");
+//       Expect(cardUnderTest.zone).toBe("play");
 //     });
 //
-//     it("declining the optional ability leaves deck unchanged", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: emilyQuackfasterLevelheadedLibrarian.cost,
-//         deck: [goofyKnightForADay],
-//         hand: [emilyQuackfasterLevelheadedLibrarian],
-//         play: [littleJohnImpermanentOutlaw],
+//     It("declining the optional ability leaves deck unchanged", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: emilyQuackfasterLevelheadedLibrarian.cost,
+//         Deck: [goofyKnightForADay],
+//         Hand: [emilyQuackfasterLevelheadedLibrarian],
+//         Play: [littleJohnImpermanentOutlaw],
 //       });
 //
 //       // Play Emily and then skip the optional layer (decline)
-//       await testEngine.playCard(emilyQuackfasterLevelheadedLibrarian);
-//       await testEngine.skipTopOfStack();
+//       Await testEngine.playCard(emilyQuackfasterLevelheadedLibrarian);
+//       Await testEngine.skipTopOfStack();
 //
 //       // Deck should remain intact and nothing put under target
-//       expect(testEngine.getZonesCardCount().deck).toBe(1);
-//       const target = testEngine.getCardModel(littleJohnImpermanentOutlaw);
-//       expect(target.cardsUnder).toHaveLength(0);
+//       Expect(testEngine.getZonesCardCount().deck).toBe(1);
+//       Const target = testEngine.getCardModel(littleJohnImpermanentOutlaw);
+//       Expect(target.cardsUnder).toHaveLength(0);
 //     });
 //
-//     it("when no valid Boost targets exist nothing happens", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: emilyQuackfasterLevelheadedLibrarian.cost,
-//         deck: [littleJohnImpermanentOutlaw],
-//         hand: [emilyQuackfasterLevelheadedLibrarian],
-//         play: [goofyKnightForADay],
+//     It("when no valid Boost targets exist nothing happens", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: emilyQuackfasterLevelheadedLibrarian.cost,
+//         Deck: [littleJohnImpermanentOutlaw],
+//         Hand: [emilyQuackfasterLevelheadedLibrarian],
+//         Play: [goofyKnightForADay],
 //       });
 //
 //       // Play Emily; there are no booster targets in play so nothing should be put under any card
-//       await testEngine.playCard(emilyQuackfasterLevelheadedLibrarian);
+//       Await testEngine.playCard(emilyQuackfasterLevelheadedLibrarian);
 //
 //       // NOTE: it appears that the optional layer needs to be accepted by tests,
 //       //       but may not occur in the UI.
-//       await testEngine.acceptOptionalLayer();
+//       Await testEngine.acceptOptionalLayer();
 //
 //       // Verify that the stack is now empty (no target selection)
-//       expect(testEngine.stackLayers).toHaveLength(0);
+//       Expect(testEngine.stackLayers).toHaveLength(0);
 //
-//       expect(testEngine.getZonesCardCount().deck).toBe(1);
-//       expect(testEngine.getZonesCardCount().play).toBe(2);
+//       Expect(testEngine.getZonesCardCount().deck).toBe(1);
+//       Expect(testEngine.getZonesCardCount().play).toBe(2);
 //     });
 //   });
 // });

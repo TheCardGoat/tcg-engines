@@ -1,29 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const mickeyMouseWaywardSorcerer: CharacterCard = {
-  id: "kuw",
-  cardType: "character",
-  name: "Mickey Mouse",
-  version: "Wayward Sorcerer",
-  fullName: "Mickey Mouse - Wayward Sorcerer",
-  inkType: ["amethyst"],
-  franchise: "Disney",
-  set: "001",
-  text: "**ANIMATE BROOM** You pay 1 {I} less to play Broom characters.\n\n**CEASELESS WORKER** Whenever one of your Broom characters is banished in a challenge, you may return that card to your hand.",
-  cost: 4,
-  strength: 3,
-  willpower: 4,
-  lore: 2,
-  cardNumber: 51,
-  inkable: true,
-  externalIds: {
-    ravensburger: "",
-  },
   abilities: [
     {
-      type: "action",
-      id: "kuw-1",
-      text: "**CEASELESS WORKER** Whenever one of your Broom characters is banished in a challenge, you may return that card to your hand.",
       effect: {
         type: "optional",
         effect: {
@@ -38,39 +17,60 @@ export const mickeyMouseWaywardSorcerer: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "kuw-1",
+      text: "**CEASELESS WORKER** Whenever one of your Broom characters is banished in a challenge, you may return that card to your hand.",
+      type: "action",
     },
   ],
+  cardNumber: 51,
+  cardType: "character",
   classifications: ["Dreamborn", "Sorcerer"],
+  cost: 4,
+  externalIds: {
+    ravensburger: "",
+  },
+  franchise: "Disney",
+  fullName: "Mickey Mouse - Wayward Sorcerer",
+  id: "kuw",
+  inkType: ["amethyst"],
+  inkable: true,
+  lore: 2,
+  name: "Mickey Mouse",
+  set: "001",
+  strength: 3,
+  text: "**ANIMATE BROOM** You pay 1 {I} less to play Broom characters.\n\n**CEASELESS WORKER** Whenever one of your Broom characters is banished in a challenge, you may return that card to your hand.",
+  version: "Wayward Sorcerer",
+  willpower: 4,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { wheneverOneOfYourCharactersIsBanishedInAChallenge } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import { wheneverOneOfYourCharactersIsBanishedInAChallenge } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const mickeyMouseWaywardSorcerer: LorcanitoCharacterCard = {
-//   id: "kuw",
+// Export const mickeyMouseWaywardSorcerer: LorcanitoCharacterCard = {
+//   Id: "kuw",
 //
-//   name: "Mickey Mouse",
-//   title: "Wayward Sorcerer",
-//   characteristics: ["dreamborn", "sorcerer"],
-//   text: "**ANIMATE BROOM** You pay 1 {I} less to play Broom characters.\n\n**CEASELESS WORKER** Whenever one of your Broom characters is banished in a challenge, you may return that card to your hand.",
-//   type: "character",
-//   abilities: [
+//   Name: "Mickey Mouse",
+//   Title: "Wayward Sorcerer",
+//   Characteristics: ["dreamborn", "sorcerer"],
+//   Text: "**ANIMATE BROOM** You pay 1 {I} less to play Broom characters.\n\n**CEASELESS WORKER** Whenever one of your Broom characters is banished in a challenge, you may return that card to your hand.",
+//   Type: "character",
+//   Abilities: [
 //     {
-//       type: "static",
-//       name: "Animate Broom",
-//       text: "You pay 1 {I} less to play Broom characters.",
-//       ability: "effects",
-//       effects: [
+//       Type: "static",
+//       Name: "Animate Broom",
+//       Text: "You pay 1 {I} less to play Broom characters.",
+//       Ability: "effects",
+//       Effects: [
 //         {
-//           type: "replacement",
-//           replacement: "cost",
-//           duration: "static",
-//           amount: 1,
-//           target: {
-//             type: "card",
-//             value: "all",
-//             filters: [
+//           Type: "replacement",
+//           Replacement: "cost",
+//           Duration: "static",
+//           Amount: 1,
+//           Target: {
+//             Type: "card",
+//             Value: "all",
+//             Filters: [
 //               { filter: "type", value: "character" },
 //               { filter: "characteristics", value: ["broom"] },
 //               { filter: "owner", value: "self" },
@@ -79,41 +79,41 @@ export const mickeyMouseWaywardSorcerer: CharacterCard = {
 //         },
 //       ],
 //     },
-//     wheneverOneOfYourCharactersIsBanishedInAChallenge({
-//       name: "Ceaseless Worker",
-//       text: "Whenever one of your Broom characters is banished in a challenge, you may return that card to your hand.",
-//       optional: true,
-//       triggerFilter: [
+//     WheneverOneOfYourCharactersIsBanishedInAChallenge({
+//       Name: "Ceaseless Worker",
+//       Text: "Whenever one of your Broom characters is banished in a challenge, you may return that card to your hand.",
+//       Optional: true,
+//       TriggerFilter: [
 //         { filter: "owner", value: "self" },
 //         { filter: "type", value: "character" },
 //         { filter: "characteristics", value: ["broom"] },
 //       ],
-//       effects: [
+//       Effects: [
 //         {
-//           type: "move",
-//           to: "hand",
-//           target: {
-//             type: "card",
-//             value: "all",
-//             filters: [{ filter: "source", value: "trigger" }],
+//           Type: "move",
+//           To: "hand",
+//           Target: {
+//             Type: "card",
+//             Value: "all",
+//             Filters: [{ filter: "source", value: "trigger" }],
 //           },
 //         },
 //       ],
 //     }),
 //   ],
-//   flavour: "He always goes for the clean sweep.",
-//   inkwell: true,
-//   colors: ["amethyst"],
-//   cost: 4,
-//   strength: 3,
-//   willpower: 4,
-//   lore: 2,
-//   illustrator: "Nicholas Kole",
-//   number: 51,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 492369,
+//   Flavour: "He always goes for the clean sweep.",
+//   Inkwell: true,
+//   Colors: ["amethyst"],
+//   Cost: 4,
+//   Strength: 3,
+//   Willpower: 4,
+//   Lore: 2,
+//   Illustrator: "Nicholas Kole",
+//   Number: 51,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 492369,
 //   },
-//   rarity: "super_rare",
+//   Rarity: "super_rare",
 // };
 //

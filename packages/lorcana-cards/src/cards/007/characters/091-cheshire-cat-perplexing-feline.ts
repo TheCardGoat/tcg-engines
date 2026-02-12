@@ -1,35 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const cheshireCatPerplexingFeline: CharacterCard = {
-  id: "16n",
-  cardType: "character",
-  name: "Cheshire Cat",
-  version: "Perplexing Feline",
-  fullName: "Cheshire Cat - Perplexing Feline",
-  inkType: ["emerald"],
-  franchise: "Alice in Wonderland",
-  set: "007",
-  text: "MAD GRIN When you play this character, you may deal 2 damage to chosen damaged character.",
-  cost: 5,
-  strength: 4,
-  willpower: 3,
-  lore: 2,
-  cardNumber: 91,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "99b060c09b5134d9107f78d08e2018d615658a7c",
-  },
   abilities: [
     {
-      id: "16n-1",
-      type: "triggered",
-      name: "MAD GRIN",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -45,8 +18,35 @@ export const cheshireCatPerplexingFeline: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "16n-1",
+      name: "MAD GRIN",
       text: "MAD GRIN When you play this character, you may deal 2 damage to chosen damaged character.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 91,
+  cardType: "character",
   classifications: ["Storyborn"],
+  cost: 5,
+  externalIds: {
+    ravensburger: "99b060c09b5134d9107f78d08e2018d615658a7c",
+  },
+  franchise: "Alice in Wonderland",
+  fullName: "Cheshire Cat - Perplexing Feline",
+  id: "16n",
+  inkType: ["emerald"],
+  inkable: true,
+  lore: 2,
+  missingTests: true,
+  name: "Cheshire Cat",
+  set: "007",
+  strength: 4,
+  text: "MAD GRIN When you play this character, you may deal 2 damage to chosen damaged character.",
+  version: "Perplexing Feline",
+  willpower: 3,
 };

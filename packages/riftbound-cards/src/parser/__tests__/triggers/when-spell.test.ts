@@ -17,14 +17,14 @@ describe("Trigger: When Spell", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
+          effect: expect.objectContaining({
+            amount: 1,
+            type: "draw",
+          }),
           trigger: expect.objectContaining({
             event: "play-spell",
           }),
-          effect: expect.objectContaining({
-            type: "draw",
-            amount: 1,
-          }),
+          type: "triggered",
         }),
       );
     });
@@ -32,19 +32,17 @@ describe("Trigger: When Spell", () => {
 
   describe("might modification effects", () => {
     it.skip("should parse 'When you play a spell, give me +1 :rb_might: this turn.'", () => {
-      const result = parseAbilities(
-        "When you play a spell, give me +1 :rb_might: this turn.",
-      );
+      const result = parseAbilities("When you play a spell, give me +1 :rb_might: this turn.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           effect: expect.objectContaining({
-            type: "modify-might",
             amount: 1,
+            type: "modify-might",
           }),
+          type: "triggered",
         }),
       );
     });
@@ -60,10 +58,10 @@ describe("Trigger: When Spell", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           effect: expect.objectContaining({
             type: "buff",
           }),
+          type: "triggered",
         }),
       );
     });
@@ -71,15 +69,12 @@ describe("Trigger: When Spell", () => {
 
   describe("first time restrictions", () => {
     it.skip("should parse 'The first time you play a spell each turn, draw 1.'", () => {
-      const result = parseAbilities(
-        "The first time you play a spell each turn, draw 1.",
-      );
+      const result = parseAbilities("The first time you play a spell each turn, draw 1.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           trigger: expect.objectContaining({
             event: "play-spell",
             restrictions: expect.arrayContaining([
@@ -88,6 +83,7 @@ describe("Trigger: When Spell", () => {
               }),
             ]),
           }),
+          type: "triggered",
         }),
       );
     });
@@ -101,11 +97,11 @@ describe("Trigger: When Spell", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           trigger: expect.objectContaining({
             event: "play-spell",
             on: "opponent",
           }),
+          type: "triggered",
         }),
       );
     });

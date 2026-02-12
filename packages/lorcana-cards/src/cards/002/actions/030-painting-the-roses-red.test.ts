@@ -3,73 +3,73 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { paintingTheRosesRed } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
-// import {
-//   dopeyAlwaysPlayful,
-//   eudoraAccomplishedSeamstress,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { paintingTheRosesRed } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
+// Import {
+//   DopeyAlwaysPlayful,
+//   EudoraAccomplishedSeamstress,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Painting the Roses Red", () => {
-//   describe("Up to 2 chosen characters get -1 {S} this turn. Draw a card.", () => {
-//     it("Draw a card", () => {
-//       const testStore = new TestStore({
-//         inkwell: paintingTheRosesRed.cost,
-//         hand: [paintingTheRosesRed],
-//         deck: 1,
+// Describe("Painting the Roses Red", () => {
+//   Describe("Up to 2 chosen characters get -1 {S} this turn. Draw a card.", () => {
+//     It("Draw a card", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: paintingTheRosesRed.cost,
+//         Hand: [paintingTheRosesRed],
+//         Deck: 1,
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "hand",
-//         paintingTheRosesRed.id,
+//         PaintingTheRosesRed.id,
 //       );
 //
-//       cardUnderTest.playFromHand();
-//       testStore.resolveTopOfStack({ targets: [] });
+//       CardUnderTest.playFromHand();
+//       TestStore.resolveTopOfStack({ targets: [] });
 //
-//       expect(testStore.getZonesCardCount()).toEqual(
-//         expect.objectContaining({
-//           hand: 1,
-//           deck: 0,
+//       Expect(testStore.getZonesCardCount()).toEqual(
+//         Expect.objectContaining({
+//           Hand: 1,
+//           Deck: 0,
 //         }),
 //       );
 //     });
 //
-//     it("Up to 2 chosen characters get -1 {S} this turn.", () => {
-//       const testStore = new TestStore(
+//     It("Up to 2 chosen characters get -1 {S} this turn.", () => {
+//       Const testStore = new TestStore(
 //         {
-//           inkwell: paintingTheRosesRed.cost,
-//           hand: [paintingTheRosesRed],
-//           play: [dopeyAlwaysPlayful, eudoraAccomplishedSeamstress],
-//           deck: 1,
+//           Inkwell: paintingTheRosesRed.cost,
+//           Hand: [paintingTheRosesRed],
+//           Play: [dopeyAlwaysPlayful, eudoraAccomplishedSeamstress],
+//           Deck: 1,
 //         },
 //         {
-//           deck: 1,
+//           Deck: 1,
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "hand",
-//         paintingTheRosesRed.id,
+//         PaintingTheRosesRed.id,
 //       );
-//       const target = testStore.getByZoneAndId("play", dopeyAlwaysPlayful.id);
-//       const anotherTarget = testStore.getByZoneAndId(
+//       Const target = testStore.getByZoneAndId("play", dopeyAlwaysPlayful.id);
+//       Const anotherTarget = testStore.getByZoneAndId(
 //         "play",
-//         eudoraAccomplishedSeamstress.id,
+//         EudoraAccomplishedSeamstress.id,
 //       );
 //
-//       cardUnderTest.playFromHand();
-//       testStore.resolveTopOfStack({ targets: [target, anotherTarget] });
+//       CardUnderTest.playFromHand();
+//       TestStore.resolveTopOfStack({ targets: [target, anotherTarget] });
 //
 //       [target, anotherTarget].forEach((card) => {
-//         expect(card.strength).toEqual((card.lorcanitoCard.strength || 0) - 1);
+//         Expect(card.strength).toEqual((card.lorcanitoCard.strength || 0) - 1);
 //       });
 //
-//       testStore.passTurn();
+//       TestStore.passTurn();
 //
 //       [target, anotherTarget].forEach((card) => {
-//         expect(card.strength).toEqual(card.lorcanitoCard.strength);
+//         Expect(card.strength).toEqual(card.lorcanitoCard.strength);
 //       });
 //     });
 //   });

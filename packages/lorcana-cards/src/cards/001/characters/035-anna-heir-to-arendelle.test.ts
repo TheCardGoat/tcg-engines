@@ -4,7 +4,7 @@ import { annaHeirToArendelle } from "./035-anna-heir-to-arendelle";
 describe("Anna - Heir to Arendelle", () => {
   it("has triggered ability with Elsa condition and restriction effect", () => {
     expect(annaHeirToArendelle.abilities).toHaveLength(1);
-    // biome-ignore lint/style/noNonNullAssertion: length check above guarantees existence
+    // Biome-ignore lint/style/noNonNullAssertion: length check above guarantees existence
     const ability = annaHeirToArendelle.abilities![0] as {
       type: string;
       name: string;
@@ -25,15 +25,15 @@ describe("Anna - Heir to Arendelle", () => {
     // Verify trigger is "when you play this character"
     expect(ability.trigger).toMatchObject({
       event: "play",
-      timing: "when",
       on: "SELF",
+      timing: "when",
     });
 
     // Verify condition checks for Elsa
     expect(ability.condition).toMatchObject({
-      type: "has-named-character",
-      name: "Elsa",
       controller: "you",
+      name: "Elsa",
+      type: "has-named-character",
     });
 
     // Verify effect is a restriction
@@ -43,9 +43,9 @@ describe("Anna - Heir to Arendelle", () => {
 
     // Verify target is opposing character
     expect(ability.effect?.target).toMatchObject({
-      selector: "chosen",
       count: 1,
       owner: "opponent",
+      selector: "chosen",
     });
   });
 });

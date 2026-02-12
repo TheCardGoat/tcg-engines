@@ -3,53 +3,53 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   boltDownButNotOut,
-//   headsHeldHigh,
-//   rayaInfiltrationExpert,
-//   theColonelOldSheepdog,
-//   yzmaOnEdge,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   BoltDownButNotOut,
+//   HeadsHeldHigh,
+//   RayaInfiltrationExpert,
+//   TheColonelOldSheepdog,
+//   YzmaOnEdge,
 // } from "@lorcanito/lorcana-engine/cards/008";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Heads Held High", () => {
-//   it("Remove up to 3 damage from any number of chosen characters. All opposing characters get -3 {S} this turn.", async () => {
-//     const targets = [theColonelOldSheepdog, boltDownButNotOut];
+// Describe("Heads Held High", () => {
+//   It("Remove up to 3 damage from any number of chosen characters. All opposing characters get -3 {S} this turn.", async () => {
+//     Const targets = [theColonelOldSheepdog, boltDownButNotOut];
 //
-//     const opponents = [yzmaOnEdge, rayaInfiltrationExpert];
-//     const testEngine = new TestEngine(
+//     Const opponents = [yzmaOnEdge, rayaInfiltrationExpert];
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: headsHeldHigh.cost,
-//         play: targets,
-//         hand: [headsHeldHigh],
+//         Inkwell: headsHeldHigh.cost,
+//         Play: targets,
+//         Hand: [headsHeldHigh],
 //       },
 //       {
-//         play: opponents,
+//         Play: opponents,
 //       },
 //     );
 //
-//     for (const target of targets) {
-//       await testEngine.setCardDamage(target, 3);
+//     For (const target of targets) {
+//       Await testEngine.setCardDamage(target, 3);
 //     }
 //
-//     await testEngine.playCard(headsHeldHigh, { targets });
+//     Await testEngine.playCard(headsHeldHigh, { targets });
 //
-//     for (const target of targets) {
-//       expect(testEngine.getCardModel(target).damage).toEqual(0);
+//     For (const target of targets) {
+//       Expect(testEngine.getCardModel(target).damage).toEqual(0);
 //     }
 //
-//     for (const opponent of opponents) {
-//       expect(testEngine.getCardModel(opponent).strength).toEqual(
-//         opponent.strength - 3,
+//     For (const opponent of opponents) {
+//       Expect(testEngine.getCardModel(opponent).strength).toEqual(
+//         Opponent.strength - 3,
 //       );
 //     }
 //
-//     await testEngine.passTurn();
+//     Await testEngine.passTurn();
 //
-//     for (const opponent of opponents) {
-//       expect(testEngine.getCardModel(opponent).strength).toEqual(
-//         opponent.strength,
+//     For (const opponent of opponents) {
+//       Expect(testEngine.getCardModel(opponent).strength).toEqual(
+//         Opponent.strength,
 //       );
 //     }
 //   });

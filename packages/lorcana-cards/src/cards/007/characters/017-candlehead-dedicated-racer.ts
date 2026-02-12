@@ -1,35 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const candleheadDedicatedRacer: CharacterCard = {
-  id: "w07",
-  cardType: "character",
-  name: "Candlehead",
-  version: "Dedicated Racer",
-  fullName: "Candlehead - Dedicated Racer",
-  inkType: ["amber"],
-  franchise: "Wreck It Ralph",
-  set: "007",
-  text: "WINNING ISN'T EVERYTHING When this character is banished, you may remove up to 2 damage from chosen character.",
-  cost: 2,
-  strength: 2,
-  willpower: 2,
-  lore: 1,
-  cardNumber: 17,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "735997cb2d2bb3550d9657a45ff6656a73b7c2eb",
-  },
   abilities: [
     {
-      id: "w07-1",
-      type: "triggered",
-      name: "WINNING ISN'T EVERYTHING",
-      trigger: {
-        event: "banish",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -46,8 +19,35 @@ export const candleheadDedicatedRacer: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "w07-1",
+      name: "WINNING ISN'T EVERYTHING",
       text: "WINNING ISN'T EVERYTHING When this character is banished, you may remove up to 2 damage from chosen character.",
+      trigger: {
+        event: "banish",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 17,
+  cardType: "character",
   classifications: ["Storyborn", "Ally", "Racer"],
+  cost: 2,
+  externalIds: {
+    ravensburger: "735997cb2d2bb3550d9657a45ff6656a73b7c2eb",
+  },
+  franchise: "Wreck It Ralph",
+  fullName: "Candlehead - Dedicated Racer",
+  id: "w07",
+  inkType: ["amber"],
+  inkable: true,
+  lore: 1,
+  missingTests: true,
+  name: "Candlehead",
+  set: "007",
+  strength: 2,
+  text: "WINNING ISN'T EVERYTHING When this character is banished, you may remove up to 2 damage from chosen character.",
+  version: "Dedicated Racer",
+  willpower: 2,
 };

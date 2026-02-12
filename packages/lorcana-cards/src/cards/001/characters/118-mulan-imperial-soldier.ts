@@ -1,30 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const mulanImperialSoldier: CharacterCard = {
-  id: "nsp",
-  cardType: "character",
-  name: "Mulan",
-  version: "Imperial Soldier",
-  fullName: "Mulan - Imperial Soldier",
-  inkType: ["ruby"],
-  franchise: "Mulan",
-  set: "001",
-  text: "LEAD BY EXAMPLE During your turn, whenever this character banishes another character in a challenge, your other characters get +1 {L} this turn.",
-  cost: 5,
-  strength: 4,
-  willpower: 5,
-  lore: 1,
-  cardNumber: 118,
-  inkable: true,
-  externalIds: {
-    ravensburger: "55c43a8042650d3b7d79099e5ff68e2941e49d7f",
-  },
   abilities: [
     {
-      id: "nsp-1",
-      text: "LEAD BY EXAMPLE During your turn, whenever this character banishes another character in a challenge, your other characters get +1 {L} this turn.",
-      name: "LEAD BY EXAMPLE",
-      type: "static",
       effect: {
         type: "modify-stat",
         stat: "lore",
@@ -32,38 +10,60 @@ export const mulanImperialSoldier: CharacterCard = {
         target: "SELF",
         duration: "this-turn",
       },
+      id: "nsp-1",
+      name: "LEAD BY EXAMPLE",
+      text: "LEAD BY EXAMPLE During your turn, whenever this character banishes another character in a challenge, your other characters get +1 {L} this turn.",
+      type: "static",
     },
   ],
+  cardNumber: 118,
+  cardType: "character",
   classifications: ["Storyborn", "Hero", "Princess"],
+  cost: 5,
+  externalIds: {
+    ravensburger: "55c43a8042650d3b7d79099e5ff68e2941e49d7f",
+  },
+  franchise: "Mulan",
+  fullName: "Mulan - Imperial Soldier",
+  id: "nsp",
+  inkType: ["ruby"],
+  inkable: true,
+  lore: 1,
+  name: "Mulan",
+  set: "001",
+  strength: 4,
+  text: "LEAD BY EXAMPLE During your turn, whenever this character banishes another character in a challenge, your other characters get +1 {L} this turn.",
+  version: "Imperial Soldier",
+  willpower: 5,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { wheneverBanishesAnotherCharacterInChallenge } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import { wheneverBanishesAnotherCharacterInChallenge } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const mulanImperialSoldier: LorcanitoCharacterCard = {
-//   id: "cqk",
-//   name: "Mulan",
-//   title: "Imperial Soldier",
-//   characteristics: ["hero", "storyborn", "princess"],
-//   text: "**Lead by example** During your turn, whenever this character banishes another character in a challenge, your other characters get +1 {L} this turn.",
-//   type: "character",
-//   abilities: [
-//     wheneverBanishesAnotherCharacterInChallenge({
-//       name: "Lead by example",
-//       text: "During your turn, whenever this character banishes another character in a challenge, your other characters get +1 {L} this turn.",
-//       effects: [
+// Export const mulanImperialSoldier: LorcanitoCharacterCard = {
+//   Id: "cqk",
+//   Name: "Mulan",
+//   Title: "Imperial Soldier",
+//   Characteristics: ["hero", "storyborn", "princess"],
+//   Text: "**Lead by example** During your turn, whenever this character banishes another character in a challenge, your other characters get +1 {L} this turn.",
+//   Type: "character",
+//   Abilities: [
+//     WheneverBanishesAnotherCharacterInChallenge({
+//       Name: "Lead by example",
+//       Text: "During your turn, whenever this character banishes another character in a challenge, your other characters get +1 {L} this turn.",
+//       Effects: [
 //         {
-//           type: "attribute",
-//           attribute: "lore",
-//           amount: 1,
-//           modifier: "add",
-//           duration: "turn",
-//           target: {
-//             type: "card",
-//             value: "all",
-//             excludeSelf: true,
-//             filters: [
+//           Type: "attribute",
+//           Attribute: "lore",
+//           Amount: 1,
+//           Modifier: "add",
+//           Duration: "turn",
+//           Target: {
+//             Type: "card",
+//             Value: "all",
+//             ExcludeSelf: true,
+//             Filters: [
 //               { filter: "owner", value: "self" },
 //               { filter: "type", value: "character" },
 //               { filter: "zone", value: "play" },
@@ -73,18 +73,18 @@ export const mulanImperialSoldier: CharacterCard = {
 //       ],
 //     }),
 //   ],
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 5,
-//   strength: 4,
-//   willpower: 5,
-//   lore: 1,
-//   illustrator: "Mel Milton",
-//   number: 118,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 516778,
+//   Inkwell: true,
+//   Colors: ["ruby"],
+//   Cost: 5,
+//   Strength: 4,
+//   Willpower: 5,
+//   Lore: 1,
+//   Illustrator: "Mel Milton",
+//   Number: 118,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 516778,
 //   },
-//   rarity: "super_rare",
+//   Rarity: "super_rare",
 // };
 //

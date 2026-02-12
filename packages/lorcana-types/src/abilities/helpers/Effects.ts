@@ -13,19 +13,15 @@
  */
 
 import type { Effect, OptionalEffect } from "../effect-types";
-import type {
-  CardTarget,
-  CharacterTarget,
-  PlayerTarget,
-} from "../target-types";
+import type { CardTarget, CharacterTarget, PlayerTarget } from "../target-types";
 
 export const Effects = {
   /**
    * "Draw X cards"
    */
   Draw: (params: { amount: number }): Effect => ({
-    type: "draw",
     amount: params.amount,
+    type: "draw",
   }),
 
   /**
@@ -33,107 +29,95 @@ export const Effects = {
    */
   Banish: (params: { target: CharacterTarget; optional?: boolean }): Effect => {
     const banishEffect: Effect = {
-      type: "banish",
       target: params.target,
+      type: "banish",
     };
 
-    return params.optional
-      ? { type: "optional", effect: banishEffect }
-      : banishEffect;
+    return params.optional ? { effect: banishEffect, type: "optional" } : banishEffect;
   },
 
   /**
    * "Remove up to X damage from target"
    */
-  RemoveDamage: (params: {
-    amount: number;
-    target: CharacterTarget;
-    upTo?: boolean;
-  }): Effect => ({
-    type: "remove-damage",
+  RemoveDamage: (params: { amount: number; target: CharacterTarget; upTo?: boolean }): Effect => ({
     amount: params.amount,
     target: params.target,
+    type: "remove-damage",
     upTo: params.upTo,
   }),
 
   /**
    * "Target gains keyword"
    */
-  GainKeyword: (params: {
-    keyword: string;
-    target?: CharacterTarget;
-  }): Effect => ({
-    type: "gain-keyword",
+  GainKeyword: (params: { keyword: string; target?: CharacterTarget }): Effect => ({
     keyword: params.keyword,
     target: params.target ?? "SELF",
+    type: "gain-keyword",
   }),
 
   /**
    * "Sequence of effects"
    */
   Sequence: (effects: Effect[]): Effect => ({
-    type: "sequence",
     effects,
+    type: "sequence",
   }),
 
   /**
    * "You may [effect]"
    */
   Optional: (effect: Effect): OptionalEffect => ({
-    type: "optional",
     effect,
+    type: "optional",
   }),
 
   /**
    * "Deal X damage to target"
    */
-  DealDamage: (params: {
-    amount: number;
-    target: CharacterTarget;
-  }): Effect => ({
-    type: "deal-damage",
+  DealDamage: (params: { amount: number; target: CharacterTarget }): Effect => ({
     amount: params.amount,
     target: params.target,
+    type: "deal-damage",
   }),
 
   /**
    * "Gain X lore"
    */
   GainLore: (params: { amount: number }): Effect => ({
-    type: "gain-lore",
     amount: params.amount,
+    type: "gain-lore",
   }),
 
   /**
    * "Lose X lore"
    */
   LoseLore: (params: { amount: number }): Effect => ({
-    type: "lose-lore",
     amount: params.amount,
+    type: "lose-lore",
   }),
 
   /**
    * "Exert target"
    */
   Exert: (params?: { target?: CharacterTarget }): Effect => ({
-    type: "exert",
     target: params?.target ?? "SELF",
+    type: "exert",
   }),
 
   /**
    * "Ready target"
    */
   Ready: (params?: { target?: CharacterTarget }): Effect => ({
-    type: "ready",
     target: params?.target ?? "SELF",
+    type: "ready",
   }),
 
   /**
    * "Return target to hand"
    */
   ReturnToHand: (params: { target: CharacterTarget }): Effect => ({
-    type: "return-to-hand",
     target: params.target,
+    type: "return-to-hand",
   }),
 
   /**
@@ -161,8 +145,8 @@ export const Effects = {
    * "Shuffle target into deck"
    */
   ShuffleIntoDeck: (params: { target: CharacterTarget }): Effect => ({
-    type: "shuffle-into-deck",
     target: params.target,
+    type: "shuffle-into-deck",
   }),
 
   /**
@@ -176,7 +160,7 @@ export const Effects = {
    * "Put target on bottom of deck"
    */
   PutOnBottom: (params: { target: CharacterTarget }): Effect => ({
-    type: "put-on-bottom",
     target: params.target,
+    type: "put-on-bottom",
   }),
 };

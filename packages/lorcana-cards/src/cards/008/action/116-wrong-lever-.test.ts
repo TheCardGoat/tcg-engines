@@ -3,70 +3,70 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   mickeyMouseGiantMouse,
-//   pullTheLever,
-//   wrongLeverAction,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   MickeyMouseGiantMouse,
+//   PullTheLever,
+//   WrongLeverAction,
 // } from "@lorcanito/lorcana-engine/cards/008";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Wrong Lever!", () => {
-//   it("- Return chosen character to their player's hand.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Wrong Lever!", () => {
+//   It("- Return chosen character to their player's hand.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: wrongLeverAction.cost,
-//         hand: [wrongLeverAction],
+//         Inkwell: wrongLeverAction.cost,
+//         Hand: [wrongLeverAction],
 //       },
 //       {
-//         play: [mickeyMouseGiantMouse],
+//         Play: [mickeyMouseGiantMouse],
 //       },
 //     );
 //
-//     await testEngine.playCard(wrongLeverAction, { mode: "1" }, true);
-//     await testEngine.resolveTopOfStack({ targets: [mickeyMouseGiantMouse] });
+//     Await testEngine.playCard(wrongLeverAction, { mode: "1" }, true);
+//     Await testEngine.resolveTopOfStack({ targets: [mickeyMouseGiantMouse] });
 //
-//     expect(testEngine.getCardModel(mickeyMouseGiantMouse).zone).toBe("hand");
+//     Expect(testEngine.getCardModel(mickeyMouseGiantMouse).zone).toBe("hand");
 //   });
 //
-//   it("- Put a Pull the Lever! card from your discard pile on the bottom of your deck to put chosen character on the bottom of their owner's deck.", async () => {
-//     const testEngine = new TestEngine(
+//   It("- Put a Pull the Lever! card from your discard pile on the bottom of your deck to put chosen character on the bottom of their owner's deck.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: wrongLeverAction.cost,
-//         discard: [pullTheLever],
-//         hand: [wrongLeverAction],
+//         Inkwell: wrongLeverAction.cost,
+//         Discard: [pullTheLever],
+//         Hand: [wrongLeverAction],
 //       },
 //       {
-//         play: [mickeyMouseGiantMouse],
+//         Play: [mickeyMouseGiantMouse],
 //       },
 //     );
 //
-//     await testEngine.playCard(wrongLeverAction);
+//     Await testEngine.playCard(wrongLeverAction);
 //
-//     await testEngine.playCard(wrongLeverAction, { mode: "2" }, true);
-//     await testEngine.resolveTopOfStack({ targets: [pullTheLever] }, true);
-//     expect(testEngine.getCardModel(pullTheLever).zone).toBe("deck");
-//     expect(testEngine.stackLayers).toHaveLength(1);
+//     Await testEngine.playCard(wrongLeverAction, { mode: "2" }, true);
+//     Await testEngine.resolveTopOfStack({ targets: [pullTheLever] }, true);
+//     Expect(testEngine.getCardModel(pullTheLever).zone).toBe("deck");
+//     Expect(testEngine.stackLayers).toHaveLength(1);
 //
-//     await testEngine.resolveTopOfStack({ targets: [mickeyMouseGiantMouse] });
-//     expect(testEngine.getCardModel(mickeyMouseGiantMouse).zone).toBe("deck");
+//     Await testEngine.resolveTopOfStack({ targets: [mickeyMouseGiantMouse] });
+//     Expect(testEngine.getCardModel(mickeyMouseGiantMouse).zone).toBe("deck");
 //   });
 //
-//   it("Selecting second mode without Pull the Lever on discard", async () => {
-//     const testEngine = new TestEngine(
+//   It("Selecting second mode without Pull the Lever on discard", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: wrongLeverAction.cost,
-//         hand: [wrongLeverAction],
+//         Inkwell: wrongLeverAction.cost,
+//         Hand: [wrongLeverAction],
 //       },
 //       {
-//         play: [mickeyMouseGiantMouse],
+//         Play: [mickeyMouseGiantMouse],
 //       },
 //     );
 //
-//     await testEngine.playCard(wrongLeverAction);
+//     Await testEngine.playCard(wrongLeverAction);
 //
-//     await testEngine.playCard(wrongLeverAction, { mode: "2" }, true);
-//     expect(testEngine.stackLayers).toHaveLength(0);
+//     Await testEngine.playCard(wrongLeverAction, { mode: "2" }, true);
+//     Expect(testEngine.stackLayers).toHaveLength(0);
 //   });
 // });
 //

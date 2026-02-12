@@ -3,41 +3,41 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { balooFunLovingBear } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { kaaHypnotizingPython } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { balooFunLovingBear } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { kaaHypnotizingPython } from "@lorcanito/lorcana-engine/cards/008/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Kaa - Hypnotizing Python", () => {
-//   it("LOOK ME IN THE EYE Whenever this character quests, chosen opposing character gets -2 {S} and gains Reckless until the start of your next turn. (They can't quest and must challenge if able.)", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Kaa - Hypnotizing Python", () => {
+//   It("LOOK ME IN THE EYE Whenever this character quests, chosen opposing character gets -2 {S} and gains Reckless until the start of your next turn. (They can't quest and must challenge if able.)", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: kaaHypnotizingPython.cost,
-//         play: [kaaHypnotizingPython],
+//         Inkwell: kaaHypnotizingPython.cost,
+//         Play: [kaaHypnotizingPython],
 //       },
 //       {
-//         play: [balooFunLovingBear],
+//         Play: [balooFunLovingBear],
 //       },
 //     );
 //
-//     await testEngine.questCard(kaaHypnotizingPython, {
-//       targets: [balooFunLovingBear],
+//     Await testEngine.questCard(kaaHypnotizingPython, {
+//       Targets: [balooFunLovingBear],
 //     });
 //
-//     expect(testEngine.getCardModel(balooFunLovingBear).strength).toBe(2);
-//     await testEngine.passTurn();
+//     Expect(testEngine.getCardModel(balooFunLovingBear).strength).toBe(2);
+//     Await testEngine.passTurn();
 //
-//     expect(testEngine.getCardModel(balooFunLovingBear).strength).toBe(2);
-//     expect(testEngine.getCardModel(balooFunLovingBear).hasReckless).toBe(true);
-//     await testEngine.challenge({
-//       attacker: balooFunLovingBear,
-//       defender: kaaHypnotizingPython,
+//     Expect(testEngine.getCardModel(balooFunLovingBear).strength).toBe(2);
+//     Expect(testEngine.getCardModel(balooFunLovingBear).hasReckless).toBe(true);
+//     Await testEngine.challenge({
+//       Attacker: balooFunLovingBear,
+//       Defender: kaaHypnotizingPython,
 //     });
 //
-//     await testEngine.passTurn();
+//     Await testEngine.passTurn();
 //
-//     expect(testEngine.getCardModel(balooFunLovingBear).strength).toBe(4);
-//     expect(testEngine.getCardModel(balooFunLovingBear).hasReckless).toBe(false);
+//     Expect(testEngine.getCardModel(balooFunLovingBear).strength).toBe(4);
+//     Expect(testEngine.getCardModel(balooFunLovingBear).hasReckless).toBe(false);
 //   });
 // });
 //

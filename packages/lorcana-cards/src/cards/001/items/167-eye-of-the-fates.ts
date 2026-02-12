@@ -1,25 +1,8 @@
 import type { ItemCard } from "@tcg/lorcana-types";
 
 export const eyeOfTheFates: ItemCard = {
-  id: "dun",
-  cardType: "item",
-  name: "Eye of the Fates",
-  inkType: ["sapphire"],
-  franchise: "Hercules",
-  set: "001",
-  text: "SEE THE FUTURE {E} — Chosen character gets +1 {L} this turn.",
-  cost: 4,
-  cardNumber: 167,
-  inkable: true,
-  externalIds: {
-    ravensburger: "31ec2dd1c4e99314e1f758de9ca87d581629a5a9",
-  },
   abilities: [
     {
-      id: "dun-1",
-      text: "SEE THE FUTURE {E} — Chosen character gets +1 {L} this turn.",
-      name: "SEE THE FUTURE",
-      type: "activated",
       cost: {
         exert: true,
       },
@@ -30,41 +13,58 @@ export const eyeOfTheFates: ItemCard = {
         target: "CHOSEN_CHARACTER",
         duration: "this-turn",
       },
+      id: "dun-1",
+      name: "SEE THE FUTURE",
+      text: "SEE THE FUTURE {E} — Chosen character gets +1 {L} this turn.",
+      type: "activated",
     },
   ],
+  cardNumber: 167,
+  cardType: "item",
+  cost: 4,
+  externalIds: {
+    ravensburger: "31ec2dd1c4e99314e1f758de9ca87d581629a5a9",
+  },
+  franchise: "Hercules",
+  id: "dun",
+  inkType: ["sapphire"],
+  inkable: true,
+  name: "Eye of the Fates",
+  set: "001",
+  text: "SEE THE FUTURE {E} — Chosen character gets +1 {L} this turn.",
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { ActivatedAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-// import { chosenCharacterGetLoreThisTurn } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { ActivatedAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import { chosenCharacterGetLoreThisTurn } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const eyeOfTheFate: LorcanitoItemCard = {
-//   characteristics: ["item"],
-//   id: "jgm",
+// Export const eyeOfTheFate: LorcanitoItemCard = {
+//   Characteristics: ["item"],
+//   Id: "jgm",
 //
-//   name: "Eye of the Fates",
-//   text: "**SEE THE FUTURE** {E} − Chosen character gets +1 {L} this turn.",
-//   type: "item",
-//   abilities: [
+//   Name: "Eye of the Fates",
+//   Text: "**SEE THE FUTURE** {E} − Chosen character gets +1 {L} this turn.",
+//   Type: "item",
+//   Abilities: [
 //     {
-//       type: "activated",
-//       name: "See the Future",
-//       text: "Chosen character gets +1 {L} this turn.",
-//       costs: [{ type: "exert" }],
-//       effects: [chosenCharacterGetLoreThisTurn(1)],
+//       Type: "activated",
+//       Name: "See the Future",
+//       Text: "Chosen character gets +1 {L} this turn.",
+//       Costs: [{ type: "exert" }],
+//       Effects: [chosenCharacterGetLoreThisTurn(1)],
 //     } as ActivatedAbility,
 //   ],
-//   flavour: "You can change the future once you know what you're looking at.",
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 4,
-//   illustrator: "Ron Baird",
-//   number: 167,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 508825,
+//   Flavour: "You can change the future once you know what you're looking at.",
+//   Inkwell: true,
+//   Colors: ["sapphire"],
+//   Cost: 4,
+//   Illustrator: "Ron Baird",
+//   Number: 167,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 508825,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

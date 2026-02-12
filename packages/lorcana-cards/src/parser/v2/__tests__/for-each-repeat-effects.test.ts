@@ -13,12 +13,12 @@ describe("For-Each Effects", () => {
       const effect = parseEffect("Gain 1 lore for each character you have");
 
       expect(effect).toEqual({
-        type: "for-each",
-        counter: { type: "characters", controller: "you" },
+        counter: { controller: "you", type: "characters" },
         effect: {
-          type: "gain-lore",
           amount: 1,
+          type: "gain-lore",
         },
+        type: "for-each",
       });
     });
 
@@ -28,12 +28,12 @@ describe("For-Each Effects", () => {
       );
 
       expect(effect).toEqual({
-        type: "for-each",
-        counter: { type: "characters", controller: "you" },
+        counter: { controller: "you", type: "characters" },
         effect: {
-          type: "gain-lore",
           amount: 1,
+          type: "gain-lore",
         },
+        type: "for-each",
       });
     });
 
@@ -43,10 +43,8 @@ describe("For-Each Effects", () => {
       );
 
       expect(effect).toEqual({
-        type: "for-each",
-        counter: { type: "characters", controller: "opponent" },
+        counter: { controller: "opponent", type: "characters" },
         effect: {
-          type: "deal-damage",
           amount: 1,
           target: {
             selector: "chosen",
@@ -55,7 +53,9 @@ describe("For-Each Effects", () => {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "deal-damage",
         },
+        type: "for-each",
       });
     });
   });
@@ -65,13 +65,13 @@ describe("For-Each Effects", () => {
       const effect = parseEffect("Draw a card for each damaged character");
 
       expect(effect).toEqual({
-        type: "for-each",
-        counter: { type: "damaged-characters", controller: "any" },
+        counter: { controller: "any", type: "damaged-characters" },
         effect: {
-          type: "draw",
           amount: 1,
           target: "CONTROLLER",
+          type: "draw",
         },
+        type: "for-each",
       });
     });
 
@@ -81,12 +81,12 @@ describe("For-Each Effects", () => {
       );
 
       expect(effect).toEqual({
-        type: "for-each",
-        counter: { type: "damaged-characters", controller: "any" },
+        counter: { controller: "any", type: "damaged-characters" },
         effect: {
-          type: "gain-lore",
           amount: 2,
+          type: "gain-lore",
         },
+        type: "for-each",
       });
     });
   });
@@ -96,13 +96,13 @@ describe("For-Each Effects", () => {
       const effect = parseEffect("Draw a card for each item you have");
 
       expect(effect).toEqual({
-        type: "for-each",
-        counter: { type: "items", controller: "you" },
+        counter: { controller: "you", type: "items" },
         effect: {
-          type: "draw",
           amount: 1,
           target: "CONTROLLER",
+          type: "draw",
         },
+        type: "for-each",
       });
     });
 
@@ -112,12 +112,12 @@ describe("For-Each Effects", () => {
       );
 
       expect(effect).toEqual({
-        type: "for-each",
-        counter: { type: "items", controller: "opponent" },
+        counter: { controller: "opponent", type: "items" },
         effect: {
-          type: "gain-lore",
           amount: 1,
+          type: "gain-lore",
         },
+        type: "for-each",
       });
     });
   });
@@ -127,12 +127,12 @@ describe("For-Each Effects", () => {
       const effect = parseEffect("Gain 2 lore for each location you have");
 
       expect(effect).toEqual({
-        type: "for-each",
-        counter: { type: "locations", controller: "you" },
+        counter: { controller: "you", type: "locations" },
         effect: {
-          type: "gain-lore",
           amount: 2,
+          type: "gain-lore",
         },
+        type: "for-each",
       });
     });
   });
@@ -144,10 +144,8 @@ describe("For-Each Effects", () => {
       );
 
       expect(effect).toEqual({
-        type: "for-each",
-        counter: { type: "cards-in-hand", controller: "you" },
+        counter: { controller: "you", type: "cards-in-hand" },
         effect: {
-          type: "deal-damage",
           amount: 1,
           target: {
             selector: "chosen",
@@ -156,7 +154,9 @@ describe("For-Each Effects", () => {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "deal-damage",
         },
+        type: "for-each",
       });
     });
 
@@ -164,12 +164,12 @@ describe("For-Each Effects", () => {
       const effect = parseEffect("Gain 1 lore for each card in their hand");
 
       expect(effect).toEqual({
-        type: "for-each",
-        counter: { type: "cards-in-hand", controller: "opponent" },
+        counter: { controller: "opponent", type: "cards-in-hand" },
         effect: {
-          type: "gain-lore",
           amount: 1,
+          type: "gain-lore",
         },
+        type: "for-each",
       });
     });
   });
@@ -179,12 +179,12 @@ describe("For-Each Effects", () => {
       const effect = parseEffect("Gain 1 lore for each card in your discard");
 
       expect(effect).toEqual({
-        type: "for-each",
-        counter: { type: "cards-in-discard", controller: "you" },
+        counter: { controller: "you", type: "cards-in-discard" },
         effect: {
-          type: "gain-lore",
           amount: 1,
+          type: "gain-lore",
         },
+        type: "for-each",
       });
     });
 
@@ -194,13 +194,13 @@ describe("For-Each Effects", () => {
       );
 
       expect(effect).toEqual({
-        type: "for-each",
-        counter: { type: "cards-in-discard", controller: "you" },
+        counter: { controller: "you", type: "cards-in-discard" },
         effect: {
-          type: "draw",
           amount: 1,
           target: "CONTROLLER",
+          type: "draw",
         },
+        type: "for-each",
       });
     });
   });
@@ -212,12 +212,12 @@ describe("For-Each Effects", () => {
       );
 
       expect(effect).toEqual({
-        type: "for-each",
         counter: { type: "damage-on-self" },
         effect: {
-          type: "gain-lore",
           amount: 1,
+          type: "gain-lore",
         },
+        type: "for-each",
       });
     });
 
@@ -225,13 +225,13 @@ describe("For-Each Effects", () => {
       const effect = parseEffect("Draw a card for each damage on it");
 
       expect(effect).toEqual({
-        type: "for-each",
         counter: { type: "damage-on-self" },
         effect: {
-          type: "draw",
           amount: 1,
           target: "CONTROLLER",
+          type: "draw",
         },
+        type: "for-each",
       });
     });
 
@@ -241,12 +241,12 @@ describe("For-Each Effects", () => {
       );
 
       expect(effect).toEqual({
-        type: "for-each",
         counter: { type: "damage-on-target" },
         effect: {
-          type: "gain-lore",
           amount: 1,
+          type: "gain-lore",
         },
+        type: "for-each",
       });
     });
   });
@@ -258,12 +258,12 @@ describe("For-Each Effects", () => {
       );
 
       expect(effect).toEqual({
-        type: "for-each",
         counter: { type: "cards-under-self" },
         effect: {
-          type: "gain-lore",
           amount: 2,
+          type: "gain-lore",
         },
+        type: "for-each",
       });
     });
 
@@ -271,13 +271,13 @@ describe("For-Each Effects", () => {
       const effect = parseEffect("Draw a card for each card under it");
 
       expect(effect).toEqual({
-        type: "for-each",
         counter: { type: "cards-under-self" },
         effect: {
-          type: "draw",
           amount: 1,
           target: "CONTROLLER",
+          type: "draw",
         },
+        type: "for-each",
       });
     });
   });
@@ -289,12 +289,12 @@ describe("For-Each Effects", () => {
       );
 
       expect(effect).toEqual({
-        type: "for-each",
-        counter: { type: "characters-that-sang", thisTurn: true },
+        counter: { thisTurn: true, type: "characters-that-sang" },
         effect: {
-          type: "gain-lore",
           amount: 1,
+          type: "gain-lore",
         },
+        type: "for-each",
       });
     });
 
@@ -302,13 +302,13 @@ describe("For-Each Effects", () => {
       const effect = parseEffect("Draw a card for each character that sang");
 
       expect(effect).toEqual({
-        type: "for-each",
-        counter: { type: "characters-that-sang", thisTurn: false },
+        counter: { thisTurn: false, type: "characters-that-sang" },
         effect: {
-          type: "draw",
           amount: 1,
           target: "CONTROLLER",
+          type: "draw",
         },
+        type: "for-each",
       });
     });
   });
@@ -320,10 +320,8 @@ describe("For-Each Effects", () => {
       );
 
       expect(effect).toEqual({
-        type: "for-each",
-        counter: { type: "items", controller: "you" },
+        counter: { controller: "you", type: "items" },
         effect: {
-          type: "exert",
           target: {
             selector: "chosen",
             count: 1,
@@ -331,7 +329,9 @@ describe("For-Each Effects", () => {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "exert",
         },
+        type: "for-each",
       });
     });
 
@@ -341,10 +341,8 @@ describe("For-Each Effects", () => {
       );
 
       expect(effect).toEqual({
-        type: "for-each",
-        counter: { type: "damaged-characters", controller: "any" },
+        counter: { controller: "any", type: "damaged-characters" },
         effect: {
-          type: "banish",
           target: {
             selector: "chosen",
             count: 1,
@@ -352,7 +350,9 @@ describe("For-Each Effects", () => {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "banish",
         },
+        type: "for-each",
       });
     });
   });
@@ -366,10 +366,7 @@ describe("Repeat Effects", () => {
       );
 
       expect(effect).toEqual({
-        type: "repeat",
-        times: 3,
         effect: {
-          type: "deal-damage",
           amount: 1,
           target: {
             selector: "chosen",
@@ -378,7 +375,10 @@ describe("Repeat Effects", () => {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "deal-damage",
         },
+        times: 3,
+        type: "repeat",
       });
     });
 
@@ -386,13 +386,13 @@ describe("Repeat Effects", () => {
       const effect = parseEffect("Draw a card. Repeat that 2 times");
 
       expect(effect).toEqual({
-        type: "repeat",
-        times: 2,
         effect: {
-          type: "draw",
           amount: 1,
           target: "CONTROLLER",
+          type: "draw",
         },
+        times: 2,
+        type: "repeat",
       });
     });
 
@@ -400,12 +400,12 @@ describe("Repeat Effects", () => {
       const effect = parseEffect("Gain 2 lore. Repeat this 1 time");
 
       expect(effect).toEqual({
-        type: "repeat",
-        times: 1,
         effect: {
-          type: "gain-lore",
           amount: 2,
+          type: "gain-lore",
         },
+        times: 1,
+        type: "repeat",
       });
     });
   });
@@ -417,17 +417,17 @@ describe("Repeat Effects", () => {
       );
 
       expect(effect).toEqual({
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "repeat",
-          times: 2,
           effect: {
             type: "draw",
             amount: 1,
             target: "CONTROLLER",
           },
+          times: 2,
+          type: "repeat",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       });
     });
 
@@ -437,10 +437,8 @@ describe("Repeat Effects", () => {
       );
 
       expect(effect).toEqual({
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "repeat",
-          times: 3,
           effect: {
             type: "deal-damage",
             amount: 2,
@@ -452,8 +450,10 @@ describe("Repeat Effects", () => {
               cardTypes: ["character"],
             },
           },
+          times: 3,
+          type: "repeat",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       });
     });
   });
@@ -463,10 +463,7 @@ describe("Repeat Effects", () => {
       const effect = parseEffect("Exert chosen character. Repeat this 2 times");
 
       expect(effect).toEqual({
-        type: "repeat",
-        times: 2,
         effect: {
-          type: "exert",
           target: {
             selector: "chosen",
             count: 1,
@@ -474,7 +471,10 @@ describe("Repeat Effects", () => {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "exert",
         },
+        times: 2,
+        type: "repeat",
       });
     });
 
@@ -482,10 +482,7 @@ describe("Repeat Effects", () => {
       const effect = parseEffect("Ready chosen character. Repeat that 1 time");
 
       expect(effect).toEqual({
-        type: "repeat",
-        times: 1,
         effect: {
-          type: "ready",
           target: {
             selector: "chosen",
             count: 1,
@@ -493,7 +490,10 @@ describe("Repeat Effects", () => {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "ready",
         },
+        times: 1,
+        type: "repeat",
       });
     });
   });
@@ -504,12 +504,12 @@ describe("Integration Tests", () => {
     const effect = parseEffect("Gain 1 lore For Each character you have");
 
     expect(effect).toEqual({
-      type: "for-each",
-      counter: { type: "characters", controller: "you" },
+      counter: { controller: "you", type: "characters" },
       effect: {
-        type: "gain-lore",
         amount: 1,
+        type: "gain-lore",
       },
+      type: "for-each",
     });
   });
 
@@ -517,13 +517,13 @@ describe("Integration Tests", () => {
     const effect = parseEffect("Draw a card. Repeat This 2 times");
 
     expect(effect).toEqual({
-      type: "repeat",
-      times: 2,
       effect: {
-        type: "draw",
         amount: 1,
         target: "CONTROLLER",
+        type: "draw",
       },
+      times: 2,
+      type: "repeat",
     });
   });
 
@@ -531,8 +531,8 @@ describe("Integration Tests", () => {
     const effect = parseEffect("Gain 1 lore for some reason");
 
     expect(effect).toEqual({
-      type: "gain-lore",
       amount: 1,
+      type: "gain-lore",
     });
   });
 

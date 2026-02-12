@@ -1,29 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const arielWhoseitCollector: CharacterCard = {
-  id: "df2",
-  cardType: "character",
-  name: "Ariel",
-  version: "Whoseit Collector",
-  fullName: "Ariel - Whoseit Collector",
-  inkType: ["sapphire"],
-  franchise: "Disney",
-  set: "001",
-  text: "**LOOK AT THIS STUFF** Whenever you play an item, you may ready this character.",
-  cost: 4,
-  strength: 3,
-  willpower: 3,
-  lore: 1,
-  cardNumber: 137,
-  inkable: true,
-  externalIds: {
-    ravensburger: "",
-  },
   abilities: [
     {
-      type: "action",
-      id: "c6b-1",
-      text: "**PRINCE'S CHARM** You may ready this character.",
       effect: {
         type: "optional",
         effect: {
@@ -38,60 +17,81 @@ export const arielWhoseitCollector: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "c6b-1",
+      text: "**PRINCE'S CHARM** You may ready this character.",
+      type: "action",
     },
   ],
+  cardNumber: 137,
+  cardType: "character",
   classifications: ["Hero", "Storyborn", "Princess"],
+  cost: 4,
+  externalIds: {
+    ravensburger: "",
+  },
+  franchise: "Disney",
+  fullName: "Ariel - Whoseit Collector",
+  id: "df2",
+  inkType: ["sapphire"],
+  inkable: true,
+  lore: 1,
+  name: "Ariel",
+  set: "001",
+  strength: 3,
+  text: "**LOOK AT THIS STUFF** Whenever you play an item, you may ready this character.",
+  version: "Whoseit Collector",
+  willpower: 3,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { wheneverPlays } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import { wheneverPlays } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const arielWhoseitCollector: LorcanitoCharacterCard = {
-//   id: "df2",
-//   name: "Ariel",
-//   title: "Whoseit Collector",
-//   characteristics: ["hero", "storyborn", "princess"],
-//   text: "**LOOK AT THIS STUFF** Whenever you play an item, you may ready this character.",
-//   type: "character",
-//   abilities: [
-//     wheneverPlays({
-//       name: "Look at This Stuff",
-//       text: "Whenever you play an item, you may ready this character.",
-//       optional: true,
-//       triggerTarget: {
-//         type: "card",
-//         value: 1,
-//         filters: [
+// Export const arielWhoseitCollector: LorcanitoCharacterCard = {
+//   Id: "df2",
+//   Name: "Ariel",
+//   Title: "Whoseit Collector",
+//   Characteristics: ["hero", "storyborn", "princess"],
+//   Text: "**LOOK AT THIS STUFF** Whenever you play an item, you may ready this character.",
+//   Type: "character",
+//   Abilities: [
+//     WheneverPlays({
+//       Name: "Look at This Stuff",
+//       Text: "Whenever you play an item, you may ready this character.",
+//       Optional: true,
+//       TriggerTarget: {
+//         Type: "card",
+//         Value: 1,
+//         Filters: [
 //           { filter: "type", value: "item" },
 //           { filter: "owner", value: "self" },
 //         ],
 //       },
-//       effects: [
+//       Effects: [
 //         {
-//           type: "exert",
-//           exert: false,
-//           target: {
-//             type: "card",
-//             value: "all",
-//             filters: [{ filter: "source", value: "self" }],
+//           Type: "exert",
+//           Exert: false,
+//           Target: {
+//             Type: "card",
+//             Value: "all",
+//             Filters: [{ filter: "source", value: "self" }],
 //           },
 //         },
 //       ],
 //     }),
 //   ],
-//   flavour: "You want thingamabobs? I got twenty.",
-//   colors: ["sapphire"],
-//   cost: 4,
-//   strength: 3,
-//   willpower: 3,
-//   lore: 1,
-//   illustrator: "Hedvig Häggman-Sund",
-//   number: 137,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 502532,
+//   Flavour: "You want thingamabobs? I got twenty.",
+//   Colors: ["sapphire"],
+//   Cost: 4,
+//   Strength: 3,
+//   Willpower: 3,
+//   Lore: 1,
+//   Illustrator: "Hedvig Häggman-Sund",
+//   Number: 137,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 502532,
 //   },
-//   rarity: "rare",
+//   Rarity: "rare",
 // };
 //

@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { ratiganNefariousCriminal } from "@lorcanito/lorcana-engine/cards/007";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { ratiganNefariousCriminal } from "@lorcanito/lorcana-engine/cards/007";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Ratigan - Nefarious Criminal", () => {
-//   it.skip("A MARVELOUS PERFORMANCE Whenever you play an action while this character is exerted, gain 1 lore.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: ratiganNefariousCriminal.cost,
-//       play: [ratiganNefariousCriminal],
-//       hand: [ratiganNefariousCriminal],
+// Describe("Ratigan - Nefarious Criminal", () => {
+//   It.skip("A MARVELOUS PERFORMANCE Whenever you play an action while this character is exerted, gain 1 lore.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: ratiganNefariousCriminal.cost,
+//       Play: [ratiganNefariousCriminal],
+//       Hand: [ratiganNefariousCriminal],
 //     });
 //
-//     await testEngine.playCard(ratiganNefariousCriminal);
+//     Await testEngine.playCard(ratiganNefariousCriminal);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

@@ -31,7 +31,7 @@ export function parseConditionFromCst(ctx: {
   logger.debug("Parsing condition from CST", { ctx });
 
   // Determine condition type
-  // biome-ignore lint/suspicious/noExplicitAny: CST children type casting
+  // Biome-ignore lint/suspicious/noExplicitAny: CST children type casting
   if (ctx.ifCondition) {
     return parseIfConditionFromCst(ctx.ifCondition[0].children as any);
   }
@@ -71,8 +71,8 @@ function parseIfConditionFromCst(ctx: {
   }
 
   const condition: VisitorCondition = {
-    type: "if",
     expression,
+    type: "if",
   };
 
   logger.info("Parsed 'if' condition from CST", { condition });
@@ -107,8 +107,8 @@ function parseDuringConditionFromCst(ctx: {
   }
 
   const condition: VisitorCondition = {
-    type: "during",
     expression,
+    type: "during",
   };
 
   logger.info("Parsed 'during' condition from CST", { condition });
@@ -134,8 +134,8 @@ function parseAtConditionFromCst(ctx: {
     .toLowerCase();
 
   const condition: VisitorCondition = {
-    type: "at",
     expression,
+    type: "at",
   };
 
   logger.info("Parsed 'at' condition from CST", { condition });
@@ -159,8 +159,8 @@ function parseWithConditionFromCst(ctx: {
   }
 
   const condition: VisitorCondition = {
-    type: "with",
     expression,
+    type: "with",
   };
 
   logger.info("Parsed 'with' condition from CST", { condition });
@@ -184,8 +184,8 @@ function parseWithoutConditionFromCst(ctx: {
   }
 
   const condition: VisitorCondition = {
-    type: "without",
     expression,
+    type: "without",
   };
 
   logger.info("Parsed 'without' condition from CST", { condition });
@@ -202,7 +202,7 @@ function extractExpressionFromCst(
     return null;
   }
 
-  // biome-ignore lint/suspicious/noExplicitAny: CST children type casting
+  // Biome-ignore lint/suspicious/noExplicitAny: CST children type casting
   const ctx = expressionNodes[0].children as any as {
     Identifier?: IToken[];
     NumberToken?: IToken[];
@@ -228,7 +228,7 @@ function extractExpressionFromCst(
   }
 
   // Sort by token position and join
-  const sortedTokens = tokens.sort((a, b) => {
+  const sortedTokens = tokens.toSorted((a, b) => {
     if (a.startOffset === undefined || b.startOffset === undefined) {
       return 0;
     }
@@ -253,7 +253,7 @@ export function parseConditionFromText(text: string): VisitorCondition | null {
   logger.debug("Parsing condition from text", { text });
 
   // Common condition patterns
-  const patterns: Array<{ regex: RegExp; type: VisitorCondition["type"] }> = [
+  const patterns: { regex: RegExp; type: VisitorCondition["type"] }[] = [
     { regex: /\bif\s+(.+?)(?:,|$)/i, type: "if" },
     { regex: /\bduring\s+(.+?)(?:,|$)/i, type: "during" },
     { regex: /\bat\s+(.+?)(?:,|$)/i, type: "at" },
@@ -265,8 +265,8 @@ export function parseConditionFromText(text: string): VisitorCondition | null {
     const match = text.match(pattern.regex);
     if (match) {
       const condition: VisitorCondition = {
-        type: pattern.type,
         expression: match[1].trim(),
+        type: pattern.type,
       };
 
       logger.info("Parsed condition from text", { condition });
@@ -286,10 +286,10 @@ export function parseConditionFromText(text: string): VisitorCondition | null {
 export function toCondition(
   visitor: VisitorCondition | null,
 ): IfCondition | null {
-  if (!visitor) return null;
+  if (!visitor) {return null;}
 
   return {
-    type: "if",
     expression: visitor.expression,
+    type: "if",
   };
 }

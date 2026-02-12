@@ -1,31 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const simbaFightingPrince: CharacterCard = {
-  id: "1sf",
-  cardType: "character",
-  name: "Simba",
-  version: "Fighting Prince",
-  fullName: "Simba - Fighting Prince",
-  inkType: ["steel"],
-  franchise: "Lion King",
-  set: "003",
-  text: "STEP DOWN OR FIGHT When you play this character and whenever he banishes another character in a challenge during your turn, you may choose one: • Draw 2 cards, then choose and discard 2 cards. • Deal 2 damage to chosen character.",
-  cost: 7,
-  strength: 5,
-  willpower: 7,
-  lore: 2,
-  cardNumber: 192,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "e836b4740f7b37d1bb09ffe4674ef38b8b93c2ed",
-  },
   abilities: [
     {
-      id: "1sf-1",
-      type: "triggered",
-      name: "STEP DOWN OR FIGHT When you play this character and",
-      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "choice",
         options: [
@@ -51,8 +28,31 @@ export const simbaFightingPrince: CharacterCard = {
           "Deal 2 damage to chosen character.",
         ],
       },
+      id: "1sf-1",
+      name: "STEP DOWN OR FIGHT When you play this character and",
       text: "STEP DOWN OR FIGHT When you play this character and whenever he banishes another character in a challenge during your turn, you may choose one: • Draw 2 cards, then choose and discard 2 cards. • Deal 2 damage to chosen character.",
+      trigger: { event: "play", timing: "when", on: "SELF" },
+      type: "triggered",
     },
   ],
+  cardNumber: 192,
+  cardType: "character",
   classifications: ["Dreamborn", "Hero", "Prince"],
+  cost: 7,
+  externalIds: {
+    ravensburger: "e836b4740f7b37d1bb09ffe4674ef38b8b93c2ed",
+  },
+  franchise: "Lion King",
+  fullName: "Simba - Fighting Prince",
+  id: "1sf",
+  inkType: ["steel"],
+  inkable: true,
+  lore: 2,
+  missingTests: true,
+  name: "Simba",
+  set: "003",
+  strength: 5,
+  text: "STEP DOWN OR FIGHT When you play this character and whenever he banishes another character in a challenge during your turn, you may choose one: • Draw 2 cards, then choose and discard 2 cards. • Deal 2 damage to chosen character.",
+  version: "Fighting Prince",
+  willpower: 7,
 };

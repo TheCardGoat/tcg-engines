@@ -23,14 +23,14 @@ export function matchesLorcanaFilter(
     return false;
   }
 
-  return handler.evaluate(filter, card, { state, registry, context });
+  return handler.evaluate(filter, card, { context, registry, state });
 }
 
 /**
  * Sort filters by rank using registry complexity
  */
 export function sortFilters(filters: LorcanaFilter[]): LorcanaFilter[] {
-  return [...filters].sort((a, b) => {
+  return [...filters].toSorted((a, b) => {
     const handlerA = filterRegistry.get(a.type);
     const handlerB = filterRegistry.get(b.type);
     const rankA = handlerA ? handlerA.complexity : 100;
@@ -54,11 +54,8 @@ export function createTargetFiltersPredicate(
 
   const sortedFilters = sortFilters(filters);
 
-  return (card: CardInstance<LorcanaCardMeta>) => {
-    return sortedFilters.every((filter) =>
-      matchesLorcanaFilter(card, filter, state, registry, context),
-    );
-  };
+  return (card: CardInstance<LorcanaCardMeta>) =>
+    sortedFilters.every((filter) => matchesLorcanaFilter(card, filter, state, registry, context));
 }
 
 /**
@@ -85,12 +82,7 @@ export function createTargetFiltersPredicateWithDebug(
     details: FilterDebugInfo[];
   };
 } {
-  const rawPredicate = createTargetFiltersPredicate(
-    filters,
-    state,
-    registry,
-    context,
-  );
+  const rawPredicate = createTargetFiltersPredicate(filters, state, registry, context);
   const sortedFilters = filters ? sortFilters(filters) : [];
 
   const debug = (card: CardInstance<LorcanaCardMeta>) => {
@@ -99,19 +91,13 @@ export function createTargetFiltersPredicateWithDebug(
 
     for (const filter of sortedFilters) {
       const start = performance.now();
-      const passed = matchesLorcanaFilter(
-        card,
-        filter,
-        state,
-        registry,
-        context,
-      );
+      const passed = matchesLorcanaFilter(card, filter, state, registry, context);
       const duration = performance.now() - start;
 
       details.push({
+        executionTime: duration,
         filter,
         passed,
-        executionTime: duration,
       });
 
       if (!passed) {
@@ -120,10 +106,10 @@ export function createTargetFiltersPredicateWithDebug(
       }
     }
 
-    return { result, details };
+    return { details, result };
   };
 
-  return { predicate: rawPredicate, debug };
+  return { debug, predicate: rawPredicate };
 }
 
 /**
@@ -141,5 +127,5 @@ export function validateFilters(filters: LorcanaFilter[]): {
     }
     // TODO: Add specific handler validation if needed
   }
-  return { valid: errors.length === 0, errors };
+  return { errors, valid: errors.length === 0 };
 }

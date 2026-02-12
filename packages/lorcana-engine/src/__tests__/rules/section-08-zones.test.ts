@@ -6,19 +6,15 @@
  */
 
 import { afterEach, beforeEach, describe, expect, test } from "bun:test";
-import {
-  LorcanaTestEngine,
-  PLAYER_ONE,
-  PLAYER_TWO,
-} from "../../testing/lorcana-test-engine";
+import { LorcanaTestEngine, PLAYER_ONE, PLAYER_TWO } from "../../testing/lorcana-test-engine";
 
 describe("Section 8: Zones", () => {
   let testEngine: LorcanaTestEngine;
 
   beforeEach(() => {
     testEngine = new LorcanaTestEngine(
-      { hand: 7, deck: 53, inkwell: 0 },
-      { hand: 7, deck: 53, inkwell: 0 },
+      { deck: 53, hand: 7, inkwell: 0 },
+      { deck: 53, hand: 7, inkwell: 0 },
       { skipPreGame: true },
     );
   });

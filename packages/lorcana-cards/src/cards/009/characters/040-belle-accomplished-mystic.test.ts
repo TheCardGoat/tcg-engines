@@ -3,29 +3,29 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { belleAccomplishedMystic } from "@lorcanito/lorcana-engine/cards/009/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { belleAccomplishedMystic } from "@lorcanito/lorcana-engine/cards/009/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Belle - Accomplished Mystic", () => {
-//   it.skip("**Shift** 3", async () => {
-//     const testEngine = new TestEngine({
-//       play: [belleAccomplishedMystic],
+// Describe("Belle - Accomplished Mystic", () => {
+//   It.skip("**Shift** 3", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [belleAccomplishedMystic],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(belleAccomplishedMystic);
-//     expect(cardUnderTest.hasShift).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(belleAccomplishedMystic);
+//     Expect(cardUnderTest.hasShift).toBe(true);
 //   });
 //
-//   it.skip("**ENHANCED HEALING** When you play this character, move up to 3 damage counters from chosen character to chosen opposing character.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: belleAccomplishedMystic.cost,
-//       hand: [belleAccomplishedMystic],
+//   It.skip("**ENHANCED HEALING** When you play this character, move up to 3 damage counters from chosen character to chosen opposing character.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: belleAccomplishedMystic.cost,
+//       Hand: [belleAccomplishedMystic],
 //     });
 //
-//     await testEngine.playCard(belleAccomplishedMystic);
-//     await testEngine.acceptOptionalLayer();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.playCard(belleAccomplishedMystic);
+//     Await testEngine.acceptOptionalLayer();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

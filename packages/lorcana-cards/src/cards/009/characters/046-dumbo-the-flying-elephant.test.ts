@@ -3,39 +3,39 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { deweyLovableShowoff } from "@lorcanito/lorcana-engine/cards/008";
-// import { dumboTheFlyingElephant } from "@lorcanito/lorcana-engine/cards/009/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { deweyLovableShowoff } from "@lorcanito/lorcana-engine/cards/008";
+// Import { dumboTheFlyingElephant } from "@lorcanito/lorcana-engine/cards/009/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Dumbo - The Flying Elephant", () => {
-//   it("Evasive (Only characters with Evasive can challenge this character.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [dumboTheFlyingElephant],
+// Describe("Dumbo - The Flying Elephant", () => {
+//   It("Evasive (Only characters with Evasive can challenge this character.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [dumboTheFlyingElephant],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(dumboTheFlyingElephant);
-//     expect(cardUnderTest.hasEvasive).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(dumboTheFlyingElephant);
+//     Expect(cardUnderTest.hasEvasive).toBe(true);
 //   });
 //
-//   it("AERIAL DUO When you play this character, chosen character gains Evasive until the start of your next turn.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: dumboTheFlyingElephant.cost,
-//       hand: [dumboTheFlyingElephant],
-//       play: [deweyLovableShowoff],
+//   It("AERIAL DUO When you play this character, chosen character gains Evasive until the start of your next turn.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: dumboTheFlyingElephant.cost,
+//       Hand: [dumboTheFlyingElephant],
+//       Play: [deweyLovableShowoff],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(dumboTheFlyingElephant);
-//     const target = testEngine.getCardModel(deweyLovableShowoff);
+//     Const cardUnderTest = testEngine.getCardModel(dumboTheFlyingElephant);
+//     Const target = testEngine.getCardModel(deweyLovableShowoff);
 //
-//     testEngine.playCard(cardUnderTest);
-//     await testEngine.resolveTopOfStack({ targets: [target] });
+//     TestEngine.playCard(cardUnderTest);
+//     Await testEngine.resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.hasEvasive).toBe(true);
+//     Expect(target.hasEvasive).toBe(true);
 //
-//     testEngine.passTurn();
+//     TestEngine.passTurn();
 //
-//     expect(target.hasEvasive).toBe(true);
+//     Expect(target.hasEvasive).toBe(true);
 //   });
 // });
 //

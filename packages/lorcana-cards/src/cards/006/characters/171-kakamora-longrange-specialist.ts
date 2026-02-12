@@ -1,39 +1,39 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
 // // TODO: Once the set is released, we organize the cards by set and type
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { ifYouHaveAnotherPirate } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
-// import { chosenCharacterOrLocation } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { whenYouPlayThisCharacter } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import { dealDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { ifYouHaveAnotherPirate } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
+// Import { chosenCharacterOrLocation } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import { whenYouPlayThisCharacter } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import { dealDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const kakamoraLongrangeSpecialist: LorcanitoCharacterCard = {
-//   id: "zdx",
-//   name: "Kakamora",
-//   title: "Long-Range Specialist",
-//   characteristics: ["storyborn", "pirate"],
-//   text: "A LITTLE HELP When you play this character, if you have another Pirate character in play, you may deal 1 damage to chosen character or location.",
-//   type: "character",
-//   abilities: [
-//     whenYouPlayThisCharacter({
-//       name: "A Little Help",
-//       text: "When you play this character, if you have another Pirate character in play, you may deal 1 damage to chosen character or location.",
-//       optional: true,
-//       conditions: [ifYouHaveAnotherPirate],
-//       effects: [dealDamageEffect(1, chosenCharacterOrLocation)],
+// Export const kakamoraLongrangeSpecialist: LorcanitoCharacterCard = {
+//   Id: "zdx",
+//   Name: "Kakamora",
+//   Title: "Long-Range Specialist",
+//   Characteristics: ["storyborn", "pirate"],
+//   Text: "A LITTLE HELP When you play this character, if you have another Pirate character in play, you may deal 1 damage to chosen character or location.",
+//   Type: "character",
+//   Abilities: [
+//     WhenYouPlayThisCharacter({
+//       Name: "A Little Help",
+//       Text: "When you play this character, if you have another Pirate character in play, you may deal 1 damage to chosen character or location.",
+//       Optional: true,
+//       Conditions: [ifYouHaveAnotherPirate],
+//       Effects: [dealDamageEffect(1, chosenCharacterOrLocation)],
 //     }),
 //   ],
-//   inkwell: false,
-//   colors: ["steel"],
-//   cost: 1,
-//   strength: 0,
-//   willpower: 2,
-//   lore: 1,
-//   illustrator: "Matthew Robert Davies",
-//   number: 171,
-//   set: "006",
-//   externalIds: {
-//     tcgPlayer: 588366,
+//   Inkwell: false,
+//   Colors: ["steel"],
+//   Cost: 1,
+//   Strength: 0,
+//   Willpower: 2,
+//   Lore: 1,
+//   Illustrator: "Matthew Robert Davies",
+//   Number: 171,
+//   Set: "006",
+//   ExternalIds: {
+//     TcgPlayer: 588366,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

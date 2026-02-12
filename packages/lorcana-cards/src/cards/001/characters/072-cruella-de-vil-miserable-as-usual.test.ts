@@ -5,9 +5,9 @@ import { cruellaDeVilMiserableAsUsual } from "./072-cruella-de-vil-miserable-as-
 describe("Cruella De Vil - Miserable as Usual", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [cruellaDeVilMiserableAsUsual] });
-  //   expect(testEngine.getCardModel(cruellaDeVilMiserableAsUsual).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [cruellaDeVilMiserableAsUsual] });
+  //   Expect(testEngine.getCardModel(cruellaDeVilMiserableAsUsual).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,85 +17,85 @@ describe("Cruella De Vil - Miserable as Usual", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   cruellaDeVilMiserableAsUsual,
-//   teKaTheBurningOne,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   CruellaDeVilMiserableAsUsual,
+//   TeKaTheBurningOne,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Cruella De Vil - Miserable As Usual", () => {
-//   describe("**You'll Be Sorry** When this character is challenged and banished, you may return chosen character to their player's hand.", () => {
-//     it("should banish the challenging character", () => {
-//       const testStore = new TestStore(
+// Describe("Cruella De Vil - Miserable As Usual", () => {
+//   Describe("**You'll Be Sorry** When this character is challenged and banished, you may return chosen character to their player's hand.", () => {
+//     It("should banish the challenging character", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [teKaTheBurningOne],
+//           Play: [teKaTheBurningOne],
 //         },
 //         {
-//           play: [cruellaDeVilMiserableAsUsual],
+//           Play: [cruellaDeVilMiserableAsUsual],
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         cruellaDeVilMiserableAsUsual.id,
+//         CruellaDeVilMiserableAsUsual.id,
 //         "player_two",
 //       );
 //
-//       const attacker = testStore.getByZoneAndId("play", teKaTheBurningOne.id);
+//       Const attacker = testStore.getByZoneAndId("play", teKaTheBurningOne.id);
 //
-//       expect(cardUnderTest.zone).toEqual("play");
-//       cardUnderTest.updateCardMeta({ exerted: true });
+//       Expect(cardUnderTest.zone).toEqual("play");
+//       CardUnderTest.updateCardMeta({ exerted: true });
 //
-//       attacker.challenge(cardUnderTest);
+//       Attacker.challenge(cardUnderTest);
 //
-//       testStore.changePlayer("player_two");
+//       TestStore.changePlayer("player_two");
 //
-//       testStore.resolveOptionalAbility();
-//       testStore.resolveTopOfStack({ targetId: attacker.instanceId });
+//       TestStore.resolveOptionalAbility();
+//       TestStore.resolveTopOfStack({ targetId: attacker.instanceId });
 //
-//       expect(testStore.getZonesCardCount("player_two")).toEqual(
-//         expect.objectContaining({ discard: 1, play: 0 }),
+//       Expect(testStore.getZonesCardCount("player_two")).toEqual(
+//         Expect.objectContaining({ discard: 1, play: 0 }),
 //       );
-//       expect(testStore.getZonesCardCount("player_one")).toEqual(
-//         expect.objectContaining({ hand: 1, play: 0 }),
+//       Expect(testStore.getZonesCardCount("player_one")).toEqual(
+//         Expect.objectContaining({ hand: 1, play: 0 }),
 //       );
-//       expect(attacker.zone).toEqual("hand");
-//       expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
+//       Expect(attacker.zone).toEqual("hand");
+//       Expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
 //     });
 //
-//     it("skips banish effect", () => {
-//       const testStore = new TestStore(
+//     It("skips banish effect", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [teKaTheBurningOne],
+//           Play: [teKaTheBurningOne],
 //         },
 //         {
-//           play: [cruellaDeVilMiserableAsUsual],
+//           Play: [cruellaDeVilMiserableAsUsual],
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         cruellaDeVilMiserableAsUsual.id,
+//         CruellaDeVilMiserableAsUsual.id,
 //         "player_two",
 //       );
 //
-//       const attacker = testStore.getByZoneAndId("play", teKaTheBurningOne.id);
+//       Const attacker = testStore.getByZoneAndId("play", teKaTheBurningOne.id);
 //
-//       expect(cardUnderTest.zone).toEqual("play");
-//       cardUnderTest.updateCardMeta({ exerted: true });
+//       Expect(cardUnderTest.zone).toEqual("play");
+//       CardUnderTest.updateCardMeta({ exerted: true });
 //
-//       attacker.challenge(cardUnderTest);
-//       testStore.changePlayer().resolveOptionalAbility();
-//       testStore.resolveTopOfStack({ skip: true });
+//       Attacker.challenge(cardUnderTest);
+//       TestStore.changePlayer().resolveOptionalAbility();
+//       TestStore.resolveTopOfStack({ skip: true });
 //
-//       expect(testStore.getZonesCardCount("player_one")).toEqual(
-//         expect.objectContaining({ discard: 0, play: 1 }),
+//       Expect(testStore.getZonesCardCount("player_one")).toEqual(
+//         Expect.objectContaining({ discard: 0, play: 1 }),
 //       );
-//       expect(testStore.getZonesCardCount("player_two")).toEqual(
-//         expect.objectContaining({ discard: 1, play: 0 }),
+//       Expect(testStore.getZonesCardCount("player_two")).toEqual(
+//         Expect.objectContaining({ discard: 1, play: 0 }),
 //       );
-//       expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
+//       Expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
 //     });
 //   });
 // });

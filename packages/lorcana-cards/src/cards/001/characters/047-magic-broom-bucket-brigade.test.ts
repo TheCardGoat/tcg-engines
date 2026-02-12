@@ -5,9 +5,9 @@ import { magicBroomBucketBrigade } from "./047-magic-broom-bucket-brigade";
 describe("Magic Broom - Bucket Brigade", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [magicBroomBucketBrigade] });
-  //   expect(testEngine.getCardModel(magicBroomBucketBrigade).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [magicBroomBucketBrigade] });
+  //   Expect(testEngine.getCardModel(magicBroomBucketBrigade).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,121 +17,121 @@ describe("Magic Broom - Bucket Brigade", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   captainColonelsLieutenant,
-//   heiheiBoatSnack,
-//   magicBroomBucketBrigade,
-//   mickeyMouseTrueFriend,
-//   moanaOfMotunui,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   CaptainColonelsLieutenant,
+//   HeiheiBoatSnack,
+//   MagicBroomBucketBrigade,
+//   MickeyMouseTrueFriend,
+//   MoanaOfMotunui,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Magic Broom - Bucket Brigade", () => {
-//   it("Weep effect - Own Discard", () => {
-//     const testStore = new TestStore({
-//       inkwell: [magicBroomBucketBrigade, magicBroomBucketBrigade],
-//       hand: [magicBroomBucketBrigade],
-//       discard: [mickeyMouseTrueFriend, moanaOfMotunui],
+// Describe("Magic Broom - Bucket Brigade", () => {
+//   It("Weep effect - Own Discard", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: [magicBroomBucketBrigade, magicBroomBucketBrigade],
+//       Hand: [magicBroomBucketBrigade],
+//       Discard: [mickeyMouseTrueFriend, moanaOfMotunui],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "hand",
-//       magicBroomBucketBrigade.id,
+//       MagicBroomBucketBrigade.id,
 //     );
 //
-//     expect(testStore.getZonesCardCount("player_one").discard).toEqual(2);
+//     Expect(testStore.getZonesCardCount("player_one").discard).toEqual(2);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     expect(testStore.store.stackLayerStore.layers).toHaveLength(1);
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     Expect(testStore.store.stackLayerStore.layers).toHaveLength(1);
 //
-//     const target = testStore.getByZoneAndId(
+//     Const target = testStore.getByZoneAndId(
 //       "discard",
-//       mickeyMouseTrueFriend.id,
+//       MickeyMouseTrueFriend.id,
 //     );
-//     testStore.resolveTopOfStack({ targetId: target.instanceId });
+//     TestStore.resolveTopOfStack({ targetId: target.instanceId });
 //
-//     expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
-//     expect(testStore.getZonesCardCount("player_one")).toEqual(
-//       expect.objectContaining({
-//         discard: 1,
-//         play: 1,
-//         deck: 1,
+//     Expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
+//     Expect(testStore.getZonesCardCount("player_one")).toEqual(
+//       Expect.objectContaining({
+//         Discard: 1,
+//         Play: 1,
+//         Deck: 1,
 //       }),
 //     );
 //   });
 //
-//   it("Weep effect - Opponent's Discard", () => {
-//     const testStore = new TestStore(
+//   It("Weep effect - Opponent's Discard", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: [magicBroomBucketBrigade, magicBroomBucketBrigade],
-//         hand: [magicBroomBucketBrigade],
+//         Inkwell: [magicBroomBucketBrigade, magicBroomBucketBrigade],
+//         Hand: [magicBroomBucketBrigade],
 //       },
 //       {
-//         discard: [mickeyMouseTrueFriend, moanaOfMotunui],
+//         Discard: [mickeyMouseTrueFriend, moanaOfMotunui],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "hand",
-//       magicBroomBucketBrigade.id,
+//       MagicBroomBucketBrigade.id,
 //     );
 //
-//     expect(testStore.getZonesCardCount("player_two").discard).toEqual(2);
+//     Expect(testStore.getZonesCardCount("player_two").discard).toEqual(2);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     expect(testStore.store.stackLayerStore.layers).toHaveLength(1);
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     Expect(testStore.store.stackLayerStore.layers).toHaveLength(1);
 //
-//     const target = testStore.getByZoneAndId(
+//     Const target = testStore.getByZoneAndId(
 //       "discard",
-//       mickeyMouseTrueFriend.id,
+//       MickeyMouseTrueFriend.id,
 //       "player_two",
 //     );
-//     testStore.resolveTopOfStack({ targetId: target.instanceId });
+//     TestStore.resolveTopOfStack({ targetId: target.instanceId });
 //
-//     expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
-//     expect(testStore.getZonesCardCount("player_two")).toEqual(
-//       expect.objectContaining({
-//         discard: 1,
-//         deck: 1,
+//     Expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
+//     Expect(testStore.getZonesCardCount("player_two")).toEqual(
+//       Expect.objectContaining({
+//         Discard: 1,
+//         Deck: 1,
 //       }),
 //     );
 //   });
 //
-//   it("Weep effect - Skipping", () => {
-//     const testStore = new TestStore(
+//   It("Weep effect - Skipping", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: 2,
-//         discard: [heiheiBoatSnack, captainColonelsLieutenant],
-//         hand: [magicBroomBucketBrigade],
+//         Inkwell: 2,
+//         Discard: [heiheiBoatSnack, captainColonelsLieutenant],
+//         Hand: [magicBroomBucketBrigade],
 //       },
 //       {
-//         discard: [mickeyMouseTrueFriend, moanaOfMotunui],
+//         Discard: [mickeyMouseTrueFriend, moanaOfMotunui],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "hand",
-//       magicBroomBucketBrigade.id,
+//       MagicBroomBucketBrigade.id,
 //     );
 //
-//     expect(testStore.getZonesCardCount("player_one").discard).toEqual(2);
-//     expect(testStore.getZonesCardCount("player_two").discard).toEqual(2);
+//     Expect(testStore.getZonesCardCount("player_one").discard).toEqual(2);
+//     Expect(testStore.getZonesCardCount("player_two").discard).toEqual(2);
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     expect(testStore.store.stackLayerStore.layers).toHaveLength(1);
+//     Expect(testStore.store.stackLayerStore.layers).toHaveLength(1);
 //
-//     testStore.resolveTopOfStack({ skip: true });
+//     TestStore.resolveTopOfStack({ skip: true });
 //
-//     expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
-//     expect(testStore.getZonesCardCount("player_two").discard).toEqual(2);
-//     expect(testStore.getZonesCardCount("player_one")).toEqual(
-//       expect.objectContaining({
-//         discard: 2,
-//         play: 1,
+//     Expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
+//     Expect(testStore.getZonesCardCount("player_two").discard).toEqual(2);
+//     Expect(testStore.getZonesCardCount("player_one")).toEqual(
+//       Expect.objectContaining({
+//         Discard: 2,
+//         Play: 1,
 //       }),
 //     );
 //   });

@@ -1,34 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const buckyNuttyRascal: CharacterCard = {
-  id: "17v",
-  cardType: "character",
-  name: "Bucky",
-  version: "Nutty Rascal",
-  fullName: "Bucky - Nutty Rascal",
-  inkType: ["amethyst"],
-  franchise: "Emperors New Groove",
-  set: "007",
-  text: "POP! When this character is banished in a challenge, you may draw a card.",
-  cost: 3,
-  strength: 3,
-  willpower: 2,
-  lore: 1,
-  cardNumber: 60,
-  inkable: true,
-  externalIds: {
-    ravensburger: "9e2af09893b0ca662b9ffaf6ed3e829170c038b7",
-  },
   abilities: [
     {
-      id: "17v-1",
-      type: "triggered",
-      name: "POP!",
-      trigger: {
-        event: "banish",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -38,8 +12,34 @@ export const buckyNuttyRascal: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "17v-1",
+      name: "POP!",
       text: "POP! When this character is banished in a challenge, you may draw a card.",
+      trigger: {
+        event: "banish",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 60,
+  cardType: "character",
   classifications: ["Dreamborn", "Ally"],
+  cost: 3,
+  externalIds: {
+    ravensburger: "9e2af09893b0ca662b9ffaf6ed3e829170c038b7",
+  },
+  franchise: "Emperors New Groove",
+  fullName: "Bucky - Nutty Rascal",
+  id: "17v",
+  inkType: ["amethyst"],
+  inkable: true,
+  lore: 1,
+  name: "Bucky",
+  set: "007",
+  strength: 3,
+  text: "POP! When this character is banished in a challenge, you may draw a card.",
+  version: "Nutty Rascal",
+  willpower: 2,
 };

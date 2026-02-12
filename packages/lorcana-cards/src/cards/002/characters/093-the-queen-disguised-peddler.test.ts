@@ -3,31 +3,31 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   goofyKnightForADay,
-//   theQueenDisguisedPeddler,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   GoofyKnightForADay,
+//   TheQueenDisguisedPeddler,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("The Queen - Disguised Peddler", () => {
-//   it("**A PERFECT DISGUISE** {E}, Choose and discard a character card − Gain lore equal to the discarded character's {L}.", () => {
-//     const testStore = new TestStore({
-//       play: [theQueenDisguisedPeddler],
-//       hand: [goofyKnightForADay],
+// Describe("The Queen - Disguised Peddler", () => {
+//   It("**A PERFECT DISGUISE** {E}, Choose and discard a character card − Gain lore equal to the discarded character's {L}.", () => {
+//     Const testStore = new TestStore({
+//       Play: [theQueenDisguisedPeddler],
+//       Hand: [goofyKnightForADay],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       theQueenDisguisedPeddler.id,
+//       TheQueenDisguisedPeddler.id,
 //     );
-//     const target = testStore.getByZoneAndId("hand", goofyKnightForADay.id);
+//     Const target = testStore.getByZoneAndId("hand", goofyKnightForADay.id);
 //
-//     cardUnderTest.activate();
-//     testStore.resolveTopOfStack({ targets: [target] });
+//     CardUnderTest.activate();
+//     TestStore.resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.zone).toEqual("discard");
-//     expect(testStore.getPlayerLore()).toEqual(target.lore);
+//     Expect(target.zone).toEqual("discard");
+//     Expect(testStore.getPlayerLore()).toEqual(target.lore);
 //   });
 // });
 //

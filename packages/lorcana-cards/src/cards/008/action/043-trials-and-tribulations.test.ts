@@ -3,35 +3,35 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { trialsAndTribulations } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { trialsAndTribulations } from "@lorcanito/lorcana-engine/cards/008/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Trials And Tribulations", () => {
-//   it.skip("(A character with cost 2 or more can {E} to sing this song for free.)", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: trialsAndTribulations.cost,
-//       play: [trialsAndTribulations],
-//       hand: [trialsAndTribulations],
+// Describe("Trials And Tribulations", () => {
+//   It.skip("(A character with cost 2 or more can {E} to sing this song for free.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: trialsAndTribulations.cost,
+//       Play: [trialsAndTribulations],
+//       Hand: [trialsAndTribulations],
 //     });
 //
-//     await testEngine.playCard(trialsAndTribulations);
+//     Await testEngine.playCard(trialsAndTribulations);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 //
-//   it.skip("Chosen character gets -4 {S} until the start of your next turn.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: trialsAndTribulations.cost,
-//       play: [trialsAndTribulations],
-//       hand: [trialsAndTribulations],
+//   It.skip("Chosen character gets -4 {S} until the start of your next turn.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: trialsAndTribulations.cost,
+//       Play: [trialsAndTribulations],
+//       Hand: [trialsAndTribulations],
 //     });
 //
-//     await testEngine.playCard(trialsAndTribulations);
+//     Await testEngine.playCard(trialsAndTribulations);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

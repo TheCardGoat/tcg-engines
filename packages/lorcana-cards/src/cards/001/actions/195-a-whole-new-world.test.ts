@@ -5,9 +5,9 @@ import { aWholeNewWorld } from "./195-a-whole-new-world";
 describe("A Whole New World - undefined", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [aWholeNewWorld] });
-  //   expect(testEngine.getCardModel(aWholeNewWorld).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [aWholeNewWorld] });
+  //   Expect(testEngine.getCardModel(aWholeNewWorld).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,64 +17,64 @@ describe("A Whole New World - undefined", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   magicBroomBucketBrigade,
-//   moanaOfMotunui,
-//   teKaTheBurningOne,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   MagicBroomBucketBrigade,
+//   MoanaOfMotunui,
+//   TeKaTheBurningOne,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { dingleHopper } from "@lorcanito/lorcana-engine/cards/001/items/items";
-// import { aWholeNewWorld } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { dingleHopper } from "@lorcanito/lorcana-engine/cards/001/items/items";
+// Import { aWholeNewWorld } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("A Whole New World", () => {
-//   it("Each player discards their hand and draws 7 cards.", () => {
-//     const testStore = new TestStore(
+// Describe("A Whole New World", () => {
+//   It("Each player discards their hand and draws 7 cards.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: aWholeNewWorld.cost,
-//         hand: [dingleHopper, aWholeNewWorld],
-//         deck: 7,
+//         Inkwell: aWholeNewWorld.cost,
+//         Hand: [dingleHopper, aWholeNewWorld],
+//         Deck: 7,
 //       },
 //       {
-//         hand: [magicBroomBucketBrigade, teKaTheBurningOne, moanaOfMotunui],
-//         deck: 7,
+//         Hand: [magicBroomBucketBrigade, teKaTheBurningOne, moanaOfMotunui],
+//         Deck: 7,
 //       },
 //     );
 //
-//     testStore.store.playCardFromHand(
-//       testStore.getByZoneAndId("hand", aWholeNewWorld.id).instanceId,
+//     TestStore.store.playCardFromHand(
+//       TestStore.getByZoneAndId("hand", aWholeNewWorld.id).instanceId,
 //     );
 //
-//     expect(testStore.getZonesCardCount("player_one")).toEqual(
-//       expect.objectContaining({ hand: 7, discard: 2, deck: 0 }),
+//     Expect(testStore.getZonesCardCount("player_one")).toEqual(
+//       Expect.objectContaining({ hand: 7, discard: 2, deck: 0 }),
 //     );
-//     expect(testStore.getZonesCardCount("player_two")).toEqual(
-//       expect.objectContaining({ hand: 7, discard: 3, deck: 0 }),
+//     Expect(testStore.getZonesCardCount("player_two")).toEqual(
+//       Expect.objectContaining({ hand: 7, discard: 3, deck: 0 }),
 //     );
 //   });
 //
-//   it("Should also trigger on empty hand", () => {
-//     const testStore = new TestStore(
+//   It("Should also trigger on empty hand", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: aWholeNewWorld.cost,
-//         hand: [aWholeNewWorld],
-//         deck: 7,
+//         Inkwell: aWholeNewWorld.cost,
+//         Hand: [aWholeNewWorld],
+//         Deck: 7,
 //       },
 //       {
-//         hand: [],
-//         deck: 7,
+//         Hand: [],
+//         Deck: 7,
 //       },
 //     );
 //
-//     testStore.store.playCardFromHand(
-//       testStore.getByZoneAndId("hand", aWholeNewWorld.id).instanceId,
+//     TestStore.store.playCardFromHand(
+//       TestStore.getByZoneAndId("hand", aWholeNewWorld.id).instanceId,
 //     );
 //
-//     expect(testStore.getZonesCardCount("player_one")).toEqual(
-//       expect.objectContaining({ hand: 7, discard: 1, deck: 0 }),
+//     Expect(testStore.getZonesCardCount("player_one")).toEqual(
+//       Expect.objectContaining({ hand: 7, discard: 1, deck: 0 }),
 //     );
-//     expect(testStore.getZonesCardCount("player_two")).toEqual(
-//       expect.objectContaining({ hand: 7, discard: 0, deck: 0 }),
+//     Expect(testStore.getZonesCardCount("player_two")).toEqual(
+//       Expect.objectContaining({ hand: 7, discard: 0, deck: 0 }),
 //     );
 //   });
 // });

@@ -99,7 +99,7 @@ describe("LorcanaParserV2 - Integration", () => {
       expect(result).not.toBeNull();
       expect(result?.type).toBe("triggered");
       // Text-based fallback wraps effect as triggered ability
-      // biome-ignore lint/suspicious/noExplicitAny: Testing dynamic property
+      // Biome-ignore lint/suspicious/noExplicitAny: Testing dynamic property
       const effect = (result as any)?.effect;
       expect(effect).toBeDefined();
       expect(effect?.type).toBe("draw");
@@ -110,7 +110,7 @@ describe("LorcanaParserV2 - Integration", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("triggered");
-      // biome-ignore lint/suspicious/noExplicitAny: Testing dynamic property
+      // Biome-ignore lint/suspicious/noExplicitAny: Testing dynamic property
       const effect = (result as any)?.effect;
       expect(effect).toBeDefined();
     });
@@ -159,12 +159,12 @@ describe("LorcanaParserV2 - Integration", () => {
     });
 
     it("handles null input gracefully", () => {
-      // biome-ignore lint/suspicious/noExplicitAny: Testing error handling with invalid input
+      // Biome-ignore lint/suspicious/noExplicitAny: Testing error handling with invalid input
       expect(() => parserV2.parseAbility(null as any)).not.toThrow();
     });
 
     it("handles undefined input gracefully", () => {
-      // biome-ignore lint/suspicious/noExplicitAny: Testing error handling with invalid input
+      // Biome-ignore lint/suspicious/noExplicitAny: Testing error handling with invalid input
       expect(() => parserV2.parseAbility(undefined as any)).not.toThrow();
     });
   });
@@ -197,7 +197,7 @@ describe("LorcanaParserV2 - Integration", () => {
 
     it("logs debug when parsing fails via grammar and falls back to text parser", () => {
       // "when when when" fails both grammar and text-based parsing
-      // but doesn't log an error, just returns null
+      // But doesn't log an error, just returns null
       const result = parserV2.parseAbility("when when when");
       expect(result).toBeNull();
       // The parser logs debug messages, not errors
@@ -284,7 +284,7 @@ describe("LorcanaParserV2 - Integration", () => {
 
     it("completes visiting phase", () => {
       // Grammar-based parsing may fail for triggered abilities,
-      // but text-based parsing will fall back and parse the draw effect
+      // But text-based parsing will fall back and parse the draw effect
       const result = parserV2.parseAbility("draw 2 cards");
 
       expect(result).not.toBeNull();
@@ -299,7 +299,7 @@ describe("LorcanaParserV2 - Integration", () => {
       expect(result).not.toBeNull();
       expect(result?.type).toBe("action");
       // Check that effect exists on the result
-      // biome-ignore lint/suspicious/noExplicitAny: Testing dynamic property access
+      // Biome-ignore lint/suspicious/noExplicitAny: Testing dynamic property access
       const effect = (result as any)?.effect;
       expect(effect).toBeDefined();
       expect(effect?.type).toBe("draw");

@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { lookAtThisFamily } from "@lorcanito/lorcana-engine/cards/004/actions/actions";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { lookAtThisFamily } from "@lorcanito/lorcana-engine/cards/004/actions/actions";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Look At This Family", () => {
-//   it.skip("**Sing Together** 7 _(Any number of your of your teammates' characters with total cost 7 or more may {E} to sing this song for free.)_Look at the top 5 cards of your deck. You may reveal up to 2 character cards and put them into your hand. Put the rest on the bottom of your deck in any order.", () => {
-//     const testStore = new TestStore({
-//       inkwell: lookAtThisFamily.cost,
-//       hand: [lookAtThisFamily],
+// Describe("Look At This Family", () => {
+//   It.skip("**Sing Together** 7 _(Any number of your of your teammates' characters with total cost 7 or more may {E} to sing this song for free.)_Look at the top 5 cards of your deck. You may reveal up to 2 character cards and put them into your hand. Put the rest on the bottom of your deck in any order.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: lookAtThisFamily.cost,
+//       Hand: [lookAtThisFamily],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", lookAtThisFamily.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", lookAtThisFamily.id);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

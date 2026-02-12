@@ -1,49 +1,49 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { whenYouPlayThis } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import { healEffect } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { whenYouPlayThis } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import { healEffect } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const littleSisterResponsibleRabbit: LorcanitoCharacterCard = {
-//   id: "sud",
-//   name: "Little Sister",
-//   title: "Responsible Rabbit",
-//   characteristics: ["storyborn", "ally"],
-//   text: "LET ME HELP When you play this character, you may remove up to 1 damage from chosen character.",
-//   type: "character",
-//   abilities: [
-//     whenYouPlayThis({
-//       name: "LET ME HELP",
-//       text: "When you play this character, you may remove up to 1 damage from chosen character.",
-//       optional: true,
-//       effects: [
-//         healEffect(
+// Export const littleSisterResponsibleRabbit: LorcanitoCharacterCard = {
+//   Id: "sud",
+//   Name: "Little Sister",
+//   Title: "Responsible Rabbit",
+//   Characteristics: ["storyborn", "ally"],
+//   Text: "LET ME HELP When you play this character, you may remove up to 1 damage from chosen character.",
+//   Type: "character",
+//   Abilities: [
+//     WhenYouPlayThis({
+//       Name: "LET ME HELP",
+//       Text: "When you play this character, you may remove up to 1 damage from chosen character.",
+//       Optional: true,
+//       Effects: [
+//         HealEffect(
 //           1,
 //           {
-//             type: "card",
-//             value: 1,
-//             filters: [
+//             Type: "card",
+//             Value: 1,
+//             Filters: [
 //               { filter: "type", value: "character" },
 //               { filter: "zone", value: "play" },
 //             ],
 //           },
-//           undefined,
-//           true,
+//           Undefined,
+//           True,
 //         ),
 //       ],
 //     }),
 //   ],
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 1,
-//   strength: 1,
-//   willpower: 2,
-//   illustrator: "Andrea Parisi",
-//   number: 163,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631460,
+//   Inkwell: true,
+//   Colors: ["sapphire"],
+//   Cost: 1,
+//   Strength: 1,
+//   Willpower: 2,
+//   Illustrator: "Andrea Parisi",
+//   Number: 163,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631460,
 //   },
-//   rarity: "common",
-//   lore: 1,
+//   Rarity: "common",
+//   Lore: 1,
 // };
 //

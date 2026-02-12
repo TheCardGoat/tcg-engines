@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { goodJob } from "@lorcanito/lorcana-engine/cards/006/actions/actions";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { goodJob } from "@lorcanito/lorcana-engine/cards/006/actions/actions";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Good Job!", () => {
-//   it.skip("Chosen character gets +1 {L} this turn.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: goodJob.cost,
-//       play: [goodJob],
-//       hand: [goodJob],
+// Describe("Good Job!", () => {
+//   It.skip("Chosen character gets +1 {L} this turn.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: goodJob.cost,
+//       Play: [goodJob],
+//       Hand: [goodJob],
 //     });
 //
-//     await testEngine.playCard(goodJob);
+//     Await testEngine.playCard(goodJob);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

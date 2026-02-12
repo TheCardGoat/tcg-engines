@@ -3,208 +3,208 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   aladdinHeroicOutlaw,
-//   arielOnHumanLegs,
-//   beastWolfbane,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   AladdinHeroicOutlaw,
+//   ArielOnHumanLegs,
+//   BeastWolfbane,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { goofyGalumphingGumshoe } from "@lorcanito/lorcana-engine/cards/010/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { goofyGalumphingGumshoe } from "@lorcanito/lorcana-engine/cards/010/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Goofy - Galumphing Gumshoe", () => {
-//   describe("Shift 5", () => {
-//     it("has shift ability", () => {
-//       const testEngine = new TestEngine({
-//         play: [goofyGalumphingGumshoe],
+// Describe("Goofy - Galumphing Gumshoe", () => {
+//   Describe("Shift 5", () => {
+//     It("has shift ability", () => {
+//       Const testEngine = new TestEngine({
+//         Play: [goofyGalumphingGumshoe],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(goofyGalumphingGumshoe);
-//       expect(cardUnderTest.hasShift).toBe(true);
+//       Const cardUnderTest = testEngine.getCardModel(goofyGalumphingGumshoe);
+//       Expect(cardUnderTest.hasShift).toBe(true);
 //     });
 //   });
 //
-//   describe("HOT PURSUIT - When you play this character and whenever he quests, each opposing character gets -1 strength until the start of your next turn.", () => {
-//     it("triggers when you play the character", async () => {
-//       const testEngine = new TestEngine(
+//   Describe("HOT PURSUIT - When you play this character and whenever he quests, each opposing character gets -1 strength until the start of your next turn.", () => {
+//     It("triggers when you play the character", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: goofyGalumphingGumshoe.cost,
-//           hand: [goofyGalumphingGumshoe],
+//           Inkwell: goofyGalumphingGumshoe.cost,
+//           Hand: [goofyGalumphingGumshoe],
 //         },
 //         {
-//           play: [aladdinHeroicOutlaw, arielOnHumanLegs],
+//           Play: [aladdinHeroicOutlaw, arielOnHumanLegs],
 //         },
 //       );
 //
-//       const opponentChar1 = testEngine.getByZoneAndId(
+//       Const opponentChar1 = testEngine.getByZoneAndId(
 //         "play",
-//         aladdinHeroicOutlaw.id,
+//         AladdinHeroicOutlaw.id,
 //         "player_two",
 //       );
-//       const opponentChar2 = testEngine.getByZoneAndId(
+//       Const opponentChar2 = testEngine.getByZoneAndId(
 //         "play",
-//         arielOnHumanLegs.id,
+//         ArielOnHumanLegs.id,
 //         "player_two",
 //       );
 //
-//       const initialStrength1 = opponentChar1.strength;
-//       const initialStrength2 = opponentChar2.strength;
+//       Const initialStrength1 = opponentChar1.strength;
+//       Const initialStrength2 = opponentChar2.strength;
 //
-//       await testEngine.playCard(goofyGalumphingGumshoe);
+//       Await testEngine.playCard(goofyGalumphingGumshoe);
 //
 //       // Characters should have reduced strength immediately
-//       expect(opponentChar1.strength).toBe(initialStrength1 - 1);
-//       expect(opponentChar2.strength).toBe(initialStrength2 - 1);
+//       Expect(opponentChar1.strength).toBe(initialStrength1 - 1);
+//       Expect(opponentChar2.strength).toBe(initialStrength2 - 1);
 //
 //       // Pass turn to opponent
-//       testEngine.passTurn();
+//       TestEngine.passTurn();
 //
 //       // During opponent's turn, they should still have -1 strength
-//       expect(opponentChar1.strength).toBe(initialStrength1 - 1);
-//       expect(opponentChar2.strength).toBe(initialStrength2 - 1);
+//       Expect(opponentChar1.strength).toBe(initialStrength1 - 1);
+//       Expect(opponentChar2.strength).toBe(initialStrength2 - 1);
 //
 //       // Pass turn back to player one (start of your next turn)
-//       testEngine.passTurn();
+//       TestEngine.passTurn();
 //
 //       // Effect should wear off at start of your next turn
-//       expect(opponentChar1.strength).toBe(initialStrength1);
-//       expect(opponentChar2.strength).toBe(initialStrength2);
+//       Expect(opponentChar1.strength).toBe(initialStrength1);
+//       Expect(opponentChar2.strength).toBe(initialStrength2);
 //     });
 //
-//     it("triggers when the character quests", async () => {
-//       const testEngine = new TestEngine(
+//     It("triggers when the character quests", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           play: [goofyGalumphingGumshoe],
+//           Play: [goofyGalumphingGumshoe],
 //         },
 //         {
-//           play: [aladdinHeroicOutlaw, arielOnHumanLegs],
+//           Play: [aladdinHeroicOutlaw, arielOnHumanLegs],
 //         },
 //       );
 //
-//       const cardUnderTest = testEngine.getCardModel(goofyGalumphingGumshoe);
-//       const opponentChar1 = testEngine.getByZoneAndId(
+//       Const cardUnderTest = testEngine.getCardModel(goofyGalumphingGumshoe);
+//       Const opponentChar1 = testEngine.getByZoneAndId(
 //         "play",
-//         aladdinHeroicOutlaw.id,
+//         AladdinHeroicOutlaw.id,
 //         "player_two",
 //       );
-//       const opponentChar2 = testEngine.getByZoneAndId(
+//       Const opponentChar2 = testEngine.getByZoneAndId(
 //         "play",
-//         arielOnHumanLegs.id,
+//         ArielOnHumanLegs.id,
 //         "player_two",
 //       );
 //
-//       const initialStrength1 = opponentChar1.strength;
-//       const initialStrength2 = opponentChar2.strength;
+//       Const initialStrength1 = opponentChar1.strength;
+//       Const initialStrength2 = opponentChar2.strength;
 //
-//       cardUnderTest.quest();
+//       CardUnderTest.quest();
 //
 //       // Characters should have reduced strength immediately
-//       expect(opponentChar1.strength).toBe(initialStrength1 - 1);
-//       expect(opponentChar2.strength).toBe(initialStrength2 - 1);
+//       Expect(opponentChar1.strength).toBe(initialStrength1 - 1);
+//       Expect(opponentChar2.strength).toBe(initialStrength2 - 1);
 //
 //       // Pass turn to opponent
-//       testEngine.passTurn();
+//       TestEngine.passTurn();
 //
 //       // During opponent's turn, they should still have -1 strength
-//       expect(opponentChar1.strength).toBe(initialStrength1 - 1);
-//       expect(opponentChar2.strength).toBe(initialStrength2 - 1);
+//       Expect(opponentChar1.strength).toBe(initialStrength1 - 1);
+//       Expect(opponentChar2.strength).toBe(initialStrength2 - 1);
 //
 //       // Pass turn back to player one
-//       testEngine.passTurn();
+//       TestEngine.passTurn();
 //
 //       // Effect should wear off at start of your next turn
-//       expect(opponentChar1.strength).toBe(initialStrength1);
-//       expect(opponentChar2.strength).toBe(initialStrength2);
+//       Expect(opponentChar1.strength).toBe(initialStrength1);
+//       Expect(opponentChar2.strength).toBe(initialStrength2);
 //     });
 //
-//     it("affects ALL opposing characters in play", async () => {
-//       const testEngine = new TestEngine(
+//     It("affects ALL opposing characters in play", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: goofyGalumphingGumshoe.cost,
-//           hand: [goofyGalumphingGumshoe],
+//           Inkwell: goofyGalumphingGumshoe.cost,
+//           Hand: [goofyGalumphingGumshoe],
 //         },
 //         {
-//           play: [aladdinHeroicOutlaw, arielOnHumanLegs, beastWolfbane],
+//           Play: [aladdinHeroicOutlaw, arielOnHumanLegs, beastWolfbane],
 //         },
 //       );
 //
-//       const opponentChar1 = testEngine.getByZoneAndId(
+//       Const opponentChar1 = testEngine.getByZoneAndId(
 //         "play",
-//         aladdinHeroicOutlaw.id,
+//         AladdinHeroicOutlaw.id,
 //         "player_two",
 //       );
-//       const opponentChar2 = testEngine.getByZoneAndId(
+//       Const opponentChar2 = testEngine.getByZoneAndId(
 //         "play",
-//         arielOnHumanLegs.id,
+//         ArielOnHumanLegs.id,
 //         "player_two",
 //       );
-//       const opponentChar3 = testEngine.getByZoneAndId(
+//       Const opponentChar3 = testEngine.getByZoneAndId(
 //         "play",
-//         beastWolfbane.id,
+//         BeastWolfbane.id,
 //         "player_two",
 //       );
-//       const initialStrength1 = opponentChar1.strength;
-//       const initialStrength2 = opponentChar2.strength;
-//       const initialStrength3 = opponentChar3.strength;
+//       Const initialStrength1 = opponentChar1.strength;
+//       Const initialStrength2 = opponentChar2.strength;
+//       Const initialStrength3 = opponentChar3.strength;
 //
-//       await testEngine.playCard(goofyGalumphingGumshoe);
+//       Await testEngine.playCard(goofyGalumphingGumshoe);
 //
 //       // All characters should have -1 strength immediately
-//       expect(opponentChar1.strength).toBe(initialStrength1 - 1);
-//       expect(opponentChar2.strength).toBe(initialStrength2 - 1);
-//       expect(opponentChar3.strength).toBe(initialStrength3 - 1);
+//       Expect(opponentChar1.strength).toBe(initialStrength1 - 1);
+//       Expect(opponentChar2.strength).toBe(initialStrength2 - 1);
+//       Expect(opponentChar3.strength).toBe(initialStrength3 - 1);
 //
 //       // Pass turn to opponent
-//       testEngine.passTurn();
+//       TestEngine.passTurn();
 //
 //       // All characters should still have -1 strength
-//       expect(opponentChar1.strength).toBe(initialStrength1 - 1);
-//       expect(opponentChar2.strength).toBe(initialStrength2 - 1);
-//       expect(opponentChar3.strength).toBe(initialStrength3 - 1);
+//       Expect(opponentChar1.strength).toBe(initialStrength1 - 1);
+//       Expect(opponentChar2.strength).toBe(initialStrength2 - 1);
+//       Expect(opponentChar3.strength).toBe(initialStrength3 - 1);
 //
 //       // Pass turn back to player one (start of your next turn)
-//       testEngine.passTurn();
+//       TestEngine.passTurn();
 //
 //       // Effect should wear off for all characters
-//       expect(opponentChar1.strength).toBe(initialStrength1);
-//       expect(opponentChar2.strength).toBe(initialStrength2);
-//       expect(opponentChar3.strength).toBe(initialStrength3);
+//       Expect(opponentChar1.strength).toBe(initialStrength1);
+//       Expect(opponentChar2.strength).toBe(initialStrength2);
+//       Expect(opponentChar3.strength).toBe(initialStrength3);
 //     });
 //
-//     it("applies effect each time Goofy quests", async () => {
-//       const testEngine = new TestEngine(
+//     It("applies effect each time Goofy quests", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           play: [goofyGalumphingGumshoe],
+//           Play: [goofyGalumphingGumshoe],
 //         },
 //         {
-//           play: [aladdinHeroicOutlaw],
+//           Play: [aladdinHeroicOutlaw],
 //         },
 //       );
 //
-//       const cardUnderTest = testEngine.getCardModel(goofyGalumphingGumshoe);
-//       const opponentChar = testEngine.getByZoneAndId(
+//       Const cardUnderTest = testEngine.getCardModel(goofyGalumphingGumshoe);
+//       Const opponentChar = testEngine.getByZoneAndId(
 //         "play",
-//         aladdinHeroicOutlaw.id,
+//         AladdinHeroicOutlaw.id,
 //         "player_two",
 //       );
-//       const initialStrength = opponentChar.strength;
+//       Const initialStrength = opponentChar.strength;
 //
 //       // First quest
-//       cardUnderTest.quest();
-//       testEngine.passTurn();
-//       expect(opponentChar.strength).toBe(initialStrength - 1);
+//       CardUnderTest.quest();
+//       TestEngine.passTurn();
+//       Expect(opponentChar.strength).toBe(initialStrength - 1);
 //
 //       // Return to player one's turn
-//       testEngine.passTurn();
-//       expect(opponentChar.strength).toBe(initialStrength);
+//       TestEngine.passTurn();
+//       Expect(opponentChar.strength).toBe(initialStrength);
 //
 //       // Goofy should be ready at start of turn, quest again
-//       expect(cardUnderTest.ready).toBe(true);
-//       cardUnderTest.quest();
-//       testEngine.passTurn();
+//       Expect(cardUnderTest.ready).toBe(true);
+//       CardUnderTest.quest();
+//       TestEngine.passTurn();
 //
 //       // Effect should apply again
-//       expect(opponentChar.strength).toBe(initialStrength - 1);
+//       Expect(opponentChar.strength).toBe(initialStrength - 1);
 //     });
 //   });
 // });

@@ -3,20 +3,20 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { doloresMadrigalEasyListener } from "@lorcanito/lorcana-engine/cards/009/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { doloresMadrigalEasyListener } from "@lorcanito/lorcana-engine/cards/009/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Dolores Madrigal - Easy Listener", () => {
-//   it.skip("**MAGICAL INFORMANT** When you play this character, if an opponent has an exerted character in play, you may draw a card.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: doloresMadrigalEasyListener.cost,
-//       hand: [doloresMadrigalEasyListener],
+// Describe("Dolores Madrigal - Easy Listener", () => {
+//   It.skip("**MAGICAL INFORMANT** When you play this character, if an opponent has an exerted character in play, you may draw a card.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: doloresMadrigalEasyListener.cost,
+//       Hand: [doloresMadrigalEasyListener],
 //     });
 //
-//     await testEngine.playCard(doloresMadrigalEasyListener);
-//     await testEngine.acceptOptionalLayer();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.playCard(doloresMadrigalEasyListener);
+//     Await testEngine.acceptOptionalLayer();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

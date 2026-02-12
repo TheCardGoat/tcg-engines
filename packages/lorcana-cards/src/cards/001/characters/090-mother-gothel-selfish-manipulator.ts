@@ -1,89 +1,89 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const motherGothelSelfishManipulator: CharacterCard = {
-  id: "xse",
-  cardType: "character",
-  name: "Mother Gothel",
-  version: "Selfish Manipulator",
-  fullName: "Mother Gothel - Selfish Manipulator",
-  inkType: ["emerald"],
-  franchise: "Tangled",
-  set: "001",
-  text: "SKIP THE DRAMA, STAY WITH MAMA While this character is exerted, opposing characters can't quest.",
-  cost: 6,
-  strength: 3,
-  willpower: 6,
-  lore: 2,
-  cardNumber: 90,
-  inkable: true,
-  externalIds: {
-    ravensburger: "79c6e202cddc31d783bd416c273e9fed9f7a7eb2",
-  },
   abilities: [
     {
-      id: "xse-1",
-      text: "SKIP THE DRAMA, STAY WITH MAMA While this character is exerted, opposing characters can't quest.",
-      name: "SKIP THE DRAMA, STAY WITH MAMA",
-      type: "static",
       effect: {
         type: "restriction",
         restriction: "cant-quest",
         target: "SELF",
       },
+      id: "xse-1",
+      name: "SKIP THE DRAMA, STAY WITH MAMA",
+      text: "SKIP THE DRAMA, STAY WITH MAMA While this character is exerted, opposing characters can't quest.",
+      type: "static",
     },
   ],
+  cardNumber: 90,
+  cardType: "character",
   classifications: ["Storyborn", "Villain"],
+  cost: 6,
+  externalIds: {
+    ravensburger: "79c6e202cddc31d783bd416c273e9fed9f7a7eb2",
+  },
+  franchise: "Tangled",
+  fullName: "Mother Gothel - Selfish Manipulator",
+  id: "xse",
+  inkType: ["emerald"],
+  inkable: true,
+  lore: 2,
+  name: "Mother Gothel",
+  set: "001",
+  strength: 3,
+  text: "SKIP THE DRAMA, STAY WITH MAMA While this character is exerted, opposing characters can't quest.",
+  version: "Selfish Manipulator",
+  willpower: 6,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import {
-//   opposingCharacters,
-//   thisCharacter,
+// Import {
+//   OpposingCharacters,
+//   ThisCharacter,
 // } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { whileConditionOnThisCharacterTargetsGain } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import { whileConditionOnThisCharacterTargetsGain } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const motherGoethelSelfishManipulator: LorcanitoCharacterCard = {
-//   id: "opl",
-//   name: "Mother Gothel",
-//   title: "Selfish Manipulator",
-//   characteristics: ["storyborn", "villain"],
-//   text: "**SKIP THE DRAMA, STAY WITH MAMA** While this character is exerted, opposing character can't quest.",
-//   type: "character",
-//   illustrator: "Javier Salas",
-//   abilities: [
-//     whileConditionOnThisCharacterTargetsGain({
-//       name: "Skip the Drama, Stay with Mama",
-//       text: "While this character is exerted, opposing character can't quest.",
-//       conditions: [{ type: "exerted" }],
-//       target: opposingCharacters,
-//       ability: {
-//         type: "static",
-//         ability: "effects",
-//         target: thisCharacter,
-//         effects: [
+// Export const motherGoethelSelfishManipulator: LorcanitoCharacterCard = {
+//   Id: "opl",
+//   Name: "Mother Gothel",
+//   Title: "Selfish Manipulator",
+//   Characteristics: ["storyborn", "villain"],
+//   Text: "**SKIP THE DRAMA, STAY WITH MAMA** While this character is exerted, opposing character can't quest.",
+//   Type: "character",
+//   Illustrator: "Javier Salas",
+//   Abilities: [
+//     WhileConditionOnThisCharacterTargetsGain({
+//       Name: "Skip the Drama, Stay with Mama",
+//       Text: "While this character is exerted, opposing character can't quest.",
+//       Conditions: [{ type: "exerted" }],
+//       Target: opposingCharacters,
+//       Ability: {
+//         Type: "static",
+//         Ability: "effects",
+//         Target: thisCharacter,
+//         Effects: [
 //           {
-//             type: "restriction",
-//             restriction: "quest",
-//             duration: "static",
-//             target: opposingCharacters,
+//             Type: "restriction",
+//             Restriction: "quest",
+//             Duration: "static",
+//             Target: opposingCharacters,
 //           },
 //         ],
 //       },
 //     }),
 //   ],
-//   flavour: "Great. Now I'm the bad guy.",
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 6,
-//   strength: 3,
-//   willpower: 6,
-//   lore: 2,
-//   number: 90,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 508772,
+//   Flavour: "Great. Now I'm the bad guy.",
+//   Inkwell: true,
+//   Colors: ["emerald"],
+//   Cost: 6,
+//   Strength: 3,
+//   Willpower: 6,
+//   Lore: 2,
+//   Number: 90,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 508772,
 //   },
-//   rarity: "super_rare",
+//   Rarity: "super_rare",
 // };
 //

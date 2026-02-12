@@ -5,9 +5,9 @@ import { jasperCommonCrook } from "./081-jasper-common-crook";
 describe("Jasper - Common Crook", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [jasperCommonCrook] });
-  //   expect(testEngine.getCardModel(jasperCommonCrook).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [jasperCommonCrook] });
+  //   Expect(testEngine.getCardModel(jasperCommonCrook).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,45 +17,45 @@ describe("Jasper - Common Crook", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   jasperCommonCrook,
-//   liloMakingAWish,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   JasperCommonCrook,
+//   LiloMakingAWish,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Jasper - Common Crook", () => {
-//   it("**PUPPYNAPPING** Whenever this character quests, chosen opposing character can't quest during their next turn.", () => {
-//     const testStore = new TestStore(
+// Describe("Jasper - Common Crook", () => {
+//   It("**PUPPYNAPPING** Whenever this character quests, chosen opposing character can't quest during their next turn.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         deck: 2,
-//         inkwell: jasperCommonCrook.cost,
-//         play: [jasperCommonCrook],
+//         Deck: 2,
+//         Inkwell: jasperCommonCrook.cost,
+//         Play: [jasperCommonCrook],
 //       },
 //       {
-//         deck: 2,
-//         play: [liloMakingAWish],
+//         Deck: 2,
+//         Play: [liloMakingAWish],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       jasperCommonCrook.id,
+//       JasperCommonCrook.id,
 //     );
-//     const target = testStore.getByZoneAndId(
+//     Const target = testStore.getByZoneAndId(
 //       "play",
-//       liloMakingAWish.id,
+//       LiloMakingAWish.id,
 //       "player_two",
 //     );
 //
-//     cardUnderTest.quest();
-//     testStore.resolveTopOfStack({ targetId: target.instanceId });
+//     CardUnderTest.quest();
+//     TestStore.resolveTopOfStack({ targetId: target.instanceId });
 //
-//     testStore.store.passTurn("player_one");
+//     TestStore.store.passTurn("player_one");
 //
-//     expect(testStore.store.tableStore.getTable("player_two").lore).toEqual(0);
-//     target.quest();
-//     expect(testStore.store.tableStore.getTable("player_two").lore).toEqual(0);
+//     Expect(testStore.store.tableStore.getTable("player_two").lore).toEqual(0);
+//     Target.quest();
+//     Expect(testStore.store.tableStore.getTable("player_two").lore).toEqual(0);
 //   });
 // });
 //

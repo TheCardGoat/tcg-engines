@@ -1,56 +1,56 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { resistAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { whenYouPlayThisForEachYouPayLess } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import { wheneverYouPlayAnActionNotASong } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-// import { dealDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
+// Import { resistAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import { whenYouPlayThisForEachYouPayLess } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import { wheneverYouPlayAnActionNotASong } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import { dealDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// const drawnToAFight = whenYouPlayThisForEachYouPayLess({
-//   name: "Drawn to a Fight",
-//   text: "If an opposing character was damaged this turn, you pay 2 {I} less to play this character.",
-//   conditions: [
+// Const drawnToAFight = whenYouPlayThisForEachYouPayLess({
+//   Name: "Drawn to a Fight",
+//   Text: "If an opposing character was damaged this turn, you pay 2 {I} less to play this character.",
+//   Conditions: [
 //     {
-//       type: "this-turn",
-//       value: "was-damaged",
-//       target: "self",
-//       comparison: { operator: "gte", value: 1 },
-//       filters: [
+//       Type: "this-turn",
+//       Value: "was-damaged",
+//       Target: "self",
+//       Comparison: { operator: "gte", value: 1 },
+//       Filters: [
 //         { filter: "type", value: "character" },
 //         { filter: "owner", value: "opponent" },
 //       ],
 //     },
 //   ],
-//   amount: 2,
+//   Amount: 2,
 // });
 //
-// const iAintGoneSoft = wheneverYouPlayAnActionNotASong({
-//   name: "I Ain't Gone Soft",
-//   text: "Whenever you play an action that isn't a song, you may deal 1 damage to chosen character.",
-//   optional: true,
-//   effects: [dealDamageEffect(1, chosenCharacter)],
+// Const iAintGoneSoft = wheneverYouPlayAnActionNotASong({
+//   Name: "I Ain't Gone Soft",
+//   Text: "Whenever you play an action that isn't a song, you may deal 1 damage to chosen character.",
+//   Optional: true,
+//   Effects: [dealDamageEffect(1, chosenCharacter)],
 // });
 //
-// export const johnSilverVengefulPirate: LorcanitoCharacterCard = {
-//   id: "ox6",
-//   name: "John Silver",
-//   title: "Vengeful Pirate",
-//   characteristics: ["storyborn", "villain", "alien", "pirate", "captain"],
-//   text: "DRAWN TO A FIGHT If an opposing character was damaged this turn, you pay 2 {I} less to play this character.\nResist +1\nI AIN'T GONE SOFT! Whenever you play an action that isn't a song, you may deal 1 damage to chosen character.",
-//   type: "character",
-//   abilities: [drawnToAFight, resistAbility(1), iAintGoneSoft],
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 8,
-//   strength: 6,
-//   willpower: 4,
-//   illustrator: "Nicholas Kole",
-//   number: 109,
-//   set: "007",
-//   externalIds: {
-//     tcgPlayer: 619466,
+// Export const johnSilverVengefulPirate: LorcanitoCharacterCard = {
+//   Id: "ox6",
+//   Name: "John Silver",
+//   Title: "Vengeful Pirate",
+//   Characteristics: ["storyborn", "villain", "alien", "pirate", "captain"],
+//   Text: "DRAWN TO A FIGHT If an opposing character was damaged this turn, you pay 2 {I} less to play this character.\nResist +1\nI AIN'T GONE SOFT! Whenever you play an action that isn't a song, you may deal 1 damage to chosen character.",
+//   Type: "character",
+//   Abilities: [drawnToAFight, resistAbility(1), iAintGoneSoft],
+//   Inkwell: true,
+//   Colors: ["emerald"],
+//   Cost: 8,
+//   Strength: 6,
+//   Willpower: 4,
+//   Illustrator: "Nicholas Kole",
+//   Number: 109,
+//   Set: "007",
+//   ExternalIds: {
+//     TcgPlayer: 619466,
 //   },
-//   rarity: "rare",
-//   lore: 2,
+//   Rarity: "rare",
+//   Lore: 2,
 // };
 //

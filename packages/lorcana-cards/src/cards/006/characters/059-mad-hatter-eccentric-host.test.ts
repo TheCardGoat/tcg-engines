@@ -3,87 +3,87 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   madHatterEccentricHost,
-//   naveensUkulele,
-//   scrump,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   MadHatterEccentricHost,
+//   NaveensUkulele,
+//   Scrump,
 // } from "@lorcanito/lorcana-engine/cards/006";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Mad Hatter - Eccentric Host", () => {
-//   describe("WE'LL HAVE TO LOOK INTO THIS Whenever this character quests, you may look at the top card of chosen player's deck. Put it on top of their deck or into their discard.", () => {
-//     it("Looking at opponent's deck", async () => {
-//       const testEngine = new TestEngine(
+// Describe("Mad Hatter - Eccentric Host", () => {
+//   Describe("WE'LL HAVE TO LOOK INTO THIS Whenever this character quests, you may look at the top card of chosen player's deck. Put it on top of their deck or into their discard.", () => {
+//     It("Looking at opponent's deck", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           play: [madHatterEccentricHost],
+//           Play: [madHatterEccentricHost],
 //         },
 //         {
-//           deck: [naveensUkulele, scrump],
+//           Deck: [naveensUkulele, scrump],
 //         },
 //       );
 //
-//       const cardToDiscard = testEngine.getCardModel(scrump);
+//       Const cardToDiscard = testEngine.getCardModel(scrump);
 //
-//       expect(
-//         testEngine.store.tableStore.getTopDeckCard("player_two")?.instanceId,
+//       Expect(
+//         TestEngine.store.tableStore.getTopDeckCard("player_two")?.instanceId,
 //       ).toEqual(cardToDiscard.instanceId);
 //
-//       await testEngine.questCard(madHatterEccentricHost);
+//       Await testEngine.questCard(madHatterEccentricHost);
 //       // await testEngine.acceptOptionalLayer();
 //
-//       await testEngine.resolveTopOfStack(
+//       Await testEngine.resolveTopOfStack(
 //         {
-//           targetPlayer: "player_two",
+//           TargetPlayer: "player_two",
 //         },
-//         true,
+//         True,
 //       );
 //
-//       await testEngine.resolveTopOfStack(
+//       Await testEngine.resolveTopOfStack(
 //         {
-//           scry: { discard: [cardToDiscard] },
+//           Scry: { discard: [cardToDiscard] },
 //         },
-//         true,
+//         True,
 //       );
 //
-//       expect(cardToDiscard.zone).toBe("discard");
-//       expect(
-//         testEngine.store.tableStore.getTopDeckCard("player_two")?.instanceId,
+//       Expect(cardToDiscard.zone).toBe("discard");
+//       Expect(
+//         TestEngine.store.tableStore.getTopDeckCard("player_two")?.instanceId,
 //       ).toEqual(testEngine.getCardModel(naveensUkulele).instanceId);
 //     });
 //
-//     it("Looking at your own deck", async () => {
-//       const testEngine = new TestEngine({
-//         play: [madHatterEccentricHost],
-//         deck: [naveensUkulele, scrump],
+//     It("Looking at your own deck", async () => {
+//       Const testEngine = new TestEngine({
+//         Play: [madHatterEccentricHost],
+//         Deck: [naveensUkulele, scrump],
 //       });
 //
-//       const cardToDiscard = testEngine.getCardModel(scrump);
+//       Const cardToDiscard = testEngine.getCardModel(scrump);
 //
-//       expect(
-//         testEngine.store.tableStore.getTopDeckCard("player_one")?.instanceId,
+//       Expect(
+//         TestEngine.store.tableStore.getTopDeckCard("player_one")?.instanceId,
 //       ).toEqual(cardToDiscard.instanceId);
 //
-//       await testEngine.questCard(madHatterEccentricHost);
+//       Await testEngine.questCard(madHatterEccentricHost);
 //       // await testEngine.acceptOptionalLayer();
 //
-//       await testEngine.resolveTopOfStack(
+//       Await testEngine.resolveTopOfStack(
 //         {
-//           targetPlayer: "player_one",
+//           TargetPlayer: "player_one",
 //         },
-//         true,
+//         True,
 //       );
 //
-//       await testEngine.resolveTopOfStack(
+//       Await testEngine.resolveTopOfStack(
 //         {
-//           scry: { discard: [cardToDiscard] },
+//           Scry: { discard: [cardToDiscard] },
 //         },
-//         true,
+//         True,
 //       );
 //
-//       expect(cardToDiscard.zone).toBe("discard");
-//       expect(
-//         testEngine.store.tableStore.getTopDeckCard("player_one")?.instanceId,
+//       Expect(cardToDiscard.zone).toBe("discard");
+//       Expect(
+//         TestEngine.store.tableStore.getTopDeckCard("player_one")?.instanceId,
 //       ).toEqual(testEngine.getCardModel(naveensUkulele).instanceId);
 //     });
 //   });

@@ -110,7 +110,7 @@ describe("Activated Ability Parser", () => {
       expect(result.success).toBe(true);
       expect(result.ability?.ability.type).toBe("activated");
       const ability = result.ability?.ability as ActivatedAbility;
-      expect(ability.cost).toMatchObject({ exert: true, banishSelf: true });
+      expect(ability.cost).toMatchObject({ banishSelf: true, exert: true });
       expect(ability.effect).toBeDefined();
     });
 
@@ -122,7 +122,7 @@ describe("Activated Ability Parser", () => {
       expect(result.success).toBe(true);
       expect(result.ability?.ability.type).toBe("activated");
       const ability = result.ability?.ability as ActivatedAbility;
-      expect(ability.cost).toMatchObject({ exert: true, banishSelf: true });
+      expect(ability.cost).toMatchObject({ banishSelf: true, exert: true });
       expect(ability.effect).toBeDefined();
     });
   });

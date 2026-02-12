@@ -1,41 +1,41 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { whenYouPlayThis } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { whenYouPlayThis } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 //
-// export const donaldGhostHunter: LorcanitoCharacterCard = {
-//   id: "yoy",
-//   name: "Donald Duck",
-//   title: "Ghost Hunter",
-//   characteristics: ["dreamborn", "hero", "detective"],
-//   text: "RAISE A RUCKUS When you play this character, choose a Detective character to gain Challenger +2 for the rest of this turn. (While challenging, that character gets +2 {S}.)",
-//   type: "character",
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 4,
-//   strength: 5,
-//   willpower: 4,
-//   illustrator: "Carmine Cassese",
-//   number: 172,
-//   set: "010",
-//   externalIds: {
-//     tcgPlayer: 659396,
+// Export const donaldGhostHunter: LorcanitoCharacterCard = {
+//   Id: "yoy",
+//   Name: "Donald Duck",
+//   Title: "Ghost Hunter",
+//   Characteristics: ["dreamborn", "hero", "detective"],
+//   Text: "RAISE A RUCKUS When you play this character, choose a Detective character to gain Challenger +2 for the rest of this turn. (While challenging, that character gets +2 {S}.)",
+//   Type: "character",
+//   Inkwell: true,
+//   Colors: ["steel"],
+//   Cost: 4,
+//   Strength: 5,
+//   Willpower: 4,
+//   Illustrator: "Carmine Cassese",
+//   Number: 172,
+//   Set: "010",
+//   ExternalIds: {
+//     TcgPlayer: 659396,
 //   },
-//   rarity: "common",
-//   abilities: [
-//     whenYouPlayThis({
-//       name: "RAISE A RUCKUS",
-//       text: "When you play this character, choose a Detective character to gain Challenger +2 for the rest of this turn.",
-//       effects: [
+//   Rarity: "common",
+//   Abilities: [
+//     WhenYouPlayThis({
+//       Name: "RAISE A RUCKUS",
+//       Text: "When you play this character, choose a Detective character to gain Challenger +2 for the rest of this turn.",
+//       Effects: [
 //         {
-//           type: "ability",
-//           ability: "challenger",
-//           amount: 2,
-//           modifier: "add",
-//           duration: "turn",
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
+//           Type: "ability",
+//           Ability: "challenger",
+//           Amount: 2,
+//           Modifier: "add",
+//           Duration: "turn",
+//           Target: {
+//             Type: "card",
+//             Value: 1,
+//             Filters: [
 //               { filter: "type", value: "character" },
 //               { filter: "zone", value: "play" },
 //               { filter: "owner", value: "self" },
@@ -46,6 +46,6 @@
 //       ],
 //     }),
 //   ],
-//   lore: 1,
+//   Lore: 1,
 // };
 //

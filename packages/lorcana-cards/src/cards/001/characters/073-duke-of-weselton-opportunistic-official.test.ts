@@ -5,9 +5,9 @@ import { dukeOfWeseltonOpportunisticOfficial } from "./073-duke-of-weselton-oppo
 describe("Duke of Weselton - Opportunistic Official", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [dukeOfWeselton] });
-  //   expect(testEngine.getCardModel(dukeOfWeselton).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [dukeOfWeselton] });
+  //   Expect(testEngine.getCardModel(dukeOfWeselton).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });

@@ -3,45 +3,45 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   mamaOdieVoiceOfWisdom,
-//   nalaFierceFriend,
-//   robinHoodBelovedOutlaw,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   MamaOdieVoiceOfWisdom,
+//   NalaFierceFriend,
+//   RobinHoodBelovedOutlaw,
 // } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { theQueensCastleMirrorChamber } from "@lorcanito/lorcana-engine/cards/003/locations/locations";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { theQueensCastleMirrorChamber } from "@lorcanito/lorcana-engine/cards/003/locations/locations";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("The Queen's Castle - Mirror Chamber", () => {
-//   it("**USING THE MIRROR** At the start of your turn, for each character you have here, you may draw a card.", () => {
-//     const testEngine = new TestEngine(
+// Describe("The Queen's Castle - Mirror Chamber", () => {
+//   It("**USING THE MIRROR** At the start of your turn, for each character you have here, you may draw a card.", () => {
+//     Const testEngine = new TestEngine(
 //       {},
 //       {
-//         inkwell: theQueensCastleMirrorChamber.cost,
-//         play: [
-//           theQueensCastleMirrorChamber,
-//           mamaOdieVoiceOfWisdom,
-//           robinHoodBelovedOutlaw,
-//           nalaFierceFriend,
+//         Inkwell: theQueensCastleMirrorChamber.cost,
+//         Play: [
+//           TheQueensCastleMirrorChamber,
+//           MamaOdieVoiceOfWisdom,
+//           RobinHoodBelovedOutlaw,
+//           NalaFierceFriend,
 //         ],
-//         deck: 5,
+//         Deck: 5,
 //       },
 //     );
 //
-//     const cardUnderTest = testEngine.getCardModel(theQueensCastleMirrorChamber);
-//     const mamaOdie = testEngine.getCardModel(mamaOdieVoiceOfWisdom);
-//     const robinHood = testEngine.getCardModel(robinHoodBelovedOutlaw);
-//     const nala = testEngine.getCardModel(nalaFierceFriend);
+//     Const cardUnderTest = testEngine.getCardModel(theQueensCastleMirrorChamber);
+//     Const mamaOdie = testEngine.getCardModel(mamaOdieVoiceOfWisdom);
+//     Const robinHood = testEngine.getCardModel(robinHoodBelovedOutlaw);
+//     Const nala = testEngine.getCardModel(nalaFierceFriend);
 //
 //     [mamaOdie, robinHood, nala].forEach((character) => {
-//       character.enterLocation(cardUnderTest);
+//       Character.enterLocation(cardUnderTest);
 //     });
 //
-//     testEngine.passTurn();
+//     TestEngine.passTurn();
 //
-//     expect(testEngine.getZonesCardCount("player_two").deck).toBe(5);
-//     testEngine.resolveOptionalAbility();
-//     expect(testEngine.getZonesCardCount("player_two").deck).toBe(1);
+//     Expect(testEngine.getZonesCardCount("player_two").deck).toBe(5);
+//     TestEngine.resolveOptionalAbility();
+//     Expect(testEngine.getZonesCardCount("player_two").deck).toBe(1);
 //   });
 // });
 //

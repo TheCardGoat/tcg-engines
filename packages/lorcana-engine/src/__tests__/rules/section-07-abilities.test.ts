@@ -7,19 +7,15 @@
  */
 
 import { afterEach, beforeEach, describe, expect, test } from "bun:test";
-import {
-  LorcanaTestEngine,
-  PLAYER_ONE,
-  PLAYER_TWO,
-} from "../../testing/lorcana-test-engine";
+import { LorcanaTestEngine, PLAYER_ONE, PLAYER_TWO } from "../../testing/lorcana-test-engine";
 
 describe("Section 7: Abilities", () => {
   let testEngine: LorcanaTestEngine;
 
   beforeEach(() => {
     testEngine = new LorcanaTestEngine(
-      { hand: 7, deck: 53, inkwell: 3 },
-      { hand: 7, deck: 53, inkwell: 3 },
+      { deck: 53, hand: 7, inkwell: 3 },
+      { deck: 53, hand: 7, inkwell: 3 },
       { skipPreGame: true },
     );
   });
@@ -34,7 +30,7 @@ describe("Section 7: Abilities", () => {
      */
     test.failing("Rule 7.1.1 - Multiple clauses in abilities", () => {
       // Arrange: Ability with multiple clauses
-      // e.g., "Draw 2 cards. Deal 2 damage to chosen character."
+      // E.g., "Draw 2 cards. Deal 2 damage to chosen character."
 
       // Assert: Each clause should resolve in order
       expect(true).toBe(false); // Will fail until multi-clause parsing implemented
@@ -45,7 +41,7 @@ describe("Section 7: Abilities", () => {
      */
     test.failing("Rule 7.1.2 - 'May' is optional", () => {
       // Arrange: Ability with "may"
-      // e.g., "You may draw a card"
+      // E.g., "You may draw a card"
 
       // Act: Choose not to do it
 
@@ -322,7 +318,7 @@ describe("Section 7: Abilities", () => {
      */
     test.failing("Rule 7.8 - Ability modifiers", () => {
       // Arrange: Effect that modifies abilities
-      // e.g., "Abilities can't be used"
+      // E.g., "Abilities can't be used"
 
       // Act: Try to use ability
 

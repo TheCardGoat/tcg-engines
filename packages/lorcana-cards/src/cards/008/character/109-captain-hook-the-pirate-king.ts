@@ -1,50 +1,50 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { shiftAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { duringYourTurn } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
-// import { allYourCharacteristicCharacters } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { wheneverOppCharIsDamaged } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-// import {
-//   getStrengthThisTurn,
-//   targetCardGainsResist,
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { shiftAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import { duringYourTurn } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
+// Import { allYourCharacteristicCharacters } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import { wheneverOppCharIsDamaged } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// Import {
+//   GetStrengthThisTurn,
+//   TargetCardGainsResist,
 // } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const captainHookThePirateKing: LorcanitoCharacterCard = {
-//   id: "kfs",
-//   name: "Captain Hook",
-//   title: "The Pirate King",
-//   characteristics: ["floodborn", "villain", "king", "pirate", "captain"],
-//   text: "SHIFT 3 (You may pay 3 {I} to play this on top of one of your characters named Captain Hook.)\nGIVE 'EM ALL YOU GOT! Once during your turn, whenever an opposing character is damaged, your Pirate characters get +2 {S} and gain Resist +2 this turn. (Damage dealt to them is reduced by 2.)",
-//   type: "character",
-//   abilities: [
-//     shiftAbility(3, "Captain Hook"),
-//     wheneverOppCharIsDamaged({
-//       name: "GIVE 'EM ALL YOU GOT!",
-//       text: "Once during your turn, whenever an opposing character is damaged, your Pirate characters get +2 {S} and gain Resist +2 this turn. (Damage dealt to them is reduced by 2.)",
-//       oncePerTurn: true,
-//       effects: [
-//         targetCardGainsResist({
-//           amount: 2,
-//           duration: "turn",
-//           target: allYourCharacteristicCharacters(["pirate"]),
+// Export const captainHookThePirateKing: LorcanitoCharacterCard = {
+//   Id: "kfs",
+//   Name: "Captain Hook",
+//   Title: "The Pirate King",
+//   Characteristics: ["floodborn", "villain", "king", "pirate", "captain"],
+//   Text: "SHIFT 3 (You may pay 3 {I} to play this on top of one of your characters named Captain Hook.)\nGIVE 'EM ALL YOU GOT! Once during your turn, whenever an opposing character is damaged, your Pirate characters get +2 {S} and gain Resist +2 this turn. (Damage dealt to them is reduced by 2.)",
+//   Type: "character",
+//   Abilities: [
+//     ShiftAbility(3, "Captain Hook"),
+//     WheneverOppCharIsDamaged({
+//       Name: "GIVE 'EM ALL YOU GOT!",
+//       Text: "Once during your turn, whenever an opposing character is damaged, your Pirate characters get +2 {S} and gain Resist +2 this turn. (Damage dealt to them is reduced by 2.)",
+//       OncePerTurn: true,
+//       Effects: [
+//         TargetCardGainsResist({
+//           Amount: 2,
+//           Duration: "turn",
+//           Target: allYourCharacteristicCharacters(["pirate"]),
 //         }),
-//         getStrengthThisTurn(2, allYourCharacteristicCharacters(["pirate"])),
+//         GetStrengthThisTurn(2, allYourCharacteristicCharacters(["pirate"])),
 //       ],
-//       conditions: [duringYourTurn],
+//       Conditions: [duringYourTurn],
 //     }),
 //   ],
-//   inkwell: true,
-//   colors: ["emerald", "steel"],
-//   cost: 5,
-//   strength: 4,
-//   willpower: 5,
-//   illustrator: "Kenneth Anderson",
-//   number: 109,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631420,
+//   Inkwell: true,
+//   Colors: ["emerald", "steel"],
+//   Cost: 5,
+//   Strength: 4,
+//   Willpower: 5,
+//   Illustrator: "Kenneth Anderson",
+//   Number: 109,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631420,
 //   },
-//   rarity: "rare",
-//   lore: 2,
+//   Rarity: "rare",
+//   Lore: 2,
 // };
 //

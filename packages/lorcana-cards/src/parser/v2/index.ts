@@ -84,8 +84,8 @@ export class LorcanaParserV2 {
       const lexResult = this.lexer.tokenize(text);
       if (lexResult.errors.length > 0) {
         logger.debug("Lexing failed, trying text-based parsing", {
-          text,
           errors: lexResult.errors,
+          text,
         });
         return null;
       }
@@ -95,8 +95,8 @@ export class LorcanaParserV2 {
       const cst = this.parser.ability();
       if (this.parser.errors.length > 0) {
         logger.debug("Grammar parsing failed, trying text-based parsing", {
-          text,
           errors: this.parser.errors,
+          text,
         });
         return null;
       }
@@ -107,8 +107,8 @@ export class LorcanaParserV2 {
       return ability;
     } catch (error) {
       logger.debug("Grammar parsing threw error, trying text-based parsing", {
-        text,
         error: error instanceof Error ? error.message : String(error),
+        text,
       });
       return null;
     }
@@ -166,8 +166,8 @@ export class LorcanaParserV2 {
     );
     if (namedAbilityMatch) {
       // The effect text is the last capture group (could be index 2 or 3 depending on which alternative matched)
-      // namedAbilityMatch[2] is the effect when the first alternative matches
-      // namedAbilityMatch[3] would be the effect for other alternatives
+      // NamedAbilityMatch[2] is the effect when the first alternative matches
+      // NamedAbilityMatch[3] would be the effect for other alternatives
       return namedAbilityMatch[2] || "";
     }
 
@@ -249,10 +249,10 @@ export class LorcanaParserV2 {
       if (trigger) {
         // Successfully parsed trigger - create proper triggered ability
         return {
-          type: "triggered",
+          effect,
           name,
           trigger,
-          effect,
+          type: "triggered",
         } as unknown as Ability;
       }
 
@@ -260,14 +260,14 @@ export class LorcanaParserV2 {
       // Use a generic "when you play this" trigger as a placeholder
       logger.debug("Failed to parse trigger metadata", { text: originalText });
       return {
-        type: "triggered",
+        effect,
         name,
         trigger: {
           event: "play",
-          timing: "when",
           on: "SELF",
+          timing: "when",
         },
-        effect,
+        type: "triggered",
       } as unknown as Ability;
     }
 
@@ -281,9 +281,9 @@ export class LorcanaParserV2 {
 
     if (hasEmDashSeparator || hasCostWithSeparator || hasStandaloneCost) {
       return {
-        type: "activated",
         cost: { exert: true },
         effect,
+        type: "activated",
       } as unknown as Ability;
     }
 
@@ -296,7 +296,7 @@ export class LorcanaParserV2 {
     // - "enters play exerted" (enters effects)
     //
     // Note: "Each player/opponent" followed by action verbs (draw, discard, lose, gain) are
-    // action abilities, not static abilities. They are one-time effects when played.
+    // Action abilities, not static abilities. They are one-time effects when played.
     const isStatic =
       /^(?:While |Your characters |Your items |This character can'?t |This character cannot |This item can'?t |This item cannot |[A-Z][A-Z\s!?'-]+\s+(?:This character|This item|This character can'?t|This item can'?t|This character cannot|This item cannot))|(?:enters? play exerted)/i.test(
         originalText,
@@ -310,8 +310,8 @@ export class LorcanaParserV2 {
 
     if (isStatic) {
       const staticAbility: Record<string, unknown> = {
-        type: "static",
         effect,
+        type: "static",
       };
       if (name) {
         staticAbility.name = name;
@@ -321,8 +321,8 @@ export class LorcanaParserV2 {
 
     // Default to action ability
     return {
-      type: "action",
       effect,
+      type: "action",
     } as unknown as Ability;
   }
 

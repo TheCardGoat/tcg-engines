@@ -3,88 +3,88 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { shereKhanFierceAndFurious } from "@lorcanito/lorcana-engine/cards/010/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { shereKhanFierceAndFurious } from "@lorcanito/lorcana-engine/cards/010/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Shere Khan - Fierce and Furious", () => {
-//   it("should have Shift 5", () => {
-//     const testEngine = new TestEngine({
-//       play: [shereKhanFierceAndFurious],
+// Describe("Shere Khan - Fierce and Furious", () => {
+//   It("should have Shift 5", () => {
+//     Const testEngine = new TestEngine({
+//       Play: [shereKhanFierceAndFurious],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(shereKhanFierceAndFurious);
-//     expect(cardUnderTest.hasShift).toBe(true);
-//     expect(cardUnderTest.shiftInkCost).toBe(5);
+//     Const cardUnderTest = testEngine.getCardModel(shereKhanFierceAndFurious);
+//     Expect(cardUnderTest.hasShift).toBe(true);
+//     Expect(cardUnderTest.shiftInkCost).toBe(5);
 //   });
 //
-//   describe("WILD RAGE - 1 {I}, Deal 1 damage to this character — Ready this character. He can't quest for the rest of this turn.", () => {
-//     it("should ready an exerted Shere Khan and prevent him from questing", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: 1,
-//         play: [shereKhanFierceAndFurious],
+//   Describe("WILD RAGE - 1 {I}, Deal 1 damage to this character — Ready this character. He can't quest for the rest of this turn.", () => {
+//     It("should ready an exerted Shere Khan and prevent him from questing", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: 1,
+//         Play: [shereKhanFierceAndFurious],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(shereKhanFierceAndFurious);
+//       Const cardUnderTest = testEngine.getCardModel(shereKhanFierceAndFurious);
 //
 //       // Exert Shere Khan
-//       cardUnderTest.exert();
-//       expect(cardUnderTest.ready).toBe(false);
+//       CardUnderTest.exert();
+//       Expect(cardUnderTest.ready).toBe(false);
 //
 //       // Activate WILD RAGE ability
-//       const ability = cardUnderTest
+//       Const ability = cardUnderTest
 //         .nativeAbilities()
 //         .find((ab) => ab.name === "WILD RAGE");
-//       expect(ability).toBeDefined();
+//       Expect(ability).toBeDefined();
 //
-//       await testEngine.activateCard(cardUnderTest, { ability: "WILD RAGE" });
+//       Await testEngine.activateCard(cardUnderTest, { ability: "WILD RAGE" });
 //
 //       // Should be ready but can't quest
-//       expect(cardUnderTest.ready).toBe(true);
-//       expect(cardUnderTest.canQuest).toBe(false);
+//       Expect(cardUnderTest.ready).toBe(true);
+//       Expect(cardUnderTest.canQuest).toBe(false);
 //       // Should have 1 damage
-//       expect(cardUnderTest.damage).toBe(1);
+//       Expect(cardUnderTest.damage).toBe(1);
 //     });
 //
-//     it("should deal 1 damage to activate", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: 2,
-//         play: [shereKhanFierceAndFurious],
+//     It("should deal 1 damage to activate", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: 2,
+//         Play: [shereKhanFierceAndFurious],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(shereKhanFierceAndFurious);
-//       cardUnderTest.exert();
+//       Const cardUnderTest = testEngine.getCardModel(shereKhanFierceAndFurious);
+//       CardUnderTest.exert();
 //
-//       expect(cardUnderTest.damage).toBe(0);
+//       Expect(cardUnderTest.damage).toBe(0);
 //
 //       // Activate WILD RAGE
-//       await testEngine.activateCard(cardUnderTest, { ability: "WILD RAGE" });
+//       Await testEngine.activateCard(cardUnderTest, { ability: "WILD RAGE" });
 //
 //       // Should have 1 damage (costs 1 ink + 1 damage to self)
-//       expect(cardUnderTest.damage).toBe(1);
-//       expect(cardUnderTest.ready).toBe(true);
+//       Expect(cardUnderTest.damage).toBe(1);
+//       Expect(cardUnderTest.ready).toBe(true);
 //     });
 //
-//     it("should allow questing on the next turn", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: 1,
-//         play: [shereKhanFierceAndFurious],
+//     It("should allow questing on the next turn", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: 1,
+//         Play: [shereKhanFierceAndFurious],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(shereKhanFierceAndFurious);
-//       cardUnderTest.exert();
+//       Const cardUnderTest = testEngine.getCardModel(shereKhanFierceAndFurious);
+//       CardUnderTest.exert();
 //
 //       // Activate WILD RAGE
-//       await testEngine.activateCard(cardUnderTest, { ability: "WILD RAGE" });
+//       Await testEngine.activateCard(cardUnderTest, { ability: "WILD RAGE" });
 //
-//       expect(cardUnderTest.canQuest).toBe(false);
+//       Expect(cardUnderTest.canQuest).toBe(false);
 //
 //       // Pass turn
-//       testEngine.passTurn();
-//       testEngine.passTurn();
+//       TestEngine.passTurn();
+//       TestEngine.passTurn();
 //
 //       // Should be able to quest next turn
-//       expect(cardUnderTest.canQuest).toBe(true);
+//       Expect(cardUnderTest.canQuest).toBe(true);
 //     });
 //   });
 // });

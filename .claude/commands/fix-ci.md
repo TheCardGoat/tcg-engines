@@ -147,7 +147,7 @@ bun run ci-check
 
 ### Fix Quality Standards
 - **No `any` types** - Maintain type safety
-- **No eslint-disable or biome-ignore** unless absolutely necessary and documented
+- **No eslint-disable or oxlint-disable** unless absolutely necessary and documented
 - **Prefer proper fixes** over suppressions
 - **Follow existing patterns** in the codebase
 

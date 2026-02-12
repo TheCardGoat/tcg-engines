@@ -7,8 +7,8 @@
     "start": "bun run src/index.ts",
     "typecheck": "tsc --noEmit",
     "check-types": "tsc --noEmit",
-    "format": "bun x @biomejs/biome check --fix --max-diagnostics=none --diagnostic-level=error --linter-enabled=false ./src",
-    "lint": "bun x @biomejs/biome lint --write ./src",
+    "format": "bun x oxfmt --write ./src",
+    "lint": "bun x oxlint --fix ./src",
     "db:generate": "drizzle-kit generate",
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
@@ -30,7 +30,6 @@
   "devDependencies": {
     "bun-types": "latest",
     "drizzle-kit": "^0.31.1",
-    "@biomejs/biome": "2.3.11",
     "@lorcanito/typescript-config": "workspace:*",
     "typescript": "^5.8.3"
   }

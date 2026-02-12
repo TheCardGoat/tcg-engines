@@ -3,53 +3,53 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import {
-//   dalmatianPuppyTailWagger,
-//   deweyLovableShowoff,
-//   everybodysGotAWeakness,
-//   khanWarHorse,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import {
+//   DalmatianPuppyTailWagger,
+//   DeweyLovableShowoff,
+//   EverybodysGotAWeakness,
+//   KhanWarHorse,
 // } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Everybody's Got A Weakness", () => {
-//   it("Move 1 damage counter from each damaged character you have in play to chosen opposing character. Draw a card for each damage counter moved this way.", async () => {
-//     const charsInPlay = [
-//       deweyLovableShowoff,
-//       khanWarHorse,
-//       dalmatianPuppyTailWagger,
+// Describe("Everybody's Got A Weakness", () => {
+//   It("Move 1 damage counter from each damaged character you have in play to chosen opposing character. Draw a card for each damage counter moved this way.", async () => {
+//     Const charsInPlay = [
+//       DeweyLovableShowoff,
+//       KhanWarHorse,
+//       DalmatianPuppyTailWagger,
 //     ];
-//     const testEngine = new TestEngine(
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: everybodysGotAWeakness.cost,
-//         play: charsInPlay,
-//         hand: [everybodysGotAWeakness],
-//         deck: 10,
+//         Inkwell: everybodysGotAWeakness.cost,
+//         Play: charsInPlay,
+//         Hand: [everybodysGotAWeakness],
+//         Deck: 10,
 //       },
 //       {
-//         play: [goofyKnightForADay],
+//         Play: [goofyKnightForADay],
 //       },
 //     );
 //
-//     for (const char of charsInPlay) {
-//       await testEngine.setCardDamage(char, 2);
+//     For (const char of charsInPlay) {
+//       Await testEngine.setCardDamage(char, 2);
 //     }
 //
-//     await testEngine.playCard(everybodysGotAWeakness, {
-//       targets: [goofyKnightForADay],
+//     Await testEngine.playCard(everybodysGotAWeakness, {
+//       Targets: [goofyKnightForADay],
 //     });
 //
-//     for (const char of charsInPlay) {
-//       expect(testEngine.getCardModel(char).damage).toEqual(1);
+//     For (const char of charsInPlay) {
+//       Expect(testEngine.getCardModel(char).damage).toEqual(1);
 //     }
-//     expect(testEngine.getCardModel(goofyKnightForADay).damage).toEqual(
-//       charsInPlay.length,
+//     Expect(testEngine.getCardModel(goofyKnightForADay).damage).toEqual(
+//       CharsInPlay.length,
 //     );
-//     expect(testEngine.getZonesCardCount()).toEqual(
-//       expect.objectContaining({
-//         hand: charsInPlay.length,
-//         deck: 10 - charsInPlay.length,
+//     Expect(testEngine.getZonesCardCount()).toEqual(
+//       Expect.objectContaining({
+//         Hand: charsInPlay.length,
+//         Deck: 10 - charsInPlay.length,
 //       }),
 //     );
 //   });

@@ -3,98 +3,98 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   belleStrangeButBeautiful,
-//   goonsMaleficent,
-//   mauiDemiGod,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   BelleStrangeButBeautiful,
+//   GoonsMaleficent,
+//   MauiDemiGod,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import {
-//   mauiHalfshark,
-//   rayaKumandranRider,
-//   yokaiProfessorCallaghan,
+// Import {
+//   MauiHalfshark,
+//   RayaKumandranRider,
+//   YokaiProfessorCallaghan,
 // } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Raya - Kumandran Rider", () => {
-//   it("can't ready itself", async () => {
-//     const testEngine = new TestEngine({
-//       play: [rayaKumandranRider, mauiHalfshark, mauiDemiGod],
-//       hand: [goonsMaleficent, yokaiProfessorCallaghan],
+// Describe("Raya - Kumandran Rider", () => {
+//   It("can't ready itself", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [rayaKumandranRider, mauiHalfshark, mauiDemiGod],
+//       Hand: [goonsMaleficent, yokaiProfessorCallaghan],
 //     });
 //
-//     await testEngine.tapCard(mauiHalfshark); // Card to untap
-//     await testEngine.tapCard(rayaKumandranRider); // Card that should not be untapped
+//     Await testEngine.tapCard(mauiHalfshark); // Card to untap
+//     Await testEngine.tapCard(rayaKumandranRider); // Card that should not be untapped
 //
-//     await testEngine.putIntoInkwell(goonsMaleficent);
+//     Await testEngine.putIntoInkwell(goonsMaleficent);
 //
-//     expect(testEngine.stackLayers).toHaveLength(1);
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({ targets: [rayaKumandranRider] }, true);
-//     expect(testEngine.getCardModel(rayaKumandranRider).meta.exerted).toBe(true);
-//     expect(testEngine.stackLayers).toHaveLength(1);
+//     Expect(testEngine.stackLayers).toHaveLength(1);
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({ targets: [rayaKumandranRider] }, true);
+//     Expect(testEngine.getCardModel(rayaKumandranRider).meta.exerted).toBe(true);
+//     Expect(testEngine.stackLayers).toHaveLength(1);
 //   });
 //
-//   it("Doesn't trigger on opponent's turn", async () => {
-//     const testEngine = new TestEngine(
+//   It("Doesn't trigger on opponent's turn", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         play: [mauiDemiGod],
-//         hand: [goonsMaleficent],
+//         Play: [mauiDemiGod],
+//         Hand: [goonsMaleficent],
 //       },
 //       {
-//         play: [rayaKumandranRider, mauiHalfshark],
+//         Play: [rayaKumandranRider, mauiHalfshark],
 //       },
 //     );
 //
-//     await testEngine.tapCard(mauiHalfshark);
-//     await testEngine.tapCard(mauiDemiGod);
+//     Await testEngine.tapCard(mauiHalfshark);
+//     Await testEngine.tapCard(mauiDemiGod);
 //
-//     await testEngine.putIntoInkwell(goonsMaleficent);
+//     Await testEngine.putIntoInkwell(goonsMaleficent);
 //
-//     expect(testEngine.stackLayers).toHaveLength(0);
+//     Expect(testEngine.stackLayers).toHaveLength(0);
 //   });
 //
-//   it("COME ON, LET'S DO THIS Once during your turn, whenever a card is put into your inkwell, you may ready another chosen character of yours. They can't quest for the rest of this turn.", async () => {
-//     const testStore = new TestStore({
-//       play: [rayaKumandranRider, mauiHalfshark],
-//       hand: [goonsMaleficent],
+//   It("COME ON, LET'S DO THIS Once during your turn, whenever a card is put into your inkwell, you may ready another chosen character of yours. They can't quest for the rest of this turn.", async () => {
+//     Const testStore = new TestStore({
+//       Play: [rayaKumandranRider, mauiHalfshark],
+//       Hand: [goonsMaleficent],
 //     });
-//     const cardToUnexert = testStore.getCard(mauiHalfshark);
-//     cardToUnexert.updateCardMeta({ exerted: true });
-//     const cardToInk = testStore.getCard(goonsMaleficent);
-//     cardToInk.addToInkwell();
-//     expect(testStore.stackLayers).toHaveLength(1);
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({ targets: [cardToUnexert] }, true);
-//     expect(cardToUnexert.meta.exerted).toBe(false);
+//     Const cardToUnexert = testStore.getCard(mauiHalfshark);
+//     CardToUnexert.updateCardMeta({ exerted: true });
+//     Const cardToInk = testStore.getCard(goonsMaleficent);
+//     CardToInk.addToInkwell();
+//     Expect(testStore.stackLayers).toHaveLength(1);
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({ targets: [cardToUnexert] }, true);
+//     Expect(cardToUnexert.meta.exerted).toBe(false);
 //   });
 //
-//   it("can't do it twice", async () => {
-//     const testEngine = new TestEngine({
-//       play: [
-//         rayaKumandranRider,
-//         mauiHalfshark,
-//         mauiDemiGod,
-//         belleStrangeButBeautiful,
+//   It("can't do it twice", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [
+//         RayaKumandranRider,
+//         MauiHalfshark,
+//         MauiDemiGod,
+//         BelleStrangeButBeautiful,
 //       ],
-//       hand: [goonsMaleficent, yokaiProfessorCallaghan],
+//       Hand: [goonsMaleficent, yokaiProfessorCallaghan],
 //     });
 //
-//     await testEngine.tapCard(mauiHalfshark); // Card to untap
-//     await testEngine.tapCard(mauiDemiGod); // Card that should not be untapped
+//     Await testEngine.tapCard(mauiHalfshark); // Card to untap
+//     Await testEngine.tapCard(mauiDemiGod); // Card that should not be untapped
 //
-//     await testEngine.putIntoInkwell(goonsMaleficent);
+//     Await testEngine.putIntoInkwell(goonsMaleficent);
 //
-//     expect(testEngine.stackLayers).toHaveLength(1);
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({ targets: [mauiHalfshark] });
-//     expect(testEngine.getCardModel(mauiHalfshark).meta.exerted).toBe(false);
-//     expect(testEngine.getCardModel(mauiHalfshark).canQuest).toBe(false);
+//     Expect(testEngine.stackLayers).toHaveLength(1);
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({ targets: [mauiHalfshark] });
+//     Expect(testEngine.getCardModel(mauiHalfshark).meta.exerted).toBe(false);
+//     Expect(testEngine.getCardModel(mauiHalfshark).canQuest).toBe(false);
 //
-//     await testEngine.putIntoInkwell(yokaiProfessorCallaghan);
+//     Await testEngine.putIntoInkwell(yokaiProfessorCallaghan);
 //
-//     expect(testEngine.stackLayers).toHaveLength(0);
+//     Expect(testEngine.stackLayers).toHaveLength(0);
 //   });
 // });
 //

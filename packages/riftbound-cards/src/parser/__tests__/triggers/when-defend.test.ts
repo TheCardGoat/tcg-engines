@@ -17,14 +17,14 @@ describe("Trigger: When Defend", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
+          effect: expect.objectContaining({
+            amount: 1,
+            type: "draw",
+          }),
           trigger: expect.objectContaining({
             event: "defend",
           }),
-          effect: expect.objectContaining({
-            type: "draw",
-            amount: 1,
-          }),
+          type: "triggered",
         }),
       );
     });
@@ -32,19 +32,17 @@ describe("Trigger: When Defend", () => {
 
   describe("might modification effects", () => {
     it.skip("should parse 'When I defend, give me +2 :rb_might: this turn.'", () => {
-      const result = parseAbilities(
-        "When I defend, give me +2 :rb_might: this turn.",
-      );
+      const result = parseAbilities("When I defend, give me +2 :rb_might: this turn.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           effect: expect.objectContaining({
-            type: "modify-might",
             amount: 2,
+            type: "modify-might",
           }),
+          type: "triggered",
         }),
       );
     });
@@ -61,19 +59,17 @@ describe("Trigger: When Defend", () => {
 
   describe("damage effects", () => {
     it.skip("should parse 'When I defend, deal 2 to an attacking enemy unit.'", () => {
-      const result = parseAbilities(
-        "When I defend, deal 2 to an attacking enemy unit.",
-      );
+      const result = parseAbilities("When I defend, deal 2 to an attacking enemy unit.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           effect: expect.objectContaining({
-            type: "damage",
             amount: 2,
+            type: "damage",
           }),
+          type: "triggered",
         }),
       );
     });
@@ -89,12 +85,12 @@ describe("Trigger: When Defend", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           effect: expect.objectContaining({
-            type: "grant-keyword",
             keyword: "Shield",
+            type: "grant-keyword",
             value: 2,
           }),
+          type: "triggered",
         }),
       );
     });
@@ -121,14 +117,14 @@ describe("Trigger: When Defend", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           trigger: expect.objectContaining({
             event: "defend",
             on: expect.objectContaining({
-              type: "unit",
               controller: "friendly",
+              type: "unit",
             }),
           }),
+          type: "triggered",
         }),
       );
     });

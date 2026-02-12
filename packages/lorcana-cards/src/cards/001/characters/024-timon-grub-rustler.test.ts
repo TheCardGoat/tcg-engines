@@ -4,7 +4,7 @@ import { timonGrubRustler } from "./024-timon-grub-rustler";
 describe("Timon - Grub Rustler", () => {
   it("has optional remove-damage triggered ability when played", () => {
     expect(timonGrubRustler.abilities).toHaveLength(1);
-    // biome-ignore lint/style/noNonNullAssertion: length check above guarantees existence
+    // Biome-ignore lint/style/noNonNullAssertion: length check above guarantees existence
     const ability = timonGrubRustler.abilities![0] as {
       type: string;
       name: string;
@@ -23,8 +23,8 @@ describe("Timon - Grub Rustler", () => {
     // Verify trigger is "when you play this character"
     expect(ability.trigger).toMatchObject({
       event: "play",
-      timing: "when",
       on: "SELF",
+      timing: "when",
     });
 
     // Verify effect is optional
@@ -32,10 +32,10 @@ describe("Timon - Grub Rustler", () => {
 
     // Verify nested effect is remove-damage
     expect(ability.effect?.effect).toMatchObject({
-      type: "remove-damage",
       amount: 1,
-      upTo: true,
       target: "CHOSEN_CHARACTER",
+      type: "remove-damage",
+      upTo: true,
     });
 
     // Verify chooser is controller

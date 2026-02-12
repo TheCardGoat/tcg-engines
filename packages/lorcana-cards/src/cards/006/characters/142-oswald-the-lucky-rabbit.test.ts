@@ -3,116 +3,116 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { hiramFlavershamToymaker } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { pawpsicle } from "@lorcanito/lorcana-engine/cards/002/items/items";
-// import { tipoGrowingSon } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { oswaldTheLuckyRabbit } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { hiramFlavershamToymaker } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { pawpsicle } from "@lorcanito/lorcana-engine/cards/002/items/items";
+// Import { tipoGrowingSon } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { oswaldTheLuckyRabbit } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Oswald - The Lucky Rabbit", () => {
-//   it("FAVORABLE CHANCE During your turn, whenever a card is put into your inkwell, you may reveal the top card of your deck. If it's an item card, you may play that item for free and they enter play exerted. Otherwise put it on the bottom of your deck.", async () => {
-//     const testEngine = new TestEngine({
-//       play: [oswaldTheLuckyRabbit],
-//       hand: [tipoGrowingSon],
-//       deck: [pawpsicle, hiramFlavershamToymaker],
+// Describe("Oswald - The Lucky Rabbit", () => {
+//   It("FAVORABLE CHANCE During your turn, whenever a card is put into your inkwell, you may reveal the top card of your deck. If it's an item card, you may play that item for free and they enter play exerted. Otherwise put it on the bottom of your deck.", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [oswaldTheLuckyRabbit],
+//       Hand: [tipoGrowingSon],
+//       Deck: [pawpsicle, hiramFlavershamToymaker],
 //     });
 //
-//     await testEngine.putIntoInkwell(tipoGrowingSon);
-//     expect(testEngine.getAvailableInkwellCardCount()).toBe(1);
+//     Await testEngine.putIntoInkwell(tipoGrowingSon);
+//     Expect(testEngine.getAvailableInkwellCardCount()).toBe(1);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack(
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack(
 //       {
-//         scry: {
-//           play: [pawpsicle],
+//         Scry: {
+//           Play: [pawpsicle],
 //         },
 //       },
-//       true,
+//       True,
 //     );
 //
-//     expect(testEngine.getZonesCardCount()).toEqual(
-//       expect.objectContaining({
-//         deck: 1,
-//         discard: 0,
-//         hand: 0,
-//         play: 2,
-//         inkwell: 1,
+//     Expect(testEngine.getZonesCardCount()).toEqual(
+//       Expect.objectContaining({
+//         Deck: 1,
+//         Discard: 0,
+//         Hand: 0,
+//         Play: 2,
+//         Inkwell: 1,
 //       }),
 //     );
 //   });
 //
-//   it("Draw item but choose not to play", async () => {
-//     const testEngine = new TestEngine({
-//       play: [oswaldTheLuckyRabbit],
-//       hand: [tipoGrowingSon],
-//       deck: [pawpsicle, hiramFlavershamToymaker],
+//   It("Draw item but choose not to play", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [oswaldTheLuckyRabbit],
+//       Hand: [tipoGrowingSon],
+//       Deck: [pawpsicle, hiramFlavershamToymaker],
 //     });
 //
-//     const hiram = testEngine.getCardModel(hiramFlavershamToymaker);
-//     const pawp = testEngine.getCardModel(pawpsicle);
+//     Const hiram = testEngine.getCardModel(hiramFlavershamToymaker);
+//     Const pawp = testEngine.getCardModel(pawpsicle);
 //
-//     await testEngine.putIntoInkwell(tipoGrowingSon);
-//     expect(testEngine.getAvailableInkwellCardCount()).toBe(1);
+//     Await testEngine.putIntoInkwell(tipoGrowingSon);
+//     Expect(testEngine.getAvailableInkwellCardCount()).toBe(1);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack(
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack(
 //       {
-//         scry: {
-//           bottom: [pawpsicle],
+//         Scry: {
+//           Bottom: [pawpsicle],
 //         },
 //       },
-//       true,
+//       True,
 //     );
-//     await testEngine.drawCard();
+//     Await testEngine.drawCard();
 //
-//     expect(testEngine.getCardZone(hiram)).toBe("hand");
-//     expect(testEngine.getCardZone(pawp)).toBe("deck");
-//     expect(testEngine.getZonesCardCount()).toEqual(
-//       expect.objectContaining({
-//         deck: 1,
-//         discard: 0,
-//         hand: 1,
-//         play: 1,
-//         inkwell: 1,
+//     Expect(testEngine.getCardZone(hiram)).toBe("hand");
+//     Expect(testEngine.getCardZone(pawp)).toBe("deck");
+//     Expect(testEngine.getZonesCardCount()).toEqual(
+//       Expect.objectContaining({
+//         Deck: 1,
+//         Discard: 0,
+//         Hand: 1,
+//         Play: 1,
+//         Inkwell: 1,
 //       }),
 //     );
 //   });
 //
-//   it("if NOT an item card then put onto bottom of deck", async () => {
-//     const testEngine = new TestEngine({
-//       play: [oswaldTheLuckyRabbit],
-//       hand: [pawpsicle],
-//       deck: [tipoGrowingSon, hiramFlavershamToymaker],
+//   It("if NOT an item card then put onto bottom of deck", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [oswaldTheLuckyRabbit],
+//       Hand: [pawpsicle],
+//       Deck: [tipoGrowingSon, hiramFlavershamToymaker],
 //     });
 //
-//     const hiram = testEngine.getCardModel(hiramFlavershamToymaker);
-//     const tipo = testEngine.getCardModel(tipoGrowingSon);
+//     Const hiram = testEngine.getCardModel(hiramFlavershamToymaker);
+//     Const tipo = testEngine.getCardModel(tipoGrowingSon);
 //
-//     await testEngine.putIntoInkwell(pawpsicle);
-//     expect(testEngine.getAvailableInkwellCardCount()).toBe(1);
+//     Await testEngine.putIntoInkwell(pawpsicle);
+//     Expect(testEngine.getAvailableInkwellCardCount()).toBe(1);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack(
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack(
 //       {
-//         scry: {
-//           bottom: [tipoGrowingSon],
+//         Scry: {
+//           Bottom: [tipoGrowingSon],
 //         },
 //       },
-//       true,
+//       True,
 //     );
 //
-//     await testEngine.drawCard();
+//     Await testEngine.drawCard();
 //
-//     expect(testEngine.getCardZone(hiram)).toBe("hand");
-//     expect(testEngine.getCardZone(tipo)).toBe("deck");
-//     expect(testEngine.getZonesCardCount()).toEqual(
-//       expect.objectContaining({
-//         deck: 1,
-//         discard: 0,
-//         hand: 1,
-//         play: 1,
-//         inkwell: 1,
+//     Expect(testEngine.getCardZone(hiram)).toBe("hand");
+//     Expect(testEngine.getCardZone(tipo)).toBe("deck");
+//     Expect(testEngine.getZonesCardCount()).toEqual(
+//       Expect.objectContaining({
+//         Deck: 1,
+//         Discard: 0,
+//         Hand: 1,
+//         Play: 1,
+//         Inkwell: 1,
 //       }),
 //     );
 //   });

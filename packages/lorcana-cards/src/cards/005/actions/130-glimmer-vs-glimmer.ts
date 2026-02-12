@@ -1,24 +1,8 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
 export const glimmerVsGlimmer: ActionCard = {
-  id: "e3r",
-  cardType: "action",
-  name: "Glimmer vs Glimmer",
-  inkType: ["ruby"],
-  franchise: "Lorcana",
-  set: "005",
-  text: "Banish chosen character of yours to banish chosen character.",
-  cost: 4,
-  cardNumber: 130,
-  inkable: false,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "32d58396c6366bd44e37140214651921b4bc231f",
-  },
   abilities: [
     {
-      id: "e3r-1",
-      type: "action",
       effect: {
         type: "banish",
         target: {
@@ -29,7 +13,23 @@ export const glimmerVsGlimmer: ActionCard = {
           cardTypes: ["character"],
         },
       },
+      id: "e3r-1",
       text: "Banish chosen character of yours to banish chosen character.",
+      type: "action",
     },
   ],
+  cardNumber: 130,
+  cardType: "action",
+  cost: 4,
+  externalIds: {
+    ravensburger: "32d58396c6366bd44e37140214651921b4bc231f",
+  },
+  franchise: "Lorcana",
+  id: "e3r",
+  inkType: ["ruby"],
+  inkable: false,
+  missingTests: true,
+  name: "Glimmer vs Glimmer",
+  set: "005",
+  text: "Banish chosen character of yours to banish chosen character.",
 };

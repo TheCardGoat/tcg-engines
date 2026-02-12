@@ -1,49 +1,49 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
-// import {
-//   anyCard,
-//   namedCard,
+// Import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
+// Import {
+//   AnyCard,
+//   NamedCard,
 // } from "@lorcanito/lorcana-engine/abilities/targets";
 //
-// export const theSorcerersHat: LorcanitoItemCard = {
-//   id: "h9u",
-//   name: "The Sorcerer's Hat",
-//   characteristics: ["item"],
-//   text: "**INCREDIBLE ENERGY** {E}, 1 {I} − Name a card, then reveal the top card of your deck. If it's the named card, put that card into your hand. Otherwise, put it on the top of your deck.",
-//   type: "item",
-//   abilities: [
+// Export const theSorcerersHat: LorcanitoItemCard = {
+//   Id: "h9u",
+//   Name: "The Sorcerer's Hat",
+//   Characteristics: ["item"],
+//   Text: "**INCREDIBLE ENERGY** {E}, 1 {I} − Name a card, then reveal the top card of your deck. If it's the named card, put that card into your hand. Otherwise, put it on the top of your deck.",
+//   Type: "item",
+//   Abilities: [
 //     {
-//       type: "activated",
-//       name: "Incredible Energy",
-//       text: "{E}, 1 {I} − Name a card, then reveal the top card of your deck. If it's the named card, put that card into your hand. Otherwise, put it on the top of your deck.",
-//       costs: [{ type: "exert" }, { type: "ink", amount: 1 }],
-//       nameACard: true,
-//       effects: [
+//       Type: "activated",
+//       Name: "Incredible Energy",
+//       Text: "{E}, 1 {I} − Name a card, then reveal the top card of your deck. If it's the named card, put that card into your hand. Otherwise, put it on the top of your deck.",
+//       Costs: [{ type: "exert" }, { type: "ink", amount: 1 }],
+//       NameACard: true,
+//       Effects: [
 //         {
-//           type: "reveal-top-card",
-//           target: namedCard,
-//           onTargetMatchEffects: [
+//           Type: "reveal-top-card",
+//           Target: namedCard,
+//           OnTargetMatchEffects: [
 //             {
-//               type: "move",
-//               to: "hand",
-//               target: anyCard,
+//               Type: "move",
+//               To: "hand",
+//               Target: anyCard,
 //             },
 //           ],
 //         },
 //       ],
 //     },
 //   ],
-//   flavour:
+//   Flavour:
 //     "Minnie approached it cautiously. Whoever had placed it here might have prepared traps.",
-//   inkwell: true,
-//   colors: ["amethyst"],
-//   cost: 2,
-//   illustrator: "Jiahui Eva Gao",
-//   number: 65,
-//   set: "ITI",
-//   externalIds: {
-//     tcgPlayer: 532639,
+//   Inkwell: true,
+//   Colors: ["amethyst"],
+//   Cost: 2,
+//   Illustrator: "Jiahui Eva Gao",
+//   Number: 65,
+//   Set: "ITI",
+//   ExternalIds: {
+//     TcgPlayer: 532639,
 //   },
-//   rarity: "rare",
+//   Rarity: "rare",
 // };
 //

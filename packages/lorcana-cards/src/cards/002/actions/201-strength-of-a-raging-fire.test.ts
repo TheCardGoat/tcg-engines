@@ -3,39 +3,39 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   liloMakingAWish,
-//   stichtNewDog,
-//   tiggerWonderfulThing,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   LiloMakingAWish,
+//   StichtNewDog,
+//   TiggerWonderfulThing,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { strengthOfARagingFire } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
-// import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { strengthOfARagingFire } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
+// Import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Strength of a Raging Fire", () => {
-//   it("Deal damage to chosen character equal to the number of characters you have in play.", () => {
-//     const testStore = new TestStore({
-//       inkwell: strengthOfARagingFire.cost,
-//       hand: [strengthOfARagingFire],
-//       play: [
-//         goofyKnightForADay,
-//         liloMakingAWish,
-//         stichtNewDog,
-//         tiggerWonderfulThing,
+// Describe("Strength of a Raging Fire", () => {
+//   It("Deal damage to chosen character equal to the number of characters you have in play.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: strengthOfARagingFire.cost,
+//       Hand: [strengthOfARagingFire],
+//       Play: [
+//         GoofyKnightForADay,
+//         LiloMakingAWish,
+//         StichtNewDog,
+//         TiggerWonderfulThing,
 //       ],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "hand",
-//       strengthOfARagingFire.id,
+//       StrengthOfARagingFire.id,
 //     );
-//     const target = testStore.getByZoneAndId("play", goofyKnightForADay.id);
+//     Const target = testStore.getByZoneAndId("play", goofyKnightForADay.id);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveTopOfStack({ targets: [target] });
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.meta.damage).toEqual(4);
+//     Expect(target.meta.damage).toEqual(4);
 //   });
 // });
 //

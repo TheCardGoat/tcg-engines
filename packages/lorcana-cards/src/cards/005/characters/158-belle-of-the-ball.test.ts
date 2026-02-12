@@ -3,34 +3,34 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { belleOfTheBall } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { belleOfTheBall } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Belle - Of the Ball", () => {
-//   it.skip("", () => {
-//     const testStore = new TestStore({
-//       inkwell: belleOfTheBall.cost,
-//       play: [belleOfTheBall],
+// Describe("Belle - Of the Ball", () => {
+//   It.skip("", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: belleOfTheBall.cost,
+//       Play: [belleOfTheBall],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(belleOfTheBall);
+//     Const cardUnderTest = testStore.getCard(belleOfTheBall);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 //
-//   it.skip("**USHERED INTO THE PARTY** When you play this character, your other characters gain **Ward** until the start of your next turn.", () => {
-//     const testStore = new TestStore({
-//       inkwell: belleOfTheBall.cost,
-//       hand: [belleOfTheBall],
+//   It.skip("**USHERED INTO THE PARTY** When you play this character, your other characters gain **Ward** until the start of your next turn.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: belleOfTheBall.cost,
+//       Hand: [belleOfTheBall],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(belleOfTheBall);
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     Const cardUnderTest = testStore.getCard(belleOfTheBall);
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

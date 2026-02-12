@@ -3,121 +3,121 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { mcduckManorScroogesMansion } from "@lorcanito/lorcana-engine/cards/003/locations/locations";
-// import {
-//   cinderellaMelodyWeaver,
-//   mulanEliteArcher,
-//   mulanInjuredSoldier,
-//   peteRottenGuy,
-//   plutoRescueDog,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { mcduckManorScroogesMansion } from "@lorcanito/lorcana-engine/cards/003/locations/locations";
+// Import {
+//   CinderellaMelodyWeaver,
+//   MulanEliteArcher,
+//   MulanInjuredSoldier,
+//   PeteRottenGuy,
+//   PlutoRescueDog,
 // } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Mulan - Elite Archer", () => {
-//   it("**Shift** 5 _(You may pay 5 {I} to play this on top of one of your characters named Mulan.)_", () => {
-//     const testStore = new TestStore({
-//       play: [mulanEliteArcher],
+// Describe("Mulan - Elite Archer", () => {
+//   It("**Shift** 5 _(You may pay 5 {I} to play this on top of one of your characters named Mulan.)_", () => {
+//     Const testStore = new TestStore({
+//       Play: [mulanEliteArcher],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(mulanEliteArcher);
-//     expect(cardUnderTest.hasShift).toBe(true);
+//     Const cardUnderTest = testStore.getCard(mulanEliteArcher);
+//     Expect(cardUnderTest.hasShift).toBe(true);
 //   });
 //
-//   it("**STRAIGHT SHOOTER** When you play this character, if you used **Shift** to play her, she gets +3 {S} this turn.", () => {
-//     const testStore = new TestStore({
-//       inkwell: mulanEliteArcher.cost,
-//       hand: [mulanEliteArcher],
-//       play: [mulanInjuredSoldier],
+//   It("**STRAIGHT SHOOTER** When you play this character, if you used **Shift** to play her, she gets +3 {S} this turn.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: mulanEliteArcher.cost,
+//       Hand: [mulanEliteArcher],
+//       Play: [mulanInjuredSoldier],
 //     });
 //
-//     const shifter = testStore.getCard(mulanEliteArcher);
-//     const shifted = testStore.getCard(mulanInjuredSoldier);
+//     Const shifter = testStore.getCard(mulanEliteArcher);
+//     Const shifted = testStore.getCard(mulanInjuredSoldier);
 //
-//     shifter.shift(shifted);
+//     Shifter.shift(shifted);
 //
-//     expect(shifter.strength).toBe(mulanEliteArcher.strength + 3);
+//     Expect(shifter.strength).toBe(mulanEliteArcher.strength + 3);
 //   });
 //
-//   describe("**TRIPLE SHOT** During your turn, whenever this character deals damage to another character in a challenge, deal the same amount of damage to up to 2 other chosen characters.", () => {
-//     it("During your turn", async () => {
-//       const opponentsPlayCard = [
-//         cinderellaMelodyWeaver,
-//         plutoRescueDog,
-//         peteRottenGuy,
+//   Describe("**TRIPLE SHOT** During your turn, whenever this character deals damage to another character in a challenge, deal the same amount of damage to up to 2 other chosen characters.", () => {
+//     It("During your turn", async () => {
+//       Const opponentsPlayCard = [
+//         CinderellaMelodyWeaver,
+//         PlutoRescueDog,
+//         PeteRottenGuy,
 //       ];
-//       const testEngine = new TestEngine(
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: mulanEliteArcher.cost,
-//           play: [mulanEliteArcher],
+//           Inkwell: mulanEliteArcher.cost,
+//           Play: [mulanEliteArcher],
 //         },
 //         {
-//           play: opponentsPlayCard,
+//           Play: opponentsPlayCard,
 //         },
 //       );
 //
-//       await testEngine.challenge({
-//         attacker: mulanEliteArcher,
-//         defender: cinderellaMelodyWeaver,
-//         exertDefender: true,
+//       Await testEngine.challenge({
+//         Attacker: mulanEliteArcher,
+//         Defender: cinderellaMelodyWeaver,
+//         ExertDefender: true,
 //       });
-//       await testEngine.resolveTopOfStack(
+//       Await testEngine.resolveTopOfStack(
 //         {
-//           targets: [plutoRescueDog, peteRottenGuy],
+//           Targets: [plutoRescueDog, peteRottenGuy],
 //         },
-//         true,
+//         True,
 //       );
 //
-//       opponentsPlayCard.forEach((target) => {
-//         expect(testEngine.getCardModel(target).damage).toBe(
-//           mulanEliteArcher.strength,
+//       OpponentsPlayCard.forEach((target) => {
+//         Expect(testEngine.getCardModel(target).damage).toBe(
+//           MulanEliteArcher.strength,
 //         );
 //       });
-//       expect(testEngine.stackLayers).toHaveLength(0);
+//       Expect(testEngine.stackLayers).toHaveLength(0);
 //     });
 //
-//     it("During your turn, does NOT trigger on locations", async () => {
-//       const opponentsPlayCard = [
-//         mcduckManorScroogesMansion,
-//         plutoRescueDog,
-//         peteRottenGuy,
+//     It("During your turn, does NOT trigger on locations", async () => {
+//       Const opponentsPlayCard = [
+//         McduckManorScroogesMansion,
+//         PlutoRescueDog,
+//         PeteRottenGuy,
 //       ];
-//       const testEngine = new TestEngine(
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: mulanEliteArcher.cost,
-//           play: [mulanEliteArcher],
+//           Inkwell: mulanEliteArcher.cost,
+//           Play: [mulanEliteArcher],
 //         },
 //         {
-//           play: opponentsPlayCard,
+//           Play: opponentsPlayCard,
 //         },
 //       );
 //
-//       await testEngine.challenge({
-//         attacker: mulanEliteArcher,
-//         defender: mcduckManorScroogesMansion,
-//         exertDefender: true,
+//       Await testEngine.challenge({
+//         Attacker: mulanEliteArcher,
+//         Defender: mcduckManorScroogesMansion,
+//         ExertDefender: true,
 //       });
-//       expect(testEngine.stackLayers).toHaveLength(0);
+//       Expect(testEngine.stackLayers).toHaveLength(0);
 //     });
 //
-//     it("During opponent's turn", async () => {
-//       const testEngine = new TestEngine(
+//     It("During opponent's turn", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           play: [cinderellaMelodyWeaver],
+//           Play: [cinderellaMelodyWeaver],
 //         },
 //         {
-//           play: [mulanEliteArcher],
+//           Play: [mulanEliteArcher],
 //         },
 //       );
 //
-//       const cardUnderTest = testEngine.getCardModel(mulanEliteArcher);
-//       const attacker = testEngine.getCardModel(cinderellaMelodyWeaver);
+//       Const cardUnderTest = testEngine.getCardModel(mulanEliteArcher);
+//       Const attacker = testEngine.getCardModel(cinderellaMelodyWeaver);
 //
-//       cardUnderTest.updateCardMeta({ exerted: true });
+//       CardUnderTest.updateCardMeta({ exerted: true });
 //
-//       await testEngine.challenge({ attacker, defender: cardUnderTest });
-//       expect(testEngine.stackLayers).toHaveLength(0);
+//       Await testEngine.challenge({ attacker, defender: cardUnderTest });
+//       Expect(testEngine.stackLayers).toHaveLength(0);
 //     });
 //   });
 // });

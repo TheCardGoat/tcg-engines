@@ -1,25 +1,8 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
 export const worldsGreatestCriminalMind: ActionCard = {
-  id: "5o7",
-  cardType: "action",
-  name: "World's Greatest Criminal Mind",
-  inkType: ["amber"],
-  franchise: "Great Mouse Detective",
-  set: "009",
-  text: "Banish chosen character with 5 {S} or more.",
-  actionSubtype: "song",
-  cost: 3,
-  cardNumber: 30,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "1471d83012de7c7df9cd43e860b8cd5eda891838",
-  },
   abilities: [
     {
-      id: "5o7-1",
-      type: "action",
       effect: {
         type: "banish",
         target: {
@@ -30,7 +13,24 @@ export const worldsGreatestCriminalMind: ActionCard = {
           cardTypes: ["character"],
         },
       },
+      id: "5o7-1",
       text: "Banish chosen character with 5 {S} or more.",
+      type: "action",
     },
   ],
+  actionSubtype: "song",
+  cardNumber: 30,
+  cardType: "action",
+  cost: 3,
+  externalIds: {
+    ravensburger: "1471d83012de7c7df9cd43e860b8cd5eda891838",
+  },
+  franchise: "Great Mouse Detective",
+  id: "5o7",
+  inkType: ["amber"],
+  inkable: true,
+  missingTests: true,
+  name: "World's Greatest Criminal Mind",
+  set: "009",
+  text: "Banish chosen character with 5 {S} or more.",
 };

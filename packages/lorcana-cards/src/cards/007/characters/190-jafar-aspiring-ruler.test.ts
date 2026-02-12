@@ -3,25 +3,25 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { goonsMaleficent } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { jafarAspiringRuler } from "@lorcanito/lorcana-engine/cards/007";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { goonsMaleficent } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { jafarAspiringRuler } from "@lorcanito/lorcana-engine/cards/007";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Jafar - Aspiring Ruler", () => {
-//   it("THAT'S BETTER When you play this character, chosen character gains Challenger +2 this turn. (They get +2 {S} while challenging.)", async () => {
-//     const testStore = new TestStore({
-//       inkwell: jafarAspiringRuler.cost,
-//       hand: [jafarAspiringRuler],
-//       play: [goonsMaleficent],
+// Describe("Jafar - Aspiring Ruler", () => {
+//   It("THAT'S BETTER When you play this character, chosen character gains Challenger +2 this turn. (They get +2 {S} while challenging.)", async () => {
+//     Const testStore = new TestStore({
+//       Inkwell: jafarAspiringRuler.cost,
+//       Hand: [jafarAspiringRuler],
+//       Play: [goonsMaleficent],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(jafarAspiringRuler);
-//     const target = testStore.getCard(goonsMaleficent);
-//     expect(target.hasChallenger).toEqual(false);
-//     cardUnderTest.playFromHand();
-//     testStore.resolveTopOfStack({ targets: [target] });
-//     expect(target.hasChallenger).toEqual(true);
+//     Const cardUnderTest = testStore.getCard(jafarAspiringRuler);
+//     Const target = testStore.getCard(goonsMaleficent);
+//     Expect(target.hasChallenger).toEqual(false);
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveTopOfStack({ targets: [target] });
+//     Expect(target.hasChallenger).toEqual(true);
 //   });
 // });
 //

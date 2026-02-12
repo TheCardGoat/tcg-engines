@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { kodaTalkativeCub } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { kodaTalkativeCub } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Koda - Talkative Cub", () => {
-//   it.skip("**TELL EVERYBODY** During opponents’ turns, you can’t lose lore.", () => {
-//     const testStore = new TestStore({
-//       inkwell: kodaTalkativeCub.cost,
-//       play: [kodaTalkativeCub],
+// Describe("Koda - Talkative Cub", () => {
+//   It.skip("**TELL EVERYBODY** During opponents’ turns, you can’t lose lore.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: kodaTalkativeCub.cost,
+//       Play: [kodaTalkativeCub],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(kodaTalkativeCub);
+//     Const cardUnderTest = testStore.getCard(kodaTalkativeCub);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

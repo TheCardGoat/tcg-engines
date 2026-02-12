@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { candleheadDedicatedRacer } from "@lorcanito/lorcana-engine/cards/007/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { candleheadDedicatedRacer } from "@lorcanito/lorcana-engine/cards/007/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Candlehead - Dedicated Racer", () => {
-//   it.skip("WINNING ISN'T EVERYTHING When this character is banished, you may remove up to 2 damage from chosen character.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: candleheadDedicatedRacer.cost,
-//       play: [candleheadDedicatedRacer],
-//       hand: [candleheadDedicatedRacer],
+// Describe("Candlehead - Dedicated Racer", () => {
+//   It.skip("WINNING ISN'T EVERYTHING When this character is banished, you may remove up to 2 damage from chosen character.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: candleheadDedicatedRacer.cost,
+//       Play: [candleheadDedicatedRacer],
+//       Hand: [candleheadDedicatedRacer],
 //     });
 //
-//     await testEngine.playCard(candleheadDedicatedRacer);
+//     Await testEngine.playCard(candleheadDedicatedRacer);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

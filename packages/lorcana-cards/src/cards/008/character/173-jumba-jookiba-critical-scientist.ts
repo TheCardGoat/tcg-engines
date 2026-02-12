@@ -1,24 +1,24 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
 //
-// export const jumbaJookibaCriticalScientist: LorcanitoCharacterCard = {
-//   id: "oom",
-//   name: "Jumba Jookiba",
-//   title: "Critical Scientist",
-//   characteristics: ["storyborn", "alien", "inventor"],
-//   type: "character",
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 4,
-//   strength: 1,
-//   willpower: 6,
-//   illustrator: "Malia Ewart",
-//   number: 173,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631468,
+// Export const jumbaJookibaCriticalScientist: LorcanitoCharacterCard = {
+//   Id: "oom",
+//   Name: "Jumba Jookiba",
+//   Title: "Critical Scientist",
+//   Characteristics: ["storyborn", "alien", "inventor"],
+//   Type: "character",
+//   Inkwell: true,
+//   Colors: ["sapphire"],
+//   Cost: 4,
+//   Strength: 1,
+//   Willpower: 6,
+//   Illustrator: "Malia Ewart",
+//   Number: 173,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631468,
 //   },
-//   rarity: "uncommon",
-//   lore: 2,
+//   Rarity: "uncommon",
+//   Lore: 2,
 // };
 //

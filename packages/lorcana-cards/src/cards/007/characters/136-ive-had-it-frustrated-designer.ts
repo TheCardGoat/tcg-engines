@@ -1,55 +1,55 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { ActivatedAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import {
-//   chosenCharacter,
-//   chosenItemOfYours,
+// Import type { ActivatedAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import {
+//   ChosenCharacter,
+//   ChosenItemOfYours,
 // } from "@lorcanito/lorcana-engine/abilities/targets";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// const iVeHadIt: ActivatedAbility = {
-//   type: "activated",
-//   name: "I'VE HAD IT!",
-//   text: "{E}, 2 {I}, Banish 2 of your items – Deal 5 damage to chosen character.",
-//   costs: [
+// Const iVeHadIt: ActivatedAbility = {
+//   Type: "activated",
+//   Name: "I'VE HAD IT!",
+//   Text: "{E}, 2 {I}, Banish 2 of your items – Deal 5 damage to chosen character.",
+//   Costs: [
 //     { type: "exert" },
 //     { type: "ink", amount: 2 },
 //     {
-//       type: "card",
-//       action: "banish",
-//       amount: 2,
-//       filters: chosenItemOfYours.filters,
+//       Type: "card",
+//       Action: "banish",
+//       Amount: 2,
+//       Filters: chosenItemOfYours.filters,
 //     },
 //   ],
-//   effects: [
+//   Effects: [
 //     {
-//       type: "damage",
-//       amount: 5,
-//       target: chosenCharacter,
+//       Type: "damage",
+//       Amount: 5,
+//       Target: chosenCharacter,
 //     },
 //   ],
 // };
 //
-// export const beastFrustratedDesigner: LorcanitoCharacterCard = {
-//   id: "tum",
-//   name: "Beast",
-//   title: "Frustrated Designer",
-//   characteristics: ["dreamborn", "hero", "prince", "inventor"],
-//   text: "I'VE HAD IT! {E}, 2 {I}, Banish 2 of your items – Deal 5 damage to chosen character.",
-//   type: "character",
-//   abilities: [iVeHadIt],
-//   inkwell: false,
+// Export const beastFrustratedDesigner: LorcanitoCharacterCard = {
+//   Id: "tum",
+//   Name: "Beast",
+//   Title: "Frustrated Designer",
+//   Characteristics: ["dreamborn", "hero", "prince", "inventor"],
+//   Text: "I'VE HAD IT! {E}, 2 {I}, Banish 2 of your items – Deal 5 damage to chosen character.",
+//   Type: "character",
+//   Abilities: [iVeHadIt],
+//   Inkwell: false,
 //
-//   colors: ["ruby", "sapphire"],
-//   cost: 6,
-//   strength: 5,
-//   willpower: 5,
-//   illustrator: "Koni",
-//   number: 136,
-//   set: "007",
-//   externalIds: {
-//     tcgPlayer: 618145,
+//   Colors: ["ruby", "sapphire"],
+//   Cost: 6,
+//   Strength: 5,
+//   Willpower: 5,
+//   Illustrator: "Koni",
+//   Number: 136,
+//   Set: "007",
+//   ExternalIds: {
+//     TcgPlayer: 618145,
 //   },
-//   rarity: "rare",
-//   lore: 2,
+//   Rarity: "rare",
+//   Lore: 2,
 // };
 //

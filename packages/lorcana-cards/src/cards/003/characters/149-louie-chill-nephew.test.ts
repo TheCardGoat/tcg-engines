@@ -3,18 +3,18 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { louieChillNephew } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { louieChillNephew } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Louie - Chill Nephew", () => {
-//   it.skip("**Support** _(Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)_", () => {
-//     const testStore = new TestStore({
-//       play: [louieChillNephew],
+// Describe("Louie - Chill Nephew", () => {
+//   It.skip("**Support** _(Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)_", () => {
+//     Const testStore = new TestStore({
+//       Play: [louieChillNephew],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("play", louieChillNephew.id);
-//     expect(cardUnderTest.hasSupport).toBe(true);
+//     Const cardUnderTest = testStore.getByZoneAndId("play", louieChillNephew.id);
+//     Expect(cardUnderTest.hasSupport).toBe(true);
 //   });
 // });
 //

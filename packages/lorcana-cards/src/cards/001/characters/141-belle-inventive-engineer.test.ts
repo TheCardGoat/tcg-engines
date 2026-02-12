@@ -5,9 +5,9 @@ import { belleInventiveEngineer } from "./141-belle-inventive-engineer";
 describe("Belle - Inventive Engineer", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [belleInventiveEngineer] });
-  //   expect(testEngine.getCardModel(belleInventiveEngineer).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [belleInventiveEngineer] });
+  //   Expect(testEngine.getCardModel(belleInventiveEngineer).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,28 +17,28 @@ describe("Belle - Inventive Engineer", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { belleInventive } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { lantern } from "@lorcanito/lorcana-engine/cards/001/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { belleInventive } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { lantern } from "@lorcanito/lorcana-engine/cards/001/items/items";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Belle - Inventive Engineer", () => {
-//   it("**TINKER** Whenever this character quests, you pay 1 {I} less for the next item you play this turn.", () => {
-//     const testStore = new TestStore({
-//       inkwell: lantern.cost - 1,
-//       hand: [lantern],
-//       play: [belleInventive],
+// Describe("Belle - Inventive Engineer", () => {
+//   It("**TINKER** Whenever this character quests, you pay 1 {I} less for the next item you play this turn.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: lantern.cost - 1,
+//       Hand: [lantern],
+//       Play: [belleInventive],
 //     });
 //
-//     const reducedCostItem = testStore.getByZoneAndId("hand", lantern.id);
+//     Const reducedCostItem = testStore.getByZoneAndId("hand", lantern.id);
 //
-//     const cardUnderTest = testStore.getByZoneAndId("play", belleInventive.id);
-//     cardUnderTest.quest();
+//     Const cardUnderTest = testStore.getByZoneAndId("play", belleInventive.id);
+//     CardUnderTest.quest();
 //
-//     reducedCostItem.playFromHand();
+//     ReducedCostItem.playFromHand();
 //
-//     expect(testStore.store.tableStore.getTable().inkAvailable()).toEqual(0);
-//     expect(reducedCostItem.zone).toEqual("play");
+//     Expect(testStore.store.tableStore.getTable().inkAvailable()).toEqual(0);
+//     Expect(reducedCostItem.zone).toEqual("play");
 //   });
 // });
 //

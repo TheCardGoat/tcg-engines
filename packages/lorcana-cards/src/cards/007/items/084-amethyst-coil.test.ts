@@ -3,46 +3,46 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   amethystCoil,
-//   kodaSmallishBear,
-//   sirKayUnrulyKnight,
-//   suzyMasterSeamstress,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   AmethystCoil,
+//   KodaSmallishBear,
+//   SirKayUnrulyKnight,
+//   SuzyMasterSeamstress,
 // } from "@lorcanito/lorcana-engine/cards/007";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Amethyst Coil", () => {
-//   it("MAGICAL TOUCH During your turn, whenever a card is put into your inkwell, you may move 1 damage counter from chosen character to chosen opposing character.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Amethyst Coil", () => {
+//   It("MAGICAL TOUCH During your turn, whenever a card is put into your inkwell, you may move 1 damage counter from chosen character to chosen opposing character.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         play: [amethystCoil, sirKayUnrulyKnight],
-//         hand: [suzyMasterSeamstress],
+//         Play: [amethystCoil, sirKayUnrulyKnight],
+//         Hand: [suzyMasterSeamstress],
 //       },
 //       {
-//         play: [kodaSmallishBear],
+//         Play: [kodaSmallishBear],
 //       },
 //     );
 //
-//     await testEngine.setCardDamage(sirKayUnrulyKnight, 1);
-//     await testEngine.putIntoInkwell(suzyMasterSeamstress);
+//     Await testEngine.setCardDamage(sirKayUnrulyKnight, 1);
+//     Await testEngine.putIntoInkwell(suzyMasterSeamstress);
 //
-//     expect(testEngine.getCardModel(sirKayUnrulyKnight).damage).toBe(1);
-//     expect(testEngine.getCardModel(kodaSmallishBear).damage).toBe(0);
+//     Expect(testEngine.getCardModel(sirKayUnrulyKnight).damage).toBe(1);
+//     Expect(testEngine.getCardModel(kodaSmallishBear).damage).toBe(0);
 //
-//     await testEngine.acceptOptionalAbility();
-//     await testEngine.resolveTopOfStack(
+//     Await testEngine.acceptOptionalAbility();
+//     Await testEngine.resolveTopOfStack(
 //       {
-//         targets: [sirKayUnrulyKnight],
+//         Targets: [sirKayUnrulyKnight],
 //       },
-//       true,
+//       True,
 //     );
-//     await testEngine.resolveTopOfStack({
-//       targets: [kodaSmallishBear],
+//     Await testEngine.resolveTopOfStack({
+//       Targets: [kodaSmallishBear],
 //     });
 //
-//     expect(testEngine.getCardModel(sirKayUnrulyKnight).damage).toBe(0);
-//     expect(testEngine.getCardModel(kodaSmallishBear).damage).toBe(1);
+//     Expect(testEngine.getCardModel(sirKayUnrulyKnight).damage).toBe(0);
+//     Expect(testEngine.getCardModel(kodaSmallishBear).damage).toBe(1);
 //   });
 // });
 //

@@ -3,47 +3,47 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   charlotteLaBouffMardiGrasPrincess,
-//   deweyLovableShowoff,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   CharlotteLaBouffMardiGrasPrincess,
+//   DeweyLovableShowoff,
 // } from "@lorcanito/lorcana-engine/cards/008";
-// import { theQueenConceitedRuler } from "@lorcanito/lorcana-engine/cards/009";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { theQueenConceitedRuler } from "@lorcanito/lorcana-engine/cards/009";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("The Queen - Conceited Ruler", () => {
-//   it("Support (Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [theQueenConceitedRuler],
+// Describe("The Queen - Conceited Ruler", () => {
+//   It("Support (Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [theQueenConceitedRuler],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(theQueenConceitedRuler);
-//     expect(cardUnderTest.hasSupport).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(theQueenConceitedRuler);
+//     Expect(cardUnderTest.hasSupport).toBe(true);
 //   });
 //
-//   it("ROYAL SUMMONS At the start of your turn, you may choose and discard a Princess or Queen character card to return a character card from your discard to your hand.", async () => {
-//     const testEngine = new TestEngine({
-//       play: [theQueenConceitedRuler],
-//       hand: [charlotteLaBouffMardiGrasPrincess],
-//       discard: [deweyLovableShowoff],
+//   It("ROYAL SUMMONS At the start of your turn, you may choose and discard a Princess or Queen character card to return a character card from your discard to your hand.", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [theQueenConceitedRuler],
+//       Hand: [charlotteLaBouffMardiGrasPrincess],
+//       Discard: [deweyLovableShowoff],
 //     });
 //
-//     await testEngine.passTurn();
-//     await testEngine.passTurn();
+//     Await testEngine.passTurn();
+//     Await testEngine.passTurn();
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack(
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack(
 //       { targets: [charlotteLaBouffMardiGrasPrincess] },
-//       true,
+//       True,
 //     );
 //
-//     expect(
-//       testEngine.getCardModel(charlotteLaBouffMardiGrasPrincess).zone,
+//     Expect(
+//       TestEngine.getCardModel(charlotteLaBouffMardiGrasPrincess).zone,
 //     ).toBe("discard");
 //
-//     await testEngine.resolveTopOfStack({ targets: [deweyLovableShowoff] });
+//     Await testEngine.resolveTopOfStack({ targets: [deweyLovableShowoff] });
 //
-//     expect(testEngine.getCardModel(deweyLovableShowoff).zone).toBe("hand");
+//     Expect(testEngine.getCardModel(deweyLovableShowoff).zone).toBe("hand");
 //   });
 // });
 //

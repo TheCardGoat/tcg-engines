@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { steelChromicon } from "@lorcanito/lorcana-engine/cards/005/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { steelChromicon } from "@lorcanito/lorcana-engine/cards/005/items/items";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Steel Chromicon", () => {
-//   it.skip("**STEEL LIGHT** {E} – Deal 1 damage to chosen character.", () => {
-//     const testStore = new TestStore({
-//       inkwell: steelChromicon.cost,
-//       play: [steelChromicon],
+// Describe("Steel Chromicon", () => {
+//   It.skip("**STEEL LIGHT** {E} – Deal 1 damage to chosen character.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: steelChromicon.cost,
+//       Play: [steelChromicon],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(steelChromicon);
+//     Const cardUnderTest = testStore.getCard(steelChromicon);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

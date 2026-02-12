@@ -1,10 +1,6 @@
 import { createMove } from "@tcg/core";
 import { useLorcanaOps } from "../../../operations";
-import type {
-  LorcanaCardMeta,
-  LorcanaGameState,
-  LorcanaMoveParams,
-} from "../../../types";
+import type { LorcanaCardMeta, LorcanaGameState, LorcanaMoveParams } from "../../../types";
 import { and, canQuest, isMainPhase } from "../../../validators";
 
 /**
@@ -23,12 +19,7 @@ import { and, canQuest, isMainPhase } from "../../../validators";
  * - Add Lore value to player's lore count
  * - Mark character as having quested this turn
  */
-export const quest = createMove<
-  LorcanaGameState,
-  LorcanaMoveParams,
-  "quest",
-  LorcanaCardMeta
->({
+export const quest = createMove<LorcanaGameState, LorcanaMoveParams, "quest", LorcanaCardMeta>({
   condition: and(isMainPhase(), (state, context) =>
     canQuest(context.params.cardId)(state, context),
   ),

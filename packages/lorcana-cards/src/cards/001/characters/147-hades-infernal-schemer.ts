@@ -1,79 +1,79 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const hadesInfernalSchemer: CharacterCard = {
-  id: "x36",
-  cardType: "character",
-  name: "Hades",
-  version: "Infernal Schemer",
-  fullName: "Hades - Infernal Schemer",
-  inkType: ["sapphire"],
-  franchise: "Disney",
-  set: "001",
-  text: "**IS THERE A DOWNSIDE TO THIS?** When you play this character, you may put chosen opposing character into their player",
-  cost: 7,
-  strength: 3,
-  willpower: 6,
-  lore: 2,
-  cardNumber: 147,
-  inkable: true,
-  externalIds: {
-    ravensburger: "",
-  },
   abilities: [
     {
-      type: "action",
-      text: "**IS THERE A DOWNSIDE TO THIS?** When you play this character, you may put chosen opposing character into their player",
-      id: "x36-1",
       effect: {
         type: "play-card",
         from: "hand",
       },
+      id: "x36-1",
+      text: "**IS THERE A DOWNSIDE TO THIS?** When you play this character, you may put chosen opposing character into their player",
+      type: "action",
     },
   ],
+  cardNumber: 147,
+  cardType: "character",
   classifications: ["Dreamborn", "Villain", "Deity"],
+  cost: 7,
+  externalIds: {
+    ravensburger: "",
+  },
+  franchise: "Disney",
+  fullName: "Hades - Infernal Schemer",
+  id: "x36",
+  inkType: ["sapphire"],
+  inkable: true,
+  lore: 2,
+  name: "Hades",
+  set: "001",
+  strength: 3,
+  text: "**IS THERE A DOWNSIDE TO THIS?** When you play this character, you may put chosen opposing character into their player",
+  version: "Infernal Schemer",
+  willpower: 6,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { chosenOpposingCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import { chosenOpposingCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const hadesInfernalSchemer: LorcanitoCharacterCard = {
-//   id: "x36",
-//   reprints: ["a03"],
-//   name: "Hades",
-//   title: "Infernal Schemer",
-//   characteristics: ["dreamborn", "villain", "deity"],
-//   text: "**IS THERE A DOWNSIDE TO THIS?** When you play this character, you may put chosen opposing character into their player's inkwell facedown.",
-//   type: "character",
-//   abilities: [
-//     whenYouPlayThisCharAbility({
-//       type: "resolution",
-//       name: "Is There a Downside to This?",
-//       text: "When you play this character, you may put chosen opposing character into their player's inkwell facedown.",
-//       optional: true,
-//       effects: [
+// Export const hadesInfernalSchemer: LorcanitoCharacterCard = {
+//   Id: "x36",
+//   Reprints: ["a03"],
+//   Name: "Hades",
+//   Title: "Infernal Schemer",
+//   Characteristics: ["dreamborn", "villain", "deity"],
+//   Text: "**IS THERE A DOWNSIDE TO THIS?** When you play this character, you may put chosen opposing character into their player's inkwell facedown.",
+//   Type: "character",
+//   Abilities: [
+//     WhenYouPlayThisCharAbility({
+//       Type: "resolution",
+//       Name: "Is There a Downside to This?",
+//       Text: "When you play this character, you may put chosen opposing character into their player's inkwell facedown.",
+//       Optional: true,
+//       Effects: [
 //         {
-//           type: "move",
-//           to: "inkwell",
-//           exerted: true,
-//           target: chosenOpposingCharacter,
+//           Type: "move",
+//           To: "inkwell",
+//           Exerted: true,
+//           Target: chosenOpposingCharacter,
 //         },
 //       ],
 //     }),
 //   ],
-//   flavour: "He's gotta have a weakness, because everybody's got a weakness.",
-//   colors: ["sapphire"],
-//   cost: 7,
-//   strength: 3,
-//   willpower: 6,
-//   lore: 2,
-//   illustrator: "Matthew Robert Davies",
-//   number: 147,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 508848,
+//   Flavour: "He's gotta have a weakness, because everybody's got a weakness.",
+//   Colors: ["sapphire"],
+//   Cost: 7,
+//   Strength: 3,
+//   Willpower: 6,
+//   Lore: 2,
+//   Illustrator: "Matthew Robert Davies",
+//   Number: 147,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 508848,
 //   },
-//   rarity: "legendary",
+//   Rarity: "legendary",
 // };
 //

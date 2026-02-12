@@ -3,48 +3,48 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { hotPotato } from "@lorcanito/lorcana-engine/cards/006/actions/actions";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { hotPotato } from "@lorcanito/lorcana-engine/cards/006/actions/actions";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Hot Potato", () => {
-//   it.skip("Choose one:", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: hotPotato.cost,
-//       play: [hotPotato],
-//       hand: [hotPotato],
+// Describe("Hot Potato", () => {
+//   It.skip("Choose one:", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: hotPotato.cost,
+//       Play: [hotPotato],
+//       Hand: [hotPotato],
 //     });
 //
-//     await testEngine.playCard(hotPotato);
+//     Await testEngine.playCard(hotPotato);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 //
-//   it.skip("· Deal 2 damage to chosen character.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: hotPotato.cost,
-//       play: [hotPotato],
-//       hand: [hotPotato],
+//   It.skip("· Deal 2 damage to chosen character.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: hotPotato.cost,
+//       Play: [hotPotato],
+//       Hand: [hotPotato],
 //     });
 //
-//     await testEngine.playCard(hotPotato);
+//     Await testEngine.playCard(hotPotato);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 //
-//   it.skip("· Banish chosen item.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: hotPotato.cost,
-//       play: [hotPotato],
-//       hand: [hotPotato],
+//   It.skip("· Banish chosen item.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: hotPotato.cost,
+//       Play: [hotPotato],
+//       Hand: [hotPotato],
 //     });
 //
-//     await testEngine.playCard(hotPotato);
+//     Await testEngine.playCard(hotPotato);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

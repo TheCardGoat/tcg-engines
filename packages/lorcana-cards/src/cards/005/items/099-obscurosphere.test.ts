@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { obscurosphere } from "@lorcanito/lorcana-engine/cards/005/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { obscurosphere } from "@lorcanito/lorcana-engine/cards/005/items/items";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Obscurosphere", () => {
-//   it.skip("**EXTRACT OF EMERALD** 2 {I}, Banish this item – Your characters gain **Ward** until the start of your next turn. _(Opponents can't choose them except to challenge.)_", () => {
-//     const testStore = new TestStore({
-//       inkwell: obscurosphere.cost,
-//       play: [obscurosphere],
+// Describe("Obscurosphere", () => {
+//   It.skip("**EXTRACT OF EMERALD** 2 {I}, Banish this item – Your characters gain **Ward** until the start of your next turn. _(Opponents can't choose them except to challenge.)_", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: obscurosphere.cost,
+//       Play: [obscurosphere],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(obscurosphere);
+//     Const cardUnderTest = testStore.getCard(obscurosphere);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

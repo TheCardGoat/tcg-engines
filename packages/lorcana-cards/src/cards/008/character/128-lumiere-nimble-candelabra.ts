@@ -1,36 +1,36 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { evasiveAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { haveItemInDiscard } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
-// import { whileConditionThisCharacterGains } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { evasiveAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import { haveItemInDiscard } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
+// Import { whileConditionThisCharacterGains } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
 //
-// export const lumiereNimbleCandelabra: LorcanitoCharacterCard = {
-//   id: "pb6",
-//   name: "Lumiere",
-//   title: "Nimble Candelabra",
-//   characteristics: ["storyborn", "ally"],
-//   text: "QUICK-STEP While you have an item card in your discard, this character gains Evasive. (Only characters with Evasive can challenge them.)",
-//   type: "character",
-//   abilities: [
-//     whileConditionThisCharacterGains({
-//       name: "QUICK-STEP",
-//       text: "While you have an item card in your discard, this character gains Evasive. (Only characters with Evasive can challenge them.)",
-//       conditions: [haveItemInDiscard],
-//       ability: evasiveAbility,
+// Export const lumiereNimbleCandelabra: LorcanitoCharacterCard = {
+//   Id: "pb6",
+//   Name: "Lumiere",
+//   Title: "Nimble Candelabra",
+//   Characteristics: ["storyborn", "ally"],
+//   Text: "QUICK-STEP While you have an item card in your discard, this character gains Evasive. (Only characters with Evasive can challenge them.)",
+//   Type: "character",
+//   Abilities: [
+//     WhileConditionThisCharacterGains({
+//       Name: "QUICK-STEP",
+//       Text: "While you have an item card in your discard, this character gains Evasive. (Only characters with Evasive can challenge them.)",
+//       Conditions: [haveItemInDiscard],
+//       Ability: evasiveAbility,
 //     }),
 //   ],
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 2,
-//   strength: 1,
-//   willpower: 1,
-//   illustrator: "Heidi Neunhoffer",
-//   number: 128,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631434,
+//   Inkwell: true,
+//   Colors: ["ruby"],
+//   Cost: 2,
+//   Strength: 1,
+//   Willpower: 1,
+//   Illustrator: "Heidi Neunhoffer",
+//   Number: 128,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631434,
 //   },
-//   rarity: "common",
-//   lore: 2,
+//   Rarity: "common",
+//   Lore: 2,
 // };
 //

@@ -3,41 +3,41 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   beastForbiddingRecluse,
-//   rabbitReluctantHost,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   BeastForbiddingRecluse,
+//   RabbitReluctantHost,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Beast- Forbidding Recluse", () => {
-//   it("**YOU'RE NOT WELCOME HERE** When you play this character, you may deal 1 damage to chosen character.", () => {
-//     const testStore = new TestStore(
+// Describe("Beast- Forbidding Recluse", () => {
+//   It("**YOU'RE NOT WELCOME HERE** When you play this character, you may deal 1 damage to chosen character.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: beastForbiddingRecluse.cost,
-//         hand: [beastForbiddingRecluse],
+//         Inkwell: beastForbiddingRecluse.cost,
+//         Hand: [beastForbiddingRecluse],
 //       },
 //       {
-//         play: [rabbitReluctantHost],
+//         Play: [rabbitReluctantHost],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "hand",
-//       beastForbiddingRecluse.id,
+//       BeastForbiddingRecluse.id,
 //     );
-//     const target = testStore.getByZoneAndId(
+//     Const target = testStore.getByZoneAndId(
 //       "play",
-//       rabbitReluctantHost.id,
+//       RabbitReluctantHost.id,
 //       "player_two",
 //     );
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
 //
-//     testStore.resolveTopOfStack({ targets: [target] });
+//     TestStore.resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.meta.damage).toEqual(1);
+//     Expect(target.meta.damage).toEqual(1);
 //   });
 // });
 //

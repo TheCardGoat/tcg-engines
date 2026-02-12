@@ -3,35 +3,35 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { halfHexwellCrown } from "@lorcanito/lorcana-engine/cards/005/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { halfHexwellCrown } from "@lorcanito/lorcana-engine/cards/005/items/items";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Half Hexwell Crown", () => {
-//   it.skip("**AN UNEXPECTED FIND**, {E}, 2 {I} — Draw a card.", () => {
-//     const testStore = new TestStore({
-//       inkwell: halfHexwellCrown.cost,
-//       play: [halfHexwellCrown],
+// Describe("Half Hexwell Crown", () => {
+//   It.skip("**AN UNEXPECTED FIND**, {E}, 2 {I} — Draw a card.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: halfHexwellCrown.cost,
+//       Play: [halfHexwellCrown],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(halfHexwellCrown);
+//     Const cardUnderTest = testStore.getCard(halfHexwellCrown);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 //
-//   it.skip("**A PERILOUS POWER** {E}, 2 {I}, Discard a card – Exert chosen character.", () => {
-//     const testStore = new TestStore({
-//       inkwell: halfHexwellCrown.cost,
-//       play: [halfHexwellCrown],
+//   It.skip("**A PERILOUS POWER** {E}, 2 {I}, Discard a card – Exert chosen character.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: halfHexwellCrown.cost,
+//       Play: [halfHexwellCrown],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(halfHexwellCrown);
+//     Const cardUnderTest = testStore.getCard(halfHexwellCrown);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

@@ -1,28 +1,28 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { challengerAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { challengerAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
 //
-// export const captainHookForcefulDuelist: LorcanitoCharacterCard = {
-//   id: "whb",
-//   reprints: ["uk5"],
-//   name: "Captain Hook",
-//   title: "Forceful Duelist",
-//   characteristics: ["dreamborn", "villain", "pirate", "captain"],
-//   text: "Challenger +2",
-//   type: "character",
-//   abilities: [challengerAbility(2)],
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 1,
-//   strength: 1,
-//   willpower: 2,
-//   illustrator: "Ornella Savarese",
-//   number: 186,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631706,
+// Export const captainHookForcefulDuelist: LorcanitoCharacterCard = {
+//   Id: "whb",
+//   Reprints: ["uk5"],
+//   Name: "Captain Hook",
+//   Title: "Forceful Duelist",
+//   Characteristics: ["dreamborn", "villain", "pirate", "captain"],
+//   Text: "Challenger +2",
+//   Type: "character",
+//   Abilities: [challengerAbility(2)],
+//   Inkwell: true,
+//   Colors: ["steel"],
+//   Cost: 1,
+//   Strength: 1,
+//   Willpower: 2,
+//   Illustrator: "Ornella Savarese",
+//   Number: 186,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631706,
 //   },
-//   rarity: "common",
-//   lore: 1,
+//   Rarity: "common",
+//   Lore: 1,
 // };
 //

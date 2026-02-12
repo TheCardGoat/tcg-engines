@@ -3,41 +3,41 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   hesATramp,
-//   pepaMadrigalSensitiveSister,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   HesATramp,
+//   PepaMadrigalSensitiveSister,
 // } from "@lorcanito/lorcana-engine/cards/007";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Pepa Madrigal - Sensitive Sister", () => {
-//   describe("CLEAR SKIES, CLEAR SKIES Whenever one or more of your characters sings a song, gain 1 lore.", () => {
-//     it("Singing a song", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: pepaMadrigalSensitiveSister.cost,
-//         play: [pepaMadrigalSensitiveSister],
-//         hand: [hesATramp],
+// Describe("Pepa Madrigal - Sensitive Sister", () => {
+//   Describe("CLEAR SKIES, CLEAR SKIES Whenever one or more of your characters sings a song, gain 1 lore.", () => {
+//     It("Singing a song", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: pepaMadrigalSensitiveSister.cost,
+//         Play: [pepaMadrigalSensitiveSister],
+//         Hand: [hesATramp],
 //       });
 //
-//       await testEngine.singSong({
-//         singer: pepaMadrigalSensitiveSister,
-//         song: hesATramp,
+//       Await testEngine.singSong({
+//         Singer: pepaMadrigalSensitiveSister,
+//         Song: hesATramp,
 //       });
-//       await testEngine.acceptOptionalLayer();
+//       Await testEngine.acceptOptionalLayer();
 //
-//       expect(testEngine.getLoreForPlayer()).toBe(1);
+//       Expect(testEngine.getLoreForPlayer()).toBe(1);
 //     });
 //
-//     it("Casting a song", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: pepaMadrigalSensitiveSister.cost,
-//         play: [pepaMadrigalSensitiveSister],
-//         hand: [hesATramp],
+//     It("Casting a song", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: pepaMadrigalSensitiveSister.cost,
+//         Play: [pepaMadrigalSensitiveSister],
+//         Hand: [hesATramp],
 //       });
 //
-//       await testEngine.playCard(hesATramp);
+//       Await testEngine.playCard(hesATramp);
 //
-//       expect(testEngine.getLoreForPlayer()).toBe(0);
+//       Expect(testEngine.getLoreForPlayer()).toBe(0);
 //     });
 //   });
 // });

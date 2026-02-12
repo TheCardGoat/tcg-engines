@@ -19,10 +19,10 @@ describe("Set 004 Card Text Parser Tests - Actions Items", () => {
     expect(result.abilities.length).toBe(1);
 
     const swingIntoAction = {
-      type: "action",
       effect: {
         type: "gain-keyword",
       },
+      type: "action",
     };
     expect(result.abilities[0].ability).toEqual(
       expect.objectContaining(swingIntoAction),

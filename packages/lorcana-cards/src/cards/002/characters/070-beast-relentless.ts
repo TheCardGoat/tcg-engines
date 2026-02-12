@@ -1,31 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const beastRelentless: CharacterCard = {
-  id: "8rn",
-  cardType: "character",
-  name: "Beast",
-  version: "Relentless",
-  fullName: "Beast - Relentless",
-  inkType: ["emerald"],
-  franchise: "Beauty and the Beast",
-  set: "002",
-  text: "SECOND WIND Whenever an opposing character is damaged, you may ready this character.",
-  cost: 6,
-  strength: 4,
-  willpower: 5,
-  lore: 2,
-  cardNumber: 70,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "1f998b8d166c57c497364060cda6ba1cc7a4a1bf",
-  },
   abilities: [
     {
-      id: "8rn-1",
-      type: "triggered",
-      name: "SECOND WIND",
-      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "optional",
         effect: {
@@ -40,8 +17,31 @@ export const beastRelentless: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "8rn-1",
+      name: "SECOND WIND",
       text: "SECOND WIND Whenever an opposing character is damaged, you may ready this character.",
+      trigger: { event: "play", timing: "when", on: "SELF" },
+      type: "triggered",
     },
   ],
+  cardNumber: 70,
+  cardType: "character",
   classifications: ["Storyborn", "Hero", "Prince"],
+  cost: 6,
+  externalIds: {
+    ravensburger: "1f998b8d166c57c497364060cda6ba1cc7a4a1bf",
+  },
+  franchise: "Beauty and the Beast",
+  fullName: "Beast - Relentless",
+  id: "8rn",
+  inkType: ["emerald"],
+  inkable: true,
+  lore: 2,
+  missingTests: true,
+  name: "Beast",
+  set: "002",
+  strength: 4,
+  text: "SECOND WIND Whenever an opposing character is damaged, you may ready this character.",
+  version: "Relentless",
+  willpower: 5,
 };

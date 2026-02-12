@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { sunglasses } from "@lorcanito/lorcana-engine/cards/006/items/items";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { sunglasses } from "@lorcanito/lorcana-engine/cards/006/items/items";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Sunglasses", () => {
-//   it.skip("SPYCRAFT {E} - Draw a card, then choose and discard a card.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: sunglasses.cost,
-//       play: [sunglasses],
-//       hand: [sunglasses],
+// Describe("Sunglasses", () => {
+//   It.skip("SPYCRAFT {E} - Draw a card, then choose and discard a card.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: sunglasses.cost,
+//       Play: [sunglasses],
+//       Hand: [sunglasses],
 //     });
 //
-//     await testEngine.playCard(sunglasses);
+//     Await testEngine.playCard(sunglasses);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

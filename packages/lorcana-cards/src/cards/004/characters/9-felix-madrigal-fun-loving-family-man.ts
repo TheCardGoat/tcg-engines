@@ -1,25 +1,25 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
 //
-// export const felixMadrigalFunLovingFamilyMan: LorcanitoCharacterCard = {
-//   id: "dpy",
-//   name: "Félix Madrigal",
-//   title: "Fun-Loving Family Man",
-//   characteristics: ["storyborn", "ally", "madrigal"],
-//   type: "character",
-//   flavour: "Who needs a gift when you're having this much fun?",
-//   inkwell: true,
-//   colors: ["amber"],
-//   cost: 3,
-//   strength: 2,
-//   willpower: 4,
-//   lore: 2,
-//   illustrator: "Hedvig Håggman-Sund",
-//   number: 9,
-//   set: "URR",
-//   externalIds: {
-//     tcgPlayer: 543896,
+// Export const felixMadrigalFunLovingFamilyMan: LorcanitoCharacterCard = {
+//   Id: "dpy",
+//   Name: "Félix Madrigal",
+//   Title: "Fun-Loving Family Man",
+//   Characteristics: ["storyborn", "ally", "madrigal"],
+//   Type: "character",
+//   Flavour: "Who needs a gift when you're having this much fun?",
+//   Inkwell: true,
+//   Colors: ["amber"],
+//   Cost: 3,
+//   Strength: 2,
+//   Willpower: 4,
+//   Lore: 2,
+//   Illustrator: "Hedvig Håggman-Sund",
+//   Number: 9,
+//   Set: "URR",
+//   ExternalIds: {
+//     TcgPlayer: 543896,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

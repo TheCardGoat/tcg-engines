@@ -3,90 +3,90 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { iagoPrettyPolly } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { aPiratesLife } from "@lorcanito/lorcana-engine/cards/004/actions/128-a-pirates-life";
-// import {
-//   dumboNinthWonderOfTheUniverse,
-//   dumboTheFlyingElephant,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { iagoPrettyPolly } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { aPiratesLife } from "@lorcanito/lorcana-engine/cards/004/actions/128-a-pirates-life";
+// Import {
+//   DumboNinthWonderOfTheUniverse,
+//   DumboTheFlyingElephant,
 // } from "@lorcanito/lorcana-engine/cards/009";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Dumbo - Ninth Wonder of the Universe", () => {
-//   it("Evasive (Only characters with Evasive can challenge this character.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [dumboNinthWonderOfTheUniverse],
+// Describe("Dumbo - Ninth Wonder of the Universe", () => {
+//   It("Evasive (Only characters with Evasive can challenge this character.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [dumboNinthWonderOfTheUniverse],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(
-//       dumboNinthWonderOfTheUniverse,
+//     Const cardUnderTest = testEngine.getCardModel(
+//       DumboNinthWonderOfTheUniverse,
 //     );
-//     expect(cardUnderTest.hasEvasive).toBe(true);
+//     Expect(cardUnderTest.hasEvasive).toBe(true);
 //   });
 //
-//   it("BREAKING RECORDS {E}, 1 {I} – Draw a card and gain 1 lore.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: 1,
-//       play: [dumboNinthWonderOfTheUniverse],
-//       deck: 3,
+//   It("BREAKING RECORDS {E}, 1 {I} – Draw a card and gain 1 lore.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: 1,
+//       Play: [dumboNinthWonderOfTheUniverse],
+//       Deck: 3,
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(
-//       dumboNinthWonderOfTheUniverse,
+//     Const cardUnderTest = testEngine.getCardModel(
+//       DumboNinthWonderOfTheUniverse,
 //     );
 //
-//     await testEngine.activateCard(cardUnderTest);
-//     expect(testEngine.getPlayerLore()).toEqual(1);
-//     expect(testEngine.getCardsByZone("hand").length).toEqual(1);
+//     Await testEngine.activateCard(cardUnderTest);
+//     Expect(testEngine.getPlayerLore()).toEqual(1);
+//     Expect(testEngine.getCardsByZone("hand").length).toEqual(1);
 //   });
 //
-//   it("MAKING HISTORY Your other characters with Evasive gain '{E}, 1 {I} – Draw a card and gain 1 lore.'", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: 1,
-//       play: [dumboNinthWonderOfTheUniverse, iagoPrettyPolly],
-//       deck: 3,
+//   It("MAKING HISTORY Your other characters with Evasive gain '{E}, 1 {I} – Draw a card and gain 1 lore.'", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: 1,
+//       Play: [dumboNinthWonderOfTheUniverse, iagoPrettyPolly],
+//       Deck: 3,
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(iagoPrettyPolly);
+//     Const cardUnderTest = testEngine.getCardModel(iagoPrettyPolly);
 //
-//     await testEngine.activateCard(cardUnderTest);
+//     Await testEngine.activateCard(cardUnderTest);
 //
-//     expect(cardUnderTest.ready).toEqual(false);
-//     expect(testEngine.getPlayerLore()).toEqual(1);
-//     expect(testEngine.getCardsByZone("hand").length).toEqual(1);
+//     Expect(cardUnderTest.ready).toEqual(false);
+//     Expect(testEngine.getPlayerLore()).toEqual(1);
+//     Expect(testEngine.getCardsByZone("hand").length).toEqual(1);
 //   });
 //
-//   describe("Regressions", () => {
-//     it("Only give the ability to other characters", async () => {
-//       const testEngine = new TestEngine({
-//         play: [dumboNinthWonderOfTheUniverse],
+//   Describe("Regressions", () => {
+//     It("Only give the ability to other characters", async () => {
+//       Const testEngine = new TestEngine({
+//         Play: [dumboNinthWonderOfTheUniverse],
 //       });
 //
-//       const dumbo = testEngine.getCardModel(dumboNinthWonderOfTheUniverse);
+//       Const dumbo = testEngine.getCardModel(dumboNinthWonderOfTheUniverse);
 //
-//       expect(dumbo.activatedAbilities).toHaveLength(2);
+//       Expect(dumbo.activatedAbilities).toHaveLength(2);
 //     });
 //
-//     it("A Pirate's Life interaction", async () => {
-//       const testEngine = new TestEngine(
+//     It("A Pirate's Life interaction", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: 1,
-//           play: [dumboNinthWonderOfTheUniverse, dumboTheFlyingElephant],
-//           hand: [aPiratesLife],
-//           deck: 3,
+//           Inkwell: 1,
+//           Play: [dumboNinthWonderOfTheUniverse, dumboTheFlyingElephant],
+//           Hand: [aPiratesLife],
+//           Deck: 3,
 //         },
 //         {
-//           lore: 5,
+//           Lore: 5,
 //         },
 //       );
 //
-//       await testEngine.singSongTogether({
-//         singers: [dumboNinthWonderOfTheUniverse, dumboTheFlyingElephant],
-//         song: aPiratesLife,
+//       Await testEngine.singSongTogether({
+//         Singers: [dumboNinthWonderOfTheUniverse, dumboTheFlyingElephant],
+//         Song: aPiratesLife,
 //       });
 //
-//       expect(testEngine.getLoreForPlayer("player_one")).toBe(2);
-//       expect(testEngine.getLoreForPlayer("player_two")).toBe(3);
+//       Expect(testEngine.getLoreForPlayer("player_one")).toBe(2);
+//       Expect(testEngine.getLoreForPlayer("player_two")).toBe(3);
 //     });
 //   });
 // });

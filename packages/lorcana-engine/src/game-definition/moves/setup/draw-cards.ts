@@ -1,9 +1,5 @@
-import { createMove, type ZoneId } from "@tcg/core";
-import type {
-  LorcanaCardMeta,
-  LorcanaGameState,
-  LorcanaMoveParams,
-} from "../../../types";
+import { type ZoneId, createMove } from "@tcg/core";
+import type { LorcanaCardMeta, LorcanaGameState, LorcanaMoveParams } from "../../../types";
 
 /**
  * Draw Cards Move
@@ -20,18 +16,15 @@ export const drawCards = createMove<
   "drawCards",
   LorcanaCardMeta
 >({
-  condition: (_state, context) => {
-    // Not available during chooseFirstPlayer phase
-    return context.flow?.currentPhase !== "chooseFirstPlayer";
-  },
+  condition: (_state, context) => context.flow?.currentPhase !== "chooseFirstPlayer",
   reducer: (_draft, context) => {
     const { playerId, count } = context.params;
 
     context.zones.drawCards({
-      from: "deck" as ZoneId,
-      to: "hand" as ZoneId,
       count,
+      from: "deck" as ZoneId,
       playerId,
+      to: "hand" as ZoneId,
     });
   },
 });

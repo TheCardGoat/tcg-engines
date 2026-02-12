@@ -1,18 +1,14 @@
 import { afterEach, beforeEach, describe, expect, it } from "bun:test";
 import { createPlayerId } from "@tcg/core";
-import {
-  LorcanaTestEngine,
-  PLAYER_ONE,
-  PLAYER_TWO,
-} from "../../../testing/lorcana-test-engine";
+import { LorcanaTestEngine, PLAYER_ONE, PLAYER_TWO } from "../../../testing/lorcana-test-engine";
 
 describe("Move: Put a Card Into The Inkwell", () => {
   let testEngine: LorcanaTestEngine;
 
   beforeEach(() => {
     testEngine = new LorcanaTestEngine(
-      { hand: 7, deck: 10, inkwell: 0 },
-      { hand: 7, deck: 10, inkwell: 0 },
+      { deck: 10, hand: 7, inkwell: 0 },
+      { deck: 10, hand: 7, inkwell: 0 },
       { skipPreGame: false },
     );
 
@@ -33,16 +29,16 @@ describe("Move: Put a Card Into The Inkwell", () => {
 
     // Player two takes their turn (beginning -> main -> end -> next turn)
     testEngine.changeActivePlayer(PLAYER_TWO);
-    testEngine.passTurn(); // beginning -> main
-    testEngine.passTurn(); // main -> end -> turn 3 beginning -> main (player_one)
+    testEngine.passTurn(); // Beginning -> main
+    testEngine.passTurn(); // Main -> end -> turn 3 beginning -> main (player_one)
 
     // Player one takes their turn
     testEngine.changeActivePlayer(PLAYER_ONE);
-    testEngine.passTurn(); // main -> end -> turn 4 beginning -> main (player_two)
+    testEngine.passTurn(); // Main -> end -> turn 4 beginning -> main (player_two)
 
     // Back to player two
     testEngine.changeActivePlayer(PLAYER_TWO);
-    testEngine.passTurn(); // main -> end -> turn 5 beginning -> main (player_one)
+    testEngine.passTurn(); // Main -> end -> turn 5 beginning -> main (player_one)
 
     // Now on player_one's turn in main phase
     testEngine.changeActivePlayer(PLAYER_ONE);
@@ -83,20 +79,15 @@ describe("Move: Put a Card Into The Inkwell", () => {
 
       // Initially should not be marked (may be undefined or false)
       const ctx = testEngine.getCtx();
-      const initialInked = ctx.trackers?.check(
-        "hasInked",
-        createPlayerId(PLAYER_ONE),
-      );
-      expect(initialInked).toBeFalsy(); // undefined or false
+      const initialInked = ctx.trackers?.check("hasInked", createPlayerId(PLAYER_ONE));
+      expect(initialInked).toBeFalsy(); // Undefined or false
 
       // Ink the card
       testEngine.putCardInInkwell(cardToInk);
 
       // Should now be marked
       const newCtx = testEngine.getCtx();
-      expect(
-        newCtx.trackers?.check("hasInked", createPlayerId(PLAYER_ONE)),
-      ).toBe(true);
+      expect(newCtx.trackers?.check("hasInked", createPlayerId(PLAYER_ONE))).toBe(true);
     });
 
     it("should allow inking different cards in different turns", () => {
@@ -136,10 +127,10 @@ describe("Move: Put a Card Into The Inkwell", () => {
 
       // Second ink should fail
       const result = testEngine.engine.executeMove("putACardIntoTheInkwell", {
-        playerId: createPlayerId(PLAYER_ONE),
         params: {
           cardId: secondCard,
         },
+        playerId: createPlayerId(PLAYER_ONE),
       });
 
       expect(result.success).toBe(false);
@@ -147,8 +138,7 @@ describe("Move: Put a Card Into The Inkwell", () => {
       if (!result.success) {
         // Accept either specific or generic error code
         expect(
-          result.errorCode === "ALREADY_USED_ACTION" ||
-            result.errorCode === "CONDITION_FAILED",
+          result.errorCode === "ALREADY_USED_ACTION" || result.errorCode === "CONDITION_FAILED",
         ).toBe(true);
       }
 
@@ -190,10 +180,10 @@ describe("Move: Put a Card Into The Inkwell", () => {
       const cardInDeck = deck[0];
 
       const result = testEngine.engine.executeMove("putACardIntoTheInkwell", {
-        playerId: createPlayerId(PLAYER_ONE),
         params: {
           cardId: cardInDeck,
         },
+        playerId: createPlayerId(PLAYER_ONE),
       });
 
       expect(result.success).toBe(false);
@@ -204,16 +194,14 @@ describe("Move: Put a Card Into The Inkwell", () => {
     it("should reject cards not in hand - card in play", () => {
       // Set up with a card in play
       const testEngineWithPlay = new LorcanaTestEngine(
-        { hand: 7, deck: 10, play: 1 },
-        { hand: 7, deck: 10 },
+        { deck: 10, hand: 7, play: 1 },
+        { deck: 10, hand: 7 },
         { skipPreGame: false },
       );
 
       // Complete setup
       const ctx = testEngineWithPlay.getCtx();
-      testEngineWithPlay.changeActivePlayer(
-        ctx.choosingFirstPlayer || PLAYER_ONE,
-      );
+      testEngineWithPlay.changeActivePlayer(ctx.choosingFirstPlayer || PLAYER_ONE);
       testEngineWithPlay.chooseWhoGoesFirst(PLAYER_ONE);
       testEngineWithPlay.changeActivePlayer(PLAYER_ONE);
       testEngineWithPlay.alterHand([]);
@@ -224,15 +212,12 @@ describe("Move: Put a Card Into The Inkwell", () => {
       const playZone = testEngineWithPlay.getZone("play", PLAYER_ONE);
       const cardInPlay = playZone[0];
 
-      const result = testEngineWithPlay.engine.executeMove(
-        "putACardIntoTheInkwell",
-        {
-          playerId: createPlayerId(PLAYER_ONE),
-          params: {
-            cardId: cardInPlay,
-          },
+      const result = testEngineWithPlay.engine.executeMove("putACardIntoTheInkwell", {
+        params: {
+          cardId: cardInPlay,
         },
-      );
+        playerId: createPlayerId(PLAYER_ONE),
+      });
 
       expect(result.success).toBe(false);
 
@@ -241,10 +226,10 @@ describe("Move: Put a Card Into The Inkwell", () => {
 
     it("should reject invalid card IDs", () => {
       const result = testEngine.engine.executeMove("putACardIntoTheInkwell", {
-        playerId: createPlayerId(PLAYER_ONE),
         params: {
           cardId: "invalid-card-id-12345",
         },
+        playerId: createPlayerId(PLAYER_ONE),
       });
 
       expect(result.success).toBe(false);
@@ -255,10 +240,10 @@ describe("Move: Put a Card Into The Inkwell", () => {
       const opponentCard = opponentHand[0];
 
       const result = testEngine.engine.executeMove("putACardIntoTheInkwell", {
-        playerId: createPlayerId(PLAYER_ONE),
         params: {
           cardId: opponentCard,
         },
+        playerId: createPlayerId(PLAYER_ONE),
       });
 
       expect(result.success).toBe(false);
@@ -280,10 +265,10 @@ describe("Move: Put a Card Into The Inkwell", () => {
 
       // Try to ink the same card again (now it's in inkwell)
       const result = testEngine.engine.executeMove("putACardIntoTheInkwell", {
-        playerId: createPlayerId(PLAYER_ONE),
         params: {
           cardId: cardToInk,
         },
+        playerId: createPlayerId(PLAYER_ONE),
       });
 
       expect(result.success).toBe(false);
@@ -319,8 +304,8 @@ describe("Move: Put a Card Into The Inkwell", () => {
   describe("Edge Cases", () => {
     it("should handle empty hand gracefully", () => {
       const emptyHandEngine = new LorcanaTestEngine(
-        { hand: 0, deck: 10 },
-        { hand: 7, deck: 10 },
+        { deck: 10, hand: 0 },
+        { deck: 10, hand: 7 },
         { skipPreGame: false },
       );
 
@@ -335,15 +320,12 @@ describe("Move: Put a Card Into The Inkwell", () => {
       emptyHandEngine.changeActivePlayer(PLAYER_ONE);
 
       // Try to ink with no cards in hand
-      const result = emptyHandEngine.engine.executeMove(
-        "putACardIntoTheInkwell",
-        {
-          playerId: createPlayerId(PLAYER_ONE),
-          params: {
-            cardId: "any-card-id",
-          },
+      const result = emptyHandEngine.engine.executeMove("putACardIntoTheInkwell", {
+        params: {
+          cardId: "any-card-id",
         },
-      );
+        playerId: createPlayerId(PLAYER_ONE),
+      });
 
       expect(result.success).toBe(false);
 
@@ -406,9 +388,7 @@ describe("Move: Put a Card Into The Inkwell", () => {
 
       // Verify tracker is marked
       let ctx = testEngine.getCtx();
-      expect(ctx.trackers?.check("hasInked", createPlayerId(PLAYER_ONE))).toBe(
-        true,
-      );
+      expect(ctx.trackers?.check("hasInked", createPlayerId(PLAYER_ONE))).toBe(true);
 
       // Pass turn and come back
       testEngine.passTurn();
@@ -416,11 +396,8 @@ describe("Move: Put a Card Into The Inkwell", () => {
 
       // Tracker should be reset (undefined or false)
       ctx = testEngine.getCtx();
-      const trackerValue = ctx.trackers?.check(
-        "hasInked",
-        createPlayerId(PLAYER_ONE),
-      );
-      expect(trackerValue).toBeFalsy(); // undefined or false
+      const trackerValue = ctx.trackers?.check("hasInked", createPlayerId(PLAYER_ONE));
+      expect(trackerValue).toBeFalsy(); // Undefined or false
 
       // Should be able to ink again
       const newHand = testEngine.getZone("hand", PLAYER_ONE);

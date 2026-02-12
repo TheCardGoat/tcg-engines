@@ -5,9 +5,9 @@ import { flynnRiderCharmingRogue } from "./074-flynn-rider-charming-rogue";
 describe("Flynn Rider - Charming Rogue", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [flynnRiderCharmingRogue] });
-  //   expect(testEngine.getCardModel(flynnRiderCharmingRogue).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [flynnRiderCharmingRogue] });
+  //   Expect(testEngine.getCardModel(flynnRiderCharmingRogue).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,72 +17,72 @@ describe("Flynn Rider - Charming Rogue", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   flynnRiderCharmingRogue,
-//   heiheiBoatSnack,
-//   mauiDemiGod,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   FlynnRiderCharmingRogue,
+//   HeiheiBoatSnack,
+//   MauiDemiGod,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Flynn Rider - Charming Rogue", () => {
-//   describe("**HERE COMES THE SMOLDER** Whenever this character is challenged, the challenging player chooses and discards a card.", () => {
-//     it("attacking does not trigger the effect", () => {
-//       const testStore = new TestStore(
+// Describe("Flynn Rider - Charming Rogue", () => {
+//   Describe("**HERE COMES THE SMOLDER** Whenever this character is challenged, the challenging player chooses and discards a card.", () => {
+//     It("attacking does not trigger the effect", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [flynnRiderCharmingRogue],
+//           Play: [flynnRiderCharmingRogue],
 //         },
 //         {
-//           play: [heiheiBoatSnack],
-//           hand: [mauiDemiGod],
+//           Play: [heiheiBoatSnack],
+//           Hand: [mauiDemiGod],
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         flynnRiderCharmingRogue.id,
+//         FlynnRiderCharmingRogue.id,
 //       );
-//       const defender = testStore.getByZoneAndId(
+//       Const defender = testStore.getByZoneAndId(
 //         "play",
-//         heiheiBoatSnack.id,
+//         HeiheiBoatSnack.id,
 //         "player_two",
 //       );
 //
-//       cardUnderTest.challenge(defender);
-//       expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
+//       CardUnderTest.challenge(defender);
+//       Expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
 //     });
 //
-//     it("as defender triggers the effect", () => {
-//       const testStore = new TestStore(
+//     It("as defender triggers the effect", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [heiheiBoatSnack],
-//           hand: [mauiDemiGod],
+//           Play: [heiheiBoatSnack],
+//           Hand: [mauiDemiGod],
 //         },
 //         {
-//           play: [flynnRiderCharmingRogue],
+//           Play: [flynnRiderCharmingRogue],
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         flynnRiderCharmingRogue.id,
+//         FlynnRiderCharmingRogue.id,
 //         "player_two",
 //       );
-//       const attacker = testStore.getByZoneAndId("play", heiheiBoatSnack.id);
-//       const cardToDiscard = testStore.getByZoneAndId(
+//       Const attacker = testStore.getByZoneAndId("play", heiheiBoatSnack.id);
+//       Const cardToDiscard = testStore.getByZoneAndId(
 //         "hand",
-//         mauiDemiGod.id,
+//         MauiDemiGod.id,
 //         "player_one",
 //       );
 //
-//       cardUnderTest.updateCardMeta({ exerted: true });
+//       CardUnderTest.updateCardMeta({ exerted: true });
 //
-//       attacker.challenge(cardUnderTest);
-//       testStore.resolveTopOfStack({
-//         targets: [cardToDiscard],
+//       Attacker.challenge(cardUnderTest);
+//       TestStore.resolveTopOfStack({
+//         Targets: [cardToDiscard],
 //       });
 //
-//       expect(cardToDiscard.zone).toEqual("discard");
+//       Expect(cardToDiscard.zone).toEqual("discard");
 //     });
 //   });
 // });

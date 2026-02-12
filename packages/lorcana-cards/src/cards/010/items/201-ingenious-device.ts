@@ -1,25 +1,8 @@
 import type { ItemCard } from "@tcg/lorcana-types";
 
 export const ingeniousDevice: ItemCard = {
-  id: "12e",
-  cardType: "item",
-  name: "Ingenious Device",
-  inkType: ["steel"],
-  franchise: "Peter Pan",
-  set: "010",
-  text: "SURPRISE PACKAGE {E}, 2 {I}, Banish this item — Draw a card, then choose and discard a card.\nTIME GROWS SHORT During your turn, when this item is banished, deal 3 damage to chosen character or location.",
-  cost: 3,
-  cardNumber: 201,
-  inkable: false,
-  externalIds: {
-    ravensburger: "8a50bd678c2214c7ff51d993613b9ce04f7e3fea",
-  },
   abilities: [
     {
-      id: "12e-1",
-      text: "SURPRISE PACKAGE {E}, 2 {I}, Banish this item — Draw a card, then choose and discard a card.",
-      name: "SURPRISE PACKAGE",
-      type: "activated",
       cost: {
         exert: true,
         ink: 2,
@@ -41,16 +24,15 @@ export const ingeniousDevice: ItemCard = {
           },
         ],
       },
+      id: "12e-1",
+      name: "SURPRISE PACKAGE",
+      text: "SURPRISE PACKAGE {E}, 2 {I}, Banish this item — Draw a card, then choose and discard a card.",
+      type: "activated",
     },
     {
-      id: "12e-2",
-      text: "TIME GROWS SHORT During your turn, when this item is banished, deal 3 damage to chosen character or location.",
-      name: "TIME GROWS SHORT",
-      type: "triggered",
-      trigger: {
-        event: "banish",
-        timing: "when",
-        on: "SELF",
+      condition: {
+        type: "turn",
+        whose: "your",
       },
       effect: {
         type: "deal-damage",
@@ -61,10 +43,28 @@ export const ingeniousDevice: ItemCard = {
           cardTypes: ["character", "location"],
         },
       },
-      condition: {
-        type: "turn",
-        whose: "your",
+      id: "12e-2",
+      name: "TIME GROWS SHORT",
+      text: "TIME GROWS SHORT During your turn, when this item is banished, deal 3 damage to chosen character or location.",
+      trigger: {
+        event: "banish",
+        timing: "when",
+        on: "SELF",
       },
+      type: "triggered",
     },
   ],
+  cardNumber: 201,
+  cardType: "item",
+  cost: 3,
+  externalIds: {
+    ravensburger: "8a50bd678c2214c7ff51d993613b9ce04f7e3fea",
+  },
+  franchise: "Peter Pan",
+  id: "12e",
+  inkType: ["steel"],
+  inkable: false,
+  name: "Ingenious Device",
+  set: "010",
+  text: "SURPRISE PACKAGE {E}, 2 {I}, Banish this item — Draw a card, then choose and discard a card.\nTIME GROWS SHORT During your turn, when this item is banished, deal 3 damage to chosen character or location.",
 };

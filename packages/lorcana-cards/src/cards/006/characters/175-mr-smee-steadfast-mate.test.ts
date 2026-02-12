@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { mrSmeeSteadfastMate } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { mrSmeeSteadfastMate } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Mr. Smee - Steadfast Mate", () => {
-//   it.skip("GOOD CATCH During your turn, this character gains Evasive. (They can challenge characters with Evasive.)", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: mrSmeeSteadfastMate.cost,
-//       play: [mrSmeeSteadfastMate],
-//       hand: [mrSmeeSteadfastMate],
+// Describe("Mr. Smee - Steadfast Mate", () => {
+//   It.skip("GOOD CATCH During your turn, this character gains Evasive. (They can challenge characters with Evasive.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: mrSmeeSteadfastMate.cost,
+//       Play: [mrSmeeSteadfastMate],
+//       Hand: [mrSmeeSteadfastMate],
 //     });
 //
-//     await testEngine.playCard(mrSmeeSteadfastMate);
+//     Await testEngine.playCard(mrSmeeSteadfastMate);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

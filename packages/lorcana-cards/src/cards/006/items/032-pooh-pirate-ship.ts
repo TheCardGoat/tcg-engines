@@ -1,29 +1,29 @@
 import type { ItemCard } from "@tcg/lorcana-types";
 
 export const poohPirateShip: ItemCard = {
-  id: "6g9",
-  cardType: "item",
-  name: "Pooh Pirate Ship",
-  inkType: ["amber"],
-  franchise: "Winnie the Pooh",
-  set: "006",
-  text: "MAKE A RESCUE {E}, 3 {I} – Return a Pirate character card from your discard to your hand.",
-  cost: 1,
-  cardNumber: 32,
-  inkable: false,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "1740993c2d9c41b47477e050c6664ad461d7aa89",
-  },
   abilities: [
     {
-      id: "6g9-1",
-      type: "action",
       effect: {
         type: "return-from-discard",
         target: "CONTROLLER",
       },
+      id: "6g9-1",
       text: "MAKE A RESCUE {E}, 3 {I} – Return a Pirate character card from your discard to your hand.",
+      type: "action",
     },
   ],
+  cardNumber: 32,
+  cardType: "item",
+  cost: 1,
+  externalIds: {
+    ravensburger: "1740993c2d9c41b47477e050c6664ad461d7aa89",
+  },
+  franchise: "Winnie the Pooh",
+  id: "6g9",
+  inkType: ["amber"],
+  inkable: false,
+  missingTests: true,
+  name: "Pooh Pirate Ship",
+  set: "006",
+  text: "MAKE A RESCUE {E}, 3 {I} – Return a Pirate character card from your discard to your hand.",
 };

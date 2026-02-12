@@ -1,41 +1,41 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { singerTogetherAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { youPayXLessToPlayNextCharThisTurn } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+// Import { singerTogetherAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import { youPayXLessToPlayNextCharThisTurn } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const itMeansNoWorries: LorcanitoActionCard = {
-//   id: "u6f",
-//   name: "It Means No Worries",
-//   characteristics: ["action", "song"],
-//   text: "Sing Together 9 (Any number of your or your teammates' characters with total cost 9 or more may {E} to sing this song for free.)\nReturn up to 3 character cards from your discard to your hand. You pay 2 {I} less for the next character you play this turn.",
-//   type: "action",
-//   inkwell: false,
-//   colors: ["amber"],
-//   cost: 9,
-//   illustrator: "Gianluca Barone",
-//   number: 42,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631380,
+// Export const itMeansNoWorries: LorcanitoActionCard = {
+//   Id: "u6f",
+//   Name: "It Means No Worries",
+//   Characteristics: ["action", "song"],
+//   Text: "Sing Together 9 (Any number of your or your teammates' characters with total cost 9 or more may {E} to sing this song for free.)\nReturn up to 3 character cards from your discard to your hand. You pay 2 {I} less for the next character you play this turn.",
+//   Type: "action",
+//   Inkwell: false,
+//   Colors: ["amber"],
+//   Cost: 9,
+//   Illustrator: "Gianluca Barone",
+//   Number: 42,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631380,
 //   },
-//   rarity: "rare",
-//   abilities: [
-//     singerTogetherAbility(9),
+//   Rarity: "rare",
+//   Abilities: [
+//     SingerTogetherAbility(9),
 //     {
-//       type: "resolution",
-//       effects: [youPayXLessToPlayNextCharThisTurn(2)],
+//       Type: "resolution",
+//       Effects: [youPayXLessToPlayNextCharThisTurn(2)],
 //     },
 //     {
-//       type: "resolution",
-//       effects: [
+//       Type: "resolution",
+//       Effects: [
 //         {
-//           type: "move",
-//           to: "hand",
-//           target: {
-//             type: "card",
-//             value: 3,
-//             upTo: true,
-//             filters: [
+//           Type: "move",
+//           To: "hand",
+//           Target: {
+//             Type: "card",
+//             Value: 3,
+//             UpTo: true,
+//             Filters: [
 //               { filter: "type", value: "character" },
 //               { filter: "zone", value: "discard" },
 //               { filter: "owner", value: "self" },

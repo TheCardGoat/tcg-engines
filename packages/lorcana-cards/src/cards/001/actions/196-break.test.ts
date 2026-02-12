@@ -5,9 +5,9 @@ import { breakCard } from "./196-break";
 describe("breakCard - undefined", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [breakAction] });
-  //   expect(testEngine.getCardModel(breakAction).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [breakAction] });
+  //   Expect(testEngine.getCardModel(breakAction).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,29 +17,29 @@ describe("breakCard - undefined", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { breakAction } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
-// import { dingleHopper } from "@lorcanito/lorcana-engine/cards/001/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { breakAction } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
+// Import { dingleHopper } from "@lorcanito/lorcana-engine/cards/001/items/items";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Break", () => {
-//   it("Banish chosen item.", () => {
-//     const testStore = new TestStore({
-//       inkwell: breakAction.cost,
-//       hand: [breakAction],
-//       play: [dingleHopper],
+// Describe("Break", () => {
+//   It("Banish chosen item.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: breakAction.cost,
+//       Hand: [breakAction],
+//       Play: [dingleHopper],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", breakAction.id);
-//     const target = testStore.getByZoneAndId("play", dingleHopper.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", breakAction.id);
+//     Const target = testStore.getByZoneAndId("play", dingleHopper.id);
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     testStore.resolveTopOfStack({
-//       targetId: target.instanceId,
+//     TestStore.resolveTopOfStack({
+//       TargetId: target.instanceId,
 //     });
 //
-//     expect(target.zone).toEqual("discard");
+//     Expect(target.zone).toEqual("discard");
 //   });
 // });
 //

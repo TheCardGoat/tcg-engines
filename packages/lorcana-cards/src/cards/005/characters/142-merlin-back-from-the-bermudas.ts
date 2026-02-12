@@ -1,49 +1,49 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { resistAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { resistAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
 //
-// export const merlinBackFromTheBermudas: LorcanitoCharacterCard = {
-//   id: "tbu",
-//   name: "Merlin",
-//   title: "Back from Bermuda",
-//   characteristics: ["sorcerer", "storyborn", "mentor"],
-//   text: "**LONG LIVE THE KING!** Your Arthur characters gain **Resist** +1 _(Damage dealt to this character is reduced by 1)_",
-//   type: "character",
-//   abilities: [
+// Export const merlinBackFromTheBermudas: LorcanitoCharacterCard = {
+//   Id: "tbu",
+//   Name: "Merlin",
+//   Title: "Back from Bermuda",
+//   Characteristics: ["sorcerer", "storyborn", "mentor"],
+//   Text: "**LONG LIVE THE KING!** Your Arthur characters gain **Resist** +1 _(Damage dealt to this character is reduced by 1)_",
+//   Type: "character",
+//   Abilities: [
 //     {
-//       type: "static",
-//       ability: "gain-ability",
-//       name: "LONG LIVE THE KING!",
-//       text: "Your Arthur characters gain **Resist** +1 _(Damage dealt to this character is reduced by 1)_",
-//       gainedAbility: resistAbility(1),
-//       target: {
-//         type: "card",
-//         value: "all",
-//         filters: [
+//       Type: "static",
+//       Ability: "gain-ability",
+//       Name: "LONG LIVE THE KING!",
+//       Text: "Your Arthur characters gain **Resist** +1 _(Damage dealt to this character is reduced by 1)_",
+//       GainedAbility: resistAbility(1),
+//       Target: {
+//         Type: "card",
+//         Value: "all",
+//         Filters: [
 //           { filter: "owner", value: "self" },
 //           { filter: "zone", value: "play" },
 //           {
-//             filter: "attribute",
-//             value: "name",
-//             comparison: { operator: "eq", value: "Arthur" },
+//             Filter: "attribute",
+//             Value: "name",
+//             Comparison: { operator: "eq", value: "Arthur" },
 //           },
 //         ],
 //       },
 //     },
 //   ],
-//   flavour: "A little rest and relaxation will do your health good, boy.",
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 4,
-//   strength: 1,
-//   willpower: 4,
-//   lore: 2,
-//   illustrator: "Alice Pisoni",
-//   number: 142,
-//   set: "SSK",
-//   externalIds: {
-//     tcgPlayer: 561966,
+//   Flavour: "A little rest and relaxation will do your health good, boy.",
+//   Inkwell: true,
+//   Colors: ["sapphire"],
+//   Cost: 4,
+//   Strength: 1,
+//   Willpower: 4,
+//   Lore: 2,
+//   Illustrator: "Alice Pisoni",
+//   Number: 142,
+//   Set: "SSK",
+//   ExternalIds: {
+//     TcgPlayer: 561966,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

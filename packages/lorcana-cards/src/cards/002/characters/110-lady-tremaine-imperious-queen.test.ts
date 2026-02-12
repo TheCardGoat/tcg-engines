@@ -3,79 +3,79 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   fidgetRatigansHenchman,
-//   ladyTremaineImperiousQueen,
-//   princeJohnGreediestOfAll,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   FidgetRatigansHenchman,
+//   LadyTremaineImperiousQueen,
+//   PrinceJohnGreediestOfAll,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Lady Tremaine - Imperious Queen", () => {
-//   it("Shift", () => {
-//     const testStore = new TestStore({
-//       play: [ladyTremaineImperiousQueen],
+// Describe("Lady Tremaine - Imperious Queen", () => {
+//   It("Shift", () => {
+//     Const testStore = new TestStore({
+//       Play: [ladyTremaineImperiousQueen],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       ladyTremaineImperiousQueen.id,
+//       LadyTremaineImperiousQueen.id,
 //     );
 //
-//     expect(cardUnderTest.hasShift).toBe(true);
+//     Expect(cardUnderTest.hasShift).toBe(true);
 //   });
 //
-//   it("**POWER TO RULE AT LAST** When you play this character, each opponent chooses and banishes one of their characters.", () => {
-//     const testStore = new TestStore(
+//   It("**POWER TO RULE AT LAST** When you play this character, each opponent chooses and banishes one of their characters.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: ladyTremaineImperiousQueen.cost,
-//         hand: [ladyTremaineImperiousQueen],
+//         Inkwell: ladyTremaineImperiousQueen.cost,
+//         Hand: [ladyTremaineImperiousQueen],
 //       },
 //       {
-//         play: [fidgetRatigansHenchman],
+//         Play: [fidgetRatigansHenchman],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "hand",
-//       ladyTremaineImperiousQueen.id,
+//       LadyTremaineImperiousQueen.id,
 //     );
-//     const target = testStore.getByZoneAndId(
+//     Const target = testStore.getByZoneAndId(
 //       "play",
-//       fidgetRatigansHenchman.id,
+//       FidgetRatigansHenchman.id,
 //       "player_two",
 //     );
 //
-//     cardUnderTest.playFromHand();
-//     testStore.changePlayer().resolveTopOfStack({ targets: [target] });
+//     CardUnderTest.playFromHand();
+//     TestStore.changePlayer().resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.zone).toBe("discard");
+//     Expect(target.zone).toBe("discard");
 //   });
-//   it("Opponent being able to choose their own character with ward.", () => {
-//     const testStore = new TestStore(
+//   It("Opponent being able to choose their own character with ward.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: ladyTremaineImperiousQueen.cost,
-//         hand: [ladyTremaineImperiousQueen],
+//         Inkwell: ladyTremaineImperiousQueen.cost,
+//         Hand: [ladyTremaineImperiousQueen],
 //       },
 //       {
-//         play: [princeJohnGreediestOfAll],
+//         Play: [princeJohnGreediestOfAll],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "hand",
-//       ladyTremaineImperiousQueen.id,
+//       LadyTremaineImperiousQueen.id,
 //     );
-//     const target = testStore.getByZoneAndId(
+//     Const target = testStore.getByZoneAndId(
 //       "play",
-//       princeJohnGreediestOfAll.id,
+//       PrinceJohnGreediestOfAll.id,
 //       "player_two",
 //     );
 //
-//     cardUnderTest.playFromHand();
-//     testStore.changePlayer().resolveTopOfStack({ targets: [target] });
+//     CardUnderTest.playFromHand();
+//     TestStore.changePlayer().resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.zone).toBe("discard");
+//     Expect(target.zone).toBe("discard");
 //   });
 // });
 //

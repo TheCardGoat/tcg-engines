@@ -11,18 +11,16 @@ import { Effects } from "../helpers";
 describe("Effect: Return to Hand", () => {
   describe("return unit", () => {
     it.skip("should parse 'Return a unit at a battlefield to its owner's hand.'", () => {
-      const result = parseAbilities(
-        "Return a unit at a battlefield to its owner's hand.",
-      );
+      const result = parseAbilities("Return a unit at a battlefield to its owner's hand.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "spell",
           effect: expect.objectContaining({
             type: "return-to-hand",
           }),
+          type: "spell",
         }),
       );
     });
@@ -46,9 +44,7 @@ describe("Effect: Return to Hand", () => {
 
   describe("return from trash", () => {
     it.skip("should parse 'Return a unit from your trash to your hand.'", () => {
-      const result = parseAbilities(
-        "Return a unit from your trash to your hand.",
-      );
+      const result = parseAbilities("Return a unit from your trash to your hand.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);

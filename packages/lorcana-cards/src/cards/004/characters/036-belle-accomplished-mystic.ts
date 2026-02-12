@@ -1,51 +1,51 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import {
-//   moveDamageAbility,
-//   shiftAbility,
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import {
+//   MoveDamageAbility,
+//   ShiftAbility,
 // } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import {
-//   chosenCharacter,
-//   chosenOpposingCharacter,
+// Import {
+//   ChosenCharacter,
+//   ChosenOpposingCharacter,
 // } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { whenYouPlayThis } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import { whenYouPlayThis } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 //
-// export const belleAccomplishedMystic: LorcanitoCharacterCard = {
-//   id: "j8p",
-//   reprints: ["cqp"],
-//   missingTestCase: true,
-//   name: "Belle",
-//   title: "Accomplished Mystic",
-//   characteristics: ["hero", "floodborn", "sorcerer", "princess"],
-//   text: "**Shift** 3\n\n\n**ENHANCED HEALING** When you play this character, move up to 3 damage counters from chosen character to chosen opposing character.",
-//   type: "character",
-//   abilities: [
-//     shiftAbility(3, "belle"),
-//     whenYouPlayThis({
-//       name: "ENHANCED HEALING",
-//       text: "When you play this character, move up to 3 damage counters from chosen character to chosen opposing character.",
-//       optional: true,
+// Export const belleAccomplishedMystic: LorcanitoCharacterCard = {
+//   Id: "j8p",
+//   Reprints: ["cqp"],
+//   MissingTestCase: true,
+//   Name: "Belle",
+//   Title: "Accomplished Mystic",
+//   Characteristics: ["hero", "floodborn", "sorcerer", "princess"],
+//   Text: "**Shift** 3\n\n\n**ENHANCED HEALING** When you play this character, move up to 3 damage counters from chosen character to chosen opposing character.",
+//   Type: "character",
+//   Abilities: [
+//     ShiftAbility(3, "belle"),
+//     WhenYouPlayThis({
+//       Name: "ENHANCED HEALING",
+//       Text: "When you play this character, move up to 3 damage counters from chosen character to chosen opposing character.",
+//       Optional: true,
 //       ...moveDamageAbility({
-//         amount: 3,
-//         upTo: true,
-//         from: chosenCharacter,
-//         to: chosenOpposingCharacter,
+//         Amount: 3,
+//         UpTo: true,
+//         From: chosenCharacter,
+//         To: chosenOpposingCharacter,
 //       }),
 //     }),
 //   ],
-//   flavour: "The mixed ink had changed more than just the rose.",
-//   inkwell: true,
-//   colors: ["amethyst"],
-//   cost: 5,
-//   strength: 4,
-//   willpower: 4,
-//   lore: 2,
-//   illustrator: "Malia Ewart",
-//   number: 36,
-//   set: "URR",
-//   externalIds: {
-//     tcgPlayer: 549294,
+//   Flavour: "The mixed ink had changed more than just the rose.",
+//   Inkwell: true,
+//   Colors: ["amethyst"],
+//   Cost: 5,
+//   Strength: 4,
+//   Willpower: 4,
+//   Lore: 2,
+//   Illustrator: "Malia Ewart",
+//   Number: 36,
+//   Set: "URR",
+//   ExternalIds: {
+//     TcgPlayer: 549294,
 //   },
-//   rarity: "super_rare",
+//   Rarity: "super_rare",
 // };
 //

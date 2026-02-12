@@ -3,21 +3,21 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { peterPanPiratesBane } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { peterPanPiratesBane } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Peter Pan - Pirate’s Bane", () => {
-//   it.skip("**Shift** 4 _(You may pay 4 ink to play this on top of one of your characters named Peter Pan.)_**Evasive** _(Only characters with Evasive can challenge this character.)_**YOU’RE NEXT!** Whenever he challenges a Pirate character, this character takes no damage from the challenge.", () => {
-//     const testStore = new TestStore({
-//       play: [peterPanPiratesBane],
+// Describe("Peter Pan - Pirate’s Bane", () => {
+//   It.skip("**Shift** 4 _(You may pay 4 ink to play this on top of one of your characters named Peter Pan.)_**Evasive** _(Only characters with Evasive can challenge this character.)_**YOU’RE NEXT!** Whenever he challenges a Pirate character, this character takes no damage from the challenge.", () => {
+//     Const testStore = new TestStore({
+//       Play: [peterPanPiratesBane],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       peterPanPiratesBane.id,
+//       PeterPanPiratesBane.id,
 //     );
-//     expect(cardUnderTest.hasShift).toBe(true);
+//     Expect(cardUnderTest.hasShift).toBe(true);
 //   });
 // });
 //

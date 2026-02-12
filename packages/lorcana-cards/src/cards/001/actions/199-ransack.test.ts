@@ -5,9 +5,9 @@ import { ransack } from "./199-ransack";
 describe("ransack - undefined", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [ransack] });
-  //   expect(testEngine.getCardModel(ransack).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [ransack] });
+  //   Expect(testEngine.getCardModel(ransack).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,80 +17,80 @@ describe("ransack - undefined", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   ransack,
-//   youHaveForgottenMe,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   Ransack,
+//   YouHaveForgottenMe,
 // } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
-// import {
-//   aladdinHeroicOutlaw,
-//   magicBroomBucketBrigade,
+// Import {
+//   AladdinHeroicOutlaw,
+//   MagicBroomBucketBrigade,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Ransack", () => {
-//   it("draw 2 cards and discard 2 cards", () => {
-//     const testStore = new TestStore({
-//       inkwell: ransack.cost,
-//       deck: [magicBroomBucketBrigade, youHaveForgottenMe],
-//       hand: [ransack, aladdinHeroicOutlaw],
+// Describe("Ransack", () => {
+//   It("draw 2 cards and discard 2 cards", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: ransack.cost,
+//       Deck: [magicBroomBucketBrigade, youHaveForgottenMe],
+//       Hand: [ransack, aladdinHeroicOutlaw],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", ransack.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", ransack.id);
 //
-//     const aCardToDiscard = testStore.getByZoneAndId(
+//     Const aCardToDiscard = testStore.getByZoneAndId(
 //       "hand",
-//       aladdinHeroicOutlaw.id,
+//       AladdinHeroicOutlaw.id,
 //     );
 //     // This card will be drawn, then discarded.
-//     const anotherCardToDiscard = testStore.getByZoneAndId(
+//     Const anotherCardToDiscard = testStore.getByZoneAndId(
 //       "deck",
-//       youHaveForgottenMe.id,
+//       YouHaveForgottenMe.id,
 //     );
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveTopOfStack({
-//       targets: [aCardToDiscard, anotherCardToDiscard],
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveTopOfStack({
+//       Targets: [aCardToDiscard, anotherCardToDiscard],
 //     });
 //
-//     expect(testStore.getZonesCardCount()).toEqual(
-//       expect.objectContaining({ hand: 1, deck: 0, play: 0, discard: 2 + 1 }),
+//     Expect(testStore.getZonesCardCount()).toEqual(
+//       Expect.objectContaining({ hand: 1, deck: 0, play: 0, discard: 2 + 1 }),
 //     );
 //   });
 //
-//   it("you should draw before discarding", () => {
-//     const testStore = new TestStore({
-//       inkwell: ransack.cost,
-//       deck: [magicBroomBucketBrigade, youHaveForgottenMe],
-//       hand: [ransack, aladdinHeroicOutlaw],
+//   It("you should draw before discarding", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: ransack.cost,
+//       Deck: [magicBroomBucketBrigade, youHaveForgottenMe],
+//       Hand: [ransack, aladdinHeroicOutlaw],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", ransack.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", ransack.id);
 //
-//     const aCardToDiscard = testStore.getByZoneAndId(
+//     Const aCardToDiscard = testStore.getByZoneAndId(
 //       "hand",
-//       aladdinHeroicOutlaw.id,
+//       AladdinHeroicOutlaw.id,
 //     );
 //
-//     const anotherCardToDiscard = testStore.getByZoneAndId(
+//     Const anotherCardToDiscard = testStore.getByZoneAndId(
 //       "deck",
-//       youHaveForgottenMe.id,
+//       YouHaveForgottenMe.id,
 //     );
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     expect(testStore.store.stackLayerStore.layers).toHaveLength(1);
+//     Expect(testStore.store.stackLayerStore.layers).toHaveLength(1);
 //
-//     expect(testStore.getZonesCardCount()).toEqual(
-//       expect.objectContaining({ hand: 3, deck: 0, discard: 1 }),
+//     Expect(testStore.getZonesCardCount()).toEqual(
+//       Expect.objectContaining({ hand: 3, deck: 0, discard: 1 }),
 //     );
-//     testStore.resolveTopOfStack({
-//       targets: [aCardToDiscard, anotherCardToDiscard],
+//     TestStore.resolveTopOfStack({
+//       Targets: [aCardToDiscard, anotherCardToDiscard],
 //     });
-//     expect(testStore.getZonesCardCount()).toEqual(
-//       expect.objectContaining({ hand: 1, deck: 0, discard: 3 }),
+//     Expect(testStore.getZonesCardCount()).toEqual(
+//       Expect.objectContaining({ hand: 1, deck: 0, discard: 3 }),
 //     );
-//     expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
+//     Expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
 //   });
 // });
 //

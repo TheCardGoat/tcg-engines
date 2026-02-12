@@ -1,24 +1,24 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
 //
-// export const deweyLovableShowoff: LorcanitoCharacterCard = {
-//   id: "h8j",
-//   name: "Dewey",
-//   title: "Lovable Showoff",
-//   characteristics: ["storyborn", "ally"],
-//   type: "character",
-//   inkwell: true,
-//   colors: ["amber"],
-//   cost: 4,
-//   strength: 4,
-//   willpower: 4,
-//   illustrator: "Federico Maria Cugliari",
-//   number: 2,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 633428,
+// Export const deweyLovableShowoff: LorcanitoCharacterCard = {
+//   Id: "h8j",
+//   Name: "Dewey",
+//   Title: "Lovable Showoff",
+//   Characteristics: ["storyborn", "ally"],
+//   Type: "character",
+//   Inkwell: true,
+//   Colors: ["amber"],
+//   Cost: 4,
+//   Strength: 4,
+//   Willpower: 4,
+//   Illustrator: "Federico Maria Cugliari",
+//   Number: 2,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 633428,
 //   },
-//   rarity: "super_rare",
-//   lore: 1,
+//   Rarity: "super_rare",
+//   Lore: 1,
 // };
 //

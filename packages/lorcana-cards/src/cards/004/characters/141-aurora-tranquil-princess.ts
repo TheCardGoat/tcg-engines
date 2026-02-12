@@ -1,29 +1,29 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { wardAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { wardAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
 //
-// export const auroraTranquilPrincess: LorcanitoCharacterCard = {
-//   id: "pdt",
-//   reprints: ["u0u"],
-//   name: "Aurora",
-//   title: "Tranquil Princess",
-//   characteristics: ["hero", "dreamborn", "princess"],
-//   text: "**Ward** _(Opponents can't choose this character except to challenge.)_",
-//   type: "character",
-//   abilities: [wardAbility],
-//   flavour: "Her music fills the Illuminary's gardens with joy and light.",
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 2,
-//   strength: 1,
-//   willpower: 3,
-//   lore: 1,
-//   illustrator: "Koni",
-//   number: 141,
-//   set: "URR",
-//   externalIds: {
-//     tcgPlayer: 550524,
+// Export const auroraTranquilPrincess: LorcanitoCharacterCard = {
+//   Id: "pdt",
+//   Reprints: ["u0u"],
+//   Name: "Aurora",
+//   Title: "Tranquil Princess",
+//   Characteristics: ["hero", "dreamborn", "princess"],
+//   Text: "**Ward** _(Opponents can't choose this character except to challenge.)_",
+//   Type: "character",
+//   Abilities: [wardAbility],
+//   Flavour: "Her music fills the Illuminary's gardens with joy and light.",
+//   Inkwell: true,
+//   Colors: ["sapphire"],
+//   Cost: 2,
+//   Strength: 1,
+//   Willpower: 3,
+//   Lore: 1,
+//   Illustrator: "Koni",
+//   Number: 141,
+//   Set: "URR",
+//   ExternalIds: {
+//     TcgPlayer: 550524,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

@@ -1,53 +1,53 @@
 import type { ItemCard } from "@tcg/lorcana-types";
 
 export const whiteRabbitundefined: ItemCard = {
-  id: "u45",
-  cardType: "item",
-  name: "White Rabbit",
-  version: "undefined",
-  fullName: "White Rabbit - undefined",
-  inkType: ["amethyst"],
-  franchise: "Disney",
-  set: "001",
-  text: "**I",
-  cost: 3,
+  abilities: [],
   cardNumber: 68,
-  inkable: true,
+  cardType: "item",
+  cost: 3,
   externalIds: {
     ravensburger: "",
   },
-  abilities: [],
+  franchise: "Disney",
+  fullName: "White Rabbit - undefined",
+  id: "u45",
+  inkType: ["amethyst"],
+  inkable: true,
+  name: "White Rabbit",
+  set: "001",
+  text: "**I",
+  version: "undefined",
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { ActivatedAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-// import type { AbilityEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+// Import type { ActivatedAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { AbilityEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
 //
-// export const whiteRabbitPocketWatch: LorcanitoItemCard = {
-//   characteristics: ["item"],
-//   id: "u45",
-//   reprints: ["u14"],
+// Export const whiteRabbitPocketWatch: LorcanitoItemCard = {
+//   Characteristics: ["item"],
+//   Id: "u45",
+//   Reprints: ["u14"],
 //
-//   name: "White Rabbit's Pocket Watch",
-//   text: "**I'm late!** {E}, 1 {I} - Chosen character gains **Rush** this turn. _(They can challenge the turn they're played.)_",
-//   type: "item",
-//   abilities: [
+//   Name: "White Rabbit's Pocket Watch",
+//   Text: "**I'm late!** {E}, 1 {I} - Chosen character gains **Rush** this turn. _(They can challenge the turn they're played.)_",
+//   Type: "item",
+//   Abilities: [
 //     {
-//       type: "activated",
-//       name: "I'm late!",
-//       text: "Chosen character gains **Rush** this turn. _(They can challenge the turn they're played.)_",
-//       costs: [{ type: "exert" }, { type: "ink", amount: 1 }],
-//       effects: [
+//       Type: "activated",
+//       Name: "I'm late!",
+//       Text: "Chosen character gains **Rush** this turn. _(They can challenge the turn they're played.)_",
+//       Costs: [{ type: "exert" }, { type: "ink", amount: 1 }],
+//       Effects: [
 //         {
-//           type: "ability",
-//           ability: "rush",
-//           modifier: "add",
-//           duration: "turn",
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
+//           Type: "ability",
+//           Ability: "rush",
+//           Modifier: "add",
+//           Duration: "turn",
+//           Target: {
+//             Type: "card",
+//             Value: 1,
+//             Filters: [
 //               { filter: "zone", value: "play" },
 //               { filter: "type", value: "character" },
 //             ],
@@ -56,17 +56,17 @@ export const whiteRabbitundefined: ItemCard = {
 //       ],
 //     } as ActivatedAbility,
 //   ],
-//   flavour:
+//   Flavour:
 //     '"No wonder you\'re late. Why, this clock is exactly two days slow." −The Mad Hatter',
-//   inkwell: true,
-//   colors: ["amethyst"],
-//   cost: 3,
-//   illustrator: "Kamil Murzyn",
-//   number: 68,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 492712,
+//   Inkwell: true,
+//   Colors: ["amethyst"],
+//   Cost: 3,
+//   Illustrator: "Kamil Murzyn",
+//   Number: 68,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 492712,
 //   },
-//   rarity: "rare",
+//   Rarity: "rare",
 // };
 //

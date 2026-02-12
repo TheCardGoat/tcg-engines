@@ -3,62 +3,62 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { liloGalacticHero } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import {
-//   buckySquirrelSqueakTutor,
-//   cheshireCatAlwaysGrinning,
-//   cheshireCatFromTheShadows,
-//   herculesDivineHero,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { liloGalacticHero } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import {
+//   BuckySquirrelSqueakTutor,
+//   CheshireCatAlwaysGrinning,
+//   CheshireCatFromTheShadows,
+//   HerculesDivineHero,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Bucky - Squirrel Squeak Tutor", () => {
-//   describe("**SQUEAK** Whenever you play a Floodborn character, if you used Shift to play them, each opponent chooses and discards a card.", () => {
-//     it("Playing a Floodborn character without Shift", () => {
-//       const testStore = new TestStore(
+// Describe("Bucky - Squirrel Squeak Tutor", () => {
+//   Describe("**SQUEAK** Whenever you play a Floodborn character, if you used Shift to play them, each opponent chooses and discards a card.", () => {
+//     It("Playing a Floodborn character without Shift", () => {
+//       Const testStore = new TestStore(
 //         {
-//           inkwell: herculesDivineHero.cost,
-//           hand: [herculesDivineHero],
-//           play: [buckySquirrelSqueakTutor],
+//           Inkwell: herculesDivineHero.cost,
+//           Hand: [herculesDivineHero],
+//           Play: [buckySquirrelSqueakTutor],
 //         },
 //         {
-//           hand: [liloGalacticHero],
+//           Hand: [liloGalacticHero],
 //         },
 //       );
 //
-//       const floodbornChar = testStore.getByZoneAndId(
+//       Const floodbornChar = testStore.getByZoneAndId(
 //         "hand",
-//         herculesDivineHero.id,
+//         HerculesDivineHero.id,
 //       );
 //
-//       floodbornChar.playFromHand();
-//       expect(testStore.stackLayers).toHaveLength(0);
+//       FloodbornChar.playFromHand();
+//       Expect(testStore.stackLayers).toHaveLength(0);
 //     });
 //
-//     it("Playing a Floodborn character with Shift", () => {
-//       const testStore = new TestStore(
+//     It("Playing a Floodborn character with Shift", () => {
+//       Const testStore = new TestStore(
 //         {
-//           inkwell: cheshireCatFromTheShadows.cost,
-//           hand: [cheshireCatFromTheShadows],
-//           play: [buckySquirrelSqueakTutor, cheshireCatAlwaysGrinning],
+//           Inkwell: cheshireCatFromTheShadows.cost,
+//           Hand: [cheshireCatFromTheShadows],
+//           Play: [buckySquirrelSqueakTutor, cheshireCatAlwaysGrinning],
 //         },
 //         {
-//           hand: [liloGalacticHero],
+//           Hand: [liloGalacticHero],
 //         },
 //       );
 //
-//       const floodbornChar = testStore.getCard(cheshireCatFromTheShadows);
-//       const shiftedChar = testStore.getCard(cheshireCatAlwaysGrinning);
-//       const shifterChar = testStore.getCard(cheshireCatFromTheShadows);
-//       const target = testStore.getCard(liloGalacticHero);
+//       Const floodbornChar = testStore.getCard(cheshireCatFromTheShadows);
+//       Const shiftedChar = testStore.getCard(cheshireCatAlwaysGrinning);
+//       Const shifterChar = testStore.getCard(cheshireCatFromTheShadows);
+//       Const target = testStore.getCard(liloGalacticHero);
 //
-//       shifterChar.shift(shiftedChar);
+//       ShifterChar.shift(shiftedChar);
 //
-//       expect(testStore.stackLayers).toHaveLength(1);
-//       testStore.changePlayer().resolveTopOfStack({ targets: [target] });
+//       Expect(testStore.stackLayers).toHaveLength(1);
+//       TestStore.changePlayer().resolveTopOfStack({ targets: [target] });
 //
-//       expect(target.zone).toEqual("discard");
+//       Expect(target.zone).toEqual("discard");
 //     });
 //   });
 // });

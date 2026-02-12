@@ -92,9 +92,7 @@ describe("Keyword: Equip", () => {
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
-        expect.objectContaining(
-          Abilities.equip(Costs.energyAndPower(1, "body")),
-        ),
+        expect.objectContaining(Abilities.equip(Costs.energyAndPower(1, "body"))),
       );
     });
 
@@ -106,9 +104,7 @@ describe("Keyword: Equip", () => {
       expect(result.success).toBe(true);
       expect(result.abilities?.length).toBeGreaterThanOrEqual(2);
       expect(result.abilities?.[0]).toEqual(
-        expect.objectContaining(
-          Abilities.equip(Costs.energyAndPower(1, "calm")),
-        ),
+        expect.objectContaining(Abilities.equip(Costs.energyAndPower(1, "calm"))),
       );
     });
 
@@ -120,9 +116,7 @@ describe("Keyword: Equip", () => {
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
-        expect.objectContaining(
-          Abilities.equip(Costs.energyAndPower(1, "fury")),
-        ),
+        expect.objectContaining(Abilities.equip(Costs.energyAndPower(1, "fury"))),
       );
     });
 
@@ -146,12 +140,12 @@ describe("Keyword: Equip", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "keyword",
-          keyword: "Equip",
           cost: expect.objectContaining({
             power: expect.arrayContaining(["chaos"]),
             recycle: 2,
           }),
+          keyword: "Equip",
+          type: "keyword",
         }),
       );
     });
@@ -165,8 +159,8 @@ describe("Keyword: Equip", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "keyword",
           keyword: "Equip",
+          type: "keyword",
         }),
       );
     });
@@ -180,9 +174,7 @@ describe("Keyword: Equip", () => {
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(3);
-      expect(result.abilities?.[0]).toEqual(
-        expect.objectContaining(Abilities.hidden()),
-      );
+      expect(result.abilities?.[0]).toEqual(expect.objectContaining(Abilities.hidden()));
       expect(result.abilities?.[2]).toEqual(
         expect.objectContaining(Abilities.equip(Costs.power("chaos"))),
       );
@@ -197,9 +189,7 @@ describe("Keyword: Equip", () => {
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(2);
-      expect(result.abilities?.[0]).toEqual(
-        expect.objectContaining(Abilities.quickDraw()),
-      );
+      expect(result.abilities?.[0]).toEqual(expect.objectContaining(Abilities.quickDraw()));
       expect(result.abilities?.[1]).toEqual(
         expect.objectContaining(Abilities.equip(Costs.power("calm"))),
       );
@@ -214,9 +204,7 @@ describe("Keyword: Equip", () => {
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(2);
-      expect(result.abilities?.[0]).toEqual(
-        expect.objectContaining(Abilities.unique()),
-      );
+      expect(result.abilities?.[0]).toEqual(expect.objectContaining(Abilities.unique()));
       expect(result.abilities?.[1]).toEqual(
         expect.objectContaining(Abilities.equip(Costs.power("rainbow"))),
       );

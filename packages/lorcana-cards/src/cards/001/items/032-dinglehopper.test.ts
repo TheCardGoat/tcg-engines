@@ -3,70 +3,70 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { magicBroomBucketBrigade } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { dingleHopper } from "@lorcanito/lorcana-engine/cards/001/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { magicBroomBucketBrigade } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { dingleHopper } from "@lorcanito/lorcana-engine/cards/001/items/items";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Dinglehopper", () => {
-//   it("STRAIGHTEN HAIR - healing 1 damage", () => {
-//     const testStore = new TestStore({
-//       play: [dingleHopper, magicBroomBucketBrigade],
+// Describe("Dinglehopper", () => {
+//   It("STRAIGHTEN HAIR - healing 1 damage", () => {
+//     Const testStore = new TestStore({
+//       Play: [dingleHopper, magicBroomBucketBrigade],
 //     });
 //
-//     const damagedChar = testStore.getByZoneAndId(
+//     Const damagedChar = testStore.getByZoneAndId(
 //       "play",
-//       magicBroomBucketBrigade.id,
+//       MagicBroomBucketBrigade.id,
 //     );
-//     damagedChar.updateCardMeta({ damage: 1 });
-//     expect(
-//       testStore.getByZoneAndId("play", magicBroomBucketBrigade.id).meta,
+//     DamagedChar.updateCardMeta({ damage: 1 });
+//     Expect(
+//       TestStore.getByZoneAndId("play", magicBroomBucketBrigade.id).meta,
 //     ).toEqual(expect.objectContaining({ damage: 1 }));
 //
-//     const cardUnderTest = testStore.getByZoneAndId("play", dingleHopper.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("play", dingleHopper.id);
 //
-//     expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
-//     cardUnderTest.activate();
-//     expect(testStore.store.stackLayerStore.layers).toHaveLength(1);
+//     Expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
+//     CardUnderTest.activate();
+//     Expect(testStore.store.stackLayerStore.layers).toHaveLength(1);
 //
-//     const effect = testStore.store.stackLayerStore.layers[0];
-//     if (effect) {
-//       testStore.resolveTopOfStack({
-//         targets: [damagedChar],
+//     Const effect = testStore.store.stackLayerStore.layers[0];
+//     If (effect) {
+//       TestStore.resolveTopOfStack({
+//         Targets: [damagedChar],
 //       });
 //     }
 //
-//     expect(
-//       testStore.getByZoneAndId("play", magicBroomBucketBrigade.id).meta,
+//     Expect(
+//       TestStore.getByZoneAndId("play", magicBroomBucketBrigade.id).meta,
 //     ).toEqual(expect.objectContaining({ damage: 0 }));
-//     expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
+//     Expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
 //   });
 //
-//   it("STRAIGHTEN HAIR - healing 0 damage", () => {
-//     const testStore = new TestStore({
-//       play: [dingleHopper, magicBroomBucketBrigade],
+//   It("STRAIGHTEN HAIR - healing 0 damage", () => {
+//     Const testStore = new TestStore({
+//       Play: [dingleHopper, magicBroomBucketBrigade],
 //     });
 //
-//     const damagedChar = testStore.getByZoneAndId(
+//     Const damagedChar = testStore.getByZoneAndId(
 //       "play",
-//       magicBroomBucketBrigade.id,
+//       MagicBroomBucketBrigade.id,
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId("play", dingleHopper.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("play", dingleHopper.id);
 //
-//     cardUnderTest.activate();
+//     CardUnderTest.activate();
 //
-//     const effect = testStore.store.stackLayerStore.layers[0];
-//     if (effect) {
-//       testStore.resolveTopOfStack({
-//         targets: [damagedChar],
+//     Const effect = testStore.store.stackLayerStore.layers[0];
+//     If (effect) {
+//       TestStore.resolveTopOfStack({
+//         Targets: [damagedChar],
 //       });
 //     }
 //
-//     expect(
-//       testStore.getByZoneAndId("play", magicBroomBucketBrigade.id).meta.damage,
+//     Expect(
+//       TestStore.getByZoneAndId("play", magicBroomBucketBrigade.id).meta.damage,
 //     ).toBeFalsy();
-//     expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
+//     Expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
 //   });
 // });
 //

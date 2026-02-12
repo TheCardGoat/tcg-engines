@@ -51,13 +51,13 @@ export const COST_SEPARATOR_PATTERN = /\s*[-−–—:]\s+/;
  * Combined cost patterns export
  */
 export const COST_PATTERNS = {
-  exert: EXERT_PATTERN,
-  ink: INK_PATTERN,
-  exertAndInk: EXERT_AND_INK_PATTERN,
-  exertAndBanish: EXERT_AND_BANISH_PATTERN,
   banishSelf: BANISH_SELF_PATTERN,
-  discard: DISCARD_PATTERN,
   costSeparator: COST_SEPARATOR_PATTERN,
+  discard: DISCARD_PATTERN,
+  exert: EXERT_PATTERN,
+  exertAndBanish: EXERT_AND_BANISH_PATTERN,
+  exertAndInk: EXERT_AND_INK_PATTERN,
+  ink: INK_PATTERN,
 } as const;
 
 /**
@@ -65,10 +65,10 @@ export const COST_PATTERNS = {
  */
 export function hasActivatedAbilityCost(text: string): boolean {
   // Must start with a cost pattern and contain separator
-  const hasExert = /^\{E\}/.test(text);
+  const hasExert = text.startsWith('{E}');
   const hasInk = /^(\{d\}|\d+) \{I\}/.test(text);
-  const hasBanish = /^Banish this/.test(text);
-  const hasDiscard = /^Choose and discard/.test(text);
+  const hasBanish = text.startsWith('Banish this');
+  const hasDiscard = text.startsWith('Choose and discard');
 
   const hasSeparator = COST_SEPARATOR_PATTERN.test(text);
 

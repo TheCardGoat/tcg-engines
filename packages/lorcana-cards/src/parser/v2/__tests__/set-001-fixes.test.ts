@@ -129,7 +129,7 @@ describe("Set 001 Parsing Fixes", () => {
       const effect = parseEffect("banish the challenging character");
       expect(effect).toBeDefined();
       expect(effect?.type).toBe("banish");
-      // expect((effect as any).target).toBe("THE_CHALLENGING_CHARACTER");
+      // Expect((effect as any).target).toBe("THE_CHALLENGING_CHARACTER");
     });
 
     // Mickey Mouse - Steamboat Pilot

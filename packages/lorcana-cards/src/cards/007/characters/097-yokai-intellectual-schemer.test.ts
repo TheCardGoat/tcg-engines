@@ -3,74 +3,74 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   theQueenCommandingPresence,
-//   theQueenRegalMonarch,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   TheQueenCommandingPresence,
+//   TheQueenRegalMonarch,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { yokaiScientificSupervillain } from "@lorcanito/lorcana-engine/cards/006";
-// import { yokaiIntellectualSchemer } from "@lorcanito/lorcana-engine/cards/007/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { yokaiScientificSupervillain } from "@lorcanito/lorcana-engine/cards/006";
+// Import { yokaiIntellectualSchemer } from "@lorcanito/lorcana-engine/cards/007/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("INNOVATE You pay 1{I} less to play characters using their Shift ability.", () => {
-//   it("should reduce shift cost", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: 10,
-//       play: [yokaiIntellectualSchemer],
-//       hand: [yokaiScientificSupervillain],
+// Describe("INNOVATE You pay 1{I} less to play characters using their Shift ability.", () => {
+//   It("should reduce shift cost", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: 10,
+//       Play: [yokaiIntellectualSchemer],
+//       Hand: [yokaiScientificSupervillain],
 //     });
 //
-//     const { shifter } = await testEngine.shiftCard({
-//       shifted: yokaiIntellectualSchemer,
-//       shifter: yokaiScientificSupervillain,
+//     Const { shifter } = await testEngine.shiftCard({
+//       Shifted: yokaiIntellectualSchemer,
+//       Shifter: yokaiScientificSupervillain,
 //     });
 //
-//     expect(shifter.zone).toEqual("play");
-//     expect(
-//       testEngine.store.continuousEffectStore.continuousEffects,
+//     Expect(shifter.zone).toEqual("play");
+//     Expect(
+//       TestEngine.store.continuousEffectStore.continuousEffects,
 //     ).toHaveLength(0);
 //
-//     expect(testEngine.getAvailableInkwellCardCount("player_one")).toBe(5);
+//     Expect(testEngine.getAvailableInkwellCardCount("player_one")).toBe(5);
 //   });
 //
-//   it("should not reduce cost", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: 10,
-//       play: [yokaiIntellectualSchemer],
-//       hand: [yokaiScientificSupervillain],
+//   It("should not reduce cost", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: 10,
+//       Play: [yokaiIntellectualSchemer],
+//       Hand: [yokaiScientificSupervillain],
 //     });
 //
-//     await testEngine.playCard(yokaiScientificSupervillain);
+//     Await testEngine.playCard(yokaiScientificSupervillain);
 //
-//     expect(testEngine.getAvailableInkwellCardCount("player_one")).toBe(1);
+//     Expect(testEngine.getAvailableInkwellCardCount("player_one")).toBe(1);
 //   });
 //
-//   it("should not reduce shift cost for opponent", async () => {
-//     const testEngine = new TestEngine(
+//   It("should not reduce shift cost for opponent", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         play: [yokaiIntellectualSchemer],
+//         Play: [yokaiIntellectualSchemer],
 //       },
 //       {
-//         inkwell: 1,
-//         play: [theQueenRegalMonarch],
-//         hand: [theQueenCommandingPresence],
-//         deck: 2,
+//         Inkwell: 1,
+//         Play: [theQueenRegalMonarch],
+//         Hand: [theQueenCommandingPresence],
+//         Deck: 2,
 //       },
 //     );
 //
-//     await testEngine.passTurn();
+//     Await testEngine.passTurn();
 //
-//     const { shifter } = await testEngine.shiftCard({
-//       shifted: theQueenRegalMonarch,
-//       shifter: theQueenCommandingPresence,
+//     Const { shifter } = await testEngine.shiftCard({
+//       Shifted: theQueenRegalMonarch,
+//       Shifter: theQueenCommandingPresence,
 //     });
 //
-//     expect(shifter.zone).toEqual("hand");
-//     expect(
-//       testEngine.store.continuousEffectStore.continuousEffects,
+//     Expect(shifter.zone).toEqual("hand");
+//     Expect(
+//       TestEngine.store.continuousEffectStore.continuousEffects,
 //     ).toHaveLength(0);
 //
-//     expect(testEngine.getAvailableInkwellCardCount("player_two")).toBe(1);
+//     Expect(testEngine.getAvailableInkwellCardCount("player_two")).toBe(1);
 //   });
 // });
 //

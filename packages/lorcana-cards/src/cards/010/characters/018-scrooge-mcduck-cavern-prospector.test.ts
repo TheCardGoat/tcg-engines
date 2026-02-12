@@ -3,42 +3,42 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/180-goofy-knight-for-a-day";
-// import {
-//   gastonFrightfulBully,
-//   scroogeMcduckCavernProspector,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/180-goofy-knight-for-a-day";
+// Import {
+//   GastonFrightfulBully,
+//   ScroogeMcduckCavernProspector,
 // } from "@lorcanito/lorcana-engine/cards/010";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Scrooge McDuck - Cavern Prospector", () => {
-//   it("Has Shift 4 ability", async () => {
-//     const testEngine = new TestEngine({
-//       play: [scroogeMcduckCavernProspector],
+// Describe("Scrooge McDuck - Cavern Prospector", () => {
+//   It("Has Shift 4 ability", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [scroogeMcduckCavernProspector],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(
-//       scroogeMcduckCavernProspector,
+//     Const cardUnderTest = testEngine.getCardModel(
+//       ScroogeMcduckCavernProspector,
 //     );
-//     expect(cardUnderTest.hasShift).toBe(true);
+//     Expect(cardUnderTest.hasShift).toBe(true);
 //   });
 //
-//   it("SPECULATION Whenever you play a character or location with Boost, you may put the top card of your deck facedown under them.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: gastonFrightfulBully.cost,
-//       hand: [gastonFrightfulBully],
-//       play: [scroogeMcduckCavernProspector],
-//       deck: [goofyKnightForADay],
+//   It("SPECULATION Whenever you play a character or location with Boost, you may put the top card of your deck facedown under them.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: gastonFrightfulBully.cost,
+//       Hand: [gastonFrightfulBully],
+//       Play: [scroogeMcduckCavernProspector],
+//       Deck: [goofyKnightForADay],
 //     });
 //
-//     const topCard = testEngine.getCardModel(goofyKnightForADay);
-//     const targetCard = testEngine.getCardModel(gastonFrightfulBully);
+//     Const topCard = testEngine.getCardModel(goofyKnightForADay);
+//     Const targetCard = testEngine.getCardModel(gastonFrightfulBully);
 //
-//     await testEngine.playCard(gastonFrightfulBully);
-//     await testEngine.acceptOptionalLayer();
+//     Await testEngine.playCard(gastonFrightfulBully);
+//     Await testEngine.acceptOptionalLayer();
 //
-//     expect(targetCard.cardsUnder).toHaveLength(1);
-//     expect(topCard.isUnder(targetCard)).toBe(true);
+//     Expect(targetCard.cardsUnder).toHaveLength(1);
+//     Expect(topCard.isUnder(targetCard)).toBe(true);
 //   });
 // });
 //

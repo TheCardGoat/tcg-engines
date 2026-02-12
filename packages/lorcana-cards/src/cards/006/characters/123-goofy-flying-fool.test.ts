@@ -3,27 +3,27 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { goofyFlyingFool } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { goofyFlyingFool } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Goofy - Flying Fool", () => {
-//   it.skip("Rush (This character can challenge the turn they're played.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [goofyFlyingFool],
+// Describe("Goofy - Flying Fool", () => {
+//   It.skip("Rush (This character can challenge the turn they're played.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [goofyFlyingFool],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(goofyFlyingFool);
-//     expect(cardUnderTest.hasRush).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(goofyFlyingFool);
+//     Expect(cardUnderTest.hasRush).toBe(true);
 //   });
 //
-//   it.skip("Evasive (Only characters with Evasive can challenge this character.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [goofyFlyingFool],
+//   It.skip("Evasive (Only characters with Evasive can challenge this character.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [goofyFlyingFool],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(goofyFlyingFool);
-//     expect(cardUnderTest.hasEvasive).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(goofyFlyingFool);
+//     Expect(cardUnderTest.hasEvasive).toBe(true);
 //   });
 // });
 //

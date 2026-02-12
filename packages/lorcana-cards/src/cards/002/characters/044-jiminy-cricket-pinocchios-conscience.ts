@@ -1,34 +1,14 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const jiminyCricketPinocchiosConscience: CharacterCard = {
-  id: "tfc",
-  cardType: "character",
-  name: "Jiminy Cricket",
-  version: "Pinocchio's Conscience",
-  fullName: "Jiminy Cricket - Pinocchio's Conscience",
-  inkType: ["amethyst"],
-  franchise: "Pinocchio",
-  set: "002",
-  text: "Evasive (Only characters with Evasive can challenge this character.)\nTHAT STILL, SMALL VOICE When you play this character, if you have a character named Pinocchio in play, you may draw a card.",
-  cost: 2,
-  strength: 1,
-  willpower: 2,
-  lore: 1,
-  cardNumber: 44,
-  inkable: true,
-  externalIds: {
-    ravensburger: "6a0e1c5bd5e10ee679a0aaa9eb92ba73c5bafe57",
-  },
   abilities: [
     {
       id: "tfc-1",
-      type: "keyword",
       keyword: "Evasive",
       text: "Evasive",
+      type: "keyword",
     },
     {
-      id: "tfc-2",
-      type: "action",
       effect: {
         type: "conditional",
         condition: {
@@ -41,8 +21,28 @@ export const jiminyCricketPinocchiosConscience: CharacterCard = {
           target: "CONTROLLER",
         },
       },
+      id: "tfc-2",
       text: "THAT STILL, SMALL VOICE When you play this character, if you have a character named Pinocchio in play, you may draw a card.",
+      type: "action",
     },
   ],
+  cardNumber: 44,
+  cardType: "character",
   classifications: ["Storyborn", "Mentor"],
+  cost: 2,
+  externalIds: {
+    ravensburger: "6a0e1c5bd5e10ee679a0aaa9eb92ba73c5bafe57",
+  },
+  franchise: "Pinocchio",
+  fullName: "Jiminy Cricket - Pinocchio's Conscience",
+  id: "tfc",
+  inkType: ["amethyst"],
+  inkable: true,
+  lore: 1,
+  name: "Jiminy Cricket",
+  set: "002",
+  strength: 1,
+  text: "Evasive (Only characters with Evasive can challenge this character.)\nTHAT STILL, SMALL VOICE When you play this character, if you have a character named Pinocchio in play, you may draw a card.",
+  version: "Pinocchio's Conscience",
+  willpower: 2,
 };

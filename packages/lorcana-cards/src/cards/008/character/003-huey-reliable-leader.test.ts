@@ -3,52 +3,52 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   dalmatianPuppyTailWagger,
-//   hueyReliableLeader,
-//   perditaOnTheLookout,
-//   tianaNaturalTalent,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   DalmatianPuppyTailWagger,
+//   HueyReliableLeader,
+//   PerditaOnTheLookout,
+//   TianaNaturalTalent,
 // } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Huey - Reliable Leader", () => {
-//   it("I KNOW THE WAY Whenever this character quests, you pay 1 {I} less for the next character you play this turn.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: 3,
-//       play: [hueyReliableLeader],
-//       hand: [tianaNaturalTalent], // Cost 4
+// Describe("Huey - Reliable Leader", () => {
+//   It("I KNOW THE WAY Whenever this character quests, you pay 1 {I} less for the next character you play this turn.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: 3,
+//       Play: [hueyReliableLeader],
+//       Hand: [tianaNaturalTalent], // Cost 4
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(hueyReliableLeader);
+//     Const cardUnderTest = testEngine.getCardModel(hueyReliableLeader);
 //
-//     cardUnderTest.quest();
+//     CardUnderTest.quest();
 //
-//     await testEngine.playCard(tianaNaturalTalent);
+//     Await testEngine.playCard(tianaNaturalTalent);
 //
-//     expect(testEngine.getZonesCardCount().play).toBe(2);
-//     expect(testEngine.store.tableStore.getTable().inkAvailable()).toEqual(0);
+//     Expect(testEngine.getZonesCardCount().play).toBe(2);
+//     Expect(testEngine.store.tableStore.getTable().inkAvailable()).toEqual(0);
 //     // console.log();
 //   });
 //
-//   it("Player1 have hueyReliableLeader in play and 3 ink. He will can play 2 cards with cost 2 ink, only after quest of hueyReliableLeader. First card will be cost 1 ink and for second card pay full cost.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: 3,
-//       play: [hueyReliableLeader],
-//       hand: [dalmatianPuppyTailWagger, perditaOnTheLookout],
+//   It("Player1 have hueyReliableLeader in play and 3 ink. He will can play 2 cards with cost 2 ink, only after quest of hueyReliableLeader. First card will be cost 1 ink and for second card pay full cost.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: 3,
+//       Play: [hueyReliableLeader],
+//       Hand: [dalmatianPuppyTailWagger, perditaOnTheLookout],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(hueyReliableLeader);
+//     Const cardUnderTest = testEngine.getCardModel(hueyReliableLeader);
 //
-//     cardUnderTest.quest();
+//     CardUnderTest.quest();
 //
-//     await testEngine.playCard(dalmatianPuppyTailWagger);
-//     expect(testEngine.store.tableStore.getTable().inkAvailable()).toEqual(2);
+//     Await testEngine.playCard(dalmatianPuppyTailWagger);
+//     Expect(testEngine.store.tableStore.getTable().inkAvailable()).toEqual(2);
 //
-//     await testEngine.playCard(perditaOnTheLookout);
-//     expect(testEngine.store.tableStore.getTable().inkAvailable()).toEqual(0);
+//     Await testEngine.playCard(perditaOnTheLookout);
+//     Expect(testEngine.store.tableStore.getTable().inkAvailable()).toEqual(0);
 //
-//     expect(testEngine.getZonesCardCount().play).toBe(3);
+//     Expect(testEngine.getZonesCardCount().play).toBe(3);
 //   });
 // });
 //

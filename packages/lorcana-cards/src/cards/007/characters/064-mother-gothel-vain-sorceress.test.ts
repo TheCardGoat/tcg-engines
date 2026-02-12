@@ -3,235 +3,235 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   goonsMaleficent,
-//   iagoLoudMouthedParrot,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   GoonsMaleficent,
+//   IagoLoudMouthedParrot,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
-// import { rapunzelGiftedArtist } from "../../002/characters/characters";
-// import { rapunzelsTowerSecludedPrison } from "../../005/locations/locations";
-// import { motherGothelVainSorceress } from "./064-mother-gothel-vain-sorceress";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { rapunzelGiftedArtist } from "../../002/characters/characters";
+// Import { rapunzelsTowerSecludedPrison } from "../../005/locations/locations";
+// Import { motherGothelVainSorceress } from "./064-mother-gothel-vain-sorceress";
 //
-// describe("Mother Gothel - Vain Sorceress", () => {
-//   describe("NOW YOU'VE UPSET ME - When one of your characters challenges, you may move 1 damage counter from chosen character to chosen opposing character.", () => {
-//     it("should move 1 damage counter from chosen character to chosen opposing character when ability is accepted", () => {
-//       const testStore = new TestStore(
+// Describe("Mother Gothel - Vain Sorceress", () => {
+//   Describe("NOW YOU'VE UPSET ME - When one of your characters challenges, you may move 1 damage counter from chosen character to chosen opposing character.", () => {
+//     It("should move 1 damage counter from chosen character to chosen opposing character when ability is accepted", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [motherGothelVainSorceress, rapunzelGiftedArtist],
+//           Play: [motherGothelVainSorceress, rapunzelGiftedArtist],
 //         },
 //         {
-//           play: [goonsMaleficent],
+//           Play: [goonsMaleficent],
 //         },
 //       );
 //
-//       const gothel = testStore.getByZoneAndId(
+//       Const gothel = testStore.getByZoneAndId(
 //         "play",
-//         motherGothelVainSorceress.id,
+//         MotherGothelVainSorceress.id,
 //       );
-//       const target = testStore.getByZoneAndId(
+//       Const target = testStore.getByZoneAndId(
 //         "play",
-//         goonsMaleficent.id,
+//         GoonsMaleficent.id,
 //         "player_two",
 //       );
-//       const rapunzel = testStore.getByZoneAndId(
+//       Const rapunzel = testStore.getByZoneAndId(
 //         "play",
-//         rapunzelGiftedArtist.id,
+//         RapunzelGiftedArtist.id,
 //       );
 //
 //       // Set up initial state
-//       rapunzel.updateCardMeta({ damage: 2 });
-//       target.updateCardMeta({ exerted: true, damage: 0 });
+//       Rapunzel.updateCardMeta({ damage: 2 });
+//       Target.updateCardMeta({ exerted: true, damage: 0 });
 //
 //       // Challenge to trigger the ability
-//       testStore.store.challenge(rapunzel.instanceId, target.instanceId);
+//       TestStore.store.challenge(rapunzel.instanceId, target.instanceId);
 //
 //       // Accept the optional ability
-//       testStore.resolveTopOfStack({}, true);
+//       TestStore.resolveTopOfStack({}, true);
 //
 //       // Choose source character (where to take damage from)
-//       testStore.resolveTopOfStack({ targets: [rapunzel] }, true);
+//       TestStore.resolveTopOfStack({ targets: [rapunzel] }, true);
 //
 //       // Choose target character (where to move damage to)
-//       testStore.resolveTopOfStack({ targets: [target] }, true);
+//       TestStore.resolveTopOfStack({ targets: [target] }, true);
 //
 //       // Verify the damage was moved correctly
-//       expect(rapunzel.meta.damage).toBe(1);
-//       expect(target.meta.damage).toBe(1);
+//       Expect(rapunzel.meta.damage).toBe(1);
+//       Expect(target.meta.damage).toBe(1);
 //     });
 //
-//     it("should not move damage when ability is declined", () => {
-//       const testStore = new TestStore(
+//     It("should not move damage when ability is declined", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [motherGothelVainSorceress, rapunzelGiftedArtist],
+//           Play: [motherGothelVainSorceress, rapunzelGiftedArtist],
 //         },
 //         {
-//           play: [goonsMaleficent],
+//           Play: [goonsMaleficent],
 //         },
 //       );
 //
-//       const gothel = testStore.getByZoneAndId(
+//       Const gothel = testStore.getByZoneAndId(
 //         "play",
-//         motherGothelVainSorceress.id,
+//         MotherGothelVainSorceress.id,
 //       );
-//       const target = testStore.getByZoneAndId(
+//       Const target = testStore.getByZoneAndId(
 //         "play",
-//         goonsMaleficent.id,
+//         GoonsMaleficent.id,
 //         "player_two",
 //       );
-//       const rapunzel = testStore.getByZoneAndId(
+//       Const rapunzel = testStore.getByZoneAndId(
 //         "play",
-//         rapunzelGiftedArtist.id,
+//         RapunzelGiftedArtist.id,
 //       );
 //
 //       // Set up initial state
-//       rapunzel.updateCardMeta({ damage: 2 });
-//       target.updateCardMeta({ exerted: true, damage: 0 });
+//       Rapunzel.updateCardMeta({ damage: 2 });
+//       Target.updateCardMeta({ exerted: true, damage: 0 });
 //
 //       // Challenge to trigger the ability
-//       testStore.store.challenge(rapunzel.instanceId, target.instanceId);
+//       TestStore.store.challenge(rapunzel.instanceId, target.instanceId);
 //
 //       // Decline the optional ability
-//       testStore.resolveTopOfStack({ skip: true }, true);
+//       TestStore.resolveTopOfStack({ skip: true }, true);
 //
 //       // Verify no damage was moved
-//       expect(rapunzel.meta.damage).toBe(2);
-//       expect(target.meta.damage).toBe(0);
+//       Expect(rapunzel.meta.damage).toBe(2);
+//       Expect(target.meta.damage).toBe(0);
 //     });
 //
-//     it("should move 1 damage counter from chosen character to chosen opposing character when challenging a location", () => {
-//       const testStore = new TestStore(
+//     It("should move 1 damage counter from chosen character to chosen opposing character when challenging a location", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [motherGothelVainSorceress, rapunzelGiftedArtist],
+//           Play: [motherGothelVainSorceress, rapunzelGiftedArtist],
 //         },
 //         {
-//           play: [rapunzelsTowerSecludedPrison, goonsMaleficent],
+//           Play: [rapunzelsTowerSecludedPrison, goonsMaleficent],
 //         },
 //       );
 //
-//       const gothel = testStore.getByZoneAndId(
+//       Const gothel = testStore.getByZoneAndId(
 //         "play",
-//         motherGothelVainSorceress.id,
+//         MotherGothelVainSorceress.id,
 //       );
-//       const tower = testStore.getByZoneAndId(
+//       Const tower = testStore.getByZoneAndId(
 //         "play",
-//         rapunzelsTowerSecludedPrison.id,
+//         RapunzelsTowerSecludedPrison.id,
 //         "player_two",
 //       );
-//       const target = testStore.getByZoneAndId(
+//       Const target = testStore.getByZoneAndId(
 //         "play",
-//         goonsMaleficent.id,
+//         GoonsMaleficent.id,
 //         "player_two",
 //       );
-//       const rapunzel = testStore.getByZoneAndId(
+//       Const rapunzel = testStore.getByZoneAndId(
 //         "play",
-//         rapunzelGiftedArtist.id,
+//         RapunzelGiftedArtist.id,
 //       );
 //
 //       // Set up initial state
-//       rapunzel.updateCardMeta({ damage: 2 });
-//       tower.updateCardMeta({ damage: 0 });
-//       target.updateCardMeta({ exerted: true, damage: 0 });
+//       Rapunzel.updateCardMeta({ damage: 2 });
+//       Tower.updateCardMeta({ damage: 0 });
+//       Target.updateCardMeta({ exerted: true, damage: 0 });
 //
 //       // Challenge to trigger the ability
-//       testStore.store.challenge(gothel.instanceId, tower.instanceId);
+//       TestStore.store.challenge(gothel.instanceId, tower.instanceId);
 //
 //       // Accept the optional ability
-//       testStore.resolveTopOfStack({}, true);
+//       TestStore.resolveTopOfStack({}, true);
 //
 //       // Choose source character (where to take damage from)
-//       testStore.resolveTopOfStack({ targets: [rapunzel] }, true);
+//       TestStore.resolveTopOfStack({ targets: [rapunzel] }, true);
 //
 //       // Choose target character (where to move damage to)
-//       testStore.resolveTopOfStack({ targets: [target] }, true);
+//       TestStore.resolveTopOfStack({ targets: [target] }, true);
 //
 //       // Verify the damage was moved correctly
-//       expect(rapunzel.meta.damage).toBe(1);
-//       expect(target.meta.damage).toBe(1);
+//       Expect(rapunzel.meta.damage).toBe(1);
+//       Expect(target.meta.damage).toBe(1);
 //     });
 //   });
 //
-//   describe("Regression", () => {
-//     it("moves damage before challenge is resolved", async () => {
-//       const testEngine = new TestEngine(
+//   Describe("Regression", () => {
+//     It("moves damage before challenge is resolved", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           play: [motherGothelVainSorceress],
+//           Play: [motherGothelVainSorceress],
 //         },
 //         {
-//           play: [goonsMaleficent],
+//           Play: [goonsMaleficent],
 //         },
 //       );
 //
-//       await testEngine.tapCard(goonsMaleficent);
-//       await testEngine.setCardDamage(
-//         goonsMaleficent,
-//         goonsMaleficent.willpower - 1,
+//       Await testEngine.tapCard(goonsMaleficent);
+//       Await testEngine.setCardDamage(
+//         GoonsMaleficent,
+//         GoonsMaleficent.willpower - 1,
 //       );
-//       await testEngine.setCardDamage(
-//         motherGothelVainSorceress,
-//         motherGothelVainSorceress.willpower - 1,
+//       Await testEngine.setCardDamage(
+//         MotherGothelVainSorceress,
+//         MotherGothelVainSorceress.willpower - 1,
 //       );
 //
-//       await testEngine.challenge({
-//         attacker: motherGothelVainSorceress,
-//         defender: goonsMaleficent,
+//       Await testEngine.challenge({
+//         Attacker: motherGothelVainSorceress,
+//         Defender: goonsMaleficent,
 //       });
 //
-//       await testEngine.acceptOptionalLayer();
-//       await testEngine.resolveTopOfStack(
+//       Await testEngine.acceptOptionalLayer();
+//       Await testEngine.resolveTopOfStack(
 //         {
-//           targets: [motherGothelVainSorceress],
+//           Targets: [motherGothelVainSorceress],
 //         },
-//         true,
+//         True,
 //       );
-//       await testEngine.resolveTopOfStack({
-//         targets: [goonsMaleficent],
+//       Await testEngine.resolveTopOfStack({
+//         Targets: [goonsMaleficent],
 //       });
 //
-//       expect(testEngine.getCardModel(motherGothelVainSorceress).zone).toBe(
+//       Expect(testEngine.getCardModel(motherGothelVainSorceress).zone).toBe(
 //         "play",
 //       );
-//       expect(testEngine.getCardModel(motherGothelVainSorceress).damage).toBe(
-//         motherGothelVainSorceress.willpower - 2, // She moved 1 damage to Maleficent
+//       Expect(testEngine.getCardModel(motherGothelVainSorceress).damage).toBe(
+//         MotherGothelVainSorceress.willpower - 2, // She moved 1 damage to Maleficent
 //       );
-//       expect(testEngine.getCardModel(goonsMaleficent).zone).toBe("discard");
+//       Expect(testEngine.getCardModel(goonsMaleficent).zone).toBe("discard");
 //     });
 //
-//     it("It cannot move damage caused during combat", async () => {
-//       const testEngine = new TestEngine(
+//     It("It cannot move damage caused during combat", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           play: [motherGothelVainSorceress, iagoLoudMouthedParrot],
+//           Play: [motherGothelVainSorceress, iagoLoudMouthedParrot],
 //         },
 //         {
-//           play: [goonsMaleficent],
+//           Play: [goonsMaleficent],
 //         },
 //       );
 //
-//       await testEngine.tapCard(goonsMaleficent);
+//       Await testEngine.tapCard(goonsMaleficent);
 //
-//       await testEngine.challenge({
-//         attacker: iagoLoudMouthedParrot,
-//         defender: goonsMaleficent,
+//       Await testEngine.challenge({
+//         Attacker: iagoLoudMouthedParrot,
+//         Defender: goonsMaleficent,
 //       });
 //
-//       await testEngine.acceptOptionalLayer();
-//       await testEngine.resolveTopOfStack(
+//       Await testEngine.acceptOptionalLayer();
+//       Await testEngine.resolveTopOfStack(
 //         {
-//           targets: [iagoLoudMouthedParrot],
+//           Targets: [iagoLoudMouthedParrot],
 //         },
-//         true,
+//         True,
 //       );
-//       await testEngine.resolveTopOfStack({
-//         targets: [goonsMaleficent],
+//       Await testEngine.resolveTopOfStack({
+//         Targets: [goonsMaleficent],
 //       });
 //
 //       // Damage can only be moved before the combat, so the damage caused during combat must remain
-//       expect(testEngine.getCardModel(iagoLoudMouthedParrot).damage).toBe(
-//         goonsMaleficent.strength,
+//       Expect(testEngine.getCardModel(iagoLoudMouthedParrot).damage).toBe(
+//         GoonsMaleficent.strength,
 //       );
-//       expect(testEngine.getCardModel(goonsMaleficent).damage).toBe(
-//         iagoLoudMouthedParrot.strength,
+//       Expect(testEngine.getCardModel(goonsMaleficent).damage).toBe(
+//         IagoLoudMouthedParrot.strength,
 //       );
 //     });
 //   });

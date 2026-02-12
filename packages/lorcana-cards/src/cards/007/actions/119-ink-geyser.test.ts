@@ -3,69 +3,69 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { inkGeyser } from "@lorcanito/lorcana-engine/cards/007";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { inkGeyser } from "@lorcanito/lorcana-engine/cards/007";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Ink Geyser", () => {
-//   describe("Each player exerts all the cards in their inkwell. Then each player with more than 3 cards in their inkwell returns cards at random from their inkwell to their hand until they have 3 cards in their inkwell.", () => {
-//     it("Both have more than 3", async () => {
-//       const testEngine = new TestEngine(
+// Describe("Ink Geyser", () => {
+//   Describe("Each player exerts all the cards in their inkwell. Then each player with more than 3 cards in their inkwell returns cards at random from their inkwell to their hand until they have 3 cards in their inkwell.", () => {
+//     It("Both have more than 3", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: 7,
-//           hand: [inkGeyser],
+//           Inkwell: 7,
+//           Hand: [inkGeyser],
 //         },
 //         {
-//           inkwell: 5,
+//           Inkwell: 5,
 //         },
 //       );
 //
-//       await testEngine.playCard(inkGeyser);
+//       Await testEngine.playCard(inkGeyser);
 //
-//       expect(testEngine.getZonesCardCount("player_one").inkwell).toBe(3);
-//       expect(testEngine.getZonesCardCount("player_two").inkwell).toBe(3);
-//       expect(testEngine.getZonesCardCount("player_one").hand).toBe(4);
-//       expect(testEngine.getZonesCardCount("player_two").hand).toBe(2);
+//       Expect(testEngine.getZonesCardCount("player_one").inkwell).toBe(3);
+//       Expect(testEngine.getZonesCardCount("player_two").inkwell).toBe(3);
+//       Expect(testEngine.getZonesCardCount("player_one").hand).toBe(4);
+//       Expect(testEngine.getZonesCardCount("player_two").hand).toBe(2);
 //     });
 //
-//     it("Only active player has", async () => {
-//       const testEngine = new TestEngine(
+//     It("Only active player has", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: 8,
-//           hand: [inkGeyser],
+//           Inkwell: 8,
+//           Hand: [inkGeyser],
 //         },
 //         {
-//           inkwell: 2,
+//           Inkwell: 2,
 //         },
 //       );
 //
-//       await testEngine.playCard(inkGeyser);
+//       Await testEngine.playCard(inkGeyser);
 //
-//       expect(testEngine.getZonesCardCount("player_one").inkwell).toBe(3);
-//       expect(testEngine.getZonesCardCount("player_two").inkwell).toBe(2);
+//       Expect(testEngine.getZonesCardCount("player_one").inkwell).toBe(3);
+//       Expect(testEngine.getZonesCardCount("player_two").inkwell).toBe(2);
 //
-//       expect(testEngine.getZonesCardCount("player_one").hand).toBe(5);
-//       expect(testEngine.getZonesCardCount("player_two").hand).toBe(0);
+//       Expect(testEngine.getZonesCardCount("player_one").hand).toBe(5);
+//       Expect(testEngine.getZonesCardCount("player_two").hand).toBe(0);
 //     });
 //
-//     it("Only opponent has", async () => {
-//       const testEngine = new TestEngine(
+//     It("Only opponent has", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: 3,
-//           hand: [inkGeyser],
+//           Inkwell: 3,
+//           Hand: [inkGeyser],
 //         },
 //         {
-//           inkwell: 9,
+//           Inkwell: 9,
 //         },
 //       );
 //
-//       await testEngine.playCard(inkGeyser);
+//       Await testEngine.playCard(inkGeyser);
 //
-//       expect(testEngine.getZonesCardCount("player_one").inkwell).toBe(3);
-//       expect(testEngine.getZonesCardCount("player_two").inkwell).toBe(3);
+//       Expect(testEngine.getZonesCardCount("player_one").inkwell).toBe(3);
+//       Expect(testEngine.getZonesCardCount("player_two").inkwell).toBe(3);
 //
-//       expect(testEngine.getZonesCardCount("player_one").hand).toBe(0);
-//       expect(testEngine.getZonesCardCount("player_two").hand).toBe(6);
+//       Expect(testEngine.getZonesCardCount("player_one").hand).toBe(0);
+//       Expect(testEngine.getZonesCardCount("player_two").hand).toBe(6);
 //     });
 //   });
 // });

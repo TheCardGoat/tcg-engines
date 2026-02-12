@@ -3,63 +3,63 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { tangle } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
-// import { grabYourSword } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
-// import { fourDozenEggs } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
-// import { minnieMouseWideEyedDiver } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { tangle } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
+// Import { grabYourSword } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
+// Import { fourDozenEggs } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
+// Import { minnieMouseWideEyedDiver } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Minnie Mouse - Wide-Eyed Diver", () => {
-//   it("Shift", () => {
-//     const testStore = new TestStore({
-//       play: [minnieMouseWideEyedDiver],
+// Describe("Minnie Mouse - Wide-Eyed Diver", () => {
+//   It("Shift", () => {
+//     Const testStore = new TestStore({
+//       Play: [minnieMouseWideEyedDiver],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       minnieMouseWideEyedDiver.id,
+//       MinnieMouseWideEyedDiver.id,
 //     );
 //
-//     expect(cardUnderTest.hasShift).toBe(true);
+//     Expect(cardUnderTest.hasShift).toBe(true);
 //   });
 //
-//   it("Evasive", () => {
-//     const testStore = new TestStore({
-//       play: [minnieMouseWideEyedDiver],
+//   It("Evasive", () => {
+//     Const testStore = new TestStore({
+//       Play: [minnieMouseWideEyedDiver],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       minnieMouseWideEyedDiver.id,
+//       MinnieMouseWideEyedDiver.id,
 //     );
 //
-//     expect(cardUnderTest.hasEvasive).toBe(true);
+//     Expect(cardUnderTest.hasEvasive).toBe(true);
 //   });
 //
-//   it("**UNDERSEA ADVENTURE** Whenever you play a second action in a turn, this character gets +2 {L} this turn.", () => {
-//     const testStore = new TestStore({
-//       inkwell: grabYourSword.cost + fourDozenEggs.cost + tangle.cost,
-//       hand: [grabYourSword, fourDozenEggs, tangle],
-//       play: [minnieMouseWideEyedDiver],
+//   It("**UNDERSEA ADVENTURE** Whenever you play a second action in a turn, this character gets +2 {L} this turn.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: grabYourSword.cost + fourDozenEggs.cost + tangle.cost,
+//       Hand: [grabYourSword, fourDozenEggs, tangle],
+//       Play: [minnieMouseWideEyedDiver],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       minnieMouseWideEyedDiver.id,
+//       MinnieMouseWideEyedDiver.id,
 //     );
-//     const actionOne = testStore.getByZoneAndId("hand", grabYourSword.id);
-//     const actionTwo = testStore.getByZoneAndId("hand", fourDozenEggs.id);
-//     const actionThree = testStore.getByZoneAndId("hand", tangle.id);
+//     Const actionOne = testStore.getByZoneAndId("hand", grabYourSword.id);
+//     Const actionTwo = testStore.getByZoneAndId("hand", fourDozenEggs.id);
+//     Const actionThree = testStore.getByZoneAndId("hand", tangle.id);
 //
-//     actionOne.playFromHand();
-//     expect(cardUnderTest.lore).toBe(minnieMouseWideEyedDiver.lore);
+//     ActionOne.playFromHand();
+//     Expect(cardUnderTest.lore).toBe(minnieMouseWideEyedDiver.lore);
 //
-//     actionTwo.playFromHand();
-//     expect(cardUnderTest.lore).toBe(minnieMouseWideEyedDiver.lore + 2);
+//     ActionTwo.playFromHand();
+//     Expect(cardUnderTest.lore).toBe(minnieMouseWideEyedDiver.lore + 2);
 //
-//     actionThree.playFromHand();
-//     expect(cardUnderTest.lore).toBe(minnieMouseWideEyedDiver.lore + 2);
+//     ActionThree.playFromHand();
+//     Expect(cardUnderTest.lore).toBe(minnieMouseWideEyedDiver.lore + 2);
 //   });
 // });
 //

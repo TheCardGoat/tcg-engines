@@ -3,46 +3,46 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   camiloMadrigalFamilyCopycat,
-//   zazuAdvisorToMufasa,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   CamiloMadrigalFamilyCopycat,
+//   ZazuAdvisorToMufasa,
 // } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Camilo Madrigal - Family Copycat", () => {
-//   describe("**IMITATE** Whenever this character quests, you may gain lore equal to the {L} of chosen other character of yours. Return that character to your hand.", () => {
-//     it("should gain lore equal to the {L} of chosen other character of yours", () => {
-//       const testStore = new TestStore({
-//         play: [camiloMadrigalFamilyCopycat, zazuAdvisorToMufasa],
+// Describe("Camilo Madrigal - Family Copycat", () => {
+//   Describe("**IMITATE** Whenever this character quests, you may gain lore equal to the {L} of chosen other character of yours. Return that character to your hand.", () => {
+//     It("should gain lore equal to the {L} of chosen other character of yours", () => {
+//       Const testStore = new TestStore({
+//         Play: [camiloMadrigalFamilyCopycat, zazuAdvisorToMufasa],
 //       });
 //
-//       const cardUnderTest = testStore.getCard(camiloMadrigalFamilyCopycat);
-//       const otherCharacter = testStore.getCard(zazuAdvisorToMufasa);
+//       Const cardUnderTest = testStore.getCard(camiloMadrigalFamilyCopycat);
+//       Const otherCharacter = testStore.getCard(zazuAdvisorToMufasa);
 //
-//       cardUnderTest.quest();
+//       CardUnderTest.quest();
 //
-//       testStore.resolveOptionalAbility();
-//       testStore.resolveTopOfStack({ targets: [otherCharacter] });
+//       TestStore.resolveOptionalAbility();
+//       TestStore.resolveTopOfStack({ targets: [otherCharacter] });
 //
-//       expect(testStore.getPlayerLore("player_one")).toBe(
-//         zazuAdvisorToMufasa.lore + camiloMadrigalFamilyCopycat.lore,
+//       Expect(testStore.getPlayerLore("player_one")).toBe(
+//         ZazuAdvisorToMufasa.lore + camiloMadrigalFamilyCopycat.lore,
 //       );
-//       expect(otherCharacter.zone).toBe("hand");
+//       Expect(otherCharacter.zone).toBe("hand");
 //     });
 //
-//     it("should NOT trigger if there's not another char", () => {
-//       const testStore = new TestStore({
-//         play: [camiloMadrigalFamilyCopycat],
+//     It("should NOT trigger if there's not another char", () => {
+//       Const testStore = new TestStore({
+//         Play: [camiloMadrigalFamilyCopycat],
 //       });
 //
-//       const cardUnderTest = testStore.getCard(camiloMadrigalFamilyCopycat);
+//       Const cardUnderTest = testStore.getCard(camiloMadrigalFamilyCopycat);
 //
-//       cardUnderTest.quest();
-//       expect(testStore.stackLayers).toHaveLength(0);
+//       CardUnderTest.quest();
+//       Expect(testStore.stackLayers).toHaveLength(0);
 //
-//       expect(testStore.getPlayerLore("player_one")).toBe(
-//         camiloMadrigalFamilyCopycat.lore,
+//       Expect(testStore.getPlayerLore("player_one")).toBe(
+//         CamiloMadrigalFamilyCopycat.lore,
 //       );
 //     });
 //   });

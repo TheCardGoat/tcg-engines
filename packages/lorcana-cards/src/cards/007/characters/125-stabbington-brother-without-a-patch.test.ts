@@ -3,20 +3,20 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { stabbingtonBrotherWithoutAPatch } from "@lorcanito/lorcana-engine/cards/007/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { stabbingtonBrotherWithoutAPatch } from "@lorcanito/lorcana-engine/cards/007/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Stabbington Brother - Without a Patch", () => {
-//   it.skip("Rush (This character can challenge the turn they're played.) GET 'EM! Your other characters named Stabbington Brother gain Rush.", async () => {
-//     const testEngine = new TestEngine({
-//       play: [stabbingtonBrotherWithoutAPatch],
+// Describe("Stabbington Brother - Without a Patch", () => {
+//   It.skip("Rush (This character can challenge the turn they're played.) GET 'EM! Your other characters named Stabbington Brother gain Rush.", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [stabbingtonBrotherWithoutAPatch],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(
-//       stabbingtonBrotherWithoutAPatch,
+//     Const cardUnderTest = testEngine.getCardModel(
+//       StabbingtonBrotherWithoutAPatch,
 //     );
-//     expect(cardUnderTest.hasRush).toBe(true);
+//     Expect(cardUnderTest.hasRush).toBe(true);
 //   });
 // });
 //

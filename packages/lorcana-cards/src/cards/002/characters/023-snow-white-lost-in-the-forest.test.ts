@@ -3,34 +3,34 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { donaldDuckMusketeer } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { snowWhiteLostInTheForest } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { donaldDuckMusketeer } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { snowWhiteLostInTheForest } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Snow White - Lost in the Forest", () => {
-//   it("**I WON'T HURT YOU** When you play this character, you may remove up to 2 damage from chosen character.", () => {
-//     const testStore = new TestStore({
-//       inkwell: snowWhiteLostInTheForest.cost,
-//       hand: [snowWhiteLostInTheForest],
-//       play: [donaldDuckMusketeer],
+// Describe("Snow White - Lost in the Forest", () => {
+//   It("**I WON'T HURT YOU** When you play this character, you may remove up to 2 damage from chosen character.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: snowWhiteLostInTheForest.cost,
+//       Hand: [snowWhiteLostInTheForest],
+//       Play: [donaldDuckMusketeer],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "hand",
-//       snowWhiteLostInTheForest.id,
+//       SnowWhiteLostInTheForest.id,
 //     );
-//     const target = testStore.getByZoneAndId("play", donaldDuckMusketeer.id);
+//     Const target = testStore.getByZoneAndId("play", donaldDuckMusketeer.id);
 //
-//     target.updateCardMeta({ damage: 3 });
+//     Target.updateCardMeta({ damage: 3 });
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({ targets: [target] });
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({ targets: [target] });
 //
-//     expect(cardUnderTest.zone).toEqual("play");
-//     expect(target.meta.damage).toEqual(1);
+//     Expect(cardUnderTest.zone).toEqual("play");
+//     Expect(target.meta.damage).toEqual(1);
 //   });
 // });
 //

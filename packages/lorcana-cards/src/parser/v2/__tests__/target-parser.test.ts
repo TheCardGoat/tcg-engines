@@ -20,11 +20,11 @@ describe.skip("Target Parser", () => {
     it("should parse 'chosen character'", () => {
       const result = parseCharacterTarget("Deal damage to chosen character");
       expect(result).toEqual({
-        selector: "chosen",
+        cardTypes: ["character"],
         count: 1,
         owner: "any",
+        selector: "chosen",
         zones: ["play"],
-        cardTypes: ["character"],
       });
     });
 
@@ -33,66 +33,66 @@ describe.skip("Target Parser", () => {
         "Banishing chosen opposing character",
       );
       expect(result).toEqual({
-        selector: "chosen",
+        cardTypes: ["character"],
         count: 1,
         owner: "opponent",
+        selector: "chosen",
         zones: ["play"],
-        cardTypes: ["character"],
       });
     });
 
     it("should parse 'chosen character of yours'", () => {
       const result = parseCharacterTarget("Heal chosen character of yours");
       expect(result).toEqual({
-        selector: "chosen",
+        cardTypes: ["character"],
         count: 1,
         owner: "you",
+        selector: "chosen",
         zones: ["play"],
-        cardTypes: ["character"],
       });
     });
 
     it("should parse 'all characters'", () => {
       const result = parseCharacterTarget("Damage all characters");
       expect(result).toEqual({
-        selector: "all",
+        cardTypes: ["character"],
         count: "all",
         owner: "any",
+        selector: "all",
         zones: ["play"],
-        cardTypes: ["character"],
       });
     });
 
     it("should parse 'all opposing characters'", () => {
       const result = parseCharacterTarget("Damage all opposing characters");
       expect(result).toEqual({
-        selector: "all",
+        cardTypes: ["character"],
         count: "all",
         owner: "opponent",
+        selector: "all",
         zones: ["play"],
-        cardTypes: ["character"],
       });
     });
 
     it("should parse 'each opposing character'", () => {
       const result = parseCharacterTarget("Damage each opposing character");
       expect(result).toEqual({
-        selector: "all",
+        cardTypes: ["character"],
         count: "all",
         owner: "opponent",
+        selector: "all",
         zones: ["play"],
-        cardTypes: ["character"],
       });
     });
 
     it("should parse 'your characters'", () => {
       const result = parseCharacterTarget("Your characters get +1 lore");
       expect(result).toEqual({
-        selector: "all",
+        cardTypes: ["character"],
         count: "all",
         owner: "you",
+        selector: "all",
         zones: ["play"],
-        cardTypes: ["character"],
       });
     });
   });
@@ -101,11 +101,11 @@ describe.skip("Target Parser", () => {
     it("should parse 'chosen item'", () => {
       const result = parseItemTarget("Banish chosen item");
       expect(result).toEqual({
-        selector: "chosen",
+        cardTypes: ["item"],
         count: 1,
         owner: "any",
+        selector: "chosen",
         zones: ["play"],
-        cardTypes: ["item"],
       });
     });
   });
@@ -114,11 +114,11 @@ describe.skip("Target Parser", () => {
     it("should parse 'chosen location'", () => {
       const result = parseLocationTarget("Banish chosen location");
       expect(result).toEqual({
-        selector: "chosen",
+        cardTypes: ["location"],
         count: 1,
         owner: "any",
+        selector: "chosen",
         zones: ["play"],
-        cardTypes: ["location"],
       });
     });
   });

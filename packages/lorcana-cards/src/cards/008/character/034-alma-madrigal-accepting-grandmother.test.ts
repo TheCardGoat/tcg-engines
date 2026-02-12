@@ -3,79 +3,79 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   aPiratesLife,
-//   secondStarToTheRight,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   APiratesLife,
+//   SecondStarToTheRight,
 // } from "@lorcanito/lorcana-engine/cards/004/actions/actions";
-// import {
-//   almaMadrigalAcceptingGrandmother,
-//   friendOwlCantankerousNeighbor,
-//   mulanChargingAhead,
-//   thumperYoungBunny,
-//   vanellopeVonSchweetzSpunkySpeedster,
+// Import {
+//   AlmaMadrigalAcceptingGrandmother,
+//   FriendOwlCantankerousNeighbor,
+//   MulanChargingAhead,
+//   ThumperYoungBunny,
+//   VanellopeVonSchweetzSpunkySpeedster,
 // } from "@lorcanito/lorcana-engine/cards/008";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
-// import { mickeyBraveLittleTailor } from "../../001/characters/115-mickey-mouse-brave-little-tailor";
-// import { hakunaMatata } from "../../001/songs/027-hakuna-matata";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { mickeyBraveLittleTailor } from "../../001/characters/115-mickey-mouse-brave-little-tailor";
+// Import { hakunaMatata } from "../../001/songs/027-hakuna-matata";
 //
-// describe("Alma Madrigal - Accepting Grandmother", () => {
-//   it("THE MIRACLE IS YOU Once during your turn, whenever one or more of your characters sings a song, you may ready those characters.", async () => {
-//     const singers = [
-//       vanellopeVonSchweetzSpunkySpeedster,
-//       thumperYoungBunny,
-//       mulanChargingAhead,
-//       friendOwlCantankerousNeighbor,
+// Describe("Alma Madrigal - Accepting Grandmother", () => {
+//   It("THE MIRACLE IS YOU Once during your turn, whenever one or more of your characters sings a song, you may ready those characters.", async () => {
+//     Const singers = [
+//       VanellopeVonSchweetzSpunkySpeedster,
+//       ThumperYoungBunny,
+//       MulanChargingAhead,
+//       FriendOwlCantankerousNeighbor,
 //     ];
 //
-//     const testEngine = new TestEngine({
-//       inkwell: almaMadrigalAcceptingGrandmother.cost,
-//       play: [almaMadrigalAcceptingGrandmother, ...singers],
-//       hand: [secondStarToTheRight, aPiratesLife],
+//     Const testEngine = new TestEngine({
+//       Inkwell: almaMadrigalAcceptingGrandmother.cost,
+//       Play: [almaMadrigalAcceptingGrandmother, ...singers],
+//       Hand: [secondStarToTheRight, aPiratesLife],
 //     });
 //
-//     await testEngine.singSongTogether({
-//       song: secondStarToTheRight,
-//       singers,
+//     Await testEngine.singSongTogether({
+//       Song: secondStarToTheRight,
+//       Singers,
 //     });
 //
-//     await testEngine.resolveTopOfStack({ targetPlayer: "player_two" }, true);
-//     await testEngine.acceptOptionalLayer();
+//     Await testEngine.resolveTopOfStack({ targetPlayer: "player_two" }, true);
+//     Await testEngine.acceptOptionalLayer();
 //
-//     expect(testEngine.stackLayers).toHaveLength(0);
-//     for (const singer of singers) {
-//       expect(testEngine.getCardModel(singer).ready).toBe(true);
+//     Expect(testEngine.stackLayers).toHaveLength(0);
+//     For (const singer of singers) {
+//       Expect(testEngine.getCardModel(singer).ready).toBe(true);
 //     }
 //
 //     // Only triggers once
-//     await testEngine.singSongTogether({
-//       song: aPiratesLife,
-//       singers,
+//     Await testEngine.singSongTogether({
+//       Song: aPiratesLife,
+//       Singers,
 //     });
 //
-//     expect(testEngine.stackLayers).toHaveLength(0);
-//     for (const singer of singers) {
-//       expect(testEngine.getCardModel(singer).ready).toBe(false);
+//     Expect(testEngine.stackLayers).toHaveLength(0);
+//     For (const singer of singers) {
+//       Expect(testEngine.getCardModel(singer).ready).toBe(false);
 //     }
 //   });
 // });
 //
-// describe("Regression Test", () => {
-//   it("Should trigger when it's only one character singing a song", async () => {
-//     const testEngine = new TestEngine({
-//       play: [almaMadrigalAcceptingGrandmother, mickeyBraveLittleTailor],
-//       hand: [hakunaMatata],
+// Describe("Regression Test", () => {
+//   It("Should trigger when it's only one character singing a song", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [almaMadrigalAcceptingGrandmother, mickeyBraveLittleTailor],
+//       Hand: [hakunaMatata],
 //     });
 //
-//     await testEngine.singSong({
-//       singer: mickeyBraveLittleTailor,
-//       song: hakunaMatata,
+//     Await testEngine.singSong({
+//       Singer: mickeyBraveLittleTailor,
+//       Song: hakunaMatata,
 //     });
 //
-//     await testEngine.acceptOptionalLayer();
+//     Await testEngine.acceptOptionalLayer();
 //
-//     expect(testEngine.stackLayers).toHaveLength(0);
-//     expect(testEngine.getCardModel(mickeyBraveLittleTailor).ready).toBe(true);
+//     Expect(testEngine.stackLayers).toHaveLength(0);
+//     Expect(testEngine.getCardModel(mickeyBraveLittleTailor).ready).toBe(true);
 //   });
 // });
 //

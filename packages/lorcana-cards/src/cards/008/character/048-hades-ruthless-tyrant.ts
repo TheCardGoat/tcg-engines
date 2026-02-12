@@ -1,40 +1,40 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { anotherChosenCharacterOfYours } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { whenPlayAndWheneverQuests } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import {
-//   dealDamageEffect,
-//   drawXCards,
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { anotherChosenCharacterOfYours } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import { whenPlayAndWheneverQuests } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import {
+//   DealDamageEffect,
+//   DrawXCards,
 // } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// const shortOnPatience = whenPlayAndWheneverQuests({
-//   name: "SHORT ON PATIENCE",
-//   text: "When you play this character and whenever he quests, you may deal 2 damage to another chosen character of yours to draw 2 cards.",
-//   optional: true,
-//   dependentEffects: true,
-//   effects: [dealDamageEffect(2, anotherChosenCharacterOfYours), drawXCards(2)],
+// Const shortOnPatience = whenPlayAndWheneverQuests({
+//   Name: "SHORT ON PATIENCE",
+//   Text: "When you play this character and whenever he quests, you may deal 2 damage to another chosen character of yours to draw 2 cards.",
+//   Optional: true,
+//   DependentEffects: true,
+//   Effects: [dealDamageEffect(2, anotherChosenCharacterOfYours), drawXCards(2)],
 // });
 //
-// export const hadesRuthlessTyrant: LorcanitoCharacterCard = {
-//   id: "xoz",
-//   name: "Hades",
-//   title: "Ruthless Tyrant",
-//   characteristics: ["dreamborn", "villain", "deity"],
-//   text: "SHORT ON PATIENCE When you play this character and whenever he quests, you may deal 2 damage to another chosen character of yours to draw 2 cards.",
-//   type: "character",
-//   abilities: shortOnPatience,
-//   inkwell: false,
-//   colors: ["amethyst", "ruby"],
-//   cost: 7,
-//   strength: 3,
-//   willpower: 6,
-//   illustrator: "Marcel Berg",
-//   number: 48,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 630060,
+// Export const hadesRuthlessTyrant: LorcanitoCharacterCard = {
+//   Id: "xoz",
+//   Name: "Hades",
+//   Title: "Ruthless Tyrant",
+//   Characteristics: ["dreamborn", "villain", "deity"],
+//   Text: "SHORT ON PATIENCE When you play this character and whenever he quests, you may deal 2 damage to another chosen character of yours to draw 2 cards.",
+//   Type: "character",
+//   Abilities: shortOnPatience,
+//   Inkwell: false,
+//   Colors: ["amethyst", "ruby"],
+//   Cost: 7,
+//   Strength: 3,
+//   Willpower: 6,
+//   Illustrator: "Marcel Berg",
+//   Number: 48,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 630060,
 //   },
-//   rarity: "super_rare",
-//   lore: 2,
+//   Rarity: "super_rare",
+//   Lore: 2,
 // };
 //

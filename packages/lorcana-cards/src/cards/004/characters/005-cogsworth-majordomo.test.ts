@@ -3,52 +3,52 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { tamatoaSoShiny } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { cogsworthMajordomo } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { tamatoaSoShiny } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { cogsworthMajordomo } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Cogsworth - Majordomo", () => {
-//   it("AS YOU WERE! Whenever this character quests, you may give chosen character -2 {S} until the start of your next turn.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Cogsworth - Majordomo", () => {
+//   It("AS YOU WERE! Whenever this character quests, you may give chosen character -2 {S} until the start of your next turn.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         play: [cogsworthMajordomo],
-//         deck: 10,
+//         Play: [cogsworthMajordomo],
+//         Deck: 10,
 //       },
 //       {
-//         play: [tamatoaSoShiny],
-//         deck: 10,
+//         Play: [tamatoaSoShiny],
+//         Deck: 10,
 //       },
 //     );
 //
-//     expect(testEngine.getCardModel(tamatoaSoShiny).strength).toBe(
-//       tamatoaSoShiny.strength,
+//     Expect(testEngine.getCardModel(tamatoaSoShiny).strength).toBe(
+//       TamatoaSoShiny.strength,
 //     );
 //
-//     await testEngine.questCard(cogsworthMajordomo);
+//     Await testEngine.questCard(cogsworthMajordomo);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack(
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack(
 //       {
-//         targets: [tamatoaSoShiny],
+//         Targets: [tamatoaSoShiny],
 //       },
-//       true,
+//       True,
 //     );
 //
-//     expect(testEngine.getCardModel(tamatoaSoShiny).strength).toBe(
-//       tamatoaSoShiny.strength - 2,
+//     Expect(testEngine.getCardModel(tamatoaSoShiny).strength).toBe(
+//       TamatoaSoShiny.strength - 2,
 //     );
 //
-//     await testEngine.passTurn();
+//     Await testEngine.passTurn();
 //
-//     expect(testEngine.getCardModel(tamatoaSoShiny).strength).toBe(
-//       tamatoaSoShiny.strength - 2,
+//     Expect(testEngine.getCardModel(tamatoaSoShiny).strength).toBe(
+//       TamatoaSoShiny.strength - 2,
 //     );
 //
-//     await testEngine.passTurn();
+//     Await testEngine.passTurn();
 //
-//     expect(testEngine.getCardModel(tamatoaSoShiny).strength).toBe(
-//       tamatoaSoShiny.strength,
+//     Expect(testEngine.getCardModel(tamatoaSoShiny).strength).toBe(
+//       TamatoaSoShiny.strength,
 //     );
 //   });
 // });

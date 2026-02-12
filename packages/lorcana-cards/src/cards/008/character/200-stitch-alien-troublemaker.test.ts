@@ -3,38 +3,38 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { liloMakingAWish } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { stitchAlienTroublemaker } from "@lorcanito/lorcana-engine/cards/008";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { liloMakingAWish } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { stitchAlienTroublemaker } from "@lorcanito/lorcana-engine/cards/008";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Stitch - Alien Troublemaker", () => {
-//   it("I WIN! During your turn, whenever this character banishes another character in a challenge, you may draw a card and gain 1 lore.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Stitch - Alien Troublemaker", () => {
+//   It("I WIN! During your turn, whenever this character banishes another character in a challenge, you may draw a card and gain 1 lore.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         play: [stitchAlienTroublemaker],
-//         deck: 2,
+//         Play: [stitchAlienTroublemaker],
+//         Deck: 2,
 //       },
 //       {
-//         play: [liloMakingAWish],
+//         Play: [liloMakingAWish],
 //       },
 //     );
 //
-//     const cardBeingChallenged = testEngine.getCardModel(liloMakingAWish);
-//     cardBeingChallenged.updateCardMeta({ exerted: true });
+//     Const cardBeingChallenged = testEngine.getCardModel(liloMakingAWish);
+//     CardBeingChallenged.updateCardMeta({ exerted: true });
 //
-//     testEngine
+//     TestEngine
 //       .getCardModel(stitchAlienTroublemaker)
 //       .challenge(cardBeingChallenged);
 //
-//     await testEngine.resolveOptionalAbility();
-//     expect(testEngine.getZonesCardCount()).toEqual(
-//       expect.objectContaining({
-//         hand: 1,
-//         deck: 1,
+//     Await testEngine.resolveOptionalAbility();
+//     Expect(testEngine.getZonesCardCount()).toEqual(
+//       Expect.objectContaining({
+//         Hand: 1,
+//         Deck: 1,
 //       }),
 //     );
-//     expect(testEngine.getPlayerLore("player_one")).toEqual(1);
+//     Expect(testEngine.getPlayerLore("player_one")).toEqual(1);
 //   });
 // });
 //

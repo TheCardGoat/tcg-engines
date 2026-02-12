@@ -5,9 +5,9 @@ import { teKaHeartless } from "./192-te-ka-heartless";
 describe("Te Ka - Heartless", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [teKaHeartless] });
-  //   expect(testEngine.getCardModel(teKaHeartless).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [teKaHeartless] });
+  //   Expect(testEngine.getCardModel(teKaHeartless).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,40 +17,40 @@ describe("Te Ka - Heartless", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   heiheiBoatSnack,
-//   teKaHeartless,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   HeiheiBoatSnack,
+//   TeKaHeartless,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// export const teKaHeartlessTestCase = () => {
-//   const testStore = new TestStore(
+// Export const teKaHeartlessTestCase = () => {
+//   Const testStore = new TestStore(
 //     {
-//       play: [teKaHeartless],
+//       Play: [teKaHeartless],
 //     },
 //     {
-//       play: [heiheiBoatSnack],
+//       Play: [heiheiBoatSnack],
 //     },
 //   );
 //
-//   const attacker = testStore.getByZoneAndId("play", teKaHeartless.id);
-//   const defender = testStore.getByZoneAndId(
+//   Const attacker = testStore.getByZoneAndId("play", teKaHeartless.id);
+//   Const defender = testStore.getByZoneAndId(
 //     "play",
-//     heiheiBoatSnack.id,
+//     HeiheiBoatSnack.id,
 //     "player_two",
 //   );
 //
-//   defender.updateCardMeta({ exerted: true });
+//   Defender.updateCardMeta({ exerted: true });
 //
-//   expect(testStore.store.tableStore.getTable("player_one").lore).toEqual(0);
-//   attacker.challenge(defender);
-//   expect(testStore.store.tableStore.getTable("player_one").lore).toEqual(2);
+//   Expect(testStore.store.tableStore.getTable("player_one").lore).toEqual(0);
+//   Attacker.challenge(defender);
+//   Expect(testStore.store.tableStore.getTable("player_one").lore).toEqual(2);
 // };
 //
-// describe("Te Ka - Heartless", () => {
-//   it("During your turn, whenever this character banishes another character in a challenge, you gain 2 lore.", () => {
-//     teKaHeartlessTestCase();
+// Describe("Te Ka - Heartless", () => {
+//   It("During your turn, whenever this character banishes another character in a challenge, you gain 2 lore.", () => {
+//     TeKaHeartlessTestCase();
 //   });
 // });
 //

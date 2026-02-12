@@ -1,81 +1,81 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const flotsamUrsulasSpy: CharacterCard = {
-  id: "4d0",
-  cardType: "character",
-  name: "Flotsam",
-  version: "Ursula’s Spy",
-  fullName: "Flotsam - Ursula’s Spy",
-  inkType: ["amethyst"],
-  franchise: "Little Mermaid",
-  set: "001",
-  text: "Rush (This character can challenge the turn they're played.)\nDEXTEROUS LUNGE Your characters named Jetsam gain Rush.",
-  cost: 5,
-  strength: 3,
-  willpower: 4,
-  lore: 2,
-  cardNumber: 43,
-  inkable: false,
-  externalIds: {
-    ravensburger: "0fb84ba893dbb130cedf653b49ff8e2427440270",
-  },
   abilities: [
     {
       id: "4d0-1",
+      keyword: "Rush",
       text: "Rush",
       type: "keyword",
-      keyword: "Rush",
     },
     {
-      id: "4d0-2",
-      text: "DEXTEROUS LUNGE Your characters named Jetsam gain Rush.",
-      name: "DEXTEROUS LUNGE",
-      type: "static",
       effect: {
         type: "gain-keyword",
         keyword: "Rush",
         target: "YOUR_CHARACTERS",
         duration: "this-turn",
       },
+      id: "4d0-2",
+      name: "DEXTEROUS LUNGE",
+      text: "DEXTEROUS LUNGE Your characters named Jetsam gain Rush.",
+      type: "static",
     },
   ],
+  cardNumber: 43,
+  cardType: "character",
   classifications: ["Storyborn", "Ally"],
+  cost: 5,
+  externalIds: {
+    ravensburger: "0fb84ba893dbb130cedf653b49ff8e2427440270",
+  },
+  franchise: "Little Mermaid",
+  fullName: "Flotsam - Ursula’s Spy",
+  id: "4d0",
+  inkType: ["amethyst"],
+  inkable: false,
+  lore: 2,
+  name: "Flotsam",
+  set: "001",
+  strength: 3,
+  text: "Rush (This character can challenge the turn they're played.)\nDEXTEROUS LUNGE Your characters named Jetsam gain Rush.",
+  version: "Ursula’s Spy",
+  willpower: 4,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import {
-//   rushAbility,
-//   yourCharactersNamedGain,
+// Import {
+//   RushAbility,
+//   YourCharactersNamedGain,
 // } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const flotsamUrsulaSpy: LorcanitoCharacterCard = {
-//   id: "apr",
+// Export const flotsamUrsulaSpy: LorcanitoCharacterCard = {
+//   Id: "apr",
 //
-//   name: "Flotsam",
-//   title: "Ursula's Spy",
-//   characteristics: ["storyborn", "ally"],
-//   text: "**Rush** _(This character can challenge the turn they're played.)_\nc",
-//   type: "character",
-//   abilities: [
-//     rushAbility,
-//     yourCharactersNamedGain({
-//       name: "Jetsam",
-//       ability: rushAbility,
+//   Name: "Flotsam",
+//   Title: "Ursula's Spy",
+//   Characteristics: ["storyborn", "ally"],
+//   Text: "**Rush** _(This character can challenge the turn they're played.)_\nc",
+//   Type: "character",
+//   Abilities: [
+//     RushAbility,
+//     YourCharactersNamedGain({
+//       Name: "Jetsam",
+//       Ability: rushAbility,
 //     }),
 //   ],
-//   flavour: "We know someone who can help you . . . for a price.",
-//   colors: ["amethyst"],
-//   cost: 5,
-//   strength: 3,
-//   willpower: 4,
-//   lore: 2,
-//   illustrator: "Luis Huerta",
-//   number: 43,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 503318,
+//   Flavour: "We know someone who can help you . . . for a price.",
+//   Colors: ["amethyst"],
+//   Cost: 5,
+//   Strength: 3,
+//   Willpower: 4,
+//   Lore: 2,
+//   Illustrator: "Luis Huerta",
+//   Number: 43,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 503318,
 //   },
-//   rarity: "rare",
+//   Rarity: "rare",
 // };
 //

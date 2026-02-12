@@ -3,79 +3,79 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { dragonFire } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
-// import { goonsMaleficent } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import {
-//   mrSmeeSteadfastMate,
-//   mullinsSeasonedShipmate,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { dragonFire } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
+// Import { goonsMaleficent } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import {
+//   MrSmeeSteadfastMate,
+//   MullinsSeasonedShipmate,
 // } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Mullins - Seasoned Shipmate", () => {
-//   it("FALL IN LINE While you have a character named Mr. Smee in play, this character gains Resist +1. (Damage dealt to them is reduced by 1.)", async () => {
+// Describe("Mullins - Seasoned Shipmate", () => {
+//   It("FALL IN LINE While you have a character named Mr. Smee in play, this character gains Resist +1. (Damage dealt to them is reduced by 1.)", async () => {
 //     // Test when Mr. Smee is not in play
-//     const testEngine = new TestEngine({
-//       play: [mullinsSeasonedShipmate],
+//     Const testEngine = new TestEngine({
+//       Play: [mullinsSeasonedShipmate],
 //     });
 //
-//     const mullins = testEngine.getCardModel(mullinsSeasonedShipmate);
-//     expect(mullins.hasResist).toBe(false);
+//     Const mullins = testEngine.getCardModel(mullinsSeasonedShipmate);
+//     Expect(mullins.hasResist).toBe(false);
 //
 //     // Add Mr. Smee to play and verify Mullins gains Resist +1
-//     const testEngineWithSmee = new TestEngine({
-//       play: [mullinsSeasonedShipmate, mrSmeeSteadfastMate],
+//     Const testEngineWithSmee = new TestEngine({
+//       Play: [mullinsSeasonedShipmate, mrSmeeSteadfastMate],
 //     });
 //
-//     const mullinsWithSmee = testEngineWithSmee.getCardModel(
-//       mullinsSeasonedShipmate,
+//     Const mullinsWithSmee = testEngineWithSmee.getCardModel(
+//       MullinsSeasonedShipmate,
 //     );
-//     expect(mullinsWithSmee.hasResist).toBe(true);
+//     Expect(mullinsWithSmee.hasResist).toBe(true);
 //
 //     // Test damage reduction when Mullins has Resist
-//     const testEngineWithDamage = new TestEngine(
+//     Const testEngineWithDamage = new TestEngine(
 //       {
-//         play: [mullinsSeasonedShipmate, mrSmeeSteadfastMate],
+//         Play: [mullinsSeasonedShipmate, mrSmeeSteadfastMate],
 //       },
 //       {
-//         play: [goonsMaleficent],
+//         Play: [goonsMaleficent],
 //       },
 //     );
 //
-//     const mullinsWithResist = testEngineWithDamage.getCardModel(
-//       mullinsSeasonedShipmate,
+//     Const mullinsWithResist = testEngineWithDamage.getCardModel(
+//       MullinsSeasonedShipmate,
 //     );
-//     mullinsWithResist.updateCardMeta({ exerted: true });
+//     MullinsWithResist.updateCardMeta({ exerted: true });
 //
-//     const attacker = testEngineWithDamage.getCardModel(goonsMaleficent);
-//     attacker.challenge(mullinsWithResist);
-//     expect(mullinsWithResist.damage).toBe(goonsMaleficent.strength - 1);
+//     Const attacker = testEngineWithDamage.getCardModel(goonsMaleficent);
+//     Attacker.challenge(mullinsWithResist);
+//     Expect(mullinsWithResist.damage).toBe(goonsMaleficent.strength - 1);
 //   });
 //
-//   it("FALL IN LINE ability is dynamic and updates when Mr. Smee enters or leaves play", async () => {
-//     const testEngine = new TestEngine(
+//   It("FALL IN LINE ability is dynamic and updates when Mr. Smee enters or leaves play", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: mrSmeeSteadfastMate.cost + dragonFire.cost,
-//         play: [mullinsSeasonedShipmate],
-//         hand: [mrSmeeSteadfastMate, dragonFire],
+//         Inkwell: mrSmeeSteadfastMate.cost + dragonFire.cost,
+//         Play: [mullinsSeasonedShipmate],
+//         Hand: [mrSmeeSteadfastMate, dragonFire],
 //       },
 //       {
-//         play: [goofyKnightForADay],
+//         Play: [goofyKnightForADay],
 //       },
 //     );
 //
-//     const mullins = testEngine.getCardModel(mullinsSeasonedShipmate);
-//     expect(mullins.hasResist).toBe(false);
+//     Const mullins = testEngine.getCardModel(mullinsSeasonedShipmate);
+//     Expect(mullins.hasResist).toBe(false);
 //
-//     await testEngine.playCard(mrSmeeSteadfastMate);
-//     expect(mullins.hasResist).toBe(true);
+//     Await testEngine.playCard(mrSmeeSteadfastMate);
+//     Expect(mullins.hasResist).toBe(true);
 //
-//     await testEngine.playCard(dragonFire, {
-//       targets: [mrSmeeSteadfastMate],
+//     Await testEngine.playCard(dragonFire, {
+//       Targets: [mrSmeeSteadfastMate],
 //     });
 //
-//     expect(mullins.hasResist).toBe(false);
+//     Expect(mullins.hasResist).toBe(false);
 //   });
 // });
 //

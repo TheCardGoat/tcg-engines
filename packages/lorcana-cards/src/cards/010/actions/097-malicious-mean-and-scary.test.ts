@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { maliciousMeanAndScary } from "@lorcanito/lorcana-engine/cards/010/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { maliciousMeanAndScary } from "@lorcanito/lorcana-engine/cards/010/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Malicious, Mean, and Scary", () => {
-//   it.skip("Put 1 damage counter on each opposing character.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: maliciousMeanAndScary.cost,
-//       play: [maliciousMeanAndScary],
-//       hand: [maliciousMeanAndScary],
+// Describe("Malicious, Mean, and Scary", () => {
+//   It.skip("Put 1 damage counter on each opposing character.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: maliciousMeanAndScary.cost,
+//       Play: [maliciousMeanAndScary],
+//       Hand: [maliciousMeanAndScary],
 //     });
 //
-//     await testEngine.playCard(maliciousMeanAndScary);
+//     Await testEngine.playCard(maliciousMeanAndScary);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

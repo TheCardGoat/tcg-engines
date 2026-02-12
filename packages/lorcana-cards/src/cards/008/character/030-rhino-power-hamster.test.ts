@@ -3,84 +3,84 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { agustinMadrigalClumsyDad } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { vanellopeVonSchweetzSugarRushChamp } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { rhinoPowerHamster } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { agustinMadrigalClumsyDad } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { vanellopeVonSchweetzSugarRushChamp } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { rhinoPowerHamster } from "@lorcanito/lorcana-engine/cards/008/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Rhino - Power Hamster", () => {
-//   it("Shift 2 (You may pay 2 {I} to play this on top of one of your characters named Rhino.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [rhinoPowerHamster],
+// Describe("Rhino - Power Hamster", () => {
+//   It("Shift 2 (You may pay 2 {I} to play this on top of one of your characters named Rhino.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [rhinoPowerHamster],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(rhinoPowerHamster);
-//     expect(cardUnderTest.hasShift).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(rhinoPowerHamster);
+//     Expect(cardUnderTest.hasShift).toBe(true);
 //   });
 //
-//   it("EPIC BALL OF AWESOME While this character has no damage, he gains Resist +2. (Damage dealt to them is reduced by 2.)", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: rhinoPowerHamster.cost,
-//       play: [rhinoPowerHamster],
-//       hand: [],
+//   It("EPIC BALL OF AWESOME While this character has no damage, he gains Resist +2. (Damage dealt to them is reduced by 2.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: rhinoPowerHamster.cost,
+//       Play: [rhinoPowerHamster],
+//       Hand: [],
 //     });
 //
-//     expect(testEngine.getCardModel(rhinoPowerHamster).hasResist).toBe(true);
+//     Expect(testEngine.getCardModel(rhinoPowerHamster).hasResist).toBe(true);
 //   });
 //
-//   it("EPIC BALL OF AWESOME While this character has damage, he does not have resist", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: rhinoPowerHamster.cost,
-//       play: [rhinoPowerHamster],
-//       hand: [],
+//   It("EPIC BALL OF AWESOME While this character has damage, he does not have resist", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: rhinoPowerHamster.cost,
+//       Play: [rhinoPowerHamster],
+//       Hand: [],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(rhinoPowerHamster);
-//     testEngine.setCardDamage(cardUnderTest, 1);
+//     Const cardUnderTest = testEngine.getCardModel(rhinoPowerHamster);
+//     TestEngine.setCardDamage(cardUnderTest, 1);
 //
-//     expect(testEngine.getCardModel(rhinoPowerHamster).hasResist).toBe(false);
+//     Expect(testEngine.getCardModel(rhinoPowerHamster).hasResist).toBe(false);
 //   });
 //
-//   it("EPIC BALL OF AWESOME While this character has damage, he does not have resist", async () => {
-//     const testEngine = new TestEngine(
+//   It("EPIC BALL OF AWESOME While this character has damage, he does not have resist", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: rhinoPowerHamster.cost,
-//         play: [rhinoPowerHamster],
-//         hand: [],
+//         Inkwell: rhinoPowerHamster.cost,
+//         Play: [rhinoPowerHamster],
+//         Hand: [],
 //       },
 //       {
-//         play: [vanellopeVonSchweetzSugarRushChamp, agustinMadrigalClumsyDad],
+//         Play: [vanellopeVonSchweetzSugarRushChamp, agustinMadrigalClumsyDad],
 //       },
 //     );
 //
-//     const cardUnderTest = testEngine.getCardModel(rhinoPowerHamster);
-//     const oppoChar1 = testEngine.getCardModel(
-//       vanellopeVonSchweetzSugarRushChamp,
+//     Const cardUnderTest = testEngine.getCardModel(rhinoPowerHamster);
+//     Const oppoChar1 = testEngine.getCardModel(
+//       VanellopeVonSchweetzSugarRushChamp,
 //     );
-//     const oppoChar2 = testEngine.getCardModel(agustinMadrigalClumsyDad);
+//     Const oppoChar2 = testEngine.getCardModel(agustinMadrigalClumsyDad);
 //     // testEngine.setCardDamage(cardUnderTest, 1);
 //
-//     expect(cardUnderTest.hasResist).toBe(true);
-//     cardUnderTest.exert();
+//     Expect(cardUnderTest.hasResist).toBe(true);
+//     CardUnderTest.exert();
 //
-//     testEngine.passTurn();
+//     TestEngine.passTurn();
 //
-//     testEngine.challenge({
-//       attacker: oppoChar1,
-//       defender: cardUnderTest,
+//     TestEngine.challenge({
+//       Attacker: oppoChar1,
+//       Defender: cardUnderTest,
 //     });
 //
-//     expect(cardUnderTest.hasResist).toBe(true);
-//     expect(cardUnderTest.damage).toBe(0);
+//     Expect(cardUnderTest.hasResist).toBe(true);
+//     Expect(cardUnderTest.damage).toBe(0);
 //
-//     testEngine.challenge({
-//       attacker: oppoChar2,
-//       defender: cardUnderTest,
+//     TestEngine.challenge({
+//       Attacker: oppoChar2,
+//       Defender: cardUnderTest,
 //     });
 //
-//     expect(cardUnderTest.hasResist).toBe(true);
-//     expect(cardUnderTest.damage).toBe(0);
+//     Expect(cardUnderTest.hasResist).toBe(true);
+//     Expect(cardUnderTest.damage).toBe(0);
 //   });
 // });
 //

@@ -1,24 +1,8 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
 export const nextStopOlympus: ActionCard = {
-  id: "xl2",
-  cardType: "action",
-  name: "Next Stop, Olympus",
-  inkType: ["ruby"],
-  franchise: "Hercules",
-  set: "010",
-  text: "ACTION If you have a character with 5 {S} or more in play, you pay 2 {I} less to play this action.\nReady chosen character. They can't quest for the rest of this turn. The next time they challenge another character this turn, gain 1 lore.",
-  cost: 2,
-  cardNumber: 129,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "790b03a85acbeacfa6e0cdce19e8aa611d38f18b",
-  },
   abilities: [
     {
-      id: "xl2-1",
-      type: "action",
       effect: {
         type: "conditional",
         condition: {
@@ -30,11 +14,11 @@ export const nextStopOlympus: ActionCard = {
           from: "hand",
         },
       },
+      id: "xl2-1",
       text: "ACTION If you have a character with 5 {S} or more in play, you pay 2 {I} less to play this action.",
+      type: "action",
     },
     {
-      id: "xl2-2",
-      type: "action",
       effect: {
         type: "sequence",
         steps: [
@@ -60,7 +44,23 @@ export const nextStopOlympus: ActionCard = {
           },
         ],
       },
+      id: "xl2-2",
       text: "Ready chosen character. They can't quest for the rest of this turn. The next time they challenge another character this turn, gain 1 lore.",
+      type: "action",
     },
   ],
+  cardNumber: 129,
+  cardType: "action",
+  cost: 2,
+  externalIds: {
+    ravensburger: "790b03a85acbeacfa6e0cdce19e8aa611d38f18b",
+  },
+  franchise: "Hercules",
+  id: "xl2",
+  inkType: ["ruby"],
+  inkable: true,
+  missingTests: true,
+  name: "Next Stop, Olympus",
+  set: "010",
+  text: "ACTION If you have a character with 5 {S} or more in play, you pay 2 {I} less to play this action.\nReady chosen character. They can't quest for the rest of this turn. The next time they challenge another character this turn, gain 1 lore.",
 };

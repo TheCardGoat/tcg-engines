@@ -7,19 +7,15 @@
  */
 
 import { afterEach, beforeEach, describe, expect, test } from "bun:test";
-import {
-  LorcanaTestEngine,
-  PLAYER_ONE,
-  PLAYER_TWO,
-} from "../../testing/lorcana-test-engine";
+import { LorcanaTestEngine, PLAYER_ONE, PLAYER_TWO } from "../../testing/lorcana-test-engine";
 
 describe("Section 10: Keywords", () => {
   let testEngine: LorcanaTestEngine;
 
   beforeEach(() => {
     testEngine = new LorcanaTestEngine(
-      { hand: 7, deck: 53, inkwell: 3 },
-      { hand: 7, deck: 53, inkwell: 3 },
+      { deck: 53, hand: 7, inkwell: 3 },
+      { deck: 53, hand: 7, inkwell: 3 },
       { skipPreGame: true },
     );
   });

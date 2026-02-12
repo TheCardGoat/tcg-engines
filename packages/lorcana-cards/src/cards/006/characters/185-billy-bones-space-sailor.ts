@@ -1,35 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const billyBonesSpaceSailor: CharacterCard = {
-  id: "1oc",
-  cardType: "character",
-  name: "Billy Bones",
-  version: "Space Sailor",
-  fullName: "Billy Bones - Space Sailor",
-  inkType: ["steel"],
-  franchise: "Treasure Planet",
-  set: "006",
-  text: "KEEP IT HIDDEN When this character is banished, you may banish chosen item or location.",
-  cost: 3,
-  strength: 2,
-  willpower: 2,
-  lore: 2,
-  cardNumber: 185,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "d9747118f33198abebde6af5d847e6ea933d788e",
-  },
   abilities: [
     {
-      id: "1oc-1",
-      type: "triggered",
-      name: "KEEP IT HIDDEN",
-      trigger: {
-        event: "banish",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -44,8 +17,35 @@ export const billyBonesSpaceSailor: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "1oc-1",
+      name: "KEEP IT HIDDEN",
       text: "KEEP IT HIDDEN When this character is banished, you may banish chosen item or location.",
+      trigger: {
+        event: "banish",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 185,
+  cardType: "character",
   classifications: ["Storyborn", "Alien", "Pirate"],
+  cost: 3,
+  externalIds: {
+    ravensburger: "d9747118f33198abebde6af5d847e6ea933d788e",
+  },
+  franchise: "Treasure Planet",
+  fullName: "Billy Bones - Space Sailor",
+  id: "1oc",
+  inkType: ["steel"],
+  inkable: true,
+  lore: 2,
+  missingTests: true,
+  name: "Billy Bones",
+  set: "006",
+  strength: 2,
+  text: "KEEP IT HIDDEN When this character is banished, you may banish chosen item or location.",
+  version: "Space Sailor",
+  willpower: 2,
 };

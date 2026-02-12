@@ -3,53 +3,53 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   mickeyBraveLittleTailor,
-//   mickeyMouseArtfulRogue,
-//   mickeyMouseTrueFriend,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   MickeyBraveLittleTailor,
+//   MickeyMouseArtfulRogue,
+//   MickeyMouseTrueFriend,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { nothingToHide } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { nothingToHide } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Nothing to Hide", () => {
-//   it("Each opponent reveals their hand. Draw a card.", () => {
-//     const testStore = new TestStore(
+// Describe("Nothing to Hide", () => {
+//   It("Each opponent reveals their hand. Draw a card.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: nothingToHide.cost,
-//         hand: [nothingToHide],
-//         deck: 2,
+//         Inkwell: nothingToHide.cost,
+//         Hand: [nothingToHide],
+//         Deck: 2,
 //       },
 //       {
-//         hand: [
-//           mickeyBraveLittleTailor,
-//           mickeyMouseArtfulRogue,
-//           mickeyMouseTrueFriend,
+//         Hand: [
+//           MickeyBraveLittleTailor,
+//           MickeyMouseArtfulRogue,
+//           MickeyMouseTrueFriend,
 //         ],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", nothingToHide.id);
-//     const targets = [
-//       testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", nothingToHide.id);
+//     Const targets = [
+//       TestStore.getByZoneAndId(
 //         "hand",
-//         mickeyBraveLittleTailor.id,
+//         MickeyBraveLittleTailor.id,
 //         "player_two",
 //       ),
-//       testStore.getByZoneAndId("hand", mickeyMouseArtfulRogue.id, "player_two"),
-//       testStore.getByZoneAndId("hand", mickeyMouseTrueFriend.id, "player_two"),
+//       TestStore.getByZoneAndId("hand", mickeyMouseArtfulRogue.id, "player_two"),
+//       TestStore.getByZoneAndId("hand", mickeyMouseTrueFriend.id, "player_two"),
 //     ];
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     expect(testStore.getZonesCardCount()).toEqual(
-//       expect.objectContaining({
-//         deck: 1,
-//         hand: 1,
+//     Expect(testStore.getZonesCardCount()).toEqual(
+//       Expect.objectContaining({
+//         Deck: 1,
+//         Hand: 1,
 //       }),
 //     );
-//     targets.forEach((card) => {
-//       expect(card.meta.revealed).toEqual(true);
+//     Targets.forEach((card) => {
+//       Expect(card.meta.revealed).toEqual(true);
 //     });
 //   });
 // });

@@ -3,115 +3,115 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { robinHoodTimelyContestant } from "@lorcanito/lorcana-engine/cards/005/characters/069-robin-hood-timely-contestant";
-// import {
-//   donaldGhostHunter,
-//   hadesLookingForADeal,
-//   mickeyMouseDetective,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { robinHoodTimelyContestant } from "@lorcanito/lorcana-engine/cards/005/characters/069-robin-hood-timely-contestant";
+// Import {
+//   DonaldGhostHunter,
+//   HadesLookingForADeal,
+//   MickeyMouseDetective,
 // } from "@lorcanito/lorcana-engine/cards/010";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Hades - Looking for a Deal", () => {
-//   describe("WHAT D'YA SAY? - Modal ability", () => {
-//     it("should allow opponent to put their character on bottom of deck", async () => {
-//       const testEngine = new TestEngine(
+// Describe("Hades - Looking for a Deal", () => {
+//   Describe("WHAT D'YA SAY? - Modal ability", () => {
+//     It("should allow opponent to put their character on bottom of deck", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: hadesLookingForADeal.cost,
-//           hand: [hadesLookingForADeal],
-//           deck: 10,
+//           Inkwell: hadesLookingForADeal.cost,
+//           Hand: [hadesLookingForADeal],
+//           Deck: 10,
 //         },
 //         {
-//           play: [donaldGhostHunter, mickeyMouseDetective],
+//           Play: [donaldGhostHunter, mickeyMouseDetective],
 //         },
 //       );
 //
-//       const targetCard = testEngine.getCardModel(donaldGhostHunter);
-//       await testEngine.playCard(
-//         hadesLookingForADeal,
+//       Const targetCard = testEngine.getCardModel(donaldGhostHunter);
+//       Await testEngine.playCard(
+//         HadesLookingForADeal,
 //         {
-//           targets: [targetCard],
-//           acceptOptionalLayer: true,
+//           Targets: [targetCard],
+//           AcceptOptionalLayer: true,
 //         },
-//         true,
+//         True,
 //       );
 //
-//       testEngine.changeActivePlayer("player_two");
-//       await testEngine.resolveTopOfStack({ mode: "1" });
+//       TestEngine.changeActivePlayer("player_two");
+//       Await testEngine.resolveTopOfStack({ mode: "1" });
 //
-//       expect(targetCard.zone).toEqual("deck");
-//       expect(testEngine.getCardsByZone("hand", "player_one")?.length).toEqual(
+//       Expect(targetCard.zone).toEqual("deck");
+//       Expect(testEngine.getCardsByZone("hand", "player_one")?.length).toEqual(
 //         0,
 //       );
-//       expect(testEngine.getCardsByZone("hand", "player_two")?.length).toEqual(
+//       Expect(testEngine.getCardsByZone("hand", "player_two")?.length).toEqual(
 //         0,
 //       );
 //     });
 //
-//     it("should allow opponent to let you draw 2 cards", async () => {
-//       const testEngine = new TestEngine(
+//     It("should allow opponent to let you draw 2 cards", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: hadesLookingForADeal.cost,
-//           hand: [hadesLookingForADeal],
-//           deck: 10,
+//           Inkwell: hadesLookingForADeal.cost,
+//           Hand: [hadesLookingForADeal],
+//           Deck: 10,
 //         },
 //         {
-//           play: [donaldGhostHunter, mickeyMouseDetective],
+//           Play: [donaldGhostHunter, mickeyMouseDetective],
 //         },
 //       );
 //
-//       const targetCard = testEngine.getCardModel(mickeyMouseDetective);
-//       await testEngine.playCard(
-//         hadesLookingForADeal,
+//       Const targetCard = testEngine.getCardModel(mickeyMouseDetective);
+//       Await testEngine.playCard(
+//         HadesLookingForADeal,
 //         {
-//           targets: [targetCard],
-//           acceptOptionalLayer: true,
+//           Targets: [targetCard],
+//           AcceptOptionalLayer: true,
 //         },
-//         true,
+//         True,
 //       );
 //
-//       testEngine.changeActivePlayer("player_two");
-//       await testEngine.resolveTopOfStack({ mode: "2" });
+//       TestEngine.changeActivePlayer("player_two");
+//       Await testEngine.resolveTopOfStack({ mode: "2" });
 //
-//       expect(targetCard.zone).toEqual("play");
-//       expect(testEngine.getCardsByZone("hand", "player_one")?.length).toEqual(
+//       Expect(targetCard.zone).toEqual("play");
+//       Expect(testEngine.getCardsByZone("hand", "player_one")?.length).toEqual(
 //         2,
 //       );
-//       expect(testEngine.getCardsByZone("hand", "player_two")?.length).toEqual(
+//       Expect(testEngine.getCardsByZone("hand", "player_two")?.length).toEqual(
 //         0,
 //       );
 //     });
 //   });
 // });
 //
-// describe("Regression", () => {
-//   it("Shouldn't target characters with ward", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Regression", () => {
+//   It("Shouldn't target characters with ward", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: hadesLookingForADeal.cost,
-//         hand: [hadesLookingForADeal],
-//         deck: 10,
+//         Inkwell: hadesLookingForADeal.cost,
+//         Hand: [hadesLookingForADeal],
+//         Deck: 10,
 //       },
 //       {
-//         play: [
-//           donaldGhostHunter,
-//           mickeyMouseDetective,
-//           robinHoodTimelyContestant,
+//         Play: [
+//           DonaldGhostHunter,
+//           MickeyMouseDetective,
+//           RobinHoodTimelyContestant,
 //         ],
 //       },
 //     );
 //
-//     const targetCard = testEngine.getCardModel(robinHoodTimelyContestant);
-//     await testEngine.playCard(
-//       hadesLookingForADeal,
+//     Const targetCard = testEngine.getCardModel(robinHoodTimelyContestant);
+//     Await testEngine.playCard(
+//       HadesLookingForADeal,
 //       {
-//         targets: [targetCard],
-//         acceptOptionalLayer: true,
+//         Targets: [targetCard],
+//         AcceptOptionalLayer: true,
 //       },
-//       true,
+//       True,
 //     );
 //
-//     expect(testEngine.engine.store.priorityPlayer).toEqual("player_one");
+//     Expect(testEngine.engine.store.priorityPlayer).toEqual("player_one");
 //   });
 // });
 //

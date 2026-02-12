@@ -15,18 +15,18 @@ describe("Manual Overrides by Name", () => {
 
   // Register a manual entry for testing before each test
   const testEntry: any = {
-    text: TEST_ABILITY_TEXT,
-    name: "TEST ABILITY",
     ability: {
-      type: "static",
-      id: "test-1",
-      text: "Test static ability",
       effect: {
         type: "gain-keyword",
         keyword: "Ward",
         target: "THIS_CHARACTER",
       },
+      id: "test-1",
+      text: "Test static ability",
+      type: "static",
     },
+    name: "TEST ABILITY",
+    text: TEST_ABILITY_TEXT,
   };
 
   beforeEach(() => {

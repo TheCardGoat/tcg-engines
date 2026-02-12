@@ -1,70 +1,70 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import {
-//   whenChallenged,
-//   whenYouPlayThis,
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import {
+//   WhenChallenged,
+//   WhenYouPlayThis,
 // } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import { returnThisCardToHand } from "@lorcanito/lorcana-engine/effects/effects";
+// Import { returnThisCardToHand } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const scroogeMcduckShushAgent: LorcanitoCharacterCard = {
-//   id: "j53",
-//   name: "Scrooge McDuck",
-//   title: "S.H.U.S.H. Agent",
-//   characteristics: ["storyborn", "hero"],
-//   text: "BACKUP PLAN When you play this character, draw a card, then choose and discard a card. ON THE MOVE When this character is challenged, return this card to your hand. (No damage is dealt in that challenge.)",
-//   type: "character",
-//   inkwell: false,
-//   colors: ["emerald"],
-//   cost: 2,
-//   strength: 0,
-//   willpower: 2,
-//   illustrator: "Federico Maria Cugliari",
-//   number: 89,
-//   set: "010",
-//   externalIds: {
-//     tcgPlayer: 659464,
+// Export const scroogeMcduckShushAgent: LorcanitoCharacterCard = {
+//   Id: "j53",
+//   Name: "Scrooge McDuck",
+//   Title: "S.H.U.S.H. Agent",
+//   Characteristics: ["storyborn", "hero"],
+//   Text: "BACKUP PLAN When you play this character, draw a card, then choose and discard a card. ON THE MOVE When this character is challenged, return this card to your hand. (No damage is dealt in that challenge.)",
+//   Type: "character",
+//   Inkwell: false,
+//   Colors: ["emerald"],
+//   Cost: 2,
+//   Strength: 0,
+//   Willpower: 2,
+//   Illustrator: "Federico Maria Cugliari",
+//   Number: 89,
+//   Set: "010",
+//   ExternalIds: {
+//     TcgPlayer: 659464,
 //   },
-//   rarity: "super_rare",
-//   lore: 2,
-//   abilities: [
-//     whenYouPlayThis({
-//       name: "BACKUP PLAN",
-//       text: "When you play this character, draw a card, then choose and discard a card.",
-//       resolveEffectsIndividually: true,
-//       dependentEffects: false,
-//       effects: [
+//   Rarity: "super_rare",
+//   Lore: 2,
+//   Abilities: [
+//     WhenYouPlayThis({
+//       Name: "BACKUP PLAN",
+//       Text: "When you play this character, draw a card, then choose and discard a card.",
+//       ResolveEffectsIndividually: true,
+//       DependentEffects: false,
+//       Effects: [
 //         {
-//           type: "draw",
-//           amount: 1,
-//           target: {
-//             type: "player",
-//             value: "self",
+//           Type: "draw",
+//           Amount: 1,
+//           Target: {
+//             Type: "player",
+//             Value: "self",
 //           },
 //         },
 //         {
-//           type: "discard",
-//           amount: 1,
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
+//           Type: "discard",
+//           Amount: 1,
+//           Target: {
+//             Type: "card",
+//             Value: 1,
+//             Filters: [
 //               {
-//                 filter: "zone",
-//                 value: "hand",
+//                 Filter: "zone",
+//                 Value: "hand",
 //               },
 //               {
-//                 filter: "owner",
-//                 value: "self",
+//                 Filter: "owner",
+//                 Value: "self",
 //               },
 //             ],
 //           },
 //         },
 //       ],
 //     }),
-//     whenChallenged({
-//       name: "ON THE MOVE",
-//       text: "When this character is challenged, return this card to your hand. (No damage is dealt in that challenge.)",
-//       effects: [returnThisCardToHand],
+//     WhenChallenged({
+//       Name: "ON THE MOVE",
+//       Text: "When this character is challenged, return this card to your hand. (No damage is dealt in that challenge.)",
+//       Effects: [returnThisCardToHand],
 //     }),
 //   ],
 // };

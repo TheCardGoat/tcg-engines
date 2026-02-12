@@ -3,29 +3,29 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { pawpsicle } from "@lorcanito/lorcana-engine/cards/002/items/items";
-// import { princeJohnOpportunisticBriber } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { pawpsicle } from "@lorcanito/lorcana-engine/cards/002/items/items";
+// Import { princeJohnOpportunisticBriber } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Prince John - Opportunistic Briber", () => {
-//   it("**TAXES NEVER FAIL ME** Whenever you play an item, this character gets +2 {S} this turn.", () => {
-//     const testStore = new TestStore({
-//       inkwell: pawpsicle.cost,
-//       hand: [pawpsicle],
-//       play: [princeJohnOpportunisticBriber],
+// Describe("Prince John - Opportunistic Briber", () => {
+//   It("**TAXES NEVER FAIL ME** Whenever you play an item, this character gets +2 {S} this turn.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: pawpsicle.cost,
+//       Hand: [pawpsicle],
+//       Play: [princeJohnOpportunisticBriber],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(princeJohnOpportunisticBriber);
-//     const trigger = testStore.getCard(pawpsicle);
+//     Const cardUnderTest = testStore.getCard(princeJohnOpportunisticBriber);
+//     Const trigger = testStore.getCard(pawpsicle);
 //
-//     expect(cardUnderTest.strength).toBe(princeJohnOpportunisticBriber.strength);
+//     Expect(cardUnderTest.strength).toBe(princeJohnOpportunisticBriber.strength);
 //
-//     trigger.playFromHand();
-//     testStore.resolveOptionalAbility();
+//     Trigger.playFromHand();
+//     TestStore.resolveOptionalAbility();
 //
-//     expect(cardUnderTest.strength).toBe(
-//       princeJohnOpportunisticBriber.strength + 2,
+//     Expect(cardUnderTest.strength).toBe(
+//       PrinceJohnOpportunisticBriber.strength + 2,
 //     );
 //   });
 // });

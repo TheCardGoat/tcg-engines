@@ -3,65 +3,65 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
+// Import { describe, expect, it } from "@jest/globals";
 //
-// import {
-//   cogsworthGrandfatherClock,
-//   hiramFlavershamToymaker,
+// Import {
+//   CogsworthGrandfatherClock,
+//   HiramFlavershamToymaker,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { tipoGrowingSon } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { heffalumpsAndWoozles } from "@lorcanito/lorcana-engine/cards/006/actions/actions";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { tipoGrowingSon } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { heffalumpsAndWoozles } from "@lorcanito/lorcana-engine/cards/006/actions/actions";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Heffalumps And Woozles", () => {
-//   it("(A character with cost 2 or more can {E} to sing this song for free.)", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Heffalumps And Woozles", () => {
+//   It("(A character with cost 2 or more can {E} to sing this song for free.)", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: heffalumpsAndWoozles.cost,
-//         hand: [heffalumpsAndWoozles],
-//         deck: [hiramFlavershamToymaker],
+//         Inkwell: heffalumpsAndWoozles.cost,
+//         Hand: [heffalumpsAndWoozles],
+//         Deck: [hiramFlavershamToymaker],
 //       },
 //       { play: [tipoGrowingSon] },
 //     );
 //
-//     await testEngine.playCard(heffalumpsAndWoozles);
+//     Await testEngine.playCard(heffalumpsAndWoozles);
 //
-//     const target = testEngine.getCardModel(tipoGrowingSon);
+//     Const target = testEngine.getCardModel(tipoGrowingSon);
 //
-//     expect(testEngine.stackLayers).toHaveLength(1);
-//     await testEngine.resolveTopOfStack({ targets: [target] });
-//     expect(testEngine.stackLayers).toHaveLength(0);
-//     expect(testEngine.getZonesCardCount().hand).toEqual(1);
+//     Expect(testEngine.stackLayers).toHaveLength(1);
+//     Await testEngine.resolveTopOfStack({ targets: [target] });
+//     Expect(testEngine.stackLayers).toHaveLength(0);
+//     Expect(testEngine.getZonesCardCount().hand).toEqual(1);
 //   });
 //
-//   it("NO OPPOSING CHARACTER IN PLAY - Chosen opposing character can't quest during their next turn. Draw a card.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: heffalumpsAndWoozles.cost,
-//       hand: [heffalumpsAndWoozles],
-//       deck: [tipoGrowingSon],
+//   It("NO OPPOSING CHARACTER IN PLAY - Chosen opposing character can't quest during their next turn. Draw a card.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: heffalumpsAndWoozles.cost,
+//       Hand: [heffalumpsAndWoozles],
+//       Deck: [tipoGrowingSon],
 //     });
 //
-//     await testEngine.playCard(heffalumpsAndWoozles);
-//     await testEngine.acceptOptionalLayer();
-//     expect(testEngine.stackLayers).toHaveLength(0);
-//     expect(testEngine.getZonesCardCount().hand).toEqual(1);
+//     Await testEngine.playCard(heffalumpsAndWoozles);
+//     Await testEngine.acceptOptionalLayer();
+//     Expect(testEngine.stackLayers).toHaveLength(0);
+//     Expect(testEngine.getZonesCardCount().hand).toEqual(1);
 //   });
 //
-//   it("WARDED OPPOSING CHARACTER IN PLAY - Chosen opposing character can't quest during their next turn. Draw a card.", async () => {
-//     const testEngine = new TestEngine(
+//   It("WARDED OPPOSING CHARACTER IN PLAY - Chosen opposing character can't quest during their next turn. Draw a card.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: heffalumpsAndWoozles.cost,
-//         hand: [heffalumpsAndWoozles],
-//         deck: [tipoGrowingSon],
+//         Inkwell: heffalumpsAndWoozles.cost,
+//         Hand: [heffalumpsAndWoozles],
+//         Deck: [tipoGrowingSon],
 //       },
 //       { play: [cogsworthGrandfatherClock] },
 //     );
 //
-//     await testEngine.playCard(heffalumpsAndWoozles);
-//     await testEngine.acceptOptionalLayer();
+//     Await testEngine.playCard(heffalumpsAndWoozles);
+//     Await testEngine.acceptOptionalLayer();
 //
-//     expect(testEngine.stackLayers).toHaveLength(0);
-//     expect(testEngine.getZonesCardCount().hand).toEqual(1);
+//     Expect(testEngine.stackLayers).toHaveLength(0);
+//     Expect(testEngine.getZonesCardCount().hand).toEqual(1);
 //   });
 // });
 //

@@ -3,87 +3,87 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { mickeyMouseDetective } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { tipoGrowingSon } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import {
-//   chipFriendIndeed,
-//   chipNDaleRecoveryRangers,
-//   daleFriendInNeed,
-//   dawsonBasilsAssistant,
-//   gadgetHackwrenchPerceptiveMouse,
-//   rafikiShamanOfTheSavanna,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { mickeyMouseDetective } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { tipoGrowingSon } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import {
+//   ChipFriendIndeed,
+//   ChipNDaleRecoveryRangers,
+//   DaleFriendInNeed,
+//   DawsonBasilsAssistant,
+//   GadgetHackwrenchPerceptiveMouse,
+//   RafikiShamanOfTheSavanna,
 // } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Chip 'n' Dale - Recovery Rangers", () => {
-//   describe("Shift", () => {
-//     it("Shifts from Dale", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: 5,
-//         hand: [chipNDaleRecoveryRangers],
-//         play: [daleFriendInNeed],
+// Describe("Chip 'n' Dale - Recovery Rangers", () => {
+//   Describe("Shift", () => {
+//     It("Shifts from Dale", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: 5,
+//         Hand: [chipNDaleRecoveryRangers],
+//         Play: [daleFriendInNeed],
 //       });
 //
-//       const { shifter } = await testEngine.shiftCard({
-//         shifted: daleFriendInNeed,
-//         shifter: chipNDaleRecoveryRangers,
+//       Const { shifter } = await testEngine.shiftCard({
+//         Shifted: daleFriendInNeed,
+//         Shifter: chipNDaleRecoveryRangers,
 //       });
 //
-//       expect(shifter.zone).toEqual("play");
+//       Expect(shifter.zone).toEqual("play");
 //     });
 //
-//     it("Shifts from Chip", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: 5,
-//         hand: [chipNDaleRecoveryRangers],
-//         play: [chipFriendIndeed],
+//     It("Shifts from Chip", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: 5,
+//         Hand: [chipNDaleRecoveryRangers],
+//         Play: [chipFriendIndeed],
 //       });
 //
-//       const { shifter } = await testEngine.shiftCard({
-//         shifted: chipFriendIndeed,
-//         shifter: chipNDaleRecoveryRangers,
+//       Const { shifter } = await testEngine.shiftCard({
+//         Shifted: chipFriendIndeed,
+//         Shifter: chipNDaleRecoveryRangers,
 //       });
 //
-//       expect(shifter.zone).toEqual("play");
+//       Expect(shifter.zone).toEqual("play");
 //     });
 //   });
 //
-//   describe("Search And Rescue", () => {
-//     it("During your turn, whenever a card is put into your inkwell, you may return a character card from your discard to your hand.", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: mickeyMouseDetective.cost + mickeyMouseDetective.cost,
-//         deck: 2,
-//         hand: [
-//           rafikiShamanOfTheSavanna,
-//           mickeyMouseDetective,
-//           tipoGrowingSon,
-//           dawsonBasilsAssistant,
+//   Describe("Search And Rescue", () => {
+//     It("During your turn, whenever a card is put into your inkwell, you may return a character card from your discard to your hand.", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: mickeyMouseDetective.cost + mickeyMouseDetective.cost,
+//         Deck: 2,
+//         Hand: [
+//           RafikiShamanOfTheSavanna,
+//           MickeyMouseDetective,
+//           TipoGrowingSon,
+//           DawsonBasilsAssistant,
 //         ],
-//         discard: [gadgetHackwrenchPerceptiveMouse],
-//         play: [chipNDaleRecoveryRangers],
+//         Discard: [gadgetHackwrenchPerceptiveMouse],
+//         Play: [chipNDaleRecoveryRangers],
 //       });
 //
-//       await testEngine.putIntoInkwell(rafikiShamanOfTheSavanna);
-//       expect(testEngine.stackLayers).toHaveLength(1);
-//       await testEngine.skipTopOfStack();
+//       Await testEngine.putIntoInkwell(rafikiShamanOfTheSavanna);
+//       Expect(testEngine.stackLayers).toHaveLength(1);
+//       Await testEngine.skipTopOfStack();
 //
-//       await testEngine.playCard(mickeyMouseDetective);
-//       await testEngine.acceptOptionalLayer();
-//       expect(testEngine.stackLayers).toHaveLength(1);
-//       await testEngine.skipTopOfStack();
+//       Await testEngine.playCard(mickeyMouseDetective);
+//       Await testEngine.acceptOptionalLayer();
+//       Expect(testEngine.stackLayers).toHaveLength(1);
+//       Await testEngine.skipTopOfStack();
 //
-//       await testEngine.playCard(
-//         tipoGrowingSon,
+//       Await testEngine.playCard(
+//         TipoGrowingSon,
 //         {
-//           targets: [dawsonBasilsAssistant],
+//           Targets: [dawsonBasilsAssistant],
 //         },
-//         true,
+//         True,
 //       );
-//       expect(testEngine.stackLayers).toHaveLength(1);
-//       await testEngine.skipTopOfStack();
+//       Expect(testEngine.stackLayers).toHaveLength(1);
+//       Await testEngine.skipTopOfStack();
 //
-//       expect(testEngine.stackLayers).toHaveLength(0);
+//       Expect(testEngine.stackLayers).toHaveLength(0);
 //     });
 //   });
 // });

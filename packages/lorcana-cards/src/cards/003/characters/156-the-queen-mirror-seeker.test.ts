@@ -2,56 +2,56 @@
 // /**
 //  * @jest-environment node
 //  */
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   chiefTui,
-//   heiheiBoatSnack,
-//   liloMakingAWish,
-//   moanaOfMotunui,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   ChiefTui,
+//   HeiheiBoatSnack,
+//   LiloMakingAWish,
+//   MoanaOfMotunui,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { theQueenMirrorSeeker } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
-// import type { CardModel } from "@lorcanito/lorcana-engine/store/models/CardModel";
+// Import { theQueenMirrorSeeker } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import type { CardModel } from "@lorcanito/lorcana-engine/store/models/CardModel";
 //
-// describe("The Queen - Mirror Seeker", () => {
-//   it("**CALCULATING AND VAIN** Whenever this character quests, you may look at the top 3 cards of your deck and put them back in any order.", () => {
-//     const testStore = new TestStore({
-//       inkwell: theQueenMirrorSeeker.cost,
-//       deck: [liloMakingAWish, moanaOfMotunui, chiefTui, heiheiBoatSnack],
-//       play: [theQueenMirrorSeeker],
+// Describe("The Queen - Mirror Seeker", () => {
+//   It("**CALCULATING AND VAIN** Whenever this character quests, you may look at the top 3 cards of your deck and put them back in any order.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: theQueenMirrorSeeker.cost,
+//       Deck: [liloMakingAWish, moanaOfMotunui, chiefTui, heiheiBoatSnack],
+//       Play: [theQueenMirrorSeeker],
 //     });
 //
 //     // Retrieve the card from the "play" zone
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       theQueenMirrorSeeker.id,
+//       TheQueenMirrorSeeker.id,
 //     ) as CardModel;
-//     const one = testStore.getByZoneAndId(
+//     Const one = testStore.getByZoneAndId(
 //       "deck",
-//       heiheiBoatSnack.id,
+//       HeiheiBoatSnack.id,
 //     ) as CardModel;
-//     const two = testStore.getByZoneAndId("deck", chiefTui.id) as CardModel;
-//     const three = testStore.getByZoneAndId(
+//     Const two = testStore.getByZoneAndId("deck", chiefTui.id) as CardModel;
+//     Const three = testStore.getByZoneAndId(
 //       "deck",
-//       moanaOfMotunui.id,
+//       MoanaOfMotunui.id,
 //     ) as CardModel;
 //
-//     cardUnderTest.quest(); // Trigger the questing ability
+//     CardUnderTest.quest(); // Trigger the questing ability
 //
 //     // Handle the optional ability
-//     testStore.resolveOptionalAbility();
+//     TestStore.resolveOptionalAbility();
 //
 //     // Assume the player chooses to reorder the top 3 cards as chiefTui, heiheiBoatSnack, moanaOfMotunui
-//     const top: CardModel[] = [two, one, three];
+//     Const top: CardModel[] = [two, one, three];
 //
-//     testStore.resolveTopOfStack({ scry: { top } }, true); // Set skipAssertion to true
+//     TestStore.resolveTopOfStack({ scry: { top } }, true); // Set skipAssertion to true
 //
-//     expect(
-//       testStore.store.tableStore
+//     Expect(
+//       TestStore.store.tableStore
 //         .getPlayerZoneCards("player_one", "deck")
 //         .map((card) => card.lorcanitoCard?.name),
 //     ).toEqual([
-//       liloMakingAWish.name,
+//       LiloMakingAWish.name,
 //       ...top.map((card) => card.lorcanitoCard?.name),
 //     ]);
 //   });

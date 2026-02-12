@@ -5,9 +5,9 @@ import { theQueenWickedAndVain } from "./056-the-queen-wicked-and-vain";
 describe("The Queen - Wicked and Vain", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [theQueenWickedAndVain] });
-  //   expect(testEngine.getCardModel(theQueenWickedAndVain).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [theQueenWickedAndVain] });
+  //   Expect(testEngine.getCardModel(theQueenWickedAndVain).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,27 +17,27 @@ describe("The Queen - Wicked and Vain", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { youHaveForgottenMe } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
-// import { theQueenWickedAndVain } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { youHaveForgottenMe } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
+// Import { theQueenWickedAndVain } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("The Queen - Wicked and Vain", () => {
-//   it("**I SUMMON THEE** {E} − Draw a card.", () => {
-//     const testStore = new TestStore({
-//       deck: [youHaveForgottenMe],
-//       play: [theQueenWickedAndVain],
+// Describe("The Queen - Wicked and Vain", () => {
+//   It("**I SUMMON THEE** {E} − Draw a card.", () => {
+//     Const testStore = new TestStore({
+//       Deck: [youHaveForgottenMe],
+//       Play: [theQueenWickedAndVain],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       theQueenWickedAndVain.id,
+//       TheQueenWickedAndVain.id,
 //     );
 //
-//     cardUnderTest.activate();
+//     CardUnderTest.activate();
 //
-//     expect(testStore.getZonesCardCount()).toEqual(
-//       expect.objectContaining({ hand: 1, deck: 0, play: 1, discard: 0 }),
+//     Expect(testStore.getZonesCardCount()).toEqual(
+//       Expect.objectContaining({ hand: 1, deck: 0, play: 1, discard: 0 }),
 //     );
 //   });
 // });

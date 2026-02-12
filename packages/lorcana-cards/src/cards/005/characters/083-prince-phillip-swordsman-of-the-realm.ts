@@ -1,35 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const princePhillipSwordsmanOfTheRealm: CharacterCard = {
-  id: "1ov",
-  cardType: "character",
-  name: "Prince Phillip",
-  version: "Swordsman of the Realm",
-  fullName: "Prince Phillip - Swordsman of the Realm",
-  inkType: ["emerald"],
-  franchise: "Sleeping Beauty",
-  set: "005",
-  text: "SLAYER OF DRAGONS When you play this character, banish chosen opposing Dragon character.\nPRESSING THE ADVANTAGE Whenever he challenges a damaged character, ready this character after the challenge.",
-  cost: 7,
-  strength: 3,
-  willpower: 9,
-  lore: 3,
-  cardNumber: 83,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "db66d5e6886edfaf68c3a28ff44e4adb2989692d",
-  },
   abilities: [
     {
-      id: "1ov-1",
-      type: "triggered",
-      name: "SLAYER OF DRAGONS",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "banish",
         target: {
@@ -40,13 +13,17 @@ export const princePhillipSwordsmanOfTheRealm: CharacterCard = {
           cardTypes: ["character"],
         },
       },
+      id: "1ov-1",
+      name: "SLAYER OF DRAGONS",
       text: "SLAYER OF DRAGONS When you play this character, banish chosen opposing Dragon character.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
     {
-      id: "1ov-2",
-      type: "triggered",
-      name: "PRESSING THE ADVANTAGE",
-      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "ready",
         target: {
@@ -57,8 +34,31 @@ export const princePhillipSwordsmanOfTheRealm: CharacterCard = {
           cardTypes: ["character"],
         },
       },
+      id: "1ov-2",
+      name: "PRESSING THE ADVANTAGE",
       text: "PRESSING THE ADVANTAGE Whenever he challenges a damaged character, ready this character after the challenge.",
+      trigger: { event: "play", timing: "when", on: "SELF" },
+      type: "triggered",
     },
   ],
+  cardNumber: 83,
+  cardType: "character",
   classifications: ["Storyborn", "Hero", "Prince"],
+  cost: 7,
+  externalIds: {
+    ravensburger: "db66d5e6886edfaf68c3a28ff44e4adb2989692d",
+  },
+  franchise: "Sleeping Beauty",
+  fullName: "Prince Phillip - Swordsman of the Realm",
+  id: "1ov",
+  inkType: ["emerald"],
+  inkable: true,
+  lore: 3,
+  missingTests: true,
+  name: "Prince Phillip",
+  set: "005",
+  strength: 3,
+  text: "SLAYER OF DRAGONS When you play this character, banish chosen opposing Dragon character.\nPRESSING THE ADVANTAGE Whenever he challenges a damaged character, ready this character after the challenge.",
+  version: "Swordsman of the Realm",
+  willpower: 9,
 };

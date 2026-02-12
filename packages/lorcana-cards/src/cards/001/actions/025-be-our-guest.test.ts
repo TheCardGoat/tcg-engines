@@ -6,57 +6,57 @@ describe("Be Our Guest", () => {
   // TODO: Add tests for abilities
 });
 
-// describe("Be Our Guest", () => {
-//   it("Look at the top 4 cards of your deck. You may reveal a character card and put it into your hand. Put the rest on the bottom of your deck in any order", async () => {
-//     const testEngine = new TestEngine({
-//       deck: [liloMakingAWish, moanaOfMotunui, chiefTui, heiheiBoatSnack],
-//       hand: [beOurGuest],
-//       inkwell: beOurGuest.cost,
+// Describe("Be Our Guest", () => {
+//   It("Look at the top 4 cards of your deck. You may reveal a character card and put it into your hand. Put the rest on the bottom of your deck in any order", async () => {
+//     Const testEngine = new TestEngine({
+//       Deck: [liloMakingAWish, moanaOfMotunui, chiefTui, heiheiBoatSnack],
+//       Hand: [beOurGuest],
+//       Inkwell: beOurGuest.cost,
 //     });
 
-//     await testEngine.playCard(beOurGuest, {
-//       scry: { bottom: [heiheiBoatSnack, moanaOfMotunui], hand: [chiefTui] },
+//     Await testEngine.playCard(beOurGuest, {
+//       Scry: { bottom: [heiheiBoatSnack, moanaOfMotunui], hand: [chiefTui] },
 //     });
 
-//     const deck = testEngine.store.tableStore
+//     Const deck = testEngine.store.tableStore
 //       .getPlayerZoneCards("player_one", "deck")
 //       .map((card) => card.lorcanitoCard?.name);
 
-//     expect(testEngine.getCardModel(chiefTui).zone).toEqual("hand");
-//     expect(deck).toEqual([
-//       testEngine.getCardModel(heiheiBoatSnack).name,
-//       testEngine.getCardModel(moanaOfMotunui).name,
-//       liloMakingAWish.name,
+//     Expect(testEngine.getCardModel(chiefTui).zone).toEqual("hand");
+//     Expect(deck).toEqual([
+//       TestEngine.getCardModel(heiheiBoatSnack).name,
+//       TestEngine.getCardModel(moanaOfMotunui).name,
+//       LiloMakingAWish.name,
 //     ]);
 //   });
 
-//   it("Tutoring an invalid target card", () => {
-//     const testStore = new TestStore({
-//       deck: [liloMakingAWish, reflection, friendsOnTheOtherSide, oneJumpAhead],
-//       hand: [beOurGuest],
-//       inkwell: beOurGuest.cost,
+//   It("Tutoring an invalid target card", () => {
+//     Const testStore = new TestStore({
+//       Deck: [liloMakingAWish, reflection, friendsOnTheOtherSide, oneJumpAhead],
+//       Hand: [beOurGuest],
+//       Inkwell: beOurGuest.cost,
 //     });
 
-//     const cardUnderTest = testStore.getByZoneAndId("hand", beOurGuest.id);
-//     const one = testStore.getByZoneAndId("deck", reflection.id);
-//     const two = testStore.getByZoneAndId("deck", friendsOnTheOtherSide.id);
-//     const three = testStore.getByZoneAndId("deck", oneJumpAhead.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", beOurGuest.id);
+//     Const one = testStore.getByZoneAndId("deck", reflection.id);
+//     Const two = testStore.getByZoneAndId("deck", friendsOnTheOtherSide.id);
+//     Const three = testStore.getByZoneAndId("deck", oneJumpAhead.id);
 
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 
-//     const bottom: CardModel[] = [one, three];
+//     Const bottom: CardModel[] = [one, three];
 
-//     testStore.resolveTopOfStack({ scry: { bottom, hand: [two] } });
+//     TestStore.resolveTopOfStack({ scry: { bottom, hand: [two] } });
 
-//     const deck = testStore.store.tableStore
+//     Const deck = testStore.store.tableStore
 //       .getPlayerZoneCards("player_one", "deck")
 //       .map((card) => card.lorcanitoCard?.name);
 
-//     expect(deck).toEqual([
+//     Expect(deck).toEqual([
 //       ...bottom.reverse().map((card) => card.lorcanitoCard?.name),
-//       liloMakingAWish.name,
+//       LiloMakingAWish.name,
 //       // Be our guest only takes characters, so the card should stay on top of the deck
-//       friendsOnTheOtherSide.name,
+//       FriendsOnTheOtherSide.name,
 //     ]);
 //   });
 // });

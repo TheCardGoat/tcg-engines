@@ -3,33 +3,33 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { fishboneQuill } from "@lorcanito/lorcana-engine/cards/001/items/items";
-// import { touchedMyHeart } from "@lorcanito/lorcana-engine/cards/003/actions/actions";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { fishboneQuill } from "@lorcanito/lorcana-engine/cards/001/items/items";
+// Import { touchedMyHeart } from "@lorcanito/lorcana-engine/cards/003/actions/actions";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Touched My Heart", () => {
-//   it("_(A character with cost 2 or more can {E} to sing this song for free.)_Banish chosen item.", () => {
-//     const testStore = new TestStore({
-//       inkwell: touchedMyHeart.cost,
-//       hand: [touchedMyHeart],
-//       play: [fishboneQuill],
+// Describe("Touched My Heart", () => {
+//   It("_(A character with cost 2 or more can {E} to sing this song for free.)_Banish chosen item.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: touchedMyHeart.cost,
+//       Hand: [touchedMyHeart],
+//       Play: [fishboneQuill],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", touchedMyHeart.id);
-//     const targetItem = testStore.getByZoneAndId("play", fishboneQuill.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", touchedMyHeart.id);
+//     Const targetItem = testStore.getByZoneAndId("play", fishboneQuill.id);
 //
-//     expect(targetItem.zone).toBe("play");
+//     Expect(targetItem.zone).toBe("play");
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     testStore.resolveTopOfStack({
-//       targets: [targetItem],
+//     TestStore.resolveTopOfStack({
+//       Targets: [targetItem],
 //     });
 //
-//     expect(targetItem.zone).toBe("discard");
-//     expect(testStore.getZonesCardCount().play).toBe(0);
-//     expect(testStore.getZonesCardCount().discard).toBe(2); // item + action card
+//     Expect(targetItem.zone).toBe("discard");
+//     Expect(testStore.getZonesCardCount().play).toBe(0);
+//     Expect(testStore.getZonesCardCount().discard).toBe(2); // item + action card
 //   });
 // });
 //

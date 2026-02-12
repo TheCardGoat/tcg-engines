@@ -3,42 +3,42 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { mickeyMouseTrueFriend } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { minnieMouseDazzlingDancer } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { montereyJackGoodheartedRanger } from "@lorcanito/lorcana-engine/cards/006";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { mickeyMouseTrueFriend } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { minnieMouseDazzlingDancer } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { montereyJackGoodheartedRanger } from "@lorcanito/lorcana-engine/cards/006";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Minnie Mouse - Dazzling Dancer", () => {
-//   it("**DANCE-OFF** Whenever this character or one of your characters named Mickey Mouse challenges another character, gain 1 lore.", () => {
-//     const testEngine = new TestEngine(
+// Describe("Minnie Mouse - Dazzling Dancer", () => {
+//   It("**DANCE-OFF** Whenever this character or one of your characters named Mickey Mouse challenges another character, gain 1 lore.", () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         play: [minnieMouseDazzlingDancer, mickeyMouseTrueFriend],
+//         Play: [minnieMouseDazzlingDancer, mickeyMouseTrueFriend],
 //       },
 //       {
-//         play: [montereyJackGoodheartedRanger],
+//         Play: [montereyJackGoodheartedRanger],
 //       },
 //     );
 //
-//     const cardUnderTest = testEngine.getCardModel(minnieMouseDazzlingDancer);
-//     const mickeyCard = testEngine.getCardModel(mickeyMouseTrueFriend);
-//     const target = testEngine.getCardModel(montereyJackGoodheartedRanger);
+//     Const cardUnderTest = testEngine.getCardModel(minnieMouseDazzlingDancer);
+//     Const mickeyCard = testEngine.getCardModel(mickeyMouseTrueFriend);
+//     Const target = testEngine.getCardModel(montereyJackGoodheartedRanger);
 //
-//     target.exert();
+//     Target.exert();
 //
-//     testEngine.challenge({
-//       attacker: cardUnderTest,
-//       defender: target,
+//     TestEngine.challenge({
+//       Attacker: cardUnderTest,
+//       Defender: target,
 //     });
 //
-//     expect(testEngine.getLoreForPlayer("player_one")).toBe(1);
+//     Expect(testEngine.getLoreForPlayer("player_one")).toBe(1);
 //
-//     testEngine.challenge({
-//       attacker: mickeyCard,
-//       defender: target,
+//     TestEngine.challenge({
+//       Attacker: mickeyCard,
+//       Defender: target,
 //     });
 //
-//     expect(testEngine.getLoreForPlayer("player_one")).toBe(2);
+//     Expect(testEngine.getLoreForPlayer("player_one")).toBe(2);
 //   });
 // });
 //

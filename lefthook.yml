@@ -1,9 +1,9 @@
 pre-commit:
   parallel: true
   commands:
-    biome:
-      glob: "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}"
-      run: npx @biomejs/biome check --write --diagnostic-level=error --no-errors-on-unmatched --files-ignore-unknown=true --colors=off {staged_files}
+    oxlint:
+      glob: "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx}"
+      run: bun x oxlint --fix --quiet {staged_files}
       stage_fixed: true
 
 pre-push:

@@ -3,55 +3,55 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   goofyKnightForADay,
-//   theQueenCommandingPresence,
-//   theQueenRegalMonarch,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   GoofyKnightForADay,
+//   TheQueenCommandingPresence,
+//   TheQueenRegalMonarch,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("The Queen - Commanding Presence", () => {
-//   it("has shift", () => {
-//     const testStore = new TestStore({
-//       inkwell: theQueenCommandingPresence.cost,
-//       play: [theQueenCommandingPresence],
+// Describe("The Queen - Commanding Presence", () => {
+//   It("has shift", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: theQueenCommandingPresence.cost,
+//       Play: [theQueenCommandingPresence],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       theQueenCommandingPresence.id,
+//       TheQueenCommandingPresence.id,
 //     );
 //
-//     expect(cardUnderTest.hasShift).toEqual(true);
+//     Expect(cardUnderTest.hasShift).toEqual(true);
 //   });
 //
-//   it("**WHO IS THE FAIREST?** Whenever this character quests, chosen opposing character gets -4 {S} this turn and chosen character gets +4 {S} this turn.", () => {
-//     const testStore = new TestStore(
+//   It("**WHO IS THE FAIREST?** Whenever this character quests, chosen opposing character gets -4 {S} this turn and chosen character gets +4 {S} this turn.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: theQueenCommandingPresence.cost,
-//         play: [theQueenCommandingPresence, theQueenRegalMonarch],
+//         Inkwell: theQueenCommandingPresence.cost,
+//         Play: [theQueenCommandingPresence, theQueenRegalMonarch],
 //       },
 //       { play: [goofyKnightForADay] },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       theQueenCommandingPresence.id,
+//       TheQueenCommandingPresence.id,
 //     );
-//     const target = testStore.getByZoneAndId("play", theQueenRegalMonarch.id);
-//     const opponentTarget = testStore.getByZoneAndId(
+//     Const target = testStore.getByZoneAndId("play", theQueenRegalMonarch.id);
+//     Const opponentTarget = testStore.getByZoneAndId(
 //       "play",
-//       goofyKnightForADay.id,
+//       GoofyKnightForADay.id,
 //       "player_two",
 //     );
-//     cardUnderTest.quest();
+//     CardUnderTest.quest();
 //
-//     testStore.resolveTopOfStack({ targets: [opponentTarget] }, true);
-//     expect(opponentTarget.strength).toEqual(goofyKnightForADay.strength - 4);
+//     TestStore.resolveTopOfStack({ targets: [opponentTarget] }, true);
+//     Expect(opponentTarget.strength).toEqual(goofyKnightForADay.strength - 4);
 //
-//     testStore.resolveTopOfStack({ targets: [target] });
-//     expect(target.strength).toEqual(theQueenRegalMonarch.strength + 4);
+//     TestStore.resolveTopOfStack({ targets: [target] });
+//     Expect(target.strength).toEqual(theQueenRegalMonarch.strength + 4);
 //   });
 // });
 //

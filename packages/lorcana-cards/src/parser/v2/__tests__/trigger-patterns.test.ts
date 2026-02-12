@@ -20,8 +20,8 @@ describe("Trigger Pattern: Whenever you play a card", () => {
       expect(ability.trigger.timing).toBe("whenever");
       expect(ability.trigger.event).toBe("play");
       expect(ability.trigger.on).toEqual({
-        controller: "you",
         cardType: "card",
+        controller: "you",
       });
       expect(ability.effect.type).toBe("draw");
     }
@@ -39,8 +39,8 @@ describe("Trigger Pattern: Whenever you play a card", () => {
       expect(ability.name).toBe("YOUR REWARD AWAITS");
       expect(ability.trigger.event).toBe("play");
       expect(ability.trigger.on).toEqual({
-        controller: "you",
         cardType: "card",
+        controller: "you",
       });
     }
   });
@@ -58,8 +58,8 @@ describe("Trigger Pattern: Whenever an opponent plays X", () => {
       expect(ability.trigger.timing).toBe("whenever");
       expect(ability.trigger.event).toBe("play");
       expect(ability.trigger.on).toEqual({
-        controller: "opponent",
-        cardType: "action", // "song" is mapped to "action" (songs are actions)
+        cardType: "action",
+        controller: "opponent", // "song" is mapped to "action" (songs are actions)
       });
       expect(ability.effect.type).toBe("optional");
     }
@@ -75,8 +75,8 @@ describe("Trigger Pattern: Whenever an opponent plays X", () => {
     if (ability?.type === "triggered") {
       expect(ability.trigger.event).toBe("play");
       expect(ability.trigger.on).toEqual({
-        controller: "opponent",
         cardType: "character",
+        controller: "opponent",
       });
       expect(ability.effect.type).toBe("gain-lore");
     }
@@ -92,8 +92,8 @@ describe("Trigger Pattern: Whenever an opponent plays X", () => {
     const ability = result.ability?.ability as TriggeredAbility | undefined;
     if (ability?.type === "triggered") {
       expect(ability.trigger.on).toEqual({
-        controller: "opponent",
-        cardType: "action", // "song" is mapped to "action" (songs are actions)
+        cardType: "action",
+        controller: "opponent", // "song" is mapped to "action" (songs are actions)
       });
     }
   });
@@ -111,9 +111,9 @@ describe("Trigger Pattern: Whenever you play a [Type] character", () => {
       expect(ability.trigger.timing).toBe("whenever");
       expect(ability.trigger.event).toBe("play");
       expect(ability.trigger.on).toEqual({
-        controller: "you",
         cardType: "character",
         classification: "Hero",
+        controller: "you",
       });
       expect(ability.effect.type).toBe("gain-lore");
     }
@@ -128,9 +128,9 @@ describe("Trigger Pattern: Whenever you play a [Type] character", () => {
     const ability = result.ability?.ability as TriggeredAbility | undefined;
     if (ability?.type === "triggered") {
       expect(ability.trigger.on).toEqual({
-        controller: "you",
         cardType: "character",
         classification: "Villain",
+        controller: "you",
       });
     }
   });
@@ -144,9 +144,9 @@ describe("Trigger Pattern: Whenever you play a [Type] character", () => {
     const ability = result.ability?.ability as TriggeredAbility | undefined;
     if (ability?.type === "triggered") {
       expect(ability.trigger.on).toEqual({
-        controller: "you",
         cardType: "character",
         classification: "Princess",
+        controller: "you",
       });
     }
   });
@@ -162,9 +162,9 @@ describe("Trigger Pattern: Whenever you play a [Type] character", () => {
     if (ability?.type === "triggered") {
       expect(ability.name).toBe("SHAMELESS PROMOTER");
       expect(ability.trigger.on).toEqual({
-        controller: "you",
         cardType: "character",
         classification: "Hero",
+        controller: "you",
       });
     }
   });
@@ -178,9 +178,9 @@ describe("Trigger Pattern: Whenever you play a [Type] character", () => {
     const ability = result.ability?.ability as TriggeredAbility | undefined;
     if (ability?.type === "triggered") {
       expect(ability.trigger.on).toEqual({
-        controller: "you",
         cardType: "character",
         classification: "King",
+        controller: "you",
       });
     }
   });
@@ -194,9 +194,9 @@ describe("Trigger Pattern: Whenever you play a [Type] character", () => {
     const ability = result.ability?.ability as TriggeredAbility | undefined;
     if (ability?.type === "triggered") {
       expect(ability.trigger.on).toEqual({
-        controller: "you",
         cardType: "character",
         classification: "Queen",
+        controller: "you",
       });
     }
   });
@@ -210,9 +210,9 @@ describe("Trigger Pattern: Whenever you play a [Type] character", () => {
     const ability = result.ability?.ability as TriggeredAbility | undefined;
     if (ability?.type === "triggered") {
       expect(ability.trigger.on).toEqual({
-        controller: "you",
         cardType: "character",
         classification: "Pirate",
+        controller: "you",
       });
     }
   });
@@ -261,8 +261,8 @@ describe("Trigger Pattern: Whenever you play an action", () => {
       expect(ability.trigger.timing).toBe("whenever");
       expect(ability.trigger.event).toBe("play");
       expect(ability.trigger.on).toEqual({
-        controller: "you",
         cardType: "action",
+        controller: "you",
       });
       expect(ability.effect.type).toBe("gain-lore");
     }
@@ -278,8 +278,8 @@ describe("Trigger Pattern: Whenever you play an action", () => {
     const ability = result.ability?.ability as TriggeredAbility | undefined;
     if (ability?.type === "triggered") {
       expect(ability.trigger.on).toEqual({
-        controller: "you",
         cardType: "action",
+        controller: "you",
       });
     }
   });
@@ -297,8 +297,8 @@ describe("Trigger Pattern: Whenever you play an item", () => {
       expect(ability.trigger.timing).toBe("whenever");
       expect(ability.trigger.event).toBe("play");
       expect(ability.trigger.on).toEqual({
-        controller: "you",
         cardType: "item",
+        controller: "you",
       });
       expect(ability.effect.type).toBe("optional");
     }
@@ -314,8 +314,8 @@ describe("Trigger Pattern: Whenever you play an item", () => {
     const ability = result.ability?.ability as TriggeredAbility | undefined;
     if (ability?.type === "triggered") {
       expect(ability.trigger.on).toEqual({
-        controller: "you",
         cardType: "item",
+        controller: "you",
       });
     }
   });
@@ -333,8 +333,8 @@ describe("Trigger Pattern: Whenever you play a song", () => {
       expect(ability.trigger.timing).toBe("whenever");
       expect(ability.trigger.event).toBe("play");
       expect(ability.trigger.on).toEqual({
-        controller: "you",
-        cardType: "action", // "song" is mapped to "action" (songs are actions)
+        cardType: "action",
+        controller: "you", // "song" is mapped to "action" (songs are actions)
       });
       expect(ability.effect.type).toBe("gain-lore");
     }
@@ -351,8 +351,8 @@ describe("Trigger Pattern: Whenever you play a song", () => {
     if (ability?.type === "triggered") {
       expect(ability.name).toBe("FAN FAVORITE");
       expect(ability.trigger.on).toEqual({
-        controller: "you",
-        cardType: "action", // "song" is mapped to "action" (songs are actions)
+        cardType: "action",
+        controller: "you", // "song" is mapped to "action" (songs are actions)
       });
     }
   });
@@ -366,8 +366,8 @@ describe("Trigger Pattern: Whenever you play a song", () => {
     const ability = result.ability?.ability as TriggeredAbility | undefined;
     if (ability?.type === "triggered") {
       expect(ability.trigger.on).toEqual({
-        controller: "you",
-        cardType: "action", // "song" is mapped to "action" (songs are actions)
+        cardType: "action",
+        controller: "you", // "song" is mapped to "action" (songs are actions)
       });
       expect(ability.effect.type).toBe("optional");
     }
@@ -440,15 +440,15 @@ describe("Integration: Complex trigger combinations", () => {
 
     if (cardAbility?.type === "triggered") {
       expect(cardAbility.trigger.on).toEqual({
-        controller: "you",
         cardType: "card",
+        controller: "you",
       });
     }
 
     if (characterAbility?.type === "triggered") {
       expect(characterAbility.trigger.on).toEqual({
-        controller: "you",
         cardType: "character",
+        controller: "you",
       });
     }
   });
@@ -473,16 +473,16 @@ describe("Integration: Complex trigger combinations", () => {
 
     if (heroAbility?.type === "triggered") {
       expect(heroAbility.trigger.on).toEqual({
-        controller: "you",
         cardType: "character",
         classification: "Hero",
+        controller: "you",
       });
     }
 
     if (genericAbility?.type === "triggered") {
       expect(genericAbility.trigger.on).toEqual({
-        controller: "you",
         cardType: "character",
+        controller: "you",
       });
     }
   });
@@ -497,8 +497,8 @@ describe("Integration: Complex trigger combinations", () => {
     if (ability?.type === "triggered") {
       expect(ability.trigger.on).toBe("SELF");
       expect(ability.trigger.on).not.toEqual({
-        controller: "you",
         cardType: "character",
+        controller: "you",
       });
     }
   });

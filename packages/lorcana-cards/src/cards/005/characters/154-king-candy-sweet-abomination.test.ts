@@ -3,55 +3,55 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   kingCandySweetAbomination,
-//   kronkUnlicensedInvestigator,
-//   nalaMischievousCub,
-//   rudyGrooveDisrupter,
-//   ruttNorthernMoose,
-//   sleepySluggishKnight,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   KingCandySweetAbomination,
+//   KronkUnlicensedInvestigator,
+//   NalaMischievousCub,
+//   RudyGrooveDisrupter,
+//   RuttNorthernMoose,
+//   SleepySluggishKnight,
 // } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("King Candy - Sweet Abomination", () => {
-//   it("Shift", () => {
-//     const testStore = new TestStore({
-//       play: [kingCandySweetAbomination],
+// Describe("King Candy - Sweet Abomination", () => {
+//   It("Shift", () => {
+//     Const testStore = new TestStore({
+//       Play: [kingCandySweetAbomination],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(kingCandySweetAbomination);
+//     Const cardUnderTest = testStore.getCard(kingCandySweetAbomination);
 //
-//     expect(cardUnderTest.hasShift).toBe(true);
+//     Expect(cardUnderTest.hasShift).toBe(true);
 //   });
 //
-//   it("**CHANGING THE CODE** When you play this character, you may draw 2 cards, then put a card from your hand on the bottom of your deck.", () => {
-//     const testStore = new TestStore({
-//       inkwell: kingCandySweetAbomination.cost,
-//       hand: [kingCandySweetAbomination],
-//       deck: [
-//         rudyGrooveDisrupter,
-//         sleepySluggishKnight,
-//         kronkUnlicensedInvestigator,
-//         nalaMischievousCub,
-//         ruttNorthernMoose,
+//   It("**CHANGING THE CODE** When you play this character, you may draw 2 cards, then put a card from your hand on the bottom of your deck.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: kingCandySweetAbomination.cost,
+//       Hand: [kingCandySweetAbomination],
+//       Deck: [
+//         RudyGrooveDisrupter,
+//         SleepySluggishKnight,
+//         KronkUnlicensedInvestigator,
+//         NalaMischievousCub,
+//         RuttNorthernMoose,
 //       ],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(kingCandySweetAbomination);
-//     cardUnderTest.playFromHand();
+//     Const cardUnderTest = testStore.getCard(kingCandySweetAbomination);
+//     CardUnderTest.playFromHand();
 //
-//     testStore.resolveOptionalAbility();
-//     expect(testStore.getZonesCardCount().hand).toBe(2);
+//     TestStore.resolveOptionalAbility();
+//     Expect(testStore.getZonesCardCount().hand).toBe(2);
 //
-//     const target = testStore.getCard(nalaMischievousCub);
-//     testStore.resolveTopOfStack({ targets: [target] });
+//     Const target = testStore.getCard(nalaMischievousCub);
+//     TestStore.resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.zone).toBe("deck");
+//     Expect(target.zone).toBe("deck");
 //
 //     // Checking if the card was not put on top
-//     testStore.store.drawCard("player_one");
-//     expect(target.zone).toBe("deck");
+//     TestStore.store.drawCard("player_one");
+//     Expect(target.zone).toBe("deck");
 //   });
 // });
 //

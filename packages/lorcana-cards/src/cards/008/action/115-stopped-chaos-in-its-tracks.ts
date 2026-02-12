@@ -1,42 +1,42 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { singerTogetherAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+// Import { singerTogetherAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
 //
-// export const stoppedChaosInItsTracks: LorcanitoActionCard = {
-//   id: "cm3",
-//   name: "Stopped Chaos In Its Tracks",
-//   characteristics: ["action", "song"],
-//   text: "Sing Together 8\nReturn up to 2 chosen characters with 3 {S} or less each to their player's hand.",
-//   type: "action",
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 8,
-//   illustrator: "Edu Francisco",
-//   number: 115,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631424,
+// Export const stoppedChaosInItsTracks: LorcanitoActionCard = {
+//   Id: "cm3",
+//   Name: "Stopped Chaos In Its Tracks",
+//   Characteristics: ["action", "song"],
+//   Text: "Sing Together 8\nReturn up to 2 chosen characters with 3 {S} or less each to their player's hand.",
+//   Type: "action",
+//   Inkwell: true,
+//   Colors: ["emerald"],
+//   Cost: 8,
+//   Illustrator: "Edu Francisco",
+//   Number: 115,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631424,
 //   },
-//   rarity: "uncommon",
-//   abilities: [
-//     singerTogetherAbility(8),
+//   Rarity: "uncommon",
+//   Abilities: [
+//     SingerTogetherAbility(8),
 //     {
-//       type: "resolution",
-//       effects: [
+//       Type: "resolution",
+//       Effects: [
 //         {
-//           type: "move",
-//           to: "hand",
-//           target: {
-//             type: "card",
-//             value: 2,
-//             upTo: true,
-//             filters: [
+//           Type: "move",
+//           To: "hand",
+//           Target: {
+//             Type: "card",
+//             Value: 2,
+//             UpTo: true,
+//             Filters: [
 //               { filter: "type", value: "character" },
 //               { filter: "zone", value: "play" },
 //               {
-//                 filter: "attribute",
-//                 value: "strength",
-//                 comparison: { operator: "lte", value: 3 },
+//                 Filter: "attribute",
+//                 Value: "strength",
+//                 Comparison: { operator: "lte", value: 3 },
 //               },
 //             ],
 //           },

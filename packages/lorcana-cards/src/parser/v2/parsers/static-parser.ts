@@ -17,11 +17,11 @@ export function parseStaticAbility(text: string): ParseResult {
   const ability = parserV2.parseAbility(text);
   if (ability?.type === "static") {
     return {
-      success: true,
       ability: {
         ability,
         name: (ability as { name?: string }).name,
       },
+      success: true,
       warnings: [],
     };
   }

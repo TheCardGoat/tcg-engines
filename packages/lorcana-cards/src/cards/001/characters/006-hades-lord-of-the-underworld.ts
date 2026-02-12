@@ -1,70 +1,70 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const hadesLordOfTheUnderworld: CharacterCard = {
-  id: "1yp",
-  cardType: "character",
-  name: "Hades",
-  version: "Lord of the Underworld",
-  fullName: "Hades - Lord of the Underworld",
-  inkType: ["amber"],
-  franchise: "Hercules",
-  set: "001",
-  text: "WELL OF SOULS When you play this character, return a character card from your discard to your hand.",
-  cost: 4,
-  strength: 3,
-  willpower: 2,
-  lore: 1,
-  cardNumber: 6,
-  inkable: false,
-  externalIds: {
-    ravensburger: "fee01a363b4de2d6f92c340520d2adaea461f380",
-  },
   abilities: [
     {
-      id: "1yp-1",
-      text: "WELL OF SOULS When you play this character, return a character card from your discard to your hand.",
-      name: "WELL OF SOULS",
-      type: "triggered",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "return-from-discard",
         cardType: "character",
         target: "CONTROLLER",
       },
+      id: "1yp-1",
+      name: "WELL OF SOULS",
+      text: "WELL OF SOULS When you play this character, return a character card from your discard to your hand.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 6,
+  cardType: "character",
   classifications: ["Storyborn", "Villain", "Deity"],
+  cost: 4,
+  externalIds: {
+    ravensburger: "fee01a363b4de2d6f92c340520d2adaea461f380",
+  },
+  franchise: "Hercules",
+  fullName: "Hades - Lord of the Underworld",
+  id: "1yp",
+  inkType: ["amber"],
+  inkable: false,
+  lore: 1,
+  name: "Hades",
+  set: "001",
+  strength: 3,
+  text: "WELL OF SOULS When you play this character, return a character card from your discard to your hand.",
+  version: "Lord of the Underworld",
+  willpower: 2,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const hadesLordOfUnderworld: LorcanitoCharacterCard = {
-//   id: "kaz",
-//   name: "Hades",
-//   title: "Lord of the Underworld",
-//   characteristics: ["storyborn", "villain", "deity"],
-//   text: "**WELL OF SOULS** When you play this character, return a character card from your discard to your hand.",
-//   type: "character",
-//   abilities: [
-//     whenYouPlayThisCharAbility({
-//       type: "resolution",
-//       name: "WELL OF SOULS",
-//       text: "When you play this character, return a character card from your discard to your hand.",
-//       effects: [
+// Export const hadesLordOfUnderworld: LorcanitoCharacterCard = {
+//   Id: "kaz",
+//   Name: "Hades",
+//   Title: "Lord of the Underworld",
+//   Characteristics: ["storyborn", "villain", "deity"],
+//   Text: "**WELL OF SOULS** When you play this character, return a character card from your discard to your hand.",
+//   Type: "character",
+//   Abilities: [
+//     WhenYouPlayThisCharAbility({
+//       Type: "resolution",
+//       Name: "WELL OF SOULS",
+//       Text: "When you play this character, return a character card from your discard to your hand.",
+//       Effects: [
 //         {
-//           type: "move",
-//           to: "hand",
-//           exerted: false,
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
+//           Type: "move",
+//           To: "hand",
+//           Exerted: false,
+//           Target: {
+//             Type: "card",
+//             Value: 1,
+//             Filters: [
 //               { filter: "type", value: "character" },
 //               { filter: "zone", value: "discard" },
 //               { filter: "owner", value: "self" },
@@ -74,19 +74,19 @@ export const hadesLordOfTheUnderworld: CharacterCard = {
 //       ],
 //     }),
 //   ],
-//   flavour:
+//   Flavour:
 //     '"Production is up, costs are down, the rivers are full. Time to talk expansion."',
-//   colors: ["amber"],
-//   cost: 4,
-//   strength: 3,
-//   willpower: 2,
-//   lore: 1,
-//   illustrator: "Randy Bishop",
-//   number: 6,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 493480,
+//   Colors: ["amber"],
+//   Cost: 4,
+//   Strength: 3,
+//   Willpower: 2,
+//   Lore: 1,
+//   Illustrator: "Randy Bishop",
+//   Number: 6,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 493480,
 //   },
-//   rarity: "rare",
+//   Rarity: "rare",
 // };
 //

@@ -27,27 +27,27 @@ describe("Baloo - Friend and Guardian", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { balooFriendAndGuardian } from "@lorcanito/lorcana-engine/cards/010/characters/001-baloo-friend-and-guardian";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { balooFriendAndGuardian } from "@lorcanito/lorcana-engine/cards/010/characters/001-baloo-friend-and-guardian";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Baloo - Friend and Guardian", () => {
-//   it("should have Bodyguard ability", () => {
-//     const testEngine = new TestEngine({
-//       play: [balooFriendAndGuardian],
+// Describe("Baloo - Friend and Guardian", () => {
+//   It("should have Bodyguard ability", () => {
+//     Const testEngine = new TestEngine({
+//       Play: [balooFriendAndGuardian],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(balooFriendAndGuardian);
-//     expect(cardUnderTest.hasBodyguard).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(balooFriendAndGuardian);
+//     Expect(cardUnderTest.hasBodyguard).toBe(true);
 //   });
 //
-//   it("should have Support ability", () => {
-//     const testEngine = new TestEngine({
-//       play: [balooFriendAndGuardian],
+//   It("should have Support ability", () => {
+//     Const testEngine = new TestEngine({
+//       Play: [balooFriendAndGuardian],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(balooFriendAndGuardian);
-//     expect(cardUnderTest.hasSupport).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(balooFriendAndGuardian);
+//     Expect(cardUnderTest.hasSupport).toBe(true);
 //   });
 // });
 //

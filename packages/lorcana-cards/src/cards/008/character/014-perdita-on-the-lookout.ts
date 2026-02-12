@@ -1,29 +1,29 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { whileConditionThisCharacterGets } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { whileConditionThisCharacterGets } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
 //
-// export const perditaOnTheLookout: LorcanitoCharacterCard = {
-//   id: "q2j",
-//   missingTestCase: true,
-//   name: "Perdita",
-//   title: "On the Lookout",
-//   characteristics: ["storyborn", "hero"],
-//   text: "KEEPING WATCH While you have a Puppy character in play, this character gets +1 {W}.",
-//   type: "character",
-//   abilities: [
-//     whileConditionThisCharacterGets({
-//       name: "KEEPING WATCH",
-//       text: "While you have a Puppy character in play, this character gets +1 {W}.",
-//       attribute: "willpower",
-//       amount: 1,
-//       conditions: [
+// Export const perditaOnTheLookout: LorcanitoCharacterCard = {
+//   Id: "q2j",
+//   MissingTestCase: true,
+//   Name: "Perdita",
+//   Title: "On the Lookout",
+//   Characteristics: ["storyborn", "hero"],
+//   Text: "KEEPING WATCH While you have a Puppy character in play, this character gets +1 {W}.",
+//   Type: "character",
+//   Abilities: [
+//     WhileConditionThisCharacterGets({
+//       Name: "KEEPING WATCH",
+//       Text: "While you have a Puppy character in play, this character gets +1 {W}.",
+//       Attribute: "willpower",
+//       Amount: 1,
+//       Conditions: [
 //         {
-//           type: "filter",
-//           comparison: {
-//             operator: "gte",
-//             value: 1,
+//           Type: "filter",
+//           Comparison: {
+//             Operator: "gte",
+//             Value: 1,
 //           },
-//           filters: [
+//           Filters: [
 //             { filter: "type", value: "character" },
 //             { filter: "zone", value: "play" },
 //             { filter: "owner", value: "self" },
@@ -33,18 +33,18 @@
 //       ],
 //     }),
 //   ],
-//   inkwell: true,
-//   colors: ["amber"],
-//   cost: 2,
-//   strength: 1,
-//   willpower: 4,
-//   illustrator: "Carmine Pucci",
-//   number: 14,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631358,
+//   Inkwell: true,
+//   Colors: ["amber"],
+//   Cost: 2,
+//   Strength: 1,
+//   Willpower: 4,
+//   Illustrator: "Carmine Pucci",
+//   Number: 14,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631358,
 //   },
-//   rarity: "common",
-//   lore: 1,
+//   Rarity: "common",
+//   Lore: 1,
 // };
 //

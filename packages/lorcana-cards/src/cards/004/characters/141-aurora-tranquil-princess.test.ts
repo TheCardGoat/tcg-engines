@@ -3,21 +3,21 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { auroraTranquilPrincess } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { auroraTranquilPrincess } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Aurora - Tranquil Princess", () => {
-//   it.skip("**Ward** _(Opponents can't choose this character except to challenge.)_", () => {
-//     const testStore = new TestStore({
-//       play: [auroraTranquilPrincess],
+// Describe("Aurora - Tranquil Princess", () => {
+//   It.skip("**Ward** _(Opponents can't choose this character except to challenge.)_", () => {
+//     Const testStore = new TestStore({
+//       Play: [auroraTranquilPrincess],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       auroraTranquilPrincess.id,
+//       AuroraTranquilPrincess.id,
 //     );
-//     expect(cardUnderTest.hasWard).toBe(true);
+//     Expect(cardUnderTest.hasWard).toBe(true);
 //   });
 // });
 //

@@ -3,53 +3,53 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { heiheiBoatSnack } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { heiheiBumblingRooster } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { heiheiBoatSnack } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { heiheiBumblingRooster } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Heihei - Bumbling Rooster", () => {
-//   describe("**LET’S FATTEN YOU UP** When you play this character, if an opponent has more cards in their inkwell than you, you may put the top card of your deck into your inkwell facedown and exerted.", () => {
-//     it("Opponent has more than you", () => {
-//       const testStore = new TestStore(
+// Describe("Heihei - Bumbling Rooster", () => {
+//   Describe("**LET’S FATTEN YOU UP** When you play this character, if an opponent has more cards in their inkwell than you, you may put the top card of your deck into your inkwell facedown and exerted.", () => {
+//     It("Opponent has more than you", () => {
+//       Const testStore = new TestStore(
 //         {
-//           inkwell: heiheiBumblingRooster.cost,
-//           hand: [heiheiBumblingRooster],
-//           deck: [heiheiBoatSnack],
+//           Inkwell: heiheiBumblingRooster.cost,
+//           Hand: [heiheiBumblingRooster],
+//           Deck: [heiheiBoatSnack],
 //         },
 //         {
-//           inkwell: heiheiBumblingRooster.cost + 1,
+//           Inkwell: heiheiBumblingRooster.cost + 1,
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getCard(heiheiBumblingRooster);
-//       const target = testStore.getCard(heiheiBoatSnack);
+//       Const cardUnderTest = testStore.getCard(heiheiBumblingRooster);
+//       Const target = testStore.getCard(heiheiBoatSnack);
 //
-//       cardUnderTest.playFromHand();
-//       testStore.resolveOptionalAbility();
+//       CardUnderTest.playFromHand();
+//       TestStore.resolveOptionalAbility();
 //
-//       expect(target.zone).toEqual("inkwell");
-//       expect(target.ready).toEqual(false);
+//       Expect(target.zone).toEqual("inkwell");
+//       Expect(target.ready).toEqual(false);
 //     });
 //
-//     it("Opponent has same as you", () => {
-//       const testStore = new TestStore(
+//     It("Opponent has same as you", () => {
+//       Const testStore = new TestStore(
 //         {
-//           inkwell: heiheiBumblingRooster.cost,
-//           hand: [heiheiBumblingRooster],
-//           deck: [heiheiBoatSnack],
+//           Inkwell: heiheiBumblingRooster.cost,
+//           Hand: [heiheiBumblingRooster],
+//           Deck: [heiheiBoatSnack],
 //         },
 //         {
-//           inkwell: heiheiBumblingRooster.cost,
+//           Inkwell: heiheiBumblingRooster.cost,
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getCard(heiheiBumblingRooster);
-//       const target = testStore.getCard(heiheiBoatSnack);
+//       Const cardUnderTest = testStore.getCard(heiheiBumblingRooster);
+//       Const target = testStore.getCard(heiheiBoatSnack);
 //
-//       cardUnderTest.playFromHand();
-//       expect(testStore.stackLayers).toHaveLength(0);
-//       expect(target.zone).toEqual("deck");
+//       CardUnderTest.playFromHand();
+//       Expect(testStore.stackLayers).toHaveLength(0);
+//       Expect(target.zone).toEqual("deck");
 //     });
 //   });
 // });

@@ -3,33 +3,33 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { grabYourSword } from "@lorcanito/lorcana-engine/cards/001/songs/198-grab-your-sword";
-// import { powerlineMusicalSuperstar } from "@lorcanito/lorcana-engine/cards/009";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { grabYourSword } from "@lorcanito/lorcana-engine/cards/001/songs/198-grab-your-sword";
+// Import { powerlineMusicalSuperstar } from "@lorcanito/lorcana-engine/cards/009";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Powerline - Musical Superstar", () => {
-//   it("ELECTRIC MOVE If you've played a song this turn, this character gains Rush this turn. (They can challenge the turn they're played.)", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: grabYourSword.cost,
-//       play: [powerlineMusicalSuperstar],
-//       hand: [grabYourSword],
+// Describe("Powerline - Musical Superstar", () => {
+//   It("ELECTRIC MOVE If you've played a song this turn, this character gains Rush this turn. (They can challenge the turn they're played.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: grabYourSword.cost,
+//       Play: [powerlineMusicalSuperstar],
+//       Hand: [grabYourSword],
 //     });
 //
-//     expect(testEngine.getCardModel(powerlineMusicalSuperstar).hasRush).toBe(
-//       false,
+//     Expect(testEngine.getCardModel(powerlineMusicalSuperstar).hasRush).toBe(
+//       False,
 //     );
 //
-//     await testEngine.playCard(grabYourSword);
+//     Await testEngine.playCard(grabYourSword);
 //
-//     expect(testEngine.getCardModel(powerlineMusicalSuperstar).hasRush).toBe(
-//       true,
+//     Expect(testEngine.getCardModel(powerlineMusicalSuperstar).hasRush).toBe(
+//       True,
 //     );
 //
-//     await testEngine.passTurn();
+//     Await testEngine.passTurn();
 //
-//     expect(testEngine.getCardModel(powerlineMusicalSuperstar).hasRush).toBe(
-//       false,
+//     Expect(testEngine.getCardModel(powerlineMusicalSuperstar).hasRush).toBe(
+//       False,
 //     );
 //   });
 // });

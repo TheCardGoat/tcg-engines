@@ -110,13 +110,7 @@ export type TriggerEvent =
 /**
  * Card type filter for triggers
  */
-export type TriggerCardType =
-  | "character"
-  | "action"
-  | "item"
-  | "location"
-  | "song"
-  | "card"; // any card type
+export type TriggerCardType = "character" | "action" | "item" | "location" | "song" | "card"; // Any card type
 
 /**
  * Simple trigger subject - common patterns as string literals
@@ -235,9 +229,7 @@ export interface ChallengeTrigger extends BaseTrigger {
 /**
  * Type guard to check if a trigger is a challenge trigger
  */
-export function isChallengeTrigger(
-  trigger: Trigger,
-): trigger is ChallengeTrigger {
+export function isChallengeTrigger(trigger: Trigger): trigger is ChallengeTrigger {
   return (
     trigger.event === "challenge" ||
     trigger.event === "challenged" ||
@@ -378,117 +370,117 @@ export const COMMON_TRIGGERS = {
   /** "When you play this character" */
   WHEN_PLAY_SELF: {
     event: "play",
-    timing: "when",
     on: "SELF",
+    timing: "when",
   } as const satisfies Trigger,
 
   /** "Whenever this character quests" */
   WHENEVER_QUEST_SELF: {
     event: "quest",
-    timing: "whenever",
     on: "SELF",
+    timing: "whenever",
   } as const satisfies Trigger,
 
   /** "Whenever this character challenges" */
   WHENEVER_CHALLENGE_SELF: {
     event: "challenge",
-    timing: "whenever",
     on: "SELF",
+    timing: "whenever",
   } as const satisfies Trigger,
 
   /** "Whenever this character is challenged" */
   WHENEVER_CHALLENGED_SELF: {
     event: "challenged",
-    timing: "whenever",
     on: "SELF",
+    timing: "whenever",
   } as const satisfies Trigger,
 
   /** "When this character is banished" */
   WHEN_BANISH_SELF: {
     event: "banish",
-    timing: "when",
     on: "SELF",
+    timing: "when",
   } as const satisfies Trigger,
 
   /** "When this character is banished in a challenge" */
   WHEN_BANISH_IN_CHALLENGE: {
     event: "banish-in-challenge",
-    timing: "when",
     on: "SELF",
+    timing: "when",
   } as const satisfies Trigger,
 
   /** "At the start of your turn" */
   AT_START_OF_TURN: {
     event: "start-turn",
-    timing: "at",
     on: "YOU",
+    timing: "at",
   } as const satisfies Trigger,
 
   /** "At the end of your turn" */
   AT_END_OF_TURN: {
     event: "end-turn",
-    timing: "at",
     on: "YOU",
+    timing: "at",
   } as const satisfies Trigger,
 
   /** "Whenever you play a character" */
   WHENEVER_PLAY_CHARACTER: {
     event: "play",
-    timing: "whenever",
     on: { controller: "you", cardType: "character" },
+    timing: "whenever",
   } as const satisfies Trigger,
 
   /** "Whenever you play a song" */
   WHENEVER_PLAY_SONG: {
     event: "play",
-    timing: "whenever",
     on: { controller: "you", cardType: "song" },
+    timing: "whenever",
   } as const satisfies Trigger,
 
   /** "Whenever you play a Floodborn character" */
   WHENEVER_PLAY_FLOODBORN: {
     event: "play",
-    timing: "whenever",
     on: {
       controller: "you",
       cardType: "character",
       classification: "Floodborn",
     },
+    timing: "whenever",
   } as const satisfies Trigger,
 
   /** "When this character leaves play" */
   WHEN_LEAVE_PLAY: {
     event: "leave-play",
-    timing: "when",
     on: "SELF",
+    timing: "when",
   } as const satisfies Trigger,
 
   /** "Whenever one of your other characters is banished" */
   WHENEVER_YOUR_OTHER_CHARACTER_BANISHED: {
     event: "banish",
-    timing: "whenever",
     on: "YOUR_OTHER_CHARACTERS",
+    timing: "whenever",
   } as const satisfies Trigger,
 
   /** "Whenever an opposing character is banished" */
   WHENEVER_OPPONENT_CHARACTER_BANISHED: {
     event: "banish",
-    timing: "whenever",
     on: "OPPONENT_CHARACTERS",
+    timing: "whenever",
   } as const satisfies Trigger,
 
   /** "Whenever you draw a card" */
   WHENEVER_YOU_DRAW: {
     event: "draw",
-    timing: "whenever",
     on: "YOU",
+    timing: "whenever",
   } as const satisfies Trigger,
 
   /** "Whenever you gain lore" */
   WHENEVER_YOU_GAIN_LORE: {
     event: "gain-lore",
-    timing: "whenever",
     on: "YOU",
+    timing: "whenever",
   } as const satisfies Trigger,
 } as const;
 
@@ -499,9 +491,7 @@ export const COMMON_TRIGGERS = {
 /**
  * Check if trigger subject is a query object
  */
-export function isTriggerSubjectQuery(
-  subject: TriggerSubject,
-): subject is TriggerSubjectQuery {
+export function isTriggerSubjectQuery(subject: TriggerSubject): subject is TriggerSubjectQuery {
   return typeof subject === "object" && subject !== null;
 }
 
@@ -522,9 +512,6 @@ export function isPhaseTrigger(trigger: Trigger): boolean {
 /**
  * Check if trigger has a specific restriction
  */
-export function hasRestriction(
-  trigger: Trigger,
-  type: TriggerRestriction["type"],
-): boolean {
+export function hasRestriction(trigger: Trigger, type: TriggerRestriction["type"]): boolean {
   return trigger.restrictions?.some((r) => r.type === type) ?? false;
 }

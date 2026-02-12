@@ -3,35 +3,35 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { worldsGreatestCriminalMind } from "@lorcanito/lorcana-engine/cards/009/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { worldsGreatestCriminalMind } from "@lorcanito/lorcana-engine/cards/009/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("World's Greatest Criminal Mind", () => {
-//   it.skip("(A character with cost 3 or more can {E} to sing this song for free.)", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: worldsGreatestCriminalMind.cost,
-//       play: [worldsGreatestCriminalMind],
-//       hand: [worldsGreatestCriminalMind],
+// Describe("World's Greatest Criminal Mind", () => {
+//   It.skip("(A character with cost 3 or more can {E} to sing this song for free.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: worldsGreatestCriminalMind.cost,
+//       Play: [worldsGreatestCriminalMind],
+//       Hand: [worldsGreatestCriminalMind],
 //     });
 //
-//     await testEngine.playCard(worldsGreatestCriminalMind);
+//     Await testEngine.playCard(worldsGreatestCriminalMind);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 //
-//   it.skip("Banish chosen character with 5 {S} or more.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: worldsGreatestCriminalMind.cost,
-//       play: [worldsGreatestCriminalMind],
-//       hand: [worldsGreatestCriminalMind],
+//   It.skip("Banish chosen character with 5 {S} or more.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: worldsGreatestCriminalMind.cost,
+//       Play: [worldsGreatestCriminalMind],
+//       Hand: [worldsGreatestCriminalMind],
 //     });
 //
-//     await testEngine.playCard(worldsGreatestCriminalMind);
+//     Await testEngine.playCard(worldsGreatestCriminalMind);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

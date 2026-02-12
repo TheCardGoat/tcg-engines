@@ -3,35 +3,35 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { agustinMadrigalClumsyDad } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { vitalisphere } from "@lorcanito/lorcana-engine/cards/004/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { agustinMadrigalClumsyDad } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { vitalisphere } from "@lorcanito/lorcana-engine/cards/004/items/items";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Vitalisphere", () => {
-//   it("**EXTRACT OF RUBY** 1 {I}, Banish this item - Chosen chracter gains **Rush** and gets +2 {S} this turn. _(They can challenge the turn they're played.)_", () => {
-//     const testStore = new TestStore({
-//       inkwell: vitalisphere.cost,
-//       play: [vitalisphere, agustinMadrigalClumsyDad],
+// Describe("Vitalisphere", () => {
+//   It("**EXTRACT OF RUBY** 1 {I}, Banish this item - Chosen chracter gains **Rush** and gets +2 {S} this turn. _(They can challenge the turn they're played.)_", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: vitalisphere.cost,
+//       Play: [vitalisphere, agustinMadrigalClumsyDad],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("play", vitalisphere.id);
-//     const target = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId("play", vitalisphere.id);
+//     Const target = testStore.getByZoneAndId(
 //       "play",
-//       agustinMadrigalClumsyDad.id,
+//       AgustinMadrigalClumsyDad.id,
 //     );
 //
-//     cardUnderTest.activate();
-//     testStore.resolveTopOfStack({ targets: [target] });
+//     CardUnderTest.activate();
+//     TestStore.resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.hasRush).toBeTruthy();
-//     expect(target.strength).toEqual(agustinMadrigalClumsyDad.strength + 2);
-//     expect(cardUnderTest.zone).toEqual("discard");
+//     Expect(target.hasRush).toBeTruthy();
+//     Expect(target.strength).toEqual(agustinMadrigalClumsyDad.strength + 2);
+//     Expect(cardUnderTest.zone).toEqual("discard");
 //
-//     testStore.passTurn();
+//     TestStore.passTurn();
 //
-//     expect(target.hasRush).toBeFalsy();
-//     expect(target.strength).toEqual(agustinMadrigalClumsyDad.strength);
+//     Expect(target.hasRush).toBeFalsy();
+//     Expect(target.strength).toEqual(agustinMadrigalClumsyDad.strength);
 //   });
 // });
 //

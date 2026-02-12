@@ -1,34 +1,34 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { ifYouHaveCharacterNamed } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
-// import { whenYouPlayThisCharacter } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { ifYouHaveCharacterNamed } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
+// Import { whenYouPlayThisCharacter } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 //
-// export const annaTrustingSister: LorcanitoCharacterCard = {
-//   id: "uws",
-//   name: "Anna",
-//   title: "Trusting Sister",
-//   characteristics: ["storyborn", "hero", "queen"],
-//   text: "WE CAN DO THIS TOGETHER When you play this character, if you have a character named Elsa in play, you may put the top card of your deck into your inkwell facedown and exerted.",
-//   type: "character",
-//   abilities: [
-//     whenYouPlayThisCharacter({
-//       name: "WE CAN DO THIS TOGETHER",
-//       text: "When you play this character, if you have a character named Elsa in play, you may put the top card of your deck into your inkwell facedown and exerted.",
-//       conditions: [ifYouHaveCharacterNamed("Elsa")],
-//       optional: true,
-//       effects: [
+// Export const annaTrustingSister: LorcanitoCharacterCard = {
+//   Id: "uws",
+//   Name: "Anna",
+//   Title: "Trusting Sister",
+//   Characteristics: ["storyborn", "hero", "queen"],
+//   Text: "WE CAN DO THIS TOGETHER When you play this character, if you have a character named Elsa in play, you may put the top card of your deck into your inkwell facedown and exerted.",
+//   Type: "character",
+//   Abilities: [
+//     WhenYouPlayThisCharacter({
+//       Name: "WE CAN DO THIS TOGETHER",
+//       Text: "When you play this character, if you have a character named Elsa in play, you may put the top card of your deck into your inkwell facedown and exerted.",
+//       Conditions: [ifYouHaveCharacterNamed("Elsa")],
+//       Optional: true,
+//       Effects: [
 //         {
-//           type: "move",
-//           to: "inkwell",
-//           amount: 1,
-//           exerted: true,
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
+//           Type: "move",
+//           To: "inkwell",
+//           Amount: 1,
+//           Exerted: true,
+//           Target: {
+//             Type: "card",
+//             Value: 1,
+//             Filters: [
 //               {
-//                 filter: "top-deck",
-//                 value: "self",
+//                 Filter: "top-deck",
+//                 Value: "self",
 //               },
 //             ],
 //           },
@@ -36,18 +36,18 @@
 //       ],
 //     }),
 //   ],
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 3,
-//   strength: 2,
-//   willpower: 2,
-//   illustrator: "Samanta Erdini",
-//   number: 157,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631455,
+//   Inkwell: true,
+//   Colors: ["sapphire"],
+//   Cost: 3,
+//   Strength: 2,
+//   Willpower: 2,
+//   Illustrator: "Samanta Erdini",
+//   Number: 157,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631455,
 //   },
-//   rarity: "common",
-//   lore: 2,
+//   Rarity: "common",
+//   Lore: 2,
 // };
 //

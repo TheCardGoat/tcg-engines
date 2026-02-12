@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { mamaOdieMysticalMaven } from "@lorcanito/lorcana-engine/cards/009/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { mamaOdieMysticalMaven } from "@lorcanito/lorcana-engine/cards/009/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Mama Odie - Mystical Maven", () => {
-//   it.skip("**THIS GOING TO BE GOOD** Whenever you play a song, you may put the top card of your deck into your inkwell facedown and exerted.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: mamaOdieMysticalMaven.cost,
-//       play: [mamaOdieMysticalMaven],
-//       hand: [mamaOdieMysticalMaven],
+// Describe("Mama Odie - Mystical Maven", () => {
+//   It.skip("**THIS GOING TO BE GOOD** Whenever you play a song, you may put the top card of your deck into your inkwell facedown and exerted.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: mamaOdieMysticalMaven.cost,
+//       Play: [mamaOdieMysticalMaven],
+//       Hand: [mamaOdieMysticalMaven],
 //     });
 //
-//     await testEngine.playCard(mamaOdieMysticalMaven);
+//     Await testEngine.playCard(mamaOdieMysticalMaven);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

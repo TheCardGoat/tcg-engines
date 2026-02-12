@@ -3,64 +3,64 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   pumbaFriendlyWarhog,
-//   simbaFutureKing,
-//   simbaReturnedKing,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   PumbaFriendlyWarhog,
+//   SimbaFutureKing,
+//   SimbaReturnedKing,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { mufasaBetrayedLeader } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { prideLandsJungleOasis } from "@lorcanito/lorcana-engine/cards/005/locations/locations";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { mufasaBetrayedLeader } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { prideLandsJungleOasis } from "@lorcanito/lorcana-engine/cards/005/locations/locations";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Pride Lands - Jungle Oasis", () => {
-//   describe("**OUR HUMBLE HOME**While you have 3 or more characters here, you may banish this location to play a character from your discard for free.", () => {
-//     it("Shouldn't be activated if there's less than 3 chars", () => {
-//       const testStore = new TestStore({
-//         inkwell: prideLandsJungleOasis.moveCost * 2,
-//         play: [prideLandsJungleOasis, simbaFutureKing, pumbaFriendlyWarhog],
-//         discard: [mufasaBetrayedLeader],
+// Describe("Pride Lands - Jungle Oasis", () => {
+//   Describe("**OUR HUMBLE HOME**While you have 3 or more characters here, you may banish this location to play a character from your discard for free.", () => {
+//     It("Shouldn't be activated if there's less than 3 chars", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: prideLandsJungleOasis.moveCost * 2,
+//         Play: [prideLandsJungleOasis, simbaFutureKing, pumbaFriendlyWarhog],
+//         Discard: [mufasaBetrayedLeader],
 //       });
 //
-//       const cardUnderTest = testStore.getCard(prideLandsJungleOasis);
-//       const charOne = testStore.getCard(simbaFutureKing);
-//       const charTwo = testStore.getCard(pumbaFriendlyWarhog);
+//       Const cardUnderTest = testStore.getCard(prideLandsJungleOasis);
+//       Const charOne = testStore.getCard(simbaFutureKing);
+//       Const charTwo = testStore.getCard(pumbaFriendlyWarhog);
 //
 //       [charOne, charTwo].forEach((char) => {
-//         char.enterLocation(cardUnderTest);
+//         Char.enterLocation(cardUnderTest);
 //       });
 //
-//       cardUnderTest.activate();
-//       expect(testStore.stackLayers).toHaveLength(0);
+//       CardUnderTest.activate();
+//       Expect(testStore.stackLayers).toHaveLength(0);
 //     });
 //
-//     it("Activates with 3", () => {
-//       const testStore = new TestStore({
-//         inkwell: prideLandsJungleOasis.moveCost * 3,
-//         play: [
-//           prideLandsJungleOasis,
-//           simbaFutureKing,
-//           pumbaFriendlyWarhog,
-//           simbaReturnedKing,
+//     It("Activates with 3", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: prideLandsJungleOasis.moveCost * 3,
+//         Play: [
+//           PrideLandsJungleOasis,
+//           SimbaFutureKing,
+//           PumbaFriendlyWarhog,
+//           SimbaReturnedKing,
 //         ],
-//         discard: [mufasaBetrayedLeader],
+//         Discard: [mufasaBetrayedLeader],
 //       });
 //
-//       const cardUnderTest = testStore.getCard(prideLandsJungleOasis);
-//       const target = testStore.getCard(mufasaBetrayedLeader);
+//       Const cardUnderTest = testStore.getCard(prideLandsJungleOasis);
+//       Const target = testStore.getCard(mufasaBetrayedLeader);
 //
-//       const charOne = testStore.getCard(simbaFutureKing);
-//       const charTwo = testStore.getCard(pumbaFriendlyWarhog);
-//       const charThree = testStore.getCard(simbaReturnedKing);
+//       Const charOne = testStore.getCard(simbaFutureKing);
+//       Const charTwo = testStore.getCard(pumbaFriendlyWarhog);
+//       Const charThree = testStore.getCard(simbaReturnedKing);
 //
 //       [charOne, charTwo, charThree].forEach((char) => {
-//         char.enterLocation(cardUnderTest);
+//         Char.enterLocation(cardUnderTest);
 //       });
 //
-//       expect(cardUnderTest.getCardsAtLocation).toHaveLength(3);
-//       cardUnderTest.activate();
-//       expect(testStore.stackLayers).toHaveLength(1);
-//       testStore.resolveTopOfStack({ targets: [target] });
+//       Expect(cardUnderTest.getCardsAtLocation).toHaveLength(3);
+//       CardUnderTest.activate();
+//       Expect(testStore.stackLayers).toHaveLength(1);
+//       TestStore.resolveTopOfStack({ targets: [target] });
 //     });
 //   });
 // });

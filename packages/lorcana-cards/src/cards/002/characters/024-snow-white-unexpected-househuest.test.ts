@@ -3,49 +3,49 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   bashfulHopelessRomantic,
-//   docLeaderOfTheSevenDwarfs,
-//   grumpyBadTempered,
-//   sleepyNoddingOff,
-//   snowWhiteUnexpectedHouseGuest,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   BashfulHopelessRomantic,
+//   DocLeaderOfTheSevenDwarfs,
+//   GrumpyBadTempered,
+//   SleepyNoddingOff,
+//   SnowWhiteUnexpectedHouseGuest,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Snow White - Unexpected Househuest", () => {
-//   it("**HOW DO YOU DO?** You pay 1 {I} less to play Seven Dwarfs characters.", () => {
-//     const testStore = new TestStore({
-//       inkwell:
-//         grumpyBadTempered.cost +
-//         docLeaderOfTheSevenDwarfs.cost +
-//         sleepyNoddingOff.cost +
-//         bashfulHopelessRomantic.cost -
+// Describe("Snow White - Unexpected Househuest", () => {
+//   It("**HOW DO YOU DO?** You pay 1 {I} less to play Seven Dwarfs characters.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell:
+//         GrumpyBadTempered.cost +
+//         DocLeaderOfTheSevenDwarfs.cost +
+//         SleepyNoddingOff.cost +
+//         BashfulHopelessRomantic.cost -
 //         4,
-//       hand: [
-//         grumpyBadTempered,
-//         docLeaderOfTheSevenDwarfs,
-//         sleepyNoddingOff,
-//         bashfulHopelessRomantic,
+//       Hand: [
+//         GrumpyBadTempered,
+//         DocLeaderOfTheSevenDwarfs,
+//         SleepyNoddingOff,
+//         BashfulHopelessRomantic,
 //       ],
-//       play: [snowWhiteUnexpectedHouseGuest],
+//       Play: [snowWhiteUnexpectedHouseGuest],
 //     });
 //
-//     const target0 = testStore.getByZoneAndId("hand", grumpyBadTempered.id);
-//     const target1 = testStore.getByZoneAndId(
+//     Const target0 = testStore.getByZoneAndId("hand", grumpyBadTempered.id);
+//     Const target1 = testStore.getByZoneAndId(
 //       "hand",
-//       docLeaderOfTheSevenDwarfs.id,
+//       DocLeaderOfTheSevenDwarfs.id,
 //     );
-//     const target2 = testStore.getByZoneAndId("hand", sleepyNoddingOff.id);
-//     const target3 = testStore.getByZoneAndId(
+//     Const target2 = testStore.getByZoneAndId("hand", sleepyNoddingOff.id);
+//     Const target3 = testStore.getByZoneAndId(
 //       "hand",
-//       bashfulHopelessRomantic.id,
+//       BashfulHopelessRomantic.id,
 //     );
 //
 //     [target0, target1, target2, target3].forEach((card) => {
-//       expect(card.zone).toEqual("hand");
-//       card.playFromHand();
-//       expect(card.zone).toEqual("play");
+//       Expect(card.zone).toEqual("hand");
+//       Card.playFromHand();
+//       Expect(card.zone).toEqual("play");
 //     });
 //   });
 // });

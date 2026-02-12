@@ -3,18 +3,18 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { captainHookForcefulDuelist } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { captainHookForcefulDuelist } from "@lorcanito/lorcana-engine/cards/008/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Captain Hook - Forceful Duelist", () => {
-//   it("Challenger +2 (While challenging, this character gets +2 {S}.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [captainHookForcefulDuelist],
+// Describe("Captain Hook - Forceful Duelist", () => {
+//   It("Challenger +2 (While challenging, this character gets +2 {S}.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [captainHookForcefulDuelist],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(captainHookForcefulDuelist);
-//     expect(cardUnderTest.hasChallenger).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(captainHookForcefulDuelist);
+//     Expect(cardUnderTest.hasChallenger).toBe(true);
 //   });
 // });
 //

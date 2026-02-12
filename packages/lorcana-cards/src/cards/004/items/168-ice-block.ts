@@ -1,24 +1,8 @@
 import type { ItemCard } from "@tcg/lorcana-types";
 
 export const iceBlock: ItemCard = {
-  id: "ssh",
-  cardType: "item",
-  name: "Ice Block",
-  inkType: ["sapphire"],
-  franchise: "Frozen",
-  set: "004",
-  text: "CHILLY LABOR {E} — Chosen character gets -1 {S} this turn.",
-  cost: 1,
-  cardNumber: 168,
-  inkable: false,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "67c3a9d35138ced621a95e5ffb3c11d66ec99f27",
-  },
   abilities: [
     {
-      id: "ssh-1",
-      type: "activated",
       cost: { exert: true },
       effect: {
         type: "modify-stat",
@@ -33,7 +17,23 @@ export const iceBlock: ItemCard = {
         },
         duration: "this-turn",
       },
+      id: "ssh-1",
       text: "CHILLY LABOR {E} — Chosen character gets -1 {S} this turn.",
+      type: "activated",
     },
   ],
+  cardNumber: 168,
+  cardType: "item",
+  cost: 1,
+  externalIds: {
+    ravensburger: "67c3a9d35138ced621a95e5ffb3c11d66ec99f27",
+  },
+  franchise: "Frozen",
+  id: "ssh",
+  inkType: ["sapphire"],
+  inkable: false,
+  missingTests: true,
+  name: "Ice Block",
+  set: "004",
+  text: "CHILLY LABOR {E} — Chosen character gets -1 {S} this turn.",
 };

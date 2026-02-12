@@ -5,9 +5,9 @@ import { freeze } from "./063-freeze";
 describe("freeze - undefined", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [freeze] });
-  //   expect(testEngine.getCardModel(freeze).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [freeze] });
+  //   Expect(testEngine.getCardModel(freeze).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,69 +17,69 @@ describe("freeze - undefined", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { freeze } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
-// import { moanaOfMotunui } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { freeze } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
+// Import { moanaOfMotunui } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Freeze", () => {
-//   it("Exert chosen opponent character.", () => {
-//     const testStore = new TestStore(
+// Describe("Freeze", () => {
+//   It("Exert chosen opponent character.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: freeze.cost,
-//         hand: [freeze],
+//         Inkwell: freeze.cost,
+//         Hand: [freeze],
 //       },
 //       {
-//         play: [moanaOfMotunui],
+//         Play: [moanaOfMotunui],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", freeze.id);
-//     const target = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", freeze.id);
+//     Const target = testStore.getByZoneAndId(
 //       "play",
-//       moanaOfMotunui.id,
+//       MoanaOfMotunui.id,
 //       "player_two",
 //     );
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     testStore.resolveTopOfStack({
-//       targetId: target.instanceId,
+//     TestStore.resolveTopOfStack({
+//       TargetId: target.instanceId,
 //     });
 //
-//     expect(
-//       testStore.getByZoneAndId("play", moanaOfMotunui.id, "player_two").meta,
+//     Expect(
+//       TestStore.getByZoneAndId("play", moanaOfMotunui.id, "player_two").meta,
 //     ).toEqual(expect.objectContaining({ exerted: true }));
 //   });
 //
-//   it("Exert chosen opponent character already exerted.", () => {
-//     const testStore = new TestStore(
+//   It("Exert chosen opponent character already exerted.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: freeze.cost,
-//         hand: [freeze],
+//         Inkwell: freeze.cost,
+//         Hand: [freeze],
 //       },
 //       {
-//         play: [moanaOfMotunui],
+//         Play: [moanaOfMotunui],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", freeze.id);
-//     const target = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", freeze.id);
+//     Const target = testStore.getByZoneAndId(
 //       "play",
-//       moanaOfMotunui.id,
+//       MoanaOfMotunui.id,
 //       "player_two",
 //     );
 //
-//     target.updateCardMeta({ exerted: true });
+//     Target.updateCardMeta({ exerted: true });
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     testStore.resolveTopOfStack({
-//       targetId: target.instanceId,
+//     TestStore.resolveTopOfStack({
+//       TargetId: target.instanceId,
 //     });
 //
-//     expect(
-//       testStore.getByZoneAndId("play", moanaOfMotunui.id, "player_two").meta,
+//     Expect(
+//       TestStore.getByZoneAndId("play", moanaOfMotunui.id, "player_two").meta,
 //     ).toEqual(expect.objectContaining({ exerted: true }));
 //   });
 // });

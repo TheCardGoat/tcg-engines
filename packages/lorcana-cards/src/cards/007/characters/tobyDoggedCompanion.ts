@@ -1,24 +1,24 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const tobyDoggedCompanion: LorcanitoCharacterCard = {
-//   id: "e4r",
-//   name: "Toby",
-//   title: "Dogged Companion",
-//   characteristics: ["storyborn", "ally"],
-//   type: "character",
-//   inkwell: false,
-//   colors: ["ruby"],
-//   cost: 1,
-//   strength: 3,
-//   willpower: 1,
-//   illustrator: "Gaku Kumatori",
-//   number: 131,
-//   set: "007",
-//   externalIds: {
-//     tcgPlayer: 618708,
+// Export const tobyDoggedCompanion: LorcanitoCharacterCard = {
+//   Id: "e4r",
+//   Name: "Toby",
+//   Title: "Dogged Companion",
+//   Characteristics: ["storyborn", "ally"],
+//   Type: "character",
+//   Inkwell: false,
+//   Colors: ["ruby"],
+//   Cost: 1,
+//   Strength: 3,
+//   Willpower: 1,
+//   Illustrator: "Gaku Kumatori",
+//   Number: 131,
+//   Set: "007",
+//   ExternalIds: {
+//     TcgPlayer: 618708,
 //   },
-//   rarity: "common",
-//   lore: 1,
+//   Rarity: "common",
+//   Lore: 1,
 // };
 //

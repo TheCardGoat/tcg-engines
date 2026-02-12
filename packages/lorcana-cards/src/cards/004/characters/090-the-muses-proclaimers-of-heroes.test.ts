@@ -3,130 +3,130 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { liloMakingAWish } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import {
-//   friendsOnTheOtherSide,
-//   grabYourSword,
-//   suddenChill,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { liloMakingAWish } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import {
+//   FriendsOnTheOtherSide,
+//   GrabYourSword,
+//   SuddenChill,
 // } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
-// import {
-//   goofyKnightForADay,
-//   princeJohnGreediestOfAll,
+// Import {
+//   GoofyKnightForADay,
+//   PrinceJohnGreediestOfAll,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import {
-//   aladdinResoluteSwordsman,
-//   auroraTranquilPrincess,
-//   faLiMulansMother,
-//   theMusesProclaimersOfHeroes,
+// Import {
+//   AladdinResoluteSwordsman,
+//   AuroraTranquilPrincess,
+//   FaLiMulansMother,
+//   TheMusesProclaimersOfHeroes,
 // } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("The Muses - Proclaimers of Heroes", () => {
-//   describe("**THE GOSPEL TRUTH** Whenever you play a song, you may return chosen character with 2 {S} or less to their player's hand.", () => {
-//     it("should return own character with 2 {S} or less to own hand when a song is played", () => {
-//       const testStore = new TestStore({
-//         inkwell: grabYourSword.cost,
-//         play: [
-//           theMusesProclaimersOfHeroes,
-//           princeJohnGreediestOfAll,
-//           auroraTranquilPrincess,
-//           faLiMulansMother,
+// Describe("The Muses - Proclaimers of Heroes", () => {
+//   Describe("**THE GOSPEL TRUTH** Whenever you play a song, you may return chosen character with 2 {S} or less to their player's hand.", () => {
+//     It("should return own character with 2 {S} or less to own hand when a song is played", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: grabYourSword.cost,
+//         Play: [
+//           TheMusesProclaimersOfHeroes,
+//           PrinceJohnGreediestOfAll,
+//           AuroraTranquilPrincess,
+//           FaLiMulansMother,
 //         ],
-//         hand: [grabYourSword],
+//         Hand: [grabYourSword],
 //       });
 //
-//       const notTargetOne = testStore.getCard(auroraTranquilPrincess);
-//       const notTargetTwo = testStore.getCard(faLiMulansMother);
-//       const notTargetThree = testStore.getCard(theMusesProclaimersOfHeroes);
+//       Const notTargetOne = testStore.getCard(auroraTranquilPrincess);
+//       Const notTargetTwo = testStore.getCard(faLiMulansMother);
+//       Const notTargetThree = testStore.getCard(theMusesProclaimersOfHeroes);
 //
-//       const target = testStore.getCard(princeJohnGreediestOfAll);
-//       const song = testStore.getByZoneAndId("hand", grabYourSword.id);
-//       song.playFromHand();
+//       Const target = testStore.getCard(princeJohnGreediestOfAll);
+//       Const song = testStore.getByZoneAndId("hand", grabYourSword.id);
+//       Song.playFromHand();
 //
-//       testStore.resolveOptionalAbility();
-//       testStore.resolveTopOfStack({ targets: [target] });
+//       TestStore.resolveOptionalAbility();
+//       TestStore.resolveTopOfStack({ targets: [target] });
 //
-//       expect(target.zone).toBe("hand");
+//       Expect(target.zone).toBe("hand");
 //
 //       [notTargetOne, notTargetTwo, notTargetThree].forEach((card) => {
-//         expect(card.zone).toBe("play");
+//         Expect(card.zone).toBe("play");
 //       });
 //     });
 //
-//     it("should return opponents character with 2 {S} or less to opponents hand when a song is played", () => {
-//       const testStore = new TestStore(
+//     It("should return opponents character with 2 {S} or less to opponents hand when a song is played", () => {
+//       Const testStore = new TestStore(
 //         {
-//           inkwell: grabYourSword.cost,
-//           play: [theMusesProclaimersOfHeroes],
-//           hand: [friendsOnTheOtherSide],
-//           deck: 3,
+//           Inkwell: grabYourSword.cost,
+//           Play: [theMusesProclaimersOfHeroes],
+//           Hand: [friendsOnTheOtherSide],
+//           Deck: 3,
 //         },
 //         {
-//           play: [
-//             aladdinResoluteSwordsman,
-//             princeJohnGreediestOfAll,
-//             auroraTranquilPrincess,
-//             faLiMulansMother,
+//           Play: [
+//             AladdinResoluteSwordsman,
+//             PrinceJohnGreediestOfAll,
+//             AuroraTranquilPrincess,
+//             FaLiMulansMother,
 //           ],
 //         },
 //       );
-//       const notTargetOne = testStore.getCard(auroraTranquilPrincess);
-//       const notTargetTwo = testStore.getCard(faLiMulansMother);
-//       const notTargetThree = testStore.getCard(princeJohnGreediestOfAll);
+//       Const notTargetOne = testStore.getCard(auroraTranquilPrincess);
+//       Const notTargetTwo = testStore.getCard(faLiMulansMother);
+//       Const notTargetThree = testStore.getCard(princeJohnGreediestOfAll);
 //
-//       const song = testStore.getByZoneAndId("hand", friendsOnTheOtherSide.id);
-//       const opponentCardToReturn = testStore.getByZoneAndId(
+//       Const song = testStore.getByZoneAndId("hand", friendsOnTheOtherSide.id);
+//       Const opponentCardToReturn = testStore.getByZoneAndId(
 //         "play",
-//         aladdinResoluteSwordsman.id,
+//         AladdinResoluteSwordsman.id,
 //         "player_two",
 //       );
-//       song.playFromHand();
+//       Song.playFromHand();
 //
-//       testStore.resolveOptionalAbility();
-//       testStore.resolveTopOfStack({ targets: [opponentCardToReturn] });
+//       TestStore.resolveOptionalAbility();
+//       TestStore.resolveTopOfStack({ targets: [opponentCardToReturn] });
 //
-//       expect(opponentCardToReturn.zone).toBe("hand");
+//       Expect(opponentCardToReturn.zone).toBe("hand");
 //
 //       [notTargetOne, notTargetTwo, notTargetThree].forEach((card) => {
-//         expect(card.zone).toBe("play");
+//         Expect(card.zone).toBe("play");
 //       });
 //     });
 //   });
 // });
 //
-// describe("Regression", () => {
-//   it("Skipping muses effect during an song that requires response from opponent", () => {
-//     const testStore = new TestStore(
+// Describe("Regression", () => {
+//   It("Skipping muses effect during an song that requires response from opponent", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: suddenChill.cost,
-//         play: [theMusesProclaimersOfHeroes, liloMakingAWish],
-//         hand: [suddenChill],
+//         Inkwell: suddenChill.cost,
+//         Play: [theMusesProclaimersOfHeroes, liloMakingAWish],
+//         Hand: [suddenChill],
 //       },
 //       {
-//         hand: [goofyKnightForADay],
+//         Hand: [goofyKnightForADay],
 //       },
 //     );
 //
-//     const target = testStore.getCard(liloMakingAWish);
-//     const song = testStore.getCard(suddenChill);
+//     Const target = testStore.getCard(liloMakingAWish);
+//     Const song = testStore.getCard(suddenChill);
 //
-//     const opponentsCard = testStore.getCard(goofyKnightForADay);
+//     Const opponentsCard = testStore.getCard(goofyKnightForADay);
 //
-//     song.playFromHand();
-//     expect(testStore.stackLayers).toHaveLength(2);
-//     console.log(JSON.stringify(testStore.stackLayers[0]));
-//     expect(testStore.store.priorityPlayer).toEqual("player_two");
+//     Song.playFromHand();
+//     Expect(testStore.stackLayers).toHaveLength(2);
+//     Console.log(JSON.stringify(testStore.stackLayers[0]));
+//     Expect(testStore.store.priorityPlayer).toEqual("player_two");
 //
-//     testStore.changePlayer("player_two");
-//     testStore.resolveTopOfStack({ targets: [opponentsCard] }, true);
-//     expect(testStore.stackLayers).toHaveLength(1);
-//     expect(opponentsCard.zone).toEqual("discard");
+//     TestStore.changePlayer("player_two");
+//     TestStore.resolveTopOfStack({ targets: [opponentsCard] }, true);
+//     Expect(testStore.stackLayers).toHaveLength(1);
+//     Expect(opponentsCard.zone).toEqual("discard");
 //
-//     testStore.changePlayer("player_one");
-//     testStore.skipOptionalAbility();
-//     expect(target.zone).toBe("play");
-//     expect(testStore.stackLayers).toHaveLength(0);
+//     TestStore.changePlayer("player_one");
+//     TestStore.skipOptionalAbility();
+//     Expect(target.zone).toBe("play");
+//     Expect(testStore.stackLayers).toHaveLength(0);
 //   });
 // });
 //

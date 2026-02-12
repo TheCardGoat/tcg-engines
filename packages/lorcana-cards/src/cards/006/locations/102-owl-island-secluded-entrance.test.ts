@@ -3,69 +3,69 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   bePrepared,
-//   grabYourSword,
-//   hakunaMatata,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   BePrepared,
+//   GrabYourSword,
+//   HakunaMatata,
 // } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
-// import {
-//   owlIslandSecludedEntrance,
-//   peterPanShadowCatcher,
-//   stitchLittleTrickster,
+// Import {
+//   OwlIslandSecludedEntrance,
+//   PeterPanShadowCatcher,
+//   StitchLittleTrickster,
 // } from "@lorcanito/lorcana-engine/cards/006";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Owl's Island - Isolated Entrance", () => {
-//   it("TEAMWORK For each character you have here, you pay 1 {I} less for the first action you play each turn.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: hakunaMatata.cost + owlIslandSecludedEntrance.moveCost * 2,
-//       play: [
-//         owlIslandSecludedEntrance,
-//         peterPanShadowCatcher,
-//         stitchLittleTrickster,
+// Describe("Owl's Island - Isolated Entrance", () => {
+//   It("TEAMWORK For each character you have here, you pay 1 {I} less for the first action you play each turn.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: hakunaMatata.cost + owlIslandSecludedEntrance.moveCost * 2,
+//       Play: [
+//         OwlIslandSecludedEntrance,
+//         PeterPanShadowCatcher,
+//         StitchLittleTrickster,
 //       ],
-//       hand: [hakunaMatata, grabYourSword],
+//       Hand: [hakunaMatata, grabYourSword],
 //     });
 //
-//     const actionCard = testEngine.getCardModel(hakunaMatata);
-//     const anotherActionCard = testEngine.getCardModel(grabYourSword);
+//     Const actionCard = testEngine.getCardModel(hakunaMatata);
+//     Const anotherActionCard = testEngine.getCardModel(grabYourSword);
 //
-//     expect(actionCard.cost).toBe(hakunaMatata.cost);
+//     Expect(actionCard.cost).toBe(hakunaMatata.cost);
 //
-//     await testEngine.moveToLocation({
-//       location: owlIslandSecludedEntrance,
-//       character: peterPanShadowCatcher,
+//     Await testEngine.moveToLocation({
+//       Location: owlIslandSecludedEntrance,
+//       Character: peterPanShadowCatcher,
 //     });
 //
-//     expect(actionCard.cost).toBe(hakunaMatata.cost - 1);
+//     Expect(actionCard.cost).toBe(hakunaMatata.cost - 1);
 //
-//     await testEngine.moveToLocation({
-//       location: owlIslandSecludedEntrance,
-//       character: stitchLittleTrickster,
+//     Await testEngine.moveToLocation({
+//       Location: owlIslandSecludedEntrance,
+//       Character: stitchLittleTrickster,
 //     });
 //
-//     expect(actionCard.cost).toBe(hakunaMatata.cost - 2);
-//     expect(anotherActionCard.cost).toBe(grabYourSword.cost - 2);
+//     Expect(actionCard.cost).toBe(hakunaMatata.cost - 2);
+//     Expect(anotherActionCard.cost).toBe(grabYourSword.cost - 2);
 //
-//     await testEngine.playCard(hakunaMatata);
+//     Await testEngine.playCard(hakunaMatata);
 //
-//     expect(anotherActionCard.cost).toBe(grabYourSword.cost);
+//     Expect(anotherActionCard.cost).toBe(grabYourSword.cost);
 //   });
 //
-//   it("LOTS TO LEARN Whenever you play a second action in a turn, gain 3 lore.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: hakunaMatata.cost + grabYourSword.cost + bePrepared.cost,
-//       play: [owlIslandSecludedEntrance],
-//       hand: [hakunaMatata, grabYourSword, bePrepared],
+//   It("LOTS TO LEARN Whenever you play a second action in a turn, gain 3 lore.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: hakunaMatata.cost + grabYourSword.cost + bePrepared.cost,
+//       Play: [owlIslandSecludedEntrance],
+//       Hand: [hakunaMatata, grabYourSword, bePrepared],
 //     });
 //
-//     await testEngine.playCard(hakunaMatata);
-//     expect(testEngine.getLoreForPlayer("player_one")).toBe(0);
-//     await testEngine.playCard(grabYourSword);
-//     expect(testEngine.getLoreForPlayer("player_one")).toBe(3);
-//     await testEngine.playCard(bePrepared);
-//     expect(testEngine.getLoreForPlayer("player_one")).toBe(3);
+//     Await testEngine.playCard(hakunaMatata);
+//     Expect(testEngine.getLoreForPlayer("player_one")).toBe(0);
+//     Await testEngine.playCard(grabYourSword);
+//     Expect(testEngine.getLoreForPlayer("player_one")).toBe(3);
+//     Await testEngine.playCard(bePrepared);
+//     Expect(testEngine.getLoreForPlayer("player_one")).toBe(3);
 //   });
 // });
 //

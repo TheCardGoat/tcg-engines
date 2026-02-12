@@ -5,9 +5,9 @@ import { hansThirteenthInLine } from "./180-hans-thirteenth-in-line";
 describe("Hans - Thirteenth in Line", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [hansThirteenthInLine] });
-  //   expect(testEngine.getCardModel(hansThirteenthInLine).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [hansThirteenthInLine] });
+  //   Expect(testEngine.getCardModel(hansThirteenthInLine).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,61 +17,61 @@ describe("Hans - Thirteenth in Line", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   hansThirteenthInLine,
-//   magicBroomBucketBrigade,
-//   mickeyMouseTrueFriend,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   HansThirteenthInLine,
+//   MagicBroomBucketBrigade,
+//   MickeyMouseTrueFriend,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Hans Blaster - Thirteenth in Line", () => {
-//   it("**STAGE LITTLE ACCIDENT** Whenever this character quests, you may deal 1 damage to chosen character.", () => {
-//     const testStore = new TestStore({
-//       play: [hansThirteenthInLine, mickeyMouseTrueFriend],
+// Describe("Hans Blaster - Thirteenth in Line", () => {
+//   It("**STAGE LITTLE ACCIDENT** Whenever this character quests, you may deal 1 damage to chosen character.", () => {
+//     Const testStore = new TestStore({
+//       Play: [hansThirteenthInLine, mickeyMouseTrueFriend],
 //     });
 //
-//     const target = testStore.getByZoneAndId("play", mickeyMouseTrueFriend.id);
-//     target.updateCardMeta({ damage: 1 });
-//     expect(target.meta).toEqual(expect.objectContaining({ damage: 1 }));
+//     Const target = testStore.getByZoneAndId("play", mickeyMouseTrueFriend.id);
+//     Target.updateCardMeta({ damage: 1 });
+//     Expect(target.meta).toEqual(expect.objectContaining({ damage: 1 }));
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       hansThirteenthInLine.id,
+//       HansThirteenthInLine.id,
 //     );
 //
-//     cardUnderTest.quest();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({ targetId: target.instanceId });
+//     CardUnderTest.quest();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({ targetId: target.instanceId });
 //
-//     expect(target.meta).toEqual(expect.objectContaining({ damage: 2 }));
-//     expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
+//     Expect(target.meta).toEqual(expect.objectContaining({ damage: 2 }));
+//     Expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
 //   });
 //
-//   it("skip effect.", () => {
-//     const testStore = new TestStore({
-//       play: [hansThirteenthInLine, magicBroomBucketBrigade],
+//   It("skip effect.", () => {
+//     Const testStore = new TestStore({
+//       Play: [hansThirteenthInLine, magicBroomBucketBrigade],
 //     });
 //
-//     const target = testStore.getByZoneAndId("play", magicBroomBucketBrigade.id);
-//     target.updateCardMeta({ damage: 1 });
-//     expect(
-//       testStore.getByZoneAndId("play", magicBroomBucketBrigade.id).meta,
+//     Const target = testStore.getByZoneAndId("play", magicBroomBucketBrigade.id);
+//     Target.updateCardMeta({ damage: 1 });
+//     Expect(
+//       TestStore.getByZoneAndId("play", magicBroomBucketBrigade.id).meta,
 //     ).toEqual(expect.objectContaining({ damage: 1 }));
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       hansThirteenthInLine.id,
+//       HansThirteenthInLine.id,
 //     );
 //
-//     cardUnderTest.quest();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack();
+//     CardUnderTest.quest();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack();
 //
-//     expect(
-//       testStore.getByZoneAndId("play", magicBroomBucketBrigade.id).meta,
+//     Expect(
+//       TestStore.getByZoneAndId("play", magicBroomBucketBrigade.id).meta,
 //     ).toEqual(expect.objectContaining({ damage: 1 }));
-//     expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
+//     Expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
 //   });
 // });
 //

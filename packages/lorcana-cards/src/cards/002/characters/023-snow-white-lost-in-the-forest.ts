@@ -1,35 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const snowWhiteLostInTheForest: CharacterCard = {
-  id: "muw",
-  cardType: "character",
-  name: "Snow White",
-  version: "Lost in the Forest",
-  fullName: "Snow White - Lost in the Forest",
-  inkType: ["amber"],
-  franchise: "Snow White",
-  set: "002",
-  text: "I WON'T HURT YOU When you play this character, you may remove up to 2 damage from chosen character.",
-  cost: 2,
-  strength: 2,
-  willpower: 3,
-  lore: 1,
-  cardNumber: 23,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "52625a3814824139f2171b5ae5029653a9b48d92",
-  },
   abilities: [
     {
-      id: "muw-1",
-      type: "triggered",
-      name: "I WON'T HURT YOU",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -46,8 +19,35 @@ export const snowWhiteLostInTheForest: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "muw-1",
+      name: "I WON'T HURT YOU",
       text: "I WON'T HURT YOU When you play this character, you may remove up to 2 damage from chosen character.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 23,
+  cardType: "character",
   classifications: ["Storyborn", "Hero", "Princess"],
+  cost: 2,
+  externalIds: {
+    ravensburger: "52625a3814824139f2171b5ae5029653a9b48d92",
+  },
+  franchise: "Snow White",
+  fullName: "Snow White - Lost in the Forest",
+  id: "muw",
+  inkType: ["amber"],
+  inkable: true,
+  lore: 1,
+  missingTests: true,
+  name: "Snow White",
+  set: "002",
+  strength: 2,
+  text: "I WON'T HURT YOU When you play this character, you may remove up to 2 damage from chosen character.",
+  version: "Lost in the Forest",
+  willpower: 3,
 };

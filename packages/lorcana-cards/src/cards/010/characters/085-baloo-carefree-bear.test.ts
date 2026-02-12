@@ -3,107 +3,107 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   balooCarefreeBear,
-//   balooFriendAndGuardian,
-//   balooLaidbackBear,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   BalooCarefreeBear,
+//   BalooFriendAndGuardian,
+//   BalooLaidbackBear,
 // } from "@lorcanito/lorcana-engine/cards/010";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Baloo - Carefree Bear", () => {
-//   it("has shift 3", async () => {
-//     const testEngine = new TestEngine({
-//       play: [balooCarefreeBear],
+// Describe("Baloo - Carefree Bear", () => {
+//   It("has shift 3", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [balooCarefreeBear],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(balooCarefreeBear);
-//     expect(cardUnderTest.hasShift).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(balooCarefreeBear);
+//     Expect(cardUnderTest.hasShift).toBe(true);
 //   });
 //
-//   describe("ROLL WITH IT", () => {
-//     it("chooses mode 1: Each player draws a card", async () => {
-//       const testEngine = new TestEngine(
+//   Describe("ROLL WITH IT", () => {
+//     It("chooses mode 1: Each player draws a card", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: balooCarefreeBear.cost,
-//           hand: [balooCarefreeBear],
-//           deck: 20,
+//           Inkwell: balooCarefreeBear.cost,
+//           Hand: [balooCarefreeBear],
+//           Deck: 20,
 //         },
 //         {
-//           deck: 10,
+//           Deck: 10,
 //         },
 //       );
 //
-//       await testEngine.playCard(balooCarefreeBear);
-//       await testEngine.resolveOptionalAbility();
-//       await testEngine.resolveTopOfStack({ mode: "1" });
+//       Await testEngine.playCard(balooCarefreeBear);
+//       Await testEngine.resolveOptionalAbility();
+//       Await testEngine.resolveTopOfStack({ mode: "1" });
 //
 //       // Both players should draw a card
-//       expect(testEngine.getZonesCardCount("player_one")).toEqual(
-//         expect.objectContaining({
-//           hand: 1,
-//           deck: 19,
+//       Expect(testEngine.getZonesCardCount("player_one")).toEqual(
+//         Expect.objectContaining({
+//           Hand: 1,
+//           Deck: 19,
 //         }),
 //       );
-//       expect(testEngine.getZonesCardCount("player_two")).toEqual(
-//         expect.objectContaining({
-//           hand: 1,
-//           deck: 9,
+//       Expect(testEngine.getZonesCardCount("player_two")).toEqual(
+//         Expect.objectContaining({
+//           Hand: 1,
+//           Deck: 9,
 //         }),
 //       );
 //     });
 //
-//     it("chooses mode 2: Each player chooses and discards a card", async () => {
-//       const testEngine = new TestEngine(
+//     It("chooses mode 2: Each player chooses and discards a card", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: balooCarefreeBear.cost,
-//           hand: [balooCarefreeBear, balooFriendAndGuardian],
+//           Inkwell: balooCarefreeBear.cost,
+//           Hand: [balooCarefreeBear, balooFriendAndGuardian],
 //         },
 //         {
-//           hand: [balooLaidbackBear],
+//           Hand: [balooLaidbackBear],
 //         },
 //       );
 //
-//       await testEngine.playCard(balooCarefreeBear);
-//       expect(testEngine.getZonesCardCount("player_one")).toEqual(
-//         expect.objectContaining({
-//           hand: 1,
-//           play: 1,
+//       Await testEngine.playCard(balooCarefreeBear);
+//       Expect(testEngine.getZonesCardCount("player_one")).toEqual(
+//         Expect.objectContaining({
+//           Hand: 1,
+//           Play: 1,
 //         }),
 //       );
 //
-//       await testEngine.resolveOptionalAbility();
-//       await testEngine.resolveTopOfStack({ mode: "2" }, true);
+//       Await testEngine.resolveOptionalAbility();
+//       Await testEngine.resolveTopOfStack({ mode: "2" }, true);
 //
 //       // Active Player Chooses and Discards first
-//       testEngine.changeActivePlayer("player_one");
-//       await testEngine.resolveTopOfStack(
+//       TestEngine.changeActivePlayer("player_one");
+//       Await testEngine.resolveTopOfStack(
 //         { targets: [balooFriendAndGuardian] },
-//         true,
+//         True,
 //       );
-//       expect(testEngine.getZonesCardCount("player_one")).toEqual(
-//         expect.objectContaining({
-//           hand: 0,
-//           discard: 1,
+//       Expect(testEngine.getZonesCardCount("player_one")).toEqual(
+//         Expect.objectContaining({
+//           Hand: 0,
+//           Discard: 1,
 //         }),
 //       );
 //
-//       expect(testEngine.stackLayers).toHaveLength(1);
+//       Expect(testEngine.stackLayers).toHaveLength(1);
 //
-//       testEngine.changeActivePlayer("player_two");
-//       await testEngine.resolveTopOfStack(
+//       TestEngine.changeActivePlayer("player_two");
+//       Await testEngine.resolveTopOfStack(
 //         { targets: [balooFriendAndGuardian] },
-//         true,
+//         True,
 //       );
 //
-//       await testEngine.resolveTopOfStack(
+//       Await testEngine.resolveTopOfStack(
 //         { targets: [balooLaidbackBear] },
-//         true,
+//         True,
 //       );
-//       expect(testEngine.getZonesCardCount("player_two")).toEqual(
-//         expect.objectContaining({
-//           hand: 0,
-//           discard: 1,
+//       Expect(testEngine.getZonesCardCount("player_two")).toEqual(
+//         Expect.objectContaining({
+//           Hand: 0,
+//           Discard: 1,
 //         }),
 //       );
 //     });

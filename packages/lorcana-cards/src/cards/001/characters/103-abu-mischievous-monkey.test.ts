@@ -5,9 +5,9 @@ import { abuMischievousMonkey } from "./103-abu-mischievous-monkey";
 describe("Abu - Mischievous Monkey", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [abuMischievenusMonkey] });
-  //   expect(testEngine.getCardModel(abuMischievenusMonkey).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [abuMischievenusMonkey] });
+  //   Expect(testEngine.getCardModel(abuMischievenusMonkey).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });

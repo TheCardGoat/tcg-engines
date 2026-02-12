@@ -5,9 +5,9 @@ import { dragonFireundefined } from "./130-dragon-fire";
 describe("Dragon Fire - undefined", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [dragonFire] });
-  //   expect(testEngine.getCardModel(dragonFire).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [dragonFire] });
+  //   Expect(testEngine.getCardModel(dragonFire).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,29 +17,29 @@ describe("Dragon Fire - undefined", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { dragonFire } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
-// import { moanaOfMotunui } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { dragonFire } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
+// Import { moanaOfMotunui } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Dragon Fire", () => {
-//   it("Banish chosen character.", () => {
-//     const testStore = new TestStore({
-//       inkwell: dragonFire.cost,
-//       hand: [dragonFire],
-//       play: [moanaOfMotunui],
+// Describe("Dragon Fire", () => {
+//   It("Banish chosen character.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: dragonFire.cost,
+//       Hand: [dragonFire],
+//       Play: [moanaOfMotunui],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", dragonFire.id);
-//     const target = testStore.getByZoneAndId("play", moanaOfMotunui.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", dragonFire.id);
+//     Const target = testStore.getByZoneAndId("play", moanaOfMotunui.id);
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     testStore.resolveTopOfStack({
-//       targetId: target.instanceId,
+//     TestStore.resolveTopOfStack({
+//       TargetId: target.instanceId,
 //     });
 //
-//     expect(target.zone).toEqual("discard");
+//     Expect(target.zone).toEqual("discard");
 //   });
 // });
 //

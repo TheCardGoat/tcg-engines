@@ -3,34 +3,34 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   elsaTheFifthSpirit,
-//   monstroWhaleOfAWhale,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   ElsaTheFifthSpirit,
+//   MonstroWhaleOfAWhale,
 // } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Elsa The Fifth Spirit", () => {
-//   it("**CRYSTALLIZE** When you play this character, exert chosen opposing character.", () => {
-//     const testStore = new TestStore(
+// Describe("Elsa The Fifth Spirit", () => {
+//   It("**CRYSTALLIZE** When you play this character, exert chosen opposing character.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: elsaTheFifthSpirit.cost,
-//         hand: [elsaTheFifthSpirit],
+//         Inkwell: elsaTheFifthSpirit.cost,
+//         Hand: [elsaTheFifthSpirit],
 //       },
 //       {
-//         play: [monstroWhaleOfAWhale],
+//         Play: [monstroWhaleOfAWhale],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "hand",
-//       elsaTheFifthSpirit.id,
+//       ElsaTheFifthSpirit.id,
 //     );
-//     const target = testStore.getCard(monstroWhaleOfAWhale);
+//     Const target = testStore.getCard(monstroWhaleOfAWhale);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveTopOfStack({ targets: [target] });
-//     expect(target.meta.exerted).toBe(true);
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveTopOfStack({ targets: [target] });
+//     Expect(target.meta.exerted).toBe(true);
 //   });
 // });
 //

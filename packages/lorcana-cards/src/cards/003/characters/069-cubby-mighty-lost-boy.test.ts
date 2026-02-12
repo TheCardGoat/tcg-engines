@@ -3,25 +3,25 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { cubbyMightyLostBoy } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { cubbyMightyLostBoy } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Cubby - Mighty Lost Boy", () => {
-//   it.skip("**THE BEAR** Whenever this character moves to a location, he gets +3 {S} this turn.", () => {
-//     const testStore = new TestStore({
-//       inkwell: cubbyMightyLostBoy.cost,
-//       play: [cubbyMightyLostBoy],
+// Describe("Cubby - Mighty Lost Boy", () => {
+//   It.skip("**THE BEAR** Whenever this character moves to a location, he gets +3 {S} this turn.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: cubbyMightyLostBoy.cost,
+//       Play: [cubbyMightyLostBoy],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       cubbyMightyLostBoy.id,
+//       CubbyMightyLostBoy.id,
 //     );
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

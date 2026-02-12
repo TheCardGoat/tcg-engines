@@ -3,160 +3,160 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { dragonFire } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
-// import {
-//   liloGalacticHero,
-//   liloMakingAWish,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { dragonFire } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
+// Import {
+//   LiloGalacticHero,
+//   LiloMakingAWish,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import {
-//   bePrepared,
-//   grabYourSword,
+// Import {
+//   BePrepared,
+//   GrabYourSword,
 // } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
-// import { lyleTiberiusRourkeCunningMercenary } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { liloJuniorCakeDecorator } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { lyleTiberiusRourkeCunningMercenary } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { liloJuniorCakeDecorator } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Lyle Tiberius Rourke - Cunning Mercenary", () => {
-//   it("**WELL, NOW YOU KNOW** When you play this character, chosen opposing character gains **Reckless** during their next turn. _(They can’t quest and must challenge if able.)", () => {
-//     const testStore = new TestStore(
+// Describe("Lyle Tiberius Rourke - Cunning Mercenary", () => {
+//   It("**WELL, NOW YOU KNOW** When you play this character, chosen opposing character gains **Reckless** during their next turn. _(They can’t quest and must challenge if able.)", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: lyleTiberiusRourkeCunningMercenary.cost,
-//         hand: [lyleTiberiusRourkeCunningMercenary],
+//         Inkwell: lyleTiberiusRourkeCunningMercenary.cost,
+//         Hand: [lyleTiberiusRourkeCunningMercenary],
 //       },
 //       {
-//         play: [liloMakingAWish],
+//         Play: [liloMakingAWish],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getCard(lyleTiberiusRourkeCunningMercenary);
-//     const target = testStore.getCard(liloMakingAWish);
+//     Const cardUnderTest = testStore.getCard(lyleTiberiusRourkeCunningMercenary);
+//     Const target = testStore.getCard(liloMakingAWish);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveTopOfStack({ targets: [target] });
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveTopOfStack({ targets: [target] });
 //
-//     testStore.passTurn();
+//     TestStore.passTurn();
 //
-//     expect(target.hasReckless).toEqual(true);
+//     Expect(target.hasReckless).toEqual(true);
 //   });
 //
-//   describe("**THANKS FOR VOLUNTEERING**", () => {
-//     it("Whenever one of your other characters is banished, each opponent loses 1 lore.", () => {
-//       const testStore = new TestStore({
-//         inkwell: dragonFire.cost,
-//         hand: [dragonFire],
-//         play: [lyleTiberiusRourkeCunningMercenary, liloMakingAWish],
+//   Describe("**THANKS FOR VOLUNTEERING**", () => {
+//     It("Whenever one of your other characters is banished, each opponent loses 1 lore.", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: dragonFire.cost,
+//         Hand: [dragonFire],
+//         Play: [lyleTiberiusRourkeCunningMercenary, liloMakingAWish],
 //       });
 //
-//       testStore.store.tableStore.getTable("player_two").lore = 5;
+//       TestStore.store.tableStore.getTable("player_two").lore = 5;
 //
-//       const target = testStore.getCard(liloMakingAWish);
-//       const banisher = testStore.getCard(dragonFire);
+//       Const target = testStore.getCard(liloMakingAWish);
+//       Const banisher = testStore.getCard(dragonFire);
 //
-//       banisher.playFromHand();
-//       testStore.resolveTopOfStack({ targets: [target] });
-//       expect(target.zone).toBe("discard");
-//       expect(testStore.store.tableStore.getTable("player_two").lore).toBe(4);
+//       Banisher.playFromHand();
+//       TestStore.resolveTopOfStack({ targets: [target] });
+//       Expect(target.zone).toBe("discard");
+//       Expect(testStore.store.tableStore.getTable("player_two").lore).toBe(4);
 //     });
 //
-//     it("Whenever one of your other characters is banished, each opponent loses 1 lore. (Should not trigger on himself)", () => {
-//       const testStore = new TestStore({
-//         inkwell: dragonFire.cost,
-//         hand: [dragonFire],
-//         play: [lyleTiberiusRourkeCunningMercenary],
+//     It("Whenever one of your other characters is banished, each opponent loses 1 lore. (Should not trigger on himself)", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: dragonFire.cost,
+//         Hand: [dragonFire],
+//         Play: [lyleTiberiusRourkeCunningMercenary],
 //       });
 //
-//       testStore.store.tableStore.getTable("player_two").lore = 5;
+//       TestStore.store.tableStore.getTable("player_two").lore = 5;
 //
-//       const target = testStore.getCard(lyleTiberiusRourkeCunningMercenary);
-//       const banisher = testStore.getCard(dragonFire);
+//       Const target = testStore.getCard(lyleTiberiusRourkeCunningMercenary);
+//       Const banisher = testStore.getCard(dragonFire);
 //
-//       banisher.playFromHand();
-//       testStore.resolveTopOfStack({ targets: [target] });
-//       expect(target.zone).toBe("discard");
-//       expect(testStore.store.tableStore.getTable("player_two").lore).toBe(5);
+//       Banisher.playFromHand();
+//       TestStore.resolveTopOfStack({ targets: [target] });
+//       Expect(target.zone).toBe("discard");
+//       Expect(testStore.store.tableStore.getTable("player_two").lore).toBe(5);
 //     });
 //
-//     it("Grab your Sword Interaction", async () => {
-//       const testEngine = new TestEngine(
+//     It("Grab your Sword Interaction", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: grabYourSword.cost,
-//           hand: [grabYourSword],
+//           Inkwell: grabYourSword.cost,
+//           Hand: [grabYourSword],
 //         },
 //         {
-//           play: [
-//             lyleTiberiusRourkeCunningMercenary,
-//             liloMakingAWish,
-//             liloGalacticHero,
+//           Play: [
+//             LyleTiberiusRourkeCunningMercenary,
+//             LiloMakingAWish,
+//             LiloGalacticHero,
 //           ],
 //         },
 //       );
 //
-//       testEngine.store.tableStore.getTable("player_one").lore = 5;
+//       TestEngine.store.tableStore.getTable("player_one").lore = 5;
 //
-//       const cardUnderTest = testEngine.getCardModel(
-//         lyleTiberiusRourkeCunningMercenary,
+//       Const cardUnderTest = testEngine.getCardModel(
+//         LyleTiberiusRourkeCunningMercenary,
 //       );
 //
-//       cardUnderTest.updateCardDamage(
-//         lyleTiberiusRourkeCunningMercenary.willpower - 1,
+//       CardUnderTest.updateCardDamage(
+//         LyleTiberiusRourkeCunningMercenary.willpower - 1,
 //       );
 //
-//       await testEngine.playCard(grabYourSword);
+//       Await testEngine.playCard(grabYourSword);
 //
-//       expect(testEngine.store.tableStore.getTable("player_one").lore).toBe(3);
+//       Expect(testEngine.store.tableStore.getTable("player_one").lore).toBe(3);
 //     });
 //
-//     it("Be prepared interaction", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: bePrepared.cost,
-//         hand: [bePrepared],
-//         play: [
-//           lyleTiberiusRourkeCunningMercenary,
-//           liloMakingAWish,
-//           liloGalacticHero,
-//           liloJuniorCakeDecorator,
+//     It("Be prepared interaction", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: bePrepared.cost,
+//         Hand: [bePrepared],
+//         Play: [
+//           LyleTiberiusRourkeCunningMercenary,
+//           LiloMakingAWish,
+//           LiloGalacticHero,
+//           LiloJuniorCakeDecorator,
 //         ],
 //       });
 //
-//       testEngine.store.tableStore.getTable("player_two").lore = 5;
+//       TestEngine.store.tableStore.getTable("player_two").lore = 5;
 //
-//       await testEngine.playCard(bePrepared);
-//       await testEngine.resolveOptionalAbility();
-//       await testEngine.resolveOptionalAbility();
+//       Await testEngine.playCard(bePrepared);
+//       Await testEngine.resolveOptionalAbility();
+//       Await testEngine.resolveOptionalAbility();
 //
-//       expect(testEngine.store.tableStore.getTable("player_two").lore).toBe(2);
+//       Expect(testEngine.store.tableStore.getTable("player_two").lore).toBe(2);
 //     });
 //
-//     it("Be prepared interaction + 2 Lyles", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: bePrepared.cost,
-//         hand: [bePrepared],
-//         play: [
-//           lyleTiberiusRourkeCunningMercenary,
-//           lyleTiberiusRourkeCunningMercenary,
-//           liloMakingAWish,
-//           liloGalacticHero,
-//           liloJuniorCakeDecorator,
+//     It("Be prepared interaction + 2 Lyles", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: bePrepared.cost,
+//         Hand: [bePrepared],
+//         Play: [
+//           LyleTiberiusRourkeCunningMercenary,
+//           LyleTiberiusRourkeCunningMercenary,
+//           LiloMakingAWish,
+//           LiloGalacticHero,
+//           LiloJuniorCakeDecorator,
 //         ],
 //       });
 //
-//       testEngine.store.tableStore.getTable("player_two").lore = 10;
+//       TestEngine.store.tableStore.getTable("player_two").lore = 10;
 //
-//       await testEngine.playCard(bePrepared);
+//       Await testEngine.playCard(bePrepared);
 //
-//       await testEngine.resolveOptionalAbility(true);
-//       await testEngine.resolveOptionalAbility(true);
-//       await testEngine.resolveOptionalAbility(true);
-//       await testEngine.resolveOptionalAbility(true);
-//       await testEngine.resolveOptionalAbility(true);
-//       await testEngine.resolveOptionalAbility(true);
+//       Await testEngine.resolveOptionalAbility(true);
+//       Await testEngine.resolveOptionalAbility(true);
+//       Await testEngine.resolveOptionalAbility(true);
+//       Await testEngine.resolveOptionalAbility(true);
+//       Await testEngine.resolveOptionalAbility(true);
+//       Await testEngine.resolveOptionalAbility(true);
 //
-//       await testEngine.resolveOptionalAbility();
+//       Await testEngine.resolveOptionalAbility();
 //
-//       expect(testEngine.store.tableStore.getTable("player_two").lore).toBe(2);
-//       expect(testEngine.stackLayers).toHaveLength(0);
+//       Expect(testEngine.store.tableStore.getTable("player_two").lore).toBe(2);
+//       Expect(testEngine.stackLayers).toHaveLength(0);
 //     });
 //   });
 // });

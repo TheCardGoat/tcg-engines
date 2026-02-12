@@ -1,25 +1,8 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
 export const paintingTheRosesRed: ActionCard = {
-  id: "2ft",
-  cardType: "action",
-  name: "Painting the Roses Red",
-  inkType: ["amber"],
-  franchise: "Alice in Wonderland",
-  set: "002",
-  text: "Up to 2 chosen characters get -1 {S} this turn. Draw a card.",
-  actionSubtype: "song",
-  cost: 2,
-  cardNumber: 30,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "003e83f940426d943bddbae6a42d20fe26abf042",
-  },
   abilities: [
     {
-      id: "2ft-1",
-      type: "static",
       effect: {
         type: "sequence",
         steps: [
@@ -43,7 +26,24 @@ export const paintingTheRosesRed: ActionCard = {
           },
         ],
       },
+      id: "2ft-1",
       text: "Up to 2 chosen characters get -1 {S} this turn. Draw a card.",
+      type: "static",
     },
   ],
+  actionSubtype: "song",
+  cardNumber: 30,
+  cardType: "action",
+  cost: 2,
+  externalIds: {
+    ravensburger: "003e83f940426d943bddbae6a42d20fe26abf042",
+  },
+  franchise: "Alice in Wonderland",
+  id: "2ft",
+  inkType: ["amber"],
+  inkable: true,
+  missingTests: true,
+  name: "Painting the Roses Red",
+  set: "002",
+  text: "Up to 2 chosen characters get -1 {S} this turn. Draw a card.",
 };

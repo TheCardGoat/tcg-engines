@@ -1,29 +1,8 @@
 import type { LocationCard } from "@tcg/lorcana-types";
 
 export const sherwoodForestOutlawHideaway: LocationCard = {
-  id: "1kh",
-  cardType: "location",
-  name: "Sherwood Forest",
-  version: "Outlaw Hideaway",
-  fullName: "Sherwood Forest - Outlaw Hideaway",
-  inkType: ["emerald"],
-  franchise: "Robin Hood",
-  set: "005",
-  text: "FOREST HOME Your characters named Robin Hood may move here for free.\nFAMILIAR TERRAIN Characters gain Ward and “{E}, 1 {I} — Deal 2 damage to chosen damaged character” while here. (Opponents can't choose them except to challenge.)",
-  cost: 2,
-  moveCost: 2,
-  lore: 0,
-  cardNumber: 101,
-  inkable: true,
-  externalIds: {
-    ravensburger: "cb0b3f11503ac2065fa15cb7f7ee80a1d45319a9",
-  },
   abilities: [
     {
-      id: "1kh-1",
-      text: "FOREST HOME Your characters named Robin Hood may move here for free.",
-      name: "FOREST HOME",
-      type: "static",
       effect: {
         type: "move-cost-reduction",
         filter: {
@@ -32,12 +11,12 @@ export const sherwoodForestOutlawHideaway: LocationCard = {
         reduction: "free",
         location: "here",
       },
+      id: "1kh-1",
+      name: "FOREST HOME",
+      text: "FOREST HOME Your characters named Robin Hood may move here for free.",
+      type: "static",
     },
     {
-      id: "1kh-2",
-      text: "FAMILIAR TERRAIN Characters gain Ward and “{E}, {d} {I} — Deal {d} damage to chosen damaged character” while here.",
-      name: "FAMILIAR TERRAIN",
-      type: "static",
       effect: {
         type: "grant-abilities-while-here",
         abilities: [
@@ -66,57 +45,78 @@ export const sherwoodForestOutlawHideaway: LocationCard = {
           },
         ],
       },
+      id: "1kh-2",
+      name: "FAMILIAR TERRAIN",
+      text: "FAMILIAR TERRAIN Characters gain Ward and “{E}, {d} {I} — Deal {d} damage to chosen damaged character” while here.",
+      type: "static",
     },
   ],
+  cardNumber: 101,
+  cardType: "location",
+  cost: 2,
+  externalIds: {
+    ravensburger: "cb0b3f11503ac2065fa15cb7f7ee80a1d45319a9",
+  },
+  franchise: "Robin Hood",
+  fullName: "Sherwood Forest - Outlaw Hideaway",
+  id: "1kh",
+  inkType: ["emerald"],
+  inkable: true,
+  lore: 0,
+  moveCost: 2,
+  name: "Sherwood Forest",
+  set: "005",
+  text: "FOREST HOME Your characters named Robin Hood may move here for free.\nFAMILIAR TERRAIN Characters gain Ward and “{E}, 1 {I} — Deal 2 damage to chosen damaged character” while here. (Opponents can't choose them except to challenge.)",
+  version: "Outlaw Hideaway",
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
-// import {
-//   gainAbilityWhileHere,
-//   wardAbility,
+// Import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
+// Import {
+//   GainAbilityWhileHere,
+//   WardAbility,
 // } from "@lorcanito/lorcana-engine/abilities/abilities";
 //
-// export const sherwoodForestOutlawHideaway: LorcanitoLocationCard = {
-//   id: "pi0",
-//   name: "Sherwood Forest",
-//   title: "Outlaw Hideaway",
-//   characteristics: ["location"],
-//   text: '**FOREST HOME** Your characters named Robin Hood may move here for free. **FAMILIAR TERRAIN** Characters gain **Ward** and "{E} ,1 {I} −Deal 2 damage to chosen damaged character" while here. _(Opponents can\'t choose them except to challenge.)_',
-//   type: "location",
-//   abilities: [
+// Export const sherwoodForestOutlawHideaway: LorcanitoLocationCard = {
+//   Id: "pi0",
+//   Name: "Sherwood Forest",
+//   Title: "Outlaw Hideaway",
+//   Characteristics: ["location"],
+//   Text: '**FOREST HOME** Your characters named Robin Hood may move here for free. **FAMILIAR TERRAIN** Characters gain **Ward** and "{E} ,1 {I} −Deal 2 damage to chosen damaged character" while here. _(Opponents can\'t choose them except to challenge.)_',
+//   Type: "location",
+//   Abilities: [
 //     // {
 //     //   name: "**FOREST HOME**",
 //     //   text: "Your characters named Robin Hood may move here for free.",
 //     //   TODO: This is currently done as an if condition inside the onMove function in the CharacterModel
 //     // },
-//     gainAbilityWhileHere({
-//       name: "Familiar Terrain",
-//       text: "Characters gain **Ward**",
-//       ability: wardAbility,
+//     GainAbilityWhileHere({
+//       Name: "Familiar Terrain",
+//       Text: "Characters gain **Ward**",
+//       Ability: wardAbility,
 //     }),
-//     gainAbilityWhileHere({
-//       name: "Familiar Terrain",
-//       text: "{E} – Deal 2 damage to chosen damaged character or location.",
-//       ability: {
-//         type: "activated",
-//         name: "Familiar Terrain",
-//         text: "{E} , 1 {I} − Deal 2 damage to chosen damaged character",
-//         costs: [{ type: "exert" }, { type: "ink", amount: 1 }],
-//         effects: [
+//     GainAbilityWhileHere({
+//       Name: "Familiar Terrain",
+//       Text: "{E} – Deal 2 damage to chosen damaged character or location.",
+//       Ability: {
+//         Type: "activated",
+//         Name: "Familiar Terrain",
+//         Text: "{E} , 1 {I} − Deal 2 damage to chosen damaged character",
+//         Costs: [{ type: "exert" }, { type: "ink", amount: 1 }],
+//         Effects: [
 //           {
-//             type: "damage",
-//             amount: 2,
-//             target: {
-//               type: "card",
-//               value: 1,
-//               filters: [
+//             Type: "damage",
+//             Amount: 2,
+//             Target: {
+//               Type: "card",
+//               Value: 1,
+//               Filters: [
 //                 { filter: "type", value: ["character"] },
 //                 { filter: "zone", value: "play" },
 //                 {
-//                   filter: "status",
-//                   value: "damage",
-//                   comparison: { operator: "gte", value: 1 },
+//                   Filter: "status",
+//                   Value: "damage",
+//                   Comparison: { operator: "gte", value: 1 },
 //                 },
 //               ],
 //             },
@@ -125,28 +125,28 @@ export const sherwoodForestOutlawHideaway: LocationCard = {
 //       },
 //     }),
 //   ],
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 2,
-//   willpower: 7,
-//   illustrator: "Douglas De La Hoz",
-//   number: 101,
-//   set: "SSK",
-//   externalIds: {
-//     tcgPlayer: 559088,
+//   Inkwell: true,
+//   Colors: ["emerald"],
+//   Cost: 2,
+//   Willpower: 7,
+//   Illustrator: "Douglas De La Hoz",
+//   Number: 101,
+//   Set: "SSK",
+//   ExternalIds: {
+//     TcgPlayer: 559088,
 //   },
-//   rarity: "rare",
-//   moveCost: 2,
-//   movementDiscounts: [
+//   Rarity: "rare",
+//   MoveCost: 2,
+//   MovementDiscounts: [
 //     {
-//       filters: [
+//       Filters: [
 //         {
-//           filter: "attribute",
-//           value: "name",
-//           comparison: { operator: "eq", value: "Robin Hood" },
+//           Filter: "attribute",
+//           Value: "name",
+//           Comparison: { operator: "eq", value: "Robin Hood" },
 //         },
 //       ],
-//       amount: 0,
+//       Amount: 0,
 //     },
 //   ],
 // };

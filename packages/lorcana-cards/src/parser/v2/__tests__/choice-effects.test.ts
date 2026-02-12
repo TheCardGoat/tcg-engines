@@ -27,21 +27,21 @@ describe("Choice Effect Parser", () => {
       expect(choice.options).toHaveLength(2);
 
       expect(choice.options![0]).toEqual({
-        type: "draw",
         amount: 1,
         target: "CONTROLLER",
+        type: "draw",
       });
 
       expect(choice.options![1]).toEqual({
-        type: "deal-damage",
         amount: 2,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "deal-damage",
       });
 
       expect(choice.optionLabels).toEqual([
@@ -62,26 +62,26 @@ describe("Choice Effect Parser", () => {
       expect(choice.options).toHaveLength(3);
 
       expect(choice.options![0]).toEqual({
-        type: "gain-lore",
         amount: 2,
+        type: "gain-lore",
       });
 
       expect(choice.options![1]).toEqual({
-        type: "draw",
         amount: 2,
         target: "CONTROLLER",
+        type: "draw",
       });
 
       expect(choice.options![2]).toEqual({
-        type: "deal-damage",
         amount: 3,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "opponent",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "deal-damage",
       });
 
       expect(choice.optionLabels).toEqual([
@@ -103,25 +103,25 @@ describe("Choice Effect Parser", () => {
       expect(choice.options).toHaveLength(2);
 
       expect(choice.options![0]).toEqual({
-        type: "exert",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "exert",
       });
 
       expect(choice.options![1]).toEqual({
-        type: "ready",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "ready",
       });
     });
 
@@ -138,25 +138,25 @@ describe("Choice Effect Parser", () => {
       expect(choice.options).toHaveLength(2);
 
       expect(choice.options![0]).toEqual({
-        type: "banish",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "banish",
       });
 
       expect(choice.options![1]).toEqual({
-        type: "return-to-hand",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "return-to-hand",
       });
     });
   });
@@ -175,21 +175,21 @@ describe("Choice Effect Parser", () => {
       expect(choice.options).toHaveLength(2);
 
       expect(choice.options![0]).toEqual({
-        type: "draw",
         amount: 1,
         target: "CONTROLLER",
+        type: "draw",
       });
 
       expect(choice.options![1]).toEqual({
-        type: "deal-damage",
         amount: 2,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "deal-damage",
       });
 
       expect(choice.optionLabels).toEqual([
@@ -211,25 +211,25 @@ describe("Choice Effect Parser", () => {
       expect(choice.options).toHaveLength(3);
 
       expect(choice.options![0]).toEqual({
-        type: "gain-lore",
         amount: 2,
+        type: "gain-lore",
       });
 
       expect(choice.options![1]).toEqual({
-        type: "draw",
         amount: 2,
         target: "CONTROLLER",
+        type: "draw",
       });
 
       expect(choice.options![2]).toEqual({
-        type: "banish",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "banish",
       });
 
       expect(choice.optionLabels).toEqual([
@@ -254,21 +254,21 @@ describe("Choice Effect Parser", () => {
       expect(choice.options).toHaveLength(2);
 
       expect(choice.options![0]).toEqual({
-        type: "draw",
         amount: 1,
         target: "CONTROLLER",
+        type: "draw",
       });
 
       expect(choice.options![1]).toEqual({
-        type: "deal-damage",
         amount: 2,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "deal-damage",
       });
 
       expect(choice.optionLabels).toEqual([
@@ -288,14 +288,14 @@ describe("Choice Effect Parser", () => {
       expect(choice.options).toHaveLength(2);
 
       expect(choice.options![0]).toEqual({
-        type: "gain-lore",
         amount: 1,
+        type: "gain-lore",
       });
 
       expect(choice.options![1]).toEqual({
-        type: "draw",
         amount: 1,
         target: "CONTROLLER",
+        type: "draw",
       });
     });
 
@@ -312,25 +312,25 @@ describe("Choice Effect Parser", () => {
       expect(choice.options).toHaveLength(2);
 
       expect(choice.options![0]).toEqual({
-        type: "exert",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "exert",
       });
 
       expect(choice.options![1]).toEqual({
-        type: "ready",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "ready",
       });
     });
 
@@ -347,26 +347,26 @@ describe("Choice Effect Parser", () => {
       expect(choice.options).toHaveLength(2);
 
       expect(choice.options![0]).toEqual({
-        type: "deal-damage",
         amount: 3,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "deal-damage",
       });
 
       expect(choice.options![1]).toEqual({
-        type: "banish",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "banish",
       });
     });
   });
@@ -439,20 +439,20 @@ describe("Choice Effect Parser", () => {
       expect(choice.options).toHaveLength(2);
 
       expect(choice.options![0]).toEqual({
-        type: "gain-lore",
         amount: 3,
+        type: "gain-lore",
       });
 
       expect(choice.options![1]).toEqual({
-        type: "deal-damage",
         amount: 4,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "opponent",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "deal-damage",
       });
     });
 
@@ -467,16 +467,16 @@ describe("Choice Effect Parser", () => {
       expect(choice.options).toHaveLength(2);
 
       expect(choice.options![0]).toEqual({
-        type: "draw",
         amount: 3,
         target: "CONTROLLER",
+        type: "draw",
       });
 
       expect(choice.options![1]).toEqual({
-        type: "discard",
         amount: 2,
-        target: "CONTROLLER",
         chosen: false,
+        target: "CONTROLLER",
+        type: "discard",
       });
     });
 
@@ -493,28 +493,28 @@ describe("Choice Effect Parser", () => {
       expect(choice.options).toHaveLength(2);
 
       expect(choice.options![0]).toEqual({
-        type: "remove-damage",
         amount: 3,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "remove-damage",
         upTo: true,
       });
 
       expect(choice.options![1]).toEqual({
-        type: "deal-damage",
         amount: 2,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "deal-damage",
       });
     });
   });

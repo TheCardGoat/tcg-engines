@@ -3,110 +3,110 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { justInTime } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
-// import {
-//   captainColonelsLieutenant,
-//   simbaProtectiveCub,
-//   teKaTheBurningOne,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { justInTime } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
+// Import {
+//   CaptainColonelsLieutenant,
+//   SimbaProtectiveCub,
+//   TeKaTheBurningOne,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Just in Time", () => {
-//   describe("Costs <= 5", () => {
-//     it("Plays character card for free", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: justInTime.cost,
-//         hand: [justInTime, captainColonelsLieutenant],
+// Describe("Just in Time", () => {
+//   Describe("Costs <= 5", () => {
+//     It("Plays character card for free", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: justInTime.cost,
+//         Hand: [justInTime, captainColonelsLieutenant],
 //       });
 //
-//       await testEngine.playCard(justInTime, {
-//         acceptOptionalLayer: true,
-//         targets: [captainColonelsLieutenant],
+//       Await testEngine.playCard(justInTime, {
+//         AcceptOptionalLayer: true,
+//         Targets: [captainColonelsLieutenant],
 //       });
 //
-//       expect(testEngine.getCardModel(justInTime).zone).toEqual("discard");
-//       expect(testEngine.getCardModel(captainColonelsLieutenant).zone).toEqual(
+//       Expect(testEngine.getCardModel(justInTime).zone).toEqual("discard");
+//       Expect(testEngine.getCardModel(captainColonelsLieutenant).zone).toEqual(
 //         "play",
 //       );
 //     });
 //
-//     it("Characters with Bodyguard can be played exerted", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: justInTime.cost,
-//         hand: [justInTime, simbaProtectiveCub],
+//     It("Characters with Bodyguard can be played exerted", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: justInTime.cost,
+//         Hand: [justInTime, simbaProtectiveCub],
 //       });
 //
-//       await testEngine.playCard(
-//         justInTime,
+//       Await testEngine.playCard(
+//         JustInTime,
 //         {
-//           acceptOptionalLayer: true,
-//           targets: [simbaProtectiveCub],
+//           AcceptOptionalLayer: true,
+//           Targets: [simbaProtectiveCub],
 //         },
-//         true,
+//         True,
 //       );
-//       expect(testEngine.getCardModel(simbaProtectiveCub).zone).toEqual("play");
-//       expect(testEngine.getCardModel(simbaProtectiveCub).exerted).toEqual(
-//         false,
+//       Expect(testEngine.getCardModel(simbaProtectiveCub).zone).toEqual("play");
+//       Expect(testEngine.getCardModel(simbaProtectiveCub).exerted).toEqual(
+//         False,
 //       );
 //
-//       await testEngine.acceptOptionalLayer();
+//       Await testEngine.acceptOptionalLayer();
 //
-//       expect(testEngine.getCardModel(simbaProtectiveCub).exerted).toEqual(true);
+//       Expect(testEngine.getCardModel(simbaProtectiveCub).exerted).toEqual(true);
 //     });
 //
-//     it("Characters with Bodyguard can be played ready", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: justInTime.cost,
-//         hand: [justInTime, simbaProtectiveCub],
+//     It("Characters with Bodyguard can be played ready", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: justInTime.cost,
+//         Hand: [justInTime, simbaProtectiveCub],
 //       });
 //
-//       await testEngine.playCard(
-//         justInTime,
+//       Await testEngine.playCard(
+//         JustInTime,
 //         {
-//           acceptOptionalLayer: true,
-//           targets: [simbaProtectiveCub],
+//           AcceptOptionalLayer: true,
+//           Targets: [simbaProtectiveCub],
 //         },
-//         true,
+//         True,
 //       );
-//       expect(testEngine.getCardModel(simbaProtectiveCub).zone).toEqual("play");
-//       expect(testEngine.getCardModel(simbaProtectiveCub).exerted).toEqual(
-//         false,
+//       Expect(testEngine.getCardModel(simbaProtectiveCub).zone).toEqual("play");
+//       Expect(testEngine.getCardModel(simbaProtectiveCub).exerted).toEqual(
+//         False,
 //       );
 //
-//       await testEngine.skipTopOfStack();
+//       Await testEngine.skipTopOfStack();
 //
-//       expect(testEngine.getCardModel(simbaProtectiveCub).exerted).toEqual(
-//         false,
+//       Expect(testEngine.getCardModel(simbaProtectiveCub).exerted).toEqual(
+//         False,
 //       );
 //     });
 //   });
 //
-//   describe("Costs > 5", () => {
-//     it("Doesn't play for free", () => {
-//       const testStore = new TestStore({
-//         inkwell: justInTime.cost,
-//         hand: [justInTime, teKaTheBurningOne],
+//   Describe("Costs > 5", () => {
+//     It("Doesn't play for free", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: justInTime.cost,
+//         Hand: [justInTime, teKaTheBurningOne],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId("hand", justInTime.id);
-//       const target = testStore.getByZoneAndId("hand", teKaTheBurningOne.id);
+//       Const cardUnderTest = testStore.getByZoneAndId("hand", justInTime.id);
+//       Const target = testStore.getByZoneAndId("hand", teKaTheBurningOne.id);
 //
-//       cardUnderTest.playFromHand();
-//       testStore.resolveOptionalAbility();
-//       expect(cardUnderTest.zone).toEqual("discard");
+//       CardUnderTest.playFromHand();
+//       TestStore.resolveOptionalAbility();
+//       Expect(cardUnderTest.zone).toEqual("discard");
 //
-//       testStore.resolveTopOfStack({ targetId: target.instanceId });
-//       expect(target.zone).toEqual("hand");
+//       TestStore.resolveTopOfStack({ targetId: target.instanceId });
+//       Expect(target.zone).toEqual("hand");
 //
 //       // TODO: We still have to decide what to do with the stack, when there's no valid target.
 //       // Ideally we should not be able to play the card, but this would require to check valid targets before playing the card
-//       expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
+//       Expect(testStore.store.stackLayerStore.layers).toHaveLength(0);
 //     });
 //
-//     it.skip("Doesn't shift character card for free", () => {
-//       throw new Error("Not implemented");
+//     It.skip("Doesn't shift character card for free", () => {
+//       Throw new Error("Not implemented");
 //     });
 //   });
 // });

@@ -1,24 +1,8 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
 export const breakFree: ActionCard = {
-  id: "10c",
-  cardType: "action",
-  name: "Break Free",
-  inkType: ["ruby"],
-  franchise: "Peter Pan",
-  set: "005",
-  text: "Deal 1 damage to chosen character of yours. They gain Rush and get +1 {S} this turn. (They can challenge the turn they're played.)",
-  cost: 1,
-  cardNumber: 127,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "8248c978719b5c75b9b75c52ba7e436f3fc416db",
-  },
   abilities: [
     {
-      id: "10c-1",
-      type: "action",
       effect: {
         type: "sequence",
         steps: [
@@ -52,7 +36,23 @@ export const breakFree: ActionCard = {
           },
         ],
       },
+      id: "10c-1",
       text: "Deal 1 damage to chosen character of yours. They gain Rush and get +1 {S} this turn.",
+      type: "action",
     },
   ],
+  cardNumber: 127,
+  cardType: "action",
+  cost: 1,
+  externalIds: {
+    ravensburger: "8248c978719b5c75b9b75c52ba7e436f3fc416db",
+  },
+  franchise: "Peter Pan",
+  id: "10c",
+  inkType: ["ruby"],
+  inkable: true,
+  missingTests: true,
+  name: "Break Free",
+  set: "005",
+  text: "Deal 1 damage to chosen character of yours. They gain Rush and get +1 {S} this turn. (They can challenge the turn they're played.)",
 };

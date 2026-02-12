@@ -17,10 +17,10 @@ describe("Effect: Move", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "spell",
           effect: expect.objectContaining({
             type: "move",
           }),
+          type: "spell",
         }),
       );
     });
@@ -35,20 +35,18 @@ describe("Effect: Move", () => {
 
   describe("move to specific location", () => {
     it.skip("should parse 'Move a unit from a battlefield to its base.'", () => {
-      const result = parseAbilities(
-        "Move a unit from a battlefield to its base.",
-      );
+      const result = parseAbilities("Move a unit from a battlefield to its base.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "spell",
           effect: expect.objectContaining({
-            type: "move",
             from: "battlefield",
             to: "base",
+            type: "move",
           }),
+          type: "spell",
         }),
       );
     });

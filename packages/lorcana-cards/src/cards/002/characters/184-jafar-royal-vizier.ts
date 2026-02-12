@@ -1,38 +1,38 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import {
-//   duringYourTurnGains,
-//   evasiveAbility,
+// Import {
+//   DuringYourTurnGains,
+//   EvasiveAbility,
 // } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const jafarRoyalVizier: LorcanitoCharacterCard = {
-//   id: "fk0",
-//   reprints: ["xva"],
-//   name: "Jafar",
-//   title: "Royal Vizier",
-//   characteristics: ["sorcerer", "storyborn", "villain"],
-//   text: "**I DON'T TRUST HIM, SIRE** During your turn, this character gains **Evasive**. _(They can challenge characters with Evasive.)_",
-//   type: "character",
-//   abilities: [
-//     duringYourTurnGains(
+// Export const jafarRoyalVizier: LorcanitoCharacterCard = {
+//   Id: "fk0",
+//   Reprints: ["xva"],
+//   Name: "Jafar",
+//   Title: "Royal Vizier",
+//   Characteristics: ["sorcerer", "storyborn", "villain"],
+//   Text: "**I DON'T TRUST HIM, SIRE** During your turn, this character gains **Evasive**. _(They can challenge characters with Evasive.)_",
+//   Type: "character",
+//   Abilities: [
+//     DuringYourTurnGains(
 //       "I don't trust him, sire",
 //       "During your turn, this character gains **Evasive**.",
-//       evasiveAbility,
+//       EvasiveAbility,
 //     ),
 //   ],
-//   flavour: "Soon you’ll learn who holds the real power!",
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 2,
-//   strength: 3,
-//   willpower: 2,
-//   lore: 1,
-//   illustrator: "Rob Di Salvo",
-//   number: 184,
-//   set: "ROF",
-//   externalIds: {
-//     tcgPlayer: 527181,
+//   Flavour: "Soon you’ll learn who holds the real power!",
+//   Inkwell: true,
+//   Colors: ["steel"],
+//   Cost: 2,
+//   Strength: 3,
+//   Willpower: 2,
+//   Lore: 1,
+//   Illustrator: "Rob Di Salvo",
+//   Number: 184,
+//   Set: "ROF",
+//   ExternalIds: {
+//     TcgPlayer: 527181,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

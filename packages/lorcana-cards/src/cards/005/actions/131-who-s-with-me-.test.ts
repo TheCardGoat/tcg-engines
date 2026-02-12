@@ -3,35 +3,35 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { whosWithMe } from "@lorcanito/lorcana-engine/cards/005/actions/actions";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { whosWithMe } from "@lorcanito/lorcana-engine/cards/005/actions/actions";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Who's With Me?", () => {
-//   it.skip("Your characters get +2 {S} this turn.", () => {
-//     const testStore = new TestStore({
-//       inkwell: whosWithMe.cost,
-//       hand: [whosWithMe],
+// Describe("Who's With Me?", () => {
+//   It.skip("Your characters get +2 {S} this turn.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: whosWithMe.cost,
+//       Hand: [whosWithMe],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(whosWithMe);
+//     Const cardUnderTest = testStore.getCard(whosWithMe);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 //
-//   it.skip("Whenever one of your characters with **Reckless** challenges another character this turn, gain 2 lore.", () => {
-//     const testStore = new TestStore({
-//       inkwell: whosWithMe.cost,
-//       hand: [whosWithMe],
+//   It.skip("Whenever one of your characters with **Reckless** challenges another character this turn, gain 2 lore.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: whosWithMe.cost,
+//       Hand: [whosWithMe],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(whosWithMe);
+//     Const cardUnderTest = testStore.getCard(whosWithMe);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

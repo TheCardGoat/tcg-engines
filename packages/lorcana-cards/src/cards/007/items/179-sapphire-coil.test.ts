@@ -3,31 +3,31 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   kashekimAncientRuler,
-//   sapphireCoil,
-//   suzyMasterSeamstress,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   KashekimAncientRuler,
+//   SapphireCoil,
+//   SuzyMasterSeamstress,
 // } from "@lorcanito/lorcana-engine/cards/007";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Sapphire Coil", () => {
-//   it("BRILLIANT SHINE During your turn, whenever a card is put into your inkwell, you may give chosen character -2 {S} this turn.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: sapphireCoil.cost,
-//       play: [sapphireCoil, kashekimAncientRuler],
-//       hand: [suzyMasterSeamstress],
+// Describe("Sapphire Coil", () => {
+//   It("BRILLIANT SHINE During your turn, whenever a card is put into your inkwell, you may give chosen character -2 {S} this turn.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: sapphireCoil.cost,
+//       Play: [sapphireCoil, kashekimAncientRuler],
+//       Hand: [suzyMasterSeamstress],
 //     });
-//     const target = testEngine.getCardModel(kashekimAncientRuler);
+//     Const target = testEngine.getCardModel(kashekimAncientRuler);
 //
-//     expect(target.strength).toBe(kashekimAncientRuler.strength);
+//     Expect(target.strength).toBe(kashekimAncientRuler.strength);
 //
-//     await testEngine.putIntoInkwell(suzyMasterSeamstress);
+//     Await testEngine.putIntoInkwell(suzyMasterSeamstress);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({ targets: [kashekimAncientRuler] });
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({ targets: [kashekimAncientRuler] });
 //
-//     expect(target.strength).toBe(kashekimAncientRuler.strength - 2);
+//     Expect(target.strength).toBe(kashekimAncientRuler.strength - 2);
 //   });
 // });
 //

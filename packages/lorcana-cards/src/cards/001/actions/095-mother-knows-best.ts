@@ -1,66 +1,66 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
 export const motherKnowsBest: ActionCard = {
-  id: "rxk",
-  cardType: "action",
-  name: "Mother Knows Best",
-  inkType: ["emerald"],
-  franchise: "Disney",
-  set: "001",
-  text: "_(A character with cost 3 or more can {E} to sing this\nsong for free.)_\nReturn chosen character to their player",
-  cost: 3,
+  abilities: [],
   actionSubtype: "song",
   cardNumber: 95,
-  inkable: true,
+  cardType: "action",
+  cost: 3,
   externalIds: {
     ravensburger: "",
   },
-  abilities: [],
+  franchise: "Disney",
+  id: "rxk",
+  inkType: ["emerald"],
+  inkable: true,
+  name: "Mother Knows Best",
+  set: "001",
+  text: "_(A character with cost 3 or more can {E} to sing this\nsong for free.)_\nReturn chosen character to their player",
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { CardEffectTarget } from "@lorcanito/lorcana-engine";
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { CardEffectTarget } from "@lorcanito/lorcana-engine";
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// const chosenCharacter: CardEffectTarget = {
-//   type: "card",
-//   value: 1,
-//   filters: [
+// Const chosenCharacter: CardEffectTarget = {
+//   Type: "card",
+//   Value: 1,
+//   Filters: [
 //     { filter: "type", value: "character" },
 //     { filter: "zone", value: "play" },
 //   ],
 // };
 //
-// export const motherKnowsBest: LorcanitoActionCard = {
-//   id: "rxk",
-//   reprints: ["px0"],
-//   name: "Mother Knows Best",
-//   characteristics: ["action", "song"],
-//   text: "_(A character with cost 3 or more can {E} to sing this\nsong for free.)_\nReturn chosen character to their player's hand.",
-//   type: "action",
-//   abilities: [
+// Export const motherKnowsBest: LorcanitoActionCard = {
+//   Id: "rxk",
+//   Reprints: ["px0"],
+//   Name: "Mother Knows Best",
+//   Characteristics: ["action", "song"],
+//   Text: "_(A character with cost 3 or more can {E} to sing this\nsong for free.)_\nReturn chosen character to their player's hand.",
+//   Type: "action",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       name: "Mother Knows Best",
-//       text: "Return chosen character to their player's hand.",
-//       effects: [
+//       Type: "resolution",
+//       Name: "Mother Knows Best",
+//       Text: "Return chosen character to their player's hand.",
+//       Effects: [
 //         {
-//           type: "move",
-//           to: "hand",
-//           target: chosenCharacter,
+//           Type: "move",
+//           To: "hand",
+//           Target: chosenCharacter,
 //         },
 //       ],
 //     },
 //   ],
-//   flavour: "One way or another \nSomething will go wrong, I swear",
-//   colors: ["emerald"],
-//   cost: 3,
-//   illustrator: "R. La Barbera / L. Giammichele",
-//   number: 95,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 506100,
+//   Flavour: "One way or another \nSomething will go wrong, I swear",
+//   Colors: ["emerald"],
+//   Cost: 3,
+//   Illustrator: "R. La Barbera / L. Giammichele",
+//   Number: 95,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 506100,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

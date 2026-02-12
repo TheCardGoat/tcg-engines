@@ -3,53 +3,53 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { simbaProtectiveCub } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { nalaFierceFriend } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { simbaAdventurousSuccessor } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { mufasaAmongTheStars } from "@lorcanito/lorcana-engine/cards/007";
-// import { itMeansNoWorries } from "@lorcanito/lorcana-engine/cards/008";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { simbaProtectiveCub } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { nalaFierceFriend } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { simbaAdventurousSuccessor } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { mufasaAmongTheStars } from "@lorcanito/lorcana-engine/cards/007";
+// Import { itMeansNoWorries } from "@lorcanito/lorcana-engine/cards/008";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("It Means No Worries", () => {
-//   it("Return up to 3 character cards from your discard to your hand.", async () => {
-//     const discardCards = [
-//       simbaAdventurousSuccessor,
-//       nalaFierceFriend,
-//       mufasaAmongTheStars,
+// Describe("It Means No Worries", () => {
+//   It("Return up to 3 character cards from your discard to your hand.", async () => {
+//     Const discardCards = [
+//       SimbaAdventurousSuccessor,
+//       NalaFierceFriend,
+//       MufasaAmongTheStars,
 //     ];
-//     const testEngine = new TestEngine({
-//       inkwell: itMeansNoWorries.cost,
-//       hand: [itMeansNoWorries],
-//       discard: discardCards,
+//     Const testEngine = new TestEngine({
+//       Inkwell: itMeansNoWorries.cost,
+//       Hand: [itMeansNoWorries],
+//       Discard: discardCards,
 //     });
 //
-//     await testEngine.playCard(
-//       itMeansNoWorries,
+//     Await testEngine.playCard(
+//       ItMeansNoWorries,
 //       {
-//         targets: discardCards,
+//         Targets: discardCards,
 //       },
-//       true,
+//       True,
 //     );
 //
-//     for (const card of discardCards) {
-//       expect(testEngine.getCardModel(card).zone).toEqual("hand");
+//     For (const card of discardCards) {
+//       Expect(testEngine.getCardModel(card).zone).toEqual("hand");
 //     }
 //   });
 //
-//   it(" You pay 2 {I} less for the next character you play this turn.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: itMeansNoWorries.cost,
-//       hand: [itMeansNoWorries, simbaProtectiveCub],
+//   It(" You pay 2 {I} less for the next character you play this turn.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: itMeansNoWorries.cost,
+//       Hand: [itMeansNoWorries, simbaProtectiveCub],
 //     });
 //
-//     expect(testEngine.getCardModel(simbaProtectiveCub).cost).toEqual(2);
+//     Expect(testEngine.getCardModel(simbaProtectiveCub).cost).toEqual(2);
 //
-//     await testEngine.playCard(itMeansNoWorries);
-//     await testEngine.resolveTopOfStack({}, true);
-//     await testEngine.resolveTopOfStack({}, true);
+//     Await testEngine.playCard(itMeansNoWorries);
+//     Await testEngine.resolveTopOfStack({}, true);
+//     Await testEngine.resolveTopOfStack({}, true);
 //
-//     expect(testEngine.getCardModel(simbaProtectiveCub).cost).toEqual(0);
+//     Expect(testEngine.getCardModel(simbaProtectiveCub).cost).toEqual(0);
 //   });
 // });
 //

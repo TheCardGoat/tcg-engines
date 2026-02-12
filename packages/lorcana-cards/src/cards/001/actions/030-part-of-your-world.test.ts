@@ -3,29 +3,29 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { moanaOfMotunui } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { partOfYourWorld } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { moanaOfMotunui } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { partOfYourWorld } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Part of Your World", () => {
-//   it("Return a character card from your discard to your hand.", () => {
-//     const testStore = new TestStore({
-//       inkwell: partOfYourWorld.cost,
-//       hand: [partOfYourWorld],
-//       discard: [moanaOfMotunui],
+// Describe("Part of Your World", () => {
+//   It("Return a character card from your discard to your hand.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: partOfYourWorld.cost,
+//       Hand: [partOfYourWorld],
+//       Discard: [moanaOfMotunui],
 //     });
-//     const cardUnderTest = testStore.getByZoneAndId("hand", partOfYourWorld.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", partOfYourWorld.id);
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     const target = testStore.getByZoneAndId("discard", moanaOfMotunui.id);
+//     Const target = testStore.getByZoneAndId("discard", moanaOfMotunui.id);
 //
-//     testStore.resolveTopOfStack({
-//       targetId: target.instanceId,
+//     TestStore.resolveTopOfStack({
+//       TargetId: target.instanceId,
 //     });
 //
-//     expect(target.zone).toEqual("hand");
+//     Expect(target.zone).toEqual("hand");
 //   });
 // });
 //

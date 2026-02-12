@@ -3,55 +3,55 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { bePrepared } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
-// import {
-//   mauiHalfshark,
-//   sailTheAzuriteSea,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { bePrepared } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
+// Import {
+//   MauiHalfshark,
+//   SailTheAzuriteSea,
 // } from "@lorcanito/lorcana-engine/cards/006";
-// import { mowgliManCub } from "@lorcanito/lorcana-engine/cards/010";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { mowgliManCub } from "@lorcanito/lorcana-engine/cards/010";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Mowgli - Man Cub", () => {
-//   describe("HAVE A BETTER LOOK", () => {
-//     it("When you play this character, chosen opponent reveals their hand and discards a non-character card of their choice.", async () => {
-//       const testEngine = new TestEngine(
+// Describe("Mowgli - Man Cub", () => {
+//   Describe("HAVE A BETTER LOOK", () => {
+//     It("When you play this character, chosen opponent reveals their hand and discards a non-character card of their choice.", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: mowgliManCub.cost,
-//           hand: [mowgliManCub],
+//           Inkwell: mowgliManCub.cost,
+//           Hand: [mowgliManCub],
 //         },
 //         {
-//           hand: [bePrepared, sailTheAzuriteSea, mauiHalfshark],
+//           Hand: [bePrepared, sailTheAzuriteSea, mauiHalfshark],
 //         },
 //       );
 //
-//       const actionCard = testEngine.getCardModel(bePrepared);
-//       expect(actionCard.zone).toBe("hand");
-//       expect(testEngine.getCardsByZone("hand", "player_two").length).toBe(3);
+//       Const actionCard = testEngine.getCardModel(bePrepared);
+//       Expect(actionCard.zone).toBe("hand");
+//       Expect(testEngine.getCardsByZone("hand", "player_two").length).toBe(3);
 //
-//       await testEngine.playCard(mowgliManCub);
+//       Await testEngine.playCard(mowgliManCub);
 //
-//       await testEngine.acceptOptionalLayer();
+//       Await testEngine.acceptOptionalLayer();
 //       // Opponent's hand should be revealed
-//       expect(
-//         testEngine
+//       Expect(
+//         TestEngine
 //           .getCardsByZone("hand", "player_two")
 //           .every((card) => card.isRevealed),
 //       ).toBe(true);
 //
 //       // Switch to opponent's perspective (they make the choice)
-//       testEngine.testStore.changePlayer("player_two");
-//       await testEngine.resolveTopOfStack({ targets: [actionCard] });
+//       TestEngine.testStore.changePlayer("player_two");
+//       Await testEngine.resolveTopOfStack({ targets: [actionCard] });
 //
 //       // Switch back to original player
-//       testEngine.testStore.changePlayer("player_one");
+//       TestEngine.testStore.changePlayer("player_one");
 //
 //       // Action card should be discarded (opponent chose to discard it)
-//       expect(actionCard.zone).toBe("discard");
+//       Expect(actionCard.zone).toBe("discard");
 //
 //       // Character card should still be in hand (opponent cannot discard character cards with this ability)
-//       const characterCard = testEngine.getCardModel(mauiHalfshark);
-//       expect(characterCard.zone).toBe("hand");
+//       Const characterCard = testEngine.getCardModel(mauiHalfshark);
+//       Expect(characterCard.zone).toBe("hand");
 //     });
 //   });
 // });

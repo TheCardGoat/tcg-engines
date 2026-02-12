@@ -1,53 +1,53 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const mufasaKingOfThePrideLands: CharacterCard = {
-  id: "py9",
-  cardType: "character",
-  name: "Mufasa",
-  version: "King of the Pride Lands",
-  fullName: "Mufasa - King of the Pride Lands",
-  inkType: ["sapphire"],
-  franchise: "Disney",
-  set: "001",
-  text: "",
-  cost: 6,
-  strength: 4,
-  willpower: 6,
-  lore: 3,
+  abilities: [],
   cardNumber: 155,
-  inkable: true,
+  cardType: "character",
+  classifications: ["Storyborn", "King", "Mentor"],
+  cost: 6,
   externalIds: {
     ravensburger: "",
   },
-  abilities: [],
-  classifications: ["Storyborn", "King", "Mentor"],
+  franchise: "Disney",
+  fullName: "Mufasa - King of the Pride Lands",
+  id: "py9",
+  inkType: ["sapphire"],
+  inkable: true,
+  lore: 3,
+  name: "Mufasa",
+  set: "001",
+  strength: 4,
+  text: "",
+  version: "King of the Pride Lands",
+  willpower: 6,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const mufasaKingOfProudLands: LorcanitoCharacterCard = {
-//   id: "py9",
-//   reprints: ["adw"],
+// Export const mufasaKingOfProudLands: LorcanitoCharacterCard = {
+//   Id: "py9",
+//   Reprints: ["adw"],
 //
-//   name: "Mufasa",
-//   title: "King of the Pride Lands",
-//   characteristics: ["storyborn", "king", "mentor"],
-//   type: "character",
-//   flavour:
+//   Name: "Mufasa",
+//   Title: "King of the Pride Lands",
+//   Characteristics: ["storyborn", "king", "mentor"],
+//   Type: "character",
+//   Flavour:
 //     "A king must care for all of the creatures in his kingdom, no matter their size.",
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 6,
-//   strength: 4,
-//   willpower: 6,
-//   lore: 3,
-//   illustrator: "Luis Huerta",
-//   number: 155,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 508868,
+//   Inkwell: true,
+//   Colors: ["sapphire"],
+//   Cost: 6,
+//   Strength: 4,
+//   Willpower: 6,
+//   Lore: 3,
+//   Illustrator: "Luis Huerta",
+//   Number: 155,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 508868,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

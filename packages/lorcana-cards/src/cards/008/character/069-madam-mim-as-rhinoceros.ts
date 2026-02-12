@@ -1,35 +1,35 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import {
-//   madameMimAbility,
-//   shiftAbility,
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import {
+//   MadameMimAbility,
+//   ShiftAbility,
 // } from "@lorcanito/lorcana-engine/abilities/abilities";
 //
-// export const madamMimAsRhinoceros: LorcanitoCharacterCard = {
-//   id: "xlw",
-//   name: "Madam Mim",
-//   title: "Rhino",
-//   characteristics: ["floodborn", "villain", "mage"],
-//   text: "SHIFT 2 (You can pay 2 {I} to play this character on one of your Madame Mime characters.)\nMAKE WAY, I'M COMING! When you play this character, banish it or return one of your other characters in play to your hand.",
-//   type: "character",
-//   inkwell: false,
-//   colors: ["amethyst", "ruby"],
-//   cost: 6,
-//   strength: 6,
-//   willpower: 5,
-//   illustrator: "Allbeth Zermeno",
-//   number: 69,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631396,
+// Export const madamMimAsRhinoceros: LorcanitoCharacterCard = {
+//   Id: "xlw",
+//   Name: "Madam Mim",
+//   Title: "Rhino",
+//   Characteristics: ["floodborn", "villain", "mage"],
+//   Text: "SHIFT 2 (You can pay 2 {I} to play this character on one of your Madame Mime characters.)\nMAKE WAY, I'M COMING! When you play this character, banish it or return one of your other characters in play to your hand.",
+//   Type: "character",
+//   Inkwell: false,
+//   Colors: ["amethyst", "ruby"],
+//   Cost: 6,
+//   Strength: 6,
+//   Willpower: 5,
+//   Illustrator: "Allbeth Zermeno",
+//   Number: 69,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631396,
 //   },
-//   rarity: "uncommon",
-//   lore: 1,
-//   abilities: [
-//     shiftAbility(2, "Madam Mim"),
+//   Rarity: "uncommon",
+//   Lore: 1,
+//   Abilities: [
+//     ShiftAbility(2, "Madam Mim"),
 //     {
 //       ...madameMimAbility,
-//       name: "MAKE WAY, I'M COMING!",
+//       Name: "MAKE WAY, I'M COMING!",
 //     },
 //   ],
 // };

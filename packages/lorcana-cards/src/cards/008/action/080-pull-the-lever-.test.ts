@@ -3,51 +3,51 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   pullTheLever,
-//   wrongLeverAction,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   PullTheLever,
+//   WrongLeverAction,
 // } from "@lorcanito/lorcana-engine/cards/008";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Pull The Lever!", () => {
-//   describe("Choose one:", () => {
-//     it("- Draw 2 cards.", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: pullTheLever.cost,
-//         hand: [pullTheLever],
-//         deck: 10,
+// Describe("Pull The Lever!", () => {
+//   Describe("Choose one:", () => {
+//     It("- Draw 2 cards.", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: pullTheLever.cost,
+//         Hand: [pullTheLever],
+//         Deck: 10,
 //       });
 //
-//       await testEngine.playCard(pullTheLever, { mode: "1" });
+//       Await testEngine.playCard(pullTheLever, { mode: "1" });
 //
-//       expect(testEngine.getZonesCardCount()).toEqual(
-//         expect.objectContaining({
-//           hand: 2,
-//           deck: 8,
+//       Expect(testEngine.getZonesCardCount()).toEqual(
+//         Expect.objectContaining({
+//           Hand: 2,
+//           Deck: 8,
 //         }),
 //       );
 //     });
 //
-//     it("- Each opponent chooses and discards a card.", async () => {
-//       const testEngine = new TestEngine(
+//     It("- Each opponent chooses and discards a card.", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: pullTheLever.cost,
-//           hand: [pullTheLever],
+//           Inkwell: pullTheLever.cost,
+//           Hand: [pullTheLever],
 //         },
 //         {
-//           hand: [wrongLeverAction],
+//           Hand: [wrongLeverAction],
 //         },
 //       );
 //
-//       await testEngine.playCard(pullTheLever, { mode: "2" }, true);
+//       Await testEngine.playCard(pullTheLever, { mode: "2" }, true);
 //
-//       testEngine.changeActivePlayer("player_two");
-//       await testEngine.resolveTopOfStack({
-//         targets: [wrongLeverAction],
+//       TestEngine.changeActivePlayer("player_two");
+//       Await testEngine.resolveTopOfStack({
+//         Targets: [wrongLeverAction],
 //       });
 //
-//       expect(testEngine.getCardModel(wrongLeverAction).zone).toEqual("discard");
+//       Expect(testEngine.getCardModel(wrongLeverAction).zone).toEqual("discard");
 //     });
 //   });
 // });

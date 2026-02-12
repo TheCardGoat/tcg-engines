@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { johnSilverGreedyTreasureSeeker } from "@lorcanito/lorcana-engine/cards/009/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { johnSilverGreedyTreasureSeeker } from "@lorcanito/lorcana-engine/cards/009/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("John Silver - Greedy Treasure Seeker", () => {
-//   it.skip("**CHART YOUR OWN COURSE** For each location you have in play, this character gains **Resist** +1 and gets +1 {L}. _(Damage dealt to them is reduced by 1.)_", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: johnSilverGreedyTreasureSeeker.cost,
-//       play: [johnSilverGreedyTreasureSeeker],
-//       hand: [johnSilverGreedyTreasureSeeker],
+// Describe("John Silver - Greedy Treasure Seeker", () => {
+//   It.skip("**CHART YOUR OWN COURSE** For each location you have in play, this character gains **Resist** +1 and gets +1 {L}. _(Damage dealt to them is reduced by 1.)_", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: johnSilverGreedyTreasureSeeker.cost,
+//       Play: [johnSilverGreedyTreasureSeeker],
+//       Hand: [johnSilverGreedyTreasureSeeker],
 //     });
 //
-//     await testEngine.playCard(johnSilverGreedyTreasureSeeker);
+//     Await testEngine.playCard(johnSilverGreedyTreasureSeeker);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

@@ -1,30 +1,30 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
 export const friendsOnTheOtherSide: ActionCard = {
-  id: "a41",
-  cardType: "action",
-  name: "Friends on the Other Side",
-  inkType: ["amethyst"],
-  franchise: "Princess and the Frog",
-  set: "001",
-  text: "Draw 2 cards.",
-  actionSubtype: "song",
-  cost: 3,
-  cardNumber: 64,
-  inkable: true,
-  externalIds: {
-    ravensburger: "248406633c5253dbfe3569d61c9feaa738ab3a84",
-  },
   abilities: [
     {
-      id: "a41-1",
-      type: "action",
       effect: {
         type: "draw",
         amount: 2,
         target: "CONTROLLER",
       },
+      id: "a41-1",
       text: "Draw 2 cards.",
+      type: "action",
     },
   ],
+  actionSubtype: "song",
+  cardNumber: 64,
+  cardType: "action",
+  cost: 3,
+  externalIds: {
+    ravensburger: "248406633c5253dbfe3569d61c9feaa738ab3a84",
+  },
+  franchise: "Princess and the Frog",
+  id: "a41",
+  inkType: ["amethyst"],
+  inkable: true,
+  name: "Friends on the Other Side",
+  set: "001",
+  text: "Draw 2 cards.",
 };

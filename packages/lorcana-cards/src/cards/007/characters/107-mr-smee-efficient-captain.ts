@@ -1,38 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const mrSmeeEfficientCaptain: CharacterCard = {
-  id: "1co",
-  cardType: "character",
-  name: "Mr. Smee",
-  version: "Efficient Captain",
-  fullName: "Mr. Smee - Efficient Captain",
-  inkType: ["emerald", "steel"],
-  franchise: "Peter Pan",
-  set: "007",
-  text: "PIPE UP THE CREW Whenever you play an action that isn't a song, you may ready chosen Pirate character.",
-  cost: 3,
-  strength: 3,
-  willpower: 3,
-  lore: 1,
-  cardNumber: 107,
-  inkable: false,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "af71eddc1279e3c929451e656d1d9c68d307965e",
-  },
   abilities: [
     {
-      id: "1co-1",
-      type: "triggered",
-      name: "PIPE UP THE CREW",
-      trigger: {
-        event: "play",
-        timing: "whenever",
-        on: {
-          controller: "you",
-          cardType: "action",
-        },
-      },
       effect: {
         type: "optional",
         effect: {
@@ -47,8 +17,38 @@ export const mrSmeeEfficientCaptain: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "1co-1",
+      name: "PIPE UP THE CREW",
       text: "PIPE UP THE CREW Whenever you play an action that isn't a song, you may ready chosen Pirate character.",
+      trigger: {
+        event: "play",
+        timing: "whenever",
+        on: {
+          controller: "you",
+          cardType: "action",
+        },
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 107,
+  cardType: "character",
   classifications: ["Dreamborn", "Villain", "Pirate", "Captain"],
+  cost: 3,
+  externalIds: {
+    ravensburger: "af71eddc1279e3c929451e656d1d9c68d307965e",
+  },
+  franchise: "Peter Pan",
+  fullName: "Mr. Smee - Efficient Captain",
+  id: "1co",
+  inkType: ["emerald", "steel"],
+  inkable: false,
+  lore: 1,
+  missingTests: true,
+  name: "Mr. Smee",
+  set: "007",
+  strength: 3,
+  text: "PIPE UP THE CREW Whenever you play an action that isn't a song, you may ready chosen Pirate character.",
+  version: "Efficient Captain",
+  willpower: 3,
 };

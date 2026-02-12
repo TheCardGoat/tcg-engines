@@ -3,65 +3,65 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { hakunaMatata } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
-// import { aPiratesLife } from "@lorcanito/lorcana-engine/cards/004/actions/actions";
-// import {
-//   powerlineWorldsGreatestRockStar,
-//   rapunzelSunshine,
-//   stitchRockStar,
-//   theQueenRegalMonarch,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { hakunaMatata } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
+// Import { aPiratesLife } from "@lorcanito/lorcana-engine/cards/004/actions/actions";
+// Import {
+//   PowerlineWorldsGreatestRockStar,
+//   RapunzelSunshine,
+//   StitchRockStar,
+//   TheQueenRegalMonarch,
 // } from "@lorcanito/lorcana-engine/cards/009";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Powerline - World's Greatest Rock Star", () => {
-//   it("Shift 4 {I} (You may pay 4 {I} to play this on top of one of your characters named Powerline.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [powerlineWorldsGreatestRockStar],
+// Describe("Powerline - World's Greatest Rock Star", () => {
+//   It("Shift 4 {I} (You may pay 4 {I} to play this on top of one of your characters named Powerline.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [powerlineWorldsGreatestRockStar],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(
-//       powerlineWorldsGreatestRockStar,
+//     Const cardUnderTest = testEngine.getCardModel(
+//       PowerlineWorldsGreatestRockStar,
 //     );
-//     expect(cardUnderTest.hasShift).toBe(true);
+//     Expect(cardUnderTest.hasShift).toBe(true);
 //   });
 //
-//   it("Singer 9", async () => {
-//     const testEngine = new TestEngine({
-//       play: [powerlineWorldsGreatestRockStar],
+//   It("Singer 9", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [powerlineWorldsGreatestRockStar],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(
-//       powerlineWorldsGreatestRockStar,
+//     Const cardUnderTest = testEngine.getCardModel(
+//       PowerlineWorldsGreatestRockStar,
 //     );
-//     expect(cardUnderTest.hasSinger).toBe(true);
+//     Expect(cardUnderTest.hasSinger).toBe(true);
 //   });
 //
-//   it("MASH-UP Once during your turn, whenever this character sings a song, look at the top 4 cards of your deck. You may reveal a song card with cost 9 or less and play it for free. Put the rest on the bottom of your deck in any order.", async () => {
-//     const testEngine = new TestEngine({
-//       play: [powerlineWorldsGreatestRockStar],
-//       hand: [hakunaMatata],
-//       deck: [
-//         aPiratesLife,
-//         stitchRockStar,
-//         theQueenRegalMonarch,
-//         rapunzelSunshine,
+//   It("MASH-UP Once during your turn, whenever this character sings a song, look at the top 4 cards of your deck. You may reveal a song card with cost 9 or less and play it for free. Put the rest on the bottom of your deck in any order.", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [powerlineWorldsGreatestRockStar],
+//       Hand: [hakunaMatata],
+//       Deck: [
+//         APiratesLife,
+//         StitchRockStar,
+//         TheQueenRegalMonarch,
+//         RapunzelSunshine,
 //       ],
 //     });
 //
-//     await testEngine.singSong({
-//       singer: powerlineWorldsGreatestRockStar,
-//       song: hakunaMatata,
+//     Await testEngine.singSong({
+//       Singer: powerlineWorldsGreatestRockStar,
+//       Song: hakunaMatata,
 //     });
 //
-//     await testEngine.resolveTopOfStack({
-//       scry: {
-//         play: [aPiratesLife],
-//         bottom: [stitchRockStar, theQueenRegalMonarch, rapunzelSunshine],
+//     Await testEngine.resolveTopOfStack({
+//       Scry: {
+//         Play: [aPiratesLife],
+//         Bottom: [stitchRockStar, theQueenRegalMonarch, rapunzelSunshine],
 //       },
 //     });
 //
-//     expect(testEngine.getCardModel(aPiratesLife).zone).toEqual("discard");
+//     Expect(testEngine.getCardModel(aPiratesLife).zone).toEqual("discard");
 //   });
 // });
 //

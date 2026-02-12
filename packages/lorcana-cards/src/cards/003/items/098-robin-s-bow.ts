@@ -1,51 +1,51 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
-// import { wheneverACharacterQuests } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-// import { readyThisItem } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
+// Import { wheneverACharacterQuests } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// Import { readyThisItem } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const robinsBow: LorcanitoItemCard = {
-//   id: "b4u",
-//   missingTestCase: true,
-//   name: "Robin's Bow",
-//   characteristics: ["item"],
-//   text: "**FOREST'S GIFT** {E} – Deal 1 damage to chosen damaged character or location.\n\n\n**A BIT OF A LARK** Whenever a character of yours named Robin Hood quests, you may ready this item.",
-//   type: "item",
-//   abilities: [
+// Export const robinsBow: LorcanitoItemCard = {
+//   Id: "b4u",
+//   MissingTestCase: true,
+//   Name: "Robin's Bow",
+//   Characteristics: ["item"],
+//   Text: "**FOREST'S GIFT** {E} – Deal 1 damage to chosen damaged character or location.\n\n\n**A BIT OF A LARK** Whenever a character of yours named Robin Hood quests, you may ready this item.",
+//   Type: "item",
+//   Abilities: [
 //     {
-//       type: "activated",
-//       name: "FOREST'S GIFT",
-//       text: "{E} – Deal 1 damage to chosen damaged character or location.",
-//       costs: [{ type: "exert" }],
-//       effects: [
+//       Type: "activated",
+//       Name: "FOREST'S GIFT",
+//       Text: "{E} – Deal 1 damage to chosen damaged character or location.",
+//       Costs: [{ type: "exert" }],
+//       Effects: [
 //         {
-//           type: "damage",
-//           amount: 1,
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
+//           Type: "damage",
+//           Amount: 1,
+//           Target: {
+//             Type: "card",
+//             Value: 1,
+//             Filters: [
 //               { filter: "type", value: ["location", "character"] },
 //               { filter: "zone", value: "play" },
 //               {
-//                 filter: "status",
-//                 value: "damage",
-//                 comparison: { operator: "gte", value: 1 },
+//                 Filter: "status",
+//                 Value: "damage",
+//                 Comparison: { operator: "gte", value: 1 },
 //               },
 //             ],
 //           },
 //         },
 //       ],
 //     },
-//     wheneverACharacterQuests({
-//       name: "A bit of a Lark",
-//       text: "Whenever a character of yours named Robin Hood quests, you may ready this item.",
-//       optional: true,
-//       effects: [readyThisItem],
-//       characterFilter: [
+//     WheneverACharacterQuests({
+//       Name: "A bit of a Lark",
+//       Text: "Whenever a character of yours named Robin Hood quests, you may ready this item.",
+//       Optional: true,
+//       Effects: [readyThisItem],
+//       CharacterFilter: [
 //         {
-//           filter: "attribute",
-//           value: "name",
-//           comparison: { operator: "eq", value: "robin hood" },
+//           Filter: "attribute",
+//           Value: "name",
+//           Comparison: { operator: "eq", value: "robin hood" },
 //         },
 //         { filter: "type", value: "character" },
 //         { filter: "owner", value: "self" },
@@ -53,15 +53,15 @@
 //       ],
 //     }),
 //   ],
-//   flavour: "The forest always provides just what you need. \n–Robin Hood",
-//   colors: ["emerald"],
-//   cost: 3,
-//   illustrator: "McKay Anderson",
-//   number: 98,
-//   set: "ITI",
-//   externalIds: {
-//     tcgPlayer: 537827,
+//   Flavour: "The forest always provides just what you need. \n–Robin Hood",
+//   Colors: ["emerald"],
+//   Cost: 3,
+//   Illustrator: "McKay Anderson",
+//   Number: 98,
+//   Set: "ITI",
+//   ExternalIds: {
+//     TcgPlayer: 537827,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

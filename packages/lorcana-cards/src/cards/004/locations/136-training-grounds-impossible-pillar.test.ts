@@ -3,9 +3,9 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
+// Import { describe, it } from "@jest/globals";
 //
-// describe("Training Grounds - Impossible Pillar", () => {
-//   it("TODO", () => {});
+// Describe("Training Grounds - Impossible Pillar", () => {
+//   It("TODO", () => {});
 // });
 //

@@ -3,28 +3,28 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   monstroWhaleOfAWhale,
-//   motherGothelConceitedManipulator,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   MonstroWhaleOfAWhale,
+//   MotherGothelConceitedManipulator,
 // } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Mother Gothel - Conceited Manipulator", () => {
-//   it("**MOTHER KNOWS BEST** When you play this character, you may pay 3 {I} to return chosen character to their player’s hand.", () => {
-//     const testStore = new TestStore({
-//       inkwell: motherGothelConceitedManipulator.cost + 3,
-//       hand: [motherGothelConceitedManipulator],
-//       play: [monstroWhaleOfAWhale],
+// Describe("Mother Gothel - Conceited Manipulator", () => {
+//   It("**MOTHER KNOWS BEST** When you play this character, you may pay 3 {I} to return chosen character to their player’s hand.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: motherGothelConceitedManipulator.cost + 3,
+//       Hand: [motherGothelConceitedManipulator],
+//       Play: [monstroWhaleOfAWhale],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(motherGothelConceitedManipulator);
-//     const target = testStore.getCard(monstroWhaleOfAWhale);
+//     Const cardUnderTest = testStore.getCard(motherGothelConceitedManipulator);
+//     Const target = testStore.getCard(monstroWhaleOfAWhale);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({ targets: [target] });
-//     expect(target.zone).toEqual("hand");
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({ targets: [target] });
+//     Expect(target.zone).toEqual("hand");
 //   });
 // });
 //

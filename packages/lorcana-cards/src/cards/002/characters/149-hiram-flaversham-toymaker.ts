@@ -1,31 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const hiramFlavershamToymaker: CharacterCard = {
-  id: "slt",
-  cardType: "character",
-  name: "Hiram Flaversham",
-  version: "Toymaker",
-  fullName: "Hiram Flaversham - Toymaker",
-  inkType: ["sapphire"],
-  franchise: "Great Mouse Detective",
-  set: "002",
-  text: "ARTIFICER When you play this character and whenever he quests, you may banish one of your items to draw 2 cards.",
-  cost: 4,
-  strength: 1,
-  willpower: 6,
-  lore: 1,
-  cardNumber: 149,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "671965c7095dd8a31d791f102a4dc3e789f6a21b",
-  },
   abilities: [
     {
-      id: "slt-1",
-      type: "triggered",
-      name: "ARTIFICER When you play this character and",
-      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "optional",
         effect: {
@@ -40,8 +17,31 @@ export const hiramFlavershamToymaker: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "slt-1",
+      name: "ARTIFICER When you play this character and",
       text: "ARTIFICER When you play this character and whenever he quests, you may banish one of your items to draw 2 cards.",
+      trigger: { event: "play", timing: "when", on: "SELF" },
+      type: "triggered",
     },
   ],
+  cardNumber: 149,
+  cardType: "character",
   classifications: ["Storyborn", "Inventor"],
+  cost: 4,
+  externalIds: {
+    ravensburger: "671965c7095dd8a31d791f102a4dc3e789f6a21b",
+  },
+  franchise: "Great Mouse Detective",
+  fullName: "Hiram Flaversham - Toymaker",
+  id: "slt",
+  inkType: ["sapphire"],
+  inkable: true,
+  lore: 1,
+  missingTests: true,
+  name: "Hiram Flaversham",
+  set: "002",
+  strength: 1,
+  text: "ARTIFICER When you play this character and whenever he quests, you may banish one of your items to draw 2 cards.",
+  version: "Toymaker",
+  willpower: 6,
 };

@@ -3,72 +3,72 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { royalTantrum } from "@lorcanito/lorcana-engine/cards/005/actions/actions";
-// import {
-//   amberChromiconItem,
-//   halfHexwellCrown,
-//   healingDecanterItem,
-//   queensSensorCoreItem,
-//   retrosphere,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { royalTantrum } from "@lorcanito/lorcana-engine/cards/005/actions/actions";
+// Import {
+//   AmberChromiconItem,
+//   HalfHexwellCrown,
+//   HealingDecanterItem,
+//   QueensSensorCoreItem,
+//   Retrosphere,
 // } from "@lorcanito/lorcana-engine/cards/005/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Royal Tantrum", () => {
-//   describe("Banish any number of your items, then draw a card for each item banished this way.", () => {
-//     it("Banishes just one item", () => {
-//       const testStore = new TestStore({
-//         deck: 10,
-//         inkwell: royalTantrum.cost,
-//         hand: [royalTantrum],
-//         play: [
-//           queensSensorCoreItem,
-//           amberChromiconItem,
-//           healingDecanterItem,
-//           retrosphere,
-//           halfHexwellCrown,
+// Describe("Royal Tantrum", () => {
+//   Describe("Banish any number of your items, then draw a card for each item banished this way.", () => {
+//     It("Banishes just one item", () => {
+//       Const testStore = new TestStore({
+//         Deck: 10,
+//         Inkwell: royalTantrum.cost,
+//         Hand: [royalTantrum],
+//         Play: [
+//           QueensSensorCoreItem,
+//           AmberChromiconItem,
+//           HealingDecanterItem,
+//           Retrosphere,
+//           HalfHexwellCrown,
 //         ],
 //       });
 //
-//       const cardUnderTest = testStore.getCard(royalTantrum);
-//       const target = testStore.getCard(healingDecanterItem);
+//       Const cardUnderTest = testStore.getCard(royalTantrum);
+//       Const target = testStore.getCard(healingDecanterItem);
 //
-//       cardUnderTest.playFromHand();
-//       testStore.resolveTopOfStack({ targets: [target] });
+//       CardUnderTest.playFromHand();
+//       TestStore.resolveTopOfStack({ targets: [target] });
 //
-//       expect(target.zone).toBe("discard");
-//       expect(testStore.getZonesCardCount()).toEqual(
-//         expect.objectContaining({ deck: 9, hand: 1, discard: 2 }),
+//       Expect(target.zone).toBe("discard");
+//       Expect(testStore.getZonesCardCount()).toEqual(
+//         Expect.objectContaining({ deck: 9, hand: 1, discard: 2 }),
 //       );
 //     });
 //
-//     it("Banishing more than one, but not all", () => {
-//       const testStore = new TestStore({
-//         deck: 10,
-//         inkwell: royalTantrum.cost,
-//         hand: [royalTantrum],
-//         play: [
-//           queensSensorCoreItem,
-//           amberChromiconItem,
-//           healingDecanterItem,
-//           retrosphere,
-//           halfHexwellCrown,
+//     It("Banishing more than one, but not all", () => {
+//       Const testStore = new TestStore({
+//         Deck: 10,
+//         Inkwell: royalTantrum.cost,
+//         Hand: [royalTantrum],
+//         Play: [
+//           QueensSensorCoreItem,
+//           AmberChromiconItem,
+//           HealingDecanterItem,
+//           Retrosphere,
+//           HalfHexwellCrown,
 //         ],
 //       });
 //
-//       const cardUnderTest = testStore.getCard(royalTantrum);
-//       const target = testStore.getCard(healingDecanterItem);
-//       const anotherTarget = testStore.getCard(queensSensorCoreItem);
-//       const yetAnotherTarget = testStore.getCard(amberChromiconItem);
+//       Const cardUnderTest = testStore.getCard(royalTantrum);
+//       Const target = testStore.getCard(healingDecanterItem);
+//       Const anotherTarget = testStore.getCard(queensSensorCoreItem);
+//       Const yetAnotherTarget = testStore.getCard(amberChromiconItem);
 //
-//       cardUnderTest.playFromHand();
-//       testStore.resolveTopOfStack({
-//         targets: [target, anotherTarget, yetAnotherTarget],
+//       CardUnderTest.playFromHand();
+//       TestStore.resolveTopOfStack({
+//         Targets: [target, anotherTarget, yetAnotherTarget],
 //       });
 //
-//       expect(target.zone).toBe("discard");
-//       expect(testStore.getZonesCardCount()).toEqual(
-//         expect.objectContaining({ deck: 7, hand: 3, discard: 4 }),
+//       Expect(target.zone).toBe("discard");
+//       Expect(testStore.getZonesCardCount()).toEqual(
+//         Expect.objectContaining({ deck: 7, hand: 3, discard: 4 }),
 //       );
 //     });
 //   });

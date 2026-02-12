@@ -1,53 +1,53 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { youGainLore } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { youGainLore } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const hansNobleScoundrel: LorcanitoCharacterCard = {
-//   id: "zqc",
-//   reprints: ["e93"],
-//   missingTestCase: true,
-//   name: "Hans",
-//   title: "Noble Scoundrel",
-//   characteristics: ["storyborn", "villain", "prince"],
-//   text: "**ROYAL SCHEMES** When you play this characer, if a Princess or Queen character is in play, gain 1 lore.",
-//   type: "character",
-//   abilities: [
+// Export const hansNobleScoundrel: LorcanitoCharacterCard = {
+//   Id: "zqc",
+//   Reprints: ["e93"],
+//   MissingTestCase: true,
+//   Name: "Hans",
+//   Title: "Noble Scoundrel",
+//   Characteristics: ["storyborn", "villain", "prince"],
+//   Text: "**ROYAL SCHEMES** When you play this characer, if a Princess or Queen character is in play, gain 1 lore.",
+//   Type: "character",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       name: "Royal Schemes",
-//       text: "When you play this character, if a Princess or Queen character is in play, gain 1 lore.",
-//       resolutionConditions: [
+//       Type: "resolution",
+//       Name: "Royal Schemes",
+//       Text: "When you play this character, if a Princess or Queen character is in play, gain 1 lore.",
+//       ResolutionConditions: [
 //         {
-//           type: "filter",
-//           comparison: { operator: "gte", value: 1 },
-//           filters: [
+//           Type: "filter",
+//           Comparison: { operator: "gte", value: 1 },
+//           Filters: [
 //             { filter: "type", value: "character" },
 //             { filter: "zone", value: "play" },
 //             {
-//               filter: "characteristics",
-//               conjunction: "or",
-//               value: ["princess", "queen"],
+//               Filter: "characteristics",
+//               Conjunction: "or",
+//               Value: ["princess", "queen"],
 //             },
 //           ],
 //         },
 //       ],
-//       effects: [youGainLore(1)],
+//       Effects: [youGainLore(1)],
 //     },
 //   ],
-//   flavour:
+//   Flavour:
 //     "Hans was confident he could bring Anna to Ursula — all he needed was something of Kristoff's to lure her in.",
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 3,
-//   strength: 3,
-//   willpower: 2,
-//   lore: 2,
-//   illustrator: "Dustin Panzino / Leonardo Giammichele",
-//   number: 146,
-//   set: "URR",
-//   externalIds: {
-//     tcgPlayer: 543914,
+//   Inkwell: true,
+//   Colors: ["sapphire"],
+//   Cost: 3,
+//   Strength: 3,
+//   Willpower: 2,
+//   Lore: 2,
+//   Illustrator: "Dustin Panzino / Leonardo Giammichele",
+//   Number: 146,
+//   Set: "URR",
+//   ExternalIds: {
+//     TcgPlayer: 543914,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

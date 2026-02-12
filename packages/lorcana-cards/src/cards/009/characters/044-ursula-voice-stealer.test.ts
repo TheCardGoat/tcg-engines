@@ -3,86 +3,86 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { hakunaMatata } from "@lorcanito/lorcana-engine/cards/001/songs/027-hakuna-matata";
-// import { clarabelleLightOnHerHooves } from "@lorcanito/lorcana-engine/cards/005/characters/084-clarabelle-light-on-her-hooves";
-// import { allIsFound } from "@lorcanito/lorcana-engine/cards/007";
-// import {
-//   mickeyMouseBraveLittlePrince,
-//   minnieMouseSweetheartPrincess,
-//   ursulaVoiceStealer,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { hakunaMatata } from "@lorcanito/lorcana-engine/cards/001/songs/027-hakuna-matata";
+// Import { clarabelleLightOnHerHooves } from "@lorcanito/lorcana-engine/cards/005/characters/084-clarabelle-light-on-her-hooves";
+// Import { allIsFound } from "@lorcanito/lorcana-engine/cards/007";
+// Import {
+//   MickeyMouseBraveLittlePrince,
+//   MinnieMouseSweetheartPrincess,
+//   UrsulaVoiceStealer,
 // } from "@lorcanito/lorcana-engine/cards/009";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Ursula - Voice Stealer", () => {
-//   it("SING FOR ME When you play this character, exert chosen opposing ready character. Then, you may play a song with cost equal to or less than the exerted character's cost for free.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Ursula - Voice Stealer", () => {
+//   It("SING FOR ME When you play this character, exert chosen opposing ready character. Then, you may play a song with cost equal to or less than the exerted character's cost for free.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: ursulaVoiceStealer.cost,
-//         hand: [ursulaVoiceStealer, hakunaMatata],
+//         Inkwell: ursulaVoiceStealer.cost,
+//         Hand: [ursulaVoiceStealer, hakunaMatata],
 //       },
 //       {
-//         play: [minnieMouseSweetheartPrincess],
+//         Play: [minnieMouseSweetheartPrincess],
 //       },
 //     );
 //
-//     await testEngine.playCard(
-//       ursulaVoiceStealer,
+//     Await testEngine.playCard(
+//       UrsulaVoiceStealer,
 //       {
-//         acceptOptionalLayer: true,
-//         targets: [minnieMouseSweetheartPrincess],
+//         AcceptOptionalLayer: true,
+//         Targets: [minnieMouseSweetheartPrincess],
 //       },
-//       true,
+//       True,
 //     );
 //
-//     expect(testEngine.getCardModel(minnieMouseSweetheartPrincess).ready).toBe(
-//       false,
+//     Expect(testEngine.getCardModel(minnieMouseSweetheartPrincess).ready).toBe(
+//       False,
 //     );
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({ targets: [hakunaMatata] });
-//     expect(testEngine.getCardModel(hakunaMatata).zone).toBe("discard");
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({ targets: [hakunaMatata] });
+//     Expect(testEngine.getCardModel(hakunaMatata).zone).toBe("discard");
 //   });
 //
-//   describe("Regression", () => {
-//     it("Clarabelle interaction", async () => {
-//       const targets = [
-//         minnieMouseSweetheartPrincess,
-//         mickeyMouseBraveLittlePrince,
+//   Describe("Regression", () => {
+//     It("Clarabelle interaction", async () => {
+//       Const targets = [
+//         MinnieMouseSweetheartPrincess,
+//         MickeyMouseBraveLittlePrince,
 //       ];
-//       const testEngine = new TestEngine(
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: ursulaVoiceStealer.cost,
-//           hand: [ursulaVoiceStealer, allIsFound],
-//           discard: targets,
+//           Inkwell: ursulaVoiceStealer.cost,
+//           Hand: [ursulaVoiceStealer, allIsFound],
+//           Discard: targets,
 //         },
 //         {
-//           play: [clarabelleLightOnHerHooves],
+//           Play: [clarabelleLightOnHerHooves],
 //         },
 //       );
 //
-//       await testEngine.playCard(
-//         ursulaVoiceStealer,
+//       Await testEngine.playCard(
+//         UrsulaVoiceStealer,
 //         {
-//           targets: [clarabelleLightOnHerHooves],
-//           acceptOptionalLayer: true,
+//           Targets: [clarabelleLightOnHerHooves],
+//           AcceptOptionalLayer: true,
 //         },
-//         true,
+//         True,
 //       );
 //
-//       expect(testEngine.getCardModel(clarabelleLightOnHerHooves).ready).toBe(
-//         false,
+//       Expect(testEngine.getCardModel(clarabelleLightOnHerHooves).ready).toBe(
+//         False,
 //       );
 //
-//       await testEngine.resolveOptionalAbility();
-//       await testEngine.resolveTopOfStack({ targets: [allIsFound] }, true);
-//       expect(testEngine.getCardModel(allIsFound).zone).toBe("discard");
+//       Await testEngine.resolveOptionalAbility();
+//       Await testEngine.resolveTopOfStack({ targets: [allIsFound] }, true);
+//       Expect(testEngine.getCardModel(allIsFound).zone).toBe("discard");
 //
-//       await testEngine.resolveTopOfStack({ targets: targets });
+//       Await testEngine.resolveTopOfStack({ targets: targets });
 //
-//       for (const target of targets) {
+//       For (const target of targets) {
 //         // "Put up to 2 cards from your discard into your inkwell, facedown and exerted."
-//         expect(testEngine.getCardModel(target).zone).toBe("inkwell");
+//         Expect(testEngine.getCardModel(target).zone).toBe("inkwell");
 //       }
 //     });
 //   });

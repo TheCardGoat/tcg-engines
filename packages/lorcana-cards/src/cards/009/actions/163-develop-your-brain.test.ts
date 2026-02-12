@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { developYourBrain } from "@lorcanito/lorcana-engine/cards/009/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { developYourBrain } from "@lorcanito/lorcana-engine/cards/009/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Develop Your Brain", () => {
-//   it.skip("Look at the top 2 cards of your deck. Put one into your hand and the other on the bottom of the deck.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: developYourBrain.cost,
-//       play: [developYourBrain],
-//       hand: [developYourBrain],
+// Describe("Develop Your Brain", () => {
+//   It.skip("Look at the top 2 cards of your deck. Put one into your hand and the other on the bottom of the deck.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: developYourBrain.cost,
+//       Play: [developYourBrain],
+//       Hand: [developYourBrain],
 //     });
 //
-//     await testEngine.playCard(developYourBrain);
+//     Await testEngine.playCard(developYourBrain);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

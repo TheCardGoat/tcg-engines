@@ -1,42 +1,42 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { self } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { wheneverYouHeal } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import { self } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import { wheneverYouHeal } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const grandPabbieOldestAndWisest: LorcanitoCharacterCard = {
-//   id: "dy0",
-//   reprints: ["rj4"],
-//   name: "Grand Pabbie",
-//   title: "Oldest and Wisest",
-//   characteristics: ["storyborn", "mentor"],
-//   text: "**ANCIENT INSIGHT** Whenever you remove 1 or more damage from one of your characters, gain 2 lore.",
-//   type: "character",
-//   abilities: [
-//     wheneverYouHeal({
-//       name: "Ancient Insight",
-//       text: "Whenever you remove 1 or more damage from one of your characters, gain 2 lore.",
-//       effects: [
+// Export const grandPabbieOldestAndWisest: LorcanitoCharacterCard = {
+//   Id: "dy0",
+//   Reprints: ["rj4"],
+//   Name: "Grand Pabbie",
+//   Title: "Oldest and Wisest",
+//   Characteristics: ["storyborn", "mentor"],
+//   Text: "**ANCIENT INSIGHT** Whenever you remove 1 or more damage from one of your characters, gain 2 lore.",
+//   Type: "character",
+//   Abilities: [
+//     WheneverYouHeal({
+//       Name: "Ancient Insight",
+//       Text: "Whenever you remove 1 or more damage from one of your characters, gain 2 lore.",
+//       Effects: [
 //         {
-//           type: "lore",
-//           modifier: "add",
-//           amount: 2,
-//           target: self,
+//           Type: "lore",
+//           Modifier: "add",
+//           Amount: 2,
+//           Target: self,
 //         },
 //       ],
 //     }),
 //   ],
-//   flavour: "When he talks, even sky listens.",
-//   colors: ["sapphire"],
-//   cost: 7,
-//   strength: 3,
-//   willpower: 6,
-//   lore: 3,
-//   illustrator: "Juan Diego Leon",
-//   number: 148,
-//   set: "ROF",
-//   externalIds: {
-//     tcgPlayer: 525113,
+//   Flavour: "When he talks, even sky listens.",
+//   Colors: ["sapphire"],
+//   Cost: 7,
+//   Strength: 3,
+//   Willpower: 6,
+//   Lore: 3,
+//   Illustrator: "Juan Diego Leon",
+//   Number: 148,
+//   Set: "ROF",
+//   ExternalIds: {
+//     TcgPlayer: 525113,
 //   },
-//   rarity: "super_rare",
+//   Rarity: "super_rare",
 // };
 //

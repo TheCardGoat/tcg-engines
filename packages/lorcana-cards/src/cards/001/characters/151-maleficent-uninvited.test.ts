@@ -5,9 +5,9 @@ import { maleficentUninvited } from "./151-maleficent-uninvited";
 describe("Maleficent - Uninvited", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [maleficentUninvited] });
-  //   expect(testEngine.getCardModel(maleficentUninvited).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [maleficentUninvited] });
+  //   Expect(testEngine.getCardModel(maleficentUninvited).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });

@@ -3,49 +3,49 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   basilUndercoverDetective,
-//   daleBumbler,
-//   deweyLovableShowoff,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   BasilUndercoverDetective,
+//   DaleBumbler,
+//   DeweyLovableShowoff,
 // } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Basil - Undercover Detective", () => {
-//   it("INCAPACITATE When you play this character, you may return chosen character to their player's hand.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: basilUndercoverDetective.cost,
-//       hand: [basilUndercoverDetective],
-//       play: [deweyLovableShowoff],
+// Describe("Basil - Undercover Detective", () => {
+//   It("INCAPACITATE When you play this character, you may return chosen character to their player's hand.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: basilUndercoverDetective.cost,
+//       Hand: [basilUndercoverDetective],
+//       Play: [deweyLovableShowoff],
 //     });
 //
-//     const target = testEngine.getCardModel(deweyLovableShowoff);
+//     Const target = testEngine.getCardModel(deweyLovableShowoff);
 //
-//     await testEngine.playCard(basilUndercoverDetective);
-//     await testEngine.acceptOptionalLayer();
-//     await testEngine.resolveTopOfStack({ targets: [target] });
+//     Await testEngine.playCard(basilUndercoverDetective);
+//     Await testEngine.acceptOptionalLayer();
+//     Await testEngine.resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.zone).toEqual("hand");
+//     Expect(target.zone).toEqual("hand");
 //   });
 //
-//   it("INTERFERE Whenever this character quests, chosen opponent discards a card at random.", async () => {
-//     const testEngine = new TestEngine(
+//   It("INTERFERE Whenever this character quests, chosen opponent discards a card at random.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         play: [basilUndercoverDetective],
+//         Play: [basilUndercoverDetective],
 //       },
 //       {
-//         hand: [deweyLovableShowoff, daleBumbler],
+//         Hand: [deweyLovableShowoff, daleBumbler],
 //       },
 //     );
 //
-//     expect(testEngine.getCardsByZone("discard", "player_two").length).toEqual(
+//     Expect(testEngine.getCardsByZone("discard", "player_two").length).toEqual(
 //       0,
 //     );
 //
-//     const cardUnderTest = testEngine.getCardModel(basilUndercoverDetective);
-//     await testEngine.questCard(cardUnderTest);
+//     Const cardUnderTest = testEngine.getCardModel(basilUndercoverDetective);
+//     Await testEngine.questCard(cardUnderTest);
 //
-//     expect(testEngine.getCardsByZone("discard", "player_two").length).toEqual(
+//     Expect(testEngine.getCardsByZone("discard", "player_two").length).toEqual(
 //       1,
 //     );
 //   });

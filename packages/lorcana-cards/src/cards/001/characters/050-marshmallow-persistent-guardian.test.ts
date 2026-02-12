@@ -5,9 +5,9 @@ import { marshmallowPersistentGuardian } from "./050-marshmallow-persistent-guar
 describe("Marshmallow - Persistent Guardian", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [marshmallowPersistentGuardian] });
-  //   expect(testEngine.getCardModel(marshmallowPersistentGuardian).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [marshmallowPersistentGuardian] });
+  //   Expect(testEngine.getCardModel(marshmallowPersistentGuardian).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,96 +17,96 @@ describe("Marshmallow - Persistent Guardian", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { dragonFire } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
-// import {
-//   marshmallowPersistentGuardian,
-//   mauiDemiGod,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { dragonFire } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
+// Import {
+//   MarshmallowPersistentGuardian,
+//   MauiDemiGod,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Marshmallow - Persistent Guardian", () => {
-//   describe("**DURABLE** When this character is banished in a challenge, you may return this card to your hand.", () => {
-//     it("should not return to hand when banished out of a challenge", () => {
-//       const testStore = new TestStore(
+// Describe("Marshmallow - Persistent Guardian", () => {
+//   Describe("**DURABLE** When this character is banished in a challenge, you may return this card to your hand.", () => {
+//     It("should not return to hand when banished out of a challenge", () => {
+//       Const testStore = new TestStore(
 //         {
-//           inkwell: dragonFire.cost,
-//           hand: [dragonFire],
+//           Inkwell: dragonFire.cost,
+//           Hand: [dragonFire],
 //         },
 //         {
-//           play: [marshmallowPersistentGuardian],
+//           Play: [marshmallowPersistentGuardian],
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         marshmallowPersistentGuardian.id,
+//         MarshmallowPersistentGuardian.id,
 //         "player_two",
 //       );
-//       const removal = testStore.getByZoneAndId("hand", dragonFire.id);
+//       Const removal = testStore.getByZoneAndId("hand", dragonFire.id);
 //
-//       removal.playFromHand();
-//       testStore.resolveTopOfStack({ targetId: cardUnderTest.instanceId });
+//       Removal.playFromHand();
+//       TestStore.resolveTopOfStack({ targetId: cardUnderTest.instanceId });
 //
-//       expect(cardUnderTest.zone).toEqual("discard");
+//       Expect(cardUnderTest.zone).toEqual("discard");
 //     });
 //
-//     it("as an attacker, should return to hand when banished", () => {
-//       const testStore = new TestStore(
+//     It("as an attacker, should return to hand when banished", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [marshmallowPersistentGuardian],
+//           Play: [marshmallowPersistentGuardian],
 //         },
 //         {
-//           play: [mauiDemiGod],
+//           Play: [mauiDemiGod],
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         marshmallowPersistentGuardian.id,
+//         MarshmallowPersistentGuardian.id,
 //       );
-//       const defender = testStore.getByZoneAndId(
+//       Const defender = testStore.getByZoneAndId(
 //         "play",
-//         mauiDemiGod.id,
+//         MauiDemiGod.id,
 //         "player_two",
 //       );
 //
-//       defender.updateCardMeta({ exerted: true });
-//       cardUnderTest.challenge(defender);
-//       testStore.resolveTopOfStack();
+//       Defender.updateCardMeta({ exerted: true });
+//       CardUnderTest.challenge(defender);
+//       TestStore.resolveTopOfStack();
 //
-//       expect(cardUnderTest.zone).toEqual("hand");
-//       expect(defender.meta.damage).toEqual(
-//         cardUnderTest.lorcanitoCard.strength,
+//       Expect(cardUnderTest.zone).toEqual("hand");
+//       Expect(defender.meta.damage).toEqual(
+//         CardUnderTest.lorcanitoCard.strength,
 //       );
 //     });
 //
-//     it("as a defender, should return to hand when banished", () => {
-//       const testStore = new TestStore(
+//     It("as a defender, should return to hand when banished", () => {
+//       Const testStore = new TestStore(
 //         {
-//           play: [mauiDemiGod],
+//           Play: [mauiDemiGod],
 //         },
 //         {
-//           play: [marshmallowPersistentGuardian],
+//           Play: [marshmallowPersistentGuardian],
 //         },
 //       );
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "play",
-//         marshmallowPersistentGuardian.id,
+//         MarshmallowPersistentGuardian.id,
 //         "player_two",
 //       );
-//       const attacker = testStore.getByZoneAndId("play", mauiDemiGod.id);
+//       Const attacker = testStore.getByZoneAndId("play", mauiDemiGod.id);
 //
-//       cardUnderTest.updateCardMeta({ exerted: true });
+//       CardUnderTest.updateCardMeta({ exerted: true });
 //
-//       attacker.challenge(cardUnderTest);
-//       testStore.changePlayer("player_two");
-//       testStore.resolveTopOfStack();
+//       Attacker.challenge(cardUnderTest);
+//       TestStore.changePlayer("player_two");
+//       TestStore.resolveTopOfStack();
 //
-//       expect(cardUnderTest.zone).toEqual("hand");
-//       expect(attacker.meta.damage).toEqual(
-//         cardUnderTest.lorcanitoCard.strength,
+//       Expect(cardUnderTest.zone).toEqual("hand");
+//       Expect(attacker.meta.damage).toEqual(
+//         CardUnderTest.lorcanitoCard.strength,
 //       );
 //     });
 //   });

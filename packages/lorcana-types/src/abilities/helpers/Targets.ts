@@ -12,11 +12,7 @@
  * ```
  */
 
-import type {
-  CardTarget,
-  CharacterTarget,
-  PlayerTarget,
-} from "../target-types";
+import type { CardTarget, CharacterTarget, PlayerTarget } from "../target-types";
 
 export const Targets = {
   // ========================================================================
@@ -107,14 +103,12 @@ export const Targets = {
   /**
    * "Your other Steel characters"
    */
-  YourOtherSteelCharacters: (): CharacterTarget =>
-    "YOUR_OTHER_STEEL_CHARACTERS",
+  YourOtherSteelCharacters: (): CharacterTarget => "YOUR_OTHER_STEEL_CHARACTERS",
 
   /**
    * "Your other Amethyst characters"
    */
-  YourOtherAmethystCharacters: (): CharacterTarget =>
-    "YOUR_OTHER_AMETHYST_CHARACTERS",
+  YourOtherAmethystCharacters: (): CharacterTarget => "YOUR_OTHER_AMETHYST_CHARACTERS",
 
   // ========================================================================
   // Zone-based Targets

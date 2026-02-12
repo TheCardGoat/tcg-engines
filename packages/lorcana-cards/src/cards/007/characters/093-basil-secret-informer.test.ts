@@ -3,52 +3,52 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { tinkerBellGiantFairy } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { letTheStormRageOn } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
-// import { beastTragicHero } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { basilSecretInformer } from "@lorcanito/lorcana-engine/cards/007/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { tinkerBellGiantFairy } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { letTheStormRageOn } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
+// Import { beastTragicHero } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { basilSecretInformer } from "@lorcanito/lorcana-engine/cards/007/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("DRAW THEM OUT Whenever this character quests, opposing damaged characters gain Reckless during their next turn. (They can't quest and must challenge if able.)", () => {
-//   it("should give Reckless to damaged opposing characters, when questing", async () => {
-//     const testEngine = new TestEngine(
+// Describe("DRAW THEM OUT Whenever this character quests, opposing damaged characters gain Reckless during their next turn. (They can't quest and must challenge if able.)", () => {
+//   It("should give Reckless to damaged opposing characters, when questing", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: 10,
-//         play: [basilSecretInformer],
-//         hand: [letTheStormRageOn],
+//         Inkwell: 10,
+//         Play: [basilSecretInformer],
+//         Hand: [letTheStormRageOn],
 //       },
 //       {
-//         inkwell: 10,
-//         play: [beastTragicHero, tinkerBellGiantFairy],
-//         hand: [],
+//         Inkwell: 10,
+//         Play: [beastTragicHero, tinkerBellGiantFairy],
+//         Hand: [],
 //       },
 //     );
 //
 //     /*await testEngine.playCard(
-//       letTheStormRageOn,
+//       LetTheStormRageOn,
 //       {
-//         targets: [beastTragicHero],
+//         Targets: [beastTragicHero],
 //       },
-//       true,
+//       True,
 //     );*/
 //
-//     expect(testEngine.getCardModel(beastTragicHero).hasReckless).toBe(false);
-//     expect(testEngine.getCardModel(tinkerBellGiantFairy).hasReckless).toBe(
-//       false,
+//     Expect(testEngine.getCardModel(beastTragicHero).hasReckless).toBe(false);
+//     Expect(testEngine.getCardModel(tinkerBellGiantFairy).hasReckless).toBe(
+//       False,
 //     );
 //
-//     testEngine.getCardModel(beastTragicHero).updateCardDamage(2, "add");
+//     TestEngine.getCardModel(beastTragicHero).updateCardDamage(2, "add");
 //
-//     expect(testEngine.getCardModel(beastTragicHero).damage).toEqual(2);
+//     Expect(testEngine.getCardModel(beastTragicHero).damage).toEqual(2);
 //
-//     await testEngine.questCard(basilSecretInformer);
+//     Await testEngine.questCard(basilSecretInformer);
 //
-//     await testEngine.passTurn();
+//     Await testEngine.passTurn();
 //
-//     expect(testEngine.getCardModel(beastTragicHero).hasReckless).toBe(true);
-//     expect(testEngine.getCardModel(tinkerBellGiantFairy).hasReckless).toBe(
-//       false,
+//     Expect(testEngine.getCardModel(beastTragicHero).hasReckless).toBe(true);
+//     Expect(testEngine.getCardModel(tinkerBellGiantFairy).hasReckless).toBe(
+//       False,
 //     );
 //   });
 // });

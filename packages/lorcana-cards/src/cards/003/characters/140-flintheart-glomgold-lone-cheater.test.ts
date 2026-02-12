@@ -3,25 +3,25 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { flintheartGlomgoldLoneCheater } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { flintheartGlomgoldLoneCheater } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Flintheart Glomgold - Lone Cheater", () => {
-//   it.skip("**THEY'LL NEVER SEE IT COMING!** During your turn, this character gains **Evasive**. _(They can challenge characters with Evasive.)_", () => {
-//     const testStore = new TestStore({
-//       inkwell: flintheartGlomgoldLoneCheater.cost,
-//       play: [flintheartGlomgoldLoneCheater],
+// Describe("Flintheart Glomgold - Lone Cheater", () => {
+//   It.skip("**THEY'LL NEVER SEE IT COMING!** During your turn, this character gains **Evasive**. _(They can challenge characters with Evasive.)_", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: flintheartGlomgoldLoneCheater.cost,
+//       Play: [flintheartGlomgoldLoneCheater],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       flintheartGlomgoldLoneCheater.id,
+//       FlintheartGlomgoldLoneCheater.id,
 //     );
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

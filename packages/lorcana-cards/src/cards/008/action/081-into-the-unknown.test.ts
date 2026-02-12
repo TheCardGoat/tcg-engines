@@ -3,73 +3,73 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { cinderellaBallroomSensation } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { intoTheUnknown } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { cinderellaBallroomSensation } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { intoTheUnknown } from "@lorcanito/lorcana-engine/cards/008/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Into The Unknown", () => {
-//   it("(A character with cost 3 or more can {E} to sing this song for free.)", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: intoTheUnknown.cost,
-//       play: [cinderellaBallroomSensation],
-//       hand: [intoTheUnknown],
+// Describe("Into The Unknown", () => {
+//   It("(A character with cost 3 or more can {E} to sing this song for free.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: intoTheUnknown.cost,
+//       Play: [cinderellaBallroomSensation],
+//       Hand: [intoTheUnknown],
 //     });
 //
-//     await testEngine.singSong({
-//       song: intoTheUnknown,
-//       singer: cinderellaBallroomSensation,
+//     Await testEngine.singSong({
+//       Song: intoTheUnknown,
+//       Singer: cinderellaBallroomSensation,
 //     });
-//     await testEngine.resolveTopOfStack({
-//       targets: [cinderellaBallroomSensation],
+//     Await testEngine.resolveTopOfStack({
+//       Targets: [cinderellaBallroomSensation],
 //     });
 //
-//     expect(testEngine.getCardModel(cinderellaBallroomSensation).zone).toBe(
+//     Expect(testEngine.getCardModel(cinderellaBallroomSensation).zone).toBe(
 //       "inkwell",
 //     );
 //   });
 //
-//   it("Put chosen exerted character into their player's inkwell facedown and exerted.", async () => {
-//     const testEngine = new TestEngine(
+//   It("Put chosen exerted character into their player's inkwell facedown and exerted.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: intoTheUnknown.cost,
-//         play: [],
-//         hand: [intoTheUnknown],
+//         Inkwell: intoTheUnknown.cost,
+//         Play: [],
+//         Hand: [intoTheUnknown],
 //       },
 //       {
-//         play: [cinderellaBallroomSensation],
-//         inkwell: 1,
+//         Play: [cinderellaBallroomSensation],
+//         Inkwell: 1,
 //       },
 //     );
 //
-//     testEngine
+//     TestEngine
 //       .getCardModel(cinderellaBallroomSensation)
 //       .updateCardMeta({ exerted: true });
 //
-//     await testEngine.playCard(intoTheUnknown);
-//     await testEngine.resolveTopOfStack({
-//       targets: [cinderellaBallroomSensation],
+//     Await testEngine.playCard(intoTheUnknown);
+//     Await testEngine.resolveTopOfStack({
+//       Targets: [cinderellaBallroomSensation],
 //     });
 //
-//     expect(testEngine.getCardModel(cinderellaBallroomSensation).zone).toBe(
+//     Expect(testEngine.getCardModel(cinderellaBallroomSensation).zone).toBe(
 //       "inkwell",
 //     );
-//     expect(testEngine.getCardModel(cinderellaBallroomSensation).exerted).toBe(
-//       true,
+//     Expect(testEngine.getCardModel(cinderellaBallroomSensation).exerted).toBe(
+//       True,
 //     );
-//     expect(testEngine.getAvailableInkwellCardCount("player_two")).toBe(1);
-//     expect(testEngine.getTotalInkwellCardCount("player_two")).toBe(2);
+//     Expect(testEngine.getAvailableInkwellCardCount("player_two")).toBe(1);
+//     Expect(testEngine.getTotalInkwellCardCount("player_two")).toBe(2);
 //   });
 //
-//   it("No characters in play", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: intoTheUnknown.cost,
-//       play: [],
-//       hand: [intoTheUnknown],
+//   It("No characters in play", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: intoTheUnknown.cost,
+//       Play: [],
+//       Hand: [intoTheUnknown],
 //     });
 //
-//     await testEngine.playCard(intoTheUnknown);
-//     expect(testEngine.stackLayers).toHaveLength(0);
+//     Await testEngine.playCard(intoTheUnknown);
+//     Expect(testEngine.stackLayers).toHaveLength(0);
 //   });
 // });
 //

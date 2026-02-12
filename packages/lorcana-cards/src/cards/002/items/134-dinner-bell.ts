@@ -1,61 +1,61 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-// import {
-//   drawXCards,
-//   mayBanish,
+// Import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import {
+//   DrawXCards,
+//   MayBanish,
 // } from "@lorcanito/lorcana-engine/effects/effects";
-// import type { CardEffectTarget } from "@lorcanito/lorcana-engine/effects/effectTargets";
+// Import type { CardEffectTarget } from "@lorcanito/lorcana-engine/effects/effectTargets";
 //
-// const chosenCharacterOfYours: CardEffectTarget = {
-//   type: "card",
-//   value: 1,
-//   filters: [
+// Const chosenCharacterOfYours: CardEffectTarget = {
+//   Type: "card",
+//   Value: 1,
+//   Filters: [
 //     { filter: "zone", value: "play" },
 //     { filter: "type", value: "character" },
 //     { filter: "owner", value: "self" },
 //   ],
 // };
 //
-// export const dinnerBell: LorcanitoItemCard = {
-//   id: "s78",
-//   reprints: ["box"],
+// Export const dinnerBell: LorcanitoItemCard = {
+//   Id: "s78",
+//   Reprints: ["box"],
 //
-//   name: "Dinner Bell",
-//   characteristics: ["item"],
-//   text: "**YOU KNOW WHAT HAPPENS** {E}, 2 {I} − Draw cards equal to the damage on chosen character of yours, then banish them.",
-//   type: "item",
-//   abilities: [
+//   Name: "Dinner Bell",
+//   Characteristics: ["item"],
+//   Text: "**YOU KNOW WHAT HAPPENS** {E}, 2 {I} − Draw cards equal to the damage on chosen character of yours, then banish them.",
+//   Type: "item",
+//   Abilities: [
 //     {
-//       type: "activated",
-//       name: "You Know What Happens",
-//       text: "{E}, 2 {I} − Draw cards equal to the damage on chosen character of yours, then banish them.",
-//       costs: [{ type: "exert" }, { type: "ink", amount: 2 }],
-//       effects: [
+//       Type: "activated",
+//       Name: "You Know What Happens",
+//       Text: "{E}, 2 {I} − Draw cards equal to the damage on chosen character of yours, then banish them.",
+//       Costs: [{ type: "exert" }, { type: "ink", amount: 2 }],
+//       Effects: [
 //         {
-//           type: "create-layer-based-on-target",
-//           target: chosenCharacterOfYours,
-//           resolveAmountBeforeCreatingLayer: true,
-//           effects: [
-//             drawXCards({
-//               dynamic: true,
-//               target: { attribute: "damage" },
+//           Type: "create-layer-based-on-target",
+//           Target: chosenCharacterOfYours,
+//           ResolveAmountBeforeCreatingLayer: true,
+//           Effects: [
+//             DrawXCards({
+//               Dynamic: true,
+//               Target: { attribute: "damage" },
 //             }),
 //           ],
 //         },
-//         mayBanish(chosenCharacterOfYours),
+//         MayBanish(chosenCharacterOfYours),
 //       ],
 //     },
 //   ],
 //
-//   flavour: "The delicate sound of impending doom.",
-//   colors: ["ruby"],
-//   cost: 4,
-//   illustrator: "Peter Brockhammer",
-//   number: 134,
-//   set: "ROF",
-//   externalIds: {
-//     tcgPlayer: 516420,
+//   Flavour: "The delicate sound of impending doom.",
+//   Colors: ["ruby"],
+//   Cost: 4,
+//   Illustrator: "Peter Brockhammer",
+//   Number: 134,
+//   Set: "ROF",
+//   ExternalIds: {
+//     TcgPlayer: 516420,
 //   },
-//   rarity: "rare",
+//   Rarity: "rare",
 // };
 //

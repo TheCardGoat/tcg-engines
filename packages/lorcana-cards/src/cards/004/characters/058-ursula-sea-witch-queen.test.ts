@@ -3,65 +3,65 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { partOfYourWorld } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
-// import { cinderellaBallroomSensation } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import {
-//   diabloMaleficentsSpy,
-//   ursulaSeaWitchQueen,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { partOfYourWorld } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
+// Import { cinderellaBallroomSensation } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import {
+//   DiabloMaleficentsSpy,
+//   UrsulaSeaWitchQueen,
 // } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Ursula - Sea Witch Queen", () => {
-//   it("**NOW I'M THE RULER** Whenever this character quests, exert chosen character.", () => {
-//     const testStore = new TestStore({
-//       play: [ursulaSeaWitchQueen, diabloMaleficentsSpy],
+// Describe("Ursula - Sea Witch Queen", () => {
+//   It("**NOW I'M THE RULER** Whenever this character quests, exert chosen character.", () => {
+//     Const testStore = new TestStore({
+//       Play: [ursulaSeaWitchQueen, diabloMaleficentsSpy],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(ursulaSeaWitchQueen);
-//     const target = testStore.getCard(diabloMaleficentsSpy);
+//     Const cardUnderTest = testStore.getCard(ursulaSeaWitchQueen);
+//     Const target = testStore.getCard(diabloMaleficentsSpy);
 //
-//     expect(target.meta.exerted).toBeFalsy();
-//     cardUnderTest.quest();
-//     testStore.resolveTopOfStack({ targets: [target] });
-//     expect(target.meta.exerted).toBe(true);
+//     Expect(target.meta.exerted).toBeFalsy();
+//     CardUnderTest.quest();
+//     TestStore.resolveTopOfStack({ targets: [target] });
+//     Expect(target.meta.exerted).toBe(true);
 //   });
 //
-//   describe("**YOU'LL LISTEN TO ME!**", () => {
-//     it("Other characters can't exert to sing songs.", () => {
-//       const testStore = new TestStore({
-//         play: [ursulaSeaWitchQueen, cinderellaBallroomSensation],
-//         hand: [partOfYourWorld],
+//   Describe("**YOU'LL LISTEN TO ME!**", () => {
+//     It("Other characters can't exert to sing songs.", () => {
+//       Const testStore = new TestStore({
+//         Play: [ursulaSeaWitchQueen, cinderellaBallroomSensation],
+//         Hand: [partOfYourWorld],
 //       });
 //
-//       const songToSing = testStore.getCard(partOfYourWorld);
-//       const cardToSing = testStore.getCard(cinderellaBallroomSensation);
+//       Const songToSing = testStore.getCard(partOfYourWorld);
+//       Const cardToSing = testStore.getCard(cinderellaBallroomSensation);
 //
-//       expect(cardToSing.ready).toEqual(true);
-//       expect(cardToSing.meta.playedThisTurn).toBeFalsy();
+//       Expect(cardToSing.ready).toEqual(true);
+//       Expect(cardToSing.meta.playedThisTurn).toBeFalsy();
 //
-//       cardToSing.sing(songToSing);
+//       CardToSing.sing(songToSing);
 //
-//       expect(cardToSing.ready).toEqual(true);
-//       expect(testStore.getZonesCardCount().hand).toEqual(1);
-//       expect(testStore.getZonesCardCount().play).toEqual(2);
+//       Expect(cardToSing.ready).toEqual(true);
+//       Expect(testStore.getZonesCardCount().hand).toEqual(1);
+//       Expect(testStore.getZonesCardCount().play).toEqual(2);
 //     });
 //
-//     it("She's able to sing", async () => {
-//       const testEngine = new TestEngine({
-//         play: [ursulaSeaWitchQueen],
-//         discard: [cinderellaBallroomSensation],
-//         hand: [partOfYourWorld],
+//     It("She's able to sing", async () => {
+//       Const testEngine = new TestEngine({
+//         Play: [ursulaSeaWitchQueen],
+//         Discard: [cinderellaBallroomSensation],
+//         Hand: [partOfYourWorld],
 //       });
 //
-//       const { singer, song } = await testEngine.singSong({
-//         song: partOfYourWorld,
-//         singer: cinderellaBallroomSensation,
+//       Const { singer, song } = await testEngine.singSong({
+//         Song: partOfYourWorld,
+//         Singer: cinderellaBallroomSensation,
 //       });
 //
-//       expect(singer.ready).toEqual(false);
-//       expect(song.zone).toEqual("discard");
+//       Expect(singer.ready).toEqual(false);
+//       Expect(song.zone).toEqual("discard");
 //     });
 //   });
 // });

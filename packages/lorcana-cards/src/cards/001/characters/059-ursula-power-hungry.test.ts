@@ -5,9 +5,9 @@ import { ursulaPowerHungry } from "./059-ursula-power-hungry";
 describe("Ursula - Power Hungry", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [ursulaPowerHungry] });
-  //   expect(testEngine.getCardModel(ursulaPowerHungry).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [ursulaPowerHungry] });
+  //   Expect(testEngine.getCardModel(ursulaPowerHungry).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,55 +17,55 @@ describe("Ursula - Power Hungry", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { youHaveForgottenMe } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
-// import { ursulaPowerHungry } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { youHaveForgottenMe } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
+// Import { ursulaPowerHungry } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Ursula - Power Hungry", () => {
-//   describe("**IT'S TOO EASY!** When you play this character, each opponent loses 1 lore. You may draw a card for each 1 lore lost this way.", () => {
-//     it("Activates the effect", () => {
-//       const testStore = new TestStore({
-//         inkwell: ursulaPowerHungry.cost,
-//         deck: [youHaveForgottenMe],
-//         hand: [ursulaPowerHungry],
+// Describe("Ursula - Power Hungry", () => {
+//   Describe("**IT'S TOO EASY!** When you play this character, each opponent loses 1 lore. You may draw a card for each 1 lore lost this way.", () => {
+//     It("Activates the effect", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: ursulaPowerHungry.cost,
+//         Deck: [youHaveForgottenMe],
+//         Hand: [ursulaPowerHungry],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "hand",
-//         ursulaPowerHungry.id,
+//         UrsulaPowerHungry.id,
 //       );
 //
-//       testStore.store.tableStore.getTable("player_two").lore = 5;
+//       TestStore.store.tableStore.getTable("player_two").lore = 5;
 //
-//       cardUnderTest.playFromHand();
+//       CardUnderTest.playFromHand();
 //
-//       expect(testStore.store.tableStore.getTable("player_two").lore).toBe(4);
-//       expect(testStore.getZonesCardCount()).toEqual(
-//         expect.objectContaining({ hand: 1, deck: 0, play: 1, discard: 0 }),
+//       Expect(testStore.store.tableStore.getTable("player_two").lore).toBe(4);
+//       Expect(testStore.getZonesCardCount()).toEqual(
+//         Expect.objectContaining({ hand: 1, deck: 0, play: 1, discard: 0 }),
 //       );
 //     });
 //
-//     it.skip("Skips the effect", () => {
-//       const testStore = new TestStore({
-//         inkwell: ursulaPowerHungry.cost,
-//         deck: [youHaveForgottenMe],
-//         hand: [ursulaPowerHungry],
+//     It.skip("Skips the effect", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: ursulaPowerHungry.cost,
+//         Deck: [youHaveForgottenMe],
+//         Hand: [ursulaPowerHungry],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "hand",
-//         ursulaPowerHungry.id,
+//         UrsulaPowerHungry.id,
 //       );
 //
-//       testStore.store.tableStore.getTable("player_two").lore = 5;
+//       TestStore.store.tableStore.getTable("player_two").lore = 5;
 //
-//       cardUnderTest.playFromHand();
-//       testStore.resolveTopOfStack();
+//       CardUnderTest.playFromHand();
+//       TestStore.resolveTopOfStack();
 //
-//       expect(testStore.store.tableStore.getTable("player_two").lore).toBe(4);
-//       expect(testStore.getZonesCardCount()).toEqual(
-//         expect.objectContaining({ hand: 0, deck: 1, play: 1, discard: 0 }),
+//       Expect(testStore.store.tableStore.getTable("player_two").lore).toBe(4);
+//       Expect(testStore.getZonesCardCount()).toEqual(
+//         Expect.objectContaining({ hand: 0, deck: 1, play: 1, discard: 0 }),
 //       );
 //     });
 //   });

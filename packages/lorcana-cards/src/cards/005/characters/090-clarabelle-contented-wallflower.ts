@@ -1,34 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const clarabelleContentedWallflower: CharacterCard = {
-  id: "1v9",
-  cardType: "character",
-  name: "Clarabelle",
-  version: "Contented Wallflower",
-  fullName: "Clarabelle - Contented Wallflower",
-  inkType: ["emerald"],
-  set: "005",
-  text: "ONE STEP BEHIND When you play this character, if an opponent has more cards in their hand than you, you may draw a card.",
-  cost: 3,
-  strength: 2,
-  willpower: 3,
-  lore: 1,
-  cardNumber: 90,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "f2123da0366f4fab7d748e1632bb5c20732c94ab",
-  },
   abilities: [
     {
-      id: "1v9-1",
-      type: "triggered",
-      name: "ONE STEP BEHIND",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "conditional",
         condition: {
@@ -41,8 +15,34 @@ export const clarabelleContentedWallflower: CharacterCard = {
           target: "CONTROLLER",
         },
       },
+      id: "1v9-1",
+      name: "ONE STEP BEHIND",
       text: "ONE STEP BEHIND When you play this character, if an opponent has more cards in their hand than you, you may draw a card.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 90,
+  cardType: "character",
   classifications: ["Storyborn", "Ally"],
+  cost: 3,
+  externalIds: {
+    ravensburger: "f2123da0366f4fab7d748e1632bb5c20732c94ab",
+  },
+  fullName: "Clarabelle - Contented Wallflower",
+  id: "1v9",
+  inkType: ["emerald"],
+  inkable: true,
+  lore: 1,
+  missingTests: true,
+  name: "Clarabelle",
+  set: "005",
+  strength: 2,
+  text: "ONE STEP BEHIND When you play this character, if an opponent has more cards in their hand than you, you may draw a card.",
+  version: "Contented Wallflower",
+  willpower: 3,
 };

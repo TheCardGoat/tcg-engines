@@ -67,9 +67,9 @@ export type { CardInstance, CardDefinition } from "./cards";
 export { createCard, getCardById } from "./cards";
 ```
 
-## Biome Formatting
+## Oxc Formatting
 
-Biome handles all formatting automatically:
+Oxc formatter (via `oxfmt`) handles all formatting automatically:
 - **Indent**: 2 spaces
 - **Quotes**: Double quotes (`"string"`)
 - **Semicolons**: Required
@@ -101,7 +101,7 @@ state.cards.push(newCard);
 
 ### Dead Code
 - Remove unused code, don't comment it out
-- Remove unused imports (Biome enforces this)
+- Remove unused imports (oxlint enforces this)
 - No backward compatibility shims unless explicitly required
 
 ## Documentation

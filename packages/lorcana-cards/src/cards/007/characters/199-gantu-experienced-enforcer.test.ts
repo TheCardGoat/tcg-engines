@@ -3,186 +3,186 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { aPiratesLife } from "@lorcanito/lorcana-engine/cards/004/actions/actions";
-// import { princeNaveenUkulelePlayer } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import {
-//   gantuExperiencedEnforcer,
-//   mickeyMouseInspirationalWarrior,
-//   mirabelMadrigalHopefulDreamer,
-//   restoringTheHeart,
-//   spaghettiDinner,
-//   theFamilyMadrigal,
-//   theTroubadourMusicalNarrator,
-//   thunderboltWonderDog,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { aPiratesLife } from "@lorcanito/lorcana-engine/cards/004/actions/actions";
+// Import { princeNaveenUkulelePlayer } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import {
+//   GantuExperiencedEnforcer,
+//   MickeyMouseInspirationalWarrior,
+//   MirabelMadrigalHopefulDreamer,
+//   RestoringTheHeart,
+//   SpaghettiDinner,
+//   TheFamilyMadrigal,
+//   TheTroubadourMusicalNarrator,
+//   ThunderboltWonderDog,
 // } from "@lorcanito/lorcana-engine/cards/007/";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Gantu - Experienced Enforcer", () => {
-//   it("CLOSE ALL CHANNELS When you play this character, characters can’t exert to sing songs until the start of your next turn.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Gantu - Experienced Enforcer", () => {
+//   It("CLOSE ALL CHANNELS When you play this character, characters can’t exert to sing songs until the start of your next turn.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         deck: 2,
-//         inkwell: gantuExperiencedEnforcer.cost,
-//         play: [theTroubadourMusicalNarrator],
-//         hand: [gantuExperiencedEnforcer],
+//         Deck: 2,
+//         Inkwell: gantuExperiencedEnforcer.cost,
+//         Play: [theTroubadourMusicalNarrator],
+//         Hand: [gantuExperiencedEnforcer],
 //       },
 //       {
-//         deck: 2,
-//         play: [mirabelMadrigalHopefulDreamer],
+//         Deck: 2,
+//         Play: [mirabelMadrigalHopefulDreamer],
 //       },
 //     );
 //
-//     const singer = testEngine.getCardModel(theTroubadourMusicalNarrator);
-//     const anotherSinger = testEngine.getCardModel(
-//       mirabelMadrigalHopefulDreamer,
+//     Const singer = testEngine.getCardModel(theTroubadourMusicalNarrator);
+//     Const anotherSinger = testEngine.getCardModel(
+//       MirabelMadrigalHopefulDreamer,
 //     );
 //
-//     expect(singer.hasSingRestriction).toBe(false);
-//     expect(anotherSinger.hasSingRestriction).toBe(false);
+//     Expect(singer.hasSingRestriction).toBe(false);
+//     Expect(anotherSinger.hasSingRestriction).toBe(false);
 //
-//     await testEngine.playCard(gantuExperiencedEnforcer);
+//     Await testEngine.playCard(gantuExperiencedEnforcer);
 //
-//     expect(singer.hasSingRestriction).toBe(true);
-//     expect(anotherSinger.hasSingRestriction).toBe(true);
+//     Expect(singer.hasSingRestriction).toBe(true);
+//     Expect(anotherSinger.hasSingRestriction).toBe(true);
 //
-//     await testEngine.passTurn();
+//     Await testEngine.passTurn();
 //
-//     expect(singer.hasSingRestriction).toBe(true);
-//     expect(anotherSinger.hasSingRestriction).toBe(true);
+//     Expect(singer.hasSingRestriction).toBe(true);
+//     Expect(anotherSinger.hasSingRestriction).toBe(true);
 //
-//     await testEngine.passTurn();
+//     Await testEngine.passTurn();
 //
-//     expect(singer.hasSingRestriction).toBe(false);
-//     expect(anotherSinger.hasSingRestriction).toBe(false);
+//     Expect(singer.hasSingRestriction).toBe(false);
+//     Expect(anotherSinger.hasSingRestriction).toBe(false);
 //   });
 //
-//   describe("DON'T GET ANY IDEAS Each player pays 2 {I} more to play actions or items. (This doesn’t apply to singing songs.)", () => {
-//     it("[Active Player] Increase cost for items and actions, but not for characters", async () => {
-//       const testEngine = new TestEngine({
-//         play: [gantuExperiencedEnforcer],
-//         hand: [
-//           mickeyMouseInspirationalWarrior,
-//           spaghettiDinner,
-//           restoringTheHeart,
+//   Describe("DON'T GET ANY IDEAS Each player pays 2 {I} more to play actions or items. (This doesn’t apply to singing songs.)", () => {
+//     It("[Active Player] Increase cost for items and actions, but not for characters", async () => {
+//       Const testEngine = new TestEngine({
+//         Play: [gantuExperiencedEnforcer],
+//         Hand: [
+//           MickeyMouseInspirationalWarrior,
+//           SpaghettiDinner,
+//           RestoringTheHeart,
 //         ],
 //       });
 //
-//       expect(
-//         testEngine.getCardModel(mickeyMouseInspirationalWarrior).cost,
+//       Expect(
+//         TestEngine.getCardModel(mickeyMouseInspirationalWarrior).cost,
 //       ).toBe(mickeyMouseInspirationalWarrior.cost);
-//       expect(testEngine.getCardModel(spaghettiDinner).cost).toBe(
-//         spaghettiDinner.cost + 2,
+//       Expect(testEngine.getCardModel(spaghettiDinner).cost).toBe(
+//         SpaghettiDinner.cost + 2,
 //       );
-//       expect(testEngine.getCardModel(restoringTheHeart).cost).toBe(
-//         restoringTheHeart.cost + 2,
+//       Expect(testEngine.getCardModel(restoringTheHeart).cost).toBe(
+//         RestoringTheHeart.cost + 2,
 //       );
 //     });
 //
-//     it("[Opponent] Increase cost for items and actions, but not for characters", async () => {
-//       const testEngine = new TestEngine(
+//     It("[Opponent] Increase cost for items and actions, but not for characters", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           hand: [
-//             mickeyMouseInspirationalWarrior,
-//             spaghettiDinner,
-//             restoringTheHeart,
+//           Hand: [
+//             MickeyMouseInspirationalWarrior,
+//             SpaghettiDinner,
+//             RestoringTheHeart,
 //           ],
 //         },
 //         {
-//           play: [gantuExperiencedEnforcer],
+//           Play: [gantuExperiencedEnforcer],
 //         },
 //       );
 //
-//       expect(
-//         testEngine.getCardModel(mickeyMouseInspirationalWarrior).cost,
+//       Expect(
+//         TestEngine.getCardModel(mickeyMouseInspirationalWarrior).cost,
 //       ).toBe(mickeyMouseInspirationalWarrior.cost);
-//       expect(testEngine.getCardModel(spaghettiDinner).cost).toBe(
-//         spaghettiDinner.cost + 2,
+//       Expect(testEngine.getCardModel(spaghettiDinner).cost).toBe(
+//         SpaghettiDinner.cost + 2,
 //       );
-//       expect(testEngine.getCardModel(restoringTheHeart).cost).toBe(
-//         restoringTheHeart.cost + 2,
+//       Expect(testEngine.getCardModel(restoringTheHeart).cost).toBe(
+//         RestoringTheHeart.cost + 2,
 //       );
 //     });
 //
-//     it("Effect Accumulates", async () => {
-//       const testEngine = new TestEngine(
+//     It("Effect Accumulates", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           hand: [
-//             mickeyMouseInspirationalWarrior,
-//             spaghettiDinner,
-//             restoringTheHeart,
+//           Hand: [
+//             MickeyMouseInspirationalWarrior,
+//             SpaghettiDinner,
+//             RestoringTheHeart,
 //           ],
 //         },
 //         {
-//           play: [gantuExperiencedEnforcer, gantuExperiencedEnforcer],
+//           Play: [gantuExperiencedEnforcer, gantuExperiencedEnforcer],
 //         },
 //       );
 //
-//       expect(
-//         testEngine.getCardModel(mickeyMouseInspirationalWarrior).cost,
+//       Expect(
+//         TestEngine.getCardModel(mickeyMouseInspirationalWarrior).cost,
 //       ).toBe(mickeyMouseInspirationalWarrior.cost);
-//       expect(testEngine.getCardModel(spaghettiDinner).cost).toBe(
-//         spaghettiDinner.cost + 4,
+//       Expect(testEngine.getCardModel(spaghettiDinner).cost).toBe(
+//         SpaghettiDinner.cost + 4,
 //       );
-//       expect(testEngine.getCardModel(restoringTheHeart).cost).toBe(
-//         restoringTheHeart.cost + 4,
+//       Expect(testEngine.getCardModel(restoringTheHeart).cost).toBe(
+//         RestoringTheHeart.cost + 4,
 //       );
 //     });
 //
-//     it("This doesn't apply to singing songs.", async () => {
-//       const testEngine = new TestEngine(
+//     It("This doesn't apply to singing songs.", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           hand: [theFamilyMadrigal],
-//           play: [thunderboltWonderDog],
+//           Hand: [theFamilyMadrigal],
+//           Play: [thunderboltWonderDog],
 //         },
 //         {
-//           play: [gantuExperiencedEnforcer],
+//           Play: [gantuExperiencedEnforcer],
 //         },
 //       );
 //
-//       expect(testEngine.getCardModel(theFamilyMadrigal).cost).toBe(
-//         theFamilyMadrigal.cost + 2,
+//       Expect(testEngine.getCardModel(theFamilyMadrigal).cost).toBe(
+//         TheFamilyMadrigal.cost + 2,
 //       );
 //
-//       expect(
-//         testEngine
+//       Expect(
+//         TestEngine
 //           .getCardModel(thunderboltWonderDog)
 //           .canSingASong(testEngine.getCardModel(theFamilyMadrigal)),
 //       ).toBe(true);
 //
-//       await testEngine.singSong({
-//         singer: thunderboltWonderDog,
-//         song: theFamilyMadrigal,
+//       Await testEngine.singSong({
+//         Singer: thunderboltWonderDog,
+//         Song: theFamilyMadrigal,
 //       });
 //
-//       expect(testEngine.getCardModel(thunderboltWonderDog).exerted).toEqual(
-//         true,
+//       Expect(testEngine.getCardModel(thunderboltWonderDog).exerted).toEqual(
+//         True,
 //       );
-//       expect(testEngine.getCardModel(theFamilyMadrigal).zone).toEqual(
+//       Expect(testEngine.getCardModel(theFamilyMadrigal).zone).toEqual(
 //         "discard",
 //       );
 //     });
 //   });
 // });
 //
-// describe("Regression tests", () => {
-//   it("Prince Naveen - Ukulele Player + Gantu - Experienced Enforcer", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Regression tests", () => {
+//   It("Prince Naveen - Ukulele Player + Gantu - Experienced Enforcer", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: princeNaveenUkulelePlayer.cost,
-//         hand: [princeNaveenUkulelePlayer, aPiratesLife],
+//         Inkwell: princeNaveenUkulelePlayer.cost,
+//         Hand: [princeNaveenUkulelePlayer, aPiratesLife],
 //       },
 //       {
-//         play: [gantuExperiencedEnforcer],
+//         Play: [gantuExperiencedEnforcer],
 //       },
 //     );
 //
-//     await testEngine.playCard(princeNaveenUkulelePlayer);
-//     await testEngine.acceptOptionalLayer();
-//     await testEngine.resolveTopOfStack({ targets: [aPiratesLife] });
+//     Await testEngine.playCard(princeNaveenUkulelePlayer);
+//     Await testEngine.acceptOptionalLayer();
+//     Await testEngine.resolveTopOfStack({ targets: [aPiratesLife] });
 //
-//     expect(testEngine.getCardModel(aPiratesLife).zone).toBe("discard");
-//     expect(testEngine.getCardModel(princeNaveenUkulelePlayer).zone).toBe(
+//     Expect(testEngine.getCardModel(aPiratesLife).zone).toBe("discard");
+//     Expect(testEngine.getCardModel(princeNaveenUkulelePlayer).zone).toBe(
 //       "play",
 //     );
 //   });

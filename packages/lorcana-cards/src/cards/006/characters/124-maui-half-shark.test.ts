@@ -3,44 +3,44 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { mauiHalfshark } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { mauiHalfshark } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Maui - Half-Shark", () => {
-//   it.skip("Evasive (Only characters with Evasive can challenge this character.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [mauiHalfshark],
+// Describe("Maui - Half-Shark", () => {
+//   It.skip("Evasive (Only characters with Evasive can challenge this character.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [mauiHalfshark],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(mauiHalfshark);
-//     expect(cardUnderTest.hasEvasive).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(mauiHalfshark);
+//     Expect(cardUnderTest.hasEvasive).toBe(true);
 //   });
 //
-//   it.skip("CHEEEEOHOOOO! Whenever this character challenges another character, you may return an action card from your discard to your hand.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: mauiHalfshark.cost,
-//       play: [mauiHalfshark],
-//       hand: [mauiHalfshark],
+//   It.skip("CHEEEEOHOOOO! Whenever this character challenges another character, you may return an action card from your discard to your hand.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: mauiHalfshark.cost,
+//       Play: [mauiHalfshark],
+//       Hand: [mauiHalfshark],
 //     });
 //
-//     await testEngine.playCard(mauiHalfshark);
+//     Await testEngine.playCard(mauiHalfshark);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 //
-//   it.skip("WAYFINDING Whenever you play an action, gain 1 lore.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: mauiHalfshark.cost,
-//       play: [mauiHalfshark],
-//       hand: [mauiHalfshark],
+//   It.skip("WAYFINDING Whenever you play an action, gain 1 lore.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: mauiHalfshark.cost,
+//       Play: [mauiHalfshark],
+//       Hand: [mauiHalfshark],
 //     });
 //
-//     await testEngine.playCard(mauiHalfshark);
+//     Await testEngine.playCard(mauiHalfshark);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

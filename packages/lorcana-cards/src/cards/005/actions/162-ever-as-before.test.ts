@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { everAsBefore } from "@lorcanito/lorcana-engine/cards/005/actions/actions";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { everAsBefore } from "@lorcanito/lorcana-engine/cards/005/actions/actions";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Ever as Before", () => {
-//   it.skip("_(A character with cost 2 or more can {E} to sing this song for free.)_<br/>Remove up to 2 damage from any number of chosen characters.", () => {
-//     const testStore = new TestStore({
-//       inkwell: everAsBefore.cost,
-//       hand: [everAsBefore],
+// Describe("Ever as Before", () => {
+//   It.skip("_(A character with cost 2 or more can {E} to sing this song for free.)_<br/>Remove up to 2 damage from any number of chosen characters.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: everAsBefore.cost,
+//       Hand: [everAsBefore],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(everAsBefore);
+//     Const cardUnderTest = testStore.getCard(everAsBefore);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

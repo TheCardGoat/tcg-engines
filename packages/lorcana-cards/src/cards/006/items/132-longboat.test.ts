@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { longboat } from "@lorcanito/lorcana-engine/cards/006/items/items";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { longboat } from "@lorcanito/lorcana-engine/cards/006/items/items";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Longboat", () => {
-//   it.skip("TAKE IT FOR A SPIN 2 {I} – Chosen character of yours gains Evasive until the start of your next turn. (Only characters with Evasive can challenge them.)", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: longboat.cost,
-//       play: [longboat],
-//       hand: [longboat],
+// Describe("Longboat", () => {
+//   It.skip("TAKE IT FOR A SPIN 2 {I} – Chosen character of yours gains Evasive until the start of your next turn. (Only characters with Evasive can challenge them.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: longboat.cost,
+//       Play: [longboat],
+//       Hand: [longboat],
 //     });
 //
-//     await testEngine.playCard(longboat);
+//     Await testEngine.playCard(longboat);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

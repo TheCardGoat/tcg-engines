@@ -1,51 +1,51 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
 export const breakCard: ActionCard = {
-  id: "m37",
-  cardType: "action",
-  name: "Break",
-  inkType: ["steel"],
-  franchise: "Beauty and the Beast",
-  set: "001",
-  text: "Banish chosen item.",
-  cost: 2,
-  cardNumber: 196,
-  inkable: true,
-  externalIds: {
-    ravensburger: "4f9cac8dbc4c67a388b8379dcc126c90c7c5e72a",
-  },
   abilities: [
     {
-      id: "m37-1",
-      text: "Banish chosen item.",
-      type: "action",
       effect: {
         type: "banish",
         target: "CHOSEN_CHARACTER",
       },
+      id: "m37-1",
+      text: "Banish chosen item.",
+      type: "action",
     },
   ],
+  cardNumber: 196,
+  cardType: "action",
+  cost: 2,
+  externalIds: {
+    ravensburger: "4f9cac8dbc4c67a388b8379dcc126c90c7c5e72a",
+  },
+  franchise: "Beauty and the Beast",
+  id: "m37",
+  inkType: ["steel"],
+  inkable: true,
+  name: "Break",
+  set: "001",
+  text: "Banish chosen item.",
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const breakAction: LorcanitoActionCard = {
-//   id: "whn",
-//   name: "Break",
-//   characteristics: ["action"],
-//   text: "Banish chosen item.",
-//   type: "action",
-//   abilities: [
+// Export const breakAction: LorcanitoActionCard = {
+//   Id: "whn",
+//   Name: "Break",
+//   Characteristics: ["action"],
+//   Text: "Banish chosen item.",
+//   Type: "action",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       effects: [
+//       Type: "resolution",
+//       Effects: [
 //         {
-//           type: "banish",
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
+//           Type: "banish",
+//           Target: {
+//             Type: "card",
+//             Value: 1,
+//             Filters: [
 //               { filter: "type", value: ["item"] },
 //               { filter: "zone", value: "play" },
 //             ],
@@ -54,16 +54,16 @@ export const breakCard: ActionCard = {
 //       ],
 //     },
 //   ],
-//   flavour: "No one throws a tantrum like a beast.",
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 2,
-//   illustrator: "Grace Tran",
-//   number: 196,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 506000,
+//   Flavour: "No one throws a tantrum like a beast.",
+//   Inkwell: true,
+//   Colors: ["steel"],
+//   Cost: 2,
+//   Illustrator: "Grace Tran",
+//   Number: 196,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 506000,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

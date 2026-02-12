@@ -1,10 +1,6 @@
 import { createMove } from "@tcg/core";
 import { useLorcanaOps } from "../../../operations";
-import type {
-  LorcanaCardMeta,
-  LorcanaGameState,
-  LorcanaMoveParams,
-} from "../../../types";
+import type { LorcanaCardMeta, LorcanaGameState, LorcanaMoveParams } from "../../../types";
 import { and, cardInPlay, isMainPhase } from "../../../validators";
 
 /**

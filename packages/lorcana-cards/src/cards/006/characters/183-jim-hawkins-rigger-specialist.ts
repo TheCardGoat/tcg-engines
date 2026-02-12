@@ -1,40 +1,40 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
 // // TODO: Once the set is released, we organize the cards by set and type
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { shiftAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { chosenCharacterOrLocation } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { whenYouPlayThis } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import { dealDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { shiftAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import { chosenCharacterOrLocation } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import { whenYouPlayThis } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import { dealDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const jimHawkinsRiggerSpecialist: LorcanitoCharacterCard = {
-//   id: "wxe",
-//   missingTestCase: true,
-//   name: "Jim Hawkins",
-//   title: "Rigging Specialist",
-//   characteristics: ["floodborn", "hero"],
-//   text: "Shift 3 (You may pay 3 {I} to play this on top of one of your characters named Jim Hawkins.)\nBATTLE STATION When you play this character, you may deal 1 damage to chosen character or location.",
-//   type: "character",
-//   abilities: [
-//     shiftAbility(3, "Jim Hawkins"),
-//     whenYouPlayThis({
-//       name: "Battle Station",
-//       text: "When you play this character, you may deal 1 damage to chosen character or location.",
-//       optional: true,
-//       effects: [dealDamageEffect(1, chosenCharacterOrLocation)],
+// Export const jimHawkinsRiggerSpecialist: LorcanitoCharacterCard = {
+//   Id: "wxe",
+//   MissingTestCase: true,
+//   Name: "Jim Hawkins",
+//   Title: "Rigging Specialist",
+//   Characteristics: ["floodborn", "hero"],
+//   Text: "Shift 3 (You may pay 3 {I} to play this on top of one of your characters named Jim Hawkins.)\nBATTLE STATION When you play this character, you may deal 1 damage to chosen character or location.",
+//   Type: "character",
+//   Abilities: [
+//     ShiftAbility(3, "Jim Hawkins"),
+//     WhenYouPlayThis({
+//       Name: "Battle Station",
+//       Text: "When you play this character, you may deal 1 damage to chosen character or location.",
+//       Optional: true,
+//       Effects: [dealDamageEffect(1, chosenCharacterOrLocation)],
 //     }),
 //   ],
-//   inkwell: false,
-//   colors: ["steel"],
-//   cost: 5,
-//   strength: 5,
-//   willpower: 5,
-//   lore: 2,
-//   illustrator: "Ornella Savarese",
-//   number: 183,
-//   set: "006",
-//   externalIds: {
-//     tcgPlayer: 593015,
+//   Inkwell: false,
+//   Colors: ["steel"],
+//   Cost: 5,
+//   Strength: 5,
+//   Willpower: 5,
+//   Lore: 2,
+//   Illustrator: "Ornella Savarese",
+//   Number: 183,
+//   Set: "006",
+//   ExternalIds: {
+//     TcgPlayer: 593015,
 //   },
-//   rarity: "uncommon",
+//   Rarity: "uncommon",
 // };
 //

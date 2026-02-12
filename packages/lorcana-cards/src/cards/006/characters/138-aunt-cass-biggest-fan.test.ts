@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { auntCassBiggestFan } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { auntCassBiggestFan } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Aunt Cass - Biggest Fan", () => {
-//   it.skip("HAPPY TO HELP Whenever this character quests, chosen Inventor character gets +1 {L} this turn.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: auntCassBiggestFan.cost,
-//       play: [auntCassBiggestFan],
-//       hand: [auntCassBiggestFan],
+// Describe("Aunt Cass - Biggest Fan", () => {
+//   It.skip("HAPPY TO HELP Whenever this character quests, chosen Inventor character gets +1 {L} this turn.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: auntCassBiggestFan.cost,
+//       Play: [auntCassBiggestFan],
+//       Hand: [auntCassBiggestFan],
 //     });
 //
-//     await testEngine.playCard(auntCassBiggestFan);
+//     Await testEngine.playCard(auntCassBiggestFan);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

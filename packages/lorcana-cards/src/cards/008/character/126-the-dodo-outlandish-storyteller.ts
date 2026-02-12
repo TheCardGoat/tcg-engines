@@ -1,35 +1,35 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { thisCharacterGetsStrength } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { thisCharacterGetsStrength } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const theDodoOutlandishStoryteller: LorcanitoCharacterCard = {
-//   id: "l04",
-//   name: "The Dodo",
-//   title: "Outlandish Storyteller",
-//   characteristics: ["storyborn"],
-//   text: "AN EXTREMELY FATAL SITUATION This character receives +1 {S} for each damage on it.",
-//   type: "character",
-//   abilities: [
+// Export const theDodoOutlandishStoryteller: LorcanitoCharacterCard = {
+//   Id: "l04",
+//   Name: "The Dodo",
+//   Title: "Outlandish Storyteller",
+//   Characteristics: ["storyborn"],
+//   Text: "AN EXTREMELY FATAL SITUATION This character receives +1 {S} for each damage on it.",
+//   Type: "character",
+//   Abilities: [
 //     {
-//       type: "static",
-//       ability: "effects",
-//       effects: [
-//         thisCharacterGetsStrength({ dynamic: true, sourceAttribute: "damage" }),
+//       Type: "static",
+//       Ability: "effects",
+//       Effects: [
+//         ThisCharacterGetsStrength({ dynamic: true, sourceAttribute: "damage" }),
 //       ],
 //     },
 //   ],
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 3,
-//   strength: 0,
-//   willpower: 6,
-//   illustrator: "Filipe Lourenço",
-//   number: 126,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631432,
+//   Inkwell: true,
+//   Colors: ["ruby"],
+//   Cost: 3,
+//   Strength: 0,
+//   Willpower: 6,
+//   Illustrator: "Filipe Lourenço",
+//   Number: 126,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631432,
 //   },
-//   rarity: "common",
-//   lore: 1,
+//   Rarity: "common",
+//   Lore: 1,
 // };
 //

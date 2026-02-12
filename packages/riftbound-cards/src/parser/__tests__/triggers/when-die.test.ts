@@ -17,14 +17,14 @@ describe("Trigger: When Die", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
+          effect: expect.objectContaining({
+            amount: 1,
+            type: "draw",
+          }),
           trigger: expect.objectContaining({
             event: "die",
           }),
-          effect: expect.objectContaining({
-            type: "draw",
-            amount: 1,
-          }),
+          type: "triggered",
         }),
       );
     });
@@ -45,12 +45,12 @@ describe("Trigger: When Die", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           effect: expect.objectContaining({
-            type: "channel",
             amount: 1,
             exhausted: true,
+            type: "channel",
           }),
+          type: "triggered",
         }),
       );
     });
@@ -66,10 +66,10 @@ describe("Trigger: When Die", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           effect: expect.objectContaining({
             type: "create-token",
           }),
+          type: "triggered",
         }),
       );
     });
@@ -77,19 +77,17 @@ describe("Trigger: When Die", () => {
 
   describe("damage effects", () => {
     it.skip("should parse 'When I die, deal 2 to all enemy units at my battlefield.'", () => {
-      const result = parseAbilities(
-        "When I die, deal 2 to all enemy units at my battlefield.",
-      );
+      const result = parseAbilities("When I die, deal 2 to all enemy units at my battlefield.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           effect: expect.objectContaining({
-            type: "damage",
             amount: 2,
+            type: "damage",
           }),
+          type: "triggered",
         }),
       );
     });
@@ -103,10 +101,10 @@ describe("Trigger: When Die", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           effect: expect.objectContaining({
             type: "recycle",
           }),
+          type: "triggered",
         }),
       );
     });
@@ -120,14 +118,14 @@ describe("Trigger: When Die", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           trigger: expect.objectContaining({
             event: "die",
             on: expect.objectContaining({
-              type: "unit",
               controller: "friendly",
+              type: "unit",
             }),
           }),
+          type: "triggered",
         }),
       );
     });
@@ -140,9 +138,7 @@ describe("Trigger: When Die", () => {
     });
 
     it.skip("should parse 'When another friendly unit dies, give me +1 :rb_might:.'", () => {
-      const result = parseAbilities(
-        "When another friendly unit dies, give me +1 :rb_might:.",
-      );
+      const result = parseAbilities("When another friendly unit dies, give me +1 :rb_might:.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);

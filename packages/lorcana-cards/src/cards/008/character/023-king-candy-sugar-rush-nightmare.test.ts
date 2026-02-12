@@ -3,84 +3,84 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { dragonFire } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
-// import { wreckitRalphAdmiralUnderpants } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { candleheadDedicatedRacer } from "@lorcanito/lorcana-engine/cards/007";
-// import {
-//   gloydOrangeboarFierceCompetitor,
-//   kingCandySugarRushNightmare,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { dragonFire } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
+// Import { wreckitRalphAdmiralUnderpants } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { candleheadDedicatedRacer } from "@lorcanito/lorcana-engine/cards/007";
+// Import {
+//   GloydOrangeboarFierceCompetitor,
+//   KingCandySugarRushNightmare,
 // } from "@lorcanito/lorcana-engine/cards/008";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("King Candy - Sugar Rush Nightmare", () => {
-//   it("A NEW ROSTER When this character is banished, you may return another Racer character card from your discard to your hand.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: dragonFire.cost,
-//       play: [kingCandySugarRushNightmare],
-//       hand: [dragonFire],
-//       discard: [candleheadDedicatedRacer],
+// Describe("King Candy - Sugar Rush Nightmare", () => {
+//   It("A NEW ROSTER When this character is banished, you may return another Racer character card from your discard to your hand.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: dragonFire.cost,
+//       Play: [kingCandySugarRushNightmare],
+//       Hand: [dragonFire],
+//       Discard: [candleheadDedicatedRacer],
 //     });
 //
-//     await testEngine.playCard(
-//       dragonFire,
+//     Await testEngine.playCard(
+//       DragonFire,
 //       {
-//         targets: [kingCandySugarRushNightmare],
+//         Targets: [kingCandySugarRushNightmare],
 //       },
-//       true,
+//       True,
 //     );
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({ targets: [candleheadDedicatedRacer] });
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({ targets: [candleheadDedicatedRacer] });
 //
-//     expect(testEngine.getCardModel(candleheadDedicatedRacer).zone).toBe("hand");
+//     Expect(testEngine.getCardModel(candleheadDedicatedRacer).zone).toBe("hand");
 //   });
 //
-//   it("A NEW ROSTER Only racers return", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: dragonFire.cost,
-//       play: [kingCandySugarRushNightmare],
-//       hand: [dragonFire],
-//       discard: [wreckitRalphAdmiralUnderpants, gloydOrangeboarFierceCompetitor],
+//   It("A NEW ROSTER Only racers return", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: dragonFire.cost,
+//       Play: [kingCandySugarRushNightmare],
+//       Hand: [dragonFire],
+//       Discard: [wreckitRalphAdmiralUnderpants, gloydOrangeboarFierceCompetitor],
 //     });
 //
-//     await testEngine.playCard(
-//       dragonFire,
+//     Await testEngine.playCard(
+//       DragonFire,
 //       {
-//         targets: [kingCandySugarRushNightmare],
+//         Targets: [kingCandySugarRushNightmare],
 //       },
-//       true,
+//       True,
 //     );
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack(
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack(
 //       { targets: [wreckitRalphAdmiralUnderpants] },
-//       true,
+//       True,
 //     );
 //
-//     expect(testEngine.getCardModel(wreckitRalphAdmiralUnderpants).zone).toBe(
+//     Expect(testEngine.getCardModel(wreckitRalphAdmiralUnderpants).zone).toBe(
 //       "discard",
 //     );
 //   });
 // });
 //
-// describe("Regression tests", () => {
-//   it("Cannot Return Himself", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: dragonFire.cost,
-//       play: [kingCandySugarRushNightmare],
-//       hand: [dragonFire],
-//       discard: [],
+// Describe("Regression tests", () => {
+//   It("Cannot Return Himself", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: dragonFire.cost,
+//       Play: [kingCandySugarRushNightmare],
+//       Hand: [dragonFire],
+//       Discard: [],
 //     });
 //
-//     await testEngine.playCard(
-//       dragonFire,
+//     Await testEngine.playCard(
+//       DragonFire,
 //       {
-//         targets: [kingCandySugarRushNightmare],
+//         Targets: [kingCandySugarRushNightmare],
 //       },
-//       true,
+//       True,
 //     );
 //
-//     expect(testEngine.stackLayers).toHaveLength(0);
-//     expect(testEngine.getCardModel(kingCandySugarRushNightmare).zone).toBe(
+//     Expect(testEngine.stackLayers).toHaveLength(0);
+//     Expect(testEngine.getCardModel(kingCandySugarRushNightmare).zone).toBe(
 //       "discard",
 //     );
 //   });

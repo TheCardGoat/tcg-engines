@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { signTheScroll } from "@lorcanito/lorcana-engine/cards/004/actions/actions";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { signTheScroll } from "@lorcanito/lorcana-engine/cards/004/actions/actions";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Sign The Scroll", () => {
-//   it.skip("Each opponent may chose and discard a chard. For each opponent who doesn't, you gain 2 lore.", () => {
-//     const testStore = new TestStore({
-//       inkwell: signTheScroll.cost,
-//       hand: [signTheScroll],
+// Describe("Sign The Scroll", () => {
+//   It.skip("Each opponent may chose and discard a chard. For each opponent who doesn't, you gain 2 lore.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: signTheScroll.cost,
+//       Hand: [signTheScroll],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", signTheScroll.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", signTheScroll.id);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

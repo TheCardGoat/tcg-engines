@@ -98,9 +98,7 @@ test(cards): add tests for keyword abilities
 ### Pre-commit Hooks
 
 Lefthook runs automatically on commit:
-- Biome formatting check
-- Biome lint check
-- Type checking
+- oxlint formatting and lint check
 
 ### Branch Strategy
 - `main` - Production-ready code

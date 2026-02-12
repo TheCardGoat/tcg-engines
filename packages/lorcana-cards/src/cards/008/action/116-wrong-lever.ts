@@ -1,91 +1,91 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type {
+// Import type {
 //   CardEffectTarget,
 //   LorcanitoActionCard,
 // } from "@lorcanito/lorcana-engine";
-// import {
-//   chosenCharacter,
-//   thisCharacter,
+// Import {
+//   ChosenCharacter,
+//   ThisCharacter,
 // } from "@lorcanito/lorcana-engine/abilities/targets";
-// import type {
+// Import type {
 //   CreateLayerBasedOnTarget,
 //   MoveCardEffect,
 // } from "@lorcanito/lorcana-engine/effects/effectTypes";
 //
-// const putChosenCharAtTheBottom: CreateLayerBasedOnTarget = {
-//   type: "create-layer-based-on-target",
+// Const putChosenCharAtTheBottom: CreateLayerBasedOnTarget = {
+//   Type: "create-layer-based-on-target",
 //   // TODO: get rid of target
-//   target: thisCharacter,
-//   responder: "self",
-//   effects: [
+//   Target: thisCharacter,
+//   Responder: "self",
+//   Effects: [
 //     {
-//       type: "move",
-//       to: "deck",
-//       bottom: true,
-//       shouldRevealMoved: true,
-//       target: chosenCharacter,
+//       Type: "move",
+//       To: "deck",
+//       Bottom: true,
+//       ShouldRevealMoved: true,
+//       Target: chosenCharacter,
 //     },
 //   ],
 // };
 //
-// const pullTheLeverFromDiscard: CardEffectTarget = {
-//   type: "card",
-//   value: 1,
-//   filters: [
+// Const pullTheLeverFromDiscard: CardEffectTarget = {
+//   Type: "card",
+//   Value: 1,
+//   Filters: [
 //     { filter: "zone", value: "discard" },
 //     { filter: "owner", value: "self" },
 //     {
-//       filter: "publicId",
+//       Filter: "publicId",
 //       // value: pullTheLever.id,
-//       value: "sp7",
+//       Value: "sp7",
 //     },
 //   ],
 // };
 //
-// const putAPullTheLeverFromDiscardToBottom: MoveCardEffect = {
-//   type: "move",
-//   to: "deck",
-//   bottom: true,
-//   amount: 1,
-//   shouldRevealMoved: true,
-//   target: pullTheLeverFromDiscard,
-//   forEach: [putChosenCharAtTheBottom],
+// Const putAPullTheLeverFromDiscardToBottom: MoveCardEffect = {
+//   Type: "move",
+//   To: "deck",
+//   Bottom: true,
+//   Amount: 1,
+//   ShouldRevealMoved: true,
+//   Target: pullTheLeverFromDiscard,
+//   ForEach: [putChosenCharAtTheBottom],
 // };
 //
-// export const wrongLeverAction: LorcanitoActionCard = {
-//   id: "g9i",
-//   name: "Wrong Lever!",
-//   characteristics: ["action"],
-//   text: "Choose one:\n- Return chosen character to their player's hand.\n- Put a Pull the Lever! card from your discard pile on the bottom of your deck to put chosen character on the bottom of their owner's deck.",
-//   type: "action",
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 3,
-//   illustrator: "Cristian Romero",
-//   number: 116,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631425,
+// Export const wrongLeverAction: LorcanitoActionCard = {
+//   Id: "g9i",
+//   Name: "Wrong Lever!",
+//   Characteristics: ["action"],
+//   Text: "Choose one:\n- Return chosen character to their player's hand.\n- Put a Pull the Lever! card from your discard pile on the bottom of your deck to put chosen character on the bottom of their owner's deck.",
+//   Type: "action",
+//   Inkwell: true,
+//   Colors: ["emerald"],
+//   Cost: 3,
+//   Illustrator: "Cristian Romero",
+//   Number: 116,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631425,
 //   },
-//   rarity: "rare",
-//   abilities: [
+//   Rarity: "rare",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       effects: [
+//       Type: "resolution",
+//       Effects: [
 //         {
-//           type: "modal",
+//           Type: "modal",
 //           // TODO: Get rid of target
-//           target: chosenCharacter,
-//           modes: [
+//           Target: chosenCharacter,
+//           Modes: [
 //             {
-//               id: "1",
-//               text: "Return chosen character to their player's hand.",
-//               effects: [{ type: "move", to: "hand", target: chosenCharacter }],
+//               Id: "1",
+//               Text: "Return chosen character to their player's hand.",
+//               Effects: [{ type: "move", to: "hand", target: chosenCharacter }],
 //             },
 //             {
-//               id: "2",
-//               text: "Put a Pull the Lever! card from your discard pile on the bottom of your deck to put chosen character on the bottom of their owner's deck.",
-//               effects: [putAPullTheLeverFromDiscardToBottom],
+//               Id: "2",
+//               Text: "Put a Pull the Lever! card from your discard pile on the bottom of your deck to put chosen character on the bottom of their owner's deck.",
+//               Effects: [putAPullTheLeverFromDiscardToBottom],
 //             },
 //           ],
 //         },

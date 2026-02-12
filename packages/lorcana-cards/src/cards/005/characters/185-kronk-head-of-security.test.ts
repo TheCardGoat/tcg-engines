@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { kronkHeadOfSecurity } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { kronkHeadOfSecurity } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Kronk - Head of Security", () => {
-//   it.skip("", () => {
-//     const testStore = new TestStore({
-//       inkwell: kronkHeadOfSecurity.cost,
-//       play: [kronkHeadOfSecurity],
+// Describe("Kronk - Head of Security", () => {
+//   It.skip("", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: kronkHeadOfSecurity.cost,
+//       Play: [kronkHeadOfSecurity],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(kronkHeadOfSecurity);
+//     Const cardUnderTest = testStore.getCard(kronkHeadOfSecurity);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

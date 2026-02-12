@@ -3,48 +3,48 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   breakFree,
-//   evilComesPrepared,
-//   gatheringKnowledgeAndWisdom,
-//   hypnoticDeduction,
-//   youreWelcome,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   BreakFree,
+//   EvilComesPrepared,
+//   GatheringKnowledgeAndWisdom,
+//   HypnoticDeduction,
+//   YoureWelcome,
 // } from "@lorcanito/lorcana-engine/cards/005/actions/actions";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Hypnotic Deduction", () => {
-//   it("Draw 3 cards, then put 2 cards from your hand on the top of your deck in any order.", () => {
-//     const testStore = new TestStore({
-//       inkwell: hypnoticDeduction.cost,
-//       hand: [hypnoticDeduction],
-//       deck: [
-//         gatheringKnowledgeAndWisdom,
-//         youreWelcome,
-//         evilComesPrepared,
-//         breakFree,
+// Describe("Hypnotic Deduction", () => {
+//   It("Draw 3 cards, then put 2 cards from your hand on the top of your deck in any order.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: hypnoticDeduction.cost,
+//       Hand: [hypnoticDeduction],
+//       Deck: [
+//         GatheringKnowledgeAndWisdom,
+//         YoureWelcome,
+//         EvilComesPrepared,
+//         BreakFree,
 //       ],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(hypnoticDeduction);
+//     Const cardUnderTest = testStore.getCard(hypnoticDeduction);
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     expect(testStore.getZonesCardCount().hand).toBe(3);
-//     expect(testStore.getZonesCardCount().deck).toBe(1);
-//     expect(testStore.getZonesCardCount().discard).toBe(1);
+//     Expect(testStore.getZonesCardCount().hand).toBe(3);
+//     Expect(testStore.getZonesCardCount().deck).toBe(1);
+//     Expect(testStore.getZonesCardCount().discard).toBe(1);
 //
-//     const secondCard = testStore.getCard(youreWelcome);
-//     const firstCard = testStore.getCard(breakFree);
+//     Const secondCard = testStore.getCard(youreWelcome);
+//     Const firstCard = testStore.getCard(breakFree);
 //
-//     testStore.resolveTopOfStack({ targets: [secondCard] }, true);
-//     expect(secondCard.zone).toBe("deck");
+//     TestStore.resolveTopOfStack({ targets: [secondCard] }, true);
+//     Expect(secondCard.zone).toBe("deck");
 //
-//     testStore.resolveTopOfStack({ targets: [firstCard] });
-//     expect(firstCard.zone).toBe("deck");
+//     TestStore.resolveTopOfStack({ targets: [firstCard] });
+//     Expect(firstCard.zone).toBe("deck");
 //
-//     expect(
-//       testStore.getZonesCards().deck.map((card) => card.lorcanitoCard.id),
+//     Expect(
+//       TestStore.getZonesCards().deck.map((card) => card.lorcanitoCard.id),
 //     ).toEqual([gatheringKnowledgeAndWisdom.id, youreWelcome.id, breakFree.id]);
 //   });
 // });

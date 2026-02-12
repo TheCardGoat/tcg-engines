@@ -1,25 +1,8 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
 export const thisIsMyFamily: ActionCard = {
-  id: "1io",
-  cardType: "action",
-  name: "This Is My Family",
-  inkType: ["amethyst"],
-  franchise: "Encanto",
-  set: "007",
-  text: "Gain 1 lore. Draw a card.",
-  actionSubtype: "song",
-  cost: 2,
-  cardNumber: 81,
-  inkable: false,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "c3565f192febee8aaadc4da67348a3246ad959eb",
-  },
   abilities: [
     {
-      id: "1io-1",
-      type: "action",
       effect: {
         type: "sequence",
         steps: [
@@ -34,7 +17,24 @@ export const thisIsMyFamily: ActionCard = {
           },
         ],
       },
+      id: "1io-1",
       text: "Gain 1 lore. Draw a card.",
+      type: "action",
     },
   ],
+  actionSubtype: "song",
+  cardNumber: 81,
+  cardType: "action",
+  cost: 2,
+  externalIds: {
+    ravensburger: "c3565f192febee8aaadc4da67348a3246ad959eb",
+  },
+  franchise: "Encanto",
+  id: "1io",
+  inkType: ["amethyst"],
+  inkable: false,
+  missingTests: true,
+  name: "This Is My Family",
+  set: "007",
+  text: "Gain 1 lore. Draw a card.",
 };

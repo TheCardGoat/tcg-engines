@@ -1,28 +1,28 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { rushAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { rushAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
 //
-// export const luisaMadrigalMagicallyStrongOne: LorcanitoCharacterCard = {
-//   id: "kcf",
-//   reprints: ["utw"],
-//   name: "Luisa Madrigal",
-//   title: "Magically Strong One",
-//   characteristics: ["storyborn", "ally", "madrigal"],
-//   text: "**Rush** _(This character can challenge the turn they're played.)_",
-//   type: "character",
-//   abilities: [rushAbility],
-//   flavour: '"This rock? No problem. Go get that prophecy, hermana!"',
-//   colors: ["amethyst"],
-//   cost: 4,
-//   strength: 4,
-//   willpower: 3,
-//   lore: 1,
-//   illustrator: "Juan Diego Leon",
-//   number: 47,
-//   set: "URR",
-//   externalIds: {
-//     tcgPlayer: 543901,
+// Export const luisaMadrigalMagicallyStrongOne: LorcanitoCharacterCard = {
+//   Id: "kcf",
+//   Reprints: ["utw"],
+//   Name: "Luisa Madrigal",
+//   Title: "Magically Strong One",
+//   Characteristics: ["storyborn", "ally", "madrigal"],
+//   Text: "**Rush** _(This character can challenge the turn they're played.)_",
+//   Type: "character",
+//   Abilities: [rushAbility],
+//   Flavour: '"This rock? No problem. Go get that prophecy, hermana!"',
+//   Colors: ["amethyst"],
+//   Cost: 4,
+//   Strength: 4,
+//   Willpower: 3,
+//   Lore: 1,
+//   Illustrator: "Juan Diego Leon",
+//   Number: 47,
+//   Set: "URR",
+//   ExternalIds: {
+//     TcgPlayer: 543901,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

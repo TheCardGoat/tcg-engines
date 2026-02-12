@@ -3,101 +3,101 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { fireTheCannons } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
-// import { stichtNewDog } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { chernabogsFollowersCreaturesOfEvil } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { magicBroomIlluminaryKeeper } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { theLibraryAGiftForBelle } from "@lorcanito/lorcana-engine/cards/005/locations/locations";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { fireTheCannons } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
+// Import { stichtNewDog } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+// Import { chernabogsFollowersCreaturesOfEvil } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { magicBroomIlluminaryKeeper } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { theLibraryAGiftForBelle } from "@lorcanito/lorcana-engine/cards/005/locations/locations";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("The Library - A Gift for Belle", () => {
-//   describe("**LOST IN A BOOK** Whenever a character is banished while here, you may draw a card.", () => {
-//     it("Removal", async () => {
-//       const testEngine = new TestEngine({
-//         inkwell: theLibraryAGiftForBelle.moveCost + fireTheCannons.cost,
-//         hand: [fireTheCannons],
-//         play: [theLibraryAGiftForBelle, stichtNewDog],
-//         deck: 5,
+// Describe("The Library - A Gift for Belle", () => {
+//   Describe("**LOST IN A BOOK** Whenever a character is banished while here, you may draw a card.", () => {
+//     It("Removal", async () => {
+//       Const testEngine = new TestEngine({
+//         Inkwell: theLibraryAGiftForBelle.moveCost + fireTheCannons.cost,
+//         Hand: [fireTheCannons],
+//         Play: [theLibraryAGiftForBelle, stichtNewDog],
+//         Deck: 5,
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(theLibraryAGiftForBelle);
-//       const targetCard = testEngine.getCardModel(stichtNewDog);
-//       const removal = testEngine.getCardModel(fireTheCannons);
+//       Const cardUnderTest = testEngine.getCardModel(theLibraryAGiftForBelle);
+//       Const targetCard = testEngine.getCardModel(stichtNewDog);
+//       Const removal = testEngine.getCardModel(fireTheCannons);
 //
-//       expect(
-//         testEngine.store.effectStore.getTriggeredAbilitiesForCard(
-//           targetCard,
+//       Expect(
+//         TestEngine.store.effectStore.getTriggeredAbilitiesForCard(
+//           TargetCard,
 //           () => true,
 //         ),
 //       ).toHaveLength(0);
-//       targetCard.enterLocation(cardUnderTest);
-//       expect(
-//         testEngine.store.effectStore.getTriggeredAbilitiesForCard(
-//           targetCard,
+//       TargetCard.enterLocation(cardUnderTest);
+//       Expect(
+//         TestEngine.store.effectStore.getTriggeredAbilitiesForCard(
+//           TargetCard,
 //           () => true,
 //         ),
 //       ).toHaveLength(1);
 //
-//       expect(targetCard.isAtLocation(cardUnderTest)).toBe(true);
+//       Expect(targetCard.isAtLocation(cardUnderTest)).toBe(true);
 //
-//       await testEngine.playCard(removal);
-//       await testEngine.resolveTopOfStack({ targets: [targetCard] }, true);
+//       Await testEngine.playCard(removal);
+//       Await testEngine.resolveTopOfStack({ targets: [targetCard] }, true);
 //
-//       await testEngine.resolveOptionalAbility();
+//       Await testEngine.resolveOptionalAbility();
 //
-//       expect(testEngine.getZonesCardCount().hand).toBe(1);
-//       expect(testEngine.getZonesCardCount().deck).toBe(4);
+//       Expect(testEngine.getZonesCardCount().hand).toBe(1);
+//       Expect(testEngine.getZonesCardCount().deck).toBe(4);
 //     });
 //
-//     it("Chernabog's Followers", () => {
-//       const testStore = new TestStore({
-//         inkwell: theLibraryAGiftForBelle.moveCost,
-//         play: [theLibraryAGiftForBelle, chernabogsFollowersCreaturesOfEvil],
-//         deck: 5,
+//     It("Chernabog's Followers", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: theLibraryAGiftForBelle.moveCost,
+//         Play: [theLibraryAGiftForBelle, chernabogsFollowersCreaturesOfEvil],
+//         Deck: 5,
 //       });
 //
-//       const cardUnderTest = testStore.getCard(theLibraryAGiftForBelle);
-//       const targetCard = testStore.getCard(chernabogsFollowersCreaturesOfEvil);
+//       Const cardUnderTest = testStore.getCard(theLibraryAGiftForBelle);
+//       Const targetCard = testStore.getCard(chernabogsFollowersCreaturesOfEvil);
 //
-//       targetCard.enterLocation(cardUnderTest);
-//       targetCard.quest();
+//       TargetCard.enterLocation(cardUnderTest);
+//       TargetCard.quest();
 //       // Chernabo's Followers is banished and draws a card
-//       testStore.resolveOptionalAbility();
+//       TestStore.resolveOptionalAbility();
 //
 //       // Draws a card from Library's effect
-//       testStore.resolveOptionalAbility();
+//       TestStore.resolveOptionalAbility();
 //
-//       expect(testStore.getZonesCardCount().hand).toBe(2);
-//       expect(testStore.getZonesCardCount().deck).toBe(3);
+//       Expect(testStore.getZonesCardCount().hand).toBe(2);
+//       Expect(testStore.getZonesCardCount().deck).toBe(3);
 //     });
 //   });
 //
-//   it("Magic Broom - Illuminary Keeper", () => {
-//     const testStore = new TestStore({
-//       inkwell:
-//         theLibraryAGiftForBelle.moveCost +
-//         chernabogsFollowersCreaturesOfEvil.cost,
-//       play: [theLibraryAGiftForBelle, magicBroomIlluminaryKeeper],
-//       hand: [chernabogsFollowersCreaturesOfEvil],
-//       deck: 5,
+//   It("Magic Broom - Illuminary Keeper", () => {
+//     Const testStore = new TestStore({
+//       Inkwell:
+//         TheLibraryAGiftForBelle.moveCost +
+//         ChernabogsFollowersCreaturesOfEvil.cost,
+//       Play: [theLibraryAGiftForBelle, magicBroomIlluminaryKeeper],
+//       Hand: [chernabogsFollowersCreaturesOfEvil],
+//       Deck: 5,
 //     });
 //
-//     const cardUnderTest = testStore.getCard(theLibraryAGiftForBelle);
-//     const targetCard = testStore.getCard(magicBroomIlluminaryKeeper);
+//     Const cardUnderTest = testStore.getCard(theLibraryAGiftForBelle);
+//     Const targetCard = testStore.getCard(magicBroomIlluminaryKeeper);
 //
-//     targetCard.enterLocation(cardUnderTest);
-//     testStore.getCard(chernabogsFollowersCreaturesOfEvil).playFromHand();
+//     TargetCard.enterLocation(cardUnderTest);
+//     TestStore.getCard(chernabogsFollowersCreaturesOfEvil).playFromHand();
 //
 //     // Magic Broom Illuminary Keeper is banished and draws a card
-//     testStore.resolveOptionalAbility();
+//     TestStore.resolveOptionalAbility();
 //
 //     // Draws a card from Library's effect
-//     testStore.resolveOptionalAbility();
+//     TestStore.resolveOptionalAbility();
 //
-//     expect(testStore.getZonesCardCount().hand).toBe(2);
-//     expect(testStore.getZonesCardCount().deck).toBe(3);
+//     Expect(testStore.getZonesCardCount().hand).toBe(2);
+//     Expect(testStore.getZonesCardCount().deck).toBe(3);
 //   });
 // });
 //

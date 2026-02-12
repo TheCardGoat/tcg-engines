@@ -3,87 +3,87 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { smash } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
-// import {
-//   chipTheTeacupGentleSoul,
-//   merlinSquirrel,
-//   princeNaveenPennilessRoyal,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { smash } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
+// Import {
+//   ChipTheTeacupGentleSoul,
+//   MerlinSquirrel,
+//   PrinceNaveenPennilessRoyal,
 // } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Merlin - Squirrel", () => {
-//   describe("**LOOK BEFORE YOU LEAP** When you play this character and when he leaves play, look at the top card of your deck. Put it on either the top or the bottom of your deck.", () => {
-//     it.skip("When you play", () => {
-//       const testStore = new TestStore({
-//         deck: [chipTheTeacupGentleSoul, princeNaveenPennilessRoyal],
-//         inkwell: merlinSquirrel.cost,
-//         hand: [merlinSquirrel],
+// Describe("Merlin - Squirrel", () => {
+//   Describe("**LOOK BEFORE YOU LEAP** When you play this character and when he leaves play, look at the top card of your deck. Put it on either the top or the bottom of your deck.", () => {
+//     It.skip("When you play", () => {
+//       Const testStore = new TestStore({
+//         Deck: [chipTheTeacupGentleSoul, princeNaveenPennilessRoyal],
+//         Inkwell: merlinSquirrel.cost,
+//         Hand: [merlinSquirrel],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId("hand", merlinSquirrel.id);
-//       const first = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId("hand", merlinSquirrel.id);
+//       Const first = testStore.getByZoneAndId(
 //         "deck",
-//         princeNaveenPennilessRoyal.id,
+//         PrinceNaveenPennilessRoyal.id,
 //       );
-//       const last = testStore.getByZoneAndId("deck", chipTheTeacupGentleSoul.id);
+//       Const last = testStore.getByZoneAndId("deck", chipTheTeacupGentleSoul.id);
 //
-//       expect(testStore.store.tableStore.getTable().zones.deck.cards).toEqual([
-//         last,
-//         first,
+//       Expect(testStore.store.tableStore.getTable().zones.deck.cards).toEqual([
+//         Last,
+//         First,
 //       ]);
 //
-//       cardUnderTest.playFromHand();
-//       testStore.resolveTopOfStack({ scry: { top: [last] } });
+//       CardUnderTest.playFromHand();
+//       TestStore.resolveTopOfStack({ scry: { top: [last] } });
 //
-//       expect(testStore.store.tableStore.getTable().zones.deck.cards).toEqual([
-//         first,
-//         last,
+//       Expect(testStore.store.tableStore.getTable().zones.deck.cards).toEqual([
+//         First,
+//         Last,
 //       ]);
 //     });
 //
-//     it.skip("When he leaves play", async () => {
-//       const testStore = new TestStore({
-//         inkwell: smash.cost,
-//         deck: [chipTheTeacupGentleSoul, princeNaveenPennilessRoyal],
-//         hand: [smash],
-//         play: [merlinSquirrel],
+//     It.skip("When he leaves play", async () => {
+//       Const testStore = new TestStore({
+//         Inkwell: smash.cost,
+//         Deck: [chipTheTeacupGentleSoul, princeNaveenPennilessRoyal],
+//         Hand: [smash],
+//         Play: [merlinSquirrel],
 //       });
 //
-//       const testEngine = new TestEngine({
-//         inkwell: smash.cost,
-//         deck: [chipTheTeacupGentleSoul, princeNaveenPennilessRoyal],
-//         hand: [smash],
-//         play: [merlinSquirrel],
+//       Const testEngine = new TestEngine({
+//         Inkwell: smash.cost,
+//         Deck: [chipTheTeacupGentleSoul, princeNaveenPennilessRoyal],
+//         Hand: [smash],
+//         Play: [merlinSquirrel],
 //       });
 //
-//       const first = testStore.getByZoneAndId(
+//       Const first = testStore.getByZoneAndId(
 //         "deck",
-//         princeNaveenPennilessRoyal.id,
+//         PrinceNaveenPennilessRoyal.id,
 //       );
-//       const last = testStore.getByZoneAndId("deck", chipTheTeacupGentleSoul.id);
+//       Const last = testStore.getByZoneAndId("deck", chipTheTeacupGentleSoul.id);
 //
-//       expect(testStore.store.tableStore.getTable().zones.deck.cards).toEqual([
-//         last,
-//         first,
+//       Expect(testStore.store.tableStore.getTable().zones.deck.cards).toEqual([
+//         Last,
+//         First,
 //       ]);
 //
-//       await testEngine.playCard(smash);
-//       await testEngine.resolveTopOfStack(
+//       Await testEngine.playCard(smash);
+//       Await testEngine.resolveTopOfStack(
 //         {
-//           targets: [merlinSquirrel],
+//           Targets: [merlinSquirrel],
 //         },
-//         true,
+//         True,
 //       );
 //
-//       await testEngine.resolveTopOfStack({
-//         scry: { bottom: [princeNaveenPennilessRoyal] },
+//       Await testEngine.resolveTopOfStack({
+//         Scry: { bottom: [princeNaveenPennilessRoyal] },
 //       });
 //
-//       expect(testEngine.store.tableStore.getTable().zones.deck.cards).toEqual([
-//         testEngine.getCardModel(princeNaveenPennilessRoyal),
-//         testEngine.getCardModel(chipTheTeacupGentleSoul),
+//       Expect(testEngine.store.tableStore.getTable().zones.deck.cards).toEqual([
+//         TestEngine.getCardModel(princeNaveenPennilessRoyal),
+//         TestEngine.getCardModel(chipTheTeacupGentleSoul),
 //       ]);
 //     });
 //   });

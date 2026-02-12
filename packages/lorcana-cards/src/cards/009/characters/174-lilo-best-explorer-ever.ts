@@ -1,29 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const liloBestExplorerEver: CharacterCard = {
-  id: "127",
-  cardType: "character",
-  name: "Lilo",
-  version: "Best Explorer Ever",
-  fullName: "Lilo - Best Explorer Ever",
-  inkType: ["steel"],
-  franchise: "Lilo and Stitch",
-  set: "009",
-  text: "COME ON, PEOPLE, LET'S MOVE When you play this character, your other characters gain Challenger +2 this turn (They get +2 {S} while challenging.)\nGO GET 'EM Whenever this character quests, chosen Alien character gains Challenger +2 and \"This character can challenge ready characters\" this turn.",
-  cost: 3,
-  strength: 2,
-  willpower: 2,
-  lore: 1,
-  cardNumber: 174,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "89a9cf3060e267f03223e97c6bd0ec7ab0072c80",
-  },
   abilities: [
     {
-      id: "127-1",
-      type: "static",
       effect: {
         type: "gain-keyword",
         keyword: "Challenger",
@@ -31,17 +10,11 @@ export const liloBestExplorerEver: CharacterCard = {
         value: 2,
         duration: "this-turn",
       },
+      id: "127-1",
       text: "COME ON, PEOPLE, LET'S MOVE When you play this character, your other characters gain Challenger +2 this turn",
+      type: "static",
     },
     {
-      id: "127-2",
-      type: "triggered",
-      name: "GO GET 'EM",
-      trigger: {
-        event: "quest",
-        timing: "whenever",
-        on: "SELF",
-      },
       effect: {
         type: "sequence",
         steps: [
@@ -58,8 +31,35 @@ export const liloBestExplorerEver: CharacterCard = {
           },
         ],
       },
+      id: "127-2",
+      name: "GO GET 'EM",
       text: 'GO GET \'EM Whenever this character quests, chosen Alien character gains Challenger +2 and "This character can challenge ready characters" this turn.',
+      trigger: {
+        event: "quest",
+        timing: "whenever",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 174,
+  cardType: "character",
   classifications: ["Storyborn", "Hero"],
+  cost: 3,
+  externalIds: {
+    ravensburger: "89a9cf3060e267f03223e97c6bd0ec7ab0072c80",
+  },
+  franchise: "Lilo and Stitch",
+  fullName: "Lilo - Best Explorer Ever",
+  id: "127",
+  inkType: ["steel"],
+  inkable: true,
+  lore: 1,
+  missingTests: true,
+  name: "Lilo",
+  set: "009",
+  strength: 2,
+  text: "COME ON, PEOPLE, LET'S MOVE When you play this character, your other characters gain Challenger +2 this turn (They get +2 {S} while challenging.)\nGO GET 'EM Whenever this character quests, chosen Alien character gains Challenger +2 and \"This character can challenge ready characters\" this turn.",
+  version: "Best Explorer Ever",
+  willpower: 2,
 };

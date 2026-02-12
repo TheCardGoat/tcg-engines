@@ -3,49 +3,49 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { oneLastHope } from "@lorcanito/lorcana-engine/cards/004/actions/actions";
-// import {
-//   faZhouMulansFather,
-//   goofySuperGoof,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { oneLastHope } from "@lorcanito/lorcana-engine/cards/004/actions/actions";
+// Import {
+//   FaZhouMulansFather,
+//   GoofySuperGoof,
 // } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("One Last Hope", () => {
-//   it("Chosen character gains **Resist** +2 until the start of your next turn. If a Hero character is chosen, they may also challenge ready characters this turn.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: oneLastHope.cost,
-//       hand: [oneLastHope],
-//       play: [goofySuperGoof],
+// Describe("One Last Hope", () => {
+//   It("Chosen character gains **Resist** +2 until the start of your next turn. If a Hero character is chosen, they may also challenge ready characters this turn.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: oneLastHope.cost,
+//       Hand: [oneLastHope],
+//       Play: [goofySuperGoof],
 //     });
 //
-//     const target = testEngine.getCardModel(goofySuperGoof);
+//     Const target = testEngine.getCardModel(goofySuperGoof);
 //
-//     expect(target.hasResist).toBe(false);
-//     expect(target.canChallengeReadyCharacters).toBe(false);
+//     Expect(target.hasResist).toBe(false);
+//     Expect(target.canChallengeReadyCharacters).toBe(false);
 //
-//     await testEngine.playCard(oneLastHope, { targets: [goofySuperGoof] });
+//     Await testEngine.playCard(oneLastHope, { targets: [goofySuperGoof] });
 //
-//     expect(target.hasResist).toBe(true);
-//     expect(target.canChallengeReadyCharacters).toBe(true);
+//     Expect(target.hasResist).toBe(true);
+//     Expect(target.canChallengeReadyCharacters).toBe(true);
 //   });
 //
-//   it("Chosen character gains **Resist** +2 until the start of your next turn.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: oneLastHope.cost,
-//       hand: [oneLastHope],
-//       play: [faZhouMulansFather],
+//   It("Chosen character gains **Resist** +2 until the start of your next turn.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: oneLastHope.cost,
+//       Hand: [oneLastHope],
+//       Play: [faZhouMulansFather],
 //     });
 //
-//     const target = testEngine.getCardModel(faZhouMulansFather);
+//     Const target = testEngine.getCardModel(faZhouMulansFather);
 //
-//     expect(target.hasResist).toBe(false);
-//     expect(target.canChallengeReadyCharacters).toBe(false);
+//     Expect(target.hasResist).toBe(false);
+//     Expect(target.canChallengeReadyCharacters).toBe(false);
 //
-//     await testEngine.playCard(oneLastHope, { targets: [target] });
+//     Await testEngine.playCard(oneLastHope, { targets: [target] });
 //
-//     expect(target.hasResist).toBe(true);
-//     expect(target.canChallengeReadyCharacters).toBe(false);
+//     Expect(target.hasResist).toBe(true);
+//     Expect(target.canChallengeReadyCharacters).toBe(false);
 //   });
 // });
 //

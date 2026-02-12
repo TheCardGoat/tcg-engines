@@ -1,24 +1,8 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
 export const twitterpated: ActionCard = {
-  id: "11m",
-  cardType: "action",
-  name: "Twitterpated",
-  inkType: ["ruby"],
-  franchise: "Bambi",
-  set: "008",
-  text: "Chosen character gains Evasive until the start of your next turn. (Only characters with Evasive can challenge them.)",
-  cost: 1,
-  cardNumber: 150,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "8796f4cb21d5e4fb185646eae3e02d2b25ce1fc6",
-  },
   abilities: [
     {
-      id: "11m-1",
-      type: "action",
       effect: {
         type: "gain-keyword",
         keyword: "Evasive",
@@ -30,7 +14,23 @@ export const twitterpated: ActionCard = {
           cardTypes: ["character"],
         },
       },
+      id: "11m-1",
       text: "Chosen character gains Evasive until the start of your next turn.",
+      type: "action",
     },
   ],
+  cardNumber: 150,
+  cardType: "action",
+  cost: 1,
+  externalIds: {
+    ravensburger: "8796f4cb21d5e4fb185646eae3e02d2b25ce1fc6",
+  },
+  franchise: "Bambi",
+  id: "11m",
+  inkType: ["ruby"],
+  inkable: true,
+  missingTests: true,
+  name: "Twitterpated",
+  set: "008",
+  text: "Chosen character gains Evasive until the start of your next turn. (Only characters with Evasive can challenge them.)",
 };

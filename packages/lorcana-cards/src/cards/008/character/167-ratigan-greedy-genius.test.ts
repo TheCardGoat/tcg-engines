@@ -3,45 +3,45 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   ratiganGreedyGenius,
-//   theWardrobePerceptiveFriend,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   RatiganGreedyGenius,
+//   TheWardrobePerceptiveFriend,
 // } from "@lorcanito/lorcana-engine/cards/008";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Ratigan - Greedy Genius", () => {
-//   it("Ward (Opponents can't choose this character except to challenge.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [ratiganGreedyGenius],
+// Describe("Ratigan - Greedy Genius", () => {
+//   It("Ward (Opponents can't choose this character except to challenge.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [ratiganGreedyGenius],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(ratiganGreedyGenius);
-//     expect(cardUnderTest.hasWard).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(ratiganGreedyGenius);
+//     Expect(cardUnderTest.hasWard).toBe(true);
 //   });
 //
-//   describe("TIME RUNS OUT At the end of your turn, if you didn't put any cards into your inkwell this turn, banish this character.", () => {
-//     it("Not putting anything into inkwell", async () => {
-//       const testEngine = new TestEngine({
-//         play: [ratiganGreedyGenius],
+//   Describe("TIME RUNS OUT At the end of your turn, if you didn't put any cards into your inkwell this turn, banish this character.", () => {
+//     It("Not putting anything into inkwell", async () => {
+//       Const testEngine = new TestEngine({
+//         Play: [ratiganGreedyGenius],
 //       });
 //
-//       expect(testEngine.getCardModel(ratiganGreedyGenius).zone).toBe("play");
-//       await testEngine.passTurn();
-//       expect(testEngine.getCardModel(ratiganGreedyGenius).zone).toBe("discard");
+//       Expect(testEngine.getCardModel(ratiganGreedyGenius).zone).toBe("play");
+//       Await testEngine.passTurn();
+//       Expect(testEngine.getCardModel(ratiganGreedyGenius).zone).toBe("discard");
 //     });
 //
-//     it("Not putting anything into inkwell", async () => {
-//       const testEngine = new TestEngine({
-//         play: [ratiganGreedyGenius],
-//         hand: [theWardrobePerceptiveFriend],
+//     It("Not putting anything into inkwell", async () => {
+//       Const testEngine = new TestEngine({
+//         Play: [ratiganGreedyGenius],
+//         Hand: [theWardrobePerceptiveFriend],
 //       });
 //
-//       await testEngine.putIntoInkwell(theWardrobePerceptiveFriend);
+//       Await testEngine.putIntoInkwell(theWardrobePerceptiveFriend);
 //
-//       expect(testEngine.getCardModel(ratiganGreedyGenius).zone).toBe("play");
-//       await testEngine.passTurn();
-//       expect(testEngine.getCardModel(ratiganGreedyGenius).zone).toBe("play");
+//       Expect(testEngine.getCardModel(ratiganGreedyGenius).zone).toBe("play");
+//       Await testEngine.passTurn();
+//       Expect(testEngine.getCardModel(ratiganGreedyGenius).zone).toBe("play");
 //     });
 //   });
 // });

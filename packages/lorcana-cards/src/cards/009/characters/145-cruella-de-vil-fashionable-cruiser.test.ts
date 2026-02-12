@@ -3,11 +3,11 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
+// Import { describe, expect, it } from "@jest/globals";
 //
-// describe("Cruella De Vil - Fashionable Cruiser", () => {
-//   it("**NOW GET GOING** During your turn, this character gains **Evasive**. _(They can challenge characters with Evasive.)_", async () => {
-//     expect(true).toBeTruthy();
+// Describe("Cruella De Vil - Fashionable Cruiser", () => {
+//   It("**NOW GET GOING** During your turn, this character gains **Evasive**. _(They can challenge characters with Evasive.)_", async () => {
+//     Expect(true).toBeTruthy();
 //   });
 // });
 //

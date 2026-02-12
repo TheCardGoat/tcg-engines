@@ -3,24 +3,24 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { jaqConnoisseurOfClimbing } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { jaqConnoisseurOfClimbing } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Jaq - Connoisseur of Climbing", () => {
-//   it.skip("**SNEAKY IDEA** When you play this character, chosen opposing character gains **Reckless** during their next turn. _(They can't quest and must challenge if able.)_", () => {
-//     const testStore = new TestStore({
-//       inkwell: jaqConnoisseurOfClimbing.cost,
-//       hand: [jaqConnoisseurOfClimbing],
+// Describe("Jaq - Connoisseur of Climbing", () => {
+//   It.skip("**SNEAKY IDEA** When you play this character, chosen opposing character gains **Reckless** during their next turn. _(They can't quest and must challenge if able.)_", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: jaqConnoisseurOfClimbing.cost,
+//       Hand: [jaqConnoisseurOfClimbing],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "hand",
-//       jaqConnoisseurOfClimbing.id,
+//       JaqConnoisseurOfClimbing.id,
 //     );
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

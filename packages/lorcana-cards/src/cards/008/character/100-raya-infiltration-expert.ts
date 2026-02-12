@@ -1,36 +1,36 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { wheneverThisCharacterQuests } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-// import { readyAnotherChosenCharacter } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { wheneverThisCharacterQuests } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// Import { readyAnotherChosenCharacter } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const rayaInfiltrationExpert: LorcanitoCharacterCard = {
-//   id: "oql",
-//   name: "Raya",
-//   title: "Infiltration Expert",
-//   characteristics: ["storyborn", "hero", "princess"],
-//   text: "UNCONVENTIONAL TACTICS Whenever this character quests, you may pay 2 {I} to ready another chosen character.",
-//   type: "character",
-//   abilities: [
-//     wheneverThisCharacterQuests({
-//       name: "UNCONVENTIONAL TACTICS",
-//       text: "Whenever this character quests, you may pay 2 {I} to ready another chosen character.",
-//       optional: true,
-//       costs: [{ type: "ink", amount: 2 }],
-//       effects: [readyAnotherChosenCharacter],
+// Export const rayaInfiltrationExpert: LorcanitoCharacterCard = {
+//   Id: "oql",
+//   Name: "Raya",
+//   Title: "Infiltration Expert",
+//   Characteristics: ["storyborn", "hero", "princess"],
+//   Text: "UNCONVENTIONAL TACTICS Whenever this character quests, you may pay 2 {I} to ready another chosen character.",
+//   Type: "character",
+//   Abilities: [
+//     WheneverThisCharacterQuests({
+//       Name: "UNCONVENTIONAL TACTICS",
+//       Text: "Whenever this character quests, you may pay 2 {I} to ready another chosen character.",
+//       Optional: true,
+//       Costs: [{ type: "ink", amount: 2 }],
+//       Effects: [readyAnotherChosenCharacter],
 //     }),
 //   ],
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 6,
-//   strength: 5,
-//   willpower: 5,
-//   illustrator: "Dustin Panzino",
-//   number: 100,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631413,
+//   Inkwell: true,
+//   Colors: ["emerald"],
+//   Cost: 6,
+//   Strength: 5,
+//   Willpower: 5,
+//   Illustrator: "Dustin Panzino",
+//   Number: 100,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631413,
 //   },
-//   rarity: "legendary",
-//   lore: 2,
+//   Rarity: "legendary",
+//   Lore: 2,
 // };
 //

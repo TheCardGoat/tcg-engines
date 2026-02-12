@@ -1,16 +1,7 @@
-import { createMove, type ZoneId } from "@tcg/core";
+import { type ZoneId, createMove } from "@tcg/core";
 import { useLorcanaOps } from "../../../operations";
-import type {
-  LorcanaCardMeta,
-  LorcanaGameState,
-  LorcanaMoveParams,
-} from "../../../types";
-import {
-  and,
-  cardInHand,
-  cardOwnedByPlayer,
-  isMainPhase,
-} from "../../../validators";
+import type { LorcanaCardMeta, LorcanaGameState, LorcanaMoveParams } from "../../../types";
+import { and, cardInHand, cardOwnedByPlayer, isMainPhase } from "../../../validators";
 
 /**
  * Play Card Move
@@ -36,8 +27,7 @@ export const playCard = createMove<
   condition: and(
     isMainPhase(),
     (state, context) => cardInHand(context.params.cardId)(state, context),
-    (state, context) =>
-      cardOwnedByPlayer(context.params.cardId)(state, context),
+    (state, context) => cardOwnedByPlayer(context.params.cardId)(state, context),
   ),
   reducer: (draft, context) => {
     const { cardId, cost } = context.params;
@@ -66,8 +56,7 @@ export const playCard = createMove<
 
     // Determine target zone (actions go to discard, others to play)
     const cardType = ops.getCardType(cardId);
-    const targetZone =
-      cardType === "action" ? ("discard" as ZoneId) : ("play" as ZoneId);
+    const targetZone = cardType === "action" ? ("discard" as ZoneId) : ("play" as ZoneId);
 
     // Move card
     context.zones.moveCard({

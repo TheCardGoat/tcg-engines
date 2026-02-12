@@ -1,26 +1,8 @@
 import type { ItemCard } from "@tcg/lorcana-types";
 
 export const inkAmplifier: ItemCard = {
-  id: "1gc",
-  cardType: "item",
-  name: "Ink Amplifier",
-  inkType: ["sapphire"],
-  franchise: "Lorcana",
-  set: "010",
-  text: "ENERGY CAPTURE Whenever an opponent draws a card during their turn, if it's the second card they've drawn this turn, you may put the top card of your deck into your inkwell facedown and exerted.",
-  cost: 3,
-  cardNumber: 167,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "bcc3489fe6383dec57016732d9934c6102fcd605",
-  },
   abilities: [
     {
-      id: "1gc-1",
-      type: "triggered",
-      name: "ENERGY CAPTURE",
-      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "conditional",
         condition: {
@@ -35,7 +17,25 @@ export const inkAmplifier: ItemCard = {
           facedown: true,
         },
       },
+      id: "1gc-1",
+      name: "ENERGY CAPTURE",
       text: "ENERGY CAPTURE Whenever an opponent draws a card during their turn, if it's the second card they've drawn this turn, you may put the top card of your deck into your inkwell facedown and exerted.",
+      trigger: { event: "play", timing: "when", on: "SELF" },
+      type: "triggered",
     },
   ],
+  cardNumber: 167,
+  cardType: "item",
+  cost: 3,
+  externalIds: {
+    ravensburger: "bcc3489fe6383dec57016732d9934c6102fcd605",
+  },
+  franchise: "Lorcana",
+  id: "1gc",
+  inkType: ["sapphire"],
+  inkable: true,
+  missingTests: true,
+  name: "Ink Amplifier",
+  set: "010",
+  text: "ENERGY CAPTURE Whenever an opponent draws a card during their turn, if it's the second card they've drawn this turn, you may put the top card of your deck into your inkwell facedown and exerted.",
 };

@@ -1,47 +1,47 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const herculesTrueHero: CharacterCard = {
-  id: "1ch",
-  cardType: "character",
-  name: "Hercules",
-  version: "True Hero",
-  fullName: "Hercules - True Hero",
-  inkType: ["steel"],
-  franchise: "Hercules",
-  set: "009",
-  text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
-  cost: 3,
-  strength: 3,
-  willpower: 3,
-  lore: 1,
-  cardNumber: 191,
-  inkable: true,
-  externalIds: {
-    ravensburger: "aec8753f7f97cb51feeedf58b45f27661b18c44e",
-  },
   abilities: [
     {
       id: "1ch-1",
+      keyword: "Bodyguard",
       text: "Bodyguard",
       type: "keyword",
-      keyword: "Bodyguard",
     },
   ],
+  cardNumber: 191,
+  cardType: "character",
   classifications: ["Dreamborn", "Hero", "Prince"],
+  cost: 3,
+  externalIds: {
+    ravensburger: "aec8753f7f97cb51feeedf58b45f27661b18c44e",
+  },
+  franchise: "Hercules",
+  fullName: "Hercules - True Hero",
+  id: "1ch",
+  inkType: ["steel"],
+  inkable: true,
+  lore: 1,
+  name: "Hercules",
+  set: "009",
+  strength: 3,
+  text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
+  version: "True Hero",
+  willpower: 3,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { herculesTrueHero as ogHerculesTrueHero } from "@lorcanito/lorcana-engine/cards/001/characters/181-hercules-true-hero";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { herculesTrueHero as ogHerculesTrueHero } from "@lorcanito/lorcana-engine/cards/001/characters/181-hercules-true-hero";
 //
-// export const herculesTrueHero: LorcanitoCharacterCard = {
+// Export const herculesTrueHero: LorcanitoCharacterCard = {
 //   ...ogHerculesTrueHero,
-//   id: "s5k",
-//   reprints: [ogHerculesTrueHero.id],
-//   number: 191,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650124,
+//   Id: "s5k",
+//   Reprints: [ogHerculesTrueHero.id],
+//   Number: 191,
+//   Set: "009",
+//   ExternalIds: {
+//     TcgPlayer: 650124,
 //   },
 // };
 //

@@ -1,13 +1,13 @@
 import { describe, expect, it } from "bun:test";
 import { createCardId, createPlayerId } from "@tcg/core";
 import {
+  type ZoneState,
   addCardToZone,
   createZoneState,
   getCardsInZone,
   isCardInZone,
   moveCardBetweenZones,
   removeCardFromZone,
-  type ZoneState,
 } from "../zone-operations";
 
 /**
@@ -65,11 +65,7 @@ describe("Zone Operations", () => {
 
     it("should add multiple cards maintaining order", () => {
       const [player1] = createTestPlayers("player1");
-      const [card1, card2, card3] = createTestCards(
-        "card-1",
-        "card-2",
-        "card-3",
-      );
+      const [card1, card2, card3] = createTestCards("card-1", "card-2", "card-3");
 
       const zoneState: ZoneState = {
         [player1]: [],
@@ -99,11 +95,7 @@ describe("Zone Operations", () => {
 
     it("should maintain order when removing from middle", () => {
       const [player1] = createTestPlayers("player1");
-      const [card1, card2, card3] = createTestCards(
-        "card-1",
-        "card-2",
-        "card-3",
-      );
+      const [card1, card2, card3] = createTestCards("card-1", "card-2", "card-3");
 
       const zoneState: ZoneState = {
         [player1]: [card1, card2, card3],
@@ -169,11 +161,7 @@ describe("Zone Operations", () => {
 
     it("should maintain card order in destination zone", () => {
       const [player1] = createTestPlayers("player1");
-      const [card1, card2, card3] = createTestCards(
-        "card-1",
-        "card-2",
-        "card-3",
-      );
+      const [card1, card2, card3] = createTestCards("card-1", "card-2", "card-3");
 
       const sourceZone: ZoneState = {
         [player1]: [card2],
@@ -228,11 +216,7 @@ describe("Zone Operations", () => {
   describe("getCardsInZone", () => {
     it("should return all cards in player's zone", () => {
       const [player1] = createTestPlayers("player1");
-      const [card1, card2, card3] = createTestCards(
-        "card-1",
-        "card-2",
-        "card-3",
-      );
+      const [card1, card2, card3] = createTestCards("card-1", "card-2", "card-3");
 
       const zoneState: ZoneState = {
         [player1]: [card1, card2, card3],
@@ -284,11 +268,7 @@ describe("Zone Operations", () => {
   describe("Zone Transition Scenarios", () => {
     it("should handle draw card scenario (deck -> hand)", () => {
       const [player1] = createTestPlayers("player1");
-      const [topCard, card2, card3] = createTestCards(
-        "top-card",
-        "card-2",
-        "card-3",
-      );
+      const [topCard, card2, card3] = createTestCards("top-card", "card-2", "card-3");
 
       const deckZone: ZoneState = {
         [player1]: [topCard, card2, card3],

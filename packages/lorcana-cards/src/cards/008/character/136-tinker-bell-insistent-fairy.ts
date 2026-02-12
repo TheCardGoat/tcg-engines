@@ -1,57 +1,57 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { evasiveAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { self, targetCard } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { wheneverPlays } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { evasiveAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import { self, targetCard } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import { wheneverPlays } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
 //
-// export const tinkerBellInsistentFairy: LorcanitoCharacterCard = {
-//   id: "pi7",
-//   name: "Tinker Bell",
-//   title: "Insistent Fairy",
-//   characteristics: ["storyborn", "ally", "fairy"],
-//   text: "Evasive (Only characters with Evasive can challenge this character.)\nPAY ATTENTION Whenever you play a character with 5 {S} or more, you may exert them to gain 2 lore.",
-//   type: "character",
-//   abilities: [
-//     wheneverPlays({
-//       name: "PAY ATTENTION",
-//       text: "Whenever you play a character with 5 {S} or more, you may exert them to gain 2 lore.",
-//       triggerTarget: {
-//         type: "card",
-//         value: 1,
-//         filters: [
+// Export const tinkerBellInsistentFairy: LorcanitoCharacterCard = {
+//   Id: "pi7",
+//   Name: "Tinker Bell",
+//   Title: "Insistent Fairy",
+//   Characteristics: ["storyborn", "ally", "fairy"],
+//   Text: "Evasive (Only characters with Evasive can challenge this character.)\nPAY ATTENTION Whenever you play a character with 5 {S} or more, you may exert them to gain 2 lore.",
+//   Type: "character",
+//   Abilities: [
+//     WheneverPlays({
+//       Name: "PAY ATTENTION",
+//       Text: "Whenever you play a character with 5 {S} or more, you may exert them to gain 2 lore.",
+//       TriggerTarget: {
+//         Type: "card",
+//         Value: 1,
+//         Filters: [
 //           { filter: "type", value: "character" },
 //           { filter: "owner", value: "self" },
 //           {
-//             filter: "attribute",
-//             value: "strength",
-//             comparison: { operator: "gte", value: 5 },
+//             Filter: "attribute",
+//             Value: "strength",
+//             Comparison: { operator: "gte", value: 5 },
 //           },
 //         ],
 //       },
-//       optional: true,
-//       effects: [
+//       Optional: true,
+//       Effects: [
 //         {
-//           type: "exert",
-//           exert: true,
-//           target: {
-//             type: "card",
-//             value: "all",
-//             filters: [
+//           Type: "exert",
+//           Exert: true,
+//           Target: {
+//             Type: "card",
+//             Value: "all",
+//             Filters: [
 //               { filter: "source", value: "trigger" },
 //               { filter: "status", value: "ready" },
 //             ],
 //           },
-//           afterEffect: [
+//           AfterEffect: [
 //             {
-//               type: "create-layer-based-on-target",
-//               target: targetCard,
-//               filters: targetCard.filters,
-//               effects: [
+//               Type: "create-layer-based-on-target",
+//               Target: targetCard,
+//               Filters: targetCard.filters,
+//               Effects: [
 //                 {
-//                   type: "lore",
-//                   modifier: "add",
-//                   amount: 2,
-//                   target: self,
+//                   Type: "lore",
+//                   Modifier: "add",
+//                   Amount: 2,
+//                   Target: self,
 //                 },
 //               ],
 //             },
@@ -59,20 +59,20 @@
 //         },
 //       ],
 //     }),
-//     evasiveAbility,
+//     EvasiveAbility,
 //   ],
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 2,
-//   strength: 1,
-//   willpower: 1,
-//   illustrator: "Amber Kommanvongsa",
-//   number: 136,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631842,
+//   Inkwell: true,
+//   Colors: ["ruby"],
+//   Cost: 2,
+//   Strength: 1,
+//   Willpower: 1,
+//   Illustrator: "Amber Kommanvongsa",
+//   Number: 136,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631842,
 //   },
-//   rarity: "legendary",
-//   lore: 1,
+//   Rarity: "legendary",
+//   Lore: 1,
 // };
 //

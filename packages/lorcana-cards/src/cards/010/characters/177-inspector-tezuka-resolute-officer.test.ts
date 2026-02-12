@@ -20,58 +20,58 @@ describe("Inspector Tezuka - Resolute Officer", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { inspectorTezukaResoluteOfficer } from "@lorcanito/lorcana-engine/cards/010/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { inspectorTezukaResoluteOfficer } from "@lorcanito/lorcana-engine/cards/010/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Inspector Tezuka - Resolute Officer", () => {
-//   describe("Bodyguard - This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.", () => {
-//     it("should have bodyguard ability", () => {
-//       const testEngine = new TestEngine({
-//         play: [inspectorTezukaResoluteOfficer],
+// Describe("Inspector Tezuka - Resolute Officer", () => {
+//   Describe("Bodyguard - This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.", () => {
+//     It("should have bodyguard ability", () => {
+//       Const testEngine = new TestEngine({
+//         Play: [inspectorTezukaResoluteOfficer],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(
-//         inspectorTezukaResoluteOfficer,
+//       Const cardUnderTest = testEngine.getCardModel(
+//         InspectorTezukaResoluteOfficer,
 //       );
-//       expect(cardUnderTest.hasBodyguard).toBe(true);
+//       Expect(cardUnderTest.hasBodyguard).toBe(true);
 //     });
 //   });
 //
-//   describe("Stats and basic properties", () => {
-//     it("should have correct stats", () => {
-//       const testEngine = new TestEngine({
-//         play: [inspectorTezukaResoluteOfficer],
+//   Describe("Stats and basic properties", () => {
+//     It("should have correct stats", () => {
+//       Const testEngine = new TestEngine({
+//         Play: [inspectorTezukaResoluteOfficer],
 //       });
 //
-//       const cardUnderTest = testEngine.getCardModel(
-//         inspectorTezukaResoluteOfficer,
+//       Const cardUnderTest = testEngine.getCardModel(
+//         InspectorTezukaResoluteOfficer,
 //       );
 //
-//       expect(cardUnderTest.strength).toBe(2);
-//       expect(cardUnderTest.willpower).toBe(3);
-//       expect(cardUnderTest.lore).toBe(1);
-//       expect(cardUnderTest.cost).toBe(2);
+//       Expect(cardUnderTest.strength).toBe(2);
+//       Expect(cardUnderTest.willpower).toBe(3);
+//       Expect(cardUnderTest.lore).toBe(1);
+//       Expect(cardUnderTest.cost).toBe(2);
 //     });
 //
-//     it("should be inkwell card", () => {
-//       expect(inspectorTezukaResoluteOfficer.inkwell).toBe(true);
+//     It("should be inkwell card", () => {
+//       Expect(inspectorTezukaResoluteOfficer.inkwell).toBe(true);
 //     });
 //
-//     it("should have correct characteristics for Detective synergy", () => {
-//       expect(inspectorTezukaResoluteOfficer.characteristics).toEqual([
+//     It("should have correct characteristics for Detective synergy", () => {
+//       Expect(inspectorTezukaResoluteOfficer.characteristics).toEqual([
 //         "storyborn",
 //         "ally",
 //         "detective",
 //       ]);
 //     });
 //
-//     it("should be steel color", () => {
-//       expect(inspectorTezukaResoluteOfficer.colors).toEqual(["steel"]);
+//     It("should be steel color", () => {
+//       Expect(inspectorTezukaResoluteOfficer.colors).toEqual(["steel"]);
 //     });
 //
-//     it("should be common rarity", () => {
-//       expect(inspectorTezukaResoluteOfficer.rarity).toBe("common");
+//     It("should be common rarity", () => {
+//       Expect(inspectorTezukaResoluteOfficer.rarity).toBe("common");
 //     });
 //   });
 // });

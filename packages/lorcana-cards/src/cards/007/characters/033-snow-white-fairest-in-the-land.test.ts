@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { snowWhiteFairestInTheLand } from "@lorcanito/lorcana-engine/cards/007/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { snowWhiteFairestInTheLand } from "@lorcanito/lorcana-engine/cards/007/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Snow White - Fairest in the Land", () => {
-//   it.skip("HIDDEN AWAY This character can't be challenged.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: snowWhiteFairestInTheLand.cost,
-//       play: [snowWhiteFairestInTheLand],
-//       hand: [snowWhiteFairestInTheLand],
+// Describe("Snow White - Fairest in the Land", () => {
+//   It.skip("HIDDEN AWAY This character can't be challenged.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: snowWhiteFairestInTheLand.cost,
+//       Play: [snowWhiteFairestInTheLand],
+//       Hand: [snowWhiteFairestInTheLand],
 //     });
 //
-//     await testEngine.playCard(snowWhiteFairestInTheLand);
+//     Await testEngine.playCard(snowWhiteFairestInTheLand);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

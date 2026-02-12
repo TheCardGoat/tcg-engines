@@ -1,24 +1,8 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
 export const lightTheFuse: ActionCard = {
-  id: "f06",
-  cardType: "action",
-  name: "Light the Fuse",
-  inkType: ["ruby", "steel"],
-  franchise: "Mulan",
-  set: "008",
-  text: "Deal 1 damage to chosen character for each exerted character you have in play.",
-  cost: 1,
-  cardNumber: 149,
-  inkable: false,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "3614498b58e0cf1cc33837d6960c31671cbd30a9",
-  },
   abilities: [
     {
-      id: "f06-1",
-      type: "action",
       effect: {
         type: "deal-damage",
         amount: 1,
@@ -30,7 +14,23 @@ export const lightTheFuse: ActionCard = {
           cardTypes: ["character"],
         },
       },
+      id: "f06-1",
       text: "Deal 1 damage to chosen character for each exerted character you have in play.",
+      type: "action",
     },
   ],
+  cardNumber: 149,
+  cardType: "action",
+  cost: 1,
+  externalIds: {
+    ravensburger: "3614498b58e0cf1cc33837d6960c31671cbd30a9",
+  },
+  franchise: "Mulan",
+  id: "f06",
+  inkType: ["ruby", "steel"],
+  inkable: false,
+  missingTests: true,
+  name: "Light the Fuse",
+  set: "008",
+  text: "Deal 1 damage to chosen character for each exerted character you have in play.",
 };

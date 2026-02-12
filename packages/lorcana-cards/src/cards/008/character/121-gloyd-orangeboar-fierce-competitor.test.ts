@@ -3,27 +3,27 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { gloydOrangeboarFierceCompetitor } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { gloydOrangeboarFierceCompetitor } from "@lorcanito/lorcana-engine/cards/008/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Gloyd Orangeboar - Fierce Competitor", () => {
-//   it("PUMPKIN SPICE When you play this character, each opponent loses 1 lore and you gain 1 lore.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Gloyd Orangeboar - Fierce Competitor", () => {
+//   It("PUMPKIN SPICE When you play this character, each opponent loses 1 lore and you gain 1 lore.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: gloydOrangeboarFierceCompetitor.cost,
-//         hand: [gloydOrangeboarFierceCompetitor],
-//         lore: 5,
+//         Inkwell: gloydOrangeboarFierceCompetitor.cost,
+//         Hand: [gloydOrangeboarFierceCompetitor],
+//         Lore: 5,
 //       },
 //       {
-//         lore: 5,
+//         Lore: 5,
 //       },
 //     );
 //
-//     await testEngine.playCard(gloydOrangeboarFierceCompetitor);
+//     Await testEngine.playCard(gloydOrangeboarFierceCompetitor);
 //
-//     expect(testEngine.getLoreForPlayer("player_one")).toEqual(6);
-//     expect(testEngine.getLoreForPlayer("player_two")).toEqual(4);
+//     Expect(testEngine.getLoreForPlayer("player_one")).toEqual(6);
+//     Expect(testEngine.getLoreForPlayer("player_two")).toEqual(4);
 //   });
 // });
 //

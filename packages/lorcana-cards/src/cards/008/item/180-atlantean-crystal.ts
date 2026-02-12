@@ -1,35 +1,35 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
-// import {
-//   chosenCharacterGainsResist,
-//   chosenCharacterGainsSupport,
+// Import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
+// Import {
+//   ChosenCharacterGainsResist,
+//   ChosenCharacterGainsSupport,
 // } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const atlanteanCrystal: LorcanitoItemCard = {
-//   id: "rb8",
-//   name: "Atlantean Crystal",
-//   characteristics: ["item"],
-//   text: "SHIELDING LIGHT {E}, 2 {I} – Chosen character gains Resist +2 and Support until the start of your next turn. (Damage dealt to them is reduced by 2. Whenever they quest, you may add their {S} to another chosen character's {S} this turn.)",
-//   type: "item",
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 2,
-//   illustrator: "Greez",
-//   number: 180,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631685,
+// Export const atlanteanCrystal: LorcanitoItemCard = {
+//   Id: "rb8",
+//   Name: "Atlantean Crystal",
+//   Characteristics: ["item"],
+//   Text: "SHIELDING LIGHT {E}, 2 {I} – Chosen character gains Resist +2 and Support until the start of your next turn. (Damage dealt to them is reduced by 2. Whenever they quest, you may add their {S} to another chosen character's {S} this turn.)",
+//   Type: "item",
+//   Inkwell: true,
+//   Colors: ["sapphire"],
+//   Cost: 2,
+//   Illustrator: "Greez",
+//   Number: 180,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631685,
 //   },
-//   rarity: "rare",
-//   abilities: [
+//   Rarity: "rare",
+//   Abilities: [
 //     {
-//       type: "activated",
-//       name: "SHIELDING LIGHT",
-//       text: "{E}, 2 {I} – Chosen character gains Resist +2 and Support until the start of your next turn.",
-//       costs: [{ type: "exert" }, { type: "ink", amount: 2 }],
-//       effects: [
-//         chosenCharacterGainsResist(2, "next_turn"),
-//         chosenCharacterGainsSupport("next_turn"),
+//       Type: "activated",
+//       Name: "SHIELDING LIGHT",
+//       Text: "{E}, 2 {I} – Chosen character gains Resist +2 and Support until the start of your next turn.",
+//       Costs: [{ type: "exert" }, { type: "ink", amount: 2 }],
+//       Effects: [
+//         ChosenCharacterGainsResist(2, "next_turn"),
+//         ChosenCharacterGainsSupport("next_turn"),
 //       ],
 //     },
 //   ],

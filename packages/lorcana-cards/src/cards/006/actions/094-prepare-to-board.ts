@@ -1,24 +1,8 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
 export const prepareToBoard: ActionCard = {
-  id: "lql",
-  cardType: "action",
-  name: "Prepare to Board!",
-  inkType: ["emerald"],
-  franchise: "Peter Pan",
-  set: "006",
-  text: "Chosen character gets +2 {S} this turn. If a Pirate character is chosen, they get +3 {S} instead.",
-  cost: 1,
-  cardNumber: 94,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "4e596a3444f05ec541e3386bc403faa66729f7d0",
-  },
   abilities: [
     {
-      id: "lql-1",
-      type: "action",
       effect: {
         type: "conditional",
         condition: {
@@ -32,7 +16,23 @@ export const prepareToBoard: ActionCard = {
           target: "CHOSEN_CHARACTER",
         },
       },
+      id: "lql-1",
       text: "Chosen character gets +2 {S} this turn. If a Pirate character is chosen, they get +3 {S} instead.",
+      type: "action",
     },
   ],
+  cardNumber: 94,
+  cardType: "action",
+  cost: 1,
+  externalIds: {
+    ravensburger: "4e596a3444f05ec541e3386bc403faa66729f7d0",
+  },
+  franchise: "Peter Pan",
+  id: "lql",
+  inkType: ["emerald"],
+  inkable: true,
+  missingTests: true,
+  name: "Prepare to Board!",
+  set: "006",
+  text: "Chosen character gets +2 {S} this turn. If a Pirate character is chosen, they get +3 {S} instead.",
 };

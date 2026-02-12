@@ -78,16 +78,16 @@ export const EXAMPLE_ABILITIES = {
    * Simple Rush keyword
    */
   rush: {
-    type: "keyword",
     keyword: "Rush",
+    type: "keyword",
   },
 
   /**
    * Challenger +3
    */
   challengerPlus3: {
-    type: "keyword",
     keyword: "Challenger",
+    type: "keyword",
     value: 3,
   },
 
@@ -95,8 +95,8 @@ export const EXAMPLE_ABILITIES = {
    * Resist +2
    */
   resistPlus2: {
-    type: "keyword",
     keyword: "Resist",
+    type: "keyword",
     value: 2,
   },
 
@@ -104,72 +104,72 @@ export const EXAMPLE_ABILITIES = {
    * Shift 5 (can Shift onto any matching character)
    */
   shift5: {
-    type: "keyword",
     keyword: "Shift",
     shiftCost: 5,
+    type: "keyword",
   },
 
   /**
    * "When you play this character, draw 2 cards"
    */
   drawOnPlay: {
+    effect: { amount: 2, target: "CONTROLLER", type: "draw" },
+    trigger: { event: "play", on: "SELF", timing: "when" },
     type: "triggered",
-    trigger: { event: "play", timing: "when", on: "SELF" },
-    effect: { type: "draw", amount: 2, target: "CONTROLLER" },
   },
 
   /**
    * "Whenever this character quests, gain 1 lore"
    */
   gainLoreOnQuest: {
+    effect: { amount: 1, type: "gain-lore" },
+    trigger: { event: "quest", on: "SELF", timing: "whenever" },
     type: "triggered",
-    trigger: { event: "quest", timing: "whenever", on: "SELF" },
-    effect: { type: "gain-lore", amount: 1 },
   },
 
   /**
    * "{E} - Draw a card"
    */
   exertToDraw: {
-    type: "activated",
     cost: { exert: true },
-    effect: { type: "draw", amount: 1, target: "CONTROLLER" },
+    effect: { amount: 1, target: "CONTROLLER", type: "draw" },
+    type: "activated",
   },
 
   /**
    * "{E}, 2 {I} - Deal 3 damage to chosen character"
    */
   exertInkToDamage: {
-    type: "activated",
     cost: { exert: true, ink: 2 },
-    effect: { type: "deal-damage", amount: 3, target: "CHOSEN_CHARACTER" },
+    effect: { amount: 3, target: "CHOSEN_CHARACTER", type: "deal-damage" },
+    type: "activated",
   },
 
   /**
    * "Your characters gain Ward"
    */
   yourCharactersGainWard: {
-    type: "static",
     effect: {
-      type: "gain-keyword",
+      duration: "while-condition",
       keyword: "Ward",
       target: "YOUR_CHARACTERS",
-      duration: "while-condition",
+      type: "gain-keyword",
     },
+    type: "static",
   },
 
   /**
    * "While this character has no damage, he gets +2 Strength"
    */
   bonusWhileNoDamage: {
-    type: "static",
     condition: { type: "no-damage" },
     effect: {
-      type: "modify-stat",
-      stat: "strength",
-      modifier: 2,
-      target: "SELF",
       duration: "while-condition",
+      modifier: 2,
+      stat: "strength",
+      target: "SELF",
+      type: "modify-stat",
     },
+    type: "static",
   },
 } as const;

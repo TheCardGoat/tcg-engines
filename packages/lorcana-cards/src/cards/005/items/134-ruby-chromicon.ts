@@ -1,24 +1,8 @@
 import type { ItemCard } from "@tcg/lorcana-types";
 
 export const rubyChromicon: ItemCard = {
-  id: "1tf",
-  cardType: "item",
-  name: "Ruby Chromicon",
-  inkType: ["ruby"],
-  franchise: "Lorcana",
-  set: "005",
-  text: "RUBY LIGHT {E} — Chosen character gets +1 {S} this turn.",
-  cost: 1,
-  cardNumber: 134,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "ed3b71854b6b1360da9cc9f442856fad6e2a743d",
-  },
   abilities: [
     {
-      id: "1tf-1",
-      type: "activated",
       cost: { exert: true },
       effect: {
         type: "modify-stat",
@@ -33,7 +17,23 @@ export const rubyChromicon: ItemCard = {
         },
         duration: "this-turn",
       },
+      id: "1tf-1",
       text: "RUBY LIGHT {E} — Chosen character gets +1 {S} this turn.",
+      type: "activated",
     },
   ],
+  cardNumber: 134,
+  cardType: "item",
+  cost: 1,
+  externalIds: {
+    ravensburger: "ed3b71854b6b1360da9cc9f442856fad6e2a743d",
+  },
+  franchise: "Lorcana",
+  id: "1tf",
+  inkType: ["ruby"],
+  inkable: true,
+  missingTests: true,
+  name: "Ruby Chromicon",
+  set: "005",
+  text: "RUBY LIGHT {E} — Chosen character gets +1 {S} this turn.",
 };

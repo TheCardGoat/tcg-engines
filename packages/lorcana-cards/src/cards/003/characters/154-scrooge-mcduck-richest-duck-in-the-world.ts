@@ -1,45 +1,18 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const scroogeMcduckRichestDuckInTheWorld: CharacterCard = {
-  id: "1f8",
-  cardType: "character",
-  name: "Scrooge McDuck",
-  version: "Richest Duck in the World",
-  fullName: "Scrooge McDuck - Richest Duck in the World",
-  inkType: ["sapphire"],
-  franchise: "Ducktales",
-  set: "003",
-  text: "I'M GOING HOME! During your turn, this character gains Evasive. (They can challenge characters with Evasive.)\nI DIDN'T GET RICH BY BEING STUPID During your turn, whenever this character banishes another character in a challenge, you may play an item for free.",
-  cost: 5,
-  strength: 3,
-  willpower: 5,
-  lore: 1,
-  cardNumber: 154,
-  inkable: false,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "b91ab841ba2a2c52983687a609e0d1a647a704f8",
-  },
   abilities: [
     {
-      id: "1f8-1",
-      type: "action",
       effect: {
         type: "gain-keyword",
         keyword: "Evasive",
         target: "SELF",
       },
+      id: "1f8-1",
       text: "I'M GOING HOME! During your turn, this character gains Evasive.",
+      type: "action",
     },
     {
-      id: "1f8-2",
-      type: "triggered",
-      name: "I DIDN'T GET RICH BY BEING STUPID",
-      trigger: {
-        event: "banish",
-        timing: "whenever",
-        on: "OPPONENT_CHARACTERS",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -50,8 +23,35 @@ export const scroogeMcduckRichestDuckInTheWorld: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "1f8-2",
+      name: "I DIDN'T GET RICH BY BEING STUPID",
       text: "I DIDN'T GET RICH BY BEING STUPID During your turn, whenever this character banishes another character in a challenge, you may play an item for free.",
+      trigger: {
+        event: "banish",
+        timing: "whenever",
+        on: "OPPONENT_CHARACTERS",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 154,
+  cardType: "character",
   classifications: ["Storyborn", "Hero"],
+  cost: 5,
+  externalIds: {
+    ravensburger: "b91ab841ba2a2c52983687a609e0d1a647a704f8",
+  },
+  franchise: "Ducktales",
+  fullName: "Scrooge McDuck - Richest Duck in the World",
+  id: "1f8",
+  inkType: ["sapphire"],
+  inkable: false,
+  lore: 1,
+  missingTests: true,
+  name: "Scrooge McDuck",
+  set: "003",
+  strength: 3,
+  text: "I'M GOING HOME! During your turn, this character gains Evasive. (They can challenge characters with Evasive.)\nI DIDN'T GET RICH BY BEING STUPID During your turn, whenever this character banishes another character in a challenge, you may play an item for free.",
+  version: "Richest Duck in the World",
+  willpower: 5,
 };

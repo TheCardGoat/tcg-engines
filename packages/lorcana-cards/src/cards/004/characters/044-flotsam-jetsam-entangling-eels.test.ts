@@ -3,25 +3,25 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { flotsamAndJetsamEntanglingEels } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { flotsamAndJetsamEntanglingEels } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Flotsam & Jetsam - Entangling Eels", () => {
-//   it.skip("**Shift: Discard 2 cards** _(You may discard 2 cards to play this on top of one of your characters named Flotsam or Jetsam.)__(This character counts as being named both Flotsam and Jetsam)_", () => {
-//     const testStore = new TestStore({
-//       inkwell: flotsamAndJetsamEntanglingEels.cost,
-//       play: [flotsamAndJetsamEntanglingEels],
+// Describe("Flotsam & Jetsam - Entangling Eels", () => {
+//   It.skip("**Shift: Discard 2 cards** _(You may discard 2 cards to play this on top of one of your characters named Flotsam or Jetsam.)__(This character counts as being named both Flotsam and Jetsam)_", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: flotsamAndJetsamEntanglingEels.cost,
+//       Play: [flotsamAndJetsamEntanglingEels],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       flotsamAndJetsamEntanglingEels.id,
+//       FlotsamAndJetsamEntanglingEels.id,
 //     );
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

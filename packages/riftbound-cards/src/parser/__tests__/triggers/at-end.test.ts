@@ -17,15 +17,15 @@ describe("Trigger: At End of Turn", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
+          effect: expect.objectContaining({
+            amount: 1,
+            type: "draw",
+          }),
           trigger: expect.objectContaining({
             event: "end-of-turn",
             timing: "at",
           }),
-          effect: expect.objectContaining({
-            type: "draw",
-            amount: 1,
-          }),
+          type: "triggered",
         }),
       );
     });
@@ -41,10 +41,10 @@ describe("Trigger: At End of Turn", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           effect: expect.objectContaining({
             type: "recall",
           }),
+          type: "triggered",
         }),
       );
     });
@@ -69,10 +69,10 @@ describe("Trigger: At End of Turn", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           effect: expect.objectContaining({
             type: "kill",
           }),
+          type: "triggered",
         }),
       );
     });
@@ -80,18 +80,16 @@ describe("Trigger: At End of Turn", () => {
 
   describe("conditional effects", () => {
     it.skip("should parse 'At the end of your turn, if I'm at a battlefield, draw 1.'", () => {
-      const result = parseAbilities(
-        "At the end of your turn, if I'm at a battlefield, draw 1.",
-      );
+      const result = parseAbilities("At the end of your turn, if I'm at a battlefield, draw 1.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           condition: expect.objectContaining({
             type: "while-at-battlefield",
           }),
+          type: "triggered",
         }),
       );
     });

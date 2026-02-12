@@ -7,8 +7,8 @@
 import { describe, expect, it } from "bun:test";
 import type { CardId } from "@tcg/core";
 import {
-  addDamage,
   type CardInstanceState,
+  addDamage,
   clearDrying,
   createCardInstanceState,
   createStack,
@@ -28,12 +28,12 @@ import {
   setDrying,
 } from "../zones/card-state";
 import {
+  LORCANA_ZONES,
+  type LorcanaZoneId,
   areCardsVisibleIn,
   getZoneConfig,
   isLorcanaZoneId,
   isZoneVisibleTo,
-  LORCANA_ZONES,
-  type LorcanaZoneId,
 } from "../zones/zone-config";
 
 // Helper to create card IDs
@@ -233,10 +233,7 @@ describe("Spec 2: Zones & Card States", () => {
 
     it("damage carries over from underneath character (Rule 10.8.x)", () => {
       const topState = createCardInstanceState(cardId("shifted-card"));
-      const underState = addDamage(
-        createCardInstanceState(cardId("original-card")),
-        3,
-      );
+      const underState = addDamage(createCardInstanceState(cardId("original-card")), 3);
 
       const { topCard } = createStack(topState, underState);
 
@@ -245,9 +242,7 @@ describe("Spec 2: Zones & Card States", () => {
 
     it("shifted character is ready (Rule 10.8.x)", () => {
       const topState = createCardInstanceState(cardId("shifted-card"));
-      const underState = exertCard(
-        createCardInstanceState(cardId("original-card")),
-      );
+      const underState = exertCard(createCardInstanceState(cardId("original-card")));
 
       const { topCard } = createStack(topState, underState);
 
@@ -277,13 +272,7 @@ describe("Spec 2: Zones & Card States", () => {
 
   describe("Zone Configuration Access", () => {
     it("all zone configs are accessible", () => {
-      const zones: LorcanaZoneId[] = [
-        "deck",
-        "hand",
-        "play",
-        "inkwell",
-        "discard",
-      ];
+      const zones: LorcanaZoneId[] = ["deck", "hand", "play", "inkwell", "discard"];
 
       for (const zone of zones) {
         const config = LORCANA_ZONES[zone];

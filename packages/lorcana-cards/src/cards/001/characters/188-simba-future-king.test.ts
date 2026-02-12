@@ -5,9 +5,9 @@ import { simbaFutureKing } from "./188-simba-future-king";
 describe("Simba - Future King", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [simbaFutureKing] });
-  //   expect(testEngine.getCardModel(simbaFutureKing).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [simbaFutureKing] });
+  //   Expect(testEngine.getCardModel(simbaFutureKing).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,47 +17,47 @@ describe("Simba - Future King", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   magicBroomBucketBrigade,
-//   simbaFutureKing,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   MagicBroomBucketBrigade,
+//   SimbaFutureKing,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Simba - Future King", () => {
-//   describe("**GUESS WHAT?** When you play this character, you may draw a card, then choose and discard a card.", () => {
-//     it("Happy path", () => {
-//       const testStore = new TestStore({
-//         inkwell: simbaFutureKing.cost,
-//         deck: [magicBroomBucketBrigade],
-//         hand: [simbaFutureKing],
+// Describe("Simba - Future King", () => {
+//   Describe("**GUESS WHAT?** When you play this character, you may draw a card, then choose and discard a card.", () => {
+//     It("Happy path", () => {
+//       Const testStore = new TestStore({
+//         Inkwell: simbaFutureKing.cost,
+//         Deck: [magicBroomBucketBrigade],
+//         Hand: [simbaFutureKing],
 //       });
 //
-//       const cardUnderTest = testStore.getByZoneAndId(
+//       Const cardUnderTest = testStore.getByZoneAndId(
 //         "hand",
-//         simbaFutureKing.id,
+//         SimbaFutureKing.id,
 //       );
 //
-//       cardUnderTest.playFromHand();
+//       CardUnderTest.playFromHand();
 //
-//       expect(testStore.stackLayers).toHaveLength(1);
-//       testStore.resolveOptionalAbility();
+//       Expect(testStore.stackLayers).toHaveLength(1);
+//       TestStore.resolveOptionalAbility();
 //
-//       expect(testStore.stackLayers).toHaveLength(1);
+//       Expect(testStore.stackLayers).toHaveLength(1);
 //
-//       expect(testStore.getZonesCardCount()).toEqual(
-//         expect.objectContaining({ hand: 1, deck: 0, play: 1, discard: 0 }),
+//       Expect(testStore.getZonesCardCount()).toEqual(
+//         Expect.objectContaining({ hand: 1, deck: 0, play: 1, discard: 0 }),
 //       );
 //
-//       const aCardToDiscard = testStore.getByZoneAndId(
+//       Const aCardToDiscard = testStore.getByZoneAndId(
 //         "hand",
-//         magicBroomBucketBrigade.id,
+//         MagicBroomBucketBrigade.id,
 //       );
-//       testStore.resolveTopOfStack({
-//         targets: [aCardToDiscard],
+//       TestStore.resolveTopOfStack({
+//         Targets: [aCardToDiscard],
 //       });
-//       expect(testStore.getZonesCardCount()).toEqual(
-//         expect.objectContaining({ hand: 0, deck: 0, play: 1, discard: 1 }),
+//       Expect(testStore.getZonesCardCount()).toEqual(
+//         Expect.objectContaining({ hand: 0, deck: 0, play: 1, discard: 1 }),
 //       );
 //     });
 //

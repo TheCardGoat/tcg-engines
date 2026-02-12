@@ -1,30 +1,30 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { entersPlayExerted } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { entersPlayExerted } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const boltDownButNotOut: LorcanitoCharacterCard = {
-//   id: "ase",
-//   name: "Bolt",
-//   title: "Down but Not Out",
-//   characteristics: ["storyborn", "hero"],
-//   text: "NONE OF YOUR POWERS ARE WORKING This character enters play exerted.",
-//   type: "character",
-//   inkwell: true,
-//   colors: ["amber", "steel"],
-//   cost: 3,
-//   strength: 0,
-//   willpower: 4,
-//   illustrator: "Joy Ang / Jaime Puga",
-//   number: 29,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631371,
+// Export const boltDownButNotOut: LorcanitoCharacterCard = {
+//   Id: "ase",
+//   Name: "Bolt",
+//   Title: "Down but Not Out",
+//   Characteristics: ["storyborn", "hero"],
+//   Text: "NONE OF YOUR POWERS ARE WORKING This character enters play exerted.",
+//   Type: "character",
+//   Inkwell: true,
+//   Colors: ["amber", "steel"],
+//   Cost: 3,
+//   Strength: 0,
+//   Willpower: 4,
+//   Illustrator: "Joy Ang / Jaime Puga",
+//   Number: 29,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631371,
 //   },
-//   rarity: "rare",
-//   lore: 4,
-//   abilities: [
-//     entersPlayExerted({
-//       name: "NONE OF YOUR POWERS ARE WORKING",
+//   Rarity: "rare",
+//   Lore: 4,
+//   Abilities: [
+//     EntersPlayExerted({
+//       Name: "NONE OF YOUR POWERS ARE WORKING",
 //     }),
 //   ],
 // };

@@ -1,35 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const stitchCarefreeSurfer: CharacterCard = {
-  id: "jzu",
-  cardType: "character",
-  name: "Stitch",
-  version: "Carefree Surfer",
-  fullName: "Stitch - Carefree Surfer",
-  inkType: ["amber"],
-  franchise: "Disney",
-  set: "001",
-  text: "**OHANA** When you play this character, if you have 2 or more other characters in play, you may draw 2 cards.",
-  cost: 7,
-  strength: 4,
-  willpower: 8,
-  lore: 2,
-  cardNumber: 21,
-  inkable: true,
-  externalIds: {
-    ravensburger: "",
-  },
   abilities: [
     {
-      id: "jzu-1",
-      type: "triggered",
-      name: "OHANA",
-      text: "When you play this character, if you have 2 or more other characters in play, you may draw 2 cards.",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "conditional",
         condition: {
@@ -50,57 +23,84 @@ export const stitchCarefreeSurfer: CharacterCard = {
           chooser: "CONTROLLER",
         },
       },
+      id: "jzu-1",
+      name: "OHANA",
+      text: "When you play this character, if you have 2 or more other characters in play, you may draw 2 cards.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 21,
+  cardType: "character",
   classifications: ["Hero", "Dreamborn", "Alien"],
+  cost: 7,
+  externalIds: {
+    ravensburger: "",
+  },
+  franchise: "Disney",
+  fullName: "Stitch - Carefree Surfer",
+  id: "jzu",
+  inkType: ["amber"],
+  inkable: true,
+  lore: 2,
+  name: "Stitch",
+  set: "001",
+  strength: 4,
+  text: "**OHANA** When you play this character, if you have 2 or more other characters in play, you may draw 2 cards.",
+  version: "Carefree Surfer",
+  willpower: 8,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const stichtCarefreeSurfer: LorcanitoCharacterCard = {
-//   id: "jzu",
-//   reprints: ["jdo"],
-//   name: "Stitch",
-//   title: "Carefree Surfer",
-//   characteristics: ["hero", "dreamborn", "alien"],
-//   text: "**OHANA** When you play this character, if you have 2 or more other characters in play, you may draw 2 cards.",
-//   type: "character",
-//   abilities: [
-//     whenYouPlayThisCharAbility({
-//       type: "resolution",
-//       name: "Ohana",
-//       text: "When you play this character, if you have 2 or more other characters in play, you may draw 2 cards.",
-//       resolutionConditions: [
+// Export const stichtCarefreeSurfer: LorcanitoCharacterCard = {
+//   Id: "jzu",
+//   Reprints: ["jdo"],
+//   Name: "Stitch",
+//   Title: "Carefree Surfer",
+//   Characteristics: ["hero", "dreamborn", "alien"],
+//   Text: "**OHANA** When you play this character, if you have 2 or more other characters in play, you may draw 2 cards.",
+//   Type: "character",
+//   Abilities: [
+//     WhenYouPlayThisCharAbility({
+//       Type: "resolution",
+//       Name: "Ohana",
+//       Text: "When you play this character, if you have 2 or more other characters in play, you may draw 2 cards.",
+//       ResolutionConditions: [
 //         { type: "play", comparison: { operator: "gte", value: 3 } },
 //       ],
-//       effects: [
+//       Effects: [
 //         {
-//           type: "draw",
-//           amount: 2,
-//           target: {
-//             type: "player",
-//             value: "self",
+//           Type: "draw",
+//           Amount: 2,
+//           Target: {
+//             Type: "player",
+//             Value: "self",
 //           },
 //         },
 //       ],
 //     }),
 //   ],
-//   flavour:
+//   Flavour:
 //     "So you're from outer space, huh? I hear the surfing's choice.\n−David",
-//   inkwell: true,
-//   colors: ["amber"],
-//   cost: 7,
-//   strength: 4,
-//   willpower: 8,
-//   lore: 2,
-//   illustrator: "Marcel Berg",
-//   number: 21,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 502009,
+//   Inkwell: true,
+//   Colors: ["amber"],
+//   Cost: 7,
+//   Strength: 4,
+//   Willpower: 8,
+//   Lore: 2,
+//   Illustrator: "Marcel Berg",
+//   Number: 21,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 502009,
 //   },
-//   rarity: "legendary",
+//   Rarity: "legendary",
 // };
 //

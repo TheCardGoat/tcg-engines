@@ -3,39 +3,39 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   fixitFelixJrNicelandSteward,
-//   monstroWhaleOfAWhale,
-//   theNokkMythicalSpirit,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   FixitFelixJrNicelandSteward,
+//   MonstroWhaleOfAWhale,
+//   TheNokkMythicalSpirit,
 // } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("The Nokk - Mythical Spirit", () => {
-//   it.skip("**TURNING TIDES** When you play this character, you may move up to 2 damage counters from chosen character to chosen opposing character.", () => {
-//     const testStore = new TestStore(
+// Describe("The Nokk - Mythical Spirit", () => {
+//   It.skip("**TURNING TIDES** When you play this character, you may move up to 2 damage counters from chosen character to chosen opposing character.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: theNokkMythicalSpirit.cost,
-//         hand: [theNokkMythicalSpirit, fixitFelixJrNicelandSteward],
+//         Inkwell: theNokkMythicalSpirit.cost,
+//         Hand: [theNokkMythicalSpirit, fixitFelixJrNicelandSteward],
 //       },
 //       {
-//         play: [monstroWhaleOfAWhale],
+//         Play: [monstroWhaleOfAWhale],
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getCard(theNokkMythicalSpirit);
-//     const damagedCharacter = testStore.getCard(fixitFelixJrNicelandSteward);
-//     damagedCharacter.updateCardDamage(2);
-//     const opposingCharacter = testStore.getCard(monstroWhaleOfAWhale);
-//     cardUnderTest.playFromHand();
-//     testStore.resolveTopOfStack({
-//       targets: [opposingCharacter],
+//     Const cardUnderTest = testStore.getCard(theNokkMythicalSpirit);
+//     Const damagedCharacter = testStore.getCard(fixitFelixJrNicelandSteward);
+//     DamagedCharacter.updateCardDamage(2);
+//     Const opposingCharacter = testStore.getCard(monstroWhaleOfAWhale);
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveTopOfStack({
+//       Targets: [opposingCharacter],
 //     });
-//     testStore.resolveTopOfStack({
-//       targets: [damagedCharacter],
+//     TestStore.resolveTopOfStack({
+//       Targets: [damagedCharacter],
 //     });
-//     expect(damagedCharacter.damage).toBe(0);
-//     expect(opposingCharacter.damage).toBe(2);
+//     Expect(damagedCharacter.damage).toBe(0);
+//     Expect(opposingCharacter.damage).toBe(2);
 //   });
 // });
 //

@@ -3,84 +3,84 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { mickeyMouseArtfulRogue } from "@lorcanito/lorcana-engine/cards/001/characters/088-mickey-mouse-artful-rogue";
-// import { cobraBubblesSimpleEducator } from "@lorcanito/lorcana-engine/cards/002/characters/004-cobra-bubbles-just-a-social-worker";
-// import {
-//   minnieMouseSweetheartPrincess,
-//   powerlineWorldsGreatestRockStar,
+// Import { describe, expect, it } from "@jest/globals";
+// Import { mickeyMouseArtfulRogue } from "@lorcanito/lorcana-engine/cards/001/characters/088-mickey-mouse-artful-rogue";
+// Import { cobraBubblesSimpleEducator } from "@lorcanito/lorcana-engine/cards/002/characters/004-cobra-bubbles-just-a-social-worker";
+// Import {
+//   MinnieMouseSweetheartPrincess,
+//   PowerlineWorldsGreatestRockStar,
 // } from "@lorcanito/lorcana-engine/cards/009";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Minnie Mouse - Sweetheart Princess", () => {
-//   it("ROYAL FAVOR Your characters named Mickey Mouse gain Support. (Whenever they quest, you may add their {S} to another chosen character's {S} this turn.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [minnieMouseSweetheartPrincess, mickeyMouseArtfulRogue],
+// Describe("Minnie Mouse - Sweetheart Princess", () => {
+//   It("ROYAL FAVOR Your characters named Mickey Mouse gain Support. (Whenever they quest, you may add their {S} to another chosen character's {S} this turn.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [minnieMouseSweetheartPrincess, mickeyMouseArtfulRogue],
 //     });
 //
-//     const mickeyMouse = testEngine.getCardModel(mickeyMouseArtfulRogue);
+//     Const mickeyMouse = testEngine.getCardModel(mickeyMouseArtfulRogue);
 //
-//     expect(mickeyMouse.hasSupport).toBe(true);
+//     Expect(mickeyMouse.hasSupport).toBe(true);
 //   });
 //
-//   it("BYE BYE, NOW Whenever this character quests, you may banish chosen exerted character with 5 {S} or more.", async () => {
-//     const testEngine = new TestEngine(
+//   It("BYE BYE, NOW Whenever this character quests, you may banish chosen exerted character with 5 {S} or more.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         play: [minnieMouseSweetheartPrincess],
+//         Play: [minnieMouseSweetheartPrincess],
 //       },
 //       {
-//         play: [cobraBubblesSimpleEducator],
+//         Play: [cobraBubblesSimpleEducator],
 //       },
 //     );
 //
-//     await testEngine.tapCard(cobraBubblesSimpleEducator);
-//     await testEngine.questCard(minnieMouseSweetheartPrincess);
+//     Await testEngine.tapCard(cobraBubblesSimpleEducator);
+//     Await testEngine.questCard(minnieMouseSweetheartPrincess);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({
-//       targets: [cobraBubblesSimpleEducator],
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({
+//       Targets: [cobraBubblesSimpleEducator],
 //     });
 //
-//     expect(testEngine.getCardModel(cobraBubblesSimpleEducator).zone).toBe(
+//     Expect(testEngine.getCardModel(cobraBubblesSimpleEducator).zone).toBe(
 //       "discard",
 //     );
 //   });
 //
-//   describe("Regression Tests", () => {
-//     it("Should banish only one character", async () => {
-//       const testEngine = new TestEngine(
+//   Describe("Regression Tests", () => {
+//     It("Should banish only one character", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           play: [minnieMouseSweetheartPrincess],
+//           Play: [minnieMouseSweetheartPrincess],
 //         },
 //         {
-//           play: [
-//             powerlineWorldsGreatestRockStar,
-//             powerlineWorldsGreatestRockStar,
+//           Play: [
+//             PowerlineWorldsGreatestRockStar,
+//             PowerlineWorldsGreatestRockStar,
 //           ],
 //         },
 //       );
 //
-//       const powerOne = testEngine.getCardModel(
-//         powerlineWorldsGreatestRockStar,
+//       Const powerOne = testEngine.getCardModel(
+//         PowerlineWorldsGreatestRockStar,
 //         0,
 //       );
-//       const powerTwo = testEngine.getCardModel(
-//         powerlineWorldsGreatestRockStar,
+//       Const powerTwo = testEngine.getCardModel(
+//         PowerlineWorldsGreatestRockStar,
 //         1,
 //       );
 //
-//       await testEngine.tapCard(powerOne);
-//       await testEngine.tapCard(powerTwo);
+//       Await testEngine.tapCard(powerOne);
+//       Await testEngine.tapCard(powerTwo);
 //
-//       await testEngine.questCard(minnieMouseSweetheartPrincess);
+//       Await testEngine.questCard(minnieMouseSweetheartPrincess);
 //
-//       await testEngine.resolveOptionalAbility();
-//       await testEngine.resolveTopOfStack({
-//         targets: [powerOne],
+//       Await testEngine.resolveOptionalAbility();
+//       Await testEngine.resolveTopOfStack({
+//         Targets: [powerOne],
 //       });
 //
-//       expect(powerOne.zone).toBe("discard");
-//       expect(powerTwo.zone).toBe("play");
+//       Expect(powerOne.zone).toBe("discard");
+//       Expect(powerTwo.zone).toBe("play");
 //     });
 //   });
 // });

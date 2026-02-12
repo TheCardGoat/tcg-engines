@@ -13,6 +13,6 @@ describe("@tcg/lorcana Package Setup", () => {
       expect(core).toBeDefined();
       expect(core.RuleEngine).toBeDefined();
     },
-    { timeout: 30000 },
+    { timeout: 30_000 },
   );
 });

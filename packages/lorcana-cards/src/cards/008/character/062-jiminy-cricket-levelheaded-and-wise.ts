@@ -1,35 +1,35 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import {
-//   evasiveAbility,
-//   targetCharacterGains,
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import {
+//   EvasiveAbility,
+//   TargetCharacterGains,
 // } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { entersPlayExerted } from "@lorcanito/lorcana-engine/effects/effects";
+// Import { entersPlayExerted } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const jiminyCricketLevelheadedAndWise: LorcanitoCharacterCard = {
-//   id: "rhn",
-//   name: "Jiminy Cricket",
-//   title: "Level-Headed and Wise",
-//   characteristics: ["storyborn", "mentor"],
-//   text: "Evasive\nENOUGH'S ENOUGH While this character is exerted, opposing characters with Rush enter play exerted.",
-//   type: "character",
-//   abilities: [
-//     evasiveAbility,
-//     targetCharacterGains({
-//       name: "ENOUGH'S ENOUGH",
-//       text: "While this character is exerted, opposing characters with Rush enter play exerted.",
-//       conditions: [
+// Export const jiminyCricketLevelheadedAndWise: LorcanitoCharacterCard = {
+//   Id: "rhn",
+//   Name: "Jiminy Cricket",
+//   Title: "Level-Headed and Wise",
+//   Characteristics: ["storyborn", "mentor"],
+//   Text: "Evasive\nENOUGH'S ENOUGH While this character is exerted, opposing characters with Rush enter play exerted.",
+//   Type: "character",
+//   Abilities: [
+//     EvasiveAbility,
+//     TargetCharacterGains({
+//       Name: "ENOUGH'S ENOUGH",
+//       Text: "While this character is exerted, opposing characters with Rush enter play exerted.",
+//       Conditions: [
 //         {
-//           type: "exerted",
+//           Type: "exerted",
 //         },
 //       ],
-//       gainedAbility: entersPlayExerted({
-//         name: "ENOUGH'S ENOUGH",
+//       GainedAbility: entersPlayExerted({
+//         Name: "ENOUGH'S ENOUGH",
 //       }),
-//       target: {
-//         type: "card",
-//         value: "all",
-//         filters: [
+//       Target: {
+//         Type: "card",
+//         Value: "all",
+//         Filters: [
 //           { filter: "type", value: "character" },
 //           { filter: "owner", value: "opponent" },
 //           { filter: "ability", value: "rush" },
@@ -38,18 +38,18 @@
 //       },
 //     }),
 //   ],
-//   inkwell: true,
-//   colors: ["amethyst"],
-//   cost: 2,
-//   strength: 1,
-//   willpower: 1,
-//   illustrator: "Rosa la Barbera / Livio Cacciatore",
-//   number: 62,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631392,
+//   Inkwell: true,
+//   Colors: ["amethyst"],
+//   Cost: 2,
+//   Strength: 1,
+//   Willpower: 1,
+//   Illustrator: "Rosa la Barbera / Livio Cacciatore",
+//   Number: 62,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631392,
 //   },
-//   rarity: "rare",
-//   lore: 1,
+//   Rarity: "rare",
+//   Lore: 1,
 // };
 //

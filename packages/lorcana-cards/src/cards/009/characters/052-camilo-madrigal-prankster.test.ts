@@ -3,48 +3,48 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { camiloMadrigalPrankster } from "@lorcanito/lorcana-engine/cards/009/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { camiloMadrigalPrankster } from "@lorcanito/lorcana-engine/cards/009/index";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Camilo Madrigal - Prankster", () => {
-//   it.skip("**MANY FORMS** At the start of your turn, you may chose one:", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: camiloMadrigalPrankster.cost,
-//       play: [camiloMadrigalPrankster],
-//       hand: [camiloMadrigalPrankster],
+// Describe("Camilo Madrigal - Prankster", () => {
+//   It.skip("**MANY FORMS** At the start of your turn, you may chose one:", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: camiloMadrigalPrankster.cost,
+//       Play: [camiloMadrigalPrankster],
+//       Hand: [camiloMadrigalPrankster],
 //     });
 //
-//     await testEngine.playCard(camiloMadrigalPrankster);
+//     Await testEngine.playCard(camiloMadrigalPrankster);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 //
-//   it.skip("• This character gets +1 {L} this turn.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: camiloMadrigalPrankster.cost,
-//       play: [camiloMadrigalPrankster],
-//       hand: [camiloMadrigalPrankster],
+//   It.skip("• This character gets +1 {L} this turn.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: camiloMadrigalPrankster.cost,
+//       Play: [camiloMadrigalPrankster],
+//       Hand: [camiloMadrigalPrankster],
 //     });
 //
-//     await testEngine.playCard(camiloMadrigalPrankster);
+//     Await testEngine.playCard(camiloMadrigalPrankster);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 //
-//   it.skip("• This character gain **Challenger** +2 this turn. _(While challenging, this character gets +2 {S}.)_", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: camiloMadrigalPrankster.cost,
-//       play: [camiloMadrigalPrankster],
-//       hand: [camiloMadrigalPrankster],
+//   It.skip("• This character gain **Challenger** +2 this turn. _(While challenging, this character gets +2 {S}.)_", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: camiloMadrigalPrankster.cost,
+//       Play: [camiloMadrigalPrankster],
+//       Hand: [camiloMadrigalPrankster],
 //     });
 //
-//     await testEngine.playCard(camiloMadrigalPrankster);
+//     Await testEngine.playCard(camiloMadrigalPrankster);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

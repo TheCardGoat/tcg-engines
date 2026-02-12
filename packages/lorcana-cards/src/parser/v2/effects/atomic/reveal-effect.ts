@@ -34,8 +34,8 @@ function parseFromText(
     logger.info("Parsed reveal hand effect", { target });
 
     const effect: RevealHandEffect = {
-      type: "reveal-hand",
       target,
+      type: "reveal-hand",
     };
     return effect;
   }
@@ -49,8 +49,8 @@ function parseFromText(
     logger.info("Parsed reveal top card effect", { target });
 
     const effect: RevealTopCardEffect = {
-      type: "reveal-top-card",
       target,
+      type: "reveal-top-card",
     };
     return effect;
   }
@@ -61,8 +61,8 @@ function parseFromText(
 
     // Use reveal-hand type with opponent target
     const effect: RevealHandEffect = {
-      type: "reveal-hand",
       target: "OPPONENT",
+      type: "reveal-hand",
     };
     return effect;
   }
@@ -104,11 +104,8 @@ function parseFromText(
  * Reveal effect parser implementation
  */
 export const revealEffectParser: EffectParser = {
-  pattern:
-    /(?:reveal|look at)\s+(?:your\s+)?(?:hand|top|the|cards?|opponent'?s?)/i,
   description:
     "Parses reveal and look-at effects (e.g., 'reveal your hand', 'look at opponent's hand', 'look at the top 3 cards of your deck')",
-
   parse: (
     input: CstNode | string,
   ): RevealHandEffect | RevealTopCardEffect | Effect | null => {
@@ -119,4 +116,7 @@ export const revealEffectParser: EffectParser = {
     logger.warn("CST parsing not implemented for reveal effects");
     return null;
   },
+
+  pattern:
+    /(?:reveal|look at)\s+(?:your\s+)?(?:hand|top|the|cards?|opponent'?s?)/i,
 };

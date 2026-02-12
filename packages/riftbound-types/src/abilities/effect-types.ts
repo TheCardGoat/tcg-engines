@@ -290,16 +290,16 @@ export interface CreateTokenEffect {
  * Common token presets
  */
 export const TOKEN_PRESETS = {
+  GOLD: { name: "Gold", type: "gear" } as const,
+  MECH: { name: "Mech", type: "unit", might: 3 } as const,
   RECRUIT: { name: "Recruit", type: "unit", might: 1 } as const,
   SAND_SOLDIER: { name: "Sand Soldier", type: "unit", might: 2 } as const,
-  MECH: { name: "Mech", type: "unit", might: 3 } as const,
   SPRITE: {
     name: "Sprite",
     type: "unit",
     might: 3,
     keywords: ["Temporary"],
   } as const,
-  GOLD: { name: "Gold", type: "gear" } as const,
 } as const;
 
 // ============================================================================
@@ -573,10 +573,7 @@ export type Effect =
 /**
  * Static effects (subset for static abilities)
  */
-export type StaticEffect =
-  | ModifyMightEffect
-  | GrantKeywordEffect
-  | GrantKeywordsEffect;
+export type StaticEffect = ModifyMightEffect | GrantKeywordEffect | GrantKeywordsEffect;
 
 // ============================================================================
 // Type Guards
@@ -611,11 +608,7 @@ export function isControlFlowEffect(
  */
 export function isStatModifyingEffect(
   effect: Effect,
-): effect is
-  | ModifyMightEffect
-  | BuffEffect
-  | DoubleMightEffect
-  | SwapMightEffect {
+): effect is ModifyMightEffect | BuffEffect | DoubleMightEffect | SwapMightEffect {
   return (
     effect.type === "modify-might" ||
     effect.type === "buff" ||
@@ -642,9 +635,7 @@ export function isCombatEffect(
 /**
  * Check if amount is an expression
  */
-export function isAmountExpression(
-  amount: number | AmountExpression,
-): amount is AmountExpression {
+export function isAmountExpression(amount: number | AmountExpression): amount is AmountExpression {
   return typeof amount === "object";
 }
 
@@ -659,31 +650,28 @@ export function draw(
   amount: number | AmountExpression,
   player?: "self" | "opponent" | "each",
 ): DrawEffect {
-  return player ? { type: "draw", amount, player } : { type: "draw", amount };
+  return player ? { amount, player, type: "draw" } : { amount, type: "draw" };
 }
 
 /**
  * Create a damage effect
  */
-export function damage(
-  amount: number | AmountExpression,
-  target: AnyTarget,
-): DamageEffect {
-  return { type: "damage", amount, target };
+export function damage(amount: number | AmountExpression, target: AnyTarget): DamageEffect {
+  return { amount, target, type: "damage" };
 }
 
 /**
  * Create a kill effect
  */
 export function kill(target: AnyTarget): KillEffect {
-  return { type: "kill", target };
+  return { target, type: "kill" };
 }
 
 /**
  * Create a buff effect
  */
 export function buff(target: AnyTarget): BuffEffect {
-  return { type: "buff", target };
+  return { target, type: "buff" };
 }
 
 /**
@@ -695,31 +683,29 @@ export function modifyMight(
   duration?: "turn" | "permanent" | "combat",
 ): ModifyMightEffect {
   return duration
-    ? { type: "modify-might", amount, target, duration }
-    : { type: "modify-might", amount, target };
+    ? { amount, duration, target, type: "modify-might" }
+    : { amount, target, type: "modify-might" };
 }
 
 /**
  * Create a move effect
  */
 export function move(target: AnyTarget, to: Location): MoveEffect {
-  return { type: "move", target, to };
+  return { target, to, type: "move" };
 }
 
 /**
  * Create a ready effect
  */
 export function ready(target: AnyTarget): ReadyEffect {
-  return { type: "ready", target };
+  return { target, type: "ready" };
 }
 
 /**
  * Create a channel effect
  */
 export function channel(amount: number, exhausted?: boolean): ChannelEffect {
-  return exhausted
-    ? { type: "channel", amount, exhausted }
-    : { type: "channel", amount };
+  return exhausted ? { amount, exhausted, type: "channel" } : { amount, type: "channel" };
 }
 
 /**
@@ -731,9 +717,9 @@ export function createToken(
   options?: { ready?: boolean; amount?: number },
 ): CreateTokenEffect {
   return {
-    type: "create-token",
-    token,
     location,
+    token,
+    type: "create-token",
     ...options,
   };
 }
@@ -742,21 +728,21 @@ export function createToken(
  * Create a sequence of effects
  */
 export function sequence(...effects: Effect[]): SequenceEffect {
-  return { type: "sequence", effects };
+  return { effects, type: "sequence" };
 }
 
 /**
  * Create a choice effect
  */
 export function choice(...options: ChoiceOption[]): ChoiceEffect {
-  return { type: "choice", options };
+  return { options, type: "choice" };
 }
 
 /**
  * Create an optional effect
  */
 export function optional(effect: Effect): OptionalEffect {
-  return { type: "optional", effect };
+  return { effect, type: "optional" };
 }
 
 /**
@@ -768,6 +754,6 @@ export function conditional(
   elseEffect?: Effect,
 ): ConditionalEffect {
   return elseEffect
-    ? { type: "conditional", condition, then, else: elseEffect }
-    : { type: "conditional", condition, then };
+    ? { condition, else: elseEffect, then, type: "conditional" }
+    : { condition, then, type: "conditional" };
 }

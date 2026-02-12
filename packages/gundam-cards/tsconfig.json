@@ -2,7 +2,7 @@
   "include": ["src/**/*", "tools/**/*", "scripts/**/*"],
   "exclude": ["node_modules"],
   "compilerOptions": {
-    "target": "ES2022",
+    "target": "ES2023",
     "module": "ESNext",
     "moduleResolution": "bundler",
     "esModuleInterop": true,

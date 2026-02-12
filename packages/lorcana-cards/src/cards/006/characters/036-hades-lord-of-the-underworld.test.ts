@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { hadesLordOfTheUnderworld } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { hadesLordOfTheUnderworld } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Hades - Lord of the Underworld", () => {
-//   it.skip("SOUL COLLECTOR Whenever one of your other characters is banished during the opponent's turn, gain 2 lore.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: hadesLordOfTheUnderworld.cost,
-//       play: [hadesLordOfTheUnderworld],
-//       hand: [hadesLordOfTheUnderworld],
+// Describe("Hades - Lord of the Underworld", () => {
+//   It.skip("SOUL COLLECTOR Whenever one of your other characters is banished during the opponent's turn, gain 2 lore.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: hadesLordOfTheUnderworld.cost,
+//       Play: [hadesLordOfTheUnderworld],
+//       Hand: [hadesLordOfTheUnderworld],
 //     });
 //
-//     await testEngine.playCard(hadesLordOfTheUnderworld);
+//     Await testEngine.playCard(hadesLordOfTheUnderworld);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

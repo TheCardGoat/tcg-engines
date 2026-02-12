@@ -1,43 +1,43 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { self } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { whenThisCharacterBanished } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { self } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import { whenThisCharacterBanished } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 //
-// export const kuzcoWantedLlama: LorcanitoCharacterCard = {
-//   id: "cng",
-//   reprints: ["q3b"],
-//   name: "Kuzco",
-//   title: "Wanted Llama",
-//   characteristics: ["storyborn", "king"],
-//   text: "**OK, WHERE AM I?** When this character is banished, you may draw a card.",
-//   type: "character",
-//   abilities: [
-//     whenThisCharacterBanished({
-//       name: "OK, Where Am I?",
-//       text: "When this character is banished, you may draw a card.",
-//       optional: true,
-//       effects: [
+// Export const kuzcoWantedLlama: LorcanitoCharacterCard = {
+//   Id: "cng",
+//   Reprints: ["q3b"],
+//   Name: "Kuzco",
+//   Title: "Wanted Llama",
+//   Characteristics: ["storyborn", "king"],
+//   Text: "**OK, WHERE AM I?** When this character is banished, you may draw a card.",
+//   Type: "character",
+//   Abilities: [
+//     WhenThisCharacterBanished({
+//       Name: "OK, Where Am I?",
+//       Text: "When this character is banished, you may draw a card.",
+//       Optional: true,
+//       Effects: [
 //         {
-//           type: "draw",
-//           amount: 1,
-//           target: self,
+//           Type: "draw",
+//           Amount: 1,
+//           Target: self,
 //         },
 //       ],
 //     }),
 //   ],
-//   flavour: "So there I was. Perfectly in control of the situation.",
-//   inkwell: true,
-//   colors: ["amethyst"],
-//   cost: 2,
-//   strength: 1,
-//   willpower: 2,
-//   lore: 1,
-//   illustrator: "Michaela Martin",
-//   number: 45,
-//   set: "ROF",
-//   externalIds: {
-//     tcgPlayer: 527266,
+//   Flavour: "So there I was. Perfectly in control of the situation.",
+//   Inkwell: true,
+//   Colors: ["amethyst"],
+//   Cost: 2,
+//   Strength: 1,
+//   Willpower: 2,
+//   Lore: 1,
+//   Illustrator: "Michaela Martin",
+//   Number: 45,
+//   Set: "ROF",
+//   ExternalIds: {
+//     TcgPlayer: 527266,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

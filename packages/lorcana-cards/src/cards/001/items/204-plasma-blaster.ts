@@ -1,25 +1,8 @@
 import type { ItemCard } from "@tcg/lorcana-types";
 
 export const plasmaBlaster: ItemCard = {
-  id: "vmw",
-  cardType: "item",
-  name: "Plasma Blaster",
-  inkType: ["steel"],
-  franchise: "Lilo and Stitch",
-  set: "001",
-  text: "QUICK SHOT {E}, 2 {I} — Deal 1 damage to chosen character.",
-  cost: 3,
-  cardNumber: 204,
-  inkable: false,
-  externalIds: {
-    ravensburger: "7204a43d0ddbf91326f601cd9fbef27e72eae9fa",
-  },
   abilities: [
     {
-      id: "vmw-1",
-      text: "QUICK SHOT {E}, 2 {I} — Deal 1 damage to chosen character.",
-      name: "QUICK SHOT",
-      type: "activated",
       cost: {
         exert: true,
         ink: 2,
@@ -29,56 +12,73 @@ export const plasmaBlaster: ItemCard = {
         amount: 1,
         target: "CHOSEN_CHARACTER",
       },
+      id: "vmw-1",
+      name: "QUICK SHOT",
+      text: "QUICK SHOT {E}, 2 {I} — Deal 1 damage to chosen character.",
+      type: "activated",
     },
   ],
+  cardNumber: 204,
+  cardType: "item",
+  cost: 3,
+  externalIds: {
+    ravensburger: "7204a43d0ddbf91326f601cd9fbef27e72eae9fa",
+  },
+  franchise: "Lilo and Stitch",
+  id: "vmw",
+  inkType: ["steel"],
+  inkable: false,
+  name: "Plasma Blaster",
+  set: "001",
+  text: "QUICK SHOT {E}, 2 {I} — Deal 1 damage to chosen character.",
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { ActivatedAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-// import type { CardEffectTarget } from "@lorcanito/lorcana-engine/effects/effectTargets";
+// Import type { ActivatedAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { CardEffectTarget } from "@lorcanito/lorcana-engine/effects/effectTargets";
 //
-// const chosenCharacter: CardEffectTarget = {
-//   type: "card",
-//   value: 1,
-//   filters: [
+// Const chosenCharacter: CardEffectTarget = {
+//   Type: "card",
+//   Value: 1,
+//   Filters: [
 //     { filter: "type", value: "character" },
 //     { filter: "zone", value: "play" },
 //   ],
 // };
 //
-// const quickShot: ActivatedAbility = {
-//   type: "activated",
-//   name: "Quick Shot",
-//   text: "Deal 1 damage to chosen character.",
-//   optional: false,
-//   effects: [
+// Const quickShot: ActivatedAbility = {
+//   Type: "activated",
+//   Name: "Quick Shot",
+//   Text: "Deal 1 damage to chosen character.",
+//   Optional: false,
+//   Effects: [
 //     {
-//       type: "damage",
-//       amount: 1,
-//       target: chosenCharacter,
+//       Type: "damage",
+//       Amount: 1,
+//       Target: chosenCharacter,
 //     },
 //   ],
-//   costs: [{ type: "exert" }, { type: "ink", amount: 2 }],
+//   Costs: [{ type: "exert" }, { type: "ink", amount: 2 }],
 // };
 //
-// export const plasmaBlaster: LorcanitoItemCard = {
-//   characteristics: ["item"],
-//   id: "t4y",
-//   name: "Plasma Blaster",
-//   text: "**QUICK SHOT** {E}, 2 {I} − Deal 1 damage to chosen character.",
-//   type: "item",
-//   abilities: [quickShot],
-//   flavour:
+// Export const plasmaBlaster: LorcanitoItemCard = {
+//   Characteristics: ["item"],
+//   Id: "t4y",
+//   Name: "Plasma Blaster",
+//   Text: "**QUICK SHOT** {E}, 2 {I} − Deal 1 damage to chosen character.",
+//   Type: "item",
+//   Abilities: [quickShot],
+//   Flavour:
 //     "You don't have to say 'pew pew' when you use it, but it doesn't hurt. \n−Lilo, galactic hero",
-//   colors: ["steel"],
-//   cost: 3,
-//   number: 204,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 508929,
+//   Colors: ["steel"],
+//   Cost: 3,
+//   Number: 204,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 508929,
 //   },
-//   rarity: "rare",
-//   illustrator: "TBD",
+//   Rarity: "rare",
+//   Illustrator: "TBD",
 // };
 //

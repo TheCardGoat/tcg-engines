@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { tritonsTrident } from "@lorcanito/lorcana-engine/cards/004/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { tritonsTrident } from "@lorcanito/lorcana-engine/cards/004/items/items";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Triton's Trident", () => {
-//   it.skip("**SYMBOL OF POWER** Banish this item — Chosen character gets +1 {S} this turn for each card in your hand.", () => {
-//     const testStore = new TestStore({
-//       inkwell: tritonsTrident.cost,
-//       play: [tritonsTrident],
+// Describe("Triton's Trident", () => {
+//   It.skip("**SYMBOL OF POWER** Banish this item — Chosen character gets +1 {S} this turn for each card in your hand.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: tritonsTrident.cost,
+//       Play: [tritonsTrident],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("play", tritonsTrident.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("play", tritonsTrident.id);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

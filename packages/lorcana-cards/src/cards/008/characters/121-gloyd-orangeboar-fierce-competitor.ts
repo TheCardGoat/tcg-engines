@@ -1,35 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const gloydOrangeboarFierceCompetitor: CharacterCard = {
-  id: "1mc",
-  cardType: "character",
-  name: "Gloyd Orangeboar",
-  version: "Fierce Competitor",
-  fullName: "Gloyd Orangeboar - Fierce Competitor",
-  inkType: ["ruby"],
-  franchise: "Wreck It Ralph",
-  set: "008",
-  text: "PUMPKIN SPICE When you play this character, each opponent loses 1 lore and you gain 1 lore.",
-  cost: 3,
-  strength: 1,
-  willpower: 2,
-  lore: 1,
-  cardNumber: 121,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "d23fb62e58a5e37fc9f04d4ead58b2087a98c49d",
-  },
   abilities: [
     {
-      id: "1mc-1",
-      type: "triggered",
-      name: "PUMPKIN SPICE",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "sequence",
         steps: [
@@ -44,8 +17,35 @@ export const gloydOrangeboarFierceCompetitor: CharacterCard = {
           },
         ],
       },
+      id: "1mc-1",
+      name: "PUMPKIN SPICE",
       text: "PUMPKIN SPICE When you play this character, each opponent loses 1 lore and you gain 1 lore.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 121,
+  cardType: "character",
   classifications: ["Storyborn", "Ally", "Racer"],
+  cost: 3,
+  externalIds: {
+    ravensburger: "d23fb62e58a5e37fc9f04d4ead58b2087a98c49d",
+  },
+  franchise: "Wreck It Ralph",
+  fullName: "Gloyd Orangeboar - Fierce Competitor",
+  id: "1mc",
+  inkType: ["ruby"],
+  inkable: true,
+  lore: 1,
+  missingTests: true,
+  name: "Gloyd Orangeboar",
+  set: "008",
+  strength: 1,
+  text: "PUMPKIN SPICE When you play this character, each opponent loses 1 lore and you gain 1 lore.",
+  version: "Fierce Competitor",
+  willpower: 2,
 };

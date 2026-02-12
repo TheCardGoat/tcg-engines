@@ -5,9 +5,9 @@ import { donaldDuckBoisterousFowl } from "./108-donald-duck-boisterous-fowl";
 describe("Donald Duck - Boisterous Fowl", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [donaldDuck] });
-  //   expect(testEngine.getCardModel(donaldDuck).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [donaldDuck] });
+  //   Expect(testEngine.getCardModel(donaldDuck).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });

@@ -3,24 +3,24 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { transformedChefCastleStove } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { transformedChefCastleStove } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Transformed Chef - Castle Stove", () => {
-//   it.skip("**SMOOTH SMALL DISHES** When you play this character, remove up to 2 damage from chosen character.", () => {
-//     const testStore = new TestStore({
-//       inkwell: transformedChefCastleStove.cost,
-//       hand: [transformedChefCastleStove],
+// Describe("Transformed Chef - Castle Stove", () => {
+//   It.skip("**SMOOTH SMALL DISHES** When you play this character, remove up to 2 damage from chosen character.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: transformedChefCastleStove.cost,
+//       Hand: [transformedChefCastleStove],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "hand",
-//       transformedChefCastleStove.id,
+//       TransformedChefCastleStove.id,
 //     );
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

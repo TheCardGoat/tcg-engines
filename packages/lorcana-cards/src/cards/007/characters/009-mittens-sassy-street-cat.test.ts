@@ -3,133 +3,133 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   captainHookForcefulDuelist,
-//   hadesInfernalSchemer,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   CaptainHookForcefulDuelist,
+//   HadesInfernalSchemer,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { fishboneQuill } from "@lorcanito/lorcana-engine/cards/001/items/items";
-// import { letItGo } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
-// import { hiramFlavershamToymaker } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { mrSmeeBumblingMate } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { plutoGuardDog } from "@lorcanito/lorcana-engine/cards/006";
-// import { mittensSassyStreetCat } from "@lorcanito/lorcana-engine/cards/007";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { fishboneQuill } from "@lorcanito/lorcana-engine/cards/001/items/items";
+// Import { letItGo } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
+// Import { hiramFlavershamToymaker } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { mrSmeeBumblingMate } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { plutoGuardDog } from "@lorcanito/lorcana-engine/cards/006";
+// Import { mittensSassyStreetCat } from "@lorcanito/lorcana-engine/cards/007";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Mittens - Sassy Street Cat", () => {
-//   it("Bodyguard", async () => {
-//     const testEngine = new TestEngine({
-//       play: [mittensSassyStreetCat],
+// Describe("Mittens - Sassy Street Cat", () => {
+//   It("Bodyguard", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [mittensSassyStreetCat],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(mittensSassyStreetCat);
-//     expect(cardUnderTest.hasBodyguard).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(mittensSassyStreetCat);
+//     Expect(cardUnderTest.hasBodyguard).toBe(true);
 //   });
 //
-//   describe("NO THANKS NECESSARY", () => {
-//     it("Once during your turn, whenever a card is put into your inkwell, your other characters with Bodyguard get +1 {L} this turn.", async () => {
-//       const testEngine = new TestEngine(
+//   Describe("NO THANKS NECESSARY", () => {
+//     It("Once during your turn, whenever a card is put into your inkwell, your other characters with Bodyguard get +1 {L} this turn.", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: 5,
-//           play: [
-//             mittensSassyStreetCat,
-//             plutoGuardDog,
-//             captainHookForcefulDuelist,
+//           Inkwell: 5,
+//           Play: [
+//             MittensSassyStreetCat,
+//             PlutoGuardDog,
+//             CaptainHookForcefulDuelist,
 //           ],
-//           hand: [mrSmeeBumblingMate],
+//           Hand: [mrSmeeBumblingMate],
 //         },
 //         {
-//           inkwell: 5,
-//           play: [],
-//           hand: [letItGo],
-//           deck: [hadesInfernalSchemer],
+//           Inkwell: 5,
+//           Play: [],
+//           Hand: [letItGo],
+//           Deck: [hadesInfernalSchemer],
 //         },
 //       );
 //
-//       expect(testEngine.getCardModel(plutoGuardDog).lore).toBe(1);
+//       Expect(testEngine.getCardModel(plutoGuardDog).lore).toBe(1);
 //
-//       await testEngine.putIntoInkwell(mrSmeeBumblingMate);
+//       Await testEngine.putIntoInkwell(mrSmeeBumblingMate);
 //
-//       expect(testEngine.getZonesCardCount().inkwell).toBe(6);
-//       expect(testEngine.getCardModel(plutoGuardDog).lore).toBe(2);
+//       Expect(testEngine.getZonesCardCount().inkwell).toBe(6);
+//       Expect(testEngine.getCardModel(plutoGuardDog).lore).toBe(2);
 //
 //       // This character should not get +1 {L} because it doesn't have Bodyguard
-//       expect(testEngine.getCardModel(captainHookForcefulDuelist).lore).toBe(1);
+//       Expect(testEngine.getCardModel(captainHookForcefulDuelist).lore).toBe(1);
 //
-//       await testEngine.passTurn();
+//       Await testEngine.passTurn();
 //
 //       // Falls off after turn passed
-//       expect(testEngine.getCardModel(plutoGuardDog).lore).toBe(1);
+//       Expect(testEngine.getCardModel(plutoGuardDog).lore).toBe(1);
 //     });
 //
-//     it("Checking once during your turn", async () => {
-//       const testEngine = new TestEngine(
+//     It("Checking once during your turn", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: 5,
-//           play: [
-//             mittensSassyStreetCat,
-//             plutoGuardDog,
-//             captainHookForcefulDuelist,
-//             fishboneQuill,
+//           Inkwell: 5,
+//           Play: [
+//             MittensSassyStreetCat,
+//             PlutoGuardDog,
+//             CaptainHookForcefulDuelist,
+//             FishboneQuill,
 //           ],
-//           hand: [mrSmeeBumblingMate, hiramFlavershamToymaker],
+//           Hand: [mrSmeeBumblingMate, hiramFlavershamToymaker],
 //         },
 //         {
-//           inkwell: 5,
-//           play: [],
-//           hand: [letItGo],
-//           deck: [hadesInfernalSchemer],
+//           Inkwell: 5,
+//           Play: [],
+//           Hand: [letItGo],
+//           Deck: [hadesInfernalSchemer],
 //         },
 //       );
 //
-//       expect(testEngine.getCardModel(plutoGuardDog).lore).toBe(1);
+//       Expect(testEngine.getCardModel(plutoGuardDog).lore).toBe(1);
 //
-//       await testEngine.putIntoInkwell(mrSmeeBumblingMate);
+//       Await testEngine.putIntoInkwell(mrSmeeBumblingMate);
 //
-//       await testEngine.activateCard(fishboneQuill);
+//       Await testEngine.activateCard(fishboneQuill);
 //
-//       await testEngine.resolveTopOfStack({
-//         targets: [hiramFlavershamToymaker],
+//       Await testEngine.resolveTopOfStack({
+//         Targets: [hiramFlavershamToymaker],
 //       });
 //
-//       expect(testEngine.getZonesCardCount().inkwell).toBe(7);
+//       Expect(testEngine.getZonesCardCount().inkwell).toBe(7);
 //
 //       // should only be 2, not 3 because the second ink should not trigger the effect
-//       expect(testEngine.getCardModel(plutoGuardDog).lore).toBe(2);
+//       Expect(testEngine.getCardModel(plutoGuardDog).lore).toBe(2);
 //
 //       // This character should not get +1 {L} because it doesn't have Bodyguard
-//       expect(testEngine.getCardModel(captainHookForcefulDuelist).lore).toBe(1);
+//       Expect(testEngine.getCardModel(captainHookForcefulDuelist).lore).toBe(1);
 //
-//       await testEngine.passTurn();
+//       Await testEngine.passTurn();
 //
 //       // Falls off after turn passed
-//       expect(testEngine.getCardModel(plutoGuardDog).lore).toBe(1);
+//       Expect(testEngine.getCardModel(plutoGuardDog).lore).toBe(1);
 //     });
 //
-//     it("Not your turn, doesn't trigger", async () => {
-//       const testEngine = new TestEngine(
+//     It("Not your turn, doesn't trigger", async () => {
+//       Const testEngine = new TestEngine(
 //         {
-//           inkwell: 5,
-//           play: [mittensSassyStreetCat, plutoGuardDog, mrSmeeBumblingMate],
-//           hand: [],
+//           Inkwell: 5,
+//           Play: [mittensSassyStreetCat, plutoGuardDog, mrSmeeBumblingMate],
+//           Hand: [],
 //         },
 //         {
-//           inkwell: 5,
-//           play: [],
-//           hand: [letItGo],
-//           deck: [hadesInfernalSchemer],
+//           Inkwell: 5,
+//           Play: [],
+//           Hand: [letItGo],
+//           Deck: [hadesInfernalSchemer],
 //         },
 //       );
 //
-//       expect(testEngine.getCardModel(plutoGuardDog).lore).toBe(1);
+//       Expect(testEngine.getCardModel(plutoGuardDog).lore).toBe(1);
 //
-//       await testEngine.passTurn();
+//       Await testEngine.passTurn();
 //
-//       testEngine.playCard(letItGo);
+//       TestEngine.playCard(letItGo);
 //
-//       await testEngine.resolveTopOfStack({ targets: [mrSmeeBumblingMate] });
+//       Await testEngine.resolveTopOfStack({ targets: [mrSmeeBumblingMate] });
 //
-//       expect(testEngine.getCardModel(plutoGuardDog).lore).toBe(1);
+//       Expect(testEngine.getCardModel(plutoGuardDog).lore).toBe(1);
 //     });
 //   });
 // });

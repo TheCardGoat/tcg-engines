@@ -3,74 +3,74 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { baBoom } from "@lorcanito/lorcana-engine/cards/003/actions/actions";
-// import { scroogeMcduckUncleMoneybags } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { vaultDoor } from "@lorcanito/lorcana-engine/cards/003/items/items";
-// import { mcduckManorScroogesMansion } from "@lorcanito/lorcana-engine/cards/003/locations/locations";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { baBoom } from "@lorcanito/lorcana-engine/cards/003/actions/actions";
+// Import { scroogeMcduckUncleMoneybags } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { vaultDoor } from "@lorcanito/lorcana-engine/cards/003/items/items";
+// Import { mcduckManorScroogesMansion } from "@lorcanito/lorcana-engine/cards/003/locations/locations";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Vault Door", () => {
-//   it("Your locations gain **Resist** +1", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: baBoom.cost,
-//       play: [
-//         vaultDoor,
-//         mcduckManorScroogesMansion,
-//         scroogeMcduckUncleMoneybags,
+// Describe("Vault Door", () => {
+//   It("Your locations gain **Resist** +1", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: baBoom.cost,
+//       Play: [
+//         VaultDoor,
+//         McduckManorScroogesMansion,
+//         ScroogeMcduckUncleMoneybags,
 //       ],
-//       hand: [baBoom],
+//       Hand: [baBoom],
 //     });
 //
-//     const location = testEngine.getCardModel(mcduckManorScroogesMansion);
-//     const damageAction = testEngine.getCardModel(baBoom);
+//     Const location = testEngine.getCardModel(mcduckManorScroogesMansion);
+//     Const damageAction = testEngine.getCardModel(baBoom);
 //
-//     damageAction.playFromHand();
-//     await testEngine.resolveTopOfStack({ targets: [location] });
+//     DamageAction.playFromHand();
+//     Await testEngine.resolveTopOfStack({ targets: [location] });
 //
-//     expect(location.damage).toBe(1);
+//     Expect(location.damage).toBe(1);
 //   });
-//   it("Your characters at locations gain **Resist** +1", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: baBoom.cost + mcduckManorScroogesMansion.moveCost,
-//       play: [
-//         vaultDoor,
-//         mcduckManorScroogesMansion,
-//         scroogeMcduckUncleMoneybags,
+//   It("Your characters at locations gain **Resist** +1", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: baBoom.cost + mcduckManorScroogesMansion.moveCost,
+//       Play: [
+//         VaultDoor,
+//         McduckManorScroogesMansion,
+//         ScroogeMcduckUncleMoneybags,
 //       ],
-//       hand: [baBoom],
+//       Hand: [baBoom],
 //     });
 //
-//     const location = testEngine.getCardModel(mcduckManorScroogesMansion);
-//     const character = testEngine.getCardModel(scroogeMcduckUncleMoneybags);
-//     const damageAction = testEngine.getCardModel(baBoom);
+//     Const location = testEngine.getCardModel(mcduckManorScroogesMansion);
+//     Const character = testEngine.getCardModel(scroogeMcduckUncleMoneybags);
+//     Const damageAction = testEngine.getCardModel(baBoom);
 //
-//     await testEngine.moveToLocation({ location, character });
+//     Await testEngine.moveToLocation({ location, character });
 //
-//     damageAction.playFromHand();
-//     await testEngine.resolveTopOfStack({ targets: [character] });
+//     DamageAction.playFromHand();
+//     Await testEngine.resolveTopOfStack({ targets: [character] });
 //
-//     expect(character.damage).toBe(1);
+//     Expect(character.damage).toBe(1);
 //   });
 //
-//   it("Your characters outside locations DONT gain **Resist** +1", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: baBoom.cost,
-//       play: [
-//         vaultDoor,
-//         mcduckManorScroogesMansion,
-//         scroogeMcduckUncleMoneybags,
+//   It("Your characters outside locations DONT gain **Resist** +1", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: baBoom.cost,
+//       Play: [
+//         VaultDoor,
+//         McduckManorScroogesMansion,
+//         ScroogeMcduckUncleMoneybags,
 //       ],
-//       hand: [baBoom],
+//       Hand: [baBoom],
 //     });
 //
-//     const character = testEngine.getCardModel(scroogeMcduckUncleMoneybags);
-//     const damageAction = testEngine.getCardModel(baBoom);
+//     Const character = testEngine.getCardModel(scroogeMcduckUncleMoneybags);
+//     Const damageAction = testEngine.getCardModel(baBoom);
 //
-//     damageAction.playFromHand();
-//     await testEngine.resolveTopOfStack({ targets: [character] });
+//     DamageAction.playFromHand();
+//     Await testEngine.resolveTopOfStack({ targets: [character] });
 //
-//     expect(character.damage).toBe(2);
+//     Expect(character.damage).toBe(2);
 //   });
 // });
 //

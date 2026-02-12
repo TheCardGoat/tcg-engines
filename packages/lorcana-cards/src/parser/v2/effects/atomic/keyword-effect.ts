@@ -124,9 +124,9 @@ function parseFromCst(
   logger.info("Parsed keyword effect from CST", { keyword });
 
   return {
-    type: "gain-keyword",
     keyword,
     target: "CHOSEN_CHARACTER" as CharacterTarget,
+    type: "gain-keyword",
   };
 }
 
@@ -196,25 +196,25 @@ function parseFromText(text: string): GainKeywordEffect | null {
   } else if (lowerText.includes("chosen character")) {
     // Use detailed target format for "chosen character"
     target = {
-      selector: "chosen",
+      cardTypes: ["character"],
       count: 1,
       owner: "any",
+      selector: "chosen",
       zones: ["play"],
-      cardTypes: ["character"],
     };
   }
 
   logger.info("Parsed keyword effect from text", {
+    duration,
     keyword,
     target,
     value: parsedKeyword.value,
-    duration,
   });
 
   const effect: GainKeywordEffect = {
-    type: "gain-keyword",
     keyword: keyword as GainKeywordEffect["keyword"],
     target,
+    type: "gain-keyword",
   };
 
   if (parsedKeyword.value !== undefined) {
@@ -232,15 +232,15 @@ function parseFromText(text: string): GainKeywordEffect | null {
  * Keyword effect parser implementation
  */
 export const keywordEffectParser: EffectParser = {
-  pattern:
-    /(gain|gains|gets?)\s+(Evasive|Challenger|Rush|Ward|Bodyguard|Resist|Support|Reckless|Alert)(?:\s*[+-]\d+|\s*\+\{d\})?/i,
   description:
     "Parses keyword grant effects (e.g., 'gains Evasive', 'Your characters gain Ward')",
-
   parse: (input: CstNode | string): GainKeywordEffect | null => {
     if (typeof input === "string") {
       return parseFromText(input);
     }
     return parseFromCst(input as { Identifier?: IToken[] } | null | undefined);
   },
+
+  pattern:
+    /(gain|gains|gets?)\s+(Evasive|Challenger|Rush|Ward|Bodyguard|Resist|Support|Reckless|Alert)(?:\s*[+-]\d+|\s*\+\{d\})?/i,
 };

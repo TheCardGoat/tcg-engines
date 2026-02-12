@@ -3,31 +3,31 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { hypnoticStrength } from "@lorcanito/lorcana-engine/cards/005/actions/actions";
-// import { liloJuniorCakeDecorator } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { hypnoticStrength } from "@lorcanito/lorcana-engine/cards/005/actions/actions";
+// Import { liloJuniorCakeDecorator } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Hypnotic Strength", () => {
-//   it("Draw a card. Chosen character gains **Challenger** +2 this turn. _(They get +2 {S} while challenging.)_", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: hypnoticStrength.cost,
-//       hand: [hypnoticStrength],
-//       play: [liloJuniorCakeDecorator],
+// Describe("Hypnotic Strength", () => {
+//   It("Draw a card. Chosen character gains **Challenger** +2 this turn. _(They get +2 {S} while challenging.)_", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: hypnoticStrength.cost,
+//       Hand: [hypnoticStrength],
+//       Play: [liloJuniorCakeDecorator],
 //     });
 //
-//     expect(testEngine.getCardModel(liloJuniorCakeDecorator).hasChallenger).toBe(
-//       false,
+//     Expect(testEngine.getCardModel(liloJuniorCakeDecorator).hasChallenger).toBe(
+//       False,
 //     );
 //
-//     await testEngine.playCard(hypnoticStrength, {
-//       targets: [liloJuniorCakeDecorator],
+//     Await testEngine.playCard(hypnoticStrength, {
+//       Targets: [liloJuniorCakeDecorator],
 //     });
 //
-//     expect(testEngine.getCardModel(liloJuniorCakeDecorator).hasChallenger).toBe(
-//       true,
+//     Expect(testEngine.getCardModel(liloJuniorCakeDecorator).hasChallenger).toBe(
+//       True,
 //     );
-//     expect(testEngine.getZonesCardCount().hand).toBe(1);
+//     Expect(testEngine.getZonesCardCount().hand).toBe(1);
 //   });
 // });
 //

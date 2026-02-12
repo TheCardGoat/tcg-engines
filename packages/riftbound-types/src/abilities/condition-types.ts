@@ -260,11 +260,7 @@ export interface OpponentControlsCondition {
  */
 export interface AtLocationCondition {
   readonly type: "at-location";
-  readonly location:
-    | "base"
-    | "battlefield"
-    | "controlled-battlefield"
-    | "enemy-battlefield";
+  readonly location: "base" | "battlefield" | "controlled-battlefield" | "enemy-battlefield";
 }
 
 /**
@@ -397,19 +393,13 @@ export function isStateCondition(
 export function isLogicalCondition(
   condition: Condition,
 ): condition is AndCondition | OrCondition | NotCondition {
-  return (
-    condition.type === "and" ||
-    condition.type === "or" ||
-    condition.type === "not"
-  );
+  return condition.type === "and" || condition.type === "or" || condition.type === "not";
 }
 
 /**
  * Check if condition is AND
  */
-export function isAndCondition(
-  condition: Condition,
-): condition is AndCondition {
+export function isAndCondition(condition: Condition): condition is AndCondition {
   return condition.type === "and";
 }
 
@@ -423,9 +413,7 @@ export function isOrCondition(condition: Condition): condition is OrCondition {
 /**
  * Check if condition is NOT
  */
-export function isNotCondition(
-  condition: Condition,
-): condition is NotCondition {
+export function isNotCondition(condition: Condition): condition is NotCondition {
   return condition.type === "not";
 }
 
@@ -455,25 +443,21 @@ export function isCombatCondition(
  * Create a "while mighty" condition
  */
 export function whileMighty(target?: "self" | Target): WhileMightyCondition {
-  return target ? { type: "while-mighty", target } : { type: "while-mighty" };
+  return target ? { target, type: "while-mighty" } : { type: "while-mighty" };
 }
 
 /**
  * Create a "while buffed" condition
  */
 export function whileBuffed(target?: "self" | Target): WhileBuffedCondition {
-  return target ? { type: "while-buffed", target } : { type: "while-buffed" };
+  return target ? { target, type: "while-buffed" } : { type: "while-buffed" };
 }
 
 /**
  * Create a "while at battlefield" condition
  */
-export function whileAtBattlefield(
-  target?: "self" | Target,
-): WhileAtBattlefieldCondition {
-  return target
-    ? { type: "while-at-battlefield", target }
-    : { type: "while-at-battlefield" };
+export function whileAtBattlefield(target?: "self" | Target): WhileAtBattlefieldCondition {
+  return target ? { target, type: "while-at-battlefield" } : { type: "while-at-battlefield" };
 }
 
 /**
@@ -487,26 +471,26 @@ export function legion(): LegionCondition {
  * Create a "pay cost" condition
  */
 export function payCost(cost: Cost): PayCostCondition {
-  return { type: "pay-cost", cost };
+  return { cost, type: "pay-cost" };
 }
 
 /**
  * Create an AND condition
  */
 export function and(...conditions: Condition[]): AndCondition {
-  return { type: "and", conditions };
+  return { conditions, type: "and" };
 }
 
 /**
  * Create an OR condition
  */
 export function or(...conditions: Condition[]): OrCondition {
-  return { type: "or", conditions };
+  return { conditions, type: "or" };
 }
 
 /**
  * Create a NOT condition
  */
 export function not(condition: Condition): NotCondition {
-  return { type: "not", condition };
+  return { condition, type: "not" };
 }

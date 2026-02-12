@@ -1,26 +1,8 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
 export const fireTheCannonsundefined: ActionCard = {
-  id: "lhl",
-  cardType: "action",
-  name: "Fire the Cannons!",
-  version: "undefined",
-  fullName: "Fire the Cannons! - undefined",
-  inkType: ["steel"],
-  franchise: "Disney",
-  set: "001",
-  text: "Deal 2 damage to chosen character.",
-  cost: 1,
-  cardNumber: 197,
-  inkable: true,
-  externalIds: {
-    ravensburger: "",
-  },
   abilities: [
     {
-      type: "action",
-      id: "lhl-1",
-      text: "Deal 2 damage to chosen character.",
       effect: {
         type: "deal-damage",
         amount: 2,
@@ -32,33 +14,51 @@ export const fireTheCannonsundefined: ActionCard = {
           cardTypes: ["character"],
         },
       },
+      id: "lhl-1",
+      text: "Deal 2 damage to chosen character.",
+      type: "action",
     },
   ],
+  cardNumber: 197,
+  cardType: "action",
+  cost: 1,
+  externalIds: {
+    ravensburger: "",
+  },
+  franchise: "Disney",
+  fullName: "Fire the Cannons! - undefined",
+  id: "lhl",
+  inkType: ["steel"],
+  inkable: true,
+  name: "Fire the Cannons!",
+  set: "001",
+  text: "Deal 2 damage to chosen character.",
+  version: "undefined",
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const fireTheCannons: LorcanitoActionCard = {
-//   id: "lhl",
-//   reprints: ["ooh"],
-//   name: "Fire the Cannons!",
-//   characteristics: ["action"],
-//   text: "Deal 2 damage to chosen character.",
-//   type: "action",
-//   abilities: [
+// Export const fireTheCannons: LorcanitoActionCard = {
+//   Id: "lhl",
+//   Reprints: ["ooh"],
+//   Name: "Fire the Cannons!",
+//   Characteristics: ["action"],
+//   Text: "Deal 2 damage to chosen character.",
+//   Type: "action",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       name: "Fire the Cannons!",
-//       text: "Deal 2 damage to chosen character.",
-//       effects: [
+//       Type: "resolution",
+//       Name: "Fire the Cannons!",
+//       Text: "Deal 2 damage to chosen character.",
+//       Effects: [
 //         {
-//           type: "damage",
-//           amount: 2,
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
+//           Type: "damage",
+//           Amount: 2,
+//           Target: {
+//             Type: "card",
+//             Value: 1,
+//             Filters: [
 //               { filter: "type", value: "character" },
 //               { filter: "zone", value: "play" },
 //             ],
@@ -67,16 +67,16 @@ export const fireTheCannonsundefined: ActionCard = {
 //       ],
 //     },
 //   ],
-//   flavour:
+//   Flavour:
 //     "Captain Hook: „Double the powder and shorten the\rfuse!<br />Mr. Smee: „Shorten the powder and double the fuse!",
-//   colors: ["steel"],
-//   cost: 1,
-//   illustrator: "Matt Chapman",
-//   number: 197,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 493483,
+//   Colors: ["steel"],
+//   Cost: 1,
+//   Illustrator: "Matt Chapman",
+//   Number: 197,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 493483,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

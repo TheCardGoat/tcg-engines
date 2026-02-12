@@ -1,24 +1,24 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
 //
-// export const theMouseQueenRulerOfMousedom: LorcanitoCharacterCard = {
-//   id: "wmf",
-//   name: "The Mouse Queen",
-//   title: "Ruler of Mousedom",
-//   characteristics: ["storyborn", "ally", "queen"],
-//   type: "character",
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 4,
-//   strength: 3,
-//   willpower: 6,
-//   illustrator: "Jon Dansk / Hayley Evans",
-//   number: 153,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631453,
+// Export const theMouseQueenRulerOfMousedom: LorcanitoCharacterCard = {
+//   Id: "wmf",
+//   Name: "The Mouse Queen",
+//   Title: "Ruler of Mousedom",
+//   Characteristics: ["storyborn", "ally", "queen"],
+//   Type: "character",
+//   Inkwell: true,
+//   Colors: ["sapphire"],
+//   Cost: 4,
+//   Strength: 3,
+//   Willpower: 6,
+//   Illustrator: "Jon Dansk / Hayley Evans",
+//   Number: 153,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631453,
 //   },
-//   rarity: "common",
-//   lore: 1,
+//   Rarity: "common",
+//   Lore: 1,
 // };
 //

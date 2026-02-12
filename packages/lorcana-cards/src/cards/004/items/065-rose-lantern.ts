@@ -1,45 +1,45 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
-// import {
-//   chosenCharacter,
-//   chosenOpposingCharacter,
+// Import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
+// Import {
+//   ChosenCharacter,
+//   ChosenOpposingCharacter,
 // } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { moveDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
+// Import { moveDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const roseLantern: LorcanitoItemCard = {
-//   id: "xin",
-//   reprints: ["j0w"],
-//   missingTestCase: true,
-//   name: "Rose Lantern",
-//   characteristics: ["item"],
-//   text: "MYSTICAL PETALS  {E}, 2 {I} − Move 1 damage counter from chosen character to chosen opposing character.",
-//   type: "item",
-//   abilities: [
+// Export const roseLantern: LorcanitoItemCard = {
+//   Id: "xin",
+//   Reprints: ["j0w"],
+//   MissingTestCase: true,
+//   Name: "Rose Lantern",
+//   Characteristics: ["item"],
+//   Text: "MYSTICAL PETALS  {E}, 2 {I} − Move 1 damage counter from chosen character to chosen opposing character.",
+//   Type: "item",
+//   Abilities: [
 //     {
-//       type: "activated",
-//       name: "Mystical Petals",
-//       text: "{E}, 2 {I} − Move 1 damage counter from chosen character to chosen opposing character.",
-//       costs: [{ type: "exert" }, { type: "ink", amount: 2 }],
-//       effects: [
-//         moveDamageEffect({
-//           amount: 1,
-//           from: chosenCharacter,
-//           to: chosenOpposingCharacter,
+//       Type: "activated",
+//       Name: "Mystical Petals",
+//       Text: "{E}, 2 {I} − Move 1 damage counter from chosen character to chosen opposing character.",
+//       Costs: [{ type: "exert" }, { type: "ink", amount: 2 }],
+//       Effects: [
+//         MoveDamageEffect({
+//           Amount: 1,
+//           From: chosenCharacter,
+//           To: chosenOpposingCharacter,
 //         }),
 //       ],
 //     },
 //   ],
-//   flavour:
+//   Flavour:
 //     "The transformed rose made short work of the Beast's wound. But even the gentlest magic comes at a cost.",
-//   inkwell: true,
-//   colors: ["amethyst"],
-//   cost: 2,
-//   illustrator: "Gabriel Angelo",
-//   number: 65,
-//   set: "URR",
-//   externalIds: {
-//     tcgPlayer: 550573,
+//   Inkwell: true,
+//   Colors: ["amethyst"],
+//   Cost: 2,
+//   Illustrator: "Gabriel Angelo",
+//   Number: 65,
+//   Set: "URR",
+//   ExternalIds: {
+//     TcgPlayer: 550573,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

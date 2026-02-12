@@ -5,14 +5,7 @@
  * A deck can contain cards of at most 2 different ink types.
  */
 
-export const INK_TYPES = [
-  "amber",
-  "amethyst",
-  "emerald",
-  "ruby",
-  "sapphire",
-  "steel",
-] as const;
+export const INK_TYPES = ["amber", "amethyst", "emerald", "ruby", "sapphire", "steel"] as const;
 
 export type InkType = (typeof INK_TYPES)[number];
 

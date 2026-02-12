@@ -8,19 +8,15 @@
  */
 
 import { afterEach, beforeEach, describe, expect, test } from "bun:test";
-import {
-  LorcanaTestEngine,
-  PLAYER_ONE,
-  PLAYER_TWO,
-} from "../../testing/lorcana-test-engine";
+import { LorcanaTestEngine, PLAYER_ONE, PLAYER_TWO } from "../../testing/lorcana-test-engine";
 
 describe("Section 6: Card Types", () => {
   let testEngine: LorcanaTestEngine;
 
   beforeEach(() => {
     testEngine = new LorcanaTestEngine(
-      { hand: 7, deck: 53, inkwell: 3 },
-      { hand: 7, deck: 53, inkwell: 3 },
+      { deck: 53, hand: 7, inkwell: 3 },
+      { deck: 53, hand: 7, inkwell: 3 },
       { skipPreGame: true },
     );
   });
@@ -187,9 +183,9 @@ describe("Section 6: Card Types", () => {
     test.failing("Rule 6.2.11 - Lore value determines quest reward", () => {
       // Arrange: Character with lore 2
       const character = testEngine.createCharacterInPlay(PLAYER_ONE, {
+        lore: 2,
         strength: 2,
         willpower: 3,
-        lore: 2,
       });
 
       // Act: Quest

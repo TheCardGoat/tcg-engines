@@ -3,43 +3,43 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import type { CardModel } from "@lorcanito/lorcana-engine";
-// import {
-//   lafayetteSleepyDachshund,
-//   rhinoOnesixteenthWolf,
+// Import { describe, expect, it } from "@jest/globals";
+// Import type { CardModel } from "@lorcanito/lorcana-engine";
+// Import {
+//   LafayetteSleepyDachshund,
+//   RhinoOnesixteenthWolf,
 // } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Rhino - One-Sixteenth Wolf", () => {
-//   it("TINY HOWL When you play this character, chosen opposing character gets -1 {S} until the start of your next turn.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("Rhino - One-Sixteenth Wolf", () => {
+//   It("TINY HOWL When you play this character, chosen opposing character gets -1 {S} until the start of your next turn.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: rhinoOnesixteenthWolf.cost,
-//         hand: [rhinoOnesixteenthWolf],
+//         Inkwell: rhinoOnesixteenthWolf.cost,
+//         Hand: [rhinoOnesixteenthWolf],
 //       },
 //       {
-//         play: [lafayetteSleepyDachshund],
+//         Play: [lafayetteSleepyDachshund],
 //       },
 //     );
 //
-//     const cardToTest = testEngine.getCardModel(rhinoOnesixteenthWolf);
-//     const targetCard: CardModel = testEngine.getCardModel(
-//       lafayetteSleepyDachshund,
+//     Const cardToTest = testEngine.getCardModel(rhinoOnesixteenthWolf);
+//     Const targetCard: CardModel = testEngine.getCardModel(
+//       LafayetteSleepyDachshund,
 //     );
 //
-//     await testEngine.playCard(cardToTest);
-//     await testEngine.resolveTopOfStack({ targets: [targetCard] });
+//     Await testEngine.playCard(cardToTest);
+//     Await testEngine.resolveTopOfStack({ targets: [targetCard] });
 //
-//     expect(targetCard.strength).toBe(lafayetteSleepyDachshund.strength - 1);
+//     Expect(targetCard.strength).toBe(lafayetteSleepyDachshund.strength - 1);
 //
-//     testEngine.passTurn();
+//     TestEngine.passTurn();
 //
-//     expect(targetCard.strength).toBe(lafayetteSleepyDachshund.strength - 1);
+//     Expect(targetCard.strength).toBe(lafayetteSleepyDachshund.strength - 1);
 //
-//     testEngine.passTurn();
+//     TestEngine.passTurn();
 //
-//     expect(targetCard.strength).toBe(lafayetteSleepyDachshund.strength);
+//     Expect(targetCard.strength).toBe(lafayetteSleepyDachshund.strength);
 //   });
 // });
 //

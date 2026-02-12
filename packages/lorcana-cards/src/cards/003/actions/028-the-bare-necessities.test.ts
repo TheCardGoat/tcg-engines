@@ -3,26 +3,26 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { hakunaMatata } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
-// import { theBareNecessities } from "@lorcanito/lorcana-engine/cards/003/actions/actions";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { hakunaMatata } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
+// Import { theBareNecessities } from "@lorcanito/lorcana-engine/cards/003/actions/actions";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("The Bare Necessities", () => {
-//   it("Chosen opponent reveals their hand and discards a non-character card of your choice.", async () => {
-//     const testEngine = new TestEngine(
+// Describe("The Bare Necessities", () => {
+//   It("Chosen opponent reveals their hand and discards a non-character card of your choice.", async () => {
+//     Const testEngine = new TestEngine(
 //       {
-//         inkwell: theBareNecessities.cost,
-//         hand: [theBareNecessities],
+//         Inkwell: theBareNecessities.cost,
+//         Hand: [theBareNecessities],
 //       },
 //       {
-//         hand: [hakunaMatata],
+//         Hand: [hakunaMatata],
 //       },
 //     );
 //
-//     await testEngine.playCard(theBareNecessities, { targets: [hakunaMatata] });
+//     Await testEngine.playCard(theBareNecessities, { targets: [hakunaMatata] });
 //
-//     expect(testEngine.getCardModel(hakunaMatata).zone).toEqual("discard");
+//     Expect(testEngine.getCardModel(hakunaMatata).zone).toEqual("discard");
 //   });
 // });
 //

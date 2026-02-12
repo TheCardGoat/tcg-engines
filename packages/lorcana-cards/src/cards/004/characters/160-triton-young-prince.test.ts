@@ -3,41 +3,41 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   bellesHouseMauricesWorkshop,
-//   mcduckManorScroogesMansion,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   BellesHouseMauricesWorkshop,
+//   McduckManorScroogesMansion,
 // } from "@lorcanito/lorcana-engine/cards/003/locations/locations";
-// import { tritonYoungPrince } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { arielsGrottoASecretPlace } from "@lorcanito/lorcana-engine/cards/004/locations/locations";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { tritonYoungPrince } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { arielsGrottoASecretPlace } from "@lorcanito/lorcana-engine/cards/004/locations/locations";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Triton - Young Prince", () => {
-//   it("**SUPERIOR SWIMMER** During your turn, this character gains **Evasive**. _(They can challenge characters with Evasive.)_**KEEPER OF ATLANTICA** Whenever one of your locations is banished, you may put that card into your inkwell facedown and exerted.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: tritonYoungPrince.cost,
-//       play: [
-//         tritonYoungPrince,
-//         arielsGrottoASecretPlace,
-//         mcduckManorScroogesMansion,
+// Describe("Triton - Young Prince", () => {
+//   It("**SUPERIOR SWIMMER** During your turn, this character gains **Evasive**. _(They can challenge characters with Evasive.)_**KEEPER OF ATLANTICA** Whenever one of your locations is banished, you may put that card into your inkwell facedown and exerted.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: tritonYoungPrince.cost,
+//       Play: [
+//         TritonYoungPrince,
+//         ArielsGrottoASecretPlace,
+//         McduckManorScroogesMansion,
 //       ],
-//       discard: [bellesHouseMauricesWorkshop],
+//       Discard: [bellesHouseMauricesWorkshop],
 //     });
 //
-//     const target = testEngine.getCardModel(arielsGrottoASecretPlace);
-//     const locInPlay = testEngine.getCardModel(mcduckManorScroogesMansion);
-//     const locInDiscard = testEngine.getCardModel(bellesHouseMauricesWorkshop);
+//     Const target = testEngine.getCardModel(arielsGrottoASecretPlace);
+//     Const locInPlay = testEngine.getCardModel(mcduckManorScroogesMansion);
+//     Const locInDiscard = testEngine.getCardModel(bellesHouseMauricesWorkshop);
 //
-//     target.banish();
-//     expect(target.zone).toEqual("discard");
-//     expect(locInPlay.zone).toEqual("play");
-//     expect(locInDiscard.zone).toEqual("discard");
+//     Target.banish();
+//     Expect(target.zone).toEqual("discard");
+//     Expect(locInPlay.zone).toEqual("play");
+//     Expect(locInDiscard.zone).toEqual("discard");
 //
-//     await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveOptionalAbility();
 //
-//     expect(target.zone).toEqual("inkwell");
-//     expect(locInPlay.zone).toEqual("play");
-//     expect(locInDiscard.zone).toEqual("discard");
+//     Expect(target.zone).toEqual("inkwell");
+//     Expect(locInPlay.zone).toEqual("play");
+//     Expect(locInDiscard.zone).toEqual("discard");
 //   });
 // });
 //

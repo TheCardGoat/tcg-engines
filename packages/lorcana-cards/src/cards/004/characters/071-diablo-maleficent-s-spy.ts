@@ -1,36 +1,36 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { opponentRevealHand } from "@lorcanito/lorcana-engine/effects/effects";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { opponentRevealHand } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const diabloMaleficentsSpy: LorcanitoCharacterCard = {
-//   id: "b9t",
-//   name: "Diablo",
-//   title: "Maleficent's Spy",
-//   characteristics: ["storyborn", "ally"],
-//   text: "**SCOUT AHEAD** When you play this character, you may look at each opponent's hand.",
-//   type: "character",
-//   abilities: [
+// Export const diabloMaleficentsSpy: LorcanitoCharacterCard = {
+//   Id: "b9t",
+//   Name: "Diablo",
+//   Title: "Maleficent's Spy",
+//   Characteristics: ["storyborn", "ally"],
+//   Text: "**SCOUT AHEAD** When you play this character, you may look at each opponent's hand.",
+//   Type: "character",
+//   Abilities: [
 //     {
-//       type: "resolution",
-//       name: "Scout Ahead",
-//       text: "When you play this character, you may look at each opponent's hand.",
-//       effects: [opponentRevealHand],
+//       Type: "resolution",
+//       Name: "Scout Ahead",
+//       Text: "When you play this character, you may look at each opponent's hand.",
+//       Effects: [opponentRevealHand],
 //     },
 //   ],
-//   flavour:
+//   Flavour:
 //     "Keep an eye on the sea witch, my pet. Tell me everything. −Maleficent",
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 1,
-//   strength: 1,
-//   willpower: 2,
-//   lore: 1,
-//   illustrator: "Ellie Horie",
-//   number: 71,
-//   set: "URR",
-//   externalIds: {
-//     tcgPlayer: 550574,
+//   Inkwell: true,
+//   Colors: ["emerald"],
+//   Cost: 1,
+//   Strength: 1,
+//   Willpower: 2,
+//   Lore: 1,
+//   Illustrator: "Ellie Horie",
+//   Number: 71,
+//   Set: "URR",
+//   ExternalIds: {
+//     TcgPlayer: 550574,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

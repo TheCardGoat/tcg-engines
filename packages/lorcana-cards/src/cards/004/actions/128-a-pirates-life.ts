@@ -1,42 +1,42 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { singerTogetherAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { opponent, self } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+// Import { singerTogetherAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import { opponent, self } from "@lorcanito/lorcana-engine/abilities/targets";
 //
-// export const aPiratesLife: LorcanitoActionCard = {
-//   id: "u5v",
-//   reprints: ["t0s"],
-//   name: "A Pirate's Life",
-//   characteristics: ["action", "song"],
-//   text: "**Sing Together** 6 _(Any number of your of your teammates' characters with total cost 6 or more may {E} to sing this song for free.)_\n\n\nEach opponent loses 2 lore. You gain 2 lore.",
-//   type: "action",
-//   flavour: "Give me a career\nAs a buccaneer",
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 6,
-//   illustrator: "Valentina Graziuso",
-//   number: 128,
-//   set: "URR",
-//   externalIds: {
-//     tcgPlayer: 547843,
+// Export const aPiratesLife: LorcanitoActionCard = {
+//   Id: "u5v",
+//   Reprints: ["t0s"],
+//   Name: "A Pirate's Life",
+//   Characteristics: ["action", "song"],
+//   Text: "**Sing Together** 6 _(Any number of your of your teammates' characters with total cost 6 or more may {E} to sing this song for free.)_\n\n\nEach opponent loses 2 lore. You gain 2 lore.",
+//   Type: "action",
+//   Flavour: "Give me a career\nAs a buccaneer",
+//   Inkwell: true,
+//   Colors: ["ruby"],
+//   Cost: 6,
+//   Illustrator: "Valentina Graziuso",
+//   Number: 128,
+//   Set: "URR",
+//   ExternalIds: {
+//     TcgPlayer: 547843,
 //   },
-//   rarity: "uncommon",
-//   abilities: [
-//     singerTogetherAbility(6),
+//   Rarity: "uncommon",
+//   Abilities: [
+//     SingerTogetherAbility(6),
 //     {
-//       type: "resolution",
-//       effects: [
+//       Type: "resolution",
+//       Effects: [
 //         {
-//           type: "lore",
-//           modifier: "subtract",
-//           amount: 2,
-//           target: opponent,
+//           Type: "lore",
+//           Modifier: "subtract",
+//           Amount: 2,
+//           Target: opponent,
 //         },
 //         {
-//           type: "lore",
-//           modifier: "add",
-//           amount: 2,
-//           target: self,
+//           Type: "lore",
+//           Modifier: "add",
+//           Amount: 2,
+//           Target: self,
 //         },
 //       ],
 //     },

@@ -5,9 +5,9 @@ import { tinkerBellMostHelpful } from "./093-tinker-bell-most-helpful";
 describe("Tinker Bell - Most Helpful", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [tinkerBellMostHelpful] });
-  //   expect(testEngine.getCardModel(tinkerBellMostHelpful).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [tinkerBellMostHelpful] });
+  //   Expect(testEngine.getCardModel(tinkerBellMostHelpful).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -17,32 +17,32 @@ describe("Tinker Bell - Most Helpful", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   johnSilverAlienPirate,
-//   tinkerBellMostHelpful,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   JohnSilverAlienPirate,
+//   TinkerBellMostHelpful,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Tinker Bell - Most Helpful", () => {
-//   it("**PIXIE DUST** When you play this character, chosen character gains **Evasive** this turn.", () => {
-//     const testStore = new TestStore({
-//       inkwell: tinkerBellMostHelpful.cost,
-//       hand: [tinkerBellMostHelpful],
-//       play: [johnSilverAlienPirate],
+// Describe("Tinker Bell - Most Helpful", () => {
+//   It("**PIXIE DUST** When you play this character, chosen character gains **Evasive** this turn.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: tinkerBellMostHelpful.cost,
+//       Hand: [tinkerBellMostHelpful],
+//       Play: [johnSilverAlienPirate],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "hand",
-//       tinkerBellMostHelpful.id,
+//       TinkerBellMostHelpful.id,
 //     );
 //
-//     const target = testStore.getByZoneAndId("play", johnSilverAlienPirate.id);
+//     Const target = testStore.getByZoneAndId("play", johnSilverAlienPirate.id);
 //
-//     expect(target.hasEvasive).toBeFalsy();
-//     cardUnderTest.playFromHand();
-//     testStore.resolveTopOfStack({ targetId: target.instanceId });
-//     expect(target.hasEvasive).toBeTruthy();
+//     Expect(target.hasEvasive).toBeFalsy();
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveTopOfStack({ targetId: target.instanceId });
+//     Expect(target.hasEvasive).toBeTruthy();
 //   });
 // });
 //

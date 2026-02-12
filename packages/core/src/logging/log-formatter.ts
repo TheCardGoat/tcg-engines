@@ -170,18 +170,14 @@ export function createPinoFormatter(level: VerbosityPreset): unknown {
 
   // Configure pino-pretty for human-readable output
   return {
-    target: "pino-pretty",
     options: {
       colorize: true,
       translateTime: "HH:MM:ss.l",
       ignore: "pid,hostname",
       // Customize format based on level
       messageFormat:
-        level === "DEVELOPER"
-          ? "{msg} {context}"
-          : level === "ADVANCED_PLAYER"
-            ? "{msg}"
-            : "{msg}",
+        level === "DEVELOPER" ? "{msg} {context}" : level === "ADVANCED_PLAYER" ? "{msg}" : "{msg}",
     },
+    target: "pino-pretty",
   };
 }

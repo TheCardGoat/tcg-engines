@@ -3,40 +3,40 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   dalmatianPuppyTailWagger,
-//   patchPlayfulPup,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   DalmatianPuppyTailWagger,
+//   PatchPlayfulPup,
 // } from "@lorcanito/lorcana-engine/cards/008/index";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Patch - Playful Pup", () => {
-//   it("Ward (Opponents can't choose this character except to challenge.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [patchPlayfulPup],
+// Describe("Patch - Playful Pup", () => {
+//   It("Ward (Opponents can't choose this character except to challenge.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [patchPlayfulPup],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(patchPlayfulPup);
-//     expect(cardUnderTest.hasWard).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(patchPlayfulPup);
+//     Expect(cardUnderTest.hasWard).toBe(true);
 //   });
 //
-//   it("PUPPY BARKING While you have another Puppy character in play, this character gets +1 {L}.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: dalmatianPuppyTailWagger.cost,
-//       play: [patchPlayfulPup],
-//       hand: [dalmatianPuppyTailWagger],
+//   It("PUPPY BARKING While you have another Puppy character in play, this character gets +1 {L}.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: dalmatianPuppyTailWagger.cost,
+//       Play: [patchPlayfulPup],
+//       Hand: [dalmatianPuppyTailWagger],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(patchPlayfulPup);
+//     Const cardUnderTest = testEngine.getCardModel(patchPlayfulPup);
 //
 //     // Verify no lore boost
-//     expect(cardUnderTest.lore).toBe(1);
+//     Expect(cardUnderTest.lore).toBe(1);
 //
 //     // Play the other puppy
-//     await testEngine.playCard(dalmatianPuppyTailWagger);
+//     Await testEngine.playCard(dalmatianPuppyTailWagger);
 //
 //     // Verify lore boost
-//     expect(cardUnderTest.lore).toBe(2);
+//     Expect(cardUnderTest.lore).toBe(2);
 //   });
 // });
 //

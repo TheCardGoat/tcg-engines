@@ -3,61 +3,61 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { megabot } from "@lorcanito/lorcana-engine/cards/006/items/items";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, it } from "@jest/globals";
+// Import { megabot } from "@lorcanito/lorcana-engine/cards/006/items/items";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Megabot", () => {
-//   it.skip("HAPPY FACE This item enters play exerted.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: megabot.cost,
-//       play: [megabot],
-//       hand: [megabot],
+// Describe("Megabot", () => {
+//   It.skip("HAPPY FACE This item enters play exerted.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: megabot.cost,
+//       Play: [megabot],
+//       Hand: [megabot],
 //     });
 //
-//     await testEngine.playCard(megabot);
+//     Await testEngine.playCard(megabot);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 //
-//   it.skip("DESTROY! {E}, Banish this item - Choose one:", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: megabot.cost,
-//       play: [megabot],
-//       hand: [megabot],
+//   It.skip("DESTROY! {E}, Banish this item - Choose one:", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: megabot.cost,
+//       Play: [megabot],
+//       Hand: [megabot],
 //     });
 //
-//     await testEngine.playCard(megabot);
+//     Await testEngine.playCard(megabot);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 //
-//   it.skip("* Banish chosen item.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: megabot.cost,
-//       play: [megabot],
-//       hand: [megabot],
+//   It.skip("* Banish chosen item.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: megabot.cost,
+//       Play: [megabot],
+//       Hand: [megabot],
 //     });
 //
-//     await testEngine.playCard(megabot);
+//     Await testEngine.playCard(megabot);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 //
-//   it.skip("* Banish chosen damaged character.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: megabot.cost,
-//       play: [megabot],
-//       hand: [megabot],
+//   It.skip("* Banish chosen damaged character.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: megabot.cost,
+//       Play: [megabot],
+//       Hand: [megabot],
 //     });
 //
-//     await testEngine.playCard(megabot);
+//     Await testEngine.playCard(megabot);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

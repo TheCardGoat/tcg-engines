@@ -3,44 +3,44 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   arthurKingVictorious,
-//   mufasaRulerOfPrideRock,
-//   princeNaveenUkulelePlayer,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   ArthurKingVictorious,
+//   MufasaRulerOfPrideRock,
+//   PrinceNaveenUkulelePlayer,
 // } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Arthur - King Victorious", () => {
-//   it("**KNIGHTED BY THE KING** When you play this character, chosen character gains **Challenger** +2 and **Resist** +2 and can challenge ready characters this turn. _(They get +2 {S} while challenging. Damage dealt to them is reduced by 2.)_", () => {
-//     const testStore = new TestStore(
+// Describe("Arthur - King Victorious", () => {
+//   It("**KNIGHTED BY THE KING** When you play this character, chosen character gains **Challenger** +2 and **Resist** +2 and can challenge ready characters this turn. _(They get +2 {S} while challenging. Damage dealt to them is reduced by 2.)_", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: arthurKingVictorious.cost,
-//         hand: [arthurKingVictorious],
-//         play: [princeNaveenUkulelePlayer],
+//         Inkwell: arthurKingVictorious.cost,
+//         Hand: [arthurKingVictorious],
+//         Play: [princeNaveenUkulelePlayer],
 //       },
 //       {
-//         play: [mufasaRulerOfPrideRock],
-//         deck: 1,
+//         Play: [mufasaRulerOfPrideRock],
+//         Deck: 1,
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getCard(arthurKingVictorious);
-//     const target = testStore.getCard(princeNaveenUkulelePlayer);
-//     const defender = testStore.getCard(mufasaRulerOfPrideRock);
+//     Const cardUnderTest = testStore.getCard(arthurKingVictorious);
+//     Const target = testStore.getCard(princeNaveenUkulelePlayer);
+//     Const defender = testStore.getCard(mufasaRulerOfPrideRock);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveTopOfStack({ targets: [target] });
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveTopOfStack({ targets: [target] });
 //
-//     expect(target.hasChallenger).toEqual(true);
-//     expect(target.hasResist).toEqual(true);
-//     expect(target.canChallenge(defender)).toEqual(true);
+//     Expect(target.hasChallenger).toEqual(true);
+//     Expect(target.hasResist).toEqual(true);
+//     Expect(target.canChallenge(defender)).toEqual(true);
 //
-//     testStore.passTurn();
+//     TestStore.passTurn();
 //
-//     expect(target.hasChallenger).toEqual(false);
-//     expect(target.hasResist).toEqual(false);
-//     expect(target.canChallenge(defender)).toEqual(false);
+//     Expect(target.hasChallenger).toEqual(false);
+//     Expect(target.hasResist).toEqual(false);
+//     Expect(target.canChallenge(defender)).toEqual(false);
 //   });
 // });
 //

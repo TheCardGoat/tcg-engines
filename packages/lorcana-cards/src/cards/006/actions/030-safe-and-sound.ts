@@ -1,20 +1,20 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
 export const safeAndSound: ActionCard = {
-  id: "1po",
-  cardType: "action",
-  name: "Safe and Sound",
-  inkType: ["amber"],
-  franchise: "Winnie the Pooh",
-  set: "006",
-  text: "Chosen character of yours can’t be challenged until the start of your next turn.",
-  cost: 2,
+  abilities: [],
   cardNumber: 30,
-  inkable: false,
-  missingImplementation: true,
-  missingTests: true,
+  cardType: "action",
+  cost: 2,
   externalIds: {
     ravensburger: "dc0802d2dbfb80d577f530a89334ff27a081f61a",
   },
-  abilities: [],
+  franchise: "Winnie the Pooh",
+  id: "1po",
+  inkType: ["amber"],
+  inkable: false,
+  missingImplementation: true,
+  missingTests: true,
+  name: "Safe and Sound",
+  set: "006",
+  text: "Chosen character of yours can’t be challenged until the start of your next turn.",
 };

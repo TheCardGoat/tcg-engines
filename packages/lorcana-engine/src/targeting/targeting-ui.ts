@@ -136,9 +136,7 @@ function generateDSLDescription(target: LorcanaCardTarget): string {
   const result = parts.join(" ");
   return result.replace(/__ARTICLE__\s+(\w)/, (_, nextChar) => {
     const vowels = ["a", "e", "i", "o", "u"];
-    return vowels.includes(nextChar.toLowerCase())
-      ? `an ${nextChar}`
-      : `a ${nextChar}`;
+    return vowels.includes(nextChar.toLowerCase()) ? `an ${nextChar}` : `a ${nextChar}`;
   });
 }
 
@@ -148,13 +146,27 @@ function generateDSLDescription(target: LorcanaCardTarget): string {
 function getCountValue(
   count: LorcanaCardTarget["count"],
 ): number | { upTo: number } | "all" | undefined {
-  if (count === undefined) return 1;
-  if (count === "all") return "all";
-  if (typeof count === "number") return count;
-  if ("exactly" in count) return count.exactly;
-  if ("upTo" in count) return { upTo: count.upTo };
-  if ("atLeast" in count) return count.atLeast;
-  if ("between" in count) return count.between[0];
+  if (count === undefined) {
+    return 1;
+  }
+  if (count === "all") {
+    return "all";
+  }
+  if (typeof count === "number") {
+    return count;
+  }
+  if ("exactly" in count) {
+    return count.exactly;
+  }
+  if ("upTo" in count) {
+    return { upTo: count.upTo };
+  }
+  if ("atLeast" in count) {
+    return count.atLeast;
+  }
+  if ("between" in count) {
+    return count.between[0];
+  }
   return 1;
 }
 
@@ -170,18 +182,24 @@ function assertNever(x: never): never {
  */
 function getFilterAdjective(filter: LorcanaFilter): string | undefined {
   switch (filter.type) {
-    case "damaged":
+    case "damaged": {
       return "damaged";
-    case "undamaged":
+    }
+    case "undamaged": {
       return "undamaged";
-    case "exerted":
+    }
+    case "exerted": {
       return "exerted";
-    case "ready":
+    }
+    case "ready": {
       return "ready";
-    case "dry":
+    }
+    case "dry": {
       return "fresh";
-    case "inkable":
+    }
+    case "inkable": {
       return filter.value ? "inkable" : "non-inkable";
+    }
     // Filters that don't produce adjectives (handled in getFilterSuffix)
     case "has-keyword":
     case "has-classification":
@@ -195,11 +213,13 @@ function getFilterAdjective(filter: LorcanaFilter): string | undefined {
     case "and":
     case "or":
     case "card-type":
-    case "not":
+    case "not": {
       return undefined;
-    default:
+    }
+    default: {
       // Exhaustive check - will fail to compile if a new filter type is added
       return assertNever(filter);
+    }
   }
 }
 
@@ -208,65 +228,81 @@ function getFilterAdjective(filter: LorcanaFilter): string | undefined {
  */
 function getFilterSuffix(filter: LorcanaFilter): string | undefined {
   switch (filter.type) {
-    case "has-keyword":
+    case "has-keyword": {
       return `with ${filter.keyword}`;
-    case "has-classification":
+    }
+    case "has-classification": {
       return `with ${filter.classification} classification`;
-    case "cost":
+    }
+    case "cost": {
       return `with cost ${getComparisonSymbol(filter.comparison)} ${filter.value}`;
-    case "strength":
+    }
+    case "strength": {
       return `with strength ${getComparisonSymbol(filter.comparison)} ${filter.value}`;
-    case "willpower":
+    }
+    case "willpower": {
       return `with willpower ${getComparisonSymbol(filter.comparison)} ${filter.value}`;
-    case "lore-value":
+    }
+    case "lore-value": {
       return `with lore ${getComparisonSymbol(filter.comparison)} ${filter.value}`;
-    case "at-location":
+    }
+    case "at-location": {
       return filter.location ? `at ${filter.location}` : "at a location";
-    case "move-cost":
+    }
+    case "move-cost": {
       return `with move cost ${getComparisonSymbol(filter.comparison)} ${filter.value}`;
-    case "name":
-      if ("equals" in filter) return `named ${filter.equals}`;
-      if ("contains" in filter) return `with "${filter.contains}" in name`;
+    }
+    case "name": {
+      if ("equals" in filter) {return `named ${filter.equals}`;}
+      if ("contains" in filter) {return `with "${filter.contains}" in name`;}
       return undefined;
+    }
     // State filters handled in getFilterAdjective
     case "damaged":
     case "undamaged":
     case "exerted":
     case "ready":
     case "dry":
-    case "inkable":
+    case "inkable": {
       return undefined;
+    }
     // Composite filters - recursively process
     case "and":
     case "or":
     case "card-type":
-    case "not":
+    case "not": {
       return undefined;
-    default:
+    }
+    default: {
       // Exhaustive check - will fail to compile if a new filter type is added
       return assertNever(filter);
+    }
   }
 }
 
 /**
  * Get comparison symbol for display
  */
-function getComparisonSymbol(
-  comparison: "eq" | "ne" | "gt" | "gte" | "lt" | "lte",
-): string {
+function getComparisonSymbol(comparison: "eq" | "ne" | "gt" | "gte" | "lt" | "lte"): string {
   switch (comparison) {
-    case "eq":
+    case "eq": {
       return "=";
-    case "ne":
+    }
+    case "ne": {
       return "!=";
-    case "gt":
+    }
+    case "gt": {
       return ">";
-    case "gte":
+    }
+    case "gte": {
       return ">=";
-    case "lt":
+    }
+    case "lt": {
       return "<";
-    case "lte":
+    }
+    case "lte": {
       return "<=";
+    }
   }
 }
 
@@ -308,14 +344,14 @@ export function getTargetUIHints(
     } else {
       // Fallback for unknown enum
       return {
-        selectionType: "single",
-        minSelections: 1,
-        maxSelections: 1,
-        prompt: "Choose a target",
-        optional: false,
-        highlightZones: ["play"],
         cardType: undefined,
+        highlightZones: ["play"],
+        maxSelections: 1,
+        minSelections: 1,
+        optional: false,
         ownerFilter: "any",
+        prompt: "Choose a target",
+        selectionType: "single",
       };
     }
   } else {
@@ -338,9 +374,7 @@ export interface LorcanaTargetUIHint extends TargetingUIHint {
 /**
  * Generate UI hints from DSL object
  */
-function generateUIHintsFromDSL(
-  target: LorcanaCardTarget,
-): LorcanaTargetUIHint {
+function generateUIHintsFromDSL(target: LorcanaCardTarget): LorcanaTargetUIHint {
   const description = generateDSLDescription(target);
 
   // Determine selection type
@@ -353,7 +387,7 @@ function generateUIHintsFromDSL(
     selectionType = "automatic";
   } else {
     // "chosen" - check count for single vs multiple
-    const count = target.count;
+    const { count } = target;
     if (count === "all") {
       selectionType = "multiple";
     } else if (typeof count === "number") {
@@ -395,13 +429,13 @@ function generateUIHintsFromDSL(
   }
 
   return {
-    selectionType,
-    minSelections,
-    maxSelections,
-    prompt: `Choose ${description}`,
-    optional: minSelections === 0,
-    highlightZones: target.zones || ["play"],
     cardType: target.cardType,
+    highlightZones: target.zones || ["play"],
+    maxSelections,
+    minSelections,
+    optional: minSelections === 0,
     ownerFilter: target.owner || "any",
+    prompt: `Choose ${description}`,
+    selectionType,
   };
 }

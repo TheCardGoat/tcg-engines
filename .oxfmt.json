@@ -1,0 +1,15 @@
+{
+  "plugins": ["prettier"],
+  "prettier": {
+    "quoteProps": "preserve",
+    "singleQuote": false,
+    "trailingComma": "es5",
+    "semi": true,
+    "tabWidth": 2,
+    "useTabs": false
+  },
+  "experimentalTailwindcss": {
+    "attributes": ["class", "className"],
+    "functions": ["clsx", "cn", "tw"]
+  }
+}

@@ -1,27 +1,27 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { wardAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { wardAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
 //
-// export const eurekaScatterbrain: LorcanitoCharacterCard = {
-//   id: "nn5",
-//   name: "Scuttle",
-//   title: "Birdbrained",
-//   characteristics: ["dreamborn", "ally"],
-//   text: "WARD (Opponents can't choose this character except to challenge.)",
-//   type: "character",
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 5,
-//   strength: 5,
-//   willpower: 5,
-//   illustrator: "Kendall Hale",
-//   number: 147,
-//   set: "010",
-//   externalIds: {
-//     tcgPlayer: 659383,
+// Export const eurekaScatterbrain: LorcanitoCharacterCard = {
+//   Id: "nn5",
+//   Name: "Scuttle",
+//   Title: "Birdbrained",
+//   Characteristics: ["dreamborn", "ally"],
+//   Text: "WARD (Opponents can't choose this character except to challenge.)",
+//   Type: "character",
+//   Inkwell: true,
+//   Colors: ["sapphire"],
+//   Cost: 5,
+//   Strength: 5,
+//   Willpower: 5,
+//   Illustrator: "Kendall Hale",
+//   Number: 147,
+//   Set: "010",
+//   ExternalIds: {
+//     TcgPlayer: 659383,
 //   },
-//   rarity: "uncommon",
-//   abilities: [wardAbility],
-//   lore: 2,
+//   Rarity: "uncommon",
+//   Abilities: [wardAbility],
+//   Lore: 2,
 // };
 //

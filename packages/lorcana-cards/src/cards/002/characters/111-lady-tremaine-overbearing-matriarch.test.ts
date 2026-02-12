@@ -3,31 +3,31 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { ladyTremaineOverbearingMatriarch } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { ladyTremaineOverbearingMatriarch } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Lady Tremaine - Overbearing Matriarch", () => {
-//   it("**NOT FOR YOU** When you play this character, each opponent with more lore than you loses 1 lore.", () => {
-//     const testStore = new TestStore(
+// Describe("Lady Tremaine - Overbearing Matriarch", () => {
+//   It("**NOT FOR YOU** When you play this character, each opponent with more lore than you loses 1 lore.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: ladyTremaineOverbearingMatriarch.cost,
-//         hand: [ladyTremaineOverbearingMatriarch],
-//         lore: 1,
+//         Inkwell: ladyTremaineOverbearingMatriarch.cost,
+//         Hand: [ladyTremaineOverbearingMatriarch],
+//         Lore: 1,
 //       },
 //       {
-//         lore: 3,
+//         Lore: 3,
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "hand",
-//       ladyTremaineOverbearingMatriarch.id,
+//       LadyTremaineOverbearingMatriarch.id,
 //     );
 //
-//     cardUnderTest.playFromHand();
+//     CardUnderTest.playFromHand();
 //
-//     expect(testStore.getPlayerLore("player_two")).toEqual(2);
+//     Expect(testStore.getPlayerLore("player_two")).toEqual(2);
 //   });
 // });
 //

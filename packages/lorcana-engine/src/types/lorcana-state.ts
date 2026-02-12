@@ -41,7 +41,7 @@ export type LorcanaPhase = "beginning" | "main" | "end";
  * Rule 6.1.4: Must be dry to quest, challenge, or exert
  * Rule 9: Damage represented by counters
  */
-export type CharacterState = {
+export interface CharacterState {
   /**
    * "Drying" status - true if played this turn
    *
@@ -69,7 +69,7 @@ export type CharacterState = {
    * Rule 4.2.1.1: Readied at start of turn
    */
   exerted: boolean;
-};
+}
 
 /**
  * Permanent State
@@ -77,7 +77,7 @@ export type CharacterState = {
  * Runtime state for locations and items in play.
  * Currently only tracks damage (for locations).
  */
-export type PermanentState = {
+export interface PermanentState {
   /**
    * Damage counters (for locations)
    *
@@ -85,7 +85,7 @@ export type PermanentState = {
    * Rule 6.5: Locations have Willpower
    */
   damage: number;
-};
+}
 
 /**
  * Challenge State
@@ -98,7 +98,7 @@ export type PermanentState = {
  * - Damage calculated and dealt
  * - Challenge ends
  */
-export type ChallengeState = {
+export interface ChallengeState {
   /**
    * Attacking character
    */
@@ -124,7 +124,7 @@ export type ChallengeState = {
    * Rule 4.3.6.22: Locations deal no damage
    */
   defenderDamage: number;
-};
+}
 
 /**
  * Turn Metadata
@@ -132,7 +132,7 @@ export type ChallengeState = {
  * Tracks actions taken this turn for validation and cleanup.
  * Reset at start of each turn.
  */
-export type TurnMetadata = {
+export interface TurnMetadata {
   /**
    * Cards played this turn
    *
@@ -154,7 +154,7 @@ export type TurnMetadata = {
    * Rule 4.3.3: Limited to once per turn
    */
   inkedThisTurn: boolean;
-};
+}
 
 /**
  * Lorcana-specific Game State
@@ -162,7 +162,7 @@ export type TurnMetadata = {
  * Complete game state for Disney Lorcana extending base game state structure.
  * All Lorcana-specific data nested under `lorcana` property.
  */
-export type LorcanaState = {
+export interface LorcanaState {
   /**
    * Players in the game
    *
@@ -257,4 +257,4 @@ export type LorcanaState = {
      */
     challengeState?: ChallengeState;
   };
-};
+}

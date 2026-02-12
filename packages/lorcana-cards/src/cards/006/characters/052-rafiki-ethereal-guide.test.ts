@@ -3,31 +3,31 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { rafikiEtherealGuide } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { rafikiEtherealGuide } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Rafiki - Ethereal Guide", () => {
-//   it("Shift 7 (You may pay 7 {I} to play this on top of one of your characters named Rafiki.)", async () => {
-//     const testEngine = new TestEngine({
-//       play: [rafikiEtherealGuide],
+// Describe("Rafiki - Ethereal Guide", () => {
+//   It("Shift 7 (You may pay 7 {I} to play this on top of one of your characters named Rafiki.)", async () => {
+//     Const testEngine = new TestEngine({
+//       Play: [rafikiEtherealGuide],
 //     });
 //
-//     const cardUnderTest = testEngine.getCardModel(rafikiEtherealGuide);
-//     expect(cardUnderTest.hasShift).toBe(true);
+//     Const cardUnderTest = testEngine.getCardModel(rafikiEtherealGuide);
+//     Expect(cardUnderTest.hasShift).toBe(true);
 //   });
 //
-//   it.skip("ASTRAL ATTUNEMENT During your turn, whenever a card is put into your inkwell, you may draw a card.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: rafikiEtherealGuide.cost,
-//       play: [rafikiEtherealGuide],
-//       hand: [rafikiEtherealGuide],
+//   It.skip("ASTRAL ATTUNEMENT During your turn, whenever a card is put into your inkwell, you may draw a card.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: rafikiEtherealGuide.cost,
+//       Play: [rafikiEtherealGuide],
+//       Hand: [rafikiEtherealGuide],
 //     });
 //
-//     await testEngine.playCard(rafikiEtherealGuide);
+//     Await testEngine.playCard(rafikiEtherealGuide);
 //
-//     await testEngine.resolveOptionalAbility();
-//     await testEngine.resolveTopOfStack({});
+//     Await testEngine.resolveOptionalAbility();
+//     Await testEngine.resolveTopOfStack({});
 //   });
 // });
 //

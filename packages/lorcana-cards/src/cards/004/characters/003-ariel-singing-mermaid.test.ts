@@ -3,21 +3,21 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { arielSingingMermaid } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { arielSingingMermaid } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Ariel - Singing Mermaid", () => {
-//   it.skip("**Singer** 7 _(This character counts as cost 7 to sing songs.)_", () => {
-//     const testStore = new TestStore({
-//       play: [arielSingingMermaid],
+// Describe("Ariel - Singing Mermaid", () => {
+//   It.skip("**Singer** 7 _(This character counts as cost 7 to sing songs.)_", () => {
+//     Const testStore = new TestStore({
+//       Play: [arielSingingMermaid],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       arielSingingMermaid.id,
+//       ArielSingingMermaid.id,
 //     );
-//     expect(cardUnderTest.hasSinger).toBe(true);
+//     Expect(cardUnderTest.hasSinger).toBe(true);
 //   });
 // });
 //

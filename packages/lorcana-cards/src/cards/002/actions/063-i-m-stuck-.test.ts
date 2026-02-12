@@ -3,39 +3,39 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { imStuck } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
-// import { cheshireCatAlwaysGrinning } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { imStuck } from "@lorcanito/lorcana-engine/cards/002/actions/actions";
+// Import { cheshireCatAlwaysGrinning } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("I'm Stuck!", () => {
-//   it("Chosen exerted character can't ready at the start of their next turn.", () => {
-//     const testStore = new TestStore(
+// Describe("I'm Stuck!", () => {
+//   It("Chosen exerted character can't ready at the start of their next turn.", () => {
+//     Const testStore = new TestStore(
 //       {
-//         inkwell: imStuck.cost,
-//         hand: [imStuck],
+//         Inkwell: imStuck.cost,
+//         Hand: [imStuck],
 //       },
 //       {
-//         play: [cheshireCatAlwaysGrinning],
-//         deck: 1,
+//         Play: [cheshireCatAlwaysGrinning],
+//         Deck: 1,
 //       },
 //     );
 //
-//     const cardUnderTest = testStore.getByZoneAndId("hand", imStuck.id);
-//     const target = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId("hand", imStuck.id);
+//     Const target = testStore.getByZoneAndId(
 //       "play",
-//       cheshireCatAlwaysGrinning.id,
+//       CheshireCatAlwaysGrinning.id,
 //       "player_two",
 //     );
 //
-//     target.updateCardMeta({ exerted: true });
+//     Target.updateCardMeta({ exerted: true });
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveTopOfStack({ targets: [target] });
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveTopOfStack({ targets: [target] });
 //
-//     testStore.passTurn();
+//     TestStore.passTurn();
 //
-//     expect(target.ready).toBeFalsy();
+//     Expect(target.ready).toBeFalsy();
 //   });
 // });
 //

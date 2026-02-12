@@ -1,32 +1,32 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { evasiveAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { self } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { whenYouPlayThis } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { evasiveAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import { self } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import { whenYouPlayThis } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 //
-// export const magicaDeSpellShadowForm: LorcanitoCharacterCard = {
-//   id: "t1p",
-//   name: "Magica De Spell",
-//   title: "Shadow Form",
-//   characteristics: ["storyborn", "villain", "sorcerer"],
-//   text: "Evasive (Only characters with Evasive can challenge this character.)\nDANCE OF DARKNESS When you play this character, you may return one of your other characters to your hand to draw a card.",
-//   type: "character",
-//   abilities: [
-//     evasiveAbility,
-//     whenYouPlayThis({
-//       name: "DANCE OF DARKNESS",
-//       text: "When you play this character, you may return one of your other characters to your hand to draw a card.",
-//       optional: true,
-//       effects: [
+// Export const magicaDeSpellShadowForm: LorcanitoCharacterCard = {
+//   Id: "t1p",
+//   Name: "Magica De Spell",
+//   Title: "Shadow Form",
+//   Characteristics: ["storyborn", "villain", "sorcerer"],
+//   Text: "Evasive (Only characters with Evasive can challenge this character.)\nDANCE OF DARKNESS When you play this character, you may return one of your other characters to your hand to draw a card.",
+//   Type: "character",
+//   Abilities: [
+//     EvasiveAbility,
+//     WhenYouPlayThis({
+//       Name: "DANCE OF DARKNESS",
+//       Text: "When you play this character, you may return one of your other characters to your hand to draw a card.",
+//       Optional: true,
+//       Effects: [
 //         {
-//           type: "move",
-//           to: "hand",
-//           isPrivate: false,
-//           shouldRevealMoved: true,
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
+//           Type: "move",
+//           To: "hand",
+//           IsPrivate: false,
+//           ShouldRevealMoved: true,
+//           Target: {
+//             Type: "card",
+//             Value: 1,
+//             Filters: [
 //               { filter: "zone", value: "play" },
 //               { filter: "owner", value: "self" },
 //               { filter: "type", value: "character" },
@@ -35,25 +35,25 @@
 //           },
 //         },
 //         {
-//           type: "draw",
-//           amount: 1,
-//           target: self,
+//           Type: "draw",
+//           Amount: 1,
+//           Target: self,
 //         },
 //       ],
 //     }),
 //   ],
-//   inkwell: false,
-//   colors: ["amethyst", "emerald"],
-//   cost: 5,
-//   strength: 3,
-//   willpower: 3,
-//   illustrator: "Sandara Tang",
-//   number: 66,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 632709,
+//   Inkwell: false,
+//   Colors: ["amethyst", "emerald"],
+//   Cost: 5,
+//   Strength: 3,
+//   Willpower: 3,
+//   Illustrator: "Sandara Tang",
+//   Number: 66,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 632709,
 //   },
-//   rarity: "uncommon",
-//   lore: 2,
+//   Rarity: "uncommon",
+//   Lore: 2,
 // };
 //

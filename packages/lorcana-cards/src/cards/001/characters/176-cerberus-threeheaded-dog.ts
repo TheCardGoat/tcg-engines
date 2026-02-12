@@ -1,49 +1,49 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const cerberusThreeheadedDog: CharacterCard = {
-  id: "zie",
-  cardType: "character",
-  name: "Cerberus",
-  version: "Three-Headed Dog",
-  fullName: "Cerberus - Three-Headed Dog",
-  inkType: ["steel"],
-  franchise: "Disney",
-  set: "001",
-  text: "",
-  cost: 5,
-  strength: 5,
-  willpower: 6,
-  lore: 1,
+  abilities: [],
   cardNumber: 176,
-  inkable: true,
+  cardType: "character",
+  classifications: ["Storyborn"],
+  cost: 5,
   externalIds: {
     ravensburger: "",
   },
-  abilities: [],
-  classifications: ["Storyborn"],
+  franchise: "Disney",
+  fullName: "Cerberus - Three-Headed Dog",
+  id: "zie",
+  inkType: ["steel"],
+  inkable: true,
+  lore: 1,
+  name: "Cerberus",
+  set: "001",
+  strength: 5,
+  text: "",
+  version: "Three-Headed Dog",
+  willpower: 6,
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 //
-// export const cerberusThreeHeadedDog: LorcanitoCharacterCard = {
-//   id: "zie",
-//   name: "Cerberus",
-//   title: "Three-Headed Dog",
-//   characteristics: ["storyborn"],
-//   type: "character",
-//   inkwell: true,
-//   colors: ["steel"],
-//   illustrator: "Oleg Yurkov",
-//   cost: 5,
-//   strength: 5,
-//   willpower: 6,
-//   lore: 1,
-//   number: 176,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 497206,
+// Export const cerberusThreeHeadedDog: LorcanitoCharacterCard = {
+//   Id: "zie",
+//   Name: "Cerberus",
+//   Title: "Three-Headed Dog",
+//   Characteristics: ["storyborn"],
+//   Type: "character",
+//   Inkwell: true,
+//   Colors: ["steel"],
+//   Illustrator: "Oleg Yurkov",
+//   Cost: 5,
+//   Strength: 5,
+//   Willpower: 6,
+//   Lore: 1,
+//   Number: 176,
+//   Set: "TFC",
+//   ExternalIds: {
+//     TcgPlayer: 497206,
 //   },
-//   rarity: "common",
+//   Rarity: "common",
 // };
 //

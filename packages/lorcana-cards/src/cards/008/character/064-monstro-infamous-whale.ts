@@ -1,34 +1,34 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import {
-//   type ActivatedAbility,
-//   rushAbility,
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import {
+//   Type ActivatedAbility,
+//   RushAbility,
 // } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { allCardsInYourDeck } from "@lorcanito/lorcana-engine/abilities/amounts";
-// import { self } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { readyAndCantQuest } from "@lorcanito/lorcana-engine/effects/effects";
+// Import { allCardsInYourDeck } from "@lorcanito/lorcana-engine/abilities/amounts";
+// Import { self } from "@lorcanito/lorcana-engine/abilities/targets";
+// Import { readyAndCantQuest } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const fullBreachAndMoneyEverywhereCombo: ActivatedAbility = {
-//   type: "activated",
-//   name: "FULL BREACH + COMBO",
-//   text: "Draw your whole deck, discard that many cards.",
-//   optional: false,
-//   resolveEffectsIndividually: true,
-//   resolveAmountBeforeCreatingLayer: true,
-//   costs: [],
-//   effects: [
+// Export const fullBreachAndMoneyEverywhereCombo: ActivatedAbility = {
+//   Type: "activated",
+//   Name: "FULL BREACH + COMBO",
+//   Text: "Draw your whole deck, discard that many cards.",
+//   Optional: false,
+//   ResolveEffectsIndividually: true,
+//   ResolveAmountBeforeCreatingLayer: true,
+//   Costs: [],
+//   Effects: [
 //     {
-//       type: "draw",
-//       amount: allCardsInYourDeck,
-//       target: self,
+//       Type: "draw",
+//       Amount: allCardsInYourDeck,
+//       Target: self,
 //     },
 //     {
-//       type: "discard",
-//       amount: allCardsInYourDeck,
-//       target: {
-//         type: "card",
-//         value: allCardsInYourDeck,
-//         filters: [
+//       Type: "discard",
+//       Amount: allCardsInYourDeck,
+//       Target: {
+//         Type: "card",
+//         Value: allCardsInYourDeck,
+//         Filters: [
 //           { filter: "zone", value: "hand" },
 //           { filter: "owner", value: "self" },
 //         ],
@@ -37,54 +37,54 @@
 //   ],
 // };
 //
-// export const fullBreach: ActivatedAbility = {
-//   type: "activated",
-//   name: "FULL BREACH",
-//   text: "Choose and discard a card - Ready this character. He can't quest for the rest of this turn.",
-//   optional: false,
-//   costs: [
+// Export const fullBreach: ActivatedAbility = {
+//   Type: "activated",
+//   Name: "FULL BREACH",
+//   Text: "Choose and discard a card - Ready this character. He can't quest for the rest of this turn.",
+//   Optional: false,
+//   Costs: [
 //     {
-//       type: "card",
-//       action: "discard",
-//       amount: 1,
-//       filters: [
+//       Type: "card",
+//       Action: "discard",
+//       Amount: 1,
+//       Filters: [
 //         { filter: "zone", value: "hand" },
 //         { filter: "owner", value: "self" },
 //       ],
 //     },
 //   ],
-//   effects: [
+//   Effects: [
 //     ...readyAndCantQuest(
 //       {
-//         type: "card",
-//         value: "all",
-//         filters: [{ filter: "source", value: "self" }],
+//         Type: "card",
+//         Value: "all",
+//         Filters: [{ filter: "source", value: "self" }],
 //       },
-//       true,
+//       True,
 //     ),
 //   ],
 // };
 //
-// export const monstroInfamousWhale: LorcanitoCharacterCard = {
-//   id: "oa8",
-//   name: "Monstro",
-//   title: "Infamous Whale",
-//   characteristics: ["storyborn"],
-//   text: "Rush (This character can challenge the turn they're played.)\nFULL BREACH Choose and discard a card - Ready this character. He can't quest for the rest of this turn.",
-//   type: "character",
-//   abilities: [rushAbility, fullBreach],
-//   inkwell: true,
-//   colors: ["amethyst"],
-//   cost: 8,
-//   strength: 6,
-//   willpower: 8,
-//   illustrator: "Alexandria Neonakis",
-//   number: 64,
-//   set: "008",
-//   externalIds: {
-//     tcgPlayer: 631393,
+// Export const monstroInfamousWhale: LorcanitoCharacterCard = {
+//   Id: "oa8",
+//   Name: "Monstro",
+//   Title: "Infamous Whale",
+//   Characteristics: ["storyborn"],
+//   Text: "Rush (This character can challenge the turn they're played.)\nFULL BREACH Choose and discard a card - Ready this character. He can't quest for the rest of this turn.",
+//   Type: "character",
+//   Abilities: [rushAbility, fullBreach],
+//   Inkwell: true,
+//   Colors: ["amethyst"],
+//   Cost: 8,
+//   Strength: 6,
+//   Willpower: 8,
+//   Illustrator: "Alexandria Neonakis",
+//   Number: 64,
+//   Set: "008",
+//   ExternalIds: {
+//     TcgPlayer: 631393,
 //   },
-//   rarity: "rare",
-//   lore: 2,
+//   Rarity: "rare",
+//   Lore: 2,
 // };
 //

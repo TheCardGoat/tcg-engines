@@ -5,9 +5,9 @@ import { stolenScimitar } from "./102-stolen-scimitar";
 describe("Stolen Scimitar - undefined", () => {
   // Add ability tests here
   // Examples:
-  // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [stolenScimitar] });
-  //   expect(testEngine.getCardModel(stolenScimitar).hasKeyword()).toBe(true);
+  // It("has [Keyword]", () => {
+  //   Const testEngine = new LorcanaTestEngine({ play: [stolenScimitar] });
+  //   Expect(testEngine.getCardModel(stolenScimitar).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });
@@ -16,41 +16,41 @@ describe("Stolen Scimitar - undefined", () => {
 // /**
 //  * @jest-environment node
 //  */
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   aladdinHeroicOutlaw,
-//   moanaOfMotunui,
+// Import { describe, expect, it } from "@jest/globals";
+// Import {
+//   AladdinHeroicOutlaw,
+//   MoanaOfMotunui,
 // } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { stolenScimitar } from "@lorcanito/lorcana-engine/cards/001/items/items";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { stolenScimitar } from "@lorcanito/lorcana-engine/cards/001/items/items";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Stolen Scimitar", () => {
-//   it("[Aladdin] Chosen character get +1 {S} this turn. If a character named Aladdin is chosen, he gets +2 {S} instead.", () => {
-//     const testStore = new TestStore({
-//       play: [stolenScimitar, aladdinHeroicOutlaw],
+// Describe("Stolen Scimitar", () => {
+//   It("[Aladdin] Chosen character get +1 {S} this turn. If a character named Aladdin is chosen, he gets +2 {S} instead.", () => {
+//     Const testStore = new TestStore({
+//       Play: [stolenScimitar, aladdinHeroicOutlaw],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("play", stolenScimitar.id);
-//     const target = testStore.getByZoneAndId("play", aladdinHeroicOutlaw.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("play", stolenScimitar.id);
+//     Const target = testStore.getByZoneAndId("play", aladdinHeroicOutlaw.id);
 //
-//     cardUnderTest.activate();
-//     testStore.resolveTopOfStack({ targetId: target.instanceId });
+//     CardUnderTest.activate();
+//     TestStore.resolveTopOfStack({ targetId: target.instanceId });
 //
-//     expect(target.strength).toEqual((target.lorcanitoCard.strength || 0) + 2);
+//     Expect(target.strength).toEqual((target.lorcanitoCard.strength || 0) + 2);
 //   });
 //
-//   it("[Non Aladdin] Chosen character get +1 {S} this turn. If a character named Aladdin is chosen, he gets +2 {S} instead.", () => {
-//     const testStore = new TestStore({
-//       play: [stolenScimitar, moanaOfMotunui],
+//   It("[Non Aladdin] Chosen character get +1 {S} this turn. If a character named Aladdin is chosen, he gets +2 {S} instead.", () => {
+//     Const testStore = new TestStore({
+//       Play: [stolenScimitar, moanaOfMotunui],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("play", stolenScimitar.id);
-//     const target = testStore.getByZoneAndId("play", moanaOfMotunui.id);
+//     Const cardUnderTest = testStore.getByZoneAndId("play", stolenScimitar.id);
+//     Const target = testStore.getByZoneAndId("play", moanaOfMotunui.id);
 //
-//     cardUnderTest.activate();
-//     testStore.resolveTopOfStack({ targetId: target.instanceId });
+//     CardUnderTest.activate();
+//     TestStore.resolveTopOfStack({ targetId: target.instanceId });
 //
-//     expect(target.strength).toEqual((target.lorcanitoCard.strength || 0) + 1);
+//     Expect(target.strength).toEqual((target.lorcanitoCard.strength || 0) + 1);
 //   });
 // });
 //

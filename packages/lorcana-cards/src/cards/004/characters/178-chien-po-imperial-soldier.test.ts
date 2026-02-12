@@ -18,21 +18,21 @@ describe("Chien-Po - Imperial Soldier", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { chienPoImperialSoldier } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { chienPoImperialSoldier } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Chien-Po - Imperial Soldier", () => {
-//   it.skip("**Bodyguard** _(This character may enter play exerted. An opposing character who challenges one of your characters must chose one with Bodyguard if able.)_", () => {
-//     const testStore = new TestStore({
-//       play: [chienPoImperialSoldier],
+// Describe("Chien-Po - Imperial Soldier", () => {
+//   It.skip("**Bodyguard** _(This character may enter play exerted. An opposing character who challenges one of your characters must chose one with Bodyguard if able.)_", () => {
+//     Const testStore = new TestStore({
+//       Play: [chienPoImperialSoldier],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId(
+//     Const cardUnderTest = testStore.getByZoneAndId(
 //       "play",
-//       chienPoImperialSoldier.id,
+//       ChienPoImperialSoldier.id,
 //     );
-//     expect(cardUnderTest.hasBodyguard).toBe(true);
+//     Expect(cardUnderTest.hasBodyguard).toBe(true);
 //   });
 // });
 //

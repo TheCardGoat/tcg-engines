@@ -75,13 +75,7 @@ export type {
   LorcanaGameState,
   StackPosition,
 } from "./game-state";
-export {
-  createDefaultCardMeta,
-  createInitialLorcanaState,
-} from "./game-state";
+export { createDefaultCardMeta, createInitialLorcanaState } from "./game-state";
 
 // Move params - exclude LorcanaGameState to avoid conflict with game-state.ts
-export type {
-  LorcanaMoveParams,
-  PlayCardCost,
-} from "./move-params";
+export type { LorcanaMoveParams, PlayCardCost } from "./move-params";

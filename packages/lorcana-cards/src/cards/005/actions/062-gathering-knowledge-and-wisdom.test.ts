@@ -3,20 +3,20 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { gatheringKnowledgeAndWisdom } from "@lorcanito/lorcana-engine/cards/005/actions/actions";
-// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { gatheringKnowledgeAndWisdom } from "@lorcanito/lorcana-engine/cards/005/actions/actions";
+// Import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 //
-// describe("Gathering Knowledge And Wisdom", () => {
-//   it("Gain 2 lore.", async () => {
-//     const testEngine = new TestEngine({
-//       inkwell: gatheringKnowledgeAndWisdom.cost,
-//       hand: [gatheringKnowledgeAndWisdom],
+// Describe("Gathering Knowledge And Wisdom", () => {
+//   It("Gain 2 lore.", async () => {
+//     Const testEngine = new TestEngine({
+//       Inkwell: gatheringKnowledgeAndWisdom.cost,
+//       Hand: [gatheringKnowledgeAndWisdom],
 //     });
 //
-//     await testEngine.playCard(gatheringKnowledgeAndWisdom);
+//     Await testEngine.playCard(gatheringKnowledgeAndWisdom);
 //
-//     expect(testEngine.getPlayerLore()).toBe(2);
+//     Expect(testEngine.getPlayerLore()).toBe(2);
 //   });
 // });
 //

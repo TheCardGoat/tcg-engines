@@ -66,20 +66,17 @@ import type {
  */
 export const Effects = {
   // Card manipulation effects
-  draw: (
-    amount: number | AmountExpression,
-    player?: "self" | "opponent" | "each",
-  ): DrawEffect =>
-    player ? { type: "draw", amount, player } : { type: "draw", amount },
+  draw: (amount: number | AmountExpression, player?: "self" | "opponent" | "each"): DrawEffect =>
+    player ? { amount, player, type: "draw" } : { amount, type: "draw" },
 
   discard: (
     amount: number | AmountExpression,
     player?: "self" | "opponent" | "each",
     then?: Effect,
   ): DiscardEffect => {
-    const effect: DiscardEffect = { type: "discard", amount };
-    if (player) (effect as { player: typeof player }).player = player;
-    if (then) (effect as { then: Effect }).then = then;
+    const effect: DiscardEffect = { amount, type: "discard" };
+    if (player) {(effect as { player: typeof player }).player = player;}
+    if (then) {(effect as { then: Effect }).then = then;}
     return effect;
   },
 
@@ -93,8 +90,8 @@ export const Effects = {
   }),
 
   returnToHand: (target: AnyTarget): ReturnToHandEffect => ({
-    type: "return-to-hand",
     target,
+    type: "return-to-hand",
   }),
 
   play: (opts: {
@@ -109,8 +106,8 @@ export const Effects = {
   }),
 
   banish: (target: AnyTarget): BanishEffect => ({
-    type: "banish",
     target,
+    type: "banish",
   }),
 
   look: (
@@ -118,10 +115,10 @@ export const Effects = {
     from: "deck" | "rune-deck" | "opponent-hand",
     then?: LookThenEffect,
   ): LookEffect => ({
-    type: "look",
     amount,
     from,
     then,
+    type: "look",
   }),
 
   reveal: (opts: {
@@ -135,38 +132,29 @@ export const Effects = {
   }),
 
   // Combat effects
-  damage: (
-    amount: number | AmountExpression,
-    target: AnyTarget,
-    split?: boolean,
-  ): DamageEffect =>
-    split
-      ? { type: "damage", amount, target, split }
-      : { type: "damage", amount, target },
+  damage: (amount: number | AmountExpression, target: AnyTarget, split?: boolean): DamageEffect =>
+    split ? { amount, split, target, type: "damage" } : { amount, target, type: "damage" },
 
-  heal: (
-    amount: number | AmountExpression | "all",
-    target: AnyTarget,
-  ): HealEffect => ({
-    type: "heal",
+  heal: (amount: number | AmountExpression | "all", target: AnyTarget): HealEffect => ({
     amount,
     target,
+    type: "heal",
   }),
 
   kill: (target: AnyTarget): KillEffect => ({
-    type: "kill",
     target,
+    type: "kill",
   }),
 
   stun: (target: AnyTarget): StunEffect => ({
-    type: "stun",
     target,
+    type: "stun",
   }),
 
   fight: (attacker: AnyTarget, defender: AnyTarget): FightEffect => ({
-    type: "fight",
     attacker,
     defender,
+    type: "fight",
   }),
 
   // Stat modification effects
@@ -178,30 +166,30 @@ export const Effects = {
       minimum?: number;
     },
   ): ModifyMightEffect => ({
-    type: "modify-might",
     amount,
     target,
+    type: "modify-might",
     ...opts,
   }),
 
   buff: (target: AnyTarget): BuffEffect => ({
-    type: "buff",
     target,
+    type: "buff",
   }),
 
   spendBuff: (target?: AnyTarget, then?: Effect): SpendBuffEffect => ({
-    type: "spend-buff",
     target,
     then,
+    type: "spend-buff",
   }),
 
   doubleMight: (
     target: AnyTarget,
     duration?: "turn" | "permanent" | "combat",
   ): DoubleMightEffect => ({
-    type: "double-might",
-    target,
     duration,
+    target,
+    type: "double-might",
   }),
 
   swapMight: (
@@ -209,49 +197,46 @@ export const Effects = {
     target2: AnyTarget,
     duration?: "turn" | "permanent",
   ): SwapMightEffect => ({
-    type: "swap-might",
+    duration,
     target1,
     target2,
-    duration,
+    type: "swap-might",
   }),
 
   // Movement effects
   move: (target: AnyTarget, to: Location, from?: Location): MoveEffect => ({
-    type: "move",
+    from,
     target,
     to,
-    from,
+    type: "move",
   }),
 
   recall: (target: AnyTarget, exhausted?: boolean): RecallEffect => ({
-    type: "recall",
-    target,
     exhausted,
+    target,
+    type: "recall",
   }),
 
   // Resource effects
-  addResource: (opts: {
-    energy?: number;
-    power?: Domain[];
-  }): AddResourceEffect => ({
+  addResource: (opts: { energy?: number; power?: Domain[] }): AddResourceEffect => ({
     type: "add-resource",
     ...opts,
   }),
 
   channel: (amount: number, exhausted?: boolean): ChannelEffect => ({
-    type: "channel",
     amount,
     exhausted,
+    type: "channel",
   }),
 
   ready: (target: AnyTarget): ReadyEffect => ({
-    type: "ready",
     target,
+    type: "ready",
   }),
 
   exhaust: (target: AnyTarget): ExhaustEffect => ({
-    type: "exhaust",
     target,
+    type: "exhaust",
   }),
 
   // Token effects
@@ -263,8 +248,8 @@ export const Effects = {
       amount?: number;
     },
   ): CreateTokenEffect => ({
-    type: "create-token",
     token,
+    type: "create-token",
     ...opts,
   }),
 
@@ -277,9 +262,9 @@ export const Effects = {
       duration?: "turn" | "permanent";
     },
   ): GrantKeywordEffect => ({
-    type: "grant-keyword",
     keyword,
     target,
+    type: "grant-keyword",
     ...opts,
   }),
 
@@ -288,70 +273,59 @@ export const Effects = {
     target: AnyTarget,
     duration?: "turn" | "permanent",
   ): GrantKeywordsEffect => ({
-    type: "grant-keywords",
+    duration,
     keywords,
     target,
-    duration,
+    type: "grant-keywords",
   }),
 
   // Control flow effects
   sequence: (...effects: Effect[]): SequenceEffect => ({
-    type: "sequence",
     effects,
+    type: "sequence",
   }),
 
-  choice: (
-    options: ChoiceOption[],
-    notChosenThisTurn?: boolean,
-  ): ChoiceEffect => ({
-    type: "choice",
-    options,
+  choice: (options: ChoiceOption[], notChosenThisTurn?: boolean): ChoiceEffect => ({
     notChosenThisTurn,
+    options,
+    type: "choice",
   }),
 
-  conditional: (
-    condition: Condition,
-    then: Effect,
-    elseEffect?: Effect,
-  ): ConditionalEffect => ({
-    type: "conditional",
+  conditional: (condition: Condition, then: Effect, elseEffect?: Effect): ConditionalEffect => ({
     condition,
-    then,
     else: elseEffect,
+    then,
+    type: "conditional",
   }),
 
   optional: (effect: Effect): OptionalEffect => ({
-    type: "optional",
     effect,
+    type: "optional",
   }),
 
   forEach: (target: Target, effect: Effect): ForEachEffect => ({
-    type: "for-each",
-    target,
     effect,
+    target,
+    type: "for-each",
   }),
 
-  repeat: (
-    cost: Cost,
-    effect: Effect,
-    differentChoices?: boolean,
-  ): RepeatEffect => ({
-    type: "repeat",
+  repeat: (cost: Cost, effect: Effect, differentChoices?: boolean): RepeatEffect => ({
     cost,
-    effect,
     differentChoices,
+    effect,
+    type: "repeat",
   }),
 
   // Special effects
   score: (amount: number, player?: "self" | "opponent"): ScoreEffect => ({
-    type: "score",
     amount,
     player,
+    type: "score",
   }),
 
   counter: (target?: "spell" | Target, unless?: Cost): CounterEffect => ({
-    type: "counter",
     target,
+    type: "counter",
     unless,
   }),
 
@@ -359,9 +333,9 @@ export const Effects = {
     target: AnyTarget,
     duration?: "turn" | "permanent" | "until-leaves",
   ): TakeControlEffect => ({
-    type: "take-control",
-    target,
     duration,
+    target,
+    type: "take-control",
   }),
 
   preventDamage: (opts?: {
@@ -374,19 +348,19 @@ export const Effects = {
   }),
 
   attach: (equipment: AnyTarget, to: AnyTarget): AttachEffect => ({
-    type: "attach",
     equipment,
     to,
+    type: "attach",
   }),
 
   detach: (equipment: AnyTarget): DetachEffect => ({
-    type: "detach",
     equipment,
+    type: "detach",
   }),
 
   gainControlOfSpell: (newChoices?: boolean): GainControlOfSpellEffect => ({
-    type: "gain-control-of-spell",
     newChoices,
+    type: "gain-control-of-spell",
   }),
 
   extraTurn: (): ExtraTurnEffect => ({
@@ -402,33 +376,33 @@ export const Effects = {
  * Token presets for common tokens
  */
 export const Tokens = {
-  recruit: (might = 1): TokenDefinition => ({
-    name: "Recruit",
-    type: "unit",
-    might,
-  }),
-
-  sandSoldier: (might = 2): TokenDefinition => ({
-    name: "Sand Soldier",
-    type: "unit",
-    might,
-  }),
-
-  mech: (might = 3): TokenDefinition => ({
-    name: "Mech",
-    type: "unit",
-    might,
-  }),
-
-  sprite: (might = 3): TokenDefinition => ({
-    name: "Sprite",
-    type: "unit",
-    might,
-    keywords: ["Temporary"],
-  }),
-
   gold: (): TokenDefinition => ({
     name: "Gold",
     type: "gear",
+  }),
+
+  mech: (might = 3): TokenDefinition => ({
+    might,
+    name: "Mech",
+    type: "unit",
+  }),
+
+  recruit: (might = 1): TokenDefinition => ({
+    might,
+    name: "Recruit",
+    type: "unit",
+  }),
+
+  sandSoldier: (might = 2): TokenDefinition => ({
+    might,
+    name: "Sand Soldier",
+    type: "unit",
+  }),
+
+  sprite: (might = 3): TokenDefinition => ({
+    keywords: ["Temporary"],
+    might,
+    name: "Sprite",
+    type: "unit",
   }),
 };

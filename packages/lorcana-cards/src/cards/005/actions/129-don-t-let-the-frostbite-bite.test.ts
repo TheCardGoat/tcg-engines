@@ -3,35 +3,35 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { dontLetTheFrostbiteBite } from "@lorcanito/lorcana-engine/cards/005/actions/actions";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { dontLetTheFrostbiteBite } from "@lorcanito/lorcana-engine/cards/005/actions/actions";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Don't Let the Frostbite Bite", () => {
-//   it.skip("_(A character with cost 7 or more can  {E} to sing this song for free.)_", () => {
-//     const testStore = new TestStore({
-//       inkwell: dontLetTheFrostbiteBite.cost,
-//       hand: [dontLetTheFrostbiteBite],
+// Describe("Don't Let the Frostbite Bite", () => {
+//   It.skip("_(A character with cost 7 or more can  {E} to sing this song for free.)_", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: dontLetTheFrostbiteBite.cost,
+//       Hand: [dontLetTheFrostbiteBite],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(dontLetTheFrostbiteBite);
+//     Const cardUnderTest = testStore.getCard(dontLetTheFrostbiteBite);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 //
-//   it.skip("Ready all your characters. They can’t quest for the rest of this turn.", () => {
-//     const testStore = new TestStore({
-//       inkwell: dontLetTheFrostbiteBite.cost,
-//       hand: [dontLetTheFrostbiteBite],
+//   It.skip("Ready all your characters. They can’t quest for the rest of this turn.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: dontLetTheFrostbiteBite.cost,
+//       Hand: [dontLetTheFrostbiteBite],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(dontLetTheFrostbiteBite);
+//     Const cardUnderTest = testStore.getCard(dontLetTheFrostbiteBite);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

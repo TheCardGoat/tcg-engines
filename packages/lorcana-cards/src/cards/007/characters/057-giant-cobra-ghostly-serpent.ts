@@ -1,41 +1,14 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const giantCobraGhostlySerpent: CharacterCard = {
-  id: "1bh",
-  cardType: "character",
-  name: "Giant Cobra",
-  version: "Ghostly Serpent",
-  fullName: "Giant Cobra - Ghostly Serpent",
-  inkType: ["amethyst", "steel"],
-  franchise: "Aladdin",
-  set: "007",
-  text: "Vanish (When an opponent chooses this character for an action, banish them.)\nMYSTERIOUS ADVANTAGE When you play this character, you may choose and discard a card to gain 2 lore.",
-  cost: 3,
-  strength: 4,
-  willpower: 4,
-  lore: 1,
-  cardNumber: 57,
-  inkable: true,
-  missingTests: true,
-  externalIds: {
-    ravensburger: "ab23bc0d0f42e3fa41a43526d6fca8f364824467",
-  },
   abilities: [
     {
       id: "1bh-1",
-      type: "keyword",
       keyword: "Vanish",
       text: "Vanish",
+      type: "keyword",
     },
     {
-      id: "1bh-2",
-      type: "triggered",
-      name: "MYSTERIOUS ADVANTAGE",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
       effect: {
         type: "optional",
         effect: {
@@ -44,8 +17,35 @@ export const giantCobraGhostlySerpent: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      id: "1bh-2",
+      name: "MYSTERIOUS ADVANTAGE",
       text: "MYSTERIOUS ADVANTAGE When you play this character, you may choose and discard a card to gain 2 lore.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      type: "triggered",
     },
   ],
+  cardNumber: 57,
+  cardType: "character",
   classifications: ["Dreamborn", "Ally", "Illusion"],
+  cost: 3,
+  externalIds: {
+    ravensburger: "ab23bc0d0f42e3fa41a43526d6fca8f364824467",
+  },
+  franchise: "Aladdin",
+  fullName: "Giant Cobra - Ghostly Serpent",
+  id: "1bh",
+  inkType: ["amethyst", "steel"],
+  inkable: true,
+  lore: 1,
+  missingTests: true,
+  name: "Giant Cobra",
+  set: "007",
+  strength: 4,
+  text: "Vanish (When an opponent chooses this character for an action, banish them.)\nMYSTERIOUS ADVANTAGE When you play this character, you may choose and discard a card to gain 2 lore.",
+  version: "Ghostly Serpent",
+  willpower: 4,
 };

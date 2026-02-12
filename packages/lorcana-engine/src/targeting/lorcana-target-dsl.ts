@@ -180,9 +180,7 @@ export interface MoveCostFilter {
 /**
  * Filter by card name
  */
-export type NameFilter =
-  | { type: "name"; equals: string }
-  | { type: "name"; contains: string };
+export type NameFilter = { type: "name"; equals: string } | { type: "name"; contains: string };
 
 // --- Card Type Filters ---
 
@@ -315,8 +313,7 @@ export type LorcanaCardType = "character" | "item" | "location" | "action";
  * };
  * ```
  */
-export interface LorcanaCardTarget
-  extends TargetDSL<LorcanaFilter, LorcanaContext> {
+export interface LorcanaCardTarget extends TargetDSL<LorcanaFilter, LorcanaContext> {
   /** Lorcana card type constraint */
   cardType?: LorcanaCardType;
 
@@ -364,9 +361,7 @@ export type LorcanaPlayerTarget = PlayerTargetDSL;
 /**
  * Check if a target is a DSL object (vs enum string)
  */
-export function isDSLTarget(
-  target: LorcanaTarget,
-): target is LorcanaCardTarget {
+export function isDSLTarget(target: LorcanaTarget): target is LorcanaCardTarget {
   return typeof target === "object" && target !== null;
 }
 
@@ -375,12 +370,7 @@ export function isDSLTarget(
  */
 export function isStateFilter(
   filter: LorcanaFilter,
-): filter is
-  | DamagedFilter
-  | UndamagedFilter
-  | ExertedFilter
-  | ReadyFilter
-  | DryFilter {
+): filter is DamagedFilter | UndamagedFilter | ExertedFilter | ReadyFilter | DryFilter {
   return (
     filter.type === "damaged" ||
     filter.type === "undamaged" ||
@@ -395,12 +385,7 @@ export function isStateFilter(
  */
 export function isNumericFilter(
   filter: LorcanaFilter,
-): filter is
-  | StrengthFilter
-  | WillpowerFilter
-  | CostFilter
-  | LoreValueFilter
-  | MoveCostFilter {
+): filter is StrengthFilter | WillpowerFilter | CostFilter | LoreValueFilter | MoveCostFilter {
   return (
     filter.type === "strength" ||
     filter.type === "willpower" ||

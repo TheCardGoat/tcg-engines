@@ -18,18 +18,18 @@ describe("Kida - Royal Warrior", () => {
 //  * @jest-environment node
 //  */
 //
-// import { describe, expect, it } from "@jest/globals";
-// import { kidaRoyalWarrior } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, expect, it } from "@jest/globals";
+// Import { kidaRoyalWarrior } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("Kida - Royal Warrior", () => {
-//   it.skip("**Bodyguard** _(This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)_", () => {
-//     const testStore = new TestStore({
-//       play: [kidaRoyalWarrior],
+// Describe("Kida - Royal Warrior", () => {
+//   It.skip("**Bodyguard** _(This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)_", () => {
+//     Const testStore = new TestStore({
+//       Play: [kidaRoyalWarrior],
 //     });
 //
-//     const cardUnderTest = testStore.getByZoneAndId("play", kidaRoyalWarrior.id);
-//     expect(cardUnderTest.hasBodyguard).toBe(true);
+//     Const cardUnderTest = testStore.getByZoneAndId("play", kidaRoyalWarrior.id);
+//     Expect(cardUnderTest.hasBodyguard).toBe(true);
 //   });
 // });
 //

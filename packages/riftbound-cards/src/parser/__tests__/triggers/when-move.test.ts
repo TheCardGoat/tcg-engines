@@ -17,14 +17,14 @@ describe("Trigger: When Move", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
+          effect: expect.objectContaining({
+            amount: 1,
+            type: "draw",
+          }),
           trigger: expect.objectContaining({
             event: "move",
           }),
-          effect: expect.objectContaining({
-            type: "draw",
-            amount: 1,
-          }),
+          type: "triggered",
         }),
       );
     });
@@ -32,19 +32,17 @@ describe("Trigger: When Move", () => {
 
   describe("might modification effects", () => {
     it.skip("should parse 'When I move, give me +1 :rb_might: this turn.'", () => {
-      const result = parseAbilities(
-        "When I move, give me +1 :rb_might: this turn.",
-      );
+      const result = parseAbilities("When I move, give me +1 :rb_might: this turn.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           effect: expect.objectContaining({
-            type: "modify-might",
             amount: 1,
+            type: "modify-might",
           }),
+          type: "triggered",
         }),
       );
     });
@@ -71,14 +69,14 @@ describe("Trigger: When Move", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
+          effect: expect.objectContaining({
+            amount: 3,
+            type: "create-token",
+          }),
           trigger: expect.objectContaining({
             event: "move-to-battlefield",
           }),
-          effect: expect.objectContaining({
-            type: "create-token",
-            amount: 3,
-          }),
+          type: "triggered",
         }),
       );
     });
@@ -94,7 +92,6 @@ describe("Trigger: When Move", () => {
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           optional: true,
           trigger: expect.objectContaining({
             event: "move",
@@ -104,6 +101,7 @@ describe("Trigger: When Move", () => {
               }),
             ]),
           }),
+          type: "triggered",
         }),
       );
     });
@@ -111,19 +109,17 @@ describe("Trigger: When Move", () => {
 
   describe("score effects", () => {
     it.skip("should parse 'The third time I move in a turn, you score 1 point.'", () => {
-      const result = parseAbilities(
-        "The third time I move in a turn, you score 1 point.",
-      );
+      const result = parseAbilities("The third time I move in a turn, you score 1 point.");
 
       expect(result.success).toBe(true);
       expect(result.abilities).toHaveLength(1);
       expect(result.abilities?.[0]).toEqual(
         expect.objectContaining({
-          type: "triggered",
           effect: expect.objectContaining({
-            type: "score",
             amount: 1,
+            type: "score",
           }),
+          type: "triggered",
         }),
       );
     });

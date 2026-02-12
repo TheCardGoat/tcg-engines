@@ -3,22 +3,22 @@
 //  * @jest-environment node
 //  */
 //
-// import { describe, it } from "@jest/globals";
-// import { kingOfHeartsMonarchOfWonderland } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+// Import { describe, it } from "@jest/globals";
+// Import { kingOfHeartsMonarchOfWonderland } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+// Import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 //
-// describe("King of Hearts - Monarch of Wonderland", () => {
-//   it.skip("**PLEASING THE QUEEN** {E} – Chosen exerted character can’t ready at the start of their next turn.", () => {
-//     const testStore = new TestStore({
-//       inkwell: kingOfHeartsMonarchOfWonderland.cost,
-//       play: [kingOfHeartsMonarchOfWonderland],
+// Describe("King of Hearts - Monarch of Wonderland", () => {
+//   It.skip("**PLEASING THE QUEEN** {E} – Chosen exerted character can’t ready at the start of their next turn.", () => {
+//     Const testStore = new TestStore({
+//       Inkwell: kingOfHeartsMonarchOfWonderland.cost,
+//       Play: [kingOfHeartsMonarchOfWonderland],
 //     });
 //
-//     const cardUnderTest = testStore.getCard(kingOfHeartsMonarchOfWonderland);
+//     Const cardUnderTest = testStore.getCard(kingOfHeartsMonarchOfWonderland);
 //
-//     cardUnderTest.playFromHand();
-//     testStore.resolveOptionalAbility();
-//     testStore.resolveTopOfStack({});
+//     CardUnderTest.playFromHand();
+//     TestStore.resolveOptionalAbility();
+//     TestStore.resolveTopOfStack({});
 //   });
 // });
 //

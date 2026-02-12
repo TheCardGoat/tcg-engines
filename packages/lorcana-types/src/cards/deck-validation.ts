@@ -21,10 +21,7 @@ export const MAX_COPIES_PER_CARD = 4;
 /**
  * Deck validation error types
  */
-export type DeckValidationError =
-  | TooFewCardsError
-  | TooManyInkTypesError
-  | TooManyCopiesError;
+export type DeckValidationError = TooFewCardsError | TooManyInkTypesError | TooManyCopiesError;
 
 export interface TooFewCardsError {
   type: "TOO_FEW_CARDS";

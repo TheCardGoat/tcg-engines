@@ -1,53 +1,53 @@
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { evasiveAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import {
-//   chosenCharacterOfYoursIncludingSelf,
-//   chosenOtherCharacterOfYours,
+// Import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// Import { evasiveAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// Import {
+//   ChosenCharacterOfYoursIncludingSelf,
+//   ChosenOtherCharacterOfYours,
 // } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { moveToLocation } from "@lorcanito/lorcana-engine/effects/effects";
+// Import { moveToLocation } from "@lorcanito/lorcana-engine/effects/effects";
 //
-// export const tukTukLivelyPartner: LorcanitoCharacterCard = {
-//   id: "fjt",
-//   reprints: ["lts"],
-//   name: "Tuk Tuk",
-//   title: "Lively Partner",
-//   characteristics: ["ally"],
-//   text: "**Evasive** _(Only characters with Evasive can challenge this character.)_\n\n\n**ON A ROLL** When you play this character, you may move him and one of your other characters to the same location for free. The other character gets +2 {S} this turn.",
-//   type: "character",
-//   abilities: [
-//     evasiveAbility,
+// Export const tukTukLivelyPartner: LorcanitoCharacterCard = {
+//   Id: "fjt",
+//   Reprints: ["lts"],
+//   Name: "Tuk Tuk",
+//   Title: "Lively Partner",
+//   Characteristics: ["ally"],
+//   Text: "**Evasive** _(Only characters with Evasive can challenge this character.)_\n\n\n**ON A ROLL** When you play this character, you may move him and one of your other characters to the same location for free. The other character gets +2 {S} this turn.",
+//   Type: "character",
+//   Abilities: [
+//     EvasiveAbility,
 //     {
-//       type: "resolution",
-//       name: "ON A ROLL",
-//       text: "When you play this character, you may move him and one of your other characters to the same location for free. The other character gets +2 {S} this turn.",
-//       optional: true,
-//       dependentEffects: true,
-//       effects: [
-//         moveToLocation(chosenCharacterOfYoursIncludingSelf),
+//       Type: "resolution",
+//       Name: "ON A ROLL",
+//       Text: "When you play this character, you may move him and one of your other characters to the same location for free. The other character gets +2 {S} this turn.",
+//       Optional: true,
+//       DependentEffects: true,
+//       Effects: [
+//         MoveToLocation(chosenCharacterOfYoursIncludingSelf),
 //         {
-//           type: "attribute",
-//           attribute: "strength",
-//           amount: 2,
-//           modifier: "add",
-//           duration: "turn",
-//           target: chosenOtherCharacterOfYours,
+//           Type: "attribute",
+//           Attribute: "strength",
+//           Amount: 2,
+//           Modifier: "add",
+//           Duration: "turn",
+//           Target: chosenOtherCharacterOfYours,
 //         },
 //       ],
 //     },
 //   ],
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 3,
-//   strength: 2,
-//   willpower: 3,
-//   lore: 1,
-//   illustrator: "Sandra Rios",
-//   number: 127,
-//   set: "URR",
-//   externalIds: {
-//     tcgPlayer: 549619,
+//   Inkwell: true,
+//   Colors: ["ruby"],
+//   Cost: 3,
+//   Strength: 2,
+//   Willpower: 3,
+//   Lore: 1,
+//   Illustrator: "Sandra Rios",
+//   Number: 127,
+//   Set: "URR",
+//   ExternalIds: {
+//     TcgPlayer: 549619,
 //   },
-//   rarity: "rare",
+//   Rarity: "rare",
 // };
 //
