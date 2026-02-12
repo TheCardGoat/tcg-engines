@@ -282,10 +282,7 @@ describe("FlowManager - State Machine", () => {
                   order: 1,
                 },
                 ready: {
-                  endIf: (context) => {
-                    // Auto-end when all players are ready
-                    return context.state.players.every((p) => p.ready);
-                  },
+                  endIf: (context) => context.state.players.every((p) => p.ready),
                   next: "draw",
                   order: 0,
                 },
@@ -649,9 +646,9 @@ describe("FlowManager - State Machine", () => {
                   next: "end",
                   order: 0,
                   steps: {
-                    start: { order: 0, next: "middle" },
-                    middle: { order: 1, next: "finish" },
-                    finish: { order: 2, next: undefined },
+                    finish: { next: undefined, order: 2 },
+                    middle: { next: "finish", order: 1 },
+                    start: { next: "middle", order: 0 },
                   },
                 },
               },

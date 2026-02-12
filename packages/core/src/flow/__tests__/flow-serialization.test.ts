@@ -50,18 +50,18 @@ describe("Flow Serialization - End to End", () => {
                 },
               },
               end: {
-                order: 3,
                 next: undefined,
                 onBegin: (context) => {
                   context.state.log.push("end-phase");
                 },
+                order: 3,
               },
               main: {
-                order: 2,
                 next: "end",
                 onBegin: (context) => {
                   context.state.log.push("main-phase");
                 },
+                order: 2,
               },
               main: {
                 next: "end",
@@ -71,11 +71,11 @@ describe("Flow Serialization - End to End", () => {
                 order: 2,
               },
               ready: {
-                order: 0,
                 next: "draw",
                 onBegin: (context) => {
                   context.state.log.push("ready-phase");
                 },
+                order: 0,
                 order: 3,
               },
               ready: {
@@ -445,10 +445,7 @@ describe("Flow Serialization - End to End", () => {
                 order: 1,
               },
               waiting: {
-                endIf: (context) => {
-                  // Auto-transition when all players ready
-                  return context.state.players.every((p) => p.score > 0);
-                },
+                endIf: (context) => context.state.players.every((p) => p.score > 0),
                 next: "ready",
                 onBegin: (context) => {
                   context.state.log.push("waiting-for-players");

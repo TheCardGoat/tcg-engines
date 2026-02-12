@@ -140,8 +140,8 @@ describe("RuleEngine - Operations Integration", () => {
         },
       }),
       setup: (players: Player[]) => ({
-        players,
         currentPlayer: 0,
+        players,
         resources: {
           [players[0].id]: 10,
           [players[1].id]: 10,
@@ -153,8 +153,8 @@ describe("RuleEngine - Operations Integration", () => {
         play: playZone,
       },
       zones: {
-        hand: handZone,
         deck: deckZone,
+        hand: handZone,
         play: playZone,
       },
     };
