@@ -2,13 +2,15 @@
  * Gundam Card Text Parser
  *
  * Converts card effect text into structured ability format.
+ *
+ * NOTE: This parser currently returns legacy BaseEffect shapes for backward
+ * compatibility. Use legacyToNewEffects() to convert to the new Effect type.
  */
 
 import type {
   ActivatedEffect,
   BaseEffect,
   ConstantEffect,
-  Effect,
   KeywordAbility,
   TargetQuery,
   TriggeredEffect,
@@ -21,7 +23,7 @@ import { parseTarget } from "./stages/target-parser";
 
 export type ParseResult = {
   keywords: KeywordAbility[];
-  effects: Effect[];
+  effects: BaseEffect[];
   warnings: string[];
 };
 
@@ -81,7 +83,7 @@ export function parseCardText(text: string): ParseResult {
   // Cleanup any leftover double spaces
   textToParse = textToParse.replace(/\s+/g, " ").trim();
 
-  const effects: Effect[] = [];
+  const effects: BaseEffect[] = [];
   const segments = splitIntoSegments(textToParse);
 
   for (const segment of segments) {
@@ -114,7 +116,7 @@ export function parseCardText(text: string): ParseResult {
     const id = `eff-${Math.random().toString(36).substr(2, 9)}`;
     const markers = segment.markers.join(" ");
 
-    let effect: Effect;
+    let effect: BaseEffect;
 
     if (markers.includes("Activate")) {
       const timing = markers.includes("Main") ? "MAIN" : "ACTION";
@@ -127,7 +129,7 @@ export function parseCardText(text: string): ParseResult {
         costs,
         conditions,
         action,
-      } as ActivatedEffect;
+      } as BaseEffect;
     } else if (
       markers.includes("Deploy") ||
       markers.includes("Attack") ||
@@ -135,7 +137,13 @@ export function parseCardText(text: string): ParseResult {
       markers.includes("When") ||
       markers.includes("Burst")
     ) {
-      let timing: TriggeredEffect["timing"] = "DEPLOY";
+      let timing:
+        | "DEPLOY"
+        | "ATTACK"
+        | "DESTROYED"
+        | "BURST"
+        | "WHEN_PAIRED"
+        | "WHEN_LINKED" = "DEPLOY";
       if (markers.includes("Deploy")) timing = "DEPLOY";
       else if (markers.includes("Attack")) timing = "ATTACK";
       else if (markers.includes("Destroyed")) timing = "DESTROYED";
@@ -152,7 +160,7 @@ export function parseCardText(text: string): ParseResult {
         costs,
         conditions,
         action,
-      } as TriggeredEffect;
+      } as BaseEffect;
     } else {
       // Constant Effect (or Command, but parser context doesn't know card type yet)
       effect = {
@@ -162,7 +170,7 @@ export function parseCardText(text: string): ParseResult {
         restrictions,
         conditions,
         action,
-      } as ConstantEffect;
+      } as BaseEffect;
     }
 
     effects.push(effect);

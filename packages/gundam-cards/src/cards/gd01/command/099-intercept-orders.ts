@@ -1,5 +1,16 @@
-import type { CommandCardDefinition } from "@tcg/gundam-types";
+import type { CommandCardDefinition, Effect } from "@tcg/gundam-types";
 
+/**
+ * Intercept Orders - Command Card
+ *
+ * Legacy → New Effect Migration:
+ * - type: "TRIGGERED" → category: "triggered"
+ * - type: "CONSTANT" → category: "command" (for Command card main/action effect)
+ * - description → text
+ * - action → actions: [action] (convert LegacyAction to EffectAction)
+ * - Removed: restrictions, costs, conditions (not represented in new Effect)
+ * - Added: targeting (derived from legacy action.target)
+ */
 export const InterceptOrders: CommandCardDefinition = {
   id: "gd01-099",
   name: "Intercept Orders",
@@ -15,38 +26,53 @@ export const InterceptOrders: CommandCardDefinition = {
   effects: [
     {
       id: "gd01-099-burst-1",
-      type: "TRIGGERED",
-      timing: "BURST",
-      description: "【Burst】Choose 1 enemy Unit with 5 or less HP. Rest it.",
-      restrictions: [],
-      costs: [],
-      conditions: [],
-      action: {
-        type: "REST",
-        target: {
-          controller: "OPPONENT",
-          cardType: "UNIT",
-          count: { min: 1, max: 1 },
-          filters: [{ type: "hp", comparison: "lte", value: 5 }],
+      category: "triggered",
+      timing: { type: "BURST", timing: "after" },
+      text: "【Burst】Choose 1 enemy Unit with 5 or less HP. Rest it.",
+      actions: [
+        {
+          type: "REST",
+          target: {
+            count: 1,
+            validTargets: [
+              {
+                type: "unit",
+                owner: "opponent",
+                state: { hasDamageAtLeast: 0 },
+              },
+            ],
+            chooser: "controller",
+            timing: "on_resolution",
+          },
         },
-      },
+      ],
+      // Note: HP filter (5 or less) is not directly mappable to TargetStateFilter
+      // This filter would need custom handling in the effect execution layer
     },
     {
       id: "gd01-099-main-action-1",
-      type: "CONSTANT",
-      description:
-        "【Main】/【Action】Choose 1 to 2 enemy Units with 3 or less HP. Rest them.",
-      restrictions: [],
-      conditions: [],
-      action: {
-        type: "REST",
-        target: {
-          controller: "OPPONENT",
-          cardType: "UNIT",
-          count: { min: 1, max: 2 },
-          filters: [{ type: "hp", comparison: "lte", value: 3 }],
+      category: "command",
+      timing: { type: "MAIN" },
+      text: "【Main】/【Action】Choose 1 to 2 enemy Units with 3 or less HP. Rest them.",
+      actions: [
+        {
+          type: "REST",
+          target: {
+            count: { min: 1, max: 2 },
+            validTargets: [
+              {
+                type: "unit",
+                owner: "opponent",
+                state: { hasDamageAtLeast: 0 },
+              },
+            ],
+            chooser: "controller",
+            timing: "on_resolution",
+          },
         },
-      },
+      ],
+      // Note: HP filter (3 or less) is not directly mappable to TargetStateFilter
+      // This filter would need custom handling in the effect execution layer
     },
   ],
   imageUrl:

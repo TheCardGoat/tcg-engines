@@ -21,10 +21,7 @@ import type { CardId, GameMoveDefinition, MoveContext } from "@tcg/core";
 import { isCardInZone } from "@tcg/core";
 import type { Draft } from "immer";
 import { enqueueBatchEffects } from "../../../effects/effect-stack";
-import {
-  detectAttackTriggers,
-  orderTriggeredEffects,
-} from "../../../effects/trigger-detection";
+import { detectAndEnqueueAttackTriggers } from "../../../effects/trigger-integration";
 import type { GundamGameState } from "../../../types";
 
 /**
@@ -198,31 +195,7 @@ export const attackMove: GameMoveDefinition<GundamGameState> = {
     }
 
     // Detect and enqueue 【Attack】 triggered effects
-    const triggerResult = detectAttackTriggers(
-      draft,
-      attackerId,
-      targetId,
-      playerId,
-    );
-
-    if (triggerResult.hasTriggers) {
-      // Order effects: active player's effects first
-      const orderResult = orderTriggeredEffects(
-        triggerResult.effects,
-        draft.currentPlayer,
-      );
-
-      // Enqueue effects in the determined order
-      enqueueBatchEffects(
-        draft,
-        [...triggerResult.effects],
-        [...orderResult.order],
-      );
-
-      console.log(
-        `[ATTACK] Detected ${triggerResult.effects.length} attack triggers, enqueued in order: ${orderResult.order.join(", ")}`,
-      );
-    }
+    detectAndEnqueueAttackTriggers(draft, attackerId, targetId, playerId);
 
     // TODO: Set up battle state for resolution
     // This would involve:

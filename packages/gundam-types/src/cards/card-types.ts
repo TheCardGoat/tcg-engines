@@ -1,3 +1,4 @@
+import type { BaseEffect, Effect } from "../effects";
 import type { TargetQuery } from "../targeting/gundam-target-dsl";
 
 // ============================================================================
@@ -9,88 +10,15 @@ export type KeywordAbility = {
   value?: number;
 };
 
-export type EffectRestriction =
-  | { type: "ONCE_PER_TURN" }
-  | { type: "MAX_PER_TURN"; value: number };
-
-export type EffectCost =
-  | { type: "ENERGY"; amount: number }
-  | { type: "REST_SELF"; amount: number }
-  | { type: "DISCARD"; amount: number }
-  | { type: "RETURN_TO_HAND"; amount: number };
-
-export type EffectCondition = {
-  type: "STATE_CHECK";
-  text: string;
-};
-
-export type Action =
-  | { type: "SEQUENCE"; actions: Action[] }
-  | {
-      type: "CONDITIONAL";
-      conditions: EffectCondition[];
-      trueAction: Action;
-      falseAction?: Action;
-    }
-  | { type: "DRAW"; value: number }
-  | { type: "HEAL"; amount: number; target?: TargetQuery | TargetQuery[] }
-  | { type: "DAMAGE"; value: number; target?: TargetQuery | TargetQuery[] }
-  | {
-      type: "SEARCH";
-      destination: string;
-      count?: number;
-      filter?: Record<string, string>;
-    }
-  | { type: "REST"; target?: TargetQuery | TargetQuery[] }
-  | { type: "STAND"; target?: TargetQuery | TargetQuery[] }
-  | { type: "DEPLOY"; target?: TargetQuery | TargetQuery[] }
-  | { type: "ADD_TO_HAND"; target?: TargetQuery | TargetQuery[] }
-  | {
-      type: "MODIFY_STATS";
-      attribute: "AP" | "HP";
-      value: number;
-      duration: "TURN" | "PERMANENT";
-      target?: TargetQuery | TargetQuery[];
-    }
-  | {
-      type: "GAIN_KEYWORDS";
-      keywords: string[];
-      duration: "TURN" | "PERMANENT";
-      target?: TargetQuery | TargetQuery[];
-    }
-  | { type: "DISCARD"; value: number; target?: TargetQuery | TargetQuery[] }
-  | { type: "CUSTOM"; text: string };
-
-export type BaseEffect = {
-  id: string;
-  description: string;
-  restrictions?: EffectRestriction[];
-  costs?: EffectCost[];
-  conditions?: EffectCondition[];
-  action: Action;
-};
-
-export type ActivatedEffect = BaseEffect & {
-  type: "ACTIVATED";
-  timing: "MAIN" | "ACTION";
-};
-
-export type TriggeredEffect = BaseEffect & {
-  type: "TRIGGERED";
-  timing:
-    | "DEPLOY"
-    | "ATTACK"
-    | "DESTROYED"
-    | "WHEN_PAIRED"
-    | "WHEN_LINKED"
-    | "BURST";
-};
-
-export type ConstantEffect = BaseEffect & {
-  type: "CONSTANT";
-};
-
-export type Effect = ActivatedEffect | TriggeredEffect | ConstantEffect;
+/**
+ * Card Effects - Transitional Union Type
+ *
+ * During the migration from legacy effects to new effects, card definitions
+ * can have either BaseEffect[] (legacy parser output) or Effect[] (new format).
+ *
+ * TODO: Once all cards are migrated, change this to just Effect[].
+ */
+export type CardEffects = BaseEffect[] | Effect[];
 
 // ============================================================================
 // BASE CARD DEFINITION
@@ -131,7 +59,7 @@ export type RawCardDefinition = {
   keywords?: KeywordAbility[];
 
   /** Parsed structured effects */
-  effects?: Effect[];
+  effects?: CardEffects;
 
   /** Card image URL */
   imageUrl?: string;

@@ -6,11 +6,11 @@
 import { describe, expect, it } from "bun:test";
 import type { CardId, PlayerId } from "@tcg/core";
 import { createCardId, createPlayerId } from "@tcg/core";
-import type { GundamGameState } from "../../types";
 import type {
   BaseEffectCardDefinition,
   TargetingSpec,
-} from "../../types/effects";
+} from "@tcg/gundam-types";
+import type { GundamGameState } from "../../types";
 import {
   enumerateValidTargets,
   type TargetingContext,

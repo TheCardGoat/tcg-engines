@@ -13,6 +13,7 @@
  */
 
 import type { PlayerId } from "@tcg/core";
+import type { Effect as SharedEffect } from "@tcg/gundam-types/effects";
 
 // ============================================================================
 // Targeting Types
@@ -712,6 +713,9 @@ export type Cost =
 
 /**
  * Ability definition structure
+ *
+ * Uses the engine's Effect type which is a union of simple effect shapes.
+ * This allows for easier creation of abilities in tests and card definitions.
  */
 export interface AbilityDefinition {
   readonly name?: string;

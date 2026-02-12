@@ -7,8 +7,8 @@
 
 import { afterEach, beforeEach, describe, expect, it } from "bun:test";
 import type { CardId, PlayerId } from "@tcg/core";
+import type { Effect, EffectTiming } from "@tcg/gundam-types/effects";
 import type { GundamGameState } from "../../types";
-import type { EffectDefinition, EffectTiming } from "../../types/effects";
 import {
   clearCardDefinitions,
   registerCardDefinition,
@@ -31,11 +31,8 @@ import {
 } from "../trigger-detection";
 
 // Helper function to create a mock card definition with effects
-function createMockCardDefinition(
-  cardId: CardId,
-  effects: EffectDefinition[],
-): EffectDefinition {
-  const def: EffectDefinition = {
+function createMockCardDefinition(cardId: CardId, effects: Effect[]): Effect {
+  const def: Effect = {
     id: `effect-${cardId}`,
     category: "triggered",
     timing: { type: "DEPLOY" },
@@ -118,7 +115,7 @@ describe("Trigger Detection", () => {
       setupPlayerZones(state, player1, [cardId]);
 
       // Register card with deploy effect
-      const deployEffect: EffectDefinition = {
+      const deployEffect: Effect = {
         id: "deploy-effect",
         category: "triggered",
         timing: { type: "DEPLOY" },
@@ -155,7 +152,7 @@ describe("Trigger Detection", () => {
       setupPlayerZones(state, player1, [attackerId]);
 
       // Register card with attack effect
-      const attackEffect: EffectDefinition = {
+      const attackEffect: Effect = {
         id: "attack-effect",
         category: "triggered",
         timing: { type: "ATTACK" },
@@ -193,7 +190,7 @@ describe("Trigger Detection", () => {
       setupPlayerZones(state, player1, [cardId]);
 
       // Register card with destroyed effect
-      const destroyedEffect: EffectDefinition = {
+      const destroyedEffect: Effect = {
         id: "destroyed-effect",
         category: "triggered",
         timing: { type: "DESTROYED" },
@@ -230,7 +227,7 @@ describe("Trigger Detection", () => {
       setupPlayerZones(state, player1, [cardId]);
 
       // Register card with start of turn effect
-      const startTurnEffect: EffectDefinition = {
+      const startTurnEffect: Effect = {
         id: "start-turn-effect",
         category: "triggered",
         timing: { type: "START_OF_TURN" },
@@ -266,7 +263,7 @@ describe("Trigger Detection", () => {
       setupPlayerZones(state, player1, [cardId]);
 
       // Register card with end of turn effect
-      const endTurnEffect: EffectDefinition = {
+      const endTurnEffect: Effect = {
         id: "end-turn-effect",
         category: "triggered",
         timing: { type: "END_OF_TURN" },
@@ -311,7 +308,7 @@ describe("Trigger Detection", () => {
         [card1, player1],
         [card2, player2],
       ] as const) {
-        const effect: EffectDefinition = {
+        const effect: Effect = {
           id: `deploy-effect-${id}`,
           category: "triggered",
           timing: { type: "DEPLOY" },
@@ -328,7 +325,13 @@ describe("Trigger Detection", () => {
         });
       }
 
-      const result = detectDeployTriggers(state, card1, player1);
+      const event: DeployTriggerEvent = {
+        type: "DEPLOY",
+        cardId: card1,
+        playerId: player1,
+      };
+
+      const result = detectDeployTriggers(state, event);
 
       expect(result.hasTriggers).toBe(true);
       expect(result.effects).toHaveLength(2);
@@ -342,7 +345,7 @@ describe("Trigger Detection", () => {
       setupPlayerZones(state, player1, [cardId]);
 
       // Register card without deploy effect
-      const attackEffect: EffectDefinition = {
+      const attackEffect: Effect = {
         id: "attack-effect",
         category: "triggered",
         timing: { type: "ATTACK" },
@@ -358,7 +361,13 @@ describe("Trigger Detection", () => {
         effects: [attackEffect],
       });
 
-      const result = detectDeployTriggers(state, cardId, player1);
+      const event: DeployTriggerEvent = {
+        type: "DEPLOY",
+        cardId,
+        playerId: player1,
+      };
+
+      const result = detectDeployTriggers(state, event);
 
       expect(result.hasTriggers).toBe(false);
       expect(result.effects).toHaveLength(0);
@@ -376,7 +385,7 @@ describe("Trigger Detection", () => {
 
       // Register both cards with attack effects
       for (const id of [attackerId, otherUnitId]) {
-        const effect: EffectDefinition = {
+        const effect: Effect = {
           id: `attack-effect-${id}`,
           category: "triggered",
           timing: { type: "ATTACK" },
@@ -393,12 +402,14 @@ describe("Trigger Detection", () => {
         });
       }
 
-      const result = detectAttackTriggers(
-        state,
+      const event: AttackTriggerEvent = {
+        type: "ATTACK",
         attackerId,
-        undefined,
-        player1,
-      );
+        targetId: undefined,
+        playerId: player1,
+      };
+
+      const result = detectAttackTriggers(state, event);
 
       expect(result.hasTriggers).toBe(true);
       expect(result.effects).toHaveLength(2);
@@ -416,7 +427,7 @@ describe("Trigger Detection", () => {
 
       // Register both cards with destroyed effects
       for (const id of [destroyedId, otherUnitId]) {
-        const effect: EffectDefinition = {
+        const effect: Effect = {
           id: `destroyed-effect-${id}`,
           category: "triggered",
           timing: { type: "DESTROYED" },
@@ -433,7 +444,13 @@ describe("Trigger Detection", () => {
         });
       }
 
-      const result = detectDestroyedTriggers(state, destroyedId, player1);
+      const event: DestroyedTriggerEvent = {
+        type: "DESTROYED",
+        cardId: destroyedId,
+        playerId: player1,
+      };
+
+      const result = detectDestroyedTriggers(state, event);
 
       expect(result.hasTriggers).toBe(true);
       expect(result.effects).toHaveLength(2);
@@ -453,7 +470,7 @@ describe("Trigger Detection", () => {
 
       // Register both cards with start of turn effects
       for (const id of [card1, card2]) {
-        const effect: EffectDefinition = {
+        const effect: Effect = {
           id: `start-turn-effect-${id}`,
           category: "triggered",
           timing: { type: "START_OF_TURN" },
@@ -471,7 +488,12 @@ describe("Trigger Detection", () => {
       }
 
       // Only player1's turn
-      const result = detectStartOfTurnTriggers(state, player1);
+      const event: StartOfTurnTriggerEvent = {
+        type: "START_OF_TURN",
+        playerId: player1,
+      };
+
+      const result = detectStartOfTurnTriggers(state, event);
 
       expect(result.hasTriggers).toBe(true);
       expect(result.effects).toHaveLength(1);
@@ -492,7 +514,7 @@ describe("Trigger Detection", () => {
 
       // Register both cards with end of turn effects
       for (const id of [card1, card2]) {
-        const effect: EffectDefinition = {
+        const effect: Effect = {
           id: `end-turn-effect-${id}`,
           category: "triggered",
           timing: { type: "END_OF_TURN" },
@@ -510,7 +532,12 @@ describe("Trigger Detection", () => {
       }
 
       // Player1's turn is ending
-      const result = detectEndOfTurnTriggers(state, player1);
+      const event: EndOfTurnTriggerEvent = {
+        type: "END_OF_TURN",
+        playerId: player1,
+      };
+
+      const result = detectEndOfTurnTriggers(state, event);
 
       expect(result.hasTriggers).toBe(true);
       // Both players' end of turn effects trigger

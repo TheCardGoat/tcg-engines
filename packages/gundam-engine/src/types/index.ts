@@ -27,6 +27,5 @@ export type {
  * - TargetingSpec: Target selection system
  * - Card Definition Extensions: CommandCardDefinition, UnitCardDefinition, etc.
  *
- * See effects.ts for comprehensive JSDoc documentation.
+ * See @tcg/gundam-types/effects for comprehensive JSDoc documentation.
  */
-export type * from "./effects";

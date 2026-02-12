@@ -12,7 +12,6 @@
 
 import type { CardId, PlayerId, Zone } from "@tcg/core";
 import { draw, getZoneSize, isCardInZone, moveCard, shuffle } from "@tcg/core";
-import type { CardPosition, GundamGameState } from "../types";
 import type {
   ActivateAction,
   CardFilter,
@@ -22,19 +21,19 @@ import type {
   DestroyAction,
   DiscardAction,
   DrawAction,
+  Effect,
   EffectAction,
-  EffectDefinition,
   GrantKeywordAction,
   KeywordEffect,
-  ModifierId,
   ModifyStatsAction,
   MoveCardAction,
   RestAction,
   SearchAction,
   TargetingSpec,
-  TemporaryModifier,
   ZoneType,
-} from "../types/effects";
+} from "@tcg/gundam-types/effects";
+import type { CardPosition, GundamGameState } from "../types";
+import type { ModifierId, TemporaryModifier } from "./effect-runtime";
 
 // ============================================================================
 // CARD DEFINITION REGISTRY
@@ -66,7 +65,7 @@ export interface CardDefinition {
   /** Keywords inherent to this card */
   readonly keywords?: readonly KeywordEffect[];
   /** Effects defined on this card */
-  readonly effects?: readonly EffectDefinition[];
+  readonly effects?: readonly Effect[];
 }
 
 /**
