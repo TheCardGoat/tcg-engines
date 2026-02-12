@@ -4,10 +4,10 @@ export const ursulasPlan: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "restriction",
+        duration: "until-start-of-next-turn",
         restriction: "cant-ready",
         target: "SELF",
-        duration: "until-start-of-next-turn",
+        type: "restriction",
       },
       id: "ygy-1",
       text: "Each opponent chooses and exerts one of their characters. Those characters can't ready at the start of their next turn.",

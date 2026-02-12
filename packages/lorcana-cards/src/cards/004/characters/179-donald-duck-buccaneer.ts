@@ -4,16 +4,16 @@ export const donaldDuckBuccaneer: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "lore",
-        modifier: 1,
-        target: "YOUR_CHARACTERS",
         duration: "this-turn",
+        modifier: 1,
+        stat: "lore",
+        target: "YOUR_CHARACTERS",
+        type: "modify-stat",
       },
       id: "va5-1",
       name: "BOARDING PARTY",
       text: "BOARDING PARTY During your turn, whenever this character banishes a character in a challenge, your other characters get +1 {L} this turn.",
-      trigger: { event: "play", timing: "when", on: "SELF" },
+      trigger: { event: "play", on: "SELF", timing: "when" },
       type: "triggered",
     },
   ],

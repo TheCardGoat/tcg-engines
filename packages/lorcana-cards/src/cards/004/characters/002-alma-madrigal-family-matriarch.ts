@@ -4,21 +4,21 @@ export const almaMadrigalFamilyMatriarch: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "search-deck",
           putInto: "hand",
           shuffle: true,
+          type: "search-deck",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "6uc-1",
       name: "TO THE TABLE",
       text: "TO THE TABLE When you play this character, you may search your deck for a Madrigal character card and reveal that card to all players. Shuffle your deck and put that card on top of it.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

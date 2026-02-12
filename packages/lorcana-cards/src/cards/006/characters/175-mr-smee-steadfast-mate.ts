@@ -4,9 +4,9 @@ export const mrSmeeSteadfastMate: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Evasive",
         target: "SELF",
+        type: "gain-keyword",
       },
       id: "8zn-1",
       text: "GOOD CATCH During your turn, this character gains Evasive.",

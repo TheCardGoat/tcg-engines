@@ -5,11 +5,11 @@ export const imperialBow: ItemCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "gain-keyword",
+        duration: "this-turn",
         keyword: "Challenger",
         target: "CHOSEN_CHARACTER",
+        type: "gain-keyword",
         value: 2,
-        duration: "this-turn",
       },
       id: "1li-1",
       text: "WITHIN RANGE {E}, 1 {I} — Chosen Hero character gains Challenger +2 and Evasive this turn.",

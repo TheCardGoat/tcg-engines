@@ -4,14 +4,14 @@ export const youCameBack: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "ready",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "ready",
       },
       id: "1dw-1",
       text: "Ready chosen character.",

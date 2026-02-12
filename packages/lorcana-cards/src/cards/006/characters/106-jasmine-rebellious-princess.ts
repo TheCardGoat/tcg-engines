@@ -4,17 +4,17 @@ export const jasmineRebelliousPrincess: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "lose-lore",
         amount: 1,
         target: "EACH_OPPONENT",
+        type: "lose-lore",
       },
       id: "zj2-1",
       name: "YOU'LL NEVER MISS IT",
       text: "YOU'LL NEVER MISS IT Whenever this character quests, each opponent loses 1 lore.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

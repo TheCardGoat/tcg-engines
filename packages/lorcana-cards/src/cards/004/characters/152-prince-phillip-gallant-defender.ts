@@ -10,19 +10,19 @@ export const princePhillipGallantDefender: CharacterCard = {
     },
     {
       effect: {
-        type: "gain-keyword",
+        duration: "this-turn",
         keyword: "Resist",
         target: "CHOSEN_CHARACTER",
+        type: "gain-keyword",
         value: 1,
-        duration: "this-turn",
       },
       id: "1f7-2",
       name: "BEST DEFENSE",
       text: "BEST DEFENSE Whenever one of your characters is chosen for Support, they gain Resist +1 this turn.",
       trigger: {
         event: "banish",
-        timing: "whenever",
         on: "YOUR_OTHER_CHARACTERS",
+        timing: "whenever",
       },
       type: "triggered",
     },

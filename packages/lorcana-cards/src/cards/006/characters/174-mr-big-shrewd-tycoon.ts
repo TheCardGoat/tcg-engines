@@ -4,9 +4,9 @@ export const mrBigShrewdTycoon: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "restriction",
         restriction: "cant-be-challenged",
         target: "SELF",
+        type: "restriction",
       },
       id: "1lm-1",
       name: "REPUTATION",

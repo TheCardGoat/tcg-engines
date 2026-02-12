@@ -8,9 +8,7 @@ describe("General Li - Head of the Imperial Army", () => {
       play: [generalLiHeadOfTheImperialArmy],
     });
 
-    const cardUnderTest = testEngine.getCardModel(
-      generalLiHeadOfTheImperialArmy,
-    );
+    const cardUnderTest = testEngine.getCardModel(generalLiHeadOfTheImperialArmy);
     expect(cardUnderTest.hasResist).toBe(true);
   });
 });

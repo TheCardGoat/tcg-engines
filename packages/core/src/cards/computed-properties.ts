@@ -23,7 +23,7 @@ export function getCardPower<TGameState = unknown>(
   // Sum all power modifiers
   const modifierBonus = card.modifiers
     .filter((m) => m.type === "stat" && m.property === "power")
-    .filter((m) => !m.condition || m.condition(state)) // check conditions
+    .filter((m) => !m.condition || m.condition(state)) // Check conditions
     .reduce((sum, m) => sum + (m.value as number), 0);
 
   return basePower + modifierBonus;
@@ -49,7 +49,7 @@ export function getCardToughness<TGameState = unknown>(
   // Sum all toughness modifiers
   const modifierBonus = card.modifiers
     .filter((m) => m.type === "stat" && m.property === "toughness")
-    .filter((m) => !m.condition || m.condition(state)) // check conditions
+    .filter((m) => !m.condition || m.condition(state)) // Check conditions
     .reduce((sum, m) => sum + (m.value as number), 0);
 
   return baseToughness + modifierBonus;
@@ -76,7 +76,7 @@ export function getCardCost<TGameState = unknown>(
   // Sum all cost modifiers (can be negative for cost reduction)
   const costModification = card.modifiers
     .filter((m) => m.type === "stat" && m.property === "cost")
-    .filter((m) => !m.condition || m.condition(state)) // check conditions
+    .filter((m) => !m.condition || m.condition(state)) // Check conditions
     .reduce((sum, m) => sum + (m.value as number), 0);
 
   // Cost cannot go below zero

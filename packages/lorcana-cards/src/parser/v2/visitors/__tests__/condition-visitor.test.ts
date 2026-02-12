@@ -32,9 +32,7 @@ describe("VisitorCondition Visitor", () => {
     const cst = (parser as any).conditionClause();
 
     if (parser.errors.length > 0) {
-      throw new Error(
-        `Parsing failed: ${parser.errors.map((e) => e.message).join(", ")}`,
-      );
+      throw new Error(`Parsing failed: ${parser.errors.map((e) => e.message).join(", ")}`);
     }
 
     return cst;
@@ -44,9 +42,7 @@ describe("VisitorCondition Visitor", () => {
   describe.skip("parseConditionFromCst", () => {
     describe("if conditions", () => {
       it("parses 'if you have another character'", () => {
-        const cst = parseVisitorConditionClause(
-          "if you have another character",
-        );
+        const cst = parseVisitorConditionClause("if you have another character");
         const condition = parseConditionFromCst(cst.children);
 
         expect(condition).toBeDefined();
@@ -246,9 +242,7 @@ describe("VisitorCondition Visitor", () => {
   describe("parseConditionFromText", () => {
     describe("if conditions from text", () => {
       it("parses 'if you have another character'", () => {
-        const condition = parseConditionFromText(
-          "if you have another character",
-        );
+        const condition = parseConditionFromText("if you have another character");
 
         expect(condition).toBeDefined();
         expect(condition?.type).toBe("if");
@@ -401,9 +395,7 @@ describe("VisitorCondition Visitor", () => {
     it("returns null for non-matching text", () => {
       // Note: Text must not contain "if", "during", "at", "with", "without"
       // As these are condition keywords that trigger pattern matching
-      const condition = parseConditionFromText(
-        "invalid text for testing purposes",
-      );
+      const condition = parseConditionFromText("invalid text for testing purposes");
 
       expect(condition).toBeNull();
     });
@@ -424,9 +416,7 @@ describe("VisitorCondition Visitor", () => {
     });
 
     it("matches first condition in text with multiple conditions", () => {
-      const condition = parseConditionFromText(
-        "if you have 5 lore, during your turn, draw",
-      );
+      const condition = parseConditionFromText("if you have 5 lore, during your turn, draw");
 
       expect(condition).toBeDefined();
       // Should match the first one (if)
@@ -441,9 +431,7 @@ describe("VisitorCondition Visitor", () => {
     });
 
     it("handles condition at end of text", () => {
-      const condition = parseConditionFromText(
-        "draw a card if you have 5 lore",
-      );
+      const condition = parseConditionFromText("draw a card if you have 5 lore");
 
       expect(condition).toBeDefined();
       expect(condition?.type).toBe("if");
@@ -526,13 +514,7 @@ describe("VisitorCondition Visitor", () => {
     });
 
     it("type field matches expected values", () => {
-      const validTypes: VisitorCondition["type"][] = [
-        "if",
-        "during",
-        "at",
-        "with",
-        "without",
-      ];
+      const validTypes: VisitorCondition["type"][] = ["if", "during", "at", "with", "without"];
 
       for (const type of validTypes) {
         let testText = "";

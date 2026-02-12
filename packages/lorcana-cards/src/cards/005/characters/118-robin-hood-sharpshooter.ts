@@ -4,21 +4,21 @@ export const robinHoodSharpshooter: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
-        effect: {
-          type: "play-card",
-          from: "hand",
-          cost: "free",
-        },
         chooser: "CONTROLLER",
+        effect: {
+          cost: "free",
+          from: "hand",
+          type: "play-card",
+        },
+        type: "optional",
       },
       id: "1w7-1",
       name: "MY GREATEST PERFORMANCE",
       text: "MY GREATEST PERFORMANCE Whenever this character quests, look at the top 4 cards of your deck. You may reveal an action card with cost 6 or less and play it for free. Put the rest in your discard.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

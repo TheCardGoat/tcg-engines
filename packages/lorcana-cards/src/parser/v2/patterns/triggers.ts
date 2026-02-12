@@ -33,14 +33,12 @@ export const FIRST_TIME_PATTERN = /^The first time\s+/;
 /**
  * Pattern for "Once per turn, when/whenever" (restriction prefix)
  */
-export const ONCE_PER_TURN_TRIGGER_PATTERN =
-  /^Once per turn,\s+(?:when|whenever)\s+/i;
+export const ONCE_PER_TURN_TRIGGER_PATTERN = /^Once per turn,\s+(?:when|whenever)\s+/i;
 
 /**
  * Pattern for "During your turn, when" (restriction prefix)
  */
-export const DURING_YOUR_TURN_TRIGGER_PATTERN =
-  /^During your turn,\s+(?:when|whenever)\s+/i;
+export const DURING_YOUR_TURN_TRIGGER_PATTERN = /^During your turn,\s+(?:when|whenever)\s+/i;
 
 /**
  * Common trigger event patterns
@@ -114,10 +112,7 @@ export function isTriggeredAbilityText(text: string): boolean {
   }
 
   // Trigger word after restriction prefix
-  if (
-    ONCE_PER_TURN_TRIGGER_PATTERN.test(text) ||
-    DURING_YOUR_TURN_TRIGGER_PATTERN.test(text)
-  ) {
+  if (ONCE_PER_TURN_TRIGGER_PATTERN.test(text) || DURING_YOUR_TURN_TRIGGER_PATTERN.test(text)) {
     return true;
   }
 

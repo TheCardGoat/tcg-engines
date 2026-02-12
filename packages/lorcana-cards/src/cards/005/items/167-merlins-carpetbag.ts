@@ -5,9 +5,9 @@ export const merlinsCarpetbag: ItemCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "return-from-discard",
-        target: "CONTROLLER",
         cardType: "item",
+        target: "CONTROLLER",
+        type: "return-from-discard",
       },
       id: "1ya-1",
       text: "HOCKETY POCKETY {E}, 1 {I} — Return an item card from your discard to your hand.",

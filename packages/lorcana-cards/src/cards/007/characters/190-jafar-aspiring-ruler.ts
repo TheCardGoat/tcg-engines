@@ -4,19 +4,19 @@ export const jafarAspiringRuler: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
+        duration: "this-turn",
         keyword: "Challenger",
         target: "SELF",
+        type: "gain-keyword",
         value: 2,
-        duration: "this-turn",
       },
       id: "1bu-1",
       name: "THAT'S BETTER",
       text: "THAT'S BETTER When you play this character, chosen character gains Challenger +2 this turn.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

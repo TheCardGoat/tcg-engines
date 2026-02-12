@@ -4,9 +4,9 @@ export const friendsOnTheOtherSide: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "draw",
         amount: 2,
         target: "CONTROLLER",
+        type: "draw",
       },
       id: "a41-1",
       text: "Draw 2 cards.",

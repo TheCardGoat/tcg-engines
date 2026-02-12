@@ -4,10 +4,10 @@ export const instituteOfTechnologyPrestigiousUniversity: LocationCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "willpower",
         modifier: 1,
+        stat: "willpower",
         target: "CHARACTERS_HERE",
+        type: "modify-stat",
       },
       id: "5mi-1",
       name: "WELCOME TO THE LAB Inventor",
@@ -16,15 +16,15 @@ export const instituteOfTechnologyPrestigiousUniversity: LocationCard = {
     },
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you have a character here",
+          type: "if",
         },
         then: {
-          type: "gain-lore",
           amount: 1,
+          type: "gain-lore",
         },
+        type: "conditional",
       },
       id: "5mi-2",
       text: "PUSH THE BOUNDARIES At the start of your turn, if you have a character here, gain 1 lore.",

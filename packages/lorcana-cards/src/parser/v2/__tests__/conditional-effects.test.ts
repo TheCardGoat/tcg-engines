@@ -14,9 +14,7 @@ import { parseEffect } from "../parsers/effect-parser";
 describe("Conditional Effect Parser", () => {
   describe("Simple conditional effects", () => {
     it('should parse "if you have a character named Elsa, draw a card"', () => {
-      const result = parseEffect(
-        "If you have a character named Elsa, draw a card",
-      );
+      const result = parseEffect("If you have a character named Elsa, draw a card");
 
       expect(result).toMatchObject({
         condition: {
@@ -34,9 +32,7 @@ describe("Conditional Effect Parser", () => {
     });
 
     it('should parse "if you have 3 or more items, deal 3 damage to chosen character"', () => {
-      const result = parseEffect(
-        "If you have 3 or more items, deal 3 damage to chosen character",
-      );
+      const result = parseEffect("If you have 3 or more items, deal 3 damage to chosen character");
 
       expect(result).toMatchObject({
         condition: {
@@ -50,9 +46,7 @@ describe("Conditional Effect Parser", () => {
         type: "conditional",
       });
       // Verify target object is present in then effect
-      expect(
-        (result as { then: { target: unknown } }).then.target,
-      ).toBeDefined();
+      expect((result as { then: { target: unknown } }).then.target).toBeDefined();
     });
 
     it('should parse "if you have no cards in hand, gain 2 lore"', () => {
@@ -96,9 +90,7 @@ describe("Conditional Effect Parser", () => {
     });
 
     it('should parse "Gain 1 lore. If you have no cards in hand, gain 2 lore instead"', () => {
-      const result = parseEffect(
-        "Gain 1 lore. If you have no cards in hand, gain 2 lore instead",
-      );
+      const result = parseEffect("Gain 1 lore. If you have no cards in hand, gain 2 lore instead");
 
       expect(result).toMatchObject({
         condition: {
@@ -137,9 +129,7 @@ describe("Conditional Effect Parser", () => {
     });
 
     it('should parse "if this character has no damage, draw 2 cards"', () => {
-      const result = parseEffect(
-        "If this character has no damage, draw 2 cards",
-      );
+      const result = parseEffect("If this character has no damage, draw 2 cards");
 
       expect(result).toMatchObject({
         condition: {
@@ -158,9 +148,7 @@ describe("Conditional Effect Parser", () => {
 
   describe('"if an opponent has..." conditions', () => {
     it('should parse "if an opponent has more lore than you, draw 2 cards"', () => {
-      const result = parseEffect(
-        "If an opponent has more lore than you, draw 2 cards",
-      );
+      const result = parseEffect("If an opponent has more lore than you, draw 2 cards");
 
       expect(result).toMatchObject({
         condition: {
@@ -177,9 +165,7 @@ describe("Conditional Effect Parser", () => {
     });
 
     it('should parse "if an opponent has no characters, gain 3 lore"', () => {
-      const result = parseEffect(
-        "If an opponent has no characters, gain 3 lore",
-      );
+      const result = parseEffect("If an opponent has no characters, gain 3 lore");
 
       expect(result).toMatchObject({
         condition: {
@@ -197,9 +183,7 @@ describe("Conditional Effect Parser", () => {
 
   describe("Character count conditions", () => {
     it('should parse "if you have 3 or more characters in play, draw a card"', () => {
-      const result = parseEffect(
-        "If you have 3 or more characters in play, draw a card",
-      );
+      const result = parseEffect("If you have 3 or more characters in play, draw a card");
 
       expect(result).toMatchObject({
         condition: {
@@ -218,9 +202,7 @@ describe("Conditional Effect Parser", () => {
 
   describe("Complex conditional effects", () => {
     it('should parse "if you have a Floodborn character, draw 2 cards"', () => {
-      const result = parseEffect(
-        "If you have a Floodborn character, draw 2 cards",
-      );
+      const result = parseEffect("If you have a Floodborn character, draw 2 cards");
 
       expect(result).toMatchObject({
         condition: {
@@ -261,9 +243,7 @@ describe("Conditional Effect Parser", () => {
 
   describe("Edge cases", () => {
     it("should handle trailing periods correctly", () => {
-      const result = parseEffect(
-        "If you have a character named Elsa, draw a card.",
-      );
+      const result = parseEffect("If you have a character named Elsa, draw a card.");
 
       expect(result).toMatchObject({ type: "conditional" });
     });

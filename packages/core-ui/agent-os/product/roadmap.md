@@ -10,6 +10,7 @@
 8. [ ] Storybook Documentation — Create complete interactive documentation with live examples, usage guides, and component playground `[XL]`
 
 > Notes
+>
 > - Include 4–12 items total
 > - Order items by technical dependencies and product architecture
 > - Each item should represent an end-to-end (frontend + backend) functional and testable feature

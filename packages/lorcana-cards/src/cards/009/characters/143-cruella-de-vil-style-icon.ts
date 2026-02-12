@@ -4,24 +4,24 @@ export const cruellaDeVilStyleIcon: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "put-into-inkwell",
-        source: "top-of-deck",
-        target: "CONTROLLER",
         exerted: true,
         facedown: true,
+        source: "top-of-deck",
+        target: "CONTROLLER",
+        type: "put-into-inkwell",
       },
       id: "1r1-1",
       name: "OUT OF SEASON Once",
       text: "OUT OF SEASON Once during your turn, whenever a character with cost 2 or less is banished, put the top card of your deck into your inkwell facedown and exerted.",
-      trigger: { event: "play", timing: "when", on: "SELF" },
+      trigger: { event: "play", on: "SELF", timing: "when" },
       type: "triggered",
     },
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: -1,
+        stat: "strength",
         target: "CHOSEN_CHARACTER",
+        type: "modify-stat",
       },
       id: "1r1-2",
       text: "INSULTING REMARK During your turn, each opposing character with cost 2 or less gets -1 {S}.",

@@ -4,22 +4,22 @@ export const antonioMadrigalFriendToAll: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "search-deck",
+          cardType: "character",
           putInto: "hand",
           shuffle: true,
-          cardType: "character",
+          type: "search-deck",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "v9i-1",
       name: "OF COURSE THEY CAN COME Once",
       text: "OF COURSE THEY CAN COME Once during your turn, whenever one of your characters sings a song, you may search your deck for a character card with cost 3 or less and reveal that card to all players. Put that card into your hand and shuffle your deck.",
       trigger: {
         event: "banish",
-        timing: "whenever",
         on: "YOUR_OTHER_CHARACTERS",
+        timing: "whenever",
       },
       type: "triggered",
     },

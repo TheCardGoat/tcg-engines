@@ -10,10 +10,10 @@ export const plutoGuardDog: CharacterCard = {
     },
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: 4,
+        stat: "strength",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "173-2",
       text: "BRAVO While this character has no damage, he gets +4 {S}.",

@@ -43,7 +43,7 @@ describe("One Piece Game - Refactored Engine Features", () => {
 
   it("should have proper zone configuration", () => {
     const gameDefinition = createMockOnePieceGame();
-    const zones = gameDefinition.zones;
+    const { zones } = gameDefinition;
 
     // Verify One Piece zones
     expect(zones?.deck).toBeDefined();
@@ -79,8 +79,8 @@ describe("One Piece Game - Refactored Engine Features", () => {
   it("should use flow context for first turn draw skip", () => {
     const gameDefinition = createMockOnePieceGame();
 
-    // draw move uses context.flow.isFirstTurn and context.flow.currentPlayer
-    const draw = gameDefinition.moves.draw;
+    // Draw move uses context.flow.isFirstTurn and context.flow.currentPlayer
+    const { draw } = gameDefinition.moves;
     expect(draw.condition).toBeDefined();
 
     // First player skips draw on first turn
@@ -89,8 +89,8 @@ describe("One Piece Game - Refactored Engine Features", () => {
   it("should use flow context for DON!! placement", () => {
     const gameDefinition = createMockOnePieceGame();
 
-    // placeDon uses context.flow.turn to determine DON!! count
-    const placeDon = gameDefinition.moves.placeDon;
+    // PlaceDon uses context.flow.turn to determine DON!! count
+    const { placeDon } = gameDefinition.moves;
     expect(placeDon.reducer).toBeDefined();
   });
 

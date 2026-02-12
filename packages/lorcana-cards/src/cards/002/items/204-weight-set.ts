@@ -4,24 +4,24 @@ export const weightSet: ItemCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "draw",
           amount: 1,
           target: "CONTROLLER",
+          type: "draw",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "1vv-1",
       name: "TRAINING",
       text: "TRAINING Whenever you play a character with 4 or more, you may pay 1 to draw a card.",
       trigger: {
         event: "play",
-        timing: "whenever",
         on: {
-          controller: "you",
           cardType: "character",
+          controller: "you",
         },
+        timing: "whenever",
       },
       type: "triggered",
     },

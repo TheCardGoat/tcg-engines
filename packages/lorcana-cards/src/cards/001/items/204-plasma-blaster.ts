@@ -8,9 +8,9 @@ export const plasmaBlaster: ItemCard = {
         ink: 2,
       },
       effect: {
-        type: "deal-damage",
         amount: 1,
         target: "CHOSEN_CHARACTER",
+        type: "deal-damage",
       },
       id: "vmw-1",
       name: "QUICK SHOT",

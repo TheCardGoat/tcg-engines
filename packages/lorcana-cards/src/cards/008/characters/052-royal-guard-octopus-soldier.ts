@@ -4,16 +4,16 @@ export const royalGuardOctopusSoldier: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
+        duration: "this-turn",
         keyword: "Challenger",
         target: "SELF",
+        type: "gain-keyword",
         value: 1,
-        duration: "this-turn",
       },
       id: "9mz-1",
       name: "HEAVILY ARMED",
       text: "HEAVILY ARMED Whenever you draw a card, this character gains Challenger +1 this turn.",
-      trigger: { event: "play", timing: "when", on: "SELF" },
+      trigger: { event: "play", on: "SELF", timing: "when" },
       type: "triggered",
     },
   ],

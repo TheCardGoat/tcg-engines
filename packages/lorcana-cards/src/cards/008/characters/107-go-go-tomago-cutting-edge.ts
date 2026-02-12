@@ -19,26 +19,26 @@ export const goGoTomagoCuttingEdge: CharacterCard = {
     },
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you used Shift to play her",
+          type: "if",
         },
         then: {
-          type: "put-into-inkwell",
-          source: "chosen-character",
-          target: "OPPONENT",
           exerted: true,
           facedown: true,
+          source: "chosen-character",
+          target: "OPPONENT",
+          type: "put-into-inkwell",
         },
+        type: "conditional",
       },
       id: "1l3-3",
       name: "ZERO RESISTANCE",
       text: "ZERO RESISTANCE When you play this character, if you used Shift to play her, you may put chosen character into their player's inkwell facedown and exerted.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

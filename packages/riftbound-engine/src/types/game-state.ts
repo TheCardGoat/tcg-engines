@@ -81,12 +81,12 @@ export interface RiftboundCardMeta {
  * Default card metadata values
  */
 export const DEFAULT_CARD_META: RiftboundCardMeta = {
-  damage: 0,
   buffed: false,
-  stunned: false,
-  exhausted: false,
   combatRole: null,
+  damage: 0,
+  exhausted: false,
   hidden: false,
+  stunned: false,
 };
 
 /**
@@ -207,13 +207,11 @@ export function createPlayerState(playerId: PlayerId): PlayerState {
 /**
  * Create initial battlefield state
  */
-export function createBattlefieldState(
-  battlefieldId: CardId,
-): BattlefieldState {
+export function createBattlefieldState(battlefieldId: CardId): BattlefieldState {
   return {
-    id: battlefieldId,
-    controller: null,
     contested: false,
+    controller: null,
+    id: battlefieldId,
   };
 }
 

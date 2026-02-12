@@ -4,21 +4,21 @@ export const docBoldKnight: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "discard",
           amount: -1,
           target: "CONTROLLER",
+          type: "discard",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "1if-1",
       name: "DRASTIC MEASURES",
       text: "DRASTIC MEASURES When you play this character, you may discard your hand to draw 2 cards.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

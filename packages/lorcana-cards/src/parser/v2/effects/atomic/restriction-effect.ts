@@ -27,9 +27,7 @@ interface GrantAbilityEffect {
  * Note: Returns RestrictionEffect | GrantAbilityEffect union since this parser
  * handles both restriction effects and ability-granting effects
  */
-function parseFromText(
-  text: string,
-): RestrictionEffect | GrantAbilityEffect | null {
+function parseFromText(text: string): RestrictionEffect | GrantAbilityEffect | null {
   logger.debug("Attempting to parse restriction effect from text", { text });
 
   // Pattern: "can't be challenged" or "cannot be challenged"
@@ -87,10 +85,7 @@ function parseFromText(
     let duration: "this-turn" | "next-turn" | "their-next-turn" | undefined;
     if (/this turn/i.test(text)) {
       duration = "this-turn";
-    } else if (
-      /their next turn/i.test(text) ||
-      /at the start of their next turn/i.test(text)
-    ) {
+    } else if (/their next turn/i.test(text) || /at the start of their next turn/i.test(text)) {
       duration = "their-next-turn";
     } else if (/next turn/i.test(text)) {
       duration = "next-turn";
@@ -131,11 +126,7 @@ function parseFromText(
   }
 
   // Pattern: "can't {E} to sing songs" or "cannot exert to sing"
-  if (
-    /[Cc]an'?t\s*\{E\}\s+to\s+sing\s+songs|[Cc]annot\s+(?:exert|{E})\s+to\s+sing/i.test(
-      text,
-    )
-  ) {
+  if (/[Cc]an'?t\s*\{E\}\s+to\s+sing\s+songs|[Cc]annot\s+(?:exert|{E})\s+to\s+sing/i.test(text)) {
     logger.info("Parsed 'can't sing' restriction");
     return {
       restriction: "cant-sing",
@@ -156,11 +147,7 @@ function parseFromText(
   }
 
   // Pattern: "opponents can't be healed" or "opposing characters can't be healed"
-  if (
-    /[Oo]pponents? can'?t be healed|[Oo]pposing characters can'?t be healed/i.test(
-      text,
-    )
-  ) {
+  if (/[Oo]pponents? can'?t be healed|[Oo]pposing characters can'?t be healed/i.test(text)) {
     logger.info("Parsed 'can't be healed' restriction");
     return {
       restriction: "cant-be-healed",
@@ -208,9 +195,7 @@ function parseFromText(
  * Parse restriction effect from CST node (grammar-based parsing)
  * For now, delegates to text parsing
  */
-function parseFromCst(
-  _ctx: CstNode,
-): RestrictionEffect | GrantAbilityEffect | null {
+function parseFromCst(_ctx: CstNode): RestrictionEffect | GrantAbilityEffect | null {
   logger.debug("CST-based restriction parsing delegates to text parsing");
   return null;
 }

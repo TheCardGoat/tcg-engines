@@ -150,18 +150,18 @@ Description: {description}
  * Preprocessing prompts configuration
  */
 export const SUPADATA_PREPROCESSING_PROMPTS = {
-  entityExtraction: ENTITY_EXTRACTION_PROMPT,
-  themeAnalysis: THEME_ANALYSIS_PROMPT,
   contentSegmentation: CONTENT_SEGMENTATION_PROMPT,
+  entityExtraction: ENTITY_EXTRACTION_PROMPT,
   gameRelevance: GAME_RELEVANCE_PROMPT,
+  themeAnalysis: THEME_ANALYSIS_PROMPT,
 };
 
 /**
  * Format transcript for prompts
  */
 export function formatTranscriptForPrompt(
-  segments: Array<{ text: string; offsetMs: number }>,
-  maxLength = 15000,
+  segments: { text: string; offsetMs: number }[],
+  maxLength = 15_000,
 ): string {
   let result = "";
   for (const segment of segments) {
@@ -188,10 +188,7 @@ function formatTimestamp(ms: number): string {
 /**
  * Get transcript excerpt for validation
  */
-export function getTranscriptExcerpt(
-  textContent: string,
-  maxLength = 2000,
-): string {
+export function getTranscriptExcerpt(textContent: string, maxLength = 2000): string {
   if (textContent.length <= maxLength) {
     return textContent;
   }

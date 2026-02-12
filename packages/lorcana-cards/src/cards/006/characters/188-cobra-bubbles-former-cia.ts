@@ -10,20 +10,20 @@ export const cobraBubblesFormerCia: CharacterCard = {
     },
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "draw",
             amount: 1,
             target: "CONTROLLER",
+            type: "draw",
           },
           {
-            type: "discard",
             amount: 1,
-            target: "CONTROLLER",
             chosen: true,
+            target: "CONTROLLER",
+            type: "discard",
           },
         ],
+        type: "sequence",
       },
       id: "1r8-2",
       text: "THINK ABOUT WHAT'S BEST 2 {I} – Draw a card, then choose and discard a card.",

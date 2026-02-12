@@ -5,15 +5,15 @@ export const rlsLegacysCannon: ItemCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "deal-damage",
         amount: 2,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "deal-damage",
       },
       id: "1rt-1",
       text: "BA-BOOM! {E}, 2 {I}, Discard a card — Deal 2 damage to chosen character or location.",

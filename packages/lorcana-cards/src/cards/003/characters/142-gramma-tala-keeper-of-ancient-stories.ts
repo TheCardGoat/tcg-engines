@@ -4,20 +4,20 @@ export const grammaTalaKeeperOfAncientStories: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
-        effect: {
-          type: "put-on-bottom",
-          target: "CHOSEN_CHARACTER",
-        },
         chooser: "CONTROLLER",
+        effect: {
+          target: "CHOSEN_CHARACTER",
+          type: "put-on-bottom",
+        },
+        type: "optional",
       },
       id: "1ga-1",
       name: "THERE WAS ONLY OCEAN",
       text: "THERE WAS ONLY OCEAN When you play this character, look at the top 2 cards of your deck. You may put one into your hand. Put the rest on the bottom of your deck in any order.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

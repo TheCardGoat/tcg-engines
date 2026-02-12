@@ -5,10 +5,10 @@ import type { TargetQuery } from "../targeting/gundam-target-dsl";
 // EFFECTS & KEYWORDS
 // ============================================================================
 
-export type KeywordAbility = {
+export interface KeywordAbility {
   keyword: string;
   value?: number;
-};
+}
 
 /**
  * Card Effects - Transitional Union Type
@@ -24,7 +24,7 @@ export type CardEffects = BaseEffect[] | Effect[];
 // BASE CARD DEFINITION
 // ============================================================================
 
-export type RawCardDefinition = {
+export interface RawCardDefinition {
   /** Unique identifier (e.g., "st01-001") */
   id: string;
 
@@ -66,7 +66,7 @@ export type RawCardDefinition = {
 
   /** Source title (e.g., "Mobile Suit Gundam") */
   sourceTitle?: string;
-};
+}
 
 // ============================================================================
 // UNIT CARD
@@ -82,7 +82,7 @@ export type UnitCardDefinition = RawCardDefinition & {
   hp: number;
 
   /** Deployment zones */
-  zones: Array<"space" | "earth">;
+  zones: ("space" | "earth")[];
 
   /** Traits (e.g., ["earth-federation", "white-base"]) */
   traits: string[];
@@ -141,7 +141,7 @@ export type BaseCardDefinition = RawCardDefinition & {
   hp: number;
 
   /** Deployment zones */
-  zones: Array<"space" | "earth">;
+  zones: ("space" | "earth")[];
 
   /** Traits */
   traits: string[];
@@ -151,10 +151,7 @@ export type BaseCardDefinition = RawCardDefinition & {
 // RESOURCE CARD
 // ============================================================================
 
-export type ResourceCardDefinition = Omit<
-  RawCardDefinition,
-  "cost" | "level" | "color"
-> & {
+export type ResourceCardDefinition = Omit<RawCardDefinition, "cost" | "level" | "color"> & {
   cardType: "RESOURCE";
 
   /** Whether this is an EX resource */
@@ -182,10 +179,7 @@ import { createTypeGuard } from "@tcg/core/validation";
  * Type guard for Unit cards
  * Built using @tcg/core's createTypeGuard utility
  */
-export const isUnitCard = createTypeGuard<CardDefinition, "cardType", "UNIT">(
-  "cardType",
-  "UNIT",
-);
+export const isUnitCard = createTypeGuard<CardDefinition, "cardType", "UNIT">("cardType", "UNIT");
 
 /**
  * Type guard for Pilot cards
@@ -200,27 +194,22 @@ export const isPilotCard = createTypeGuard<CardDefinition, "cardType", "PILOT">(
  * Type guard for Command cards
  * Built using @tcg/core's createTypeGuard utility
  */
-export const isCommandCard = createTypeGuard<
-  CardDefinition,
+export const isCommandCard = createTypeGuard<CardDefinition, "cardType", "COMMAND">(
   "cardType",
-  "COMMAND"
->("cardType", "COMMAND");
+  "COMMAND",
+);
 
 /**
  * Type guard for Base cards
  * Built using @tcg/core's createTypeGuard utility
  */
-export const isBaseCard = createTypeGuard<CardDefinition, "cardType", "BASE">(
-  "cardType",
-  "BASE",
-);
+export const isBaseCard = createTypeGuard<CardDefinition, "cardType", "BASE">("cardType", "BASE");
 
 /**
  * Type guard for Resource cards
  * Built using @tcg/core's createTypeGuard utility
  */
-export const isResourceCard = createTypeGuard<
-  CardDefinition,
+export const isResourceCard = createTypeGuard<CardDefinition, "cardType", "RESOURCE">(
   "cardType",
-  "RESOURCE"
->("cardType", "RESOURCE");
+  "RESOURCE",
+);

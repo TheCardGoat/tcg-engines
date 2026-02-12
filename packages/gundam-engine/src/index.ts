@@ -25,7 +25,7 @@ export type {
 export * from "./effects";
 // Targeting DSL
 // Types should be imported directly from @tcg/gundam-types
-// export * from "@tcg/gundam-types";
+// Export * from "@tcg/gundam-types";
 // Engine exports
 export { GundamEngine } from "./engine/gundam-engine";
 // Type exports

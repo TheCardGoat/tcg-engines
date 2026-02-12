@@ -10,9 +10,9 @@ export const mulanChargingAhead: CharacterCard = {
     },
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Evasive",
         target: "SELF",
+        type: "gain-keyword",
       },
       id: "17c-2",
       text: "BURST OF SPEED During your turn, this character gains Evasive.",
@@ -20,9 +20,9 @@ export const mulanChargingAhead: CharacterCard = {
     },
     {
       effect: {
-        type: "grant-ability",
         ability: "can-challenge-ready",
         target: "SELF",
+        type: "grant-ability",
       },
       id: "17c-3",
       name: "LONG RANGE",

@@ -68,19 +68,15 @@ function deepMerge<T>(target: T, source: Partial<T>): T {
 
       if (sourceValue === undefined) {
         // Allow explicit undefined to override
-        // biome-ignore lint/suspicious/noExplicitAny: Safe type assertion for deep merge
+        // Biome-ignore lint/suspicious/noExplicitAny: Safe type assertion for deep merge
         result[key] = sourceValue as any;
-      } else if (
-        isObject(sourceValue) &&
-        isObject(targetValue) &&
-        !Array.isArray(sourceValue)
-      ) {
+      } else if (isObject(sourceValue) && isObject(targetValue) && !Array.isArray(sourceValue)) {
         // Recursively merge objects (but not arrays)
-        // biome-ignore lint/suspicious/noExplicitAny: Safe type assertion for deep merge
+        // Biome-ignore lint/suspicious/noExplicitAny: Safe type assertion for deep merge
         result[key] = deepMerge(targetValue, sourceValue as any) as any;
       } else {
         // Replace primitives, arrays, null, etc.
-        // biome-ignore lint/suspicious/noExplicitAny: Safe type assertion for deep merge
+        // Biome-ignore lint/suspicious/noExplicitAny: Safe type assertion for deep merge
         result[key] = sourceValue as any;
       }
     }

@@ -4,8 +4,8 @@ export const donaldDuckCoinCollector: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "play-card",
         from: "hand",
+        type: "play-card",
       },
       id: "1pf-1",
       text: "HERE, PIGGY, PIGGY For each item named The Nephews' Piggy Bank you have in play, you pay 2 {I} less to play this character.",

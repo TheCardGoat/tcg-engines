@@ -153,9 +153,7 @@ describe("Integration: Effect Parsing Pipeline", () => {
       });
 
       it("parses for-each effect through pipeline", () => {
-        const result = parseEffect(
-          "for each character you control, gain 1 lore",
-        );
+        const result = parseEffect("for each character you control, gain 1 lore");
 
         expect(result).not.toBeNull();
         expect(result?.type).toBe("for-each");
@@ -165,9 +163,7 @@ describe("Integration: Effect Parsing Pipeline", () => {
       });
 
       it("parses conditional effect through pipeline", () => {
-        const result = parseEffect(
-          "if you have another character in play, gain 2 lore",
-        );
+        const result = parseEffect("if you have another character in play, gain 2 lore");
 
         expect(result).not.toBeNull();
         expect(result?.type).toBe("conditional");
@@ -275,27 +271,21 @@ describe("Integration: Effect Parsing Pipeline", () => {
     });
 
     it("parses Gaston - Arrogant Hunter ability", () => {
-      const result = parseEffect(
-        "if you have another character in play, gain 2 lore",
-      );
+      const result = parseEffect("if you have another character in play, gain 2 lore");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("conditional");
     });
 
     it("parses Merlin - Crab ability", () => {
-      const result = parseEffect(
-        "for each character you have in play, gain 1 lore",
-      );
+      const result = parseEffect("for each character you have in play, gain 1 lore");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("for-each");
     });
 
     it("parses complex multi-step sequence", () => {
-      const result = parseEffect(
-        "draw 1 card, then discard 1 card, then gain 1 lore",
-      );
+      const result = parseEffect("draw 1 card, then discard 1 card, then gain 1 lore");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("sequence");
@@ -307,12 +297,7 @@ describe("Integration: Effect Parsing Pipeline", () => {
 
   describe("Case Insensitivity", () => {
     it("parses effects with different casing", () => {
-      const variations = [
-        "draw 2 cards",
-        "DRAW 2 CARDS",
-        "Draw 2 Cards",
-        "dRaW 2 cArDs",
-      ];
+      const variations = ["draw 2 cards", "DRAW 2 CARDS", "Draw 2 Cards", "dRaW 2 cArDs"];
 
       for (const text of variations) {
         const result = parseEffect(text);

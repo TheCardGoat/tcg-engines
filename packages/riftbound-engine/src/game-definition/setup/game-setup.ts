@@ -4,12 +4,7 @@
  * Initial game setup logic for the tabletop simulator.
  */
 
-import type {
-  createPlayerState,
-  createRunePool,
-  PlayerId,
-  RiftboundGameState,
-} from "../../types";
+import type { PlayerId, RiftboundGameState, createPlayerState, createRunePool } from "../../types";
 
 /**
  * Configuration for game setup
@@ -36,20 +31,12 @@ export const DEFAULT_SETUP_CONFIG: SetupConfig = {
  * @param players - Array of player objects from the engine
  * @returns Initial game state
  */
-export function createInitialState(
-  players: Array<{ id: string }>,
-): RiftboundGameState {
+export function createInitialState(players: { id: string }[]): RiftboundGameState {
   const playerIds = players.map((p) => p.id as PlayerId);
 
   // Initialize player states
-  const playerStates: Record<
-    PlayerId,
-    { id: PlayerId; victoryPoints: number }
-  > = {};
-  const runePools: Record<
-    PlayerId,
-    { energy: number; power: Record<string, number> }
-  > = {};
+  const playerStates: Record<PlayerId, { id: PlayerId; victoryPoints: number }> = {};
+  const runePools: Record<PlayerId, { energy: number; power: Record<string, number> }> = {};
   const conqueredThisTurn: Record<PlayerId, string[]> = {};
   const scoredThisTurn: Record<PlayerId, string[]> = {};
 
@@ -75,8 +62,8 @@ export function createInitialState(
     conqueredThisTurn,
     scoredThisTurn,
     turn: {
-      number: 1,
       activePlayer: playerIds[0] ?? ("" as PlayerId),
+      number: 1,
       phase: "setup",
     },
     status: "setup",

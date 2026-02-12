@@ -4,10 +4,10 @@ export const rapunzelsTowerSecludedPrison: LocationCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "willpower",
         modifier: 3,
+        stat: "willpower",
         target: "CHARACTERS_HERE",
+        type: "modify-stat",
       },
       id: "vng-1",
       name: "SAFE AND SOUND",

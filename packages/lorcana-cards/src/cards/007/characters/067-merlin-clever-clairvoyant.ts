@@ -4,39 +4,39 @@ export const merlinCleverClairvoyant: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
             type: "name-a-card",
           },
           {
-            type: "reveal-top-card",
             target: "CONTROLLER",
+            type: "reveal-top-card",
           },
           {
-            type: "conditional",
             condition: {
               type: "revealed-matches-named",
+            },
+            else: {
+              type: "put-on-top",
+              source: "revealed",
             },
             then: {
               type: "put-into-inkwell",
               source: "revealed",
               exerted: true,
             },
-            else: {
-              type: "put-on-top",
-              source: "revealed",
-            },
+            type: "conditional",
           },
         ],
+        type: "sequence",
       },
       id: "1c1-1",
       name: "PRESTIDIGITONIUM",
       text: "PRESTIDIGITONIUM Whenever this character quests, name a card, then reveal the top card of your deck. If it's the named card, put it into your inkwell facedown and exerted. Otherwise, put it on the top of your deck.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

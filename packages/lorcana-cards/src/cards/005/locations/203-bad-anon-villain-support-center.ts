@@ -5,10 +5,10 @@ export const badanonVillainSupportCenter: LocationCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "play-card",
-        from: "hand",
         cardType: "character",
         cost: "free",
+        from: "hand",
+        type: "play-card",
       },
       id: "1kj-1",
       text: "THERE'S NO ONE I'D RATHER BE THAN ME Villain characters gain “{E}, 3 {I} — Play a character with the same name as this character for free” while here.",

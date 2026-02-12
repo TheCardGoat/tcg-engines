@@ -4,17 +4,17 @@ export const kakamoraPiratePitcher: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Evasive",
         target: "CHOSEN_CHARACTER",
+        type: "gain-keyword",
       },
       id: "xu8-1",
       name: "DIZZYING SPEED",
       text: "DIZZYING SPEED When you play this character, chosen Pirate character gains Evasive until the start of your next turn.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

@@ -9,10 +9,7 @@ import type { CardFilter, NumberFilter, PropertyFilter } from "./card-filter";
  * @param value - Value to check
  * @returns true if value matches the filter
  */
-export function matchesNumberFilter(
-  filter: NumberFilter,
-  value: number,
-): boolean {
+export function matchesNumberFilter(filter: NumberFilter, value: number): boolean {
   // Direct number comparison (exact match)
   if (typeof filter === "number") {
     return value === filter;
@@ -53,10 +50,7 @@ export function matchesNumberFilter(
  * @param value - Value to check
  * @returns true if value matches the filter
  */
-export function matchesPropertyFilter(
-  filter: PropertyFilter,
-  value: any,
-): boolean {
+export function matchesPropertyFilter(filter: PropertyFilter, value: any): boolean {
   // Direct value comparison (exact match)
   if (typeof filter !== "object" || filter === null) {
     // Handle RegExp
@@ -266,9 +260,7 @@ export function matchesFilter<
  * @param registry - Card definition registry
  * @returns Array of matching cards
  */
-export function selectCards<
-  TGameState extends { cards: Record<string, CardInstance<any>> },
->(
+export function selectCards<TGameState extends { cards: Record<string, CardInstance<any>> }>(
   state: TGameState,
   filter: CardFilter<TGameState>,
   registry: CardRegistry<CardDefinition>,
@@ -285,9 +277,7 @@ export function selectCards<
  * @param registry - Card definition registry
  * @returns Number of matching cards
  */
-export function countCards<
-  TGameState extends { cards: Record<string, CardInstance<any>> },
->(
+export function countCards<TGameState extends { cards: Record<string, CardInstance<any>> }>(
   state: TGameState,
   filter: CardFilter<TGameState>,
   registry: CardRegistry<CardDefinition>,
@@ -303,9 +293,7 @@ export function countCards<
  * @param registry - Card definition registry
  * @returns true if at least one card matches
  */
-export function anyCard<
-  TGameState extends { cards: Record<string, CardInstance<any>> },
->(
+export function anyCard<TGameState extends { cards: Record<string, CardInstance<any>> }>(
   state: TGameState,
   filter: CardFilter<TGameState>,
   registry: CardRegistry<CardDefinition>,

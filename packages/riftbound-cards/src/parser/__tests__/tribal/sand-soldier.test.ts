@@ -51,9 +51,9 @@ describe("Tribal: Sand Soldier", () => {
         expect.objectContaining({
           effect: expect.objectContaining({
             token: expect.objectContaining({
+              might: 2,
               name: "Sand Soldier",
               type: "unit",
-              might: 2,
             }),
             type: "create-token",
           }),

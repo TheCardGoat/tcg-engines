@@ -4,15 +4,15 @@ export const magicBroomIndustrialModel: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Resist",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "gain-keyword",
         value: 1,
       },
       id: "11u-1",
@@ -20,8 +20,8 @@ export const magicBroomIndustrialModel: CharacterCard = {
       text: "MAKE IT SHINE When you play this character, chosen character gains Resist +1 until the start of your next turn.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

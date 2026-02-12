@@ -4,15 +4,15 @@ export const jamesRoleModel: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "put-into-inkwell",
-          source: "this-card",
-          target: "CONTROLLER",
           exerted: true,
           facedown: true,
+          source: "this-card",
+          target: "CONTROLLER",
+          type: "put-into-inkwell",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "1l7-1",
       text: "NEVER, EVER LOSE SIGHT When this character is banished, you may put this card into your inkwell facedown and exerted.",

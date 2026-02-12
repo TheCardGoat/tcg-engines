@@ -4,9 +4,9 @@ export const revive: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "play-card",
-        from: "discard",
         cost: "free",
+        from: "discard",
+        type: "play-card",
       },
       id: "16b-1",
       text: "Play a character card with cost 5 or less from your discard for free.",

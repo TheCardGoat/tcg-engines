@@ -12,8 +12,8 @@ import type { PostgresJsDatabase } from "drizzle-orm/postgres-js";
 import type * as schema from "../../db/schema";
 import {
   contentSummaries,
-  contents,
   contentTags,
+  contents,
   postprocessingCache,
   tags,
 } from "../../db/schema";
@@ -75,11 +75,7 @@ export class PostprocessingService {
 
     try {
       // Extract tags from themes and entities
-      const assignedTags = await this.extractAndAssignTags(
-        contentId,
-        processing,
-        options.gameId,
-      );
+      const assignedTags = await this.extractAndAssignTags(contentId, processing, options.gameId);
 
       // Calculate hotness score
       const hotnessScore = this.calculateHotness(processing);
@@ -94,12 +90,12 @@ export class PostprocessingService {
       await this.updateContentStatus(contentId, hotnessScore, baitRating);
 
       const result: PostprocessingResult = {
-        contentId,
-        success: true,
-        blocked: false,
-        tags: assignedTags,
-        hotnessScore,
         baitRating,
+        blocked: false,
+        contentId,
+        hotnessScore,
+        success: true,
+        tags: assignedTags,
       };
 
       // Store in cache
@@ -107,21 +103,20 @@ export class PostprocessingService {
 
       return result;
     } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : "Postprocessing failed";
+      const errorMessage = error instanceof Error ? error.message : "Postprocessing failed";
 
       // Store failed result
       await this.storeFailedInCache(contentId, errorMessage);
 
       return {
-        contentId,
-        success: false,
-        blocked: false,
-        errorMessage,
-        errorCode: "POSTPROCESSING_FAILED",
-        tags: [],
-        hotnessScore: 0,
         baitRating: 1,
+        blocked: false,
+        contentId,
+        errorCode: "POSTPROCESSING_FAILED",
+        errorMessage,
+        hotnessScore: 0,
+        success: false,
+        tags: [],
       };
     }
   }
@@ -140,20 +135,15 @@ export class PostprocessingService {
     for (const theme of processing.overview.mainThemes) {
       const slug = this.slugify(theme.title);
       const tag: AssignedTag = {
-        name: theme.title,
-        slug,
+        appliedBy: "ai",
         category: "topic",
         confidence: theme.relevance,
-        appliedBy: "ai",
+        name: theme.title,
+        slug,
       };
 
       // Try to find existing tag or create new one
-      const existingTag = await this.findOrCreateTag(
-        tag.name,
-        tag.slug,
-        tag.category,
-        gameId,
-      );
+      const existingTag = await this.findOrCreateTag(tag.name, tag.slug, tag.category, gameId);
 
       if (existingTag) {
         tag.tagId = existingTag.id;
@@ -164,11 +154,11 @@ export class PostprocessingService {
 
     // Add content category as a tag
     const categoryTag: AssignedTag = {
+      appliedBy: "ai",
+      category: "content_type",
+      confidence: 1,
       name: this.formatCategory(processing.overview.contentCategory),
       slug: processing.overview.contentCategory,
-      category: "content_type",
-      confidence: 1.0,
-      appliedBy: "ai",
     };
 
     const existingCategoryTag = await this.findOrCreateTag(
@@ -223,12 +213,12 @@ export class PostprocessingService {
       const [created] = await this.db
         .insert(tags)
         .values({
-          name,
-          slug,
           category,
           gameId,
-          usageCount: 1,
           isActive: true,
+          name,
+          slug,
+          usageCount: 1,
         })
         .returning({ id: tags.id });
 
@@ -248,23 +238,18 @@ export class PostprocessingService {
   /**
    * Store content-tag associations
    */
-  private async storeContentTags(
-    contentId: string,
-    assignedTags: AssignedTag[],
-  ): Promise<void> {
+  private async storeContentTags(contentId: string, assignedTags: AssignedTag[]): Promise<void> {
     // Delete existing tags for this content
-    await this.db
-      .delete(contentTags)
-      .where(eq(contentTags.contentId, contentId));
+    await this.db.delete(contentTags).where(eq(contentTags.contentId, contentId));
 
     // Insert new tags
     const tagsToInsert = assignedTags
       .filter((tag) => tag.tagId)
       .map((tag) => ({
+        appliedBy: tag.appliedBy,
+        confidence: tag.confidence,
         contentId,
         tagId: tag.tagId!,
-        confidence: tag.confidence,
-        appliedBy: tag.appliedBy,
       }));
 
     if (tagsToInsert.length > 0) {
@@ -275,14 +260,9 @@ export class PostprocessingService {
   /**
    * Store summaries in content_summaries table
    */
-  private async storeSummaries(
-    contentId: string,
-    processing: ProcessingResult,
-  ): Promise<void> {
+  private async storeSummaries(contentId: string, processing: ProcessingResult): Promise<void> {
     // Delete existing summaries for this content
-    await this.db
-      .delete(contentSummaries)
-      .where(eq(contentSummaries.contentId, contentId));
+    await this.db.delete(contentSummaries).where(eq(contentSummaries.contentId, contentId));
 
     // Prepare summaries to insert
     const summariesToInsert = [];
@@ -290,11 +270,11 @@ export class PostprocessingService {
     // Add general summary from overview
     summariesToInsert.push({
       contentId,
-      summaryType: "general" as const,
-      short: processing.overview.shortOverview,
       detailed: processing.overview.fullOverview,
-      provider: processing.provider,
       modelId: processing.modelId,
+      provider: processing.provider,
+      short: processing.overview.shortOverview,
+      summaryType: "general" as const,
     });
 
     // Add enhanced summaries
@@ -303,16 +283,16 @@ export class PostprocessingService {
       if (enhanced.format === "list") {
         summariesToInsert.push({
           contentId,
+          detailed: enhanced.detailed,
+          modelId: processing.modelId,
+          provider: processing.provider,
+          short: enhanced.short,
           summaryType: enhanced.summaryType as
             | "general"
             | "insightful"
             | "funny"
             | "actionable"
             | "controversial",
-          short: enhanced.short,
-          detailed: enhanced.detailed,
-          provider: processing.provider,
-          modelId: processing.modelId,
         });
       }
     }
@@ -334,9 +314,9 @@ export class PostprocessingService {
     await this.db
       .update(contents)
       .set({
-        status: "completed",
-        hotness: hotnessScore,
         baitRating,
+        hotness: hotnessScore,
+        status: "completed",
       })
       .where(eq(contents.id, contentId));
   }
@@ -347,15 +327,15 @@ export class PostprocessingService {
   private calculateHotness(processing: ProcessingResult): number {
     // Base score from content category
     const categoryModifiers: Record<string, number> = {
-      tutorial: 2,
-      how_to: 2,
       crafting: 1,
+      discussion: 0,
+      gameplay: 0,
+      how_to: 2,
       market: 1,
       news: 0,
-      gameplay: 0,
-      discussion: 0,
-      review: 0,
       other: -1,
+      review: 0,
+      tutorial: 2,
     };
 
     const base = categoryModifiers[processing.overview.contentCategory] ?? 0;
@@ -390,23 +370,20 @@ export class PostprocessingService {
     }
 
     return {
-      status: cached.status as PostprocessingStatus,
       data: cached.contentJson as PostprocessingCacheData,
+      status: cached.status as PostprocessingStatus,
     };
   }
 
   /**
    * Store postprocessing result in cache
    */
-  private async storeInCache(
-    contentId: string,
-    result: PostprocessingResult,
-  ): Promise<void> {
+  private async storeInCache(contentId: string, result: PostprocessingResult): Promise<void> {
     const cacheData: PostprocessingCacheData = {
-      tags: result.tags,
+      baitRating: result.baitRating,
       creatorId: result.creatorId,
       hotnessScore: result.hotnessScore,
-      baitRating: result.baitRating,
+      tags: result.tags,
     };
 
     await this.db
@@ -417,39 +394,36 @@ export class PostprocessingService {
         status: "completed",
       })
       .onConflictDoUpdate({
-        target: postprocessingCache.contentId,
         set: {
           contentJson: cacheData,
-          status: "completed",
           createdAt: new Date(),
+          status: "completed",
         },
+        target: postprocessingCache.contentId,
       });
   }
 
   /**
    * Store failed postprocessing in cache
    */
-  private async storeFailedInCache(
-    contentId: string,
-    errorMessage: string,
-  ): Promise<void> {
+  private async storeFailedInCache(contentId: string, errorMessage: string): Promise<void> {
     await this.db
       .insert(postprocessingCache)
       .values({
         contentId,
         contentJson: {
-          tags: [],
-          hotnessScore: 0,
           baitRating: 1,
+          hotnessScore: 0,
+          tags: [],
         },
         status: "failed",
       })
       .onConflictDoUpdate({
-        target: postprocessingCache.contentId,
         set: {
-          status: "failed",
           createdAt: new Date(),
+          status: "failed",
         },
+        target: postprocessingCache.contentId,
       });
   }
 
@@ -463,13 +437,13 @@ export class PostprocessingService {
     const data = cached.data!;
 
     return {
-      contentId,
-      success: true,
+      baitRating: data.baitRating,
       blocked: false,
-      tags: data.tags,
+      contentId,
       creatorId: data.creatorId,
       hotnessScore: data.hotnessScore,
-      baitRating: data.baitRating,
+      success: true,
+      tags: data.tags,
     };
   }
 

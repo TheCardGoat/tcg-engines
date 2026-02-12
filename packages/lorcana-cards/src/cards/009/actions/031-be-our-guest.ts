@@ -4,10 +4,10 @@ export const beOurGuest: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "look-at-cards",
         amount: 4,
         source: "deck",
         target: "CONTROLLER",
+        type: "look-at-cards",
       },
       id: "wnp-1",
       name: "Be Our Guest",

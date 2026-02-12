@@ -4,21 +4,21 @@ export const simbaFutureKing: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "draw",
           amount: 1,
           target: "CONTROLLER",
+          type: "draw",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "q21-1",
       name: "GUESS WHAT?",
       text: "GUESS WHAT? When you play this character, you may draw a card, then choose and discard a card.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

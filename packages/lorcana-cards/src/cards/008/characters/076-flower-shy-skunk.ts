@@ -4,13 +4,13 @@ export const flowerShySkunk: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "put-on-bottom",
         target: "CHOSEN_CHARACTER",
+        type: "put-on-bottom",
       },
       id: "ry8-1",
       name: "LOOKING FOR FRIENDS",
       text: "LOOKING FOR FRIENDS Whenever you play another character, look at the top card of your deck. Put it on either the top or the bottom of your deck.",
-      trigger: { event: "play", timing: "when", on: "SELF" },
+      trigger: { event: "play", on: "SELF", timing: "when" },
       type: "triggered",
     },
   ],

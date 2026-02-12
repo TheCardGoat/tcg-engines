@@ -4,10 +4,10 @@ export const pachaTrekmate: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "lore",
         modifier: 2,
+        stat: "lore",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "19c-1",
       text: "FULL PACK While you have more cards in your hand than each opponent, this character gets +2 {L}.",

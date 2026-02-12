@@ -13,9 +13,9 @@ export const peteSpacePirate: CharacterCard = {
     },
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Resist",
         target: "SELF",
+        type: "gain-keyword",
         value: 1,
       },
       id: "hmq-2",

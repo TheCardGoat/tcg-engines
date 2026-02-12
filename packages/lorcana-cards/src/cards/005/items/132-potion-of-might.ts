@@ -5,17 +5,17 @@ export const potionOfMight: ItemCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "a Villain character is chosen",
+          type: "if",
         },
         then: {
-          type: "modify-stat",
-          stat: "strength",
           modifier: 4,
+          stat: "strength",
           target: "CHOSEN_CHARACTER",
+          type: "modify-stat",
         },
+        type: "conditional",
       },
       id: "6dr-1",
       text: "VILE CONCOCTION 1 {I}, Banish this item — Chosen character gets +3 {S} this turn. If a Villain character is chosen, they get +4 {S} instead.",

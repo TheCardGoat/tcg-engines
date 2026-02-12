@@ -4,10 +4,10 @@ export const iveGotADream: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "restriction",
+        duration: "this-turn",
         restriction: "cant-quest",
         target: "SELF",
-        duration: "this-turn",
+        type: "restriction",
       },
       id: "1hw-1",
       text: "Ready chosen character of yours at a location. They can't quest for the rest of this turn. Gain lore equal to that location's {L}.",

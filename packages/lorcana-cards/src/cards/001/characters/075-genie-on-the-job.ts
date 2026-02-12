@@ -10,20 +10,20 @@ export const genieOnTheJob: CharacterCard = {
     },
     {
       effect: {
-        type: "optional",
-        effect: {
-          type: "return-to-hand",
-          target: "CHOSEN_CHARACTER",
-        },
         chooser: "CONTROLLER",
+        effect: {
+          target: "CHOSEN_CHARACTER",
+          type: "return-to-hand",
+        },
+        type: "optional",
       },
       id: "n53-2",
       name: "DISAPPEAR",
       text: "DISAPPEAR When you play this character, you may return chosen character to their player's hand.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

@@ -4,9 +4,9 @@ export const figaroTuxedoCat: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "restriction",
         restriction: "enters-play-exerted",
         target: "SELF",
+        type: "restriction",
       },
       id: "1w3-1",
       text: "PLAYFULNESS Opposing items enter play exerted.",

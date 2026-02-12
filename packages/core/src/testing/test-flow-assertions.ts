@@ -43,10 +43,7 @@ import type { MoveContext, MoveContextInput } from "../moves/move-system";
  * );
  * ```
  */
-export function expectPhaseTransition<
-  TState,
-  TMoves extends Record<string, any>,
->(
+export function expectPhaseTransition<TState, TMoves extends Record<string, any>>(
   engine: RuleEngine<TState, TMoves>,
   moveId: string,
   context: MoveContextInput,
@@ -60,9 +57,7 @@ export function expectPhaseTransition<
 
   // Verify initial phase
   if (initialPhase !== fromPhase) {
-    throw new Error(
-      `Expected initial phase to be '${fromPhase}', but found '${initialPhase}'`,
-    );
+    throw new Error(`Expected initial phase to be '${fromPhase}', but found '${initialPhase}'`);
   }
 
   // Execute move
@@ -82,9 +77,7 @@ export function expectPhaseTransition<
 
   // Verify final phase
   if (finalPhase !== toPhase) {
-    throw new Error(
-      `Expected final phase to be '${toPhase}', but found '${finalPhase}'`,
-    );
+    throw new Error(`Expected final phase to be '${toPhase}', but found '${finalPhase}'`);
   }
 }
 

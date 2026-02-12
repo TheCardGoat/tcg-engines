@@ -4,21 +4,21 @@ export const mrSnoopsBetrayedPartner: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "draw",
           amount: 1,
           target: "CONTROLLER",
+          type: "draw",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "1iu-1",
       name: "DOUBLE-CROSSING CROOK!",
       text: "DOUBLE-CROSSING CROOK! During your turn, when this character is banished, you may draw a card.",
       trigger: {
         event: "banish",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

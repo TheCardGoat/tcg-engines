@@ -4,10 +4,10 @@ export const mickeyMouseAmberChampion: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "willpower",
         modifier: 2,
+        stat: "willpower",
         target: "CHOSEN_CHARACTER",
+        type: "modify-stat",
       },
       id: "12o-1",
       name: "LEADING THE WAY Your other Amber",

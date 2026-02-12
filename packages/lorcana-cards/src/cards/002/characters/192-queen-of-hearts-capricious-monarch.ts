@@ -4,9 +4,8 @@ export const queenOfHeartsCapriciousMonarch: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "ready",
           target: {
             selector: "self",
             count: 1,
@@ -14,13 +13,14 @@ export const queenOfHeartsCapriciousMonarch: CharacterCard = {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "ready",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "qi9-1",
       name: "OFF WITH THEIR HEADS!",
       text: "OFF WITH THEIR HEADS! Whenever an opposing character is banished, you may ready this character.",
-      trigger: { event: "play", timing: "when", on: "SELF" },
+      trigger: { event: "play", on: "SELF", timing: "when" },
       type: "triggered",
     },
   ],

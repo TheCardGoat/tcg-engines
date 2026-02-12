@@ -4,16 +4,16 @@ export const auroraHoldingCourt: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "play-card",
         from: "hand",
+        type: "play-card",
       },
       id: "1dm-1",
       name: "ROYAL WELCOME",
       text: "ROYAL WELCOME Whenever this character quests, you pay 1 {I} less for the next Princess or Queen character you play this turn.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

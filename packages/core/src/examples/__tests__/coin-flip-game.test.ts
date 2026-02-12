@@ -3,7 +3,7 @@ import { RuleEngine } from "../../engine/rule-engine";
 import type { FlowDefinition } from "../../flow/flow-definition";
 import type { GameDefinition } from "../../game-definition/game-definition";
 import type { GameMoveDefinitions } from "../../game-definition/move-definitions";
-import { createPlayerId, type PlayerId } from "../../types";
+import { type PlayerId, createPlayerId } from "../../types";
 
 /**
  * Task 15: Example Game Implementation - Coin Flip Game
@@ -22,28 +22,36 @@ import { createPlayerId, type PlayerId } from "../../types";
  * - Deterministic replay
  */
 
-type CoinFlipGameState = {
-  players: Array<{
+interface CoinFlipGameState {
+  players: {
     id: PlayerId;
     name: string;
     score: number;
-  }>;
+  }[];
   currentPlayerIndex: number;
   turnNumber: number;
   phase: "flip" | "ended";
   lastFlipResult?: "heads" | "tails";
   winner?: PlayerId;
-};
+}
 
-type CoinFlipMoves = {
+interface CoinFlipMoves {
   flipCoin: Record<string, never>;
   endTurn: Record<string, never>;
-};
+}
 
 describe("Coin Flip Game - Setup", () => {
   describe("Task 15.1, 15.2: Game Definition and Setup", () => {
     it("should create game definition for coin flip", () => {
       const moves: GameMoveDefinitions<CoinFlipGameState, CoinFlipMoves> = {
+        endTurn: {
+          condition: (state) => state.phase === "flip",
+          reducer: (draft) => {
+            // Next player
+            draft.currentPlayerIndex = (draft.currentPlayerIndex + 1) % draft.players.length;
+            draft.turnNumber += 1;
+          },
+        },
         flipCoin: {
           condition: (state) => state.phase === "flip",
           reducer: (draft, _context) => {
@@ -59,30 +67,21 @@ describe("Coin Flip Game - Setup", () => {
             }
           },
         },
-        endTurn: {
-          condition: (state) => state.phase === "flip",
-          reducer: (draft) => {
-            // Next player
-            draft.currentPlayerIndex =
-              (draft.currentPlayerIndex + 1) % draft.players.length;
-            draft.turnNumber += 1;
-          },
-        },
       };
 
       const gameDefinition: GameDefinition<CoinFlipGameState, CoinFlipMoves> = {
+        moves,
         name: "Coin Flip",
         setup: (players) => ({
+          currentPlayerIndex: 0,
+          phase: "flip" as const,
           players: players.map((p): CoinFlipGameState["players"][number] => ({
             id: p.id as PlayerId,
             name: p.name || "Player",
             score: 0,
           })),
-          currentPlayerIndex: 0,
           turnNumber: 1,
-          phase: "flip" as const,
         }),
-        moves,
       };
 
       expect(gameDefinition.name).toBe("Coin Flip");
@@ -93,23 +92,23 @@ describe("Coin Flip Game - Setup", () => {
 
     it("should initialize game state correctly", () => {
       const moves: GameMoveDefinitions<CoinFlipGameState, CoinFlipMoves> = {
-        flipCoin: { reducer: () => {} },
         endTurn: { reducer: () => {} },
+        flipCoin: { reducer: () => {} },
       };
 
       const gameDefinition: GameDefinition<CoinFlipGameState, CoinFlipMoves> = {
+        moves,
         name: "Coin Flip",
         setup: (players) => ({
+          currentPlayerIndex: 0,
+          phase: "flip" as const,
           players: players.map((p): CoinFlipGameState["players"][number] => ({
             id: p.id as PlayerId,
             name: p.name || "Player",
             score: 0,
           })),
-          currentPlayerIndex: 0,
           turnNumber: 1,
-          phase: "flip" as const,
         }),
-        moves,
       };
 
       const players = [
@@ -132,6 +131,7 @@ describe("Coin Flip Game - Setup", () => {
   describe("Task 15.3, 15.4: Game Moves", () => {
     it("should implement flipCoin move with RNG", () => {
       const moves: GameMoveDefinitions<CoinFlipGameState, CoinFlipMoves> = {
+        endTurn: { reducer: () => {} },
         flipCoin: {
           reducer: (draft) => {
             // In real implementation, would use engine.getRNG()
@@ -146,22 +146,21 @@ describe("Coin Flip Game - Setup", () => {
             }
           },
         },
-        endTurn: { reducer: () => {} },
       };
 
       const gameDefinition: GameDefinition<CoinFlipGameState, CoinFlipMoves> = {
+        moves,
         name: "Coin Flip",
         setup: (players) => ({
+          currentPlayerIndex: 0,
+          phase: "flip" as const,
           players: players.map((p): CoinFlipGameState["players"][number] => ({
             id: p.id as PlayerId,
             name: p.name || "Player",
             score: 0,
           })),
-          currentPlayerIndex: 0,
           turnNumber: 1,
-          phase: "flip" as const,
         }),
-        moves,
       };
 
       const players = [
@@ -174,8 +173,8 @@ describe("Coin Flip Game - Setup", () => {
       });
 
       const result = engine.executeMove("flipCoin", {
-        playerId: createPlayerId("p1"),
         params: {},
+        playerId: createPlayerId("p1"),
       });
 
       expect(result.success).toBe(true);
@@ -187,29 +186,28 @@ describe("Coin Flip Game - Setup", () => {
 
     it("should implement endTurn move to progress to next player", () => {
       const moves: GameMoveDefinitions<CoinFlipGameState, CoinFlipMoves> = {
-        flipCoin: { reducer: () => {} },
         endTurn: {
           reducer: (draft) => {
-            draft.currentPlayerIndex =
-              (draft.currentPlayerIndex + 1) % draft.players.length;
+            draft.currentPlayerIndex = (draft.currentPlayerIndex + 1) % draft.players.length;
             draft.turnNumber += 1;
           },
         },
+        flipCoin: { reducer: () => {} },
       };
 
       const gameDefinition: GameDefinition<CoinFlipGameState, CoinFlipMoves> = {
+        moves,
         name: "Coin Flip",
         setup: (players) => ({
+          currentPlayerIndex: 0,
+          phase: "flip" as const,
           players: players.map((p): CoinFlipGameState["players"][number] => ({
             id: p.id as PlayerId,
             name: p.name || "Player",
             score: 0,
           })),
-          currentPlayerIndex: 0,
           turnNumber: 1,
-          phase: "flip" as const,
         }),
-        moves,
       };
 
       const players = [
@@ -222,8 +220,8 @@ describe("Coin Flip Game - Setup", () => {
       expect(engine.getState().currentPlayerIndex).toBe(0);
 
       engine.executeMove("endTurn", {
-        playerId: createPlayerId("p1"),
         params: {},
+        playerId: createPlayerId("p1"),
       });
 
       const state = engine.getState();
@@ -241,8 +239,8 @@ describe("Coin Flip Game - Setup", () => {
           },
           phases: {
             flip: {
-              order: 0,
               next: undefined,
+              order: 0,
             },
           },
         },
@@ -254,8 +252,8 @@ describe("Coin Flip Game - Setup", () => {
 
     it("should integrate flow with game", () => {
       const moves: GameMoveDefinitions<CoinFlipGameState, CoinFlipMoves> = {
-        flipCoin: { reducer: () => {} },
         endTurn: { reducer: () => {} },
+        flipCoin: { reducer: () => {} },
       };
 
       const flow: FlowDefinition<CoinFlipGameState> = {
@@ -264,25 +262,25 @@ describe("Coin Flip Game - Setup", () => {
             context.state.phase = "flip";
           },
           phases: {
-            flip: { order: 0, next: undefined },
+            flip: { next: undefined, order: 0 },
           },
         },
       };
 
       const gameDefinition: GameDefinition<CoinFlipGameState, CoinFlipMoves> = {
+        flow,
+        moves,
         name: "Coin Flip",
         setup: (players) => ({
+          currentPlayerIndex: 0,
+          phase: "flip" as const,
           players: players.map((p): CoinFlipGameState["players"][number] => ({
             id: p.id as PlayerId,
             name: p.name || "Player",
             score: 0,
           })),
-          currentPlayerIndex: 0,
           turnNumber: 1,
-          phase: "flip" as const,
         }),
-        moves,
-        flow,
       };
 
       const players = [
@@ -301,33 +299,33 @@ describe("Coin Flip Game - Setup", () => {
   describe("Task 15.7, 15.8: End Conditions", () => {
     it("should define win condition (first to 3 points)", () => {
       const moves: GameMoveDefinitions<CoinFlipGameState, CoinFlipMoves> = {
-        flipCoin: { reducer: () => {} },
         endTurn: { reducer: () => {} },
+        flipCoin: { reducer: () => {} },
       };
 
       const gameDefinition: GameDefinition<CoinFlipGameState, CoinFlipMoves> = {
+        endIf: (state) => {
+          const winner = state.players.find((p) => p.score >= 3);
+          if (winner) {
+            return {
+              reason: "Reached 3 points",
+              winner: winner.id,
+            };
+          }
+          return undefined;
+        },
+        moves,
         name: "Coin Flip",
         setup: (players) => ({
+          currentPlayerIndex: 0,
+          phase: "flip" as const,
           players: players.map((p): CoinFlipGameState["players"][number] => ({
             id: p.id as PlayerId,
             name: p.name || "Player",
             score: 0,
           })),
-          currentPlayerIndex: 0,
           turnNumber: 1,
-          phase: "flip" as const,
         }),
-        moves,
-        endIf: (state) => {
-          const winner = state.players.find((p) => p.score >= 3);
-          if (winner) {
-            return {
-              winner: winner.id,
-              reason: "Reached 3 points",
-            };
-          }
-          return undefined;
-        },
       };
 
       const players = [
@@ -343,6 +341,7 @@ describe("Coin Flip Game - Setup", () => {
 
     it("should detect game end when player reaches 3 points", () => {
       const moves: GameMoveDefinitions<CoinFlipGameState, CoinFlipMoves> = {
+        endTurn: { reducer: () => {} },
         flipCoin: {
           reducer: (draft) => {
             // Force heads for testing
@@ -353,32 +352,31 @@ describe("Coin Flip Game - Setup", () => {
             }
           },
         },
-        endTurn: { reducer: () => {} },
       };
 
       const gameDefinition: GameDefinition<CoinFlipGameState, CoinFlipMoves> = {
+        endIf: (state) => {
+          const winner = state.players.find((p) => p.score >= 3);
+          if (winner) {
+            return {
+              reason: "Reached 3 points",
+              winner: winner.id,
+            };
+          }
+          return undefined;
+        },
+        moves,
         name: "Coin Flip",
         setup: (players) => ({
+          currentPlayerIndex: 0,
+          phase: "flip" as const,
           players: players.map((p): CoinFlipGameState["players"][number] => ({
             id: p.id as PlayerId,
             name: p.name || "Player",
             score: 0,
           })),
-          currentPlayerIndex: 0,
           turnNumber: 1,
-          phase: "flip" as const,
         }),
-        moves,
-        endIf: (state) => {
-          const winner = state.players.find((p) => p.score >= 3);
-          if (winner) {
-            return {
-              winner: winner.id,
-              reason: "Reached 3 points",
-            };
-          }
-          return undefined;
-        },
       };
 
       const players = [
@@ -390,16 +388,16 @@ describe("Coin Flip Game - Setup", () => {
 
       // Flip 3 times to win
       engine.executeMove("flipCoin", {
-        playerId: createPlayerId("p1"),
         params: {},
+        playerId: createPlayerId("p1"),
       });
       engine.executeMove("flipCoin", {
-        playerId: createPlayerId("p1"),
         params: {},
+        playerId: createPlayerId("p1"),
       });
       engine.executeMove("flipCoin", {
-        playerId: createPlayerId("p1"),
         params: {},
+        playerId: createPlayerId("p1"),
       });
 
       const gameEnd = engine.checkGameEnd();
@@ -412,6 +410,12 @@ describe("Coin Flip Game - Setup", () => {
   describe("Task 15.9, 15.10: Complete Game Playthrough", () => {
     it("should play complete game from start to finish", () => {
       const moves: GameMoveDefinitions<CoinFlipGameState, CoinFlipMoves> = {
+        endTurn: {
+          reducer: (draft) => {
+            draft.currentPlayerIndex = (draft.currentPlayerIndex + 1) % draft.players.length;
+            draft.turnNumber += 1;
+          },
+        },
         flipCoin: {
           reducer: (draft) => {
             // Use deterministic "random" for test
@@ -426,38 +430,31 @@ describe("Coin Flip Game - Setup", () => {
             }
           },
         },
-        endTurn: {
-          reducer: (draft) => {
-            draft.currentPlayerIndex =
-              (draft.currentPlayerIndex + 1) % draft.players.length;
-            draft.turnNumber += 1;
-          },
-        },
       };
 
       const gameDefinition: GameDefinition<CoinFlipGameState, CoinFlipMoves> = {
+        endIf: (state) => {
+          const winner = state.players.find((p) => p.score >= 3);
+          if (winner) {
+            return {
+              reason: "Reached 3 points",
+              winner: winner.id,
+            };
+          }
+          return undefined;
+        },
+        moves,
         name: "Coin Flip",
         setup: (players) => ({
+          currentPlayerIndex: 0,
+          phase: "flip" as const,
           players: players.map((p): CoinFlipGameState["players"][number] => ({
             id: p.id as PlayerId,
             name: p.name || "Player",
             score: 0,
           })),
-          currentPlayerIndex: 0,
           turnNumber: 1,
-          phase: "flip" as const,
         }),
-        moves,
-        endIf: (state) => {
-          const winner = state.players.find((p) => p.score >= 3);
-          if (winner) {
-            return {
-              winner: winner.id,
-              reason: "Reached 3 points",
-            };
-          }
-          return undefined;
-        },
       };
 
       const players = [
@@ -475,20 +472,19 @@ describe("Coin Flip Game - Setup", () => {
 
       // Play until someone wins or max turns reached
       while (!gameEnd && turn < maxTurns) {
-        const currentPlayer =
-          engine.getState().players[engine.getState().currentPlayerIndex];
+        const currentPlayer = engine.getState().players[engine.getState().currentPlayerIndex];
 
         // Flip coin
         if (currentPlayer?.id) {
           engine.executeMove("flipCoin", {
-            playerId: currentPlayer.id,
             params: {},
+            playerId: currentPlayer.id,
           });
 
           // End turn
           engine.executeMove("endTurn", {
-            playerId: currentPlayer.id,
             params: {},
+            playerId: currentPlayer.id,
           });
         }
 
@@ -502,9 +498,7 @@ describe("Coin Flip Game - Setup", () => {
 
       // Winner should have at least 3 points
       const finalState = engine.getState();
-      const winningPlayer = finalState.players.find(
-        (p) => p.id === gameEnd?.winner,
-      );
+      const winningPlayer = finalState.players.find((p) => p.id === gameEnd?.winner);
       expect(winningPlayer?.score).toBeGreaterThanOrEqual(3);
     });
   });
@@ -512,6 +506,12 @@ describe("Coin Flip Game - Setup", () => {
   describe("Task 15.11, 15.12: Deterministic Replay", () => {
     it("should support undo/redo for game history", () => {
       const moves: GameMoveDefinitions<CoinFlipGameState, CoinFlipMoves> = {
+        endTurn: {
+          reducer: (draft) => {
+            draft.currentPlayerIndex = (draft.currentPlayerIndex + 1) % draft.players.length;
+            draft.turnNumber += 1;
+          },
+        },
         flipCoin: {
           reducer: (draft) => {
             // Force heads for deterministic test
@@ -522,28 +522,21 @@ describe("Coin Flip Game - Setup", () => {
             }
           },
         },
-        endTurn: {
-          reducer: (draft) => {
-            draft.currentPlayerIndex =
-              (draft.currentPlayerIndex + 1) % draft.players.length;
-            draft.turnNumber += 1;
-          },
-        },
       };
 
       const gameDefinition: GameDefinition<CoinFlipGameState, CoinFlipMoves> = {
+        moves,
         name: "Coin Flip",
         setup: (players) => ({
+          currentPlayerIndex: 0,
+          phase: "flip" as const,
           players: players.map((p): CoinFlipGameState["players"][number] => ({
             id: p.id as PlayerId,
             name: p.name || "Player",
             score: 0,
           })),
-          currentPlayerIndex: 0,
           turnNumber: 1,
-          phase: "flip" as const,
         }),
-        moves,
       };
 
       const players = [
@@ -555,16 +548,16 @@ describe("Coin Flip Game - Setup", () => {
 
       // Execute some moves
       engine.executeMove("flipCoin", {
-        playerId: createPlayerId("p1"),
         params: {},
+        playerId: createPlayerId("p1"),
       });
       engine.executeMove("endTurn", {
-        playerId: createPlayerId("p1"),
         params: {},
+        playerId: createPlayerId("p1"),
       });
       engine.executeMove("flipCoin", {
-        playerId: createPlayerId("p2"),
         params: {},
+        playerId: createPlayerId("p2"),
       });
 
       expect(engine.getState().players[0]?.score).toBe(1);
@@ -585,6 +578,7 @@ describe("Coin Flip Game - Setup", () => {
 
     it("should track patches for network synchronization", () => {
       const moves: GameMoveDefinitions<CoinFlipGameState, CoinFlipMoves> = {
+        endTurn: { reducer: () => {} },
         flipCoin: {
           reducer: (draft) => {
             draft.lastFlipResult = "heads";
@@ -594,22 +588,21 @@ describe("Coin Flip Game - Setup", () => {
             }
           },
         },
-        endTurn: { reducer: () => {} },
       };
 
       const gameDefinition: GameDefinition<CoinFlipGameState, CoinFlipMoves> = {
+        moves,
         name: "Coin Flip",
         setup: (players) => ({
+          currentPlayerIndex: 0,
+          phase: "flip" as const,
           players: players.map((p): CoinFlipGameState["players"][number] => ({
             id: p.id as PlayerId,
             name: p.name || "Player",
             score: 0,
           })),
-          currentPlayerIndex: 0,
           turnNumber: 1,
-          phase: "flip" as const,
         }),
-        moves,
       };
 
       const players = [
@@ -621,8 +614,8 @@ describe("Coin Flip Game - Setup", () => {
 
       // Execute move and capture patches
       const result = engine.executeMove("flipCoin", {
-        playerId: createPlayerId("p1"),
         params: {},
+        playerId: createPlayerId("p1"),
       });
 
       expect(result.success).toBe(true);

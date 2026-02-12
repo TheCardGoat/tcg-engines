@@ -4,9 +4,9 @@ export const princePhillipWardenOfTheWoods: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Ward",
         target: "CHOSEN_CHARACTER",
+        type: "gain-keyword",
       },
       id: "1kf-1",
       name: "SHINING BEACON Your other Hero",

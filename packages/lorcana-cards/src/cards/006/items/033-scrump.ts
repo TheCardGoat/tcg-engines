@@ -4,10 +4,10 @@ export const scrump: ItemCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: -2,
+        stat: "strength",
         target: "YOUR_CHARACTERS",
+        type: "modify-stat",
       },
       id: "88v-1",
       text: "I MADE HER {E} one of your characters - Chosen character gets -2 {S} until the start of your next turn.",

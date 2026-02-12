@@ -9,12 +9,7 @@
 
 import type { CardId } from "@tcg/core";
 import type { KeywordEffect } from "./keywords";
-import type {
-  CardFilter,
-  TargetFilter,
-  TargetingSpec,
-  ZoneType,
-} from "./targeting";
+import type { CardFilter, TargetFilter, TargetingSpec, ZoneType } from "./targeting";
 
 /**
  * Effect Action

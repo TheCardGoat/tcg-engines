@@ -4,16 +4,16 @@ export const teKHeartless: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-lore",
         amount: 2,
+        type: "gain-lore",
       },
       id: "bmj-1",
       name: "SEEK THE HEART",
       text: "SEEK THE HEART During your turn, whenever this character banishes another character in a challenge, you gain 2 lore.",
       trigger: {
         event: "banish",
-        timing: "whenever",
         on: "OPPONENT_CHARACTERS",
+        timing: "whenever",
       },
       type: "triggered",
     },

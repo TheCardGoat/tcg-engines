@@ -13,13 +13,13 @@ export const taffytaMuttonfudgeSourSpeedster: CharacterCard = {
     },
     {
       effect: {
-        type: "gain-lore",
         amount: 2,
+        type: "gain-lore",
       },
       id: "1a5-2",
       name: "NEW ROSTER",
       text: "NEW ROSTER Once per turn, when this character moves to a location, gain 2 lore.",
-      trigger: { event: "play", timing: "when", on: "SELF" },
+      trigger: { event: "play", on: "SELF", timing: "when" },
       type: "triggered",
     },
   ],

@@ -4,17 +4,17 @@ export const theHornedKingTriumphantGhoul: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "1 or more cards have left a player's discard this turn",
+          type: "if",
         },
         then: {
-          type: "modify-stat",
-          stat: "lore",
           modifier: 2,
+          stat: "lore",
           target: "SELF",
+          type: "modify-stat",
         },
+        type: "conditional",
       },
       id: "1f3-1",
       text: "GRAND MACHINATIONS During your turn, if 1 or more cards have left a player's discard this turn, this character gets +2 {L}.",

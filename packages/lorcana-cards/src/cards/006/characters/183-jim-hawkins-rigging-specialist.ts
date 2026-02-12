@@ -13,9 +13,8 @@ export const jimHawkinsRiggingSpecialist: CharacterCard = {
     },
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "deal-damage",
           amount: 1,
           target: {
             selector: "chosen",
@@ -24,16 +23,17 @@ export const jimHawkinsRiggingSpecialist: CharacterCard = {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "deal-damage",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "woa-2",
       name: "BATTLE STATION",
       text: "BATTLE STATION When you play this character, you may deal 1 damage to chosen character or location.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

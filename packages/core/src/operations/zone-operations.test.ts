@@ -12,6 +12,70 @@ describe("ZoneOperations Interface", () => {
     };
 
     return {
+      bulkMove: (params) => {
+        const { from, to, count, playerId, position } = params;
+        const moved: CardId[] = [];
+        const sourceZone = zones[from];
+        if (sourceZone) {
+          for (let i = 0; i < count; i++) {
+            const cardId = sourceZone.cardIds.shift();
+            if (cardId) {
+              moved.push(cardId as CardId);
+              if (!zones[to]) {zones[to] = { cardIds: [] };}
+              if (position === "top") {
+                zones[to].cardIds.unshift(cardId);
+              } else {
+                zones[to].cardIds.push(cardId);
+              }
+            }
+          }
+        }
+        return moved;
+      },
+
+      createDeck: (params) => {
+        const { zoneId, playerId, cardCount, shuffle } = params;
+        const created: CardId[] = [];
+        if (!zones[zoneId]) {zones[zoneId] = { cardIds: [] };}
+        for (let i = 0; i < cardCount; i++) {
+          const cardId = `card-${Date.now()}-${i}` as CardId;
+          created.push(cardId);
+          zones[zoneId].cardIds.push(cardId);
+        }
+        if (shuffle) {
+          zones[zoneId].cardIds.reverse(); // Mock shuffle
+        }
+        return created;
+      },
+
+      drawCards: (params) => {
+        const { from, to, count, playerId } = params;
+        const drawn: CardId[] = [];
+        const sourceZone = zones[from];
+        if (sourceZone) {
+          for (let i = 0; i < count; i++) {
+            const cardId = sourceZone.cardIds.shift();
+            if (cardId) {
+              drawn.push(cardId as CardId);
+              if (!zones[to]) {zones[to] = { cardIds: [] };}
+              zones[to].cardIds.push(cardId);
+            }
+          }
+        }
+        return drawn;
+      },
+
+      getCardZone: (cardId) => {
+        for (const zoneId in zones) {
+          if (zones[zoneId].cardIds.includes(cardId)) {
+            return zoneId as ZoneId;
+          }
+        }
+        return undefined;
+      },
+
+      getCardsInZone: (zoneId, ownerId?) => [...(zones[zoneId]?.cardIds || [])] as unknown as CardId[],
+
       moveCard: (args) => {
         const { cardId, targetZoneId } = args;
         // Find and remove from source
@@ -35,44 +99,6 @@ describe("ZoneOperations Interface", () => {
         }
       },
 
-      getCardsInZone: (zoneId, ownerId?) => {
-        // Return a copy to avoid mutation issues
-        return [...(zones[zoneId]?.cardIds || [])] as unknown as CardId[];
-      },
-
-      shuffleZone: (zoneId, ownerId?) => {
-        // Mock shuffle - just reverse for testing
-        if (zones[zoneId]) {
-          zones[zoneId].cardIds.reverse();
-        }
-      },
-
-      getCardZone: (cardId) => {
-        for (const zoneId in zones) {
-          if (zones[zoneId].cardIds.includes(cardId)) {
-            return zoneId as ZoneId;
-          }
-        }
-        return undefined;
-      },
-
-      drawCards: (params) => {
-        const { from, to, count, playerId } = params;
-        const drawn: CardId[] = [];
-        const sourceZone = zones[from];
-        if (sourceZone) {
-          for (let i = 0; i < count; i++) {
-            const cardId = sourceZone.cardIds.shift();
-            if (cardId) {
-              drawn.push(cardId as CardId);
-              if (!zones[to]) zones[to] = { cardIds: [] };
-              zones[to].cardIds.push(cardId);
-            }
-          }
-        }
-        return drawn;
-      },
-
       mulligan: (params) => {
         const { hand, deck, drawCount, playerId } = params;
         // Move all cards from hand to deck
@@ -91,40 +117,11 @@ describe("ZoneOperations Interface", () => {
         }
       },
 
-      bulkMove: (params) => {
-        const { from, to, count, playerId, position } = params;
-        const moved: CardId[] = [];
-        const sourceZone = zones[from];
-        if (sourceZone) {
-          for (let i = 0; i < count; i++) {
-            const cardId = sourceZone.cardIds.shift();
-            if (cardId) {
-              moved.push(cardId as CardId);
-              if (!zones[to]) zones[to] = { cardIds: [] };
-              if (position === "top") {
-                zones[to].cardIds.unshift(cardId);
-              } else {
-                zones[to].cardIds.push(cardId);
-              }
-            }
-          }
+      shuffleZone: (zoneId, ownerId?) => {
+        // Mock shuffle - just reverse for testing
+        if (zones[zoneId]) {
+          zones[zoneId].cardIds.reverse();
         }
-        return moved;
-      },
-
-      createDeck: (params) => {
-        const { zoneId, playerId, cardCount, shuffle } = params;
-        const created: CardId[] = [];
-        if (!zones[zoneId]) zones[zoneId] = { cardIds: [] };
-        for (let i = 0; i < cardCount; i++) {
-          const cardId = `card-${Date.now()}-${i}` as CardId;
-          created.push(cardId);
-          zones[zoneId].cardIds.push(cardId);
-        }
-        if (shuffle) {
-          zones[zoneId].cardIds.reverse(); // Mock shuffle
-        }
-        return created;
       },
     };
   };
@@ -150,8 +147,8 @@ describe("ZoneOperations Interface", () => {
 
       ops.moveCard({
         cardId: "card-1" as CardId,
-        targetZoneId: "hand" as ZoneId,
         position: "top",
+        targetZoneId: "hand" as ZoneId,
       });
 
       const handCards = ops.getCardsInZone("hand" as ZoneId);
@@ -163,14 +160,12 @@ describe("ZoneOperations Interface", () => {
 
       ops.moveCard({
         cardId: "card-1" as CardId,
-        targetZoneId: "hand" as ZoneId,
         position: "bottom",
+        targetZoneId: "hand" as ZoneId,
       });
 
       const handCards = ops.getCardsInZone("hand" as ZoneId);
-      expect(handCards[handCards.length - 1]).toBe(
-        "card-1" as unknown as CardId,
-      );
+      expect(handCards[handCards.length - 1]).toBe("card-1" as unknown as CardId);
     });
 
     it("should insert card at specific position when position is a number", () => {
@@ -178,8 +173,8 @@ describe("ZoneOperations Interface", () => {
 
       ops.moveCard({
         cardId: "card-4" as CardId,
-        targetZoneId: "deck" as ZoneId,
         position: 1,
+        targetZoneId: "deck" as ZoneId,
       });
 
       const deckCards = ops.getCardsInZone("deck" as ZoneId);
@@ -211,10 +206,7 @@ describe("ZoneOperations Interface", () => {
       const ops = createMockZoneOperations();
 
       // This just tests the signature works
-      const cards = ops.getCardsInZone(
-        "hand" as ZoneId,
-        "player-1" as unknown as PlayerId,
-      );
+      const cards = ops.getCardsInZone("hand" as ZoneId, "player-1" as unknown as PlayerId);
 
       expect(cards).toBeDefined();
     });

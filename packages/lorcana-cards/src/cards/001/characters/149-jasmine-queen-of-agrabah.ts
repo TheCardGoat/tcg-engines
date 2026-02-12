@@ -13,22 +13,22 @@ export const jasmineQueenOfAgrabah: CharacterCard = {
     },
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "remove-damage",
           amount: 2,
           target: "YOUR_CHARACTERS",
+          type: "remove-damage",
           upTo: true,
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "8w9-2",
       name: "CARETAKER",
       text: "CARETAKER When you play this character and whenever she quests, you may remove up to 2 damage from each of your characters.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

@@ -10,9 +10,9 @@ export const jetsamRiffraff: CharacterCard = {
     },
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Ward",
         target: "YOUR_CHARACTERS",
+        type: "gain-keyword",
       },
       id: "1py-2",
       text: "EERIE PAIR Your characters named Flotsam gain Ward.",

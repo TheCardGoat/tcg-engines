@@ -10,20 +10,20 @@ export const baymaxUpgradedRobot: CharacterCard = {
     },
     {
       effect: {
-        type: "optional",
-        effect: {
-          type: "put-on-bottom",
-          target: "CHOSEN_CHARACTER",
-        },
         chooser: "CONTROLLER",
+        effect: {
+          target: "CHOSEN_CHARACTER",
+          type: "put-on-bottom",
+        },
+        type: "optional",
       },
       id: "10n-2",
       name: "ADVANCED SCANNER",
       text: "ADVANCED SCANNER When you play this character, look at the top 4 cards of your deck. You may reveal a Floodborn character card and put it into your hand. Put the rest on the bottom of your deck in any order.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

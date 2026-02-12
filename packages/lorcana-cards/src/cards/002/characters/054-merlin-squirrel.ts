@@ -4,13 +4,13 @@ export const merlinSquirrel: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "put-on-bottom",
         target: "CHOSEN_CHARACTER",
+        type: "put-on-bottom",
       },
       id: "1qe-1",
       name: "LOOK BEFORE YOU LEAP When you play this character and",
       text: "LOOK BEFORE YOU LEAP When you play this character and when he leaves play, look at the top card of your deck. Put it on either the top or the bottom of your deck.",
-      trigger: { event: "play", timing: "when", on: "SELF" },
+      trigger: { event: "play", on: "SELF", timing: "when" },
       type: "triggered",
     },
   ],

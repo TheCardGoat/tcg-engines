@@ -7,10 +7,7 @@
 import type { CstNode } from "chevrotain";
 import { logger } from "../../logging";
 import type { Condition, ConditionalEffect, Effect } from "../../types";
-import {
-  parseConditionFromText,
-  toCondition,
-} from "../../visitors/condition-visitor";
+import { parseConditionFromText, toCondition } from "../../visitors/condition-visitor";
 import type { EffectParser } from "../atomic";
 import { parseAtomicEffect } from "../atomic";
 
@@ -155,9 +152,7 @@ export const conditionalEffectParser: EffectParser = {
     if (typeof input === "string") {
       return parseFromText(input);
     }
-    return parseFromCst(
-      input as { conditionClause?: CstNode[]; effectPhrase?: CstNode[] },
-    );
+    return parseFromCst(input as { conditionClause?: CstNode[]; effectPhrase?: CstNode[] });
   },
 
   pattern: /(?:.+\.\s+)?if\s+[^,]+,/i,

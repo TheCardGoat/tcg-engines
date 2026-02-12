@@ -6,13 +6,13 @@ import type { CardZoneConfig } from "../zones";
 
 // Mock Alpha Clash game state - MASSIVELY SIMPLIFIED!
 // The engine now handles: phase, turn, currentPlayer, setupStep, mulliganOffered
-type TestGameState = {
+interface TestGameState {
   contenderHealth: Record<string, number>;
   resourcesAvailable: Record<string, number>;
   clashInProgress: boolean;
-};
+}
 
-type TestMoves = {
+interface TestMoves {
   // Setup moves
   placeContender: { playerId: PlayerId };
   drawInitialHand: { playerId: PlayerId };
@@ -34,7 +34,7 @@ type TestMoves = {
   // Standard moves provided by engine
   pass: { playerId: PlayerId };
   concede: { playerId: PlayerId };
-};
+}
 
 // Alpha Clash move definitions
 const alphaClashMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
@@ -52,8 +52,8 @@ const alphaClashMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
         if (contenderCardId) {
           zones.moveCard({
             cardId: contenderCardId,
-            targetZoneId: "contender" as ZoneId,
             position: "bottom",
+            targetZoneId: "contender" as ZoneId,
           });
         }
       }
@@ -85,15 +85,15 @@ const alphaClashMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
     reducer: (draft, context) => {
       const { zones } = context;
       const playerId = context.params.playerId as PlayerId;
-      const keepHand = context.params.keepHand;
+      const { keepHand } = context.params;
 
       if (!keepHand) {
         // BEFORE: Manual loop to return cards, shuffle, redraw (25 lines)
         // AFTER: Use engine's mulligan utility (1 line!)
         zones.mulligan({
-          hand: "hand" as ZoneId,
           deck: "deck" as ZoneId,
           drawCount: 8,
+          hand: "hand" as ZoneId,
           playerId,
         });
       }
@@ -137,24 +137,21 @@ const alphaClashMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
 
       // Use engine's drawCards utility
       context.zones.drawCards({
-        from: "deck" as ZoneId,
-        to: "hand" as ZoneId,
         count: 1,
+        from: "deck" as ZoneId,
         playerId,
+        to: "hand" as ZoneId,
       });
     },
   },
 
   playResource: {
     condition: (state, context) => {
-      const playerId = context.params.playerId;
+      const { playerId } = context.params;
 
       // BEFORE: state.hasPlayedResourceThisTurn[playerId]
       // AFTER: Use engine's tracker system!
-      return !context.trackers?.check(
-        "hasPlayedResource",
-        playerId as PlayerId,
-      );
+      return !context.trackers?.check("hasPlayedResource", playerId as PlayerId);
     },
     reducer: (draft, context) => {
       const playerId = context.params.playerId as PlayerId;
@@ -167,8 +164,7 @@ const alphaClashMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
       });
 
       // Increment resources
-      draft.resourcesAvailable[playerId] =
-        (draft.resourcesAvailable[playerId] || 0) + 1;
+      draft.resourcesAvailable[playerId] = (draft.resourcesAvailable[playerId] || 0) + 1;
 
       // BEFORE: draft.hasPlayedResourceThisTurn[playerId] = true
       // AFTER: Use engine's tracker system!
@@ -248,95 +244,95 @@ const alphaClashMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
 
 // Alpha Clash zones configuration (unchanged)
 const alphaClashZones: Record<string, CardZoneConfig> = {
-  deck: {
-    id: "deck" as ZoneId,
-    name: "zones.deck",
-    visibility: "private",
-    ordered: true,
-    owner: undefined,
+  accessory: {
     faceDown: true,
-    maxSize: 50,
-  },
-  hand: {
-    id: "hand" as ZoneId,
-    name: "zones.hand",
-    visibility: "private",
-    ordered: false,
-    owner: undefined,
-    faceDown: false,
+    id: "accessory" as ZoneId,
     maxSize: undefined,
-  },
-  contender: {
-    id: "contender" as ZoneId,
-    name: "zones.contender",
-    visibility: "public",
+    name: "zones.accessory",
     ordered: false,
     owner: undefined,
-    faceDown: false,
-    maxSize: 1,
+    visibility: "secret",
   },
   clash: {
+    faceDown: false,
     id: "clash" as ZoneId,
+    maxSize: undefined,
     name: "zones.clash",
-    visibility: "public",
     ordered: false,
     owner: undefined,
-    faceDown: false,
-    maxSize: undefined,
+    visibility: "public",
   },
   clashground: {
+    faceDown: false,
     id: "clashground" as ZoneId,
-    name: "zones.clashground",
-    visibility: "public",
-    ordered: false,
-    owner: undefined,
-    faceDown: false,
     maxSize: 1,
-  },
-  accessory: {
-    id: "accessory" as ZoneId,
-    name: "zones.accessory",
-    visibility: "secret",
+    name: "zones.clashground",
     ordered: false,
     owner: undefined,
+    visibility: "public",
+  },
+  contender: {
+    faceDown: false,
+    id: "contender" as ZoneId,
+    maxSize: 1,
+    name: "zones.contender",
+    ordered: false,
+    owner: undefined,
+    visibility: "public",
+  },
+  deck: {
     faceDown: true,
-    maxSize: undefined,
-  },
-  resource: {
-    id: "resource" as ZoneId,
-    name: "zones.resource",
-    visibility: "public",
-    ordered: false,
-    owner: undefined,
-    faceDown: false,
-    maxSize: undefined,
-  },
-  discard: {
-    id: "discard" as ZoneId,
-    name: "zones.discard",
-    visibility: "public",
-    ordered: false,
-    owner: undefined,
-    faceDown: false,
-    maxSize: undefined,
-  },
-  oblivion: {
-    id: "oblivion" as ZoneId,
-    name: "zones.oblivion",
-    visibility: "public",
-    ordered: false,
-    owner: undefined,
-    faceDown: false,
-    maxSize: undefined,
-  },
-  standby: {
-    id: "standby" as ZoneId,
-    name: "zones.standby",
-    visibility: "public",
+    id: "deck" as ZoneId,
+    maxSize: 50,
+    name: "zones.deck",
     ordered: true,
     owner: undefined,
+    visibility: "private",
+  },
+  discard: {
     faceDown: false,
+    id: "discard" as ZoneId,
     maxSize: undefined,
+    name: "zones.discard",
+    ordered: false,
+    owner: undefined,
+    visibility: "public",
+  },
+  hand: {
+    faceDown: false,
+    id: "hand" as ZoneId,
+    maxSize: undefined,
+    name: "zones.hand",
+    ordered: false,
+    owner: undefined,
+    visibility: "private",
+  },
+  oblivion: {
+    faceDown: false,
+    id: "oblivion" as ZoneId,
+    maxSize: undefined,
+    name: "zones.oblivion",
+    ordered: false,
+    owner: undefined,
+    visibility: "public",
+  },
+  resource: {
+    faceDown: false,
+    id: "resource" as ZoneId,
+    maxSize: undefined,
+    name: "zones.resource",
+    ordered: false,
+    owner: undefined,
+    visibility: "public",
+  },
+  standby: {
+    faceDown: false,
+    id: "standby" as ZoneId,
+    maxSize: undefined,
+    name: "zones.standby",
+    ordered: true,
+    owner: undefined,
+    visibility: "public",
   },
 };
 
@@ -351,17 +347,19 @@ const alphaClashFlow: FlowDefinition<TestGameState> = {
       // Turn cleanup
     },
     phases: {
-      startOfTurn: {
-        order: 0,
-        next: "expansion",
-        onBegin: (_context) => {
-          // Trigger start of turn effects
+      endOfTurn: {
+        endIf: (_context) => {
+          return true;
         },
-        endIf: () => true,
+        next: "startOfTurn",
+        onBegin: (_context) => {
+          // End of turn effects
+        },
+        order: 3,
       },
       expansion: {
-        order: 1,
         next: "primary",
+        order: 1,
         steps: {
           readyStep: {
             order: 1,
@@ -388,21 +386,19 @@ const alphaClashFlow: FlowDefinition<TestGameState> = {
         },
       },
       primary: {
-        order: 2,
         next: "endOfTurn",
         onBegin: (_context) => {
           // Primary phase - player can play cards, initiate clashes
         },
+        order: 2,
       },
-      endOfTurn: {
-        order: 3,
-        next: "startOfTurn",
+      startOfTurn: {
+        endIf: () => true,
+        next: "expansion",
         onBegin: (_context) => {
-          // End of turn effects
+          // Trigger start of turn effects
         },
-        endIf: (_context) => {
-          return true;
-        },
+        order: 0,
       },
     },
   },
@@ -420,10 +416,7 @@ const alphaClashFlow: FlowDefinition<TestGameState> = {
  * ✅ Flow context access (isFirstTurn, currentPlayer)
  * ✅ No redundant zone checks
  */
-export function createMockAlphaClashGame(): GameDefinition<
-  TestGameState,
-  TestMoves
-> {
+export function createMockAlphaClashGame(): GameDefinition<TestGameState, TestMoves> {
   return {
     name: "Test Alpha Clash Game",
     zones: alphaClashZones,
@@ -453,9 +446,9 @@ export function createMockAlphaClashGame(): GameDefinition<
       }
 
       return {
+        clashInProgress: false,
         contenderHealth,
         resourcesAvailable,
-        clashInProgress: false,
       };
     },
   };

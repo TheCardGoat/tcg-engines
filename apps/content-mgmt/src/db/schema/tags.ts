@@ -27,12 +27,12 @@ interface TagMetadata {
  * Tag categories
  */
 export const TAG_CATEGORIES = {
-  CONTENT_TYPE: "content_type",
   CHARACTER: "character",
   CHARACTER_CLASS: "character_class",
+  CONTENT_TYPE: "content_type",
   GAME_MODE: "game_mode",
-  TOPIC: "topic",
   ITEM_TYPE: "item_type",
+  TOPIC: "topic",
 } as const;
 
 /**
@@ -41,18 +41,18 @@ export const TAG_CATEGORIES = {
 export const tags = pgTable(
   "tags",
   {
-    id: uuid("id").primaryKey().defaultRandom(),
-    name: text("name").notNull(),
-    slug: text("slug").notNull(),
     category: text("category").notNull(),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
     description: text("description"),
     gameId: uuid("game_id").references(() => games.id),
-    parentTagId: uuid("parent_tag_id"),
-    metadataJson: jsonb("metadata_json").$type<TagMetadata>(),
-    usageCount: integer("usage_count").default(0).notNull(),
+    id: uuid("id").primaryKey().defaultRandom(),
     isActive: boolean("is_active").default(true).notNull(),
-    createdAt: timestamp("created_at").defaultNow().notNull(),
+    metadataJson: jsonb("metadata_json").$type<TagMetadata>(),
+    name: text("name").notNull(),
+    parentTagId: uuid("parent_tag_id"),
+    slug: text("slug").notNull(),
     updatedAt: timestamp("updated_at").defaultNow().notNull(),
+    usageCount: integer("usage_count").default(0).notNull(),
   },
   (table) => [
     unique("tags_game_slug_unique").on(table.gameId, table.slug),
@@ -90,6 +90,7 @@ export const contentTags = pgTable(
 
 // Relations
 export const tagsRelations = relations(tags, ({ one, many }) => ({
+  contentTags: many(contentTags),
   game: one(games, {
     fields: [tags.gameId],
     references: [games.id],
@@ -99,7 +100,6 @@ export const tagsRelations = relations(tags, ({ one, many }) => ({
     references: [tags.id],
     relationName: "parentChild",
   }),
-  contentTags: many(contentTags),
 }));
 
 export const contentTagsRelations = relations(contentTags, ({ one }) => ({

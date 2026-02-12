@@ -4,15 +4,15 @@ export const missBiancaUnwaveringAgent: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you have an Ally character in play",
+          type: "if",
         },
         then: {
-          type: "play-card",
           from: "hand",
+          type: "play-card",
         },
+        type: "conditional",
       },
       id: "jeo-1",
       text: "HAVE A LITTLE FAITH If you have an Ally character in play, you pay 2 {I} less to play this character.",

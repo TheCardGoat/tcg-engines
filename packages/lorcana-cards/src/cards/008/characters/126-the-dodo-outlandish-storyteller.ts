@@ -4,10 +4,10 @@ export const theDodoOutlandishStoryteller: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: 1,
+        stat: "strength",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "dac-1",
       text: "EXTRAORDINARY SITUATION This character gets +1 {S} for each 1 damage on him.",

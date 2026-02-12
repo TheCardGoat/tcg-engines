@@ -4,10 +4,8 @@ export const magicalAid: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "gain-keyword",
             keyword: "Challenger",
             target: {
               selector: "chosen",
@@ -16,13 +14,15 @@ export const magicalAid: ActionCard = {
               zones: ["play"],
               cardTypes: ["character"],
             },
+            type: "gain-keyword",
             value: 3,
           },
           {
-            type: "return-to-hand",
             target: "SELF",
+            type: "return-to-hand",
           },
         ],
+        type: "sequence",
       },
       id: "6tm-1",
       text: "Chosen character gains Challenger +3 and “When this character is banished in a challenge, return this card to your hand” this turn.",

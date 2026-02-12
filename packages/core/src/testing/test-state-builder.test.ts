@@ -14,25 +14,25 @@ import { createTestState } from "./test-state-builder";
  * - Immutability of defaults
  */
 
-type TestGameState = {
+interface TestGameState {
   turn: number;
   phase: "setup" | "play" | "end";
-  players: Array<{
+  players: {
     id: string;
     name: string;
     health: number;
-  }>;
+  }[];
   deck: string[];
-};
+}
 
 describe("createTestState", () => {
   describe("Basic Functionality", () => {
     it("should create state with defaults", () => {
       const defaults: TestGameState = {
-        turn: 1,
+        deck: [],
         phase: "setup",
         players: [],
-        deck: [],
+        turn: 1,
       };
 
       const state = createTestState(defaults);
@@ -46,15 +46,15 @@ describe("createTestState", () => {
 
     it("should override specific fields", () => {
       const defaults: TestGameState = {
-        turn: 1,
+        deck: [],
         phase: "setup",
         players: [],
-        deck: [],
+        turn: 1,
       };
 
       const state = createTestState(defaults, {
-        turn: 5,
         phase: "play",
+        turn: 5,
       });
 
       expect(state.turn).toBe(5);
@@ -65,19 +65,19 @@ describe("createTestState", () => {
 
     it("should override nested fields", () => {
       const defaults: TestGameState = {
-        turn: 1,
+        deck: ["card1", "card2"],
         phase: "setup",
         players: [
-          { id: "p1", name: "Player 1", health: 20 },
-          { id: "p2", name: "Player 2", health: 20 },
+          { health: 20, id: "p1", name: "Player 1" },
+          { health: 20, id: "p2", name: "Player 2" },
         ],
-        deck: ["card1", "card2"],
+        turn: 1,
       };
 
       const state = createTestState(defaults, {
         players: [
-          { id: "p1", name: "Alice", health: 15 },
-          { id: "p2", name: "Bob", health: 18 },
+          { health: 15, id: "p1", name: "Alice" },
+          { health: 18, id: "p2", name: "Bob" },
         ],
       });
 
@@ -91,10 +91,10 @@ describe("createTestState", () => {
 
     it("should override array fields", () => {
       const defaults: TestGameState = {
-        turn: 1,
+        deck: ["card1", "card2"],
         phase: "setup",
         players: [],
-        deck: ["card1", "card2"],
+        turn: 1,
       };
 
       const state = createTestState(defaults, {
@@ -109,15 +109,15 @@ describe("createTestState", () => {
   describe("Immutability", () => {
     it("should not modify defaults when creating state", () => {
       const defaults: TestGameState = {
-        turn: 1,
-        phase: "setup",
-        players: [{ id: "p1", name: "Player 1", health: 20 }],
         deck: ["card1"],
+        phase: "setup",
+        players: [{ health: 20, id: "p1", name: "Player 1" }],
+        turn: 1,
       };
 
       createTestState(defaults, {
+        players: [{ health: 10, id: "p1", name: "Modified" }],
         turn: 2,
-        players: [{ id: "p1", name: "Modified", health: 10 }],
       });
 
       // Defaults should remain unchanged
@@ -128,10 +128,10 @@ describe("createTestState", () => {
 
     it("should not modify defaults when creating multiple states", () => {
       const defaults: TestGameState = {
-        turn: 1,
+        deck: [],
         phase: "setup",
         players: [],
-        deck: [],
+        turn: 1,
       };
 
       const state1 = createTestState(defaults, { turn: 2 });
@@ -144,10 +144,10 @@ describe("createTestState", () => {
 
     it("should create independent state copies", () => {
       const defaults: TestGameState = {
-        turn: 1,
-        phase: "setup",
-        players: [{ id: "p1", name: "Player 1", health: 20 }],
         deck: ["card1"],
+        phase: "setup",
+        players: [{ health: 20, id: "p1", name: "Player 1" }],
+        turn: 1,
       };
 
       const state1 = createTestState(defaults);
@@ -157,7 +157,7 @@ describe("createTestState", () => {
       state1.players[0]!.health = 10;
       state1.deck.push("card2");
 
-      // state2 should be unaffected
+      // State2 should be unaffected
       expect(state2.players[0]?.health).toBe(20);
       expect(state2.deck).toHaveLength(1);
     });
@@ -165,14 +165,14 @@ describe("createTestState", () => {
 
   describe("Type Safety", () => {
     it("should infer correct type from defaults", () => {
-      type SimpleState = {
+      interface SimpleState {
         value: number;
         label: string;
-      };
+      }
 
       const defaults: SimpleState = {
-        value: 0,
         label: "test",
+        value: 0,
       };
 
       const state = createTestState(defaults, { value: 42 });
@@ -184,10 +184,10 @@ describe("createTestState", () => {
 
     it("should allow partial overrides", () => {
       const defaults: TestGameState = {
-        turn: 1,
+        deck: [],
         phase: "setup",
         players: [],
-        deck: [],
+        turn: 1,
       };
 
       // Should accept partial overrides without type errors
@@ -204,10 +204,10 @@ describe("createTestState", () => {
   describe("Edge Cases", () => {
     it("should handle empty overrides", () => {
       const defaults: TestGameState = {
-        turn: 1,
+        deck: [],
         phase: "setup",
         players: [],
-        deck: [],
+        turn: 1,
       };
 
       const state = createTestState(defaults, {});
@@ -217,10 +217,10 @@ describe("createTestState", () => {
 
     it("should handle undefined overrides", () => {
       const defaults: TestGameState = {
-        turn: 1,
+        deck: [],
         phase: "setup",
         players: [],
-        deck: [],
+        turn: 1,
       };
 
       const state = createTestState(defaults);
@@ -229,7 +229,7 @@ describe("createTestState", () => {
     });
 
     it("should handle complex nested structures", () => {
-      type ComplexState = {
+      interface ComplexState {
         meta: {
           gameId: string;
           created: number;
@@ -240,18 +240,18 @@ describe("createTestState", () => {
             turnLimit: number;
           };
         };
-      };
+      }
 
       const defaults: ComplexState = {
-        meta: {
-          gameId: "game-1",
-          created: 1000,
-        },
         config: {
           rules: {
             maxPlayers: 4,
             turnLimit: 100,
           },
+        },
+        meta: {
+          created: 1000,
+          gameId: "game-1",
         },
       };
 
@@ -270,16 +270,16 @@ describe("createTestState", () => {
     });
 
     it("should handle arrays of primitives", () => {
-      type ArrayState = {
+      interface ArrayState {
         numbers: number[];
         strings: string[];
         booleans: boolean[];
-      };
+      }
 
       const defaults: ArrayState = {
+        booleans: [true, false],
         numbers: [1, 2, 3],
         strings: ["a", "b"],
-        booleans: [true, false],
       };
 
       const state = createTestState(defaults, {
@@ -293,21 +293,21 @@ describe("createTestState", () => {
     });
 
     it("should handle null and undefined values", () => {
-      type NullableState = {
+      interface NullableState {
         optional?: string;
         nullable: string | null;
         value: number;
-      };
+      }
 
       const defaults: NullableState = {
-        optional: "default",
         nullable: null,
+        optional: "default",
         value: 0,
       };
 
       const state = createTestState(defaults, {
-        optional: undefined,
         nullable: "not-null",
+        optional: undefined,
       });
 
       expect(state.optional).toBeUndefined();
@@ -319,20 +319,20 @@ describe("createTestState", () => {
   describe("Practical Test Scenarios", () => {
     it("should simplify test setup for game states", () => {
       const defaults: TestGameState = {
-        turn: 1,
+        deck: Array.from({ length: 40 }, (_, i) => `card${i}`),
         phase: "setup",
         players: [
-          { id: "p1", name: "Player 1", health: 20 },
-          { id: "p2", name: "Player 2", health: 20 },
+          { health: 20, id: "p1", name: "Player 1" },
+          { health: 20, id: "p2", name: "Player 2" },
         ],
-        deck: Array.from({ length: 40 }, (_, i) => `card${i}`),
+        turn: 1,
       };
 
       // Test scenario: mid-game state
       const midGameState = createTestState(defaults, {
-        turn: 5,
-        phase: "play",
         deck: defaults.deck.slice(10),
+        phase: "play",
+        turn: 5,
       });
 
       expect(midGameState.turn).toBe(5);
@@ -343,20 +343,20 @@ describe("createTestState", () => {
 
     it("should support testing edge cases with minimal setup", () => {
       const defaults: TestGameState = {
-        turn: 1,
+        deck: ["card1", "card2"],
         phase: "setup",
         players: [
-          { id: "p1", name: "Player 1", health: 20 },
-          { id: "p2", name: "Player 2", health: 20 },
+          { health: 20, id: "p1", name: "Player 1" },
+          { health: 20, id: "p2", name: "Player 2" },
         ],
-        deck: ["card1", "card2"],
+        turn: 1,
       };
 
       // Test scenario: player at low health
       const lowHealthState = createTestState(defaults, {
         players: [
-          { id: "p1", name: "Player 1", health: 1 },
-          { id: "p2", name: "Player 2", health: 20 },
+          { health: 1, id: "p1", name: "Player 1" },
+          { health: 20, id: "p2", name: "Player 2" },
         ],
       });
 

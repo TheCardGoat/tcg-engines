@@ -111,9 +111,7 @@ export interface CostFilter {
 /**
  * Filter by card name
  */
-export type NameFilter =
-  | { type: "name"; equals: string }
-  | { type: "name"; contains: string };
+export type NameFilter = { type: "name"; equals: string } | { type: "name"; contains: string };
 
 // --- Combined Gundam Filter Type ---
 
@@ -206,8 +204,7 @@ export type GundamCardType = "unit" | "shield" | "base" | "command";
  * };
  * ```
  */
-export interface GundamCardTarget
-  extends TargetDSL<GundamFilter, GundamContext> {
+export interface GundamCardTarget extends TargetDSL<GundamFilter, GundamContext> {
   /** Gundam card type constraint */
   cardType?: GundamCardType;
 
@@ -275,12 +272,7 @@ export function isDSLTarget(target: GundamTarget): target is GundamCardTarget {
  */
 export function isStateFilter(
   filter: GundamFilter,
-): filter is
-  | DamagedFilter
-  | UndamagedFilter
-  | ExertedFilter
-  | ReadyFilter
-  | DryFilter {
+): filter is DamagedFilter | UndamagedFilter | ExertedFilter | ReadyFilter | DryFilter {
   return (
     filter.type === "damaged" ||
     filter.type === "undamaged" ||
@@ -293,9 +285,7 @@ export function isStateFilter(
 /**
  * Check if a filter is a numeric comparison filter
  */
-export function isNumericFilter(
-  filter: GundamFilter,
-): filter is ApFilter | HpFilter | CostFilter {
+export function isNumericFilter(filter: GundamFilter): filter is ApFilter | HpFilter | CostFilter {
   return filter.type === "ap" || filter.type === "hp" || filter.type === "cost";
 }
 
@@ -316,8 +306,4 @@ export type GundamBaseTarget = BaseTarget;
 /**
  * Any card target
  */
-export type GundamTarget =
-  | GundamUnitTarget
-  | GundamBaseTarget
-  | GundamCardTarget
-  | TargetQuery;
+export type GundamTarget = GundamUnitTarget | GundamBaseTarget | GundamCardTarget | TargetQuery;

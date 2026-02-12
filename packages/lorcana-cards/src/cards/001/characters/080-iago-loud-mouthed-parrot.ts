@@ -5,10 +5,10 @@ export const iagoLoudmouthedParrot: CharacterCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "gain-keyword",
+        duration: "until-start-of-next-turn",
         keyword: "Reckless",
         target: "CHOSEN_CHARACTER",
-        duration: "until-start-of-next-turn",
+        type: "gain-keyword",
       },
       id: "j24-1",
       name: "YOU GOT A PROBLEM?",

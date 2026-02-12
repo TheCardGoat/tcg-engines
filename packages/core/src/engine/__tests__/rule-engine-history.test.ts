@@ -15,17 +15,17 @@ import { RuleEngine } from "../rule-engine";
  * - Flow integration (11.27-11.28)
  */
 
-type TestGameState = {
-  players: Array<{ id: string; name: string; score: number }>;
+interface TestGameState {
+  players: { id: string; name: string; score: number }[];
   currentPlayerIndex: number;
   randomValue?: number;
-};
+}
 
-type TestMoves = {
+interface TestMoves {
   incrementScore: { amount: number };
   randomMove: Record<string, never>;
   nextPlayer: Record<string, never>;
-};
+}
 
 describe("RuleEngine - History & Replay", () => {
   describe("Task 11.17, 11.18: getHistory", () => {
@@ -39,21 +39,21 @@ describe("RuleEngine - History & Replay", () => {
             }
           },
         },
-        randomMove: { reducer: () => {} },
         nextPlayer: { reducer: () => {} },
+        randomMove: { reducer: () => {} },
       };
 
       const gameDef: GameDefinition<TestGameState, TestMoves> = {
+        moves,
         name: "Test Game",
         setup: (players) => ({
+          currentPlayerIndex: 0,
           players: players.map((p) => ({
             id: p.id,
             name: p.name || "Player",
             score: 0,
           })),
-          currentPlayerIndex: 0,
         }),
-        moves,
       };
 
       const players = [
@@ -65,13 +65,13 @@ describe("RuleEngine - History & Replay", () => {
 
       // Execute some moves
       engine.executeMove("incrementScore", {
-        playerId: createPlayerId("p1"),
         params: { amount: 5 },
+        playerId: createPlayerId("p1"),
       });
 
       engine.executeMove("incrementScore", {
-        playerId: createPlayerId("p1"),
         params: { amount: 3 },
+        playerId: createPlayerId("p1"),
       });
 
       const history = engine.getReplayHistory();
@@ -93,21 +93,21 @@ describe("RuleEngine - History & Replay", () => {
             }
           },
         },
-        randomMove: { reducer: () => {} },
         nextPlayer: { reducer: () => {} },
+        randomMove: { reducer: () => {} },
       };
 
       const gameDef: GameDefinition<TestGameState, TestMoves> = {
+        moves,
         name: "Test Game",
         setup: (players) => ({
+          currentPlayerIndex: 0,
           players: players.map((p) => ({
             id: p.id,
             name: p.name || "Player",
             score: 0,
           })),
-          currentPlayerIndex: 0,
         }),
-        moves,
       };
 
       const players = [
@@ -118,8 +118,8 @@ describe("RuleEngine - History & Replay", () => {
       const engine = new RuleEngine(gameDef, players);
 
       engine.executeMove("incrementScore", {
-        playerId: createPlayerId("p1"),
         params: { amount: 5 },
+        playerId: createPlayerId("p1"),
       });
 
       const history = engine.getReplayHistory();
@@ -142,21 +142,21 @@ describe("RuleEngine - History & Replay", () => {
             }
           },
         },
-        randomMove: { reducer: () => {} },
         nextPlayer: { reducer: () => {} },
+        randomMove: { reducer: () => {} },
       };
 
       const gameDef: GameDefinition<TestGameState, TestMoves> = {
+        moves,
         name: "Test Game",
         setup: (players) => ({
+          currentPlayerIndex: 0,
           players: players.map((p) => ({
             id: p.id,
             name: p.name || "Player",
             score: 0,
           })),
-          currentPlayerIndex: 0,
         }),
-        moves,
       };
 
       const players = [
@@ -168,8 +168,8 @@ describe("RuleEngine - History & Replay", () => {
 
       // Execute a move
       engine.executeMove("incrementScore", {
-        playerId: createPlayerId("p1"),
         params: { amount: 5 },
+        playerId: createPlayerId("p1"),
       });
 
       let state = engine.getState();
@@ -193,21 +193,21 @@ describe("RuleEngine - History & Replay", () => {
             }
           },
         },
-        randomMove: { reducer: () => {} },
         nextPlayer: { reducer: () => {} },
+        randomMove: { reducer: () => {} },
       };
 
       const gameDef: GameDefinition<TestGameState, TestMoves> = {
+        moves,
         name: "Test Game",
         setup: (players) => ({
+          currentPlayerIndex: 0,
           players: players.map((p) => ({
             id: p.id,
             name: p.name || "Player",
             score: 0,
           })),
-          currentPlayerIndex: 0,
         }),
-        moves,
       };
 
       const players = [
@@ -219,8 +219,8 @@ describe("RuleEngine - History & Replay", () => {
 
       // Execute, undo, redo
       engine.executeMove("incrementScore", {
-        playerId: createPlayerId("p1"),
         params: { amount: 5 },
+        playerId: createPlayerId("p1"),
       });
 
       engine.undo();
@@ -234,21 +234,21 @@ describe("RuleEngine - History & Replay", () => {
     it("should return false when no moves to undo", () => {
       const moves: GameMoveDefinitions<TestGameState, TestMoves> = {
         incrementScore: { reducer: () => {} },
-        randomMove: { reducer: () => {} },
         nextPlayer: { reducer: () => {} },
+        randomMove: { reducer: () => {} },
       };
 
       const gameDef: GameDefinition<TestGameState, TestMoves> = {
+        moves,
         name: "Test Game",
         setup: (players) => ({
+          currentPlayerIndex: 0,
           players: players.map((p) => ({
             id: p.id,
             name: p.name || "Player",
             score: 0,
           })),
-          currentPlayerIndex: 0,
         }),
-        moves,
       };
 
       const players = [
@@ -265,21 +265,21 @@ describe("RuleEngine - History & Replay", () => {
     it("should return false when no moves to redo", () => {
       const moves: GameMoveDefinitions<TestGameState, TestMoves> = {
         incrementScore: { reducer: () => {} },
-        randomMove: { reducer: () => {} },
         nextPlayer: { reducer: () => {} },
+        randomMove: { reducer: () => {} },
       };
 
       const gameDef: GameDefinition<TestGameState, TestMoves> = {
+        moves,
         name: "Test Game",
         setup: (players) => ({
+          currentPlayerIndex: 0,
           players: players.map((p) => ({
             id: p.id,
             name: p.name || "Player",
             score: 0,
           })),
-          currentPlayerIndex: 0,
         }),
-        moves,
       };
 
       const players = [
@@ -303,21 +303,21 @@ describe("RuleEngine - History & Replay", () => {
             }
           },
         },
-        randomMove: { reducer: () => {} },
         nextPlayer: { reducer: () => {} },
+        randomMove: { reducer: () => {} },
       };
 
       const gameDef: GameDefinition<TestGameState, TestMoves> = {
+        moves,
         name: "Test Game",
         setup: (players) => ({
+          currentPlayerIndex: 0,
           players: players.map((p) => ({
             id: p.id,
             name: p.name || "Player",
             score: 0,
           })),
-          currentPlayerIndex: 0,
         }),
-        moves,
       };
 
       const players = [
@@ -329,13 +329,13 @@ describe("RuleEngine - History & Replay", () => {
 
       // Execute two moves
       engine.executeMove("incrementScore", {
-        playerId: createPlayerId("p1"),
         params: { amount: 5 },
+        playerId: createPlayerId("p1"),
       });
 
       engine.executeMove("incrementScore", {
-        playerId: createPlayerId("p1"),
         params: { amount: 3 },
+        playerId: createPlayerId("p1"),
       });
 
       // Undo one
@@ -343,8 +343,8 @@ describe("RuleEngine - History & Replay", () => {
 
       // Execute new move
       engine.executeMove("incrementScore", {
-        playerId: createPlayerId("p1"),
         params: { amount: 7 },
+        playerId: createPlayerId("p1"),
       });
 
       // Should not be able to redo (history was truncated)
@@ -367,21 +367,21 @@ describe("RuleEngine - History & Replay", () => {
             }
           },
         },
-        randomMove: { reducer: () => {} },
         nextPlayer: { reducer: () => {} },
+        randomMove: { reducer: () => {} },
       };
 
       const gameDef: GameDefinition<TestGameState, TestMoves> = {
+        moves,
         name: "Test Game",
         setup: (players) => ({
+          currentPlayerIndex: 0,
           players: players.map((p) => ({
             id: p.id,
             name: p.name || "Player",
             score: 0,
           })),
-          currentPlayerIndex: 0,
         }),
-        moves,
       };
 
       const players = [
@@ -393,18 +393,18 @@ describe("RuleEngine - History & Replay", () => {
 
       // Execute three moves
       engine.executeMove("incrementScore", {
-        playerId: createPlayerId("p1"),
         params: { amount: 5 },
+        playerId: createPlayerId("p1"),
       });
 
       engine.executeMove("incrementScore", {
-        playerId: createPlayerId("p1"),
         params: { amount: 3 },
+        playerId: createPlayerId("p1"),
       });
 
       engine.executeMove("incrementScore", {
-        playerId: createPlayerId("p1"),
         params: { amount: 2 },
+        playerId: createPlayerId("p1"),
       });
 
       // Get patches since move 1
@@ -424,21 +424,21 @@ describe("RuleEngine - History & Replay", () => {
             }
           },
         },
-        randomMove: { reducer: () => {} },
         nextPlayer: { reducer: () => {} },
+        randomMove: { reducer: () => {} },
       };
 
       const gameDef: GameDefinition<TestGameState, TestMoves> = {
+        moves,
         name: "Test Game",
         setup: (players) => ({
+          currentPlayerIndex: 0,
           players: players.map((p) => ({
             id: p.id,
             name: p.name || "Player",
             score: 0,
           })),
-          currentPlayerIndex: 0,
         }),
-        moves,
       };
 
       const players = [
@@ -449,8 +449,8 @@ describe("RuleEngine - History & Replay", () => {
       const engine = new RuleEngine(gameDef, players);
 
       engine.executeMove("incrementScore", {
-        playerId: createPlayerId("p1"),
         params: { amount: 5 },
+        playerId: createPlayerId("p1"),
       });
 
       const patches = engine.getPatches();
@@ -462,21 +462,21 @@ describe("RuleEngine - History & Replay", () => {
     it("should provide access to seeded RNG", () => {
       const moves: GameMoveDefinitions<TestGameState, TestMoves> = {
         incrementScore: { reducer: () => {} },
-        randomMove: { reducer: () => {} },
         nextPlayer: { reducer: () => {} },
+        randomMove: { reducer: () => {} },
       };
 
       const gameDef: GameDefinition<TestGameState, TestMoves> = {
+        moves,
         name: "Test Game",
         setup: (players) => ({
+          currentPlayerIndex: 0,
           players: players.map((p) => ({
             id: p.id,
             name: p.name || "Player",
             score: 0,
           })),
-          currentPlayerIndex: 0,
         }),
-        moves,
       };
 
       const players = [
@@ -493,27 +493,27 @@ describe("RuleEngine - History & Replay", () => {
 
     it("should produce deterministic results with same seed", () => {
       const moves: GameMoveDefinitions<TestGameState, TestMoves> = {
+        incrementScore: { reducer: () => {} },
+        nextPlayer: { reducer: () => {} },
         randomMove: {
           reducer: (draft) => {
             // Moves can access RNG through game state or context
             draft.randomValue = 42; // Placeholder
           },
         },
-        incrementScore: { reducer: () => {} },
-        nextPlayer: { reducer: () => {} },
       };
 
       const gameDef: GameDefinition<TestGameState, TestMoves> = {
+        moves,
         name: "Test Game",
         setup: (players) => ({
+          currentPlayerIndex: 0,
           players: players.map((p) => ({
             id: p.id,
             name: p.name || "Player",
             score: 0,
           })),
-          currentPlayerIndex: 0,
         }),
-        moves,
       };
 
       const players = [

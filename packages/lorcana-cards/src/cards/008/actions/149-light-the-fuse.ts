@@ -4,15 +4,15 @@ export const lightTheFuse: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "deal-damage",
         amount: 1,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "deal-damage",
       },
       id: "f06-1",
       text: "Deal 1 damage to chosen character for each exerted character you have in play.",

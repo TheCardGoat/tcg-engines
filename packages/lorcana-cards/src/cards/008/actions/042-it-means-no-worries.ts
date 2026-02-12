@@ -4,10 +4,8 @@ export const itMeansNoWorries: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "return-to-hand",
             target: {
               selector: "chosen",
               count: 1,
@@ -15,12 +13,14 @@ export const itMeansNoWorries: ActionCard = {
               zones: ["play"],
               cardTypes: ["character"],
             },
+            type: "return-to-hand",
           },
           {
-            type: "play-card",
             from: "hand",
+            type: "play-card",
           },
         ],
+        type: "sequence",
       },
       id: "i3v-1",
       text: "Sing Together 9 Return up to 3 character cards from your discard to your hand. You pay 2 {I} less for the next character you play this turn.",

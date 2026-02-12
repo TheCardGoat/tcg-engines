@@ -4,17 +4,17 @@ export const goodJob: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "lore",
+        duration: "this-turn",
         modifier: 1,
+        stat: "lore",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
-        duration: "this-turn",
+        type: "modify-stat",
       },
       id: "1q8-1",
       text: "Chosen character gets +1 {L} this turn.",

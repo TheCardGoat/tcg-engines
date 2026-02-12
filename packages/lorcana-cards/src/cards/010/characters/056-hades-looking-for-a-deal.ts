@@ -4,26 +4,26 @@ export const hadesLookingForADeal: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "play-card",
             from: "hand",
+            type: "play-card",
           },
           {
-            type: "draw",
             amount: 2,
             target: "CONTROLLER",
+            type: "draw",
           },
         ],
+        type: "sequence",
       },
       id: "qkg-1",
       name: "WHAT D'YA SAY?",
       text: "WHAT D'YA SAY? When you play this character, you may choose an opposing character. If you do, draw 2 cards unless that character’s player puts that card on the bottom of their deck.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

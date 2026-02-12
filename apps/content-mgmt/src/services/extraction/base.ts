@@ -24,9 +24,7 @@ import type {
  * Provides common validation logic and helper methods.
  * Subclasses must implement the abstract methods for source-specific behavior.
  */
-export abstract class BaseExtractionAdapter
-  implements ExtractionServiceAdapter
-{
+export abstract class BaseExtractionAdapter implements ExtractionServiceAdapter {
   abstract readonly serviceId: string;
   abstract readonly supportedSourceTypes: readonly SourceType[];
 
@@ -40,10 +38,7 @@ export abstract class BaseExtractionAdapter
    * Fetch raw content from the source
    * Must be implemented by subclasses
    */
-  abstract fetchContent(
-    contentId: string,
-    options?: FetchContentOptions,
-  ): Promise<RawContent>;
+  abstract fetchContent(contentId: string, options?: FetchContentOptions): Promise<RawContent>;
 
   /**
    * Extract metadata from raw content
@@ -90,54 +85,45 @@ export abstract class BaseExtractionAdapter
     }
 
     // Check duration constraint (for video content)
-    if (
-      config.maxDurationSeconds !== undefined &&
-      metadata.durationSeconds !== undefined
-    ) {
+    if (config.maxDurationSeconds !== undefined && metadata.durationSeconds !== undefined) {
       if (metadata.durationSeconds > config.maxDurationSeconds) {
         errors.push({
           code: "CONTENT_TOO_LONG",
-          message: `Content duration (${metadata.durationSeconds}s) exceeds maximum allowed (${config.maxDurationSeconds}s)`,
           field: "durationSeconds",
+          message: `Content duration (${metadata.durationSeconds}s) exceeds maximum allowed (${config.maxDurationSeconds}s)`,
         });
         shouldBlock = true;
       }
     }
 
     // Check content length constraint (for text content)
-    if (
-      config.maxContentLength !== undefined &&
-      metadata.contentLength !== undefined
-    ) {
+    if (config.maxContentLength !== undefined && metadata.contentLength !== undefined) {
       if (metadata.contentLength > config.maxContentLength) {
         errors.push({
           code: "CONTENT_TOO_LONG",
-          message: `Content length (${metadata.contentLength} chars) exceeds maximum allowed (${config.maxContentLength} chars)`,
           field: "contentLength",
+          message: `Content length (${metadata.contentLength} chars) exceeds maximum allowed (${config.maxContentLength} chars)`,
         });
         shouldBlock = true;
       }
     }
 
     // Check language constraint
-    if (
-      config.supportedLanguages.length > 0 &&
-      metadata.language !== undefined
-    ) {
+    if (config.supportedLanguages.length > 0 && metadata.language !== undefined) {
       if (!config.supportedLanguages.includes(metadata.language)) {
         errors.push({
           code: "UNSUPPORTED_LANGUAGE",
-          message: `Language '${metadata.language}' is not supported. Supported languages: ${config.supportedLanguages.join(", ")}`,
           field: "language",
+          message: `Language '${metadata.language}' is not supported. Supported languages: ${config.supportedLanguages.join(", ")}`,
         });
         shouldBlock = true;
       }
     }
 
     return {
+      errors,
       isValid: errors.length === 0,
       shouldBlock,
-      errors,
     };
   }
 
@@ -150,7 +136,7 @@ export abstract class BaseExtractionAdapter
     blocksOnFailure: boolean,
     validate: (metadata: ContentMetadata) => ValidationError | null,
   ): ValidationRule {
-    return { id, description, blocksOnFailure, validate };
+    return { blocksOnFailure, description, id, validate };
   }
 
   /**

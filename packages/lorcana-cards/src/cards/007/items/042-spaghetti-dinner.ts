@@ -5,15 +5,15 @@ export const spaghettiDinner: ItemCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you have 2 or more characters in play",
+          type: "if",
         },
         then: {
-          type: "gain-lore",
           amount: 1,
+          type: "gain-lore",
         },
+        type: "conditional",
       },
       id: "1bi-1",
       text: "FINE DINING {E}, 1 {I} — If you have 2 or more characters in play, gain 1 lore.",

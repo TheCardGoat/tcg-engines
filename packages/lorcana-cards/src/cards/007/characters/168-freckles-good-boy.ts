@@ -4,19 +4,19 @@ export const frecklesGoodBoy: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
-        modifier: -1,
-        target: "SELF",
         duration: "this-turn",
+        modifier: -1,
+        stat: "strength",
+        target: "SELF",
+        type: "modify-stat",
       },
       id: "1v6-1",
       name: "JUST SO CUTE!",
       text: "JUST SO CUTE! When you play this character, chosen opposing character gets -1 {S} this turn.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

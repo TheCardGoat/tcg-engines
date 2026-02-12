@@ -4,9 +4,9 @@ export const restoringAtlantis: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "restriction",
         restriction: "cant-be-challenged",
         target: "SELF",
+        type: "restriction",
       },
       id: "g4p-1",
       text: "Your characters can't be challenged until the start of your next turn.",

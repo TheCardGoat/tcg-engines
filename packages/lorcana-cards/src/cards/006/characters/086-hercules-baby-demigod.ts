@@ -10,15 +10,15 @@ export const herculesBabyDemigod: CharacterCard = {
     },
     {
       effect: {
-        type: "deal-damage",
         amount: 1,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "deal-damage",
       },
       id: "844-2",
       text: "STRONG LIKE HIS DAD 3 {I} - Deal 1 damage to chosen damaged character.",

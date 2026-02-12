@@ -14,8 +14,4 @@ export type {
   TelemetryEvent,
 } from "./events";
 export { TelemetryManager } from "./telemetry-manager";
-export type {
-  TelemetryHook,
-  TelemetryHooks,
-  TelemetryOptions,
-} from "./types";
+export type { TelemetryHook, TelemetryHooks, TelemetryOptions } from "./types";

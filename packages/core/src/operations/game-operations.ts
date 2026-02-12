@@ -9,7 +9,7 @@ import type { PlayerId } from "../types";
  *
  * These are universal TCG concepts that apply across all card games.
  */
-export type GameOperations = {
+export interface GameOperations {
   /**
    * Set the player who is "on the play" (goes first)
    *
@@ -137,4 +137,4 @@ export type GameOperations = {
    * ```
    */
   removePendingMulligan(playerId: PlayerId): void;
-};
+}

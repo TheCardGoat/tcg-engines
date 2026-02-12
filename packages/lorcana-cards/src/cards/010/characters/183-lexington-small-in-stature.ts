@@ -10,16 +10,16 @@ export const lexingtonSmallInStature: CharacterCard = {
     },
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you have 3 or more cards in your hand",
+          type: "if",
         },
         then: {
-          type: "restriction",
           restriction: "cant-ready",
           target: "SELF",
+          type: "restriction",
         },
+        type: "conditional",
       },
       id: "wbg-2",
       text: "STONE BY DAY If you have 3 or more cards in your hand, this character can't ready.",

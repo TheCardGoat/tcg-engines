@@ -4,9 +4,9 @@ export const nothingToHide: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "draw",
         amount: 1,
         target: "EACH_OPPONENT",
+        type: "draw",
       },
       id: "1tm-1",
       text: "Each opponent reveals their hand. Draw a card.",

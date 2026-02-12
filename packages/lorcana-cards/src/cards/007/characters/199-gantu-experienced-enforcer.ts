@@ -4,8 +4,8 @@ export const gantuExperiencedEnforcer: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "play-card",
         from: "hand",
+        type: "play-card",
       },
       id: "3lm-2",
       text: "DON'T GET ANY IDEAS Each player pays 2 {I} more to play actions or items.",

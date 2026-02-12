@@ -19,7 +19,7 @@ import type { ZoneOperations } from "../operations/zone-operations";
  * This replaces the simple (state: TState) => void pattern with a richer API
  * that allows programmatic control of flow progression and access to game operations.
  */
-export type FlowContext<TState, TCardMeta = any> = {
+export interface FlowContext<TState, TCardMeta = any> {
   /** Immer draft of game state - can be mutated */
   state: Draft<TState>;
 
@@ -146,7 +146,7 @@ export type FlowContext<TState, TCardMeta = any> = {
    * @param playerId - Player ID to set as current, or undefined to clear
    */
   setCurrentPlayer: (playerId?: string) => void;
-};
+}
 
 /**
  * Task 9.2: Lifecycle hook type
@@ -181,7 +181,7 @@ export type EndCondition<TState, TCardMeta = any> = (
  * Example: Combat phase has declare, target, damage steps.
  * Once all steps are over, the phase ends.
  */
-export type StepDefinition<TState, TCardMeta = any> = {
+export interface StepDefinition<TState, TCardMeta = any> {
   /**
    * Order/sequence number for this step
    *
@@ -214,7 +214,7 @@ export type StepDefinition<TState, TCardMeta = any> = {
    * When returns true, step automatically ends and transitions to next.
    */
   endIf?: EndCondition<TState, TCardMeta>;
-};
+}
 
 /**
  * Task 9.13: PhaseDefinition - Phases within a turn
@@ -225,7 +225,7 @@ export type StepDefinition<TState, TCardMeta = any> = {
  * Example: Disney Lorcana turn has ready, draw, main, end phases.
  * Phases progress sequentially for the same player.
  */
-export type PhaseDefinition<TState, TCardMeta = any> = {
+export interface PhaseDefinition<TState, TCardMeta = any> {
   /**
    * Initial step name (optional)
    *
@@ -274,7 +274,7 @@ export type PhaseDefinition<TState, TCardMeta = any> = {
    * Steps execute in order, then phase ends.
    */
   steps?: Record<string, StepDefinition<TState, TCardMeta>>;
-};
+}
 
 /**
  * Task 9.2: TurnDefinition - Defines turn structure within a game segment
@@ -284,7 +284,7 @@ export type PhaseDefinition<TState, TCardMeta = any> = {
  * A turn is owned by a single player and consists of phases.
  * When turn ends, next player starts their turn.
  */
-export type TurnDefinition<TState, TCardMeta = any> = {
+export interface TurnDefinition<TState, TCardMeta = any> {
   /**
    * Initial phase name (optional)
    *
@@ -327,7 +327,7 @@ export type TurnDefinition<TState, TCardMeta = any> = {
    * Example: ready → draw → main → end
    */
   phases?: Record<string, PhaseDefinition<TState, TCardMeta>>;
-};
+}
 
 /**
  * GameSegmentDefinition - High-level game segments
@@ -346,7 +346,7 @@ export type TurnDefinition<TState, TCardMeta = any> = {
  * - Main game segment: Primary gameplay
  * - Overtime segment: Extra turns or special win conditions
  */
-export type GameSegmentDefinition<TState, TCardMeta = any> = {
+export interface GameSegmentDefinition<TState, TCardMeta = any> {
   /**
    * Order/sequence number for this game segment
    *
@@ -388,7 +388,7 @@ export type GameSegmentDefinition<TState, TCardMeta = any> = {
    * completely different turn mechanics.
    */
   turn: TurnDefinition<TState, TCardMeta>;
-};
+}
 
 /**
  * Task 9.1, 9.2: FlowDefinition - Complete flow orchestration

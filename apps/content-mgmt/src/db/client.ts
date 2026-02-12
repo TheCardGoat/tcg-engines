@@ -40,9 +40,7 @@ export function initDatabase(connectionString: string): void {
  */
 export function getDb(): ReturnType<typeof drizzle<typeof schema>> {
   if (!_db) {
-    throw new Error(
-      "Database not initialized. Call initDatabase() first with DATABASE_URL.",
-    );
+    throw new Error("Database not initialized. Call initDatabase() first with DATABASE_URL.");
   }
   return _db;
 }

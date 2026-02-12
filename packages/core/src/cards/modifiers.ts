@@ -15,16 +15,13 @@ export type ModifierType = "stat" | "ability" | "type" | "keyword";
  * - until-end-of-turn: Expires at end of turn
  * - while-condition: Active only while condition is true
  */
-export type ModifierDuration =
-  | "permanent"
-  | "until-end-of-turn"
-  | "while-condition";
+export type ModifierDuration = "permanent" | "until-end-of-turn" | "while-condition";
 
 /**
  * Modifier represents a temporary or permanent change to a card's properties
  * @template TGameState - Game state type for condition evaluation (defaults to unknown)
  */
-export type Modifier<TGameState = unknown> = {
+export interface Modifier<TGameState = unknown> {
   /** Unique identifier for this modifier */
   id: string;
 
@@ -48,4 +45,4 @@ export type Modifier<TGameState = unknown> = {
 
   /** Optional layer for complex modifier interactions (e.g., MTG layer system) */
   layer?: number;
-};
+}

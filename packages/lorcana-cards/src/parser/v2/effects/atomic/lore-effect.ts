@@ -86,8 +86,7 @@ function parseFromText(text: string): GainLoreEffect | LoseLoreEffect | null {
 
   // Handle {d} placeholder as D_PLACEHOLDER sentinel
   const amountValue = match[1];
-  const amount =
-    amountValue === "{d}" ? D_PLACEHOLDER : Number.parseInt(amountValue, 10);
+  const amount = amountValue === "{d}" ? D_PLACEHOLDER : Number.parseInt(amountValue, 10);
 
   if (Number.isNaN(amount)) {
     logger.warn("Failed to extract number from lore effect text", {
@@ -132,10 +131,7 @@ export const loreEffectParser: EffectParser = {
       return parseFromText(input);
     }
     return parseFromCst(
-      input as
-        | { NumberToken?: IToken[]; Gain?: IToken[]; Lose?: IToken[] }
-        | null
-        | undefined,
+      input as { NumberToken?: IToken[]; Gain?: IToken[]; Lose?: IToken[] } | null | undefined,
     );
   },
 

@@ -4,10 +4,12 @@ export const kakamoraPirateChief: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "choice",
+        optionLabels: [
+          "you may draw a card. Then, choose and discard a card to deal 1 damage to chosen character",
+          "location. If a Pirate character card was discarded, deal 3 damage to that character",
+        ],
         options: [
           {
-            type: "deal-damage",
             amount: 1,
             target: {
               selector: "chosen",
@@ -16,9 +18,9 @@ export const kakamoraPirateChief: CharacterCard = {
               zones: ["play"],
               cardTypes: ["character"],
             },
+            type: "deal-damage",
           },
           {
-            type: "deal-damage",
             amount: 3,
             target: {
               selector: "chosen",
@@ -27,20 +29,18 @@ export const kakamoraPirateChief: CharacterCard = {
               zones: ["play"],
               cardTypes: ["character"],
             },
+            type: "deal-damage",
           },
         ],
-        optionLabels: [
-          "you may draw a card. Then, choose and discard a card to deal 1 damage to chosen character",
-          "location. If a Pirate character card was discarded, deal 3 damage to that character",
-        ],
+        type: "choice",
       },
       id: "15x-1",
       name: "COCONUT LEADER",
       text: "COCONUT LEADER Whenever this character quests, you may draw a card. Then, choose and discard a card to deal 1 damage to chosen character or location. If a Pirate character card was discarded, deal 3 damage to that character or location instead.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

@@ -29,9 +29,7 @@ describe.skip("Target Parser", () => {
     });
 
     it("should parse 'chosen opposing character'", () => {
-      const result = parseCharacterTarget(
-        "Banishing chosen opposing character",
-      );
+      const result = parseCharacterTarget("Banishing chosen opposing character");
       expect(result).toEqual({
         cardTypes: ["character"],
         count: 1,

@@ -4,19 +4,19 @@ export const sourBillSurlyHenchman: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
-        modifier: -2,
-        target: "CHOSEN_CHARACTER",
         duration: "this-turn",
+        modifier: -2,
+        stat: "strength",
+        target: "CHOSEN_CHARACTER",
+        type: "modify-stat",
       },
       id: "1f5-1",
       name: "UNPALATABLE",
       text: "UNPALATABLE When you play this character, chosen opposing character gets -2 {S} this turn.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

@@ -2,7 +2,7 @@ import { describe, expect, it } from "bun:test";
 import { RuleEngine } from "../../engine/rule-engine";
 import type { GameDefinition } from "../../game-definition/game-definition";
 import type { GameMoveDefinitions } from "../../game-definition/move-definitions";
-import { createPlayerId, type PlayerId } from "../../types";
+import { type PlayerId, createPlayerId } from "../../types";
 import {
   createTestCards,
   createTestDeck,
@@ -21,22 +21,22 @@ import {
  * Integration test demonstrating @tcg/core/testing utilities
  */
 
-type TestGameState = {
-  players: Array<{
+interface TestGameState {
+  players: {
     id: PlayerId;
     name: string;
     health: number;
     hand: string[];
-  }>;
+  }[];
   phase: "draw" | "main";
   winner?: PlayerId;
-};
+}
 
-type TestGameMoves = {
+interface TestGameMoves {
   drawCard: Record<string, never>;
   attack: Record<string, never>;
   endPhase: Record<string, never>;
-};
+}
 
 describe("Testing Utilities Integration", () => {
   it("demonstrates testing utilities workflow", () => {
@@ -57,15 +57,6 @@ describe("Testing Utilities Integration", () => {
 
     // 3. Test game
     const moves: GameMoveDefinitions<TestGameState, TestGameMoves> = {
-      drawCard: {
-        condition: (state) => state.phase === "draw",
-        reducer: (draft) => {
-          const player = draft.players[0];
-          if (player) {
-            player.hand.push("card");
-          }
-        },
-      },
       attack: {
         condition: (state) => state.phase === "main",
         reducer: (draft) => {
@@ -78,6 +69,15 @@ describe("Testing Utilities Integration", () => {
           }
         },
       },
+      drawCard: {
+        condition: (state) => state.phase === "draw",
+        reducer: (draft) => {
+          const player = draft.players[0];
+          if (player) {
+            player.hand.push("card");
+          }
+        },
+      },
       endPhase: {
         reducer: (draft) => {
           draft.phase = draft.phase === "draw" ? "main" : "draw";
@@ -86,23 +86,23 @@ describe("Testing Utilities Integration", () => {
     };
 
     const gameDefinition: GameDefinition<TestGameState, TestGameMoves> = {
+      endIf: (state) => {
+        if (state.winner) {
+          return { reason: "Victory", winner: state.winner };
+        }
+        return undefined;
+      },
+      moves,
       name: "Test Game",
       setup: (players) => ({
+        phase: "draw" as const,
         players: players.map((p) => ({
           id: p.id as PlayerId,
           name: p.name || "Player",
           health: 3,
           hand: [],
         })),
-        phase: "draw" as const,
       }),
-      moves,
-      endIf: (state) => {
-        if (state.winner) {
-          return { winner: state.winner, reason: "Victory" };
-        }
-        return undefined;
-      },
     };
 
     const engine = new RuleEngine(
@@ -119,15 +119,15 @@ describe("Testing Utilities Integration", () => {
     expectStateProperty(engine, "players[0].health", 3);
 
     expectMoveSuccess(engine, "drawCard", {
-      playerId: createPlayerId("p1"),
       params: {},
+      playerId: createPlayerId("p1"),
     });
     expectStateProperty(engine, "players[0].hand.length", 1);
 
     expectPhaseTransition(
       engine,
       "endPhase",
-      { playerId: createPlayerId("p1"), params: {} },
+      { params: {}, playerId: createPlayerId("p1") },
       "draw",
       "main",
     );
@@ -135,7 +135,7 @@ describe("Testing Utilities Integration", () => {
     expectMoveFailure(
       engine,
       "drawCard",
-      { playerId: createPlayerId("p1"), params: {} },
+      { params: {}, playerId: createPlayerId("p1") },
       "CONDITION_FAILED",
     );
 
@@ -143,16 +143,16 @@ describe("Testing Utilities Integration", () => {
 
     // Attack to end game
     expectMoveSuccess(engine, "attack", {
-      playerId: createPlayerId("p1"),
       params: {},
+      playerId: createPlayerId("p1"),
     });
     expectMoveSuccess(engine, "attack", {
-      playerId: createPlayerId("p1"),
       params: {},
+      playerId: createPlayerId("p1"),
     });
     expectMoveSuccess(engine, "attack", {
-      playerId: createPlayerId("p1"),
       params: {},
+      playerId: createPlayerId("p1"),
     });
 
     expectGameEnd(engine, createPlayerId("p1"));

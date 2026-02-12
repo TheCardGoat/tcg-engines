@@ -4,17 +4,17 @@ export const ursulaDeceiverOfAll: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
-        effect: {
-          type: "put-on-bottom",
-          target: "CHOSEN_CHARACTER",
-        },
         chooser: "CONTROLLER",
+        effect: {
+          target: "CHOSEN_CHARACTER",
+          type: "put-on-bottom",
+        },
+        type: "optional",
       },
       id: "1gd-1",
       name: "WHAT A DEAL",
       text: "WHAT A DEAL Whenever this character sings a song, you may play that song again from your discard for free, then put it on the bottom of your deck.",
-      trigger: { event: "play", timing: "when", on: "SELF" },
+      trigger: { event: "play", on: "SELF", timing: "when" },
       type: "triggered",
     },
   ],

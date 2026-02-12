@@ -4,22 +4,22 @@ export const weDontTalkAboutBruno: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "return-to-hand",
             target: {
               selector: "chosen",
               count: 1,
             },
+            type: "return-to-hand",
           },
           {
-            type: "discard",
             amount: 1,
-            target: "CARD_OWNER",
             chosen: true,
+            target: "CARD_OWNER",
+            type: "discard",
           },
         ],
+        type: "sequence",
       },
       id: "3im-1",
       text: "Return chosen character to their player's hand. That player chooses and discards a card.",

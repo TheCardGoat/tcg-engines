@@ -13,15 +13,15 @@ export const goofyGalumphingGumshoe: CharacterCard = {
     },
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: -1,
+        stat: "strength",
         target: "CHOSEN_CHARACTER",
+        type: "modify-stat",
       },
       id: "1mo-2",
       name: "HOT PURSUIT When you play this character and",
       text: "HOT PURSUIT When you play this character and whenever he quests, each opposing character gets -1 {S} until the start of your next turn.",
-      trigger: { event: "play", timing: "when", on: "SELF" },
+      trigger: { event: "play", on: "SELF", timing: "when" },
       type: "triggered",
     },
   ],

@@ -4,9 +4,9 @@ export const boltDownButNotOut: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "restriction",
         restriction: "enters-play-exerted",
         target: "SELF",
+        type: "restriction",
       },
       id: "1q7-1",
       name: "NONE OF YOUR POWERS ARE WORKING",

@@ -4,9 +4,9 @@ export const theQueenWickedAndVain: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "draw",
         amount: 1,
         target: "CONTROLLER",
+        type: "draw",
       },
       id: "y32-1",
       text: "**I SUMMON THEE** {E} − Draw a card.",

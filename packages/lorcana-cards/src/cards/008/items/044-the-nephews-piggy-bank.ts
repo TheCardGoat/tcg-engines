@@ -4,15 +4,15 @@ export const theNephewsPiggyBank: ItemCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you have a character named Donald Duck in play",
+          type: "if",
         },
         then: {
-          type: "play-card",
           from: "hand",
+          type: "play-card",
         },
+        type: "conditional",
       },
       id: "12r-1",
       text: "INSIDE JOB If you have a character named Donald Duck in play, you pay 1 {I} less to play this item.",
@@ -20,16 +20,16 @@ export const theNephewsPiggyBank: ItemCard = {
     },
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: -1,
+        stat: "strength",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "modify-stat",
       },
       id: "12r-2",
       text: "PAYOFF {E} – Chosen character gets -1 {S} until the start of your next turn.",

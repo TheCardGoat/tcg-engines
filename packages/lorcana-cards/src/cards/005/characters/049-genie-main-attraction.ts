@@ -4,9 +4,9 @@ export const genieMainAttraction: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "restriction",
         restriction: "cant-ready",
         target: "SELF",
+        type: "restriction",
       },
       id: "1ia-1",
       text: "PHENOMENAL SHOWMAN While this character is exerted, opposing characters can't ready at the start of their turn.",

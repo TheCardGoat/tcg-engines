@@ -4,9 +4,9 @@ export const bashfulHopelessRomantic: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "restriction",
         restriction: "cant-quest",
         target: "SELF",
+        type: "restriction",
       },
       id: "1ff-1",
       text: "OH, GOSH! This character can't quest unless you have another Seven Dwarfs character in play.",

@@ -4,9 +4,8 @@ export const motherGothelKnowsWhatsBest: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "deal-damage",
           amount: 2,
           target: {
             selector: "chosen",
@@ -15,16 +14,17 @@ export const motherGothelKnowsWhatsBest: CharacterCard = {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "deal-damage",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "1pt-1",
       name: "LOOK WHAT YOU'VE DONE",
       text: 'LOOK WHAT YOU\'VE DONE When you play this character, you may deal 2 damage to another chosen character of yours to give that character Challenger +1 and "When this character is banished in a challenge, return this card to your hand" this turn.',
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

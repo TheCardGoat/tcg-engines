@@ -10,16 +10,16 @@ export const goofySuperGoof: CharacterCard = {
     },
     {
       effect: {
-        type: "gain-lore",
         amount: 2,
+        type: "gain-lore",
       },
       id: "1n2-2",
       name: "SUPER PEANUT POWERS",
       text: "SUPER PEANUT POWERS Whenever this character challenges another character, gain 2 lore.",
       trigger: {
         event: "challenge",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

@@ -36,14 +36,8 @@ export class RiftboundEngine {
     const { players, victoryScore = 8 } = config;
 
     // Initialize player states
-    const playerStates: Record<
-      PlayerId,
-      { id: PlayerId; victoryPoints: number }
-    > = {};
-    const runePools: Record<
-      PlayerId,
-      { energy: number; power: Record<string, number> }
-    > = {};
+    const playerStates: Record<PlayerId, { id: PlayerId; victoryPoints: number }> = {};
+    const runePools: Record<PlayerId, { energy: number; power: Record<string, number> }> = {};
     const conqueredThisTurn: Record<PlayerId, string[]> = {};
     const scoredThisTurn: Record<PlayerId, string[]> = {};
 
@@ -62,19 +56,19 @@ export class RiftboundEngine {
 
     // Create initial game state
     const initialState: RiftboundGameState = {
+      battlefields: {},
+      conqueredThisTurn,
       gameId: crypto.randomUUID(),
       players: playerStates,
-      victoryScore,
-      battlefields: {},
       runePools,
-      conqueredThisTurn,
       scoredThisTurn,
+      status: "setup",
       turn: {
-        number: 1,
         activePlayer: players[0] as PlayerId,
+        number: 1,
         phase: "setup",
       },
-      status: "setup",
+      victoryScore,
     };
 
     return initialState;
@@ -85,10 +79,7 @@ export class RiftboundEngine {
    *
    * @returns RuleEngine instance (placeholder)
    */
-  getRuleEngine(): RuleEngine<
-    RiftboundGameState,
-    Record<string, unknown>
-  > | null {
+  getRuleEngine(): RuleEngine<RiftboundGameState, Record<string, unknown>> | null {
     // Rule engine will be implemented when game rules are defined
     return null;
   }

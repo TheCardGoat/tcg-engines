@@ -4,9 +4,9 @@ export const snowWhiteFairestInTheLand: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "restriction",
         restriction: "cant-be-challenged",
         target: "SELF",
+        type: "restriction",
       },
       id: "1wd-1",
       name: "HIDDEN AWAY",

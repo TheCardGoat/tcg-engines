@@ -4,9 +4,8 @@ export const monsieurDarqueDespicableProprietor: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "banish",
           target: {
             selector: "chosen",
             count: 1,
@@ -14,16 +13,17 @@ export const monsieurDarqueDespicableProprietor: CharacterCard = {
             zones: ["play"],
             cardTypes: ["item"],
           },
+          type: "banish",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "116-1",
       name: "I'VE COME TO COLLECT",
       text: "I'VE COME TO COLLECT Whenever this character quests, you may banish chosen item of yours to draw a card.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

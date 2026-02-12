@@ -4,15 +4,13 @@ export const fragileAsAFlower: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "draw",
             amount: 1,
             target: "CONTROLLER",
+            type: "draw",
           },
           {
-            type: "exert",
             target: {
               selector: "chosen",
               count: 1,
@@ -20,14 +18,16 @@ export const fragileAsAFlower: ActionCard = {
               zones: ["play"],
               cardTypes: ["character"],
             },
+            type: "exert",
           },
           {
-            type: "restriction",
+            duration: "until-start-of-next-turn",
             restriction: "cant-ready",
             target: "SELF",
-            duration: "until-start-of-next-turn",
+            type: "restriction",
           },
         ],
+        type: "sequence",
       },
       id: "1im-1",
       text: "Draw a card. Exert chosen character with cost 2 or less. They can't ready at the start of their next turn.",

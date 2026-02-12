@@ -5,16 +5,16 @@ export const wildcatsWrench: ItemCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "remove-damage",
         amount: 2,
-        upTo: true,
         target: {
-          selector: "chosen",
+          cardTypes: ["location"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["location"],
         },
+        type: "remove-damage",
+        upTo: true,
       },
       id: "1wk-1",
       text: "REBUILD {E} — Remove up to 2 damage from chosen location.",

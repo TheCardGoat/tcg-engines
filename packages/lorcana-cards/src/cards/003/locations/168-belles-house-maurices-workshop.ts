@@ -4,15 +4,15 @@ export const bellesHouseMauricesWorkshop: LocationCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you have a character here",
+          type: "if",
         },
         then: {
-          type: "play-card",
           from: "hand",
+          type: "play-card",
         },
+        type: "conditional",
       },
       id: "kt9-1",
       text: "LABORATORY If you have a character here, you pay 1 {I} less to play items.",

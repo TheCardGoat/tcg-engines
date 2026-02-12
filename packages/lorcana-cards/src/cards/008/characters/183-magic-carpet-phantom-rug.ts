@@ -10,9 +10,9 @@ export const magicCarpetPhantomRug: CharacterCard = {
     },
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Challenger",
         target: "CHOSEN_CHARACTER",
+        type: "gain-keyword",
         value: 1,
       },
       id: "3wd-2",

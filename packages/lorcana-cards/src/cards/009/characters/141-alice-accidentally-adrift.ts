@@ -4,19 +4,19 @@ export const aliceAccidentallyAdrift: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
-        modifier: -2,
-        target: "CHOSEN_CHARACTER",
         duration: "this-turn",
+        modifier: -2,
+        stat: "strength",
+        target: "CHOSEN_CHARACTER",
+        type: "modify-stat",
       },
       id: "ijg-2",
       name: "MAKING WAVES",
       text: "MAKING WAVES Whenever this character quests, chosen opposing character gets -2 {S} this turn.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

@@ -4,19 +4,19 @@ export const donaldDuckGhostHunter: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
+        duration: "this-turn",
         keyword: "Challenger",
         target: "CHOSEN_CHARACTER",
+        type: "gain-keyword",
         value: 2,
-        duration: "this-turn",
       },
       id: "1u3-1",
       name: "RAISE A RUCKUS",
       text: "RAISE A RUCKUS When you play this character, chosen Detective character gains Challenger +2 this turn.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

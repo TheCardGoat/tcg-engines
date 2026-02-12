@@ -4,26 +4,26 @@ export const littleJohnSirReginald: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "play-card",
         from: "hand",
+        type: "play-card",
       },
       id: "1mt-1",
       name: "WHAT A BEAUTIFUL BRAWL!",
       text: "WHAT A BEAUTIFUL BRAWL! When you play this character, choose one:",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },
     {
       effect: {
-        type: "gain-keyword",
+        duration: "this-turn",
         keyword: "Resist",
         target: "CHOSEN_CHARACTER",
+        type: "gain-keyword",
         value: 2,
-        duration: "this-turn",
       },
       id: "1mt-2",
       text: "- Chosen Hero character gains Resist +2 this turn.",
@@ -31,15 +31,15 @@ export const littleJohnSirReginald: CharacterCard = {
     },
     {
       effect: {
-        type: "deal-damage",
         amount: 2,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "deal-damage",
       },
       id: "1mt-3",
       text: "- Deal 2 damage to chosen Villain character.",

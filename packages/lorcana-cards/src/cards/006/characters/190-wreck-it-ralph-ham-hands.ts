@@ -4,20 +4,20 @@ export const wreckitRalphHamHands: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
-        effect: {
-          type: "gain-lore",
-          amount: 2,
-        },
         chooser: "CONTROLLER",
+        effect: {
+          amount: 2,
+          type: "gain-lore",
+        },
+        type: "optional",
       },
       id: "1h8-1",
       name: "I WRECK THINGS",
       text: "I WRECK THINGS Whenever this character quests, you may banish chosen item or location to gain 2 lore.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

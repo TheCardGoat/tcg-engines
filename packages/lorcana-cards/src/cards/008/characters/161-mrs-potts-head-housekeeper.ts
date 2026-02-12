@@ -7,9 +7,9 @@ export const mrsPottsHeadHousekeeper: CharacterCard = {
         exert: true,
       },
       effect: {
-        type: "draw",
         amount: 1,
         target: "CONTROLLER",
+        type: "draw",
       },
       id: "cpn-1",
       text: "CLEAN UP {E}, Banish one of your items — Draw a card.",

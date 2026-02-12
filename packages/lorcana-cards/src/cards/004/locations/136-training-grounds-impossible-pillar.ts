@@ -5,17 +5,17 @@ export const trainingGroundsImpossiblePillar: LocationCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "modify-stat",
-        stat: "strength",
+        duration: "this-turn",
         modifier: 1,
+        stat: "strength",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
-        duration: "this-turn",
+        type: "modify-stat",
       },
       id: "etf-1",
       text: "STRENGTH OF MIND 1 {I} — Chosen character here gets +1 {S} this turn.",

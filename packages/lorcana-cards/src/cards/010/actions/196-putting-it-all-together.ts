@@ -4,19 +4,19 @@ export const puttingItAllTogether: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "restriction",
             restriction: "cant-challenge",
             target: "SELF",
+            type: "restriction",
           },
           {
-            type: "draw",
             amount: 1,
             target: "CONTROLLER",
+            type: "draw",
           },
         ],
+        type: "sequence",
       },
       id: "1du-1",
       text: "Chosen opposing character can't challenge during their next turn. Draw a card.",

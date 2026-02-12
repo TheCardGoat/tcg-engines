@@ -4,18 +4,18 @@ import type { CardOperations } from "./card-operations";
 
 describe("CardOperations Interface", () => {
   // Mock card metadata type for testing
-  type TestCardMeta = {
+  interface TestCardMeta {
     damage?: number;
     exerted?: boolean;
     counters?: number;
     effects?: string[];
-  };
+  }
 
   // Mock implementation for testing the interface structure
   const createMockCardOperations = (): CardOperations<TestCardMeta> => {
     const cardMetas: Record<string, TestCardMeta> = {
       "card-1": { damage: 0, exerted: false },
-      "card-2": { damage: 3, exerted: true, counters: 5 },
+      "card-2": { counters: 5, damage: 3, exerted: true },
     };
 
     const cardOwners: Record<string, string> = {
@@ -24,24 +24,9 @@ describe("CardOperations Interface", () => {
     };
 
     return {
-      getCardMeta: (cardId) => {
-        return cardMetas[cardId] || {};
-      },
+      getCardMeta: (cardId) => cardMetas[cardId] || {},
 
-      updateCardMeta: (cardId, meta) => {
-        if (!cardMetas[cardId]) {
-          cardMetas[cardId] = {};
-        }
-        Object.assign(cardMetas[cardId], meta);
-      },
-
-      setCardMeta: (cardId, meta) => {
-        cardMetas[cardId] = meta;
-      },
-
-      getCardOwner: (cardId) => {
-        return cardOwners[cardId] as unknown as PlayerId | undefined;
-      },
+      getCardOwner: (cardId) => cardOwners[cardId] as unknown as PlayerId | undefined,
 
       queryCards: (predicate) => {
         const results: CardId[] = [];
@@ -51,6 +36,17 @@ describe("CardOperations Interface", () => {
           }
         }
         return results;
+      },
+
+      setCardMeta: (cardId, meta) => {
+        cardMetas[cardId] = meta;
+      },
+
+      updateCardMeta: (cardId, meta) => {
+        if (!cardMetas[cardId]) {
+          cardMetas[cardId] = {};
+        }
+        Object.assign(cardMetas[cardId], meta);
       },
     };
   };
@@ -161,9 +157,7 @@ describe("CardOperations Interface", () => {
     it("should find cards matching a predicate", () => {
       const ops = createMockCardOperations();
 
-      const exertedCards = ops.queryCards(
-        (cardId, meta) => meta.exerted === true,
-      );
+      const exertedCards = ops.queryCards((cardId, meta) => meta.exerted === true);
 
       expect(exertedCards).toHaveLength(1);
       expect(exertedCards).toContain("card-2");
@@ -172,9 +166,7 @@ describe("CardOperations Interface", () => {
     it("should find cards with specific damage", () => {
       const ops = createMockCardOperations();
 
-      const damagedCards = ops.queryCards(
-        (cardId, meta) => (meta.damage ?? 0) > 0,
-      );
+      const damagedCards = ops.queryCards((cardId, meta) => (meta.damage ?? 0) > 0);
 
       expect(damagedCards).toHaveLength(1);
       expect(damagedCards).toContain("card-2");
@@ -193,9 +185,7 @@ describe("CardOperations Interface", () => {
 
       const results = ops.queryCards(
         (cardId, meta) =>
-          (meta.damage ?? 0) > 0 &&
-          meta.exerted === true &&
-          (meta.counters ?? 0) >= 5,
+          (meta.damage ?? 0) > 0 && meta.exerted === true && (meta.counters ?? 0) >= 5,
       );
 
       expect(results).toHaveLength(1);

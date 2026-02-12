@@ -3,12 +3,12 @@
   import BoardViewport from "$lib/components/board/BoardViewport.svelte";
 
   const { Story } = defineMeta({
-    title: "Board/Board States",
     component: BoardViewport,
-    tags: ["autodocs"],
     parameters: {
       layout: "fullscreen",
     },
+    tags: ["autodocs"],
+    title: "Board/Board States",
   });
 </script>
 
@@ -19,14 +19,24 @@
   import Zone from "$lib/components/board/Zone.svelte";
 
   const footerIcons = {
-    speaker:
-      "M5 10v4h3l4 4V2L8 6H5zm11.5 2a4.5 4.5 0 0 1-2 3.75v-7.5a4.5 4.5 0 0 1 2 3.75z",
-    gear: "M12 8.75A3.25 3.25 0 1 0 12 15.25 3.25 3.25 0 0 0 12 8.75Zm9 3.25-.9-.52.11-1.03-1.63-2.83-1 .4-.83-.62-3.26-.55-.32 1.03h-1.02l-.32-1.03-3.26.55-.83.62-1-.4L2.79 10.45l.11 1.03L2 12l.9.52-.11 1.03 1.63 2.83 1-.4.83.62 3.26.55.32-1.03h1.02l.32 1.03 3.26-.55.83-.62 1 .4 1.63-2.83-.11-1.03.9-.52Z",
     fullscreen:
       "M7 14H5v5h5v-2H7v-3Zm12 5v-5h-2v3h-3v2h5ZM7 7h3V5H5v5h2V7Zm12 3h2V5h-5v2h3v3Z",
+    gear: "M12 8.75A3.25 3.25 0 1 0 12 15.25 3.25 3.25 0 0 0 12 8.75Zm9 3.25-.9-.52.11-1.03-1.63-2.83-1 .4-.83-.62-3.26-.55-.32 1.03h-1.02l-.32-1.03-3.26.55-.83.62-1-.4L2.79 10.45l.11 1.03L2 12l.9.52-.11 1.03 1.63 2.83 1-.4.83.62 3.26.55.32-1.03h1.02l.32 1.03 3.26-.55.83-.62 1 .4 1.63-2.83-.11-1.03.9-.52Z",
+    speaker:
+      "M5 10v4h3l4 4V2L8 6H5zm11.5 2a4.5 4.5 0 0 1-2 3.75v-7.5a4.5 4.5 0 0 1 2 3.75z",
   };
 
   const logBlocks = {
+    grandArchive: [
+      "Player 2 is starting the game!",
+      "Shuffling decks...",
+      "Player 1 draws 7 cards from Spirit of Water",
+      "Player 2 draws 7 cards from Spirit of Water",
+      "Turn 1 begins!",
+      "Player 2’s Main Phase begins",
+      "Player 2 is playing Forging Servant",
+      "Opportunity window is open from resolving the effect stack",
+    ],
     lorcana: [
       "Player 2 is starting the game!",
       "Shuffling decks...",
@@ -41,24 +51,14 @@
       "Drawing starting hands...",
       "Round 1 begins!",
     ],
-    grandArchive: [
-      "Player 2 is starting the game!",
-      "Shuffling decks...",
-      "Player 1 draws 7 cards from Spirit of Water",
-      "Player 2 draws 7 cards from Spirit of Water",
-      "Turn 1 begins!",
-      "Player 2’s Main Phase begins",
-      "Player 2 is playing Forging Servant",
-      "Opportunity window is open from resolving the effect stack",
-    ],
-    unlimited: [
-      "Setting player 1 to Darth Vader, Don’t Fail Me Again",
-      "Setting player 2 to Darth Vader, Don’t Fail Me Again",
+    shields: [
       "Player 1 is starting the game!",
       "Shuffling decks...",
       "Drawing starting hands...",
     ],
-    shields: [
+    unlimited: [
+      "Setting player 1 to Darth Vader, Don’t Fail Me Again",
+      "Setting player 2 to Darth Vader, Don’t Fail Me Again",
       "Player 1 is starting the game!",
       "Shuffling decks...",
       "Drawing starting hands...",

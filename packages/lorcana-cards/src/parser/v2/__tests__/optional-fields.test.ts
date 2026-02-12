@@ -29,25 +29,19 @@ describe("Optional Fields in AbilityWithText", () => {
 
     it("should include name field for named triggered abilities", () => {
       // Named triggered ability: "NAME When/Whenever..." pattern
-      const result = parseAbilityText(
-        "COLD SHOULDER When you play this character, draw a card.",
-      );
+      const result = parseAbilityText("COLD SHOULDER When you play this character, draw a card.");
 
       expect(result.success).toBe(true);
       expect(result.ability).toBeDefined();
       // Named triggered abilities should have their name extracted
       expect(result.ability?.name).toBe("COLD SHOULDER");
       // Text should also be present
-      expect(result.ability?.text).toBe(
-        "COLD SHOULDER When you play this character, draw a card.",
-      );
+      expect(result.ability?.text).toBe("COLD SHOULDER When you play this character, draw a card.");
     });
 
     it("should include name field for named static abilities", () => {
       // Named static ability: "NAME This character can't/cannot..." pattern
-      const result = parseAbilityText(
-        "STAY LOW This character can't be challenged.",
-      );
+      const result = parseAbilityText("STAY LOW This character can't be challenged.");
 
       expect(result.success).toBe(true);
       expect(result.ability).toBeDefined();

@@ -15,7 +15,7 @@ import type { CardId, PlayerId, ZoneId } from "./index";
  * @template TCardDefinition - Static card definition type (game-specific)
  * @template TCardMeta - Dynamic card metadata type (game-specific)
  */
-export type InternalState<TCardDefinition = any, TCardMeta = any> = {
+export interface InternalState<TCardDefinition = any, TCardMeta = any> {
   /**
    * Zone registry - Maps zone ID to zone data
    *
@@ -25,12 +25,10 @@ export type InternalState<TCardDefinition = any, TCardMeta = any> = {
    *
    * The framework maintains this mapping and ensures consistency.
    */
-  zones: {
-    [zoneId: string]: {
+  zones: Record<string, {
       config: CardZoneConfig;
       cardIds: CardId[];
-    };
-  };
+    }>;
 
   /**
    * Card instance registry - Maps card instance ID to card data
@@ -45,8 +43,7 @@ export type InternalState<TCardDefinition = any, TCardMeta = any> = {
    * Card instances are created during game setup or through game actions.
    * Note: Field names align with CardInstanceBase from cards/card-instance.ts
    */
-  cards: {
-    [cardId: string]: {
+  cards: Record<string, {
       /** Reference to card definition (static properties) */
       definitionId: string;
       /** Player who owns this card (never changes) */
@@ -57,8 +54,7 @@ export type InternalState<TCardDefinition = any, TCardMeta = any> = {
       zone: ZoneId;
       /** Position in zone (for ordered zones) */
       position?: number;
-    };
-  };
+    }>;
 
   /**
    * Card metadata registry - Maps card instance ID to dynamic metadata
@@ -71,9 +67,7 @@ export type InternalState<TCardDefinition = any, TCardMeta = any> = {
    *
    * Metadata type is generic to allow game-specific structures.
    */
-  cardMetas: {
-    [cardId: string]: TCardMeta;
-  };
+  cardMetas: Record<string, TCardMeta>;
 
   /**
    * On The Play (OTP) - Player who goes first
@@ -101,7 +95,7 @@ export type InternalState<TCardDefinition = any, TCardMeta = any> = {
    * Typically initialized with all players at game start.
    */
   pendingMulligan?: PlayerId[];
-};
+}
 
 /**
  * Complete Game State
@@ -137,7 +131,7 @@ export type InternalState<TCardDefinition = any, TCardMeta = any> = {
  * };
  * ```
  */
-export type IState<TState, TCardDefinition = any, TCardMeta = any> = {
+export interface IState<TState, TCardDefinition = any, TCardMeta = any> {
   /**
    * Framework-managed state
    * Contains zone/card infrastructure
@@ -151,4 +145,4 @@ export type IState<TState, TCardDefinition = any, TCardMeta = any> = {
    * Modified directly via Immer draft in move reducers
    */
   external: TState;
-};
+}

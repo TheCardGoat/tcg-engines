@@ -4,9 +4,9 @@ export const fourDozenEggs: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Resist",
         target: "YOUR_CHARACTERS",
+        type: "gain-keyword",
         value: 2,
       },
       id: "1np-1",

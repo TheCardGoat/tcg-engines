@@ -4,16 +4,16 @@ export const grewngeCannonExpert: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "play-card",
         from: "hand",
+        type: "play-card",
       },
       id: "15e-1",
       name: "RAPID FIRE",
       text: "RAPID FIRE Whenever this character quests, you pay 1 {I} less for the next action you play this turn.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

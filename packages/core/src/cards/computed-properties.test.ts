@@ -3,42 +3,38 @@ import { createCardRegistry } from "../operations/card-registry-impl";
 import { createCardId, createPlayerId, createZoneId } from "../types";
 import type { CardDefinition } from "./card-definition";
 import type { CardInstance } from "./card-instance";
-import {
-  getCardCost,
-  getCardPower,
-  getCardToughness,
-} from "./computed-properties";
+import { getCardCost, getCardPower, getCardToughness } from "./computed-properties";
 import type { Modifier } from "./modifiers";
 
-type GameStateWithModifiers = {
+interface GameStateWithModifiers {
   cards: Record<string, CardInstance<{ modifiers: Modifier[] }>>;
-};
+}
 
 describe("Computed Properties", () => {
   describe("getCardPower", () => {
     it("should return base power from definition", () => {
       const definition: CardDefinition = {
+        abilities: [],
+        basePower: 2,
+        baseToughness: 2,
         id: "grizzly-bears",
         name: "Grizzly Bears",
         type: "creature",
-        basePower: 2,
-        baseToughness: 2,
-        abilities: [],
       };
 
       const registry = createCardRegistry([definition]);
 
       const card: CardInstance<{ modifiers: Modifier[] }> = {
-        id: createCardId("card-1"),
-        definitionId: "grizzly-bears",
-        owner: createPlayerId("player-1"),
         controller: createPlayerId("player-1"),
-        zone: createZoneId("play"),
-        tapped: false,
+        definitionId: "grizzly-bears",
         flipped: false,
-        revealed: false,
-        phased: false,
+        id: createCardId("card-1"),
         modifiers: [],
+        owner: createPlayerId("player-1"),
+        phased: false,
+        revealed: false,
+        tapped: false,
+        zone: createZoneId("play"),
       };
 
       const state: GameStateWithModifiers = { cards: {} };
@@ -49,25 +45,25 @@ describe("Computed Properties", () => {
 
     it("should return 0 if definition has no basePower", () => {
       const definition: CardDefinition = {
+        abilities: [],
         id: "instant-spell",
         name: "Instant Spell",
         type: "instant",
-        abilities: [],
       };
 
       const registry = createCardRegistry([definition]);
 
       const card: CardInstance<{ modifiers: Modifier[] }> = {
-        id: createCardId("card-1"),
-        definitionId: "instant-spell",
-        owner: createPlayerId("player-1"),
         controller: createPlayerId("player-1"),
-        zone: createZoneId("hand"),
-        tapped: false,
+        definitionId: "instant-spell",
         flipped: false,
-        revealed: false,
-        phased: false,
+        id: createCardId("card-1"),
         modifiers: [],
+        owner: createPlayerId("player-1"),
+        phased: false,
+        revealed: false,
+        tapped: false,
+        zone: createZoneId("hand"),
       };
 
       const state: GameStateWithModifiers = { cards: {} };
@@ -78,35 +74,35 @@ describe("Computed Properties", () => {
 
     it("should add positive power modifiers to base power", () => {
       const definition: CardDefinition = {
+        abilities: [],
+        basePower: 2,
         id: "creature",
         name: "Creature",
         type: "creature",
-        basePower: 2,
-        abilities: [],
       };
 
       const registry = createCardRegistry([definition]);
 
       const card: CardInstance<{ modifiers: Modifier[] }> = {
-        id: createCardId("card-1"),
-        definitionId: "creature",
-        owner: createPlayerId("player-1"),
         controller: createPlayerId("player-1"),
-        zone: createZoneId("play"),
-        tapped: false,
+        definitionId: "creature",
         flipped: false,
-        revealed: false,
-        phased: false,
+        id: createCardId("card-1"),
         modifiers: [
           {
-            id: "mod-1",
-            type: "stat",
-            property: "power",
-            value: 3,
             duration: "permanent",
+            id: "mod-1",
+            property: "power",
             source: createCardId("source-1"),
+            type: "stat",
+            value: 3,
           },
         ],
+        owner: createPlayerId("player-1"),
+        phased: false,
+        revealed: false,
+        tapped: false,
+        zone: createZoneId("play"),
       };
 
       const state: GameStateWithModifiers = { cards: {} };
@@ -117,35 +113,35 @@ describe("Computed Properties", () => {
 
     it("should subtract negative power modifiers from base power", () => {
       const definition: CardDefinition = {
+        abilities: [],
+        basePower: 5,
         id: "creature",
         name: "Creature",
         type: "creature",
-        basePower: 5,
-        abilities: [],
       };
 
       const registry = createCardRegistry([definition]);
 
       const card: CardInstance<{ modifiers: Modifier[] }> = {
-        id: createCardId("card-1"),
-        definitionId: "creature",
-        owner: createPlayerId("player-1"),
         controller: createPlayerId("player-1"),
-        zone: createZoneId("play"),
-        tapped: false,
+        definitionId: "creature",
         flipped: false,
-        revealed: false,
-        phased: false,
+        id: createCardId("card-1"),
         modifiers: [
           {
-            id: "mod-1",
-            type: "stat",
-            property: "power",
-            value: -2,
             duration: "permanent",
+            id: "mod-1",
+            property: "power",
             source: createCardId("source-1"),
+            type: "stat",
+            value: -2,
           },
         ],
+        owner: createPlayerId("player-1"),
+        phased: false,
+        revealed: false,
+        tapped: false,
+        zone: createZoneId("play"),
       };
 
       const state: GameStateWithModifiers = { cards: {} };
@@ -156,43 +152,43 @@ describe("Computed Properties", () => {
 
     it("should sum multiple power modifiers", () => {
       const definition: CardDefinition = {
+        abilities: [],
+        basePower: 1,
         id: "creature",
         name: "Creature",
         type: "creature",
-        basePower: 1,
-        abilities: [],
       };
 
       const registry = createCardRegistry([definition]);
 
       const card: CardInstance<{ modifiers: Modifier[] }> = {
-        id: createCardId("card-1"),
-        definitionId: "creature",
-        owner: createPlayerId("player-1"),
         controller: createPlayerId("player-1"),
-        zone: createZoneId("play"),
-        tapped: false,
+        definitionId: "creature",
         flipped: false,
-        revealed: false,
-        phased: false,
+        id: createCardId("card-1"),
         modifiers: [
           {
-            id: "mod-1",
-            type: "stat",
-            property: "power",
-            value: 2,
             duration: "permanent",
+            id: "mod-1",
+            property: "power",
             source: createCardId("source-1"),
+            type: "stat",
+            value: 2,
           },
           {
-            id: "mod-2",
-            type: "stat",
-            property: "power",
-            value: 3,
             duration: "permanent",
+            id: "mod-2",
+            property: "power",
             source: createCardId("source-2"),
+            type: "stat",
+            value: 3,
           },
         ],
+        owner: createPlayerId("player-1"),
+        phased: false,
+        revealed: false,
+        tapped: false,
+        zone: createZoneId("play"),
       };
 
       const state: GameStateWithModifiers = { cards: {} };
@@ -203,43 +199,43 @@ describe("Computed Properties", () => {
 
     it("should ignore non-power modifiers", () => {
       const definition: CardDefinition = {
+        abilities: [],
+        basePower: 2,
         id: "creature",
         name: "Creature",
         type: "creature",
-        basePower: 2,
-        abilities: [],
       };
 
       const registry = createCardRegistry([definition]);
 
       const card: CardInstance<{ modifiers: Modifier[] }> = {
-        id: createCardId("card-1"),
-        definitionId: "creature",
-        owner: createPlayerId("player-1"),
         controller: createPlayerId("player-1"),
-        zone: createZoneId("play"),
-        tapped: false,
+        definitionId: "creature",
         flipped: false,
-        revealed: false,
-        phased: false,
+        id: createCardId("card-1"),
         modifiers: [
           {
-            id: "mod-1",
-            type: "stat",
-            property: "toughness",
-            value: 5,
             duration: "permanent",
+            id: "mod-1",
+            property: "toughness",
             source: createCardId("source-1"),
+            type: "stat",
+            value: 5,
           },
           {
-            id: "mod-2",
-            type: "ability",
-            property: "flying",
-            value: true,
             duration: "permanent",
+            id: "mod-2",
+            property: "flying",
             source: createCardId("source-2"),
+            type: "ability",
+            value: true,
           },
         ],
+        owner: createPlayerId("player-1"),
+        phased: false,
+        revealed: false,
+        tapped: false,
+        zone: createZoneId("play"),
       };
 
       const state: GameStateWithModifiers = { cards: {} };
@@ -252,27 +248,27 @@ describe("Computed Properties", () => {
   describe("getCardToughness", () => {
     it("should return base toughness from definition", () => {
       const definition: CardDefinition = {
+        abilities: [],
+        basePower: 2,
+        baseToughness: 2,
         id: "grizzly-bears",
         name: "Grizzly Bears",
         type: "creature",
-        basePower: 2,
-        baseToughness: 2,
-        abilities: [],
       };
 
       const registry = createCardRegistry([definition]);
 
       const card: CardInstance<{ modifiers: Modifier[] }> = {
-        id: createCardId("card-1"),
-        definitionId: "grizzly-bears",
-        owner: createPlayerId("player-1"),
         controller: createPlayerId("player-1"),
-        zone: createZoneId("play"),
-        tapped: false,
+        definitionId: "grizzly-bears",
         flipped: false,
-        revealed: false,
-        phased: false,
+        id: createCardId("card-1"),
         modifiers: [],
+        owner: createPlayerId("player-1"),
+        phased: false,
+        revealed: false,
+        tapped: false,
+        zone: createZoneId("play"),
       };
 
       const state: GameStateWithModifiers = { cards: {} };
@@ -283,25 +279,25 @@ describe("Computed Properties", () => {
 
     it("should return 0 if definition has no baseToughness", () => {
       const definition: CardDefinition = {
+        abilities: [],
         id: "instant-spell",
         name: "Instant Spell",
         type: "instant",
-        abilities: [],
       };
 
       const registry = createCardRegistry([definition]);
 
       const card: CardInstance<{ modifiers: Modifier[] }> = {
-        id: createCardId("card-1"),
-        definitionId: "instant-spell",
-        owner: createPlayerId("player-1"),
         controller: createPlayerId("player-1"),
-        zone: createZoneId("hand"),
-        tapped: false,
+        definitionId: "instant-spell",
         flipped: false,
-        revealed: false,
-        phased: false,
+        id: createCardId("card-1"),
         modifiers: [],
+        owner: createPlayerId("player-1"),
+        phased: false,
+        revealed: false,
+        tapped: false,
+        zone: createZoneId("hand"),
       };
 
       const state: GameStateWithModifiers = { cards: {} };
@@ -312,35 +308,35 @@ describe("Computed Properties", () => {
 
     it("should add toughness modifiers to base toughness", () => {
       const definition: CardDefinition = {
+        abilities: [],
+        baseToughness: 3,
         id: "creature",
         name: "Creature",
         type: "creature",
-        baseToughness: 3,
-        abilities: [],
       };
 
       const registry = createCardRegistry([definition]);
 
       const card: CardInstance<{ modifiers: Modifier[] }> = {
-        id: createCardId("card-1"),
-        definitionId: "creature",
-        owner: createPlayerId("player-1"),
         controller: createPlayerId("player-1"),
-        zone: createZoneId("play"),
-        tapped: false,
+        definitionId: "creature",
         flipped: false,
-        revealed: false,
-        phased: false,
+        id: createCardId("card-1"),
         modifiers: [
           {
-            id: "mod-1",
-            type: "stat",
-            property: "toughness",
-            value: 2,
             duration: "permanent",
+            id: "mod-1",
+            property: "toughness",
             source: createCardId("source-1"),
+            type: "stat",
+            value: 2,
           },
         ],
+        owner: createPlayerId("player-1"),
+        phased: false,
+        revealed: false,
+        tapped: false,
+        zone: createZoneId("play"),
       };
 
       const state: GameStateWithModifiers = { cards: {} };
@@ -353,26 +349,26 @@ describe("Computed Properties", () => {
   describe("getCardCost", () => {
     it("should return base cost from definition", () => {
       const definition: CardDefinition = {
+        abilities: [],
+        baseCost: 1,
         id: "fire-bolt",
         name: "Fire Bolt",
         type: "instant",
-        baseCost: 1,
-        abilities: [],
       };
 
       const registry = createCardRegistry([definition]);
 
       const card: CardInstance<{ modifiers: Modifier[] }> = {
-        id: createCardId("card-1"),
-        definitionId: "fire-bolt",
-        owner: createPlayerId("player-1"),
         controller: createPlayerId("player-1"),
-        zone: createZoneId("hand"),
-        tapped: false,
+        definitionId: "fire-bolt",
         flipped: false,
-        revealed: false,
-        phased: false,
+        id: createCardId("card-1"),
         modifiers: [],
+        owner: createPlayerId("player-1"),
+        phased: false,
+        revealed: false,
+        tapped: false,
+        zone: createZoneId("hand"),
       };
 
       const state: GameStateWithModifiers = { cards: {} };
@@ -383,25 +379,25 @@ describe("Computed Properties", () => {
 
     it("should return 0 if definition has no baseCost", () => {
       const definition: CardDefinition = {
+        abilities: [],
         id: "free-spell",
         name: "Free Spell",
         type: "instant",
-        abilities: [],
       };
 
       const registry = createCardRegistry([definition]);
 
       const card: CardInstance<{ modifiers: Modifier[] }> = {
-        id: createCardId("card-1"),
-        definitionId: "free-spell",
-        owner: createPlayerId("player-1"),
         controller: createPlayerId("player-1"),
-        zone: createZoneId("hand"),
-        tapped: false,
+        definitionId: "free-spell",
         flipped: false,
-        revealed: false,
-        phased: false,
+        id: createCardId("card-1"),
         modifiers: [],
+        owner: createPlayerId("player-1"),
+        phased: false,
+        revealed: false,
+        tapped: false,
+        zone: createZoneId("hand"),
       };
 
       const state: GameStateWithModifiers = { cards: {} };
@@ -412,35 +408,35 @@ describe("Computed Properties", () => {
 
     it("should apply cost reduction modifiers", () => {
       const definition: CardDefinition = {
+        abilities: [],
+        baseCost: 5,
         id: "spell",
         name: "Spell",
         type: "instant",
-        baseCost: 5,
-        abilities: [],
       };
 
       const registry = createCardRegistry([definition]);
 
       const card: CardInstance<{ modifiers: Modifier[] }> = {
-        id: createCardId("card-1"),
-        definitionId: "spell",
-        owner: createPlayerId("player-1"),
         controller: createPlayerId("player-1"),
-        zone: createZoneId("hand"),
-        tapped: false,
+        definitionId: "spell",
         flipped: false,
-        revealed: false,
-        phased: false,
+        id: createCardId("card-1"),
         modifiers: [
           {
-            id: "mod-1",
-            type: "stat",
-            property: "cost",
-            value: -2,
             duration: "permanent",
+            id: "mod-1",
+            property: "cost",
             source: createCardId("source-1"),
+            type: "stat",
+            value: -2,
           },
         ],
+        owner: createPlayerId("player-1"),
+        phased: false,
+        revealed: false,
+        tapped: false,
+        zone: createZoneId("hand"),
       };
 
       const state: GameStateWithModifiers = { cards: {} };
@@ -451,35 +447,35 @@ describe("Computed Properties", () => {
 
     it("should not allow cost to go below zero", () => {
       const definition: CardDefinition = {
+        abilities: [],
+        baseCost: 2,
         id: "spell",
         name: "Spell",
         type: "instant",
-        baseCost: 2,
-        abilities: [],
       };
 
       const registry = createCardRegistry([definition]);
 
       const card: CardInstance<{ modifiers: Modifier[] }> = {
-        id: createCardId("card-1"),
-        definitionId: "spell",
-        owner: createPlayerId("player-1"),
         controller: createPlayerId("player-1"),
-        zone: createZoneId("hand"),
-        tapped: false,
+        definitionId: "spell",
         flipped: false,
-        revealed: false,
-        phased: false,
+        id: createCardId("card-1"),
         modifiers: [
           {
-            id: "mod-1",
-            type: "stat",
-            property: "cost",
-            value: -5,
             duration: "permanent",
+            id: "mod-1",
+            property: "cost",
             source: createCardId("source-1"),
+            type: "stat",
+            value: -5,
           },
         ],
+        owner: createPlayerId("player-1"),
+        phased: false,
+        revealed: false,
+        tapped: false,
+        zone: createZoneId("hand"),
       };
 
       const state: GameStateWithModifiers = { cards: {} };
@@ -490,35 +486,35 @@ describe("Computed Properties", () => {
 
     it("should apply cost increase modifiers", () => {
       const definition: CardDefinition = {
+        abilities: [],
+        baseCost: 3,
         id: "spell",
         name: "Spell",
         type: "instant",
-        baseCost: 3,
-        abilities: [],
       };
 
       const registry = createCardRegistry([definition]);
 
       const card: CardInstance<{ modifiers: Modifier[] }> = {
-        id: createCardId("card-1"),
-        definitionId: "spell",
-        owner: createPlayerId("player-1"),
         controller: createPlayerId("player-1"),
-        zone: createZoneId("hand"),
-        tapped: false,
+        definitionId: "spell",
         flipped: false,
-        revealed: false,
-        phased: false,
+        id: createCardId("card-1"),
         modifiers: [
           {
-            id: "mod-1",
-            type: "stat",
-            property: "cost",
-            value: 2,
             duration: "permanent",
+            id: "mod-1",
+            property: "cost",
             source: createCardId("source-1"),
+            type: "stat",
+            value: 2,
           },
         ],
+        owner: createPlayerId("player-1"),
+        phased: false,
+        revealed: false,
+        tapped: false,
+        zone: createZoneId("hand"),
       };
 
       const state: GameStateWithModifiers = { cards: {} };

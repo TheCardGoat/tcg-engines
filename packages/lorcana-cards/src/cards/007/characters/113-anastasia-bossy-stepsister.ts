@@ -4,10 +4,10 @@ export const anastasiaBossyStepsister: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "discard",
         amount: 1,
-        target: "CONTROLLER",
         chosen: true,
+        target: "CONTROLLER",
+        type: "discard",
       },
       id: "6rw-1",
       text: "OH, I HATE THIS! Whenever this character is challenged, the challenging player chooses and discards a card.",

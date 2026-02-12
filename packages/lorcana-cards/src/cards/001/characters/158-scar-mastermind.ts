@@ -4,19 +4,19 @@ export const scarMastermind: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
-        modifier: -5,
-        target: "CHOSEN_OPPOSING_CHARACTER",
         duration: "this-turn",
+        modifier: -5,
+        stat: "strength",
+        target: "CHOSEN_OPPOSING_CHARACTER",
+        type: "modify-stat",
       },
       id: "1nb-1",
       name: "INSIDIOUS PLOT",
       text: "INSIDIOUS PLOT When you play this character, chosen opposing character gets -5 {S} this turn.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

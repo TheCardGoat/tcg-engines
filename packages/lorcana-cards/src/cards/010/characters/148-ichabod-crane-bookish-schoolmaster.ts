@@ -4,26 +4,26 @@ export const ichabodCraneBookishSchoolmaster: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you've played a character with cost 5 or more this turn",
+          type: "if",
         },
         then: {
-          type: "put-into-inkwell",
-          source: "top-of-deck",
-          target: "CONTROLLER",
           exerted: true,
           facedown: true,
+          source: "top-of-deck",
+          target: "CONTROLLER",
+          type: "put-into-inkwell",
         },
+        type: "conditional",
       },
       id: "hnb-1",
       name: "WELL-READ",
       text: "WELL-READ Whenever this character quests, if you've played a character with cost 5 or more this turn, put the top card of your deck into your inkwell facedown and exerted.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

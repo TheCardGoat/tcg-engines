@@ -4,14 +4,14 @@ export const iWontGiveIn: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "return-to-hand",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "return-to-hand",
       },
       id: "v73-1",
       text: "Return a character card with cost 2 or less from your discard to your hand.",

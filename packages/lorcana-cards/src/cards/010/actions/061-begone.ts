@@ -4,14 +4,14 @@ export const begone: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "return-to-hand",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "return-to-hand",
       },
       id: "q5p-1",
       text: "Return chosen character, item, or location with cost 3 or less to their player's hand.",

@@ -4,15 +4,15 @@ export const trainingDummy: ItemCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Bodyguard",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "gain-keyword",
       },
       id: "1dj-1",
       text: "HANDLE WITH CARE {E}, 2 {I} – Chosen character gains Bodyguard until the start of your next turn.",

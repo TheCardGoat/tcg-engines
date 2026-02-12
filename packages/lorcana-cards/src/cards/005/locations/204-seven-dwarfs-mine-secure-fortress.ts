@@ -4,9 +4,8 @@ export const sevenDwarfsMineSecureFortress: LocationCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "deal-damage",
           amount: 1,
           target: {
             selector: "chosen",
@@ -15,8 +14,9 @@ export const sevenDwarfsMineSecureFortress: LocationCard = {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "deal-damage",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "135-1",
       text: "MOUNTAIN DEFENSE During your turn, the first time you move a character here, you may deal 1 damage to chosen character. If the moved character is a Knight, deal 2 damage instead.",

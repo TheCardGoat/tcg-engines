@@ -13,10 +13,10 @@ export const tritonChampionOfAtlantica: CharacterCard = {
     },
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: -1,
+        stat: "strength",
         target: "CHOSEN_CHARACTER",
+        type: "modify-stat",
       },
       id: "1vc-2",
       name: "IMPOSING PRESENCE Opposing",

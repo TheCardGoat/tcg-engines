@@ -34,9 +34,7 @@ export class ForbiddenError extends Error {
 /**
  * Type guard to check if an error is an UnauthorizedError
  */
-export function isUnauthorizedError(
-  error: unknown,
-): error is UnauthorizedError {
+export function isUnauthorizedError(error: unknown): error is UnauthorizedError {
   return error instanceof UnauthorizedError;
 }
 

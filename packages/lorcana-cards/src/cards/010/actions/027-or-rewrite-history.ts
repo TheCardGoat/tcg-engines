@@ -4,9 +4,9 @@ export const orRewriteHistory: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "return-from-discard",
-        target: "CONTROLLER",
         cardType: "character",
+        target: "CONTROLLER",
+        type: "return-from-discard",
       },
       id: "400-1",
       text: "Return a character card from your discard to your hand.",

@@ -4,14 +4,14 @@ export const stoppedChaosInItsTracks: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "return-to-hand",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "return-to-hand",
       },
       id: "pmx-1",
       text: "Sing Together 8 Return up to 2 chosen characters with 3 {S} or less each to their player's hand.",

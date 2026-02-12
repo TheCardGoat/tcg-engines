@@ -46,9 +46,9 @@
 
   const rarityColors = {
     common: "border-base-content/20",
-    uncommon: "border-gray-400",
-    rare: "border-yellow-400",
     mythic: "border-orange-600",
+    rare: "border-yellow-400",
+    uncommon: "border-gray-400",
   };
 </script>
 

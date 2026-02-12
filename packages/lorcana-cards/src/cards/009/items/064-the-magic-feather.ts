@@ -4,40 +4,40 @@ export const theMagicFeather: ItemCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "play-card",
             from: "hand",
+            type: "play-card",
           },
           {
-            type: "gain-keyword",
             keyword: "Evasive",
             target: "CHOSEN_CHARACTER",
+            type: "gain-keyword",
           },
         ],
+        type: "sequence",
       },
       id: "cfx-1",
       name: "NOW YOU CAN FLY!",
       text: "NOW YOU CAN FLY! When you play this item, choose a character of yours. While this item is in play, that character gains Evasive.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },
     {
       cost: { exert: true },
       effect: {
-        type: "return-to-hand",
         target: {
-          selector: "self",
+          cardTypes: ["item"],
           count: 1,
           owner: "any",
+          selector: "self",
           zones: ["play"],
-          cardTypes: ["item"],
         },
+        type: "return-to-hand",
       },
       id: "cfx-2",
       text: "GROUNDED 3 {I} — Return this item to your hand.",

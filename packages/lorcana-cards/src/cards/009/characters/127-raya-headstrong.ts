@@ -4,10 +4,9 @@ export const rayaHeadstrong: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "optional",
+            chooser: "CONTROLLER",
             effect: {
               type: "ready",
               target: {
@@ -18,15 +17,16 @@ export const rayaHeadstrong: CharacterCard = {
                 cardTypes: ["character"],
               },
             },
-            chooser: "CONTROLLER",
+            type: "optional",
           },
           {
-            type: "restriction",
+            duration: "this-turn",
             restriction: "cant-quest",
             target: "SELF",
-            duration: "this-turn",
+            type: "restriction",
           },
         ],
+        type: "sequence",
       },
       id: "1jb-1",
       text: "NOTE TO SELF, DON'T DIE During your turn, whenever this character banishes another character in a challenge, you may ready this character. If you do, she can't quest for the rest of this turn.",

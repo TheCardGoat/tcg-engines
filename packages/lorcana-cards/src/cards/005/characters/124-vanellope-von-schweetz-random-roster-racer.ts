@@ -10,17 +10,17 @@ export const vanellopeVonSchweetzRandomRosterRacer: CharacterCard = {
     },
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Evasive",
         target: "CHOSEN_CHARACTER",
+        type: "gain-keyword",
       },
       id: "a4q-2",
       name: "PIXLEXIA",
       text: "PIXLEXIA When you play this character, she gains Evasive until the start of your next turn.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

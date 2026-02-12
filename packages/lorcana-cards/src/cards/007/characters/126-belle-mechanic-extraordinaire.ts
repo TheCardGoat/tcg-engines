@@ -13,8 +13,8 @@ export const belleMechanicExtraordinaire: CharacterCard = {
     },
     {
       effect: {
-        type: "play-card",
         from: "hand",
+        type: "play-card",
       },
       id: "lej-2",
       text: "SALVAGE For each item card in your discard, you pay 1 {I} less to play this character using her Shift ability.",
@@ -22,20 +22,20 @@ export const belleMechanicExtraordinaire: CharacterCard = {
     },
     {
       effect: {
-        type: "optional",
-        effect: {
-          type: "gain-lore",
-          amount: 1,
-        },
         chooser: "CONTROLLER",
+        effect: {
+          amount: 1,
+          type: "gain-lore",
+        },
+        type: "optional",
       },
       id: "lej-3",
       name: "REPURPOSE",
       text: "REPURPOSE Whenever this character quests, you may put up to 3 item cards from your discard on the bottom of your deck to gain 1 lore for each item card moved this way.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

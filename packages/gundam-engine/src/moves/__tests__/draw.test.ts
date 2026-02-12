@@ -15,12 +15,7 @@
  */
 
 import { beforeEach, describe, expect, it } from "bun:test";
-import {
-  type CardId,
-  createCardId,
-  createPlayerId,
-  type PlayerId,
-} from "@tcg/core";
+import { type CardId, type PlayerId, createCardId, createPlayerId } from "@tcg/core";
 import { createDeckZone, createHandZone, drawCards } from "../../zones";
 
 describe("Draw Move", () => {

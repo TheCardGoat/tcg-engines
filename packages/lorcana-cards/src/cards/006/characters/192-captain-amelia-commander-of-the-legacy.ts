@@ -4,9 +4,9 @@ export const captainAmeliaCommanderOfTheLegacy: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "restriction",
         restriction: "cant-be-challenged",
         target: "SELF",
+        type: "restriction",
       },
       id: "1ln-1",
       name: "DRIVELING GALOOTS",
@@ -15,9 +15,9 @@ export const captainAmeliaCommanderOfTheLegacy: CharacterCard = {
     },
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Resist",
         target: "YOUR_CHARACTERS",
+        type: "gain-keyword",
         value: 1,
       },
       id: "1ln-2",

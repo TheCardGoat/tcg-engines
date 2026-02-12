@@ -4,10 +4,10 @@ export const prideLandsPrideRock: LocationCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "willpower",
         modifier: 2,
+        stat: "willpower",
         target: "CHARACTERS_HERE",
+        type: "modify-stat",
       },
       id: "1ph-1",
       name: "WE ARE ALL CONNECTED",
@@ -16,15 +16,15 @@ export const prideLandsPrideRock: LocationCard = {
     },
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you have a Prince or King character here",
+          type: "if",
         },
         then: {
-          type: "play-card",
           from: "hand",
+          type: "play-card",
         },
+        type: "conditional",
       },
       id: "1ph-2",
       text: "LION HOME If you have a Prince or King character here, you pay 1 {I} less to play characters.",

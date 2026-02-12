@@ -5,8 +5,8 @@ export const plutoFriendlyPooch: CharacterCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "play-card",
         from: "hand",
+        type: "play-card",
       },
       id: "16c-1",
       text: "GOOD DOG {E} — You pay 1 {I} less for the next character you play this turn.",

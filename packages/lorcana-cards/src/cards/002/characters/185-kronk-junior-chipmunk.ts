@@ -11,9 +11,8 @@ export const kronkJuniorChipmunk: CharacterCard = {
     },
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "deal-damage",
           amount: 2,
           target: {
             selector: "chosen",
@@ -22,16 +21,17 @@ export const kronkJuniorChipmunk: CharacterCard = {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "deal-damage",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "6z5-2",
       name: "SCOUT LEADER",
       text: "SCOUT LEADER During your turn, whenever this character banishes another character in a challenge, you may deal 2 damage to chosen character.",
       trigger: {
         event: "banish",
-        timing: "whenever",
         on: "OPPONENT_CHARACTERS",
+        timing: "whenever",
       },
       type: "triggered",
     },

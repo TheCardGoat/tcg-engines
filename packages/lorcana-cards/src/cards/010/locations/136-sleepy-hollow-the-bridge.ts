@@ -4,17 +4,17 @@ export const sleepyHollowTheBridge: LocationCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
-        effect: {
-          type: "gain-lore",
-          amount: 2,
-        },
         chooser: "CONTROLLER",
+        effect: {
+          amount: 2,
+          type: "gain-lore",
+        },
+        type: "optional",
       },
       id: "z63-1",
       name: "HEAD FOR THE BRIDGE!",
       text: "HEAD FOR THE BRIDGE! Whenever a character quests while here, you may banish this location to gain 2 lore and give them Evasive until the start of your next turn.",
-      trigger: { event: "play", timing: "when", on: "SELF" },
+      trigger: { event: "play", on: "SELF", timing: "when" },
       type: "triggered",
     },
   ],

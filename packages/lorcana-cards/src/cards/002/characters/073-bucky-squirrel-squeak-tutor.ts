@@ -4,29 +4,29 @@ export const buckySquirrelSqueakTutor: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you used Shift to play them",
+          type: "if",
         },
         then: {
-          type: "discard",
           amount: 1,
-          target: "EACH_OPPONENT",
           chosen: true,
+          target: "EACH_OPPONENT",
+          type: "discard",
         },
+        type: "conditional",
       },
       id: "tzh-1",
       name: "SQUEAK",
       text: "SQUEAK Whenever you play a Floodborn character, if you used Shift to play them, each opponent chooses and discards a card.",
       trigger: {
         event: "play",
-        timing: "whenever",
         on: {
-          controller: "you",
           cardType: "character",
           classification: "Floodborn",
+          controller: "you",
         },
+        timing: "whenever",
       },
       type: "triggered",
     },

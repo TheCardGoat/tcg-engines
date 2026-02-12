@@ -4,12 +4,12 @@ export const elsaSpiritOfWinter: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
-        effect: {
-          type: "play-card",
-          from: "hand",
-        },
         chooser: "CONTROLLER",
+        effect: {
+          from: "hand",
+          type: "play-card",
+        },
+        type: "optional",
       },
       id: "qc4-1",
       text: "**Shift** 6 _(You may pay 6 {I} to play this on top of one of your characters named Elsa.)_\n\n**DEEP FREEZE** When you play this character, exert up to 2 chosen characters. They can",

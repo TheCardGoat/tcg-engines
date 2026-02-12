@@ -4,11 +4,11 @@ export const whosWithMe: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
-        modifier: 2,
-        target: "YOUR_CHARACTERS",
         duration: "this-turn",
+        modifier: 2,
+        stat: "strength",
+        target: "YOUR_CHARACTERS",
+        type: "modify-stat",
       },
       id: "4hv-1",
       text: "Your characters get +2 {S} this turn.",
@@ -16,15 +16,15 @@ export const whosWithMe: ActionCard = {
     },
     {
       effect: {
-        type: "gain-lore",
         amount: 2,
+        type: "gain-lore",
       },
       id: "4hv-2",
       text: "Whenever one of your characters with Reckless challenges another character this turn, gain 2 lore.",
       trigger: {
         event: "banish",
-        timing: "whenever",
         on: "YOUR_OTHER_CHARACTERS",
+        timing: "whenever",
       },
       type: "triggered",
     },

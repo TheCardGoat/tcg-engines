@@ -4,13 +4,13 @@ export const lefouOpportunisticFlunky: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
-        effect: {
-          type: "play-card",
-          from: "hand",
-          cost: "free",
-        },
         chooser: "CONTROLLER",
+        effect: {
+          cost: "free",
+          from: "hand",
+          type: "play-card",
+        },
+        type: "optional",
       },
       id: "1x0-1",
       text: "I LEARNED FROM THE BEST During your turn, you may play this character for free if an opposing character was banished in a challenge this turn.",

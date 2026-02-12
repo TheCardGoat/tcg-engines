@@ -4,15 +4,15 @@ export const mauiStubbornTrickster: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "put-damage",
         amount: 2,
         target: {
-          selector: "all",
+          cardTypes: ["character"],
           count: "all",
           owner: "opponent",
+          selector: "all",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "put-damage",
       },
       id: "1m3-2",
       text: "- Put 2 damage counters on all opposing characters.",

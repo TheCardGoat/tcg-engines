@@ -4,17 +4,17 @@ export const iWillFindMyWay: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
+        duration: "this-turn",
         modifier: 2,
+        stat: "strength",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
-        duration: "this-turn",
+        type: "modify-stat",
       },
       id: "wyf-1",
       text: "Chosen character of yours gets +2 {S} this turn. They may move to a location for free.",

@@ -4,24 +4,24 @@ export const ursulasShellNecklace: ItemCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "draw",
           amount: 1,
           target: "CONTROLLER",
+          type: "draw",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "xg1-1",
       name: "NOW, SING!",
       text: "NOW, SING! Whenever you play a song, you may pay 1 to draw a card.",
       trigger: {
         event: "play",
-        timing: "whenever",
         on: {
-          controller: "you",
           cardType: "song",
+          controller: "you",
         },
+        timing: "whenever",
       },
       type: "triggered",
     },

@@ -63,9 +63,9 @@ function createMockZone(owner: PlayerId, cards: CardId[] = []): Zone {
     {
       id: createZoneId(`zone-${owner}`),
       name: "Test Zone",
-      visibility: "public",
       ordered: true,
       owner,
+      visibility: "public",
     },
     cards,
   );
@@ -73,20 +73,31 @@ function createMockZone(owner: PlayerId, cards: CardId[] = []): Zone {
 
 function createInitialGameState(): GundamGameState {
   return {
-    players: [PLAYER_1, PLAYER_2],
     currentPlayer: PLAYER_1,
-    turn: 1,
+    gundam: {
+      activeResources: {
+        [PLAYER_1]: 0,
+        [PLAYER_2]: 0,
+      },
+      attackedThisTurn: [],
+      cardDamage: {},
+      cardPositions: {},
+      effectStack: {
+        stack: [],
+        nextInstanceId: 0,
+      },
+      hasPlayedResourceThisTurn: {
+        [PLAYER_1]: false,
+        [PLAYER_2]: false,
+      },
+      revealedCards: [],
+      temporaryModifiers: {},
+    },
     phase: "main",
+    players: [PLAYER_1, PLAYER_2],
+    turn: 1,
     zones: {
-      deck: {
-        [PLAYER_1]: createMockZone(PLAYER_1, [CARD_1, CARD_2, CARD_3]),
-        [PLAYER_2]: createMockZone(PLAYER_2, [CARD_4, CARD_5]),
-      },
-      resourceDeck: {
-        [PLAYER_1]: createMockZone(PLAYER_1),
-        [PLAYER_2]: createMockZone(PLAYER_2),
-      },
-      hand: {
+      baseSection: {
         [PLAYER_1]: createMockZone(PLAYER_1),
         [PLAYER_2]: createMockZone(PLAYER_2),
       },
@@ -94,23 +105,11 @@ function createInitialGameState(): GundamGameState {
         [PLAYER_1]: createMockZone(PLAYER_1),
         [PLAYER_2]: createMockZone(PLAYER_2),
       },
-      shieldSection: {
-        [PLAYER_1]: createMockZone(PLAYER_1),
-        [PLAYER_2]: createMockZone(PLAYER_2),
+      deck: {
+        [PLAYER_1]: createMockZone(PLAYER_1, [CARD_1, CARD_2, CARD_3]),
+        [PLAYER_2]: createMockZone(PLAYER_2, [CARD_4, CARD_5]),
       },
-      baseSection: {
-        [PLAYER_1]: createMockZone(PLAYER_1),
-        [PLAYER_2]: createMockZone(PLAYER_2),
-      },
-      resourceArea: {
-        [PLAYER_1]: createMockZone(PLAYER_1),
-        [PLAYER_2]: createMockZone(PLAYER_2),
-      },
-      trash: {
-        [PLAYER_1]: createMockZone(PLAYER_1),
-        [PLAYER_2]: createMockZone(PLAYER_2),
-      },
-      removal: {
+      hand: {
         [PLAYER_1]: createMockZone(PLAYER_1),
         [PLAYER_2]: createMockZone(PLAYER_2),
       },
@@ -118,36 +117,34 @@ function createInitialGameState(): GundamGameState {
         [PLAYER_1]: createMockZone(PLAYER_1),
         [PLAYER_2]: createMockZone(PLAYER_2),
       },
-    },
-    gundam: {
-      activeResources: {
-        [PLAYER_1]: 0,
-        [PLAYER_2]: 0,
+      removal: {
+        [PLAYER_1]: createMockZone(PLAYER_1),
+        [PLAYER_2]: createMockZone(PLAYER_2),
       },
-      cardPositions: {},
-      attackedThisTurn: [],
-      hasPlayedResourceThisTurn: {
-        [PLAYER_1]: false,
-        [PLAYER_2]: false,
+      resourceArea: {
+        [PLAYER_1]: createMockZone(PLAYER_1),
+        [PLAYER_2]: createMockZone(PLAYER_2),
       },
-      effectStack: {
-        stack: [],
-        nextInstanceId: 0,
+      resourceDeck: {
+        [PLAYER_1]: createMockZone(PLAYER_1),
+        [PLAYER_2]: createMockZone(PLAYER_2),
       },
-      temporaryModifiers: {},
-      cardDamage: {},
-      revealedCards: [],
+      shieldSection: {
+        [PLAYER_1]: createMockZone(PLAYER_1),
+        [PLAYER_2]: createMockZone(PLAYER_2),
+      },
+      trash: {
+        [PLAYER_1]: createMockZone(PLAYER_1),
+        [PLAYER_2]: createMockZone(PLAYER_2),
+      },
     },
   };
 }
 
-function createMockContext(
-  controllerId: PlayerId = PLAYER_1,
-  targets?: CardId[],
-): ActionContext {
+function createMockContext(controllerId: PlayerId = PLAYER_1, targets?: CardId[]): ActionContext {
   return {
-    sourceCardId: SOURCE_CARD,
     controllerId,
+    sourceCardId: SOURCE_CARD,
     targets,
   };
 }
@@ -182,9 +179,9 @@ describe("handleDrawAction", () => {
 
   it("should draw cards from deck to hand for self", () => {
     const action: DrawAction = {
-      type: "DRAW",
       count: 2,
       player: "self",
+      type: "DRAW",
     };
 
     state = produce(state, (draft) => {
@@ -202,9 +199,9 @@ describe("handleDrawAction", () => {
 
   it("should draw cards for opponent", () => {
     const action: DrawAction = {
-      type: "DRAW",
       count: 1,
       player: "opponent",
+      type: "DRAW",
     };
 
     state = executeHandler(state, handleDrawAction, action, context);
@@ -224,9 +221,9 @@ describe("handleDrawAction", () => {
     });
 
     const action: DrawAction = {
-      type: "DRAW",
       count: 2,
       player: "self",
+      type: "DRAW",
     };
 
     // The draw function will throw, so we expect an error
@@ -238,19 +235,13 @@ describe("handleDrawAction", () => {
   it("should draw multiple cards", () => {
     // Add more cards to deck
     state = produce(state, (draft) => {
-      draft.zones.deck[PLAYER_1].cards = [
-        CARD_1,
-        CARD_2,
-        CARD_3,
-        CARD_4,
-        CARD_5,
-      ];
+      draft.zones.deck[PLAYER_1].cards = [CARD_1, CARD_2, CARD_3, CARD_4, CARD_5];
     });
 
     const action: DrawAction = {
-      type: "DRAW",
       count: 3,
       player: "self",
+      type: "DRAW",
     };
 
     state = executeHandler(state, handleDrawAction, action, context);
@@ -275,10 +266,10 @@ describe("handleDamageAction", () => {
 
   it("should apply damage to a target unit", () => {
     const action: DamageAction = {
-      type: "DAMAGE",
       amount: 2,
-      target: "unit",
       damageType: "effect",
+      target: "unit",
+      type: "DAMAGE",
     };
 
     context.targets = [CARD_1];
@@ -290,10 +281,10 @@ describe("handleDamageAction", () => {
 
   it("should handle no targets gracefully", () => {
     const action: DamageAction = {
-      type: "DAMAGE",
       amount: 3,
-      target: "base",
       damageType: "effect",
+      target: "base",
+      type: "DAMAGE",
     };
 
     // No targets provided
@@ -307,10 +298,10 @@ describe("handleDamageAction", () => {
 
   it("should handle damage to base", () => {
     const action: DamageAction = {
-      type: "DAMAGE",
       amount: 1,
-      target: "base",
       damageType: "effect",
+      target: "base",
+      type: "DAMAGE",
     };
 
     context.targets = [CARD_1];
@@ -321,10 +312,10 @@ describe("handleDamageAction", () => {
 
   it("should handle damage to shield", () => {
     const action: DamageAction = {
-      type: "DAMAGE",
       amount: 1,
-      target: "shield",
       damageType: "effect",
+      target: "shield",
+      type: "DAMAGE",
     };
 
     context.targets = [CARD_1];
@@ -335,10 +326,10 @@ describe("handleDamageAction", () => {
 
   it("should accumulate damage on same target", () => {
     const action: DamageAction = {
-      type: "DAMAGE",
       amount: 2,
-      target: "unit",
       damageType: "effect",
+      target: "unit",
+      type: "DAMAGE",
     };
 
     context.targets = [CARD_1];
@@ -352,10 +343,10 @@ describe("handleDamageAction", () => {
 
   it("should handle damage to multiple targets", () => {
     const action: DamageAction = {
-      type: "DAMAGE",
       amount: 3,
-      target: "unit",
       damageType: "effect",
+      target: "unit",
+      type: "DAMAGE",
     };
 
     context.targets = [CARD_1, CARD_2];
@@ -373,10 +364,10 @@ describe("handleDamageAction", () => {
     });
 
     const action: DamageAction = {
-      type: "DAMAGE",
       amount: 1,
-      target: "shield",
       damageType: "effect",
+      target: "shield",
+      type: "DAMAGE",
     };
 
     context.targets = [CARD_1];
@@ -400,19 +391,19 @@ describe("handleDamageAction", () => {
     // Register card definition with HP 5
     const { registerCardDefinition } = require("../action-handlers");
     registerCardDefinition(CARD_1, {
-      id: CARD_1,
       cardType: "UNIT",
       cost: 2,
-      level: 3,
       hp: 5,
+      id: CARD_1,
+      level: 3,
       name: "Test Unit",
     });
 
     const action: DamageAction = {
-      type: "DAMAGE",
       amount: 5,
-      target: "unit",
       damageType: "effect",
+      target: "unit",
+      type: "DAMAGE",
     };
 
     context.targets = [CARD_1];
@@ -442,19 +433,19 @@ describe("handleDamageAction", () => {
     // Register card definition with HP 5
     const { registerCardDefinition } = require("../action-handlers");
     registerCardDefinition(CARD_1, {
-      id: CARD_1,
       cardType: "UNIT",
       cost: 2,
-      level: 3,
       hp: 5,
+      id: CARD_1,
+      level: 3,
       name: "Test Unit",
     });
 
     const action: DamageAction = {
-      type: "DAMAGE",
       amount: 3,
-      target: "unit",
       damageType: "effect",
+      target: "unit",
+      type: "DAMAGE",
     };
 
     context.targets = [CARD_1];
@@ -482,19 +473,19 @@ describe("handleDamageAction", () => {
     // Register card definition with HP 5
     const { registerCardDefinition } = require("../action-handlers");
     registerCardDefinition(CARD_1, {
-      id: CARD_1,
       cardType: "UNIT",
       cost: 2,
-      level: 3,
       hp: 5,
+      id: CARD_1,
+      level: 3,
       name: "Test Unit",
     });
 
     const action: DamageAction = {
-      type: "DAMAGE",
       amount: 2,
-      target: "unit",
       damageType: "effect",
+      target: "unit",
+      type: "DAMAGE",
     };
 
     context.targets = [CARD_1];
@@ -542,13 +533,13 @@ describe("handleRestAction", () => {
     });
 
     const action: RestAction = {
-      type: "REST",
       target: {
-        count: 1,
-        validTargets: [{ type: "unit", owner: "self" }],
         chooser: "controller",
+        count: 1,
         timing: "on_resolution",
+        validTargets: [{ type: "unit", owner: "self" }],
       },
+      type: "REST",
     };
 
     context.targets = [CARD_1];
@@ -565,13 +556,13 @@ describe("handleRestAction", () => {
     });
 
     const action: RestAction = {
-      type: "REST",
       target: {
-        count: 1,
-        validTargets: [{ type: "card", owner: "self", zone: "resourceArea" }],
         chooser: "controller",
+        count: 1,
         timing: "on_resolution",
+        validTargets: [{ type: "card", owner: "self", zone: "resourceArea" }],
       },
+      type: "REST",
     };
 
     context.targets = [CARD_1];
@@ -588,13 +579,13 @@ describe("handleRestAction", () => {
     });
 
     const action: RestAction = {
-      type: "REST",
       target: {
-        count: 1,
-        validTargets: [{ type: "unit", owner: "self" }],
         chooser: "controller",
+        count: 1,
         timing: "on_resolution",
+        validTargets: [{ type: "unit", owner: "self" }],
       },
+      type: "REST",
     };
 
     context.targets = [CARD_1];
@@ -610,13 +601,13 @@ describe("handleRestAction", () => {
     });
 
     const action: RestAction = {
-      type: "REST",
       target: {
-        count: 1,
-        validTargets: [{ type: "card", owner: "self" }],
         chooser: "controller",
+        count: 1,
         timing: "on_resolution",
+        validTargets: [{ type: "card", owner: "self" }],
       },
+      type: "REST",
     };
 
     context.targets = [CARD_1];
@@ -648,13 +639,13 @@ describe("handleActivateAction", () => {
     });
 
     const action: ActivateAction = {
-      type: "ACTIVATE",
       target: {
-        count: 1,
-        validTargets: [{ type: "unit", owner: "self" }],
         chooser: "controller",
+        count: 1,
         timing: "on_resolution",
+        validTargets: [{ type: "unit", owner: "self" }],
       },
+      type: "ACTIVATE",
     };
 
     context.targets = [CARD_1];
@@ -671,13 +662,13 @@ describe("handleActivateAction", () => {
     });
 
     const action: ActivateAction = {
-      type: "ACTIVATE",
       target: {
-        count: 1,
-        validTargets: [{ type: "unit", owner: "self" }],
         chooser: "controller",
+        count: 1,
         timing: "on_resolution",
+        validTargets: [{ type: "unit", owner: "self" }],
       },
+      type: "ACTIVATE",
     };
 
     context.targets = [CARD_1];
@@ -706,15 +697,15 @@ describe("handleMoveCardAction", () => {
     });
 
     const action: MoveCardAction = {
-      type: "MOVE_CARD",
       from: "hand",
-      to: "battleArea",
       target: {
-        count: 1,
-        validTargets: [{ type: "card", owner: "self" }],
         chooser: "controller",
+        count: 1,
         timing: "on_resolution",
+        validTargets: [{ type: "card", owner: "self" }],
       },
+      to: "battleArea",
+      type: "MOVE_CARD",
     };
 
     context.targets = [CARD_1];
@@ -731,15 +722,15 @@ describe("handleMoveCardAction", () => {
     });
 
     const action: MoveCardAction = {
-      type: "MOVE_CARD",
       from: "battleArea",
-      to: "trash",
       target: {
-        count: 1,
-        validTargets: [{ type: "card", owner: "self" }],
         chooser: "controller",
+        count: 1,
         timing: "on_resolution",
+        validTargets: [{ type: "card", owner: "self" }],
       },
+      to: "trash",
+      type: "MOVE_CARD",
     };
 
     context.targets = [CARD_1];
@@ -758,15 +749,15 @@ describe("handleMoveCardAction", () => {
     });
 
     const action: MoveCardAction = {
-      type: "MOVE_CARD",
       from: "hand",
-      to: "battleArea",
       target: {
-        count: 1,
-        validTargets: [{ type: "card", owner: "self" }],
         chooser: "controller",
+        count: 1,
         timing: "on_resolution",
+        validTargets: [{ type: "card", owner: "self" }],
       },
+      to: "battleArea",
+      type: "MOVE_CARD",
     };
 
     context.targets = [CARD_1];
@@ -783,16 +774,16 @@ describe("handleMoveCardAction", () => {
     });
 
     const action: MoveCardAction = {
-      type: "MOVE_CARD",
       from: "hand",
-      to: "battleArea",
       owner: "opponent",
       target: {
-        count: 1,
-        validTargets: [{ type: "card", owner: "opponent" }],
         chooser: "controller",
+        count: 1,
         timing: "on_resolution",
+        validTargets: [{ type: "card", owner: "opponent" }],
       },
+      to: "battleArea",
+      type: "MOVE_CARD",
     };
 
     context.targets = [CARD_4];
@@ -825,22 +816,22 @@ describe("handleDestroyAction", () => {
       draft.gundam.cardPositions[CARD_4] = "rested";
       draft.gundam.temporaryModifiers[CARD_4] = [
         {
-          id: "mod-1" as any,
-          duration: "end_of_turn",
-          sourceId: SOURCE_CARD,
           apModifier: 2,
+          duration: "end_of_turn",
+          id: "mod-1" as any,
+          sourceId: SOURCE_CARD,
         },
       ];
     });
 
     const action: DestroyAction = {
-      type: "DESTROY",
       target: {
-        count: 1,
-        validTargets: [{ type: "unit", owner: "opponent" }],
         chooser: "controller",
+        count: 1,
         timing: "on_resolution",
+        validTargets: [{ type: "unit", owner: "opponent" }],
       },
+      type: "DESTROY",
     };
 
     context.targets = [CARD_4];
@@ -854,13 +845,13 @@ describe("handleDestroyAction", () => {
 
   it("should handle destroy with no targets", () => {
     const action: DestroyAction = {
-      type: "DESTROY",
       target: {
-        count: 1,
-        validTargets: [{ type: "unit", owner: "opponent" }],
         chooser: "controller",
+        count: 1,
         timing: "on_resolution",
+        validTargets: [{ type: "unit", owner: "opponent" }],
       },
+      type: "DESTROY",
     };
 
     // No targets
@@ -876,13 +867,13 @@ describe("handleDestroyAction", () => {
     });
 
     const action: DestroyAction = {
-      type: "DESTROY",
       target: {
-        count: 1,
-        validTargets: [{ type: "unit", owner: "opponent" }],
         chooser: "controller",
+        count: 1,
         timing: "on_resolution",
+        validTargets: [{ type: "unit", owner: "opponent" }],
       },
+      type: "DESTROY",
     };
 
     context.targets = [CARD_4];
@@ -912,9 +903,9 @@ describe("handleDiscardAction", () => {
     });
 
     const action: DiscardAction = {
-      type: "DISCARD",
       count: 2,
       player: "self",
+      type: "DISCARD",
     };
 
     context.targets = [CARD_1, CARD_2];
@@ -931,9 +922,9 @@ describe("handleDiscardAction", () => {
     });
 
     const action: DiscardAction = {
-      type: "DISCARD",
       count: 1,
       player: "opponent",
+      type: "DISCARD",
     };
 
     context.targets = [CARD_4];
@@ -945,20 +936,14 @@ describe("handleDiscardAction", () => {
 
   it("should discard random cards when random is true", () => {
     state = produce(state, (draft) => {
-      draft.zones.hand[PLAYER_1].cards = [
-        CARD_1,
-        CARD_2,
-        CARD_3,
-        CARD_4,
-        CARD_5,
-      ];
+      draft.zones.hand[PLAYER_1].cards = [CARD_1, CARD_2, CARD_3, CARD_4, CARD_5];
     });
 
     const action: DiscardAction = {
-      type: "DISCARD",
       count: 2,
       player: "self",
       random: true,
+      type: "DISCARD",
     };
 
     state = executeHandler(state, handleDiscardAction, action, context);
@@ -975,9 +960,9 @@ describe("handleDiscardAction", () => {
     });
 
     const action: DiscardAction = {
-      type: "DISCARD",
       count: 2,
       player: "self",
+      type: "DISCARD",
     };
 
     state = executeHandler(state, handleDiscardAction, action, context);
@@ -992,9 +977,9 @@ describe("handleDiscardAction", () => {
     });
 
     const action: DiscardAction = {
-      type: "DISCARD",
       count: 2,
       player: "self",
+      type: "DISCARD",
     };
 
     state = executeHandler(state, handleDiscardAction, action, context);
@@ -1019,16 +1004,16 @@ describe("handleModifyStatsAction", () => {
 
   it("should create end of turn modifier", () => {
     const action: ModifyStatsAction = {
-      type: "MODIFY_STATS",
-      target: {
-        count: 1,
-        validTargets: [{ type: "unit", owner: "self" }],
-        chooser: "controller",
-        timing: "on_resolution",
-      },
       apModifier: 2,
-      hpModifier: 1,
       duration: "this_turn",
+      hpModifier: 1,
+      target: {
+        chooser: "controller",
+        count: 1,
+        timing: "on_resolution",
+        validTargets: [{ type: "unit", owner: "self" }],
+      },
+      type: "MODIFY_STATS",
     };
 
     context.targets = [CARD_1];
@@ -1037,8 +1022,8 @@ describe("handleModifyStatsAction", () => {
     expect(state.gundam.temporaryModifiers[CARD_1]).toBeDefined();
     expect(state.gundam.temporaryModifiers[CARD_1]!.length).toBe(1);
     expect(state.gundam.temporaryModifiers[CARD_1]![0]).toMatchObject({
-      duration: "end_of_turn",
       apModifier: 2,
+      duration: "end_of_turn",
       hpModifier: 1,
       sourceId: SOURCE_CARD,
     });
@@ -1046,37 +1031,37 @@ describe("handleModifyStatsAction", () => {
 
   it("should create permanent modifier", () => {
     const action: ModifyStatsAction = {
-      type: "MODIFY_STATS",
-      target: {
-        count: 1,
-        validTargets: [{ type: "unit", owner: "self" }],
-        chooser: "controller",
-        timing: "on_resolution",
-      },
       apModifier: 3,
       duration: "permanent",
+      target: {
+        chooser: "controller",
+        count: 1,
+        timing: "on_resolution",
+        validTargets: [{ type: "unit", owner: "self" }],
+      },
+      type: "MODIFY_STATS",
     };
 
     context.targets = [CARD_1];
     handleModifyStatsAction(state, action, context);
 
     expect(state.gundam.temporaryModifiers[CARD_1]![0]).toMatchObject({
-      duration: "permanent",
       apModifier: 3,
+      duration: "permanent",
     });
   });
 
   it("should create end of combat modifier", () => {
     const action: ModifyStatsAction = {
-      type: "MODIFY_STATS",
-      target: {
-        count: 1,
-        validTargets: [{ type: "unit", owner: "self" }],
-        chooser: "controller",
-        timing: "on_resolution",
-      },
-      hpModifier: -1,
       duration: "end_of_combat",
+      hpModifier: -1,
+      target: {
+        chooser: "controller",
+        count: 1,
+        timing: "on_resolution",
+        validTargets: [{ type: "unit", owner: "self" }],
+      },
+      type: "MODIFY_STATS",
     };
 
     context.targets = [CARD_1];
@@ -1090,15 +1075,15 @@ describe("handleModifyStatsAction", () => {
 
   it("should handle multiple targets", () => {
     const action: ModifyStatsAction = {
-      type: "MODIFY_STATS",
-      target: {
-        count: 2,
-        validTargets: [{ type: "unit", owner: "self" }],
-        chooser: "controller",
-        timing: "on_resolution",
-      },
       apModifier: 1,
       duration: "this_turn",
+      target: {
+        chooser: "controller",
+        count: 2,
+        timing: "on_resolution",
+        validTargets: [{ type: "unit", owner: "self" }],
+      },
+      type: "MODIFY_STATS",
     };
 
     context.targets = [CARD_1, CARD_2];
@@ -1110,15 +1095,15 @@ describe("handleModifyStatsAction", () => {
 
   it("should handle empty targets", () => {
     const action: ModifyStatsAction = {
-      type: "MODIFY_STATS",
-      target: {
-        count: 1,
-        validTargets: [{ type: "unit", owner: "self" }],
-        chooser: "controller",
-        timing: "on_resolution",
-      },
       apModifier: 2,
       duration: "this_turn",
+      target: {
+        chooser: "controller",
+        count: 1,
+        timing: "on_resolution",
+        validTargets: [{ type: "unit", owner: "self" }],
+      },
+      type: "MODIFY_STATS",
     };
 
     handleModifyStatsAction(state, action, context);
@@ -1129,15 +1114,15 @@ describe("handleModifyStatsAction", () => {
 
   it("should stack multiple modifiers on same card", () => {
     const action: ModifyStatsAction = {
-      type: "MODIFY_STATS",
-      target: {
-        count: 1,
-        validTargets: [{ type: "unit", owner: "self" }],
-        chooser: "controller",
-        timing: "on_resolution",
-      },
       apModifier: 1,
       duration: "this_turn",
+      target: {
+        chooser: "controller",
+        count: 1,
+        timing: "on_resolution",
+        validTargets: [{ type: "unit", owner: "self" }],
+      },
+      type: "MODIFY_STATS",
     };
 
     context.targets = [CARD_1];
@@ -1164,15 +1149,15 @@ describe("handleGrantKeywordAction", () => {
 
   it("should grant keyword for this turn", () => {
     const action: GrantKeywordAction = {
-      type: "GRANT_KEYWORD",
-      target: {
-        count: 1,
-        validTargets: [{ type: "unit", owner: "self" }],
-        chooser: "controller",
-        timing: "on_resolution",
-      },
-      keyword: "Mobile",
       duration: "this_turn",
+      keyword: "Mobile",
+      target: {
+        chooser: "controller",
+        count: 1,
+        timing: "on_resolution",
+        validTargets: [{ type: "unit", owner: "self" }],
+      },
+      type: "GRANT_KEYWORD",
     };
 
     context.targets = [CARD_1];
@@ -1187,15 +1172,15 @@ describe("handleGrantKeywordAction", () => {
 
   it("should grant keyword permanently", () => {
     const action: GrantKeywordAction = {
-      type: "GRANT_KEYWORD",
-      target: {
-        count: 1,
-        validTargets: [{ type: "unit", owner: "self" }],
-        chooser: "controller",
-        timing: "on_resolution",
-      },
-      keyword: "Breach",
       duration: "permanent",
+      keyword: "Breach",
+      target: {
+        chooser: "controller",
+        count: 1,
+        timing: "on_resolution",
+        validTargets: [{ type: "unit", owner: "self" }],
+      },
+      type: "GRANT_KEYWORD",
     };
 
     context.targets = [CARD_1];
@@ -1209,24 +1194,24 @@ describe("handleGrantKeywordAction", () => {
 
   it("should grant keyword with condition", () => {
     const action: GrantKeywordAction = {
-      type: "GRANT_KEYWORD",
-      target: {
-        count: 1,
-        validTargets: [{ type: "unit", owner: "self" }],
-        chooser: "controller",
-        timing: "on_resolution",
-      },
-      keyword: "Support",
-      duration: "while_condition",
       condition: "has-pilot",
+      duration: "while_condition",
+      keyword: "Support",
+      target: {
+        chooser: "controller",
+        count: 1,
+        timing: "on_resolution",
+        validTargets: [{ type: "unit", owner: "self" }],
+      },
+      type: "GRANT_KEYWORD",
     };
 
     context.targets = [CARD_1];
     handleGrantKeywordAction(state, action, context);
 
     expect(state.gundam.temporaryModifiers[CARD_1]![0]).toMatchObject({
-      duration: "while_condition",
       condition: "has-pilot",
+      duration: "while_condition",
       grantedKeywords: ["Support"],
     });
   });
@@ -1254,23 +1239,21 @@ describe("handleGrantKeywordAction", () => {
       // Create fresh state for each iteration
       const freshState = createInitialGameState();
       const action: GrantKeywordAction = {
-        type: "GRANT_KEYWORD",
-        target: {
-          count: 1,
-          validTargets: [{ type: "unit", owner: "self" }],
-          chooser: "controller",
-          timing: "on_resolution",
-        },
-        keyword,
         duration: "this_turn",
+        keyword,
+        target: {
+          chooser: "controller",
+          count: 1,
+          timing: "on_resolution",
+          validTargets: [{ type: "unit", owner: "self" }],
+        },
+        type: "GRANT_KEYWORD",
       };
 
       const freshContext = createMockContext(PLAYER_1, [CARD_1]);
       handleGrantKeywordAction(freshState, action, freshContext);
 
-      expect(
-        freshState.gundam.temporaryModifiers[CARD_1]![0].grantedKeywords,
-      ).toEqual([keyword]);
+      expect(freshState.gundam.temporaryModifiers[CARD_1]![0].grantedKeywords).toEqual([keyword]);
     }
   });
 });
@@ -1290,12 +1273,12 @@ describe("handleSearchAction", () => {
 
   it("should search deck and move cards to hand", () => {
     const action: SearchAction = {
-      type: "SEARCH",
-      destination: "hand",
       count: 2,
+      destination: "hand",
       filter: {},
       reveal: true,
       shuffleAfter: false,
+      type: "SEARCH",
     };
 
     state = executeHandler(state, handleSearchAction, action, context);
@@ -1313,13 +1296,13 @@ describe("handleSearchAction", () => {
     });
 
     const action: SearchAction = {
-      type: "SEARCH",
-      sourceZone: "trash",
-      destination: "hand",
       count: 1,
+      destination: "hand",
       filter: {},
       reveal: true,
       shuffleAfter: false,
+      sourceZone: "trash",
+      type: "SEARCH",
     };
 
     state = executeHandler(state, handleSearchAction, action, context);
@@ -1333,12 +1316,12 @@ describe("handleSearchAction", () => {
 
   it("should shuffle source zone after search when specified", () => {
     const action: SearchAction = {
-      type: "SEARCH",
-      destination: "hand",
       count: 1,
+      destination: "hand",
       filter: {},
       reveal: false,
       shuffleAfter: true,
+      type: "SEARCH",
     };
 
     state = executeHandler(state, handleSearchAction, action, context);
@@ -1351,12 +1334,12 @@ describe("handleSearchAction", () => {
 
   it("should limit search to count", () => {
     const action: SearchAction = {
-      type: "SEARCH",
-      destination: "hand",
       count: 1,
+      destination: "hand",
       filter: {},
       reveal: true,
       shuffleAfter: false,
+      type: "SEARCH",
     };
 
     state = executeHandler(state, handleSearchAction, action, context);
@@ -1372,12 +1355,12 @@ describe("handleSearchAction", () => {
     });
 
     const action: SearchAction = {
-      type: "SEARCH",
-      destination: "hand",
       count: 2,
+      destination: "hand",
       filter: {},
       reveal: true,
       shuffleAfter: false,
+      type: "SEARCH",
     };
 
     state = executeHandler(state, handleSearchAction, action, context);
@@ -1388,12 +1371,12 @@ describe("handleSearchAction", () => {
 
   it("should surface revealed cards when reveal is true", () => {
     const action: SearchAction = {
-      type: "SEARCH",
-      destination: "hand",
       count: 2,
+      destination: "hand",
       filter: {},
       reveal: true,
       shuffleAfter: false,
+      type: "SEARCH",
     };
 
     state = executeHandler(state, handleSearchAction, action, context);
@@ -1406,12 +1389,12 @@ describe("handleSearchAction", () => {
 
   it("should not track revealed cards when reveal is false", () => {
     const action: SearchAction = {
-      type: "SEARCH",
-      destination: "hand",
       count: 2,
+      destination: "hand",
       filter: {},
       reveal: false,
       shuffleAfter: false,
+      type: "SEARCH",
     };
 
     state = executeHandler(state, handleSearchAction, action, context);
@@ -1422,44 +1405,41 @@ describe("handleSearchAction", () => {
 
   it("should filter by card type", () => {
     // Register card definitions
-    const {
-      registerCardDefinition,
-      clearCardDefinitions,
-    } = require("../action-handlers");
+    const { registerCardDefinition, clearCardDefinitions } = require("../action-handlers");
 
     registerCardDefinition(CARD_1, {
-      id: CARD_1,
       cardType: "UNIT",
       cost: 2,
-      level: 3,
       hp: 5,
+      id: CARD_1,
+      level: 3,
       name: "Unit 1",
     });
 
     registerCardDefinition(CARD_2, {
-      id: CARD_2,
       cardType: "COMMAND",
       cost: 1,
+      id: CARD_2,
       level: 1,
       name: "Command 1",
     });
 
     registerCardDefinition(CARD_3, {
-      id: CARD_3,
       cardType: "UNIT",
       cost: 3,
-      level: 4,
       hp: 6,
+      id: CARD_3,
+      level: 4,
       name: "Unit 2",
     });
 
     const action: SearchAction = {
-      type: "SEARCH",
-      destination: "hand",
       count: 5,
+      destination: "hand",
       filter: { cardType: "UNIT" },
       reveal: false,
       shuffleAfter: false,
+      type: "SEARCH",
     };
 
     state = executeHandler(state, handleSearchAction, action, context);
@@ -1475,45 +1455,42 @@ describe("handleSearchAction", () => {
   });
 
   it("should filter by cost range", () => {
-    const {
-      registerCardDefinition,
-      clearCardDefinitions,
-    } = require("../action-handlers");
+    const { registerCardDefinition, clearCardDefinitions } = require("../action-handlers");
 
     registerCardDefinition(CARD_1, {
-      id: CARD_1,
       cardType: "UNIT",
       cost: 1,
-      level: 2,
       hp: 4,
+      id: CARD_1,
+      level: 2,
       name: "Unit 1",
     });
 
     registerCardDefinition(CARD_2, {
-      id: CARD_2,
       cardType: "UNIT",
       cost: 3,
-      level: 3,
       hp: 5,
+      id: CARD_2,
+      level: 3,
       name: "Unit 2",
     });
 
     registerCardDefinition(CARD_3, {
-      id: CARD_3,
       cardType: "UNIT",
       cost: 5,
-      level: 4,
       hp: 7,
+      id: CARD_3,
+      level: 4,
       name: "Unit 3",
     });
 
     const action: SearchAction = {
-      type: "SEARCH",
-      destination: "hand",
       count: 5,
+      destination: "hand",
       filter: { cost: { max: 3 } },
       reveal: false,
       shuffleAfter: false,
+      type: "SEARCH",
     };
 
     state = executeHandler(state, handleSearchAction, action, context);
@@ -1531,83 +1508,68 @@ describe("handleSearchAction", () => {
   it("should use deterministic shuffle seed", () => {
     // Run search twice with same setup
     const action: SearchAction = {
-      type: "SEARCH",
-      destination: "hand",
       count: 1,
+      destination: "hand",
       filter: {},
       reveal: false,
       shuffleAfter: true,
+      type: "SEARCH",
     };
 
     // First run
     const state1 = createInitialGameState();
     const context1 = createMockContext();
-    const result1 = executeHandler(
-      state1,
-      handleSearchAction,
-      action,
-      context1,
-    );
+    const result1 = executeHandler(state1, handleSearchAction, action, context1);
 
     // Second run with identical setup
     const state2 = createInitialGameState();
     const context2 = createMockContext();
-    const result2 = executeHandler(
-      state2,
-      handleSearchAction,
-      action,
-      context2,
-    );
+    const result2 = executeHandler(state2, handleSearchAction, action, context2);
 
     // Shuffled decks should be identical (deterministic)
-    expect(result1.zones.deck[PLAYER_1].cards).toEqual(
-      result2.zones.deck[PLAYER_1].cards,
-    );
+    expect(result1.zones.deck[PLAYER_1].cards).toEqual(result2.zones.deck[PLAYER_1].cards);
   });
 
   it("should filter by color", () => {
-    const {
-      registerCardDefinition,
-      clearCardDefinitions,
-    } = require("../action-handlers");
+    const { registerCardDefinition, clearCardDefinitions } = require("../action-handlers");
 
     registerCardDefinition(CARD_1, {
-      id: CARD_1,
       cardType: "UNIT",
       color: "Red",
       cost: 2,
-      level: 3,
       hp: 5,
+      id: CARD_1,
+      level: 3,
       name: "Red Unit",
     });
 
     registerCardDefinition(CARD_2, {
-      id: CARD_2,
       cardType: "UNIT",
       color: "Blue",
       cost: 2,
-      level: 3,
       hp: 5,
+      id: CARD_2,
+      level: 3,
       name: "Blue Unit",
     });
 
     registerCardDefinition(CARD_3, {
-      id: CARD_3,
       cardType: "UNIT",
       color: "Red",
       cost: 2,
-      level: 3,
       hp: 5,
+      id: CARD_3,
+      level: 3,
       name: "Another Red Unit",
     });
 
     const action: SearchAction = {
-      type: "SEARCH",
-      destination: "hand",
       count: 5,
+      destination: "hand",
       filter: { color: "Red" },
       reveal: false,
       shuffleAfter: false,
+      type: "SEARCH",
     };
 
     state = executeHandler(state, handleSearchAction, action, context);
@@ -1623,48 +1585,45 @@ describe("handleSearchAction", () => {
   });
 
   it("should filter by keyword", () => {
-    const {
-      registerCardDefinition,
-      clearCardDefinitions,
-    } = require("../action-handlers");
+    const { registerCardDefinition, clearCardDefinitions } = require("../action-handlers");
 
     registerCardDefinition(CARD_1, {
-      id: CARD_1,
       cardType: "UNIT",
       cost: 2,
-      level: 3,
       hp: 5,
-      name: "Unit 1",
+      id: CARD_1,
       keywords: ["Mobile"],
+      level: 3,
+      name: "Unit 1",
     });
 
     registerCardDefinition(CARD_2, {
-      id: CARD_2,
       cardType: "UNIT",
       cost: 2,
-      level: 3,
       hp: 5,
-      name: "Unit 2",
+      id: CARD_2,
       keywords: ["Breach"],
+      level: 3,
+      name: "Unit 2",
     });
 
     registerCardDefinition(CARD_3, {
-      id: CARD_3,
       cardType: "UNIT",
       cost: 2,
-      level: 3,
       hp: 5,
-      name: "Unit 3",
+      id: CARD_3,
       keywords: ["Mobile"],
+      level: 3,
+      name: "Unit 3",
     });
 
     const action: SearchAction = {
-      type: "SEARCH",
-      destination: "hand",
       count: 5,
+      destination: "hand",
       filter: { hasKeyword: "Mobile" },
       reveal: false,
       shuffleAfter: false,
+      type: "SEARCH",
     };
 
     state = executeHandler(state, handleSearchAction, action, context);
@@ -1696,9 +1655,9 @@ describe("executeAction", () => {
 
   it("should route DRAW action to correct handler", () => {
     const action: DrawAction = {
-      type: "DRAW",
       count: 1,
       player: "self",
+      type: "DRAW",
     };
 
     state = produce(state, (draft) => {
@@ -1717,13 +1676,13 @@ describe("executeAction", () => {
     });
 
     const action: RestAction = {
-      type: "REST",
       target: {
-        count: 1,
-        validTargets: [{ type: "unit", owner: "self" }],
         chooser: "controller",
+        count: 1,
         timing: "on_resolution",
+        validTargets: [{ type: "unit", owner: "self" }],
       },
+      type: "REST",
     };
 
     context.targets = [CARD_1];
@@ -1736,15 +1695,15 @@ describe("executeAction", () => {
 
   it("should route MODIFY_STATS action to correct handler", () => {
     const action: ModifyStatsAction = {
-      type: "MODIFY_STATS",
-      target: {
-        count: 1,
-        validTargets: [{ type: "unit", owner: "self" }],
-        chooser: "controller",
-        timing: "on_resolution",
-      },
       apModifier: 2,
       duration: "this_turn",
+      target: {
+        chooser: "controller",
+        count: 1,
+        timing: "on_resolution",
+        validTargets: [{ type: "unit", owner: "self" }],
+      },
+      type: "MODIFY_STATS",
     };
 
     context.targets = [CARD_1];
@@ -1780,24 +1739,24 @@ describe("executeActions", () => {
 
     const actions: EffectAction[] = [
       {
-        type: "REST",
         target: {
-          count: 1,
-          validTargets: [{ type: "unit", owner: "self" }],
           chooser: "controller",
+          count: 1,
           timing: "on_resolution",
+          validTargets: [{ type: "unit", owner: "self" }],
         },
+        type: "REST",
       },
       {
-        type: "MODIFY_STATS",
-        target: {
-          count: 1,
-          validTargets: [{ type: "unit", owner: "self" }],
-          chooser: "controller",
-          timing: "on_resolution",
-        },
         apModifier: 2,
         duration: "this_turn",
+        target: {
+          chooser: "controller",
+          count: 1,
+          timing: "on_resolution",
+          validTargets: [{ type: "unit", owner: "self" }],
+        },
+        type: "MODIFY_STATS",
       },
     ];
 
@@ -1813,15 +1772,15 @@ describe("executeActions", () => {
   it("should execute draw then damage", () => {
     const actions: EffectAction[] = [
       {
-        type: "DRAW",
         count: 2,
         player: "self",
+        type: "DRAW",
       },
       {
-        type: "DAMAGE",
         amount: 2,
-        target: "unit",
         damageType: "effect",
+        target: "unit",
+        type: "DAMAGE",
       },
     ];
 
@@ -1884,8 +1843,8 @@ describe("findCardZone", () => {
     const result = findCardZone(CARD_1, state);
 
     expect(result).toEqual({
-      zone: "battleArea",
       owner: PLAYER_1,
+      zone: "battleArea",
     });
   });
 
@@ -1933,10 +1892,10 @@ describe("resolveSimpleTarget", () => {
     const context = createMockContext(PLAYER_1, [CARD_1, CARD_2]);
 
     const spec = {
-      count: 1,
-      validTargets: [{ type: "unit" as const, owner: "self" as const }],
       chooser: "controller" as const,
+      count: 1,
       timing: "on_resolution" as const,
+      validTargets: [{ owner: "self" as const, type: "unit" as const }],
     };
 
     const result = resolveSimpleTarget(spec, context, state);
@@ -1949,10 +1908,10 @@ describe("resolveSimpleTarget", () => {
     const context = createMockContext(PLAYER_1, [CARD_1, CARD_2, CARD_3]);
 
     const spec = {
-      count: 2,
-      validTargets: [{ type: "unit" as const, owner: "self" as const }],
       chooser: "controller" as const,
+      count: 2,
       timing: "on_resolution" as const,
+      validTargets: [{ owner: "self" as const, type: "unit" as const }],
     };
 
     const result = resolveSimpleTarget(spec, context, state);
@@ -1965,10 +1924,10 @@ describe("resolveSimpleTarget", () => {
     const context = createMockContext(PLAYER_1);
 
     const spec = {
-      count: 1,
-      validTargets: [{ type: "unit" as const, owner: "self" as const }],
       chooser: "controller" as const,
+      count: 1,
       timing: "on_resolution" as const,
+      validTargets: [{ owner: "self" as const, type: "unit" as const }],
     };
 
     const result = resolveSimpleTarget(spec, context, state);

@@ -4,8 +4,8 @@ export const belleInventiveEngineer: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "play-card",
         from: "hand",
+        type: "play-card",
       },
       id: "vuf-1",
       text: "**TINKER** Whenever this character quests, you pay 1 {I} less for the next item you play this turn.",

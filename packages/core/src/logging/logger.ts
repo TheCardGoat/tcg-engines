@@ -6,7 +6,7 @@
  */
 
 import pino, { type Logger as PinoLogger } from "pino";
-import { type LogContext, type LoggerOptions, LogLevel } from "./types";
+import { type LogContext, LogLevel, type LoggerOptions } from "./types";
 
 /**
  * Logger
@@ -65,12 +65,12 @@ export class Logger {
     // Add pretty printing if requested
     if (options.pretty !== false) {
       pinoOptions.transport = {
-        target: "pino-pretty",
         options: {
           colorize: true,
-          translateTime: "HH:MM:ss.l",
           ignore: "pid,hostname",
+          translateTime: "HH:MM:ss.l",
         },
+        target: "pino-pretty",
       };
     }
 
@@ -88,10 +88,10 @@ export class Logger {
 
     // Map preset strings to LogLevel
     const presetMap: Record<string, LogLevel> = {
-      SILENT: LogLevel.SILENT,
-      NORMAL_PLAYER: LogLevel.INFO,
       ADVANCED_PLAYER: LogLevel.DEBUG,
       DEVELOPER: LogLevel.TRACE,
+      NORMAL_PLAYER: LogLevel.INFO,
+      SILENT: LogLevel.SILENT,
     };
 
     return presetMap[level] ?? LogLevel.SILENT;

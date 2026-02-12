@@ -4,21 +4,21 @@ export const theLibraryAGiftForBelle: LocationCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "draw",
           amount: 1,
           target: "CONTROLLER",
+          type: "draw",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "aw2-1",
       name: "LOST IN A BOOK",
       text: "LOST IN A BOOK Whenever a character is banished while here, you may draw a card.",
       trigger: {
         event: "banish",
-        timing: "whenever",
         on: "ANY_CHARACTER",
+        timing: "whenever",
       },
       type: "triggered",
     },

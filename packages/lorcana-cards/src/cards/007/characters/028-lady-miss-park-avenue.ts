@@ -13,9 +13,8 @@ export const ladyMissParkAvenue: CharacterCard = {
     },
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "return-to-hand",
           target: {
             selector: "chosen",
             count: 1,
@@ -23,16 +22,17 @@ export const ladyMissParkAvenue: CharacterCard = {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "return-to-hand",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "188-2",
       name: "SOMETHING WONDERFUL",
       text: "SOMETHING WONDERFUL When you play this character, you may return up to 2 character cards with cost 2 or less each from your discard to your hand.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

@@ -4,9 +4,9 @@ export const captainHookUnderhanded: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "restriction",
         restriction: "cant-quest",
         target: "SELF",
+        type: "restriction",
       },
       id: "i7x-1",
       text: "INSPIRES DREAD While this character is exerted, opposing Pirate characters can't quest.",
@@ -14,17 +14,17 @@ export const captainHookUnderhanded: CharacterCard = {
     },
     {
       effect: {
-        type: "draw",
         amount: 1,
         target: "CONTROLLER",
+        type: "draw",
       },
       id: "i7x-2",
       name: "UPPER HAND",
       text: "UPPER HAND Whenever this character is challenged, draw a card.",
       trigger: {
         event: "challenged",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

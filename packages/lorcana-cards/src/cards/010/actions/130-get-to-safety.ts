@@ -4,16 +4,16 @@ export const getToSafety: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you have a location named Sleepy Hollow in play",
+          type: "if",
         },
         then: {
-          type: "draw",
           amount: 1,
           target: "CONTROLLER",
+          type: "draw",
         },
+        type: "conditional",
       },
       id: "14p-1",
       text: "Play a location with cost 3 or less from your discard for free. Then, if you have a location named Sleepy Hollow in play, draw a card.",

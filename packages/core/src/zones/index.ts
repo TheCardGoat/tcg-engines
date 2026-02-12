@@ -20,9 +20,5 @@ export {
   search,
   shuffle,
 } from "./zone-operations";
-export {
-  createPlayerZones,
-  getCardZone,
-  moveCardInState,
-} from "./zone-state-helpers";
+export { createPlayerZones, getCardZone, moveCardInState } from "./zone-state-helpers";
 export { filterZoneByVisibility } from "./zone-visibility";

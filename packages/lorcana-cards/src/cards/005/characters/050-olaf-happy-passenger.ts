@@ -4,8 +4,8 @@ export const olafHappyPassenger: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "play-card",
         from: "hand",
+        type: "play-card",
       },
       id: "trf-1",
       text: "CLEAR THE PATH For each exerted character opponents have in play, you pay 1 {I} less to play this character.",

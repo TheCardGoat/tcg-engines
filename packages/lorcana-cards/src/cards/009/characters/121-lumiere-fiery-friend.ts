@@ -4,10 +4,10 @@ export const lumiereFieryFriend: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: 1,
+        stat: "strength",
         target: "YOUR_CHARACTERS",
+        type: "modify-stat",
       },
       id: "xyr-1",
       name: "FERVENT ADDRESS Your other",

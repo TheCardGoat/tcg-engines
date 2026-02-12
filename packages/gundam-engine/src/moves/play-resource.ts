@@ -48,15 +48,20 @@ export const playResourceMove: GameMoveDefinition<GundamGameState> = {
     const { playerId } = context;
 
     // Must be in resource phase
-    if (state.phase !== "resource") return false;
+    if (state.phase !== "resource") {
+      return false;
+    }
 
     // Must be current player
-    if (state.currentPlayer !== playerId) return false;
+    if (state.currentPlayer !== playerId) {
+      return false;
+    }
 
     // Check if player has already played a resource this turn
-    const hasPlayedResource =
-      state.gundam.hasPlayedResourceThisTurn[playerId] ?? false;
-    if (hasPlayedResource) return false;
+    const hasPlayedResource = state.gundam.hasPlayedResourceThisTurn[playerId] ?? false;
+    if (hasPlayedResource) {
+      return false;
+    }
 
     // Get and validate card ID
     let cardId: CardId;
@@ -68,14 +73,20 @@ export const playResourceMove: GameMoveDefinition<GundamGameState> = {
 
     // Card must be in player's hand
     const hand = state.zones.hand[playerId];
-    if (!(hand && isCardInZone(hand, cardId))) return false;
+    if (!(hand && isCardInZone(hand, cardId))) {
+      return false;
+    }
 
     // Check resource area capacity (max 15)
     const resourceArea = state.zones.resourceArea[playerId];
-    if (!resourceArea) return false;
+    if (!resourceArea) {
+      return false;
+    }
 
     const resourceAreaSize = getZoneSize(resourceArea);
-    if (resourceAreaSize >= 15) return false;
+    if (resourceAreaSize >= 15) {
+      return false;
+    }
 
     return true;
   },
@@ -95,7 +106,7 @@ export const playResourceMove: GameMoveDefinition<GundamGameState> = {
 
     if (!(hand && resourceArea)) {
       throw new Error(
-        `Missing zones for player ${playerId}: hand=${!!hand}, resourceArea=${!!resourceArea}`,
+        `Missing zones for player ${playerId}: hand=${Boolean(hand)}, resourceArea=${Boolean(resourceArea)}`,
       );
     }
 
@@ -124,10 +135,10 @@ export const playResourceMove: GameMoveDefinition<GundamGameState> = {
   },
 
   metadata: {
-    category: "resource",
-    tags: ["core", "resource-phase-action"],
-    description: "Play resource card from hand to resource area",
-    canBeUndone: false,
     affectsZones: ["hand", "resourceArea"],
+    canBeUndone: false,
+    category: "resource",
+    description: "Play resource card from hand to resource area",
+    tags: ["core", "resource-phase-action"],
   },
 };

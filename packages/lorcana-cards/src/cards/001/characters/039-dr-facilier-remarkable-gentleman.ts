@@ -4,27 +4,27 @@ export const drFacilierRemarkableGentleman: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "scry",
           amount: 2,
           destinations: [
             { zone: "deck-top", min: 1, max: 1 },
             { zone: "deck-bottom", remainder: true },
           ],
+          type: "scry",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "xhk-1",
       name: "DREAMS MADE REAL",
       text: "**DREAMS MADE REAL** Whenever you play a song, you may look at the top 2 cards of your deck. Put one on the top of your deck and the other on the bottom.",
       trigger: {
         event: "play",
-        timing: "whenever",
         on: {
-          controller: "you",
           cardType: "song",
+          controller: "you",
         },
+        timing: "whenever",
       },
       type: "triggered",
     },

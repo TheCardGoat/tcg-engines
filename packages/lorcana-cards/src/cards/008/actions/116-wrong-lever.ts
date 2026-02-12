@@ -4,14 +4,14 @@ export const wrongLever: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "return-to-hand",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "return-to-hand",
       },
       id: "1mu-2",
       text: "- Return chosen character to their player's hand.",
@@ -19,14 +19,14 @@ export const wrongLever: ActionCard = {
     },
     {
       effect: {
-        type: "put-on-bottom",
         target: {
-          selector: "chosen",
+          cardTypes: ["card"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["card"],
         },
+        type: "put-on-bottom",
       },
       id: "1mu-3",
       text: "- Put a Pull the Lever! card from your discard pile on the bottom of your deck to put chosen character on the bottom of their owner's deck.",

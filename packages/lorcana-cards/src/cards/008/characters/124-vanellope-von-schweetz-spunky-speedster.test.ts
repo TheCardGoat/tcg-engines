@@ -8,9 +8,7 @@ describe("Vanellope Von Schweetz - Spunky Speedster", () => {
       play: [vanellopeVonSchweetzSpunkySpeedster],
     });
 
-    const cardUnderTest = testEngine.getCardModel(
-      vanellopeVonSchweetzSpunkySpeedster,
-    );
+    const cardUnderTest = testEngine.getCardModel(vanellopeVonSchweetzSpunkySpeedster);
     expect(cardUnderTest.hasEvasive).toBe(true);
   });
 });

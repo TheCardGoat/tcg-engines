@@ -4,9 +4,9 @@ export const fieldOfIce: ItemCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Resist",
         target: "CHOSEN_CHARACTER",
+        type: "gain-keyword",
         value: 1,
       },
       id: "1kk-1",
@@ -14,11 +14,11 @@ export const fieldOfIce: ItemCard = {
       text: "ICY DEFENSE Whenever you play a character, they gain Resist +1 until the start of your next turn.",
       trigger: {
         event: "play",
-        timing: "whenever",
         on: {
-          controller: "you",
           cardType: "character",
+          controller: "you",
         },
+        timing: "whenever",
       },
       type: "triggered",
     },

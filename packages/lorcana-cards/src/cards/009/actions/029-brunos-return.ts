@@ -4,11 +4,9 @@ export const brunosReturn: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "remove-damage",
           amount: 2,
-          upTo: true,
           target: {
             selector: "chosen",
             count: 1,
@@ -16,8 +14,10 @@ export const brunosReturn: ActionCard = {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "remove-damage",
+          upTo: true,
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "ka9-1",
       text: "Return a character card from your discard to your hand. You may remove up to 2 damage from chosen character.",

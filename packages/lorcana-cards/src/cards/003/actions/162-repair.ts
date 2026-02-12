@@ -4,16 +4,16 @@ export const repair: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "remove-damage",
         amount: 3,
-        upTo: true,
         target: {
-          selector: "all",
+          cardTypes: ["location"],
           count: "all",
           owner: "you",
+          selector: "all",
           zones: ["play"],
-          cardTypes: ["location"],
         },
+        type: "remove-damage",
+        upTo: true,
       },
       id: "1sg-1",
       text: "Remove up to 3 damage from one of your locations or characters.",

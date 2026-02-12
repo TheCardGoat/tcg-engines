@@ -4,23 +4,23 @@ export const jeweledCollar: ItemCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "put-into-inkwell",
-          source: "top-of-deck",
-          target: "CONTROLLER",
           exerted: true,
           facedown: true,
+          source: "top-of-deck",
+          target: "CONTROLLER",
+          type: "put-into-inkwell",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "19v-1",
       name: "WELCOME EXTRAVAGANCE",
       text: "WELCOME EXTRAVAGANCE Whenever one of your characters is challenged, you may put the top card of your deck into your inkwell facedown and exerted.",
       trigger: {
         event: "banish",
-        timing: "whenever",
         on: "YOUR_OTHER_CHARACTERS",
+        timing: "whenever",
       },
       type: "triggered",
     },

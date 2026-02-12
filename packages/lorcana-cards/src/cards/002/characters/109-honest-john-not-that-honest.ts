@@ -4,21 +4,21 @@ export const honestJohnNotThatHonest: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "lose-lore",
         amount: 1,
         target: "EACH_OPPONENT",
+        type: "lose-lore",
       },
       id: "1de-1",
       name: "EASY STREET",
       text: "EASY STREET Whenever you play a Floodborn character, each opponent loses 1 lore.",
       trigger: {
         event: "play",
-        timing: "whenever",
         on: {
-          controller: "you",
           cardType: "character",
           classification: "Floodborn",
+          controller: "you",
         },
+        timing: "whenever",
       },
       type: "triggered",
     },

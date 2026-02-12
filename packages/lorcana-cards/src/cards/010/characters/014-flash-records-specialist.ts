@@ -4,9 +4,9 @@ export const flashRecordsSpecialist: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "restriction",
         restriction: "enters-play-exerted",
         target: "SELF",
+        type: "restriction",
       },
       id: "1ds-1",
       text: "HOLD... YOUR HORSES This character enters play exerted.",

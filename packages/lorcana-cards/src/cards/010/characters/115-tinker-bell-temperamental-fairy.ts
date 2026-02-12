@@ -13,22 +13,22 @@ export const tinkerBellTemperamentalFairy: CharacterCard = {
     },
     {
       effect: {
-        type: "exert",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "opponent",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "exert",
       },
       id: "yus-2",
       name: "HARMLESS DIVERSION",
       text: "HARMLESS DIVERSION When you play this character, exert chosen opposing character with 2 {S} or less.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

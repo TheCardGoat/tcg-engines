@@ -10,23 +10,23 @@ export const tinkerBellInsistentFairy: CharacterCard = {
     },
     {
       effect: {
-        type: "optional",
-        effect: {
-          type: "gain-lore",
-          amount: 2,
-        },
         chooser: "CONTROLLER",
+        effect: {
+          amount: 2,
+          type: "gain-lore",
+        },
+        type: "optional",
       },
       id: "ay2-2",
       name: "PAY ATTENTION",
       text: "PAY ATTENTION Whenever you play a character with 5 {S} or more, you may exert them to gain 2 lore.",
       trigger: {
         event: "play",
-        timing: "whenever",
         on: {
-          controller: "you",
           cardType: "character",
+          controller: "you",
         },
+        timing: "whenever",
       },
       type: "triggered",
     },

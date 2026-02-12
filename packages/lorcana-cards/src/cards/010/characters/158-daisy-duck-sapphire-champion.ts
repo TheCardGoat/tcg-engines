@@ -4,9 +4,9 @@ export const daisyDuckSapphireChampion: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Resist",
         target: "CHOSEN_CHARACTER",
+        type: "gain-keyword",
         value: 1,
       },
       id: "107-1",
@@ -16,20 +16,20 @@ export const daisyDuckSapphireChampion: CharacterCard = {
     },
     {
       effect: {
-        type: "optional",
-        effect: {
-          type: "put-on-bottom",
-          target: "CHOSEN_CHARACTER",
-        },
         chooser: "CONTROLLER",
+        effect: {
+          target: "CHOSEN_CHARACTER",
+          type: "put-on-bottom",
+        },
+        type: "optional",
       },
       id: "107-2",
       name: "LOOK AHEAD",
       text: "LOOK AHEAD Whenever one of your other Sapphire characters quests, you may look at the top card of your deck. Put it on either the top or the bottom of your deck.",
       trigger: {
         event: "banish",
-        timing: "whenever",
         on: "YOUR_OTHER_CHARACTERS",
+        timing: "whenever",
       },
       type: "triggered",
     },

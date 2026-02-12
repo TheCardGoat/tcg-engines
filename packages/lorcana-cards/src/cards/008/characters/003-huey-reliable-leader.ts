@@ -4,16 +4,16 @@ export const hueyReliableLeader: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "play-card",
         from: "hand",
+        type: "play-card",
       },
       id: "1g4-1",
       name: "I KNOW THE WAY",
       text: "I KNOW THE WAY Whenever this character quests, you pay 1 {I} less for the next character you play this turn.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

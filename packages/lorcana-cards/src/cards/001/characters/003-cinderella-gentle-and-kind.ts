@@ -4,16 +4,16 @@ export const cinderellaGentleAndKind: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "remove-damage",
         amount: 3,
-        upTo: true,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "remove-damage",
+        upTo: true,
       },
       id: "qil-1",
       text: "**Singer** 5 _(This character counts as cost 5 to sing songs.)_\n\n**A WONDERFUL DREAM** {E}− Remove up to 3 damage from chosen Princess character.",

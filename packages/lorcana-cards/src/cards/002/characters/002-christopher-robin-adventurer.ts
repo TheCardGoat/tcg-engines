@@ -4,20 +4,20 @@ export const christopherRobinAdventurer: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you have 2 or more other characters in play",
+          type: "if",
         },
         then: {
-          type: "gain-lore",
           amount: 2,
+          type: "gain-lore",
         },
+        type: "conditional",
       },
       id: "2pm-1",
       name: "WE'LL ALWAYS BE TOGETHER",
       text: "WE'LL ALWAYS BE TOGETHER Whenever you ready this character, if you have 2 or more other characters in play, gain 2 lore.",
-      trigger: { event: "play", timing: "when", on: "SELF" },
+      trigger: { event: "play", on: "SELF", timing: "when" },
       type: "triggered",
     },
   ],

@@ -4,25 +4,25 @@ export const microbots: ItemCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
+        duration: "this-turn",
         modifier: -1,
+        stat: "strength",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
-        duration: "this-turn",
+        type: "modify-stat",
       },
       id: "674-2",
       name: "INSPIRED TECH",
       text: "INSPIRED TECH When you play this item, chosen character gets -1 {S} this turn for each item named Microbots you have in play.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

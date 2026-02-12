@@ -5,16 +5,16 @@ export const munchingsAndCrunchings: ItemCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "remove-damage",
         amount: 2,
-        upTo: true,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "remove-damage",
+        upTo: true,
       },
       id: "16w-1",
       text: "WHAT A JUICY APPLE {E} — Remove up to 2 damage from chosen character.",
@@ -22,8 +22,8 @@ export const munchingsAndCrunchings: ItemCard = {
     },
     {
       effect: {
-        type: "play-card",
         from: "hand",
+        type: "play-card",
       },
       id: "16w-2",
       text: "COME ON OUT You pay 1 {I} less to play characters named Gurgi.",

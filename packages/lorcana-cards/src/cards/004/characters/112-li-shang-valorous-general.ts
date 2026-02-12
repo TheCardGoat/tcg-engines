@@ -4,10 +4,10 @@ export const liShangValorousGeneral: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "lore",
         modifier: 1,
+        stat: "lore",
         target: "YOUR_CHARACTERS",
+        type: "modify-stat",
       },
       id: "hga-2",
       text: "LEAD THE CHARGE Your characters with 4 {S} or more get +1 {L}.",

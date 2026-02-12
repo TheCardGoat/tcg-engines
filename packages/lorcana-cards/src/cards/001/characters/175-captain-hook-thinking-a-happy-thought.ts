@@ -20,9 +20,9 @@ export const captainHookThinkingAHappyThought: CharacterCard = {
     },
     {
       effect: {
-        type: "restriction",
         restriction: "cant-challenge",
         target: "SELF",
+        type: "restriction",
       },
       id: "4hp-3",
       name: "STOLEN DUST",

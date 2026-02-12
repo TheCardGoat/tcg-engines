@@ -13,13 +13,13 @@ export const grammaTalaSpiritOfTheOcean: CharacterCard = {
     },
     {
       effect: {
-        type: "gain-lore",
         amount: 1,
+        type: "gain-lore",
       },
       id: "1xw-2",
       name: "DO YOU KNOW WHO YOU ARE?",
       text: "DO YOU KNOW WHO YOU ARE? Whenever a card is put into your inkwell, gain 1 lore.",
-      trigger: { event: "play", timing: "when", on: "SELF" },
+      trigger: { event: "play", on: "SELF", timing: "when" },
       type: "triggered",
     },
   ],

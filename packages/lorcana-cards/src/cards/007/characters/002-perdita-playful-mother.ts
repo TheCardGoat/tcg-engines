@@ -4,24 +4,24 @@ export const perditaPlayfulMother: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "play-card",
         from: "hand",
+        type: "play-card",
       },
       id: "ehi-1",
       name: "WHO'S NEXT?",
       text: "WHO'S NEXT? Whenever this character quests, you pay 2 {I} less for the next Puppy character you play this turn.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Ward",
         target: "YOUR_CHARACTERS",
+        type: "gain-keyword",
       },
       id: "ehi-2",
       name: "DON'T BE AFRAID Your Puppy",

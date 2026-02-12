@@ -4,8 +4,8 @@ export const mulanInjuredSoldier: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "play-card",
         from: "hand",
+        type: "play-card",
       },
       id: "1g0-1",
       name: "BATTLE WOUND",

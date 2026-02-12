@@ -4,20 +4,20 @@ export const theyNeverComeBack: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "restriction",
+            duration: "until-start-of-next-turn",
             restriction: "cant-ready",
             target: "SELF",
-            duration: "until-start-of-next-turn",
+            type: "restriction",
           },
           {
-            type: "draw",
             amount: 1,
             target: "CONTROLLER",
+            type: "draw",
           },
         ],
+        type: "sequence",
       },
       id: "d6h-1",
       text: "Up to 2 chosen characters can't ready at the start of their next turn. Draw a card.",

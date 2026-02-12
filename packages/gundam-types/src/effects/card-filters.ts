@@ -6,12 +6,7 @@
  */
 
 import type { KeywordEffect } from "./effect-keywords";
-import type {
-  CardType,
-  Color,
-  CostFilter,
-  LevelFilter,
-} from "./targeting-types";
+import type { CardType, Color, CostFilter, LevelFilter } from "./targeting-types";
 
 /**
  * Card Filter

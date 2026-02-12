@@ -7,12 +7,12 @@ export const ursulasCauldron: ItemCard = {
         exert: true,
       },
       effect: {
-        type: "scry",
         amount: 2,
         destinations: [
-          { zone: "deck-top", min: 1, max: 1 },
-          { zone: "deck-bottom", remainder: true },
+          { max: 1, min: 1, zone: "deck-top" },
+          { remainder: true, zone: "deck-bottom" },
         ],
+        type: "scry",
       },
       id: "fkd-1",
       name: "PEER INTO THE DEPTHS",

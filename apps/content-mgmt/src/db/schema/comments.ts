@@ -1,12 +1,5 @@
 import { relations } from "drizzle-orm";
-import {
-  index,
-  integer,
-  pgTable,
-  text,
-  timestamp,
-  uuid,
-} from "drizzle-orm/pg-core";
+import { index, integer, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
 import { contents } from "./contents";
 
 /**

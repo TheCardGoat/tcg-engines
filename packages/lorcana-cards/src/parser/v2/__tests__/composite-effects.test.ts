@@ -12,9 +12,7 @@ import { parseEffect } from "../parsers/effect-parser";
 describe("Composite Effect Parser", () => {
   describe("'then' sequences", () => {
     it("should parse 'Draw 2 cards, then choose and discard a card'", () => {
-      const effect = parseEffect(
-        "Draw 2 cards, then choose and discard a card",
-      );
+      const effect = parseEffect("Draw 2 cards, then choose and discard a card");
 
       expect(effect).toBeDefined();
       expect(effect?.type).toBe("sequence");
@@ -40,9 +38,7 @@ describe("Composite Effect Parser", () => {
     });
 
     it("should parse 'Deal 2 damage to chosen character, then draw a card'", () => {
-      const effect = parseEffect(
-        "Deal 2 damage to chosen character, then draw a card",
-      );
+      const effect = parseEffect("Deal 2 damage to chosen character, then draw a card");
 
       expect(effect).toBeDefined();
       expect(effect?.type).toBe("sequence");
@@ -157,9 +153,7 @@ describe("Composite Effect Parser", () => {
     });
 
     it("should parse 'Exert chosen character. Deal 2 damage to chosen character.'", () => {
-      const effect = parseEffect(
-        "Exert chosen character. Deal 2 damage to chosen character.",
-      );
+      const effect = parseEffect("Exert chosen character. Deal 2 damage to chosen character.");
 
       expect(effect).toBeDefined();
       expect(effect?.type).toBe("sequence");
@@ -306,9 +300,7 @@ describe("Composite Effect Parser", () => {
 
   describe("Three-step sequences", () => {
     it("should parse 'Draw a card. Gain 1 lore. Deal 1 damage to chosen character.'", () => {
-      const effect = parseEffect(
-        "Draw a card. Gain 1 lore. Deal 1 damage to chosen character.",
-      );
+      const effect = parseEffect("Draw a card. Gain 1 lore. Deal 1 damage to chosen character.");
 
       expect(effect).toBeDefined();
       expect(effect?.type).toBe("sequence");
@@ -342,9 +334,7 @@ describe("Composite Effect Parser", () => {
     });
 
     it("should parse 'Gain 1 lore, then draw a card, then banish chosen character'", () => {
-      const effect = parseEffect(
-        "Gain 1 lore, then draw a card, then banish chosen character",
-      );
+      const effect = parseEffect("Gain 1 lore, then draw a card, then banish chosen character");
 
       expect(effect).toBeDefined();
       expect(effect?.type).toBe("sequence");
@@ -446,9 +436,7 @@ describe("Composite Effect Parser", () => {
     });
 
     it("should not split on 'and' that is not between effects", () => {
-      const effect = parseEffect(
-        "Draw cards equal to your hand size and discard them",
-      );
+      const effect = parseEffect("Draw cards equal to your hand size and discard them");
 
       // Parser returns undefined (not null) when unable to parse
       expect(effect).toBeUndefined();
@@ -463,9 +451,7 @@ describe("Composite Effect Parser", () => {
     });
 
     it("should parse sequence with ready and restriction effects", () => {
-      const effect = parseEffect(
-        "Ready chosen character. They can't quest this turn",
-      );
+      const effect = parseEffect("Ready chosen character. They can't quest this turn");
 
       // Both parts are now parsable:
       // 1. "Ready chosen character" → ready effect

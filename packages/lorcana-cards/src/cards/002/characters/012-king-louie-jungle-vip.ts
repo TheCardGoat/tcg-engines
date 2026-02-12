@@ -4,11 +4,9 @@ export const kingLouieJungleVip: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "remove-damage",
           amount: 2,
-          upTo: true,
           target: {
             selector: "self",
             count: 1,
@@ -16,13 +14,15 @@ export const kingLouieJungleVip: CharacterCard = {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "remove-damage",
+          upTo: true,
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "3ec-1",
       name: "LAY IT ON THE LINE",
       text: "LAY IT ON THE LINE Whenever another character is banished, you may remove up to 2 damage from this character.",
-      trigger: { event: "play", timing: "when", on: "SELF" },
+      trigger: { event: "play", on: "SELF", timing: "when" },
       type: "triggered",
     },
   ],

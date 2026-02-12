@@ -11,9 +11,9 @@ export const jetsamUrsulasBaby: CharacterCard = {
     },
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Challenger",
         target: "YOUR_CHARACTERS",
+        type: "gain-keyword",
         value: 2,
       },
       id: "du5-2",

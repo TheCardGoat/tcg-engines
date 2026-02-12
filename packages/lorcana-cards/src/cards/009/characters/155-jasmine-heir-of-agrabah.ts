@@ -4,24 +4,24 @@ export const jasmineHeirOfAgrabah: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "remove-damage",
         amount: 1,
-        upTo: true,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "remove-damage",
+        upTo: true,
       },
       id: "1sv-1",
       name: "I'M A FAST LEARNER",
       text: "I'M A FAST LEARNER When you play this character, remove up to 1 damage from chosen character of yours.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

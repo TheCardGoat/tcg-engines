@@ -4,19 +4,19 @@ export const alanadaleRockinRooster: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-lore",
         amount: 1,
+        type: "gain-lore",
       },
       id: "ow8-1",
       name: "FAN FAVORITE",
       text: "FAN FAVORITE Whenever you play a song, gain 1 lore.",
       trigger: {
         event: "play",
-        timing: "whenever",
         on: {
-          controller: "you",
           cardType: "action",
+          controller: "you",
         },
+        timing: "whenever",
       },
       type: "triggered",
     },

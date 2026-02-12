@@ -73,7 +73,7 @@ export const Triggers = {
    */
   WheneverYouPlayCharacter: (): Trigger => ({
     event: "play",
-    on: { controller: "you", cardType: "character" },
+    on: { cardType: "character", controller: "you" },
     timing: "whenever",
   }),
 
@@ -82,7 +82,7 @@ export const Triggers = {
    */
   WheneverYouPlaySong: (): Trigger => ({
     event: "play",
-    on: { controller: "you", cardType: "song" },
+    on: { cardType: "song", controller: "you" },
     timing: "whenever",
   }),
 
@@ -92,9 +92,9 @@ export const Triggers = {
   WheneverYouPlayFloodborn: (): Trigger => ({
     event: "play",
     on: {
-      controller: "you",
       cardType: "character",
       classification: "Floodborn",
+      controller: "you",
     },
     timing: "whenever",
   }),

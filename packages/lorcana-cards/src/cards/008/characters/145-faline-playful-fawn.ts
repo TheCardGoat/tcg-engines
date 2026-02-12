@@ -10,10 +10,10 @@ export const falinePlayfulFawn: CharacterCard = {
     },
     {
       effect: {
-        type: "modify-stat",
-        stat: "lore",
         modifier: 2,
+        stat: "lore",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "12c-2",
       text: "PRECOCIOUS FRIEND While you have a character in play with more {S} than each opposing character, this character gets +2 {L}.",

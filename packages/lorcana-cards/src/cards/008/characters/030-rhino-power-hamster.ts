@@ -13,9 +13,9 @@ export const rhinoPowerHamster: CharacterCard = {
     },
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Resist",
         target: "SELF",
+        type: "gain-keyword",
         value: 2,
       },
       id: "g5c-2",

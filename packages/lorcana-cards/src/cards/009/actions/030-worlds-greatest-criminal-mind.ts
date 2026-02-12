@@ -4,14 +4,14 @@ export const worldsGreatestCriminalMind: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "banish",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "banish",
       },
       id: "5o7-1",
       text: "Banish chosen character with 5 {S} or more.",

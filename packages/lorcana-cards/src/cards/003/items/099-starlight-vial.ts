@@ -5,8 +5,8 @@ export const starlightVial: ItemCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "play-card",
         from: "hand",
+        type: "play-card",
       },
       id: "1ec-1",
       text: "EFFICIENT ENERGY {E} — You pay 2 {I} less for the next action you play this turn.",
@@ -15,20 +15,20 @@ export const starlightVial: ItemCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "draw",
             amount: 2,
             target: "CONTROLLER",
+            type: "draw",
           },
           {
-            type: "discard",
             amount: 1,
-            target: "CONTROLLER",
             chosen: true,
+            target: "CONTROLLER",
+            type: "discard",
           },
         ],
+        type: "sequence",
       },
       id: "1ec-2",
       text: "TRAP 2 {I}, Banish this item — Draw 2 cards, then choose and discard a card.",

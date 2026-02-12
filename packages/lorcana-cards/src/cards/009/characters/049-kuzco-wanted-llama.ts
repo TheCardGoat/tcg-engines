@@ -4,13 +4,13 @@ export const kuzcoWantedLlama: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "draw",
           amount: 1,
           target: "CONTROLLER",
+          type: "draw",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "zpa-1",
       text: "OK, WHERE AM I? When this character is banished, you may draw a card.",

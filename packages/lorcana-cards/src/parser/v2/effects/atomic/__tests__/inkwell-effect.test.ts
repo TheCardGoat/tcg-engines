@@ -42,21 +42,15 @@ describe("inkwellEffectParser", () => {
 
   describe("text parsing - source variations", () => {
     it("parses 'put the top card of your deck into your inkwell' correctly", () => {
-      const result = inkwellEffectParser.parse(
-        "put the top card of your deck into your inkwell",
-      );
+      const result = inkwellEffectParser.parse("put the top card of your deck into your inkwell");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("put-into-inkwell");
-      expect((result as Effect & { source: string }).source).toBe(
-        "top-of-deck",
-      );
+      expect((result as Effect & { source: string }).source).toBe("top-of-deck");
     });
 
     it("parses 'put a card from your hand into your inkwell' correctly", () => {
-      const result = inkwellEffectParser.parse(
-        "put a card from your hand into your inkwell",
-      );
+      const result = inkwellEffectParser.parse("put a card from your hand into your inkwell");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("put-into-inkwell");
@@ -64,9 +58,7 @@ describe("inkwellEffectParser", () => {
     });
 
     it("parses 'put this card into your inkwell' correctly", () => {
-      const result = inkwellEffectParser.parse(
-        "put this card into your inkwell",
-      );
+      const result = inkwellEffectParser.parse("put this card into your inkwell");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("put-into-inkwell");
@@ -74,9 +66,7 @@ describe("inkwellEffectParser", () => {
     });
 
     it("parses 'put that card into your inkwell' - source defaults to hand (no 'that card' detection)", () => {
-      const result = inkwellEffectParser.parse(
-        "put that card into your inkwell",
-      );
+      const result = inkwellEffectParser.parse("put that card into your inkwell");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("put-into-inkwell");
@@ -85,21 +75,15 @@ describe("inkwellEffectParser", () => {
     });
 
     it("parses 'put chosen character into your inkwell' correctly", () => {
-      const result = inkwellEffectParser.parse(
-        "put chosen character into your inkwell",
-      );
+      const result = inkwellEffectParser.parse("put chosen character into your inkwell");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("put-into-inkwell");
-      expect((result as Effect & { source: string }).source).toBe(
-        "chosen-character",
-      );
+      expect((result as Effect & { source: string }).source).toBe("chosen-character");
     });
 
     it("parses 'put an additional card into your inkwell' correctly", () => {
-      const result = inkwellEffectParser.parse(
-        "put an additional card into your inkwell",
-      );
+      const result = inkwellEffectParser.parse("put an additional card into your inkwell");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("put-into-inkwell");
@@ -118,9 +102,7 @@ describe("inkwellEffectParser", () => {
     });
 
     it("parses 'put into their player's inkwell' - sets target to OPPONENT", () => {
-      const result = inkwellEffectParser.parse(
-        "put into their player's inkwell",
-      );
+      const result = inkwellEffectParser.parse("put into their player's inkwell");
 
       // Implementation now detects "their player's" and sets target to OPPONENT
       expect(result).not.toBeNull();
@@ -139,9 +121,7 @@ describe("inkwellEffectParser", () => {
     });
 
     it("parses 'put into your inkwell facedown' - facedown is now implemented", () => {
-      const result = inkwellEffectParser.parse(
-        "put into your inkwell facedown",
-      );
+      const result = inkwellEffectParser.parse("put into your inkwell facedown");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("put-into-inkwell");
@@ -150,9 +130,7 @@ describe("inkwellEffectParser", () => {
     });
 
     it("parses 'put into your inkwell face down' - facedown is now implemented", () => {
-      const result = inkwellEffectParser.parse(
-        "put into your inkwell face down",
-      );
+      const result = inkwellEffectParser.parse("put into your inkwell face down");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("put-into-inkwell");
@@ -161,9 +139,7 @@ describe("inkwellEffectParser", () => {
     });
 
     it("parses 'put into your inkwell exerted and facedown' - both modifiers detected", () => {
-      const result = inkwellEffectParser.parse(
-        "put into your inkwell exerted and facedown",
-      );
+      const result = inkwellEffectParser.parse("put into your inkwell exerted and facedown");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("put-into-inkwell");
@@ -176,18 +152,14 @@ describe("inkwellEffectParser", () => {
       const result = inkwellEffectParser.parse("put into your inkwell");
 
       expect(result).not.toBeNull();
-      expect(
-        (result as Effect & { exerted?: boolean }).exerted,
-      ).toBeUndefined();
+      expect((result as Effect & { exerted?: boolean }).exerted).toBeUndefined();
     });
 
     it("does not add facedown when not present", () => {
       const result = inkwellEffectParser.parse("put into your inkwell");
 
       expect(result).not.toBeNull();
-      expect(
-        (result as Effect & { facedown?: boolean }).facedown,
-      ).toBeUndefined();
+      expect((result as Effect & { facedown?: boolean }).facedown).toBeUndefined();
     });
   });
 

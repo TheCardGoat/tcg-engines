@@ -13,16 +13,16 @@ export const boltSuperdog: CharacterCard = {
     },
     {
       effect: {
-        type: "gain-lore",
         amount: 1,
+        type: "gain-lore",
       },
       id: "199-2",
       name: "MARK OF POWER",
       text: "MARK OF POWER Whenever you ready this character, gain 1 lore for each other undamaged character you have in play.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

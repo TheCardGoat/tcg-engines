@@ -4,10 +4,10 @@ export const ratiganRagingRat: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: 2,
+        stat: "strength",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "1g7-1",
       text: "NOTHING CAN STAND IN MY WAY While this character has damage, he gets +2 {S}.",

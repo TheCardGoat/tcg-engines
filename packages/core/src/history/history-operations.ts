@@ -46,7 +46,7 @@ import type { HistoryMessages } from "./types";
  * }
  * ```
  */
-export type HistoryOperations = {
+export interface HistoryOperations {
   /**
    * Log a custom history entry
    *
@@ -76,11 +76,8 @@ export type HistoryOperations = {
    * });
    * ```
    */
-  log(input: {
-    messages: HistoryMessages;
-    metadata?: Record<string, unknown>;
-  }): void;
-};
+  log(input: { messages: HistoryMessages; metadata?: Record<string, unknown> }): void;
+}
 
 /**
  * Create History Operations
@@ -106,16 +103,16 @@ export function createHistoryOperations(
   return {
     log(input) {
       manager.addEntry({
-        moveId: context.moveId,
-        playerId: context.playerId as PlayerId,
-        params: context.params,
-        timestamp: context.timestamp,
-        turn: context.turn,
-        phase: context.phase,
-        segment: context.segment,
-        success: true,
         messages: input.messages,
         metadata: input.metadata,
+        moveId: context.moveId,
+        params: context.params,
+        phase: context.phase,
+        playerId: context.playerId as PlayerId,
+        segment: context.segment,
+        success: true,
+        timestamp: context.timestamp,
+        turn: context.turn,
       });
     },
   };

@@ -4,14 +4,12 @@ export const everybodysGotAWeakness: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "play-card",
             from: "hand",
+            type: "play-card",
           },
           {
-            type: "for-each",
             counter: {
               type: "damage-on-self",
             },
@@ -20,8 +18,10 @@ export const everybodysGotAWeakness: ActionCard = {
               amount: 1,
               target: "CONTROLLER",
             },
+            type: "for-each",
           },
         ],
+        type: "sequence",
       },
       id: "1cj-1",
       text: "Move 1 damage counter from each damaged character you have in play to chosen opposing character. Draw a card for each damage counter moved this way.",

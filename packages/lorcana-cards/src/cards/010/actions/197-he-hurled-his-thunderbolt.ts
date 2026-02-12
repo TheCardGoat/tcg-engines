@@ -4,10 +4,8 @@ export const heHurledHisThunderbolt: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "deal-damage",
             amount: 4,
             target: {
               selector: "chosen",
@@ -16,15 +14,17 @@ export const heHurledHisThunderbolt: ActionCard = {
               zones: ["play"],
               cardTypes: ["character"],
             },
+            type: "deal-damage",
           },
           {
-            type: "gain-keyword",
+            duration: "this-turn",
             keyword: "Challenger",
             target: "YOUR_CHARACTERS",
+            type: "gain-keyword",
             value: 2,
-            duration: "this-turn",
           },
         ],
+        type: "sequence",
       },
       id: "h6t-1",
       text: "Deal 4 damage to chosen character. Your Deity characters gain Challenger +2 this turn.",

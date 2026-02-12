@@ -4,9 +4,8 @@ export const donaldDuckLivelyPirate: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "return-to-hand",
           target: {
             selector: "chosen",
             count: 1,
@@ -14,16 +13,17 @@ export const donaldDuckLivelyPirate: CharacterCard = {
             zones: ["play"],
             cardTypes: ["card"],
           },
+          type: "return-to-hand",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "17f-1",
       name: "DUCK OF ACTION",
       text: "DUCK OF ACTION Whenever this character is challenged, you may return an action card that isn't a song card from your discard to your hand.",
       trigger: {
         event: "challenged",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

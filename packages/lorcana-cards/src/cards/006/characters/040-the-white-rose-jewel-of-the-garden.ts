@@ -4,16 +4,16 @@ export const theWhiteRoseJewelOfTheGarden: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-lore",
         amount: 1,
+        type: "gain-lore",
       },
       id: "1v8-1",
       name: "THE BEAUTY OF THE WORLD",
       text: "THE BEAUTY OF THE WORLD When you play this character, gain 1 lore.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

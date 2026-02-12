@@ -4,31 +4,31 @@ export const ladyDecisiveDog: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
-        modifier: 1,
-        target: "SELF",
         duration: "this-turn",
+        modifier: 1,
+        stat: "strength",
+        target: "SELF",
+        type: "modify-stat",
       },
       id: "4k5-1",
       name: "PACK OF HER OWN",
       text: "PACK OF HER OWN Whenever you play a character, this character gets +1 {S} this turn.",
       trigger: {
         event: "play",
-        timing: "whenever",
         on: {
-          controller: "you",
           cardType: "character",
+          controller: "you",
         },
+        timing: "whenever",
       },
       type: "triggered",
     },
     {
       effect: {
-        type: "modify-stat",
-        stat: "lore",
         modifier: 2,
+        stat: "lore",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "4k5-2",
       text: "TAKE THE LEAD While this character has 3 {S} or more, she gets +2 {L}.",

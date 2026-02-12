@@ -10,21 +10,21 @@ export const pinocchioStringsAttached: CharacterCard = {
     },
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "draw",
           amount: 1,
           target: "CONTROLLER",
+          type: "draw",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "1m2-2",
       name: "GOT TO KEEP REAL QUIET Once",
       text: "GOT TO KEEP REAL QUIET Once during your turn, whenever you ready this character, you may draw a card.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

@@ -10,9 +10,7 @@ import { parseTriggeredAbility } from "../parsers/triggered-parser";
 
 describe("Trigger Pattern: Whenever you play a card", () => {
   it("should parse 'Whenever you play a card' trigger", () => {
-    const result = parseTriggeredAbility(
-      "Whenever you play a card, draw a card.",
-    );
+    const result = parseTriggeredAbility("Whenever you play a card, draw a card.");
 
     expect(result.success).toBe(true);
     const ability = result.ability?.ability as TriggeredAbility | undefined;
@@ -48,9 +46,7 @@ describe("Trigger Pattern: Whenever you play a card", () => {
 
 describe("Trigger Pattern: Whenever an opponent plays X", () => {
   it("should parse 'Whenever an opponent plays a song' trigger", () => {
-    const result = parseTriggeredAbility(
-      "Whenever an opponent plays a song, you may draw a card.",
-    );
+    const result = parseTriggeredAbility("Whenever an opponent plays a song, you may draw a card.");
 
     expect(result.success).toBe(true);
     const ability = result.ability?.ability as TriggeredAbility | undefined;
@@ -66,9 +62,7 @@ describe("Trigger Pattern: Whenever an opponent plays X", () => {
   });
 
   it("should parse 'Whenever an opponent plays a character' trigger", () => {
-    const result = parseTriggeredAbility(
-      "Whenever an opponent plays a character, gain 1 lore.",
-    );
+    const result = parseTriggeredAbility("Whenever an opponent plays a character, gain 1 lore.");
 
     expect(result.success).toBe(true);
     const ability = result.ability?.ability as TriggeredAbility | undefined;
@@ -101,9 +95,7 @@ describe("Trigger Pattern: Whenever an opponent plays X", () => {
 
 describe("Trigger Pattern: Whenever you play a [Type] character", () => {
   it("should parse 'Whenever you play a Hero character' trigger", () => {
-    const result = parseTriggeredAbility(
-      "Whenever you play a Hero character, gain 1 lore.",
-    );
+    const result = parseTriggeredAbility("Whenever you play a Hero character, gain 1 lore.");
 
     expect(result.success).toBe(true);
     const ability = result.ability?.ability as TriggeredAbility | undefined;
@@ -120,9 +112,7 @@ describe("Trigger Pattern: Whenever you play a [Type] character", () => {
   });
 
   it("should parse 'Whenever you play a Villain character' trigger", () => {
-    const result = parseTriggeredAbility(
-      "Whenever you play a Villain character, gain 2 lore.",
-    );
+    const result = parseTriggeredAbility("Whenever you play a Villain character, gain 2 lore.");
 
     expect(result.success).toBe(true);
     const ability = result.ability?.ability as TriggeredAbility | undefined;
@@ -136,9 +126,7 @@ describe("Trigger Pattern: Whenever you play a [Type] character", () => {
   });
 
   it("should parse 'Whenever you play a Princess character' trigger", () => {
-    const result = parseTriggeredAbility(
-      "Whenever you play a Princess character, draw a card.",
-    );
+    const result = parseTriggeredAbility("Whenever you play a Princess character, draw a card.");
 
     expect(result.success).toBe(true);
     const ability = result.ability?.ability as TriggeredAbility | undefined;
@@ -170,9 +158,7 @@ describe("Trigger Pattern: Whenever you play a [Type] character", () => {
   });
 
   it("should parse 'Whenever you play a King character' trigger", () => {
-    const result = parseTriggeredAbility(
-      "Whenever you play a King character, gain 1 lore.",
-    );
+    const result = parseTriggeredAbility("Whenever you play a King character, gain 1 lore.");
 
     expect(result.success).toBe(true);
     const ability = result.ability?.ability as TriggeredAbility | undefined;
@@ -186,9 +172,7 @@ describe("Trigger Pattern: Whenever you play a [Type] character", () => {
   });
 
   it("should parse 'Whenever you play a Queen character' trigger", () => {
-    const result = parseTriggeredAbility(
-      "Whenever you play a Queen character, draw a card.",
-    );
+    const result = parseTriggeredAbility("Whenever you play a Queen character, draw a card.");
 
     expect(result.success).toBe(true);
     const ability = result.ability?.ability as TriggeredAbility | undefined;
@@ -202,9 +186,7 @@ describe("Trigger Pattern: Whenever you play a [Type] character", () => {
   });
 
   it("should parse 'Whenever you play a Pirate character' trigger", () => {
-    const result = parseTriggeredAbility(
-      "Whenever you play a Pirate character, gain 1 lore.",
-    );
+    const result = parseTriggeredAbility("Whenever you play a Pirate character, gain 1 lore.");
 
     expect(result.success).toBe(true);
     const ability = result.ability?.ability as TriggeredAbility | undefined;
@@ -220,9 +202,7 @@ describe("Trigger Pattern: Whenever you play a [Type] character", () => {
 
 describe("Trigger Pattern: Whenever this character is challenged", () => {
   it("should parse 'Whenever this character is challenged' trigger", () => {
-    const result = parseTriggeredAbility(
-      "Whenever this character is challenged, draw a card.",
-    );
+    const result = parseTriggeredAbility("Whenever this character is challenged, draw a card.");
 
     expect(result.success).toBe(true);
     const ability = result.ability?.ability as TriggeredAbility | undefined;
@@ -251,9 +231,7 @@ describe("Trigger Pattern: Whenever this character is challenged", () => {
 
 describe("Trigger Pattern: Whenever you play an action", () => {
   it("should parse 'Whenever you play an action' trigger", () => {
-    const result = parseTriggeredAbility(
-      "Whenever you play an action, gain 1 lore.",
-    );
+    const result = parseTriggeredAbility("Whenever you play an action, gain 1 lore.");
 
     expect(result.success).toBe(true);
     const ability = result.ability?.ability as TriggeredAbility | undefined;
@@ -269,9 +247,7 @@ describe("Trigger Pattern: Whenever you play an action", () => {
   });
 
   it("should parse named ability with action trigger", () => {
-    const result = parseTriggeredAbility(
-      "ACTION MASTER Whenever you play an action, draw a card.",
-    );
+    const result = parseTriggeredAbility("ACTION MASTER Whenever you play an action, draw a card.");
 
     expect(result.success).toBe(true);
     expect(result.ability?.name).toBe("ACTION MASTER");
@@ -287,9 +263,7 @@ describe("Trigger Pattern: Whenever you play an action", () => {
 
 describe("Trigger Pattern: Whenever you play an item", () => {
   it("should parse 'Whenever you play an item' trigger", () => {
-    const result = parseTriggeredAbility(
-      "Whenever you play an item, you may draw a card.",
-    );
+    const result = parseTriggeredAbility("Whenever you play an item, you may draw a card.");
 
     expect(result.success).toBe(true);
     const ability = result.ability?.ability as TriggeredAbility | undefined;
@@ -323,9 +297,7 @@ describe("Trigger Pattern: Whenever you play an item", () => {
 
 describe("Trigger Pattern: Whenever you play a song", () => {
   it("should parse 'Whenever you play a song' trigger", () => {
-    const result = parseTriggeredAbility(
-      "Whenever you play a song, gain 1 lore.",
-    );
+    const result = parseTriggeredAbility("Whenever you play a song, gain 1 lore.");
 
     expect(result.success).toBe(true);
     const ability = result.ability?.ability as TriggeredAbility | undefined;
@@ -341,9 +313,7 @@ describe("Trigger Pattern: Whenever you play a song", () => {
   });
 
   it("should parse named ability with song trigger", () => {
-    const result = parseTriggeredAbility(
-      "FAN FAVORITE Whenever you play a song, gain 1 lore.",
-    );
+    const result = parseTriggeredAbility("FAN FAVORITE Whenever you play a song, gain 1 lore.");
 
     expect(result.success).toBe(true);
     expect(result.ability?.name).toBe("FAN FAVORITE");
@@ -358,9 +328,7 @@ describe("Trigger Pattern: Whenever you play a song", () => {
   });
 
   it("should parse optional effect with song trigger", () => {
-    const result = parseTriggeredAbility(
-      "Whenever you play a song, you may draw a card.",
-    );
+    const result = parseTriggeredAbility("Whenever you play a song, you may draw a card.");
 
     expect(result.success).toBe(true);
     const ability = result.ability?.ability as TriggeredAbility | undefined;
@@ -376,9 +344,7 @@ describe("Trigger Pattern: Whenever you play a song", () => {
 
 describe("Trigger Pattern: When this character is banished", () => {
   it("should parse 'When this character is banished' trigger", () => {
-    const result = parseTriggeredAbility(
-      "When this character is banished, draw 2 cards.",
-    );
+    const result = parseTriggeredAbility("When this character is banished, draw 2 cards.");
 
     expect(result.success).toBe(true);
     const ability = result.ability?.ability as TriggeredAbility | undefined;
@@ -391,9 +357,7 @@ describe("Trigger Pattern: When this character is banished", () => {
   });
 
   it("should parse 'Whenever this character is banished' trigger", () => {
-    const result = parseTriggeredAbility(
-      "Whenever this character is banished, gain 1 lore.",
-    );
+    const result = parseTriggeredAbility("Whenever this character is banished, gain 1 lore.");
 
     expect(result.success).toBe(true);
     const ability = result.ability?.ability as TriggeredAbility | undefined;
@@ -421,22 +385,14 @@ describe("Trigger Pattern: When this character is banished", () => {
 
 describe("Integration: Complex trigger combinations", () => {
   it("should distinguish between 'play a card' and 'play a character'", () => {
-    const cardResult = parseTriggeredAbility(
-      "Whenever you play a card, draw a card.",
-    );
-    const characterResult = parseTriggeredAbility(
-      "Whenever you play a character, draw a card.",
-    );
+    const cardResult = parseTriggeredAbility("Whenever you play a card, draw a card.");
+    const characterResult = parseTriggeredAbility("Whenever you play a character, draw a card.");
 
     expect(cardResult.success).toBe(true);
     expect(characterResult.success).toBe(true);
 
-    const cardAbility = cardResult.ability?.ability as
-      | TriggeredAbility
-      | undefined;
-    const characterAbility = characterResult.ability?.ability as
-      | TriggeredAbility
-      | undefined;
+    const cardAbility = cardResult.ability?.ability as TriggeredAbility | undefined;
+    const characterAbility = characterResult.ability?.ability as TriggeredAbility | undefined;
 
     if (cardAbility?.type === "triggered") {
       expect(cardAbility.trigger.on).toEqual({
@@ -454,22 +410,14 @@ describe("Integration: Complex trigger combinations", () => {
   });
 
   it("should distinguish between classification-based and generic triggers", () => {
-    const heroResult = parseTriggeredAbility(
-      "Whenever you play a Hero character, gain 1 lore.",
-    );
-    const genericResult = parseTriggeredAbility(
-      "Whenever you play a character, gain 1 lore.",
-    );
+    const heroResult = parseTriggeredAbility("Whenever you play a Hero character, gain 1 lore.");
+    const genericResult = parseTriggeredAbility("Whenever you play a character, gain 1 lore.");
 
     expect(heroResult.success).toBe(true);
     expect(genericResult.success).toBe(true);
 
-    const heroAbility = heroResult.ability?.ability as
-      | TriggeredAbility
-      | undefined;
-    const genericAbility = genericResult.ability?.ability as
-      | TriggeredAbility
-      | undefined;
+    const heroAbility = heroResult.ability?.ability as TriggeredAbility | undefined;
+    const genericAbility = genericResult.ability?.ability as TriggeredAbility | undefined;
 
     if (heroAbility?.type === "triggered") {
       expect(heroAbility.trigger.on).toEqual({
@@ -488,9 +436,7 @@ describe("Integration: Complex trigger combinations", () => {
   });
 
   it("should handle self-referential triggers correctly", () => {
-    const result = parseTriggeredAbility(
-      "When you play this character, draw a card.",
-    );
+    const result = parseTriggeredAbility("When you play this character, draw a card.");
 
     expect(result.success).toBe(true);
     const ability = result.ability?.ability as TriggeredAbility | undefined;

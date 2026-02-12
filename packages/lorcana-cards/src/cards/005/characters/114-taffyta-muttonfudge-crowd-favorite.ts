@@ -4,24 +4,24 @@ export const taffytaMuttonfudgeCrowdFavorite: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you have a location in play",
+          type: "if",
         },
         then: {
-          type: "lose-lore",
           amount: 1,
           target: "EACH_OPPONENT",
+          type: "lose-lore",
         },
+        type: "conditional",
       },
       id: "1a4-1",
       name: "SHOWSTOPPER",
       text: "SHOWSTOPPER When you play this character, if you have a location in play, each opponent loses 1 lore.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

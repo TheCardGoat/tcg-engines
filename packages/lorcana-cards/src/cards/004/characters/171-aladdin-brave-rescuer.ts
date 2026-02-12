@@ -4,9 +4,8 @@ export const aladdinBraveRescuer: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "banish",
           target: {
             selector: "chosen",
             count: 1,
@@ -14,16 +13,17 @@ export const aladdinBraveRescuer: CharacterCard = {
             zones: ["play"],
             cardTypes: ["item"],
           },
+          type: "banish",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "on2-2",
       name: "CRASHING THROUGH",
       text: "CRASHING THROUGH Whenever this character quests, you may banish chosen item.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

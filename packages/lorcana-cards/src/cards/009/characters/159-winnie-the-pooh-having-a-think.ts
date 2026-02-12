@@ -4,22 +4,22 @@ export const winnieThePoohHavingAThink: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "put-into-inkwell",
+          facedown: true,
           source: "hand",
           target: "CONTROLLER",
-          facedown: true,
+          type: "put-into-inkwell",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "18k-1",
       name: "HUNNY POT",
       text: "HUNNY POT Whenever this character quests, you may put a card from your hand into your inkwell facedown.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

@@ -4,24 +4,24 @@ export const chacaJuniorChipmunk: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you have a character named Tipo in play",
+          type: "if",
         },
         then: {
-          type: "gain-keyword",
           keyword: "Reckless",
           target: "CHOSEN_CHARACTER",
+          type: "gain-keyword",
         },
+        type: "conditional",
       },
       id: "mhv-1",
       name: "IN CAHOOTS",
       text: "IN CAHOOTS When you play this character, if you have a character named Tipo in play, chosen opposing character gains Reckless during their next turn.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

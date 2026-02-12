@@ -4,31 +4,31 @@ export const goofyMusketeerSwordsman: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "play-card",
-            from: "hand",
             cardType: "character",
+            from: "hand",
+            type: "play-card",
           },
           {
-            type: "restriction",
+            duration: "this-turn",
             restriction: "cant-quest",
             target: "SELF",
-            duration: "this-turn",
+            type: "restriction",
           },
         ],
+        type: "sequence",
       },
       id: "1k3-1",
       name: "EN GAWRSH!",
       text: "EN GAWRSH! Whenever you play a character with Bodyguard, ready this character. He can't quest for the rest of this turn.",
       trigger: {
         event: "play",
-        timing: "whenever",
         on: {
-          controller: "you",
           cardType: "character",
+          controller: "you",
         },
+        timing: "whenever",
       },
       type: "triggered",
     },

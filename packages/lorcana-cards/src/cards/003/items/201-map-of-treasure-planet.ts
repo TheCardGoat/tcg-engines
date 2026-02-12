@@ -5,8 +5,8 @@ export const mapOfTreasurePlanet: ItemCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "play-card",
         from: "hand",
+        type: "play-card",
       },
       id: "7x0-1",
       text: "KEY TO THE PORTAL {E} — You pay 1 {I} less for the next location you play this turn.",
@@ -14,9 +14,9 @@ export const mapOfTreasurePlanet: ItemCard = {
     },
     {
       effect: {
-        type: "move-to-location",
         character: "CHOSEN_CHARACTER_OF_YOURS",
         cost: "normal",
+        type: "move-to-location",
       },
       id: "7x0-2",
       text: "SHOW THE WAY You pay 1 {I} less to move your characters to a location.",

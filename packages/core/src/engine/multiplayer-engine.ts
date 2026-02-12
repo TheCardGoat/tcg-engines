@@ -1,8 +1,5 @@
 import type { Patch } from "immer";
-import type {
-  GameDefinition,
-  Player,
-} from "../game-definition/game-definition";
+import type { GameDefinition, Player } from "../game-definition/game-definition";
 import type { MoveContext, MoveContextInput } from "../moves/move-system";
 import type { PlayerId } from "../types/branded";
 import type { MoveExecutionResult, RuleEngineOptions } from "./rule-engine";
@@ -16,22 +13,22 @@ export type MultiplayerMode = "server" | "client";
 /**
  * Client State Tracking
  */
-export type ClientState = {
+export interface ClientState {
   clientId: string;
   lastSyncedIndex: number;
   connected: boolean;
-};
+}
 
 /**
  * Patch Broadcast Event
  */
-export type PatchBroadcast = {
+export interface PatchBroadcast {
   patches: Patch[];
   inversePatches: Patch[];
   historyIndex: number;
   moveId: string;
   context: MoveContext;
-};
+}
 
 /**
  * Multiplayer Engine Options
@@ -100,7 +97,7 @@ export class MultiplayerEngine<TState, TMoves extends Record<string, any>> {
   private engine: RuleEngine<TState, TMoves>;
   private mode: MultiplayerMode;
   private readonly options: MultiplayerEngineOptions;
-  private clients: Map<string, ClientState> = new Map();
+  private clients = new Map<string, ClientState>();
 
   constructor(
     gameDefinition: GameDefinition<TState, TMoves>,
@@ -112,8 +109,8 @@ export class MultiplayerEngine<TState, TMoves extends Record<string, any>> {
 
     // Create underlying RuleEngine
     this.engine = new RuleEngine(gameDefinition, players, {
-      seed: options.seed,
       initialPatches: options.initialPatches,
+      seed: options.seed,
     });
   }
 
@@ -128,10 +125,7 @@ export class MultiplayerEngine<TState, TMoves extends Record<string, any>> {
    * @returns Move execution result
    * @throws Error if called on client
    */
-  executeMove(
-    moveId: string,
-    contextInput: MoveContextInput,
-  ): MoveExecutionResult {
+  executeMove(moveId: string, contextInput: MoveContextInput): MoveExecutionResult {
     if (this.mode !== "server") {
       throw new Error("Only server can execute moves");
     }
@@ -151,11 +145,11 @@ export class MultiplayerEngine<TState, TMoves extends Record<string, any>> {
     if (this.options.onPatchBroadcast) {
       const historyIndex = this.engine.getHistory().length - 1;
       this.options.onPatchBroadcast({
-        patches: result.patches,
-        inversePatches: result.inversePatches,
-        historyIndex,
-        moveId,
         context: contextInput as MoveContext,
+        historyIndex,
+        inversePatches: result.inversePatches,
+        moveId,
+        patches: result.patches,
       });
     }
 
@@ -216,8 +210,8 @@ export class MultiplayerEngine<TState, TMoves extends Record<string, any>> {
 
     this.clients.set(clientId, {
       clientId,
-      lastSyncedIndex,
       connected: true,
+      lastSyncedIndex,
     });
   }
 
@@ -286,7 +280,7 @@ export class MultiplayerEngine<TState, TMoves extends Record<string, any>> {
       throw new Error("Only server can get all clients");
     }
 
-    return Array.from(this.clients.values());
+    return [...this.clients.values()];
   }
 
   /**

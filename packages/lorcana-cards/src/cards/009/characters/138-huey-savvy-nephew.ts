@@ -10,24 +10,24 @@ export const hueySavvyNephew: CharacterCard = {
     },
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you have characters named Dewey and Louie in play",
+          type: "if",
         },
         then: {
-          type: "draw",
           amount: 3,
           target: "CONTROLLER",
+          type: "draw",
         },
+        type: "conditional",
       },
       id: "aka-2",
       name: "THREE NEPHEWS",
       text: "THREE NEPHEWS Whenever this character quests, if you have characters named Dewey and Louie in play, you may draw 3 cards.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

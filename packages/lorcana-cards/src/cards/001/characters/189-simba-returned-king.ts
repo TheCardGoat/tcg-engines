@@ -11,10 +11,10 @@ export const simbaReturnedKing: CharacterCard = {
     },
     {
       effect: {
-        type: "gain-keyword",
+        duration: "this-turn",
         keyword: "Evasive",
         target: "SELF",
-        duration: "this-turn",
+        type: "gain-keyword",
       },
       id: "nj8-2",
       name: "POUNCE",

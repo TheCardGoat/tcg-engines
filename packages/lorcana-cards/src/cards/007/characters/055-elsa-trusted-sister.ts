@@ -4,23 +4,23 @@ export const elsaTrustedSister: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you have a character named Anna in play",
+          type: "if",
         },
         then: {
-          type: "gain-lore",
           amount: 1,
+          type: "gain-lore",
         },
+        type: "conditional",
       },
       id: "yr0-1",
       name: "WHAT DO WE DO NOW?",
       text: "WHAT DO WE DO NOW? Whenever this character quests, if you have a character named Anna in play, gain 1 lore.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

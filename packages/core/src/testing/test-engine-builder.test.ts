@@ -18,15 +18,15 @@ import { createTestPlayers } from "./test-player-builder";
  * - Engine is properly initialized and functional
  */
 
-type SimpleGameState = {
-  players: Array<{ id: string; name: string; score: number }>;
+interface SimpleGameState {
+  players: { id: string; name: string; score: number }[];
   currentPlayer: number;
-};
+}
 
-type SimpleMoves = {
+interface SimpleMoves {
   incrementScore: Record<string, never>;
   pass: Record<string, never>;
-};
+}
 
 describe("createTestEngine", () => {
   describe("Basic Functionality", () => {
@@ -42,23 +42,22 @@ describe("createTestEngine", () => {
         },
         pass: {
           reducer: (draft: SimpleGameState) => {
-            draft.currentPlayer =
-              (draft.currentPlayer + 1) % draft.players.length;
+            draft.currentPlayer = (draft.currentPlayer + 1) % draft.players.length;
           },
         },
       };
 
       const definition: GameDefinition<SimpleGameState, SimpleMoves> = {
+        moves,
         name: "Test Game",
         setup: (players) => ({
+          currentPlayer: 0,
           players: players.map((p) => ({
             id: p.id,
             name: p.name || "Player",
             score: 0,
           })),
-          currentPlayer: 0,
         }),
-        moves,
       };
 
       const engine = createTestEngine(definition);
@@ -80,16 +79,16 @@ describe("createTestEngine", () => {
       };
 
       const definition: GameDefinition<SimpleGameState, SimpleMoves> = {
+        moves,
         name: "Test Game",
         setup: (players) => ({
+          currentPlayer: 0,
           players: players.map((p) => ({
             id: p.id,
             name: p.name || "Player",
             score: 0,
           })),
-          currentPlayer: 0,
         }),
-        moves,
       };
 
       const customPlayers = createTestPlayers(3, ["Alice", "Bob", "Charlie"]);
@@ -109,16 +108,16 @@ describe("createTestEngine", () => {
       };
 
       const definition: GameDefinition<SimpleGameState, SimpleMoves> = {
+        moves,
         name: "Test Game",
         setup: (players) => ({
+          currentPlayer: 0,
           players: players.map((p) => ({
             id: p.id,
             name: p.name || "Player",
             score: 0,
           })),
-          currentPlayer: 0,
         }),
-        moves,
       };
 
       const engine = createTestEngine(definition, undefined, {
@@ -146,23 +145,23 @@ describe("createTestEngine", () => {
       };
 
       const definition: GameDefinition<SimpleGameState, SimpleMoves> = {
+        moves,
         name: "Test Game",
         setup: (players) => ({
+          currentPlayer: 0,
           players: players.map((p) => ({
             id: p.id,
             name: p.name || "Player",
             score: 0,
           })),
-          currentPlayer: 0,
         }),
-        moves,
       };
 
       const engine = createTestEngine(definition);
 
       const result = engine.executeMove("incrementScore", {
-        playerId: createPlayerId("test-p1"),
         params: {},
+        playerId: createPlayerId("test-p1"),
       });
 
       expect(result.success).toBe(true);
@@ -185,27 +184,27 @@ describe("createTestEngine", () => {
       };
 
       const definition: GameDefinition<SimpleGameState, SimpleMoves> = {
+        moves,
         name: "Test Game",
         setup: (players) => ({
+          currentPlayer: 0,
           players: players.map((p) => ({
             id: p.id,
             name: p.name || "Player",
             score: 0,
           })),
-          currentPlayer: 0,
         }),
-        moves,
       };
 
       const engine = createTestEngine(definition);
 
       engine.executeMove("incrementScore", {
-        playerId: createPlayerId("test-p1"),
         params: {},
+        playerId: createPlayerId("test-p1"),
       });
       engine.executeMove("incrementScore", {
-        playerId: createPlayerId("test-p1"),
         params: {},
+        playerId: createPlayerId("test-p1"),
       });
 
       const history = engine.getHistory();
@@ -226,23 +225,23 @@ describe("createTestEngine", () => {
       };
 
       const definition: GameDefinition<SimpleGameState, SimpleMoves> = {
+        moves,
         name: "Test Game",
         setup: (players) => ({
+          currentPlayer: 0,
           players: players.map((p) => ({
             id: p.id,
             name: p.name || "Player",
             score: 0,
           })),
-          currentPlayer: 0,
         }),
-        moves,
       };
 
       const engine = createTestEngine(definition);
 
       engine.executeMove("incrementScore", {
-        playerId: createPlayerId("test-p1"),
         params: {},
+        playerId: createPlayerId("test-p1"),
       });
       expect(engine.getState().players[0]?.score).toBe(1);
 
@@ -262,16 +261,16 @@ describe("createTestEngine", () => {
       };
 
       const definition: GameDefinition<SimpleGameState, SimpleMoves> = {
+        moves,
         name: "Test Game",
         setup: (players) => ({
+          currentPlayer: 0,
           players: players.map((p) => ({
             id: p.id,
             name: p.name || "Player",
             score: 0,
           })),
-          currentPlayer: 0,
         }),
-        moves,
       };
 
       const engine = createTestEngine(definition, undefined);
@@ -287,16 +286,16 @@ describe("createTestEngine", () => {
       };
 
       const definition: GameDefinition<SimpleGameState, SimpleMoves> = {
+        moves,
         name: "Test Game",
         setup: (players) => ({
+          currentPlayer: 0,
           players: players.map((p) => ({
             id: p.id,
             name: p.name || "Player",
             score: 0,
           })),
-          currentPlayer: 0,
         }),
-        moves,
       };
 
       const engine = createTestEngine(definition, undefined, undefined);
@@ -312,16 +311,16 @@ describe("createTestEngine", () => {
       };
 
       const definition: GameDefinition<SimpleGameState, SimpleMoves> = {
+        moves,
         name: "Test Game",
         setup: (players) => ({
+          currentPlayer: 0,
           players: players.map((p) => ({
             id: p.id,
             name: p.name || "Player",
             score: 0,
           })),
-          currentPlayer: 0,
         }),
-        moves,
       };
 
       const engine = createTestEngine(definition, undefined, {
@@ -340,16 +339,16 @@ describe("createTestEngine", () => {
       };
 
       const definition: GameDefinition<SimpleGameState, SimpleMoves> = {
+        moves,
         name: "Test Game",
         setup: (players) => ({
+          currentPlayer: 0,
           players: players.map((p) => ({
             id: p.id,
             name: p.name || "Player",
             score: 0,
           })),
-          currentPlayer: 0,
         }),
-        moves,
       };
 
       const singlePlayer = createTestPlayers(1, ["Solo"]);
@@ -367,16 +366,16 @@ describe("createTestEngine", () => {
       };
 
       const definition: GameDefinition<SimpleGameState, SimpleMoves> = {
+        moves,
         name: "Test Game",
         setup: (players) => ({
+          currentPlayer: 0,
           players: players.map((p) => ({
             id: p.id,
             name: p.name || "Player",
             score: 0,
           })),
-          currentPlayer: 0,
         }),
-        moves,
       };
 
       const manyPlayers = createTestPlayers(6);

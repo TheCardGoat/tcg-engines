@@ -4,10 +4,10 @@ export const cutToTheChase: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
+        duration: "this-turn",
         keyword: "Rush",
         target: "CHOSEN_CHARACTER",
-        duration: "this-turn",
+        type: "gain-keyword",
       },
       id: "5a0-1",
       text: "Chosen character gains Rush this turn.",

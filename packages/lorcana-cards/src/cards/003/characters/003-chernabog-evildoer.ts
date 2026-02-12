@@ -4,8 +4,8 @@ export const chernabogEvildoer: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "play-card",
         from: "hand",
+        type: "play-card",
       },
       id: "r3g-1",
       text: "THE POWER OF EVIL For each character card in your discard, you pay 1 {I} less to play this character.",
@@ -13,23 +13,23 @@ export const chernabogEvildoer: CharacterCard = {
     },
     {
       effect: {
-        type: "shuffle-into-deck",
+        intoDeck: "owner",
         target: {
-          selector: "all",
+          cardTypes: ["character"],
           count: "all",
           owner: "any",
+          selector: "all",
           zones: ["play"],
-          cardTypes: ["character"],
         },
-        intoDeck: "owner",
+        type: "shuffle-into-deck",
       },
       id: "r3g-2",
       name: "SUMMON THE SPIRITS",
       text: "SUMMON THE SPIRITS When you play this character, shuffle all character cards from your discard into your deck.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

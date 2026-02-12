@@ -5,16 +5,16 @@ export const theQueenDiviner: CharacterCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "that item costs 3 or less",
+          type: "if",
         },
         then: {
-          type: "restriction",
           restriction: "enters-play-exerted",
           target: "SELF",
+          type: "restriction",
         },
+        type: "conditional",
       },
       id: "aeu-1",
       text: "CONSULT THE SPELLBOOK {E} — Look at the top 4 cards of your deck. You may reveal an item card and put it into your hand. If that item costs 3 or less, you may play it for free instead and it enters play exerted. Put the rest on the bottom of your deck in any order.",

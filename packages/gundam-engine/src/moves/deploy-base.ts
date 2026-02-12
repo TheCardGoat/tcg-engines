@@ -68,10 +68,14 @@ export const deployBaseMove: GameMoveDefinition<GundamGameState> = {
     const { playerId } = context;
 
     // Must be in main phase
-    if (state.phase !== "main") return false;
+    if (state.phase !== "main") {
+      return false;
+    }
 
     // Must be current player
-    if (state.currentPlayer !== playerId) return false;
+    if (state.currentPlayer !== playerId) {
+      return false;
+    }
 
     // Get and validate card ID
     let cardId: CardId;
@@ -83,22 +87,32 @@ export const deployBaseMove: GameMoveDefinition<GundamGameState> = {
 
     // Card must be in player's hand
     const hand = state.zones.hand[playerId];
-    if (!(hand && isCardInZone(hand, cardId))) return false;
+    if (!(hand && isCardInZone(hand, cardId))) {
+      return false;
+    }
 
     // Card must be a base card
-    if (!isBaseCard(cardId)) return false;
+    if (!isBaseCard(cardId)) {
+      return false;
+    }
 
     // Check base section capacity (max 1)
     const baseSection = state.zones.baseSection[playerId];
-    if (!baseSection) return false;
+    if (!baseSection) {
+      return false;
+    }
 
     const baseSectionSize = getZoneSize(baseSection);
-    if (baseSectionSize >= 1) return false;
+    if (baseSectionSize >= 1) {
+      return false;
+    }
 
     // Check if player has sufficient resources
     const cost = getCardCost(cardId);
     const activeResources = state.gundam.activeResources[playerId] ?? 0;
-    if (activeResources < cost) return false;
+    if (activeResources < cost) {
+      return false;
+    }
 
     return true;
   },
@@ -118,7 +132,7 @@ export const deployBaseMove: GameMoveDefinition<GundamGameState> = {
 
     if (!(hand && baseSection)) {
       throw new Error(
-        `Missing zones for player ${playerId}: hand=${!!hand}, baseSection=${!!baseSection}`,
+        `Missing zones for player ${playerId}: hand=${Boolean(hand)}, baseSection=${Boolean(baseSection)}`,
       );
     }
 
@@ -138,9 +152,7 @@ export const deployBaseMove: GameMoveDefinition<GundamGameState> = {
     const activeResources = draft.gundam.activeResources[playerId] ?? 0;
 
     if (activeResources < cost) {
-      throw new Error(
-        `Insufficient resources: need ${cost}, have ${activeResources}`,
-      );
+      throw new Error(`Insufficient resources: need ${cost}, have ${activeResources}`);
     }
 
     // Deduct resources
@@ -158,10 +170,10 @@ export const deployBaseMove: GameMoveDefinition<GundamGameState> = {
   },
 
   metadata: {
-    category: "deployment",
-    tags: ["core", "main-phase-action"],
-    description: "Deploy base from hand to base section",
-    canBeUndone: false,
     affectsZones: ["hand", "baseSection"],
+    canBeUndone: false,
+    category: "deployment",
+    description: "Deploy base from hand to base section",
+    tags: ["core", "main-phase-action"],
   },
 };

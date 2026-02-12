@@ -4,24 +4,24 @@ export const jafarHighSultanOfLorcana: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "an Illusion character card is discarded this way",
+          type: "if",
         },
         then: {
-          type: "play-card",
-          from: "hand",
           cost: "free",
+          from: "hand",
+          type: "play-card",
         },
+        type: "conditional",
       },
       id: "mfw-1",
       name: "DARK POWER",
       text: "DARK POWER Whenever this character quests, you may draw a card, then choose and discard a card. If an Illusion character card is discarded this way, you may play that character for free.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

@@ -4,10 +4,10 @@ export const starkeyHooksHenchman: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "lore",
         modifier: 1,
+        stat: "lore",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "187-1",
       name: "AYE AYE, CAPTAIN",

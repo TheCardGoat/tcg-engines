@@ -44,87 +44,87 @@ export const riftboundZones: Record<string, CardZoneConfig> = {
 
   /** Main Deck - 40+ cards, secret, ordered */
   mainDeck: {
-    id: "mainDeck" as ZoneId,
-    name: "Main Deck",
-    visibility: "secret",
-    ordered: true,
     faceDown: true,
+    id: "mainDeck" as ZoneId,
     maxSize: 60,
+    name: "Main Deck",
+    ordered: true,
+    visibility: "secret",
   },
 
   /** Hand - private to owner, unordered */
   hand: {
+    faceDown: false,
     id: "hand" as ZoneId,
     name: "Hand",
-    visibility: "private",
     ordered: false,
-    faceDown: false,
+    visibility: "private",
   },
 
   /** Rune Deck - exactly 12 runes, secret, ordered */
   runeDeck: {
-    id: "runeDeck" as ZoneId,
-    name: "Rune Deck",
-    visibility: "secret",
-    ordered: true,
     faceDown: true,
+    id: "runeDeck" as ZoneId,
     maxSize: 12,
+    name: "Rune Deck",
+    ordered: true,
+    visibility: "secret",
   },
 
   /** Rune Pool - channeled runes, public */
   runePool: {
+    faceDown: false,
     id: "runePool" as ZoneId,
     name: "Rune Pool",
-    visibility: "public",
     ordered: false,
-    faceDown: false,
+    visibility: "public",
   },
 
   /** Base - player's home zone for units and gear */
   base: {
+    faceDown: false,
     id: "base" as ZoneId,
     name: "Base",
-    visibility: "public",
     ordered: false,
-    faceDown: false,
+    visibility: "public",
   },
 
   /** Trash - discard pile, public */
   trash: {
+    faceDown: false,
     id: "trash" as ZoneId,
     name: "Trash",
-    visibility: "public",
     ordered: false,
-    faceDown: false,
+    visibility: "public",
   },
 
   /** Banishment - removed from game, public */
   banishment: {
+    faceDown: false,
     id: "banishment" as ZoneId,
     name: "Banishment",
-    visibility: "public",
     ordered: false,
-    faceDown: false,
+    visibility: "public",
   },
 
   /** Legend Zone - Champion Legend, public, max 1 */
   legendZone: {
-    id: "legendZone" as ZoneId,
-    name: "Legend Zone",
-    visibility: "public",
-    ordered: false,
     faceDown: false,
+    id: "legendZone" as ZoneId,
     maxSize: 1,
+    name: "Legend Zone",
+    ordered: false,
+    visibility: "public",
   },
 
   /** Champion Zone - Chosen Champion before played, public, max 1 */
   championZone: {
-    id: "championZone" as ZoneId,
-    name: "Champion Zone",
-    visibility: "public",
-    ordered: false,
     faceDown: false,
+    id: "championZone" as ZoneId,
     maxSize: 1,
+    name: "Champion Zone",
+    ordered: false,
+    visibility: "public",
   },
 
   // ============================================
@@ -133,21 +133,21 @@ export const riftboundZones: Record<string, CardZoneConfig> = {
 
   /** Battlefield Row - holds battlefield cards, ordered, max 3 for 1v1 */
   battlefieldRow: {
-    id: "battlefieldRow" as ZoneId,
-    name: "Battlefield Row",
-    visibility: "public",
-    ordered: true,
     faceDown: false,
+    id: "battlefieldRow" as ZoneId,
     maxSize: 3,
+    name: "Battlefield Row",
+    ordered: true,
+    visibility: "public",
   },
 
   /** The Chain - spells and abilities being resolved, LIFO */
   chain: {
+    faceDown: false,
     id: "chain" as ZoneId,
     name: "The Chain",
-    visibility: "public",
     ordered: true,
-    faceDown: false,
+    visibility: "public",
   },
 };
 
@@ -161,11 +161,11 @@ export const riftboundZones: Record<string, CardZoneConfig> = {
  */
 export function createBattlefieldZone(battlefieldId: CardId): CardZoneConfig {
   return {
+    faceDown: false,
     id: `battlefield-${battlefieldId}` as ZoneId,
     name: `Battlefield ${battlefieldId}`,
-    visibility: "public",
     ordered: false,
-    faceDown: false,
+    visibility: "public",
   };
 }
 
@@ -180,12 +180,12 @@ export function createBattlefieldZone(battlefieldId: CardId): CardZoneConfig {
  */
 export function createFacedownZone(battlefieldId: CardId): CardZoneConfig {
   return {
-    id: `facedown-${battlefieldId}` as ZoneId,
-    name: `Facedown at ${battlefieldId}`,
-    visibility: "private",
-    ordered: false,
     faceDown: true,
+    id: `facedown-${battlefieldId}` as ZoneId,
     maxSize: 1,
+    name: `Facedown at ${battlefieldId}`,
+    ordered: false,
+    visibility: "private",
   };
 }
 

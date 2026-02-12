@@ -4,20 +4,20 @@ export const jafarPowerhungryVizier: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "deal-damage",
         amount: 1,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "deal-damage",
       },
       id: "1w6-1",
       name: "YOU WILL BE PAID WHEN THE TIME COMES",
       text: "YOU WILL BE PAID WHEN THE TIME COMES During your turn, whenever a card is put into your inkwell, deal 1 damage to chosen character.",
-      trigger: { event: "play", timing: "when", on: "SELF" },
+      trigger: { event: "play", on: "SELF", timing: "when" },
       type: "triggered",
     },
   ],

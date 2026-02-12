@@ -4,9 +4,9 @@ export const theWardrobePerceptiveFriend: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "draw",
         amount: 2,
         target: "CONTROLLER",
+        type: "draw",
       },
       id: "s0r-1",
       text: "I HAVE JUST THE THING! , Choose and discard an item card — Draw 2 cards.",

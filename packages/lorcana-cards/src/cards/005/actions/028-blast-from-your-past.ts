@@ -4,14 +4,14 @@ export const blastFromYourPast: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "return-to-hand",
         target: {
-          selector: "all",
+          cardTypes: ["character"],
           count: "all",
           owner: "any",
+          selector: "all",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "return-to-hand",
       },
       id: "1tj-1",
       text: "Name a card. Return all character cards with that name from your discard to your hand.",

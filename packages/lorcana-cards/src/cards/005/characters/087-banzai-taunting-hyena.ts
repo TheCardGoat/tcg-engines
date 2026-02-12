@@ -4,9 +4,8 @@ export const banzaiTauntingHyena: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "exert",
           target: {
             selector: "chosen",
             count: 1,
@@ -14,8 +13,9 @@ export const banzaiTauntingHyena: CharacterCard = {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "exert",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "16q-1",
       text: "HERE KITTY, KITTY, KITTY When you play this character, you may exert chosen damaged character.",

@@ -7,9 +7,9 @@ export const amethystChromicon: ItemCard = {
         exert: true,
       },
       effect: {
-        type: "draw",
         amount: 1,
         target: "EACH_PLAYER",
+        type: "draw",
       },
       id: "1nk-1",
       text: "AMETHYST LIGHT {E} — Each player may draw a card.",

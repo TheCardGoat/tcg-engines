@@ -4,8 +4,8 @@ export const beastWounded: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "play-card",
         from: "hand",
+        type: "play-card",
       },
       id: "hmw-1",
       name: "THAT HURTS!",

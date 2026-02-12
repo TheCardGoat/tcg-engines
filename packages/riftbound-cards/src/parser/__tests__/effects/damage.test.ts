@@ -79,8 +79,8 @@ describe("Effect: Damage", () => {
         expect.objectContaining({
           effect: expect.objectContaining({
             amount: expect.objectContaining({
-              type: "might",
               of: "self",
+              type: "might",
             }),
             type: "damage",
           }),

@@ -4,19 +4,19 @@ export const gustavTheGiantTerrorOfTheKingdom: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "restriction",
             restriction: "enters-play-exerted",
             target: "SELF",
+            type: "restriction",
           },
           {
-            type: "restriction",
             restriction: "cant-ready",
             target: "SELF",
+            type: "restriction",
           },
         ],
+        type: "sequence",
       },
       id: "5zz-1",
       name: "ALL TIED UP",
@@ -25,9 +25,8 @@ export const gustavTheGiantTerrorOfTheKingdom: CharacterCard = {
     },
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "ready",
           target: {
             selector: "self",
             count: 1,
@@ -35,16 +34,17 @@ export const gustavTheGiantTerrorOfTheKingdom: CharacterCard = {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "ready",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "5zz-2",
       name: "BREAK FREE",
       text: "BREAK FREE During your turn, whenever one of your other characters banishes another character in a challenge, you may ready this character.",
       trigger: {
         event: "banish",
-        timing: "whenever",
         on: "YOUR_OTHER_CHARACTERS",
+        timing: "whenever",
       },
       type: "triggered",
     },

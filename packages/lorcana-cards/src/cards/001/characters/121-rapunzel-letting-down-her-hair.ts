@@ -4,9 +4,9 @@ export const rapunzelLettingDownHerHair: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "lose-lore",
         amount: 1,
         target: "EACH_OPPONENT",
+        type: "lose-lore",
       },
       id: "eqs-1",
       text: "**TANGLE** When you play this character, each opponent loses 1 lore.",

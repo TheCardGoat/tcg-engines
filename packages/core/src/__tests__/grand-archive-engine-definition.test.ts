@@ -40,7 +40,7 @@ describe("Grand Archive Game - Refactored Engine Features", () => {
 
   it("should have proper zone configuration", () => {
     const gameDefinition = createMockGrandArchiveGame();
-    const zones = gameDefinition.zones;
+    const { zones } = gameDefinition;
 
     // Verify Grand Archive dual-deck system
     expect(zones?.mainDeck).toBeDefined();
@@ -80,7 +80,7 @@ describe("Grand Archive Game - Refactored Engine Features", () => {
 
   it("should use flow context in phase hooks", () => {
     const gameDefinition = createMockGrandArchiveGame();
-    const flow = gameDefinition.flow;
+    const { flow } = gameDefinition;
 
     // ✅ NEW: Phase hooks use context.getCurrentPlayer()
     expect(flow).toBeDefined();
@@ -95,7 +95,7 @@ describe("Grand Archive Game - Refactored Engine Features", () => {
   it("should use tracker system for materialize action", () => {
     const gameDefinition = createMockGrandArchiveGame();
 
-    const materializeCard = gameDefinition.moves.materializeCard;
+    const { materializeCard } = gameDefinition.moves;
     expect(materializeCard.condition).toBeDefined();
     expect(materializeCard.reducer).toBeDefined();
 

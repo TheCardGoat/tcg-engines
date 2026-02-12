@@ -6,8 +6,8 @@ describe("Target Definition Types", () => {
   describe("TargetDefinition", () => {
     it("should define target with filter and count", () => {
       const target: TargetDefinition = {
-        filter: { zone: createZoneId("play") },
         count: 1,
+        filter: { zone: createZoneId("play") },
       };
 
       expect(target.filter).toBeDefined();
@@ -16,17 +16,17 @@ describe("Target Definition Types", () => {
 
     it("should support optional targets with min/max count", () => {
       const target: TargetDefinition = {
+        count: { max: 3, min: 0 },
         filter: { type: "creature" },
-        count: { min: 0, max: 3 },
       };
 
-      expect(target.count).toEqual({ min: 0, max: 3 });
+      expect(target.count).toEqual({ max: 3, min: 0 });
     });
 
     it("should support required targets with exact count", () => {
       const target: TargetDefinition = {
-        filter: { zone: createZoneId("hand") },
         count: 2,
+        filter: { zone: createZoneId("hand") },
       };
 
       expect(target.count).toBe(2);
@@ -34,8 +34,8 @@ describe("Target Definition Types", () => {
 
     it("should support targeting restrictions", () => {
       const target: TargetDefinition = {
-        filter: { type: "creature" },
         count: 1,
+        filter: { type: "creature" },
         restrictions: ["not-self"],
       };
 
@@ -44,8 +44,8 @@ describe("Target Definition Types", () => {
 
     it("should support multiple restrictions", () => {
       const target: TargetDefinition = {
-        filter: { zone: createZoneId("play") },
         count: 2,
+        filter: { zone: createZoneId("play") },
         restrictions: ["not-self", "different-targets"],
       };
 
@@ -54,8 +54,8 @@ describe("Target Definition Types", () => {
 
     it("should work without restrictions", () => {
       const target: TargetDefinition = {
-        filter: { type: "land" },
         count: 1,
+        filter: { type: "land" },
       };
 
       expect(target.restrictions).toBeUndefined();
@@ -92,24 +92,24 @@ describe("Target Definition Types", () => {
 
     it("should support range with min and max", () => {
       const count: number | { min: number; max: number } = {
-        min: 1,
         max: 3,
+        min: 1,
       };
-      expect(count).toEqual({ min: 1, max: 3 });
+      expect(count).toEqual({ max: 3, min: 1 });
     });
 
     it("should support optional targets with min 0", () => {
       const count: number | { min: number; max: number } = {
-        min: 0,
         max: 5,
+        min: 0,
       };
       expect(count.min).toBe(0);
     });
 
     it("should support unbounded max targets", () => {
       const count: number | { min: number; max: number } = {
-        min: 1,
         max: Number.POSITIVE_INFINITY,
+        min: 1,
       };
       expect(count.max).toBe(Number.POSITIVE_INFINITY);
     });
@@ -119,12 +119,12 @@ describe("Target Definition Types", () => {
     it("should support multiple target groups", () => {
       const targets: TargetDefinition[] = [
         {
-          filter: { type: "creature" },
           count: 1,
+          filter: { type: "creature" },
         },
         {
-          filter: { type: "player" },
           count: 1,
+          filter: { type: "player" },
         },
       ];
 
@@ -136,12 +136,12 @@ describe("Target Definition Types", () => {
     it("should support optional and required targets together", () => {
       const targets: TargetDefinition[] = [
         {
-          filter: { type: "creature" },
           count: 1,
+          filter: { type: "creature" },
         },
         {
+          count: { max: 2, min: 0 },
           filter: { type: "land" },
-          count: { min: 0, max: 2 },
         },
       ];
 
@@ -154,15 +154,15 @@ describe("Target Definition Types", () => {
     it("should support targets with complex filters", () => {
       const playZone = createZoneId("play");
       const target: TargetDefinition = {
+        count: { max: 3, min: 1 },
         filter: {
-          zone: playZone,
-          type: "creature",
           properties: {
             basePower: { gte: 3 },
           },
           tapped: false,
+          type: "creature",
+          zone: playZone,
         },
-        count: { min: 1, max: 3 },
         restrictions: ["not-self"],
       };
 
@@ -170,16 +170,16 @@ describe("Target Definition Types", () => {
       expect(target.filter.type).toBe("creature");
       expect(target.filter.properties?.basePower).toEqual({ gte: 3 });
       expect(target.filter.tapped).toBe(false);
-      expect(target.count).toEqual({ min: 1, max: 3 });
+      expect(target.count).toEqual({ max: 3, min: 1 });
       expect(target.restrictions).toContain("not-self");
     });
 
     it("should support targets with composite filters", () => {
       const target: TargetDefinition = {
+        count: 2,
         filter: {
           or: [{ type: "creature" }, { type: "artifact" }],
         },
-        count: 2,
         restrictions: ["different-targets"],
       };
 
@@ -192,10 +192,10 @@ describe("Target Definition Types", () => {
   describe("Real-World Examples", () => {
     it("should model Lightning Bolt (1 target, any creature or player)", () => {
       const target: TargetDefinition = {
+        count: 1,
         filter: {
           or: [{ type: "creature" }, { type: "player" }],
         },
-        count: 1,
       };
 
       expect(target.count).toBe(1);
@@ -211,16 +211,16 @@ describe("Target Definition Types", () => {
     it("should model Fireball (1 required target, additional optional)", () => {
       const targets: TargetDefinition[] = [
         {
+          count: 1,
           filter: {
             or: [{ type: "creature" }, { type: "player" }],
           },
-          count: 1,
         },
         {
+          count: { max: Number.POSITIVE_INFINITY, min: 0 },
           filter: {
             or: [{ type: "creature" }, { type: "player" }],
           },
-          count: { min: 0, max: Number.POSITIVE_INFINITY },
           restrictions: ["different-targets"],
         },
       ];
@@ -228,19 +228,19 @@ describe("Target Definition Types", () => {
       expect(targets).toHaveLength(2);
       expect(targets[0].count).toBe(1);
       expect(targets[1].count).toEqual({
-        min: 0,
         max: Number.POSITIVE_INFINITY,
+        min: 0,
       });
     });
 
     it("should model Pump spell (target creature you control)", () => {
       const player = createPlayerId("player-1");
       const target: TargetDefinition = {
-        filter: {
-          type: "creature",
-          controller: player,
-        },
         count: 1,
+        filter: {
+          controller: player,
+          type: "creature",
+        },
       };
 
       expect(target.filter.controller).toBe(player);
@@ -248,8 +248,8 @@ describe("Target Definition Types", () => {
 
     it("should model Fight spell (2 creatures, can't target same)", () => {
       const target: TargetDefinition = {
-        filter: { type: "creature" },
         count: 2,
+        filter: { type: "creature" },
         restrictions: ["different-targets"],
       };
 
@@ -260,10 +260,10 @@ describe("Target Definition Types", () => {
     it("should model Act of Treason (opponent's creature)", () => {
       const _player = createPlayerId("player-1");
       const target: TargetDefinition = {
+        count: 1,
         filter: {
           type: "creature",
         },
-        count: 1,
         restrictions: ["not-controller"],
       };
 

@@ -4,20 +4,20 @@ export const dellasMoonLullaby: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "modify-stat",
-            stat: "strength",
             modifier: -2,
+            stat: "strength",
             target: "CHOSEN_CHARACTER",
+            type: "modify-stat",
           },
           {
-            type: "draw",
             amount: 1,
             target: "CONTROLLER",
+            type: "draw",
           },
         ],
+        type: "sequence",
       },
       id: "154-1",
       text: "Chosen opposing character gets -2 {S} until the start of your next turn. Draw a card.",

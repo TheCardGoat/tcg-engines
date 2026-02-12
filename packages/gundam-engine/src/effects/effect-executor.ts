@@ -139,12 +139,9 @@ export interface ResolvedTarget {
 /**
  * Resolve an effect target to concrete card IDs and players
  */
-function resolveTarget(
-  target: EffectTarget,
-  context: EffectContext,
-): ResolvedTarget {
-  const state = context.state;
-  const sourcePlayer = context.sourcePlayer;
+function resolveTarget(target: EffectTarget, context: EffectContext): ResolvedTarget {
+  const { state } = context;
+  const { sourcePlayer } = context;
   const opponent = state.players.find((p) => p !== sourcePlayer);
 
   // Handle simple string targets
@@ -154,21 +151,25 @@ function resolveTarget(
       case "this-card":
       case "this-unit":
       case "this-base":
-      case "this-pilot":
+      case "this-pilot": {
         return context.sourceCard
           ? { cardIds: [context.sourceCard], players: [], zones: [] }
           : { cardIds: [], players: [], zones: [] };
+      }
 
-      case "self":
+      case "self": {
         return { cardIds: [], players: [sourcePlayer], zones: [] };
+      }
 
-      case "opponent":
+      case "opponent": {
         return opponent
           ? { cardIds: [], players: [opponent], zones: [] }
           : { cardIds: [], players: [], zones: [] };
+      }
 
-      case "each-player":
+      case "each-player": {
         return { cardIds: [], players: state.players, zones: [] };
+      }
 
       case "each-unit": {
         // Return all units in battle areas
@@ -183,7 +184,9 @@ function resolveTarget(
       }
 
       case "each-opponent-unit": {
-        if (!opponent) return { cardIds: [], players: [], zones: [] };
+        if (!opponent) {
+          return { cardIds: [], players: [], zones: [] };
+        }
         const opponentUnits = state.zones.battleArea[opponent]?.cards ?? [];
         return { cardIds: opponentUnits, players: [], zones: [] };
       }
@@ -193,28 +196,31 @@ function resolveTarget(
         return { cardIds: friendlyUnits, players: [], zones: [] };
       }
 
-      default:
+      default: {
         return { cardIds: [], players: [], zones: [] };
+      }
     }
   }
 
   // Handle selector-based targets
   if ("selector" in target) {
-    const selector = target.selector;
+    const { selector } = target;
     const results: CardId[] = [];
 
     // Determine which player(s) to search
     const playersToSearch =
       selector.controller === "self"
         ? [sourcePlayer]
-        : selector.controller === "opponent" && opponent
+        : (selector.controller === "opponent" && opponent
           ? [opponent]
-          : state.players;
+          : state.players);
 
     // Search each player's battle area
     for (const player of playersToSearch) {
       const battleArea = state.zones.battleArea[player];
-      if (!battleArea?.cards) continue;
+      if (!battleArea?.cards) {
+        continue;
+      }
 
       for (const cardId of battleArea.cards) {
         // Check each selector condition
@@ -242,10 +248,7 @@ function resolveTarget(
 /**
  * Resolve an amount expression to a concrete number
  */
-function resolveAmount(
-  amount: number | AmountExpression,
-  context: EffectContext,
-): number {
+function resolveAmount(amount: number | AmountExpression, context: EffectContext): number {
   if (typeof amount === "number") {
     return amount;
   }
@@ -330,9 +333,7 @@ function resolveAmount(
       amount.shields === "self"
         ? context.sourcePlayer
         : getOpponent(context.state, context.sourcePlayer);
-    return player
-      ? (context.state.zones.shieldSection[player]?.cards.length ?? 0)
-      : 0;
+    return player ? (context.state.zones.shieldSection[player]?.cards.length ?? 0) : 0;
   }
 
   if ("variable" in amount) {
@@ -349,20 +350,15 @@ function resolveAmount(
 /**
  * Evaluate a condition to true/false
  */
-function evaluateCondition(
-  condition: Condition,
-  context: EffectContext,
-): boolean {
+function evaluateCondition(condition: Condition, context: EffectContext): boolean {
   if ("playerHas" in condition) {
-    const playerHas = condition.playerHas;
+    const { playerHas } = condition;
     if (playerHas?.resources !== undefined) {
-      const resources =
-        context.state.gundam.activeResources[context.sourcePlayer] ?? 0;
+      const resources = context.state.gundam.activeResources[context.sourcePlayer] ?? 0;
       return resources >= playerHas.resources;
     }
     if (playerHas?.cardsInHand !== undefined) {
-      const handSize =
-        context.state.zones.hand[context.sourcePlayer]?.cards.length ?? 0;
+      const handSize = context.state.zones.hand[context.sourcePlayer]?.cards.length ?? 0;
       return handSize >= playerHas.cardsInHand;
     }
   }
@@ -373,7 +369,7 @@ function evaluateCondition(
   }
 
   if ("cardCount" in condition) {
-    const cardCount = condition.cardCount;
+    const { cardCount } = condition;
     if (cardCount) {
       const zone = context.state.zones[cardCount.zone]?.[context.sourcePlayer];
       const count = zone?.cards.length ?? 0;
@@ -390,7 +386,7 @@ function evaluateCondition(
   }
 
   if ("turn" in condition) {
-    const turn = condition.turn;
+    const { turn } = condition;
     if (typeof turn === "number") {
       return context.state.turn === turn;
     }
@@ -425,10 +421,7 @@ function evaluateCondition(
 /**
  * Execute an effect and return the result
  */
-export function executeEffect(
-  effect: Effect,
-  context: EffectContext,
-): EffectResult {
+export function executeEffect(effect: Effect, context: EffectContext): EffectResult {
   const events: EffectEvent[] = [];
 
   try {
@@ -436,18 +429,18 @@ export function executeEffect(
     const result = executor(effect, context, events);
 
     return {
-      state: result,
-      variables: context.variables,
       events,
+      state: result,
       success: true,
+      variables: context.variables,
     };
   } catch (error) {
     return {
-      state: context.state,
-      variables: context.variables,
-      events,
-      success: false,
       error: error instanceof Error ? error.message : String(error),
+      events,
+      state: context.state,
+      success: false,
+      variables: context.variables,
     };
   }
 }
@@ -570,8 +563,8 @@ function executeDrawEffect(
   // This would integrate with the card operations
 
   events.push({
-    type: "card-drawn",
     data: { amount, players },
+    type: "card-drawn",
   });
 
   return context.state;
@@ -588,16 +581,18 @@ function executeDiscardEffect(
   const player =
     discardEffect.player === "self"
       ? context.sourcePlayer
-      : discardEffect.player === "opponent"
+      : (discardEffect.player === "opponent"
         ? getOpponent(context.state, context.sourcePlayer)
-        : context.sourcePlayer;
+        : context.sourcePlayer);
 
-  if (!player) return context.state;
+  if (!player) {
+    return context.state;
+  }
 
   // Would discard cards from hand
   events.push({
-    type: "card-discarded",
     data: { amount, player },
+    type: "card-discarded",
   });
 
   return context.state;
@@ -626,8 +621,8 @@ function executeReturnToHandEffect(
 
   // Would move cards to hand
   events.push({
-    type: "card-played",
     data: { cardIds: target.cardIds, destination: "hand" },
+    type: "card-played",
   });
 
   return context.state;
@@ -643,8 +638,8 @@ function executePlayFromEffect(
 
   // Would play card from zone
   events.push({
-    type: "card-played",
     data: { cardIds: target.cardIds, from: playEffect.from },
+    type: "card-played",
   });
 
   return context.state;
@@ -660,8 +655,8 @@ function executeSendToTrashEffect(
 
   // Would send cards to trash
   events.push({
-    type: "card-destroyed",
     data: { cardIds: target.cardIds },
+    type: "card-destroyed",
   });
 
   return context.state;
@@ -728,8 +723,8 @@ function executeDamageEffect(
 
   // Would apply damage to targets
   events.push({
-    type: "damage-dealt",
     data: { amount, cardIds: target.cardIds },
+    type: "damage-dealt",
   });
 
   return context.state;
@@ -741,10 +736,7 @@ function executeHealEffect(
   events: EffectEvent[],
 ): GundamGameState {
   const healEffect = effect as Extract<Effect, { type: "heal" }>;
-  const amount =
-    healEffect.amount === "all"
-      ? "all"
-      : resolveAmount(healEffect.amount, context);
+  const amount = healEffect.amount === "all" ? "all" : resolveAmount(healEffect.amount, context);
   const target = resolveTarget(healEffect.target, context);
 
   // Would remove damage from targets
@@ -761,8 +753,8 @@ function executeDestroyEffect(
 
   // Would destroy targets (send to trash)
   events.push({
-    type: "card-destroyed",
     data: { cardIds: target.cardIds },
+    type: "card-destroyed",
   });
 
   return context.state;
@@ -841,8 +833,8 @@ function executeModifyAPEffect(
   const target = resolveTarget(modifyEffect.target, context);
 
   events.push({
+    data: { amount, cardIds: target.cardIds, stat: "ap" },
     type: "stat-modified",
-    data: { stat: "ap", amount, cardIds: target.cardIds },
   });
 
   return context.state;
@@ -858,8 +850,8 @@ function executeModifyHPEffect(
   const target = resolveTarget(modifyEffect.target, context);
 
   events.push({
+    data: { amount, cardIds: target.cardIds, stat: "hp" },
     type: "stat-modified",
-    data: { stat: "hp", amount, cardIds: target.cardIds },
   });
 
   return context.state;
@@ -908,8 +900,8 @@ function executeGainControlEffect(
   const target = resolveTarget(gainEffect.target, context);
 
   events.push({
-    type: "control-changed",
     data: { cardIds: target.cardIds },
+    type: "control-changed",
   });
 
   return context.state;
@@ -929,11 +921,13 @@ function executeAddResourcesEffect(
   const player =
     addEffect.player === "self"
       ? context.sourcePlayer
-      : addEffect.player === "opponent"
+      : (addEffect.player === "opponent"
         ? getOpponent(context.state, context.sourcePlayer)
-        : context.sourcePlayer;
+        : context.sourcePlayer);
 
-  if (!player) return context.state;
+  if (!player) {
+    return context.state;
+  }
 
   // Would add resources
   return context.state;
@@ -973,8 +967,8 @@ function executePairPilotEffect(
   const unit = resolveTarget(pairEffect.unit, context);
 
   events.push({
-    type: "pilot-paired",
     data: { pilotIds: pilot.cardIds, unitIds: unit.cardIds },
+    type: "pilot-paired",
   });
 
   return context.state;
@@ -989,8 +983,8 @@ function executeUnpairPilotEffect(
   const target = resolveTarget(unpairEffect.target, context);
 
   events.push({
-    type: "pilot-unpaired",
     data: { cardIds: target.cardIds },
+    type: "pilot-unpaired",
   });
 
   return context.state;
@@ -1029,15 +1023,17 @@ function executeAddShieldEffect(
   const player =
     addEffect.player === "self"
       ? context.sourcePlayer
-      : addEffect.player === "opponent"
+      : (addEffect.player === "opponent"
         ? getOpponent(context.state, context.sourcePlayer)
-        : context.sourcePlayer;
+        : context.sourcePlayer);
 
-  if (!player) return context.state;
+  if (!player) {
+    return context.state;
+  }
 
   events.push({
-    type: "shield-added",
     data: { amount: addEffect.amount, player },
+    type: "shield-added",
   });
 
   return context.state;
@@ -1052,8 +1048,8 @@ function executeBreakShieldEffect(
   const target = resolveTarget(breakEffect.target, context);
 
   events.push({
-    type: "shield-broken",
     data: { cardIds: target.cardIds },
+    type: "shield-broken",
   });
 
   return context.state;
@@ -1072,8 +1068,8 @@ function executeGrantKeywordEffect(
   const target = resolveTarget(grantEffect.target, context);
 
   events.push({
+    data: { cardIds: target.cardIds, keyword: grantEffect.keyword },
     type: "keyword-granted",
-    data: { keyword: grantEffect.keyword, cardIds: target.cardIds },
   });
 
   return context.state;
@@ -1088,8 +1084,8 @@ function executeLoseKeywordEffect(
   const target = resolveTarget(loseEffect.target, context);
 
   events.push({
+    data: { cardIds: target.cardIds, keyword: loseEffect.keyword },
     type: "keyword-lost",
-    data: { keyword: loseEffect.keyword, cardIds: target.cardIds },
   });
 
   return context.state;
@@ -1107,8 +1103,8 @@ function executeCreateTokenEffect(
   const createEffect = effect as Extract<Effect, { type: "create-token" }>;
 
   events.push({
-    type: "token-created",
     data: { token: createEffect.token },
+    type: "token-created",
   });
 
   return context.state;
@@ -1124,11 +1120,11 @@ function executeSequenceEffect(
   events: EffectEvent[],
 ): GundamGameState {
   const sequenceEffect = effect as Extract<Effect, { type: "sequence" }>;
-  let state = context.state;
+  let { state } = context;
 
   for (const subEffect of sequenceEffect.effects) {
     const result = executeEffect(subEffect, { ...context, state });
-    state = result.state;
+    ({ state } = result);
     events.push(...result.events);
 
     if (!result.success) {
@@ -1159,9 +1155,7 @@ function executeConditionalEffect(
   const conditionalEffect = effect as Extract<Effect, { type: "conditional" }>;
   const conditionMet = evaluateCondition(conditionalEffect.condition, context);
 
-  const effectToExecute = conditionMet
-    ? conditionalEffect.then
-    : conditionalEffect.else;
+  const effectToExecute = conditionMet ? conditionalEffect.then : conditionalEffect.else;
 
   if (effectToExecute) {
     return executeEffect(effectToExecute, context).state;
@@ -1188,15 +1182,15 @@ function executeForEachEffect(
 ): GundamGameState {
   const forEachEffect = effect as Extract<Effect, { type: "for-each" }>;
   const target = resolveTarget(forEachEffect.target, context);
-  let state = context.state;
+  let { state } = context;
 
   for (const cardId of target.cardIds) {
     const result = executeEffect(forEachEffect.effect, {
       ...context,
-      state,
       sourceCard: cardId,
+      state,
     });
-    state = result.state;
+    ({ state } = result);
     events.push(...result.events);
   }
 
@@ -1210,11 +1204,11 @@ function executeDoTimesEffect(
 ): GundamGameState {
   const doTimesEffect = effect as Extract<Effect, { type: "do-times" }>;
   const times = resolveAmount(doTimesEffect.times, context);
-  let state = context.state;
+  let { state } = context;
 
   for (let i = 0; i < times; i++) {
     const result = executeEffect(doTimesEffect.effect, { ...context, state });
-    state = result.state;
+    ({ state } = result);
     events.push(...result.events);
   }
 
@@ -1227,7 +1221,7 @@ function executeRepeatWhileEffect(
   events: EffectEvent[],
 ): GundamGameState {
   const repeatEffect = effect as Extract<Effect, { type: "repeat-while" }>;
-  let state = context.state;
+  let { state } = context;
   let iterations = 0;
 
   while (
@@ -1235,7 +1229,7 @@ function executeRepeatWhileEffect(
     (repeatEffect.maxTimes === undefined || iterations < repeatEffect.maxTimes)
   ) {
     const result = executeEffect(repeatEffect.effect, { ...context, state });
-    state = result.state;
+    ({ state } = result);
     events.push(...result.events);
     iterations++;
   }
@@ -1259,10 +1253,7 @@ function executeUntilEndOfTurnEffect(
   context: EffectContext,
   events: EffectEvent[],
 ): GundamGameState {
-  const untilEndEffect = effect as Extract<
-    Effect,
-    { type: "until-end-of-turn" }
-  >;
+  const untilEndEffect = effect as Extract<Effect, { type: "until-end-of-turn" }>;
 
   // Would add temporary effect that expires at end of turn
   return executeEffect(untilEndEffect.effect, context).state;
@@ -1303,8 +1294,8 @@ function executeChangeControllerEffect(
   const target = resolveTarget(changeEffect.target, context);
 
   events.push({
-    type: "control-changed",
     data: { cardIds: target.cardIds },
+    type: "control-changed",
   });
 
   return context.state;
@@ -1350,10 +1341,7 @@ function executeLoseAbilityEffect(
 /**
  * Get the opponent of a player
  */
-function getOpponent(
-  state: GundamGameState,
-  player: PlayerId,
-): PlayerId | undefined {
+function getOpponent(state: GundamGameState, player: PlayerId): PlayerId | undefined {
   return state.players.find((p) => p !== player);
 }
 
@@ -1366,11 +1354,11 @@ export function createEffectContext(
   sourceCard?: CardId,
 ): EffectContext {
   return {
-    state,
-    sourcePlayer,
-    sourceCard,
-    variables: {},
     choices: {},
     flags: {},
+    sourceCard,
+    sourcePlayer,
+    state,
+    variables: {},
   };
 }

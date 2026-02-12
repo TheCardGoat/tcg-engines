@@ -4,9 +4,8 @@ export const pennyBoltsPerson: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "gain-keyword",
           keyword: "Resist",
           target: {
             selector: "chosen",
@@ -15,17 +14,18 @@ export const pennyBoltsPerson: CharacterCard = {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "gain-keyword",
           value: 1,
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "i2f-1",
       name: "ENDURING LOYALTY",
       text: "ENDURING LOYALTY When you play this character, you may remove up to 2 damage from chosen character and they gain Resist +1 until the start of your next turn.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

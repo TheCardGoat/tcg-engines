@@ -4,19 +4,19 @@ export const forestDuel: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "gain-keyword",
             keyword: "Challenger",
             target: "YOUR_CHARACTERS",
+            type: "gain-keyword",
             value: 2,
           },
           {
-            type: "return-to-hand",
             target: "SELF",
+            type: "return-to-hand",
           },
         ],
+        type: "sequence",
       },
       id: "12g-1",
       text: 'Your characters gain Challenger +2 and "When this character is banished in a challenge, return this card to your hand" this turn.',

@@ -28,8 +28,8 @@ describe("Zone Operations", () => {
       const zone = createZone({
         id: createZoneId("hand"),
         name: "Hand",
-        visibility: "private",
         ordered: false,
+        visibility: "private",
       });
 
       const cardId = createCardId("card-1");
@@ -43,10 +43,10 @@ describe("Zone Operations", () => {
       const zone = createZone(
         {
           id: createZoneId("hand"),
-          name: "Hand",
-          visibility: "private",
-          ordered: false,
           maxSize: 1,
+          name: "Hand",
+          ordered: false,
+          visibility: "private",
         },
         [createCardId("card-1")],
       );
@@ -61,8 +61,8 @@ describe("Zone Operations", () => {
         {
           id: createZoneId("deck"),
           name: "Deck",
-          visibility: "secret",
           ordered: true,
+          visibility: "secret",
         },
         [createCardId("card-1"), createCardId("card-2")],
       );
@@ -78,8 +78,8 @@ describe("Zone Operations", () => {
         {
           id: createZoneId("deck"),
           name: "Deck",
-          visibility: "secret",
           ordered: true,
+          visibility: "secret",
         },
         [createCardId("card-1"), createCardId("card-3")],
       );
@@ -99,8 +99,8 @@ describe("Zone Operations", () => {
         {
           id: createZoneId("hand"),
           name: "Hand",
-          visibility: "private",
           ordered: false,
+          visibility: "private",
         },
         [cardId, createCardId("card-2")],
       );
@@ -115,8 +115,8 @@ describe("Zone Operations", () => {
       const zone = createZone({
         id: createZoneId("hand"),
         name: "Hand",
-        visibility: "private",
         ordered: false,
+        visibility: "private",
       });
 
       expect(() => removeCard(zone, createCardId("missing"))).toThrow(
@@ -132,16 +132,16 @@ describe("Zone Operations", () => {
         {
           id: createZoneId("hand"),
           name: "Hand",
-          visibility: "private",
           ordered: false,
+          visibility: "private",
         },
         [cardId],
       );
       const to = createZone({
         id: createZoneId("play"),
         name: "Play",
-        visibility: "public",
         ordered: false,
+        visibility: "public",
       });
 
       const { fromZone, toZone } = moveCard(from, to, cardId);
@@ -153,25 +153,21 @@ describe("Zone Operations", () => {
 
   describe("draw", () => {
     it("should draw cards from deck to hand", () => {
-      const cards = [
-        createCardId("card-1"),
-        createCardId("card-2"),
-        createCardId("card-3"),
-      ];
+      const cards = [createCardId("card-1"), createCardId("card-2"), createCardId("card-3")];
       const deck = createZone(
         {
           id: createZoneId("deck"),
           name: "Deck",
-          visibility: "secret",
           ordered: true,
+          visibility: "secret",
         },
         cards,
       );
       const hand = createZone({
         id: createZoneId("hand"),
         name: "Hand",
-        visibility: "private",
         ordered: false,
+        visibility: "private",
       });
 
       const result = draw(deck, hand, 2);
@@ -182,25 +178,21 @@ describe("Zone Operations", () => {
     });
 
     it("should draw from top of deck", () => {
-      const cards = [
-        createCardId("card-1"),
-        createCardId("card-2"),
-        createCardId("card-3"),
-      ];
+      const cards = [createCardId("card-1"), createCardId("card-2"), createCardId("card-3")];
       const deck = createZone(
         {
           id: createZoneId("deck"),
           name: "Deck",
-          visibility: "secret",
           ordered: true,
+          visibility: "secret",
         },
         cards,
       );
       const hand = createZone({
         id: createZoneId("hand"),
         name: "Hand",
-        visibility: "private",
         ordered: false,
+        visibility: "private",
       });
 
       const result = draw(deck, hand, 1);
@@ -213,21 +205,19 @@ describe("Zone Operations", () => {
         {
           id: createZoneId("deck"),
           name: "Deck",
-          visibility: "secret",
           ordered: true,
+          visibility: "secret",
         },
         [createCardId("card-1")],
       );
       const hand = createZone({
         id: createZoneId("hand"),
         name: "Hand",
-        visibility: "private",
         ordered: false,
+        visibility: "private",
       });
 
-      expect(() => draw(deck, hand, 2)).toThrow(
-        "Cannot draw 2 cards: only 1 available in deck",
-      );
+      expect(() => draw(deck, hand, 2)).toThrow("Cannot draw 2 cards: only 1 available in deck");
     });
   });
 
@@ -244,8 +234,8 @@ describe("Zone Operations", () => {
         {
           id: createZoneId("deck"),
           name: "Deck",
-          visibility: "secret",
           ordered: true,
+          visibility: "secret",
         },
         cards,
       );
@@ -259,24 +249,18 @@ describe("Zone Operations", () => {
       }
 
       // Order should be different (with high probability)
-      const orderChanged = shuffled.cards.some(
-        (card, index) => card !== cards[index],
-      );
+      const orderChanged = shuffled.cards.some((card, index) => card !== cards[index]);
       expect(orderChanged).toBe(true);
     });
 
     it("should produce same shuffle with same seed", () => {
-      const cards = [
-        createCardId("card-1"),
-        createCardId("card-2"),
-        createCardId("card-3"),
-      ];
+      const cards = [createCardId("card-1"), createCardId("card-2"), createCardId("card-3")];
       const zone1 = createZone(
         {
           id: createZoneId("deck"),
           name: "Deck",
-          visibility: "secret",
           ordered: true,
+          visibility: "secret",
         },
         cards,
       );
@@ -284,8 +268,8 @@ describe("Zone Operations", () => {
         {
           id: createZoneId("deck"),
           name: "Deck",
-          visibility: "secret",
           ordered: true,
+          visibility: "secret",
         },
         cards,
       );
@@ -299,17 +283,13 @@ describe("Zone Operations", () => {
 
   describe("search", () => {
     it("should find cards matching filter", () => {
-      const cards = [
-        createCardId("card-1"),
-        createCardId("card-2"),
-        createCardId("card-3"),
-      ];
+      const cards = [createCardId("card-1"), createCardId("card-2"), createCardId("card-3")];
       const zone = createZone(
         {
           id: createZoneId("deck"),
           name: "Deck",
-          visibility: "secret",
           ordered: true,
+          visibility: "secret",
         },
         cards,
       );
@@ -324,17 +304,13 @@ describe("Zone Operations", () => {
 
   describe("peek", () => {
     it("should return top N cards without removing them", () => {
-      const cards = [
-        createCardId("card-1"),
-        createCardId("card-2"),
-        createCardId("card-3"),
-      ];
+      const cards = [createCardId("card-1"), createCardId("card-2"), createCardId("card-3")];
       const zone = createZone(
         {
           id: createZoneId("deck"),
           name: "Deck",
-          visibility: "secret",
           ordered: true,
+          visibility: "secret",
         },
         cards,
       );
@@ -350,25 +326,21 @@ describe("Zone Operations", () => {
 
   describe("mill", () => {
     it("should move cards from deck to graveyard", () => {
-      const cards = [
-        createCardId("card-1"),
-        createCardId("card-2"),
-        createCardId("card-3"),
-      ];
+      const cards = [createCardId("card-1"), createCardId("card-2"), createCardId("card-3")];
       const deck = createZone(
         {
           id: createZoneId("deck"),
           name: "Deck",
-          visibility: "secret",
           ordered: true,
+          visibility: "secret",
         },
         cards,
       );
       const graveyard = createZone({
         id: createZoneId("graveyard"),
         name: "Graveyard",
-        visibility: "public",
         ordered: true,
+        visibility: "public",
       });
 
       const result = mill(deck, graveyard, 2);
@@ -398,8 +370,8 @@ describe("Zone Operations", () => {
           {
             id: createZoneId("hand"),
             name: "Hand",
-            visibility: "private",
             ordered: false,
+            visibility: "private",
           },
           [createCardId("card-1"), createCardId("card-2")],
         );
@@ -415,8 +387,8 @@ describe("Zone Operations", () => {
           {
             id: createZoneId("hand"),
             name: "Hand",
-            visibility: "private",
             ordered: false,
+            visibility: "private",
           },
           cards,
         );
@@ -432,8 +404,8 @@ describe("Zone Operations", () => {
           {
             id: createZoneId("deck"),
             name: "Deck",
-            visibility: "secret",
             ordered: true,
+            visibility: "secret",
           },
           cards,
         );
@@ -445,8 +417,8 @@ describe("Zone Operations", () => {
         const zone = createZone({
           id: createZoneId("deck"),
           name: "Deck",
-          visibility: "secret",
           ordered: true,
+          visibility: "secret",
         });
 
         expect(getTopCard(zone)).toBeUndefined();
@@ -460,8 +432,8 @@ describe("Zone Operations", () => {
           {
             id: createZoneId("deck"),
             name: "Deck",
-            visibility: "secret",
             ordered: true,
+            visibility: "secret",
           },
           cards,
         );
@@ -473,8 +445,8 @@ describe("Zone Operations", () => {
         const zone = createZone({
           id: createZoneId("deck"),
           name: "Deck",
-          visibility: "secret",
           ordered: true,
+          visibility: "secret",
         });
 
         expect(getBottomCard(zone)).toBeUndefined();
@@ -489,8 +461,8 @@ describe("Zone Operations", () => {
         {
           id: createZoneId("hand"),
           name: "Hand",
-          visibility: "private",
           ordered: false,
+          visibility: "private",
         },
         [cardId, createCardId("card-2")],
       );
@@ -503,8 +475,8 @@ describe("Zone Operations", () => {
         {
           id: createZoneId("hand"),
           name: "Hand",
-          visibility: "private",
           ordered: false,
+          visibility: "private",
         },
         [createCardId("card-1"), createCardId("card-2")],
       );
@@ -516,8 +488,8 @@ describe("Zone Operations", () => {
       const zone = createZone({
         id: createZoneId("hand"),
         name: "Hand",
-        visibility: "private",
         ordered: false,
+        visibility: "private",
       });
 
       expect(isCardInZone(zone, createCardId("card-1"))).toBe(false);
@@ -530,8 +502,8 @@ describe("Zone Operations", () => {
         {
           id: createZoneId("deck"),
           name: "Deck",
-          visibility: "secret",
           ordered: true,
+          visibility: "secret",
         },
         [createCardId("card-2"), createCardId("card-3")],
       );
@@ -548,8 +520,8 @@ describe("Zone Operations", () => {
       const zone = createZone({
         id: createZoneId("deck"),
         name: "Deck",
-        visibility: "secret",
         ordered: true,
+        visibility: "secret",
       });
 
       const newCard = createCardId("card-1");
@@ -563,10 +535,10 @@ describe("Zone Operations", () => {
       const zone = createZone(
         {
           id: createZoneId("hand"),
-          name: "Hand",
-          visibility: "private",
-          ordered: false,
           maxSize: 1,
+          name: "Hand",
+          ordered: false,
+          visibility: "private",
         },
         [createCardId("card-1")],
       );
@@ -583,8 +555,8 @@ describe("Zone Operations", () => {
         {
           id: createZoneId("deck"),
           name: "Deck",
-          visibility: "secret",
           ordered: true,
+          visibility: "secret",
         },
         [createCardId("card-1"), createCardId("card-2")],
       );
@@ -601,8 +573,8 @@ describe("Zone Operations", () => {
       const zone = createZone({
         id: createZoneId("deck"),
         name: "Deck",
-        visibility: "secret",
         ordered: true,
+        visibility: "secret",
       });
 
       const newCard = createCardId("card-1");
@@ -616,10 +588,10 @@ describe("Zone Operations", () => {
       const zone = createZone(
         {
           id: createZoneId("hand"),
-          name: "Hand",
-          visibility: "private",
-          ordered: false,
           maxSize: 1,
+          name: "Hand",
+          ordered: false,
+          visibility: "private",
         },
         [createCardId("card-1")],
       );
@@ -636,14 +608,10 @@ describe("Zone Operations", () => {
         {
           id: createZoneId("hand"),
           name: "Hand",
-          visibility: "private",
           ordered: false,
+          visibility: "private",
         },
-        [
-          createCardId("card-1"),
-          createCardId("card-2"),
-          createCardId("card-3"),
-        ],
+        [createCardId("card-1"), createCardId("card-2"), createCardId("card-3")],
       );
 
       const updated = clearZone(zone);
@@ -656,8 +624,8 @@ describe("Zone Operations", () => {
       const zone = createZone({
         id: createZoneId("hand"),
         name: "Hand",
-        visibility: "private",
         ordered: false,
+        visibility: "private",
       });
 
       const updated = clearZone(zone);
@@ -669,10 +637,10 @@ describe("Zone Operations", () => {
       const zone = createZone(
         {
           id: createZoneId("hand"),
-          name: "Hand",
-          visibility: "private",
-          ordered: false,
           maxSize: 10,
+          name: "Hand",
+          ordered: false,
+          visibility: "private",
         },
         [createCardId("card-1")],
       );
@@ -691,8 +659,8 @@ describe("Zone Operations", () => {
         {
           id: createZoneId("hand"),
           name: "Hand",
-          visibility: "private",
           ordered: false,
+          visibility: "private",
         },
         [cardId, createCardId("card-2")],
       );
@@ -700,8 +668,8 @@ describe("Zone Operations", () => {
         {
           id: createZoneId("deck"),
           name: "Deck",
-          visibility: "secret",
           ordered: true,
+          visibility: "secret",
         },
         [createCardId("card-3")],
       );
@@ -718,8 +686,8 @@ describe("Zone Operations", () => {
         {
           id: createZoneId("hand"),
           name: "Hand",
-          visibility: "private",
           ordered: false,
+          visibility: "private",
         },
         [createCardId("card-1")],
       );
@@ -727,8 +695,8 @@ describe("Zone Operations", () => {
         {
           id: createZoneId("deck"),
           name: "Deck",
-          visibility: "secret",
           ordered: true,
+          visibility: "secret",
         },
         [createCardId("card-2"), cardId],
       );
@@ -744,8 +712,8 @@ describe("Zone Operations", () => {
         {
           id: createZoneId("hand"),
           name: "Hand",
-          visibility: "private",
           ordered: false,
+          visibility: "private",
         },
         [createCardId("card-1")],
       );
@@ -753,8 +721,8 @@ describe("Zone Operations", () => {
         {
           id: createZoneId("deck"),
           name: "Deck",
-          visibility: "secret",
           ordered: true,
+          visibility: "secret",
         },
         [createCardId("card-2")],
       );
@@ -776,8 +744,8 @@ describe("Zone Operations", () => {
         {
           id: createZoneId("hand"),
           name: "Hand",
-          visibility: "private",
           ordered: false,
+          visibility: "private",
         },
         [cardId],
       );
@@ -785,8 +753,8 @@ describe("Zone Operations", () => {
         {
           id: createZoneId("deck"),
           name: "Deck",
-          visibility: "secret",
           ordered: true,
+          visibility: "secret",
         },
         [cardId],
       );

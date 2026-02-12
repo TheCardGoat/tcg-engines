@@ -11,26 +11,26 @@ export const arielSpectacularSinger: CharacterCard = {
     },
     {
       effect: {
-        type: "scry",
         amount: 4,
         destinations: [
           {
-            zone: "hand",
-            min: 0,
-            max: 1,
             filter: { type: "song" },
+            max: 1,
+            min: 0,
             reveal: true,
+            zone: "hand",
           },
-          { zone: "deck-bottom", remainder: true, ordering: "player-choice" },
+          { ordering: "player-choice", remainder: true, zone: "deck-bottom" },
         ],
+        type: "scry",
       },
       id: "1k6-2",
       name: "MUSICAL DEBUT",
       text: "MUSICAL DEBUT When you play this character, look at the top 4 cards of your deck. You may reveal a song card and put it into your hand. Put the rest on the bottom of your deck in any order.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

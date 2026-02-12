@@ -15,38 +15,20 @@ import type {
 /**
  * Pipeline stage identifiers
  */
-export type PipelineStage =
-  | "extraction"
-  | "preprocessing"
-  | "processing"
-  | "postprocessing";
+export type PipelineStage = "extraction" | "preprocessing" | "processing" | "postprocessing";
 
 /**
  * Status values for each pipeline stage
  */
-export type ExtractionStatus =
-  | "pending"
-  | "partial"
-  | "complete"
-  | "failed"
-  | "blocked";
+export type ExtractionStatus = "pending" | "partial" | "complete" | "failed" | "blocked";
 export type PreprocessingStatus = "pending" | "complete" | "failed" | "blocked";
-export type ProcessingStatus =
-  | "processing"
-  | "completed"
-  | "failed"
-  | "blocked";
+export type ProcessingStatus = "processing" | "completed" | "failed" | "blocked";
 export type PostprocessingStatus = "pending" | "completed" | "failed";
 
 /**
  * Content status (overall status in contents table)
  */
-export type ContentStatus =
-  | "pending"
-  | "processing"
-  | "completed"
-  | "failed"
-  | "blocked";
+export type ContentStatus = "pending" | "processing" | "completed" | "failed" | "blocked";
 
 /**
  * Base interface for all pipeline stage results
@@ -214,12 +196,7 @@ export interface EnhancedSummary {
 /**
  * Summary types (tones)
  */
-export type SummaryType =
-  | "general"
-  | "insightful"
-  | "funny"
-  | "actionable"
-  | "controversial";
+export type SummaryType = "general" | "insightful" | "funny" | "actionable" | "controversial";
 
 /**
  * Summary formats

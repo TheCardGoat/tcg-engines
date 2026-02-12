@@ -39,23 +39,17 @@ export function expectGameEnd<TState, TMoves extends Record<string, any>>(
   const endResult = engine.checkGameEnd();
 
   if (!endResult) {
-    throw new Error(
-      "Expected game to have ended, but checkGameEnd() returned undefined",
-    );
+    throw new Error("Expected game to have ended, but checkGameEnd() returned undefined");
   }
 
   // Check winner if specified
   if (expectedWinner !== undefined && endResult.winner !== expectedWinner) {
-    throw new Error(
-      `Expected winner to be '${expectedWinner}', but got '${endResult.winner}'`,
-    );
+    throw new Error(`Expected winner to be '${expectedWinner}', but got '${endResult.winner}'`);
   }
 
   // Check reason if specified
   if (expectedReason !== undefined && endResult.reason !== expectedReason) {
-    throw new Error(
-      `Expected reason to be '${expectedReason}', but got '${endResult.reason}'`,
-    );
+    throw new Error(`Expected reason to be '${expectedReason}', but got '${endResult.reason}'`);
   }
 
   return endResult;

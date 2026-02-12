@@ -12,8 +12,8 @@ export default defineConfig({
     sveltekit(),
     devtoolsJson(),
     paraglideVitePlugin({
-      project: "./project.inlang",
       outdir: "./src/lib/paraglide",
+      project: "./project.inlang",
     }),
   ],
   test: {
@@ -23,11 +23,11 @@ export default defineConfig({
         extends: "./vite.config.ts",
         test: {
           name: "client",
-          // environment: "browser",
-          // browser: {
-          //   enabled: true,
-          //   provider: "playwright",
-          //   instances: [{ browser: "chromium" }],
+          // Environment: "browser",
+          // Browser: {
+          //   Enabled: true,
+          //   Provider: "playwright",
+          //   Instances: [{ browser: "chromium" }],
           // },
           include: ["src/**/*.svelte.{test,spec}.{js,ts}"],
           exclude: ["src/lib/server/**"],
@@ -37,10 +37,10 @@ export default defineConfig({
       {
         extends: "./vite.config.ts",
         test: {
-          name: "server",
           environment: "node",
-          include: ["src/**/*.{test,spec}.{js,ts}"],
           exclude: ["src/**/*.svelte.{test,spec}.{js,ts}"],
+          include: ["src/**/*.{test,spec}.{js,ts}"],
+          name: "server",
         },
       },
     ],

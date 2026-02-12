@@ -4,23 +4,23 @@ export const inkAmplifier: ItemCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "it's the second card they've drawn this turn",
+          type: "if",
         },
         then: {
-          type: "put-into-inkwell",
-          source: "top-of-deck",
-          target: "CONTROLLER",
           exerted: true,
           facedown: true,
+          source: "top-of-deck",
+          target: "CONTROLLER",
+          type: "put-into-inkwell",
         },
+        type: "conditional",
       },
       id: "1gc-1",
       name: "ENERGY CAPTURE",
       text: "ENERGY CAPTURE Whenever an opponent draws a card during their turn, if it's the second card they've drawn this turn, you may put the top card of your deck into your inkwell facedown and exerted.",
-      trigger: { event: "play", timing: "when", on: "SELF" },
+      trigger: { event: "play", on: "SELF", timing: "when" },
       type: "triggered",
     },
   ],

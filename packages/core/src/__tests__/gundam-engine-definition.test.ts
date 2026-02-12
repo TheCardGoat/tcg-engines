@@ -40,7 +40,7 @@ describe("Gundam Game - Refactored Engine Features", () => {
 
   it("should have proper zone configuration", () => {
     const gameDefinition = createMockGundamGame();
-    const zones = gameDefinition.zones;
+    const { zones } = gameDefinition;
 
     // Verify Gundam zones
     expect(zones?.deck).toBeDefined();
@@ -83,7 +83,7 @@ describe("Gundam Game - Refactored Engine Features", () => {
   it("should use tracker system for resource playing", () => {
     const gameDefinition = createMockGundamGame();
 
-    const playResource = gameDefinition.moves.playResource;
+    const { playResource } = gameDefinition.moves;
     expect(playResource.condition).toBeDefined();
     expect(playResource.reducer).toBeDefined();
 

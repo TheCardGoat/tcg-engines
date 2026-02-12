@@ -4,10 +4,9 @@ export const helpingHand: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "gain-keyword",
+            duration: "this-turn",
             keyword: "Support",
             target: {
               selector: "chosen",
@@ -16,14 +15,15 @@ export const helpingHand: ActionCard = {
               zones: ["play"],
               cardTypes: ["character"],
             },
-            duration: "this-turn",
+            type: "gain-keyword",
           },
           {
-            type: "draw",
             amount: 1,
             target: "CONTROLLER",
+            type: "draw",
           },
         ],
+        type: "sequence",
       },
       id: "1wv-1",
       text: "Chosen character gains Support this turn. Draw a card.",

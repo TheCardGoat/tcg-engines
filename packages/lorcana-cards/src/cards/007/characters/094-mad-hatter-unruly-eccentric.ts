@@ -4,21 +4,21 @@ export const madHatterUnrulyEccentric: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "draw",
           amount: 1,
           target: "CONTROLLER",
+          type: "draw",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "11o-1",
       name: "UNBIRTHDAY PRESENT",
       text: "UNBIRTHDAY PRESENT Whenever a damaged character challenges another character, you may draw a card.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

@@ -16,40 +16,40 @@ import type { ExtractionServiceAdapter } from "../../types/extraction-service";
 const createMockAdapter = (options: {
   shouldBlock?: boolean;
   blockReason?: string;
-  validationErrors?: Array<{ code: string; message: string }>;
+  validationErrors?: { code: string; message: string }[];
 }): ExtractionServiceAdapter => ({
-  serviceId: "mock",
-  supportedSourceTypes: ["youtube"],
-  parseUrl: (url: string) => {
-    if (!url.includes("youtube.com")) return null;
-    return {
-      sourceType: "youtube",
-      contentId: "test-video-id",
-      normalizedUrl: url,
-    };
-  },
   canHandle: (url: string) => url.includes("youtube.com"),
-  fetchContent: async () => ({
-    contentId: "test-video-id",
-    sourceType: "youtube",
-    textContent: "Test transcript content",
-    rawMetadata: {},
-  }),
   extractMetadata: async () => ({
-    title: "Test Video",
     durationSeconds: 600,
     sourceMetadata: {},
+    title: "Test Video",
   }),
-  validateContent: async () => ({
-    isValid: !options.shouldBlock,
-    shouldBlock: options.shouldBlock ?? false,
-    errors: options.validationErrors ?? [],
+  fetchContent: async () => ({
+    contentId: "test-video-id",
+    rawMetadata: {},
+    sourceType: "youtube",
+    textContent: "Test transcript content",
   }),
   getConfig: () => ({
+    extractionTimeoutMs: 60000,
     maxDurationSeconds: 1800,
     supportedLanguages: ["en"],
-    extractionTimeoutMs: 60000,
     validationRules: [],
+  }),
+  parseUrl: (url: string) => {
+    if (!url.includes("youtube.com")) {return null;}
+    return {
+      contentId: "test-video-id",
+      normalizedUrl: url,
+      sourceType: "youtube",
+    };
+  },
+  serviceId: "mock",
+  supportedSourceTypes: ["youtube"],
+  validateContent: async () => ({
+    errors: options.validationErrors ?? [],
+    isValid: !options.shouldBlock,
+    shouldBlock: options.shouldBlock ?? false,
   }),
 });
 
@@ -74,9 +74,7 @@ describe("Pipeline Blocking Behavior", () => {
     it("should block content when validation fails with shouldBlock=true", async () => {
       const adapter = createMockAdapter({
         shouldBlock: true,
-        validationErrors: [
-          { code: "CONTENT_TOO_LONG", message: "Video exceeds 30 minutes" },
-        ],
+        validationErrors: [{ code: "CONTENT_TOO_LONG", message: "Video exceeds 30 minutes" }],
       });
 
       extractionServiceRegistry.register(adapter);
@@ -94,17 +92,12 @@ describe("Pipeline Blocking Behavior", () => {
     it("should call onBlocked handler when content is blocked", async () => {
       const adapter = createMockAdapter({
         shouldBlock: true,
-        validationErrors: [
-          { code: "UNSUPPORTED_LANGUAGE", message: "Language not supported" },
-        ],
+        validationErrors: [{ code: "UNSUPPORTED_LANGUAGE", message: "Language not supported" }],
       });
 
       extractionServiceRegistry.register(adapter);
 
-      await service.ingestContent(
-        "https://www.youtube.com/watch?v=abc123",
-        "user-123",
-      );
+      await service.ingestContent("https://www.youtube.com/watch?v=abc123", "user-123");
 
       expect(onBlockedMock).toHaveBeenCalled();
     });
@@ -144,10 +137,7 @@ describe("Pipeline Blocking Behavior", () => {
       const adapter = createMockAdapter({});
       extractionServiceRegistry.register(adapter);
 
-      const result = await service.ingestContent(
-        "https://vimeo.com/123456",
-        "user-123",
-      );
+      const result = await service.ingestContent("https://vimeo.com/123456", "user-123");
 
       expect(result.blocked).toBe(true);
       expect(result.blockedAtStage).toBe("extraction");
@@ -158,9 +148,7 @@ describe("Pipeline Blocking Behavior", () => {
     it("should block on CONTENT_TOO_LONG error", async () => {
       const adapter = createMockAdapter({
         shouldBlock: true,
-        validationErrors: [
-          { code: "CONTENT_TOO_LONG", message: "Content exceeds limit" },
-        ],
+        validationErrors: [{ code: "CONTENT_TOO_LONG", message: "Content exceeds limit" }],
       });
 
       extractionServiceRegistry.register(adapter);
@@ -176,9 +164,7 @@ describe("Pipeline Blocking Behavior", () => {
     it("should block on UNSUPPORTED_LANGUAGE error", async () => {
       const adapter = createMockAdapter({
         shouldBlock: true,
-        validationErrors: [
-          { code: "UNSUPPORTED_LANGUAGE", message: "Language not supported" },
-        ],
+        validationErrors: [{ code: "UNSUPPORTED_LANGUAGE", message: "Language not supported" }],
       });
 
       extractionServiceRegistry.register(adapter);
@@ -209,9 +195,7 @@ describe("Pipeline Blocking Behavior", () => {
     it("should include block reason when blocked", async () => {
       const adapter = createMockAdapter({
         shouldBlock: true,
-        validationErrors: [
-          { code: "POLICY_VIOLATION", message: "Content violates policy" },
-        ],
+        validationErrors: [{ code: "POLICY_VIOLATION", message: "Content violates policy" }],
       });
 
       extractionServiceRegistry.register(adapter);

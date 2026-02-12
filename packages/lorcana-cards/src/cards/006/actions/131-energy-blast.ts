@@ -4,10 +4,8 @@ export const energyBlast: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "banish",
             target: {
               selector: "chosen",
               count: 1,
@@ -15,13 +13,15 @@ export const energyBlast: ActionCard = {
               zones: ["play"],
               cardTypes: ["character"],
             },
+            type: "banish",
           },
           {
-            type: "draw",
             amount: 1,
             target: "CONTROLLER",
+            type: "draw",
           },
         ],
+        type: "sequence",
       },
       id: "1j8-1",
       text: "Banish chosen character. Draw a card.",

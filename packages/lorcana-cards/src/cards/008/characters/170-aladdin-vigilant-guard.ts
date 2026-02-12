@@ -10,11 +10,9 @@ export const aladdinVigilantGuard: CharacterCard = {
     },
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "remove-damage",
           amount: 2,
-          upTo: true,
           target: {
             selector: "self",
             count: 1,
@@ -22,16 +20,18 @@ export const aladdinVigilantGuard: CharacterCard = {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "remove-damage",
+          upTo: true,
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "fh8-2",
       name: "SAFE PASSAGE",
       text: "SAFE PASSAGE Whenever one of your Ally characters quests, you may remove up to 2 damage from this character.",
       trigger: {
         event: "banish",
-        timing: "whenever",
         on: "YOUR_OTHER_CHARACTERS",
+        timing: "whenever",
       },
       type: "triggered",
     },

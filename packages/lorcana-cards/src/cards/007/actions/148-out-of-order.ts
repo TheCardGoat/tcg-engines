@@ -4,14 +4,14 @@ export const outOfOrder: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "banish",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "banish",
       },
       id: "155-1",
       text: "Banish chosen character.",

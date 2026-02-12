@@ -4,15 +4,15 @@ export const maliciousMeanAndScary: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "put-damage",
         amount: 1,
         target: {
-          selector: "all",
+          cardTypes: ["character"],
           count: "all",
           owner: "opponent",
+          selector: "all",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "put-damage",
       },
       id: "bxn-1",
       text: "Put 1 damage counter on each opposing character.",

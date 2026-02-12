@@ -4,10 +4,10 @@ export const ladyElegantSpaniel: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "lore",
         modifier: 1,
+        stat: "lore",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "14v-1",
       text: "A DOG'S LIFE While you have a character named Tramp in play, this character gets +1 {L}.",

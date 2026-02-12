@@ -107,7 +107,9 @@ export function registerDefaultFilters() {
     complexity: 10,
     evaluate: (filter, card, { registry }) => {
       const def = registry.getCard(card.definitionId);
-      if (!def || def.cardType !== "character") {return false;}
+      if (!def || def.cardType !== "character") {
+        return false;
+      }
       return (
         def.classifications?.some(
           (c: string) => c.toLowerCase() === filter.classification.toLowerCase(),
@@ -123,7 +125,9 @@ export function registerDefaultFilters() {
     complexity: 10,
     evaluate: (filter, card, { registry }) => {
       const def = registry.getCard(card.definitionId);
-      if (!def) {return false;}
+      if (!def) {
+        return false;
+      }
       if ("equals" in filter) {
         return def.name === filter.equals;
       }
@@ -186,7 +190,9 @@ export function registerDefaultFilters() {
     complexity: 20,
     evaluate: (filter, card, ctx) => {
       const def = ctx.registry.getCard(card.definitionId);
-      if (!def || def.cardType !== "character") {return false;}
+      if (!def || def.cardType !== "character") {
+        return false;
+      }
       const targetVal = getComparisonValue(filter.value);
       return checkComparison((def as any).strength ?? 0, filter.comparison, targetVal);
     },
@@ -197,7 +203,9 @@ export function registerDefaultFilters() {
     complexity: 20,
     evaluate: (filter, card, ctx) => {
       const def = ctx.registry.getCard(card.definitionId);
-      if (!def || def.cardType !== "character") {return false;}
+      if (!def || def.cardType !== "character") {
+        return false;
+      }
       const targetVal = getComparisonValue(filter.value);
       return checkComparison((def as any).willpower ?? 0, filter.comparison, targetVal);
     },
@@ -208,7 +216,9 @@ export function registerDefaultFilters() {
     complexity: 20,
     evaluate: (filter, card, ctx) => {
       const def = ctx.registry.getCard(card.definitionId);
-      if (!def) {return false;}
+      if (!def) {
+        return false;
+      }
       const targetVal = getComparisonValue(filter.value);
       return checkComparison(def.cost, filter.comparison, targetVal);
     },
@@ -219,7 +229,9 @@ export function registerDefaultFilters() {
     complexity: 20,
     evaluate: (filter, card, ctx) => {
       const def = ctx.registry.getCard(card.definitionId);
-      if (!def || (def.cardType !== "character" && def.cardType !== "location")) {return false;}
+      if (!def || (def.cardType !== "character" && def.cardType !== "location")) {
+        return false;
+      }
       const targetVal = getComparisonValue(filter.value);
       return checkComparison((def as any).lore ?? 0, filter.comparison, targetVal);
     },
@@ -230,7 +242,9 @@ export function registerDefaultFilters() {
     complexity: 20,
     evaluate: (filter, card, { registry }) => {
       const def = registry.getCard(card.definitionId);
-      if (!def || def.cardType !== "location") {return false;}
+      if (!def || def.cardType !== "location") {
+        return false;
+      }
       return checkComparison(def.moveCost ?? 0, filter.comparison, filter.value);
     },
     name: "move-cost",
@@ -238,14 +252,15 @@ export function registerDefaultFilters() {
 
   filterRegistry.register<LorcanaFilter & { type: "at-location" }>({
     complexity: 30,
-    evaluate: (_, card) => !!card.atLocationId,
+    evaluate: (_, card) => Boolean(card.atLocationId),
     name: "at-location",
   });
 
   // --- Composite Filters ---
   filterRegistry.register<LorcanaFilter & { type: "and"; filters: LorcanaFilter[] }>({
     complexity: 50,
-    evaluate: (filter, card, context) => filter.filters.every((f) => {
+    evaluate: (filter, card, context) =>
+      filter.filters.every((f) => {
         const handler = filterRegistry.get(f.type);
         return handler ? handler.evaluate(f, card, context) : false;
       }),
@@ -254,7 +269,8 @@ export function registerDefaultFilters() {
 
   filterRegistry.register<LorcanaFilter & { type: "or"; filters: LorcanaFilter[] }>({
     complexity: 50,
-    evaluate: (filter, card, context) => filter.filters.some((f) => {
+    evaluate: (filter, card, context) =>
+      filter.filters.some((f) => {
         const handler = filterRegistry.get(f.type);
         return handler ? handler.evaluate(f, card, context) : false;
       }),

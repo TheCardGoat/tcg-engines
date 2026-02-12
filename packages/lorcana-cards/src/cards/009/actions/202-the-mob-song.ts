@@ -4,15 +4,15 @@ export const theMobSong: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "deal-damage",
         amount: 3,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "deal-damage",
       },
       id: "g30-1",
       text: "Sing Together 10 Deal 3 damage to up to 3 chosen characters and/or locations.",

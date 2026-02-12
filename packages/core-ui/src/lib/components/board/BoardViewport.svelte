@@ -25,8 +25,8 @@
   }: BoardViewportProps = $props();
 
   const overflowClasses: Record<OverflowStrategy, string> = {
-    hidden: "overflow-hidden",
     auto: "overflow-auto",
+    hidden: "overflow-hidden",
     scroll: "overflow-scroll",
   };
 </script>

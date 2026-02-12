@@ -4,11 +4,11 @@ export const olympusWouldBeThatWay: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
-        modifier: 3,
-        target: "YOUR_CHARACTERS",
         duration: "this-turn",
+        modifier: 3,
+        stat: "strength",
+        target: "YOUR_CHARACTERS",
+        type: "modify-stat",
       },
       id: "1w0-1",
       text: "Your characters get +3 {S} while challenging a location this turn.",

@@ -4,13 +4,13 @@ export const wreckitRalphDemolitionDude: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-lore",
         amount: 1,
+        type: "gain-lore",
       },
       id: "co0-1",
       name: "REFRESHING BREAK",
       text: "REFRESHING BREAK Whenever you ready this character, gain 1 lore for each 1 damage on him.",
-      trigger: { event: "play", timing: "when", on: "SELF" },
+      trigger: { event: "play", on: "SELF", timing: "when" },
       type: "triggered",
     },
   ],

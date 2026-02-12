@@ -4,15 +4,15 @@ export const tugofwar: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "deal-damage",
         amount: 1,
         target: {
-          selector: "all",
+          cardTypes: ["character"],
           count: "all",
           owner: "opponent",
+          selector: "all",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "deal-damage",
       },
       id: "1pu-2",
       text: "• Deal 1 damage to each opposing character without Evasive.",
@@ -20,15 +20,15 @@ export const tugofwar: ActionCard = {
     },
     {
       effect: {
-        type: "deal-damage",
         amount: 3,
         target: {
-          selector: "all",
+          cardTypes: ["character"],
           count: "all",
           owner: "opponent",
+          selector: "all",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "deal-damage",
       },
       id: "1pu-3",
       text: "• Deal 3 damage to each opposing character with Evasive.",

@@ -4,18 +4,18 @@ export const minnieMouseGhostHunter: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
+        duration: "this-turn",
         keyword: "Alert",
         target: "CHOSEN_CHARACTER",
-        duration: "this-turn",
+        type: "gain-keyword",
       },
       id: "oy7-1",
       name: "SEARCH THE SHADOWS",
       text: "SEARCH THE SHADOWS When you play this character, chosen Detective character gains Alert this turn.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

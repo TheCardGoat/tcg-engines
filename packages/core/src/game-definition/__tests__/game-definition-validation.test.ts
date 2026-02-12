@@ -16,26 +16,26 @@ import { validateGameDefinition } from "../validation";
  * - Zod schema validation
  */
 
-type SimpleGameState = {
+interface SimpleGameState {
   value: number;
   phase: string;
-};
+}
 
-type SimpleMoves = {
+interface SimpleMoves {
   increment: Record<string, never>;
   decrement: Record<string, never>;
-};
+}
 
 describe("GameDefinition - Validation", () => {
   describe("setup function validation (Task 10.3)", () => {
     it("should validate that setup function exists", () => {
       const definition = {
-        name: "Test Game",
-        setup: (players: Array<{ id: string; name?: string }>) => ({
-          value: players.length,
-          phase: "start",
-        }),
         moves: {} as GameMoveDefinitions<SimpleGameState, SimpleMoves>,
+        name: "Test Game",
+        setup: (players: { id: string; name?: string }[]) => ({
+          phase: "start",
+          value: players.length,
+        }),
       };
 
       const result = validateGameDefinition(definition);
@@ -44,8 +44,8 @@ describe("GameDefinition - Validation", () => {
 
     it("should reject definition without setup function", () => {
       const definition = {
-        name: "Test Game",
         moves: {} as GameMoveDefinitions<SimpleGameState, SimpleMoves>,
+        name: "Test Game",
       } as unknown as GameDefinition<SimpleGameState, SimpleMoves>;
 
       const result = validateGameDefinition(definition);
@@ -57,9 +57,9 @@ describe("GameDefinition - Validation", () => {
 
     it("should validate that setup function is callable", () => {
       const definition = {
+        moves: {} as GameMoveDefinitions<SimpleGameState, SimpleMoves>,
         name: "Test Game",
         setup: "not a function" as unknown,
-        moves: {} as GameMoveDefinitions<SimpleGameState, SimpleMoves>,
       } as GameDefinition<SimpleGameState, SimpleMoves>;
 
       const result = validateGameDefinition(definition);
@@ -74,20 +74,20 @@ describe("GameDefinition - Validation", () => {
   describe("moves mapping validation (Task 10.5)", () => {
     it("should validate that moves object exists", () => {
       const definition: GameDefinition<SimpleGameState, SimpleMoves> = {
-        name: "Test Game",
-        setup: () => ({ value: 0, phase: "start" }),
         moves: {
-          increment: {
-            reducer: (draft) => {
-              draft.value += 1;
-            },
-          },
           decrement: {
             reducer: (draft) => {
               draft.value -= 1;
             },
           },
+          increment: {
+            reducer: (draft) => {
+              draft.value += 1;
+            },
+          },
         },
+        name: "Test Game",
+        setup: () => ({ phase: "start", value: 0 }),
       };
 
       const result = validateGameDefinition(definition);
@@ -97,7 +97,7 @@ describe("GameDefinition - Validation", () => {
     it("should reject definition without moves", () => {
       const definition = {
         name: "Test Game",
-        setup: () => ({ value: 0, phase: "start" }),
+        setup: () => ({ phase: "start", value: 0 }),
       };
 
       const result = validateGameDefinition(definition as any);
@@ -109,12 +109,12 @@ describe("GameDefinition - Validation", () => {
 
     it("should validate that each move has a reducer", () => {
       const definition = {
-        name: "Test Game",
-        setup: () => ({ value: 0, phase: "start" }),
         moves: {
           increment: {}, // Missing reducer
           decrement: {},
         },
+        name: "Test Game",
+        setup: () => ({ phase: "start", value: 0 }),
       };
 
       const result = validateGameDefinition(definition as any);
@@ -128,26 +128,26 @@ describe("GameDefinition - Validation", () => {
   describe("endIf validation (Task 10.9)", () => {
     it("should accept optional endIf function", () => {
       const definition: GameDefinition<SimpleGameState, SimpleMoves> = {
-        name: "Test Game",
-        setup: () => ({ value: 0, phase: "start" }),
+        endIf: (state) => {
+          if (state.value >= 10) {
+            return { reason: "reached-10", winner: "player1" };
+          }
+          return undefined;
+        },
         moves: {
-          increment: {
-            reducer: (draft) => {
-              draft.value += 1;
-            },
-          },
           decrement: {
             reducer: (draft) => {
               draft.value -= 1;
             },
           },
+          increment: {
+            reducer: (draft) => {
+              draft.value += 1;
+            },
+          },
         },
-        endIf: (state) => {
-          if (state.value >= 10) {
-            return { winner: "player1", reason: "reached-10" };
-          }
-          return undefined;
-        },
+        name: "Test Game",
+        setup: () => ({ phase: "start", value: 0 }),
       };
 
       const result = validateGameDefinition(definition);
@@ -156,20 +156,20 @@ describe("GameDefinition - Validation", () => {
 
     it("should work without endIf function", () => {
       const definition: GameDefinition<SimpleGameState, SimpleMoves> = {
-        name: "Test Game",
-        setup: () => ({ value: 0, phase: "start" }),
         moves: {
-          increment: {
-            reducer: (draft) => {
-              draft.value += 1;
-            },
-          },
           decrement: {
             reducer: (draft) => {
               draft.value -= 1;
             },
           },
+          increment: {
+            reducer: (draft) => {
+              draft.value += 1;
+            },
+          },
         },
+        name: "Test Game",
+        setup: () => ({ phase: "start", value: 0 }),
       };
 
       const result = validateGameDefinition(definition);
@@ -178,21 +178,21 @@ describe("GameDefinition - Validation", () => {
 
     it("should reject non-function endIf", () => {
       const definition = {
-        name: "Test Game",
-        setup: () => ({ value: 0, phase: "start" }),
+        endIf: "not a function",
         moves: {
-          increment: {
-            reducer: (draft: SimpleGameState) => {
-              draft.value += 1;
-            },
-          },
           decrement: {
             reducer: (draft: SimpleGameState) => {
               draft.value -= 1;
             },
           },
+          increment: {
+            reducer: (draft: SimpleGameState) => {
+              draft.value += 1;
+            },
+          },
         },
-        endIf: "not a function",
+        name: "Test Game",
+        setup: () => ({ phase: "start", value: 0 }),
       };
 
       const result = validateGameDefinition(definition as any);
@@ -207,24 +207,21 @@ describe("GameDefinition - Validation", () => {
   describe("playerView validation (Task 10.11)", () => {
     it("should accept optional playerView function", () => {
       const definition: GameDefinition<SimpleGameState, SimpleMoves> = {
-        name: "Test Game",
-        setup: () => ({ value: 0, phase: "start" }),
         moves: {
-          increment: {
-            reducer: (draft) => {
-              draft.value += 1;
-            },
-          },
           decrement: {
             reducer: (draft) => {
               draft.value -= 1;
             },
           },
+          increment: {
+            reducer: (draft) => {
+              draft.value += 1;
+            },
+          },
         },
-        playerView: (state, playerId) => {
-          // Return filtered state for this player
-          return { ...state, value: playerId === "p1" ? state.value : 0 };
-        },
+        name: "Test Game",
+        playerView: (state, playerId) => ({ ...state, value: playerId === "p1" ? state.value : 0 }),
+        setup: () => ({ phase: "start", value: 0 }),
       };
 
       const result = validateGameDefinition(definition);
@@ -233,20 +230,20 @@ describe("GameDefinition - Validation", () => {
 
     it("should work without playerView function", () => {
       const definition: GameDefinition<SimpleGameState, SimpleMoves> = {
-        name: "Test Game",
-        setup: () => ({ value: 0, phase: "start" }),
         moves: {
-          increment: {
-            reducer: (draft) => {
-              draft.value += 1;
-            },
-          },
           decrement: {
             reducer: (draft) => {
               draft.value -= 1;
             },
           },
+          increment: {
+            reducer: (draft) => {
+              draft.value += 1;
+            },
+          },
         },
+        name: "Test Game",
+        setup: () => ({ phase: "start", value: 0 }),
       };
 
       const result = validateGameDefinition(definition);
@@ -255,21 +252,21 @@ describe("GameDefinition - Validation", () => {
 
     it("should reject non-function playerView", () => {
       const definition = {
-        name: "Test Game",
-        setup: () => ({ value: 0, phase: "start" }),
         moves: {
-          increment: {
-            reducer: (draft: SimpleGameState) => {
-              draft.value += 1;
-            },
-          },
           decrement: {
             reducer: (draft: SimpleGameState) => {
               draft.value -= 1;
             },
           },
+          increment: {
+            reducer: (draft: SimpleGameState) => {
+              draft.value += 1;
+            },
+          },
         },
+        name: "Test Game",
         playerView: "not a function",
+        setup: () => ({ phase: "start", value: 0 }),
       };
 
       const result = validateGameDefinition(definition as any);
@@ -284,20 +281,20 @@ describe("GameDefinition - Validation", () => {
   describe("name validation", () => {
     it("should require a non-empty name", () => {
       const definition = {
-        name: "",
-        setup: () => ({ value: 0, phase: "start" }),
         moves: {
-          increment: {
-            reducer: (draft: SimpleGameState) => {
-              draft.value += 1;
-            },
-          },
           decrement: {
             reducer: (draft: SimpleGameState) => {
               draft.value -= 1;
             },
           },
+          increment: {
+            reducer: (draft: SimpleGameState) => {
+              draft.value += 1;
+            },
+          },
         },
+        name: "",
+        setup: () => ({ phase: "start", value: 0 }),
       };
 
       const result = validateGameDefinition(definition as any);
@@ -314,30 +311,30 @@ describe("GameDefinition - Validation", () => {
   describe("comprehensive validation (Task 10.13)", () => {
     it("should validate all fields together", () => {
       const validDefinition: GameDefinition<SimpleGameState, SimpleMoves> = {
-        name: "Complete Game",
-        setup: (players) => ({
-          value: players.length,
-          phase: "start",
-        }),
+        endIf: (state) => {
+          if (state.value >= 10) {
+            return { reason: "goal-reached", winner: "p1" };
+          }
+          return undefined;
+        },
         moves: {
-          increment: {
-            reducer: (draft) => {
-              draft.value += 1;
-            },
-          },
           decrement: {
             reducer: (draft) => {
               draft.value -= 1;
             },
           },
+          increment: {
+            reducer: (draft) => {
+              draft.value += 1;
+            },
+          },
         },
-        endIf: (state) => {
-          if (state.value >= 10) {
-            return { winner: "p1", reason: "goal-reached" };
-          }
-          return undefined;
-        },
+        name: "Complete Game",
         playerView: (state) => state,
+        setup: (players) => ({
+          phase: "start",
+          value: players.length,
+        }),
       };
 
       const result = validateGameDefinition(validDefinition);
@@ -346,9 +343,9 @@ describe("GameDefinition - Validation", () => {
 
     it("should provide detailed error messages for multiple errors", () => {
       const invalidDefinition = {
+        moves: null,
         name: "",
         setup: "not a function",
-        moves: null,
       };
 
       const result = validateGameDefinition(invalidDefinition as any);

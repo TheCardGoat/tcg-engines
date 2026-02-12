@@ -4,9 +4,9 @@ export const fanTheFlames: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "restriction",
         restriction: "cant-quest",
         target: "SELF",
+        type: "restriction",
       },
       id: "1eo-1",
       text: "Ready chosen character. They can't quest for the rest of this turn.",

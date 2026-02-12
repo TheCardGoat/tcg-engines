@@ -4,17 +4,17 @@ export const kangaNurturingMother: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "restriction",
         restriction: "cant-be-challenged",
         target: "SELF",
+        type: "restriction",
       },
       id: "qu5-1",
       name: "SAFE AND SOUND",
       text: "SAFE AND SOUND Whenever this character quests, choose a character of yours and that character can't be challenged until the start of your next turn.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

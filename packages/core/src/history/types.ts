@@ -41,13 +41,13 @@ export type VisibilityLevel = "PUBLIC" | "PRIVATE" | "PLAYER_SPECIFIC";
  * }
  * ```
  */
-export type MessageTemplateData = {
-  /** i18next translation key */
+export interface MessageTemplateData {
+  /** I18next translation key */
   key: string;
 
   /** Interpolation values for the template */
   values?: Record<string, unknown>;
-};
+}
 
 /**
  * Verbosity-Specific Messages
@@ -64,7 +64,7 @@ export type MessageTemplateData = {
  * }
  * ```
  */
-export type VerbosityMessages = {
+export interface VerbosityMessages {
   /** Message for casual players (simple, narrative) */
   casual?: MessageTemplateData;
 
@@ -73,7 +73,7 @@ export type VerbosityMessages = {
 
   /** Message for developers (full internal details) */
   developer?: MessageTemplateData;
-};
+}
 
 /**
  * Player-Specific Message Data
@@ -123,7 +123,7 @@ export type HistoryMessages =
  * Contains all information about a move execution including messages,
  * visibility, and raw data for debugging.
  */
-export type HistoryEntry = {
+export interface HistoryEntry {
   /** Unique identifier for this entry */
   id: string;
 
@@ -166,7 +166,7 @@ export type HistoryEntry = {
 
   /** Additional metadata for debugging */
   metadata?: Record<string, unknown>;
-};
+}
 
 /**
  * Formatted History Entry
@@ -174,7 +174,7 @@ export type HistoryEntry = {
  * A history entry with formatted message ready for display.
  * Returned by getHistory() after filtering and formatting.
  */
-export type FormattedHistoryEntry = {
+export interface FormattedHistoryEntry {
   /** Unique identifier for this entry */
   id: string;
 
@@ -214,14 +214,14 @@ export type FormattedHistoryEntry = {
 
   /** Raw parameters (only included in DEVELOPER mode) */
   params?: unknown;
-};
+}
 
 /**
  * History Query Options
  *
  * Options for querying game history.
  */
-export type HistoryQueryOptions = {
+export interface HistoryQueryOptions {
   /** Filter to entries visible to this player (undefined = all entries) */
   playerId?: PlayerId;
 
@@ -239,17 +239,17 @@ export type HistoryQueryOptions = {
 
   /** Include failed moves (default: true) */
   includeFailures?: boolean;
-};
+}
 
 /**
  * Log Entry Input
  *
  * Input data for creating a history entry via context.history.log()
  */
-export type LogEntryInput = {
+export interface LogEntryInput {
   /** Message templates for this entry */
   messages: HistoryMessages;
 
   /** Additional metadata for debugging */
   metadata?: Record<string, unknown>;
-};
+}

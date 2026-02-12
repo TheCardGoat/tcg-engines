@@ -9,16 +9,9 @@ import { and, eq } from "drizzle-orm";
 import type { PostgresJsDatabase } from "drizzle-orm/postgres-js";
 import type * as schema from "../../db/schema";
 import { contents, extractionCache } from "../../db/schema";
-import type {
-  ContentMetadata,
-  ExtractionResult,
-  RawContent,
-} from "../../types/extraction-service";
+import type { ContentMetadata, ExtractionResult, RawContent } from "../../types/extraction-service";
 import type { ExtractionStatus } from "../../types/ingestion-pipeline";
-import {
-  type ExtractionServiceAdapter,
-  extractionServiceRegistry,
-} from "../extraction";
+import { type ExtractionServiceAdapter, extractionServiceRegistry } from "../extraction";
 
 /**
  * Extraction cache data structure (matches database schema)
@@ -26,12 +19,12 @@ import {
 interface ExtractionCacheData {
   sourceType: "youtube" | "article" | "rss" | "http";
   textContent: string;
-  segments?: Array<{
+  segments?: {
     text: string;
     offsetMs: number;
     durationMs: number;
     language?: string;
-  }>;
+  }[];
   metadata: {
     title: string;
     description?: string;
@@ -84,10 +77,7 @@ export class ExtractionService {
    * @param options - Extraction options
    * @returns Extraction result
    */
-  async extract(
-    url: string,
-    options: ExtractionOptions = {},
-  ): Promise<ExtractionResult> {
+  async extract(url: string, options: ExtractionOptions = {}): Promise<ExtractionResult> {
     // Find adapter for URL
     const adapter = extractionServiceRegistry.getAdapterForUrl(url);
     if (!adapter) {
@@ -114,10 +104,7 @@ export class ExtractionService {
     const { sourceType, contentId, normalizedUrl } = parsed;
 
     // Check if content exists and is blocked
-    const existingContent = await this.findExistingContent(
-      sourceType,
-      contentId,
-    );
+    const existingContent = await this.findExistingContent(sourceType, contentId);
     if (existingContent) {
       // Check if blocked
       if (existingContent.status === "blocked") {
@@ -134,11 +121,7 @@ export class ExtractionService {
       if (!options.forceRefresh) {
         const cached = await this.getFromCache(existingContent.id);
         if (cached && cached.status === "complete") {
-          return this.createResultFromCache(
-            existingContent.id,
-            cached,
-            adapter.serviceId,
-          );
+          return this.createResultFromCache(existingContent.id, cached, adapter.serviceId);
         }
         if (cached && cached.status === "blocked") {
           return this.createFailedResult(
@@ -165,12 +148,7 @@ export class ExtractionService {
 
     // Perform extraction
     try {
-      const result = await this.performExtraction(
-        adapter,
-        contentId,
-        dbContentId,
-        options,
-      );
+      const result = await this.performExtraction(adapter, contentId, dbContentId, options);
 
       // Store in cache
       await this.storeInCache(
@@ -189,8 +167,7 @@ export class ExtractionService {
 
       return result;
     } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : "Extraction failed";
+      const errorMessage = error instanceof Error ? error.message : "Extraction failed";
       const shouldBlock = this.shouldBlockOnError(error);
 
       // Store failed result in cache
@@ -204,10 +181,7 @@ export class ExtractionService {
       );
 
       // Update content status
-      await this.updateContentStatus(
-        dbContentId,
-        shouldBlock ? "blocked" : "failed",
-      );
+      await this.updateContentStatus(dbContentId, shouldBlock ? "blocked" : "failed");
 
       return this.createFailedResult(
         dbContentId,
@@ -247,10 +221,10 @@ export class ExtractionService {
     }
 
     return {
-      status: cached.status as ExtractionStatus,
       data: cached.contentJson as ExtractionCacheData,
-      provider: cached.provider,
       errorMessage: cached.errorMessage ?? undefined,
+      provider: cached.provider,
+      status: cached.status as ExtractionStatus,
     };
   }
 
@@ -267,10 +241,7 @@ export class ExtractionService {
       .where(
         and(
           eq(contents.externalId, externalId),
-          eq(
-            contents.sourceType,
-            sourceType as "youtube" | "article" | "rss" | "http",
-          ),
+          eq(contents.sourceType, sourceType as "youtube" | "article" | "rss" | "http"),
         ),
       )
       .limit(1);
@@ -312,26 +283,20 @@ export class ExtractionService {
     contentId: string,
     status: "pending" | "processing" | "completed" | "failed" | "blocked",
   ): Promise<void> {
-    await this.db
-      .update(contents)
-      .set({ status })
-      .where(eq(contents.id, contentId));
+    await this.db.update(contents).set({ status }).where(eq(contents.id, contentId));
   }
 
   /**
    * Update content with extracted metadata
    */
-  private async updateContentMetadata(
-    contentId: string,
-    metadata: ContentMetadata,
-  ): Promise<void> {
+  private async updateContentMetadata(contentId: string, metadata: ContentMetadata): Promise<void> {
     await this.db
       .update(contents)
       .set({
-        title: metadata.title,
-        thumbnailUrl: metadata.thumbnailUrl,
         metadataJson: metadata.sourceMetadata,
         publishedAt: metadata.publishedAt,
+        thumbnailUrl: metadata.thumbnailUrl,
+        title: metadata.title,
       })
       .where(eq(contents.id, contentId));
   }
@@ -362,14 +327,14 @@ export class ExtractionService {
 
     return {
       contentId: dbContentId,
-      rawContent,
-      metadata,
-      validation,
-      provider: adapter.serviceId,
-      success: validation.isValid,
       errorMessage: validation.isValid
         ? undefined
         : validation.errors.map((e) => e.message).join("; "),
+      metadata,
+      provider: adapter.serviceId,
+      rawContent,
+      success: validation.isValid,
+      validation,
     };
   }
 
@@ -384,56 +349,56 @@ export class ExtractionService {
     gameId?: string,
   ): Promise<void> {
     const cacheData: ExtractionCacheData = {
+      availableLanguages: result.rawContent.availableLanguages,
+      language: result.rawContent.language,
+      metadata: {
+        authorName: result.metadata.authorName,
+        channelId: result.metadata.channelId,
+        channelName: result.metadata.channelName,
+        channelUrl: result.metadata.channelUrl,
+        commentCount: result.metadata.commentCount,
+        contentLength: result.metadata.contentLength,
+        description: result.metadata.description,
+        durationSeconds: result.metadata.durationSeconds,
+        language: result.metadata.language,
+        likeCount: result.metadata.likeCount,
+        publishedAt: result.metadata.publishedAt?.toISOString(),
+        sourceMetadata: result.metadata.sourceMetadata,
+        thumbnailUrl: result.metadata.thumbnailUrl,
+        title: result.metadata.title,
+        viewCount: result.metadata.viewCount,
+      },
+      segments: result.rawContent.segments,
       sourceType: result.rawContent.sourceType,
       textContent: result.rawContent.textContent,
-      segments: result.rawContent.segments,
-      metadata: {
-        title: result.metadata.title,
-        description: result.metadata.description,
-        authorName: result.metadata.authorName,
-        channelName: result.metadata.channelName,
-        channelId: result.metadata.channelId,
-        channelUrl: result.metadata.channelUrl,
-        durationSeconds: result.metadata.durationSeconds,
-        contentLength: result.metadata.contentLength,
-        publishedAt: result.metadata.publishedAt?.toISOString(),
-        thumbnailUrl: result.metadata.thumbnailUrl,
-        viewCount: result.metadata.viewCount,
-        likeCount: result.metadata.likeCount,
-        commentCount: result.metadata.commentCount,
-        language: result.metadata.language,
-        sourceMetadata: result.metadata.sourceMetadata,
-      },
-      language: result.rawContent.language,
-      availableLanguages: result.rawContent.availableLanguages,
     };
 
     const status: ExtractionStatus = result.validation.shouldBlock
       ? "blocked"
-      : result.success
+      : (result.success
         ? "complete"
-        : "failed";
+        : "failed");
 
     await this.db
       .insert(extractionCache)
       .values({
         contentId,
-        url,
         contentJson: cacheData,
+        errorMessage: result.errorMessage,
         gameId,
         provider,
         status,
-        errorMessage: result.errorMessage,
+        url,
       })
       .onConflictDoUpdate({
-        target: extractionCache.contentId,
         set: {
           contentJson: cacheData,
-          provider,
-          status,
           errorMessage: result.errorMessage,
           fetchedAt: new Date(),
+          provider,
+          status,
         },
+        target: extractionCache.contentId,
       });
   }
 
@@ -454,27 +419,27 @@ export class ExtractionService {
       .insert(extractionCache)
       .values({
         contentId,
-        url,
         contentJson: {
-          textContent: "",
           metadata: {
             title: "",
             sourceMetadata: {},
           },
+          textContent: "",
         },
+        errorMessage,
         gameId,
         provider,
         status,
-        errorMessage,
+        url,
       })
       .onConflictDoUpdate({
-        target: extractionCache.contentId,
         set: {
-          provider,
-          status,
           errorMessage,
           fetchedAt: new Date(),
+          provider,
+          status,
         },
+        target: extractionCache.contentId,
       });
   }
 
@@ -493,41 +458,39 @@ export class ExtractionService {
 
     return {
       contentId,
-      rawContent: {
-        contentId,
-        sourceType: data.sourceType,
-        textContent: data.textContent,
-        segments: data.segments,
-        rawMetadata: data.metadata.sourceMetadata,
-        language: data.language,
-        availableLanguages: data.availableLanguages,
-      },
       metadata: {
-        title: data.metadata.title,
-        description: data.metadata.description,
         authorName: data.metadata.authorName,
-        channelName: data.metadata.channelName,
         channelId: data.metadata.channelId,
+        channelName: data.metadata.channelName,
         channelUrl: data.metadata.channelUrl,
-        durationSeconds: data.metadata.durationSeconds,
-        contentLength: data.metadata.contentLength,
-        publishedAt: data.metadata.publishedAt
-          ? new Date(data.metadata.publishedAt)
-          : undefined,
-        thumbnailUrl: data.metadata.thumbnailUrl,
-        viewCount: data.metadata.viewCount,
-        likeCount: data.metadata.likeCount,
         commentCount: data.metadata.commentCount,
+        contentLength: data.metadata.contentLength,
+        description: data.metadata.description,
+        durationSeconds: data.metadata.durationSeconds,
         language: data.metadata.language,
+        likeCount: data.metadata.likeCount,
+        publishedAt: data.metadata.publishedAt ? new Date(data.metadata.publishedAt) : undefined,
         sourceMetadata: data.metadata.sourceMetadata,
-      },
-      validation: {
-        isValid: true,
-        shouldBlock: false,
-        errors: [],
+        thumbnailUrl: data.metadata.thumbnailUrl,
+        title: data.metadata.title,
+        viewCount: data.metadata.viewCount,
       },
       provider,
+      rawContent: {
+        availableLanguages: data.availableLanguages,
+        contentId,
+        language: data.language,
+        rawMetadata: data.metadata.sourceMetadata,
+        segments: data.segments,
+        sourceType: data.sourceType,
+        textContent: data.textContent,
+      },
       success: true,
+      validation: {
+        errors: [],
+        isValid: true,
+        shouldBlock: false,
+      },
     };
   }
 
@@ -543,29 +506,29 @@ export class ExtractionService {
   ): ExtractionResult {
     return {
       contentId,
+      errorMessage,
+      metadata: {
+        sourceMetadata: {},
+        title: "",
+      },
+      provider,
       rawContent: {
         contentId,
+        rawMetadata: {},
         sourceType,
         textContent: "",
-        rawMetadata: {},
       },
-      metadata: {
-        title: "",
-        sourceMetadata: {},
-      },
+      success: false,
       validation: {
-        isValid: false,
-        shouldBlock,
         errors: [
           {
             code: shouldBlock ? "CONTENT_BLOCKED" : "EXTRACTION_FAILED",
             message: errorMessage,
           },
         ],
+        isValid: false,
+        shouldBlock,
       },
-      provider,
-      success: false,
-      errorMessage,
     };
   }
 
@@ -591,8 +554,6 @@ export class ExtractionService {
 /**
  * Create an extraction service instance
  */
-export function createExtractionService(
-  db: PostgresJsDatabase<typeof schema>,
-): ExtractionService {
+export function createExtractionService(db: PostgresJsDatabase<typeof schema>): ExtractionService {
   return new ExtractionService(db);
 }

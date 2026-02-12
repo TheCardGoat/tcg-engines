@@ -4,12 +4,12 @@ export const scarShamelessFirebrand: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
-        effect: {
-          type: "play-card",
-          from: "hand",
-        },
         chooser: "CONTROLLER",
+        effect: {
+          from: "hand",
+          type: "play-card",
+        },
+        type: "optional",
       },
       id: "mm7-1",
       text: "**Shift** 6 _(You may pay 6 {I} to play this on top of one of your characters named Scar.)_\n**ROUSING SPEECH** When you play this character, ready your characters with cost 3 or less. They can",

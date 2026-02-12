@@ -4,12 +4,12 @@ export const mickeyMouseArtfulRogue: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
-        effect: {
-          type: "play-card",
-          from: "hand",
-        },
         chooser: "CONTROLLER",
+        effect: {
+          from: "hand",
+          type: "play-card",
+        },
+        type: "optional",
       },
       id: "dul-1",
       text: "**Shift** 5 (_You may pay 5 {I} to play this on top of one of your characters named Tinker Bell._)\n**MISDIRECTION** Whenever you play an action, chosen opposing character can",

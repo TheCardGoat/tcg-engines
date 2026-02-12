@@ -4,15 +4,15 @@ export const evilComesPrepared: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "a Villain character is chosen",
+          type: "if",
         },
         then: {
-          type: "gain-lore",
           amount: 1,
+          type: "gain-lore",
         },
+        type: "conditional",
       },
       id: "1qd-1",
       text: "Ready chosen character of yours. They can't quest for the rest of this turn. If a Villain character is chosen, gain 1 lore.",

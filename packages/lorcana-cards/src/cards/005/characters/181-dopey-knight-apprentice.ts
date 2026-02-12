@@ -4,13 +4,11 @@ export const dopeyKnightApprentice: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you have another Knight character in play",
+          type: "if",
         },
         then: {
-          type: "deal-damage",
           amount: 1,
           target: {
             selector: "chosen",
@@ -19,15 +17,17 @@ export const dopeyKnightApprentice: CharacterCard = {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "deal-damage",
         },
+        type: "conditional",
       },
       id: "1w8-1",
       name: "STRONGER TOGETHER",
       text: "STRONGER TOGETHER When you play this character, if you have another Knight character in play, you may deal 1 damage to chosen character or location.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

@@ -4,19 +4,19 @@ export const wreckitRalphBackSeatDriver: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
-        modifier: 4,
-        target: "CHOSEN_CHARACTER",
         duration: "this-turn",
+        modifier: 4,
+        stat: "strength",
+        target: "CHOSEN_CHARACTER",
+        type: "modify-stat",
       },
       id: "1ce-1",
       name: "CHARGED UP",
       text: "CHARGED UP When you play this character, chosen Racer character gets +4 {S} this turn.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

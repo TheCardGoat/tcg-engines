@@ -5,8 +5,8 @@ export const cogsworthTalkingClock: CharacterCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "gain-lore",
         amount: 1,
+        type: "gain-lore",
       },
       id: "y7r-1",
       text: "WAIT A MINUTE Your characters with Reckless gain “{E} — Gain 1 lore.”",

@@ -50,11 +50,11 @@ describe("Optional Effect Parser", () => {
         effect: {
           amount: 2,
           target: {
-            selector: "chosen",
+            cardTypes: ["character"],
             count: 1,
             owner: "any",
+            selector: "chosen",
             zones: ["play"],
-            cardTypes: ["character"],
           },
           type: "deal-damage",
         },
@@ -63,19 +63,17 @@ describe("Optional Effect Parser", () => {
     });
 
     it('should parse "You may return chosen character to their player\'s hand"', () => {
-      const effect = parseEffect(
-        "You may return chosen character to their player's hand",
-      );
+      const effect = parseEffect("You may return chosen character to their player's hand");
 
       expect(effect).toEqual({
         chooser: "CONTROLLER",
         effect: {
           target: {
-            selector: "chosen",
+            cardTypes: ["character"],
             count: 1,
             owner: "any",
+            selector: "chosen",
             zones: ["play"],
-            cardTypes: ["character"],
           },
           type: "return-to-hand",
         },
@@ -123,11 +121,11 @@ describe("Optional Effect Parser", () => {
         chooser: "CONTROLLER",
         effect: {
           target: {
-            selector: "chosen",
+            cardTypes: ["character"],
             count: 1,
             owner: "any",
+            selector: "chosen",
             zones: ["play"],
-            cardTypes: ["character"],
           },
           type: "exert",
         },
@@ -142,11 +140,11 @@ describe("Optional Effect Parser", () => {
         chooser: "CONTROLLER",
         effect: {
           target: {
-            selector: "chosen",
+            cardTypes: ["character"],
             count: 1,
             owner: "any",
+            selector: "chosen",
             zones: ["play"],
-            cardTypes: ["character"],
           },
           type: "ready",
         },
@@ -157,9 +155,7 @@ describe("Optional Effect Parser", () => {
 
   describe("Optional Effects with If You Do", () => {
     it('should parse "You may exert chosen character. If you do, draw a card"', () => {
-      const effect = parseEffect(
-        "You may exert chosen character. If you do, draw a card",
-      );
+      const effect = parseEffect("You may exert chosen character. If you do, draw a card");
 
       expect(effect).toBeDefined();
       expect(effect?.type).toBe("sequence");
@@ -173,11 +169,11 @@ describe("Optional Effect Parser", () => {
         chooser: "CONTROLLER",
         effect: {
           target: {
-            selector: "chosen",
+            cardTypes: ["character"],
             count: 1,
             owner: "any",
+            selector: "chosen",
             zones: ["play"],
-            cardTypes: ["character"],
           },
           type: "exert",
         },
@@ -193,9 +189,7 @@ describe("Optional Effect Parser", () => {
     });
 
     it('should parse "You may banish chosen item. If you do, draw 2 cards"', () => {
-      const effect = parseEffect(
-        "You may banish chosen item. If you do, draw 2 cards",
-      );
+      const effect = parseEffect("You may banish chosen item. If you do, draw 2 cards");
 
       expect(effect).toBeDefined();
       expect(effect?.type).toBe("sequence");
@@ -244,11 +238,11 @@ describe("Optional Effect Parser", () => {
         effect: {
           amount: 2,
           target: {
-            selector: "chosen",
+            cardTypes: ["character"],
             count: 1,
             owner: "any",
+            selector: "chosen",
             zones: ["play"],
-            cardTypes: ["character"],
           },
           type: "deal-damage",
         },
@@ -277,11 +271,11 @@ describe("Optional Effect Parser", () => {
         chooser: "CONTROLLER",
         effect: {
           target: {
-            selector: "chosen",
+            cardTypes: ["character"],
             count: 1,
             owner: "any",
+            selector: "chosen",
             zones: ["play"],
-            cardTypes: ["character"],
           },
           type: "return-to-hand",
         },
@@ -311,11 +305,11 @@ describe("Optional Effect Parser", () => {
         chooser: "CONTROLLER",
         effect: {
           target: {
-            selector: "chosen",
+            cardTypes: ["character"],
             count: 1,
             owner: "any",
+            selector: "chosen",
             zones: ["play"],
-            cardTypes: ["character"],
           },
           type: "exert",
         },
@@ -366,9 +360,7 @@ describe("Optional Effect Parser", () => {
     });
 
     it('should parse "if you do" (lowercase)', () => {
-      const effect = parseEffect(
-        "You may exert chosen character. if you do, draw a card",
-      );
+      const effect = parseEffect("You may exert chosen character. if you do, draw a card");
 
       expect(effect).toBeDefined();
       expect(effect?.type).toBe("sequence");
@@ -379,9 +371,7 @@ describe("Optional Effect Parser", () => {
     });
 
     it('should parse "If You Do" (title case)', () => {
-      const effect = parseEffect(
-        "You may exert chosen character. If You Do, draw a card",
-      );
+      const effect = parseEffect("You may exert chosen character. If You Do, draw a card");
 
       expect(effect).toBeDefined();
       expect(effect?.type).toBe("sequence");
@@ -401,11 +391,11 @@ describe("Optional Effect Parser", () => {
         effect: {
           amount: 3,
           target: {
-            selector: "chosen",
+            cardTypes: ["character"],
             count: 1,
             owner: "any",
+            selector: "chosen",
             zones: ["play"],
-            cardTypes: ["character"],
           },
           type: "deal-damage",
         },
@@ -483,9 +473,7 @@ describe("Optional Effect Parser", () => {
 
     it('should handle "if you do" without "you may"', () => {
       // This should not parse as optional since there's no "you may"
-      const effect = parseEffect(
-        "Draw a card. If you do, deal 2 damage to chosen character",
-      );
+      const effect = parseEffect("Draw a card. If you do, deal 2 damage to chosen character");
 
       // Should parse as a sequence without optional wrapper
       expect(effect).toBeDefined();
@@ -527,11 +515,11 @@ describe("Optional Effect Parser", () => {
         chooser: "CONTROLLER",
         effect: {
           target: {
-            selector: "chosen",
+            cardTypes: ["character"],
             count: 1,
             owner: "any",
+            selector: "chosen",
             zones: ["play"],
-            cardTypes: ["character"],
           },
           type: "exert",
         },

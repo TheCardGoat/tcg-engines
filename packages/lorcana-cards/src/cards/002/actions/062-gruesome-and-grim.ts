@@ -4,9 +4,9 @@ export const gruesomeAndGrim: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Rush",
         target: "CHOSEN_CHARACTER",
+        type: "gain-keyword",
       },
       id: "3l1-1",
       text: "Play a character with cost 4 or less for free. They gain Rush. At the end of the turn, banish them.",

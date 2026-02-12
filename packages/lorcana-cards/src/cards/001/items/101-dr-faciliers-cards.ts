@@ -7,11 +7,11 @@ export const drFaciliersCards: ItemCard = {
         exert: true,
       },
       effect: {
-        type: "cost-reduction",
         amount: 1,
         cardType: "action",
-        target: "CONTROLLER",
         duration: "next-play-this-turn",
+        target: "CONTROLLER",
+        type: "cost-reduction",
       },
       id: "18f-1",
       name: "THE CARDS WILL TELL",

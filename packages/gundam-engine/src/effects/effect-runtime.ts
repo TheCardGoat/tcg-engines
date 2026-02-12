@@ -86,11 +86,7 @@ export interface EffectMetadata {
  * Result of executing an effect or action.
  * Uses discriminated union for type-safe result handling.
  */
-export type EffectResult =
-  | SuccessResult
-  | PendingResult
-  | FailedResult
-  | FizzledResult;
+export type EffectResult = SuccessResult | PendingResult | FailedResult | FizzledResult;
 
 /**
  * Successful execution
@@ -312,11 +308,7 @@ export interface TemporaryModification {
 /**
  * Modifier duration
  */
-export type ModifierDuration =
-  | "permanent"
-  | "this_turn"
-  | "end_of_combat"
-  | "while_condition";
+export type ModifierDuration = "permanent" | "this_turn" | "end_of_combat" | "while_condition";
 
 // ============================================================================
 // RESOLVED TARGETS

@@ -119,13 +119,8 @@ export function expectDeterministicBehavior<T>(
  * const p2Roll = p2Rng.rollDice(20);
  * ```
  */
-export function createMultipleRNGs(
-  count: number,
-  baseSeed = "test",
-): SeededRNG[] {
-  return Array.from({ length: count }, (_, i) => {
-    return new SeededRNG(`${baseSeed}-${i}`);
-  });
+export function createMultipleRNGs(count: number, baseSeed = "test"): SeededRNG[] {
+  return Array.from({ length: count }, (_, i) => new SeededRNG(`${baseSeed}-${i}`));
 }
 
 /**
@@ -151,13 +146,8 @@ export function createMultipleRNGs(
  * expect(uniqueResults.size).toBeGreaterThan(10);
  * ```
  */
-export function testWithMultipleSeeds<T>(
-  fn: (rng: SeededRNG) => T,
-  iterations = 10,
-): T[] {
-  return Array.from({ length: iterations }, (_, i) => {
-    return withSeed(`test-iteration-${i}`, fn);
-  });
+export function testWithMultipleSeeds<T>(fn: (rng: SeededRNG) => T, iterations = 10): T[] {
+  return Array.from({ length: iterations }, (_, i) => withSeed(`test-iteration-${i}`, fn));
 }
 
 /**
@@ -184,7 +174,5 @@ export function createPredictableSequence(
   min: number,
   max: number,
 ): number[] {
-  return withSeed(seed, (rng) => {
-    return Array.from({ length: count }, () => rng.randomInt(min, max));
-  });
+  return withSeed(seed, (rng) => Array.from({ length: count }, () => rng.randomInt(min, max)));
 }

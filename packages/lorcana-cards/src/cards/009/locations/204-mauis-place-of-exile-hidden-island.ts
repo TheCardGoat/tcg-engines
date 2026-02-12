@@ -4,9 +4,9 @@ export const mauisPlaceOfExileHiddenIsland: LocationCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Resist",
         target: "CHARACTERS_HERE",
+        type: "gain-keyword",
         value: 1,
       },
       id: "1pe-1",

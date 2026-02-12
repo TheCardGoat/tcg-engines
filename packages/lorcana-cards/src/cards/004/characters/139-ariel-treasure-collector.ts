@@ -10,10 +10,10 @@ export const arielTreasureCollector: CharacterCard = {
     },
     {
       effect: {
-        type: "modify-stat",
-        stat: "lore",
         modifier: 2,
+        stat: "lore",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "hyy-2",
       text: "THE GIRL WHO HAS EVERYTHING While you have more items in play than each opponent, this character gets +2 {L}.",

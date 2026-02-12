@@ -10,9 +10,7 @@ import { searchEffectParser } from "../search-effect";
 describe("searchEffectParser", () => {
   describe("text parsing - search deck and shuffle", () => {
     it("parses 'search your deck for a character and shuffle' correctly", () => {
-      const result = searchEffectParser.parse(
-        "search your deck for a character and shuffle",
-      );
+      const result = searchEffectParser.parse("search your deck for a character and shuffle");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("search-deck");
@@ -22,9 +20,7 @@ describe("searchEffectParser", () => {
     });
 
     it("parses 'search your deck for an action, then shuffle' correctly", () => {
-      const result = searchEffectParser.parse(
-        "search your deck for an action, then shuffle",
-      );
+      const result = searchEffectParser.parse("search your deck for an action, then shuffle");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("search-deck");
@@ -34,9 +30,7 @@ describe("searchEffectParser", () => {
     });
 
     it("parses 'search your deck for item and shuffle your deck' correctly", () => {
-      const result = searchEffectParser.parse(
-        "search your deck for item and shuffle your deck",
-      );
+      const result = searchEffectParser.parse("search your deck for item and shuffle your deck");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("search-deck");
@@ -59,9 +53,7 @@ describe("searchEffectParser", () => {
     });
 
     it("parses 'search your deck for a card and put it into play' correctly", () => {
-      const result = searchEffectParser.parse(
-        "search your deck for a card and put it into play",
-      );
+      const result = searchEffectParser.parse("search your deck for a card and put it into play");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("search-deck");
@@ -70,9 +62,7 @@ describe("searchEffectParser", () => {
     });
 
     it("parses 'search your deck for a character and put it on top' correctly", () => {
-      const result = searchEffectParser.parse(
-        "search your deck for a character and put it on top",
-      );
+      const result = searchEffectParser.parse("search your deck for a character and put it on top");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("search-deck");
@@ -83,9 +73,7 @@ describe("searchEffectParser", () => {
 
   describe("text parsing - basic search deck", () => {
     it("parses 'search your deck for a character' correctly", () => {
-      const result = searchEffectParser.parse(
-        "search your deck for a character",
-      );
+      const result = searchEffectParser.parse("search your deck for a character");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("search-deck");
@@ -115,9 +103,7 @@ describe("searchEffectParser", () => {
 
   describe("text parsing - scry effects (look at top X)", () => {
     it("parses 'look at the top 3 cards of your deck' correctly", () => {
-      const result = searchEffectParser.parse(
-        "look at the top 3 cards of your deck",
-      );
+      const result = searchEffectParser.parse("look at the top 3 cards of your deck");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("scry");
@@ -126,9 +112,7 @@ describe("searchEffectParser", () => {
     });
 
     it("parses 'look at the top 1 card' with singular form", () => {
-      const result = searchEffectParser.parse(
-        "look at the top 1 card of your deck",
-      );
+      const result = searchEffectParser.parse("look at the top 1 card of your deck");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("scry");
@@ -136,9 +120,7 @@ describe("searchEffectParser", () => {
     });
 
     it("parses 'look at the top 10 cards' with double-digit number", () => {
-      const result = searchEffectParser.parse(
-        "look at the top 10 cards of your deck",
-      );
+      const result = searchEffectParser.parse("look at the top 10 cards of your deck");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("scry");
@@ -177,9 +159,7 @@ describe("searchEffectParser", () => {
 
   describe("text parsing - case insensitivity", () => {
     it("parses 'SEARCH YOUR DECK FOR A CHARACTER' in uppercase", () => {
-      const result = searchEffectParser.parse(
-        "SEARCH YOUR DECK FOR A CHARACTER",
-      );
+      const result = searchEffectParser.parse("SEARCH YOUR DECK FOR A CHARACTER");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("search-deck");
@@ -187,9 +167,7 @@ describe("searchEffectParser", () => {
     });
 
     it("parses 'Look At The Top 3 Cards' in mixed case", () => {
-      const result = searchEffectParser.parse(
-        "Look At The Top 3 Cards Of Your Deck",
-      );
+      const result = searchEffectParser.parse("Look At The Top 3 Cards Of Your Deck");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("scry");
@@ -205,27 +183,21 @@ describe("searchEffectParser", () => {
 
   describe("text parsing - whitespace variations", () => {
     it("parses with single spaces", () => {
-      const result = searchEffectParser.parse(
-        "search your deck for a character",
-      );
+      const result = searchEffectParser.parse("search your deck for a character");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("search-deck");
     });
 
     it("parses with multiple spaces", () => {
-      const result = searchEffectParser.parse(
-        "search  your  deck  for  a  character",
-      );
+      const result = searchEffectParser.parse("search  your  deck  for  a  character");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("search-deck");
     });
 
     it("parses with tabs", () => {
-      const result = searchEffectParser.parse(
-        "search\tyour\tdeck\tfor\ta\tcharacter",
-      );
+      const result = searchEffectParser.parse("search\tyour\tdeck\tfor\ta\tcharacter");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("search-deck");
@@ -266,9 +238,7 @@ describe("searchEffectParser", () => {
 
   describe("edge cases", () => {
     it("handles 'look at 0 cards' edge case", () => {
-      const result = searchEffectParser.parse(
-        "look at the top 0 cards of your deck",
-      );
+      const result = searchEffectParser.parse("look at the top 0 cards of your deck");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("scry");

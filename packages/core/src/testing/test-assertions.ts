@@ -238,11 +238,7 @@ function getAvailablePaths(obj: any, prefix = "", maxDepth = 2): string[] {
         // Show first few elements
         for (let i = 0; i < Math.min(3, obj[key].length); i++) {
           paths.push(`${path}[${i}]`);
-          const nestedPaths = getAvailablePaths(
-            obj[key][i],
-            `${path}[${i}]`,
-            maxDepth - 1,
-          );
+          const nestedPaths = getAvailablePaths(obj[key][i], `${path}[${i}]`, maxDepth - 1);
           paths.push(...nestedPaths);
         }
       } else {

@@ -17,9 +17,7 @@ import type { MoveEnumerationContext } from "./move-enumeration";
  *
  * @template T - Raw parameter type from TMoves
  */
-export type NormalizeParams<T> = T extends void | undefined
-  ? Record<string, never>
-  : T;
+export type NormalizeParams<T> = T extends void | undefined ? Record<string, never> : T;
 
 /**
  * Move Context Input
@@ -39,7 +37,7 @@ export type NormalizeParams<T> = T extends void | undefined
  * });
  * ```
  */
-export type MoveContextInput<TParams = any> = {
+export interface MoveContextInput<TParams = any> {
   /** Player performing this move */
   playerId: PlayerId;
 
@@ -59,7 +57,7 @@ export type MoveContextInput<TParams = any> = {
 
   /** Timestamp when move was initiated (for deterministic ordering) */
   timestamp?: number;
-};
+}
 
 /**
  * Context provided to move reducers and conditions
@@ -79,11 +77,7 @@ export type MoveContextInput<TParams = any> = {
  * @template TCardMeta - Game-specific card metadata type
  * @template TCardDefinition - Game-specific card definition type
  */
-export type MoveContext<
-  TParams = any,
-  TCardMeta = any,
-  TCardDefinition = any,
-> = {
+export interface MoveContext<TParams = any, TCardMeta = any, TCardDefinition = any> {
   /** Player performing this move */
   playerId: PlayerId;
 
@@ -302,7 +296,7 @@ export type MoveContext<
    * ```
    */
   counters: CounterOperations;
-};
+}
 
 /**
  * Move Reducer Function
@@ -331,12 +325,7 @@ export type MoveContext<
  * };
  * ```
  */
-export type MoveReducer<
-  TGameState,
-  TParams = any,
-  TCardMeta = any,
-  TCardDefinition = any,
-> = (
+export type MoveReducer<TGameState, TParams = any, TCardMeta = any, TCardDefinition = any> = (
   draft: Draft<TGameState>,
   context: MoveContext<TParams, TCardMeta, TCardDefinition>,
 ) => void;
@@ -359,14 +348,14 @@ export type MoveReducer<
  * }
  * ```
  */
-export type ConditionFailure = {
+export interface ConditionFailure {
   /** Human-readable explanation of why the move failed */
   reason: string;
   /** Machine-readable error code for categorization */
   errorCode: string;
   /** Optional additional context for debugging/logging */
   context?: Record<string, unknown>;
-};
+}
 
 /**
  * Move Condition Function
@@ -407,12 +396,7 @@ export type ConditionFailure = {
  * }
  * ```
  */
-export type MoveCondition<
-  TGameState,
-  TParams = any,
-  TCardMeta = any,
-  TCardDefinition = any,
-> = (
+export type MoveCondition<TGameState, TParams = any, TCardMeta = any, TCardDefinition = any> = (
   state: TGameState,
   context: MoveContext<TParams, TCardMeta, TCardDefinition>,
 ) => boolean | ConditionFailure;

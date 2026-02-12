@@ -4,15 +4,15 @@ export const basilTenaciousMouse: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Resist",
         target: "SELF",
+        type: "gain-keyword",
         value: 1,
       },
       id: "l21-1",
       name: "HOLD YOUR GROUND",
       text: "HOLD YOUR GROUND Whenever you play another Detective character, this character gains Resist +1 until the start of your next turn.",
-      trigger: { event: "play", timing: "when", on: "SELF" },
+      trigger: { event: "play", on: "SELF", timing: "when" },
       type: "triggered",
     },
   ],

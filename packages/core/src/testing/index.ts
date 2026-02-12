@@ -49,17 +49,9 @@
  */
 
 // Move assertions
-export {
-  expectMoveFailure,
-  expectMoveSuccess,
-  expectStateProperty,
-} from "./test-assertions";
+export { expectMoveFailure, expectMoveSuccess, expectStateProperty } from "./test-assertions";
 // Card factory
-export {
-  createTestCard,
-  createTestCards,
-  resetCardCounter,
-} from "./test-card-factory";
+export { createTestCard, createTestCards, resetCardCounter } from "./test-card-factory";
 
 // End assertions
 export { expectGameEnd, expectGameNotEnded } from "./test-end-assertions";

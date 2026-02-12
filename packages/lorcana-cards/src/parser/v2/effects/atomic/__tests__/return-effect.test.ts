@@ -14,9 +14,7 @@ describe("returnEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("return-to-hand");
-      expect((result as Effect & { target: string }).target).toBe(
-        "CHOSEN_CHARACTER",
-      );
+      expect((result as Effect & { target: string }).target).toBe("CHOSEN_CHARACTER");
     });
 
     it("parses 'return to your hand' correctly", () => {
@@ -27,9 +25,7 @@ describe("returnEffectParser", () => {
     });
 
     it("parses 'return chosen character to hand' correctly", () => {
-      const result = returnEffectParser.parse(
-        "return chosen character to hand",
-      );
+      const result = returnEffectParser.parse("return chosen character to hand");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("return-to-hand");
@@ -64,9 +60,7 @@ describe("returnEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("put-on-bottom");
-      expect((result as Effect & { target: string }).target).toBe(
-        "CHOSEN_CHARACTER",
-      );
+      expect((result as Effect & { target: string }).target).toBe("CHOSEN_CHARACTER");
     });
 
     it("parses 'put on bottom of deck' correctly", () => {
@@ -91,9 +85,7 @@ describe("returnEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("shuffle-into-deck");
-      expect((result as Effect & { target: string }).target).toBe(
-        "CHOSEN_CHARACTER",
-      );
+      expect((result as Effect & { target: string }).target).toBe("CHOSEN_CHARACTER");
       expect((result as Effect & { intoDeck: string }).intoDeck).toBe("owner");
     });
 
@@ -105,9 +97,7 @@ describe("returnEffectParser", () => {
     });
 
     it("parses 'shuffle chosen character into deck' correctly", () => {
-      const result = returnEffectParser.parse(
-        "shuffle chosen character into deck",
-      );
+      const result = returnEffectParser.parse("shuffle chosen character into deck");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("shuffle-into-deck");
@@ -131,22 +121,16 @@ describe("returnEffectParser", () => {
 
   describe("text parsing - return from discard", () => {
     it("parses 'return a character card from your discard' correctly", () => {
-      const result = returnEffectParser.parse(
-        "return a character card from your discard",
-      );
+      const result = returnEffectParser.parse("return a character card from your discard");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("return-from-discard");
-      expect((result as Effect & { cardType: string }).cardType).toBe(
-        "character",
-      );
+      expect((result as Effect & { cardType: string }).cardType).toBe("character");
       expect((result as Effect & { target: string }).target).toBe("CONTROLLER");
     });
 
     it("parses 'return an action card from your discard' correctly", () => {
-      const result = returnEffectParser.parse(
-        "return an action card from your discard",
-      );
+      const result = returnEffectParser.parse("return an action card from your discard");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("return-from-discard");
@@ -154,9 +138,7 @@ describe("returnEffectParser", () => {
     });
 
     it("parses 'return item card from your discard' without 'a' correctly", () => {
-      const result = returnEffectParser.parse(
-        "return item card from your discard",
-      );
+      const result = returnEffectParser.parse("return item card from your discard");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("return-from-discard");
@@ -244,9 +226,7 @@ describe("returnEffectParser", () => {
 
   describe("edge cases", () => {
     it("prioritizes return-from-discard over return-to-hand", () => {
-      const result = returnEffectParser.parse(
-        "return a character card from your discard to hand",
-      );
+      const result = returnEffectParser.parse("return a character card from your discard to hand");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("return-from-discard");
@@ -260,9 +240,7 @@ describe("returnEffectParser", () => {
     });
 
     it("handles complex return phrases", () => {
-      const result = returnEffectParser.parse(
-        "return chosen character you control to hand",
-      );
+      const result = returnEffectParser.parse("return chosen character you control to hand");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("return-to-hand");

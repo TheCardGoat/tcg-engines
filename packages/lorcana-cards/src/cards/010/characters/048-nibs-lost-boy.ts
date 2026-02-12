@@ -4,16 +4,16 @@ export const nibsLostBoy: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "return-to-hand",
         target: "SELF",
+        type: "return-to-hand",
       },
       id: "1ar-1",
       name: "LOOK WHO'S BACK",
       text: "LOOK WHO'S BACK When this character is banished in a challenge, return this card to your hand.",
       trigger: {
         event: "banish",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

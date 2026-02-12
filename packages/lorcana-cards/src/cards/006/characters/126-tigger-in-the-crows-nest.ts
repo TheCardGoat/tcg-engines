@@ -10,22 +10,22 @@ export const tiggerInTheCrowsNest: CharacterCard = {
     },
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
-        modifier: 1,
-        target: "SELF",
         duration: "this-turn",
+        modifier: 1,
+        stat: "strength",
+        target: "SELF",
+        type: "modify-stat",
       },
       id: "1q4-2",
       name: "SWASH YOUR BUCKLES",
       text: "SWASH YOUR BUCKLES Whenever you play an action, this character gets +1 {S} and +1 {L} this turn.",
       trigger: {
         event: "play",
-        timing: "whenever",
         on: {
-          controller: "you",
           cardType: "action",
+          controller: "you",
         },
+        timing: "whenever",
       },
       type: "triggered",
     },

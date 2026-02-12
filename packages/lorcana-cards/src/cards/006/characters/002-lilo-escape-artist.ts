@@ -4,16 +4,16 @@ export const liloEscapeArtist: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "this card is in your discard",
+          type: "if",
         },
         then: {
-          type: "restriction",
           restriction: "enters-play-exerted",
           target: "SELF",
+          type: "restriction",
         },
+        type: "conditional",
       },
       id: "105-1",
       text: "NO PLACE I’D RATHER BE At the start of your turn, if this card is in your discard, you may play her and she enters play exerted.",

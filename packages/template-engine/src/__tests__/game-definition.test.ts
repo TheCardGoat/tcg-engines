@@ -40,14 +40,12 @@ describe("Template Game", () => {
   describe("Moves", () => {
     describe("drawCard", () => {
       it("should validate phase condition", () => {
-        const game = createTemplateGame([
-          { id: createPlayerId("p1"), name: "Alice" },
-        ]);
+        const game = createTemplateGame([{ id: createPlayerId("p1"), name: "Alice" }]);
 
         // Should succeed in draw phase
         const result = game.executeMove("drawCard", {
-          playerId: createPlayerId("p1"),
           params: {},
+          playerId: createPlayerId("p1"),
         });
 
         // Will succeed (condition met) even though deck is empty
@@ -56,19 +54,17 @@ describe("Template Game", () => {
       });
 
       it("should fail when not in draw phase", () => {
-        const game = createTemplateGame([
-          { id: createPlayerId("p1"), name: "Alice" },
-        ]);
+        const game = createTemplateGame([{ id: createPlayerId("p1"), name: "Alice" }]);
 
         // Move to main phase
         game.executeMove("endPhase", {
-          playerId: createPlayerId("p1"),
           params: {},
+          playerId: createPlayerId("p1"),
         });
 
         const result = game.executeMove("drawCard", {
-          playerId: createPlayerId("p1"),
           params: {},
+          playerId: createPlayerId("p1"),
         });
 
         expect(result.success).toBe(false);
@@ -77,21 +73,19 @@ describe("Template Game", () => {
 
     describe("endPhase", () => {
       it("should progress through phases", () => {
-        const game = createTemplateGame([
-          { id: createPlayerId("p1"), name: "Alice" },
-        ]);
+        const game = createTemplateGame([{ id: createPlayerId("p1"), name: "Alice" }]);
 
         expect(game.getState().phase).toBe("draw");
 
         game.executeMove("endPhase", {
-          playerId: createPlayerId("p1"),
           params: {},
+          playerId: createPlayerId("p1"),
         });
         expect(game.getState().phase).toBe("main");
 
         game.executeMove("endPhase", {
-          playerId: createPlayerId("p1"),
           params: {},
+          playerId: createPlayerId("p1"),
         });
         expect(game.getState().phase).toBe("end");
       });
@@ -107,17 +101,17 @@ describe("Template Game", () => {
 
         // End all phases to advance turn
         game.executeMove("endPhase", {
-          playerId: createPlayerId("p1"),
           params: {},
-        }); // draw -> main
+          playerId: createPlayerId("p1"),
+        }); // Draw -> main
         game.executeMove("endPhase", {
-          playerId: createPlayerId("p1"),
           params: {},
-        }); // main -> end
+          playerId: createPlayerId("p1"),
+        }); // Main -> end
         game.executeMove("endPhase", {
-          playerId: createPlayerId("p1"),
           params: {},
-        }); // end -> next turn
+          playerId: createPlayerId("p1"),
+        }); // End -> next turn
 
         const state = game.getState();
         expect(state.currentPlayerIndex).toBe(1);
@@ -162,9 +156,7 @@ describe("Template Game", () => {
     });
 
     it("should detect win condition when defined", () => {
-      const game = createTemplateGame([
-        { id: createPlayerId("p1"), name: "Alice" },
-      ]);
+      const game = createTemplateGame([{ id: createPlayerId("p1"), name: "Alice" }]);
 
       // The endIf condition checks for life <= 0
       // We can't easily test this without a damage move
@@ -194,12 +186,12 @@ describe("Template Game", () => {
 
       // Execute same moves
       game1.executeMove("endPhase", {
-        playerId: createPlayerId("p1"),
         params: {},
+        playerId: createPlayerId("p1"),
       });
       game2.executeMove("endPhase", {
-        playerId: createPlayerId("p1"),
         params: {},
+        playerId: createPlayerId("p1"),
       });
 
       const state1 = game1.getState();

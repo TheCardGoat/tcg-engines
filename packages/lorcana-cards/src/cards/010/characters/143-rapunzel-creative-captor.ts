@@ -4,19 +4,19 @@ export const rapunzelCreativeCaptor: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
-        modifier: -3,
-        target: "CHOSEN_CHARACTER",
         duration: "this-turn",
+        modifier: -3,
+        stat: "strength",
+        target: "CHOSEN_CHARACTER",
+        type: "modify-stat",
       },
       id: "1gl-1",
       name: "ENSNARL",
       text: "ENSNARL When you play this character, chosen opposing character gets -3 {S} this turn.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

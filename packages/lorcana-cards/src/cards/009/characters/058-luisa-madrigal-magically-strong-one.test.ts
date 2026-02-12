@@ -8,9 +8,7 @@ describe("Luisa Madrigal - Magically Strong One", () => {
       play: [luisaMadrigalMagicallyStrongOne],
     });
 
-    const cardUnderTest = testEngine.getCardModel(
-      luisaMadrigalMagicallyStrongOne,
-    );
+    const cardUnderTest = testEngine.getCardModel(luisaMadrigalMagicallyStrongOne);
     expect(cardUnderTest.hasRush).toBe(true);
   });
 });

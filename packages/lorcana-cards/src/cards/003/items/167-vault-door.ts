@@ -4,9 +4,9 @@ export const vaultDoor: ItemCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Resist",
         target: "CHOSEN_CHARACTER",
+        type: "gain-keyword",
         value: 1,
       },
       id: "1nn-1",

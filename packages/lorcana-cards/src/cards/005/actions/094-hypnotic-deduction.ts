@@ -4,9 +4,9 @@ export const hypnoticDeduction: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "draw",
         amount: 3,
         target: "CONTROLLER",
+        type: "draw",
       },
       id: "5ug-1",
       text: "Draw 3 cards, then put 2 cards from your hand on the top of your deck in any order.",

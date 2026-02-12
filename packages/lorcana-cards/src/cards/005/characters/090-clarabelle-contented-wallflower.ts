@@ -4,24 +4,24 @@ export const clarabelleContentedWallflower: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "an opponent has more cards in their hand than you",
+          type: "if",
         },
         then: {
-          type: "draw",
           amount: 1,
           target: "CONTROLLER",
+          type: "draw",
         },
+        type: "conditional",
       },
       id: "1v9-1",
       name: "ONE STEP BEHIND",
       text: "ONE STEP BEHIND When you play this character, if an opponent has more cards in their hand than you, you may draw a card.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

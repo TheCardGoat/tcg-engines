@@ -4,11 +4,9 @@ export const joeyBluePigeon: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "remove-damage",
           amount: 1,
-          upTo: true,
           target: {
             selector: "all",
             count: "all",
@@ -16,16 +14,18 @@ export const joeyBluePigeon: CharacterCard = {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "remove-damage",
+          upTo: true,
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "jla-1",
       name: "I'VE GOT JUST THE THING",
       text: "I'VE GOT JUST THE THING Whenever this character quests, you may remove up to 1 damage from each of your characters with Bodyguard.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

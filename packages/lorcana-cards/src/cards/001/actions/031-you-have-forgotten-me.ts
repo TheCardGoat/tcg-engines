@@ -4,10 +4,10 @@ export const youHaveForgottenMe: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "discard",
         amount: 2,
-        target: "EACH_OPPONENT",
         chosen: true,
+        target: "EACH_OPPONENT",
+        type: "discard",
       },
       id: "1cn-1",
       text: "Each opponent chooses and discards 2 cards.",

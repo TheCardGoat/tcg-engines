@@ -4,10 +4,10 @@ export const queenOfHeartsLosingHerTemper: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: 3,
+        stat: "strength",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "123-1",
       text: "ROYAL PAIN While this character has damage, she gets +3 {S}.",

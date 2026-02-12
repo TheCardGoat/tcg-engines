@@ -4,8 +4,8 @@ export const gatheringKnowledgeAndWisdom: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "gain-lore",
         amount: 2,
+        type: "gain-lore",
       },
       id: "pjc-1",
       text: "Gain 2 lore.",

@@ -13,10 +13,8 @@ export const moanaBornLeader: CharacterCard = {
     },
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "ready",
             target: {
               selector: "all",
               count: "all",
@@ -24,22 +22,24 @@ export const moanaBornLeader: CharacterCard = {
               zones: ["play"],
               cardTypes: ["character"],
             },
+            type: "ready",
           },
           {
-            type: "restriction",
+            duration: "this-turn",
             restriction: "cant-quest",
             target: "SELF",
-            duration: "this-turn",
+            type: "restriction",
           },
         ],
+        type: "sequence",
       },
       id: "cku-2",
       name: "WELCOME TO MY BOAT",
       text: "WELCOME TO MY BOAT Whenever this character quests while at a location, ready all other characters here. They can't quest for the rest of this turn.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

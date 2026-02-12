@@ -4,9 +4,9 @@ export const grumpySkepticalKnight: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Resist",
         target: "YOUR_CHARACTERS",
+        type: "gain-keyword",
         value: 2,
       },
       id: "pqh-1",
@@ -15,9 +15,9 @@ export const grumpySkepticalKnight: CharacterCard = {
     },
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Evasive",
         target: "SELF",
+        type: "gain-keyword",
       },
       id: "pqh-2",
       text: "BURST OF SPEED During your turn, this character gains Evasive.",

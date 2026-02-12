@@ -4,10 +4,10 @@ export const peterPansDagger: ItemCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: 1,
+        stat: "strength",
         target: "YOUR_CHARACTERS",
+        type: "modify-stat",
       },
       id: "hwz-1",
       text: "Your characters with Evasive get +1 {S}.",

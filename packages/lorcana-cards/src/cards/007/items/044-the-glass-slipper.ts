@@ -4,9 +4,9 @@ export const theGlassSlipper: ItemCard = {
   abilities: [
     {
       effect: {
-        type: "search-deck",
         putInto: "hand",
         shuffle: true,
+        type: "search-deck",
       },
       id: "1wf-2",
       text: "SEARCH THE KINGDOM Banish this item, {E} one of your Prince characters – Search your deck for a Princess character card and reveal it to all players. Put that card into your hand and shuffle your deck.",

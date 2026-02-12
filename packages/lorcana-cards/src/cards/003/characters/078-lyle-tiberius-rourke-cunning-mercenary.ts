@@ -4,9 +4,9 @@ export const lyleTiberiusRourkeCunningMercenary: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Reckless",
         target: "SELF",
+        type: "gain-keyword",
       },
       id: "1s7-1",
       text: "WELL, NOW YOU KNOW When you play this character, chosen opposing character gains Reckless during their next turn.",
@@ -14,17 +14,17 @@ export const lyleTiberiusRourkeCunningMercenary: CharacterCard = {
     },
     {
       effect: {
-        type: "lose-lore",
         amount: 1,
         target: "EACH_OPPONENT",
+        type: "lose-lore",
       },
       id: "1s7-2",
       name: "THANKS FOR VOLUNTEERING",
       text: "THANKS FOR VOLUNTEERING Whenever one of your other characters is banished, each opponent loses 1 lore.",
       trigger: {
         event: "banish",
-        timing: "whenever",
         on: "YOUR_OTHER_CHARACTERS",
+        timing: "whenever",
       },
       type: "triggered",
     },

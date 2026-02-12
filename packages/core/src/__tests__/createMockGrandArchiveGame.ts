@@ -6,7 +6,7 @@ import type { CardZoneConfig } from "../zones";
 
 // Mock Grand Archive game state - SIMPLIFIED!
 // Engine now handles: phase, turn, currentPlayer, setupStep
-type TestGameState = {
+interface TestGameState {
   opportunityPlayer: PlayerId | null; // Who has Opportunity to act
   champions: Record<
     string,
@@ -16,9 +16,9 @@ type TestGameState = {
       damage: number;
     }
   >;
-};
+}
 
-type TestMoves = {
+interface TestMoves {
   // Setup moves
   initializeGame: { playerId: PlayerId };
   chooseFirstPlayer: { playerId: PlayerId };
@@ -34,7 +34,7 @@ type TestMoves = {
   endPhase: Record<string, never>;
   // Standard moves
   concede: { playerId: PlayerId };
-};
+}
 
 // Grand Archive move definitions
 const grandArchiveMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
@@ -42,21 +42,21 @@ const grandArchiveMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
   initializeGame: {
     reducer: (_draft, context) => {
       const { zones } = context;
-      const playerId = context.params.playerId;
+      const { playerId } = context.params;
 
       // Use engine's createDeck utility (instead of manual loop)
       zones.createDeck({
-        zoneId: "mainDeck" as ZoneId,
-        playerId,
         cardCount: 40,
+        playerId,
         shuffle: false,
+        zoneId: "mainDeck" as ZoneId,
       });
 
       zones.createDeck({
-        zoneId: "materialDeck" as ZoneId,
-        playerId,
         cardCount: 15,
+        playerId,
         shuffle: false,
+        zoneId: "materialDeck" as ZoneId,
       });
     },
   },
@@ -71,7 +71,7 @@ const grandArchiveMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
   shuffleDecks: {
     reducer: (_draft, context) => {
       const { zones } = context;
-      const playerId = context.params.playerId;
+      const { playerId } = context.params;
 
       // Shuffle both decks
       zones.shuffleZone("mainDeck" as ZoneId, playerId);
@@ -82,16 +82,16 @@ const grandArchiveMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
   drawStartingHand: {
     reducer: (_draft, context) => {
       const { zones } = context;
-      const playerId = context.params.playerId;
-      const count = context.params.count;
+      const { playerId } = context.params;
+      const { count } = context.params;
 
       // BEFORE: Manual loop (11 lines)
       // AFTER: Use engine's drawCards utility!
       zones.drawCards({
-        from: "mainDeck" as ZoneId,
-        to: "hand" as ZoneId,
         count,
+        from: "mainDeck" as ZoneId,
         playerId,
+        to: "hand" as ZoneId,
       });
     },
   },
@@ -99,13 +99,13 @@ const grandArchiveMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
   // Gameplay moves enhanced with engine features
   materializeCard: {
     condition: (state, context) => {
-      const playerId = context.playerId;
+      const { playerId } = context;
       // Use engine's tracker system!
       return !context.trackers?.check("hasMaterialized", playerId);
     },
     reducer: (draft, context) => {
-      const cardId = context.params.cardId;
-      const playerId = context.playerId;
+      const { cardId } = context.params;
+      const { playerId } = context;
 
       // Move from material deck to memory
       context.zones.moveCard({
@@ -120,7 +120,7 @@ const grandArchiveMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
 
   playCard: {
     reducer: (_draft, context) => {
-      const cardId = context.params.cardId;
+      const { cardId } = context.params;
 
       // Play card to field
       context.zones.moveCard({
@@ -170,86 +170,86 @@ const grandArchiveMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
 
 // Grand Archive zones configuration (unchanged)
 const grandArchiveZones: Record<string, CardZoneConfig> = {
-  hand: {
-    id: "hand" as ZoneId,
-    name: "zones.hand",
-    visibility: "private",
-    ordered: false,
-    owner: undefined,
-    faceDown: false,
-    maxSize: undefined,
-  },
-  mainDeck: {
-    id: "mainDeck" as ZoneId,
-    name: "zones.mainDeck",
-    visibility: "secret",
-    ordered: true,
-    owner: undefined,
-    faceDown: true,
-    maxSize: 40,
-  },
-  materialDeck: {
-    id: "materialDeck" as ZoneId,
-    name: "zones.materialDeck",
-    visibility: "secret",
-    ordered: true,
-    owner: undefined,
-    faceDown: true,
-    maxSize: 15,
-  },
-  memory: {
-    id: "memory" as ZoneId,
-    name: "zones.memory",
-    visibility: "private",
-    ordered: false,
-    owner: undefined,
-    faceDown: false,
-    maxSize: undefined,
-  },
-  field: {
-    id: "field" as ZoneId,
-    name: "zones.field",
-    visibility: "public",
-    ordered: false,
-    owner: undefined,
-    faceDown: false,
-    maxSize: undefined,
-  },
-  graveyard: {
-    id: "graveyard" as ZoneId,
-    name: "zones.graveyard",
-    visibility: "public",
-    ordered: false,
-    owner: undefined,
-    faceDown: false,
-    maxSize: undefined,
-  },
   banishment: {
+    faceDown: false,
     id: "banishment" as ZoneId,
+    maxSize: undefined,
     name: "zones.banishment",
-    visibility: "public",
     ordered: false,
     owner: undefined,
-    faceDown: false,
-    maxSize: undefined,
+    visibility: "public",
   },
   effectsStack: {
+    faceDown: false,
     id: "effectsStack" as ZoneId,
+    maxSize: undefined,
     name: "zones.effectsStack",
-    visibility: "public",
     ordered: true,
     owner: undefined,
-    faceDown: false,
-    maxSize: undefined,
-  },
-  intent: {
-    id: "intent" as ZoneId,
-    name: "zones.intent",
     visibility: "public",
+  },
+  field: {
+    faceDown: false,
+    id: "field" as ZoneId,
+    maxSize: undefined,
+    name: "zones.field",
     ordered: false,
     owner: undefined,
+    visibility: "public",
+  },
+  graveyard: {
     faceDown: false,
+    id: "graveyard" as ZoneId,
     maxSize: undefined,
+    name: "zones.graveyard",
+    ordered: false,
+    owner: undefined,
+    visibility: "public",
+  },
+  hand: {
+    faceDown: false,
+    id: "hand" as ZoneId,
+    maxSize: undefined,
+    name: "zones.hand",
+    ordered: false,
+    owner: undefined,
+    visibility: "private",
+  },
+  intent: {
+    faceDown: false,
+    id: "intent" as ZoneId,
+    maxSize: undefined,
+    name: "zones.intent",
+    ordered: false,
+    owner: undefined,
+    visibility: "public",
+  },
+  mainDeck: {
+    faceDown: true,
+    id: "mainDeck" as ZoneId,
+    maxSize: 40,
+    name: "zones.mainDeck",
+    ordered: true,
+    owner: undefined,
+    visibility: "secret",
+  },
+  materialDeck: {
+    faceDown: true,
+    id: "materialDeck" as ZoneId,
+    maxSize: 15,
+    name: "zones.materialDeck",
+    ordered: true,
+    owner: undefined,
+    visibility: "secret",
+  },
+  memory: {
+    faceDown: false,
+    id: "memory" as ZoneId,
+    maxSize: undefined,
+    name: "zones.memory",
+    ordered: false,
+    owner: undefined,
+    visibility: "private",
   },
 };
 
@@ -260,57 +260,57 @@ const grandArchiveFlow: FlowDefinition<TestGameState> = {
     onBegin: (_context) => {},
     onEnd: (_context) => {},
     phases: {
-      wakeUp: {
-        order: 1,
-        next: "materialize",
+      draw: {
+        endIf: () => true,
+        next: "main",
         onBegin: (context) => {
           context.state.opportunityPlayer = null;
         },
-        endIf: () => true,
+        order: 4,
+      },
+      end: {
+        endIf: (_context) => {
+          return true;
+        },
+        next: "wakeUp",
+        onBegin: (context) => {
+          const currentPlayer = context.getCurrentPlayer();
+          context.state.opportunityPlayer = currentPlayer as PlayerId;
+        },
+        order: 6,
+      },
+      main: {
+        next: "end",
+        onBegin: (context) => {
+          const currentPlayer = context.getCurrentPlayer();
+          context.state.opportunityPlayer = currentPlayer as PlayerId;
+        },
+        order: 5,
       },
       materialize: {
-        order: 2,
+        endIf: () => true,
         next: "recollection",
         onBegin: (context) => {
           context.state.opportunityPlayer = null;
         },
-        endIf: () => true,
+        order: 2,
       },
       recollection: {
-        order: 3,
         next: "draw",
         onBegin: (context) => {
           // Grant Opportunity using flow context!
           const currentPlayer = context.getCurrentPlayer();
           context.state.opportunityPlayer = currentPlayer as PlayerId;
         },
+        order: 3,
       },
-      draw: {
-        order: 4,
-        next: "main",
+      wakeUp: {
+        endIf: () => true,
+        next: "materialize",
         onBegin: (context) => {
           context.state.opportunityPlayer = null;
         },
-        endIf: () => true,
-      },
-      main: {
-        order: 5,
-        next: "end",
-        onBegin: (context) => {
-          const currentPlayer = context.getCurrentPlayer();
-          context.state.opportunityPlayer = currentPlayer as PlayerId;
-        },
-      },
-      end: {
-        order: 6,
-        next: "wakeUp",
-        onBegin: (context) => {
-          const currentPlayer = context.getCurrentPlayer();
-          context.state.opportunityPlayer = currentPlayer as PlayerId;
-        },
-        endIf: (_context) => {
-          return true;
-        },
+        order: 1,
       },
     },
   },
@@ -327,10 +327,7 @@ const grandArchiveFlow: FlowDefinition<TestGameState> = {
  * ✅ Standard moves library (concede)
  * ✅ Flow context access in phase hooks
  */
-export function createMockGrandArchiveGame(): GameDefinition<
-  TestGameState,
-  TestMoves
-> {
+export function createMockGrandArchiveGame(): GameDefinition<TestGameState, TestMoves> {
   return {
     name: "Test Grand Archive Game",
     zones: grandArchiveZones,
@@ -339,8 +336,8 @@ export function createMockGrandArchiveGame(): GameDefinition<
 
     // Configure engine's tracker system
     trackers: {
-      perTurn: ["hasMaterialized", "hasDrawn"],
       perPlayer: true,
+      perTurn: ["hasMaterialized", "hasDrawn"],
     },
 
     /**
@@ -351,22 +348,19 @@ export function createMockGrandArchiveGame(): GameDefinition<
      */
     setup: (players) => {
       const playerIds = players.map((p) => p.id);
-      const champions: Record<
-        string,
-        { id: string; level: number; damage: number }
-      > = {};
+      const champions: Record<string, { id: string; level: number; damage: number }> = {};
 
       for (const playerId of playerIds) {
         champions[playerId] = {
+          damage: 0,
           id: `${playerId}-champion`,
           level: 0,
-          damage: 0,
         };
       }
 
       return {
-        opportunityPlayer: null,
         champions,
+        opportunityPlayer: null,
       };
     },
   };

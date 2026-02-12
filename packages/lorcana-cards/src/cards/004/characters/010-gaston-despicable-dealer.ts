@@ -5,8 +5,8 @@ export const gastonDespicableDealer: CharacterCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "play-card",
         from: "hand",
+        type: "play-card",
       },
       id: "9k7-1",
       text: "DUBIOUS RECRUITMENT {E} — You pay 2 {I} less for the next character you play this turn.",

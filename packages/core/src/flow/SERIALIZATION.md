@@ -140,7 +140,7 @@ class ReplaySystem {
   // Jump to specific move
   jumpToMove(moveNumber: number): FlowManager<GameState> {
     const snapshot = this.snapshots[moveNumber];
-    if (!snapshot) throw new Error('Snapshot not found');
+    if (!snapshot) throw new Error("Snapshot not found");
 
     return new FlowManager(gameFlow, snapshot.gameState, {
       restoreFrom: snapshot.flowState,
@@ -148,8 +148,12 @@ class ReplaySystem {
   }
 
   // Step forward/backward
-  stepForward(current: number) { return this.jumpToMove(current + 1); }
-  stepBackward(current: number) { return this.jumpToMove(current - 1); }
+  stepForward(current: number) {
+    return this.jumpToMove(current + 1);
+  }
+  stepBackward(current: number) {
+    return this.jumpToMove(current - 1);
+  }
 }
 ```
 
@@ -157,17 +161,17 @@ class ReplaySystem {
 
 ```typescript
 // Server: Send snapshot to clients
-socket.on('requestGameState', async (gameId) => {
+socket.on("requestGameState", async (gameId) => {
   const manager = activeGames.get(gameId);
 
-  socket.emit('gameState', {
+  socket.emit("gameState", {
     game: manager.getGameState(),
     flow: manager.serializeFlowState(),
   });
 });
 
 // Client: Receive and restore
-socket.on('gameState', (snapshot) => {
+socket.on("gameState", (snapshot) => {
   const manager = new FlowManager(gameFlow, snapshot.game, {
     restoreFrom: snapshot.flow,
   });
@@ -248,11 +252,11 @@ The exact flow position is maintained:
 
 ```typescript
 // Original at main phase, damage segment
-manager.getCurrentPhase();   // "main"
+manager.getCurrentPhase(); // "main"
 manager.getCurrentSegment(); // "damage"
 
 // After save/restore
-restored.getCurrentPhase();   // "main"
+restored.getCurrentPhase(); // "main"
 restored.getCurrentSegment(); // "damage"
 
 // Can continue exactly where left off
@@ -264,12 +268,14 @@ restored.nextSegment();
 Ensure your game state only contains JSON-serializable data:
 
 ✅ **Serializable**:
+
 - Primitives (string, number, boolean)
 - Plain objects
 - Arrays
 - null
 
 ❌ **Not Serializable**:
+
 - Functions
 - Dates (convert to timestamp)
 - Maps/Sets (convert to arrays)
@@ -295,8 +301,12 @@ The same `FlowDefinition` must be used when restoring:
 
 ```typescript
 // ❌ Won't work correctly
-const v1Flow = { /* old definition */ };
-const v2Flow = { /* updated definition */ };
+const v1Flow = {
+  /* old definition */
+};
+const v2Flow = {
+  /* updated definition */
+};
 
 const manager = new FlowManager(v1Flow, state);
 const saved = manager.serializeFlowState();
@@ -339,9 +349,9 @@ async function saveGameWithVersion(manager: FlowManager<GameState>) {
 ```typescript
 function validateSavedGame(save: any): save is SavedGame {
   return (
-    typeof save.gameState === 'object' &&
-    typeof save.flowState === 'object' &&
-    typeof save.flowState.turnNumber === 'number'
+    typeof save.gameState === "object" &&
+    typeof save.flowState === "object" &&
+    typeof save.flowState.turnNumber === "number"
   );
 }
 
@@ -349,7 +359,7 @@ async function safeLoadGame(gameId: string) {
   const saved = await db.games.findById(gameId);
 
   if (!validateSavedGame(saved)) {
-    throw new Error('Invalid save data');
+    throw new Error("Invalid save data");
   }
 
   return new FlowManager(gameFlow, saved.gameState, {
@@ -361,7 +371,7 @@ async function safeLoadGame(gameId: string) {
 ### 3. Compress Large States
 
 ```typescript
-import { compress, decompress } from 'lz-string';
+import { compress, decompress } from "lz-string";
 
 async function saveCompressed(manager: FlowManager<GameState>) {
   const data = {
@@ -386,10 +396,10 @@ async function loadCompressed(gameId: string) {
 ## Testing Serialization
 
 ```typescript
-import { describe, it, expect } from 'bun:test';
+import { describe, it, expect } from "bun:test";
 
-describe('Game Serialization', () => {
-  it('should survive round-trip serialization', () => {
+describe("Game Serialization", () => {
+  it("should survive round-trip serialization", () => {
     const original = new FlowManager(flow, initialState);
     original.nextPhase();
     original.nextPhase();

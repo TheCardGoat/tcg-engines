@@ -4,8 +4,8 @@ export const tinkerBellMostHelpful: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "play-card",
         from: "hand",
+        type: "play-card",
       },
       id: "xkn-1",
       text: "**Evasive** _(Only characters with Evasive can challenge this character.)_\n\n**PIXIE DUST** When you play this character, chosen character gains **Evasive** this turn.",

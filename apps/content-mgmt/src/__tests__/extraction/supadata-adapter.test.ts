@@ -20,7 +20,7 @@ const createMockClient = (): SupadataClient => ({
       thumbnail_url: "https://i.ytimg.com/vi/abc123/maxresdefault.jpg",
       description: "Test video description",
       duration: 600, // 10 minutes
-      view_count: 10000,
+      view_count: 10_000,
       like_count: 500,
       comment_count: 100,
       published_at: "2024-01-15T10:00:00Z",
@@ -29,13 +29,13 @@ const createMockClient = (): SupadataClient => ({
   ),
   transcript: mock(() =>
     Promise.resolve({
+      availableLangs: ["en", "es"],
       content: [
-        { text: "Hello everyone", offset: 0, duration: 2000 },
-        { text: "Welcome to my video", offset: 2000, duration: 3000 },
-        { text: "Today we will discuss", offset: 5000, duration: 2500 },
+        { duration: 2000, offset: 0, text: "Hello everyone" },
+        { duration: 3000, offset: 2000, text: "Welcome to my video" },
+        { duration: 2500, offset: 5000, text: "Today we will discuss" },
       ],
       lang: "en",
-      availableLangs: ["en", "es"],
     }),
   ),
 });
@@ -51,16 +51,12 @@ describe("SupadataExtractionAdapter", () => {
 
   describe("parseUrl", () => {
     it("should parse standard YouTube URL", () => {
-      const result = adapter.parseUrl(
-        "https://www.youtube.com/watch?v=abc123def45",
-      );
+      const result = adapter.parseUrl("https://www.youtube.com/watch?v=abc123def45");
 
       expect(result).not.toBeNull();
       expect(result?.sourceType).toBe("youtube");
       expect(result?.contentId).toBe("abc123def45");
-      expect(result?.normalizedUrl).toBe(
-        "https://www.youtube.com/watch?v=abc123def45",
-      );
+      expect(result?.normalizedUrl).toBe("https://www.youtube.com/watch?v=abc123def45");
     });
 
     it("should parse short YouTube URL", () => {
@@ -71,36 +67,28 @@ describe("SupadataExtractionAdapter", () => {
     });
 
     it("should parse mobile YouTube URL", () => {
-      const result = adapter.parseUrl(
-        "https://m.youtube.com/watch?v=abc123def45",
-      );
+      const result = adapter.parseUrl("https://m.youtube.com/watch?v=abc123def45");
 
       expect(result).not.toBeNull();
       expect(result?.contentId).toBe("abc123def45");
     });
 
     it("should parse YouTube Shorts URL", () => {
-      const result = adapter.parseUrl(
-        "https://www.youtube.com/shorts/abc123def45",
-      );
+      const result = adapter.parseUrl("https://www.youtube.com/shorts/abc123def45");
 
       expect(result).not.toBeNull();
       expect(result?.contentId).toBe("abc123def45");
     });
 
     it("should parse embed URL", () => {
-      const result = adapter.parseUrl(
-        "https://www.youtube.com/embed/abc123def45",
-      );
+      const result = adapter.parseUrl("https://www.youtube.com/embed/abc123def45");
 
       expect(result).not.toBeNull();
       expect(result?.contentId).toBe("abc123def45");
     });
 
     it("should parse live URL", () => {
-      const result = adapter.parseUrl(
-        "https://www.youtube.com/live/abc123def45",
-      );
+      const result = adapter.parseUrl("https://www.youtube.com/live/abc123def45");
 
       expect(result).not.toBeNull();
       expect(result?.contentId).toBe("abc123def45");
@@ -112,9 +100,7 @@ describe("SupadataExtractionAdapter", () => {
       );
 
       expect(result).not.toBeNull();
-      expect(result?.normalizedUrl).toBe(
-        "https://www.youtube.com/watch?v=abc123def45",
-      );
+      expect(result?.normalizedUrl).toBe("https://www.youtube.com/watch?v=abc123def45");
     });
 
     it("should return null for invalid URL", () => {
@@ -132,9 +118,7 @@ describe("SupadataExtractionAdapter", () => {
 
   describe("canHandle", () => {
     it("should return true for YouTube URLs", () => {
-      expect(
-        adapter.canHandle("https://www.youtube.com/watch?v=abc123def45"),
-      ).toBe(true);
+      expect(adapter.canHandle("https://www.youtube.com/watch?v=abc123def45")).toBe(true);
       expect(adapter.canHandle("https://youtu.be/abc123def45")).toBe(true);
     });
 
@@ -160,10 +144,10 @@ describe("SupadataExtractionAdapter", () => {
       const result = await adapter.fetchContent("abc123def45");
 
       expect(result.segments?.[0]).toEqual({
-        text: "Hello everyone",
-        offsetMs: 0,
         durationMs: 2000,
         language: undefined,
+        offsetMs: 0,
+        text: "Hello everyone",
       });
     });
   });
@@ -177,7 +161,7 @@ describe("SupadataExtractionAdapter", () => {
       expect(metadata.authorName).toBe("Test Channel");
       expect(metadata.channelId).toBe("UC123");
       expect(metadata.durationSeconds).toBe(600);
-      expect(metadata.viewCount).toBe(10000);
+      expect(metadata.viewCount).toBe(10_000);
       expect(metadata.thumbnailUrl).toContain("ytimg.com");
     });
   });
@@ -205,9 +189,7 @@ describe("SupadataExtractionAdapter", () => {
 
       expect(validation.isValid).toBe(false);
       expect(validation.shouldBlock).toBe(true);
-      expect(validation.errors.some((e) => e.code === "CONTENT_TOO_LONG")).toBe(
-        true,
-      );
+      expect(validation.errors.some((e) => e.code === "CONTENT_TOO_LONG")).toBe(true);
     });
 
     it("should fail validation for missing title", async () => {
@@ -216,8 +198,8 @@ describe("SupadataExtractionAdapter", () => {
         ...mockClient,
         metadata: mock(() =>
           Promise.resolve({
-            title: "",
             author_name: "Test Channel",
+            title: "",
           }),
         ),
       };
@@ -228,9 +210,7 @@ describe("SupadataExtractionAdapter", () => {
       const validation = await emptyAdapter.validateContent(metadata);
 
       expect(validation.isValid).toBe(false);
-      expect(validation.errors.some((e) => e.code === "MISSING_TITLE")).toBe(
-        true,
-      );
+      expect(validation.errors.some((e) => e.code === "MISSING_TITLE")).toBe(true);
     });
   });
 
@@ -240,7 +220,7 @@ describe("SupadataExtractionAdapter", () => {
 
       expect(config.maxDurationSeconds).toBe(1800); // 30 minutes
       expect(config.supportedLanguages).toContain("en");
-      expect(config.extractionTimeoutMs).toBe(60000);
+      expect(config.extractionTimeoutMs).toBe(60_000);
     });
 
     it("should allow custom configuration", () => {

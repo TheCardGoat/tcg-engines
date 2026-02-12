@@ -4,10 +4,10 @@ export const annaDiplomaticQueen: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "discard",
         amount: 1,
-        target: "EACH_OPPONENT",
         chosen: true,
+        target: "EACH_OPPONENT",
+        type: "discard",
       },
       id: "1k2-2",
       text: "• Each opponent chooses and discards a card.",
@@ -15,17 +15,17 @@ export const annaDiplomaticQueen: CharacterCard = {
     },
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
+        duration: "this-turn",
         modifier: 2,
+        stat: "strength",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
-        duration: "this-turn",
+        type: "modify-stat",
       },
       id: "1k2-3",
       text: "• Chosen character gets +2 {S} this turn.",

@@ -4,9 +4,8 @@ export const arielWhoseitCollector: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "ready",
           target: {
             selector: "self",
             count: 1,
@@ -14,8 +13,9 @@ export const arielWhoseitCollector: CharacterCard = {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "ready",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "c6b-1",
       text: "**PRINCE'S CHARM** You may ready this character.",

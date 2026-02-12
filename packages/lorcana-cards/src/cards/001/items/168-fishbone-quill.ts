@@ -4,10 +4,10 @@ export const fishboneQuill: ItemCard = {
   abilities: [
     {
       effect: {
-        type: "put-into-inkwell",
+        facedown: true,
         source: "hand",
         target: "CONTROLLER",
-        facedown: true,
+        type: "put-into-inkwell",
       },
       id: "k4a-1",
       text: "**GO AHEAD AND SIGN** {E} − Put any card from your hand into your inkwell facedown.",

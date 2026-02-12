@@ -4,9 +4,9 @@ export const louisEndearingAlligator: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "restriction",
         restriction: "enters-play-exerted",
         target: "SELF",
+        type: "restriction",
       },
       id: "h6i-1",
       name: "SENSITIVE SOUL",
@@ -15,17 +15,17 @@ export const louisEndearingAlligator: CharacterCard = {
     },
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Reckless",
         target: "CHOSEN_CHARACTER",
+        type: "gain-keyword",
       },
       id: "h6i-2",
       name: "FRIENDLIER THAN HE LOOKS",
       text: "FRIENDLIER THAN HE LOOKS When you play this character, chosen opposing character gains Reckless during their next turn.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

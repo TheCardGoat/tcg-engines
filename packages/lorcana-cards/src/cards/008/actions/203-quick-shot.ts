@@ -4,10 +4,8 @@ export const quickShot: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "deal-damage",
             amount: 1,
             target: {
               selector: "chosen",
@@ -16,13 +14,15 @@ export const quickShot: ActionCard = {
               zones: ["play"],
               cardTypes: ["character"],
             },
+            type: "deal-damage",
           },
           {
-            type: "draw",
             amount: 1,
             target: "CONTROLLER",
+            type: "draw",
           },
         ],
+        type: "sequence",
       },
       id: "1ex-1",
       text: "Deal 1 damage to chosen character. Draw a card.",

@@ -4,23 +4,23 @@ export const scarHeartlessHunter: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "deal-damage",
         amount: 2,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "deal-damage",
       },
       id: "mp6-1",
       name: "BARED TEETH",
       text: "BARED TEETH When you play this character, deal 2 damage to chosen character of yours to deal 2 damage to chosen character.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

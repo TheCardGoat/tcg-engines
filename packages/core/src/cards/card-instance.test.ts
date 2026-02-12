@@ -12,15 +12,15 @@ describe("Card Instance Model", () => {
       const zone = createZoneId("hand");
 
       const card: CardInstanceBase = {
-        id: cardId,
-        definitionId: "fire-bolt",
-        owner,
         controller,
-        zone,
-        tapped: false,
+        definitionId: "fire-bolt",
         flipped: false,
-        revealed: false,
+        id: cardId,
+        owner,
         phased: false,
+        revealed: false,
+        tapped: false,
+        zone,
       };
 
       expect(card.id).toBe(cardId);
@@ -31,15 +31,15 @@ describe("Card Instance Model", () => {
 
     it("should require all mandatory location fields", () => {
       const card: CardInstanceBase = {
-        id: createCardId("card-1"),
-        definitionId: "fire-bolt",
-        owner: createPlayerId("player-1"),
         controller: createPlayerId("player-1"),
-        zone: createZoneId("play"),
-        tapped: false,
+        definitionId: "fire-bolt",
         flipped: false,
-        revealed: false,
+        id: createCardId("card-1"),
+        owner: createPlayerId("player-1"),
         phased: false,
+        revealed: false,
+        tapped: false,
+        zone: createZoneId("play"),
       };
 
       expect(card.zone).toBeDefined();
@@ -48,16 +48,16 @@ describe("Card Instance Model", () => {
 
     it("should support optional position field for ordered zones", () => {
       const card: CardInstanceBase = {
-        id: createCardId("card-1"),
-        definitionId: "fire-bolt",
-        owner: createPlayerId("player-1"),
         controller: createPlayerId("player-1"),
-        zone: createZoneId("deck"),
-        position: 5,
-        tapped: false,
+        definitionId: "fire-bolt",
         flipped: false,
-        revealed: false,
+        id: createCardId("card-1"),
+        owner: createPlayerId("player-1"),
         phased: false,
+        position: 5,
+        revealed: false,
+        tapped: false,
+        zone: createZoneId("deck"),
       };
 
       expect(card.position).toBe(5);
@@ -65,15 +65,15 @@ describe("Card Instance Model", () => {
 
     it("should work without optional position field", () => {
       const card: CardInstanceBase = {
-        id: createCardId("card-1"),
-        definitionId: "fire-bolt",
-        owner: createPlayerId("player-1"),
         controller: createPlayerId("player-1"),
-        zone: createZoneId("hand"),
-        tapped: false,
+        definitionId: "fire-bolt",
         flipped: false,
-        revealed: false,
+        id: createCardId("card-1"),
+        owner: createPlayerId("player-1"),
         phased: false,
+        revealed: false,
+        tapped: false,
+        zone: createZoneId("hand"),
       };
 
       expect(card.position).toBeUndefined();
@@ -81,15 +81,15 @@ describe("Card Instance Model", () => {
 
     it("should require all state flag fields", () => {
       const card: CardInstanceBase = {
-        id: createCardId("card-1"),
-        definitionId: "fire-bolt",
-        owner: createPlayerId("player-1"),
         controller: createPlayerId("player-1"),
-        zone: createZoneId("play"),
-        tapped: false,
+        definitionId: "fire-bolt",
         flipped: false,
-        revealed: false,
+        id: createCardId("card-1"),
+        owner: createPlayerId("player-1"),
         phased: false,
+        revealed: false,
+        tapped: false,
+        zone: createZoneId("play"),
       };
 
       expect(typeof card.tapped).toBe("boolean");
@@ -100,15 +100,15 @@ describe("Card Instance Model", () => {
 
     it("should support tapped state", () => {
       const card: CardInstanceBase = {
-        id: createCardId("card-1"),
-        definitionId: "creature",
-        owner: createPlayerId("player-1"),
         controller: createPlayerId("player-1"),
-        zone: createZoneId("play"),
-        tapped: true,
+        definitionId: "creature",
         flipped: false,
-        revealed: false,
+        id: createCardId("card-1"),
+        owner: createPlayerId("player-1"),
         phased: false,
+        revealed: false,
+        tapped: true,
+        zone: createZoneId("play"),
       };
 
       expect(card.tapped).toBe(true);
@@ -116,15 +116,15 @@ describe("Card Instance Model", () => {
 
     it("should support flipped state (face-down)", () => {
       const card: CardInstanceBase = {
-        id: createCardId("card-1"),
-        definitionId: "morph-creature",
-        owner: createPlayerId("player-1"),
         controller: createPlayerId("player-1"),
-        zone: createZoneId("play"),
-        tapped: false,
+        definitionId: "morph-creature",
         flipped: true,
-        revealed: false,
+        id: createCardId("card-1"),
+        owner: createPlayerId("player-1"),
         phased: false,
+        revealed: false,
+        tapped: false,
+        zone: createZoneId("play"),
       };
 
       expect(card.flipped).toBe(true);
@@ -132,15 +132,15 @@ describe("Card Instance Model", () => {
 
     it("should support revealed state (temporarily visible)", () => {
       const card: CardInstanceBase = {
-        id: createCardId("card-1"),
-        definitionId: "fire-bolt",
-        owner: createPlayerId("player-1"),
         controller: createPlayerId("player-1"),
-        zone: createZoneId("hand"),
-        tapped: false,
+        definitionId: "fire-bolt",
         flipped: false,
-        revealed: true,
+        id: createCardId("card-1"),
+        owner: createPlayerId("player-1"),
         phased: false,
+        revealed: true,
+        tapped: false,
+        zone: createZoneId("hand"),
       };
 
       expect(card.revealed).toBe(true);
@@ -148,15 +148,15 @@ describe("Card Instance Model", () => {
 
     it("should support phased state (not in play but not in another zone)", () => {
       const card: CardInstanceBase = {
-        id: createCardId("card-1"),
-        definitionId: "creature",
-        owner: createPlayerId("player-1"),
         controller: createPlayerId("player-1"),
-        zone: createZoneId("play"),
-        tapped: false,
+        definitionId: "creature",
         flipped: false,
-        revealed: false,
+        id: createCardId("card-1"),
+        owner: createPlayerId("player-1"),
         phased: true,
+        revealed: false,
+        tapped: false,
+        zone: createZoneId("play"),
       };
 
       expect(card.phased).toBe(true);
@@ -167,15 +167,15 @@ describe("Card Instance Model", () => {
       const controller = createPlayerId("player-2");
 
       const card: CardInstanceBase = {
-        id: createCardId("card-1"),
-        definitionId: "mind-control-target",
-        owner,
         controller,
-        zone: createZoneId("play"),
-        tapped: false,
+        definitionId: "mind-control-target",
         flipped: false,
-        revealed: false,
+        id: createCardId("card-1"),
+        owner,
         phased: false,
+        revealed: false,
+        tapped: false,
+        zone: createZoneId("play"),
       };
 
       expect(card.owner).toBe(owner);
@@ -188,15 +188,15 @@ describe("Card Instance Model", () => {
     it("should enforce CardId type for id field", () => {
       const cardId = createCardId("card-1");
       const card: CardInstanceBase = {
-        id: cardId,
-        definitionId: "fire-bolt",
-        owner: createPlayerId("player-1"),
         controller: createPlayerId("player-1"),
-        zone: createZoneId("play"),
-        tapped: false,
+        definitionId: "fire-bolt",
         flipped: false,
-        revealed: false,
+        id: cardId,
+        owner: createPlayerId("player-1"),
         phased: false,
+        revealed: false,
+        tapped: false,
+        zone: createZoneId("play"),
       };
 
       const _typeCheck: typeof cardId = card.id;
@@ -208,15 +208,15 @@ describe("Card Instance Model", () => {
       const controller = createPlayerId("player-2");
 
       const card: CardInstanceBase = {
-        id: createCardId("card-1"),
-        definitionId: "fire-bolt",
-        owner,
         controller,
-        zone: createZoneId("play"),
-        tapped: false,
+        definitionId: "fire-bolt",
         flipped: false,
-        revealed: false,
+        id: createCardId("card-1"),
+        owner,
         phased: false,
+        revealed: false,
+        tapped: false,
+        zone: createZoneId("play"),
       };
 
       const _ownerTypeCheck: typeof owner = card.owner;
@@ -228,15 +228,15 @@ describe("Card Instance Model", () => {
     it("should enforce ZoneId type for zone field", () => {
       const zone = createZoneId("play");
       const card: CardInstanceBase = {
-        id: createCardId("card-1"),
-        definitionId: "fire-bolt",
-        owner: createPlayerId("player-1"),
         controller: createPlayerId("player-1"),
-        zone,
-        tapped: false,
+        definitionId: "fire-bolt",
         flipped: false,
-        revealed: false,
+        id: createCardId("card-1"),
+        owner: createPlayerId("player-1"),
         phased: false,
+        revealed: false,
+        tapped: false,
+        zone,
       };
 
       const _typeCheck: typeof zone = card.zone;
@@ -246,19 +246,19 @@ describe("Card Instance Model", () => {
 
   describe("CardInstance<TCustomState>", () => {
     it("should extend CardInstanceBase with empty custom state", () => {
-      // biome-ignore lint/complexity/noBannedTypes: Empty object type is intentional for testing
+      // Biome-ignore lint/complexity/noBannedTypes: Empty object type is intentional for testing
       type EmptyCard = CardInstance<{}>;
 
       const card: EmptyCard = {
-        id: createCardId("card-1"),
-        definitionId: "fire-bolt",
-        owner: createPlayerId("player-1"),
         controller: createPlayerId("player-1"),
-        zone: createZoneId("hand"),
-        tapped: false,
+        definitionId: "fire-bolt",
         flipped: false,
-        revealed: false,
+        id: createCardId("card-1"),
+        owner: createPlayerId("player-1"),
         phased: false,
+        revealed: false,
+        tapped: false,
+        zone: createZoneId("hand"),
       };
 
       // Verify it has all base fields
@@ -270,13 +270,13 @@ describe("Card Instance Model", () => {
     });
 
     it("should extend CardInstanceBase with Magic-style custom state", () => {
-      type MagicCardState = {
+      interface MagicCardState {
         summoningSick: boolean;
         damageTaken: number;
         counters: Record<string, number>;
         attachments: CardId[];
         attachedTo?: CardId;
-      };
+      }
 
       type MagicCard = CardInstance<MagicCardState>;
 
@@ -304,13 +304,13 @@ describe("Card Instance Model", () => {
     });
 
     it("should extend CardInstanceBase with Hearthstone-style custom state", () => {
-      type HearthstoneCardState = {
+      interface HearthstoneCardState {
         damageTaken: number;
         divineShield: boolean;
         stealth: boolean;
         frozen: boolean;
         silenced: boolean;
-      };
+      }
 
       type HearthstoneCard = CardInstance<HearthstoneCardState>;
 
@@ -339,13 +339,13 @@ describe("Card Instance Model", () => {
     });
 
     it("should support attachment relationships", () => {
-      type MagicCardState = {
+      interface MagicCardState {
         summoningSick: boolean;
         damageTaken: number;
         counters: Record<string, number>;
         attachments: CardId[];
         attachedTo?: CardId;
-      };
+      }
 
       type MagicCard = CardInstance<MagicCardState>;
 
@@ -353,36 +353,36 @@ describe("Card Instance Model", () => {
       const auraId = createCardId("aura-1");
 
       const creature: MagicCard = {
-        id: creatureId,
-        definitionId: "grizzly-bears",
-        owner: createPlayerId("player-1"),
+        attachments: [auraId],
         controller: createPlayerId("player-1"),
-        zone: createZoneId("play"),
-        tapped: false,
-        flipped: false,
-        revealed: false,
-        phased: false,
-        summoningSick: false,
-        damageTaken: 0,
         counters: {},
-        attachments: [auraId], // Aura attached to this creature
+        damageTaken: 0,
+        definitionId: "grizzly-bears",
+        flipped: false,
+        id: creatureId,
+        owner: createPlayerId("player-1"),
+        phased: false,
+        revealed: false,
+        summoningSick: false,
+        tapped: false,
+        zone: createZoneId("play"), // Aura attached to this creature
       };
 
       const aura: MagicCard = {
-        id: auraId,
-        definitionId: "holy-strength",
-        owner: createPlayerId("player-1"),
-        controller: createPlayerId("player-1"),
-        zone: createZoneId("play"),
-        tapped: false,
-        flipped: false,
-        revealed: false,
-        phased: false,
-        summoningSick: false,
-        damageTaken: 0,
-        counters: {},
+        attachedTo: creatureId,
         attachments: [],
-        attachedTo: creatureId, // Aura is attached to creature
+        controller: createPlayerId("player-1"),
+        counters: {},
+        damageTaken: 0,
+        definitionId: "holy-strength",
+        flipped: false,
+        id: auraId,
+        owner: createPlayerId("player-1"),
+        phased: false,
+        revealed: false,
+        summoningSick: false,
+        tapped: false,
+        zone: createZoneId("play"), // Aura is attached to creature
       };
 
       expect(creature.attachments).toContain(auraId);
@@ -390,25 +390,25 @@ describe("Card Instance Model", () => {
     });
 
     it("should preserve type safety with custom state", () => {
-      type CustomState = {
+      interface CustomState {
         customField: string;
         customNumber: number;
-      };
+      }
 
       type CustomCard = CardInstance<CustomState>;
 
       const card: CustomCard = {
-        id: createCardId("card-1"),
-        definitionId: "test-card",
-        owner: createPlayerId("player-1"),
         controller: createPlayerId("player-1"),
-        zone: createZoneId("hand"),
-        tapped: false,
-        flipped: false,
-        revealed: false,
-        phased: false,
         customField: "test",
         customNumber: 42,
+        definitionId: "test-card",
+        flipped: false,
+        id: createCardId("card-1"),
+        owner: createPlayerId("player-1"),
+        phased: false,
+        revealed: false,
+        tapped: false,
+        zone: createZoneId("hand"),
       };
 
       // Type checks

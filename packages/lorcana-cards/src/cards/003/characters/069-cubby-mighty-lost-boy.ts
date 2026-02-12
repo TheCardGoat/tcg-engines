@@ -4,16 +4,16 @@ export const cubbyMightyLostBoy: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
-        modifier: 3,
-        target: "CHOSEN_CHARACTER",
         duration: "this-turn",
+        modifier: 3,
+        stat: "strength",
+        target: "CHOSEN_CHARACTER",
+        type: "modify-stat",
       },
       id: "1y3-1",
       name: "THE BEAR",
       text: "THE BEAR Whenever this character moves to a location, he gets +3 {S} this turn.",
-      trigger: { event: "play", timing: "when", on: "SELF" },
+      trigger: { event: "play", on: "SELF", timing: "when" },
       type: "triggered",
     },
   ],

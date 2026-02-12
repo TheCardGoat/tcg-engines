@@ -4,15 +4,15 @@ export const andThenAlongCameZeus: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "deal-damage",
         amount: 5,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "deal-damage",
       },
       id: "v95-1",
       text: "Deal 5 damage to chosen character or location.",

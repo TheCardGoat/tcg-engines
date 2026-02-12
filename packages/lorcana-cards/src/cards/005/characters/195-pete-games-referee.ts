@@ -4,16 +4,16 @@ export const peteGamesReferee: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "play-card",
         from: "hand",
+        type: "play-card",
       },
       id: "1bd-1",
       name: "BLOW THE WHISTLE",
       text: "BLOW THE WHISTLE When you play this character, opponents can't play actions until the start of your next turn.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

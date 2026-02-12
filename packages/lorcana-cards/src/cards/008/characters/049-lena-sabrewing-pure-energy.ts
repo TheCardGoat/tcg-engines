@@ -10,15 +10,15 @@ export const lenaSabrewingPureEnergy: CharacterCard = {
     },
     {
       effect: {
-        type: "deal-damage",
         amount: 1,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "deal-damage",
       },
       id: "1r9-2",
       text: "SUPERNATURAL VENGEANCE {E} – Deal 1 damage to chosen character.",

@@ -4,8 +4,8 @@ export const hundredAcreIslandPoohsHome: LocationCard = {
   abilities: [
     {
       effect: {
-        type: "gain-lore",
         amount: 1,
+        type: "gain-lore",
       },
       id: "5uo-1",
       text: "FRIENDS FOREVER During an opponent's turn, whenever a character is banished here, gain 1 lore.",

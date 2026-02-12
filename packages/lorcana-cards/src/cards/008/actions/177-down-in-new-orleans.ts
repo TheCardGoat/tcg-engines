@@ -4,12 +4,12 @@ export const downInNewOrleans: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
-        effect: {
-          type: "put-on-bottom",
-          target: "CHOSEN_CHARACTER",
-        },
         chooser: "CONTROLLER",
+        effect: {
+          target: "CHOSEN_CHARACTER",
+          type: "put-on-bottom",
+        },
+        type: "optional",
       },
       id: "nqg-1",
       text: "Look at the top 3 cards of your deck. You may reveal a character, item, or location card with cost 6 or less and play it for free. Put the rest on the bottom of your deck in any order.",

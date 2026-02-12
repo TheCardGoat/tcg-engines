@@ -10,9 +10,9 @@ export const heraQueenOfTheGods: CharacterCard = {
     },
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Ward",
         target: "YOUR_CHARACTERS",
+        type: "gain-keyword",
       },
       id: "149-2",
       text: "PROTECTIVE GODDESS Your characters named Zeus gain Ward.",
@@ -20,9 +20,9 @@ export const heraQueenOfTheGods: CharacterCard = {
     },
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Evasive",
         target: "YOUR_CHARACTERS",
+        type: "gain-keyword",
       },
       id: "149-3",
       text: "YOU'RE A TRUE HERO Your characters named Hercules gain Evasive.",

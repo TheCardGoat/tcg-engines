@@ -4,9 +4,9 @@ export const theReturnOfHercules: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "play-card",
-        from: "hand",
         cost: "free",
+        from: "hand",
+        type: "play-card",
       },
       id: "nej-1",
       text: "Each player may reveal a character card from their hand and play it for free.",

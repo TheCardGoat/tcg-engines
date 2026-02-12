@@ -4,16 +4,15 @@ export const megaraCaptivatingCynic: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "choice",
+        optionLabels: ["choose and discard a card", "banish this character."],
         options: [
           {
-            type: "discard",
             amount: 1,
-            target: "CONTROLLER",
             chosen: true,
+            target: "CONTROLLER",
+            type: "discard",
           },
           {
-            type: "banish",
             target: {
               selector: "self",
               count: 1,
@@ -21,17 +20,18 @@ export const megaraCaptivatingCynic: CharacterCard = {
               zones: ["play"],
               cardTypes: ["character"],
             },
+            type: "banish",
           },
         ],
-        optionLabels: ["choose and discard a card", "banish this character."],
+        type: "choice",
       },
       id: "13g-1",
       name: "SHADY DEAL",
       text: "SHADY DEAL When you play this character, choose and discard a card or banish this character.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

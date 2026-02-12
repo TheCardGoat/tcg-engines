@@ -4,11 +4,9 @@ export const coconutBasket: ItemCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "remove-damage",
           amount: 2,
-          upTo: true,
           target: {
             selector: "chosen",
             count: 1,
@@ -16,19 +14,21 @@ export const coconutBasket: ItemCard = {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "remove-damage",
+          upTo: true,
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "1d0-1",
       name: "CONSIDER THE COCONUT",
       text: "CONSIDER THE COCONUT Whenever you play a character, you may remove up to 2 damage from chosen character.",
       trigger: {
         event: "play",
-        timing: "whenever",
         on: {
-          controller: "you",
           cardType: "character",
+          controller: "you",
         },
+        timing: "whenever",
       },
       type: "triggered",
     },

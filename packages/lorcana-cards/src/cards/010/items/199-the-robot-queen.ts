@@ -4,9 +4,8 @@ export const theRobotQueen: ItemCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "deal-damage",
           amount: 2,
           target: {
             selector: "chosen",
@@ -15,19 +14,20 @@ export const theRobotQueen: ItemCard = {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "deal-damage",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "n1t-1",
       name: "MAJOR MALFUNCTION",
       text: "MAJOR MALFUNCTION Whenever you play a character, you may pay 1 {I} and banish this item to deal 2 damage to chosen character.",
       trigger: {
         event: "play",
-        timing: "whenever",
         on: {
-          controller: "you",
           cardType: "character",
+          controller: "you",
         },
+        timing: "whenever",
       },
       type: "triggered",
     },

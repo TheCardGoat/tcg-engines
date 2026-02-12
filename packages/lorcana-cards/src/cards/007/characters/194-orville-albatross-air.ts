@@ -4,9 +4,9 @@ export const orvilleAlbatrossAir: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Evasive",
         target: "SELF",
+        type: "gain-keyword",
       },
       id: "1jn-1",
       text: "WELCOME ABOARD, FOLKS During your turn, while you have a character named Miss Bianca or Bernard in play, this character gains Evasive.",

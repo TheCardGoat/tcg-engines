@@ -4,20 +4,20 @@ export const tinkerBellTinyTactician: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "draw",
             amount: 1,
             target: "CONTROLLER",
+            type: "draw",
           },
           {
-            type: "discard",
             amount: 1,
-            target: "CONTROLLER",
             chosen: true,
+            target: "CONTROLLER",
+            type: "discard",
           },
         ],
+        type: "sequence",
       },
       id: "s44-1",
       text: "**Battle plans** {E} - Draw a card, then choose and discard a card.",

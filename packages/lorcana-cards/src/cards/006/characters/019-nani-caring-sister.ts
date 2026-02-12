@@ -10,16 +10,16 @@ export const naniCaringSister: CharacterCard = {
     },
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: -1,
+        stat: "strength",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "modify-stat",
       },
       id: "1fu-2",
       text: "I AM SO SORRY 2 {I} - Chosen character gets -1 {S} until the start of your next turn.",

@@ -55,9 +55,7 @@ export function parseActivatedAbility(text: string): ParseResult {
 
   const separatorIndex = text.indexOf(separatorMatch[0]);
   const costText = text.slice(0, separatorIndex).trim();
-  const effectText = text
-    .slice(separatorIndex + separatorMatch[0].length)
-    .trim();
+  const effectText = text.slice(separatorIndex + separatorMatch[0].length).trim();
 
   // Parse the cost
   const cost = parseCost(costText);
@@ -73,8 +71,7 @@ export function parseActivatedAbility(text: string): ParseResult {
   const name = nameMatch ? nameMatch[1].trim() : undefined;
 
   // Parse the effect
-  const effect =
-    parseCompositeEffect(effectText) || parseAtomicEffect(effectText);
+  const effect = parseCompositeEffect(effectText) || parseAtomicEffect(effectText);
   if (!effect) {
     return {
       error: "Could not parse effect",

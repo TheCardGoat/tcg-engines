@@ -4,16 +4,16 @@ export const timeToGo: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "that character had a card under them",
+          type: "if",
         },
         then: {
-          type: "draw",
           amount: 3,
           target: "CONTROLLER",
+          type: "draw",
         },
+        type: "conditional",
       },
       id: "cfj-1",
       text: "Banish chosen character of yours to draw 2 cards. If that character had a card under them, draw 3 cards instead.",

@@ -4,10 +4,10 @@ export const razoulPalaceGuard: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: 2,
+        stat: "strength",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "1xc-1",
       text: "LOOKY HERE While this character has no damage, he gets +2 {S}.",

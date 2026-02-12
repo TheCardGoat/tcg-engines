@@ -4,10 +4,8 @@ export const rayaGuardianOfTheDragonGem: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "ready",
             target: {
               selector: "chosen",
               count: 1,
@@ -15,22 +13,24 @@ export const rayaGuardianOfTheDragonGem: CharacterCard = {
               zones: ["play"],
               cardTypes: ["character"],
             },
+            type: "ready",
           },
           {
-            type: "restriction",
+            duration: "this-turn",
             restriction: "cant-quest",
             target: "SELF",
-            duration: "this-turn",
+            type: "restriction",
           },
         ],
+        type: "sequence",
       },
       id: "1n3-1",
       name: "WE HAVE TO COME TOGETHER",
       text: "WE HAVE TO COME TOGETHER When you play this character, ready chosen character of yours at a location. They can't quest for the rest of this turn.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

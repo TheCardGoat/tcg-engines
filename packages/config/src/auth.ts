@@ -26,10 +26,10 @@ export type AuthEnv = z.infer<z.ZodObject<typeof authServerSchema>>;
  * All values are properly typed and validated.
  */
 export const authEnv = createEnv({
-  isServer: true,
-  server: authServerSchema,
-  runtimeEnv: process.env,
   emptyStringAsUndefined: true,
+  isServer: true,
+  runtimeEnv: process.env,
+  server: authServerSchema,
 });
 
 /**
@@ -49,14 +49,12 @@ export const authEnv = createEnv({
  * });
  * ```
  */
-export function parseAuthEnv(
-  runtimeEnv: Record<string, string | undefined>,
-): AuthEnv {
+export function parseAuthEnv(runtimeEnv: Record<string, string | undefined>): AuthEnv {
   return createEnv({
-    isServer: true,
-    server: authServerSchema,
-    runtimeEnv,
     emptyStringAsUndefined: true,
+    isServer: true,
+    runtimeEnv,
+    server: authServerSchema,
   });
 }
 

@@ -17,9 +17,7 @@ describe("Main Parser", () => {
   });
 
   it("should parse triggered ability", () => {
-    const result = parseAbilityText(
-      "When you play this character, draw 2 cards.",
-    );
+    const result = parseAbilityText("When you play this character, draw 2 cards.");
 
     expect(result.success).toBe(true);
     const ability = result.ability?.ability as any;
@@ -45,9 +43,7 @@ describe("Main Parser", () => {
   });
 
   it("should handle lenient mode with warnings", () => {
-    const result = parseAbilityText(
-      "Unknown ability text that cannot be parsed",
-    );
+    const result = parseAbilityText("Unknown ability text that cannot be parsed");
 
     // Lenient mode returns success: false but doesn't set error field
     expect(result.success).toBe(false);

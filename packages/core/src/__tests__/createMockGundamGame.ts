@@ -5,12 +5,12 @@ import type { CardId, PlayerId, ZoneId } from "../types";
 import type { CardZoneConfig } from "../zones";
 
 // Mock Gundam game state - SIMPLIFIED!
-type TestGameState = {
+interface TestGameState {
   activeResources: Record<string, number>;
   attackedThisTurn: CardId[];
-};
+}
 
-type TestMoves = {
+interface TestMoves {
   // Setup moves
   initializeDecks: { playerId: PlayerId };
   placeShields: { playerId: PlayerId };
@@ -27,7 +27,7 @@ type TestMoves = {
   // Standard moves
   pass: { playerId: PlayerId };
   concede: { playerId: PlayerId };
-};
+}
 
 // Gundam move definitions
 const gundamMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
@@ -35,21 +35,21 @@ const gundamMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
   initializeDecks: {
     reducer: (_draft, context) => {
       const { zones } = context;
-      const playerId = context.params.playerId;
+      const { playerId } = context.params;
 
       // Use engine's createDeck utility!
       zones.createDeck({
-        zoneId: "deck" as ZoneId,
-        playerId,
         cardCount: 50,
+        playerId,
         shuffle: true,
+        zoneId: "deck" as ZoneId,
       });
 
       zones.createDeck({
-        zoneId: "resourceDeck" as ZoneId,
-        playerId,
         cardCount: 10,
+        playerId,
         shuffle: true,
+        zoneId: "resourceDeck" as ZoneId,
       });
 
       // NO MORE: draft.setupStep
@@ -59,16 +59,16 @@ const gundamMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
   placeShields: {
     reducer: (_draft, context) => {
       const { zones } = context;
-      const playerId = context.params.playerId;
+      const { playerId } = context.params;
 
       // BEFORE: Manual loop (9 lines)
       // AFTER: Use bulkMove utility!
       zones.bulkMove({
-        from: "deck" as ZoneId,
-        to: "shieldSection" as ZoneId,
         count: 6,
+        from: "deck" as ZoneId,
         playerId,
         position: "bottom",
+        to: "shieldSection" as ZoneId,
       });
 
       // NO MORE: draft.setupStep
@@ -78,15 +78,15 @@ const gundamMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
   createTokens: {
     reducer: (_draft, context) => {
       const { zones } = context;
-      const playerId = context.params.playerId;
-      const playerIndex = context.params.playerIndex;
+      const { playerId } = context.params;
+      const { playerIndex } = context.params;
 
       // Create EX Base token
       const baseTokenId = `${playerId}-token-ex-base` as CardId;
       zones.moveCard({
         cardId: baseTokenId,
-        targetZoneId: "baseSection" as ZoneId,
         position: "bottom",
+        targetZoneId: "baseSection" as ZoneId,
       });
 
       // Second player gets EX Resource token
@@ -95,8 +95,8 @@ const gundamMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
         const resourceTokenId = `${playerId}-token-ex-resource` as CardId;
         zones.moveCard({
           cardId: resourceTokenId,
-          targetZoneId: "resourceArea" as ZoneId,
           position: "bottom",
+          targetZoneId: "resourceArea" as ZoneId,
         });
       }
 
@@ -107,15 +107,15 @@ const gundamMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
   drawInitialHand: {
     reducer: (_draft, context) => {
       const { zones } = context;
-      const playerId = context.params.playerId;
+      const { playerId } = context.params;
 
       // BEFORE: Manual loop (11 lines)
       // AFTER: Use drawCards utility!
       zones.drawCards({
-        from: "deck" as ZoneId,
-        to: "hand" as ZoneId,
         count: 7,
+        from: "deck" as ZoneId,
         playerId,
+        to: "hand" as ZoneId,
       });
 
       // NO MORE: draft.setupStep, draft.mulliganOffered
@@ -125,16 +125,16 @@ const gundamMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
   decideMulligan: {
     reducer: (_draft, context) => {
       const { zones } = context;
-      const playerId = context.params.playerId;
-      const redraw = context.params.redraw;
+      const { playerId } = context.params;
+      const { redraw } = context.params;
 
       if (redraw) {
         // BEFORE: Manual card return + shuffle + redraw (20 lines)
         // AFTER: Use mulligan utility (1 line!)
         zones.mulligan({
-          hand: "hand" as ZoneId,
           deck: "deck" as ZoneId,
           drawCount: 7,
+          hand: "hand" as ZoneId,
           playerId,
         });
       }
@@ -153,21 +153,21 @@ const gundamMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
   draw: {
     reducer: (_draft, context) => {
       const { zones } = context;
-      const playerId = context.params.playerId;
-      const count = context.params.count;
+      const { playerId } = context.params;
+      const { count } = context.params;
 
       zones.drawCards({
-        from: "deck" as ZoneId,
-        to: "hand" as ZoneId,
         count,
+        from: "deck" as ZoneId,
         playerId,
+        to: "hand" as ZoneId,
       });
     },
   },
 
   deployUnit: {
     reducer: (_draft, context) => {
-      const cardId = context.params.cardId;
+      const { cardId } = context.params;
 
       context.zones.moveCard({
         cardId,
@@ -178,7 +178,7 @@ const gundamMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
 
   deployBase: {
     reducer: (_draft, context) => {
-      const cardId = context.params.cardId;
+      const { cardId } = context.params;
 
       context.zones.moveCard({
         cardId,
@@ -189,21 +189,20 @@ const gundamMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
 
   playResource: {
     condition: (state, context) => {
-      const playerId = context.params.playerId;
+      const { playerId } = context.params;
       // Use engine's tracker system!
       return !context.trackers?.check("hasPlayedResource", playerId);
     },
     reducer: (draft, context) => {
-      const playerId = context.params.playerId;
-      const cardId = context.params.cardId;
+      const { playerId } = context.params;
+      const { cardId } = context.params;
 
       context.zones.moveCard({
         cardId,
         targetZoneId: "resourceArea" as ZoneId,
       });
 
-      draft.activeResources[playerId] =
-        (draft.activeResources[playerId] || 0) + 1;
+      draft.activeResources[playerId] = (draft.activeResources[playerId] || 0) + 1;
 
       // Mark as played
       context.trackers?.mark("hasPlayedResource", playerId);
@@ -212,7 +211,7 @@ const gundamMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
 
   attack: {
     reducer: (draft, context) => {
-      const attackerId = context.params.attackerId;
+      const { attackerId } = context.params;
 
       // Track attacker this turn
       draft.attackedThisTurn.push(attackerId);
@@ -231,77 +230,77 @@ const gundamMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
 
 // Gundam zones configuration (unchanged)
 const gundamZones: Record<string, CardZoneConfig> = {
+  baseSection: {
+    faceDown: false,
+    id: "baseSection" as ZoneId,
+    maxSize: 1,
+    name: "zones.baseSection",
+    ordered: false,
+    owner: undefined,
+    visibility: "public",
+  },
   deck: {
+    faceDown: true,
     id: "deck" as ZoneId,
+    maxSize: 50,
     name: "zones.deck",
-    visibility: "secret",
     ordered: true,
     owner: undefined,
-    faceDown: true,
-    maxSize: 50,
+    visibility: "secret",
   },
   hand: {
+    faceDown: false,
     id: "hand" as ZoneId,
+    maxSize: undefined,
     name: "zones.hand",
+    ordered: false,
+    owner: undefined,
     visibility: "private",
-    ordered: false,
-    owner: undefined,
-    faceDown: false,
-    maxSize: undefined,
-  },
-  resourceDeck: {
-    id: "resourceDeck" as ZoneId,
-    name: "zones.resourceDeck",
-    visibility: "secret",
-    ordered: true,
-    owner: undefined,
-    faceDown: true,
-    maxSize: 10,
-  },
-  resourceArea: {
-    id: "resourceArea" as ZoneId,
-    name: "zones.resourceArea",
-    visibility: "public",
-    ordered: false,
-    owner: undefined,
-    faceDown: false,
-    maxSize: undefined,
-  },
-  baseSection: {
-    id: "baseSection" as ZoneId,
-    name: "zones.baseSection",
-    visibility: "public",
-    ordered: false,
-    owner: undefined,
-    faceDown: false,
-    maxSize: 1,
-  },
-  unitArea: {
-    id: "unitArea" as ZoneId,
-    name: "zones.unitArea",
-    visibility: "public",
-    ordered: false,
-    owner: undefined,
-    faceDown: false,
-    maxSize: undefined,
-  },
-  shieldSection: {
-    id: "shieldSection" as ZoneId,
-    name: "zones.shieldSection",
-    visibility: "secret",
-    ordered: true,
-    owner: undefined,
-    faceDown: true,
-    maxSize: 6,
   },
   junkYard: {
+    faceDown: false,
     id: "junkYard" as ZoneId,
+    maxSize: undefined,
     name: "zones.junkYard",
-    visibility: "public",
     ordered: false,
     owner: undefined,
+    visibility: "public",
+  },
+  resourceArea: {
     faceDown: false,
+    id: "resourceArea" as ZoneId,
     maxSize: undefined,
+    name: "zones.resourceArea",
+    ordered: false,
+    owner: undefined,
+    visibility: "public",
+  },
+  resourceDeck: {
+    faceDown: true,
+    id: "resourceDeck" as ZoneId,
+    maxSize: 10,
+    name: "zones.resourceDeck",
+    ordered: true,
+    owner: undefined,
+    visibility: "secret",
+  },
+  shieldSection: {
+    faceDown: true,
+    id: "shieldSection" as ZoneId,
+    maxSize: 6,
+    name: "zones.shieldSection",
+    ordered: true,
+    owner: undefined,
+    visibility: "secret",
+  },
+  unitArea: {
+    faceDown: false,
+    id: "unitArea" as ZoneId,
+    maxSize: undefined,
+    name: "zones.unitArea",
+    ordered: false,
+    owner: undefined,
+    visibility: "public",
   },
 };
 
@@ -312,56 +311,46 @@ const gundamFlow: FlowDefinition<TestGameState> = {
     onBegin: (_context) => {},
     onEnd: (_context) => {},
     phases: {
-      start: {
-        order: 1,
-        next: "draw",
-        onBegin: (_context) => {},
-        endIf: () => true,
-      },
       draw: {
-        order: 2,
+        endIf: () => true,
         next: "resource",
         onBegin: (_context) => {},
-        endIf: () => true,
-      },
-      resource: {
-        order: 3,
-        next: "main",
-        onBegin: (_context) => {},
-      },
-      main: {
-        order: 4,
-        next: "end",
-        onBegin: (_context) => {},
+        order: 2,
       },
       end: {
-        order: 5,
+        endIf: () => true,
         next: "start",
         onBegin: (context) => {
           // Clear attacked units at end of turn
           context.state.attackedThisTurn = [];
         },
+        order: 5,
+      },
+      main: {
+        next: "end",
+        onBegin: (_context) => {},
+        order: 4,
+      },
+      resource: {
+        next: "main",
+        onBegin: (_context) => {},
+        order: 3,
+      },
+      start: {
         endIf: () => true,
+        next: "draw",
+        onBegin: (_context) => {},
+        order: 1,
       },
     },
   },
 };
 
-export function createMockGundamGame(): GameDefinition<
-  TestGameState,
-  TestMoves
-> {
+export function createMockGundamGame(): GameDefinition<TestGameState, TestMoves> {
   return {
-    name: "Test Gundam Game",
-    zones: gundamZones,
     flow: gundamFlow,
     moves: gundamMoves,
-
-    trackers: {
-      perTurn: ["hasPlayedResource"],
-      perPlayer: true,
-    },
-
+    name: "Test Gundam Game",
     setup: (players) => {
       const playerIds = players.map((p) => p.id);
       const activeResources: Record<string, number> = {};
@@ -375,5 +364,12 @@ export function createMockGundamGame(): GameDefinition<
         attackedThisTurn: [],
       };
     },
+
+    trackers: {
+      perPlayer: true,
+      perTurn: ["hasPlayedResource"],
+    },
+
+    zones: gundamZones,
   };
 }

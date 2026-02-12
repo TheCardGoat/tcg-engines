@@ -4,16 +4,16 @@ export const shereKhanMenacingPredator: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-lore",
         amount: 1,
+        type: "gain-lore",
       },
       id: "1nj-1",
       name: "DON'T INSULT MY INTELLIGENCE",
       text: "DON'T INSULT MY INTELLIGENCE Whenever one of your characters challenges another character, gain 1 lore.",
       trigger: {
         event: "banish",
-        timing: "whenever",
         on: "YOUR_OTHER_CHARACTERS",
+        timing: "whenever",
       },
       type: "triggered",
     },

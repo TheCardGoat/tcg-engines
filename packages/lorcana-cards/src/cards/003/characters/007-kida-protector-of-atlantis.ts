@@ -13,18 +13,18 @@ export const kidaProtectorOfAtlantis: CharacterCard = {
     },
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: -3,
+        stat: "strength",
         target: "CHOSEN_CHARACTER",
+        type: "modify-stat",
       },
       id: "194-2",
       name: "PERHAPS WE CAN SAVE OUR FUTURE",
       text: "PERHAPS WE CAN SAVE OUR FUTURE When you play this character, all characters get -3 {S} until the start of your next turn.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

@@ -4,15 +4,15 @@ export const i2i: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "2 or more characters sang this song",
+          type: "if",
         },
         then: {
-          type: "ready",
           target: "CHOSEN_CHARACTER",
+          type: "ready",
         },
+        type: "conditional",
       },
       id: "14j-1",
       text: "Sing Together 9 Each player draws 2 cards and gains 2 lore. If 2 or more characters sang this song, ready them. They can’t quest for the rest of this turn.",

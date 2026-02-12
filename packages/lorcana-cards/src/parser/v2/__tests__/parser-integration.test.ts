@@ -153,9 +153,9 @@ describe("LorcanaParserV2 - Integration", () => {
       parserV2.parseAbility("###");
 
       // Should attempt to parse and potentially log errors
-      expect(
-        consoleLogSpy.mock.calls.length + consoleErrorSpy.mock.calls.length,
-      ).toBeGreaterThan(0);
+      expect(consoleLogSpy.mock.calls.length + consoleErrorSpy.mock.calls.length).toBeGreaterThan(
+        0,
+      );
     });
 
     it("handles null input gracefully", () => {
@@ -184,13 +184,10 @@ describe("LorcanaParserV2 - Integration", () => {
 
       expect(consoleLogSpy).toHaveBeenCalled();
       // Should have success log
-      const logs = consoleLogSpy.mock.calls.map((call: unknown[]) =>
-        JSON.parse(call[0] as string),
-      );
+      const logs = consoleLogSpy.mock.calls.map((call: unknown[]) => JSON.parse(call[0] as string));
       const successLog = logs.find(
         (log: { message: string }) =>
-          log.message.includes("Successfully") ||
-          log.message.includes("Parsed"),
+          log.message.includes("Successfully") || log.message.includes("Parsed"),
       );
       expect(successLog).toBeDefined();
     });
@@ -222,12 +219,8 @@ describe("LorcanaParserV2 - Integration", () => {
 
       expect(consoleLogSpy).toHaveBeenCalled();
       // Should include debug-level logs
-      const logs = consoleLogSpy.mock.calls.map((call: unknown[]) =>
-        JSON.parse(call[0] as string),
-      );
-      const debugLogs = logs.filter(
-        (log: { level: string }) => log.level === "debug",
-      );
+      const logs = consoleLogSpy.mock.calls.map((call: unknown[]) => JSON.parse(call[0] as string));
+      const debugLogs = logs.filter((log: { level: string }) => log.level === "debug");
       expect(debugLogs.length).toBeGreaterThan(0);
     });
 
@@ -239,12 +232,8 @@ describe("LorcanaParserV2 - Integration", () => {
 
       parserV2.parseAbility("draw 2 cards");
 
-      const logs = consoleLogSpy.mock.calls.map((call: unknown[]) =>
-        JSON.parse(call[0] as string),
-      );
-      const debugLogs = logs.filter(
-        (log: { level: string }) => log.level === "debug",
-      );
+      const logs = consoleLogSpy.mock.calls.map((call: unknown[]) => JSON.parse(call[0] as string));
+      const debugLogs = logs.filter((log: { level: string }) => log.level === "debug");
       // After disabling debug logging, no debug logs should be produced
       expect(debugLogs.length).toBe(0);
     });
@@ -254,12 +243,8 @@ describe("LorcanaParserV2 - Integration", () => {
       parserV2.parseAbility("when you play, draw 2 cards");
 
       expect(consoleLogSpy).toHaveBeenCalled();
-      const logs = consoleLogSpy.mock.calls.map((call: unknown[]) =>
-        JSON.parse(call[0] as string),
-      );
-      const debugLogs = logs.filter(
-        (log: { level: string }) => log.level === "debug",
-      );
+      const logs = consoleLogSpy.mock.calls.map((call: unknown[]) => JSON.parse(call[0] as string));
+      const debugLogs = logs.filter((log: { level: string }) => log.level === "debug");
 
       // Should have debug logs from visitor
       expect(debugLogs.length).toBeGreaterThan(0);
@@ -309,9 +294,7 @@ describe("LorcanaParserV2 - Integration", () => {
 
   describe("real-world ability examples", () => {
     it("parses Elsa - Snow Queen ability", () => {
-      const result = parserV2.parseAbility(
-        "when you play this character, draw 2 cards",
-      );
+      const result = parserV2.parseAbility("when you play this character, draw 2 cards");
 
       expect(result).not.toBeNull();
       // Text-based parsing detects "when" prefix and wraps as triggered
@@ -369,9 +352,9 @@ describe("LorcanaParserV2 - Integration", () => {
       parserV2.parseAbility("test");
 
       // Should have logged something (either success or error)
-      expect(
-        consoleLogSpy.mock.calls.length + consoleErrorSpy.mock.calls.length,
-      ).toBeGreaterThan(0);
+      expect(consoleLogSpy.mock.calls.length + consoleErrorSpy.mock.calls.length).toBeGreaterThan(
+        0,
+      );
     });
   });
 
@@ -389,13 +372,7 @@ describe("LorcanaParserV2 - Integration", () => {
     });
 
     it("handles rapid successive parses", () => {
-      const texts = [
-        "draw 1 card",
-        "draw 2 cards",
-        "draw 3 cards",
-        "draw 4 cards",
-        "draw 5 cards",
-      ];
+      const texts = ["draw 1 card", "draw 2 cards", "draw 3 cards", "draw 4 cards", "draw 5 cards"];
 
       const results = texts.map((text) => parserV2.parseAbility(text));
 
@@ -409,9 +386,7 @@ describe("LorcanaParserV2 - Integration", () => {
       parserV2.enableDebugLogging();
       parserV2.parseAbility("when you play, draw 2 cards");
 
-      const logs = consoleLogSpy.mock.calls.map((call: unknown[]) =>
-        JSON.parse(call[0] as string),
-      );
+      const logs = consoleLogSpy.mock.calls.map((call: unknown[]) => JSON.parse(call[0] as string));
       // Debug logs from visitor should have context
       expect(logs.length).toBeGreaterThan(0);
     });
@@ -423,9 +398,7 @@ describe("LorcanaParserV2 - Integration", () => {
 
       // Should have logged debug messages about parsing attempts
       expect(consoleLogSpy).toHaveBeenCalled();
-      const logs = consoleLogSpy.mock.calls.map((call: unknown[]) =>
-        JSON.parse(call[0] as string),
-      );
+      const logs = consoleLogSpy.mock.calls.map((call: unknown[]) => JSON.parse(call[0] as string));
       // First log should contain the text being parsed
       const firstLog = logs[0];
       expect(firstLog.text).toBeDefined();
@@ -445,9 +418,7 @@ describe("LorcanaParserV2 - Integration", () => {
     });
 
     it("exercises text-based parsing for triggered abilities", () => {
-      const result = parserV2.parseAbility(
-        "when you play this character, draw 2 cards",
-      );
+      const result = parserV2.parseAbility("when you play this character, draw 2 cards");
       expect(result?.type).toBe("triggered");
     });
 

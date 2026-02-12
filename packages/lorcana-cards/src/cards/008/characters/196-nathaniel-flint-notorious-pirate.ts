@@ -4,8 +4,8 @@ export const nathanielFlintNotoriousPirate: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "play-card",
         from: "hand",
+        type: "play-card",
       },
       id: "1ub-1",
       text: "PREDATORY INSTINCT You can't play this character unless an opposing character was damaged this turn.",

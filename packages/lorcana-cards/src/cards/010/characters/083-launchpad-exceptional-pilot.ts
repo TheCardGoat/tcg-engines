@@ -4,9 +4,8 @@ export const launchpadExceptionalPilot: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "banish",
           target: {
             selector: "chosen",
             count: 1,
@@ -14,16 +13,17 @@ export const launchpadExceptionalPilot: CharacterCard = {
             zones: ["play"],
             cardTypes: ["location"],
           },
+          type: "banish",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "m1r-1",
       name: "OFF THE MAP",
       text: "OFF THE MAP When you play this character, you may banish chosen location.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

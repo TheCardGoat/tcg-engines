@@ -10,9 +10,8 @@ export const taranPigKeeper: CharacterCard = {
     },
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "return-to-hand",
           target: {
             selector: "chosen",
             count: 1,
@@ -20,16 +19,17 @@ export const taranPigKeeper: CharacterCard = {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "return-to-hand",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "5f5-2",
       name: "FOLLOW THE PIG",
       text: "FOLLOW THE PIG Whenever this character quests, you may return a character card named Hen Wen from your discard to your hand.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

@@ -11,10 +11,10 @@ export const megaraSecretKeeper: CharacterCard = {
     },
     {
       effect: {
-        type: "modify-stat",
-        stat: "lore",
         modifier: 1,
+        stat: "lore",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "1af-2",
       text: "I'LL BE FINE While there's a card under this character, she gets +1 {L} and gains \"Whenever this character is challenged, each opponent chooses and discards a card.\"",

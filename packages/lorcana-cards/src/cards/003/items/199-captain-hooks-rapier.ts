@@ -4,29 +4,29 @@ export const captainHooksRapier: ItemCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "draw",
           amount: 1,
           target: "CONTROLLER",
+          type: "draw",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "1wl-1",
       name: "GET THOSE SCURVY BRATS!",
       text: "GET THOSE SCURVY BRATS! During your turn, whenever one of your characters banishes another character in a challenge, you may pay 1 {I} to draw a card.",
       trigger: {
         event: "banish",
-        timing: "whenever",
         on: "YOUR_OTHER_CHARACTERS",
+        timing: "whenever",
       },
       type: "triggered",
     },
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Challenger",
         target: "YOUR_CHARACTERS",
+        type: "gain-keyword",
         value: 1,
       },
       id: "1wl-2",

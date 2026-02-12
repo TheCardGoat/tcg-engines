@@ -53,7 +53,7 @@ describe("Alpha Clash Game - Refactored Engine Features", () => {
 
   it("should have proper zone configuration for Alpha Clash", () => {
     const gameDefinition = createMockAlphaClashGame();
-    const zones = gameDefinition.zones;
+    const { zones } = gameDefinition;
 
     // Verify all Alpha Clash-specific zones exist
     expect(zones?.deck).toBeDefined();
@@ -82,7 +82,7 @@ describe("Alpha Clash Game - Refactored Engine Features", () => {
 
   it("should have all required game moves defined", () => {
     const gameDefinition = createMockAlphaClashGame();
-    const moves = gameDefinition.moves;
+    const { moves } = gameDefinition;
 
     // Setup moves
     expect(moves.placeContender).toBeDefined();
@@ -134,7 +134,7 @@ describe("Alpha Clash Game - Refactored Engine Features", () => {
 
   it("should have proper flow definition", () => {
     const gameDefinition = createMockAlphaClashGame();
-    const flow = gameDefinition.flow;
+    const { flow } = gameDefinition;
 
     expect(flow).toBeDefined();
     if (!(flow && "turn" in flow)) {
@@ -144,7 +144,7 @@ describe("Alpha Clash Game - Refactored Engine Features", () => {
     expect(flow.turn.phases).toBeDefined();
 
     // Verify Alpha Clash phases
-    const phases = flow.turn.phases;
+    const { phases } = flow.turn;
     expect(phases?.startOfTurn).toBeDefined();
     expect(phases?.expansion).toBeDefined();
     expect(phases?.primary).toBeDefined();
@@ -171,22 +171,22 @@ describe("Alpha Clash Game - Refactored Engine Features", () => {
     // The engine GUARANTEES zones, cards, rng are available
 
     // Verify moves use zones without null checks
-    const placeContender = gameDefinition.moves.placeContender;
+    const { placeContender } = gameDefinition.moves;
     expect(placeContender.reducer).toBeDefined();
 
     // In the old implementation, every move had:
-    // if (!zones) throw new Error("Zone operations not available");
+    // If (!zones) throw new Error("Zone operations not available");
     // This is NO LONGER NEEDED - zones are guaranteed!
   });
 
   it("should use high-level zone utilities for common operations", () => {
     // ✅ NEW FEATURE: Engine provides high-level zone utilities
 
-    // drawInitialHand now uses zones.drawCards() instead of manual loop:
+    // DrawInitialHand now uses zones.drawCards() instead of manual loop:
     // BEFORE: 11 lines of manual card drawing
     // AFTER: 3 lines using zones.drawCards()
 
-    // decideMulligan now uses zones.mulligan() instead of manual logic:
+    // DecideMulligan now uses zones.mulligan() instead of manual logic:
     // BEFORE: 25 lines of card return, shuffle, redraw
     // AFTER: 1 line using zones.mulligan()
 
@@ -223,12 +223,12 @@ describe("Alpha Clash Game - Refactored Engine Features", () => {
 
     const gameDefinition = createMockAlphaClashGame();
 
-    // drawCard move uses context.flow.isFirstTurn
-    const drawCard = gameDefinition.moves.drawCard;
+    // DrawCard move uses context.flow.isFirstTurn
+    const { drawCard } = gameDefinition.moves;
     expect(drawCard.condition).toBeDefined();
 
     // The condition checks context.flow.isFirstTurn and context.flow.currentPlayer
-    // to determine if first player should skip draw on first turn
+    // To determine if first player should skip draw on first turn
   });
 
   it("should demonstrate boilerplate reduction", () => {

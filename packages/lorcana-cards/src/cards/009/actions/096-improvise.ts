@@ -4,12 +4,11 @@ export const improvise: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "modify-stat",
-            stat: "strength",
+            duration: "this-turn",
             modifier: 1,
+            stat: "strength",
             target: {
               selector: "chosen",
               count: 1,
@@ -17,14 +16,15 @@ export const improvise: ActionCard = {
               zones: ["play"],
               cardTypes: ["character"],
             },
-            duration: "this-turn",
+            type: "modify-stat",
           },
           {
-            type: "draw",
             amount: 1,
             target: "CONTROLLER",
+            type: "draw",
           },
         ],
+        type: "sequence",
       },
       id: "gai-1",
       text: "Chosen character gets +1 {S} this turn. Draw a card.",

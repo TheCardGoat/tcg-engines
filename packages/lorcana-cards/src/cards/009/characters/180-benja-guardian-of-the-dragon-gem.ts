@@ -4,9 +4,8 @@ export const benjaGuardianOfTheDragonGem: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "banish",
           target: {
             selector: "chosen",
             count: 1,
@@ -14,16 +13,17 @@ export const benjaGuardianOfTheDragonGem: CharacterCard = {
             zones: ["play"],
             cardTypes: ["item"],
           },
+          type: "banish",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "14h-1",
       name: "WE HAVE A CHOICE",
       text: "WE HAVE A CHOICE When you play this character, you may banish chosen item.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

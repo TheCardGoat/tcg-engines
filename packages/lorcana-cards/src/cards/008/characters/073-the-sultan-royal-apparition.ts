@@ -10,22 +10,22 @@ export const theSultanRoyalApparition: CharacterCard = {
     },
     {
       effect: {
-        type: "exert",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "opponent",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "exert",
       },
       id: "nun-2",
       name: "COMMANDING PRESENCE",
       text: "COMMANDING PRESENCE Whenever one of your Illusion characters quests, exert chosen opposing character.",
       trigger: {
         event: "banish",
-        timing: "whenever",
         on: "YOUR_OTHER_CHARACTERS",
+        timing: "whenever",
       },
       type: "triggered",
     },

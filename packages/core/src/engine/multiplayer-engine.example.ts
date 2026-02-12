@@ -15,23 +15,23 @@ import { MultiplayerEngine } from "./multiplayer-engine";
 // Example 1: Basic Server Setup
 // ============================================================================
 
-type CardGameState = {
-  players: Array<{
+interface CardGameState {
+  players: {
     id: string;
     name: string;
     hand: string[];
     deck: string[];
     score: number;
-  }>;
+  }[];
   currentPlayerIndex: number;
   turnNumber: number;
-};
+}
 
-type CardGameMoves = {
+interface CardGameMoves {
   drawCard: Record<string, never>;
   playCard: { cardId: string };
   endTurn: Record<string, never>;
-};
+}
 
 function createCardGame(): GameDefinition<CardGameState, CardGameMoves> {
   const moves: GameMoveDefinitions<CardGameState, CardGameMoves> = {
@@ -50,37 +50,40 @@ function createCardGame(): GameDefinition<CardGameState, CardGameMoves> {
         }
       },
     },
+    endTurn: {
+      reducer: (draft) => {
+        draft.currentPlayerIndex = (draft.currentPlayerIndex + 1) % draft.players.length;
+        draft.turnNumber += 1;
+      },
+    },
     playCard: {
       condition: (state, context) => {
         const player = state.players[state.currentPlayerIndex];
-        return player
-          ? player.hand.includes(context.params?.cardId as string)
-          : false;
+        return player ? player.hand.includes(context.params?.cardId as string) : false;
       },
       reducer: (draft, context) => {
         const player = draft.players[draft.currentPlayerIndex];
         if (player && context.params?.cardId) {
           const cardId = context.params.cardId as string;
           const index = player.hand.indexOf(cardId);
-          if (index >= 0) {
+          if (index !== -1) {
             player.hand.splice(index, 1);
             player.score += 1;
           }
         }
       },
     },
-    endTurn: {
-      reducer: (draft) => {
-        draft.currentPlayerIndex =
-          (draft.currentPlayerIndex + 1) % draft.players.length;
-        draft.turnNumber += 1;
-      },
-    },
   };
 
   return {
+    endIf: (state) => {
+      const winner = state.players.find((p) => p.score >= 10);
+      return winner ? { reason: "First to 10 points", winner: winner.id } : undefined;
+    },
+    moves,
     name: "Example Card Game",
     setup: (players) => ({
+      currentPlayerIndex: 0,
       players: players.map((p) => ({
         id: p.id,
         name: p.name || "Player",
@@ -88,16 +91,8 @@ function createCardGame(): GameDefinition<CardGameState, CardGameMoves> {
         deck: Array.from({ length: 20 }, (_, i) => `card-${i + 1}`),
         score: 0,
       })),
-      currentPlayerIndex: 0,
       turnNumber: 1,
     }),
-    moves,
-    endIf: (state) => {
-      const winner = state.players.find((p) => p.score >= 10);
-      return winner
-        ? { winner: winner.id, reason: "First to 10 points" }
-        : undefined;
-    },
   };
 }
 
@@ -112,7 +107,7 @@ function createCardGame(): GameDefinition<CardGameState, CardGameMoves> {
  */
 class GameServer {
   private engine: MultiplayerEngine<CardGameState, CardGameMoves>;
-  private clients: Map<string, any> = new Map(); // WebSocket clients
+  private clients = new Map<string, any>(); // WebSocket clients
 
   constructor() {
     const gameDefinition = createCardGame();
@@ -123,25 +118,23 @@ class GameServer {
 
     this.engine = new MultiplayerEngine(gameDefinition, players, {
       mode: "server",
-      seed: "game-123-seed",
+      onMoveRejected: (moveId, error, errorCode) => {
+        console.error(`[Server] Move ${moveId} rejected: ${error} (${errorCode})`);
+      },
       onPatchBroadcast: (broadcast) => {
         // Broadcast patches to all connected clients
         this.broadcastToAllClients({
-          type: "PATCH_UPDATE",
-          patches: broadcast.patches,
           historyIndex: broadcast.historyIndex,
           moveId: broadcast.moveId,
+          patches: broadcast.patches,
+          type: "PATCH_UPDATE",
         });
 
         console.log(
           `[Server] Move ${broadcast.moveId} executed, broadcasting ${broadcast.patches.length} patches`,
         );
       },
-      onMoveRejected: (moveId, error, errorCode) => {
-        console.error(
-          `[Server] Move ${moveId} rejected: ${error} (${errorCode})`,
-        );
-      },
+      seed: "game-123-seed",
     });
   }
 
@@ -155,17 +148,15 @@ class GameServer {
     // Send initial state
     websocket.send(
       JSON.stringify({
-        type: "INITIAL_STATE",
-        state: this.engine.getState(),
         historyIndex: this.engine.getCurrentHistoryIndex(),
+        state: this.engine.getState(),
+        type: "INITIAL_STATE",
       }),
     );
   }
 
   handleClientReconnection(clientId: string, lastKnownIndex: number) {
-    console.log(
-      `[Server] Client ${clientId} reconnecting from ${lastKnownIndex}`,
-    );
+    console.log(`[Server] Client ${clientId} reconnecting from ${lastKnownIndex}`);
 
     const client = this.engine.getClientState(clientId);
     if (client) {
@@ -173,17 +164,17 @@ class GameServer {
       const catchupPatches = this.engine.getCatchupPatches(lastKnownIndex + 1);
 
       return {
-        type: "CATCHUP",
-        patches: catchupPatches,
         currentIndex: this.engine.getCurrentHistoryIndex(),
+        patches: catchupPatches,
+        type: "CATCHUP",
       };
     }
 
     // New client - send full state
     return {
-      type: "INITIAL_STATE",
-      state: this.engine.getState(),
       historyIndex: this.engine.getCurrentHistoryIndex(),
+      state: this.engine.getState(),
+      type: "INITIAL_STATE",
     };
   }
 
@@ -191,8 +182,8 @@ class GameServer {
     console.log(`[Server] Client ${clientId} attempting move ${moveId}`);
 
     const result = this.engine.executeMove(moveId, {
-      playerId: createPlayerId(clientId),
       params,
+      playerId: createPlayerId(clientId),
     });
 
     if (!result.success) {
@@ -201,10 +192,10 @@ class GameServer {
       if (client) {
         client.send(
           JSON.stringify({
-            type: "MOVE_ERROR",
-            moveId,
             error: result.error,
             errorCode: result.errorCode,
+            moveId,
+            type: "MOVE_ERROR",
           }),
         );
       }
@@ -285,25 +276,25 @@ class GameClient {
       const message = JSON.parse(data);
 
       switch (message.type) {
-        case "INITIAL_STATE":
+        case "INITIAL_STATE": {
           this.handleInitialState(message.state, message.historyIndex);
           break;
+        }
 
-        case "PATCH_UPDATE":
+        case "PATCH_UPDATE": {
           this.handlePatchUpdate(message.patches, message.historyIndex);
           break;
+        }
 
-        case "CATCHUP":
+        case "CATCHUP": {
           this.handleCatchup(message.patches, message.currentIndex);
           break;
+        }
 
-        case "MOVE_ERROR":
-          this.handleMoveError(
-            message.moveId,
-            message.error,
-            message.errorCode,
-          );
+        case "MOVE_ERROR": {
+          this.handleMoveError(message.moveId, message.error, message.errorCode);
           break;
+        }
       }
     });
   }
@@ -325,9 +316,7 @@ class GameClient {
   }
 
   private handleCatchup(patches: Patch[], currentIndex: number) {
-    console.log(
-      `[Client] Catching up from ${this.lastSyncedIndex} to ${currentIndex}`,
-    );
+    console.log(`[Client] Catching up from ${this.lastSyncedIndex} to ${currentIndex}`);
 
     if (patches.length > 0) {
       this.engine.applyServerPatches(patches);
@@ -353,8 +342,8 @@ class GameClient {
     // Optional: Check if move is valid before sending to server
     // This provides immediate UI feedback
     const canExecute = this.engine.canExecuteMove(moveId, {
-      playerId: createPlayerId(this.playerId),
       params,
+      playerId: createPlayerId(this.playerId),
     });
 
     if (!canExecute) {
@@ -365,9 +354,9 @@ class GameClient {
     // Send move request to server
     this.websocket.send(
       JSON.stringify({
-        type: "MOVE",
         moveId,
         params,
+        type: "MOVE",
       }),
     );
 
@@ -432,7 +421,6 @@ function simulateMultiplayerGame() {
 
   const server = new MultiplayerEngine(gameDefinition, players, {
     mode: "server",
-    seed: "simulation-seed",
     onPatchBroadcast: (broadcast) => {
       console.log(
         `[Server] Broadcasting move ${broadcast.moveId} (${broadcast.patches.length} patches)`,
@@ -442,6 +430,7 @@ function simulateMultiplayerGame() {
       client1.applyServerPatches(broadcast.patches);
       client2.applyServerPatches(broadcast.patches);
     },
+    seed: "simulation-seed",
   });
 
   // Create clients
@@ -462,18 +451,18 @@ function simulateMultiplayerGame() {
   // Simulate game flow
   console.log("\nPlayer 1 draws a card:");
   server.executeMove("drawCard", {
-    playerId: createPlayerId("p1"),
     params: {},
+    playerId: createPlayerId("p1"),
   });
 
   console.log("\nPlayer 1 plays a card:");
   server.executeMove("playCard", {
-    playerId: createPlayerId("p1"),
     params: { cardId: "card-20" },
+    playerId: createPlayerId("p1"),
   });
 
   console.log("\nPlayer 1 ends turn:");
-  server.executeMove("endTurn", { playerId: createPlayerId("p1"), params: {} });
+  server.executeMove("endTurn", { params: {}, playerId: createPlayerId("p1") });
 
   console.log("\nVerifying all clients are synchronized:");
   const serverState = server.getState();
@@ -519,19 +508,19 @@ function demonstrateReconnection() {
   // Execute some moves while client is disconnected
   console.log("Executing moves while client is offline:");
   server.executeMove("drawCard", {
+    params: {},
     playerId: createPlayerId("p1"),
-    params: {},
   });
-  server.executeMove("endTurn", { playerId: createPlayerId("p1"), params: {} });
+  server.executeMove("endTurn", { params: {}, playerId: createPlayerId("p1") });
   server.executeMove("drawCard", {
-    playerId: createPlayerId("p2"),
     params: {},
+    playerId: createPlayerId("p2"),
   });
 
   const serverState = server.getState();
   console.log("Server state:", {
-    turn: serverState.turnNumber,
     currentPlayer: serverState.currentPlayerIndex,
+    turn: serverState.turnNumber,
   });
 
   // Client reconnects
@@ -549,23 +538,15 @@ function demonstrateReconnection() {
 
   const clientState = reconnectedClient.getState();
   console.log("Client state after catchup:", {
-    turn: clientState.turnNumber,
     currentPlayer: clientState.currentPlayerIndex,
+    turn: clientState.turnNumber,
   });
 
-  console.log(
-    "States match:",
-    JSON.stringify(serverState) === JSON.stringify(clientState),
-  );
+  console.log("States match:", JSON.stringify(serverState) === JSON.stringify(clientState));
 }
 
 // Uncomment to run simulations:
-// simulateMultiplayerGame();
-// demonstrateReconnection();
+// SimulateMultiplayerGame();
+// DemonstrateReconnection();
 
-export {
-  GameServer,
-  GameClient,
-  simulateMultiplayerGame,
-  demonstrateReconnection,
-};
+export { GameServer, GameClient, simulateMultiplayerGame, demonstrateReconnection };

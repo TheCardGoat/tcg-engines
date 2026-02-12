@@ -6,12 +6,12 @@ describe("Modifier System", () => {
   describe("Modifier Type", () => {
     it("should define stat modifier with all required fields", () => {
       const modifier: Modifier = {
-        id: "mod-1",
-        type: "stat",
-        property: "power",
-        value: 2,
         duration: "permanent",
+        id: "mod-1",
+        property: "power",
         source: createCardId("card-1"),
+        type: "stat",
+        value: 2,
       };
 
       expect(modifier.id).toBe("mod-1");
@@ -24,12 +24,12 @@ describe("Modifier System", () => {
 
     it("should support stat modifier type", () => {
       const modifier: Modifier = {
-        id: "mod-1",
-        type: "stat",
-        property: "power",
-        value: 3,
         duration: "permanent",
+        id: "mod-1",
+        property: "power",
         source: createCardId("card-1"),
+        type: "stat",
+        value: 3,
       };
 
       expect(modifier.type).toBe("stat");
@@ -38,12 +38,12 @@ describe("Modifier System", () => {
 
     it("should support ability modifier type", () => {
       const modifier: Modifier = {
-        id: "mod-2",
-        type: "ability",
-        property: "flying",
-        value: true,
         duration: "until-end-of-turn",
+        id: "mod-2",
+        property: "flying",
         source: createCardId("card-1"),
+        type: "ability",
+        value: true,
       };
 
       expect(modifier.type).toBe("ability");
@@ -52,12 +52,12 @@ describe("Modifier System", () => {
 
     it("should support type modifier type", () => {
       const modifier: Modifier = {
-        id: "mod-3",
-        type: "type",
-        property: "creature-type",
-        value: "zombie",
         duration: "permanent",
+        id: "mod-3",
+        property: "creature-type",
         source: createCardId("card-1"),
+        type: "type",
+        value: "zombie",
       };
 
       expect(modifier.type).toBe("type");
@@ -66,12 +66,12 @@ describe("Modifier System", () => {
 
     it("should support keyword modifier type", () => {
       const modifier: Modifier = {
-        id: "mod-4",
-        type: "keyword",
-        property: "haste",
-        value: true,
         duration: "until-end-of-turn",
+        id: "mod-4",
+        property: "haste",
         source: createCardId("card-1"),
+        type: "keyword",
+        value: true,
       };
 
       expect(modifier.type).toBe("keyword");
@@ -79,12 +79,12 @@ describe("Modifier System", () => {
 
     it("should support permanent duration", () => {
       const modifier: Modifier = {
-        id: "mod-1",
-        type: "stat",
-        property: "power",
-        value: 1,
         duration: "permanent",
+        id: "mod-1",
+        property: "power",
         source: createCardId("card-1"),
+        type: "stat",
+        value: 1,
       };
 
       expect(modifier.duration).toBe("permanent");
@@ -92,12 +92,12 @@ describe("Modifier System", () => {
 
     it("should support until-end-of-turn duration", () => {
       const modifier: Modifier = {
-        id: "mod-2",
-        type: "stat",
-        property: "power",
-        value: 2,
         duration: "until-end-of-turn",
+        id: "mod-2",
+        property: "power",
         source: createCardId("card-1"),
+        type: "stat",
+        value: 2,
       };
 
       expect(modifier.duration).toBe("until-end-of-turn");
@@ -105,12 +105,12 @@ describe("Modifier System", () => {
 
     it("should support while-condition duration", () => {
       const modifier: Modifier = {
-        id: "mod-3",
-        type: "stat",
-        property: "power",
-        value: 3,
         duration: "while-condition",
+        id: "mod-3",
+        property: "power",
         source: createCardId("card-1"),
+        type: "stat",
+        value: 3,
       };
 
       expect(modifier.duration).toBe("while-condition");
@@ -118,13 +118,13 @@ describe("Modifier System", () => {
 
     it("should support optional condition function", () => {
       const modifier: Modifier = {
-        id: "mod-1",
-        type: "stat",
-        property: "power",
-        value: 2,
-        duration: "while-condition",
         condition: () => true,
+        duration: "while-condition",
+        id: "mod-1",
+        property: "power",
         source: createCardId("card-1"),
+        type: "stat",
+        value: 2,
       };
 
       expect(modifier.condition).toBeDefined();
@@ -134,13 +134,13 @@ describe("Modifier System", () => {
 
     it("should support optional layer for complex interactions", () => {
       const modifier: Modifier = {
-        id: "mod-1",
-        type: "stat",
-        property: "power",
-        value: 2,
         duration: "permanent",
-        source: createCardId("card-1"),
+        id: "mod-1",
         layer: 7,
+        property: "power",
+        source: createCardId("card-1"),
+        type: "stat",
+        value: 2,
       };
 
       expect(modifier.layer).toBe(7);
@@ -148,12 +148,12 @@ describe("Modifier System", () => {
 
     it("should work without optional fields", () => {
       const modifier: Modifier = {
-        id: "mod-1",
-        type: "stat",
-        property: "power",
-        value: 2,
         duration: "permanent",
+        id: "mod-1",
+        property: "power",
         source: createCardId("card-1"),
+        type: "stat",
+        value: 2,
       };
 
       expect(modifier.condition).toBeUndefined();
@@ -164,12 +164,12 @@ describe("Modifier System", () => {
   describe("Modifier Values", () => {
     it("should support number values", () => {
       const modifier: Modifier = {
-        id: "mod-1",
-        type: "stat",
-        property: "power",
-        value: 5,
         duration: "permanent",
+        id: "mod-1",
+        property: "power",
         source: createCardId("card-1"),
+        type: "stat",
+        value: 5,
       };
 
       expect(typeof modifier.value).toBe("number");
@@ -178,12 +178,12 @@ describe("Modifier System", () => {
 
     it("should support negative number values", () => {
       const modifier: Modifier = {
-        id: "mod-2",
-        type: "stat",
-        property: "power",
-        value: -2,
         duration: "permanent",
+        id: "mod-2",
+        property: "power",
         source: createCardId("card-1"),
+        type: "stat",
+        value: -2,
       };
 
       expect(modifier.value).toBe(-2);
@@ -191,12 +191,12 @@ describe("Modifier System", () => {
 
     it("should support string values", () => {
       const modifier: Modifier = {
-        id: "mod-3",
-        type: "type",
-        property: "creature-type",
-        value: "dragon",
         duration: "permanent",
+        id: "mod-3",
+        property: "creature-type",
         source: createCardId("card-1"),
+        type: "type",
+        value: "dragon",
       };
 
       expect(typeof modifier.value).toBe("string");
@@ -205,12 +205,12 @@ describe("Modifier System", () => {
 
     it("should support boolean values", () => {
       const modifier: Modifier = {
-        id: "mod-4",
-        type: "ability",
-        property: "flying",
-        value: true,
         duration: "permanent",
+        id: "mod-4",
+        property: "flying",
         source: createCardId("card-1"),
+        type: "ability",
+        value: true,
       };
 
       expect(typeof modifier.value).toBe("boolean");
@@ -222,12 +222,12 @@ describe("Modifier System", () => {
     it("should track source card", () => {
       const sourceCard = createCardId("source-1");
       const modifier: Modifier = {
-        id: "mod-1",
-        type: "stat",
-        property: "power",
-        value: 2,
         duration: "permanent",
+        id: "mod-1",
+        property: "power",
         source: sourceCard,
+        type: "stat",
+        value: 2,
       };
 
       expect(modifier.source).toBe(sourceCard);
@@ -236,12 +236,12 @@ describe("Modifier System", () => {
     it("should enforce CardId type for source", () => {
       const sourceCard = createCardId("source-1");
       const modifier: Modifier = {
-        id: "mod-1",
-        type: "stat",
-        property: "power",
-        value: 2,
         duration: "permanent",
+        id: "mod-1",
+        property: "power",
         source: sourceCard,
+        type: "stat",
+        value: 2,
       };
 
       const _typeCheck: typeof sourceCard = modifier.source;
@@ -252,15 +252,13 @@ describe("Modifier System", () => {
   describe("Modifier Condition", () => {
     it("should accept condition function that returns boolean", () => {
       const modifier: Modifier = {
-        id: "mod-1",
-        type: "stat",
-        property: "power",
-        value: 2,
+        condition: (state) => state !== null,
         duration: "while-condition",
-        condition: (state) => {
-          return state !== null;
-        },
+        id: "mod-1",
+        property: "power",
         source: createCardId("card-1"),
+        type: "stat",
+        value: 2,
       };
 
       expect(modifier.condition).toBeDefined();
@@ -268,15 +266,17 @@ describe("Modifier System", () => {
     });
 
     it("should support complex condition logic", () => {
-      type GameState = { cardTapped: boolean };
+      interface GameState {
+        cardTapped: boolean;
+      }
       const modifier: Modifier<GameState> = {
-        id: "mod-1",
-        type: "stat",
-        property: "power",
-        value: 2,
-        duration: "while-condition",
         condition: (state) => state.cardTapped === true,
+        duration: "while-condition",
+        id: "mod-1",
+        property: "power",
         source: createCardId("card-1"),
+        type: "stat",
+        value: 2,
       };
 
       expect(modifier.condition?.({ cardTapped: true })).toBe(true);

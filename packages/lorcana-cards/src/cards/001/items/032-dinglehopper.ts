@@ -7,9 +7,9 @@ export const dinglehopper: ItemCard = {
         exert: true,
       },
       effect: {
-        type: "remove-damage",
         amount: 1,
         target: "CHOSEN_CHARACTER",
+        type: "remove-damage",
         upTo: true,
       },
       id: "7r6-1",

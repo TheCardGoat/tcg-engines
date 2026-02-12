@@ -5,16 +5,16 @@ export const croquetMallet: ItemCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "gain-keyword",
+        duration: "this-turn",
         keyword: "Rush",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
-        duration: "this-turn",
+        type: "gain-keyword",
       },
       id: "1s8-1",
       text: "HURTLING HEDGEHOG Banish this item — Chosen character gains Rush this turn.",

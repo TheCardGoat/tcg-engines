@@ -72,10 +72,7 @@ export function extractNamedAbilityPrefix(
 
     // Must have at least 2 uppercase letters OR be a stylized single-letter name
     // Allow lower threshold (30%) to handle mixed case stylized names
-    if (
-      (uppercaseCount >= 2 && uppercaseCount >= totalLetters * 0.3) ||
-      isSingleLetterStylized
-    ) {
+    if ((uppercaseCount >= 2 && uppercaseCount >= totalLetters * 0.3) || isSingleLetterStylized) {
       // Verify remaining text exists and doesn't start with all caps (to avoid matching "RUSH" alone)
       // Must have at least one lowercase letter or special character in remaining text
       if (remainingText && !/^[A-Z\s]+$/.test(remainingText)) {

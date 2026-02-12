@@ -4,10 +4,10 @@ export const grandDukeAdvisorToTheKing: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: 1,
+        stat: "strength",
         target: "CHOSEN_CHARACTER",
+        type: "modify-stat",
       },
       id: "126-1",
       text: "YES, YOUR MAJESTY Your Prince, Princess, King, and Queen characters get +1 {S}.",

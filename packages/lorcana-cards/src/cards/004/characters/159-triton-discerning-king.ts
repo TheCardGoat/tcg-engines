@@ -5,8 +5,8 @@ export const tritonDiscerningKing: CharacterCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "gain-lore",
         amount: 3,
+        type: "gain-lore",
       },
       id: "rj9-1",
       text: "CONSIGN TO THE DEPTHS {E}, Banish one of your items — Gain 3 lore.",

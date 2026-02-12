@@ -20,7 +20,7 @@ import type { PlayerId } from "../types";
  * - Performance monitoring
  * - Replay generation
  */
-export type PlayerActionEvent = {
+export interface PlayerActionEvent {
   type: "playerAction";
   /** Move identifier */
   moveId: string;
@@ -38,7 +38,7 @@ export type PlayerActionEvent = {
   duration: number;
   /** Event timestamp */
   timestamp: number;
-};
+}
 
 /**
  * State Change Event
@@ -52,7 +52,7 @@ export type PlayerActionEvent = {
  * - Debugging state issues
  * - Audit trails
  */
-export type StateChangeEvent = {
+export interface StateChangeEvent {
   type: "stateChange";
   /** Forward patches (state mutations) */
   patches: Patch[];
@@ -66,7 +66,7 @@ export type StateChangeEvent = {
   afterSnapshot?: unknown;
   /** Event timestamp */
   timestamp: number;
-};
+}
 
 /**
  * Rule Evaluation Event
@@ -80,7 +80,7 @@ export type StateChangeEvent = {
  * - AI training data
  * - Balance analysis
  */
-export type RuleEvaluationEvent = {
+export interface RuleEvaluationEvent {
   type: "ruleEvaluation";
   /** Rule or condition name */
   ruleName: string;
@@ -92,7 +92,7 @@ export type RuleEvaluationEvent = {
   duration?: number;
   /** Event timestamp */
   timestamp: number;
-};
+}
 
 /**
  * Flow Transition Event
@@ -106,7 +106,7 @@ export type RuleEvaluationEvent = {
  * - Flow debugging
  * - UI synchronization
  */
-export type FlowTransitionEvent = {
+export interface FlowTransitionEvent {
   type: "flowTransition";
   /** Type of transition */
   transitionType: "phase" | "segment" | "turn";
@@ -118,7 +118,7 @@ export type FlowTransitionEvent = {
   turn: number;
   /** Event timestamp */
   timestamp: number;
-};
+}
 
 /**
  * Engine Error Event
@@ -132,7 +132,7 @@ export type FlowTransitionEvent = {
  * - Bug reproduction
  * - Alert generation
  */
-export type EngineErrorEvent = {
+export interface EngineErrorEvent {
   type: "engineError";
   /** Error message */
   error: string;
@@ -146,7 +146,7 @@ export type EngineErrorEvent = {
   playerId?: PlayerId;
   /** Event timestamp */
   timestamp: number;
-};
+}
 
 /**
  * Performance Event
@@ -160,7 +160,7 @@ export type EngineErrorEvent = {
  * - Optimization validation
  * - Resource monitoring
  */
-export type PerformanceEvent = {
+export interface PerformanceEvent {
   type: "performance";
   /** Operation name */
   operation: string;
@@ -170,7 +170,7 @@ export type PerformanceEvent = {
   metadata?: Record<string, unknown>;
   /** Event timestamp */
   timestamp: number;
-};
+}
 
 /**
  * Telemetry Event Union

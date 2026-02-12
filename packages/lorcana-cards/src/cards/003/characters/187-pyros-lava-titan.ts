@@ -4,9 +4,8 @@ export const pyrosLavaTitan: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "ready",
           target: {
             selector: "chosen",
             count: 1,
@@ -14,16 +13,17 @@ export const pyrosLavaTitan: CharacterCard = {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "ready",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "13y-1",
       name: "ERUPTION",
       text: "ERUPTION During your turn, whenever this character banishes another character in a challenge, you may ready chosen character.",
       trigger: {
         event: "banish",
-        timing: "whenever",
         on: "OPPONENT_CHARACTERS",
+        timing: "whenever",
       },
       type: "triggered",
     },

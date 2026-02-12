@@ -10,17 +10,13 @@ import { classifyAbility } from "../classifier";
 describe("Classifier Priority Order", () => {
   describe("Priority 1: Triggered Abilities", () => {
     it("should classify triggered abilities with 'When' prefix", () => {
-      const result = classifyAbility(
-        "When you play this character, draw a card.",
-      );
+      const result = classifyAbility("When you play this character, draw a card.");
       expect(result.type).toBe("triggered");
       expect(result.confidence).toBe(0.95);
     });
 
     it("should classify triggered abilities with 'Whenever' prefix", () => {
-      const result = classifyAbility(
-        "Whenever this character quests, gain 1 lore.",
-      );
+      const result = classifyAbility("Whenever this character quests, gain 1 lore.");
       expect(result.type).toBe("triggered");
       expect(result.confidence).toBe(0.95);
     });
@@ -38,9 +34,7 @@ describe("Classifier Priority Order", () => {
     });
 
     it("should classify triggered abilities with 'The first time' prefix", () => {
-      const result = classifyAbility(
-        "The first time each turn you play a song, draw a card.",
-      );
+      const result = classifyAbility("The first time each turn you play a song, draw a card.");
       expect(result.type).toBe("triggered");
       expect(result.confidence).toBe(0.95);
     });
@@ -54,9 +48,7 @@ describe("Classifier Priority Order", () => {
     });
 
     it("should classify activated abilities with ink cost", () => {
-      const result = classifyAbility(
-        "2 {I} - Deal 3 damage to chosen character.",
-      );
+      const result = classifyAbility("2 {I} - Deal 3 damage to chosen character.");
       expect(result.type).toBe("activated");
       expect(result.confidence).toBe(0.9);
     });
@@ -120,9 +112,7 @@ describe("Classifier Priority Order", () => {
     });
 
     it("should classify static abilities with 'While' condition", () => {
-      const result = classifyAbility(
-        "While this character has no damage, he gets +2 {S}.",
-      );
+      const result = classifyAbility("While this character has no damage, he gets +2 {S}.");
       expect(result.type).toBe("static");
       expect(result.confidence).toBeGreaterThanOrEqual(0.7);
     });
@@ -163,33 +153,25 @@ describe("Classifier Priority Order", () => {
 
 describe("Named Ability Classification", () => {
   it("should classify named triggered abilities correctly", () => {
-    const result = classifyAbility(
-      "IT WORKS! Whenever you play an item, you may draw a card.",
-    );
+    const result = classifyAbility("IT WORKS! Whenever you play an item, you may draw a card.");
     expect(result.type).toBe("triggered");
     expect(result.confidence).toBe(0.95);
   });
 
   it("should classify named triggered abilities with 'When'", () => {
-    const result = classifyAbility(
-      "FRESH INK When you play this item, draw a card.",
-    );
+    const result = classifyAbility("FRESH INK When you play this item, draw a card.");
     expect(result.type).toBe("triggered");
     expect(result.confidence).toBe(0.95);
   });
 
   it("should classify named activated abilities correctly", () => {
-    const result = classifyAbility(
-      "MAGIC HAIR {E} - Remove up to 2 damage from chosen character.",
-    );
+    const result = classifyAbility("MAGIC HAIR {E} - Remove up to 2 damage from chosen character.");
     expect(result.type).toBe("activated");
     expect(result.confidence).toBe(0.9);
   });
 
   it("should classify named static abilities correctly", () => {
-    const result = classifyAbility(
-      "HIDDEN AWAY This character can't be challenged.",
-    );
+    const result = classifyAbility("HIDDEN AWAY This character can't be challenged.");
     expect(result.type).toBe("static");
     expect(result.confidence).toBeGreaterThanOrEqual(0.7);
   });
@@ -203,9 +185,7 @@ describe("Named Ability Classification", () => {
   });
 
   it("should classify named abilities without confusing the classifier", () => {
-    const result = classifyAbility(
-      "YOUR REWARD AWAITS Whenever you play a card, draw a card.",
-    );
+    const result = classifyAbility("YOUR REWARD AWAITS Whenever you play a card, draw a card.");
     expect(result.type).toBe("triggered");
     expect(result.confidence).toBe(0.95);
   });
@@ -213,9 +193,7 @@ describe("Named Ability Classification", () => {
 
 describe("Edge Cases", () => {
   it("should not classify 'Chosen character gains' with trigger word as static", () => {
-    const result = classifyAbility(
-      "When you play this, chosen character gains Rush.",
-    );
+    const result = classifyAbility("When you play this, chosen character gains Rush.");
     expect(result.type).toBe("triggered");
   });
 
@@ -251,16 +229,12 @@ describe("Edge Cases", () => {
   });
 
   it("should handle text with multiple spaces", () => {
-    const result = classifyAbility(
-      "When  you  play  this  character,  draw  a  card.",
-    );
+    const result = classifyAbility("When  you  play  this  character,  draw  a  card.");
     expect(result.type).toBe("triggered");
   });
 
   it("should handle case-insensitive trigger words", () => {
-    const result = classifyAbility(
-      "when you play this character, draw a card.",
-    );
+    const result = classifyAbility("when you play this character, draw a card.");
     // Note: The preprocessor should normalize case, but pattern should be case-insensitive
     // For now, trigger patterns are case-sensitive, so this will fail
     // This is a known limitation - trigger patterns use ^ anchor and expect proper case
@@ -270,9 +244,7 @@ describe("Edge Cases", () => {
 
 describe("Classification Reasons", () => {
   it("should provide reason for triggered classification", () => {
-    const result = classifyAbility(
-      "When you play this character, draw a card.",
-    );
+    const result = classifyAbility("When you play this character, draw a card.");
     expect(result.reason).toContain("trigger word");
   });
 

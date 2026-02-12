@@ -4,10 +4,8 @@ export const onYourFeetNow: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "sequence",
             steps: [
               {
                 type: "ready",
@@ -19,14 +17,16 @@ export const onYourFeetNow: ActionCard = {
                 target: "CHOSEN_CHARACTER",
               },
             ],
+            type: "sequence",
           },
           {
-            type: "restriction",
+            duration: "this-turn",
             restriction: "cant-quest",
             target: "SELF",
-            duration: "this-turn",
+            type: "restriction",
           },
         ],
+        type: "sequence",
       },
       id: "1hc-1",
       text: "Ready all your characters and deal 1 damage to each of them. They can't quest for the rest of this turn.",

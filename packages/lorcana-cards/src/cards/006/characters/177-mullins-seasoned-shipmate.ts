@@ -4,9 +4,9 @@ export const mullinsSeasonedShipmate: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Resist",
         target: "SELF",
+        type: "gain-keyword",
         value: 1,
       },
       id: "meu-1",

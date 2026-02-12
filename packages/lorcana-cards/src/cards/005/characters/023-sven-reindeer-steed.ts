@@ -4,22 +4,22 @@ export const svenReindeerSteed: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "restriction",
+          duration: "this-turn",
           restriction: "cant-quest",
           target: "SELF",
-          duration: "this-turn",
+          type: "restriction",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "m3t-1",
       name: "REINDEER GAMES",
       text: "REINDEER GAMES When you play this character, you may ready chosen character. They can't quest or challenge for the rest of this turn.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

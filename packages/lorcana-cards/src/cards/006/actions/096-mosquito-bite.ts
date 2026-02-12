@@ -4,15 +4,15 @@ export const mosquitoBite: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "put-damage",
         amount: 1,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "put-damage",
       },
       id: "1xn-1",
       text: "Put 1 damage counter on chosen character.",

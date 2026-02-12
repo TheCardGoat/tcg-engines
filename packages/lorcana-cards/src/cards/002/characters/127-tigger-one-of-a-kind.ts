@@ -4,22 +4,22 @@ export const tiggerOneOfAKind: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
-        modifier: 2,
-        target: "SELF",
         duration: "this-turn",
+        modifier: 2,
+        stat: "strength",
+        target: "SELF",
+        type: "modify-stat",
       },
       id: "1ns-1",
       name: "ENERGETIC",
       text: "ENERGETIC Whenever you play an action, this character gets +2 {S} this turn.",
       trigger: {
         event: "play",
-        timing: "whenever",
         on: {
-          controller: "you",
           cardType: "action",
+          controller: "you",
         },
+        timing: "whenever",
       },
       type: "triggered",
     },

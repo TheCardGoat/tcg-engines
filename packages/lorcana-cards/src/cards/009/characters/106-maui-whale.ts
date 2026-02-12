@@ -4,9 +4,9 @@ export const mauiWhale: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "restriction",
         restriction: "cant-ready",
         target: "SELF",
+        type: "restriction",
       },
       id: "4dw-1",
       name: "THIS MISSION IS CURSED",
@@ -15,10 +15,10 @@ export const mauiWhale: CharacterCard = {
     },
     {
       effect: {
-        type: "restriction",
+        duration: "this-turn",
         restriction: "cant-quest",
         target: "SELF",
-        duration: "this-turn",
+        type: "restriction",
       },
       id: "4dw-2",
       text: "I GOT YOUR BACK 2 {I} – Ready this character. He can't quest for the rest of this turn.",

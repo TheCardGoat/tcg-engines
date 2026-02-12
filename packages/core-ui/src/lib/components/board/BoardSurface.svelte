@@ -10,10 +10,10 @@
     const h = Number(hRaw);
 
     if (!(Number.isFinite(w) && Number.isFinite(h)) || w <= 0 || h <= 0) {
-      return { w: 3, h: 2 };
+      return { h: 2, w: 3 };
     }
 
-    return { w, h };
+    return { h, w };
   }
 
   interface BoardSurfaceProps {

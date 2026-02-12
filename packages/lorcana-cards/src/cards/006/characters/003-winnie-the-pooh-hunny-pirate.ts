@@ -10,8 +10,8 @@ export const winnieThePoohHunnyPirate: CharacterCard = {
     },
     {
       effect: {
-        type: "play-card",
         from: "hand",
+        type: "play-card",
       },
       id: "1v3-2",
       text: "WE'RE PIRATES, YOU SEE Whenever this character quests, you pay 1 {I} less for the next Pirate character you play this turn.",

@@ -18,7 +18,7 @@ import type {
 
 interface TestGameState {
   currentPlayer: number;
-  players: Array<{ id: string; ready: boolean }>;
+  players: { id: string; ready: boolean }[];
   turnCount: number;
   phase: string;
   step?: string;
@@ -37,24 +37,24 @@ describe("FlowDefinition Type", () => {
       const mockContext: FlowContext<TestGameState> = {
         cards: {
           getCardMeta: () => ({}),
-          updateCardMeta: () => {},
-          setCardMeta: () => {},
           getCardOwner: () => undefined,
           queryCards: () => [],
+          setCardMeta: () => {},
+          updateCardMeta: () => {},
         },
         endGameSegment: () => {},
         endPhase: () => {},
         endStep: () => {},
         endTurn: () => {},
         game: {
-          setOTP: () => {},
-          getOTP: () => undefined,
-          setChoosingFirstPlayer: () => {},
-          getChoosingFirstPlayer: () => undefined,
-          setPendingMulligan: () => {},
-          getPendingMulligan: () => [],
           addPendingMulligan: () => {},
+          getChoosingFirstPlayer: () => undefined,
+          getOTP: () => undefined,
+          getPendingMulligan: () => [],
           removePendingMulligan: () => {},
+          setChoosingFirstPlayer: () => {},
+          setOTP: () => {},
+          setPendingMulligan: () => {},
         },
         getCurrentGameSegment: () => "mainGame",
         getCurrentPhase: () => "main",
@@ -64,14 +64,14 @@ describe("FlowDefinition Type", () => {
         setCurrentPlayer: () => {},
         state: {} as Draft<TestGameState>,
         zones: {
-          moveCard: () => {},
-          getCardsInZone: () => [],
-          shuffleZone: () => {},
-          getCardZone: () => undefined,
-          drawCards: () => [],
-          mulligan: () => {},
           bulkMove: () => [],
           createDeck: () => [],
+          drawCards: () => [],
+          getCardZone: () => undefined,
+          getCardsInZone: () => [],
+          moveCard: () => {},
+          mulligan: () => {},
+          shuffleZone: () => {},
         },
       };
 
@@ -131,23 +131,23 @@ describe("FlowDefinition Type", () => {
       const turnDef: TurnDefinition<TestGameState> = {
         phases: {
           draw: {
-            order: 1,
             next: "main",
+            order: 1,
           },
           end: {
-            order: 3,
-            next: undefined, // No next phase, turn ends
+            next: undefined,
+            order: 3, // No next phase, turn ends
           },
           main: {
-            order: 2,
             next: "end",
+            order: 2,
           },
           ready: {
-            order: 0,
             next: "draw",
             onEnd: (context) => {
               context.state.phase = "draw";
             },
+            order: 0,
           },
         },
       };
@@ -176,10 +176,7 @@ describe("FlowDefinition Type", () => {
 
     it("should support automatic phase end", () => {
       const phaseDef: PhaseDefinition<TestGameState> = {
-        endIf: (context) => {
-          // Phase automatically ends when condition is true
-          return context.state.players.every((p) => p.ready);
-        },
+        endIf: (context) => context.state.players.every((p) => p.ready),
         order: 0,
       };
 
@@ -206,16 +203,16 @@ describe("FlowDefinition Type", () => {
         order: 2,
         steps: {
           damage: {
-            order: 2,
-            next: undefined, // Ends the combat phase
+            next: undefined,
+            order: 2, // Ends the combat phase
           },
           declare: {
-            order: 0,
             next: "target",
+            order: 0,
           },
           target: {
-            order: 1,
             next: "damage",
+            order: 1,
           },
         },
       };
@@ -243,9 +240,7 @@ describe("FlowDefinition Type", () => {
 
     it("should support automatic step end", () => {
       const stepDef: StepDefinition<TestGameState> = {
-        endIf: (context) => {
-          return context.state.stepCount >= 3;
-        },
+        endIf: (context) => context.state.stepCount >= 3,
         order: 0,
       };
 
@@ -279,20 +274,20 @@ describe("FlowDefinition Type", () => {
               },
               phases: {
                 draw: {
-                  order: 1,
                   next: "main",
+                  order: 1,
                 },
                 end: {
-                  order: 3,
                   next: undefined,
+                  order: 3,
                 },
                 main: {
-                  order: 2,
                   next: "end",
+                  order: 2,
                 },
                 ready: {
-                  order: 0,
                   next: "draw",
+                  order: 0,
                 },
               },
             },
@@ -340,15 +335,14 @@ describe("FlowDefinition Type", () => {
               },
               phases: {
                 combat: {
-                  order: 1,
                   next: undefined,
+                  order: 1,
                 },
                 main: {
-                  order: 0,
                   next: "combat",
+                  order: 0,
                   steps: {
                     declare: {
-                      order: 0,
                       next: "resolve",
                       onEnd: (context) => {
                         // Custom step transition logic
@@ -356,10 +350,11 @@ describe("FlowDefinition Type", () => {
                           context.endPhase(); // Skip remaining steps
                         }
                       },
+                      order: 0,
                     },
                     resolve: {
-                      order: 1,
                       next: undefined,
+                      order: 1,
                     },
                   },
                 },

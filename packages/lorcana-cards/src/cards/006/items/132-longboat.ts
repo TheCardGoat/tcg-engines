@@ -4,15 +4,15 @@ export const longboat: ItemCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Evasive",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "gain-keyword",
       },
       id: "1wi-1",
       text: "TAKE IT FOR A SPIN 2 {I} – Chosen character of yours gains Evasive until the start of your next turn.",

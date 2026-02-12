@@ -10,15 +10,15 @@ describe("createMove Helper", () => {
   /**
    * Test game state structure
    */
-  type TestGameState = {
+  interface TestGameState {
     players: Record<PlayerId, { health: number; mana: number }>;
     cards: Record<CardId, { name: string; damage: number }>;
-  };
+  }
 
   /**
    * Test move parameter types - using a record type like real game implementations
    */
-  type TestMoveParams = {
+  interface TestMoveParams {
     // Move with specific params
     quest: { cardId: CardId };
     // Move with multiple params
@@ -27,7 +27,7 @@ describe("createMove Helper", () => {
     playCard: { cardId: CardId; alternativeCost?: number };
     // Move with no params
     pass: Record<string, never>;
-  };
+  }
 
   const player1 = createPlayerId("p1");
   const player2 = createPlayerId("p2");
@@ -35,13 +35,13 @@ describe("createMove Helper", () => {
   const card2 = createCardId("card2");
 
   const initialState: TestGameState = {
+    cards: {
+      [card1]: { damage: 0, name: "Character A" },
+      [card2]: { damage: 0, name: "Character B" },
+    },
     players: {
       [player1]: { health: 20, mana: 5 },
       [player2]: { health: 20, mana: 5 },
-    },
-    cards: {
-      [card1]: { name: "Character A", damage: 0 },
-      [card2]: { name: "Character B", damage: 0 },
     },
   };
 
@@ -56,7 +56,7 @@ describe("createMove Helper", () => {
         condition: (state, context) => {
           // ✅ context.params is { cardId: CardId }
           const { cardId } = context.params;
-          return !!state.cards[cardId];
+          return Boolean(state.cards[cardId]);
         },
         reducer: (draft, context) => {
           // ✅ context.params is { cardId: CardId }
@@ -70,8 +70,8 @@ describe("createMove Helper", () => {
 
       // Verify the move works correctly
       const context: MoveContext<TestMoveParams["quest"]> = createMockContext({
-        playerId: player1,
         params: { cardId: card1 },
+        playerId: player1,
       });
 
       // Test condition
@@ -95,7 +95,7 @@ describe("createMove Helper", () => {
         condition: (state, context) => {
           // ✅ context.params is { attackerId: CardId; defenderId: CardId }
           const { attackerId, defenderId } = context.params;
-          return !!state.cards[attackerId] && !!state.cards[defenderId];
+          return Boolean(state.cards[attackerId]) && Boolean(state.cards[defenderId]);
         },
         reducer: (draft, context) => {
           // ✅ context.params is { attackerId: CardId; defenderId: CardId }
@@ -108,11 +108,10 @@ describe("createMove Helper", () => {
         },
       });
 
-      const context: MoveContext<TestMoveParams["challenge"]> =
-        createMockContext({
-          playerId: player1,
-          params: { attackerId: card1, defenderId: card2 },
-        });
+      const context: MoveContext<TestMoveParams["challenge"]> = createMockContext({
+        params: { attackerId: card1, defenderId: card2 },
+        playerId: player1,
+      });
 
       expect(challengeMove.condition?.(initialState, context)).toBe(true);
 
@@ -146,11 +145,10 @@ describe("createMove Helper", () => {
       });
 
       // Test with alternativeCost
-      const contextWithAlt: MoveContext<TestMoveParams["playCard"]> =
-        createMockContext({
-          playerId: player1,
-          params: { cardId: card1, alternativeCost: 2 },
-        });
+      const contextWithAlt: MoveContext<TestMoveParams["playCard"]> = createMockContext({
+        params: { alternativeCost: 2, cardId: card1 },
+        playerId: player1,
+      });
 
       const nextState1 = produce(initialState, (draft) => {
         playCardMove.reducer(draft, contextWithAlt);
@@ -159,11 +157,10 @@ describe("createMove Helper", () => {
       expect(nextState1.players[player1].mana).toBe(3); // 5 - 2
 
       // Test without alternativeCost
-      const contextWithoutAlt: MoveContext<TestMoveParams["playCard"]> =
-        createMockContext({
-          playerId: player1,
-          params: { cardId: card1 }, // alternativeCost is optional
-        });
+      const contextWithoutAlt: MoveContext<TestMoveParams["playCard"]> = createMockContext({
+        params: { cardId: card1 },
+        playerId: player1, // AlternativeCost is optional
+      });
 
       const nextState2 = produce(initialState, (draft) => {
         playCardMove.reducer(draft, contextWithoutAlt);
@@ -187,8 +184,8 @@ describe("createMove Helper", () => {
       });
 
       const context: MoveContext<TestMoveParams["pass"]> = createMockContext({
-        playerId: player1,
         params: {},
+        playerId: player1,
       });
 
       const nextState = produce(initialState, (draft) => {
@@ -208,9 +205,7 @@ describe("createMove Helper", () => {
         },
       };
 
-      const result = createMove<TestGameState, TestMoveParams, "quest">(
-        definition,
-      );
+      const result = createMove<TestGameState, TestMoveParams, "quest">(definition);
 
       // Runtime behavior: returns the same object
       expect(result).toBe(definition);
@@ -225,9 +220,7 @@ describe("createMove Helper", () => {
         },
       };
 
-      const result = createMove<TestGameState, TestMoveParams, "pass">(
-        definition,
-      );
+      const result = createMove<TestGameState, TestMoveParams, "pass">(definition);
 
       expect(result).toBe(definition);
       expect(result.condition).toBeUndefined();
@@ -235,18 +228,16 @@ describe("createMove Helper", () => {
 
     it("should work with move definitions with metadata", () => {
       const definition = {
-        reducer: (draft: any) => {
-          draft.players[player1].health += 5;
-        },
         metadata: {
           category: "healing",
           tags: ["buff"],
         },
+        reducer: (draft: any) => {
+          draft.players[player1].health += 5;
+        },
       };
 
-      const result = createMove<TestGameState, TestMoveParams, "pass">(
-        definition,
-      );
+      const result = createMove<TestGameState, TestMoveParams, "pass">(definition);
 
       expect(result.metadata?.category).toBe("healing");
       expect(result.metadata?.tags).toEqual(["buff"]);
@@ -278,9 +269,9 @@ describe("createMove Helper", () => {
 
       // Aggregate into a move map (simulating GameMoveDefinitions)
       const moves = {
-        quest,
         challenge,
         pass,
+        quest,
       };
 
       // Verify all moves are accessible and work correctly
@@ -289,11 +280,10 @@ describe("createMove Helper", () => {
       expect(moves.pass).toBe(pass);
 
       // Test executing quest move
-      const questContext: MoveContext<TestMoveParams["quest"]> =
-        createMockContext({
-          playerId: player1,
-          params: { cardId: card1 },
-        });
+      const questContext: MoveContext<TestMoveParams["quest"]> = createMockContext({
+        params: { cardId: card1 },
+        playerId: player1,
+      });
 
       const state1 = produce(initialState, (draft) => {
         moves.quest.reducer(draft, questContext);
@@ -302,11 +292,10 @@ describe("createMove Helper", () => {
       expect(state1.cards[card1].damage).toBe(1);
 
       // Test executing challenge move
-      const challengeContext: MoveContext<TestMoveParams["challenge"]> =
-        createMockContext({
-          playerId: player1,
-          params: { attackerId: card1, defenderId: card2 },
-        });
+      const challengeContext: MoveContext<TestMoveParams["challenge"]> = createMockContext({
+        params: { attackerId: card1, defenderId: card2 },
+        playerId: player1,
+      });
 
       const state2 = produce(state1, (draft) => {
         moves.challenge.reducer(draft, challengeContext);
@@ -315,11 +304,10 @@ describe("createMove Helper", () => {
       expect(state2.cards[card2].damage).toBe(2);
 
       // Test executing pass move
-      const passContext: MoveContext<TestMoveParams["pass"]> =
-        createMockContext({
-          playerId: player1,
-          params: {},
-        });
+      const passContext: MoveContext<TestMoveParams["pass"]> = createMockContext({
+        params: {},
+        playerId: player1,
+      });
 
       const state3 = produce(state2, (draft) => {
         moves.pass.reducer(draft, passContext);

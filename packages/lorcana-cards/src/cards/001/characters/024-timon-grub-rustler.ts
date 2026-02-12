@@ -4,22 +4,22 @@ export const timonGrubRustler: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "remove-damage",
           amount: 1,
           target: "CHOSEN_CHARACTER",
+          type: "remove-damage",
           upTo: true,
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "1fm-1",
       name: "TASTES LIKE CHICKEN",
       text: "TASTES LIKE CHICKEN When you play this character, you may remove up to 1 damage from chosen character.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

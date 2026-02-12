@@ -45,11 +45,7 @@ export { classifyAbility } from "./v2/classifier";
 // Main v2 parser class
 export { LorcanaParserV2, parserV2 } from "./v2/index";
 // Manual overrides
-export {
-  getManualEntry,
-  MANUAL_ENTRIES,
-  tooComplexText,
-} from "./v2/manual-overrides";
+export { getManualEntry, MANUAL_ENTRIES, tooComplexText } from "./v2/manual-overrides";
 // Numeric extractor utilities
 export {
   extractNumericValues,
@@ -59,22 +55,9 @@ export {
 } from "./v2/numeric-extractor";
 export type { MultiParseResult } from "./v2/parser";
 // Main parser functions
-export {
-  parseAbilityText,
-  parseAbilityTextMulti,
-  parseAbilityTexts,
-} from "./v2/parser";
+export { parseAbilityText, parseAbilityTextMulti, parseAbilityTexts } from "./v2/parser";
 // Preprocessor utilities
-export {
-  extractNamedAbilityPrefix,
-  normalizeText,
-  resolveSymbols,
-} from "./v2/preprocessor";
+export { extractNamedAbilityPrefix, normalizeText, resolveSymbols } from "./v2/preprocessor";
 
 // Types
-export type {
-  AbilityWithText,
-  BatchParseResult,
-  ParseResult,
-  ParserOptions,
-} from "./v2/types";
+export type { AbilityWithText, BatchParseResult, ParseResult, ParserOptions } from "./v2/types";

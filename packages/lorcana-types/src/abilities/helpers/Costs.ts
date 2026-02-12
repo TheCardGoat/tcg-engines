@@ -53,31 +53,31 @@ export const Costs = {
    * "X ink and exert"
    */
   InkAndExert: (amount: number): AbilityCost => ({
-    ink: amount,
     exert: true,
+    ink: amount,
   }),
 
   /**
    * "X ink and banish"
    */
   InkAndBanish: (amount: number): AbilityCost => ({
-    ink: amount,
     banishSelf: true,
+    ink: amount,
   }),
 
   /**
    * "X ink and discard"
    */
   InkAndDiscard: (amount: number, discardAmount = 1): AbilityCost => ({
-    ink: amount,
     discardCards: discardAmount,
+    ink: amount,
   }),
 
   /**
    * "Exert and banish"
    */
   ExertAndBanish: (): AbilityCost => ({
-    exert: true,
     banishSelf: true,
+    exert: true,
   }),
 };

@@ -1,13 +1,6 @@
 // @ts-nocheck - Skipped tests contain expected values that don't match current types
 import { describe, expect, it } from "bun:test";
-import {
-  Abilities,
-  Conditions,
-  Costs,
-  Effects,
-  Targets,
-  Triggers,
-} from "@tcg/lorcana-types";
+import { Abilities, Conditions, Costs, Effects, Targets, Triggers } from "@tcg/lorcana-types";
 import { parseAbilityTextMulti } from "../../parser";
 
 describe("Set 002 Card Text Parser Tests - Characters A M", () => {
@@ -21,11 +14,11 @@ describe("Set 002 Card Text Parser Tests - Characters A M", () => {
     const ohGosh = {
       effect: {
         condition: {
-          type: "unless",
           condition: {
-            type: "have-character",
             classification: "Seven Dwarfs",
+            type: "have-character",
           },
+          type: "unless",
         },
         restriction: "cant-quest",
         target: "SELF",
@@ -35,9 +28,7 @@ describe("Set 002 Card Text Parser Tests - Characters A M", () => {
       type: "static",
     };
     expect(result.abilities[0].name).toBe("OH, GOSH!");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(ohGosh),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(ohGosh));
   });
 
   it.skip("Christopher Robin - Adventurer: should parse card text", () => {
@@ -50,14 +41,14 @@ describe("Set 002 Card Text Parser Tests - Characters A M", () => {
     const wellAlwaysBeTogether = {
       effect: {
         condition: {
-          type: "character-count",
-          count: 2,
           comparison: "or-more",
+          count: 2,
+          type: "character-count",
         },
         effect: {
-          type: "gain-lore",
           amount: 2,
           target: "CONTROLLER",
+          type: "gain-lore",
         },
         type: "conditional",
       },
@@ -70,9 +61,7 @@ describe("Set 002 Card Text Parser Tests - Characters A M", () => {
       type: "triggered",
     };
     expect(result.abilities[0].name).toBe("WE'LL ALWAYS BE TOGETHER");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(wellAlwaysBeTogether),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(wellAlwaysBeTogether));
   });
 
   it.skip("Cinderella - Ballroom Sensation: should parse card text", () => {
@@ -86,9 +75,7 @@ describe("Set 002 Card Text Parser Tests - Characters A M", () => {
       type: "keyword",
       value: 3,
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(singer),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(singer));
   });
 
   it.skip("Doc - Leader of the Seven Dwarfs: should parse card text", () => {
@@ -113,9 +100,7 @@ describe("Set 002 Card Text Parser Tests - Characters A M", () => {
       type: "triggered",
     };
     expect(result.abilities[0].name).toBe("SHARE AND SHARE ALIKE");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(shareAndShareAlike),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(shareAndShareAlike));
   });
 
   it.skip("Dopey - Always Playful: should parse card text", () => {
@@ -142,9 +127,7 @@ describe("Set 002 Card Text Parser Tests - Characters A M", () => {
       type: "triggered",
     };
     expect(result.abilities[0].name).toBe("ODD ONE OUT");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(oddOneOut),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(oddOneOut));
   });
 
   it.skip("Gaston - Baritone Bully: should parse card text", () => {
@@ -158,14 +141,11 @@ describe("Set 002 Card Text Parser Tests - Characters A M", () => {
       type: "keyword",
       value: 5,
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(singer),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(singer));
   });
 
   it.skip("Grand Duke - Advisor to the King: should parse card text", () => {
-    const text =
-      "YES, YOUR MAJESTY Your Prince, Princess, King, and Queen characters get +1 {S}.";
+    const text = "YES, YOUR MAJESTY Your Prince, Princess, King, and Queen characters get +1 {S}.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
@@ -181,14 +161,11 @@ describe("Set 002 Card Text Parser Tests - Characters A M", () => {
       type: "static",
     };
     expect(result.abilities[0].name).toBe("YES, YOUR MAJESTY");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(yesYourMajesty),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(yesYourMajesty));
   });
 
   it.skip("Grumpy - Bad-Tempered: should parse card text", () => {
-    const text =
-      "THERE'S TROUBLE A-BREWIN' Your other Seven Dwarfs characters get +1 {S}.";
+    const text = "THERE'S TROUBLE A-BREWIN' Your other Seven Dwarfs characters get +1 {S}.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
@@ -204,9 +181,7 @@ describe("Set 002 Card Text Parser Tests - Characters A M", () => {
       type: "static",
     };
     expect(result.abilities[0].name).toBe("THERE'S TROUBLE A-BREWIN'");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(theresTroubleABrewin),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(theresTroubleABrewin));
   });
 
   it.skip("Happy - Good-Natured: should parse card text", () => {
@@ -217,9 +192,7 @@ describe("Set 002 Card Text Parser Tests - Characters A M", () => {
     expect(result.abilities.length).toBe(1);
 
     const support = Abilities.Keyword("Support");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(support),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(support));
   });
 
   it.skip("King Louie - Jungle VIP: should parse card text", () => {
@@ -232,9 +205,9 @@ describe("Set 002 Card Text Parser Tests - Characters A M", () => {
     const layItOnTheLine = {
       effect: {
         effect: {
-          type: "remove-damage",
           amount: 2,
           target: "SELF",
+          type: "remove-damage",
         },
         type: "optional",
       },
@@ -247,9 +220,7 @@ describe("Set 002 Card Text Parser Tests - Characters A M", () => {
       type: "triggered",
     };
     expect(result.abilities[0].name).toBe("LAY IT ON THE LINE");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(layItOnTheLine),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(layItOnTheLine));
   });
 
   it.skip("Mickey Mouse - Friendly Face: should parse card text", () => {
@@ -274,9 +245,7 @@ describe("Set 002 Card Text Parser Tests - Characters A M", () => {
       type: "triggered",
     };
     expect(result.abilities[0].name).toBe("GLAD YOU'RE HERE!");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(gladYoureHere),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(gladYoureHere));
   });
 
   it.skip("Mufasa - Betrayed Leader: should parse card text", () => {
@@ -289,23 +258,23 @@ describe("Set 002 Card Text Parser Tests - Characters A M", () => {
     const theSunWillSet = {
       effect: {
         effect: {
-          type: "reveal-and-conditional",
-          reveal: {
-            source: "deck",
-            count: 1,
-          },
           condition: {
-            type: "card-type",
             cardType: "character",
-          },
-          ifTrue: {
-            type: "play-for-free",
-            enterExerted: true,
+            type: "card-type",
           },
           ifFalse: {
-            type: "put-on-deck",
             position: "top",
+            type: "put-on-deck",
           },
+          ifTrue: {
+            enterExerted: true,
+            type: "play-for-free",
+          },
+          reveal: {
+            count: 1,
+            source: "deck",
+          },
+          type: "reveal-and-conditional",
         },
         type: "optional",
       },
@@ -318,9 +287,7 @@ describe("Set 002 Card Text Parser Tests - Characters A M", () => {
       type: "triggered",
     };
     expect(result.abilities[0].name).toBe("THE SUN WILL SET");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(theSunWillSet),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(theSunWillSet));
   });
 
   it.skip("Mulan - Reflecting: should parse card text", () => {
@@ -342,22 +309,22 @@ describe("Set 002 Card Text Parser Tests - Characters A M", () => {
     const honorToTheAncestors = {
       effect: {
         effect: {
-          type: "reveal-and-conditional",
-          reveal: {
-            source: "deck",
-            count: 1,
-          },
           condition: {
-            type: "card-type",
             cardType: "song",
+            type: "card-type",
+          },
+          ifFalse: {
+            position: "top",
+            type: "put-on-deck",
           },
           ifTrue: {
             type: "play-for-free",
           },
-          ifFalse: {
-            type: "put-on-deck",
-            position: "top",
+          reveal: {
+            count: 1,
+            source: "deck",
           },
+          type: "reveal-and-conditional",
         },
         type: "optional",
       },
@@ -370,9 +337,7 @@ describe("Set 002 Card Text Parser Tests - Characters A M", () => {
       type: "triggered",
     };
     expect(result.abilities[1].name).toBe("HONOR TO THE ANCESTORS");
-    expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining(honorToTheAncestors),
-    );
+    expect(result.abilities[1].ability).toEqual(expect.objectContaining(honorToTheAncestors));
   });
 
   it.skip("Hold Still: should parse card text", () => {
@@ -389,9 +354,7 @@ describe("Set 002 Card Text Parser Tests - Characters A M", () => {
       },
       type: "action",
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(holdStill),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(holdStill));
   });
 
   it.skip("Last Stand: should parse card text", () => {
@@ -407,9 +370,7 @@ describe("Set 002 Card Text Parser Tests - Characters A M", () => {
       },
       type: "action",
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(lastStand),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(lastStand));
   });
 
   it.skip("Dragon Gem: should parse card text", () => {
@@ -432,9 +393,7 @@ describe("Set 002 Card Text Parser Tests - Characters A M", () => {
       type: "activated",
     };
     expect(result.abilities[0].name).toBe("BRING BACK TO LIFE");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(bringBackToLife),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(bringBackToLife));
   });
 
   it.skip("Arthur - Wizard's Apprentice: should parse card text", () => {
@@ -447,16 +406,16 @@ describe("Set 002 Card Text Parser Tests - Characters A M", () => {
     const student = {
       effect: {
         effect: {
-          type: "cost-effect",
           cost: {
-            type: "return-to-hand",
             target: "YOUR_OTHER_CHARACTER",
+            type: "return-to-hand",
           },
           effect: {
-            type: "gain-lore",
             amount: 2,
             target: "CONTROLLER",
+            type: "gain-lore",
           },
+          type: "cost-effect",
         },
         type: "optional",
       },
@@ -469,9 +428,7 @@ describe("Set 002 Card Text Parser Tests - Characters A M", () => {
       type: "triggered",
     };
     expect(result.abilities[0].name).toBe("STUDENT");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(student),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(student));
   });
 
   it.skip("Blue Fairy - Rewarding Good Deeds: should parse card text", () => {
@@ -483,17 +440,15 @@ describe("Set 002 Card Text Parser Tests - Characters A M", () => {
 
     // First ability: Evasive
     const evasive = Abilities.Keyword("Evasive");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(evasive),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(evasive));
 
     // Second ability: ETHEREAL GLOW
     const etherealGlow = {
       effect: {
         effect: {
-          type: "draw",
           amount: 1,
           target: "CONTROLLER",
+          type: "draw",
         },
         type: "optional",
       },
@@ -506,22 +461,17 @@ describe("Set 002 Card Text Parser Tests - Characters A M", () => {
       type: "triggered",
     };
     expect(result.abilities[1].name).toBe("ETHEREAL GLOW");
-    expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining(etherealGlow),
-    );
+    expect(result.abilities[1].ability).toEqual(expect.objectContaining(etherealGlow));
   });
 
   it.skip("Dr. Facilier - Savvy Opportunist: should parse card text", () => {
-    const text =
-      "Evasive (Only characters with Evasive can challenge this character.)";
+    const text = "Evasive (Only characters with Evasive can challenge this character.)";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
     const evasive = Abilities.Keyword("Evasive");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(evasive),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(evasive));
   });
 
   it.skip("Fairy Godmother - Mystic Armorer: should parse card text", () => {
@@ -544,26 +494,26 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       effect: {
         effects: [
           {
-            type: "gain-keyword",
-            keyword: "Challenger",
-            value: 3,
-            target: "YOUR_CHARACTERS",
             duration: "this-turn",
+            keyword: "Challenger",
+            target: "YOUR_CHARACTERS",
+            type: "gain-keyword",
+            value: 3,
           },
           {
-            type: "gain-ability",
             ability: {
-              type: "triggered",
-              trigger: {
-                event: "banish-in-challenge",
-              },
               effect: {
                 type: "return-to-hand",
                 target: "SELF",
               },
+              trigger: {
+                event: "banish-in-challenge",
+              },
+              type: "triggered",
             },
-            target: "YOUR_CHARACTERS",
             duration: "this-turn",
+            target: "YOUR_CHARACTERS",
+            type: "gain-ability",
           },
         ],
         type: "compound",
@@ -577,9 +527,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "triggered",
     };
     expect(result.abilities[1].name).toBe("FORGET THE COACH, HERE'S A SWORD");
-    expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining(forgetTheCoach),
-    );
+    expect(result.abilities[1].ability).toEqual(expect.objectContaining(forgetTheCoach));
   });
 
   it.skip("Fairy Godmother - Pure Heart: should parse card text", () => {
@@ -592,8 +540,8 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     const justLeaveItToMe = {
       effect: {
         effect: {
-          type: "exert",
           target: "CHOSEN_CHARACTER",
+          type: "exert",
         },
         type: "optional",
       },
@@ -606,9 +554,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "triggered",
     };
     expect(result.abilities[0].name).toBe("JUST LEAVE IT TO ME");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(justLeaveItToMe),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(justLeaveItToMe));
   });
 
   it.skip("HeiHei - Persistent Presence: should parse card text", () => {
@@ -632,9 +578,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "triggered",
     };
     expect(result.abilities[0].name).toBe("HE'S BACK!");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(hesBack),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(hesBack));
   });
 
   it.skip("Jiminy Cricket - Pinocchio's Conscience: should parse card text", () => {
@@ -646,24 +590,22 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
 
     // First ability: Evasive
     const evasive = Abilities.Keyword("Evasive");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(evasive),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(evasive));
 
     // Second ability: THAT STILL, SMALL VOICE
     const thatStillSmallVoice = {
       effect: {
         condition: {
-          type: "have-character",
           name: "Pinocchio",
+          type: "have-character",
         },
         effect: {
-          type: "optional",
           effect: {
-            type: "draw",
             amount: 1,
             target: "CONTROLLER",
+            type: "draw",
           },
+          type: "optional",
         },
         type: "conditional",
       },
@@ -676,9 +618,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "triggered",
     };
     expect(result.abilities[1].name).toBe("THAT STILL, SMALL VOICE");
-    expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining(thatStillSmallVoice),
-    );
+    expect(result.abilities[1].ability).toEqual(expect.objectContaining(thatStillSmallVoice));
   });
 
   it.skip("Madam Mim - Fox: should parse card text", () => {
@@ -693,12 +633,12 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       effect: {
         choices: [
           {
-            type: "banish",
             target: "SELF",
+            type: "banish",
           },
           {
-            type: "return-to-hand",
             target: "YOUR_OTHER_CHARACTER",
+            type: "return-to-hand",
           },
         ],
         type: "choice",
@@ -712,9 +652,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "triggered",
     };
     expect(result.abilities[0].name).toBe("CHASING THE RABBIT");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(chasingTheRabbit),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(chasingTheRabbit));
 
     // Second ability: Rush
     const rush = Abilities.Keyword("Rush");
@@ -730,21 +668,19 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
 
     // First ability: Evasive
     const evasive = Abilities.Keyword("Evasive");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(evasive),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(evasive));
 
     // Second ability: I WIN, I WIN!
     const iWinIWin = {
       effect: {
         choices: [
           {
-            type: "banish",
             target: "SELF",
+            type: "banish",
           },
           {
-            type: "return-to-hand",
             target: "YOUR_OTHER_2_CHARACTERS",
+            type: "return-to-hand",
           },
         ],
         type: "choice",
@@ -758,9 +694,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "triggered",
     };
     expect(result.abilities[1].name).toBe("I WIN, I WIN!");
-    expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining(iWinIWin),
-    );
+    expect(result.abilities[1].ability).toEqual(expect.objectContaining(iWinIWin));
   });
 
   it.skip("Madam Mim - Rival of Merlin: should parse card text", () => {
@@ -786,24 +720,24 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       effect: {
         effects: [
           {
-            type: "play-for-free",
             filter: {
               cardType: "character",
               maxCost: 4,
             },
+            type: "play-for-free",
           },
           {
-            type: "gain-keyword",
             keyword: "Rush",
             target: "PLAYED_CARD",
+            type: "gain-keyword",
           },
           {
-            type: "delayed",
-            timing: "end-of-turn",
             effect: {
-              type: "banish",
               target: "PLAYED_CARD",
+              type: "banish",
             },
+            timing: "end-of-turn",
+            type: "delayed",
           },
         ],
         type: "sequence",
@@ -812,9 +746,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "activated",
     };
     expect(result.abilities[1].name).toBe("GRUESOME AND GRIM");
-    expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining(gruesomeAndGrim),
-    );
+    expect(result.abilities[1].ability).toEqual(expect.objectContaining(gruesomeAndGrim));
   });
 
   it.skip("Madam Mim - Snake: should parse card text", () => {
@@ -828,12 +760,12 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       effect: {
         choices: [
           {
-            type: "banish",
             target: "SELF",
+            type: "banish",
           },
           {
-            type: "return-to-hand",
             target: "YOUR_OTHER_CHARACTER",
+            type: "return-to-hand",
           },
         ],
         type: "choice",
@@ -847,9 +779,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "triggered",
     };
     expect(result.abilities[0].name).toBe("JUST YOU WAIT");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(justYouWait),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(justYouWait));
   });
 
   it.skip("Merlin - Crab: should parse card text", () => {
@@ -876,14 +806,11 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "triggered",
     };
     expect(result.abilities[0].name).toBe("READY OR NOT!");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(readyOrNot),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(readyOrNot));
   });
 
   it.skip("Merlin - Goat: should parse card text", () => {
-    const text =
-      "HERE I COME! When you play this character and when he leaves play, gain 1 lore.";
+    const text = "HERE I COME! When you play this character and when he leaves play, gain 1 lore.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
@@ -903,9 +830,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "triggered",
     };
     expect(result.abilities[0].name).toBe("HERE I COME!");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(hereICome),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(hereICome));
   });
 
   it.skip("Merlin - Rabbit: should parse card text", () => {
@@ -918,9 +843,9 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     const hoppityHip = {
       effect: {
         effect: {
-          type: "draw",
           amount: 1,
           target: "CONTROLLER",
+          type: "draw",
         },
         type: "optional",
       },
@@ -933,9 +858,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "triggered",
     };
     expect(result.abilities[0].name).toBe("HOPPITY HIP!");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(hoppityHip),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(hoppityHip));
   });
 
   it.skip("Merlin - Shapeshifter: should parse card text", () => {
@@ -962,9 +885,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "triggered",
     };
     expect(result.abilities[0].name).toBe("BATTLE OF WITS");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(battleOfWits),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(battleOfWits));
   });
 
   it.skip("Merlin - Squirrel: should parse card text", () => {
@@ -978,15 +899,15 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       effect: {
         effects: [
           {
-            type: "look",
-            source: "deck",
-            position: "top",
             count: 1,
+            position: "top",
+            source: "deck",
+            type: "look",
           },
           {
-            type: "put-on-deck",
-            position: "choice",
             options: ["top", "bottom"],
+            position: "choice",
+            type: "put-on-deck",
           },
         ],
         type: "sequence",
@@ -1000,9 +921,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "triggered",
     };
     expect(result.abilities[0].name).toBe("LOOK BEFORE YOU LEAP");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(lookBeforeYouLeap),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(lookBeforeYouLeap));
   });
 
   it.skip("Gruesome and Grim: should parse card text", () => {
@@ -1016,33 +935,31 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       effect: {
         effects: [
           {
-            type: "play-for-free",
             filter: {
               cardType: "character",
               maxCost: 4,
             },
+            type: "play-for-free",
           },
           {
-            type: "gain-keyword",
             keyword: "Rush",
             target: "PLAYED_CARD",
+            type: "gain-keyword",
           },
           {
-            type: "delayed",
-            timing: "end-of-turn",
             effect: {
-              type: "banish",
               target: "PLAYED_CARD",
+              type: "banish",
             },
+            timing: "end-of-turn",
+            type: "delayed",
           },
         ],
         type: "sequence",
       },
       type: "action",
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(gruesomeAndGrim),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(gruesomeAndGrim));
   });
 
   it.skip("Legend of the Sword in the Stone: should parse card text", () => {
@@ -1062,14 +979,11 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       },
       type: "action",
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(legendOfTheSword),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(legendOfTheSword));
   });
 
   it.skip("Binding Contract: should parse card text", () => {
-    const text =
-      "FOR ALL ETERNITY {E}, {E} one of your characters — Exert chosen character.";
+    const text = "FOR ALL ETERNITY {E}, {E} one of your characters — Exert chosen character.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
@@ -1087,9 +1001,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "activated",
     };
     expect(result.abilities[0].name).toBe("FOR ALL ETERNITY");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(forAllEternity),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(forAllEternity));
   });
 
   it.skip("Croquet Mallet: should parse card text", () => {
@@ -1113,9 +1025,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "activated",
     };
     expect(result.abilities[0].name).toBe("HURTLING HEDGEHOG");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(hurtlingHedgehog),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(hurtlingHedgehog));
   });
 
   it.skip("Beast - Relentless: should parse card text", () => {
@@ -1128,8 +1038,8 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     const secondWind = {
       effect: {
         effect: {
-          type: "ready",
           target: "SELF",
+          type: "ready",
         },
         type: "optional",
       },
@@ -1142,9 +1052,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "triggered",
     };
     expect(result.abilities[0].name).toBe("SECOND WIND");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(secondWind),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(secondWind));
   });
 
   it.skip("Belle - Bookworm: should parse card text", () => {
@@ -1170,9 +1078,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "static",
     };
     expect(result.abilities[0].name).toBe("USE YOUR IMAGINATION");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(useYourImagination),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(useYourImagination));
   });
 
   it.skip("Belle - Hidden Archer: should parse card text", () => {
@@ -1206,9 +1112,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "triggered",
     };
     expect(result.abilities[1].name).toBe("THORNY ARROWS");
-    expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining(thornyArrows),
-    );
+    expect(result.abilities[1].ability).toEqual(expect.objectContaining(thornyArrows));
   });
 
   it.skip("Bucky - Squirrel Squeak Tutor: should parse card text", () => {
@@ -1224,10 +1128,10 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
           type: "used-shift",
         },
         effect: {
-          type: "discard",
           amount: 1,
-          target: "EACH_OPPONENT",
           chosenBy: "TARGET",
+          target: "EACH_OPPONENT",
+          type: "discard",
         },
         type: "conditional",
       },
@@ -1240,9 +1144,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "triggered",
     };
     expect(result.abilities[0].name).toBe("SQUEAK");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(squeak),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(squeak));
   });
 
   it.skip("Cheshire Cat - From the Shadows: should parse card text", () => {
@@ -1262,9 +1164,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
 
     // Second ability: Evasive
     const evasive = Abilities.Keyword("Evasive");
-    expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining(evasive),
-    );
+    expect(result.abilities[1].ability).toEqual(expect.objectContaining(evasive));
 
     // Third ability: WICKED SMILE
     const wickedSmile = {
@@ -1279,9 +1179,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "activated",
     };
     expect(result.abilities[2].name).toBe("WICKED SMILE");
-    expect(result.abilities[2].ability).toEqual(
-      expect.objectContaining(wickedSmile),
-    );
+    expect(result.abilities[2].ability).toEqual(expect.objectContaining(wickedSmile));
   });
 
   it.skip("Dr. Facilier - Fortune Teller: should parse card text", () => {
@@ -1293,9 +1191,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
 
     // First ability: Evasive
     const evasive = Abilities.Keyword("Evasive");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(evasive),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(evasive));
 
     // Second ability: YOU'RE IN MY WORLD
     const youreInMyWorld = {
@@ -1314,9 +1210,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "triggered",
     };
     expect(result.abilities[1].name).toBe("YOU'RE IN MY WORLD");
-    expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining(youreInMyWorld),
-    );
+    expect(result.abilities[1].ability).toEqual(expect.objectContaining(youreInMyWorld));
   });
 
   it.skip("Flynn Rider - His Own Biggest Fan: should parse card text", () => {
@@ -1336,20 +1230,18 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
 
     // Second ability: Evasive
     const evasive = Abilities.Keyword("Evasive");
-    expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining(evasive),
-    );
+    expect(result.abilities[1].ability).toEqual(expect.objectContaining(evasive));
 
     // Third ability: ONE LAST, BIG SCORE
     const oneLastBigScore = {
       effect: {
         modifier: {
-          type: "for-each",
           counter: {
-            type: "cards-in-hand",
             controller: "opponent",
+            type: "cards-in-hand",
           },
           modifier: -1,
+          type: "for-each",
         },
         stat: "lore",
         target: "SELF",
@@ -1359,9 +1251,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "static",
     };
     expect(result.abilities[2].name).toBe("ONE LAST, BIG SCORE");
-    expect(result.abilities[2].ability).toEqual(
-      expect.objectContaining(oneLastBigScore),
-    );
+    expect(result.abilities[2].ability).toEqual(expect.objectContaining(oneLastBigScore));
   });
 
   it.skip("Gaston - Scheming Suitor: should parse card text", () => {
@@ -1387,9 +1277,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "static",
     };
     expect(result.abilities[0].name).toBe("YES, I'M INTIMIDATING");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(yesImIntimidating),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(yesImIntimidating));
   });
 
   it.skip("Lucifer - Cunning Cat: should parse card text", () => {
@@ -1402,21 +1290,21 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     const mouseCatcher = {
       effect: {
         effect: {
-          type: "choice",
-          chosenBy: "TARGET",
           choices: [
             {
-              type: "discard",
               amount: 2,
+              type: "discard",
             },
             {
-              type: "discard",
               amount: 1,
               filter: {
                 cardType: "action",
               },
+              type: "discard",
             },
           ],
+          chosenBy: "TARGET",
+          type: "choice",
         },
         type: "for-each-opponent",
       },
@@ -1429,9 +1317,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "triggered",
     };
     expect(result.abilities[0].name).toBe("MOUSE CATCHER");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(mouseCatcher),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(mouseCatcher));
   });
 
   it.skip("Bibbidi Bobbidi Boo: should parse card text", () => {
@@ -1444,23 +1330,21 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     const bibbidiBobbidiBoo = {
       effect: {
         cost: {
-          type: "return-to-hand",
           target: "YOUR_CHOSEN_CHARACTER",
+          type: "return-to-hand",
         },
         effect: {
-          type: "play-for-free",
           filter: {
             cardType: "character",
             maxCost: "RETURNED_CARD_COST",
           },
+          type: "play-for-free",
         },
         type: "cost-effect",
       },
       type: "action",
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(bibbidiBobbidiBoo),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(bibbidiBobbidiBoo));
   });
 
   it.skip("Bounce: should parse card text", () => {
@@ -1473,20 +1357,18 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     const bounce = {
       effect: {
         cost: {
-          type: "return-to-hand",
           target: "YOUR_CHOSEN_CHARACTER",
+          type: "return-to-hand",
         },
         effect: {
-          type: "return-to-hand",
           target: "CHOSEN_OTHER_CHARACTER",
+          type: "return-to-hand",
         },
         type: "cost-effect",
       },
       type: "action",
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(bounce),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(bounce));
   });
 
   it.skip("Hypnotize: should parse card text", () => {
@@ -1499,24 +1381,22 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       effect: {
         effects: [
           {
-            type: "discard",
             amount: 1,
-            target: "EACH_OPPONENT",
             chosenBy: "TARGET",
+            target: "EACH_OPPONENT",
+            type: "discard",
           },
           {
-            type: "draw",
             amount: 1,
             target: "CONTROLLER",
+            type: "draw",
           },
         ],
         type: "sequence",
       },
       type: "action",
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(hypnotize),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(hypnotize));
   });
 
   it.skip("Donald Duck - Not Again!: should parse card text", () => {
@@ -1528,17 +1408,15 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
 
     // First ability: Evasive
     const evasive = Abilities.Keyword("Evasive");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(evasive),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(evasive));
 
     // Second ability: PHOOEY!
     const phooey = {
       effect: {
         modifier: {
-          type: "for-each",
           counter: "damage-on-self",
           modifier: 1,
+          type: "for-each",
         },
         stat: "lore",
         target: "SELF",
@@ -1548,40 +1426,31 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "static",
     };
     expect(result.abilities[1].name).toBe("PHOOEY!");
-    expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining(phooey),
-    );
+    expect(result.abilities[1].ability).toEqual(expect.objectContaining(phooey));
   });
 
   it.skip("Felicia - Always Hungry: should parse card text", () => {
-    const text =
-      "Reckless (This character can't quest and must challenge each turn if able.)";
+    const text = "Reckless (This character can't quest and must challenge each turn if able.)";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
     const reckless = Abilities.Keyword("Reckless");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(reckless),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(reckless));
   });
 
   it.skip("Fidget - Ratigan's Henchman: should parse card text", () => {
-    const text =
-      "Evasive (Only characters with Evasive can challenge this character.)";
+    const text = "Evasive (Only characters with Evasive can challenge this character.)";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
     const evasive = Abilities.Keyword("Evasive");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(evasive),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(evasive));
   });
 
   it.skip("Honest John - Not That Honest: should parse card text", () => {
-    const text =
-      "EASY STREET Whenever you play a Floodborn character, each opponent loses 1 lore.";
+    const text = "EASY STREET Whenever you play a Floodborn character, each opponent loses 1 lore.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
@@ -1601,9 +1470,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "triggered",
     };
     expect(result.abilities[0].name).toBe("EASY STREET");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(easyStreet),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(easyStreet));
   });
 
   it.skip("Lady Tremaine - Imperious Queen: should parse card text", () => {
@@ -1625,8 +1492,8 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     const powerToRuleAtLast = {
       effect: {
         effect: {
-          type: "banish",
           target: "THEIR_CHOSEN_CHARACTER",
+          type: "banish",
         },
         type: "for-each-opponent",
       },
@@ -1639,9 +1506,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "triggered",
     };
     expect(result.abilities[1].name).toBe("POWER TO RULE AT LAST");
-    expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining(powerToRuleAtLast),
-    );
+    expect(result.abilities[1].ability).toEqual(expect.objectContaining(powerToRuleAtLast));
   });
 
   it.skip("Lady Tremaine - Overbearing Matriarch: should parse card text", () => {
@@ -1654,13 +1519,13 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     const notForYou = {
       effect: {
         condition: {
-          type: "lore-comparison",
-          comparison: "more-than",
           compareTo: "you",
+          comparison: "more-than",
+          type: "lore-comparison",
         },
         effect: {
-          type: "lose-lore",
           amount: 1,
+          type: "lose-lore",
         },
         type: "for-each-opponent",
       },
@@ -1673,22 +1538,17 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "triggered",
     };
     expect(result.abilities[0].name).toBe("NOT FOR YOU");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(notForYou),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(notForYou));
   });
 
   it.skip("Minnie Mouse - Stylish Surfer: should parse card text", () => {
-    const text =
-      "Evasive (Only characters with Evasive can challenge this character.)";
+    const text = "Evasive (Only characters with Evasive can challenge this character.)";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
     const evasive = Abilities.Keyword("Evasive");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(evasive),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(evasive));
   });
 
   it.skip("Minnie Mouse - Wide-Eyed Diver: should parse card text", () => {
@@ -1708,9 +1568,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
 
     // Second ability: Evasive
     const evasive = Abilities.Keyword("Evasive");
-    expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining(evasive),
-    );
+    expect(result.abilities[1].ability).toEqual(expect.objectContaining(evasive));
 
     // Third ability: UNDERSEA ADVENTURE
     const underseaAdventure = {
@@ -1733,14 +1591,11 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "triggered",
     };
     expect(result.abilities[2].name).toBe("UNDERSEA ADVENTURE");
-    expect(result.abilities[2].ability).toEqual(
-      expect.objectContaining(underseaAdventure),
-    );
+    expect(result.abilities[2].ability).toEqual(expect.objectContaining(underseaAdventure));
   });
 
   it.skip("Mother Gothel - Withered and Wicked: should parse card text", () => {
-    const text =
-      "WHAT HAVE YOU DONE?! This character enters play with 3 damage.";
+    const text = "WHAT HAVE YOU DONE?! This character enters play with 3 damage.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
@@ -1754,9 +1609,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "static",
     };
     expect(result.abilities[0].name).toBe("WHAT HAVE YOU DONE?!");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(whatHaveYouDone),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(whatHaveYouDone));
   });
 
   it.skip("Mulan - Soldier in Training: should parse card text", () => {
@@ -1780,28 +1633,26 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       effect: {
         effects: [
           {
-            type: "ready",
             target: "YOUR_CHOSEN_DAMAGED_CHARACTER",
+            type: "ready",
           },
           {
-            type: "restriction",
+            duration: "this-turn",
             restriction: "cant-quest",
             target: "CHOSEN_CHARACTER",
-            duration: "this-turn",
+            type: "restriction",
           },
           {
-            type: "draw",
             amount: 1,
             target: "CONTROLLER",
+            type: "draw",
           },
         ],
         type: "sequence",
       },
       type: "action",
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(goTheDistance),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(goTheDistance));
   });
 
   it.skip("Basil - Great Mouse Detective: should parse card text", () => {
@@ -1826,9 +1677,9 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       },
       effect: {
         effect: {
-          type: "draw",
           amount: 2,
           target: "CONTROLLER",
+          type: "draw",
         },
         type: "optional",
       },
@@ -1841,9 +1692,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "triggered",
     };
     expect(result.abilities[1].name).toBe("THERE'S ALWAYS A CHANCE");
-    expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining(theresAlwaysAChance),
-    );
+    expect(result.abilities[1].ability).toEqual(expect.objectContaining(theresAlwaysAChance));
   });
 
   it.skip("Basil - Of Baker Street: should parse card text", () => {
@@ -1854,9 +1703,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.abilities.length).toBe(1);
 
     const support = Abilities.Keyword("Support");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(support),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(support));
   });
 
   it.skip("Cogsworth - Grandfather Clock: should parse card text", () => {
@@ -1890,9 +1737,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "static",
     };
     expect(result.abilities[2].name).toBe("UNWIND");
-    expect(result.abilities[2].ability).toEqual(
-      expect.objectContaining(unwind),
-    );
+    expect(result.abilities[2].ability).toEqual(expect.objectContaining(unwind));
   });
 
   it.skip("Cogsworth - Talking Clock: should parse card text", () => {
@@ -1904,15 +1749,15 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     const waitAMinute = {
       effect: {
         ability: {
-          type: "activated",
           cost: {
             exert: true,
           },
           effect: {
-            type: "gain-lore",
             amount: 1,
             target: "CONTROLLER",
+            type: "gain-lore",
           },
+          type: "activated",
         },
         target: "YOUR_RECKLESS_CHARACTERS",
         type: "grant-ability",
@@ -1921,9 +1766,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "static",
     };
     expect(result.abilities[0].name).toBe("WAIT A MINUTE");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(waitAMinute),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(waitAMinute));
   });
 
   it.skip("Cruella De Vil - Perfectly Wretched: should parse card text", () => {
@@ -1959,14 +1802,11 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "triggered",
     };
     expect(result.abilities[1].name).toBe("OH, NO YOU DON'T");
-    expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining(ohNoYouDont),
-    );
+    expect(result.abilities[1].ability).toEqual(expect.objectContaining(ohNoYouDont));
   });
 
   it.skip("Duke Weaselton - Small-Time Crook: should parse card text", () => {
-    const text =
-      "Ward (Opponents can't choose this character except to challenge.)";
+    const text = "Ward (Opponents can't choose this character except to challenge.)";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
@@ -1995,22 +1835,22 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       effect: {
         effects: [
           {
-            type: "look",
-            source: "deck",
-            position: "top",
             count: 3,
+            position: "top",
+            source: "deck",
+            type: "look",
           },
           {
-            type: "optional",
             effect: {
-              type: "put-into-hand",
               count: 1,
+              type: "put-into-hand",
             },
+            type: "optional",
           },
           {
-            type: "put-on-deck",
-            position: "bottom",
             order: "any",
+            position: "bottom",
+            type: "put-on-deck",
           },
         ],
         type: "sequence",
@@ -2024,9 +1864,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "triggered",
     };
     expect(result.abilities[1].name).toBe("DEVELOPED BRAIN");
-    expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining(developedBrain),
-    );
+    expect(result.abilities[1].ability).toEqual(expect.objectContaining(developedBrain));
   });
 
   it.skip("Hiram Flaversham - Toymaker: should parse card text", () => {
@@ -2039,16 +1877,16 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     const artificer = {
       effect: {
         effect: {
-          type: "cost-effect",
           cost: {
-            type: "banish",
             target: "YOUR_ITEM",
+            type: "banish",
           },
           effect: {
-            type: "draw",
             amount: 2,
             target: "CONTROLLER",
+            type: "draw",
           },
+          type: "cost-effect",
         },
         type: "optional",
       },
@@ -2063,9 +1901,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "triggered",
     };
     expect(result.abilities[0].name).toBe("ARTIFICER");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(artificer),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(artificer));
   });
 
   it.skip("James - Role Model: should parse card text", () => {
@@ -2078,9 +1914,9 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     const neverEverLoseSight = {
       effect: {
         effect: {
-          type: "put-into-inkwell",
-          target: "SELF",
           exerted: true,
+          target: "SELF",
+          type: "put-into-inkwell",
         },
         type: "optional",
       },
@@ -2093,9 +1929,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "triggered",
     };
     expect(result.abilities[0].name).toBe("NEVER, EVER LOSE SIGHT");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(neverEverLoseSight),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(neverEverLoseSight));
   });
 
   it.skip("Mrs. Judson - Housekeeper: should parse card text", () => {
@@ -2108,10 +1942,10 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     const tidyUp = {
       effect: {
         effect: {
-          type: "put-into-inkwell",
-          source: "deck",
-          position: "top",
           exerted: true,
+          position: "top",
+          source: "deck",
+          type: "put-into-inkwell",
         },
         type: "optional",
       },
@@ -2124,9 +1958,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "triggered",
     };
     expect(result.abilities[0].name).toBe("TIDY UP");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(tidyUp),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(tidyUp));
   });
 
   it.skip("Falling Down the Rabbit Hole: should parse card text", () => {
@@ -2139,23 +1971,20 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     const fallingDownTheRabbitHole = {
       effect: {
         effect: {
-          type: "put-into-inkwell",
-          target: "THEIR_CHOSEN_CHARACTER",
           chosenBy: "TARGET",
           exerted: true,
+          target: "THEIR_CHOSEN_CHARACTER",
+          type: "put-into-inkwell",
         },
         type: "for-each-player",
       },
       type: "action",
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(fallingDownTheRabbitHole),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(fallingDownTheRabbitHole));
   });
 
   it.skip("Launch: should parse card text", () => {
-    const text =
-      "Banish chosen item of yours to deal 5 damage to chosen character.";
+    const text = "Banish chosen item of yours to deal 5 damage to chosen character.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
@@ -2163,21 +1992,19 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     const launch = {
       effect: {
         cost: {
-          type: "banish",
           target: "YOUR_CHOSEN_ITEM",
+          type: "banish",
         },
         effect: {
-          type: "deal-damage",
           amount: 5,
           target: "CHOSEN_CHARACTER",
+          type: "deal-damage",
         },
         type: "cost-effect",
       },
       type: "action",
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(launch),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(launch));
   });
 
   it.skip("Fang Crossbow: should parse card text", () => {
@@ -2204,9 +2031,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "activated",
     };
     expect(result.abilities[0].name).toBe("CAREFUL AIM");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(carefulAim),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(carefulAim));
 
     // Second ability: STAY BACK!
     const stayBack = {
@@ -2222,9 +2047,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "activated",
     };
     expect(result.abilities[1].name).toBe("STAY BACK!");
-    expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining(stayBack),
-    );
+    expect(result.abilities[1].ability).toEqual(expect.objectContaining(stayBack));
   });
 
   it.skip("Gumbo Pot: should parse card text", () => {
@@ -2247,9 +2070,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "activated",
     };
     expect(result.abilities[0].name).toBe("THE BEST I'VE EVER TASTED");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(theBestIveEverTasted),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(theBestIveEverTasted));
   });
 
   it.skip("Maurice's Workshop: should parse card text", () => {
@@ -2262,15 +2083,15 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     const lookingForThis = {
       effect: {
         effect: {
-          type: "cost-effect",
           cost: {
             ink: 1,
           },
           effect: {
-            type: "draw",
             amount: 1,
             target: "CONTROLLER",
+            type: "draw",
           },
+          type: "cost-effect",
         },
         type: "optional",
       },
@@ -2283,9 +2104,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "triggered",
     };
     expect(result.abilities[0].name).toBe("LOOKING FOR THIS?");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(lookingForThis),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(lookingForThis));
   });
 
   it.skip("Beast - Forbidding Recluse: should parse card text", () => {
@@ -2298,9 +2117,9 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     const youreNotWelcomeHere = {
       effect: {
         effect: {
-          type: "deal-damage",
           amount: 1,
           target: "CHOSEN_CHARACTER",
+          type: "deal-damage",
         },
         type: "optional",
       },
@@ -2313,9 +2132,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "triggered",
     };
     expect(result.abilities[0].name).toBe("YOU'RE NOT WELCOME HERE");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(youreNotWelcomeHere),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(youreNotWelcomeHere));
   });
 
   it.skip("Beast - Selfless Protector: should parse card text", () => {
@@ -2328,13 +2145,13 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     const shieldAnother = {
       effect: {
         condition: {
-          type: "target",
           target: "YOUR_OTHER_CHARACTERS",
+          type: "target",
         },
         replacement: {
-          type: "redirect-damage",
-          target: "SELF",
           amount: "all",
+          target: "SELF",
+          type: "redirect-damage",
         },
         replaces: "damage-to-character",
         type: "replacement",
@@ -2343,9 +2160,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "static",
     };
     expect(result.abilities[0].name).toBe("SHIELD ANOTHER");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(shieldAnother),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(shieldAnother));
   });
 
   it.skip("Beast - Tragic Hero: should parse card text", () => {
@@ -2367,20 +2182,20 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     const itsBetterThisWay = {
       effect: {
         condition: {
-          type: "no-damage",
           target: "SELF",
+          type: "no-damage",
         },
         ifFalse: {
-          type: "modify-stat",
-          stat: "strength",
-          modifier: 4,
-          target: "SELF",
           duration: "this-turn",
+          modifier: 4,
+          stat: "strength",
+          target: "SELF",
+          type: "modify-stat",
         },
         ifTrue: {
-          type: "draw",
           amount: 1,
           target: "CONTROLLER",
+          type: "draw",
         },
         type: "conditional",
       },
@@ -2393,9 +2208,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "triggered",
     };
     expect(result.abilities[1].name).toBe("IT'S BETTER THIS WAY");
-    expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining(itsBetterThisWay),
-    );
+    expect(result.abilities[1].ability).toEqual(expect.objectContaining(itsBetterThisWay));
   });
 
   it.skip("Chief Bogo - Respected Officer: should parse card text", () => {
@@ -2420,9 +2233,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "triggered",
     };
     expect(result.abilities[0].name).toBe("INSUBORDINATION!");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(insubordination),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(insubordination));
   });
 
   it.skip("Cinderella - Knight in Training: should parse card text", () => {
@@ -2435,19 +2246,19 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     const haveCourage = {
       effect: {
         effect: {
-          type: "sequence",
           effects: [
             {
-              type: "draw",
               amount: 1,
               target: "CONTROLLER",
+              type: "draw",
             },
             {
-              type: "discard",
               amount: 1,
               chosenBy: "you",
+              type: "discard",
             },
           ],
+          type: "sequence",
         },
         type: "optional",
       },
@@ -2460,9 +2271,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "triggered",
     };
     expect(result.abilities[0].name).toBe("HAVE COURAGE");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(haveCourage),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(haveCourage));
   });
 
   it.skip("Cinderella - Stouthearted: should parse card text", () => {
@@ -2486,9 +2295,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "keyword",
       value: 2,
     };
-    expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining(resist),
-    );
+    expect(result.abilities[1].ability).toEqual(expect.objectContaining(resist));
 
     // Third ability: THE SINGING SWORD
     const theSingingSword = {
@@ -2509,9 +2316,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "triggered",
     };
     expect(result.abilities[2].name).toBe("THE SINGING SWORD");
-    expect(result.abilities[2].ability).toEqual(
-      expect.objectContaining(theSingingSword),
-    );
+    expect(result.abilities[2].ability).toEqual(expect.objectContaining(theSingingSword));
   });
 
   it.skip("Hercules - Divine Hero: should parse card text", () => {
@@ -2535,9 +2340,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "keyword",
       value: 2,
     };
-    expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining(resist),
-    );
+    expect(result.abilities[1].ability).toEqual(expect.objectContaining(resist));
   });
 
   it.skip("Jafar - Dreadnought: should parse card text", () => {
@@ -2562,9 +2365,9 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       },
       effect: {
         effect: {
-          type: "draw",
           amount: 1,
           target: "CONTROLLER",
+          type: "draw",
         },
         type: "optional",
       },
@@ -2577,9 +2380,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "triggered",
     };
     expect(result.abilities[1].name).toBe("NOW WHERE WERE WE?");
-    expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining(nowWhereWereWe),
-    );
+    expect(result.abilities[1].ability).toEqual(expect.objectContaining(nowWhereWereWe));
   });
 
   it.skip("Kronk - Junior Chipmunk: should parse card text", () => {
@@ -2595,9 +2396,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "keyword",
       value: 1,
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(resist),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(resist));
 
     // Second ability: SCOUT LEADER
     const scoutLeader = {
@@ -2606,9 +2405,9 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       },
       effect: {
         effect: {
-          type: "deal-damage",
           amount: 2,
           target: "CHOSEN_CHARACTER",
+          type: "deal-damage",
         },
         type: "optional",
       },
@@ -2621,9 +2420,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "triggered",
     };
     expect(result.abilities[1].name).toBe("SCOUT LEADER");
-    expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining(scoutLeader),
-    );
+    expect(result.abilities[1].ability).toEqual(expect.objectContaining(scoutLeader));
   });
 
   it.skip("Li Shang - Archery Instructor: should parse card text", () => {
@@ -2649,9 +2446,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "triggered",
     };
     expect(result.abilities[0].name).toBe("ARCHERY LESSON");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(archeryLesson),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(archeryLesson));
   });
 
   it.skip("Magic Broom - Industrial Model: should parse card text", () => {
@@ -2678,9 +2473,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "triggered",
     };
     expect(result.abilities[0].name).toBe("MAKE IT SHINE");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(makeItShine),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(makeItShine));
   });
 
   it.skip("Charge!: should parse card text", () => {
@@ -2702,9 +2495,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       },
       type: "action",
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(charge),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(charge));
   });
 
   it.skip("Let the Storm Rage On: should parse card text", () => {
@@ -2717,23 +2508,21 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       effect: {
         effects: [
           {
-            type: "deal-damage",
             amount: 2,
             target: "CHOSEN_CHARACTER",
+            type: "deal-damage",
           },
           {
-            type: "draw",
             amount: 1,
             target: "CONTROLLER",
+            type: "draw",
           },
         ],
         type: "sequence",
       },
       type: "action",
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(letTheStormRageOn),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(letTheStormRageOn));
   });
 
   it.skip("Last Cannon: should parse card text", () => {
@@ -2759,9 +2548,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "activated",
     };
     expect(result.abilities[0].name).toBe("ARM YOURSELF");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(armYourself),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(armYourself));
   });
 
   it.skip("Mouse Armor: should parse card text", () => {
@@ -2786,8 +2573,6 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       type: "activated",
     };
     expect(result.abilities[0].name).toBe("PROTECTION");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(protection),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(protection));
   });
 });

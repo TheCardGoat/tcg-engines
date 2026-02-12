@@ -13,33 +13,33 @@ export const genieWonderfulTrickster: CharacterCard = {
     },
     {
       effect: {
-        type: "draw",
         amount: 1,
         target: "CONTROLLER",
+        type: "draw",
       },
       id: "1yx-2",
       name: "YOUR REWARD AWAITS",
       text: "YOUR REWARD AWAITS Whenever you play a card, draw a card.",
       trigger: {
         event: "play",
-        timing: "whenever",
         on: {
-          controller: "you",
           cardType: "card",
+          controller: "you",
         },
+        timing: "whenever",
       },
       type: "triggered",
     },
     {
       effect: {
-        type: "put-on-bottom",
         target: {
-          selector: "chosen",
+          cardTypes: ["card"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["card"],
         },
+        type: "put-on-bottom",
       },
       id: "1yx-3",
       text: "FORBIDDEN TREASURE At the end of your turn, put all the cards in your hand on the bottom of your deck in any order.",

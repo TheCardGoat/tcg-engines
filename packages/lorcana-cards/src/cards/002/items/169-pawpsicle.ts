@@ -4,37 +4,37 @@ export const pawpsicle: ItemCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "draw",
           amount: 1,
           target: "CONTROLLER",
+          type: "draw",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "s1u-1",
       name: "JUMBO POP",
       text: "JUMBO POP When you play this item, you may draw a card.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },
     {
       cost: { exert: true },
       effect: {
-        type: "remove-damage",
         amount: 2,
-        upTo: true,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "remove-damage",
+        upTo: true,
       },
       id: "s1u-2",
       text: "THAT'S REDWOOD Banish this item — Remove up to 2 damage from chosen character.",

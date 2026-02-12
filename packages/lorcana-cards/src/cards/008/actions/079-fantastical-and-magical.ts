@@ -4,18 +4,18 @@ export const fantasticalAndMagical: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "draw",
             amount: 1,
             target: "CONTROLLER",
+            type: "draw",
           },
           {
-            type: "gain-lore",
             amount: 1,
+            type: "gain-lore",
           },
         ],
+        type: "sequence",
       },
       id: "1nt-1",
       text: "Sing Together 9 For each character that sang this song, draw a card and gain 1 lore.",

@@ -4,15 +4,13 @@ export const soMuchToGive: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "draw",
             amount: 1,
             target: "CONTROLLER",
+            type: "draw",
           },
           {
-            type: "gain-keyword",
             keyword: "Bodyguard",
             target: {
               selector: "chosen",
@@ -21,8 +19,10 @@ export const soMuchToGive: ActionCard = {
               zones: ["play"],
               cardTypes: ["character"],
             },
+            type: "gain-keyword",
           },
         ],
+        type: "sequence",
       },
       id: "jyr-1",
       text: "Draw a card. Chosen character gains Bodyguard until the start of your next turn.",

@@ -4,12 +4,9 @@ export const jafarLampThief: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "scry",
             amount: 2,
-            target: "CONTROLLER",
             destinations: [
               {
                 zone: "deck-bottom",
@@ -17,20 +14,23 @@ export const jafarLampThief: CharacterCard = {
                 ordering: "player-choice",
               },
             ],
+            target: "CONTROLLER",
+            type: "scry",
           },
           {
-            type: "put-on-bottom",
             target: "CHOSEN_CHARACTER",
+            type: "put-on-bottom",
           },
         ],
+        type: "sequence",
       },
       id: "eye-1",
       name: "I AM YOUR MASTER NOW",
       text: "I AM YOUR MASTER NOW When you play this character, look at the top 2 cards of your deck. Put one on the top of your deck and the other on the bottom.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

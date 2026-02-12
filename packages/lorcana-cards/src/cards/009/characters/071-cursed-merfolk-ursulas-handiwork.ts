@@ -4,18 +4,18 @@ export const cursedMerfolkUrsulasHandiwork: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "discard",
         amount: 1,
-        target: "EACH_OPPONENT",
         chosen: true,
+        target: "EACH_OPPONENT",
+        type: "discard",
       },
       id: "1pi-1",
       name: "POOR SOULS",
       text: "POOR SOULS Whenever this character is challenged, each opponent chooses and discards a card.",
       trigger: {
         event: "challenged",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

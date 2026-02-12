@@ -4,9 +4,9 @@ export const dangHuTalonChief: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Support",
         target: "CHOSEN_CHARACTER",
+        type: "gain-keyword",
       },
       id: "tq9-1",
       name: "YOU BETTER TALK FAST Your other Villain",

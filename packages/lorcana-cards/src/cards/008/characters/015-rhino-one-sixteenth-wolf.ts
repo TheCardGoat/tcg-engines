@@ -4,18 +4,18 @@ export const rhinoOnesixteenthWolf: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: -1,
+        stat: "strength",
         target: "CHOSEN_CHARACTER",
+        type: "modify-stat",
       },
       id: "1bm-1",
       name: "TINY HOWL",
       text: "TINY HOWL When you play this character, chosen opposing character gets -1 {S} until the start of your next turn.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

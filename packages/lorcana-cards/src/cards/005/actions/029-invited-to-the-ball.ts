@@ -4,14 +4,14 @@ export const invitedToTheBall: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "put-on-bottom",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "put-on-bottom",
       },
       id: "5ai-1",
       text: "Reveal the top 2 cards of your deck. Put revealed character cards into your hand. Put the rest on the bottom of your deck in any order.",

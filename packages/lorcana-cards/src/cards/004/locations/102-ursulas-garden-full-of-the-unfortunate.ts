@@ -4,10 +4,10 @@ export const ursulasGardenFullOfTheUnfortunate: LocationCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "lore",
         modifier: -1,
+        stat: "lore",
         target: "CHOSEN_CHARACTER",
+        type: "modify-stat",
       },
       id: "1h6-1",
       text: "ABANDON HOPE While you have an exerted character here, opposing characters get -1 {L}.",

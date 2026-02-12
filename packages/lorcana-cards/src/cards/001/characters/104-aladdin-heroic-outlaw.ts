@@ -4,12 +4,12 @@ export const aladdinHeroicOutlaw: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
-        effect: {
-          type: "gain-lore",
-          amount: 2,
-        },
         chooser: "CONTROLLER",
+        effect: {
+          amount: 2,
+          type: "gain-lore",
+        },
+        type: "optional",
       },
       id: "c0t-1",
       text: "**Shift** 5 _(You may pay 5 {I} to play this on top of one of your characters named Aladdin.)_\n**DARING EXPLOIT** During your turn, whenever this\rcharacter banishes another character in a challenge, you gain 2 lore and each opponent loses 2 lore.",

@@ -28,9 +28,7 @@ export function parseTrigger(text: string): Trigger | undefined {
 
   // Strip restriction prefixes if present (for cases without names)
   // E.g., "Once per turn, when X" or "During your turn, when X"
-  const restrictionMatch = textToParse.match(
-    /^(?:Once per turn|During your turn),\s*/i,
-  );
+  const restrictionMatch = textToParse.match(/^(?:Once per turn|During your turn),\s*/i);
   if (restrictionMatch) {
     textToParse = textToParse.substring(restrictionMatch[0].length).trim();
   }

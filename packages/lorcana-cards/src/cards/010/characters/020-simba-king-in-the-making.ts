@@ -11,21 +11,21 @@ export const simbaKingInTheMaking: CharacterCard = {
     },
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "it's a character card",
+          type: "if",
         },
         then: {
-          type: "restriction",
           restriction: "enters-play-exerted",
           target: "SELF",
+          type: "restriction",
         },
+        type: "conditional",
       },
       id: "dbt-2",
       name: "TIMELY ALLIANCE",
       text: "TIMELY ALLIANCE Whenever you put a card under this character, you may reveal the top card of your deck. If it's a character card, you may play that character for free and they enter play exerted. Otherwise, put it on the bottom of your deck.",
-      trigger: { event: "play", timing: "when", on: "SELF" },
+      trigger: { event: "play", on: "SELF", timing: "when" },
       type: "triggered",
     },
   ],

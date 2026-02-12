@@ -4,10 +4,10 @@ export const triggerNotsosharpShooter: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "lore",
         modifier: 1,
+        stat: "lore",
         target: "YOUR_CHARACTERS",
+        type: "modify-stat",
       },
       id: "125-1",
       text: "OLD BETSY Your characters named Nutsy get +1 {L}.",

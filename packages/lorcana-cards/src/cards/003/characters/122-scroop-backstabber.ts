@@ -4,10 +4,10 @@ export const scroopBackstabber: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: 3,
+        stat: "strength",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "58w-1",
       text: "BRUTE While this character has damage, he gets +3 {S}.",

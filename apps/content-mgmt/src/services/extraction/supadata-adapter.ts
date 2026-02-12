@@ -40,7 +40,7 @@ const YOUTUBE_PATTERNS = [
 const DEFAULT_CONFIG: ExtractionConfig = {
   maxDurationSeconds: 1800, // 30 minutes
   supportedLanguages: ["en"],
-  extractionTimeoutMs: 60000, // 1 minute
+  extractionTimeoutMs: 60_000, // 1 minute
   validationRules: [],
 };
 
@@ -48,12 +48,12 @@ const DEFAULT_CONFIG: ExtractionConfig = {
  * Supadata transcript response structure
  */
 interface SupadataTranscriptResponse {
-  content: Array<{
+  content: {
     text: string;
-    offset: number; // milliseconds
-    duration: number; // milliseconds
+    offset: number; // Milliseconds
+    duration: number; // Milliseconds
     lang?: string;
-  }>;
+  }[];
   lang: string;
   availableLangs: string[];
 }
@@ -164,9 +164,9 @@ export class SupadataExtractionAdapter extends BaseExtractionAdapter {
     }
 
     return {
-      sourceType: "youtube",
       contentId: videoId,
       normalizedUrl: `https://www.youtube.com/watch?v=${videoId}`,
+      sourceType: "youtube",
     };
   }
 
@@ -180,10 +180,7 @@ export class SupadataExtractionAdapter extends BaseExtractionAdapter {
   /**
    * Fetch raw content (transcript) from YouTube via Supadata
    */
-  async fetchContent(
-    contentId: string,
-    options?: FetchContentOptions,
-  ): Promise<RawContent> {
+  async fetchContent(contentId: string, options?: FetchContentOptions): Promise<RawContent> {
     const client = this.getClient();
     const url = `https://www.youtube.com/watch?v=${contentId}`;
 
@@ -196,31 +193,27 @@ export class SupadataExtractionAdapter extends BaseExtractionAdapter {
     });
 
     // Convert to content segments
-    const segments: ContentSegment[] = transcriptResponse.content.map(
-      (segment) => ({
-        text: segment.text,
-        offsetMs: segment.offset,
-        durationMs: segment.duration,
-        language: segment.lang,
-      }),
-    );
+    const segments: ContentSegment[] = transcriptResponse.content.map((segment) => ({
+      durationMs: segment.duration,
+      language: segment.lang,
+      offsetMs: segment.offset,
+      text: segment.text,
+    }));
 
     // Combine all text for full transcript
-    const textContent = transcriptResponse.content
-      .map((segment) => segment.text)
-      .join(" ");
+    const textContent = transcriptResponse.content.map((segment) => segment.text).join(" ");
 
     return {
+      availableLanguages: transcriptResponse.availableLangs,
       contentId,
+      language: transcriptResponse.lang,
+      rawMetadata: {
+        availableLangs: transcriptResponse.availableLangs,
+        lang: transcriptResponse.lang,
+      },
+      segments,
       sourceType: "youtube",
       textContent,
-      segments,
-      rawMetadata: {
-        lang: transcriptResponse.lang,
-        availableLangs: transcriptResponse.availableLangs,
-      },
-      language: transcriptResponse.lang,
-      availableLanguages: transcriptResponse.availableLangs,
     };
   }
 
@@ -251,26 +244,26 @@ export class SupadataExtractionAdapter extends BaseExtractionAdapter {
     }
 
     return {
-      title: metadataResponse.title,
-      description: metadataResponse.description,
       authorName: metadataResponse.author_name,
-      channelName: metadataResponse.author_name,
       channelId,
+      channelName: metadataResponse.author_name,
       channelUrl: metadataResponse.author_url,
-      durationSeconds: metadataResponse.duration,
-      thumbnailUrl: metadataResponse.thumbnail_url,
-      viewCount: metadataResponse.view_count,
-      likeCount: metadataResponse.like_count,
       commentCount: metadataResponse.comment_count,
+      description: metadataResponse.description,
+      durationSeconds: metadataResponse.duration,
+      language: rawContent.language,
+      likeCount: metadataResponse.like_count,
       publishedAt: metadataResponse.published_at
         ? new Date(metadataResponse.published_at)
         : undefined,
-      language: rawContent.language,
       sourceMetadata: {
         ...metadataResponse,
-        transcriptLang: rawContent.language,
         availableLangs: rawContent.availableLanguages,
+        transcriptLang: rawContent.language,
       },
+      thumbnailUrl: metadataResponse.thumbnail_url,
+      title: metadataResponse.title,
+      viewCount: metadataResponse.view_count,
     };
   }
 
@@ -286,36 +279,26 @@ export class SupadataExtractionAdapter extends BaseExtractionAdapter {
    */
   private getDefaultValidationRules(): ValidationRule[] {
     return [
-      this.createValidationRule(
-        "has_title",
-        "Content must have a title",
-        true,
-        (metadata) => {
-          if (!metadata.title || metadata.title.trim().length === 0) {
-            return {
-              code: "MISSING_TITLE",
-              message: "Content must have a title",
-              field: "title",
-            };
-          }
-          return null;
-        },
-      ),
-      this.createValidationRule(
-        "has_duration",
-        "Video must have a duration",
-        false,
-        (metadata) => {
-          if (metadata.durationSeconds === undefined) {
-            return {
-              code: "MISSING_DURATION",
-              message: "Video duration could not be determined",
-              field: "durationSeconds",
-            };
-          }
-          return null;
-        },
-      ),
+      this.createValidationRule("has_title", "Content must have a title", true, (metadata) => {
+        if (!metadata.title || metadata.title.trim().length === 0) {
+          return {
+            code: "MISSING_TITLE",
+            field: "title",
+            message: "Content must have a title",
+          };
+        }
+        return null;
+      }),
+      this.createValidationRule("has_duration", "Video must have a duration", false, (metadata) => {
+        if (metadata.durationSeconds === undefined) {
+          return {
+            code: "MISSING_DURATION",
+            field: "durationSeconds",
+            message: "Video duration could not be determined",
+          };
+        }
+        return null;
+      }),
     ];
   }
 }

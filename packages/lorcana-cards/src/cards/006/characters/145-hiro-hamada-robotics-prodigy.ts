@@ -4,9 +4,9 @@ export const hiroHamadaRoboticsProdigy: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "search-deck",
         putInto: "hand",
         shuffle: true,
+        type: "search-deck",
       },
       id: "r87-1",
       text: "SWEET TECH {2} {E} - Search your deck for an item card or a Robot character card and reveal it to all players. Shuffle your deck and put that card on top of it.",

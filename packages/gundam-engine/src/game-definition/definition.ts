@@ -30,11 +30,11 @@ export const gundamGameDefinition: GameDefinition<
   unknown,
   GundamCardMeta
 > = {
-  name: "Gundam TCG",
-  zones: gundamZones,
+  endIf: checkVictory,
   flow: gundamFlow,
   moves: gundamMoves,
-  trackers: trackerConfig,
+  name: "Gundam TCG",
   setup: setupGundamGame,
-  endIf: checkVictory,
+  trackers: trackerConfig,
+  zones: gundamZones,
 };

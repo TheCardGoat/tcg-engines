@@ -13,13 +13,7 @@
 // Type definitions
 export type CardType = "character" | "action" | "item" | "location";
 
-export type InkType =
-  | "amber"
-  | "amethyst"
-  | "emerald"
-  | "ruby"
-  | "sapphire"
-  | "steel";
+export type InkType = "amber" | "amethyst" | "emerald" | "ruby" | "sapphire" | "steel";
 
 export type Rarity =
   | "common"
@@ -106,14 +100,8 @@ import setsData from "./sets.json";
 
 // Type assertions for imported JSON
 // Using `as unknown as` because JSON inference can't express tuple types correctly
-export const canonicalCards = canonicalCardsData as unknown as Record<
-  string,
-  CanonicalCard
->;
-export const printings = printingsData as unknown as Record<
-  string,
-  CardPrinting
->;
+export const canonicalCards = canonicalCardsData as unknown as Record<string, CanonicalCard>;
+export const printings = printingsData as unknown as Record<string, CardPrinting>;
 export const sets = setsData as unknown as Record<string, SetDefinition>;
 export const idMapping = idMappingData as unknown as IdMapping;
 
@@ -143,7 +131,9 @@ export function getCanonicalCardByDeckBuildingId(
   deckBuildingId: string,
 ): CanonicalCard | undefined {
   const shortId = idMapping.byDeckBuildingId[deckBuildingId];
-  if (!shortId) {return undefined;}
+  if (!shortId) {
+    return undefined;
+  }
   return canonicalCards[shortId];
 }
 
@@ -159,7 +149,9 @@ export function getPrinting(printingId: string): CardPrinting | undefined {
  */
 export function getPrintingsForCard(shortId: string): CardPrinting[] {
   const card = canonicalCards[shortId];
-  if (!card) {return [];}
+  if (!card) {
+    return [];
+  }
 
   return card.printings
     .map((id) => printings[id])
@@ -169,11 +161,11 @@ export function getPrintingsForCard(shortId: string): CardPrinting[] {
 /**
  * Get the canonical card for a printing
  */
-export function getCardForPrinting(
-  printingId: string,
-): CanonicalCard | undefined {
+export function getCardForPrinting(printingId: string): CanonicalCard | undefined {
   const printing = printings[printingId];
-  if (!printing) {return undefined;}
+  if (!printing) {
+    return undefined;
+  }
 
   return canonicalCards[printing.gameCardId];
 }
@@ -197,7 +189,9 @@ export function getCardsInSet(setId: string): CardPrinting[] {
  */
 export function getReprintIds(shortId: string): string[] {
   const card = canonicalCards[shortId];
-  if (!card || card.printings.length <= 1) {return [];}
+  if (!card || card.printings.length <= 1) {
+    return [];
+  }
 
   return card.printings;
 }
@@ -243,8 +237,6 @@ export function shortIdToDeckBuildingId(shortId: string): string | undefined {
 /**
  * Convert deck_building_id to short ID
  */
-export function deckBuildingIdToShortId(
-  deckBuildingId: string,
-): string | undefined {
+export function deckBuildingIdToShortId(deckBuildingId: string): string | undefined {
   return idMapping.byDeckBuildingId[deckBuildingId];
 }

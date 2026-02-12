@@ -4,14 +4,14 @@ export const theMostDiabolicalScheme: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "banish",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "banish",
       },
       id: "hlj-1",
       text: "Banish chosen Villain of yours to banish chosen character.",

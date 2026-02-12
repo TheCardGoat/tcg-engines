@@ -4,23 +4,23 @@ export const fergusMcduckScroogesFather: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Ward",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "gain-keyword",
       },
       id: "xuv-1",
       name: "TOUGHEN UP",
       text: "TOUGHEN UP When you play this character, chosen character of yours gains Ward until the start of your next turn.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

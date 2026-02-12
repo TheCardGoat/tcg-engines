@@ -4,11 +4,11 @@ export const mulanImperialSoldier: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "lore",
-        modifier: 1,
-        target: "SELF",
         duration: "this-turn",
+        modifier: 1,
+        stat: "lore",
+        target: "SELF",
+        type: "modify-stat",
       },
       id: "nsp-1",
       name: "LEAD BY EXAMPLE",

@@ -4,18 +4,18 @@ export const thisIsMyFamily: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "gain-lore",
             amount: 1,
+            type: "gain-lore",
           },
           {
-            type: "draw",
             amount: 1,
             target: "CONTROLLER",
+            type: "draw",
           },
         ],
+        type: "sequence",
       },
       id: "1io-1",
       text: "Gain 1 lore. Draw a card.",

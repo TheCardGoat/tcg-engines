@@ -16,22 +16,22 @@ export const elsaTheFifthSpirit: CharacterCard = {
     },
     {
       effect: {
-        type: "exert",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "opponent",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "exert",
       },
       id: "dwf-3",
       name: "CRYSTALLIZE",
       text: "CRYSTALLIZE When you play this character, exert chosen opposing character.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

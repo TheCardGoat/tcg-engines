@@ -4,9 +4,8 @@ export const bernardBrandnewAgent: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "ready",
           target: {
             selector: "chosen",
             count: 1,
@@ -14,8 +13,9 @@ export const bernardBrandnewAgent: CharacterCard = {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "ready",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "15t-1",
       text: "I'LL CHECK IT OUT At the end of your turn, if this character is exerted, you may ready another chosen character of yours.",

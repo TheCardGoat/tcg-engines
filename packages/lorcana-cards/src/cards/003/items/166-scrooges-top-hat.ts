@@ -7,10 +7,10 @@ export const scroogesTopHat: ItemCard = {
         exert: true,
       },
       effect: {
-        type: "cost-reduction",
         amount: 1,
         cardType: "item",
         duration: "next-play-this-turn",
+        type: "cost-reduction",
       },
       id: "1mq-1",
       name: "BUSINESS EXPERTISE",

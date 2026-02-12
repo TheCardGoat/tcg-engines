@@ -1,11 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import type { CardId, GameId, PlayerId, ZoneId } from "./branded";
-import {
-  createCardId,
-  createGameId,
-  createPlayerId,
-  createZoneId,
-} from "./branded-utils";
+import { createCardId, createGameId, createPlayerId, createZoneId } from "./branded-utils";
 
 describe("Branded Types", () => {
   describe("createCardId", () => {
@@ -107,8 +102,8 @@ describe("Branded Types", () => {
 
       // This test verifies type safety at compile time
       // The following would fail TypeScript compilation:
-      // const wrongAssignment1: CardId = playerId;
-      // const wrongAssignment2: PlayerId = cardId;
+      // Const wrongAssignment1: CardId = playerId;
+      // Const wrongAssignment2: PlayerId = cardId;
 
       // But we can verify runtime values are still just strings
       expect(typeof cardId).toBe("string");
@@ -123,11 +118,7 @@ describe("Branded Types", () => {
     });
 
     it("should work with arrays and collections", () => {
-      const cardIds: CardId[] = [
-        createCardId("1"),
-        createCardId("2"),
-        createCardId("3"),
-      ];
+      const cardIds: CardId[] = [createCardId("1"), createCardId("2"), createCardId("3")];
 
       expect(cardIds).toHaveLength(3);
       expect(cardIds.every((id) => typeof id === "string")).toBe(true);
@@ -147,27 +138,17 @@ describe("Branded Types", () => {
 
   describe("ID Generation Consistency", () => {
     it("should generate IDs of consistent length", () => {
-      const ids = [
-        createCardId(),
-        createPlayerId(),
-        createGameId(),
-        createZoneId(),
-      ];
+      const ids = [createCardId(), createPlayerId(), createGameId(), createZoneId()];
 
       const lengths = ids.map((id) => id.length);
       expect(new Set(lengths).size).toBe(1); // All same length
     });
 
     it("should generate URL-safe IDs", () => {
-      const ids = [
-        createCardId(),
-        createPlayerId(),
-        createGameId(),
-        createZoneId(),
-      ];
+      const ids = [createCardId(), createPlayerId(), createGameId(), createZoneId()];
 
       for (const id of ids) {
-        // nanoid generates URL-safe characters: A-Za-z0-9_-
+        // Nanoid generates URL-safe characters: A-Za-z0-9_-
         expect(id).toMatch(/^[A-Za-z0-9_-]+$/);
       }
     });

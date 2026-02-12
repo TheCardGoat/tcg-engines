@@ -4,9 +4,9 @@ export const stabbingtonBrotherWithoutAPatch: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Rush",
         target: "YOUR_CHARACTERS",
+        type: "gain-keyword",
       },
       id: "103-1",
       text: "Rush GET 'EM! Your other characters named Stabbington Brother gain Rush.",

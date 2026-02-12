@@ -4,10 +4,10 @@ export const theSorcerersTowerWondrousWorkspace: LocationCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "lore",
         modifier: 1,
+        stat: "lore",
         target: "CHARACTERS_HERE",
+        type: "modify-stat",
       },
       id: "1ne-2",
       name: "MAGICAL POWER",

@@ -4,20 +4,20 @@ export const strikeAGoodMatch: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "draw",
             amount: 2,
             target: "CONTROLLER",
+            type: "draw",
           },
           {
-            type: "discard",
             amount: 1,
-            target: "CONTROLLER",
             chosen: true,
+            target: "CONTROLLER",
+            type: "discard",
           },
         ],
+        type: "sequence",
       },
       id: "1ru-1",
       text: "Draw 2 cards, then choose and discard a card.",

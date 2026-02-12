@@ -4,9 +4,8 @@ export const maleficentMonstrousDragon: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "banish",
           target: {
             selector: "chosen",
             count: 1,
@@ -14,8 +13,9 @@ export const maleficentMonstrousDragon: CharacterCard = {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "banish",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "b6l-1",
       text: "**MALEFICENT'S SCEPTER** You may banish chosen character.",

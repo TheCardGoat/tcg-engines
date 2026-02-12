@@ -19,9 +19,9 @@ describe("Effect: Token Creation", () => {
         expect.objectContaining({
           effect: expect.objectContaining({
             token: expect.objectContaining({
+              might: 1,
               name: "Recruit",
               type: "unit",
-              might: 1,
             }),
             type: "create-token",
           }),
@@ -64,9 +64,9 @@ describe("Effect: Token Creation", () => {
         expect.objectContaining({
           effect: expect.objectContaining({
             token: expect.objectContaining({
+              might: 2,
               name: "Sand Soldier",
               type: "unit",
-              might: 2,
             }),
             type: "create-token",
           }),
@@ -87,9 +87,9 @@ describe("Effect: Token Creation", () => {
           effect: expect.objectContaining({
             amount: 2,
             token: expect.objectContaining({
+              might: 3,
               name: "Mech",
               type: "unit",
-              might: 3,
             }),
             type: "create-token",
           }),
@@ -112,10 +112,10 @@ describe("Effect: Token Creation", () => {
           effect: expect.objectContaining({
             ready: true,
             token: expect.objectContaining({
+              keywords: expect.arrayContaining(["Temporary"]),
+              might: 3,
               name: "Sprite",
               type: "unit",
-              might: 3,
-              keywords: expect.arrayContaining(["Temporary"]),
             }),
             type: "create-token",
           }),

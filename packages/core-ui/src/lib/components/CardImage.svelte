@@ -45,13 +45,16 @@
     const paddedNumber = String(number).padStart(3, "0");
 
     switch (crop) {
-      case "art_only":
+      case "art_only": {
         return `https://cdn.assets.lorcanito.com/assets/images/cards/${paddedSet}/art_only/${paddedNumber}.webp`;
-      case "art_and_name":
+      }
+      case "art_and_name": {
         return `https://cdn.assets.lorcanito.com/assets/images/cards/${safeLang}/${paddedSet}/art_and_name/${paddedNumber}.webp`;
+      }
       case "full":
-      default:
+      default: {
         return `https://cdn.assets.lorcanito.com/assets/images/cards/${safeLang}/${paddedSet}/${paddedNumber}.webp`;
+      }
     }
   });
 </script>

@@ -4,9 +4,9 @@ export const herculesTrueHero: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "restriction",
         restriction: "enters-play-exerted",
         target: "SELF",
+        type: "restriction",
       },
       id: "uyj-1",
       text: "**Bodyguard** _(This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)_",

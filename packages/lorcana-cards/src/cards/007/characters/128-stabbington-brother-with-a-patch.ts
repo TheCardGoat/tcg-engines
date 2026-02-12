@@ -4,17 +4,17 @@ export const stabbingtonBrotherWithAPatch: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "lose-lore",
         amount: 1,
         target: "OPPONENT",
+        type: "lose-lore",
       },
       id: "y6f-1",
       name: "CRIME OF OPPORTUNITY",
       text: "CRIME OF OPPORTUNITY When you play this character, chosen opponent loses 1 lore.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

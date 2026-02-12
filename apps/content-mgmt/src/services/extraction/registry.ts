@@ -21,9 +21,8 @@ import type { ExtractionServiceAdapter, SourceType } from "../../types";
  * ```
  */
 export class ExtractionServiceRegistry {
-  private adapters: Map<string, ExtractionServiceAdapter> = new Map();
-  private sourceTypeToAdapter: Map<SourceType, ExtractionServiceAdapter> =
-    new Map();
+  private adapters = new Map<string, ExtractionServiceAdapter>();
+  private sourceTypeToAdapter = new Map<SourceType, ExtractionServiceAdapter>();
 
   /**
    * Register an extraction service adapter
@@ -38,9 +37,7 @@ export class ExtractionServiceRegistry {
   register(adapter: ExtractionServiceAdapter): void {
     // Validate serviceId first
     if (this.adapters.has(adapter.serviceId)) {
-      throw new Error(
-        `Extraction service adapter '${adapter.serviceId}' is already registered`,
-      );
+      throw new Error(`Extraction service adapter '${adapter.serviceId}' is already registered`);
     }
 
     // Validate all source types before making any changes
@@ -98,9 +95,7 @@ export class ExtractionServiceRegistry {
    * @param sourceType - The source type to look up
    * @returns The adapter or undefined if not found
    */
-  getAdapterBySourceType(
-    sourceType: SourceType,
-  ): ExtractionServiceAdapter | undefined {
+  getAdapterBySourceType(sourceType: SourceType): ExtractionServiceAdapter | undefined {
     return this.sourceTypeToAdapter.get(sourceType);
   }
 
@@ -135,7 +130,7 @@ export class ExtractionServiceRegistry {
    * @returns Array of registered service IDs
    */
   getRegisteredServices(): string[] {
-    return Array.from(this.adapters.keys());
+    return [...this.adapters.keys()];
   }
 
   /**
@@ -144,7 +139,7 @@ export class ExtractionServiceRegistry {
    * @returns Array of supported source types
    */
   getSupportedSourceTypes(): SourceType[] {
-    return Array.from(this.sourceTypeToAdapter.keys());
+    return [...this.sourceTypeToAdapter.keys()];
   }
 
   /**
@@ -176,9 +171,7 @@ export const extractionServiceRegistry = new ExtractionServiceRegistry();
  *
  * @param adapter - The adapter to register
  */
-export function registerExtractionService(
-  adapter: ExtractionServiceAdapter,
-): void {
+export function registerExtractionService(adapter: ExtractionServiceAdapter): void {
   extractionServiceRegistry.register(adapter);
 }
 
@@ -188,9 +181,7 @@ export function registerExtractionService(
  * @param serviceId - The service ID to look up
  * @returns The adapter or undefined if not found
  */
-export function getExtractionService(
-  serviceId: string,
-): ExtractionServiceAdapter | undefined {
+export function getExtractionService(serviceId: string): ExtractionServiceAdapter | undefined {
   return extractionServiceRegistry.getAdapter(serviceId);
 }
 
@@ -200,8 +191,6 @@ export function getExtractionService(
  * @param url - The URL to find an adapter for
  * @returns The adapter or undefined if no adapter can handle the URL
  */
-export function getExtractionServiceForUrl(
-  url: string,
-): ExtractionServiceAdapter | undefined {
+export function getExtractionServiceForUrl(url: string): ExtractionServiceAdapter | undefined {
   return extractionServiceRegistry.getAdapterForUrl(url);
 }

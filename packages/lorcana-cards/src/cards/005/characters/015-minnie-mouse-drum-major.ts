@@ -13,25 +13,25 @@ export const minnieMouseDrumMajor: CharacterCard = {
     },
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you used Shift to play her",
+          type: "if",
         },
         then: {
-          type: "search-deck",
+          cardType: "character",
           putInto: "hand",
           shuffle: true,
-          cardType: "character",
+          type: "search-deck",
         },
+        type: "conditional",
       },
       id: "o0p-2",
       name: "PARADE ORDER",
       text: "PARADE ORDER When you play this character, if you used Shift to play her, you may search your deck for a character card and reveal that card to all players. Shuffle your deck and put that card on top of it.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

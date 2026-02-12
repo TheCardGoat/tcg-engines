@@ -48,24 +48,24 @@
 
   // Spacing classes based on orientation and spacing type
   const spacingClasses: Record<CardSpacing, Record<Orientation, string>> = {
-    none: { horizontal: "gap-0", vertical: "gap-0" },
-    tight: { horizontal: "gap-0.5", vertical: "gap-0.5" },
-    normal: { horizontal: "gap-2", vertical: "gap-2" },
     loose: { horizontal: "gap-4", vertical: "gap-4" },
+    none: { horizontal: "gap-0", vertical: "gap-0" },
+    normal: { horizontal: "gap-2", vertical: "gap-2" },
     overlap: { horizontal: "-space-x-8", vertical: "-space-y-8" },
+    tight: { horizontal: "gap-0.5", vertical: "gap-0.5" },
   };
 
   // Zone type specific styling
   const zoneTypeClasses: Record<ZoneType, string> = {
-    hand: "p-4 min-h-[120px] flex items-end justify-center perspective-1000",
+    custom: "",
+    deck: "p-2 rounded-lg border-2 border-solid border-base-content/20 bg-base-200/30 shadow-sm",
+    exile: "p-2 rounded-lg opacity-60 border border-base-content/10 grayscale",
     field:
       "p-4 min-h-[200px] rounded-xl bg-base-content/5 border-2 border-dashed border-base-content/10 backdrop-blur-sm shadow-inner",
-    deck: "p-2 rounded-lg border-2 border-solid border-base-content/20 bg-base-200/30 shadow-sm",
     graveyard:
       "p-2 rounded-lg border-2 border-solid border-base-content/20 bg-black/20 shadow-inner",
+    hand: "p-4 min-h-[120px] flex items-end justify-center perspective-1000",
     resource: "p-2 rounded-lg bg-primary/5 border border-primary/20",
-    exile: "p-2 rounded-lg opacity-60 border border-base-content/10 grayscale",
-    custom: "",
   };
 
   const orientationClasses: Record<Orientation, string> = {

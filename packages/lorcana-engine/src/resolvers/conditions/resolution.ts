@@ -5,8 +5,10 @@ import { conditionRegistry } from "../condition-registry";
 conditionRegistry.register<UsedShiftCondition>("used-shift", {
   complexity: 5,
   evaluate: (_condition, sourceCard) =>
-    Boolean(sourceCard.stackPosition?.cardsUnderneath &&
-      sourceCard.stackPosition.cardsUnderneath.length > 0),
+    Boolean(
+      sourceCard.stackPosition?.cardsUnderneath &&
+      sourceCard.stackPosition.cardsUnderneath.length > 0,
+    ),
 });
 
 // Register Resolution Condition (Legacy/Context)

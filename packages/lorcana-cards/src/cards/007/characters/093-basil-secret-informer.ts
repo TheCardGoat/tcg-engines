@@ -4,17 +4,17 @@ export const basilSecretInformer: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Reckless",
         target: "CHOSEN_CHARACTER",
+        type: "gain-keyword",
       },
       id: "lk0-1",
       name: "DRAW THEM OUT",
       text: "DRAW THEM OUT Whenever this character quests, opposing damaged characters gain Reckless during their next turn.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

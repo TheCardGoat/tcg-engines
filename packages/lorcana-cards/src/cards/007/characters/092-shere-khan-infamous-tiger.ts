@@ -4,17 +4,17 @@ export const shereKhanInfamousTiger: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "discard",
         amount: -1,
         target: "CONTROLLER",
+        type: "discard",
       },
       id: "1r2-1",
       name: "WHAT A PITY",
       text: "WHAT A PITY When you play this character, discard your hand.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

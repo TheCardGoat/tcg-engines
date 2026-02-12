@@ -4,9 +4,9 @@ export const pullTheLever: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "draw",
         amount: 2,
         target: "CONTROLLER",
+        type: "draw",
       },
       id: "ixq-2",
       text: "- Draw 2 cards.",
@@ -14,10 +14,10 @@ export const pullTheLever: ActionCard = {
     },
     {
       effect: {
-        type: "discard",
         amount: 1,
-        target: "EACH_OPPONENT",
         chosen: true,
+        target: "EACH_OPPONENT",
+        type: "discard",
       },
       id: "ixq-3",
       text: "- Each opponent chooses and discards a card.",

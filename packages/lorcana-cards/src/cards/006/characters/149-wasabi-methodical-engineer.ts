@@ -4,9 +4,8 @@ export const wasabiMethodicalEngineer: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "banish",
           target: {
             selector: "chosen",
             count: 1,
@@ -14,24 +13,25 @@ export const wasabiMethodicalEngineer: CharacterCard = {
             zones: ["play"],
             cardTypes: ["item"],
           },
+          type: "banish",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "l5t-1",
       name: "BLADES OF FURY",
       text: "BLADES OF FURY When you play this character, you may banish chosen item. Its player gains 1 lore.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Evasive",
         target: "SELF",
+        type: "gain-keyword",
       },
       id: "l5t-2",
       text: "QUICK REFLEXES During your turn, this character gains Evasive.",

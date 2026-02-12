@@ -13,15 +13,13 @@ export const theHeadlessHorsemanCursedRider: CharacterCard = {
     },
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "draw",
             amount: 3,
             target: "EACH_PLAYER",
+            type: "draw",
           },
           {
-            type: "deal-damage",
             amount: 2,
             target: {
               selector: "chosen",
@@ -30,16 +28,18 @@ export const theHeadlessHorsemanCursedRider: CharacterCard = {
               zones: ["play"],
               cardTypes: ["card"],
             },
+            type: "deal-damage",
           },
         ],
+        type: "sequence",
       },
       id: "1xu-2",
       name: "WITCHING HOUR",
       text: "WITCHING HOUR When you play this character, each player draws 3 cards, then discards 3 cards at random. Choose an opposing character and deal 2 damage to them for each action card discarded this way.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

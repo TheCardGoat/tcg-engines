@@ -4,22 +4,22 @@ export const pjPeteCaughtUpInTheMusic: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
-        modifier: 2,
-        target: "SELF",
         duration: "this-turn",
+        modifier: 2,
+        stat: "strength",
+        target: "SELF",
+        type: "modify-stat",
       },
       id: "a30-1",
       name: "SHOUT OUT LOUD!",
       text: "SHOUT OUT LOUD! Whenever you play a song, this character gets +2 {S} this turn.",
       trigger: {
         event: "play",
-        timing: "whenever",
         on: {
-          controller: "you",
           cardType: "action",
+          controller: "you",
         },
+        timing: "whenever",
       },
       type: "triggered",
     },

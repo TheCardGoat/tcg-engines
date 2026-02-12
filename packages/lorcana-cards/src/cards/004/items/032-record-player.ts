@@ -4,27 +4,27 @@ export const recordPlayer: ItemCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: -2,
+        stat: "strength",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "modify-stat",
       },
       id: "1nm-1",
       name: "LOOK AT THIS!",
       text: "LOOK AT THIS! Whenever you play a song, chosen character gets -2 {S} until the start of your next turn.",
       trigger: {
         event: "play",
-        timing: "whenever",
         on: {
-          controller: "you",
           cardType: "action",
+          controller: "you",
         },
+        timing: "whenever",
       },
       type: "triggered",
     },

@@ -3,24 +3,24 @@ import { RuleEngine } from "../engine/rule-engine";
 import type { FlowDefinition } from "../flow/flow-definition";
 import type { GameDefinition } from "../game-definition/game-definition";
 import type { GameMoveDefinitions } from "../game-definition/move-definitions";
-import { createPlayerId, type PlayerId } from "../types";
+import { type PlayerId, createPlayerId } from "../types";
 import { expectPhaseTransition } from "./test-flow-assertions";
 
 /**
  * Test state for flow assertions
  */
-type FlowTestState = {
-  players: Array<{
+interface FlowTestState {
+  players: {
     id: PlayerId;
     name: string;
-  }>;
+  }[];
   phase: "draw" | "main" | "end";
   turnNumber: number;
-};
+}
 
-type FlowTestMoves = {
+interface FlowTestMoves {
   nextPhase: Record<string, never>;
-};
+}
 
 describe("test-flow-assertions", () => {
   function createTestEngine() {
@@ -47,33 +47,33 @@ describe("test-flow-assertions", () => {
         },
         phases: {
           draw: {
-            order: 0,
             next: "main",
-          },
-          main: {
-            order: 1,
-            next: "end",
+            order: 0,
           },
           end: {
-            order: 2,
             next: undefined,
+            order: 2,
+          },
+          main: {
+            next: "end",
+            order: 1,
           },
         },
       },
     };
 
     const gameDefinition: GameDefinition<FlowTestState, FlowTestMoves> = {
+      flow,
+      moves,
       name: "Flow Test Game",
       setup: (players) => ({
+        phase: "draw" as const,
         players: players.map((p) => ({
           id: p.id as PlayerId,
           name: p.name || "Player",
         })),
-        phase: "draw" as const,
         turnNumber: 1,
       }),
-      moves,
-      flow,
     };
 
     const players = [
@@ -92,7 +92,7 @@ describe("test-flow-assertions", () => {
       expectPhaseTransition(
         engine,
         "nextPhase",
-        { playerId: createPlayerId("p1"), params: {} },
+        { params: {}, playerId: createPlayerId("p1") },
         "draw",
         "main",
       );
@@ -105,7 +105,7 @@ describe("test-flow-assertions", () => {
         expectPhaseTransition(
           engine,
           "nextPhase",
-          { playerId: createPlayerId("p1"), params: {} },
+          { params: {}, playerId: createPlayerId("p1") },
           "main", // Wrong initial phase
           "end",
         );
@@ -119,7 +119,7 @@ describe("test-flow-assertions", () => {
         expectPhaseTransition(
           engine,
           "nextPhase",
-          { playerId: createPlayerId("p1"), params: {} },
+          { params: {}, playerId: createPlayerId("p1") },
           "draw",
           "end", // Wrong final phase (should be 'main')
         );
@@ -132,7 +132,7 @@ describe("test-flow-assertions", () => {
       expectPhaseTransition(
         engine,
         "nextPhase",
-        { playerId: createPlayerId("p1"), params: {} },
+        { params: {}, playerId: createPlayerId("p1") },
         "draw",
         "main",
       );
@@ -140,7 +140,7 @@ describe("test-flow-assertions", () => {
       expectPhaseTransition(
         engine,
         "nextPhase",
-        { playerId: createPlayerId("p1"), params: {} },
+        { params: {}, playerId: createPlayerId("p1") },
         "main",
         "end",
       );
@@ -148,7 +148,7 @@ describe("test-flow-assertions", () => {
       expectPhaseTransition(
         engine,
         "nextPhase",
-        { playerId: createPlayerId("p1"), params: {} },
+        { params: {}, playerId: createPlayerId("p1") },
         "end",
         "draw",
       );
@@ -168,24 +168,24 @@ describe("test-flow-assertions", () => {
       const flow: FlowDefinition<FlowTestState> = {
         turn: {
           phases: {
-            draw: { order: 0, next: "main" },
-            main: { order: 1, next: undefined },
+            draw: { next: "main", order: 0 },
+            main: { next: undefined, order: 1 },
           },
         },
       };
 
       const gameDefinition: GameDefinition<FlowTestState, FlowTestMoves> = {
+        flow,
+        moves,
         name: "Failing Flow Test",
         setup: (players) => ({
+          phase: "draw" as const,
           players: players.map((p) => ({
             id: p.id as PlayerId,
             name: p.name || "Player",
           })),
-          phase: "draw" as const,
           turnNumber: 1,
         }),
-        moves,
-        flow,
       };
 
       const failEngine = new RuleEngine(gameDefinition, [
@@ -196,7 +196,7 @@ describe("test-flow-assertions", () => {
         expectPhaseTransition(
           failEngine,
           "nextPhase",
-          { playerId: createPlayerId("p1"), params: {} },
+          { params: {}, playerId: createPlayerId("p1") },
           "draw",
           "main",
         );
@@ -214,7 +214,7 @@ describe("test-flow-assertions", () => {
       expectPhaseTransition(
         engine,
         "nextPhase",
-        { playerId: createPlayerId("p1"), params: {} },
+        { params: {}, playerId: createPlayerId("p1") },
         "draw",
         "main",
       );
@@ -227,17 +227,17 @@ describe("test-flow-assertions", () => {
 
     it("should accept phase path for nested state", () => {
       // Create engine with nested phase in state
-      type NestedFlowState = {
-        players: Array<{ id: PlayerId; name: string }>;
+      interface NestedFlowState {
+        players: { id: PlayerId; name: string }[];
         gameState: {
           currentPhase: "start" | "middle" | "end";
         };
         turnNumber: number;
-      };
+      }
 
-      type NestedMoves = {
+      interface NestedMoves {
         advance: Record<string, never>;
-      };
+      }
 
       const moves: GameMoveDefinitions<NestedFlowState, NestedMoves> = {
         advance: {
@@ -252,18 +252,18 @@ describe("test-flow-assertions", () => {
       };
 
       const gameDefinition: GameDefinition<NestedFlowState, NestedMoves> = {
+        moves,
         name: "Nested Flow Test",
         setup: (players) => ({
+          gameState: {
+            currentPhase: "start" as const,
+          },
           players: players.map((p) => ({
             id: p.id as PlayerId,
             name: p.name || "Player",
           })),
-          gameState: {
-            currentPhase: "start" as const,
-          },
           turnNumber: 1,
         }),
-        moves,
       };
 
       const nestedEngine = new RuleEngine(gameDefinition, [
@@ -274,7 +274,7 @@ describe("test-flow-assertions", () => {
       expectPhaseTransition(
         nestedEngine,
         "advance",
-        { playerId: createPlayerId("p1"), params: {} },
+        { params: {}, playerId: createPlayerId("p1") },
         "start",
         "middle",
         "gameState.currentPhase",

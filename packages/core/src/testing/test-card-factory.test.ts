@@ -24,9 +24,9 @@ describe("test-card-factory", () => {
 
     it("should override provided properties", () => {
       const card = createTestCard({
+        basePower: 10,
         name: "Custom Card",
         type: "spell",
-        basePower: 10,
       });
 
       expect(card.name).toBe("Custom Card");
@@ -46,9 +46,9 @@ describe("test-card-factory", () => {
 
     it("should create creature card with power and toughness", () => {
       const creature = createTestCard({
-        type: "creature",
         basePower: 3,
         baseToughness: 4,
+        type: "creature",
       });
 
       expect(creature.type).toBe("creature");
@@ -58,8 +58,8 @@ describe("test-card-factory", () => {
 
     it("should create spell card with cost", () => {
       const spell = createTestCard({
-        type: "spell",
         baseCost: 5,
+        type: "spell",
       });
 
       expect(spell.type).toBe("spell");
@@ -118,8 +118,8 @@ describe("test-card-factory", () => {
 
     it("should apply overrides to all cards", () => {
       const cards = createTestCards(3, {
-        type: "creature",
         basePower: 2,
+        type: "creature",
       });
 
       for (const card of cards) {
@@ -159,10 +159,10 @@ describe("test-card-factory", () => {
 
     it("should create cards with different base stats", () => {
       const cards = createTestCards(3, {
-        type: "creature",
+        baseCost: 3,
         basePower: 5,
         baseToughness: 5,
-        baseCost: 3,
+        type: "creature",
       });
 
       for (const card of cards) {
@@ -178,14 +178,14 @@ describe("test-card-factory", () => {
     it("should create cards useful for testing", () => {
       // Create a test deck
       const creatures = createTestCards(20, {
-        type: "creature",
         basePower: 2,
         baseToughness: 2,
+        type: "creature",
       });
 
       const spells = createTestCards(10, {
-        type: "spell",
         baseCost: 3,
+        type: "spell",
       });
 
       const deck = [...creatures, ...spells];

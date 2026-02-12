@@ -4,9 +4,9 @@ export const rapunzelAppreciativeArtist: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Ward",
         target: "SELF",
+        type: "gain-keyword",
       },
       id: "1qj-1",
       text: "PERCEPTIVE PARTNER While you have a character named Pascal in play, this character gains Ward.",

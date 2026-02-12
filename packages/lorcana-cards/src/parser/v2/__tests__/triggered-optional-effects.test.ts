@@ -12,9 +12,7 @@ import { parseAbilityText } from "../parser";
 describe("Task 2.4: Triggered Abilities with Optional Effects", () => {
   describe("Basic Triggered Abilities with 'you may'", () => {
     it("should parse 'Whenever you play an item, you may draw a card'", () => {
-      const result = parseAbilityText(
-        "Whenever you play an item, you may draw a card.",
-      );
+      const result = parseAbilityText("Whenever you play an item, you may draw a card.");
 
       expect(result.success).toBe(true);
       const ability = result.ability?.ability as TriggeredAbility | undefined;
@@ -29,9 +27,7 @@ describe("Task 2.4: Triggered Abilities with Optional Effects", () => {
     });
 
     it("should parse 'When this character is banished, you may draw a card'", () => {
-      const result = parseAbilityText(
-        "When this character is banished, you may draw a card.",
-      );
+      const result = parseAbilityText("When this character is banished, you may draw a card.");
 
       expect(result.success).toBe(true);
       const ability = result.ability?.ability as TriggeredAbility | undefined;
@@ -46,9 +42,7 @@ describe("Task 2.4: Triggered Abilities with Optional Effects", () => {
     });
 
     it("should parse 'Whenever this character quests, you may gain 1 lore'", () => {
-      const result = parseAbilityText(
-        "Whenever this character quests, you may gain 1 lore.",
-      );
+      const result = parseAbilityText("Whenever this character quests, you may gain 1 lore.");
 
       expect(result.success).toBe(true);
       const ability = result.ability?.ability as TriggeredAbility | undefined;
@@ -177,9 +171,7 @@ describe("Task 2.4: Triggered Abilities with Optional Effects", () => {
 
   describe("Real Card Examples", () => {
     it("should parse IT WORKS! ability", () => {
-      const result = parseAbilityText(
-        "IT WORKS! Whenever you play an item, you may draw a card.",
-      );
+      const result = parseAbilityText("IT WORKS! Whenever you play an item, you may draw a card.");
 
       expect(result.success).toBe(true);
       const ability = result.ability?.ability as TriggeredAbility | undefined;

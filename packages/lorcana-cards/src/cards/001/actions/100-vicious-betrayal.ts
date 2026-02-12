@@ -4,17 +4,17 @@ export const viciousBetrayal: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "a Villain character is chosen",
+          type: "if",
         },
         then: {
-          type: "modify-stat",
-          stat: "strength",
           modifier: 3,
+          stat: "strength",
           target: "CHOSEN_CHARACTER",
+          type: "modify-stat",
         },
+        type: "conditional",
       },
       id: "e6i-1",
       text: "Chosen character gets +2 {S} this turn. If a Villain character is chosen, they get +3 {S} instead.",

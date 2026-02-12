@@ -4,22 +4,22 @@ export const mickeyMouseInspirationalWarrior: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "play-card",
-          from: "hand",
           cardType: "character",
           cost: "free",
+          from: "hand",
+          type: "play-card",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "vri-1",
       name: "STIRRING SPIRIT",
       text: "STIRRING SPIRIT During your turn, whenever this character banishes another character in a challenge, you may play a character for free.",
       trigger: {
         event: "banish",
-        timing: "whenever",
         on: "OPPONENT_CHARACTERS",
+        timing: "whenever",
       },
       type: "triggered",
     },

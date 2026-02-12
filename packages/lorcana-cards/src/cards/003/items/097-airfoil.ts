@@ -7,16 +7,16 @@ export const airfoil: ItemCard = {
         exert: true,
       },
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you've played 2 or more actions this turn",
+          type: "if",
         },
         then: {
-          type: "draw",
           amount: 1,
           target: "CONTROLLER",
+          type: "draw",
         },
+        type: "conditional",
       },
       id: "1kp-1",
       text: "I GOT TO BE GOING {E} — If you've played 2 or more actions this turn, draw a card.",

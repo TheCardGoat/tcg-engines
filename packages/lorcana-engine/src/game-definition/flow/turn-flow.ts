@@ -34,7 +34,7 @@ export const lorcanaFlow: FlowDefinition<LorcanaGameState, LorcanaCardMeta> = {
         onBegin: (context) => {
           // Set currentPlayer to choosingFirstPlayer for priority
           // During startingAGame, there is no "turn player" yet
-          // but there IS a priority player who can take actions
+          // But there IS a priority player who can take actions
           const chooser = context.game.getChoosingFirstPlayer();
           if (chooser) {
             context.setCurrentPlayer(String(chooser));
@@ -152,7 +152,9 @@ export const lorcanaFlow: FlowDefinition<LorcanaGameState, LorcanaCardMeta> = {
             onBegin: (context) => {
               // Ready all cards for the current player
               const currentPlayer = context.getCurrentPlayer();
-              if (!currentPlayer) return;
+              if (!currentPlayer) {
+                return;
+              }
 
               // Get all cards owned by current player
               const playZone = context.zones.getCardsInZone(
@@ -165,8 +167,8 @@ export const lorcanaFlow: FlowDefinition<LorcanaGameState, LorcanaCardMeta> = {
                 const meta = context.cards.getCardMeta(cardId);
                 if (meta) {
                   context.cards.updateCardMeta(cardId, {
-                    state: "ready",
-                    isDrying: false, // Clear summoning sickness
+                    isDrying: false,
+                    state: "ready", // Clear summoning sickness
                   });
                 }
               }

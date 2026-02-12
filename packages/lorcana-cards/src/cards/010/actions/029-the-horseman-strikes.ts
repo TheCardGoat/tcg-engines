@@ -4,9 +4,8 @@ export const theHorsemanStrikes: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "banish",
           target: {
             selector: "chosen",
             count: 1,
@@ -14,8 +13,9 @@ export const theHorsemanStrikes: ActionCard = {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "banish",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "14i-1",
       text: "Draw a card. You may banish chosen character with Evasive.",

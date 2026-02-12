@@ -8,8 +8,8 @@ export const shieldOfVirtue: ItemCard = {
         ink: 3,
       },
       effect: {
-        type: "ready",
         target: "CHOSEN_CHARACTER",
+        type: "ready",
       },
       id: "f35-1",
       name: "FIREPROOF",

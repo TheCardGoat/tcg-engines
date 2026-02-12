@@ -13,16 +13,16 @@ export const stitchAlienBuccaneer: CharacterCard = {
     },
     {
       effect: {
-        type: "play-card",
         from: "discard",
+        type: "play-card",
       },
       id: "19n-2",
       name: "READY FOR ACTION",
       text: "READY FOR ACTION When you play this character, if you used Shift to play him, you may put an action card from your discard on the top of your deck.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

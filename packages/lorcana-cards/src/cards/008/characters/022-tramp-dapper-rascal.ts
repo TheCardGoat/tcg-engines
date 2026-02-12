@@ -13,13 +13,13 @@ export const trampDapperRascal: CharacterCard = {
     },
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "draw",
           amount: 1,
           target: "CONTROLLER",
+          type: "draw",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "1x4-2",
       text: "PLAY IT COOL During an opponent’s turn, whenever one of your characters is banished, you may draw a card.",

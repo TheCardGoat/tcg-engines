@@ -8,7 +8,7 @@ import type { PlayerId } from "../types";
  * This is a thin layer over core-engine's phase/segment/step system,
  * providing a way to validate timing without duplicating core-engine logic.
  */
-export type ActionTiming<TGameState = unknown> = {
+export interface ActionTiming<TGameState = unknown> {
   /** Segments where this action is allowed (e.g., "setup", "gameplay") */
   segments?: string[];
 
@@ -20,14 +20,14 @@ export type ActionTiming<TGameState = unknown> = {
 
   /** Custom timing predicate for complex game-specific timing rules */
   custom?: (state: TGameState) => boolean;
-};
+}
 
 /**
  * Action Metadata
  * Provides categorization and UI/logging information for actions.
  * Games can define their own category taxonomies.
  */
-export type ActionMetadata = {
+export interface ActionMetadata {
   /** Category for UI grouping (game-defined, e.g., "card-play", "combat", "special") */
   category?: string;
 
@@ -42,7 +42,7 @@ export type ActionMetadata = {
 
   /** Whether this action is hidden from normal UI (for automatic/internal actions) */
   hidden?: boolean;
-};
+}
 
 /**
  * Action Definition
@@ -56,7 +56,7 @@ export type ActionMetadata = {
  * The actual execution logic, game-specific constraints, and cost validation
  * are handled by core-engine's EnumerableMove.getConstraints() and execute().
  */
-export type ActionDefinition<TGameState = unknown> = {
+export interface ActionDefinition<TGameState = unknown> {
   /** Unique identifier for this action */
   id: string;
 
@@ -74,7 +74,7 @@ export type ActionDefinition<TGameState = unknown> = {
 
   /** Metadata for categorization and UI */
   metadata?: ActionMetadata;
-};
+}
 
 /**
  * Action Instance
@@ -83,7 +83,7 @@ export type ActionDefinition<TGameState = unknown> = {
  * This is the bridge between @tcg/core's action definitions and
  * core-engine's move execution system.
  */
-export type ActionInstance = {
+export interface ActionInstance {
   /** The action being performed */
   actionId: string;
 
@@ -98,7 +98,7 @@ export type ActionInstance = {
 
   /** Timestamp when action was initiated */
   timestamp?: number;
-};
+}
 
 /**
  * Action Validation Result
@@ -107,7 +107,7 @@ export type ActionInstance = {
  * Focused on timing and target validation - cost validation
  * is handled by core-engine's constraint system.
  */
-export type ActionValidationResult = {
+export interface ActionValidationResult {
   /** Whether the action is valid */
   valid: boolean;
 
@@ -119,4 +119,4 @@ export type ActionValidationResult = {
 
   /** Invalid target indices (if reason is "targets") */
   invalidTargets?: number[];
-};
+}

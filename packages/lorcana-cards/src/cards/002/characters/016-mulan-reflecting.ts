@@ -13,24 +13,24 @@ export const mulanReflecting: CharacterCard = {
     },
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "it's a song card",
+          type: "if",
         },
         then: {
-          type: "play-card",
-          from: "hand",
           cost: "free",
+          from: "hand",
+          type: "play-card",
         },
+        type: "conditional",
       },
       id: "1ox-2",
       name: "HONOR TO THE ANCESTORS",
       text: "HONOR TO THE ANCESTORS Whenever this character quests, you may reveal the top card of your deck. If it's a song card, you may play it for free. Otherwise, put it on the top of your deck.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

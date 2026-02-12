@@ -8,9 +8,7 @@ describe("Prince Naveen - Vigilant First Mate", () => {
       play: [princeNaveenVigilantFirstMate],
     });
 
-    const cardUnderTest = testEngine.getCardModel(
-      princeNaveenVigilantFirstMate,
-    );
+    const cardUnderTest = testEngine.getCardModel(princeNaveenVigilantFirstMate);
     expect(cardUnderTest.hasShift()).toBe(true);
   });
 
@@ -19,9 +17,7 @@ describe("Prince Naveen - Vigilant First Mate", () => {
       play: [princeNaveenVigilantFirstMate],
     });
 
-    const cardUnderTest = testEngine.getCardModel(
-      princeNaveenVigilantFirstMate,
-    );
+    const cardUnderTest = testEngine.getCardModel(princeNaveenVigilantFirstMate);
     expect(cardUnderTest.hasBodyguard()).toBe(true);
   });
 });

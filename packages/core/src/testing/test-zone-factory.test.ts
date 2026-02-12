@@ -24,8 +24,8 @@ describe("test-zone-factory", () => {
     it("should override config properties", () => {
       const zone = createTestZone({
         name: "Custom Zone",
-        visibility: "secret",
         ordered: true,
+        visibility: "secret",
       });
 
       expect(zone.config.name).toBe("Custom Zone");
@@ -34,11 +34,7 @@ describe("test-zone-factory", () => {
     });
 
     it("should include initial cards", () => {
-      const cards = [
-        createCardId("card1"),
-        createCardId("card2"),
-        createCardId("card3"),
-      ];
+      const cards = [createCardId("card1"), createCardId("card2"), createCardId("card3")];
 
       const zone = createTestZone({}, cards);
 
@@ -94,11 +90,7 @@ describe("test-zone-factory", () => {
     });
 
     it("should include cards when provided", () => {
-      const cards = [
-        createCardId("card1"),
-        createCardId("card2"),
-        createCardId("card3"),
-      ];
+      const cards = [createCardId("card1"), createCardId("card2"), createCardId("card3")];
 
       const deck = createTestDeck(cards);
 
@@ -113,11 +105,7 @@ describe("test-zone-factory", () => {
     });
 
     it("should maintain card order", () => {
-      const cards = [
-        createCardId("card1"),
-        createCardId("card2"),
-        createCardId("card3"),
-      ];
+      const cards = [createCardId("card1"), createCardId("card2"), createCardId("card3")];
 
       const deck = createTestDeck(cards);
 
@@ -206,11 +194,7 @@ describe("test-zone-factory", () => {
     });
 
     it("should maintain card order", () => {
-      const cards = [
-        createCardId("card1"),
-        createCardId("card2"),
-        createCardId("card3"),
-      ];
+      const cards = [createCardId("card1"), createCardId("card2"), createCardId("card3")];
 
       const graveyard = createTestGraveyard(cards);
 
@@ -226,11 +210,7 @@ describe("test-zone-factory", () => {
       const playerId = createPlayerId("p1");
 
       // Create all zones for a player
-      const deckCards = [
-        createCardId("card1"),
-        createCardId("card2"),
-        createCardId("card3"),
-      ];
+      const deckCards = [createCardId("card1"), createCardId("card2"), createCardId("card3")];
       const handCards = [createCardId("card4"), createCardId("card5")];
 
       const deck = createTestDeck(deckCards, playerId);
@@ -278,14 +258,8 @@ describe("test-zone-factory", () => {
       const p1 = createPlayerId("p1");
       const p2 = createPlayerId("p2");
 
-      const p1Deck = createTestDeck(
-        [createCardId("p1-card1"), createCardId("p1-card2")],
-        p1,
-      );
-      const p2Deck = createTestDeck(
-        [createCardId("p2-card1"), createCardId("p2-card2")],
-        p2,
-      );
+      const p1Deck = createTestDeck([createCardId("p1-card1"), createCardId("p1-card2")], p1);
+      const p2Deck = createTestDeck([createCardId("p2-card1"), createCardId("p2-card2")], p2);
 
       expect(p1Deck.config.owner).toBe(p1);
       expect(p2Deck.config.owner).toBe(p2);

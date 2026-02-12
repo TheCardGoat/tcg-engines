@@ -4,20 +4,20 @@ export const plutoTriedAndTrue: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "modify-stat",
-            stat: "strength",
             modifier: 2,
+            stat: "strength",
             target: "SELF",
+            type: "modify-stat",
           },
           {
-            type: "gain-keyword",
             keyword: "Support",
             target: "SELF",
+            type: "gain-keyword",
           },
         ],
+        type: "sequence",
       },
       id: "3hj-1",
       text: "HAPPY HELPER While this character has no damage, he gets +2 {S} and gains Support.",

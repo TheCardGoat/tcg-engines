@@ -16,7 +16,7 @@ describe("choiceEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("choice");
-      const {options} = (result as Effect & { options: Effect[] });
+      const { options } = result as Effect & { options: Effect[] };
       expect(options).toHaveLength(2);
       expect(options[0].type).toBe("deal-damage");
       expect(options[1].type).toBe("gain-lore");
@@ -29,7 +29,7 @@ describe("choiceEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("choice");
-      const {options} = (result as Effect & { options: Effect[] });
+      const { options } = result as Effect & { options: Effect[] };
       expect(options).toHaveLength(2);
     });
 
@@ -40,7 +40,7 @@ describe("choiceEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("choice");
-      const {options} = (result as Effect & { options: Effect[] });
+      const { options } = result as Effect & { options: Effect[] };
       expect(options).toHaveLength(3);
       expect(options[0].type).toBe("draw");
       expect(options[1].type).toBe("discard");
@@ -54,7 +54,7 @@ describe("choiceEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("choice");
-      const {options} = (result as Effect & { options: Effect[] });
+      const { options } = result as Effect & { options: Effect[] };
       expect(options).toHaveLength(2);
     });
 
@@ -65,7 +65,7 @@ describe("choiceEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("choice");
-      const {options} = (result as Effect & { options: Effect[] });
+      const { options } = result as Effect & { options: Effect[] };
       expect(options).toHaveLength(2);
       expect(options[0].type).toBe("deal-damage");
       expect(options[1].type).toBe("draw");
@@ -74,33 +74,27 @@ describe("choiceEffectParser", () => {
 
   describe("text parsing - case insensitivity", () => {
     it("parses choice with uppercase 'CHOOSE ONE'", () => {
-      const result = choiceEffectParser.parse(
-        "CHOOSE ONE: deal 3 damage; or gain 2 lore",
-      );
+      const result = choiceEffectParser.parse("CHOOSE ONE: deal 3 damage; or gain 2 lore");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("choice");
-      const {options} = (result as Effect & { options: Effect[] });
+      const { options } = result as Effect & { options: Effect[] };
       expect(options).toHaveLength(2);
     });
 
     it("parses choice with mixed case 'ChOoSe OnE'", () => {
-      const result = choiceEffectParser.parse(
-        "ChOoSe OnE: deal 3 damage; or gain 2 lore",
-      );
+      const result = choiceEffectParser.parse("ChOoSe OnE: deal 3 damage; or gain 2 lore");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("choice");
     });
 
     it("parses choice with uppercase 'OR'", () => {
-      const result = choiceEffectParser.parse(
-        "Choose one: deal 3 damage; OR gain 2 lore",
-      );
+      const result = choiceEffectParser.parse("Choose one: deal 3 damage; OR gain 2 lore");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("choice");
-      const {options} = (result as Effect & { options: Effect[] });
+      const { options } = result as Effect & { options: Effect[] };
       expect(options).toHaveLength(2);
     });
   });
@@ -135,9 +129,7 @@ describe("choiceEffectParser", () => {
 
   describe("text parsing - partial parsing", () => {
     it("returns null when less than 2 options can be parsed", () => {
-      const result = choiceEffectParser.parse(
-        "Choose one: draw 2 cards; or invalid effect",
-      );
+      const result = choiceEffectParser.parse("Choose one: draw 2 cards; or invalid effect");
 
       // Only 1 valid option parsed, need at least 2
       expect(result).toBeNull();
@@ -150,7 +142,7 @@ describe("choiceEffectParser", () => {
 
       // 2 out of 3 parsed successfully
       expect(result).not.toBeNull();
-      const {options} = (result as Effect & { options: Effect[] });
+      const { options } = result as Effect & { options: Effect[] };
       expect(options).toHaveLength(2);
       expect(options[0].type).toBe("draw");
       expect(options[1].type).toBe("gain-lore");
@@ -173,14 +165,12 @@ describe("choiceEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("choice");
-      const {options} = (result as Effect & { options: Effect[] });
+      const { options } = result as Effect & { options: Effect[] };
       expect(options).toHaveLength(2);
     });
 
     it("handles leading and trailing whitespace", () => {
-      const result = choiceEffectParser.parse(
-        "  Choose one: deal 3 damage; or gain 2 lore  ",
-      );
+      const result = choiceEffectParser.parse("  Choose one: deal 3 damage; or gain 2 lore  ");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("choice");
@@ -189,32 +179,26 @@ describe("choiceEffectParser", () => {
 
   describe("text parsing - separator variations", () => {
     it("parses with '; or ' separator (space before and after)", () => {
-      const result = choiceEffectParser.parse(
-        "Choose one: deal 3 damage ; or gain 2 lore",
-      );
+      const result = choiceEffectParser.parse("Choose one: deal 3 damage ; or gain 2 lore");
 
       expect(result).not.toBeNull();
-      const {options} = (result as Effect & { options: Effect[] });
+      const { options } = result as Effect & { options: Effect[] };
       expect(options).toHaveLength(2);
     });
 
     it("parses with ';or ' separator (no space before or)", () => {
-      const result = choiceEffectParser.parse(
-        "Choose one: deal 3 damage;or gain 2 lore",
-      );
+      const result = choiceEffectParser.parse("Choose one: deal 3 damage;or gain 2 lore");
 
       expect(result).not.toBeNull();
-      const {options} = (result as Effect & { options: Effect[] });
+      const { options } = result as Effect & { options: Effect[] };
       expect(options).toHaveLength(2);
     });
 
     it("parses with '; Or ' separator (capital O)", () => {
-      const result = choiceEffectParser.parse(
-        "Choose one: deal 3 damage; Or gain 2 lore",
-      );
+      const result = choiceEffectParser.parse("Choose one: deal 3 damage; Or gain 2 lore");
 
       expect(result).not.toBeNull();
-      const {options} = (result as Effect & { options: Effect[] });
+      const { options } = result as Effect & { options: Effect[] };
       expect(options).toHaveLength(2);
     });
   });

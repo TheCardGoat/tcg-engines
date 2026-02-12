@@ -4,11 +4,11 @@ export const friendLikeMe: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "put-into-inkwell",
-        source: "hand",
-        target: "OPPONENT",
         exerted: true,
         facedown: true,
+        source: "hand",
+        target: "OPPONENT",
+        type: "put-into-inkwell",
       },
       id: "h7y-1",
       text: "Each player puts the top 3 cards of their deck into their inkwell facedown and exerted.",

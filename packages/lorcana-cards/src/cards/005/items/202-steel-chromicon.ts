@@ -5,15 +5,15 @@ export const steelChromicon: ItemCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "deal-damage",
         amount: 1,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "deal-damage",
       },
       id: "1lw-1",
       text: "STEEL LIGHT {E} — Deal 1 damage to chosen character.",

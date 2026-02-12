@@ -40,35 +40,35 @@ describe("Trigger Detection Type Verification", () => {
 
   it("should properly type trigger events", () => {
     const deployEvent: DeployTriggerEvent = {
-      type: "DEPLOY",
-      playerId: "p1" as any,
       cardId: "card-1" as any,
+      playerId: "p1" as any,
+      type: "DEPLOY",
     };
     expect(deployEvent.type).toBe("DEPLOY");
 
     const attackEvent: AttackTriggerEvent = {
-      type: "ATTACK",
-      playerId: "p1" as any,
       attackerId: "attacker-1" as any,
+      playerId: "p1" as any,
+      type: "ATTACK",
     };
     expect(attackEvent.type).toBe("ATTACK");
 
     const destroyedEvent: DestroyedTriggerEvent = {
-      type: "DESTROYED",
-      playerId: "p1" as any,
       cardId: "card-1" as any,
+      playerId: "p1" as any,
+      type: "DESTROYED",
     };
     expect(destroyedEvent.type).toBe("DESTROYED");
 
     const startEvent: StartOfTurnTriggerEvent = {
-      type: "START_OF_TURN",
       playerId: "p1" as any,
+      type: "START_OF_TURN",
     };
     expect(startEvent.type).toBe("START_OF_TURN");
 
     const endEvent: EndOfTurnTriggerEvent = {
-      type: "END_OF_TURN",
       playerId: "p1" as any,
+      type: "END_OF_TURN",
     };
     expect(endEvent.type).toBe("END_OF_TURN");
   });
@@ -84,18 +84,18 @@ describe("Trigger Detection Type Verification", () => {
 
   it("should properly type triggered effect refs", () => {
     const effectRef: TriggeredEffectRef = {
-      sourceCardId: "card-1" as any,
-      effectRef: { effectId: "effect-1" },
       controllerId: "p1" as any,
+      effectRef: { effectId: "effect-1" },
+      sourceCardId: "card-1" as any,
     };
     expect(effectRef.effectRef.effectId).toBe("effect-1");
   });
 
   it("should properly type active player order result", () => {
     const orderResult: ActivePlayerOrderResult = {
-      order: [0, 1, 2],
       activePlayerEffects: [0, 2],
       opponentEffects: [1],
+      order: [0, 1, 2],
     };
     expect(orderResult.order).toEqual([0, 1, 2]);
     expect(orderResult.activePlayerEffects).toEqual([0, 2]);
@@ -104,33 +104,37 @@ describe("Trigger Detection Type Verification", () => {
 
   it("should handle discriminated union types for TriggerEvent", () => {
     const events: TriggerEvent[] = [
-      { type: "DEPLOY", playerId: "p1" as any, cardId: "card-1" as any },
+      { cardId: "card-1" as any, playerId: "p1" as any, type: "DEPLOY" },
       {
-        type: "ATTACK",
-        playerId: "p1" as any,
         attackerId: "attacker-1" as any,
+        playerId: "p1" as any,
+        type: "ATTACK",
       },
-      { type: "DESTROYED", playerId: "p1" as any, cardId: "card-1" as any },
-      { type: "START_OF_TURN", playerId: "p1" as any },
-      { type: "END_OF_TURN", playerId: "p1" as any },
+      { cardId: "card-1" as any, playerId: "p1" as any, type: "DESTROYED" },
+      { playerId: "p1" as any, type: "START_OF_TURN" },
+      { playerId: "p1" as any, type: "END_OF_TURN" },
     ];
 
     for (const event of events) {
       // Type narrowing should work correctly
       switch (event.type) {
-        case "DEPLOY":
+        case "DEPLOY": {
           expect(event).toHaveProperty("cardId");
           break;
-        case "ATTACK":
+        }
+        case "ATTACK": {
           expect(event).toHaveProperty("attackerId");
           break;
-        case "DESTROYED":
+        }
+        case "DESTROYED": {
           expect(event).toHaveProperty("cardId");
           break;
+        }
         case "START_OF_TURN":
-        case "END_OF_TURN":
+        case "END_OF_TURN": {
           expect(event).toHaveProperty("playerId");
           break;
+        }
         default: {
           // Exhaustive check - should never reach here
           const _exhaustive: never = event;

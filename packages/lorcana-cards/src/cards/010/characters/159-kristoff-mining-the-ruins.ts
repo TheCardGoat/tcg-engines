@@ -11,26 +11,26 @@ export const kristoffMiningTheRuins: CharacterCard = {
     },
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "there's a card under him",
+          type: "if",
         },
         then: {
-          type: "put-into-inkwell",
-          source: "top-of-deck",
-          target: "CONTROLLER",
           exerted: true,
           facedown: true,
+          source: "top-of-deck",
+          target: "CONTROLLER",
+          type: "put-into-inkwell",
         },
+        type: "conditional",
       },
       id: "abh-2",
       name: "WORTH MINING",
       text: "WORTH MINING Whenever this character quests, if there's a card under him, put the top card of your deck into your inkwell facedown and exerted.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

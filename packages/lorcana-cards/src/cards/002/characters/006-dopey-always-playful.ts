@@ -4,18 +4,18 @@ export const dopeyAlwaysPlayful: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: 2,
+        stat: "strength",
         target: "CHOSEN_CHARACTER",
+        type: "modify-stat",
       },
       id: "7r7-1",
       name: "ODD ONE OUT",
       text: "ODD ONE OUT When this character is banished, your other Seven Dwarfs characters get +2 {S} until the start of your next turn.",
       trigger: {
         event: "banish",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

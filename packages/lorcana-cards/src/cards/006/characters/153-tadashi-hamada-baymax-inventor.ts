@@ -4,10 +4,10 @@ export const tadashiHamadaBaymaxInventor: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: 1,
+        stat: "strength",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "16i-1",
       text: "LET'S GET BACK TO WORK This character gets +1 {S} and +1 {W} for each item you have in play.",

@@ -4,9 +4,8 @@ export const tweedledeeTweedledumStrangeStorytellers: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "return-to-hand",
           target: {
             selector: "chosen",
             count: 1,
@@ -14,16 +13,17 @@ export const tweedledeeTweedledumStrangeStorytellers: CharacterCard = {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "return-to-hand",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "1i9-1",
       name: "ANOTHER RECITATION",
       text: "ANOTHER RECITATION Whenever this character quests, you may return chosen damaged character to their player's hand.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

@@ -4,12 +4,11 @@ export const distract: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "modify-stat",
-            stat: "strength",
+            duration: "this-turn",
             modifier: -2,
+            stat: "strength",
             target: {
               selector: "chosen",
               count: 1,
@@ -17,14 +16,15 @@ export const distract: ActionCard = {
               zones: ["play"],
               cardTypes: ["character"],
             },
-            duration: "this-turn",
+            type: "modify-stat",
           },
           {
-            type: "draw",
             amount: 1,
             target: "CONTROLLER",
+            type: "draw",
           },
         ],
+        type: "sequence",
       },
       id: "1un-1",
       text: "Chosen character gets -2 {S} this turn. Draw a card.",

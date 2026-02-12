@@ -110,7 +110,5 @@ export interface CardOperations<TCardMeta = any> {
    * );
    * ```
    */
-  queryCards(
-    predicate: (cardId: CardId, meta: Partial<TCardMeta>) => boolean,
-  ): CardId[];
+  queryCards(predicate: (cardId: CardId, meta: Partial<TCardMeta>) => boolean): CardId[];
 }

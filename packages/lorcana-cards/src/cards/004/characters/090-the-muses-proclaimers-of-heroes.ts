@@ -10,9 +10,8 @@ export const theMusesProclaimersOfHeroes: CharacterCard = {
     },
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "return-to-hand",
           target: {
             selector: "chosen",
             count: 1,
@@ -20,19 +19,20 @@ export const theMusesProclaimersOfHeroes: CharacterCard = {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "return-to-hand",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "1x8-2",
       name: "THE GOSPEL TRUTH",
       text: "THE GOSPEL TRUTH Whenever you play a song, you may return chosen character with 2 {S} or less to their player's hand.",
       trigger: {
         event: "play",
-        timing: "whenever",
         on: {
-          controller: "you",
           cardType: "action",
+          controller: "you",
         },
+        timing: "whenever",
       },
       type: "triggered",
     },

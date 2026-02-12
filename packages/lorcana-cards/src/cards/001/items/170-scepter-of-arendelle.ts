@@ -7,10 +7,10 @@ export const scepterOfArendelle: ItemCard = {
         exert: true,
       },
       effect: {
-        type: "gain-keyword",
+        duration: "this-turn",
         keyword: "Support",
         target: "CHOSEN_CHARACTER",
-        duration: "this-turn",
+        type: "gain-keyword",
       },
       id: "1j9-1",
       name: "COMMAND",

@@ -13,19 +13,19 @@ export const fairyGodmotherMysticArmorer: CharacterCard = {
     },
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "gain-keyword",
             keyword: "Challenger",
             target: "SELF",
+            type: "gain-keyword",
             value: 3,
           },
           {
-            type: "return-to-hand",
             target: "SELF",
+            type: "return-to-hand",
           },
         ],
+        type: "sequence",
       },
       id: "fq8-2",
       text: "FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters gain Challenger +3 and “When this character is banished in a challenge, return this card to your hand” this turn.",

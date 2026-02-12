@@ -33,13 +33,13 @@ export type LorcanaState = GameState & {
   lorcana: {
     // Lore tracking (win condition at 20)
     lore: Record<PlayerId, number>;
-    
+
     // Ink tracking
     ink: {
       available: Record<PlayerId, number>;
       total: Record<PlayerId, number>;
     };
-    
+
     // Challenge state during challenge resolution
     challengeState?: {
       attacker: CardId;
@@ -47,12 +47,15 @@ export type LorcanaState = GameState & {
       attackerDamage: number;
       defenderDamage: number;
     };
-    
+
     // Location state
-    locations: Record<CardId, {
-      characters: CardId[];
-    }>;
-    
+    locations: Record<
+      CardId,
+      {
+        characters: CardId[];
+      }
+    >;
+
     // Turn metadata
     turnMetadata: {
       cardsPlayedThisTurn: CardId[];
@@ -68,17 +71,12 @@ export type LorcanaState = GameState & {
 Lorcana-specific zone types:
 
 ```typescript
-export type LorcanaZone =
-  | "deck"
-  | "hand"
-  | "play"
-  | "discard"
-  | "inkwell";
+export type LorcanaZone = "deck" | "hand" | "play" | "discard" | "inkwell";
 
-export type ZoneVisibility = 
-  | "all"        // All players can see
-  | "owner"      // Only owner can see
-  | "none";      // No one can see (face-down)
+export type ZoneVisibility =
+  | "all" // All players can see
+  | "owner" // Only owner can see
+  | "none"; // No one can see (face-down)
 ```
 
 ## Move Types
@@ -89,7 +87,7 @@ Type-safe move parameters:
 export type PlayCardMoveParams = {
   cardId: CardId;
   shift?: {
-    targetCardId: CardId;  // Card to shift onto
+    targetCardId: CardId; // Card to shift onto
   };
   targets?: TargetSelection[];
 };
@@ -119,20 +117,9 @@ export type ActivateAbilityMoveParams = {
 Lorcana card type definitions:
 
 ```typescript
-export type LorcanaColor =
-  | "amber"
-  | "amethyst"
-  | "emerald"
-  | "ruby"
-  | "sapphire"
-  | "steel";
+export type LorcanaColor = "amber" | "amethyst" | "emerald" | "ruby" | "sapphire" | "steel";
 
-export type LorcanaCardType =
-  | "character"
-  | "action"
-  | "item"
-  | "location"
-  | "song";
+export type LorcanaCardType = "character" | "action" | "item" | "location" | "song";
 
 export type LorcanaRarity =
   | "common"
@@ -153,16 +140,16 @@ export type LorcanaCard = {
   rarity: LorcanaRarity;
   set: string;
   number: number;
-  
+
   // Character properties
   strength?: number;
   willpower?: number;
   loreValue?: number;
-  classifications?: string[];  // "Hero", "Villain", "Princess", etc.
-  
+  classifications?: string[]; // "Hero", "Villain", "Princess", etc.
+
   // Abilities
   abilities: LorcanaAbility[];
-  
+
   // Text
   text?: string;
   flavorText?: string;
@@ -174,16 +161,12 @@ export type LorcanaCard = {
 Type-safe ability definitions:
 
 ```typescript
-export type LorcanaAbility =
-  | KeywordAbility
-  | TriggeredAbility
-  | ActivatedAbility
-  | StaticAbility;
+export type LorcanaAbility = KeywordAbility | TriggeredAbility | ActivatedAbility | StaticAbility;
 
 export type KeywordAbility = {
   type: "keyword";
   keyword: LorcanaKeyword;
-  value?: number;  // For Challenger +N, Resist +N, etc.
+  value?: number; // For Challenger +N, Resist +N, etc.
 };
 
 export type LorcanaKeyword =
@@ -254,7 +237,7 @@ export const createCardId = (value: string): CardId => {
 Type-safe effect definitions:
 
 ```typescript
-export type AbilityEffect = 
+export type AbilityEffect =
   | DrawCardsEffect
   | DealDamageEffect
   | GainLoreEffect
@@ -300,4 +283,3 @@ export type PlayerState<T> = Record<PlayerId, T>;
 
 - See `@packages/core/src/types/` for base framework types
 - See TypeScript handbook for branded types pattern
-

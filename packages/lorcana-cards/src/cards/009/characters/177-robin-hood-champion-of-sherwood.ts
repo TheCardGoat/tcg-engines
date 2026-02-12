@@ -13,36 +13,36 @@ export const robinHoodChampionOfSherwood: CharacterCard = {
     },
     {
       effect: {
-        type: "gain-lore",
         amount: 2,
+        type: "gain-lore",
       },
       id: "1oq-2",
       name: "SKILLED COMBATANT",
       text: "SKILLED COMBATANT During your turn, whenever this character banishes another character in a challenge, gain 2 lore.",
       trigger: {
         event: "banish",
-        timing: "whenever",
         on: "OPPONENT_CHARACTERS",
+        timing: "whenever",
       },
       type: "triggered",
     },
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "draw",
           amount: 1,
           target: "CONTROLLER",
+          type: "draw",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "1oq-3",
       name: "THE GOOD OF OTHERS",
       text: "THE GOOD OF OTHERS When this character is banished in a challenge, you may draw a card.",
       trigger: {
         event: "banish",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

@@ -7,16 +7,16 @@ export const pegNaturalPerformer: CharacterCard = {
         exert: true,
       },
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you have 3 or more other characters in play",
+          type: "if",
         },
         then: {
-          type: "draw",
           amount: 1,
           target: "CONTROLLER",
+          type: "draw",
         },
+        type: "conditional",
       },
       id: "wsf-1",
       text: "CAPTIVE AUDIENCE {E} — If you have 3 or more other characters in play, draw a card.",

@@ -4,9 +4,8 @@ export const madameMedusaDeceivingPartner: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "deal-damage",
           amount: 2,
           target: {
             selector: "chosen",
@@ -15,16 +14,17 @@ export const madameMedusaDeceivingPartner: CharacterCard = {
             zones: ["play"],
             cardTypes: ["character"],
           },
+          type: "deal-damage",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "dvp-1",
       name: "DOUBLE-CROSS",
       text: "DOUBLE-CROSS When you play this character, you may deal 2 damage to another chosen character of yours to return chosen character with cost 2 or less to their player’s hand.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

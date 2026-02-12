@@ -4,9 +4,9 @@ export const gantuGalacticFederationCaptain: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "restriction",
         restriction: "cant-challenge",
         target: "SELF",
+        type: "restriction",
       },
       id: "c3k-1",
       name: "UNDER ARREST",

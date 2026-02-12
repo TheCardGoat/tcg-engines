@@ -4,16 +4,16 @@ export const iagoReappearingParrot: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "return-to-hand",
         target: "SELF",
+        type: "return-to-hand",
       },
       id: "tre-1",
       name: "GUESS WHO",
       text: "GUESS WHO When this character is banished in a challenge, return this card to your hand.",
       trigger: {
         event: "banish",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

@@ -5,10 +5,10 @@ export const mickeyMouseTrumpeter: CharacterCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "play-card",
-        from: "hand",
         cardType: "character",
         cost: "free",
+        from: "hand",
+        type: "play-card",
       },
       id: "6jz-1",
       text: "SOUND THE CALL {E}, 2 {I} — Play a character for free.",

@@ -4,18 +4,18 @@ export const theUnderworldRiverStyx: LocationCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
-        effect: {
-          type: "return-from-discard",
-          target: "CONTROLLER",
-          cardType: "character",
-        },
         chooser: "CONTROLLER",
+        effect: {
+          cardType: "character",
+          target: "CONTROLLER",
+          type: "return-from-discard",
+        },
+        type: "optional",
       },
       id: "6fe-1",
       name: "SAVE A SOUL",
       text: "SAVE A SOUL Whenever a character quests while here, you may pay 3 {I} to return a character card from your discard to your hand.",
-      trigger: { event: "play", timing: "when", on: "SELF" },
+      trigger: { event: "play", on: "SELF", timing: "when" },
       type: "triggered",
     },
   ],

@@ -5,17 +5,17 @@ export const tritonsTrident: ItemCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "modify-stat",
-        stat: "strength",
+        duration: "this-turn",
         modifier: 1,
+        stat: "strength",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
-        duration: "this-turn",
+        type: "modify-stat",
       },
       id: "l9u-1",
       text: "SYMBOL OF POWER Banish this item — Chosen character gets +1 {S} this turn for each card in your hand.",

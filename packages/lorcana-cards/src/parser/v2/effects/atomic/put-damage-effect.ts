@@ -37,10 +37,7 @@ function convertToCharacterTarget(simpleTarget: {
   const cardType = cardTypeMap[type.toLowerCase()] || type;
 
   // Map modifier to selector and owner
-  const modifierMap: Record<
-    string,
-    { selector: string; owner: string; count: number | "all" }
-  > = {
+  const modifierMap: Record<string, { selector: string; owner: string; count: number | "all" }> = {
     all: { count: "all", owner: "any", selector: "all" },
     an: { count: 1, owner: "any", selector: "chosen" },
     another: { count: 1, owner: "any", selector: "chosen" },
@@ -88,9 +85,7 @@ function parseFromCst(
   logger.debug("Attempting to parse put damage effect from CST", { ctx });
 
   if (!(ctx && ctx.NumberToken) || ctx.NumberToken.length === 0) {
-    logger.debug(
-      "Put damage effect CST missing NumberToken or invalid context",
-    );
+    logger.debug("Put damage effect CST missing NumberToken or invalid context");
     return null;
   }
 
@@ -120,8 +115,7 @@ function parseFromText(text: string): PutDamageEffect | null {
 
   // Pattern for both numeric amounts and {d} placeholders
   // Supports "put N damage counters on X" and "put N damage counter on X" (singular)
-  const pattern =
-    /put\s+(\d+|\{d\})\s+damage\s+counters?\s+(?:on|to)\s+(.+?)(?:\.|,|$)/i;
+  const pattern = /put\s+(\d+|\{d\})\s+damage\s+counters?\s+(?:on|to)\s+(.+?)(?:\.|,|$)/i;
   const match = text.match(pattern);
 
   if (!match) {

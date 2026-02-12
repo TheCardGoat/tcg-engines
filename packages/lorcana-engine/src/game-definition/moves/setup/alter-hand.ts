@@ -48,8 +48,8 @@ export const alterHand = createMove<
     if (!pendingMulligan.includes(playerId)) {
       return {
         context: {
-          playerId: String(playerId),
           pendingPlayers: pendingMulligan.map((p) => String(p)),
+          playerId: String(playerId),
         },
         errorCode: "ALREADY_MULLIGANED",
         reason: `Player ${String(playerId)} has already mulliganed or is not eligible to mulligan.`,
@@ -93,8 +93,8 @@ export const alterHand = createMove<
         return {
           context: {
             cardId,
-            cardZone,
             cardOwner: String(cardOwner),
+            cardZone,
             playerId: String(playerId),
           },
           errorCode: "CARD_NOT_IN_HAND",
@@ -107,8 +107,8 @@ export const alterHand = createMove<
     if (cardsToMulligan.length > handCards.length) {
       return {
         context: {
-          requested: cardsToMulligan.length,
           handSize: handCards.length,
+          requested: cardsToMulligan.length,
         },
         errorCode: "TOO_MANY_CARDS",
         reason: `Cannot mulligan ${cardsToMulligan.length} cards when hand only has ${handCards.length} cards.`,

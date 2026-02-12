@@ -4,10 +4,7 @@
  */
 
 import { parseAtomicEffect } from "../effects/atomic";
-import {
-  compositeEffectParsers,
-  parseCompositeEffect,
-} from "../effects/composite";
+import { compositeEffectParsers, parseCompositeEffect } from "../effects/composite";
 import { logger } from "../logging";
 import type { Effect } from "../types";
 
@@ -25,7 +22,7 @@ export function parseEffect(text: string): Effect | undefined {
   // Check if the input matches any composite parser's pattern
   // If it does, we should NOT fall back to atomic parsing
   for (const parser of compositeEffectParsers) {
-    const {pattern} = parser;
+    const { pattern } = parser;
     if (pattern instanceof RegExp && pattern.test(text)) {
       logger.debug(
         "Input matches composite parser pattern but failed to parse - blocking atomic parse",

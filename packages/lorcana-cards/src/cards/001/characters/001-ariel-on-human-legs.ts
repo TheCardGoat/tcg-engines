@@ -4,9 +4,9 @@ export const arielOnHumanLegs: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "restriction",
         restriction: "cant-sing",
         target: "SELF",
+        type: "restriction",
       },
       id: "2c9-1",
       name: "VOICELESS",

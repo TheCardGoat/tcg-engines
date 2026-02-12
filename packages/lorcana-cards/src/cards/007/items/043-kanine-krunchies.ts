@@ -4,10 +4,10 @@ export const kanineKrunchies: ItemCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "willpower",
         modifier: 1,
+        stat: "willpower",
         target: "YOUR_CHARACTERS",
+        type: "modify-stat",
       },
       id: "3wn-1",
       text: "YOU CAN BE A CHAMPION, TOO Your Puppy characters get +1 {W}.",

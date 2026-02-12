@@ -4,8 +4,8 @@ export const owlIslandSecludedEntrance: LocationCard = {
   abilities: [
     {
       effect: {
-        type: "play-card",
         from: "hand",
+        type: "play-card",
       },
       id: "y11-1",
       text: "TEAMWORK For each character you have here, you pay 1 {I} less for the first action you play each turn.",
@@ -13,13 +13,13 @@ export const owlIslandSecludedEntrance: LocationCard = {
     },
     {
       effect: {
-        type: "gain-lore",
         amount: 3,
+        type: "gain-lore",
       },
       id: "y11-2",
       name: "LOTS TO LEARN",
       text: "LOTS TO LEARN Whenever you play a second action in a turn, gain 3 lore.",
-      trigger: { event: "play", timing: "when", on: "SELF" },
+      trigger: { event: "play", on: "SELF", timing: "when" },
       type: "triggered",
     },
   ],

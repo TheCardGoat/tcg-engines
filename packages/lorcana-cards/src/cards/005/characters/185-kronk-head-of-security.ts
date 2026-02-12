@@ -13,25 +13,25 @@ export const kronkHeadOfSecurity: CharacterCard = {
     },
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "play-card",
-          from: "hand",
           cost: "free",
           costRestriction: {
             comparison: "less-or-equal",
             value: 5,
           },
+          from: "hand",
+          type: "play-card",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "156-2",
       name: "ARE YOU ON THE LIST?",
       text: "ARE YOU ON THE LIST? During your turn, whenever this character banishes another character in a challenge, you may play a character with cost 5 or less for free.",
       trigger: {
         event: "banish",
-        timing: "whenever",
         on: "OPPONENT_CHARACTERS",
+        timing: "whenever",
       },
       type: "triggered",
     },

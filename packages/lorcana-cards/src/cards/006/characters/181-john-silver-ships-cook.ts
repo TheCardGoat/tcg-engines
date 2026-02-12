@@ -4,17 +4,17 @@ export const johnSilverShipsCook: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "restriction",
         restriction: "cant-challenge",
         target: "SELF",
+        type: "restriction",
       },
       id: "1r7-1",
       name: "HUNK OF HARDWARE",
       text: "HUNK OF HARDWARE When you play this character, chosen character can't challenge during their next turn.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

@@ -4,16 +4,16 @@ export const henWenPropheticPig: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "put-on-bottom",
         target: "CHOSEN_CHARACTER",
+        type: "put-on-bottom",
       },
       id: "1ms-1",
       name: "FUTURE SIGHT",
       text: "FUTURE SIGHT Whenever this character quests, look at the top card of your deck. Put it on either the top or the bottom of your deck.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

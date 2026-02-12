@@ -4,17 +4,17 @@ export const controlYourTemper: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
-        modifier: -2,
         duration: "this-turn",
+        modifier: -2,
+        stat: "strength",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "modify-stat",
       },
       id: "nur-1",
       text: "Chosen character gets -2 {S} this turn.",

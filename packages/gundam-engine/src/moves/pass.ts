@@ -22,10 +22,8 @@ import type { GundamGameState } from "../types";
 /**
  * Get the next phase in the game flow
  */
-function getNextPhase(
-  currentPhase: GundamGameState["phase"],
-): GundamGameState["phase"] {
-  const phaseOrder: Array<GundamGameState["phase"]> = [
+function getNextPhase(currentPhase: GundamGameState["phase"]): GundamGameState["phase"] {
+  const phaseOrder: GundamGameState["phase"][] = [
     "setup",
     "start",
     "draw",
@@ -48,10 +46,7 @@ function getNextPhase(
  * Ready all cards (change from rested to active) for the given player
  * This includes units in battle area, bases in base section, and resources
  */
-function readyAllCards(
-  draft: Draft<GundamGameState>,
-  playerId: PlayerId,
-): void {
+function readyAllCards(draft: Draft<GundamGameState>, playerId: PlayerId): void {
   // Ready all units in battle area
   const battleArea = draft.zones.battleArea[playerId];
   if (battleArea) {
@@ -80,12 +75,11 @@ function readyAllCards(
 /**
  * Refresh resources to match resource area size
  */
-function refreshResources(
-  draft: Draft<GundamGameState>,
-  playerId: PlayerId,
-): void {
+function refreshResources(draft: Draft<GundamGameState>, playerId: PlayerId): void {
   const resourceArea = draft.zones.resourceArea[playerId];
-  if (!resourceArea) return;
+  if (!resourceArea) {
+    return;
+  }
 
   const resourceCount = getZoneSize(resourceArea);
   draft.gundam.activeResources[playerId] = resourceCount;
@@ -106,10 +100,14 @@ export const passMove: GameMoveDefinition<GundamGameState> = {
     const { playerId } = context;
 
     // Must be current player
-    if (state.currentPlayer !== playerId) return [];
+    if (state.currentPlayer !== playerId) {
+      return [];
+    }
 
     // Cannot pass if game is over
-    if (state.phase === "gameOver") return [];
+    if (state.phase === "gameOver") {
+      return [];
+    }
 
     // Return single empty parameter set
     return [{}];
@@ -122,10 +120,14 @@ export const passMove: GameMoveDefinition<GundamGameState> = {
     const { playerId } = context;
 
     // Must be current player
-    if (state.currentPlayer !== playerId) return false;
+    if (state.currentPlayer !== playerId) {
+      return false;
+    }
 
     // Cannot pass if game is over
-    if (state.phase === "gameOver") return false;
+    if (state.phase === "gameOver") {
+      return false;
+    }
 
     return true;
   },
@@ -147,9 +149,7 @@ export const passMove: GameMoveDefinition<GundamGameState> = {
       // Switch active player
       const currentPlayerIndex = draft.players.indexOf(draft.currentPlayer);
       if (currentPlayerIndex === -1) {
-        throw new Error(
-          `Current player ${draft.currentPlayer} not found in players array`,
-        );
+        throw new Error(`Current player ${draft.currentPlayer} not found in players array`);
       }
       const nextPlayerIndex = (currentPlayerIndex + 1) % draft.players.length;
       const nextPlayer = draft.players[nextPlayerIndex];
@@ -175,10 +175,10 @@ export const passMove: GameMoveDefinition<GundamGameState> = {
   },
 
   metadata: {
-    category: "phase-control",
-    tags: ["core", "always-available"],
-    description: "Pass priority and advance game phase",
-    canBeUndone: false,
     affectsZones: [],
+    canBeUndone: false,
+    category: "phase-control",
+    description: "Pass priority and advance game phase",
+    tags: ["core", "always-available"],
   },
 };

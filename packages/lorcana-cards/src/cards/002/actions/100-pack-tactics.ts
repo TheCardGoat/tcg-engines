@@ -4,8 +4,8 @@ export const packTactics: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "gain-lore",
         amount: 1,
+        type: "gain-lore",
       },
       id: "1iw-1",
       text: "Gain 1 lore for each damaged character opponents have in play.",

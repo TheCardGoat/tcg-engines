@@ -13,20 +13,20 @@ export const princeEricUrsulasGroom: CharacterCard = {
     },
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "gain-keyword",
             keyword: "Bodyguard",
             target: "SELF",
+            type: "gain-keyword",
           },
           {
-            type: "modify-stat",
-            stat: "willpower",
             modifier: 2,
+            stat: "willpower",
             target: "CHOSEN_CHARACTER",
+            type: "modify-stat",
           },
         ],
+        type: "sequence",
       },
       id: "1rd-2",
       text: "UNDER VANESSA'S SPELL While you have a character named Ursula in play, this character gains Bodyguard and gets +2 {W}.",
