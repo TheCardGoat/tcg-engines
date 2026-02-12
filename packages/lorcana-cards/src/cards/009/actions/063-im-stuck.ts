@@ -4,10 +4,10 @@ export const imStuck: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "restriction",
+        duration: "until-start-of-next-turn",
         restriction: "cant-ready",
         target: "SELF",
-        duration: "until-start-of-next-turn",
+        type: "restriction",
       },
       id: "1bx-1",
       text: "Chosen exerted character can't ready at the start of their next turn.",

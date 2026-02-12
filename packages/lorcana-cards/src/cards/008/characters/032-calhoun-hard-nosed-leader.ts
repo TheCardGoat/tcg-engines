@@ -10,16 +10,16 @@ export const calhounHardnosedLeader: CharacterCard = {
     },
     {
       effect: {
-        type: "gain-lore",
         amount: 1,
+        type: "gain-lore",
       },
       id: "eco-2",
       name: "LOOT DROP",
       text: "LOOT DROP When this character is banished, gain 1 lore.",
       trigger: {
         event: "banish",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

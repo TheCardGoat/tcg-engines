@@ -4,37 +4,37 @@ export const dellaDuckReturningMother: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "optional",
+            chooser: "CONTROLLER",
             effect: {
-              type: "ready",
               target: {
-                selector: "chosen",
+                cardTypes: ["character"],
                 count: 1,
                 owner: "any",
+                selector: "chosen",
                 zones: ["play"],
-                cardTypes: ["character"],
               },
+              type: "ready",
             },
-            chooser: "CONTROLLER",
+            type: "optional",
           },
           {
-            type: "restriction",
+            duration: "this-turn",
             restriction: "cant-quest",
             target: "SELF",
-            duration: "this-turn",
+            type: "restriction",
           },
         ],
+        type: "sequence",
       },
       id: "27n-1",
       name: "HERE TO HELP",
       text: "HERE TO HELP When you play this character, you may ready chosen character with Boost. If you do, they can't quest or challenge for the rest of this turn.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

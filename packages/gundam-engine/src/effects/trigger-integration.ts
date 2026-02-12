@@ -45,25 +45,14 @@ export function detectAndEnqueueDeployTriggers(
   deployedCardId: CardId,
   deployingPlayerId: PlayerId,
 ): void {
-  const triggerResult = detectDeployTriggers(
-    draft,
-    deployedCardId,
-    deployingPlayerId,
-  );
+  const triggerResult = detectDeployTriggers(draft, deployedCardId, deployingPlayerId);
 
   if (triggerResult.hasTriggers) {
     // Order effects: active player's effects first
-    const orderResult = orderTriggeredEffects(
-      triggerResult.effects,
-      draft.currentPlayer,
-    );
+    const orderResult = orderTriggeredEffects(triggerResult.effects, draft.currentPlayer);
 
     // Enqueue effects in the determined order
-    enqueueBatchEffects(
-      draft,
-      [...triggerResult.effects],
-      [...orderResult.order],
-    );
+    enqueueBatchEffects(draft, [...triggerResult.effects], [...orderResult.order]);
 
     console.log(
       `[DEPLOY] Detected ${triggerResult.effects.length} deploy triggers for ${deployedCardId}, enqueued in order: ${orderResult.order.join(", ")}`,
@@ -98,26 +87,14 @@ export function detectAndEnqueueAttackTriggers(
   targetId: CardId | undefined,
   attackingPlayerId: PlayerId,
 ): void {
-  const triggerResult = detectAttackTriggers(
-    draft,
-    attackerId,
-    targetId,
-    attackingPlayerId,
-  );
+  const triggerResult = detectAttackTriggers(draft, attackerId, targetId, attackingPlayerId);
 
   if (triggerResult.hasTriggers) {
     // Order effects: active player's effects first
-    const orderResult = orderTriggeredEffects(
-      triggerResult.effects,
-      draft.currentPlayer,
-    );
+    const orderResult = orderTriggeredEffects(triggerResult.effects, draft.currentPlayer);
 
     // Enqueue effects in the determined order
-    enqueueBatchEffects(
-      draft,
-      [...triggerResult.effects],
-      [...orderResult.order],
-    );
+    enqueueBatchEffects(draft, [...triggerResult.effects], [...orderResult.order]);
 
     console.log(
       `[ATTACK] Detected ${triggerResult.effects.length} attack triggers, enqueued in order: ${orderResult.order.join(", ")}`,
@@ -150,25 +127,14 @@ export function detectAndEnqueueDestroyedTriggers(
   destroyedCardId: CardId,
   ownerPlayerId: PlayerId,
 ): void {
-  const triggerResult = detectDestroyedTriggers(
-    draft,
-    destroyedCardId,
-    ownerPlayerId,
-  );
+  const triggerResult = detectDestroyedTriggers(draft, destroyedCardId, ownerPlayerId);
 
   if (triggerResult.hasTriggers) {
     // Order effects: active player's effects first
-    const orderResult = orderTriggeredEffects(
-      triggerResult.effects,
-      draft.currentPlayer,
-    );
+    const orderResult = orderTriggeredEffects(triggerResult.effects, draft.currentPlayer);
 
     // Enqueue effects in the determined order
-    enqueueBatchEffects(
-      draft,
-      [...triggerResult.effects],
-      [...orderResult.order],
-    );
+    enqueueBatchEffects(draft, [...triggerResult.effects], [...orderResult.order]);
 
     console.log(
       `[DESTROYED] Detected ${triggerResult.effects.length} destroyed triggers for ${destroyedCardId}, enqueued in order: ${orderResult.order.join(", ")}`,
@@ -203,17 +169,10 @@ export function detectAndEnqueueStartOfTurnTriggers(
 
   if (triggerResult.hasTriggers) {
     // Order effects: active player's effects first
-    const orderResult = orderTriggeredEffects(
-      triggerResult.effects,
-      draft.currentPlayer,
-    );
+    const orderResult = orderTriggeredEffects(triggerResult.effects, draft.currentPlayer);
 
     // Enqueue effects in the determined order
-    enqueueBatchEffects(
-      draft,
-      [...triggerResult.effects],
-      [...orderResult.order],
-    );
+    enqueueBatchEffects(draft, [...triggerResult.effects], [...orderResult.order]);
 
     console.log(
       `[TURN_START] Detected ${triggerResult.effects.length} start of turn triggers for ${playerId}, enqueued in order: ${orderResult.order.join(", ")}`,
@@ -244,17 +203,10 @@ export function detectAndEnqueueEndOfTurnTriggers(
 
   if (triggerResult.hasTriggers) {
     // Order effects: active player's effects first
-    const orderResult = orderTriggeredEffects(
-      triggerResult.effects,
-      draft.currentPlayer,
-    );
+    const orderResult = orderTriggeredEffects(triggerResult.effects, draft.currentPlayer);
 
     // Enqueue effects in the determined order
-    enqueueBatchEffects(
-      draft,
-      [...triggerResult.effects],
-      [...orderResult.order],
-    );
+    enqueueBatchEffects(draft, [...triggerResult.effects], [...orderResult.order]);
 
     console.log(
       `[TURN_END] Detected ${triggerResult.effects.length} end of turn triggers, enqueued in order: ${orderResult.order.join(", ")}`,

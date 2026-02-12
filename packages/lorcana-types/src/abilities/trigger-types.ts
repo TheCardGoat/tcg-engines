@@ -426,14 +426,14 @@ export const COMMON_TRIGGERS = {
   /** "Whenever you play a character" */
   WHENEVER_PLAY_CHARACTER: {
     event: "play",
-    on: { controller: "you", cardType: "character" },
+    on: { cardType: "character", controller: "you" },
     timing: "whenever",
   } as const satisfies Trigger,
 
   /** "Whenever you play a song" */
   WHENEVER_PLAY_SONG: {
     event: "play",
-    on: { controller: "you", cardType: "song" },
+    on: { cardType: "song", controller: "you" },
     timing: "whenever",
   } as const satisfies Trigger,
 
@@ -441,9 +441,9 @@ export const COMMON_TRIGGERS = {
   WHENEVER_PLAY_FLOODBORN: {
     event: "play",
     on: {
-      controller: "you",
       cardType: "character",
       classification: "Floodborn",
+      controller: "you",
     },
     timing: "whenever",
   } as const satisfies Trigger,

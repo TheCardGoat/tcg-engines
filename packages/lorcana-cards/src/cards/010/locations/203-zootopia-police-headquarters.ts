@@ -4,24 +4,24 @@ export const zootopiaPoliceHeadquarters: LocationCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "draw",
           amount: 1,
           target: "CONTROLLER",
+          type: "draw",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "98y-1",
       name: "NEW INFORMATION",
       text: "NEW INFORMATION Once per turn, when you play a character here, you may draw a card.",
       trigger: {
         event: "play",
-        timing: "when",
         on: {
-          controller: "you",
           cardType: "character",
+          controller: "you",
         },
+        timing: "when",
       },
       type: "triggered",
     },

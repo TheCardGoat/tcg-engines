@@ -4,25 +4,25 @@ export const magicBroomDancingDuster: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you have a Sorcerer character in play",
+          type: "if",
         },
         then: {
-          type: "restriction",
+          duration: "until-start-of-next-turn",
           restriction: "cant-ready",
           target: "SELF",
-          duration: "until-start-of-next-turn",
+          type: "restriction",
         },
+        type: "conditional",
       },
       id: "1k5-1",
       name: "POWER CLEAN",
       text: "POWER CLEAN When you play this character, if you have a Sorcerer character in play, you may exert chosen opposing character. They can't ready at the start of their next turn.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

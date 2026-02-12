@@ -4,41 +4,41 @@ export const captainHookMasterSwordsman: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "ready",
             target: {
-              selector: "self",
+              cardTypes: ["character"],
               count: 1,
               owner: "any",
+              selector: "self",
               zones: ["play"],
-              cardTypes: ["character"],
             },
+            type: "ready",
           },
           {
-            type: "restriction",
+            duration: "this-turn",
             restriction: "cant-quest",
             target: "SELF",
-            duration: "this-turn",
+            type: "restriction",
           },
         ],
+        type: "sequence",
       },
       id: "gip-1",
       name: "NEMESIS",
       text: "NEMESIS During your turn, whenever this character banishes another character in a challenge, ready this character. He can't quest for the rest of this turn.",
       trigger: {
         event: "banish",
-        timing: "whenever",
         on: "OPPONENT_CHARACTERS",
+        timing: "whenever",
       },
       type: "triggered",
     },
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Evasive",
         target: "CHOSEN_CHARACTER",
+        type: "gain-keyword",
       },
       id: "gip-2",
       text: "MAN-TO-MAN Characters named Peter Pan lose Evasive and can't gain Evasive.",

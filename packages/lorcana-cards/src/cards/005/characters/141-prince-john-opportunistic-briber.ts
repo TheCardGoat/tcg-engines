@@ -4,22 +4,22 @@ export const princeJohnOpportunisticBriber: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
-        modifier: 2,
-        target: "SELF",
         duration: "this-turn",
+        modifier: 2,
+        stat: "strength",
+        target: "SELF",
+        type: "modify-stat",
       },
       id: "qie-1",
       name: "TAXES NEVER FAIL ME",
       text: "TAXES NEVER FAIL ME Whenever you play an item, this character gets +2 {S} this turn.",
       trigger: {
         event: "play",
-        timing: "whenever",
         on: {
-          controller: "you",
           cardType: "item",
+          controller: "you",
         },
+        timing: "whenever",
       },
       type: "triggered",
     },

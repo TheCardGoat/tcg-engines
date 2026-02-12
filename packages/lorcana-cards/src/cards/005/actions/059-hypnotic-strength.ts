@@ -4,27 +4,27 @@ export const hypnoticStrength: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "draw",
             amount: 1,
             target: "CONTROLLER",
+            type: "draw",
           },
           {
-            type: "gain-keyword",
+            duration: "this-turn",
             keyword: "Challenger",
             target: {
-              selector: "chosen",
+              cardTypes: ["character"],
               count: 1,
               owner: "any",
+              selector: "chosen",
               zones: ["play"],
-              cardTypes: ["character"],
             },
+            type: "gain-keyword",
             value: 2,
-            duration: "this-turn",
           },
         ],
+        type: "sequence",
       },
       id: "tu0-1",
       text: "Draw a card. Chosen character gains Challenger +2 this turn.",

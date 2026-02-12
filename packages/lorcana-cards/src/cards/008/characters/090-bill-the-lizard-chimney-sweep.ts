@@ -4,9 +4,9 @@ export const billTheLizardChimneySweep: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Evasive",
         target: "SELF",
+        type: "gain-keyword",
       },
       id: "tc2-1",
       text: "NOTHING TO IT While another character in play has damage, this character gains Evasive.",

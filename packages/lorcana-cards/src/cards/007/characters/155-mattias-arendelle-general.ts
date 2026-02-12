@@ -4,9 +4,9 @@ export const mattiasArendelleGeneral: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Ward",
         target: "YOUR_CHARACTERS",
+        type: "gain-keyword",
       },
       id: "f9s-1",
       name: "PROUD TO SERVE Your Queen",

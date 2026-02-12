@@ -3,9 +3,6 @@
   import BoardViewport from "$lib/components/board/BoardViewport.svelte";
 
   const { Story } = defineMeta({
-    title: "Board/BoardViewport",
-    component: BoardViewport,
-    tags: ["autodocs"],
     argTypes: {
       background: { control: "color" },
       overflow: {
@@ -13,9 +10,12 @@
         options: ["hidden", "auto", "scroll"],
       },
     },
+    component: BoardViewport,
     parameters: {
       layout: "fullscreen",
     },
+    tags: ["autodocs"],
+    title: "Board/BoardViewport",
   });
 </script>
 

@@ -47,18 +47,18 @@ export const mickeyMouseTrueFriend: CardDefinition<LorcanaCard> = {
   set: "001",
   rarity: "legendary",
   inkable: true,
-  
+
   // Lorcana-specific properties
   cost: 8,
   inkCost: 8,
   type: "character",
   color: "amber",
-  
+
   // Character properties
   strength: 4,
   willpower: 6,
   loreValue: 3,
-  
+
   // Abilities
   abilities: [
     {
@@ -73,7 +73,7 @@ export const mickeyMouseTrueFriend: CardDefinition<LorcanaCard> = {
       amount: 2,
     },
   ],
-  
+
   // Flavor text
   flavorText: "A friend in need is a friend indeed.",
 };
@@ -84,12 +84,7 @@ export const mickeyMouseTrueFriend: CardDefinition<LorcanaCard> = {
 Lorcana has several card types:
 
 ```typescript
-export type LorcanaCardType = 
-  | "character"
-  | "action"
-  | "item"
-  | "location"
-  | "song";
+export type LorcanaCardType = "character" | "action" | "item" | "location" | "song";
 
 export type LorcanaCard = {
   // Base card properties
@@ -102,15 +97,15 @@ export type LorcanaCard = {
   inkable: boolean;
   rarity: LorcanaRarity;
   set: string;
-  
+
   // Character-specific
   strength?: number;
   willpower?: number;
   loreValue?: number;
-  
+
   // Abilities
   abilities: LorcanaAbility[];
-  
+
   // Text
   text?: string;
   flavorText?: string;
@@ -125,7 +120,7 @@ Keyword abilities are standardized mechanics:
 // Bodyguard - Must be challenged before other characters
 export const bodyguardAbility: KeywordAbility = {
   keyword: "bodyguard",
-  
+
   // Modify challenge validation
   modifyValidation: (state, context) => {
     // Implementation: prevent challenging other characters
@@ -136,7 +131,7 @@ export const bodyguardAbility: KeywordAbility = {
 // Challenger +N - Gets +N strength when challenging
 export const challengerAbility: KeywordAbility = {
   keyword: "challenger",
-  
+
   // Modify challenge damage
   modifyDamage: (state, cardId, baseValue) => {
     const card = getCard(state, cardId);
@@ -235,7 +230,7 @@ const mickeyInstance: CardInstance = {
   instanceId: "game1-card-123",
   ownerId: "player1",
   zone: "play",
-  
+
   // Current state
   damage: 2,
   exerted: true,
@@ -251,19 +246,14 @@ Helper functions for common card operations:
 export const getCardsInZone = (
   state: LorcanaState,
   zone: ZoneId,
-  playerId: PlayerId
+  playerId: PlayerId,
 ): CardInstance[] => {
-  return state.zones[zone][playerId].map(
-    cardId => state.cards[cardId]
-  );
+  return state.zones[zone][playerId].map((cardId) => state.cards[cardId]);
 };
 
-export const getReadyCharacters = (
-  state: LorcanaState,
-  playerId: PlayerId
-): CardInstance[] => {
+export const getReadyCharacters = (state: LorcanaState, playerId: PlayerId): CardInstance[] => {
   return getCardsInZone(state, "play", playerId).filter(
-    card => card.type === "character" && !card.exerted
+    (card) => card.type === "character" && !card.exerted,
   );
 };
 ```
@@ -277,12 +267,12 @@ describe("Mickey Mouse - True Friend", () => {
   it("draws 2 cards when played", () => {
     const engine = createTestEngine();
     const initialHandSize = getHandSize(engine.getState(), "player1");
-    
+
     engine.executeMove("playCard", {
       playerId: "player1",
       params: { cardId: "mickey-true-friend" },
     });
-    
+
     const finalHandSize = getHandSize(engine.getState(), "player1");
     expect(finalHandSize).toBe(initialHandSize + 2 - 1); // +2 draw, -1 played
   });
@@ -293,4 +283,3 @@ describe("Mickey Mouse - True Friend", () => {
 
 - See `@packages/core/src/cards/` for base card system
 - See `@packages/core/ENGINE_INTEGRATION.md` for card integration guide
-

@@ -4,20 +4,20 @@ export const moanaChosenByTheOcean: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
-        effect: {
-          type: "banish",
-          target: "CHOSEN_CHARACTER",
-        },
         chooser: "CONTROLLER",
+        effect: {
+          target: "CHOSEN_CHARACTER",
+          type: "banish",
+        },
+        type: "optional",
       },
       id: "176-1",
       name: "THIS IS NOT WHO YOU ARE",
       text: "THIS IS NOT WHO YOU ARE When you play this character, you may banish chosen character named Te Kā.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

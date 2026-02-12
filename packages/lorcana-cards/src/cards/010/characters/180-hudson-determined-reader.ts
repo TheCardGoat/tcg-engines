@@ -4,37 +4,37 @@ export const hudsonDeterminedReader: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
-        effect: {
-          type: "discard",
-          amount: 1,
-          target: "CONTROLLER",
-          chosen: true,
-        },
         chooser: "CONTROLLER",
+        effect: {
+          amount: 1,
+          chosen: true,
+          target: "CONTROLLER",
+          type: "discard",
+        },
+        type: "optional",
       },
       id: "g6l-1",
       name: "FINDING ANSWERS",
       text: "FINDING ANSWERS When you play this character, you may draw a card, then choose and discard a card.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you have 3 or more cards in your hand",
+          type: "if",
         },
         then: {
-          type: "restriction",
           restriction: "cant-ready",
           target: "SELF",
+          type: "restriction",
         },
+        type: "conditional",
       },
       id: "g6l-2",
       text: "STONE BY DAY If you have 3 or more cards in your hand, this character can't ready.",

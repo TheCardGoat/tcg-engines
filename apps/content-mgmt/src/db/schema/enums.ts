@@ -4,12 +4,7 @@ import { pgEnum } from "drizzle-orm/pg-core";
  * Content source type enum
  * Identifies the extraction service used for the content
  */
-export const sourceTypeEnum = pgEnum("source_type", [
-  "youtube",
-  "article",
-  "rss",
-  "http",
-]);
+export const sourceTypeEnum = pgEnum("source_type", ["youtube", "article", "rss", "http"]);
 
 /**
  * Content processing status enum

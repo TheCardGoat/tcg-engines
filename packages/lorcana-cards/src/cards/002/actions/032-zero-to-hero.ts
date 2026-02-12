@@ -4,8 +4,8 @@ export const zeroToHero: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "play-card",
         from: "hand",
+        type: "play-card",
       },
       id: "1qz-1",
       text: "Count the number of characters you have in play. You pay that amount of {I} less for the next character you play this turn.",

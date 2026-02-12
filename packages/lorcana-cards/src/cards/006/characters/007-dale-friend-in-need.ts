@@ -4,9 +4,9 @@ export const daleFriendInNeed: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "restriction",
         restriction: "enters-play-exerted",
         target: "SELF",
+        type: "restriction",
       },
       id: "1pa-1",
       name: "CHIP'S PARTNER",

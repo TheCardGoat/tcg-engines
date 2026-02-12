@@ -4,9 +4,9 @@ export const pickAFight: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "grant-ability",
         ability: "can-challenge-ready",
         target: "SELF",
+        type: "grant-ability",
       },
       id: "zph-1",
       text: "Chosen character can challenge ready characters this turn.",

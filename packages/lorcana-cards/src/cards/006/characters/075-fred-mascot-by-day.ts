@@ -4,16 +4,16 @@ export const fredMascotByDay: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-lore",
         amount: 2,
+        type: "gain-lore",
       },
       id: "1h1-1",
       name: "HOW COOL IS THAT",
       text: "HOW COOL IS THAT Whenever this character is challenged, gain 2 lore.",
       trigger: {
         event: "challenged",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

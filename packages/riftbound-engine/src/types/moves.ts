@@ -47,7 +47,7 @@ export type ScoringMethod = "conquer" | "hold";
  * This type defines the parameters for every move in the game.
  * Each key is a move name, and the value is the parameter type for that move.
  */
-export type RiftboundMoves = {
+export interface RiftboundMoves {
   // ============================================
   // Setup Moves
   // ============================================
@@ -243,4 +243,4 @@ export type RiftboundMoves = {
 
   /** Shuffle trash into deck, opponent scores */
   burnOut: { playerId: PlayerId; opponentId: PlayerId };
-};
+}

@@ -4,25 +4,25 @@ export const nightHowlerRage: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "draw",
             amount: 1,
             target: "CONTROLLER",
+            type: "draw",
           },
           {
-            type: "gain-keyword",
             keyword: "Reckless",
             target: {
-              selector: "chosen",
+              cardTypes: ["character"],
               count: 1,
               owner: "any",
+              selector: "chosen",
               zones: ["play"],
-              cardTypes: ["character"],
             },
+            type: "gain-keyword",
           },
         ],
+        type: "sequence",
       },
       id: "1mw-1",
       text: "Draw a card. Chosen character gains Reckless during their next turn.",

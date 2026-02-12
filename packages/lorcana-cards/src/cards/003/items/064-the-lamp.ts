@@ -5,21 +5,21 @@ export const theLamp: ItemCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you have a character named Jafar in play",
+          type: "if",
         },
         then: {
-          type: "return-to-hand",
           target: {
-            selector: "chosen",
+            cardTypes: ["character"],
             count: 1,
             owner: "any",
+            selector: "chosen",
             zones: ["play"],
-            cardTypes: ["character"],
           },
+          type: "return-to-hand",
         },
+        type: "conditional",
       },
       id: "1ik-1",
       text: "GOOD OR EVIL Banish this item — If you have a character named Jafar in play, draw 2 cards. If you have a character named Genie in play, return chosen character with cost 4 or less to their player's hand.",

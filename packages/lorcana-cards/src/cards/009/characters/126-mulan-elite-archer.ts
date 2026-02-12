@@ -13,26 +13,26 @@ export const mulanEliteArcher: CharacterCard = {
     },
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you used Shift to play her",
+          type: "if",
         },
         then: {
-          type: "modify-stat",
-          stat: "strength",
-          modifier: 3,
-          target: "CHOSEN_CHARACTER",
           duration: "this-turn",
+          modifier: 3,
+          stat: "strength",
+          target: "CHOSEN_CHARACTER",
+          type: "modify-stat",
         },
+        type: "conditional",
       },
       id: "1w1-2",
       name: "STRAIGHT SHOOTER",
       text: "STRAIGHT SHOOTER When you play this character, if you used Shift to play her, she gets +3 {S} this turn.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

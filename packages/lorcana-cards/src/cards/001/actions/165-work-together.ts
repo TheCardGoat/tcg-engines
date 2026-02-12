@@ -4,10 +4,10 @@ export const workTogether: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
+        duration: "this-turn",
         keyword: "Support",
         target: "CHOSEN_CHARACTER",
-        duration: "this-turn",
+        type: "gain-keyword",
       },
       id: "118-1",
       text: "Chosen character gains Support this turn.",

@@ -75,17 +75,17 @@ import {
 describe("Effect Builders - Card Manipulation", () => {
   it("should create a draw effect", () => {
     const effect = draw(1);
-    expect(effect).toEqual({ type: "draw", amount: 1 });
+    expect(effect).toEqual({ amount: 1, type: "draw" });
   });
 
   it("should create a draw effect with player target", () => {
     const effect = draw(2, "opponent");
-    expect(effect).toEqual({ type: "draw", amount: 2, player: "opponent" });
+    expect(effect).toEqual({ amount: 2, player: "opponent", type: "draw" });
   });
 
   it("should create a discard effect", () => {
     const effect = discard(1, "self");
-    expect(effect).toEqual({ type: "discard", amount: 1, player: "self" });
+    expect(effect).toEqual({ amount: 1, player: "self", type: "discard" });
   });
 
   it("should create a search deck effect", () => {
@@ -96,12 +96,12 @@ describe("Effect Builders - Card Manipulation", () => {
 
   it("should create a return to hand effect", () => {
     const effect = returnToHand("chosen-unit");
-    expect(effect).toEqual({ type: "return-to-hand", target: "chosen-unit" });
+    expect(effect).toEqual({ target: "chosen-unit", type: "return-to-hand" });
   });
 
   it("should create a send to trash effect", () => {
     const effect = sendToTrash("this");
-    expect(effect).toEqual({ type: "send-to-trash", target: "this" });
+    expect(effect).toEqual({ target: "this", type: "send-to-trash" });
   });
 });
 
@@ -109,53 +109,53 @@ describe("Effect Builders - Combat", () => {
   it("should create a damage effect", () => {
     const effect = damage(3, "chosen-unit");
     expect(effect).toEqual({
-      type: "damage",
       amount: 3,
       target: "chosen-unit",
+      type: "damage",
     });
   });
 
   it("should create a heal effect", () => {
     const effect = heal(2, "this");
-    expect(effect).toEqual({ type: "heal", amount: 2, target: "this" });
+    expect(effect).toEqual({ amount: 2, target: "this", type: "heal" });
   });
 
   it("should create a heal all effect", () => {
     const effect = heal("all", "this");
-    expect(effect).toEqual({ type: "heal", amount: "all", target: "this" });
+    expect(effect).toEqual({ amount: "all", target: "this", type: "heal" });
   });
 
   it("should create a destroy effect", () => {
     const effect = destroy("chosen-unit");
-    expect(effect).toEqual({ type: "destroy", target: "chosen-unit" });
+    expect(effect).toEqual({ target: "chosen-unit", type: "destroy" });
   });
 
   it("should create a rest effect", () => {
     const effect = rest("chosen-unit");
-    expect(effect).toEqual({ type: "rest", target: "chosen-unit" });
+    expect(effect).toEqual({ target: "chosen-unit", type: "rest" });
   });
 
   it("should create a stand effect", () => {
     const effect = stand("this");
-    expect(effect).toEqual({ type: "stand", target: "this" });
+    expect(effect).toEqual({ target: "this", type: "stand" });
   });
 
   it("should create a battle effect", () => {
     const effect = battle("this", "chosen-unit");
     expect(effect).toEqual({
-      type: "battle",
       attacker: "this",
       defender: "chosen-unit",
+      type: "battle",
     });
   });
 
   it("should create a prevent damage effect", () => {
     const effect = preventDamage("this", 2, "turn");
     expect(effect).toEqual({
-      type: "prevent-damage",
-      target: "this",
       amount: 2,
       duration: "turn",
+      target: "this",
+      type: "prevent-damage",
     });
   });
 });
@@ -164,38 +164,38 @@ describe("Effect Builders - Stat Modification", () => {
   it("should create a modify AP effect", () => {
     const effect = modifyAP(2, "this", "turn");
     expect(effect).toEqual({
-      type: "modify-ap",
       amount: 2,
-      target: "this",
       duration: "turn",
+      target: "this",
+      type: "modify-ap",
     });
   });
 
   it("should create a modify HP effect", () => {
     const effect = modifyHP(1, "each-friendly-unit");
     expect(effect).toEqual({
-      type: "modify-hp",
       amount: 1,
       target: "each-friendly-unit",
+      type: "modify-hp",
     });
   });
 
   it("should create a set AP effect", () => {
     const effect = setAP(5, "this");
-    expect(effect).toEqual({ type: "set-ap", amount: 5, target: "this" });
+    expect(effect).toEqual({ amount: 5, target: "this", type: "set-ap" });
   });
 
   it("should create a set HP effect", () => {
     const effect = setHP(10, "this");
-    expect(effect).toEqual({ type: "set-hp", amount: 10, target: "this" });
+    expect(effect).toEqual({ amount: 10, target: "this", type: "set-hp" });
   });
 
   it("should create a swap stats effect", () => {
     const effect = swapStats("this", "chosen-unit");
     expect(effect).toEqual({
-      type: "swap-stats",
       target1: "this",
       target2: "chosen-unit",
+      type: "swap-stats",
     });
   });
 });
@@ -204,10 +204,10 @@ describe("Effect Builders - Resources", () => {
   it("should create an add resources effect", () => {
     const effect = addResources(2, "self", true);
     expect(effect).toEqual({
-      type: "add-resources",
+      active: true,
       amount: 2,
       player: "self",
-      active: true,
+      type: "add-resources",
     });
   });
 });
@@ -216,24 +216,24 @@ describe("Effect Builders - Pilot and Pairing", () => {
   it("should create a pair pilot effect", () => {
     const effect = pairPilot("chosen-unit", "this");
     expect(effect).toEqual({
-      type: "pair-pilot",
       pilot: "chosen-unit",
+      type: "pair-pilot",
       unit: "this",
     });
   });
 
   it("should create an unpair pilot effect", () => {
     const effect = unpairPilot("this");
-    expect(effect).toEqual({ type: "unpair-pilot", target: "this" });
+    expect(effect).toEqual({ target: "this", type: "unpair-pilot" });
   });
 
   it("should create a search pilot effect", () => {
     const effect = searchPilot("Amuro Ray", "hand", true);
     expect(effect).toEqual({
-      type: "search-pilot",
-      pilotName: "Amuro Ray",
       destination: "hand",
+      pilotName: "Amuro Ray",
       reveal: true,
+      type: "search-pilot",
     });
   });
 });
@@ -241,15 +241,15 @@ describe("Effect Builders - Pilot and Pairing", () => {
 describe("Effect Builders - Shields", () => {
   it("should create an add shield effect", () => {
     const effect = addShield(1, "self");
-    expect(effect).toEqual({ type: "add-shield", amount: 1, player: "self" });
+    expect(effect).toEqual({ amount: 1, player: "self", type: "add-shield" });
   });
 
   it("should create a break shield effect", () => {
     const effect = breakShield("opponent", 1);
     expect(effect).toEqual({
-      type: "break-shield",
-      target: "opponent",
       amount: 1,
+      target: "opponent",
+      type: "break-shield",
     });
   });
 });
@@ -258,19 +258,19 @@ describe("Effect Builders - Keywords", () => {
   it("should create a grant keyword effect", () => {
     const effect = grantKeyword("Intercept", "this", "turn");
     expect(effect).toEqual({
-      type: "grant-keyword",
+      duration: "turn",
       keyword: "Intercept",
       target: "this",
-      duration: "turn",
+      type: "grant-keyword",
     });
   });
 
   it("should create a lose keyword effect", () => {
     const effect = loseKeyword("Intercept", "this");
     expect(effect).toEqual({
-      type: "lose-keyword",
       keyword: "Intercept",
       target: "this",
+      type: "lose-keyword",
     });
   });
 });
@@ -278,16 +278,16 @@ describe("Effect Builders - Keywords", () => {
 describe("Effect Builders - Tokens", () => {
   it("should create a create token effect", () => {
     const token = {
-      name: "Zaku II",
-      cardType: "UNIT" as const,
-      level: 2,
-      cost: 2,
       ap: 3,
+      cardType: "UNIT" as const,
+      cost: 2,
       hp: 3,
+      level: 2,
+      name: "Zaku II",
     };
     const effect = createToken(token, {
-      location: "battleArea",
       controller: "self",
+      location: "battleArea",
     });
     expect(effect.type).toBe("create-token");
     expect(effect.token).toEqual(token);
@@ -298,18 +298,18 @@ describe("Effect Builders - Control Flow", () => {
   it("should create a sequence effect", () => {
     const effect = sequence(draw(1), damage(2, "chosen-unit"));
     expect(effect).toEqual({
-      type: "sequence",
       effects: [
-        { type: "draw", amount: 1 },
-        { type: "damage", amount: 2, target: "chosen-unit" },
+        { amount: 1, type: "draw" },
+        { amount: 2, target: "chosen-unit", type: "damage" },
       ],
+      type: "sequence",
     });
   });
 
   it("should create a choice effect", () => {
     const effect = choice(
-      { label: "Draw a card", effect: draw(1) },
-      { label: "Deal 2 damage", effect: damage(2, "chosen-unit") },
+      { effect: draw(1), label: "Draw a card" },
+      { effect: damage(2, "chosen-unit"), label: "Deal 2 damage" },
     );
     expect(effect.type).toBe("choice");
     expect(effect.options).toHaveLength(2);
@@ -318,9 +318,9 @@ describe("Effect Builders - Control Flow", () => {
   it("should create an optional effect", () => {
     const effect = optional(draw(1), "self");
     expect(effect).toEqual({
-      type: "optional",
-      effect: { type: "draw", amount: 1 },
+      effect: { amount: 1, type: "draw" },
       player: "self",
+      type: "optional",
     });
   });
 
@@ -328,28 +328,28 @@ describe("Effect Builders - Control Flow", () => {
     const condition = { turn: 3 };
     const effect = conditional(condition, draw(2), draw(1));
     expect(effect).toEqual({
-      type: "conditional",
       condition,
-      then: { type: "draw", amount: 2 },
-      else: { type: "draw", amount: 1 },
+      else: { amount: 1, type: "draw" },
+      then: { amount: 2, type: "draw" },
+      type: "conditional",
     });
   });
 
   it("should create a for each effect", () => {
     const effect = forEach("each-friendly-unit", rest("this"));
     expect(effect).toEqual({
-      type: "for-each",
+      effect: { target: "this", type: "rest" },
       target: "each-friendly-unit",
-      effect: { type: "rest", target: "this" },
+      type: "for-each",
     });
   });
 
   it("should create a do times effect", () => {
     const effect = doTimes(3, draw(1));
     expect(effect).toEqual({
-      type: "do-times",
+      effect: { amount: 1, type: "draw" },
       times: 3,
-      effect: { type: "draw", amount: 1 },
+      type: "do-times",
     });
   });
 
@@ -357,10 +357,10 @@ describe("Effect Builders - Control Flow", () => {
     const condition = { playerHas: { resources: 5 } };
     const effect = repeatWhile(condition, draw(1), 5);
     expect(effect).toEqual({
-      type: "repeat-while",
       condition,
-      effect: { type: "draw", amount: 1 },
+      effect: { amount: 1, type: "draw" },
       maxTimes: 5,
+      type: "repeat-while",
     });
   });
 
@@ -368,9 +368,9 @@ describe("Effect Builders - Control Flow", () => {
     const cost = { discard: 1 };
     const effect = ifYouDo(cost, damage(3, "chosen-unit"));
     expect(effect).toEqual({
-      type: "if-you-do",
       cost,
-      then: { type: "damage", amount: 3, target: "chosen-unit" },
+      then: { amount: 3, target: "chosen-unit", type: "damage" },
+      type: "if-you-do",
     });
   });
 
@@ -378,8 +378,8 @@ describe("Effect Builders - Control Flow", () => {
     const innerEffect = modifyAP(2, "this");
     const effect = untilEndOfTurn(innerEffect);
     expect(effect).toEqual({
-      type: "until-end-of-turn",
       effect: innerEffect,
+      type: "until-end-of-turn",
     });
   });
 });
@@ -389,144 +389,144 @@ describe("Effect Builders - Special", () => {
     const then = { draw: 1 };
     const effect = look(3, "deck", then, "self");
     expect(effect).toEqual({
-      type: "look",
       amount: 3,
       from: "deck",
-      then,
       player: "self",
+      then,
+      type: "look",
     });
   });
 
   it("should create a play from effect", () => {
     const effect = playFrom("chosen-unit", "hand", { ignoreCost: true });
     expect(effect).toEqual({
-      type: "play-from",
-      target: "chosen-unit",
       from: "hand",
       ignoreCost: true,
+      target: "chosen-unit",
+      type: "play-from",
     });
   });
 
   it("should create a gain ability effect", () => {
     const ability = {
-      type: "triggered" as const,
-      trigger: "ON_DEPLOY",
       effect: draw(1),
+      trigger: "ON_DEPLOY",
+      type: "triggered" as const,
     };
     const effect = gainAbility(ability, "this", "permanent");
     expect(effect).toEqual({
-      type: "gain-ability",
       ability,
-      target: "this",
       duration: "permanent",
+      target: "this",
+      type: "gain-ability",
     });
   });
 
   it("should create a shuffle effect", () => {
     const effect = shuffle("self", "deck");
     expect(effect).toEqual({
-      type: "shuffle",
-      player: "self",
       deck: "deck",
+      player: "self",
+      type: "shuffle",
     });
   });
 
   it("should create a reveal effect", () => {
     const effect = reveal("chosen-card", "hand");
     expect(effect).toEqual({
-      type: "reveal",
-      target: "chosen-card",
       from: "hand",
+      target: "chosen-card",
+      type: "reveal",
     });
   });
 
   it("should create a redirect damage effect", () => {
     const effect = redirectDamage("this", "chosen-unit", 2);
     expect(effect).toEqual({
-      type: "redirect-damage",
+      amount: 2,
       from: "this",
       to: "chosen-unit",
-      amount: 2,
+      type: "redirect-damage",
     });
   });
 
   it("should create a change controller effect", () => {
     const effect = changeController("chosen-unit", "self", "turn");
     expect(effect).toEqual({
-      type: "change-controller",
-      target: "chosen-unit",
-      newController: "self",
       duration: "turn",
+      newController: "self",
+      target: "chosen-unit",
+      type: "change-controller",
     });
   });
 
   it("should create a gain control effect", () => {
     const effect = gainControl("chosen-unit", "until-end-of-turn");
     expect(effect).toEqual({
-      type: "gain-control",
-      target: "chosen-unit",
       duration: "until-end-of-turn",
+      target: "chosen-unit",
+      type: "gain-control",
     });
   });
 
   it("should create a copy effect", () => {
     const effect = copy("chosen-unit", "this");
     expect(effect).toEqual({
-      type: "copy",
-      target: "chosen-unit",
       onto: "this",
+      target: "chosen-unit",
+      type: "copy",
     });
   });
 
   it("should create a flip effect", () => {
     const effect = flip("this", true);
     expect(effect).toEqual({
-      type: "flip",
-      target: "this",
       faceDown: true,
+      target: "this",
+      type: "flip",
     });
   });
 
   it("should create a remove from game effect", () => {
     const effect = removeFromGame("chosen-unit");
     expect(effect).toEqual({
-      type: "remove-from-game",
       target: "chosen-unit",
+      type: "remove-from-game",
     });
   });
 
   it("should create a lose ability effect", () => {
     const effect = loseAbility("Intercept", "this", "turn");
     expect(effect).toEqual({
-      type: "lose-ability",
       ability: "Intercept",
-      target: "this",
       duration: "turn",
+      target: "this",
+      type: "lose-ability",
     });
   });
 
   it("should create a counter effect", () => {
     const effect = counter("current-ability");
     expect(effect).toEqual({
-      type: "counter",
       target: "current-ability",
+      type: "counter",
     });
   });
 
   it("should create a play resource effect", () => {
     const effect = playResource("hand", "chosen-card");
     expect(effect).toEqual({
-      type: "play-resource",
       from: "hand",
       target: "chosen-card",
+      type: "play-resource",
     });
   });
 
   it("should create a rest for resource effect", () => {
     const effect = restForResource("this");
     expect(effect).toEqual({
-      type: "rest-for-resource",
       target: "this",
+      type: "rest-for-resource",
     });
   });
 });
@@ -535,15 +535,11 @@ describe("Type Guards", () => {
   it("should identify control flow effects", () => {
     expect(isControlFlowEffect(sequence(draw(1)))).toBe(true);
     expect(isControlFlowEffect(choice({ effect: draw(1) }))).toBe(true);
-    expect(isControlFlowEffect(conditional({ playerHas: {} }, draw(1)))).toBe(
-      true,
-    );
+    expect(isControlFlowEffect(conditional({ playerHas: {} }, draw(1)))).toBe(true);
     expect(isControlFlowEffect(optional(draw(1)))).toBe(true);
     expect(isControlFlowEffect(forEach("this", draw(1)))).toBe(true);
     expect(isControlFlowEffect(doTimes(3, draw(1)))).toBe(true);
-    expect(isControlFlowEffect(repeatWhile({ playerHas: {} }, draw(1)))).toBe(
-      true,
-    );
+    expect(isControlFlowEffect(repeatWhile({ playerHas: {} }, draw(1)))).toBe(true);
     expect(isControlFlowEffect(ifYouDo({ discard: 1 }, draw(1)))).toBe(true);
     expect(isControlFlowEffect(untilEndOfTurn(draw(1)))).toBe(true);
     expect(isControlFlowEffect(draw(1))).toBe(false);
@@ -593,8 +589,8 @@ describe("Choice Option Builder", () => {
   it("should create a choice option without condition", () => {
     const option = choiceOption("Draw a card", draw(1));
     expect(option).toEqual({
+      effect: { amount: 1, type: "draw" },
       label: "Draw a card",
-      effect: { type: "draw", amount: 1 },
     });
   });
 
@@ -602,9 +598,9 @@ describe("Choice Option Builder", () => {
     const condition = { turn: 3 };
     const option = choiceOption("Deal 3 damage", damage(3, "this"), condition);
     expect(option).toEqual({
-      label: "Deal 3 damage",
-      effect: { type: "damage", amount: 3, target: "this" },
       condition,
+      effect: { amount: 3, target: "this", type: "damage" },
+      label: "Deal 3 damage",
     });
   });
 });

@@ -4,9 +4,9 @@ export const kakamoraBandOfPirates: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Challenger",
         target: "SELF",
+        type: "gain-keyword",
         value: 3,
       },
       id: "15r-1",

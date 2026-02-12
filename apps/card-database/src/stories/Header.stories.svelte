@@ -14,9 +14,9 @@
       layout: "fullscreen",
     },
     args: {
+      onCreateAccount: fn(),
       onLogin: fn(),
       onLogout: fn(),
-      onCreateAccount: fn(),
     },
   });
 </script>

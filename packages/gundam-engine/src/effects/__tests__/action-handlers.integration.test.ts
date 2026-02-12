@@ -43,9 +43,9 @@ function createMockZone(owner: PlayerId, cards: CardId[] = []): Zone {
     {
       id: createZoneId(`zone-${owner}`),
       name: "Test Zone",
-      visibility: "public",
       ordered: true,
       owner,
+      visibility: "public",
     },
     cards,
   );
@@ -53,20 +53,31 @@ function createMockZone(owner: PlayerId, cards: CardId[] = []): Zone {
 
 function createInitialGameState(): GundamGameState {
   return {
-    players: [PLAYER_1, PLAYER_2],
     currentPlayer: PLAYER_1,
-    turn: 1,
+    gundam: {
+      activeResources: {
+        [PLAYER_1]: 0,
+        [PLAYER_2]: 0,
+      },
+      attackedThisTurn: [],
+      cardDamage: {},
+      cardPositions: {},
+      effectStack: {
+        nextInstanceId: 0,
+        stack: [],
+      },
+      hasPlayedResourceThisTurn: {
+        [PLAYER_1]: false,
+        [PLAYER_2]: false,
+      },
+      revealedCards: [],
+      temporaryModifiers: {},
+    },
     phase: "main",
+    players: [PLAYER_1, PLAYER_2],
+    turn: 1,
     zones: {
-      deck: {
-        [PLAYER_1]: createMockZone(PLAYER_1, [CARD_1, CARD_2, CARD_3]),
-        [PLAYER_2]: createMockZone(PLAYER_2, [CARD_4, CARD_5]),
-      },
-      resourceDeck: {
-        [PLAYER_1]: createMockZone(PLAYER_1),
-        [PLAYER_2]: createMockZone(PLAYER_2),
-      },
-      hand: {
+      baseSection: {
         [PLAYER_1]: createMockZone(PLAYER_1),
         [PLAYER_2]: createMockZone(PLAYER_2),
       },
@@ -74,23 +85,11 @@ function createInitialGameState(): GundamGameState {
         [PLAYER_1]: createMockZone(PLAYER_1),
         [PLAYER_2]: createMockZone(PLAYER_2),
       },
-      shieldSection: {
-        [PLAYER_1]: createMockZone(PLAYER_1),
-        [PLAYER_2]: createMockZone(PLAYER_2),
+      deck: {
+        [PLAYER_1]: createMockZone(PLAYER_1, [CARD_1, CARD_2, CARD_3]),
+        [PLAYER_2]: createMockZone(PLAYER_2, [CARD_4, CARD_5]),
       },
-      baseSection: {
-        [PLAYER_1]: createMockZone(PLAYER_1),
-        [PLAYER_2]: createMockZone(PLAYER_2),
-      },
-      resourceArea: {
-        [PLAYER_1]: createMockZone(PLAYER_1),
-        [PLAYER_2]: createMockZone(PLAYER_2),
-      },
-      trash: {
-        [PLAYER_1]: createMockZone(PLAYER_1),
-        [PLAYER_2]: createMockZone(PLAYER_2),
-      },
-      removal: {
+      hand: {
         [PLAYER_1]: createMockZone(PLAYER_1),
         [PLAYER_2]: createMockZone(PLAYER_2),
       },
@@ -98,36 +97,34 @@ function createInitialGameState(): GundamGameState {
         [PLAYER_1]: createMockZone(PLAYER_1),
         [PLAYER_2]: createMockZone(PLAYER_2),
       },
-    },
-    gundam: {
-      activeResources: {
-        [PLAYER_1]: 0,
-        [PLAYER_2]: 0,
+      removal: {
+        [PLAYER_1]: createMockZone(PLAYER_1),
+        [PLAYER_2]: createMockZone(PLAYER_2),
       },
-      cardPositions: {},
-      attackedThisTurn: [],
-      hasPlayedResourceThisTurn: {
-        [PLAYER_1]: false,
-        [PLAYER_2]: false,
+      resourceArea: {
+        [PLAYER_1]: createMockZone(PLAYER_1),
+        [PLAYER_2]: createMockZone(PLAYER_2),
       },
-      effectStack: {
-        stack: [],
-        nextInstanceId: 0,
+      resourceDeck: {
+        [PLAYER_1]: createMockZone(PLAYER_1),
+        [PLAYER_2]: createMockZone(PLAYER_2),
       },
-      temporaryModifiers: {},
-      cardDamage: {},
-      revealedCards: [],
+      shieldSection: {
+        [PLAYER_1]: createMockZone(PLAYER_1),
+        [PLAYER_2]: createMockZone(PLAYER_2),
+      },
+      trash: {
+        [PLAYER_1]: createMockZone(PLAYER_1),
+        [PLAYER_2]: createMockZone(PLAYER_2),
+      },
     },
   };
 }
 
-function createMockContext(
-  controllerId: PlayerId = PLAYER_1,
-  targets?: CardId[],
-): ActionContext {
+function createMockContext(controllerId: PlayerId = PLAYER_1, targets?: CardId[]): ActionContext {
   return {
-    sourceCardId: SOURCE_CARD,
     controllerId,
+    sourceCardId: SOURCE_CARD,
     targets,
   };
 }
@@ -154,20 +151,20 @@ describe("Multi-action effects", () => {
 
     const actions: EffectAction[] = [
       {
-        type: "DRAW",
         count: 1,
         player: "self",
+        type: "DRAW",
       } as DrawAction,
       {
-        type: "MODIFY_STATS",
-        target: {
-          count: 1,
-          validTargets: [{ type: "unit", owner: "self" }],
-          chooser: "controller",
-          timing: "on_resolution",
-        },
         apModifier: 2,
         duration: "this_turn",
+        target: {
+          chooser: "controller",
+          count: 1,
+          timing: "on_resolution",
+          validTargets: [{ owner: "self", type: "unit" }],
+        },
+        type: "MODIFY_STATS",
       } as ModifyStatsAction,
     ];
 
@@ -194,19 +191,19 @@ describe("Multi-action effects", () => {
 
     const actions: EffectAction[] = [
       {
-        type: "REST",
         target: {
-          count: 1,
-          validTargets: [{ type: "unit", owner: "self" }],
           chooser: "controller",
+          count: 1,
           timing: "on_resolution",
+          validTargets: [{ owner: "self", type: "unit" }],
         },
+        type: "REST",
       } as RestAction,
       {
-        type: "DAMAGE",
         amount: 2,
-        target: "unit",
         damageType: "effect",
+        target: "unit",
+        type: "DAMAGE",
       } as DamageAction,
     ];
 
@@ -230,29 +227,29 @@ describe("Multi-action effects", () => {
 
     const actions: EffectAction[] = [
       {
-        type: "DRAW",
         count: 2,
         player: "self",
+        type: "DRAW",
       } as DrawAction,
       {
-        type: "REST",
         target: {
-          count: 1,
-          validTargets: [{ type: "unit", owner: "self" }],
           chooser: "controller",
+          count: 1,
           timing: "on_resolution",
+          validTargets: [{ owner: "self", type: "unit" }],
         },
+        type: "REST",
       } as RestAction,
       {
-        type: "MODIFY_STATS",
-        target: {
-          count: 1,
-          validTargets: [{ type: "unit", owner: "self" }],
-          chooser: "controller",
-          timing: "on_resolution",
-        },
         apModifier: -1,
         duration: "this_turn",
+        target: {
+          chooser: "controller",
+          count: 1,
+          timing: "on_resolution",
+          validTargets: [{ owner: "self", type: "unit" }],
+        },
+        type: "MODIFY_STATS",
       } as ModifyStatsAction,
     ];
 
@@ -287,30 +284,30 @@ describe("Chained effects", () => {
       draft.gundam.cardPositions[CARD_4] = "active";
       draft.gundam.temporaryModifiers[CARD_4] = [
         {
-          id: "mod-1" as any,
-          duration: "end_of_turn",
-          sourceId: SOURCE_CARD,
           apModifier: 3,
-          hpModifier: 2,
+          duration: "end_of_turn",
           grantedKeywords: ["Mobile"],
+          hpModifier: 2,
+          id: "mod-1" as any,
+          sourceId: SOURCE_CARD,
         },
         {
-          id: "mod-2" as any,
-          duration: "permanent",
-          sourceId: SOURCE_CARD,
           apModifier: 1,
+          duration: "permanent",
+          id: "mod-2" as any,
+          sourceId: SOURCE_CARD,
         },
       ];
     });
 
     const action: DestroyAction = {
-      type: "DESTROY",
       target: {
-        count: 1,
-        validTargets: [{ type: "unit", owner: "opponent" }],
         chooser: "controller",
+        count: 1,
         timing: "on_resolution",
+        validTargets: [{ owner: "opponent", type: "unit" }],
       },
+      type: "DESTROY",
     };
 
     context.targets = [CARD_4];
@@ -334,30 +331,30 @@ describe("Chained effects", () => {
       draft.gundam.cardPositions[CARD_5] = "active";
       draft.gundam.temporaryModifiers[CARD_4] = [
         {
-          id: "mod-1" as any,
-          duration: "end_of_turn",
-          sourceId: SOURCE_CARD,
           apModifier: 2,
+          duration: "end_of_turn",
+          id: "mod-1" as any,
+          sourceId: SOURCE_CARD,
         },
       ];
       draft.gundam.temporaryModifiers[CARD_5] = [
         {
-          id: "mod-2" as any,
           duration: "permanent",
-          sourceId: SOURCE_CARD,
           hpModifier: 1,
+          id: "mod-2" as any,
+          sourceId: SOURCE_CARD,
         },
       ];
     });
 
     const action: DestroyAction = {
-      type: "DESTROY",
       target: {
-        count: 2,
-        validTargets: [{ type: "unit", owner: "opponent" }],
         chooser: "controller",
+        count: 2,
         timing: "on_resolution",
+        validTargets: [{ owner: "opponent", type: "unit" }],
       },
+      type: "DESTROY",
     };
 
     context.targets = [CARD_4, CARD_5];
@@ -394,13 +391,13 @@ describe("Edge cases", () => {
     state.gundam.cardPositions[CARD_4] = "active";
 
     const action: DestroyAction = {
-      type: "DESTROY",
       target: {
-        count: 1,
-        validTargets: [{ type: "unit", owner: "opponent" }],
         chooser: "controller",
+        count: 1,
         timing: "on_resolution",
+        validTargets: [{ owner: "opponent", type: "unit" }],
       },
+      type: "DESTROY",
     };
 
     context.targets = [CARD_4];
@@ -415,13 +412,13 @@ describe("Edge cases", () => {
 
     const actions: EffectAction[] = [
       {
-        type: "REST",
         target: {
-          count: 1,
-          validTargets: [{ type: "unit", owner: "self" }],
           chooser: "controller",
+          count: 1,
           timing: "on_resolution",
+          validTargets: [{ owner: "self", type: "unit" }],
         },
+        type: "REST",
       } as RestAction,
     ];
 
@@ -470,24 +467,24 @@ describe("State consistency", () => {
 
     const actions: EffectAction[] = [
       {
-        type: "REST",
         target: {
-          count: 1,
-          validTargets: [{ type: "unit", owner: "self" }],
           chooser: "controller",
+          count: 1,
           timing: "on_resolution",
+          validTargets: [{ owner: "self", type: "unit" }],
         },
+        type: "REST",
       } as RestAction,
       {
-        type: "MODIFY_STATS",
-        target: {
-          count: 1,
-          validTargets: [{ type: "unit", owner: "self" }],
-          chooser: "controller",
-          timing: "on_resolution",
-        },
         apModifier: 2,
         duration: "this_turn",
+        target: {
+          chooser: "controller",
+          count: 1,
+          timing: "on_resolution",
+          validTargets: [{ owner: "self", type: "unit" }],
+        },
+        type: "MODIFY_STATS",
       } as ModifyStatsAction,
     ];
 
@@ -499,9 +496,7 @@ describe("State consistency", () => {
     // Count cards across all zones
     const allCards = new Set<CardId>();
     for (const player of state.players) {
-      for (const zoneType of Object.keys(state.zones) as Array<
-        keyof typeof state.zones
-      >) {
+      for (const zoneType of Object.keys(state.zones) as (keyof typeof state.zones)[]) {
         for (const cardId of state.zones[zoneType][player].cards) {
           allCards.add(cardId);
         }
@@ -510,7 +505,7 @@ describe("State consistency", () => {
 
     // CARD_1 should appear exactly once
     expect(allCards.has(CARD_1)).toBe(true);
-    const count = Array.from(allCards).filter((id) => id === CARD_1).length;
+    const count = [...allCards].filter((id) => id === CARD_1).length;
     expect(count).toBe(1);
   });
 
@@ -524,26 +519,26 @@ describe("State consistency", () => {
 
     const actions: EffectAction[] = [
       {
-        type: "MODIFY_STATS",
-        target: {
-          count: 1,
-          validTargets: [{ type: "unit", owner: "self" }],
-          chooser: "controller",
-          timing: "on_resolution",
-        },
         apModifier: 1,
         duration: "this_turn",
+        target: {
+          chooser: "controller",
+          count: 1,
+          timing: "on_resolution",
+          validTargets: [{ owner: "self", type: "unit" }],
+        },
+        type: "MODIFY_STATS",
       } as ModifyStatsAction,
       {
-        type: "MODIFY_STATS",
-        target: {
-          count: 1,
-          validTargets: [{ type: "unit", owner: "self" }],
-          chooser: "controller",
-          timing: "on_resolution",
-        },
         apModifier: 2,
         duration: "permanent",
+        target: {
+          chooser: "controller",
+          count: 1,
+          timing: "on_resolution",
+          validTargets: [{ owner: "self", type: "unit" }],
+        },
+        type: "MODIFY_STATS",
       } as ModifyStatsAction,
     ];
 
@@ -566,15 +561,15 @@ describe("State consistency", () => {
 
     const actions: EffectAction[] = [
       {
-        type: "MOVE_CARD",
         from: "hand",
-        to: "battleArea",
         target: {
-          count: 1,
-          validTargets: [{ type: "card", owner: "self" }],
           chooser: "controller",
+          count: 1,
           timing: "on_resolution",
+          validTargets: [{ owner: "self", type: "card" }],
         },
+        to: "battleArea",
+        type: "MOVE_CARD",
       } as any,
     ];
 
@@ -586,8 +581,8 @@ describe("State consistency", () => {
     const location = findCardZone(CARD_1, state);
 
     expect(location).toEqual({
-      zone: "battleArea",
       owner: PLAYER_1,
+      zone: "battleArea",
     });
   });
 
@@ -598,23 +593,23 @@ describe("State consistency", () => {
       draft.gundam.cardPositions[CARD_4] = "rested";
       draft.gundam.temporaryModifiers[CARD_4] = [
         {
-          id: "mod-1" as any,
-          duration: "end_of_turn",
-          sourceId: SOURCE_CARD,
           apModifier: 5,
+          duration: "end_of_turn",
           grantedKeywords: ["Mobile", "Breach"],
+          id: "mod-1" as any,
+          sourceId: SOURCE_CARD,
         },
       ];
     });
 
     const action: DestroyAction = {
-      type: "DESTROY",
       target: {
-        count: 1,
-        validTargets: [{ type: "unit", owner: "opponent" }],
         chooser: "controller",
+        count: 1,
         timing: "on_resolution",
+        validTargets: [{ owner: "opponent", type: "unit" }],
       },
+      type: "DESTROY",
     };
 
     context.targets = [CARD_4];
@@ -624,8 +619,8 @@ describe("State consistency", () => {
 
     // Verify complete cleanup
     expect(findCardZone(CARD_4, state)).toEqual({
-      zone: "trash",
       owner: PLAYER_2,
+      zone: "trash",
     });
     expect(state.gundam.cardPositions[CARD_4]).toBeUndefined();
     expect(state.gundam.temporaryModifiers[CARD_4]).toBeUndefined();
@@ -654,13 +649,13 @@ describe("Cross-player operations", () => {
 
     const actions: EffectAction[] = [
       {
-        type: "REST",
         target: {
-          count: 1,
-          validTargets: [{ type: "unit", owner: "opponent" }],
           chooser: "controller",
+          count: 1,
           timing: "on_resolution",
+          validTargets: [{ owner: "opponent", type: "unit" }],
         },
+        type: "REST",
       } as RestAction,
     ];
 
@@ -675,9 +670,9 @@ describe("Cross-player operations", () => {
   it("should draw for opponent", () => {
     const actions: EffectAction[] = [
       {
-        type: "DRAW",
         count: 2,
         player: "opponent",
+        type: "DRAW",
       } as DrawAction,
     ];
 
@@ -701,13 +696,13 @@ describe("Cross-player operations", () => {
 
     const actions: EffectAction[] = [
       {
-        type: "REST",
         target: {
-          count: 2,
-          validTargets: [{ type: "unit", owner: "any" }],
           chooser: "controller",
+          count: 2,
           timing: "on_resolution",
+          validTargets: [{ owner: "any", type: "unit" }],
         },
+        type: "REST",
       } as RestAction,
     ];
 

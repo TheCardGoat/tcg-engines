@@ -4,16 +4,16 @@ export const holdStill: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "remove-damage",
         amount: 4,
-        upTo: true,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "remove-damage",
+        upTo: true,
       },
       id: "1cm-1",
       text: "Remove up to 4 damage from chosen character.",

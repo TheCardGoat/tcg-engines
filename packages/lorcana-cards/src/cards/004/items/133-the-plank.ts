@@ -4,10 +4,10 @@ export const thePlank: ItemCard = {
   abilities: [
     {
       effect: {
-        type: "restriction",
+        duration: "this-turn",
         restriction: "cant-quest",
         target: "SELF",
-        duration: "this-turn",
+        type: "restriction",
       },
       id: "1yt-3",
       text: "• Ready chosen Villain character. They can't quest for the rest of this turn.",

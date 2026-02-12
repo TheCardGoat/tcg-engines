@@ -10,39 +10,39 @@ export const mauiHalfshark: CharacterCard = {
     },
     {
       effect: {
-        type: "optional",
-        effect: {
-          type: "return-from-discard",
-          target: "CONTROLLER",
-          cardType: "action",
-        },
         chooser: "CONTROLLER",
+        effect: {
+          cardType: "action",
+          target: "CONTROLLER",
+          type: "return-from-discard",
+        },
+        type: "optional",
       },
       id: "rcf-2",
       name: "CHEEEEOHOOOO!",
       text: "CHEEEEOHOOOO! Whenever this character challenges another character, you may return an action card from your discard to your hand.",
       trigger: {
         event: "challenge",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },
     {
       effect: {
-        type: "gain-lore",
         amount: 1,
+        type: "gain-lore",
       },
       id: "rcf-3",
       name: "WAYFINDING",
       text: "WAYFINDING Whenever you play an action, gain 1 lore.",
       trigger: {
         event: "play",
-        timing: "whenever",
         on: {
-          controller: "you",
           cardType: "action",
+          controller: "you",
         },
+        timing: "whenever",
       },
       type: "triggered",
     },

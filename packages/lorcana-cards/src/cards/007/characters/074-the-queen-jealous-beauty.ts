@@ -5,15 +5,15 @@ export const theQueenJealousBeauty: CharacterCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "any Princess cards were moved this way",
+          type: "if",
         },
         then: {
-          type: "gain-lore",
           amount: 4,
+          type: "gain-lore",
         },
+        type: "conditional",
       },
       id: "ce7-1",
       text: "NO ORDINARY APPLE {E} — Choose 3 cards from chosen opponent's discard and put them on the bottom of their deck to gain 3 lore. If any Princess cards were moved this way, gain 4 lore instead.",

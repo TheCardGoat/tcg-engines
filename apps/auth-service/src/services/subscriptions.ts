@@ -2,24 +2,19 @@ import { and, desc, eq } from "drizzle-orm";
 import { getDb } from "../db/client";
 import {
   type DigestPreference,
-  digestHistory,
-  digestPreferences,
   type NewDigestPreference,
   type UserSubscription,
+  digestHistory,
+  digestPreferences,
   userSubscriptions,
 } from "../db/schema";
 
 /**
  * Get user's creator subscriptions
  */
-export async function getUserSubscriptions(
-  userId: string,
-): Promise<UserSubscription[]> {
+export async function getUserSubscriptions(userId: string): Promise<UserSubscription[]> {
   const db = getDb();
-  return db
-    .select()
-    .from(userSubscriptions)
-    .where(eq(userSubscriptions.userId, userId));
+  return db.select().from(userSubscriptions).where(eq(userSubscriptions.userId, userId));
 }
 
 /**
@@ -35,9 +30,9 @@ export async function addSubscription(
   const result = await db
     .insert(userSubscriptions)
     .values({
-      userId,
       creatorId,
       gameId: gameId ?? null,
+      userId,
     })
     .returning();
 
@@ -51,20 +46,12 @@ export async function addSubscription(
 /**
  * Remove a creator subscription
  */
-export async function removeSubscription(
-  userId: string,
-  creatorId: string,
-): Promise<boolean> {
+export async function removeSubscription(userId: string, creatorId: string): Promise<boolean> {
   const db = getDb();
 
   const result = await db
     .delete(userSubscriptions)
-    .where(
-      and(
-        eq(userSubscriptions.userId, userId),
-        eq(userSubscriptions.creatorId, creatorId),
-      ),
-    )
+    .where(and(eq(userSubscriptions.userId, userId), eq(userSubscriptions.creatorId, creatorId)))
     .returning({ id: userSubscriptions.id });
 
   return result.length > 0;
@@ -73,9 +60,7 @@ export async function removeSubscription(
 /**
  * Get user's digest preferences
  */
-export async function getDigestPreferences(
-  userId: string,
-): Promise<DigestPreference | null> {
+export async function getDigestPreferences(userId: string): Promise<DigestPreference | null> {
   const db = getDb();
   const result = await db
     .select()
@@ -140,10 +125,10 @@ export async function updateDigestPreferences(
   const result = await db
     .insert(digestPreferences)
     .values({
-      userId,
-      frequency: data.frequency ?? "daily",
       deliveryTime: data.deliveryTime ?? "09:00:00",
+      frequency: data.frequency ?? "daily",
       isActive: data.isActive ?? false,
+      userId,
     })
     .returning();
 

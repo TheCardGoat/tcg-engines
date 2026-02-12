@@ -4,13 +4,13 @@ export const mauriceWorldfamousInventor: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "draw",
           amount: 1,
           target: "CONTROLLER",
+          type: "draw",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "v0e-1",
       text: "**GIVE IT A TRY** Whenever this character quests, you pay 2 {I} less for the next item you play this turn.\n\n**IT WORKS!** Whenever you play an item, you may draw a card.",

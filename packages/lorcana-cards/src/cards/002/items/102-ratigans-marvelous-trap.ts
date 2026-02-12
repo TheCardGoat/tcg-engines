@@ -5,9 +5,9 @@ export const ratigansMarvelousTrap: ItemCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "lose-lore",
         amount: 2,
         target: "EACH_OPPONENT",
+        type: "lose-lore",
       },
       id: "1wo-1",
       text: "SNAP! BOOM! TWANG! Banish this item — Each opponent loses 2 lore.",

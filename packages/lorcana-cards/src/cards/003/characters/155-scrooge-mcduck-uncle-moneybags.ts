@@ -4,16 +4,16 @@ export const scroogeMcduckUncleMoneybags: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "play-card",
         from: "hand",
+        type: "play-card",
       },
       id: "ekh-1",
       name: "TREASURE FINDER",
       text: "TREASURE FINDER Whenever this character quests, you pay 1 {I} less for the next item you play this turn.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

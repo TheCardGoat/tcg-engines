@@ -35,16 +35,12 @@ describe("Coverage Validation: All 1552 Unique Ability Texts", () => {
     // Log summary statistics
     console.log("\n=== Coverage Validation Report ===");
     console.log(`Total Texts: ${results.total}`);
-    console.log(
-      `Successfully Parsed: ${results.successful} (${successRate.toFixed(2)}%)`,
-    );
+    console.log(`Successfully Parsed: ${results.successful} (${successRate.toFixed(2)}%)`);
     console.log(
       `Failed to Parse: ${results.failed} (${((results.failed / results.total) * 100).toFixed(2)}%)`,
     );
     console.log(`Execution Time: ${elapsed.toFixed(2)}ms`);
-    console.log(
-      `Average Time per Text: ${(elapsed / results.total).toFixed(3)}ms`,
-    );
+    console.log(`Average Time per Text: ${(elapsed / results.total).toFixed(3)}ms`);
 
     // Document current state: parser handles keywords, triggers, activated, basic static, and simple actions
     console.log("\n=== Current Parser Capabilities ===");
@@ -96,9 +92,7 @@ describe("Coverage Validation: All 1552 Unique Ability Texts", () => {
       });
 
       // Report top error groups (limit to 5)
-      const sortedGroups = [...errorGroups.entries()].toSorted(
-        (a, b) => b[1].length - a[1].length,
-      );
+      const sortedGroups = [...errorGroups.entries()].toSorted((a, b) => b[1].length - a[1].length);
 
       sortedGroups.slice(0, 5).forEach(([errorType, texts]) => {
         console.log(`\n${errorType} (${texts.length} cases):`);
@@ -111,9 +105,7 @@ describe("Coverage Validation: All 1552 Unique Ability Texts", () => {
       });
 
       if (sortedGroups.length > 5) {
-        console.log(
-          `\n... and ${sortedGroups.length - 5} more error categories`,
-        );
+        console.log(`\n... and ${sortedGroups.length - 5} more error categories`);
       }
     }
 
@@ -137,7 +129,7 @@ describe("Coverage Validation: All 1552 Unique Ability Texts", () => {
     results.results.forEach((result) => {
       if (result.success && result.ability) {
         const ability = result.ability.ability as { type: string };
-        const {type} = ability;
+        const { type } = ability;
         if (type in categoryCounts) {
           categoryCounts[type as keyof typeof categoryCounts]++;
         }
@@ -156,9 +148,7 @@ describe("Coverage Validation: All 1552 Unique Ability Texts", () => {
     // Verify we're parsing diverse ability types
     expect(categoryCounts.keyword).toBeGreaterThan(0);
     expect(
-      categoryCounts.triggered +
-        categoryCounts.activated +
-        categoryCounts.static,
+      categoryCounts.triggered + categoryCounts.activated + categoryCounts.static,
     ).toBeGreaterThan(0);
   });
 
@@ -198,21 +188,15 @@ describe("Coverage Validation: All 1552 Unique Ability Texts", () => {
           type: string;
           keyword?: string;
         };
-        const {type} = ability;
+        const { type } = ability;
 
         // Count ability types
-        abilityTypeFrequency.set(
-          type,
-          (abilityTypeFrequency.get(type) || 0) + 1,
-        );
+        abilityTypeFrequency.set(type, (abilityTypeFrequency.get(type) || 0) + 1);
 
         // Count specific keywords
         if (ability.type === "keyword" && ability.keyword) {
-          const {keyword} = ability;
-          keywordFrequency.set(
-            keyword,
-            (keywordFrequency.get(keyword) || 0) + 1,
-          );
+          const { keyword } = ability;
+          keywordFrequency.set(keyword, (keywordFrequency.get(keyword) || 0) + 1);
         }
       }
     });
@@ -254,9 +238,7 @@ describe("Coverage Validation: All 1552 Unique Ability Texts", () => {
 
     console.log("\n=== Performance Characteristics ===");
     performanceResults.forEach(({ size, timeMs, avgMs }) => {
-      console.log(
-        `Sample Size ${size}: ${timeMs.toFixed(2)}ms (${avgMs.toFixed(3)}ms avg)`,
-      );
+      console.log(`Sample Size ${size}: ${timeMs.toFixed(2)}ms (${avgMs.toFixed(3)}ms avg)`);
     });
 
     // Verify absolute performance is acceptable (not variance, which is flaky in CI)
@@ -281,18 +263,18 @@ describe("Coverage Validation: All 1552 Unique Ability Texts", () => {
 
     results.results.forEach((result, index) => {
       if (result.success && result.ability) {
-        const {type} = (result.ability.ability as { type: string });
+        const { type } = result.ability.ability as { type: string };
         if (!validTypes.has(type)) {
-          invalidResults.push(
-            `Text: "${allCardsText[index]}", Type: "${type}"`,
-          );
+          invalidResults.push(`Text: "${allCardsText[index]}", Type: "${type}"`);
         }
       }
     });
 
     if (invalidResults.length > 0) {
       console.log("\n=== Invalid Ability Types ===");
-      for (const msg of invalidResults.slice(0, 10)) {console.log(msg);}
+      for (const msg of invalidResults.slice(0, 10)) {
+        console.log(msg);
+      }
     }
 
     // All successful parses must produce valid types
@@ -312,11 +294,8 @@ describe("Coverage Validation: All 1552 Unique Ability Texts", () => {
 
     results.results.forEach((result, index) => {
       if (result.success && result.ability) {
-        const {type} = (result.ability.ability as { type: string });
-        if (
-          type in examples &&
-          examples[type as keyof typeof examples].length < 3
-        ) {
+        const { type } = result.ability.ability as { type: string };
+        if (type in examples && examples[type as keyof typeof examples].length < 3) {
           examples[type as keyof typeof examples].push(allCardsText[index]);
         }
       }

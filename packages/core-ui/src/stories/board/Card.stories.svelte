@@ -4,26 +4,26 @@
   import Card from "$lib/components/board/Card.svelte";
 
   const { Story } = defineMeta({
-    title: "Board/Card",
-    component: Card,
-    tags: ["autodocs"],
     argTypes: {
-      tapped: { control: "boolean" },
-      faceDown: { control: "boolean" },
-      hoverable: { control: "boolean" },
-      selected: { control: "boolean" },
-      draggable: { control: "boolean" },
       aspectRatio: {
         control: { type: "select" },
         options: ["2.5/3.5", "5/7", "63/88", "1/1"],
       },
+      draggable: { control: "boolean" },
+      faceDown: { control: "boolean" },
+      hoverable: { control: "boolean" },
+      selected: { control: "boolean" },
+      tapped: { control: "boolean" },
     },
     args: {
       onclick: fn(),
     },
+    component: Card,
     parameters: {
       layout: "centered",
     },
+    tags: ["autodocs"],
+    title: "Board/Card",
   });
 </script>
 

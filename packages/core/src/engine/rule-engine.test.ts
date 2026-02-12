@@ -56,10 +56,36 @@ describe("RuleEngine - Operations Integration", () => {
 
     return {
       cards: {
-        "monster-1": { id: "monster-1", name: "Monster 1", cost: 3 },
-        "monster-2": { id: "monster-2", name: "Monster 2", cost: 5 },
+        "monster-1": { cost: 3, id: "monster-1", name: "Monster 1" },
+        "monster-2": { cost: 5, id: "monster-2", name: "Monster 2" },
       },
       moves: {
+        draw: {
+          reducer: (draft, context) => {
+            const { playerId } = context;
+
+            // Operations should be available in reducer
+            if (!context.zones) {
+              throw new Error("Zones API not available");
+            }
+
+            // Get top card from player's deck
+            const deckCards = context.zones.getCardsInZone(
+              "deck" as ZoneId,
+              playerId as unknown as PlayerId,
+            );
+
+            if (deckCards.length > 0) {
+              const topCard = deckCards[0];
+
+              // Move to hand
+              context.zones.moveCard({
+                cardId: topCard,
+                targetZoneId: "hand" as ZoneId,
+              });
+            }
+          },
+        },
         playCard: {
           condition: (state, context) => {
             const playerId = context.playerId as string;
@@ -102,45 +128,19 @@ describe("RuleEngine - Operations Integration", () => {
             });
           },
         },
-        draw: {
-          reducer: (draft, context) => {
-            const playerId = context.playerId;
-
-            // Operations should be available in reducer
-            if (!context.zones) {
-              throw new Error("Zones API not available");
-            }
-
-            // Get top card from player's deck
-            const deckCards = context.zones.getCardsInZone(
-              "deck" as ZoneId,
-              playerId as unknown as PlayerId,
-            );
-
-            if (deckCards.length > 0) {
-              const topCard = deckCards[0];
-
-              // Move to hand
-              context.zones.moveCard({
-                cardId: topCard,
-                targetZoneId: "hand" as ZoneId,
-              });
-            }
-          },
-        },
       },
       name: "Test Card Game",
       setup: (players: Player[]) => ({
-        players,
         currentPlayer: 0,
+        players,
         resources: {
           [players[0].id]: 10,
           [players[1].id]: 10,
         },
       }),
       zones: {
-        hand: handZone,
         deck: deckZone,
+        hand: handZone,
         play: playZone,
       },
     };

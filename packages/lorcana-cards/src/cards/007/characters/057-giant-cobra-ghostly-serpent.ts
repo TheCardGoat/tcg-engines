@@ -10,20 +10,20 @@ export const giantCobraGhostlySerpent: CharacterCard = {
     },
     {
       effect: {
-        type: "optional",
-        effect: {
-          type: "gain-lore",
-          amount: 2,
-        },
         chooser: "CONTROLLER",
+        effect: {
+          amount: 2,
+          type: "gain-lore",
+        },
+        type: "optional",
       },
       id: "1bh-2",
       name: "MYSTERIOUS ADVANTAGE",
       text: "MYSTERIOUS ADVANTAGE When you play this character, you may choose and discard a card to gain 2 lore.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

@@ -13,20 +13,20 @@ export const calhounCourageousRescuer: CharacterCard = {
     },
     {
       effect: {
-        type: "optional",
-        effect: {
-          type: "return-from-discard",
-          target: "CONTROLLER",
-        },
         chooser: "CONTROLLER",
+        effect: {
+          target: "CONTROLLER",
+          type: "return-from-discard",
+        },
+        type: "optional",
       },
       id: "1m4-2",
       name: "BACK TO START POSITIONS!",
       text: "BACK TO START POSITIONS! Whenever this character challenges another character, you may return a Racer character card from your discard to your hand.",
       trigger: {
         event: "challenge",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

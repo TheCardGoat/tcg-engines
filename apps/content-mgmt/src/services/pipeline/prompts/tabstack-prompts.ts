@@ -158,10 +158,10 @@ Source: {source}
  * Preprocessing prompts configuration for Tabstack
  */
 export const TABSTACK_PREPROCESSING_PROMPTS = {
-  entityExtraction: ARTICLE_ENTITY_EXTRACTION_PROMPT,
-  themeAnalysis: ARTICLE_THEME_ANALYSIS_PROMPT,
   contentSegmentation: ARTICLE_SEGMENTATION_PROMPT,
+  entityExtraction: ARTICLE_ENTITY_EXTRACTION_PROMPT,
   gameRelevance: ARTICLE_GAME_RELEVANCE_PROMPT,
+  themeAnalysis: ARTICLE_THEME_ANALYSIS_PROMPT,
 };
 
 /**
@@ -208,7 +208,7 @@ Themes: {themes}
 export const TABSTACK_PROCESSING_PROMPTS = {
   overview: ARTICLE_OVERVIEW_PROMPT,
   // Enhanced summaries use the same prompts as Supadata
-  // but with article-specific context
+  // But with article-specific context
   insightful: {
     list: "/* Same as Supadata but with article context */",
     qa: "/* Same as Supadata but with article context */",

@@ -4,26 +4,26 @@ export const yokaiEnigmaticInventor: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "return-to-hand",
           target: {
-            selector: "all",
+            cardTypes: ["item"],
             count: "all",
             owner: "you",
+            selector: "all",
             zones: ["play"],
-            cardTypes: ["item"],
           },
+          type: "return-to-hand",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "nt2-1",
       name: "TIME TO UPGRADE",
       text: "TIME TO UPGRADE Whenever this character quests, you may return one of your items to your hand to pay 2 {I} less for the next item you play this turn.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

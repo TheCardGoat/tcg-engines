@@ -4,8 +4,8 @@ export const sheriffOfNottinghamBushelBritches: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "play-card",
         from: "hand",
+        type: "play-card",
       },
       id: "133-1",
       text: "EVERY LITTLE BIT HELPS For each item you have in play, you pay 1 {I} less to play this character.",

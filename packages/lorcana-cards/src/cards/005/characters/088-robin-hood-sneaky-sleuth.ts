@@ -13,10 +13,10 @@ export const robinHoodSneakySleuth: CharacterCard = {
     },
     {
       effect: {
-        type: "modify-stat",
-        stat: "lore",
         modifier: 1,
+        stat: "lore",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "qao-2",
       text: "CLEVER PLAN This character gets +1 {L} for each opposing damaged character in play.",

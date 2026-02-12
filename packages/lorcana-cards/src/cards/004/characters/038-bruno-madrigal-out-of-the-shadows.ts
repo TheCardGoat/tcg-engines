@@ -4,20 +4,20 @@ export const brunoMadrigalOutOfTheShadows: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
-        effect: {
-          type: "return-to-hand",
-          target: "SELF",
-        },
         chooser: "CONTROLLER",
+        effect: {
+          target: "SELF",
+          type: "return-to-hand",
+        },
+        type: "optional",
       },
       id: "1qi-1",
       name: "IT WAS YOUR VISION",
       text: "IT WAS YOUR VISION When you play this character, chosen character gains “When this character is banished in a challenge, you may return this card to your hand” this turn.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

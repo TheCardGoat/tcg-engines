@@ -19,8 +19,10 @@
  */
 
 import {
-  addCard,
   type CardId,
+  type PlayerId,
+  type Zone,
+  addCard,
   clearZone,
   createZone,
   createZoneId,
@@ -29,10 +31,8 @@ import {
   getZoneSize,
   isCardInZone,
   moveCard,
-  type PlayerId,
   removeCard,
   shuffle,
-  type Zone,
 } from "@tcg/core";
 
 /**
@@ -44,12 +44,12 @@ import {
 export function createDeckZone(playerId: PlayerId, cards: CardId[] = []): Zone {
   return createZone(
     {
+      faceDown: true,
       id: createZoneId(`deck-${playerId}`),
       name: "Deck",
-      visibility: "secret",
       ordered: true,
       owner: playerId,
-      faceDown: true,
+      visibility: "secret",
     },
     cards,
   );
@@ -61,18 +61,15 @@ export function createDeckZone(playerId: PlayerId, cards: CardId[] = []): Zone {
  * @param cards - Initial resource cards
  * @returns Configured resource deck zone
  */
-export function createResourceDeckZone(
-  playerId: PlayerId,
-  cards: CardId[] = [],
-): Zone {
+export function createResourceDeckZone(playerId: PlayerId, cards: CardId[] = []): Zone {
   return createZone(
     {
+      faceDown: true,
       id: createZoneId(`resource-deck-${playerId}`),
       name: "Resource Deck",
-      visibility: "secret",
       ordered: true,
       owner: playerId,
-      faceDown: true,
+      visibility: "secret",
     },
     cards,
   );
@@ -88,11 +85,11 @@ export function createHandZone(playerId: PlayerId, cards: CardId[] = []): Zone {
   return createZone(
     {
       id: createZoneId(`hand-${playerId}`),
+      maxSize: 10,
       name: "Hand",
-      visibility: "private",
       ordered: false,
       owner: playerId,
-      maxSize: 10, // Hand limit enforced at end of turn
+      visibility: "private", // Hand limit enforced at end of turn
     },
     cards,
   );
@@ -104,18 +101,15 @@ export function createHandZone(playerId: PlayerId, cards: CardId[] = []): Zone {
  * @param cards - Initial cards in battle area
  * @returns Configured battle area zone
  */
-export function createBattleAreaZone(
-  playerId: PlayerId,
-  cards: CardId[] = [],
-): Zone {
+export function createBattleAreaZone(playerId: PlayerId, cards: CardId[] = []): Zone {
   return createZone(
     {
       id: createZoneId(`battle-area-${playerId}`),
+      maxSize: 6,
       name: "Battle Area",
-      visibility: "public",
       ordered: true,
       owner: playerId,
-      maxSize: 6, // Max 6 units in battle area
+      visibility: "public", // Max 6 units in battle area
     },
     cards,
   );
@@ -127,18 +121,15 @@ export function createBattleAreaZone(
  * @param cards - Initial shield cards (typically 6)
  * @returns Configured shield section zone
  */
-export function createShieldSectionZone(
-  playerId: PlayerId,
-  cards: CardId[] = [],
-): Zone {
+export function createShieldSectionZone(playerId: PlayerId, cards: CardId[] = []): Zone {
   return createZone(
     {
+      faceDown: true,
       id: createZoneId(`shield-section-${playerId}`),
       name: "Shield Section",
-      visibility: "secret",
       ordered: true,
       owner: playerId,
-      faceDown: true,
+      visibility: "secret",
     },
     cards,
   );
@@ -150,18 +141,15 @@ export function createShieldSectionZone(
  * @param baseCard - Base card (typically EX Base)
  * @returns Configured base section zone
  */
-export function createBaseSectionZone(
-  playerId: PlayerId,
-  baseCard?: CardId,
-): Zone {
+export function createBaseSectionZone(playerId: PlayerId, baseCard?: CardId): Zone {
   return createZone(
     {
       id: createZoneId(`base-section-${playerId}`),
+      maxSize: 1,
       name: "Base Section",
-      visibility: "public",
       ordered: false,
       owner: playerId,
-      maxSize: 1, // Only one base allowed
+      visibility: "public", // Only one base allowed
     },
     baseCard ? [baseCard] : [],
   );
@@ -173,18 +161,15 @@ export function createBaseSectionZone(
  * @param cards - Initial resource cards
  * @returns Configured resource area zone
  */
-export function createResourceAreaZone(
-  playerId: PlayerId,
-  cards: CardId[] = [],
-): Zone {
+export function createResourceAreaZone(playerId: PlayerId, cards: CardId[] = []): Zone {
   return createZone(
     {
       id: createZoneId(`resource-area-${playerId}`),
+      maxSize: 15,
       name: "Resource Area",
-      visibility: "public",
       ordered: false,
       owner: playerId,
-      maxSize: 15, // Max 15 resources
+      visibility: "public", // Max 15 resources
     },
     cards,
   );
@@ -196,17 +181,14 @@ export function createResourceAreaZone(
  * @param cards - Initial cards in trash
  * @returns Configured trash zone
  */
-export function createTrashZone(
-  playerId: PlayerId,
-  cards: CardId[] = [],
-): Zone {
+export function createTrashZone(playerId: PlayerId, cards: CardId[] = []): Zone {
   return createZone(
     {
       id: createZoneId(`trash-${playerId}`),
       name: "Trash",
-      visibility: "public",
       ordered: true,
       owner: playerId,
+      visibility: "public",
     },
     cards,
   );
@@ -218,17 +200,14 @@ export function createTrashZone(
  * @param cards - Initial removed cards
  * @returns Configured removal zone
  */
-export function createRemovalZone(
-  playerId: PlayerId,
-  cards: CardId[] = [],
-): Zone {
+export function createRemovalZone(playerId: PlayerId, cards: CardId[] = []): Zone {
   return createZone(
     {
       id: createZoneId(`removal-${playerId}`),
       name: "Removal Area",
-      visibility: "public",
       ordered: false,
       owner: playerId,
+      visibility: "public",
     },
     cards,
   );
@@ -240,17 +219,14 @@ export function createRemovalZone(
  * @param cards - Initial cards in limbo
  * @returns Configured limbo zone
  */
-export function createLimboZone(
-  playerId: PlayerId,
-  cards: CardId[] = [],
-): Zone {
+export function createLimboZone(playerId: PlayerId, cards: CardId[] = []): Zone {
   return createZone(
     {
       id: createZoneId(`limbo-${playerId}`),
       name: "Limbo",
-      visibility: "public",
       ordered: true,
       owner: playerId,
+      visibility: "public",
     },
     cards,
   );
@@ -263,16 +239,16 @@ export function createLimboZone(
  */
 export function createPlayerZones(playerId: PlayerId) {
   return {
-    deck: createDeckZone(playerId),
-    resourceDeck: createResourceDeckZone(playerId),
-    hand: createHandZone(playerId),
-    battleArea: createBattleAreaZone(playerId),
-    shieldSection: createShieldSectionZone(playerId),
     baseSection: createBaseSectionZone(playerId),
-    resourceArea: createResourceAreaZone(playerId),
-    trash: createTrashZone(playerId),
-    removal: createRemovalZone(playerId),
+    battleArea: createBattleAreaZone(playerId),
+    deck: createDeckZone(playerId),
+    hand: createHandZone(playerId),
     limbo: createLimboZone(playerId),
+    removal: createRemovalZone(playerId),
+    resourceArea: createResourceAreaZone(playerId),
+    resourceDeck: createResourceDeckZone(playerId),
+    shieldSection: createShieldSectionZone(playerId),
+    trash: createTrashZone(playerId),
   };
 }
 
@@ -290,9 +266,9 @@ export function drawCards(
 ): { deck: Zone; hand: Zone; cards: CardId[] } {
   const { fromZone, toZone, drawnCards } = draw(deck, hand, count);
   return {
+    cards: drawnCards,
     deck: fromZone,
     hand: toZone,
-    cards: drawnCards,
   };
 }
 
@@ -320,8 +296,8 @@ export function deployUnit(
 ): { hand: Zone; battleArea: Zone } {
   const { fromZone, toZone } = moveCard(hand, battleArea, cardId);
   return {
-    hand: fromZone,
     battleArea: toZone,
+    hand: fromZone,
   };
 }
 
@@ -377,9 +353,9 @@ export function takeDamage(
 ): { shieldSection: Zone; trash: Zone; removedShields: CardId[] } {
   const { fromZone, toZone, drawnCards } = draw(shieldSection, trash, damage);
   return {
+    removedShields: drawnCards,
     shieldSection: fromZone,
     trash: toZone,
-    removedShields: drawnCards,
   };
 }
 
@@ -397,8 +373,8 @@ export function removeFromGame(
 ): { sourceZone: Zone; removal: Zone } {
   const { fromZone, toZone } = moveCard(sourceZone, removal, cardId);
   return {
-    sourceZone: fromZone,
     removal: toZone,
+    sourceZone: fromZone,
   };
 }
 

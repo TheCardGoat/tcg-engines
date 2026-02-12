@@ -10,17 +10,17 @@ export const genieWishFulfilled: CharacterCard = {
     },
     {
       effect: {
-        type: "draw",
         amount: 1,
         target: "CONTROLLER",
+        type: "draw",
       },
       id: "n6c-2",
       name: "WHAT HAPPENS NOW?",
       text: "WHAT HAPPENS NOW? When you play this character, draw a card.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

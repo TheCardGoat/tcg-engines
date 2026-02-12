@@ -4,25 +4,25 @@ export const ingeniousDevice: ItemCard = {
   abilities: [
     {
       cost: {
+        banishSelf: true,
         exert: true,
         ink: 2,
-        banishSelf: true,
       },
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "draw",
             amount: 1,
             target: "CONTROLLER",
+            type: "draw",
           },
           {
-            type: "discard",
             amount: 1,
-            target: "CONTROLLER",
             chosen: true,
+            target: "CONTROLLER",
+            type: "discard",
           },
         ],
+        type: "sequence",
       },
       id: "12e-1",
       name: "SURPRISE PACKAGE",
@@ -35,21 +35,21 @@ export const ingeniousDevice: ItemCard = {
         whose: "your",
       },
       effect: {
-        type: "deal-damage",
         amount: 3,
         target: {
-          selector: "chosen",
-          count: 1,
           cardTypes: ["character", "location"],
+          count: 1,
+          selector: "chosen",
         },
+        type: "deal-damage",
       },
       id: "12e-2",
       name: "TIME GROWS SHORT",
       text: "TIME GROWS SHORT During your turn, when this item is banished, deal 3 damage to chosen character or location.",
       trigger: {
         event: "banish",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

@@ -4,28 +4,28 @@ export const howFarIllGo: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "scry",
             amount: 2,
-            target: "CONTROLLER",
             destinations: [
               {
-                zone: "deck-bottom",
-                remainder: true,
                 ordering: "player-choice",
+                remainder: true,
+                zone: "deck-bottom",
               },
             ],
+            target: "CONTROLLER",
+            type: "scry",
           },
           {
-            type: "put-into-inkwell",
-            source: "hand",
-            target: "CONTROLLER",
             exerted: true,
             facedown: true,
+            source: "hand",
+            target: "CONTROLLER",
+            type: "put-into-inkwell",
           },
         ],
+        type: "sequence",
       },
       id: "1tk-1",
       text: "Look at the top 2 cards of your deck. Put one into your hand and the other into your inkwell facedown and exerted.",

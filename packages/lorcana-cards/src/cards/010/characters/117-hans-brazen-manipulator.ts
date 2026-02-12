@@ -4,9 +4,9 @@ export const hansBrazenManipulator: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "restriction",
         restriction: "cant-quest",
         target: "SELF",
+        type: "restriction",
       },
       id: "bkr-1",
       text: "JOSTLING FOR POWER King and Queen characters can't quest.",
@@ -14,15 +14,15 @@ export const hansBrazenManipulator: CharacterCard = {
     },
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "an opponent has 2 or more ready characters in play",
+          type: "if",
         },
         then: {
-          type: "gain-lore",
           amount: 2,
+          type: "gain-lore",
         },
+        type: "conditional",
       },
       id: "bkr-2",
       text: "GROWING INFLUENCE At the start of your turn, if an opponent has 2 or more ready characters in play, gain 2 lore.",

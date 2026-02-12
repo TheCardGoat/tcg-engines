@@ -18,9 +18,9 @@ import type {
   PreprocessingStatus,
 } from "../../types/ingestion-pipeline";
 import {
+  SUPADATA_PREPROCESSING_PROMPTS,
   formatTranscriptForPrompt,
   getTranscriptExcerpt,
-  SUPADATA_PREPROCESSING_PROMPTS,
 } from "./prompts";
 
 /**
@@ -95,10 +95,7 @@ export class PreprocessingService {
         return this.createResultFromCache(contentId, cached);
       }
       if (cached && cached.status === "blocked") {
-        return this.createBlockedResult(
-          contentId,
-          cached.errorMessage ?? "Content is blocked",
-        );
+        return this.createBlockedResult(contentId, cached.errorMessage ?? "Content is blocked");
       }
     }
 
@@ -120,8 +117,8 @@ export class PreprocessingService {
         const blockedResult: PreprocessingResult = {
           ...result,
           blocked: true,
-          errorMessage: "Content is not game-related",
           errorCode: "NON_GAME_CONTENT",
+          errorMessage: "Content is not game-related",
         };
 
         await this.storeInCache(contentId, blockedResult, provider, modelId);
@@ -132,33 +129,24 @@ export class PreprocessingService {
       await this.storeInCache(contentId, result, provider, modelId);
       return result;
     } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : "Preprocessing failed";
+      const errorMessage = error instanceof Error ? error.message : "Preprocessing failed";
       const shouldBlock = this.shouldBlockOnError(error);
 
       // Store failed result
-      await this.storeFailedInCache(
-        contentId,
-        provider,
-        modelId,
-        errorMessage,
-        shouldBlock,
-      );
+      await this.storeFailedInCache(contentId, provider, modelId, errorMessage, shouldBlock);
 
       return {
-        contentId,
-        success: false,
         blocked: shouldBlock,
-        errorMessage,
-        errorCode: shouldBlock
-          ? "PREPROCESSING_BLOCKED"
-          : "PREPROCESSING_FAILED",
+        contentId,
         entities: [],
-        themes: [],
-        segments: [],
+        errorCode: shouldBlock ? "PREPROCESSING_BLOCKED" : "PREPROCESSING_FAILED",
+        errorMessage,
         isGameRelated: false,
-        provider,
         modelId,
+        provider,
+        segments: [],
+        success: false,
+        themes: [],
       };
     }
   }
@@ -197,15 +185,15 @@ export class PreprocessingService {
     );
 
     return {
-      contentId,
-      success: true,
       blocked: false,
+      contentId,
       entities: entitiesResult,
-      themes: themesResult,
-      segments: segmentsResult,
       isGameRelated: relevanceResult.isGameRelated,
-      provider,
       modelId,
+      provider,
+      segments: segmentsResult,
+      success: true,
+      themes: themesResult,
     };
   }
 
@@ -276,7 +264,7 @@ export class PreprocessingService {
   ): Promise<{ isGameRelated: boolean; confidence: number }> {
     if (!this.aiProvider) {
       // Default to game-related if no AI provider
-      return { isGameRelated: true, confidence: 1.0 };
+      return { confidence: 1, isGameRelated: true };
     }
 
     const prompt = promptTemplate
@@ -290,8 +278,8 @@ export class PreprocessingService {
     }>(prompt);
 
     return {
-      isGameRelated: result.isGameRelated ?? false,
       confidence: result.confidence ?? 0,
+      isGameRelated: result.isGameRelated ?? false,
     };
   }
 
@@ -330,11 +318,11 @@ export class PreprocessingService {
     }
 
     return {
-      status: cached.status as PreprocessingStatus,
       data: cached.contentJson as PreprocessingCacheData,
-      provider: cached.provider,
-      modelId: cached.modelId,
       errorMessage: cached.errorMessage ?? undefined,
+      modelId: cached.modelId,
+      provider: cached.provider,
+      status: cached.status as PreprocessingStatus,
     };
   }
 
@@ -349,37 +337,37 @@ export class PreprocessingService {
   ): Promise<void> {
     const cacheData: PreprocessingCacheData = {
       entities: result.entities,
-      themes: result.themes,
-      segments: result.segments,
       isGameRelated: result.isGameRelated,
+      segments: result.segments,
+      themes: result.themes,
     };
 
     const status: PreprocessingStatus = result.blocked
       ? "blocked"
-      : result.success
+      : (result.success
         ? "complete"
-        : "failed";
+        : "failed");
 
     await this.db
       .insert(preprocessingCache)
       .values({
         contentId,
         contentJson: cacheData,
-        status,
-        provider,
-        modelId,
         errorMessage: result.errorMessage,
+        modelId,
+        provider,
+        status,
       })
       .onConflictDoUpdate({
-        target: preprocessingCache.contentId,
         set: {
           contentJson: cacheData,
-          status,
-          provider,
-          modelId,
-          errorMessage: result.errorMessage,
           createdAt: new Date(),
+          errorMessage: result.errorMessage,
+          modelId,
+          provider,
+          status,
         },
+        target: preprocessingCache.contentId,
       });
   }
 
@@ -401,24 +389,24 @@ export class PreprocessingService {
         contentId,
         contentJson: {
           entities: [],
-          themes: [],
-          segments: [],
           isGameRelated: false,
+          segments: [],
+          themes: [],
         },
-        status,
-        provider,
-        modelId,
         errorMessage,
+        modelId,
+        provider,
+        status,
       })
       .onConflictDoUpdate({
-        target: preprocessingCache.contentId,
         set: {
-          status,
-          provider,
-          modelId,
-          errorMessage,
           createdAt: new Date(),
+          errorMessage,
+          modelId,
+          provider,
+          status,
         },
+        target: preprocessingCache.contentId,
       });
   }
 
@@ -436,37 +424,34 @@ export class PreprocessingService {
     const data = cached.data!;
 
     return {
-      contentId,
-      success: true,
       blocked: false,
+      contentId,
       entities: data.entities,
-      themes: data.themes,
-      segments: data.segments,
       isGameRelated: data.isGameRelated,
-      provider: cached.provider,
       modelId: cached.modelId,
+      provider: cached.provider,
+      segments: data.segments,
+      success: true,
+      themes: data.themes,
     };
   }
 
   /**
    * Create a blocked result
    */
-  private createBlockedResult(
-    contentId: string,
-    errorMessage: string,
-  ): PreprocessingResult {
+  private createBlockedResult(contentId: string, errorMessage: string): PreprocessingResult {
     return {
-      contentId,
-      success: false,
       blocked: true,
-      errorMessage,
-      errorCode: "PREPROCESSING_BLOCKED",
+      contentId,
       entities: [],
-      themes: [],
-      segments: [],
+      errorCode: "PREPROCESSING_BLOCKED",
+      errorMessage,
       isGameRelated: false,
-      provider: this.defaultProvider,
       modelId: this.defaultModelId,
+      provider: this.defaultProvider,
+      segments: [],
+      success: false,
+      themes: [],
     };
   }
 

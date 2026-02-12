@@ -4,11 +4,11 @@ export const trampStreetsmartDog: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "cost-reduction",
         amount: {
-          type: "characters-in-play",
           controller: "you",
+          type: "characters-in-play",
         },
+        type: "cost-reduction",
       },
       id: "8g2-1",
       name: "NOW IT'S A PARTY",
@@ -17,41 +17,41 @@ export const trampStreetsmartDog: CharacterCard = {
     },
     {
       effect: {
-        type: "optional",
         effect: {
-          type: "sequence",
           steps: [
             {
-              type: "for-each",
               counter: {
-                type: "characters",
                 controller: "you",
+                type: "characters",
               },
               effect: {
-                type: "draw",
                 amount: 1,
                 target: "CONTROLLER",
+                type: "draw",
               },
+              type: "for-each",
             },
             {
-              type: "discard",
               amount: {
-                type: "characters-in-play",
                 controller: "you",
+                type: "characters-in-play",
               },
-              target: "CONTROLLER",
               chosen: true,
+              target: "CONTROLLER",
+              type: "discard",
             },
           ],
+          type: "sequence",
         },
+        type: "optional",
       },
       id: "8g2-2",
       name: "HOW'S PICKINGS?",
       text: "HOW'S PICKINGS? When you play this character, you may draw a card for each other character you have in play, then choose and discard that many cards.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

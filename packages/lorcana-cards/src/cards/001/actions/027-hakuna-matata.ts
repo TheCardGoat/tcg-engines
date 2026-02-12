@@ -4,15 +4,15 @@ export const hakunaMatata: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "remove-damage",
         amount: 3,
         target: {
-          selector: "all",
+          cardTypes: ["character"],
           count: "all",
           owner: "you",
+          selector: "all",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "remove-damage",
         upTo: true,
       },
       id: "10e-1",

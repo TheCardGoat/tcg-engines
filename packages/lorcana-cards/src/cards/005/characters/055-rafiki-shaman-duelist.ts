@@ -10,19 +10,19 @@ export const rafikiShamanDuelist: CharacterCard = {
     },
     {
       effect: {
-        type: "gain-keyword",
+        duration: "this-turn",
         keyword: "Challenger",
         target: "CHOSEN_CHARACTER",
+        type: "gain-keyword",
         value: 4,
-        duration: "this-turn",
       },
       id: "v9e-2",
       name: "SURPRISING SKILL",
       text: "SURPRISING SKILL When you play this character, he gains Challenger +4 this turn.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

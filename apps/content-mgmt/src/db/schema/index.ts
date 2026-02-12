@@ -25,20 +25,10 @@ export {
 } from "./cache";
 
 // Comments
-export {
-  type Comment,
-  comments,
-  commentsRelations,
-  type NewComment,
-} from "./comments";
+export { type Comment, comments, commentsRelations, type NewComment } from "./comments";
 
 // Contents
-export {
-  type Content,
-  contents,
-  contentsRelations,
-  type NewContent,
-} from "./contents";
+export { type Content, contents, contentsRelations, type NewContent } from "./contents";
 
 // Creators
 export {

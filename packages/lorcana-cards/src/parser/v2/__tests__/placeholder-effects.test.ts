@@ -50,9 +50,7 @@ describe.skip("{d} Placeholder Effects", () => {
     });
 
     it("should parse 'deal {d} damage' (lowercase)", () => {
-      const effect = parseEffect(
-        "deal {d} damage to chosen opposing character",
-      );
+      const effect = parseEffect("deal {d} damage to chosen opposing character");
 
       expect(effect).toEqual({
         amount: -1,
@@ -109,9 +107,7 @@ describe.skip("{d} Placeholder Effects", () => {
     });
 
     it("should parse 'Remove up to {d} damage from chosen character'", () => {
-      const effect = parseEffect(
-        "Remove up to {d} damage from chosen character",
-      );
+      const effect = parseEffect("Remove up to {d} damage from chosen character");
 
       expect(effect).toEqual({
         amount: -1,
@@ -302,11 +298,11 @@ describe.skip("{d} Placeholder Effects", () => {
         effect: {
           amount: -1,
           target: {
-            selector: "chosen",
+            cardTypes: ["character"],
             count: 1,
             owner: "any",
+            selector: "chosen",
             zones: ["play"],
-            cardTypes: ["character"],
           },
           type: "deal-damage",
         },

@@ -4,9 +4,9 @@ export const noiOrphanedThief: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Resist",
         target: "SELF",
+        type: "gain-keyword",
         value: 1,
       },
       id: "r47-1",

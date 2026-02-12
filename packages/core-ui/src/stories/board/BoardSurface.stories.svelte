@@ -3,15 +3,8 @@
   import BoardSurface from "$lib/components/board/BoardSurface.svelte";
 
   const { Story } = defineMeta({
-    title: "Board/BoardSurface",
-    component: BoardSurface,
-    tags: ["autodocs"],
     argTypes: {
       aspectRatio: {
-        control: { type: "select" },
-        options: ["16/9", "3/2", "4/3", "9/16", "2/3", "1/1"],
-      },
-      mobileAspectRatio: {
         control: { type: "select" },
         options: ["16/9", "3/2", "4/3", "9/16", "2/3", "1/1"],
       },
@@ -20,11 +13,18 @@
         options: ["16/9", "3/2", "4/3", "9/16", "2/3", "1/1"],
       },
       maxWidth: { control: "text" },
+      mobileAspectRatio: {
+        control: { type: "select" },
+        options: ["16/9", "3/2", "4/3", "9/16", "2/3", "1/1"],
+      },
       width: { control: "text" },
     },
+    component: BoardSurface,
     parameters: {
       layout: "fullscreen",
     },
+    tags: ["autodocs"],
+    title: "Board/BoardSurface",
   });
 </script>
 

@@ -4,25 +4,25 @@ export const darlingDearBelovedWife: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "lore",
+        duration: "this-turn",
         modifier: 2,
+        stat: "lore",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
-        duration: "this-turn",
+        type: "modify-stat",
       },
       id: "1j2-1",
       name: "HOW SWEET",
       text: "HOW SWEET When you play this character, chosen character gets +2 {L} this turn.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

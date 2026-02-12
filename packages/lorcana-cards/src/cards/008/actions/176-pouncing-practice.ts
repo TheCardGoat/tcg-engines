@@ -4,34 +4,34 @@ export const pouncingPractice: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "modify-stat",
-            stat: "strength",
+            duration: "this-turn",
             modifier: -2,
+            stat: "strength",
             target: {
-              selector: "chosen",
+              cardTypes: ["character"],
               count: 1,
               owner: "any",
+              selector: "chosen",
               zones: ["play"],
-              cardTypes: ["character"],
             },
-            duration: "this-turn",
+            type: "modify-stat",
           },
           {
-            type: "gain-keyword",
+            duration: "this-turn",
             keyword: "Evasive",
             target: {
-              selector: "chosen",
+              cardTypes: ["character"],
               count: 1,
               owner: "any",
+              selector: "chosen",
               zones: ["play"],
-              cardTypes: ["character"],
             },
-            duration: "this-turn",
+            type: "gain-keyword",
           },
         ],
+        type: "sequence",
       },
       id: "59j-1",
       text: "Chosen character gets -2 {S} this turn. Chosen character of yours gains Evasive this turn.",

@@ -5,89 +5,89 @@ import type { CardZoneConfig } from "../zones";
 import { createCardOperations, createZoneOperations } from "./operations-impl";
 
 describe("Operations Implementation", () => {
-  type TestCardDef = { id: string; name: string };
-  type TestCardMeta = {
+  interface TestCardDef {
+    id: string;
+    name: string;
+  }
+  interface TestCardMeta {
     damage?: number;
     exerted?: boolean;
     counters?: number;
-  };
+  }
 
-  const createTestInternalState = (): InternalState<
-    TestCardDef,
-    TestCardMeta
-  > => {
+  const createTestInternalState = (): InternalState<TestCardDef, TestCardMeta> => {
     const handZone: CardZoneConfig = {
       id: "hand" as ZoneId,
       name: "Hand",
-      visibility: "private",
       ordered: false,
+      visibility: "private",
     };
 
     const deckZone: CardZoneConfig = {
       id: "deck" as ZoneId,
       name: "Deck",
-      visibility: "secret",
       ordered: true,
+      visibility: "secret",
     };
 
     return {
-      zones: {
-        hand: {
-          config: handZone,
-          cardIds: ["card-1", "card-2"] as unknown as CardId[],
-        },
-        deck: {
-          config: deckZone,
-          cardIds: ["card-3", "card-4", "card-5"] as unknown as CardId[],
-        },
-        play: {
-          config: {
-            id: "play" as ZoneId,
-            name: "Play",
-            visibility: "public",
-            ordered: false,
-          },
-          cardIds: [],
-        },
+      cardMetas: {
+        "card-1": { damage: 0, exerted: false },
+        "card-2": { counters: 2, damage: 3, exerted: true },
       },
       cards: {
         "card-1": {
+          controller: "player-1" as unknown as PlayerId,
           definitionId: "monster-1",
           owner: "player-1" as unknown as PlayerId,
-          controller: "player-1" as unknown as PlayerId,
           zone: "hand" as ZoneId,
         },
         "card-2": {
+          controller: "player-1" as unknown as PlayerId,
           definitionId: "monster-2",
           owner: "player-1" as unknown as PlayerId,
-          controller: "player-1" as unknown as PlayerId,
           zone: "hand" as ZoneId,
         },
         "card-3": {
+          controller: "player-1" as unknown as PlayerId,
           definitionId: "spell-1",
           owner: "player-1" as unknown as PlayerId,
-          controller: "player-1" as unknown as PlayerId,
-          zone: "deck" as ZoneId,
           position: 0,
+          zone: "deck" as ZoneId,
         },
         "card-4": {
+          controller: "player-1" as unknown as PlayerId,
           definitionId: "spell-2",
           owner: "player-1" as unknown as PlayerId,
-          controller: "player-1" as unknown as PlayerId,
-          zone: "deck" as ZoneId,
           position: 1,
+          zone: "deck" as ZoneId,
         },
         "card-5": {
+          controller: "player-1" as unknown as PlayerId,
           definitionId: "spell-3",
           owner: "player-1" as unknown as PlayerId,
-          controller: "player-1" as unknown as PlayerId,
-          zone: "deck" as ZoneId,
           position: 2,
+          zone: "deck" as ZoneId,
         },
       },
-      cardMetas: {
-        "card-1": { damage: 0, exerted: false },
-        "card-2": { damage: 3, exerted: true, counters: 2 },
+      zones: {
+        deck: {
+          cardIds: ["card-3", "card-4", "card-5"] as unknown as CardId[],
+          config: deckZone,
+        },
+        hand: {
+          cardIds: ["card-1", "card-2"] as unknown as CardId[],
+          config: handZone,
+        },
+        play: {
+          cardIds: [],
+          config: {
+            id: "play" as ZoneId,
+            name: "Play",
+            ordered: false,
+            visibility: "public",
+          },
+        },
       },
     };
   };
@@ -114,8 +114,8 @@ describe("Operations Implementation", () => {
 
         ops.moveCard({
           cardId: "card-1" as CardId,
-          targetZoneId: "deck" as ZoneId,
           position: "top",
+          targetZoneId: "deck" as ZoneId,
         });
 
         expect(state.zones.deck.cardIds[0]).toBe("card-1" as unknown as CardId);
@@ -128,14 +128,12 @@ describe("Operations Implementation", () => {
 
         ops.moveCard({
           cardId: "card-1" as CardId,
-          targetZoneId: "deck" as ZoneId,
           position: "bottom",
+          targetZoneId: "deck" as ZoneId,
         });
 
         const lastIndex = state.zones.deck.cardIds.length - 1;
-        expect(state.zones.deck.cardIds[lastIndex]).toBe(
-          "card-1" as unknown as CardId,
-        );
+        expect(state.zones.deck.cardIds[lastIndex]).toBe("card-1" as unknown as CardId);
       });
 
       it("should update positions in ordered zones", () => {
@@ -144,8 +142,8 @@ describe("Operations Implementation", () => {
 
         ops.moveCard({
           cardId: "card-1" as CardId,
-          targetZoneId: "deck" as ZoneId,
           position: 1,
+          targetZoneId: "deck" as ZoneId,
         });
 
         expect(state.cards["card-1"].position).toBe(1);
@@ -179,9 +177,9 @@ describe("Operations Implementation", () => {
         // Add card for different player
         state.zones.hand.cardIds.push("card-6" as CardId);
         state.cards["card-6"] = {
+          controller: "player-2" as unknown as PlayerId,
           definitionId: "monster-3",
           owner: "player-2" as unknown as PlayerId,
-          controller: "player-2" as unknown as PlayerId,
           zone: "hand" as ZoneId,
         };
 

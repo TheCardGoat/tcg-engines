@@ -3,7 +3,7 @@
  * This represents the "blueprint" of a card, not an instance in play.
  * All instances of the same card share the same definition.
  */
-export type CardDefinition = {
+export interface CardDefinition {
   /** Unique identifier for this card definition */
   id: string;
 
@@ -24,4 +24,4 @@ export type CardDefinition = {
 
   /** Static abilities this card has */
   abilities?: string[];
-};
+}

@@ -4,18 +4,18 @@ export const ratiganVeryLargeMouse: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "restriction",
+        duration: "this-turn",
         restriction: "cant-quest",
         target: "SELF",
-        duration: "this-turn",
+        type: "restriction",
       },
       id: "1wj-1",
       name: "THIS IS MY KINGDOM",
       text: "THIS IS MY KINGDOM When you play this character, exert chosen opposing character with 3 {S} or less. Choose one of your characters and ready them. They can't quest for the rest of this turn.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

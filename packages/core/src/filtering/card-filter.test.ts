@@ -137,10 +137,7 @@ describe("Card Filter Types", () => {
 
     it("should support composite OR filters", () => {
       const filter: CardFilter = {
-        or: [
-          { zone: createZoneId("hand") },
-          { zone: createZoneId("graveyard") },
-        ],
+        or: [{ zone: createZoneId("hand") }, { zone: createZoneId("graveyard") }],
       };
 
       expect(Array.isArray(filter.or)).toBe(true);
@@ -166,13 +163,13 @@ describe("Card Filter Types", () => {
 
     it("should support combining multiple filter properties", () => {
       const filter: CardFilter = {
-        zone: createZoneId("play"),
-        type: "creature",
         controller: createPlayerId("player-1"),
-        tapped: false,
         properties: {
           basePower: { gte: 3 },
         },
+        tapped: false,
+        type: "creature",
+        zone: createZoneId("play"),
       };
 
       expect(filter.zone).toBeDefined();

@@ -39,7 +39,7 @@ import type { CardId, PlayerId } from "../types";
  * }
  * ```
  */
-export type EnumeratedMove<TParams = unknown> = {
+export interface EnumeratedMove<TParams = unknown> {
   /** Move identifier */
   moveId: string;
 
@@ -73,7 +73,7 @@ export type EnumeratedMove<TParams = unknown> = {
     priority?: number;
     [key: string]: unknown;
   };
-};
+}
 
 /**
  * Enumeration Context
@@ -96,10 +96,7 @@ export type EnumeratedMove<TParams = unknown> = {
  * };
  * ```
  */
-export type MoveEnumerationContext<
-  TCardMeta = unknown,
-  TCardDefinition = unknown,
-> = {
+export interface MoveEnumerationContext<TCardMeta = unknown, TCardDefinition = unknown> {
   /** Player to enumerate moves for */
   playerId: PlayerId;
 
@@ -129,7 +126,7 @@ export type MoveEnumerationContext<
 
   /** RNG for deterministic enumeration if needed */
   rng: SeededRNG;
-};
+}
 
 /**
  * Move Enumerator Function
@@ -178,10 +175,7 @@ export type MoveEnumerator<
   TParams = unknown,
   TCardMeta = unknown,
   TCardDefinition = unknown,
-> = (
-  state: TGameState,
-  context: MoveEnumerationContext<TCardMeta, TCardDefinition>,
-) => TParams[];
+> = (state: TGameState, context: MoveEnumerationContext<TCardMeta, TCardDefinition>) => TParams[];
 
 /**
  * Move Enumeration Options
@@ -213,7 +207,7 @@ export type MoveEnumerator<
  * });
  * ```
  */
-export type MoveEnumerationOptions = {
+export interface MoveEnumerationOptions {
   /** Only return valid moves (passed condition check). Default: false */
   validOnly?: boolean;
 
@@ -225,4 +219,4 @@ export type MoveEnumerationOptions = {
 
   /** Maximum number of results per move (optional limit) */
   maxPerMove?: number;
-};
+}

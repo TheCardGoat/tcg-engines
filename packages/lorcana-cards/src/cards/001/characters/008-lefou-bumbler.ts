@@ -4,14 +4,14 @@ export const lefouBumbler: CharacterCard = {
   abilities: [
     {
       condition: {
-        type: "has-named-character",
-        name: "Gaston",
         controller: "you",
+        name: "Gaston",
+        type: "has-named-character",
       },
       effect: {
-        type: "cost-reduction",
         amount: 1,
         cardType: "character",
+        type: "cost-reduction",
       },
       id: "9i4-1",
       name: "LOYAL",

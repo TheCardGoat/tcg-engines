@@ -16,8 +16,8 @@ export const auroraLoreGuardian: CharacterCard = {
         exert: true,
       },
       effect: {
-        type: "put-on-bottom",
         target: "CHOSEN_CHARACTER",
+        type: "put-on-bottom",
       },
       id: "124-3",
       text: "ROYAL INVENTORY {E} one of your items — Look at the top card of your deck and put it on either the top or the bottom of your deck.",

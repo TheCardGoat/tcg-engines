@@ -10,16 +10,16 @@ export const kidaCreativeThinker: CharacterCard = {
     },
     {
       effect: {
-        type: "scry",
         amount: 2,
-        target: "CONTROLLER",
         destinations: [
           {
-            zone: "deck-bottom",
-            remainder: true,
             ordering: "player-choice",
+            remainder: true,
+            zone: "deck-bottom",
           },
         ],
+        target: "CONTROLLER",
+        type: "scry",
       },
       id: "13v-2",
       text: "KEY TO THE PUZZLE {E} – Look at the top 2 cards of your deck. Put one into your ink supply, face down and exerted, and the other on top of your deck.",

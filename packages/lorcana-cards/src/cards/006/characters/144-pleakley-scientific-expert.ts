@@ -4,19 +4,19 @@ export const pleakleyScientificExpert: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "put-into-inkwell",
-        source: "chosen-character",
-        target: "CONTROLLER",
         exerted: true,
         facedown: true,
+        source: "chosen-character",
+        target: "CONTROLLER",
+        type: "put-into-inkwell",
       },
       id: "159-1",
       name: "REPORTING FOR DUTY",
       text: "REPORTING FOR DUTY When you play this character, put chosen character of yours into your inkwell facedown and exerted.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

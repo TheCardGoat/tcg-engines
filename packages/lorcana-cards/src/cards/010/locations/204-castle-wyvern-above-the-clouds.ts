@@ -4,9 +4,9 @@ export const castleWyvernAboveTheClouds: LocationCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Challenger",
         target: "CHARACTERS_HERE",
+        type: "gain-keyword",
         value: 1,
       },
       id: "hqg-1",

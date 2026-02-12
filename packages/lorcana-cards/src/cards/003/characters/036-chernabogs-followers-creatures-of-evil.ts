@@ -4,26 +4,26 @@ export const chernabogsFollowersCreaturesOfEvil: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "banish",
           target: {
-            selector: "chosen",
+            cardTypes: ["card"],
             count: 1,
             owner: "any",
+            selector: "chosen",
             zones: ["play"],
-            cardTypes: ["card"],
           },
+          type: "banish",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "nd2-1",
       name: "RESTLESS SOULS",
       text: "RESTLESS SOULS Whenever this character quests, you may banish them to draw a card.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

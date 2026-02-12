@@ -4,17 +4,17 @@ export const jaqConnoisseurOfClimbing: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Reckless",
         target: "CHOSEN_CHARACTER",
+        type: "gain-keyword",
       },
       id: "1u5-1",
       name: "SNEAKY IDEA",
       text: "SNEAKY IDEA When you play this character, chosen opposing character gains Reckless during their next turn.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

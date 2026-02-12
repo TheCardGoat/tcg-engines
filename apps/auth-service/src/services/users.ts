@@ -7,11 +7,7 @@ import { type User, users } from "../db/schema";
  */
 export async function getUserById(userId: string): Promise<User | null> {
   const db = getDb();
-  const result = await db
-    .select()
-    .from(users)
-    .where(eq(users.id, userId))
-    .limit(1);
+  const result = await db.select().from(users).where(eq(users.id, userId)).limit(1);
 
   return result[0] ?? null;
 }
@@ -56,11 +52,7 @@ export async function updateUserProfile(
     return getUserById(userId);
   }
 
-  const result = await db
-    .update(users)
-    .set(updateData)
-    .where(eq(users.id, userId))
-    .returning();
+  const result = await db.update(users).set(updateData).where(eq(users.id, userId)).returning();
 
   return result[0] ?? null;
 }
@@ -74,10 +66,7 @@ export async function updateUserProfile(
 export async function deleteUser(userId: string): Promise<boolean> {
   const db = getDb();
 
-  const result = await db
-    .delete(users)
-    .where(eq(users.id, userId))
-    .returning({ id: users.id });
+  const result = await db.delete(users).where(eq(users.id, userId)).returning({ id: users.id });
 
   return result.length > 0;
 }

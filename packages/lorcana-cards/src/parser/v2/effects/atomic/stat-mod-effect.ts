@@ -90,9 +90,7 @@ function parseFromText(text: string): ModifyStatEffect | null {
 
   // Check for duration "this turn" clause
   const hasDuration = /this turn/i.test(text);
-  const duration: "this-turn" | undefined = hasDuration
-    ? "this-turn"
-    : undefined;
+  const duration: "this-turn" | undefined = hasDuration ? "this-turn" : undefined;
 
   // Try pattern with {S}/{L}/{W} notation first (e.g., "Your characters get +1 {S}")
   let match = text.match(/get(?:s)?\s+([+-]?)(\d+|\{d\})\s+\{([SLW])\}/i);
@@ -100,27 +98,18 @@ function parseFromText(text: string): ModifyStatEffect | null {
   if (match) {
     const sign = match[1] === "-" ? -1 : 1;
     const valueStr = match[2];
-    const value =
-      valueStr === "{d}" ? D_PLACEHOLDER : Number.parseInt(valueStr, 10);
+    const value = valueStr === "{d}" ? D_PLACEHOLDER : Number.parseInt(valueStr, 10);
     // Don't modify D_PLACEHOLDER with sign - it's a sentinel value
     const modifier = value === D_PLACEHOLDER ? D_PLACEHOLDER : sign * value;
 
     const statSymbol = match[3];
-    const stat =
-      statSymbol === "S"
-        ? "strength"
-        : (statSymbol === "W"
-          ? "willpower"
-          : "lore");
+    const stat = statSymbol === "S" ? "strength" : (statSymbol === "W" ? "willpower" : "lore");
 
     // Try to determine target from text
     // Order matters: check more specific patterns first
     let target: CharacterTarget = "CHOSEN_CHARACTER";
     const lowerText = text.toLowerCase();
-    if (
-      lowerText.includes("this character") ||
-      lowerText.includes("this card")
-    ) {
+    if (lowerText.includes("this character") || lowerText.includes("this card")) {
       target = "SELF";
     } else if (/your\s+(?:\w+\s+)?characters/.test(lowerText)) {
       // "Your characters", "Your Hero characters", "Your inkborn characters"
@@ -162,15 +151,12 @@ function parseFromText(text: string): ModifyStatEffect | null {
   }
 
   // Try pattern with full stat name (e.g., "chosen character gets +2 strength")
-  match = text.match(
-    /get(?:s)?\s+([+-])(\d+|\{d\})\s+(strength|willpower|lore)/i,
-  );
+  match = text.match(/get(?:s)?\s+([+-])(\d+|\{d\})\s+(strength|willpower|lore)/i);
 
   if (match) {
     const sign = match[1] === "-" ? -1 : 1;
     const valueStr = match[2];
-    const value =
-      valueStr === "{d}" ? D_PLACEHOLDER : Number.parseInt(valueStr, 10);
+    const value = valueStr === "{d}" ? D_PLACEHOLDER : Number.parseInt(valueStr, 10);
     // Don't modify D_PLACEHOLDER with sign - it's a sentinel value
     const modifier = value === D_PLACEHOLDER ? D_PLACEHOLDER : sign * value;
     const stat = match[3].toLowerCase() as "strength" | "willpower" | "lore";
@@ -178,10 +164,7 @@ function parseFromText(text: string): ModifyStatEffect | null {
     // Try to determine target from text
     let target: CharacterTarget = "CHOSEN_CHARACTER";
     const lowerText = text.toLowerCase();
-    if (
-      lowerText.includes("this character") ||
-      lowerText.includes("this card")
-    ) {
+    if (lowerText.includes("this character") || lowerText.includes("this card")) {
       target = "SELF";
     } else if (/your\s+(?:\w+\s+)?characters/.test(lowerText)) {
       // "Your characters", "Your Hero characters", "Your inkborn characters"
@@ -235,13 +218,9 @@ export const statModEffectParser: EffectParser = {
       return parseFromText(input);
     }
     return parseFromCst(
-      input as
-        | { NumberToken?: IToken[]; Identifier?: IToken[] }
-        | null
-        | undefined,
+      input as { NumberToken?: IToken[]; Identifier?: IToken[] } | null | undefined,
     );
   },
 
-  pattern:
-    /gets?\s+([+-]?\d+|[+-]?\{d\})\s+(?:\{([SLW])\}|(strength|willpower|lore))/i,
+  pattern: /gets?\s+([+-]?\d+|[+-]?\{d\})\s+(?:\{([SLW])\}|(strength|willpower|lore))/i,
 };

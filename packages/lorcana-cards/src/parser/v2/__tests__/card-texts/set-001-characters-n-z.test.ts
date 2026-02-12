@@ -1,13 +1,6 @@
 // @ts-nocheck - Skipped tests contain expected values that don't match current types
 import { describe, expect, it } from "bun:test";
-import {
-  Abilities,
-  Conditions,
-  Costs,
-  Effects,
-  Targets,
-  Triggers,
-} from "@tcg/lorcana-types";
+import { Abilities, Conditions, Costs, Effects, Targets, Triggers } from "@tcg/lorcana-types";
 import { parseAbilityTextMulti } from "../../parser";
 
 describe("Set 001 Card Text Parser Tests - Characters N Z", () => {
@@ -29,9 +22,7 @@ describe("Set 001 Card Text Parser Tests - Characters N Z", () => {
         timing: "when",
       }),
     });
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(heroism),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(heroism));
   });
 
   it.skip("Rapunzel - Gifted with Healing: should parse card text", () => {
@@ -44,8 +35,8 @@ describe("Set 001 Card Text Parser Tests - Characters N Z", () => {
     const gleamAndGlow = {
       effect: {
         effects: [
-          { type: "remove-damage", amount: 3, target: "YOUR_CHARACTERS" },
-          { type: "draw", amount: "DAMAGE_REMOVED", target: "CONTROLLER" },
+          { amount: 3, target: "YOUR_CHARACTERS", type: "remove-damage" },
+          { amount: "DAMAGE_REMOVED", target: "CONTROLLER", type: "draw" },
         ],
         type: "sequence",
       },
@@ -57,9 +48,7 @@ describe("Set 001 Card Text Parser Tests - Characters N Z", () => {
       },
       type: "triggered",
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(gleamAndGlow),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(gleamAndGlow));
   });
 
   it.skip("Sebastian - Court Composer: should parse card text", () => {
@@ -69,9 +58,7 @@ describe("Set 001 Card Text Parser Tests - Characters N Z", () => {
     expect(result.abilities.length).toBe(1);
 
     const singer = Abilities.KeywordWithValue("Singer", { value: 4 });
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(singer),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(singer));
   });
 
   it.skip("Simba - Protective Cub: should parse card text", () => {
@@ -82,9 +69,7 @@ describe("Set 001 Card Text Parser Tests - Characters N Z", () => {
     expect(result.abilities.length).toBe(1);
 
     const bodyguard = Abilities.Keyword("Bodyguard");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(bodyguard),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(bodyguard));
   });
 
   it.skip("Timon - Grub Rustler: should parse card text", () => {
@@ -97,9 +82,9 @@ describe("Set 001 Card Text Parser Tests - Characters N Z", () => {
     const tastesLikeChicken = {
       effect: {
         effect: {
-          type: "remove-damage",
           amount: 1,
           target: "CHOSEN_CHARACTER",
+          type: "remove-damage",
         },
         type: "optional",
       },
@@ -111,9 +96,7 @@ describe("Set 001 Card Text Parser Tests - Characters N Z", () => {
       },
       type: "triggered",
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(tastesLikeChicken),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(tastesLikeChicken));
   });
 
   it.skip("Part of Your World: should parse card text", () => {
@@ -129,9 +112,7 @@ describe("Set 001 Card Text Parser Tests - Characters N Z", () => {
       },
       type: "action",
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(partOfYourWorld),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(partOfYourWorld));
   });
 
   it.skip("You Have Forgotten Me: should parse card text", () => {
@@ -148,9 +129,7 @@ describe("Set 001 Card Text Parser Tests - Characters N Z", () => {
       },
       type: "action",
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(youHaveForgottenMe),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(youHaveForgottenMe));
   });
 
   it.skip("Pascal - Rapunzel's Companion: should parse card text", () => {
@@ -164,18 +143,16 @@ describe("Set 001 Card Text Parser Tests - Characters N Z", () => {
       effect: {
         condition: { type: "has-another-character" },
         effect: {
-          type: "gain-keyword",
           keyword: "Evasive",
           target: "SELF",
+          type: "gain-keyword",
         },
         type: "conditional",
       },
       name: "CAMOUFLAGE",
       type: "static",
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(camouflage),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(camouflage));
   });
 
   it.skip("Rafiki - Mysterious Sage: should parse card text", () => {
@@ -197,9 +174,7 @@ describe("Set 001 Card Text Parser Tests - Characters N Z", () => {
 
     // Evasive keyword
     const evasive = Abilities.Keyword("Evasive");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(evasive),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(evasive));
 
     // LOYAL AND DEVOTED static
     const loyalAndDevoted = {
@@ -212,9 +187,7 @@ describe("Set 001 Card Text Parser Tests - Characters N Z", () => {
       name: "LOYAL AND DEVOTED",
       type: "static",
     };
-    expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining(loyalAndDevoted),
-    );
+    expect(result.abilities[1].ability).toEqual(expect.objectContaining(loyalAndDevoted));
   });
 
   it.skip("Ursula - Power Hungry: should parse card text", () => {
@@ -244,9 +217,7 @@ describe("Set 001 Card Text Parser Tests - Characters N Z", () => {
     const challenger = Abilities.KeywordParameterized("Challenger", {
       value: 4,
     });
-    expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining(challenger),
-    );
+    expect(result.abilities[1].ability).toEqual(expect.objectContaining(challenger));
   });
 
   it.skip("Reflection: should parse card text", () => {
@@ -286,22 +257,17 @@ describe("Set 001 Card Text Parser Tests - Characters N Z", () => {
       name: "PEER INTO THE DEPTHS",
       type: "activated",
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(peerIntoTheDepths),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(peerIntoTheDepths));
   });
 
   it.skip("Peter Pan - Never Landing: should parse card text", () => {
-    const text =
-      "Evasive (Only characters with Evasive can challenge this character.)";
+    const text = "Evasive (Only characters with Evasive can challenge this character.)";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
     const evasive = Abilities.Keyword("Evasive");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(evasive),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(evasive));
   });
 
   it.skip("Stampede: should parse card text", () => {
@@ -318,14 +284,11 @@ describe("Set 001 Card Text Parser Tests - Characters N Z", () => {
       },
       type: "action",
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(stampede),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(stampede));
   });
 
   it.skip("Steal from the Rich: should parse card text", () => {
-    const text =
-      "Whenever one of your characters quests this turn, each opponent loses 1 lore.";
+    const text = "Whenever one of your characters quests this turn, each opponent loses 1 lore.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
@@ -333,22 +296,20 @@ describe("Set 001 Card Text Parser Tests - Characters N Z", () => {
     const stealFromTheRich = {
       effect: {
         effect: {
-          type: "lose-lore",
           amount: 1,
           target: "OPPONENTS",
+          type: "lose-lore",
         },
         trigger: {
           event: "quest",
-          timing: "whenever",
           on: "YOUR_CHARACTERS",
+          timing: "whenever",
         },
         type: "triggered",
       },
       type: "action",
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(stealFromTheRich),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(stealFromTheRich));
   });
 
   it.skip("The Beast is Mine!: should parse card text", () => {
@@ -366,9 +327,7 @@ describe("Set 001 Card Text Parser Tests - Characters N Z", () => {
       },
       type: "action",
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(theBeastIsMine),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(theBeastIsMine));
   });
 
   it.skip("Vicious Betrayal - undefined: should parse card text", () => {
@@ -382,24 +341,22 @@ describe("Set 001 Card Text Parser Tests - Characters N Z", () => {
       effect: {
         condition: { type: "is-villain" },
         ifFalse: {
-          type: "modify-stat",
-          stat: "strength",
           modifier: 2,
+          stat: "strength",
           target: "CHOSEN_CHARACTER",
+          type: "modify-stat",
         },
         ifTrue: {
-          type: "modify-stat",
-          stat: "strength",
           modifier: 3,
+          stat: "strength",
           target: "CHOSEN_CHARACTER",
+          type: "modify-stat",
         },
         type: "conditional",
       },
       type: "action",
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(viciousBetrayal),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(viciousBetrayal));
   });
 
   it.skip("Stolen Scimitar: should parse card text", () => {
@@ -414,18 +371,18 @@ describe("Set 001 Card Text Parser Tests - Characters N Z", () => {
         exert: true,
       },
       effect: {
-        condition: { type: "is-named", name: "Aladdin" },
+        condition: { name: "Aladdin", type: "is-named" },
         ifFalse: {
-          type: "modify-stat",
-          stat: "strength",
           modifier: 1,
+          stat: "strength",
           target: "CHOSEN_CHARACTER",
+          type: "modify-stat",
         },
         ifTrue: {
-          type: "modify-stat",
-          stat: "strength",
           modifier: 2,
+          stat: "strength",
           target: "CHOSEN_CHARACTER",
+          type: "modify-stat",
         },
         type: "conditional",
       },
@@ -446,16 +403,13 @@ describe("Set 001 Card Text Parser Tests - Characters N Z", () => {
   });
 
   it.skip("Pongo - Ol' Rascal: should parse card text", () => {
-    const text =
-      "Evasive (Only characters with Evasive can challenge this character.)";
+    const text = "Evasive (Only characters with Evasive can challenge this character.)";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
     const evasive = Abilities.Keyword("Evasive");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(evasive),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(evasive));
   });
 
   it.skip("Scar - Shameless Firebrand: should parse card text", () => {
@@ -471,29 +425,23 @@ describe("Set 001 Card Text Parser Tests - Characters N Z", () => {
   });
 
   it.skip("Te Kā - The Burning One: should parse card text", () => {
-    const text =
-      "Reckless (This character can't quest and must challenge each turn if able.)";
+    const text = "Reckless (This character can't quest and must challenge each turn if able.)";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
     const reckless = Abilities.Keyword("Reckless");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(reckless),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(reckless));
   });
 
   it.skip("Tigger - Wonderful Thing: should parse card text", () => {
-    const text =
-      "Evasive (Only characters with Evasive can challenge this character.)";
+    const text = "Evasive (Only characters with Evasive can challenge this character.)";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
 
     const evasive = Abilities.Keyword("Evasive");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(evasive),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(evasive));
   });
 
   it.skip("Tangle: should parse card text", () => {
@@ -510,9 +458,7 @@ describe("Set 001 Card Text Parser Tests - Characters N Z", () => {
       },
       type: "action",
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(tangle),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(tangle));
   });
 
   it.skip("Poisoned Apple - undefined: should parse card text", () => {
@@ -529,16 +475,14 @@ describe("Set 001 Card Text Parser Tests - Characters N Z", () => {
       },
       effect: {
         condition: { type: "is-princess" },
-        ifFalse: { type: "exert", target: "CHOSEN_CHARACTER" },
-        ifTrue: { type: "banish", target: "CHOSEN_CHARACTER" },
+        ifFalse: { target: "CHOSEN_CHARACTER", type: "exert" },
+        ifTrue: { target: "CHOSEN_CHARACTER", type: "banish" },
         type: "conditional",
       },
       name: "TAKE A BITE . . .",
       type: "activated",
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(takeABite),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(takeABite));
   });
 
   it.skip("Shield of Virtue: should parse card text", () => {
@@ -555,11 +499,11 @@ describe("Set 001 Card Text Parser Tests - Characters N Z", () => {
       },
       effect: {
         effects: [
-          { type: "ready", target: "CHOSEN_CHARACTER" },
+          { target: "CHOSEN_CHARACTER", type: "ready" },
           {
-            type: "restriction",
             restriction: "cant-quest",
             target: "CHOSEN_CHARACTER",
+            type: "restriction",
           },
         ],
         type: "sequence",
@@ -567,14 +511,11 @@ describe("Set 001 Card Text Parser Tests - Characters N Z", () => {
       name: "FIREPROOF",
       type: "activated",
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(fireproof),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(fireproof));
   });
 
   it.skip("Sword of Truth - undefined: should parse card text", () => {
-    const text =
-      "**FINAL ENCHANTMENT** Banish this item − Banish chosen Villain character.";
+    const text = "**FINAL ENCHANTMENT** Banish this item − Banish chosen Villain character.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
     expect(result.abilities.length).toBe(1);
@@ -590,9 +531,7 @@ describe("Set 001 Card Text Parser Tests - Characters N Z", () => {
       name: "FINAL ENCHANTMENT",
       type: "activated",
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(finalEnchantment),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(finalEnchantment));
   });
 
   it.skip("Philoctetes - Trainer of Heroes: should parse card text", () => {
@@ -603,9 +542,7 @@ describe("Set 001 Card Text Parser Tests - Characters N Z", () => {
     expect(result.abilities.length).toBe(1);
 
     const support = Abilities.Keyword("Support");
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(support),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(support));
   });
 
   it.skip("Scar - Mastermind: should parse card text", () => {
@@ -630,9 +567,7 @@ describe("Set 001 Card Text Parser Tests - Characters N Z", () => {
       },
       type: "triggered",
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(insidiousPlot),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(insidiousPlot));
   });
 
   it.skip("Tamatoa - So Shiny!: should parse card text", () => {
@@ -646,8 +581,8 @@ describe("Set 001 Card Text Parser Tests - Characters N Z", () => {
     const whatHaveWeHere = {
       effect: {
         effect: {
-          type: "return-to-hand",
           target: "ITEM_FROM_DISCARD",
+          type: "return-to-hand",
         },
         type: "optional",
       },
@@ -659,17 +594,15 @@ describe("Set 001 Card Text Parser Tests - Characters N Z", () => {
       },
       type: "triggered",
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(whatHaveWeHere),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(whatHaveWeHere));
 
     // GLAM static
     const glam = {
       effect: {
         modifier: {
-          type: "for-each",
           counter: "items",
           modifier: 1,
+          type: "for-each",
         },
         stat: "lore",
         target: "SELF",
@@ -696,9 +629,7 @@ describe("Set 001 Card Text Parser Tests - Characters N Z", () => {
       },
       type: "action",
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(workTogether),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(workTogether));
   });
 
   it.skip("Scepter of Arendelle: should parse card text", () => {
@@ -720,9 +651,7 @@ describe("Set 001 Card Text Parser Tests - Characters N Z", () => {
       name: "COMMAND",
       type: "activated",
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(command),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(command));
   });
 
   it.skip("Simba - Future King: should parse card text", () => {
@@ -735,11 +664,11 @@ describe("Set 001 Card Text Parser Tests - Characters N Z", () => {
     const guessWhat = {
       effect: {
         effect: {
-          type: "sequence",
           effects: [
-            { type: "draw", amount: 1, target: "CONTROLLER" },
-            { type: "discard", amount: 1, target: "CONTROLLER" },
+            { amount: 1, target: "CONTROLLER", type: "draw" },
+            { amount: 1, target: "CONTROLLER", type: "discard" },
           ],
+          type: "sequence",
         },
         type: "optional",
       },
@@ -751,9 +680,7 @@ describe("Set 001 Card Text Parser Tests - Characters N Z", () => {
       },
       type: "triggered",
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(guessWhat),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(guessWhat));
   });
 
   it.skip("Simba - Returned King: should parse card text", () => {
@@ -767,9 +694,7 @@ describe("Set 001 Card Text Parser Tests - Characters N Z", () => {
     const challenger = Abilities.KeywordParameterized("Challenger", {
       value: 4,
     });
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(challenger),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(challenger));
 
     // POUNCE static
     const pounce = {
@@ -781,9 +706,7 @@ describe("Set 001 Card Text Parser Tests - Characters N Z", () => {
       name: "POUNCE",
       type: "static",
     };
-    expect(result.abilities[1].ability).toEqual(
-      expect.objectContaining(pounce),
-    );
+    expect(result.abilities[1].ability).toEqual(expect.objectContaining(pounce));
   });
 
   it.skip("Simba - Rightful Heir: should parse card text", () => {
@@ -807,9 +730,7 @@ describe("Set 001 Card Text Parser Tests - Characters N Z", () => {
       },
       type: "triggered",
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(iKnowWhatIHaveToDo),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(iKnowWhatIHaveToDo));
   });
 
   it.skip("Starkey - Hook's Henchman: should parse card text", () => {
@@ -823,19 +744,17 @@ describe("Set 001 Card Text Parser Tests - Characters N Z", () => {
       effect: {
         condition: { type: "has-captain-character" },
         effect: {
-          type: "modify-stat",
-          stat: "lore",
           modifier: 1,
+          stat: "lore",
           target: "SELF",
+          type: "modify-stat",
         },
         type: "conditional",
       },
       name: "AYE AYE, CAPTAIN",
       type: "static",
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(ayeAyeCaptain),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(ayeAyeCaptain));
   });
 
   it.skip("Te Kā - Heartless: should parse card text", () => {
@@ -859,9 +778,7 @@ describe("Set 001 Card Text Parser Tests - Characters N Z", () => {
       },
       type: "triggered",
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(seekTheHeart),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(seekTheHeart));
   });
 
   it.skip("Ransack: should parse card text", () => {
@@ -873,16 +790,14 @@ describe("Set 001 Card Text Parser Tests - Characters N Z", () => {
     const ransack = {
       effect: {
         effects: [
-          { type: "draw", amount: 2, target: "CONTROLLER" },
-          { type: "discard", amount: 2, target: "CONTROLLER" },
+          { amount: 2, target: "CONTROLLER", type: "draw" },
+          { amount: 2, target: "CONTROLLER", type: "discard" },
         ],
         type: "sequence",
       },
       type: "action",
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(ransack),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(ransack));
   });
 
   it.skip("Plasma Blaster: should parse card text", () => {
@@ -904,8 +819,6 @@ describe("Set 001 Card Text Parser Tests - Characters N Z", () => {
       name: "QUICK SHOT",
       type: "activated",
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(quickShot),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(quickShot));
   });
 });

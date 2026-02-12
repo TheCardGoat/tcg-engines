@@ -4,29 +4,29 @@ export const annaHeirToArendelle: CharacterCard = {
   abilities: [
     {
       condition: {
-        type: "has-named-character",
-        name: "Elsa",
         controller: "you",
+        name: "Elsa",
+        type: "has-named-character",
       },
       effect: {
-        type: "restriction",
-        restriction: "cant-ready",
         duration: "until-start-of-next-turn",
+        restriction: "cant-ready",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "opponent",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "restriction",
       },
       id: "ibd-1",
       name: "LOVING HEART",
       text: "When you play this character, if you have a character named Elsa in play, choose an opposing character. The chosen character doesn't ready at the start of their next turn.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

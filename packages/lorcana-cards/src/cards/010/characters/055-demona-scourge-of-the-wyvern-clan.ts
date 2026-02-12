@@ -4,44 +4,44 @@ export const demonaScourgeOfTheWyvernClan: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "exert",
             target: {
-              selector: "all",
               count: "all",
-              filter: [{ type: "owner", owner: "opponent" }],
+              filter: [{ owner: "opponent", type: "owner" }],
+              selector: "all",
             },
+            type: "exert",
           },
           {
-            type: "draw-until-hand-size",
             size: 3,
+            type: "draw-until-hand-size",
           },
         ],
+        type: "sequence",
       },
       id: "4nl-1",
       name: "AD SAXUM COMMUTATE",
       text: "AD SAXUM COMMUTATE When you play this character, exert all opposing characters. Then, each player with fewer than 3 cards in their hand draws until they have 3.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },
     {
       condition: {
-        type: "resource-count",
-        what: "cards-in-hand",
-        controller: "you",
         comparison: "greater-or-equal",
+        controller: "you",
+        type: "resource-count",
         value: 0,
+        what: "cards-in-hand",
       },
       effect: {
-        type: "restriction",
         restriction: "cant-ready",
         target: "SELF",
+        type: "restriction",
       },
       id: "4nl-2",
       name: "STONE BY DAY",

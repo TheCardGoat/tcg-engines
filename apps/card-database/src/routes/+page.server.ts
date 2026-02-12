@@ -18,8 +18,8 @@ export const load: PageServerLoad = async () => {
 
     return {
       ...card,
-      paramSet: set,
       paramNumber: number,
+      paramSet: set,
     };
   });
 

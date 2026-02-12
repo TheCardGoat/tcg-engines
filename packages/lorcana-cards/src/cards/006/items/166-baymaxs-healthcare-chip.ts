@@ -4,16 +4,16 @@ export const baymaxsHealthcareChip: ItemCard = {
   abilities: [
     {
       effect: {
-        type: "remove-damage",
         amount: 1,
-        upTo: true,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "remove-damage",
+        upTo: true,
       },
       id: "1di-2",
       text: "* Remove up to 1 damage from chosen character.",
@@ -21,23 +21,23 @@ export const baymaxsHealthcareChip: ItemCard = {
     },
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you have a Robot character in play",
+          type: "if",
         },
         then: {
-          type: "remove-damage",
           amount: 3,
-          upTo: true,
           target: {
-            selector: "chosen",
+            cardTypes: ["character"],
             count: 1,
             owner: "any",
+            selector: "chosen",
             zones: ["play"],
-            cardTypes: ["character"],
           },
+          type: "remove-damage",
+          upTo: true,
         },
+        type: "conditional",
       },
       id: "1di-3",
       text: "* If you have a Robot character in play, remove up to 3 damage from chosen character.",

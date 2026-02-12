@@ -8,9 +8,7 @@ describe("Mirabel Madrigal - Prophecy Finder", () => {
       play: [mirabelMadrigalProphecyFinder],
     });
 
-    const cardUnderTest = testEngine.getCardModel(
-      mirabelMadrigalProphecyFinder,
-    );
+    const cardUnderTest = testEngine.getCardModel(mirabelMadrigalProphecyFinder);
     expect(cardUnderTest.hasSupport()).toBe(true);
   });
 });

@@ -4,9 +4,9 @@ export const kenaiBigBrother: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "restriction",
         restriction: "cant-be-challenged",
         target: "SELF",
+        type: "restriction",
       },
       id: "a82-1",
       text: "BROTHERS FOREVER While this character is exerted, your characters named Koda can't be challenged.",

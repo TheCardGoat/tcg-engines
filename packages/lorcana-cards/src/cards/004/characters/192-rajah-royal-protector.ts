@@ -4,9 +4,9 @@ export const rajahRoyalProtector: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "restriction",
         restriction: "cant-challenge",
         target: "SELF",
+        type: "restriction",
       },
       id: "f6t-1",
       text: "STEADY GAZE While you have no cards in your hand, characters with cost 4 or less can't challenge this character.",

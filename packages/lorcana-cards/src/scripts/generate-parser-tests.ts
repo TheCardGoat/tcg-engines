@@ -87,10 +87,7 @@ ${testCases.join("\n\n")}
 }
 
 function main() {
-  const outputDir = path.resolve(
-    import.meta.dir,
-    "../parser/v2/__tests__/card-texts",
-  );
+  const outputDir = path.resolve(import.meta.dir, "../parser/v2/__tests__/card-texts");
 
   // Ensure output directory exists
   if (!fs.existsSync(outputDir)) {
@@ -109,17 +106,13 @@ function main() {
     const outputPath = path.join(outputDir, `set-${setNumber}.test.ts`);
 
     fs.writeFileSync(outputPath, content, "utf8");
-    console.log(
-      `Generated ${outputPath} with ${cardsWithText.length} test cases`,
-    );
+    console.log(`Generated ${outputPath} with ${cardsWithText.length} test cases`);
   }
 
   console.log("\n--- Summary ---");
   console.log(`Total cards processed: ${totalCards}`);
   console.log(`Cards with text (tests generated): ${totalCardsWithText}`);
-  console.log(
-    `Cards without text (skipped): ${totalCards - totalCardsWithText}`,
-  );
+  console.log(`Cards without text (skipped): ${totalCards - totalCardsWithText}`);
 }
 
 main();

@@ -11,9 +11,9 @@ export const madamMimTinyAdversary: CharacterCard = {
     },
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Challenger",
         target: "YOUR_CHARACTERS",
+        type: "gain-keyword",
         value: 1,
       },
       id: "jgv-2",

@@ -4,10 +4,10 @@ export const skullRockIsolatedFortress: LocationCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: 1,
+        stat: "strength",
         target: "CHARACTERS_HERE",
+        type: "modify-stat",
       },
       id: "1rj-1",
       name: "FAMILIAR GROUND",
@@ -16,15 +16,15 @@ export const skullRockIsolatedFortress: LocationCard = {
     },
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you have a Pirate character here",
+          type: "if",
         },
         then: {
-          type: "gain-lore",
           amount: 1,
+          type: "gain-lore",
         },
+        type: "conditional",
       },
       id: "1rj-2",
       text: "SAFE HAVEN At the start of your turn, if you have a Pirate character here, gain 1 lore.",

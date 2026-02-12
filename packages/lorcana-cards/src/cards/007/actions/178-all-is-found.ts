@@ -4,11 +4,11 @@ export const allIsFound: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "put-into-inkwell",
-        source: "discard",
-        target: "CONTROLLER",
         exerted: true,
         facedown: true,
+        source: "discard",
+        target: "CONTROLLER",
+        type: "put-into-inkwell",
       },
       id: "138-1",
       text: "Put up to 2 cards from your discard into your inkwell, facedown and exerted.",

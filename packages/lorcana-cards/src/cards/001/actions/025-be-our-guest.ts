@@ -4,18 +4,18 @@ export const beOurGuest: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "scry",
         amount: 4,
         destinations: [
           {
-            zone: "hand",
-            min: 0,
+            filter: { cardType: "character", type: "card-type" },
             max: 1,
-            filter: { type: "card-type", cardType: "character" },
+            min: 0,
             reveal: true,
+            zone: "hand",
           },
-          { zone: "deck-bottom", remainder: true, ordering: "player-choice" },
+          { ordering: "player-choice", remainder: true, zone: "deck-bottom" },
         ],
+        type: "scry",
       },
       id: "25a-1",
       text: "Look at the top 4 cards of your deck. You may reveal a character card and put it into your hand. Put the rest on the bottom of your deck in any order.",

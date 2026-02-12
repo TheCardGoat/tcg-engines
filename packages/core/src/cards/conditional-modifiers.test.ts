@@ -6,13 +6,10 @@ import type { CardInstance } from "./card-instance";
 import { getCardPower } from "./computed-properties";
 import type { Modifier } from "./modifiers";
 
-type GameStateWithCards = {
-  // biome-ignore lint/suspicious/noExplicitAny: any required for test covariance
-  cards: Record<
-    string,
-    CardInstance<{ tapped: boolean; modifiers: Modifier<any>[] }>
-  >;
-};
+interface GameStateWithCards {
+  // Biome-ignore lint/suspicious/noExplicitAny: any required for test covariance
+  cards: Record<string, CardInstance<{ tapped: boolean; modifiers: Modifier<any>[] }>>;
+}
 
 describe("Conditional Modifiers", () => {
   describe("while-condition duration", () => {
@@ -20,11 +17,11 @@ describe("Conditional Modifiers", () => {
       const cardId = createCardId("card-1");
 
       const definition: CardDefinition = {
+        abilities: [],
+        basePower: 2,
         id: "creature",
         name: "Creature",
         type: "creature",
-        basePower: 2,
-        abilities: [],
       };
 
       const registry = createCardRegistry([definition]);
@@ -44,16 +41,16 @@ describe("Conditional Modifiers", () => {
         phased: false,
         modifiers: [
           {
-            id: "mod-1",
-            type: "stat",
-            property: "power",
-            value: 2,
-            duration: "while-condition",
             condition: (state: GameStateWithCards) => {
               const c = state.cards[String(cardId)];
               return c?.tapped === true; // Only apply if tapped
             },
+            duration: "while-condition",
+            id: "mod-1",
+            property: "power",
             source: createCardId("source-1"),
+            type: "stat",
+            value: 2,
           },
         ],
       };
@@ -73,11 +70,11 @@ describe("Conditional Modifiers", () => {
       const cardId = createCardId("card-1");
 
       const definition: CardDefinition = {
+        abilities: [],
+        basePower: 2,
         id: "creature",
         name: "Creature",
         type: "creature",
-        basePower: 2,
-        abilities: [],
       };
 
       const registry = createCardRegistry([definition]);
@@ -97,16 +94,16 @@ describe("Conditional Modifiers", () => {
         phased: false,
         modifiers: [
           {
-            id: "mod-1",
-            type: "stat",
-            property: "power",
-            value: 2,
-            duration: "while-condition",
             condition: (state: GameStateWithCards) => {
               const c = state.cards[String(cardId)];
               return c?.tapped === true; // Only apply if tapped
             },
+            duration: "while-condition",
+            id: "mod-1",
+            property: "power",
             source: createCardId("source-1"),
+            type: "stat",
+            value: 2,
           },
         ],
       };
@@ -126,11 +123,11 @@ describe("Conditional Modifiers", () => {
       const cardId = createCardId("card-1");
 
       const definition: CardDefinition = {
+        abilities: [],
+        basePower: 3,
         id: "creature",
         name: "Creature",
         type: "creature",
-        basePower: 3,
-        abilities: [],
       };
 
       const registry = createCardRegistry([definition]);
@@ -139,29 +136,29 @@ describe("Conditional Modifiers", () => {
         tapped: boolean;
         modifiers: Modifier<GameStateWithCards>[];
       }> = {
-        id: cardId,
-        definitionId: "creature",
-        owner: createPlayerId("player-1"),
         controller: createPlayerId("player-1"),
-        zone: createZoneId("play"),
-        tapped: false,
+        definitionId: "creature",
         flipped: false,
-        revealed: false,
-        phased: false,
+        id: cardId,
         modifiers: [
           {
-            id: "mod-1",
-            type: "stat",
-            property: "power",
-            value: 2,
-            duration: "while-condition",
             condition: (state: GameStateWithCards) => {
               const c = state.cards[String(cardId)];
               return c?.tapped === true;
             },
+            duration: "while-condition",
+            id: "mod-1",
+            property: "power",
             source: createCardId("source-1"),
+            type: "stat",
+            value: 2,
           },
         ],
+        owner: createPlayerId("player-1"),
+        phased: false,
+        revealed: false,
+        tapped: false,
+        zone: createZoneId("play"),
       };
 
       // Initial state: card is untapped
@@ -190,11 +187,11 @@ describe("Conditional Modifiers", () => {
       const cardId = createCardId("card-1");
 
       const definition: CardDefinition = {
+        abilities: [],
+        basePower: 1,
         id: "creature",
         name: "Creature",
         type: "creature",
-        basePower: 1,
-        abilities: [],
       };
 
       const registry = createCardRegistry([definition]);
@@ -203,41 +200,41 @@ describe("Conditional Modifiers", () => {
         tapped: boolean;
         modifiers: Modifier<GameStateWithCards>[];
       }> = {
-        id: cardId,
-        definitionId: "creature",
-        owner: createPlayerId("player-1"),
         controller: createPlayerId("player-1"),
-        zone: createZoneId("play"),
-        tapped: true,
+        definitionId: "creature",
         flipped: false,
-        revealed: false,
-        phased: false,
+        id: cardId,
         modifiers: [
           {
-            id: "mod-1",
-            type: "stat",
-            property: "power",
-            value: 2,
-            duration: "while-condition",
             condition: (state: GameStateWithCards) => {
               const c = state.cards[String(cardId)];
               return c?.tapped === true; // Applies when tapped
             },
+            duration: "while-condition",
+            id: "mod-1",
+            property: "power",
             source: createCardId("source-1"),
+            type: "stat",
+            value: 2,
           },
           {
-            id: "mod-2",
-            type: "stat",
-            property: "power",
-            value: 3,
-            duration: "while-condition",
             condition: (state: GameStateWithCards) => {
               const c = state.cards[String(cardId)];
               return c?.tapped === false; // Applies when NOT tapped
             },
+            duration: "while-condition",
+            id: "mod-2",
+            property: "power",
             source: createCardId("source-2"),
+            type: "stat",
+            value: 3,
           },
         ],
+        owner: createPlayerId("player-1"),
+        phased: false,
+        revealed: false,
+        tapped: true,
+        zone: createZoneId("play"),
       };
 
       const state: GameStateWithCards = {
@@ -257,11 +254,11 @@ describe("Conditional Modifiers", () => {
       const otherCardId = createCardId("card-2");
 
       const definition: CardDefinition = {
+        abilities: [],
+        basePower: 2,
         id: "creature",
         name: "Creature",
         type: "creature",
-        basePower: 2,
-        abilities: [],
       };
 
       const registry = createCardRegistry([definition]);
@@ -270,30 +267,30 @@ describe("Conditional Modifiers", () => {
         tapped: boolean;
         modifiers: Modifier<GameStateWithCards>[];
       }> = {
-        id: cardId,
-        definitionId: "creature",
-        owner: createPlayerId("player-1"),
         controller: createPlayerId("player-1"),
-        zone: createZoneId("play"),
-        tapped: false,
+        definitionId: "creature",
         flipped: false,
-        revealed: false,
-        phased: false,
+        id: cardId,
         modifiers: [
           {
-            id: "mod-1",
-            type: "stat",
-            property: "power",
-            value: 3,
-            duration: "while-condition",
             condition: (state: GameStateWithCards) => {
               // Complex condition: +3 power if there's another tapped card
               const otherCard = state.cards[String(otherCardId)];
               return otherCard?.tapped === true;
             },
+            duration: "while-condition",
+            id: "mod-1",
+            property: "power",
             source: createCardId("source-1"),
+            type: "stat",
+            value: 3,
           },
         ],
+        owner: createPlayerId("player-1"),
+        phased: false,
+        revealed: false,
+        tapped: false,
+        zone: createZoneId("play"),
       };
 
       const otherCard: CardInstance<{
@@ -328,11 +325,11 @@ describe("Conditional Modifiers", () => {
       const cardId = createCardId("card-1");
 
       const definition: CardDefinition = {
+        abilities: [],
+        basePower: 1,
         id: "creature",
         name: "Creature",
         type: "creature",
-        basePower: 1,
-        abilities: [],
       };
 
       const registry = createCardRegistry([definition]);
@@ -341,38 +338,38 @@ describe("Conditional Modifiers", () => {
         tapped: boolean;
         modifiers: Modifier<GameStateWithCards>[];
       }> = {
-        id: cardId,
-        definitionId: "creature",
-        owner: createPlayerId("player-1"),
         controller: createPlayerId("player-1"),
-        zone: createZoneId("play"),
-        tapped: false,
+        definitionId: "creature",
         flipped: false,
-        revealed: false,
-        phased: false,
+        id: cardId,
         modifiers: [
           {
-            id: "mod-1",
-            type: "stat",
-            property: "power",
-            value: 2,
             duration: "permanent",
+            id: "mod-1",
+            property: "power",
             source: createCardId("source-1"),
+            type: "stat",
+            value: 2,
             // No condition - always applies
           },
           {
-            id: "mod-2",
-            type: "stat",
-            property: "power",
-            value: 3,
-            duration: "while-condition",
             condition: (state: GameStateWithCards) => {
               const c = state.cards[String(cardId)];
               return c?.tapped === true; // Only applies if tapped
             },
+            duration: "while-condition",
+            id: "mod-2",
+            property: "power",
             source: createCardId("source-2"),
+            type: "stat",
+            value: 3,
           },
         ],
+        owner: createPlayerId("player-1"),
+        phased: false,
+        revealed: false,
+        tapped: false,
+        zone: createZoneId("play"),
       };
 
       const state: GameStateWithCards = {

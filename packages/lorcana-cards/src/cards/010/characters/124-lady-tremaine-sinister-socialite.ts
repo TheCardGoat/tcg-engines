@@ -11,29 +11,29 @@ export const ladyTremaineSinisterSocialite: CharacterCard = {
     },
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you've put a card under her this turn",
+          type: "if",
         },
         then: {
-          type: "put-on-bottom",
           target: {
-            selector: "chosen",
+            cardTypes: ["card"],
             count: 1,
             owner: "any",
+            selector: "chosen",
             zones: ["play"],
-            cardTypes: ["card"],
           },
+          type: "put-on-bottom",
         },
+        type: "conditional",
       },
       id: "a1d-2",
       name: "EXPEDIENT SCHEMES",
       text: "EXPEDIENT SCHEMES Whenever this character quests, if you've put a card under her this turn, you may play an action with cost 5 or less from your discard for free, then put that action card on the bottom of your deck instead of into your discard.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

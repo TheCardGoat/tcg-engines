@@ -4,16 +4,16 @@ export const panicImmortalSidekick: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you have a character named Pain in play",
+          type: "if",
         },
         then: {
-          type: "restriction",
           restriction: "cant-be-challenged",
           target: "SELF",
+          type: "restriction",
         },
+        type: "conditional",
       },
       id: "1bf-1",
       text: "REPORTING FOR DUTY While this character is exerted, if you have a character named Pain in play, your Villain characters can't be challenged.",

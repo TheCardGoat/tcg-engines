@@ -1,11 +1,4 @@
-import {
-  index,
-  pgTable,
-  text,
-  timestamp,
-  unique,
-  uuid,
-} from "drizzle-orm/pg-core";
+import { index, pgTable, text, timestamp, unique, uuid } from "drizzle-orm/pg-core";
 
 /**
  * Votes table - User votes on content and comments
@@ -22,11 +15,7 @@ export const votes = pgTable(
     createdAt: timestamp("created_at").defaultNow().notNull(),
   },
   (table) => [
-    unique("votes_user_target_unique").on(
-      table.userId,
-      table.targetType,
-      table.targetId,
-    ),
+    unique("votes_user_target_unique").on(table.userId, table.targetType, table.targetId),
     index("votes_user_id_idx").on(table.userId),
     index("votes_target_idx").on(table.targetType, table.targetId),
   ],

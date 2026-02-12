@@ -5,16 +5,16 @@ export const whiteRabbitsPocketWatch: ItemCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "gain-keyword",
+        duration: "this-turn",
         keyword: "Rush",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
-        duration: "this-turn",
+        type: "gain-keyword",
       },
       id: "ecf-1",
       text: "I'M LATE! {E}, 1 {I} — Chosen character gains Rush this turn.",

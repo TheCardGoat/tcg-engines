@@ -8,14 +8,7 @@
  * - postprocessing_cache: Tags, creator links, ranking data
  */
 
-import {
-  index,
-  jsonb,
-  pgTable,
-  text,
-  timestamp,
-  uuid,
-} from "drizzle-orm/pg-core";
+import { index, jsonb, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
 import { contents } from "./contents";
 import {
   extractionStatusEnum,
@@ -32,12 +25,12 @@ interface ExtractionCacheData {
   /** Raw text content (transcript, article body, etc.) */
   textContent: string;
   /** Content segments with timestamps */
-  segments?: Array<{
+  segments?: {
     text: string;
     offsetMs: number;
     durationMs: number;
     language?: string;
-  }>;
+  }[];
   /** Extracted metadata */
   metadata: {
     title: string;
@@ -67,28 +60,28 @@ interface ExtractionCacheData {
  */
 interface PreprocessingCacheData {
   /** Extracted entities */
-  entities: Array<{
+  entities: {
     name: string;
     type: string;
     confidence: number;
     mentionCount: number;
     contexts?: string[];
-  }>;
+  }[];
   /** Identified themes */
-  themes: Array<{
+  themes: {
     title: string;
     description: string;
     relevance: number;
-  }>;
+  }[];
   /** Analyzed segments */
-  segments: Array<{
+  segments: {
     index: number;
     startOffset: number;
     endOffset: number;
     summary: string;
     topics: string[];
     entityMentions: string[];
-  }>;
+  }[];
   /** Whether content is game-related */
   isGameRelated: boolean;
 }
@@ -106,20 +99,20 @@ interface ProcessingCacheData {
       score: number;
       explanation: string;
     };
-    mainThemes: Array<{
+    mainThemes: {
       title: string;
       description: string;
       relevance: number;
-    }>;
+    }[];
     contentCategory: string;
   };
   /** Enhanced summaries (4 tones × 2 formats) */
-  enhancedSummaries: Array<{
+  enhancedSummaries: {
     summaryType: string;
     format: string;
     short: string;
     detailed: string;
-  }>;
+  }[];
 }
 
 /**
@@ -127,14 +120,14 @@ interface ProcessingCacheData {
  */
 interface PostprocessingCacheData {
   /** Assigned tags */
-  tags: Array<{
+  tags: {
     tagId?: string;
     name: string;
     slug: string;
     category: string;
     confidence: number;
     appliedBy: "ai" | "user" | "admin";
-  }>;
+  }[];
   /** Creator ID if identified */
   creatorId?: string;
   /** Calculated hotness score */
@@ -188,9 +181,7 @@ export const preprocessingCache = pgTable(
       .notNull()
       .unique()
       .references(() => contents.id, { onDelete: "cascade" }),
-    contentJson: jsonb("content_json")
-      .$type<PreprocessingCacheData>()
-      .notNull(),
+    contentJson: jsonb("content_json").$type<PreprocessingCacheData>().notNull(),
     status: preprocessingStatusEnum("status").default("complete").notNull(),
     provider: text("provider").notNull(), // AI provider
     modelId: text("model_id").notNull(),
@@ -229,10 +220,7 @@ export const processingCache = pgTable(
     createdAt: timestamp("created_at").defaultNow().notNull(),
   },
   (table) => [
-    index("processing_cache_content_id_status_idx").on(
-      table.contentId,
-      table.status,
-    ),
+    index("processing_cache_content_id_status_idx").on(table.contentId, table.status),
     index("processing_cache_status_idx").on(table.status),
     index("processing_cache_provider_idx").on(table.provider),
   ],
@@ -246,18 +234,16 @@ export const processingCache = pgTable(
 export const postprocessingCache = pgTable(
   "postprocessing_cache",
   {
-    id: text("id")
-      .primaryKey()
-      .$defaultFn(() => crypto.randomUUID()),
     contentId: uuid("content_id")
       .notNull()
       .unique()
       .references(() => contents.id, { onDelete: "cascade" }),
-    contentJson: jsonb("content_json")
-      .$type<PostprocessingCacheData>()
-      .notNull(),
-    status: postprocessingStatusEnum("status").default("completed").notNull(),
+    contentJson: jsonb("content_json").$type<PostprocessingCacheData>().notNull(),
     createdAt: timestamp("created_at").defaultNow().notNull(),
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    status: postprocessingStatusEnum("status").default("completed").notNull(),
   },
   (table) => [index("postprocessing_cache_status_idx").on(table.status)],
 );

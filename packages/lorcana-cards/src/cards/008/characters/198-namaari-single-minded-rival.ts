@@ -4,31 +4,31 @@ export const namaariSinglemindedRival: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
-        effect: {
-          type: "discard",
-          amount: 1,
-          target: "CONTROLLER",
-          chosen: true,
-        },
         chooser: "CONTROLLER",
+        effect: {
+          amount: 1,
+          chosen: true,
+          target: "CONTROLLER",
+          type: "discard",
+        },
+        type: "optional",
       },
       id: "xx2-1",
       name: "STRATEGIC EDGE",
       text: "STRATEGIC EDGE When you play this character and at the start of your turn, you may draw a card, then choose and discard a card.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: 1,
+        stat: "strength",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "xx2-2",
       text: "EXTREME FOCUS This character gets +1 {S} for each card in your discard.",

@@ -4,9 +4,9 @@ export const flintheartGlomgoldSchemingBillionaire: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Ward",
         target: "SELF",
+        type: "gain-keyword",
       },
       id: "l2o-1",
       text: "TRY ME While you have a character or location in play with a card under them, this character gains Ward.",

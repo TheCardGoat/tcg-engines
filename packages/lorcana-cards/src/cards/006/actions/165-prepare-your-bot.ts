@@ -4,10 +4,10 @@ export const prepareYourBot: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "restriction",
+        duration: "this-turn",
         restriction: "cant-quest",
         target: "SELF",
-        duration: "this-turn",
+        type: "restriction",
       },
       id: "ho1-3",
       text: "* Ready chosen Robot character. They can't quest for the rest of this turn.",

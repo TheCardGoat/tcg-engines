@@ -4,11 +4,11 @@ export const fallingDownTheRabbitHole: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "put-into-inkwell",
-        source: "chosen-character",
-        target: "OPPONENT",
         exerted: true,
         facedown: true,
+        source: "chosen-character",
+        target: "OPPONENT",
+        type: "put-into-inkwell",
       },
       id: "iug-1",
       text: "Each player chooses one of their characters and puts them into their inkwell facedown and exerted.",

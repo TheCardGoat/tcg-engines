@@ -4,9 +4,9 @@ export const theWallBorderFortress: LocationCard = {
   abilities: [
     {
       effect: {
-        type: "restriction",
         restriction: "cant-be-challenged",
         target: "SELF",
+        type: "restriction",
       },
       id: "1rp-1",
       text: "PROTECT THE REALM While you have an exerted character here, your other locations can't be challenged.",

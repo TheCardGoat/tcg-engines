@@ -1,8 +1,5 @@
 import { RuleEngine, type RuleEngineOptions } from "../engine/rule-engine";
-import type {
-  GameDefinition,
-  Player,
-} from "../game-definition/game-definition";
+import type { GameDefinition, Player } from "../game-definition/game-definition";
 import { createTestPlayers } from "./test-player-builder";
 
 /**

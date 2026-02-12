@@ -4,24 +4,24 @@ export const onlySoMuchRoom: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "return-to-hand",
             target: {
-              selector: "chosen",
+              cardTypes: ["character"],
               count: 1,
               owner: "any",
+              selector: "chosen",
               zones: ["play"],
-              cardTypes: ["character"],
             },
+            type: "return-to-hand",
           },
           {
-            type: "return-from-discard",
-            target: "CONTROLLER",
             cardType: "character",
+            target: "CONTROLLER",
+            type: "return-from-discard",
           },
         ],
+        type: "sequence",
       },
       id: "12f-1",
       text: "Return chosen character with 2 {S} or less to their player's hand. Return a character card from your discard to your hand.",

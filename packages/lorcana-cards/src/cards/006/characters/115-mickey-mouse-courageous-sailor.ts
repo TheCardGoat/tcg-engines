@@ -4,10 +4,10 @@ export const mickeyMouseCourageousSailor: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: 2,
+        stat: "strength",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "wqx-1",
       text: "SOLID GROUND While this character is at a location, he gets +2 {S}.",

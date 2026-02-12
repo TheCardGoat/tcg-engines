@@ -10,10 +10,10 @@ export const genieOfTheLamp: CharacterCard = {
     },
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: 2,
+        stat: "strength",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "msr-2",
       text: "LET'S MAKE SOME MAGIC While this character is exerted, your other characters get +2 {S}.",

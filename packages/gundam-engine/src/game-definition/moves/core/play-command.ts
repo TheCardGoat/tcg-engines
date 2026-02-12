@@ -17,12 +17,7 @@
  * - Rule 6-1-5: Level requirements must be met to play commands
  */
 
-import type {
-  CardId,
-  GameMoveDefinition,
-  MoveContext,
-  PlayerId,
-} from "@tcg/core";
+import type { CardId, GameMoveDefinition, MoveContext, PlayerId } from "@tcg/core";
 import { isCardInZone } from "@tcg/core";
 import type { Draft } from "immer";
 import { getCardDefinition } from "../../../effects/action-handlers";
@@ -52,20 +47,22 @@ function getTotalResources(state: GundamGameState, playerId: PlayerId): number {
  * @param playerId - Player to rest resources for
  * @param count - Number of resources to rest
  */
-function restResources(
-  draft: GundamGameState,
-  playerId: PlayerId,
-  count: number,
-): void {
-  if (count <= 0) return;
+function restResources(draft: GundamGameState, playerId: PlayerId, count: number): void {
+  if (count <= 0) {
+    return;
+  }
 
   const resourceArea = draft.zones.resourceArea[playerId];
-  if (!resourceArea) return;
+  if (!resourceArea) {
+    return;
+  }
 
   // Rest the first 'count' active resources
   let rested = 0;
   for (const cardId of resourceArea.cards) {
-    if (rested >= count) break;
+    if (rested >= count) {
+      break;
+    }
 
     const currentPosition = draft.gundam.cardPositions[cardId];
     if (currentPosition === "active") {
@@ -110,34 +107,48 @@ export const playCommandMove: GameMoveDefinition<GundamGameState> = {
     const { playerId } = context;
 
     // Must be in main phase
-    if (state.phase !== "main") return [];
+    if (state.phase !== "main") {
+      return [];
+    }
 
     // Must be current player
-    if (state.currentPlayer !== playerId) return [];
+    if (state.currentPlayer !== playerId) {
+      return [];
+    }
 
     // Effect stack must be empty (per Rule 6-1-3)
-    if (state.gundam.effectStack.stack.length > 0) return [];
+    if (state.gundam.effectStack.stack.length > 0) {
+      return [];
+    }
 
     const options = [];
     const hand = state.zones.hand[playerId];
 
-    if (!hand) return [];
+    if (!hand) {
+      return [];
+    }
 
     // Check each card in hand - only COMMAND cards can be played
     for (const cardId of hand.cards) {
       // Load card definition and validate card type, cost, and level
       const def = getCardDefinition(cardId);
-      if (def?.cardType !== "COMMAND") continue;
+      if (def?.cardType !== "COMMAND") {
+        continue;
+      }
 
       // Check cost requirements - player must have sufficient active resources
       const cost = def.cost ?? 0;
       const activeResources = state.gundam.activeResources[playerId] ?? 0;
-      if (activeResources < cost) continue;
+      if (activeResources < cost) {
+        continue;
+      }
 
       // Check level requirements - player must have enough total resources
       const level = def.level ?? 0;
       const totalResources = getTotalResources(state, playerId);
-      if (totalResources < level) continue;
+      if (totalResources < level) {
+        continue;
+      }
 
       options.push({ cardId });
     }
@@ -159,10 +170,14 @@ export const playCommandMove: GameMoveDefinition<GundamGameState> = {
     const { playerId } = context;
 
     // Must be in main phase
-    if (state.phase !== "main") return false;
+    if (state.phase !== "main") {
+      return false;
+    }
 
     // Must be current player
-    if (state.currentPlayer !== playerId) return false;
+    if (state.currentPlayer !== playerId) {
+      return false;
+    }
 
     // Get and validate card ID
     let cardId: CardId;
@@ -174,24 +189,34 @@ export const playCommandMove: GameMoveDefinition<GundamGameState> = {
 
     // Card must be in player's hand
     const hand = state.zones.hand[playerId];
-    if (!(hand && isCardInZone(hand, cardId))) return false;
+    if (!(hand && isCardInZone(hand, cardId))) {
+      return false;
+    }
 
     // Effect stack must be empty (per Rule 6-1-3)
-    if (state.gundam.effectStack.stack.length > 0) return false;
+    if (state.gundam.effectStack.stack.length > 0) {
+      return false;
+    }
 
     // Load card definition and validate card type is COMMAND
     const cardDef = getCardDefinition(cardId);
-    if (!cardDef || cardDef.cardType !== "COMMAND") return false;
+    if (!cardDef || cardDef.cardType !== "COMMAND") {
+      return false;
+    }
 
     // Validate cost requirements - player must have sufficient active resources
     const cost = cardDef.cost ?? 0;
     const activeResources = state.gundam.activeResources[playerId] ?? 0;
-    if (activeResources < cost) return false;
+    if (activeResources < cost) {
+      return false;
+    }
 
     // Validate level requirements - player must have enough total resources
     const level = cardDef.level ?? 0;
     const totalResources = getTotalResources(state, playerId);
-    if (totalResources < level) return false;
+    if (totalResources < level) {
+      return false;
+    }
 
     return true;
   },
@@ -242,10 +267,10 @@ export const playCommandMove: GameMoveDefinition<GundamGameState> = {
   },
 
   metadata: {
-    category: "card-play",
-    tags: ["main-phase-action", "action-step"],
-    description: "Play COMMAND card from hand",
-    canBeUndone: false,
     affectsZones: ["hand", "limbo"],
+    canBeUndone: false,
+    category: "card-play",
+    description: "Play COMMAND card from hand",
+    tags: ["main-phase-action", "action-step"],
   },
 };

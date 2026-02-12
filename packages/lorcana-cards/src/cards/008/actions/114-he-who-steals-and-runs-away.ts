@@ -4,24 +4,24 @@ export const heWhoStealsAndRunsAway: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "banish",
             target: {
-              selector: "chosen",
+              cardTypes: ["item"],
               count: 1,
               owner: "any",
+              selector: "chosen",
               zones: ["play"],
-              cardTypes: ["item"],
             },
+            type: "banish",
           },
           {
-            type: "draw",
             amount: 1,
             target: "CONTROLLER",
+            type: "draw",
           },
         ],
+        type: "sequence",
       },
       id: "h00-1",
       text: "Banish chosen item. Draw a card.",

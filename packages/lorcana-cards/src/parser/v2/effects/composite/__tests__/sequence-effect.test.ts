@@ -10,13 +10,11 @@ import { sequenceEffectParser } from "../sequence-effect";
 describe("sequenceEffectParser", () => {
   describe("text parsing - happy path", () => {
     it("parses two-step sequence with ', then ' separator", () => {
-      const result = sequenceEffectParser.parse(
-        "draw 2 cards, then discard 1 card",
-      );
+      const result = sequenceEffectParser.parse("draw 2 cards, then discard 1 card");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("sequence");
-      const {steps} = (result as Effect & { steps: Effect[] });
+      const { steps } = result as Effect & { steps: Effect[] };
       expect(steps).toHaveLength(2);
       expect(steps[0].type).toBe("draw");
       expect(steps[1].type).toBe("discard");
@@ -29,7 +27,7 @@ describe("sequenceEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("sequence");
-      const {steps} = (result as Effect & { steps: Effect[] });
+      const { steps } = result as Effect & { steps: Effect[] };
       expect(steps).toHaveLength(3);
       expect(steps[0].type).toBe("draw");
       expect(steps[1].type).toBe("discard");
@@ -37,26 +35,22 @@ describe("sequenceEffectParser", () => {
     });
 
     it("parses sequence with '. Then ' separator (capital T)", () => {
-      const result = sequenceEffectParser.parse(
-        "draw 2 cards. Then discard 1 card",
-      );
+      const result = sequenceEffectParser.parse("draw 2 cards. Then discard 1 card");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("sequence");
-      const {steps} = (result as Effect & { steps: Effect[] });
+      const { steps } = result as Effect & { steps: Effect[] };
       expect(steps).toHaveLength(2);
       expect(steps[0].type).toBe("draw");
       expect(steps[1].type).toBe("discard");
     });
 
     it("parses sequence with ', and then ' separator", () => {
-      const result = sequenceEffectParser.parse(
-        "draw 2 cards, and then discard 1 card",
-      );
+      const result = sequenceEffectParser.parse("draw 2 cards, and then discard 1 card");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("sequence");
-      const {steps} = (result as Effect & { steps: Effect[] });
+      const { steps } = result as Effect & { steps: Effect[] };
       expect(steps).toHaveLength(2);
       expect(steps[0].type).toBe("draw");
       expect(steps[1].type).toBe("discard");
@@ -69,7 +63,7 @@ describe("sequenceEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("sequence");
-      const {steps} = (result as Effect & { steps: Effect[] });
+      const { steps } = result as Effect & { steps: Effect[] };
       expect(steps).toHaveLength(3);
       expect(steps[0].type).toBe("deal-damage");
       expect(steps[1].type).toBe("draw");
@@ -79,33 +73,27 @@ describe("sequenceEffectParser", () => {
 
   describe("text parsing - case insensitivity", () => {
     it("parses sequence with uppercase 'THEN'", () => {
-      const result = sequenceEffectParser.parse(
-        "draw 2 cards, THEN discard 1 card",
-      );
+      const result = sequenceEffectParser.parse("draw 2 cards, THEN discard 1 card");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("sequence");
-      const {steps} = (result as Effect & { steps: Effect[] });
+      const { steps } = result as Effect & { steps: Effect[] };
       expect(steps).toHaveLength(2);
     });
 
     it("parses sequence with mixed case 'ThEn'", () => {
-      const result = sequenceEffectParser.parse(
-        "draw 2 cards, ThEn discard 1 card",
-      );
+      const result = sequenceEffectParser.parse("draw 2 cards, ThEn discard 1 card");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("sequence");
     });
 
     it("parses sequence with '. THEN ' separator", () => {
-      const result = sequenceEffectParser.parse(
-        "draw 2 cards. THEN discard 1 card",
-      );
+      const result = sequenceEffectParser.parse("draw 2 cards. THEN discard 1 card");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("sequence");
-      const {steps} = (result as Effect & { steps: Effect[] });
+      const { steps } = result as Effect & { steps: Effect[] };
       expect(steps).toHaveLength(2);
     });
   });
@@ -118,9 +106,7 @@ describe("sequenceEffectParser", () => {
     });
 
     it("returns null for text without sequence separator", () => {
-      const result = sequenceEffectParser.parse(
-        "draw 2 cards and discard 1 card",
-      );
+      const result = sequenceEffectParser.parse("draw 2 cards and discard 1 card");
 
       expect(result).toBeNull();
     });
@@ -141,18 +127,14 @@ describe("sequenceEffectParser", () => {
   describe("text parsing - partial parsing", () => {
     it("includes only successfully parsed steps", () => {
       // Second step won't parse, so should only have 1 effect
-      const result = sequenceEffectParser.parse(
-        "draw 2 cards, then invalid effect text",
-      );
+      const result = sequenceEffectParser.parse("draw 2 cards, then invalid effect text");
 
       // Parser now returns null if any step fails to parse (all-or-nothing approach)
       expect(result).toBeNull();
     });
 
     it("returns null when no steps can be parsed", () => {
-      const result = sequenceEffectParser.parse(
-        "invalid effect, then another invalid effect",
-      );
+      const result = sequenceEffectParser.parse("invalid effect, then another invalid effect");
 
       expect(result).toBeNull();
     });
@@ -161,22 +143,18 @@ describe("sequenceEffectParser", () => {
   describe("text parsing - whitespace handling", () => {
     it("trims whitespace from effect text after splitting", () => {
       // The separator itself must be exact, but individual effects are trimmed
-      const result = sequenceEffectParser.parse(
-        "  draw 2 cards  , then   discard 1 card  ",
-      );
+      const result = sequenceEffectParser.parse("  draw 2 cards  , then   discard 1 card  ");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("sequence");
-      const {steps} = (result as Effect & { steps: Effect[] });
+      const { steps } = result as Effect & { steps: Effect[] };
       expect(steps).toHaveLength(2);
       expect(steps[0].type).toBe("draw");
       expect(steps[1].type).toBe("discard");
     });
 
     it("handles leading and trailing whitespace", () => {
-      const result = sequenceEffectParser.parse(
-        "  draw 2 cards, then discard 1 card  ",
-      );
+      const result = sequenceEffectParser.parse("  draw 2 cards, then discard 1 card  ");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("sequence");

@@ -4,8 +4,8 @@ export const mirabelMadrigalFamilyGatherer: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "play-card",
         from: "hand",
+        type: "play-card",
       },
       id: "1v7-1",
       text: "NOT WITHOUT MY FAMILY You can't play this character unless you have 5 or more characters in play.",

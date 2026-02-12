@@ -4,23 +4,23 @@ export const alistairKreiAmbitiousEntrepreneur: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "an opponent has an item in play",
+          type: "if",
         },
         then: {
-          type: "gain-lore",
           amount: 1,
+          type: "gain-lore",
         },
+        type: "conditional",
       },
       id: "ppn-1",
       name: "AN EYE FOR TECH",
       text: "AN EYE FOR TECH When you play this character, if an opponent has an item in play, gain 1 lore.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

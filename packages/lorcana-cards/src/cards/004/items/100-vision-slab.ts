@@ -4,15 +4,15 @@ export const visionSlab: ItemCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "an opposing character has damage",
+          type: "if",
         },
         then: {
-          type: "gain-lore",
           amount: 1,
+          type: "gain-lore",
         },
+        type: "conditional",
       },
       id: "1s5-1",
       text: "DANGER REVEALED At the start of your turn, if an opposing character has damage, gain 1 lore.",

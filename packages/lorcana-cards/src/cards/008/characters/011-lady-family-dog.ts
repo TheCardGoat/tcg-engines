@@ -4,25 +4,25 @@ export const ladyFamilyDog: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "play-card",
-          from: "hand",
           cost: "free",
           costRestriction: {
             comparison: "less-or-equal",
             value: 2,
           },
+          from: "hand",
+          type: "play-card",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "ri7-1",
       name: "SOMEONE TO CARE FOR",
       text: "SOMEONE TO CARE FOR When you play this character, you may play a character with cost 2 or less for free.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

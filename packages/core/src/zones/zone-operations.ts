@@ -12,13 +12,8 @@ import type { Zone } from "./zone";
  * @throws Error if zone is at maximum size
  */
 export function addCard(zone: Zone, cardId: CardId, position?: number): Zone {
-  if (
-    zone.config.maxSize !== undefined &&
-    zone.cards.length >= zone.config.maxSize
-  ) {
-    throw new Error(
-      `Cannot add card: zone is at maximum size (${zone.config.maxSize})`,
-    );
+  if (zone.config.maxSize !== undefined && zone.cards.length >= zone.config.maxSize) {
+    throw new Error(`Cannot add card: zone is at maximum size (${zone.config.maxSize})`);
   }
 
   return produce(zone, (draft) => {
@@ -101,9 +96,9 @@ export function draw(
   });
 
   return {
+    drawnCards,
     fromZone: newDeck,
     toZone: newHand,
-    drawnCards,
   };
 }
 
@@ -136,10 +131,7 @@ export function shuffle(zone: Zone, seed: string): Zone {
  * @param filter - Filter function
  * @returns Array of matching card IDs
  */
-export function search(
-  zone: Zone,
-  filter: (cardId: CardId) => boolean,
-): CardId[] {
+export function search(zone: Zone, filter: (cardId: CardId) => boolean): CardId[] {
   return zone.cards.filter(filter);
 }
 
@@ -177,8 +169,8 @@ export function mill(
 
   return {
     fromZone: newDeck,
-    toZone: newGraveyard,
     milledCards,
+    toZone: newGraveyard,
   };
 }
 
@@ -245,13 +237,8 @@ export function isCardInZone(zone: Zone, cardId: CardId): boolean {
  * @throws Error if zone is at maximum size
  */
 export function addCardToTop(zone: Zone, cardId: CardId): Zone {
-  if (
-    zone.config.maxSize !== undefined &&
-    zone.cards.length >= zone.config.maxSize
-  ) {
-    throw new Error(
-      `Cannot add card: zone is at maximum size (${zone.config.maxSize})`,
-    );
+  if (zone.config.maxSize !== undefined && zone.cards.length >= zone.config.maxSize) {
+    throw new Error(`Cannot add card: zone is at maximum size (${zone.config.maxSize})`);
   }
 
   return produce(zone, (draft) => {
@@ -267,13 +254,8 @@ export function addCardToTop(zone: Zone, cardId: CardId): Zone {
  * @throws Error if zone is at maximum size
  */
 export function addCardToBottom(zone: Zone, cardId: CardId): Zone {
-  if (
-    zone.config.maxSize !== undefined &&
-    zone.cards.length >= zone.config.maxSize
-  ) {
-    throw new Error(
-      `Cannot add card: zone is at maximum size (${zone.config.maxSize})`,
-    );
+  if (zone.config.maxSize !== undefined && zone.cards.length >= zone.config.maxSize) {
+    throw new Error(`Cannot add card: zone is at maximum size (${zone.config.maxSize})`);
   }
 
   return produce(zone, (draft) => {
@@ -298,9 +280,6 @@ export function clearZone(zone: Zone): Zone {
  * @param zones - Zones to search
  * @returns First zone containing the card, or undefined if not found
  */
-export function findCardInZones(
-  cardId: CardId,
-  zones: Zone[],
-): Zone | undefined {
+export function findCardInZones(cardId: CardId, zones: Zone[]): Zone | undefined {
   return zones.find((zone) => isCardInZone(zone, cardId));
 }

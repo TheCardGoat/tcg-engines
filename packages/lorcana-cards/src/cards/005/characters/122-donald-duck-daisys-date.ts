@@ -4,17 +4,17 @@ export const donaldDuckDaisysDate: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "lose-lore",
         amount: 1,
         target: "EACH_OPPONENT",
+        type: "lose-lore",
       },
       id: "1d9-1",
       name: "PLUCKY PLAY",
       text: "PLUCKY PLAY Whenever this character challenges another character, each opponent loses 1 lore.",
       trigger: {
         event: "challenge",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

@@ -10,11 +10,11 @@ import { pgTable, text, timestamp } from "drizzle-orm/pg-core";
  * configured in the JWT plugin.
  */
 export const jwks = pgTable("jwks", {
-  id: text("id").primaryKey(),
-  publicKey: text("public_key").notNull(),
-  privateKey: text("private_key").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   expiresAt: timestamp("expires_at"),
+  id: text("id").primaryKey(),
+  privateKey: text("private_key").notNull(),
+  publicKey: text("public_key").notNull(),
 });
 
 // Type exports

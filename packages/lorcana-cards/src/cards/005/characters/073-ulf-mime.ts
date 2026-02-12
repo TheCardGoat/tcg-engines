@@ -4,9 +4,9 @@ export const ulfMime: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "restriction",
         restriction: "cant-sing",
         target: "SELF",
+        type: "restriction",
       },
       id: "111-1",
       name: "SILENT PERFORMANCE",

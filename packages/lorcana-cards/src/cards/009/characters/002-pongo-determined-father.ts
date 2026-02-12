@@ -4,15 +4,15 @@ export const pongoDeterminedFather: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "it's a character card",
+          type: "if",
         },
         then: {
-          type: "put-on-bottom",
           target: "CHOSEN_CHARACTER",
+          type: "put-on-bottom",
         },
+        type: "conditional",
       },
       id: "1ve-1",
       text: "TWILIGHT BARK Once during your turn, you may pay 2 {I} to reveal the top card of your deck. If it's a character card, put it into your hand. Otherwise, put it on the bottom of your deck.",

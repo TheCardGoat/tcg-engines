@@ -5,8 +5,8 @@ import { mdsvex } from "mdsvex";
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
   // Consult https://svelte.dev/docs/kit/integrations
-  // for more information about preprocessors
-  preprocess: [vitePreprocess(), mdsvex()],
+  // For more information about preprocessors
+  extensions: [".svelte", ".svx"],
 
   kit: {
     // Cloudflare Pages adapter
@@ -15,13 +15,13 @@ const config = {
       // Render a plaintext 404 page for non-matching asset requests
       fallback: "plaintext",
       routes: {
-        include: ["/*"],
         exclude: ["<all>"],
+        include: ["/*"],
       },
     }),
   },
 
-  extensions: [".svelte", ".svx"],
+  preprocess: [vitePreprocess(), mdsvex()],
 };
 
 export default config;

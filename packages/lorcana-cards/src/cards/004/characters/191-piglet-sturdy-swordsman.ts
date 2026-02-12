@@ -11,9 +11,9 @@ export const pigletSturdySwordsman: CharacterCard = {
     },
     {
       effect: {
-        type: "grant-ability",
         ability: "can-challenge-ready",
         target: "SELF",
+        type: "grant-ability",
       },
       id: "1bb-2",
       text: "NOT SO SMALL ANYMORE While you have no cards in your hand, this character can challenge ready characters.",

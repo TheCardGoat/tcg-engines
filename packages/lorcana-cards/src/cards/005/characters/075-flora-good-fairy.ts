@@ -4,10 +4,10 @@ export const floraGoodFairy: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: 2,
+        stat: "strength",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "awe-1",
       text: "FIDDLE FADDLE While being challenged, this character gets +2 {S}.",

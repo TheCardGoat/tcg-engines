@@ -4,29 +4,29 @@ export const magicalManeuvers: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "return-to-hand",
             target: {
-              selector: "chosen",
+              cardTypes: ["character"],
               count: 1,
               owner: "any",
+              selector: "chosen",
               zones: ["play"],
-              cardTypes: ["character"],
             },
+            type: "return-to-hand",
           },
           {
-            type: "exert",
             target: {
-              selector: "chosen",
+              cardTypes: ["character"],
               count: 1,
               owner: "any",
+              selector: "chosen",
               zones: ["play"],
-              cardTypes: ["character"],
             },
+            type: "exert",
           },
         ],
+        type: "sequence",
       },
       id: "1nx-1",
       text: "Return chosen character of yours to your hand. Exert chosen character.",

@@ -4,9 +4,9 @@ export const captainAmeliaFirstInCommand: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Evasive",
         target: "SELF",
+        type: "gain-keyword",
       },
       id: "1xb-1",
       text: "DISCIPLINE During your turn, this character gains Evasive.",

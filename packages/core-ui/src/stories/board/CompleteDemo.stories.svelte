@@ -3,12 +3,12 @@
   import BoardViewport from "$lib/components/board/BoardViewport.svelte";
 
   const { Story } = defineMeta({
-    title: "Board/Complete Demo",
     component: BoardViewport,
-    tags: ["autodocs"],
     parameters: {
       layout: "fullscreen",
     },
+    tags: ["autodocs"],
+    title: "Board/Complete Demo",
   });
 </script>
 
@@ -23,96 +23,96 @@
 
   const playerHand = [
     {
-      id: 1,
-      name: "Fireball",
       cost: 3,
-      type: "Spell",
       description: "Deals 3 damage to any target.",
+      id: 1,
       image:
         "https://images.unsplash.com/photo-1616084403156-9de11a475243?q=80&w=300&auto=format&fit=crop",
+      name: "Fireball",
       rarity: "common" as const,
+      type: "Spell",
     },
     {
-      id: 2,
-      name: "Elven Archer",
       cost: 1,
-      power: 1,
-      toughness: 1,
-      type: "Creature",
       description: "Reach",
+      id: 2,
       image:
         "https://images.unsplash.com/photo-1542259681-d26229616cae?q=80&w=300&auto=format&fit=crop",
+      name: "Elven Archer",
+      power: 1,
       rarity: "uncommon" as const,
+      toughness: 1,
+      type: "Creature",
     },
     {
-      id: 3,
-      name: "Forest",
-      type: "Land",
       description: "Add G.",
+      id: 3,
       image:
         "https://images.unsplash.com/photo-1448375240586-dfd8d395ea6c?q=80&w=300&auto=format&fit=crop",
+      name: "Forest",
       rarity: "common" as const,
+      type: "Land",
     },
     {
-      id: 4,
-      name: "Giant Growth",
       cost: 1,
-      type: "Instant",
       description: "Target creature gets +3/+3 until end of turn.",
+      id: 4,
       image:
         "https://images.unsplash.com/photo-1500964757637-c85e8a162699?q=80&w=300&auto=format&fit=crop",
+      name: "Giant Growth",
       rarity: "common" as const,
+      type: "Instant",
     },
     {
-      id: 5,
-      name: "Dragon",
       cost: 6,
-      power: 5,
-      toughness: 5,
-      type: "Creature",
       description: "Flying",
+      id: 5,
       image:
         "https://images.unsplash.com/photo-1577493340887-b7bfff550145?q=80&w=300&auto=format&fit=crop",
+      name: "Dragon",
+      power: 5,
       rarity: "mythic" as const,
+      toughness: 5,
+      type: "Creature",
     },
   ];
 
   const playerField = [
     {
-      id: 101,
-      name: "Soldier",
       cost: 1,
+      id: 101,
+      image:
+        "https://images.unsplash.com/photo-1599553535948-26155694c038?q=80&w=300&auto=format&fit=crop",
+      name: "Soldier",
       power: 1,
       toughness: 1,
       type: "Token",
-      image:
-        "https://images.unsplash.com/photo-1599553535948-26155694c038?q=80&w=300&auto=format&fit=crop",
     },
     {
-      id: 102,
-      name: "Knight",
       cost: 2,
-      power: 2,
-      toughness: 2,
-      type: "Creature",
       description: "First Strike",
+      id: 102,
       image:
         "https://images.unsplash.com/photo-1598556776374-329437d0422a?q=80&w=300&auto=format&fit=crop",
+      name: "Knight",
+      power: 2,
       tapped: true,
+      toughness: 2,
+      type: "Creature",
     },
   ];
 
   const opponentHand = [1, 2, 3, 4];
   const opponentField = [
     {
-      id: 201,
-      name: "Goblin",
       cost: 1,
+      id: 201,
+      image:
+        "https://images.unsplash.com/photo-1610631627885-350e96030c25?q=80&w=300&auto=format&fit=crop",
+      name: "Goblin",
       power: 1,
       toughness: 1,
       type: "Creature",
-      image:
-        "https://images.unsplash.com/photo-1610631627885-350e96030c25?q=80&w=300&auto=format&fit=crop",
     },
   ];
 </script>

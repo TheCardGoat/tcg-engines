@@ -38,8 +38,7 @@ export function createApp(options: AppOptions = {}) {
     // Global error handler - converts thrown errors to JSON responses
     .onError(({ code, error, set }) => {
       // Get error message safely
-      const errorMessage =
-        error instanceof Error ? error.message : "An unexpected error occurred";
+      const errorMessage = error instanceof Error ? error.message : "An unexpected error occurred";
 
       // Handle UNAUTHORIZED errors
       if (errorMessage === "UNAUTHORIZED") {
@@ -114,17 +113,17 @@ export function createApp(options: AppOptions = {}) {
       .get(
         "/health",
         ({ user, session }) => ({
+          authenticated: Boolean(session),
+          service: "auth-service",
           status: "ok",
           timestamp: new Date().toISOString(),
-          service: "auth-service",
           user: user
             ? {
-                id: user.id,
                 email: user.email,
+                id: user.id,
                 name: user.name,
               }
             : null,
-          authenticated: !!session,
         }),
         { auth: true },
       )

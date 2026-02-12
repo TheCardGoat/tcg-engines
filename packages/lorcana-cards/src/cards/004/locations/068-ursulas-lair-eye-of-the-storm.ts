@@ -4,29 +4,29 @@ export const ursulasLairEyeOfTheStorm: LocationCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
-        effect: {
-          type: "return-to-hand",
-          target: "CHOSEN_CHARACTER",
-        },
         chooser: "CONTROLLER",
+        effect: {
+          target: "CHOSEN_CHARACTER",
+          type: "return-to-hand",
+        },
+        type: "optional",
       },
       id: "1ks-1",
       name: "SLIPPERY HALLS",
       text: "SLIPPERY HALLS Whenever a character is banished in a challenge while here, you may return them to your hand.",
       trigger: {
         event: "banish",
-        timing: "whenever",
         on: "ANY_CHARACTER",
+        timing: "whenever",
       },
       type: "triggered",
     },
     {
       effect: {
-        type: "modify-stat",
-        stat: "lore",
         modifier: 1,
+        stat: "lore",
         target: "CHARACTERS_HERE",
+        type: "modify-stat",
       },
       id: "1ks-2",
       text: "SEAT OF POWER Characters named Ursula get +1 {L} while here.",

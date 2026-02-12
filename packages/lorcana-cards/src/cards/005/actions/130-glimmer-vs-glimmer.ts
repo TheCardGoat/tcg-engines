@@ -4,14 +4,14 @@ export const glimmerVsGlimmer: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "banish",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "banish",
       },
       id: "e3r-1",
       text: "Banish chosen character of yours to banish chosen character.",

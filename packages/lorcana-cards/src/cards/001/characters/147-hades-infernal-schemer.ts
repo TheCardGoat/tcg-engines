@@ -4,8 +4,8 @@ export const hadesInfernalSchemer: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "play-card",
         from: "hand",
+        type: "play-card",
       },
       id: "x36-1",
       text: "**IS THERE A DOWNSIDE TO THIS?** When you play this character, you may put chosen opposing character into their player",

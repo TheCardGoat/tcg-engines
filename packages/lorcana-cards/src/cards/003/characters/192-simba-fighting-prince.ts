@@ -4,34 +4,34 @@ export const simbaFightingPrince: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "choice",
-        options: [
-          {
-            type: "draw",
-            amount: 2,
-            target: "CONTROLLER",
-          },
-          {
-            type: "deal-damage",
-            amount: 2,
-            target: {
-              selector: "chosen",
-              count: 1,
-              owner: "any",
-              zones: ["play"],
-              cardTypes: ["character"],
-            },
-          },
-        ],
         optionLabels: [
           "Draw 2 cards, then choose and discard 2 cards.",
           "Deal 2 damage to chosen character.",
         ],
+        options: [
+          {
+            amount: 2,
+            target: "CONTROLLER",
+            type: "draw",
+          },
+          {
+            amount: 2,
+            target: {
+              cardTypes: ["character"],
+              count: 1,
+              owner: "any",
+              selector: "chosen",
+              zones: ["play"],
+            },
+            type: "deal-damage",
+          },
+        ],
+        type: "choice",
       },
       id: "1sf-1",
       name: "STEP DOWN OR FIGHT When you play this character and",
       text: "STEP DOWN OR FIGHT When you play this character and whenever he banishes another character in a challenge during your turn, you may choose one: • Draw 2 cards, then choose and discard 2 cards. • Deal 2 damage to chosen character.",
-      trigger: { event: "play", timing: "when", on: "SELF" },
+      trigger: { event: "play", on: "SELF", timing: "when" },
       type: "triggered",
     },
   ],

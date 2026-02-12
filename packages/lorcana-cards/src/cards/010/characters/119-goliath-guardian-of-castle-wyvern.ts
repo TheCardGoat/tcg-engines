@@ -4,34 +4,34 @@ export const goliathGuardianOfCastleWyvern: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-lore",
         amount: 3,
+        type: "gain-lore",
       },
       id: "153-1",
       name: "BE CAREFUL, ALL OF YOU",
       text: "BE CAREFUL, ALL OF YOU Whenever one of your Gargoyle characters challenges another character, gain 1 lore.",
       trigger: {
         event: "challenge",
-        timing: "whenever",
         on: {
-          controller: "you",
           classification: "Gargoyle",
+          controller: "you",
         },
+        timing: "whenever",
       },
       type: "triggered",
     },
     {
       condition: {
-        type: "resource-count",
-        what: "cards-in-hand",
-        controller: "you",
         comparison: "greater-or-equal",
+        controller: "you",
+        type: "resource-count",
         value: 0,
+        what: "cards-in-hand",
       },
       effect: {
-        type: "restriction",
         restriction: "cant-ready",
         target: "SELF",
+        type: "restriction",
       },
       id: "153-2",
       name: "STONE BY DAY",

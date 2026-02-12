@@ -4,27 +4,27 @@ export const dontLetTheFrostbiteBite: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "ready",
             target: {
-              selector: "all",
               count: "all",
-              filter: [{ type: "owner", owner: "you" }],
+              filter: [{ owner: "you", type: "owner" }],
+              selector: "all",
             },
+            type: "ready",
           },
           {
-            type: "restriction",
+            duration: "this-turn",
             restriction: "cant-quest",
             target: {
-              selector: "all",
               count: "all",
-              filter: [{ type: "owner", owner: "you" }],
+              filter: [{ owner: "you", type: "owner" }],
+              selector: "all",
             },
-            duration: "this-turn",
+            type: "restriction",
           },
         ],
+        type: "sequence",
       },
       id: "cu3-1",
       text: "Ready all your characters. They can't quest for the rest of this turn.",

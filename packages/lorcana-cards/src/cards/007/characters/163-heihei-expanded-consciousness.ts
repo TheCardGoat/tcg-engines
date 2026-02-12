@@ -20,19 +20,19 @@ export const heiheiExpandedConsciousness: CharacterCard = {
     },
     {
       effect: {
-        type: "put-into-inkwell",
-        source: "hand",
-        target: "CONTROLLER",
         exerted: true,
         facedown: true,
+        source: "hand",
+        target: "CONTROLLER",
+        type: "put-into-inkwell",
       },
       id: "quw-3",
       name: "CLEAR YOUR MIND",
       text: "CLEAR YOUR MIND When you play this character, put all cards from your hand into your inkwell facedown and exerted.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

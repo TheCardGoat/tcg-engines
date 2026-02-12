@@ -37,7 +37,7 @@ task_groups:
 
 ### NEXT: Ask user to assign subagents to each task group
 
-Next we must determine which subagents should be assigned to which task groups.  Ask the user to provide this info using the following request to user and WAIT for user's response:
+Next we must determine which subagents should be assigned to which task groups. Ask the user to provide this info using the following request to user and WAIT for user's response:
 
 ```
 Please specify the name of each subagent to be assigned to each task group:
@@ -50,7 +50,7 @@ Please specify the name of each subagent to be assigned to each task group:
 Simply respond with the subagent names and corresponding task group number and I'll update orchestration.yml accordingly.
 ```
 
-Using the user's responses, update `orchestration.yml` to specify those subagent names.  `orchestration.yml` should end up looking like this:
+Using the user's responses, update `orchestration.yml` to specify those subagent names. `orchestration.yml` should end up looking like this:
 
 ```yaml
 task_groups:
@@ -77,7 +77,7 @@ task_groups:
 
 ### NEXT: Ask user to assign standards to each task group
 
-Next we must determine which standards should guide the implementation of each task group.  Ask the user to provide this info using the following request to user and WAIT for user's response:
+Next we must determine which standards should guide the implementation of each task group. Ask the user to provide this info using the following request to user and WAIT for user's response:
 
 ```
 Please specify the standard(s) that should be used to guide the implementation of each task group:
@@ -95,7 +95,7 @@ For each task group number, you can specify any combination of the following:
 "none" to include no standards for this task group.
 ```
 
-Using the user's responses, update `orchestration.yml` to specify those standards for each task group.  `orchestration.yml` should end up having AT LEAST the following information added to it:
+Using the user's responses, update `orchestration.yml` to specify those standards for each task group. `orchestration.yml` should end up having AT LEAST the following information added to it:
 
 ```yaml
 task_groups:
@@ -139,13 +139,14 @@ Note: If the `use_claude_code_subagents` flag is enabled, the final `orchestrati
 Loop through each task group in `agent-os/specs/[this-spec]/tasks.md` and delegate its implementation to the assigned subagent specified in `orchestration.yml`.
 
 For each delegation, provide the subagent with:
+
 - The task group (including the parent task and all sub-tasks)
 - The spec file: `agent-os/specs/[this-spec]/spec.md`
 - Instruct subagent to:
   - Perform their implementation
   - Check off the task and sub-task(s) in `agent-os/specs/[this-spec]/tasks.md`
 
-In addition to the above items, also instruct the subagent to closely adhere to the user's standards & preferences as specified in the following files.  To build the list of file references to give to the subagent, follow these instructions:
+In addition to the above items, also instruct the subagent to closely adhere to the user's standards & preferences as specified in the following files. To build the list of file references to give to the subagent, follow these instructions:
 
 #### Compile Implementation Standards
 
@@ -157,8 +158,8 @@ Use the following logic to compile a list of file references to standards that s
 2. Check the list of `standards` specified for this task group in `orchestration.yml`
 3. Compile the list of file references to those standards, one file reference per line, using this logic for determining which files to include:
    a. If the value for `standards` is simply `all`, then include every single file, folder, sub-folder and files within sub-folders in your list of files.
-   b. If the item under standards ends with "*" then it means that all files within this folder or sub-folder should be included. For example, `frontend/*` means include all files and sub-folders and their files located inside of `agent-os/standards/frontend/`.
-   c. If a file ends in `.md` then it means this is one specific file you must include in your list of files. For example `backend/api.md` means you must include the file located at `agent-os/standards/backend/api.md`.
+   b. If the item under standards ends with "_" then it means that all files within this folder or sub-folder should be included. For example, `frontend/_`means include all files and sub-folders and their files located inside of`agent-os/standards/frontend/`.
+c. If a file ends in `.md`then it means this is one specific file you must include in your list of files. For example`backend/api.md`means you must include the file located at`agent-os/standards/backend/api.md`.
    d. De-duplicate files in your list of file references.
 
 ##### Output Format
@@ -175,6 +176,5 @@ The compiled list of standards should look something like this, where each file 
 @agent-os/standards/frontend/css.md
 @agent-os/standards/frontend/responsive.md
 ```
-
 
 Provide all of the above to the subagent when delegating tasks for it to implement.

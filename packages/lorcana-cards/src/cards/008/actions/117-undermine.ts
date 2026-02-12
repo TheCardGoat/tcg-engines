@@ -4,28 +4,28 @@ export const undermine: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "discard",
             amount: 1,
-            target: "CONTROLLER",
             chosen: true,
+            target: "CONTROLLER",
+            type: "discard",
           },
           {
-            type: "modify-stat",
-            stat: "strength",
+            duration: "this-turn",
             modifier: 2,
+            stat: "strength",
             target: {
-              selector: "chosen",
+              cardTypes: ["character"],
               count: 1,
               owner: "any",
+              selector: "chosen",
               zones: ["play"],
-              cardTypes: ["character"],
             },
-            duration: "this-turn",
+            type: "modify-stat",
           },
         ],
+        type: "sequence",
       },
       id: "z6k-1",
       text: "Chosen opponent chooses and discards a card. Chosen character gets +2 {S} this turn.",

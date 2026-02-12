@@ -12,17 +12,17 @@ export const lythosRockTitan: CharacterCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "gain-keyword",
+        duration: "this-turn",
         keyword: "Resist",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "gain-keyword",
         value: 2,
-        duration: "this-turn",
       },
       id: "ae9-2",
       text: "STONE SKIN {E} — Chosen character gains Resist +2 this turn.",

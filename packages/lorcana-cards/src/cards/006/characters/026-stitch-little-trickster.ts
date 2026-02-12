@@ -4,11 +4,11 @@ export const stitchLittleTrickster: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
-        modifier: 1,
-        target: "SELF",
         duration: "this-turn",
+        modifier: 1,
+        stat: "strength",
+        target: "SELF",
+        type: "modify-stat",
       },
       id: "kka-1",
       text: "NEED A HAND? 1 {I} - This character gets +1 {S} this turn.",

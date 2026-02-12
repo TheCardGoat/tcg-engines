@@ -43,9 +43,7 @@ describe("damageEffectParser", () => {
     });
 
     it("parses damage in longer text", () => {
-      const result = damageEffectParser.parse(
-        "deal 2 damage to chosen character",
-      );
+      const result = damageEffectParser.parse("deal 2 damage to chosen character");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("deal-damage");

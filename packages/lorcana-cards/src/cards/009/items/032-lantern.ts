@@ -5,8 +5,8 @@ export const lantern: ItemCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "play-card",
         from: "hand",
+        type: "play-card",
       },
       id: "o5u-1",
       text: "BIRTHDAY LIGHTS {E} — You pay 1 {I} less for the next character you play this turn.",

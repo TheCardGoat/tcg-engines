@@ -4,26 +4,26 @@ export const maximusTeamChampion: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "choice",
-        options: [
-          {
-            type: "play-card",
-            from: "hand",
-          },
-          {
-            type: "gain-lore",
-            amount: 2,
-          },
-          {
-            type: "gain-lore",
-            amount: 5,
-          },
-        ],
         optionLabels: [
           "if you have any characters in play with 5 {S}",
           "more, gain 2 lore. If you have any in play with 10 {S}",
           "more, gain 5 lore instead.",
         ],
+        options: [
+          {
+            from: "hand",
+            type: "play-card",
+          },
+          {
+            amount: 2,
+            type: "gain-lore",
+          },
+          {
+            amount: 5,
+            type: "gain-lore",
+          },
+        ],
+        type: "choice",
       },
       id: "p5e-1",
       text: "ROYALLY BIG REWARDS At the end of your turn, if you have any characters in play with 5 {S} or more, gain 2 lore. If you have any in play with 10 {S} or more, gain 5 lore instead.",

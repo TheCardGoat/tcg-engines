@@ -11,10 +11,10 @@ const RATE_LIMIT_RESPONSE: Response = new Response(
     statusCode: 429,
   }),
   {
-    status: 429,
     headers: {
       "Content-Type": "application/json",
     },
+    status: 429,
   },
 );
 
@@ -41,7 +41,9 @@ function getClientIdentifier(request: Request, server: unknown): string {
 
   // Try Cloudflare header first
   const cfIp = request.headers.get("CF-Connecting-IP");
-  if (cfIp) return cfIp;
+  if (cfIp) {
+    return cfIp;
+  }
 
   // Try standard proxy headers
   const forwardedFor = request.headers.get("X-Forwarded-For");
@@ -54,19 +56,21 @@ function getClientIdentifier(request: Request, server: unknown): string {
 
   // Try X-Real-IP
   const realIp = request.headers.get("X-Real-IP");
-  if (realIp) return realIp;
+  if (realIp) {
+    return realIp;
+  }
 
   // Fallback to Elysia's built-in IP detection
   if (
     server &&
     typeof server === "object" &&
     "requestIP" in (server as Record<string, unknown>) &&
-    typeof (server as { requestIP?: (req: Request) => { address?: string } })
-      .requestIP === "function"
+    typeof (server as { requestIP?: (req: Request) => { address?: string } }).requestIP ===
+      "function"
   ) {
-    const ip = (
-      server as { requestIP?: (req: Request) => { address?: string } }
-    ).requestIP!(request);
+    const ip = (server as { requestIP?: (req: Request) => { address?: string } }).requestIP!(
+      request,
+    );
     return ip?.address || "unknown";
   }
   return "unknown";
@@ -78,11 +82,7 @@ function getClientIdentifier(request: Request, server: unknown): string {
  * Priority: User ID → Session Token → IP
  * All levels use the same rate limit, just different identifiers
  */
-function getHierarchicalIdentifier(
-  request: Request,
-  server: unknown,
-  derived: unknown,
-): string {
+function getHierarchicalIdentifier(request: Request, server: unknown, derived: unknown): string {
   // Priority 1: User ID (all sessions share one bucket)
   if (
     derived &&
@@ -121,9 +121,7 @@ function isRateLimitEnabled(): boolean {
  * Uses IP-based identification (applied before auth middleware)
  * Note: Authenticated endpoints use their own rate limiters with higher limits
  */
-export const globalRateLimiter = ():
-  | ReturnType<typeof rateLimit>
-  | undefined => {
+export const globalRateLimiter = (): ReturnType<typeof rateLimit> | undefined => {
   if (!isRateLimitEnabled()) {
     return undefined;
   }
@@ -141,9 +139,7 @@ export const globalRateLimiter = ():
  *
  * Limits: 1000 requests/minute (very lenient for monitoring)
  */
-export const healthRateLimiter = ():
-  | ReturnType<typeof rateLimit>
-  | undefined => {
+export const healthRateLimiter = (): ReturnType<typeof rateLimit> | undefined => {
   if (!isRateLimitEnabled()) {
     return undefined;
   }

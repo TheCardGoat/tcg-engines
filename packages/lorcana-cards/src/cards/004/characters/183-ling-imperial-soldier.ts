@@ -4,10 +4,10 @@ export const lingImperialSoldier: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: 1,
+        stat: "strength",
         target: "YOUR_CHARACTERS",
+        type: "modify-stat",
       },
       id: "joz-1",
       name: "FULL OF SPIRIT Your Hero",

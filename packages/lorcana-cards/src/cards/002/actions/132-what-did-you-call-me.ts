@@ -4,11 +4,11 @@ export const whatDidYouCallMe: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
-        modifier: 3,
-        target: "CHOSEN_CHARACTER",
         duration: "this-turn",
+        modifier: 3,
+        stat: "strength",
+        target: "CHOSEN_CHARACTER",
+        type: "modify-stat",
       },
       id: "n3b-1",
       text: "Chosen damaged character gets +3 {S} this turn.",

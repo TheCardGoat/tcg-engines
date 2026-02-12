@@ -4,21 +4,21 @@ export const puaPotbelliedBuddy: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
-        effect: {
-          type: "shuffle-into-deck",
-          target: "SELF",
-          intoDeck: "owner",
-        },
         chooser: "CONTROLLER",
+        effect: {
+          intoDeck: "owner",
+          target: "SELF",
+          type: "shuffle-into-deck",
+        },
+        type: "optional",
       },
       id: "19j-1",
       name: "ALWAYS THERE",
       text: "ALWAYS THERE When this character is banished, you may shuffle this card into your deck.",
       trigger: {
         event: "banish",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

@@ -10,11 +10,11 @@ export const mickeyMouseMusketeer: CharacterCard = {
     },
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
-        modifier: 1,
-        target: "CHOSEN_CHARACTER",
         duration: "this-turn",
+        modifier: 1,
+        stat: "strength",
+        target: "CHOSEN_CHARACTER",
+        type: "modify-stat",
       },
       id: "9h9-2",
       name: "ALL FOR ONE",

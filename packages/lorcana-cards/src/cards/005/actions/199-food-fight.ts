@@ -5,15 +5,15 @@ export const foodFight: ActionCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "deal-damage",
         amount: 1,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "deal-damage",
       },
       id: "1ww-1",
       text: "Your characters gain “{E}, 1 {I} — Deal 1 damage to chosen character” this turn.",

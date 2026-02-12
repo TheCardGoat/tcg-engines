@@ -10,9 +10,7 @@ import { anyCard, countCards, selectCards } from "./filter-matching";
  * Provides chainable methods to build complex CardFilter objects
  * @template TGameState - The game state type
  */
-export class CardQuery<
-  TGameState extends { cards: Record<string, CardInstance<any>> },
-> {
+export class CardQuery<TGameState extends { cards: Record<string, CardInstance<any>> }> {
   private filter: CardFilter<TGameState> = {};
 
   private constructor(
@@ -27,9 +25,7 @@ export class CardQuery<
    * @param registry - Card definition registry
    * @returns New CardQuery instance
    */
-  static create<
-    TGameState extends { cards: Record<string, CardInstance<any>> },
-  >(
+  static create<TGameState extends { cards: Record<string, CardInstance<any>> }>(
     state: TGameState,
     registry: CardRegistry<CardDefinition>,
   ): CardQuery<TGameState> {

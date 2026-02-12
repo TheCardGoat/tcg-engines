@@ -11,23 +11,13 @@ import type {
   ZoneId as CoreZoneId,
   GameMoveDefinitions,
 } from "@tcg/core";
-import type {
-  Domain,
-  RiftboundCardMeta,
-  RiftboundGameState,
-  RiftboundMoves,
-} from "../../types";
+import type { Domain, RiftboundCardMeta, RiftboundGameState, RiftboundMoves } from "../../types";
 
 /**
  * Resource move definitions
  */
 export const resourceMoves: Partial<
-  GameMoveDefinitions<
-    RiftboundGameState,
-    RiftboundMoves,
-    RiftboundCardMeta,
-    unknown
-  >
+  GameMoveDefinitions<RiftboundGameState, RiftboundMoves, RiftboundCardMeta, unknown>
 > = {
   /**
    * Channel Runes
@@ -42,10 +32,10 @@ export const resourceMoves: Partial<
 
       // Move runes from rune deck to rune pool
       zones.bulkMove({
-        from: "runeDeck" as CoreZoneId,
-        to: "runePool" as CoreZoneId,
         count,
+        from: "runeDeck" as CoreZoneId,
         playerId: playerId as CorePlayerId,
+        to: "runePool" as CoreZoneId,
       });
     },
   },
@@ -87,8 +77,8 @@ export const resourceMoves: Partial<
       // Move rune to bottom of rune deck
       zones.moveCard({
         cardId: runeId as CoreCardId,
-        targetZoneId: "runeDeck" as CoreZoneId,
         position: "bottom",
+        targetZoneId: "runeDeck" as CoreZoneId,
       });
 
       // Add 1 power of the specified domain
@@ -117,8 +107,7 @@ export const resourceMoves: Partial<
         // Add power for each domain
         for (const [domain, amount] of Object.entries(power)) {
           if (amount && amount > 0) {
-            pool.power[domain as Domain] =
-              (pool.power[domain as Domain] ?? 0) + amount;
+            pool.power[domain as Domain] = (pool.power[domain as Domain] ?? 0) + amount;
           }
         }
       }

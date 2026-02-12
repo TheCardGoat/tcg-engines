@@ -4,31 +4,31 @@ export const theFamilyMadrigal: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "scry",
         amount: 5,
-        target: "CONTROLLER",
         destinations: [
           {
-            zone: "hand",
-            min: 0,
             max: 1,
+            min: 0,
             reveal: true,
+            zone: "hand",
           },
           {
-            zone: "hand",
-            min: 0,
-            max: 1,
             filter: {
               type: "song",
             },
+            max: 1,
+            min: 0,
             reveal: true,
+            zone: "hand",
           },
           {
-            zone: "deck-top",
-            remainder: true,
             ordering: "player-choice",
+            remainder: true,
+            zone: "deck-top",
           },
         ],
+        target: "CONTROLLER",
+        type: "scry",
       },
       id: "ibc-1",
       text: "Look at the top 5 cards of your deck. You may reveal up to 1 Madrigal character card and up to 1 song card and put them into your hand. Put the rest on the top of your deck in any order.",

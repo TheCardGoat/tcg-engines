@@ -4,16 +4,16 @@ export const shesYourPerson: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "remove-damage",
         amount: 3,
-        upTo: true,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "remove-damage",
+        upTo: true,
       },
       id: "1wu-2",
       text: "- Remove up to 3 damage from chosen character.",
@@ -21,16 +21,16 @@ export const shesYourPerson: ActionCard = {
     },
     {
       effect: {
-        type: "remove-damage",
         amount: 3,
-        upTo: true,
         target: {
-          selector: "all",
+          cardTypes: ["character"],
           count: "all",
           owner: "you",
+          selector: "all",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "remove-damage",
+        upTo: true,
       },
       id: "1wu-3",
       text: "- Remove up to 3 damage from each of your characters with Bodyguard.",

@@ -8,9 +8,7 @@ describe("Lena Sabrewing - Rebellious Teenager", () => {
       play: [lenaSabrewingRebelliousTeenager],
     });
 
-    const cardUnderTest = testEngine.getCardModel(
-      lenaSabrewingRebelliousTeenager,
-    );
+    const cardUnderTest = testEngine.getCardModel(lenaSabrewingRebelliousTeenager);
     expect(cardUnderTest.hasRush).toBe(true);
   });
 });

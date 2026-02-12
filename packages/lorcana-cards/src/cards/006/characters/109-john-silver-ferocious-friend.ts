@@ -4,38 +4,38 @@ export const johnSilverFerociousFriend: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "optional",
+            chooser: "CONTROLLER",
             effect: {
-              type: "deal-damage",
               amount: 1,
               target: {
-                selector: "all",
+                cardTypes: ["character"],
                 count: "all",
                 owner: "any",
+                selector: "all",
                 zones: ["play"],
-                cardTypes: ["character"],
               },
+              type: "deal-damage",
             },
-            chooser: "CONTROLLER",
+            type: "optional",
           },
           {
-            type: "restriction",
+            duration: "this-turn",
             restriction: "cant-quest",
             target: "SELF",
-            duration: "this-turn",
+            type: "restriction",
           },
         ],
+        type: "sequence",
       },
       id: "sje-1",
       name: "YOU HAVE TO CHART YOUR OWN COURSE",
       text: "YOU HAVE TO CHART YOUR OWN COURSE Whenever this character quests, you may deal 1 damage to one of your other characters. If you do, ready that character. They cannot quest this turn.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

@@ -4,27 +4,27 @@ export const magicaDeSpellShadowyAndSinister: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "shuffle-into-deck",
+          intoDeck: "owner",
           target: {
-            selector: "chosen",
+            cardTypes: ["card"],
             count: 1,
             owner: "any",
+            selector: "chosen",
             zones: ["play"],
-            cardTypes: ["card"],
           },
-          intoDeck: "owner",
+          type: "shuffle-into-deck",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "1l8-1",
       name: "DARK INCANTATION",
       text: "DARK INCANTATION When you play this character, you may shuffle a card from chosen player's discard into their deck.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

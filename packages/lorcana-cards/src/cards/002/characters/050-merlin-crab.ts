@@ -4,37 +4,37 @@ export const merlinCrab: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "ready",
             target: {
-              selector: "self",
+              cardTypes: ["character"],
               count: 1,
               owner: "any",
+              selector: "self",
               zones: ["play"],
-              cardTypes: ["character"],
             },
+            type: "ready",
           },
           {
-            type: "gain-keyword",
+            duration: "this-turn",
             keyword: "Challenger",
             target: {
-              selector: "chosen",
+              cardTypes: ["character"],
               count: 1,
               owner: "any",
+              selector: "chosen",
               zones: ["play"],
-              cardTypes: ["character"],
             },
+            type: "gain-keyword",
             value: 3,
-            duration: "this-turn",
           },
         ],
+        type: "sequence",
       },
       id: "1ih-1",
       name: "READY OR NOT! When you play this character and",
       text: "READY OR NOT! When you play this character and when he leaves play, chosen character gains Challenger +3 this turn.",
-      trigger: { event: "play", timing: "when", on: "SELF" },
+      trigger: { event: "play", on: "SELF", timing: "when" },
       type: "triggered",
     },
   ],

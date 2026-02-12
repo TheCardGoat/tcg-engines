@@ -4,32 +4,32 @@ export const robinHoodUnrivaledArcher: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "an opponent has more cards in their hand than you",
+          type: "if",
         },
         then: {
-          type: "draw",
           amount: 1,
           target: "CONTROLLER",
+          type: "draw",
         },
+        type: "conditional",
       },
       id: "v3n-1",
       name: "FEED THE POOR",
       text: "FEED THE POOR When you play this character, if an opponent has more cards in their hand than you, you may draw a card.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Evasive",
         target: "SELF",
+        type: "gain-keyword",
       },
       id: "v3n-2",
       text: "GOOD SHOT During your turn, this character gains Evasive.",

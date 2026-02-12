@@ -267,9 +267,15 @@ export function parseStaticAbility(text: string): StaticAbilityParseResult | und
     const keywords: string[] = [];
 
     // Collect all keywords from the match groups
-    if (grantMatch[2]) {keywords.push(grantMatch[2]);}
-    if (grantMatch[3]) {keywords.push(grantMatch[3]);}
-    if (grantMatch[4]) {keywords.push(grantMatch[4]);}
+    if (grantMatch[2]) {
+      keywords.push(grantMatch[2]);
+    }
+    if (grantMatch[3]) {
+      keywords.push(grantMatch[3]);
+    }
+    if (grantMatch[4]) {
+      keywords.push(grantMatch[4]);
+    }
 
     const target = parseGrantTarget(targetText);
 
@@ -296,7 +302,7 @@ export function parseStaticAbility(text: string): StaticAbilityParseResult | und
 
     return {
       ability: {
-        effect: { type: "grant-keyword", keyword, target },
+        effect: { keyword, target, type: "grant-keyword" },
         type: "static",
       },
       endIndex: text.length,
@@ -312,9 +318,9 @@ export function parseStaticAbility(text: string): StaticAbilityParseResult | und
     return {
       ability: {
         effect: {
-          type: "grant-keyword",
           keyword,
-          target: { type: "gear", controller: "friendly" } as Target,
+          target: { controller: "friendly", type: "gear" } as Target,
+          type: "grant-keyword",
         },
         type: "static",
       },
@@ -333,12 +339,12 @@ export function parseStaticAbility(text: string): StaticAbilityParseResult | und
     return {
       ability: {
         effect: {
-          type: "grant-keyword",
           keyword,
           target: {
-            type: cardType.toLowerCase() === "equipment" ? "gear" : "card",
             location: zone.toLowerCase(),
+            type: cardType.toLowerCase() === "equipment" ? "gear" : "card",
           } as Target,
+          type: "grant-keyword",
         },
         type: "static",
       },
@@ -361,8 +367,8 @@ export function parseStaticAbility(text: string): StaticAbilityParseResult | und
         ability: {
           condition,
           effect: {
-            type: "restriction",
             restriction: restrictionText,
+            type: "restriction",
           } as unknown as Effect,
           type: "static",
         },
@@ -380,8 +386,8 @@ export function parseStaticAbility(text: string): StaticAbilityParseResult | und
     return {
       ability: {
         effect: {
-          type: "play-restriction",
           allowedLocation: locationText,
+          type: "play-restriction",
         } as unknown as Effect,
         type: "static",
       },

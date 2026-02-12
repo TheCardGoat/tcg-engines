@@ -14,9 +14,7 @@ export type { AuthUser, AuthSession, SessionResult };
 /**
  * Elysia requires types to extend Record<string, unknown> for context derivation
  */
-export interface ElysiaSessionResult
-  extends SessionResult,
-    Record<string, unknown> {
+export interface ElysiaSessionResult extends SessionResult, Record<string, unknown> {
   user: AuthUser | null;
   session: AuthSession | null;
 }
@@ -65,6 +63,14 @@ const betterAuthConfig: BetterAuthOptions = {
 
   plugins: [
     jwt({
+      jwks: {
+        keyPairConfig: {
+          alg: "EdDSA",
+          crv: "Ed25519",
+        },
+        rotationInterval: 60 * 60 * 24 * 30, // 30 days
+        gracePeriod: 60 * 60 * 24 * 7, // 7 days grace period for key rotation
+      },
       jwt: {
         issuer: env.AUTH_BASE_URL,
         audience: env.AUTH_BASE_URL,
@@ -75,17 +81,8 @@ const betterAuthConfig: BetterAuthOptions = {
           name: user.name,
           // Include subscription tier for authorization in content service
           subscriptionTier:
-            (user as AuthUser & { subscriptionTier?: string })
-              .subscriptionTier || "free",
+            (user as AuthUser & { subscriptionTier?: string }).subscriptionTier || "free",
         }),
-      },
-      jwks: {
-        keyPairConfig: {
-          alg: "EdDSA",
-          crv: "Ed25519",
-        },
-        rotationInterval: 60 * 60 * 24 * 30, // 30 days
-        gracePeriod: 60 * 60 * 24 * 7, // 7 days grace period for key rotation
       },
     }),
   ],
@@ -136,8 +133,8 @@ function getAuth(): ReturnType<typeof betterAuth<BetterAuthOptions>> {
       ...betterAuthConfig,
       database: drizzleAdapter(getDb(), {
         provider: "pg",
-        usePlural: true,
         schema,
+        usePlural: true,
       }),
     });
   }
@@ -157,8 +154,8 @@ async function getSession(request: Request): Promise<ElysiaSessionResult> {
 
     if (session?.user && session?.session) {
       return {
-        user: session.user as AuthUser,
         session: session.session as AuthSession,
+        user: session.user as AuthUser,
       };
     }
   } catch (error) {
@@ -167,8 +164,8 @@ async function getSession(request: Request): Promise<ElysiaSessionResult> {
   }
 
   return {
-    user: null,
     session: null,
+    user: null,
   };
 }
 
@@ -186,25 +183,23 @@ async function getSession(request: Request): Promise<ElysiaSessionResult> {
  * });
  * ```
  */
-export const authGuard = new Elysia({ name: "auth-guard" }).derive(
-  async ({ request, set }) => {
-    const result = await getSession(request);
+export const authGuard = new Elysia({ name: "auth-guard" }).derive(async ({ request, set }) => {
+  const result = await getSession(request);
 
-    if (!(result.user && result.session)) {
-      // User is not authenticated - return 401
-      set.status = 401;
-      return {
-        ...result,
-        error: {
-          code: "UNAUTHORIZED",
-          message: "Authentication required",
-        },
-      };
-    }
+  if (!(result.user && result.session)) {
+    // User is not authenticated - return 401
+    set.status = 401;
+    return {
+      ...result,
+      error: {
+        code: "UNAUTHORIZED",
+        message: "Authentication required",
+      },
+    };
+  }
 
-    return result;
-  },
-);
+  return result;
+});
 
 /**
  * Helper function to assert user is authenticated
@@ -221,10 +216,7 @@ export const authGuard = new Elysia({ name: "auth-guard" }).derive(
  * })
  * ```
  */
-export function requireAuth(
-  user: AuthUser | null,
-  set: { status?: number | string },
-): AuthUser {
+export function requireAuth(user: AuthUser | null, set: { status?: number | string }): AuthUser {
   if (!user) {
     set.status = 401;
     throw new Error("UNAUTHORIZED");
@@ -260,7 +252,9 @@ export const betterAuthMacro = new Elysia({ name: "better-auth" })
   .macro({
     auth: (enabled: boolean) => ({
       async beforeHandle({ request, set }) {
-        if (!enabled) return;
+        if (!enabled) {
+          return;
+        }
 
         const session = await getSession(request);
         if (!(session.user && session.session)) {
@@ -274,8 +268,8 @@ export const betterAuthMacro = new Elysia({ name: "better-auth" })
       async resolve({ request }) {
         const session = await getSession(request);
         return {
-          user: session.user,
           session: session.session,
+          user: session.user,
         };
       },
     }),

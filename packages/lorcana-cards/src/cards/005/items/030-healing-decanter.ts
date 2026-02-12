@@ -5,16 +5,16 @@ export const healingDecanter: ItemCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "remove-damage",
         amount: 2,
-        upTo: true,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "remove-damage",
+        upTo: true,
       },
       id: "el0-1",
       text: "RENEWING ESSENCE {E} — Remove up to 2 damage from chosen character.",

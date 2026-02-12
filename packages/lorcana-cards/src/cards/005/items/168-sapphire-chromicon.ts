@@ -4,9 +4,9 @@ export const sapphireChromicon: ItemCard = {
   abilities: [
     {
       effect: {
-        type: "restriction",
         restriction: "enters-play-exerted",
         target: "SELF",
+        type: "restriction",
       },
       id: "cxg-1",
       name: "POWERING UP",
@@ -16,8 +16,8 @@ export const sapphireChromicon: ItemCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "gain-lore",
         amount: 2,
+        type: "gain-lore",
       },
       id: "cxg-2",
       text: "SAPPHIRE LIGHT {E}, 2 {I}, Banish one of your items — Gain 2 lore.",

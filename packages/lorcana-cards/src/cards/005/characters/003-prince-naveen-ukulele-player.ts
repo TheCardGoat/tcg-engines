@@ -11,17 +11,17 @@ export const princeNaveenUkulelePlayer: CharacterCard = {
     },
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "play-card",
-          from: "hand",
           cost: "free",
           costRestriction: {
             comparison: "less-or-equal",
             value: 6,
           },
+          from: "hand",
+          type: "play-card",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "v3r-2",
       text: "IT'S BEAUTIFUL, NO? When you play this character, you may play a song with cost 6 or less for free.",

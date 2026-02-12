@@ -10,27 +10,27 @@ export const madamMimPurpleDragon: CharacterCard = {
     },
     {
       effect: {
-        type: "choice",
-        options: [
-          {
-            type: "play-card",
-            from: "hand",
-          },
-          {
-            type: "return-to-hand",
-            target: {
-              selector: "chosen",
-              count: 1,
-              owner: "any",
-              zones: ["play"],
-              cardTypes: ["character"],
-            },
-          },
-        ],
         optionLabels: [
           "I WIN, I WIN! When you play this character, banish her",
           "return another 2 chosen characters of yours to your hand.",
         ],
+        options: [
+          {
+            from: "hand",
+            type: "play-card",
+          },
+          {
+            target: {
+              cardTypes: ["character"],
+              count: 1,
+              owner: "any",
+              selector: "chosen",
+              zones: ["play"],
+            },
+            type: "return-to-hand",
+          },
+        ],
+        type: "choice",
       },
       id: "12t-2",
       text: "I WIN, I WIN! When you play this character, banish her or return another 2 chosen characters of yours to your hand.",

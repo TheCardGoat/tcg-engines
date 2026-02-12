@@ -4,14 +4,14 @@ export const cantHoldItBackAnymore: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "exert",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "opponent",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "exert",
       },
       id: "1ry-1",
       text: "Exert chosen opposing character. Move all damage counters from all other characters to that character.",

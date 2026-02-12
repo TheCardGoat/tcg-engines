@@ -164,23 +164,24 @@ export function detectTriggeredEffects(
   event: TriggerEvent,
 ): TriggerDetectionResult {
   switch (event.type) {
-    case "DEPLOY":
+    case "DEPLOY": {
       return detectDeployTriggers(state, event.cardId, event.playerId);
-    case "ATTACK":
-      return detectAttackTriggers(
-        state,
-        event.attackerId,
-        event.targetId,
-        event.playerId,
-      );
-    case "DESTROYED":
+    }
+    case "ATTACK": {
+      return detectAttackTriggers(state, event.attackerId, event.targetId, event.playerId);
+    }
+    case "DESTROYED": {
       return detectDestroyedTriggers(state, event.cardId, event.playerId);
-    case "START_OF_TURN":
+    }
+    case "START_OF_TURN": {
       return detectStartOfTurnTriggers(state, event.playerId);
-    case "END_OF_TURN":
+    }
+    case "END_OF_TURN": {
       return detectEndOfTurnTriggers(state, event.playerId);
-    default:
+    }
+    default: {
       return { effects: [], hasTriggers: false };
+    }
   }
 }
 
@@ -211,19 +212,23 @@ export function detectDeployTriggers(
   // Scan all players' battle areas for cards with deploy triggers
   for (const player of state.players) {
     const battleArea = state.zones.battleArea[player];
-    if (!battleArea?.cards) continue;
+    if (!battleArea?.cards) {
+      continue;
+    }
 
     for (const cardId of battleArea.cards) {
       const cardDef = getCardDefinition(cardId);
-      if (!cardDef) continue;
+      if (!cardDef) {
+        continue;
+      }
 
       // Check each effect on the card
       for (const effect of cardDef.effects ?? []) {
         if (matchesDeployTiming(effect.timing)) {
           effects.push({
-            sourceCardId: cardId,
-            effectRef: { effectId: effect.id },
             controllerId: player,
+            effectRef: { effectId: effect.id },
+            sourceCardId: cardId,
           });
         }
       }
@@ -265,19 +270,23 @@ export function detectAttackTriggers(
   // Scan all players' battle areas for cards with attack triggers
   for (const player of state.players) {
     const battleArea = state.zones.battleArea[player];
-    if (!battleArea?.cards) continue;
+    if (!battleArea?.cards) {
+      continue;
+    }
 
     for (const cardId of battleArea.cards) {
       const cardDef = getCardDefinition(cardId);
-      if (!cardDef) continue;
+      if (!cardDef) {
+        continue;
+      }
 
       // Check each effect on the card
       for (const effect of cardDef.effects ?? []) {
         if (matchesAttackTiming(effect.timing)) {
           effects.push({
-            sourceCardId: cardId,
-            effectRef: { effectId: effect.id },
             controllerId: player,
+            effectRef: { effectId: effect.id },
+            sourceCardId: cardId,
           });
         }
       }
@@ -317,19 +326,23 @@ export function detectDestroyedTriggers(
   // Scan all players' battle areas for cards with destroyed triggers
   for (const player of state.players) {
     const battleArea = state.zones.battleArea[player];
-    if (!battleArea?.cards) continue;
+    if (!battleArea?.cards) {
+      continue;
+    }
 
     for (const cardId of battleArea.cards) {
       const cardDef = getCardDefinition(cardId);
-      if (!cardDef) continue;
+      if (!cardDef) {
+        continue;
+      }
 
       // Check each effect on the card
       for (const effect of cardDef.effects ?? []) {
         if (matchesDestroyedTiming(effect.timing)) {
           effects.push({
-            sourceCardId: cardId,
-            effectRef: { effectId: effect.id },
             controllerId: player,
+            effectRef: { effectId: effect.id },
+            sourceCardId: cardId,
           });
         }
       }
@@ -368,15 +381,17 @@ export function detectStartOfTurnTriggers(
   if (battleArea?.cards) {
     for (const cardId of battleArea.cards) {
       const cardDef = getCardDefinition(cardId);
-      if (!cardDef) continue;
+      if (!cardDef) {
+        continue;
+      }
 
       // Check each effect on the card
       for (const effect of cardDef.effects ?? []) {
         if (matchesStartOfTurnTiming(effect.timing)) {
           effects.push({
-            sourceCardId: cardId,
-            effectRef: { effectId: effect.id },
             controllerId: playerId,
+            effectRef: { effectId: effect.id },
+            sourceCardId: cardId,
           });
         }
       }
@@ -413,19 +428,23 @@ export function detectEndOfTurnTriggers(
   // Scan all players' battle areas for end of turn triggers
   for (const player of state.players) {
     const battleArea = state.zones.battleArea[player];
-    if (!battleArea?.cards) continue;
+    if (!battleArea?.cards) {
+      continue;
+    }
 
     for (const cardId of battleArea.cards) {
       const cardDef = getCardDefinition(cardId);
-      if (!cardDef) continue;
+      if (!cardDef) {
+        continue;
+      }
 
       // Check each effect on the card
       for (const effect of cardDef.effects ?? []) {
         if (matchesEndOfTurnTiming(effect.timing)) {
           effects.push({
-            sourceCardId: cardId,
-            effectRef: { effectId: effect.id },
             controllerId: player,
+            effectRef: { effectId: effect.id },
+            sourceCardId: cardId,
           });
         }
       }
@@ -545,9 +564,9 @@ export function orderTriggeredEffects(
   const order = [...activePlayerEffects, ...opponentEffects];
 
   return {
-    order,
     activePlayerEffects,
     opponentEffects,
+    order,
   };
 }
 
@@ -574,9 +593,7 @@ export function orderTriggeredEffectsCustom(
   // Validate order indices
   for (const index of customOrder) {
     if (index < 0 || index >= effects.length) {
-      throw new Error(
-        `Invalid order index ${index}: must be between 0 and ${effects.length - 1}`,
-      );
+      throw new Error(`Invalid order index ${index}: must be between 0 and ${effects.length - 1}`);
     }
   }
 
@@ -586,9 +603,9 @@ export function orderTriggeredEffectsCustom(
   const opponentEffects: number[] = [];
 
   return {
-    order: customOrder,
     activePlayerEffects,
     opponentEffects,
+    order: customOrder,
   };
 }
 

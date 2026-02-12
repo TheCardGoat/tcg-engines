@@ -4,39 +4,39 @@ export const mauriceWorldfamousInventor: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "play-card",
         from: "hand",
+        type: "play-card",
       },
       id: "x5f-1",
       name: "GIVE IT A TRY",
       text: "GIVE IT A TRY Whenever this character quests, you pay 2 {I} less for the next item you play this turn.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "draw",
           amount: 1,
           target: "CONTROLLER",
+          type: "draw",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "x5f-2",
       name: "IT WORKS!",
       text: "IT WORKS! Whenever you play an item, you may draw a card.",
       trigger: {
         event: "play",
-        timing: "whenever",
         on: {
-          controller: "you",
           cardType: "item",
+          controller: "you",
         },
+        timing: "whenever",
       },
       type: "triggered",
     },

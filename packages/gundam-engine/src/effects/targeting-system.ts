@@ -20,9 +20,9 @@ import type {
   LevelFilter,
   TargetCountRange,
   TargetFilter,
-  TargetingSpec,
   TargetPropertyFilter,
   TargetStateFilter,
+  TargetingSpec,
   ZoneType,
 } from "../types/effects";
 
@@ -173,10 +173,7 @@ export function getCardDamage(state: GundamGameState, cardId: CardId): number {
  * @param cardId - Card to find owner for
  * @returns PlayerId of owner, or undefined if card not found
  */
-export function getCardOwner(
-  state: GundamGameState,
-  cardId: CardId,
-): PlayerId | undefined {
+export function getCardOwner(state: GundamGameState, cardId: CardId): PlayerId | undefined {
   // Iterate through all zones to find the card
   for (const zoneType of Object.keys(state.zones) as ZoneType[]) {
     const zoneData = state.zones[zoneType];
@@ -251,10 +248,7 @@ export function matchesCardType(
  * @param color - Color to match
  * @returns True if card matches the color
  */
-export function matchesColor(
-  cardDefinition: BaseEffectCardDefinition,
-  color: Color,
-): boolean {
+export function matchesColor(cardDefinition: BaseEffectCardDefinition, color: Color): boolean {
   return (cardDefinition as { color?: Color }).color === color;
 }
 
@@ -264,10 +258,7 @@ export function matchesColor(
  * @param traits - Traits to match (must have all)
  * @returns True if card has all traits
  */
-export function hasTrait(
-  cardDefinition: BaseEffectCardDefinition,
-  traits: string[],
-): boolean {
+export function hasTrait(cardDefinition: BaseEffectCardDefinition, traits: string[]): boolean {
   const cardTraits = (cardDefinition as { traits?: string[] }).traits ?? [];
   return traits.every((trait) => cardTraits.includes(trait));
 }
@@ -282,7 +273,7 @@ export function matchesCostFilter(
   cardDefinition: BaseEffectCardDefinition,
   costFilter: CostFilter,
 ): boolean {
-  const cost = cardDefinition.cost;
+  const { cost } = cardDefinition;
 
   if (costFilter.exactly !== undefined) {
     return cost === costFilter.exactly;
@@ -405,10 +396,7 @@ export function getAllCardsInGame(state: GundamGameState): CardId[] {
  * @param playerId - Player to get cards for
  * @returns Array of CardIds owned by the player
  */
-export function getCardsOwnedByPlayer(
-  state: GundamGameState,
-  playerId: PlayerId,
-): CardId[] {
+export function getCardsOwnedByPlayer(state: GundamGameState, playerId: PlayerId): CardId[] {
   const allCards: CardId[] = [];
 
   for (const zoneType of Object.keys(state.zones) as ZoneType[]) {
@@ -428,10 +416,7 @@ export function getCardsOwnedByPlayer(
  * @param playerId - Player to get opponent for
  * @returns Opponent player ID, or undefined if not found
  */
-export function getOpponentId(
-  state: GundamGameState,
-  playerId: PlayerId,
-): PlayerId | undefined {
+export function getOpponentId(state: GundamGameState, playerId: PlayerId): PlayerId | undefined {
   return state.players.find((p) => p !== playerId);
 }
 
@@ -463,21 +448,28 @@ export function matchesFilter(
       return false;
     }
 
-    const cardType = cardDef.cardType;
+    const { cardType } = cardDef;
     switch (filter.type) {
-      case "unit":
-        if (cardType !== "UNIT") return false;
+      case "unit": {
+        if (cardType !== "UNIT") {
+          return false;
+        }
         break;
-      case "base":
-        if (cardType !== "BASE") return false;
+      }
+      case "base": {
+        if (cardType !== "BASE") {
+          return false;
+        }
         break;
-      case "shield":
+      }
+      case "shield": {
         // Shields are typically units in shield section
         // This is a simplified check - actual implementation may vary
         if (!isCardInZone(state, cardId, "shieldSection")) {
           return false;
         }
         break;
+      }
     }
   }
 
@@ -495,19 +487,22 @@ export function matchesFilter(
   }
 
   switch (filter.owner) {
-    case "self":
+    case "self": {
       if (cardOwner !== context.controllerId) {
         return false;
       }
       break;
-    case "opponent":
+    }
+    case "opponent": {
       if (cardOwner === context.controllerId) {
         return false;
       }
       break;
-    case "any":
+    }
+    case "any": {
       // Any owner is acceptable
       break;
+    }
   }
 
   // Check state filter
@@ -563,7 +558,7 @@ export function enumerateValidTargets(
   }
 
   // Convert Set to Array and return
-  return Array.from(validTargets);
+  return [...validTargets];
 }
 
 // ============================================================================
@@ -585,7 +580,7 @@ export function validateTargets(
   context: TargetingContext,
 ): boolean {
   // Check count validation
-  const count = targetingSpec.count;
+  const { count } = targetingSpec;
 
   if (typeof count === "number") {
     // Exact count required

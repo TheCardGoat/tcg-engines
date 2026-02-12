@@ -4,10 +4,10 @@ export const jafarKeeperOfSecrets: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: 1,
+        stat: "strength",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "1u7-1",
       text: "HIDDEN WONDERS This character gets +1 {S} for each card in your hand.",

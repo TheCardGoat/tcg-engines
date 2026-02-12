@@ -10,10 +10,10 @@ export const shenziScarsAccomplice: CharacterCard = {
     },
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: 2,
+        stat: "strength",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "1nr-2",
       text: "EASY PICKINGS While challenging a damaged character, this character gets +2 {S}.",

@@ -31,7 +31,7 @@ export function normalizeToPattern(text: string): string {
   // Then, replace standalone numbers (including those with +/- prefix) with {d}
   // Handle cases like "+3", "-2", "3", etc.
   // But avoid matching numbers that are already inside braces (we already handled those)
-  result = result.replace(/([+-]?)(\d+)/g, (match, sign) => sign ? `${sign}{d}` : "{d}");
+  result = result.replace(/([+-]?)(\d+)/g, (match, sign) => (sign ? `${sign}{d}` : "{d}"));
 
   return result;
 }
@@ -53,10 +53,7 @@ export function normalizeToPattern(text: string): string {
  * extractNumericValues("Deal 2 damage to chosen character", "Deal {d} damage to chosen character") // [2]
  * extractNumericValues("Pay 1 {I} less, gain 2 lore", "Pay {d} {I} less, gain {d} lore") // [1, 2]
  */
-export function extractNumericValues(
-  originalText: string,
-  normalizedPattern: string,
-): number[] {
+export function extractNumericValues(originalText: string, normalizedPattern: string): number[] {
   // Normalize the original text to compare patterns
   const normalizedOriginal = normalizeToPattern(originalText);
 
@@ -139,10 +136,7 @@ export function replacePlaceholders(text: string, values: number[]): string {
  * resolvePlaceholders("Gain {d} lore", "Gain 3 lore") // "Gain 3 lore"
  * resolvePlaceholders("Pay {d} {I} less", "Pay 1 {I} less") // "Pay 1 {I} less"
  */
-export function resolvePlaceholders(
-  normalizedText: string,
-  originalText: string,
-): string {
+export function resolvePlaceholders(normalizedText: string, originalText: string): string {
   // Extract numeric values from original text
   const values = extractNumericValues(originalText, normalizedText);
 

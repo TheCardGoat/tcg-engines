@@ -71,10 +71,7 @@ export function parseCharacterTarget(text: string): TargetDSL | null {
     result.selector = "this";
   }
 
-  if (
-    lowerText.includes("all characters") ||
-    lowerText.includes("all opposing characters")
-  ) {
+  if (lowerText.includes("all characters") || lowerText.includes("all opposing characters")) {
     result.selector = "all";
     result.count = "all";
     if (lowerText.includes("opposing")) {
@@ -118,15 +115,9 @@ export function parseItemTarget(text: string): TargetDSL | null {
 
   const lowerText = text.toLowerCase();
 
-  if (
-    lowerText.includes("chosen opposing") ||
-    lowerText.includes("opponent's chosen")
-  ) {
+  if (lowerText.includes("chosen opposing") || lowerText.includes("opponent's chosen")) {
     result.owner = "opponent";
-  } else if (
-    lowerText.includes("chosen item of yours") ||
-    lowerText.includes("your chosen")
-  ) {
+  } else if (lowerText.includes("chosen item of yours") || lowerText.includes("your chosen")) {
     result.owner = "you";
   }
 
@@ -159,15 +150,9 @@ export function parseLocationTarget(text: string): TargetDSL | null {
 
   const lowerText = text.toLowerCase();
 
-  if (
-    lowerText.includes("chosen opposing") ||
-    lowerText.includes("opponent's chosen")
-  ) {
+  if (lowerText.includes("chosen opposing") || lowerText.includes("opponent's chosen")) {
     result.owner = "opponent";
-  } else if (
-    lowerText.includes("chosen location of yours") ||
-    lowerText.includes("your chosen")
-  ) {
+  } else if (lowerText.includes("chosen location of yours") || lowerText.includes("your chosen")) {
     result.owner = "you";
   }
 

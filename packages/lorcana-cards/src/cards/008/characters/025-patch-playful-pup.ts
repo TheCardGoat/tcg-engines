@@ -10,10 +10,10 @@ export const patchPlayfulPup: CharacterCard = {
     },
     {
       effect: {
-        type: "modify-stat",
-        stat: "lore",
         modifier: 1,
+        stat: "lore",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "1x2-2",
       text: "PUPPY BARKING While you have another Puppy character in play, this character gets +1 {L}.",

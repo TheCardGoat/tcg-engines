@@ -8,10 +8,7 @@ import { describe, expect, it } from "bun:test";
 import { D_PLACEHOLDER } from "../effects/atomic/stat-mod-effect";
 import { parseCondition } from "../parsers/condition-parser";
 import { parseEffect } from "../parsers/effect-parser";
-import {
-  parseCharacterTarget,
-  parsePlayerTarget,
-} from "../parsers/target-parser";
+import { parseCharacterTarget, parsePlayerTarget } from "../parsers/target-parser";
 
 describe("Effect Parser", () => {
   describe("Draw Effects", () => {
@@ -192,9 +189,7 @@ describe("Effect Parser", () => {
     });
 
     it("should parse search deck and add to hand", () => {
-      const effect = parseEffect(
-        "search your deck for a song and add it to your hand",
-      );
+      const effect = parseEffect("search your deck for a song and add it to your hand");
 
       expect(effect).toEqual({
         type: "search-deck",
@@ -218,9 +213,7 @@ describe("Effect Parser", () => {
     });
 
     it("should parse search deck into play", () => {
-      const effect = parseEffect(
-        "search your deck for a character and put it into play",
-      );
+      const effect = parseEffect("search your deck for a character and put it into play");
 
       expect(effect).toEqual({
         cardType: "character",
@@ -255,9 +248,7 @@ describe("Effect Parser", () => {
 
   describe("Put Into Inkwell Effects", () => {
     it("should parse put top card into inkwell", () => {
-      const effect = parseEffect(
-        "put the top card of your deck into your inkwell",
-      );
+      const effect = parseEffect("put the top card of your deck into your inkwell");
 
       expect(effect).toEqual({
         source: "top-of-deck",
@@ -267,9 +258,7 @@ describe("Effect Parser", () => {
     });
 
     it("should parse put into inkwell facedown", () => {
-      const effect = parseEffect(
-        "put the top card of your deck into your inkwell facedown",
-      );
+      const effect = parseEffect("put the top card of your deck into your inkwell facedown");
 
       // Note: Parser outputs facedown but PutIntoInkwellEffect type doesn't have facedown property
       // This is a type limitation, the parser behavior is correct
@@ -280,9 +269,7 @@ describe("Effect Parser", () => {
     });
 
     it("should parse optional put into inkwell", () => {
-      const effect = parseEffect(
-        "you may put a card from your hand into your inkwell",
-      );
+      const effect = parseEffect("you may put a card from your hand into your inkwell");
 
       // This gets wrapped in optional
       expect(effect?.type).toBe("optional");
@@ -301,9 +288,7 @@ describe("Effect Parser", () => {
    */
   describe.skip("Shuffle Into Deck Effects", () => {
     it("should parse shuffle character into deck", () => {
-      const effect = parseEffect(
-        "shuffle chosen character into their player's deck",
-      );
+      const effect = parseEffect("shuffle chosen character into their player's deck");
 
       expect(effect).toEqual({
         intoDeck: "owner",
@@ -324,9 +309,7 @@ describe("Effect Parser", () => {
    */
   describe.skip("Return From Discard Effects", () => {
     it("should parse return action from discard", () => {
-      const effect = parseEffect(
-        "return an action card from your discard to your hand",
-      );
+      const effect = parseEffect("return an action card from your discard to your hand");
 
       expect(effect).toEqual({
         cardType: "action",
@@ -336,9 +319,7 @@ describe("Effect Parser", () => {
     });
 
     it("should parse return character from discard", () => {
-      const effect = parseEffect(
-        "return a character from your discard to your hand",
-      );
+      const effect = parseEffect("return a character from your discard to your hand");
 
       expect(effect).toEqual({
         cardType: "character",
@@ -353,9 +334,7 @@ describe("Effect Parser", () => {
    */
   describe.skip("Move To Location Effects", () => {
     it("should parse move character to location", () => {
-      const effect = parseEffect(
-        "move one of your characters to this location",
-      );
+      const effect = parseEffect("move one of your characters to this location");
 
       // This parses "your characters" as target
       expect(effect?.type).toBe("move-to-location");
@@ -365,9 +344,7 @@ describe("Effect Parser", () => {
     });
 
     it("should parse move character to location for free", () => {
-      const effect = parseEffect(
-        "move a character of yours to a location for free",
-      );
+      const effect = parseEffect("move a character of yours to a location for free");
 
       expect(effect?.type).toBe("move-to-location");
       if (effect?.type === "move-to-location") {
@@ -381,9 +358,7 @@ describe("Effect Parser", () => {
    */
   describe.skip("Put Under Effects", () => {
     it("should parse put top card under this character", () => {
-      const effect = parseEffect(
-        "put the top card of your deck under this character",
-      );
+      const effect = parseEffect("put the top card of your deck under this character");
 
       expect(effect).toEqual({
         source: "top-of-deck",
@@ -393,9 +368,7 @@ describe("Effect Parser", () => {
     });
 
     it("should parse put card from hand under chosen character", () => {
-      const effect = parseEffect(
-        "put a card from your hand under chosen character",
-      );
+      const effect = parseEffect("put a card from your hand under chosen character");
 
       expect(effect).toEqual({
         source: "hand",
@@ -413,9 +386,7 @@ describe("Effect Parser", () => {
 
   describe("Composite Effects", () => {
     it("should parse sequence with 'then' separator", () => {
-      const effect = parseEffect(
-        "Draw 2 cards, then choose and discard a card",
-      );
+      const effect = parseEffect("Draw 2 cards, then choose and discard a card");
 
       expect(effect).toBeDefined();
       expect(effect?.type).toBe("sequence");
@@ -501,9 +472,7 @@ describe.skip("Target Parser", () => {
     });
 
     it("should parse all opposing characters", () => {
-      const target = parseCharacterTarget(
-        "deal 2 damage to all opposing characters",
-      );
+      const target = parseCharacterTarget("deal 2 damage to all opposing characters");
       expect(target).toEqual({
         cardTypes: ["character"],
         count: "all",
@@ -560,9 +529,7 @@ describe.skip("Condition Parser", () => {
     });
 
     it("should parse 3 or more characters", () => {
-      const condition = parseCondition(
-        "if you have 3 or more characters in play",
-      );
+      const condition = parseCondition("if you have 3 or more characters in play");
 
       expect(condition).toBeNull();
     });

@@ -20,15 +20,15 @@ export const johnSilverSternCaptain: CharacterCard = {
     },
     {
       effect: {
-        type: "deal-damage",
         amount: 1,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "deal-damage",
       },
       id: "19b-3",
       text: "DON'T JUST SIT THERE! At the start of your turn, deal 1 damage to each opposing ready character.",

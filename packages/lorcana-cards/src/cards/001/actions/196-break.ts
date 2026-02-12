@@ -4,8 +4,8 @@ export const breakCard: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "banish",
         target: "CHOSEN_CHARACTER",
+        type: "banish",
       },
       id: "m37-1",
       text: "Banish chosen item.",

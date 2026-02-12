@@ -4,24 +4,23 @@ export const coldstoneReincarnatedCyborg: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
+          expression: "you have 2 or more Gargoyle character cards in your discard",
           type: "if",
-          expression:
-            "you have 2 or more Gargoyle character cards in your discard",
         },
         then: {
-          type: "gain-lore",
           amount: 2,
+          type: "gain-lore",
         },
+        type: "conditional",
       },
       id: "1uk-1",
       name: "THE CANTRIPS HAVE BEEN SPOKEN",
       text: "THE CANTRIPS HAVE BEEN SPOKEN When you play this character, if you have 2 or more Gargoyle character cards in your discard, gain 2 lore.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

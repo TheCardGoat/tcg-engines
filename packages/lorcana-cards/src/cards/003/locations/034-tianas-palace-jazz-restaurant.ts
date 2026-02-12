@@ -4,9 +4,9 @@ export const tianasPalaceJazzRestaurant: LocationCard = {
   abilities: [
     {
       effect: {
-        type: "restriction",
         restriction: "cant-be-challenged",
         target: "SELF",
+        type: "restriction",
       },
       id: "1hy-1",
       text: "NIGHT OUT Characters can't be challenged while here.",

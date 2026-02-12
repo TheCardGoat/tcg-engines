@@ -4,25 +4,25 @@ export const panicUnderworldImp: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "the chosen character is named Pain",
+          type: "if",
         },
         then: {
-          type: "modify-stat",
-          stat: "strength",
           modifier: 4,
+          stat: "strength",
           target: "CHOSEN_CHARACTER",
+          type: "modify-stat",
         },
+        type: "conditional",
       },
       id: "1yg-1",
       name: "I CAN HANDLE IT",
       text: "I CAN HANDLE IT When you play this character, chosen character gets +2 {S} this turn. If the chosen character is named Pain, he gets +4 {S} instead.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

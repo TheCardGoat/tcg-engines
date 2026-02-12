@@ -1,11 +1,11 @@
 // See https://svelte.dev/docs/kit/types#app.d.ts
-// for information about these interfaces
+// For information about these interfaces
 declare global {
   namespace App {
-    // interface Error {}
-    // interface Locals {}
-    // interface PageData {}
-    // interface PageState {}
+    // Interface Error {}
+    // Interface Locals {}
+    // Interface PageData {}
+    // Interface PageState {}
     interface Platform {
       env?: {
         // Add your Cloudflare bindings here (KV, D1, R2, etc.)
@@ -20,5 +20,3 @@ declare global {
     }
   }
 }
-
-export {};

@@ -4,9 +4,9 @@ export const partOfYourWorld: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "return-from-discard",
         cardType: "character",
         target: "CONTROLLER",
+        type: "return-from-discard",
       },
       id: "fn0-1",
       text: "Return a character card from your discard to your hand.",

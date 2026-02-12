@@ -32,18 +32,13 @@ export const handleTurnStartMove: GameMoveDefinition<GundamGameState> = {
    *
    * This move is called internally by game flow.
    */
-  enumerator: () => {
-    // Internal move - not enumerable
-    return [];
-  },
+  enumerator: () => [],
 
   /**
    * Condition: Can execute if:
    * - Game is in valid state
    */
-  condition: (_state: GundamGameState, _context: MoveContext): boolean => {
-    return true;
-  },
+  condition: (_state: GundamGameState, _context: MoveContext): boolean => true,
 
   /**
    * Reducer: Execute turn start logic
@@ -58,17 +53,10 @@ export const handleTurnStartMove: GameMoveDefinition<GundamGameState> = {
 
     if (triggerResult.hasTriggers) {
       // Order effects: active player's effects first
-      const orderResult = orderTriggeredEffects(
-        triggerResult.effects,
-        draft.currentPlayer,
-      );
+      const orderResult = orderTriggeredEffects(triggerResult.effects, draft.currentPlayer);
 
       // Enqueue effects in the determined order
-      enqueueBatchEffects(
-        draft,
-        [...triggerResult.effects],
-        [...orderResult.order],
-      );
+      enqueueBatchEffects(draft, [...triggerResult.effects], [...orderResult.order]);
 
       console.log(
         `[TURN_START] Detected ${triggerResult.effects.length} start of turn triggers for ${playerId}, enqueued in order: ${orderResult.order.join(", ")}`,
@@ -77,10 +65,10 @@ export const handleTurnStartMove: GameMoveDefinition<GundamGameState> = {
   },
 
   metadata: {
-    category: "turn-management",
-    tags: ["automatic", "trigger-detection"],
-    description: "Handle turn start and detect triggered effects",
-    canBeUndone: false,
     affectsZones: [],
+    canBeUndone: false,
+    category: "turn-management",
+    description: "Handle turn start and detect triggered effects",
+    tags: ["automatic", "trigger-detection"],
   },
 };

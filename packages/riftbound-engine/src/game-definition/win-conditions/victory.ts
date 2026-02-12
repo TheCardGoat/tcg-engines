@@ -43,10 +43,7 @@ export function isGameOver(state: RiftboundGameState): boolean {
  * @param playerId - Player to check
  * @returns Victory points for the player
  */
-export function getPlayerScore(
-  state: RiftboundGameState,
-  playerId: PlayerId,
-): number {
+export function getPlayerScore(state: RiftboundGameState, playerId: PlayerId): number {
   return state.players[playerId]?.victoryPoints ?? 0;
 }
 
@@ -57,10 +54,7 @@ export function getPlayerScore(
  * @param playerId - Player to check
  * @returns true if player needs only one more point to win
  */
-export function isAtMatchPoint(
-  state: RiftboundGameState,
-  playerId: PlayerId,
-): boolean {
+export function isAtMatchPoint(state: RiftboundGameState, playerId: PlayerId): boolean {
   const score = getPlayerScore(state, playerId);
   return score === state.victoryScore - 1;
 }

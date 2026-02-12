@@ -4,16 +4,16 @@ export const jujuMamaOdiesCompanion: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "play-card",
         from: "hand",
+        type: "play-card",
       },
       id: "fzy-1",
       name: "BEES' KNEES",
       text: "BEES' KNEES When you play this character, move 1 damage counter from chosen character to chosen opposing character.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

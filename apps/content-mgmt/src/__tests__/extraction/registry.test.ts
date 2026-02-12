@@ -14,37 +14,39 @@ const createMockAdapter = (
   sourceTypes: ("youtube" | "article" | "rss" | "http")[],
   urlPattern: RegExp,
 ): ExtractionServiceAdapter => ({
-  serviceId,
-  supportedSourceTypes: sourceTypes,
-  parseUrl: (url: string) => {
-    const match = url.match(urlPattern);
-    if (!match) return null;
-    return {
-      sourceType: sourceTypes[0],
-      contentId: match[1] ?? "test-id",
-      normalizedUrl: url,
-    };
-  },
   canHandle: (url: string) => urlPattern.test(url),
+  extractMetadata: async () => ({
+    sourceMetadata: {},
+    title: "Test Title",
+  }),
   fetchContent: async () => ({
     contentId: "test-id",
+    rawMetadata: {},
     sourceType: sourceTypes[0],
     textContent: "test content",
-    rawMetadata: {},
-  }),
-  extractMetadata: async () => ({
-    title: "Test Title",
-    sourceMetadata: {},
-  }),
-  validateContent: async () => ({
-    isValid: true,
-    shouldBlock: false,
-    errors: [],
   }),
   getConfig: () => ({
+    extractionTimeoutMs: 60_000,
     supportedLanguages: ["en"],
-    extractionTimeoutMs: 60000,
     validationRules: [],
+  }),
+  parseUrl: (url: string) => {
+    const match = url.match(urlPattern);
+    if (!match) {
+      return null;
+    }
+    return {
+      contentId: match[1] ?? "test-id",
+      normalizedUrl: url,
+      sourceType: sourceTypes[0],
+    };
+  },
+  serviceId,
+  supportedSourceTypes: sourceTypes,
+  validateContent: async () => ({
+    errors: [],
+    isValid: true,
+    shouldBlock: false,
   }),
 });
 
@@ -161,9 +163,7 @@ describe("ExtractionServiceRegistry", () => {
       registry.register(youtubeAdapter);
       registry.register(articleAdapter);
 
-      const result = registry.getAdapterForUrl(
-        "https://www.youtube.com/watch?v=abc123",
-      );
+      const result = registry.getAdapterForUrl("https://www.youtube.com/watch?v=abc123");
 
       expect(result).toBe(youtubeAdapter);
     });
@@ -184,9 +184,7 @@ describe("ExtractionServiceRegistry", () => {
 
       registry.register(adapter);
 
-      expect(registry.canHandle("https://www.youtube.com/watch?v=abc123")).toBe(
-        true,
-      );
+      expect(registry.canHandle("https://www.youtube.com/watch?v=abc123")).toBe(true);
     });
 
     it("should return false if no adapter can handle URL", () => {
@@ -196,16 +194,8 @@ describe("ExtractionServiceRegistry", () => {
 
   describe("getSupportedSourceTypes", () => {
     it("should return all supported source types", () => {
-      const youtubeAdapter = createMockAdapter(
-        "youtube",
-        ["youtube"],
-        /youtube\.com/,
-      );
-      const articleAdapter = createMockAdapter(
-        "article",
-        ["article"],
-        /example\.com/,
-      );
+      const youtubeAdapter = createMockAdapter("youtube", ["youtube"], /youtube\.com/);
+      const articleAdapter = createMockAdapter("article", ["article"], /example\.com/);
 
       registry.register(youtubeAdapter);
       registry.register(articleAdapter);

@@ -4,20 +4,20 @@ export const heffalumpsAndWoozles: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "restriction",
+            duration: "until-start-of-next-turn",
             restriction: "cant-quest",
             target: "SELF",
-            duration: "until-start-of-next-turn",
+            type: "restriction",
           },
           {
-            type: "draw",
             amount: 1,
             target: "CONTROLLER",
+            type: "draw",
           },
         ],
+        type: "sequence",
       },
       id: "10y-1",
       text: "Chosen opposing character can't quest during their next turn. Draw a card.",

@@ -4,18 +4,18 @@ export const sirPellinoreSeasonedKnight: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
+        duration: "this-turn",
         keyword: "Support",
         target: "YOUR_CHARACTERS",
-        duration: "this-turn",
+        type: "gain-keyword",
       },
       id: "6h9-1",
       name: "CODE OF HONOR",
       text: "CODE OF HONOR Whenever this character quests, your other characters gain Support this turn.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

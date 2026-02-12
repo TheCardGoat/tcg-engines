@@ -13,23 +13,23 @@ export const aliceClumsyAsCanBe: CharacterCard = {
     },
     {
       effect: {
-        type: "put-damage",
         amount: 1,
         target: {
-          selector: "all",
+          cardTypes: ["character"],
           count: "all",
           owner: "any",
+          selector: "all",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "put-damage",
       },
       id: "luf-2",
       name: "ACCIDENT PRONE",
       text: "ACCIDENT PRONE Whenever this character quests, put 1 damage counter on each other character.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

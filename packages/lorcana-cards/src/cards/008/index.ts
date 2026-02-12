@@ -9,10 +9,7 @@ export const all008Cards: (CharacterCard | ActionCard | ItemCard)[] = [
   ...Object.values(items),
 ];
 
-export const all008CardsById: Record<
-  string,
-  CharacterCard | ActionCard | ItemCard
-> = {};
+export const all008CardsById: Record<string, CharacterCard | ActionCard | ItemCard> = {};
 for (const card of all008Cards) {
   all008CardsById[card.id] = card;
 }

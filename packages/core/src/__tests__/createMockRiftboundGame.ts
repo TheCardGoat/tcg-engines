@@ -5,7 +5,7 @@ import type { CardId, PlayerId, ZoneId } from "../types";
 import type { CardZoneConfig } from "../zones";
 
 // Mock Riftbound game state - SIMPLIFIED!
-type TestGameState = {
+interface TestGameState {
   victoryPoints: Record<string, number>;
   battlefieldControl: Record<string, PlayerId | null>;
   runePools: Record<
@@ -16,9 +16,9 @@ type TestGameState = {
     }
   >;
   conqueredThisTurn: Record<string, CardId[]>;
-};
+}
 
-type TestMoves = {
+interface TestMoves {
   // Setup moves
   initializeDecks: { playerId: PlayerId };
   placeLegend: { playerId: PlayerId; legendId: CardId };
@@ -38,7 +38,7 @@ type TestMoves = {
   // Standard moves
   pass: { playerId: PlayerId };
   concede: { playerId: PlayerId };
-};
+}
 
 // Riftbound move definitions
 const riftboundMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
@@ -46,21 +46,21 @@ const riftboundMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
   initializeDecks: {
     reducer: (_draft, context) => {
       const { zones } = context;
-      const playerId = context.params.playerId;
+      const { playerId } = context.params;
 
       // Use engine's createDeck utility!
       zones.createDeck({
-        zoneId: "mainDeck" as ZoneId,
-        playerId,
         cardCount: 40,
+        playerId,
         shuffle: false,
+        zoneId: "mainDeck" as ZoneId,
       });
 
       zones.createDeck({
-        zoneId: "runeDeck" as ZoneId,
-        playerId,
         cardCount: 12,
+        playerId,
         shuffle: false,
+        zoneId: "runeDeck" as ZoneId,
       });
 
       // NO MORE: draft.setupStep
@@ -70,7 +70,7 @@ const riftboundMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
   placeLegend: {
     reducer: (_draft, context) => {
       const { zones } = context;
-      const legendId = context.params.legendId;
+      const { legendId } = context.params;
 
       zones.moveCard({
         cardId: legendId,
@@ -84,7 +84,7 @@ const riftboundMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
   placeChampion: {
     reducer: (_draft, context) => {
       const { zones } = context;
-      const championId = context.params.championId;
+      const { championId } = context.params;
 
       zones.moveCard({
         cardId: championId,
@@ -98,7 +98,7 @@ const riftboundMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
   placeBattlefields: {
     reducer: (draft, context) => {
       const { zones } = context;
-      const battlefieldIds = context.params.battlefieldIds;
+      const { battlefieldIds } = context.params;
 
       // Place each battlefield
       for (const battlefieldId of battlefieldIds) {
@@ -118,7 +118,7 @@ const riftboundMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
   shuffleDecks: {
     reducer: (_draft, context) => {
       const { zones } = context;
-      const playerId = context.params.playerId;
+      const { playerId } = context.params;
 
       zones.shuffleZone("mainDeck" as ZoneId, playerId);
       zones.shuffleZone("runeDeck" as ZoneId, playerId);
@@ -130,15 +130,15 @@ const riftboundMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
   drawInitialHand: {
     reducer: (_draft, context) => {
       const { zones } = context;
-      const playerId = context.params.playerId;
+      const { playerId } = context.params;
 
       // BEFORE: Manual loop (11 lines)
       // AFTER: Use drawCards utility!
       zones.drawCards({
-        from: "mainDeck" as ZoneId,
-        to: "hand" as ZoneId,
         count: 6,
+        from: "mainDeck" as ZoneId,
         playerId,
+        to: "hand" as ZoneId,
       });
 
       // NO MORE: draft.setupStep
@@ -155,15 +155,15 @@ const riftboundMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
   channelRunes: {
     reducer: (draft, context) => {
       const playerId = context.params.playerId as string;
-      const count = context.params.count;
+      const { count } = context.params;
 
       // BEFORE: Manual loop + drawing
       // AFTER: Use bulkMove utility!
       context.zones.bulkMove({
-        from: "runeDeck" as ZoneId,
-        to: "runePool" as ZoneId,
         count,
+        from: "runeDeck" as ZoneId,
         playerId: playerId as PlayerId,
+        to: "runePool" as ZoneId,
       });
 
       // Increment energy
@@ -176,19 +176,19 @@ const riftboundMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
 
   drawCard: {
     condition: (state, context) => {
-      const playerId = context.playerId;
+      const { playerId } = context;
       // Use tracker system!
       return !context.trackers?.check("hasDrawn", playerId);
     },
     reducer: (_draft, context) => {
       const { zones } = context;
-      const playerId = context.params.playerId;
+      const { playerId } = context.params;
 
       zones.drawCards({
-        from: "mainDeck" as ZoneId,
-        to: "hand" as ZoneId,
         count: 1,
+        from: "mainDeck" as ZoneId,
         playerId,
+        to: "hand" as ZoneId,
       });
 
       // Mark as drawn
@@ -198,7 +198,7 @@ const riftboundMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
 
   playUnit: {
     reducer: (_draft, context) => {
-      const cardId = context.params.cardId;
+      const { cardId } = context.params;
 
       context.zones.moveCard({
         cardId,
@@ -209,7 +209,7 @@ const riftboundMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
 
   playGear: {
     reducer: (_draft, context) => {
-      const cardId = context.params.cardId;
+      const { cardId } = context.params;
 
       context.zones.moveCard({
         cardId,
@@ -220,7 +220,7 @@ const riftboundMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
 
   playSpell: {
     reducer: (_draft, context) => {
-      const cardId = context.params.cardId;
+      const { cardId } = context.params;
 
       // Spells go to discard after resolution
       context.zones.moveCard({
@@ -261,95 +261,95 @@ const riftboundMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
 
 // Riftbound zones (unchanged)
 const riftboundZones: Record<string, CardZoneConfig> = {
-  mainDeck: {
-    id: "mainDeck" as ZoneId,
-    name: "zones.mainDeck",
-    visibility: "secret",
-    ordered: true,
-    owner: undefined,
-    faceDown: true,
-    maxSize: 40,
-  },
-  hand: {
-    id: "hand" as ZoneId,
-    name: "zones.hand",
-    visibility: "private",
-    ordered: false,
-    owner: undefined,
-    faceDown: false,
-    maxSize: undefined,
-  },
-  runeDeck: {
-    id: "runeDeck" as ZoneId,
-    name: "zones.runeDeck",
-    visibility: "secret",
-    ordered: true,
-    owner: undefined,
-    faceDown: true,
-    maxSize: 12,
-  },
-  runePool: {
-    id: "runePool" as ZoneId,
-    name: "zones.runePool",
-    visibility: "public",
-    ordered: false,
-    owner: undefined,
-    faceDown: false,
-    maxSize: undefined,
-  },
-  legendZone: {
-    id: "legendZone" as ZoneId,
-    name: "zones.legendZone",
-    visibility: "public",
-    ordered: false,
-    owner: undefined,
-    faceDown: false,
-    maxSize: 1,
-  },
-  championZone: {
-    id: "championZone" as ZoneId,
-    name: "zones.championZone",
-    visibility: "public",
-    ordered: false,
-    owner: undefined,
-    faceDown: false,
-    maxSize: 1,
-  },
   battlefield: {
+    faceDown: false,
     id: "battlefield" as ZoneId,
+    maxSize: undefined,
     name: "zones.battlefield",
-    visibility: "public",
     ordered: false,
     owner: undefined,
-    faceDown: false,
-    maxSize: undefined,
+    visibility: "public",
   },
   battlefieldRow: {
+    faceDown: false,
     id: "battlefieldRow" as ZoneId,
+    maxSize: 3,
     name: "zones.battlefieldRow",
-    visibility: "public",
     ordered: true,
     owner: undefined,
-    faceDown: false,
-    maxSize: 3,
-  },
-  gearArea: {
-    id: "gearArea" as ZoneId,
-    name: "zones.gearArea",
     visibility: "public",
+  },
+  championZone: {
+    faceDown: false,
+    id: "championZone" as ZoneId,
+    maxSize: 1,
+    name: "zones.championZone",
     ordered: false,
     owner: undefined,
-    faceDown: false,
-    maxSize: undefined,
+    visibility: "public",
   },
   discard: {
+    faceDown: false,
     id: "discard" as ZoneId,
+    maxSize: undefined,
     name: "zones.discard",
-    visibility: "public",
     ordered: false,
     owner: undefined,
+    visibility: "public",
+  },
+  gearArea: {
     faceDown: false,
+    id: "gearArea" as ZoneId,
     maxSize: undefined,
+    name: "zones.gearArea",
+    ordered: false,
+    owner: undefined,
+    visibility: "public",
+  },
+  hand: {
+    faceDown: false,
+    id: "hand" as ZoneId,
+    maxSize: undefined,
+    name: "zones.hand",
+    ordered: false,
+    owner: undefined,
+    visibility: "private",
+  },
+  legendZone: {
+    faceDown: false,
+    id: "legendZone" as ZoneId,
+    maxSize: 1,
+    name: "zones.legendZone",
+    ordered: false,
+    owner: undefined,
+    visibility: "public",
+  },
+  mainDeck: {
+    faceDown: true,
+    id: "mainDeck" as ZoneId,
+    maxSize: 40,
+    name: "zones.mainDeck",
+    ordered: true,
+    owner: undefined,
+    visibility: "secret",
+  },
+  runeDeck: {
+    faceDown: true,
+    id: "runeDeck" as ZoneId,
+    maxSize: 12,
+    name: "zones.runeDeck",
+    ordered: true,
+    owner: undefined,
+    visibility: "secret",
+  },
+  runePool: {
+    faceDown: false,
+    id: "runePool" as ZoneId,
+    maxSize: undefined,
+    name: "zones.runePool",
+    ordered: false,
+    owner: undefined,
+    visibility: "public",
   },
 };
 
@@ -358,44 +358,44 @@ const riftboundFlow: FlowDefinition<TestGameState> = {
   turn: {
     initialPhase: "awaken",
     phases: {
-      awaken: {
-        order: 1,
-        next: "beginning",
-        onBegin: (_context) => {},
-        endIf: () => true,
-      },
-      beginning: {
-        order: 2,
-        next: "channel",
-        onBegin: (_context) => {},
-        endIf: () => true,
-      },
-      channel: {
-        order: 3,
-        next: "draw",
-        onBegin: (_context) => {},
-        endIf: () => true,
-      },
-      draw: {
-        order: 4,
-        next: "action",
-        onBegin: (_context) => {},
-        endIf: () => true,
-      },
       action: {
-        order: 5,
         next: "ending",
         onBegin: (_context) => {},
+        order: 5,
+      },
+      awaken: {
+        endIf: () => true,
+        next: "beginning",
+        onBegin: (_context) => {},
+        order: 1,
+      },
+      beginning: {
+        endIf: () => true,
+        next: "channel",
+        onBegin: (_context) => {},
+        order: 2,
+      },
+      channel: {
+        endIf: () => true,
+        next: "draw",
+        onBegin: (_context) => {},
+        order: 3,
+      },
+      draw: {
+        endIf: () => true,
+        next: "action",
+        onBegin: (_context) => {},
+        order: 4,
       },
       ending: {
-        order: 6,
+        endIf: () => true,
         next: "awaken",
         onBegin: (context) => {
           // Clear conquered battlefields at turn end
           const playerId = context.getCurrentPlayer();
           context.state.conqueredThisTurn[playerId] = [];
         },
-        endIf: () => true,
+        order: 6,
       },
     },
   },
@@ -411,10 +411,7 @@ const riftboundFlow: FlowDefinition<TestGameState> = {
  * ✅ Tracker system for per-turn flags (hasDrawn)
  * ✅ Standard moves library (pass, concede)
  */
-export function createMockRiftboundGame(): GameDefinition<
-  TestGameState,
-  TestMoves
-> {
+export function createMockRiftboundGame(): GameDefinition<TestGameState, TestMoves> {
   return {
     name: "Test Riftbound Game",
     zones: riftboundZones,
@@ -423,8 +420,8 @@ export function createMockRiftboundGame(): GameDefinition<
 
     // Configure engine's tracker system
     trackers: {
-      perTurn: ["hasDrawn"],
       perPlayer: true,
+      perTurn: ["hasDrawn"],
     },
 
     /**
@@ -436,10 +433,7 @@ export function createMockRiftboundGame(): GameDefinition<
     setup: (players) => {
       const playerIds = players.map((p) => p.id);
       const victoryPoints: Record<string, number> = {};
-      const runePools: Record<
-        string,
-        { energy: number; power: Record<string, number> }
-      > = {};
+      const runePools: Record<string, { energy: number; power: Record<string, number> }> = {};
       const conqueredThisTurn: Record<string, CardId[]> = {};
 
       for (const playerId of playerIds) {
@@ -452,10 +446,10 @@ export function createMockRiftboundGame(): GameDefinition<
       }
 
       return {
-        victoryPoints,
         battlefieldControl: {},
-        runePools,
         conqueredThisTurn,
+        runePools,
+        victoryPoints,
       };
     },
   };

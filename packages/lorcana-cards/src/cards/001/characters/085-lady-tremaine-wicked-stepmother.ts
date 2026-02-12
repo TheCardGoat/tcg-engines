@@ -4,21 +4,21 @@ export const ladyTremaineWickedStepmother: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "return-from-discard",
           cardType: "action",
           target: "CONTROLLER",
+          type: "return-from-discard",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "qdk-1",
       name: "DO IT AGAIN!",
       text: "DO IT AGAIN! When you play this character, you may return an action card from your discard to your hand.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

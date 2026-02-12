@@ -13,16 +13,16 @@ export const jasmineRoyalCommodore: CharacterCard = {
     },
     {
       effect: {
-        type: "play-card",
         from: "hand",
+        type: "play-card",
       },
       id: "8v1-2",
       name: "RULER OF THE SEAS",
       text: "RULER OF THE SEAS When you play this character, if you used Shift to play her, return all other exerted characters to their players’ hands.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

@@ -10,9 +10,9 @@ export const jiminyCricketLevelheadedAndWise: CharacterCard = {
     },
     {
       effect: {
-        type: "restriction",
         restriction: "enters-play-exerted",
         target: "SELF",
+        type: "restriction",
       },
       id: "1i2-2",
       text: "ENOUGH'S ENOUGH While this character is exerted, opposing characters with Rush enter play exerted.",

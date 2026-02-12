@@ -4,10 +4,10 @@ export const perditaOnTheLookout: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "willpower",
         modifier: 1,
+        stat: "willpower",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "1uw-1",
       text: "KEEPING WATCH While you have a Puppy character in play, this character gets +1 {W}.",

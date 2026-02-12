@@ -19,24 +19,24 @@ export const annaMagicalMission: CharacterCard = {
     },
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you have a character named Elsa in play",
+          type: "if",
         },
         then: {
-          type: "draw",
           amount: 1,
           target: "CONTROLLER",
+          type: "draw",
         },
+        type: "conditional",
       },
       id: "1w2-3",
       name: "COORDINATED PLAN",
       text: "COORDINATED PLAN Whenever this character quests, if you have a character named Elsa in play, you may draw a card.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

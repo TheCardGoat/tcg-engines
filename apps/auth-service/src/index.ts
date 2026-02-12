@@ -5,6 +5,4 @@ const app = createApp();
 
 app.listen(env.AUTH_PORT);
 
-console.log(
-  `🔐 Auth Service is running at ${app.server?.hostname}:${app.server?.port}`,
-);
+console.log(`🔐 Auth Service is running at ${app.server?.hostname}:${app.server?.port}`);

@@ -4,14 +4,14 @@ export const peterPanShadowCatcher: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "put-into-inkwell",
         source: "chosen-character",
         target: "CONTROLLER",
+        type: "put-into-inkwell",
       },
       id: "1q3-1",
       name: "GOTCHA!",
       text: "GOTCHA! During your turn, whenever a card is put into your inkwell, exert chosen opposing character.",
-      trigger: { event: "play", timing: "when", on: "SELF" },
+      trigger: { event: "play", on: "SELF", timing: "when" },
       type: "triggered",
     },
   ],

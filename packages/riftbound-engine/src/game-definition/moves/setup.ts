@@ -11,22 +11,13 @@ import type {
   ZoneId as CoreZoneId,
   GameMoveDefinitions,
 } from "@tcg/core";
-import type {
-  RiftboundCardMeta,
-  RiftboundGameState,
-  RiftboundMoves,
-} from "../../types";
+import type { RiftboundCardMeta, RiftboundGameState, RiftboundMoves } from "../../types";
 
 /**
  * Setup move definitions
  */
 export const setupMoves: Partial<
-  GameMoveDefinitions<
-    RiftboundGameState,
-    RiftboundMoves,
-    RiftboundCardMeta,
-    unknown
-  >
+  GameMoveDefinitions<RiftboundGameState, RiftboundMoves, RiftboundCardMeta, unknown>
 > = {
   /**
    * Place Champion Legend in Legend Zone
@@ -86,9 +77,9 @@ export const setupMoves: Partial<
 
         // Initialize battlefield state
         draft.battlefields[battlefieldId] = {
-          id: battlefieldId,
-          controller: null,
           contested: false,
+          controller: null,
+          id: battlefieldId,
         };
       }
     },
@@ -109,8 +100,8 @@ export const setupMoves: Partial<
       for (const cardId of cardIds) {
         zones.moveCard({
           cardId: cardId as CoreCardId,
-          targetZoneId: "mainDeck" as CoreZoneId,
           position: "bottom",
+          targetZoneId: "mainDeck" as CoreZoneId,
         });
       }
     },
@@ -130,8 +121,8 @@ export const setupMoves: Partial<
       for (const runeId of runeIds) {
         zones.moveCard({
           cardId: runeId as CoreCardId,
-          targetZoneId: "runeDeck" as CoreZoneId,
           position: "bottom",
+          targetZoneId: "runeDeck" as CoreZoneId,
         });
       }
     },
@@ -164,10 +155,10 @@ export const setupMoves: Partial<
 
       // Draw 6 cards for initial hand
       zones.drawCards({
-        from: "mainDeck" as CoreZoneId,
-        to: "hand" as CoreZoneId,
         count: 6,
+        from: "mainDeck" as CoreZoneId,
         playerId: playerId as CorePlayerId,
+        to: "hand" as CoreZoneId,
       });
     },
   },
@@ -184,18 +175,15 @@ export const setupMoves: Partial<
       const { zones } = context;
 
       // Get current hand
-      const handCards = zones.getCardsInZone(
-        "hand" as CoreZoneId,
-        playerId as CorePlayerId,
-      );
+      const handCards = zones.getCardsInZone("hand" as CoreZoneId, playerId as CorePlayerId);
 
       // Return cards not being kept to deck
       for (const cardId of handCards) {
         if (!keepCards.includes(cardId as string)) {
           zones.moveCard({
             cardId: cardId,
-            targetZoneId: "mainDeck" as CoreZoneId,
             position: "bottom",
+            targetZoneId: "mainDeck" as CoreZoneId,
           });
         }
       }
@@ -209,10 +197,10 @@ export const setupMoves: Partial<
 
       if (cardsToDraw > 0) {
         zones.drawCards({
-          from: "mainDeck" as CoreZoneId,
-          to: "hand" as CoreZoneId,
           count: cardsToDraw,
+          from: "mainDeck" as CoreZoneId,
           playerId: playerId as CorePlayerId,
+          to: "hand" as CoreZoneId,
         });
       }
     },

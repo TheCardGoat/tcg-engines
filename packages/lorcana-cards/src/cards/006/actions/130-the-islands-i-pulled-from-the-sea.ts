@@ -4,10 +4,10 @@ export const theIslandsIPulledFromTheSea: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "search-deck",
+        cardType: "location",
         putInto: "hand",
         shuffle: true,
-        cardType: "location",
+        type: "search-deck",
       },
       id: "pm0-1",
       text: "Search your deck for a location card, reveal that card to all players, and put it into your hand. Then, shuffle your deck.",

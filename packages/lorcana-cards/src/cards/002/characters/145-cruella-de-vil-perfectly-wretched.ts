@@ -13,11 +13,11 @@ export const cruellaDeVilPerfectlyWretched: CharacterCard = {
     },
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
-        modifier: -2,
-        target: "SELF",
         duration: "this-turn",
+        modifier: -2,
+        stat: "strength",
+        target: "SELF",
+        type: "modify-stat",
       },
       id: "1l6-2",
       text: "OH, NO YOU DON'T Whenever this character quests, chosen opposing character gets -2 {S} this turn.",

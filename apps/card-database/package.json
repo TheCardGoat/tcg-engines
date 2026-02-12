@@ -1,7 +1,7 @@
 {
   "name": "card-database",
-  "private": true,
   "version": "0.0.1",
+  "private": true,
   "type": "module",
   "scripts": {
     "dev": "vite dev",
@@ -26,7 +26,6 @@
     "postgres": "^3.4.5"
   },
   "devDependencies": {
-    "@tcg/lorcana-types": "workspace:*",
     "@inlang/paraglide-js": "^2.6.0",
     "@playwright/test": "^1.57.0",
     "@storybook/addon-svelte-csf": "^5.0.10",
@@ -39,6 +38,7 @@
     "@tailwindcss/vite": "^4.1.17",
     "@tcg/core-ui": "workspace:*",
     "@tcg/lorcana-cards": "workspace:*",
+    "@tcg/lorcana-types": "workspace:*",
     "@types/node": "^22",
     "@vitest/browser-playwright": "^4.0.15",
     "mdsvex": "^0.12.6",

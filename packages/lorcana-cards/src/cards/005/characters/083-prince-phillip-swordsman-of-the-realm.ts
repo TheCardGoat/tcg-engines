@@ -4,40 +4,40 @@ export const princePhillipSwordsmanOfTheRealm: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "banish",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "banish",
       },
       id: "1ov-1",
       name: "SLAYER OF DRAGONS",
       text: "SLAYER OF DRAGONS When you play this character, banish chosen opposing Dragon character.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },
     {
       effect: {
-        type: "ready",
         target: {
-          selector: "self",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "self",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "ready",
       },
       id: "1ov-2",
       name: "PRESSING THE ADVANTAGE",
       text: "PRESSING THE ADVANTAGE Whenever he challenges a damaged character, ready this character after the challenge.",
-      trigger: { event: "play", timing: "when", on: "SELF" },
+      trigger: { event: "play", on: "SELF", timing: "when" },
       type: "triggered",
     },
   ],

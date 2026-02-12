@@ -46,31 +46,31 @@ function createTestGameState(): GundamGameState {
   const player2 = "player-2" as PlayerId;
 
   return {
-    players: [player1, player2],
     currentPlayer: player1,
-    turn: 1,
-    phase: "main",
-    zones: {
-      deck: {},
-      resourceDeck: {},
-      hand: {},
-      battleArea: {},
-      shieldSection: {},
-      baseSection: {},
-      resourceArea: {},
-      trash: {},
-      removal: {},
-      limbo: {},
-    },
     gundam: {
       activeResources: {},
-      cardPositions: {},
       attackedThisTurn: [],
-      hasPlayedResourceThisTurn: {},
-      effectStack: createEffectStack(),
-      temporaryModifiers: {},
       cardDamage: {},
+      cardPositions: {},
+      effectStack: createEffectStack(),
+      hasPlayedResourceThisTurn: {},
       revealedCards: [],
+      temporaryModifiers: {},
+    },
+    phase: "main",
+    players: [player1, player2],
+    turn: 1,
+    zones: {
+      baseSection: {},
+      battleArea: {},
+      deck: {},
+      hand: {},
+      limbo: {},
+      removal: {},
+      resourceArea: {},
+      resourceDeck: {},
+      shieldSection: {},
+      trash: {},
     },
   };
 }
@@ -118,12 +118,7 @@ describe("Effect Stack - Enqueue", () => {
     const playerId: PlayerId = createTestPlayerId(1);
 
     state = produce(state, (draft) => {
-      const instanceId = enqueueEffect(
-        draft,
-        cardId,
-        { effectId: "draw-2" },
-        playerId,
-      );
+      const instanceId = enqueueEffect(draft, cardId, { effectId: "draw-2" }, playerId);
 
       expect(instanceId).toBe("effect-0");
       expect(draft.gundam.effectStack.stack).toHaveLength(1);
@@ -163,30 +158,13 @@ describe("Effect Stack - Enqueue", () => {
     const playerId: PlayerId = createTestPlayerId(1);
 
     state = produce(state, (draft) => {
-      enqueueEffect(
-        draft,
-        createTestCardId(1),
-        { effectId: "first" },
-        playerId,
-      );
-      enqueueEffect(
-        draft,
-        createTestCardId(2),
-        { effectId: "second" },
-        playerId,
-      );
-      enqueueEffect(
-        draft,
-        createTestCardId(3),
-        { effectId: "third" },
-        playerId,
-      );
+      enqueueEffect(draft, createTestCardId(1), { effectId: "first" }, playerId);
+      enqueueEffect(draft, createTestCardId(2), { effectId: "second" }, playerId);
+      enqueueEffect(draft, createTestCardId(3), { effectId: "third" }, playerId);
     });
 
     expect(state.gundam.effectStack.stack[0]?.effectRef.effectId).toBe("first");
-    expect(state.gundam.effectStack.stack[1]?.effectRef.effectId).toBe(
-      "second",
-    );
+    expect(state.gundam.effectStack.stack[1]?.effectRef.effectId).toBe("second");
     expect(state.gundam.effectStack.stack[2]?.effectRef.effectId).toBe("third");
   });
 
@@ -194,12 +172,7 @@ describe("Effect Stack - Enqueue", () => {
     let state = createTestGameState();
 
     state = produce(state, (draft) => {
-      enqueueEffect(
-        draft,
-        createTestCardId(1),
-        { effectId: "test-effect" },
-        createTestPlayerId(1),
-      );
+      enqueueEffect(draft, createTestCardId(1), { effectId: "test-effect" }, createTestPlayerId(1));
     });
 
     const effect = state.gundam.effectStack.stack[0];
@@ -218,19 +191,19 @@ describe("Effect Stack - Batch Enqueue", () => {
 
     const effects = [
       {
-        sourceCardId: createTestCardId(1),
+        controllerId: playerId,
         effectRef: { effectId: "first" } as const,
-        controllerId: playerId,
+        sourceCardId: createTestCardId(1),
       },
       {
-        sourceCardId: createTestCardId(2),
+        controllerId: playerId,
         effectRef: { effectId: "second" } as const,
-        controllerId: playerId,
+        sourceCardId: createTestCardId(2),
       },
       {
-        sourceCardId: createTestCardId(3),
-        effectRef: { effectId: "third" } as const,
         controllerId: playerId,
+        effectRef: { effectId: "third" } as const,
+        sourceCardId: createTestCardId(3),
       },
     ];
 
@@ -242,9 +215,7 @@ describe("Effect Stack - Batch Enqueue", () => {
     // Verify order: third (index 2), first (index 0), second (index 1)
     expect(state.gundam.effectStack.stack[0]?.effectRef.effectId).toBe("third");
     expect(state.gundam.effectStack.stack[1]?.effectRef.effectId).toBe("first");
-    expect(state.gundam.effectStack.stack[2]?.effectRef.effectId).toBe(
-      "second",
-    );
+    expect(state.gundam.effectStack.stack[2]?.effectRef.effectId).toBe("second");
   });
 
   it("should handle different orderings", () => {
@@ -253,19 +224,19 @@ describe("Effect Stack - Batch Enqueue", () => {
 
     const effects = [
       {
-        sourceCardId: createTestCardId(1),
+        controllerId: playerId,
         effectRef: { effectId: "A" } as const,
-        controllerId: playerId,
+        sourceCardId: createTestCardId(1),
       },
       {
-        sourceCardId: createTestCardId(2),
+        controllerId: playerId,
         effectRef: { effectId: "B" } as const,
-        controllerId: playerId,
+        sourceCardId: createTestCardId(2),
       },
       {
-        sourceCardId: createTestCardId(3),
-        effectRef: { effectId: "C" } as const,
         controllerId: playerId,
+        effectRef: { effectId: "C" } as const,
+        sourceCardId: createTestCardId(3),
       },
     ];
 
@@ -285,14 +256,14 @@ describe("Effect Stack - Batch Enqueue", () => {
 
     const effects = [
       {
-        sourceCardId: createTestCardId(1),
-        effectRef: { effectId: "A" } as const,
         controllerId: playerId,
+        effectRef: { effectId: "A" } as const,
+        sourceCardId: createTestCardId(1),
       },
       {
-        sourceCardId: createTestCardId(2),
-        effectRef: { effectId: "B" } as const,
         controllerId: playerId,
+        effectRef: { effectId: "B" } as const,
+        sourceCardId: createTestCardId(2),
       },
     ];
 
@@ -322,14 +293,14 @@ describe("Effect Stack - Batch Enqueue", () => {
 
     const effects = [
       {
-        sourceCardId: createTestCardId(1),
-        effectRef: { effectId: "A" } as const,
         controllerId: playerId,
+        effectRef: { effectId: "A" } as const,
+        sourceCardId: createTestCardId(1),
       },
       {
-        sourceCardId: createTestCardId(2),
-        effectRef: { effectId: "B" } as const,
         controllerId: playerId,
+        effectRef: { effectId: "B" } as const,
+        sourceCardId: createTestCardId(2),
       },
     ];
 
@@ -346,9 +317,9 @@ describe("Effect Stack - Batch Enqueue", () => {
 
     const effects = [
       {
-        sourceCardId: createTestCardId(1),
-        effectRef: { effectId: "A" } as const,
         controllerId: playerId,
+        effectRef: { effectId: "A" } as const,
+        sourceCardId: createTestCardId(1),
       },
     ];
 
@@ -371,24 +342,9 @@ describe("Effect Stack - Dequeue", () => {
 
     // Enqueue three effects
     state = produce(state, (draft) => {
-      enqueueEffect(
-        draft,
-        createTestCardId(1),
-        { effectId: "first" },
-        playerId,
-      );
-      enqueueEffect(
-        draft,
-        createTestCardId(2),
-        { effectId: "second" },
-        playerId,
-      );
-      enqueueEffect(
-        draft,
-        createTestCardId(3),
-        { effectId: "third" },
-        playerId,
-      );
+      enqueueEffect(draft, createTestCardId(1), { effectId: "first" }, playerId);
+      enqueueEffect(draft, createTestCardId(2), { effectId: "second" }, playerId);
+      enqueueEffect(draft, createTestCardId(3), { effectId: "third" }, playerId);
     });
 
     expect(state.gundam.effectStack.stack).toHaveLength(3);
@@ -403,9 +359,7 @@ describe("Effect Stack - Dequeue", () => {
 
     expect(firstEffect?.effectRef.effectId).toBe("first");
     expect(state.gundam.effectStack.stack).toHaveLength(2);
-    expect(state.gundam.effectStack.stack[0]?.effectRef.effectId).toBe(
-      "second",
-    );
+    expect(state.gundam.effectStack.stack[0]?.effectRef.effectId).toBe("second");
   });
 
   it("should return null when dequeuing empty stack", () => {
@@ -453,12 +407,7 @@ describe("Effect Stack - Dequeue", () => {
 
     state = produce(state, (draft) => {
       for (let i = 0; i < 5; i++) {
-        enqueueEffect(
-          draft,
-          createTestCardId(i),
-          { effectId: `effect-${i}` },
-          playerId,
-        );
+        enqueueEffect(draft, createTestCardId(i), { effectId: `effect-${i}` }, playerId);
       }
     });
 
@@ -585,18 +534,8 @@ describe("Effect Stack - Query Helpers", () => {
     const playerId: PlayerId = createTestPlayerId(1);
 
     state = produce(state, (draft) => {
-      enqueueEffect(
-        draft,
-        createTestCardId(1),
-        { effectId: "first" },
-        playerId,
-      );
-      enqueueEffect(
-        draft,
-        createTestCardId(2),
-        { effectId: "second" },
-        playerId,
-      );
+      enqueueEffect(draft, createTestCardId(1), { effectId: "first" }, playerId);
+      enqueueEffect(draft, createTestCardId(2), { effectId: "second" }, playerId);
     });
 
     const peeked = peekNextEffect(state);
@@ -620,12 +559,7 @@ describe("Effect Stack - Query Helpers", () => {
 
     state = produce(state, (draft) => {
       for (let i = 0; i < 3; i++) {
-        enqueueEffect(
-          draft,
-          createTestCardId(i),
-          { effectId: `effect-${i}` },
-          playerId,
-        );
+        enqueueEffect(draft, createTestCardId(i), { effectId: `effect-${i}` }, playerId);
       }
     });
 
@@ -715,7 +649,7 @@ describe("Effect Stack - Lifecycle Helpers", () => {
       enqueueEffect(draft, createTestCardId(1), { effectId: "test" }, playerId);
     });
 
-    // pending -> resolving -> resolved
+    // Pending -> resolving -> resolved
     let effect = findEffectInstance(state, "effect-0");
     expect(effect?.state).toBe("pending");
 
@@ -809,19 +743,19 @@ describe("Effect Stack - Integration Tests", () => {
     // Simultaneous triggers from 3 cards
     const effects = [
       {
-        sourceCardId: createTestCardId(1),
+        controllerId: playerId,
         effectRef: { effectId: "draw" } as const,
-        controllerId: playerId,
+        sourceCardId: createTestCardId(1),
       },
       {
-        sourceCardId: createTestCardId(2),
+        controllerId: playerId,
         effectRef: { effectId: "damage" } as const,
-        controllerId: playerId,
+        sourceCardId: createTestCardId(2),
       },
       {
-        sourceCardId: createTestCardId(3),
-        effectRef: { effectId: "heal" } as const,
         controllerId: playerId,
+        effectRef: { effectId: "heal" } as const,
+        sourceCardId: createTestCardId(3),
       },
     ];
 
@@ -884,12 +818,7 @@ describe("Effect Stack - Integration Tests", () => {
 
     state = produce(state, (draft) => {
       for (let i = 0; i < 3; i++) {
-        enqueueEffect(
-          draft,
-          createTestCardId(i),
-          { effectId: `effect-${i}` },
-          playerId,
-        );
+        enqueueEffect(draft, createTestCardId(i), { effectId: `effect-${i}` }, playerId);
       }
     });
 
@@ -920,13 +849,11 @@ describe("Effect Stack - Effect Definition Lookup", () => {
   it("should register and retrieve effect definition", () => {
     const cardId: CardId = createTestCardId(1);
     const effectDefinition = {
-      id: "draw-2",
+      actions: [{ count: 2, player: "self" as const, type: "DRAW" }] as EffectAction[],
       category: "command" as const,
-      timing: { type: "MAIN" as const },
-      actions: [
-        { type: "DRAW", count: 2, player: "self" as const },
-      ] as EffectAction[],
+      id: "draw-2",
       text: "Draw 2 cards.",
+      timing: { type: "MAIN" as const },
     };
 
     registerEffectDefinition(cardId, effectDefinition);
@@ -937,19 +864,15 @@ describe("Effect Stack - Effect Definition Lookup", () => {
     expect(retrieved).toEqual(effectDefinition);
     expect(retrieved?.actions).toHaveLength(1);
     expect(retrieved?.actions[0]).toEqual({
-      type: "DRAW",
       count: 2,
       player: "self",
+      type: "DRAW",
     });
   });
 
   it("should return undefined for non-existent effect", () => {
     const state = createTestGameState();
-    const result = getEffectDefinition(
-      state,
-      createTestCardId(1),
-      "non-existent",
-    );
+    const result = getEffectDefinition(state, createTestCardId(1), "non-existent");
 
     expect(result).toBeUndefined();
   });
@@ -958,28 +881,26 @@ describe("Effect Stack - Effect Definition Lookup", () => {
     const cardId: CardId = createTestCardId(1);
 
     registerEffectDefinition(cardId, {
-      id: "effect-1",
+      actions: [{ count: 1, player: "self" as const, type: "DRAW" }] as EffectAction[],
       category: "triggered" as const,
-      timing: { type: "DEPLOY" as const },
-      actions: [
-        { type: "DRAW", count: 1, player: "self" as const },
-      ] as EffectAction[],
+      id: "effect-1",
       text: "Draw 1 card.",
+      timing: { type: "DEPLOY" as const },
     });
 
     registerEffectDefinition(cardId, {
-      id: "effect-2",
-      category: "triggered" as const,
-      timing: { type: "DESTROYED" as const },
       actions: [
         {
-          type: "DAMAGE",
           amount: 2,
-          target: "unit" as const,
           damageType: "effect" as const,
+          target: "unit" as const,
+          type: "DAMAGE",
         },
       ] as EffectAction[],
+      category: "triggered" as const,
+      id: "effect-2",
       text: "Deal 2 damage.",
+      timing: { type: "DESTROYED" as const },
     });
 
     const state = createTestGameState();
@@ -996,11 +917,11 @@ describe("Effect Stack - Effect Definition Lookup", () => {
     const cardId: CardId = createTestCardId(1);
 
     registerEffectDefinition(cardId, {
-      id: "test-effect",
-      category: "command" as const,
-      timing: { type: "MAIN" as const },
       actions: [],
+      category: "command" as const,
+      id: "test-effect",
       text: "Test",
+      timing: { type: "MAIN" as const },
     });
 
     const state = createTestGameState();
@@ -1013,13 +934,11 @@ describe("Effect Stack - Effect Definition Lookup", () => {
   it("should store effect definitions independently from game state", () => {
     const cardId: CardId = createTestCardId(1);
     const effectDefinition = {
-      id: "test",
+      actions: [{ count: 1, player: "self" as const, type: "DRAW" }] as EffectAction[],
       category: "command" as const,
-      timing: { type: "MAIN" as const },
-      actions: [
-        { type: "DRAW", count: 1, player: "self" as const },
-      ] as EffectAction[],
+      id: "test",
       text: "Test",
+      timing: { type: "MAIN" as const },
     };
 
     registerEffectDefinition(cardId, effectDefinition);
@@ -1029,11 +948,7 @@ describe("Effect Stack - Effect Definition Lookup", () => {
     const state2 = createTestGameState();
 
     // Both should be able to retrieve the same effect definition
-    expect(getEffectDefinition(state1, cardId, "test")).toEqual(
-      effectDefinition,
-    );
-    expect(getEffectDefinition(state2, cardId, "test")).toEqual(
-      effectDefinition,
-    );
+    expect(getEffectDefinition(state1, cardId, "test")).toEqual(effectDefinition);
+    expect(getEffectDefinition(state2, cardId, "test")).toEqual(effectDefinition);
   });
 });

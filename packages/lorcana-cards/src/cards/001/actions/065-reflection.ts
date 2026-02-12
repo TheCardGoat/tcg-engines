@@ -4,11 +4,9 @@ export const reflection: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "scry",
         amount: 3,
-        destinations: [
-          { zone: "deck-top", remainder: true, ordering: "player-choice" },
-        ],
+        destinations: [{ ordering: "player-choice", remainder: true, zone: "deck-top" }],
+        type: "scry",
       },
       id: "brz-1",
       text: "_(A character with cost 2 or more can {E} to sing this\nsong for free.)_\nLook at the top 3 cards of your deck. Put them back on the top of your deck in any order.",

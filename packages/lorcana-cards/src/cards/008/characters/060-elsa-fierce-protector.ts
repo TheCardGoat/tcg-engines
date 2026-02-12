@@ -5,10 +5,10 @@ export const elsaFierceProtector: CharacterCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "discard",
         amount: 1,
-        target: "CONTROLLER",
         chosen: true,
+        target: "CONTROLLER",
+        type: "discard",
       },
       id: "x49-1",
       text: "ICE OVER 1 {I} , Choose and discard a card — Exert chosen opposing character.",

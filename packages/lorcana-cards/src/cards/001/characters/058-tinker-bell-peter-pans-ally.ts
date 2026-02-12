@@ -10,11 +10,11 @@ export const tinkerBellPeterPansAlly: CharacterCard = {
     },
     {
       effect: {
-        type: "gain-keyword",
-        keyword: "Challenger",
-        value: 1,
-        target: "YOUR_CHARACTERS",
         duration: "this-turn",
+        keyword: "Challenger",
+        target: "YOUR_CHARACTERS",
+        type: "gain-keyword",
+        value: 1,
       },
       id: "oug-2",
       name: "LOYAL AND DEVOTED",

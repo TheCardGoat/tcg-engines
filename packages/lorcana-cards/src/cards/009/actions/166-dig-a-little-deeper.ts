@@ -4,25 +4,25 @@ export const digALittleDeeper: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "scry",
             amount: 7,
-            target: "CONTROLLER",
             destinations: [
               {
-                zone: "deck-bottom",
-                remainder: true,
                 ordering: "player-choice",
+                remainder: true,
+                zone: "deck-bottom",
               },
             ],
+            target: "CONTROLLER",
+            type: "scry",
           },
           {
-            type: "put-on-bottom",
             target: "CHOSEN_CHARACTER",
+            type: "put-on-bottom",
           },
         ],
+        type: "sequence",
       },
       id: "win-1",
       text: "Sing Together 8 Look at the top 7 cards of your deck. Put 2 into your hand and the rest on the bottom of your deck in any order.",

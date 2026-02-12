@@ -5,27 +5,27 @@ export const vitalisphere: ItemCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "gain-keyword",
             keyword: "Rush",
             target: {
-              selector: "chosen",
+              cardTypes: ["character"],
               count: 1,
               owner: "any",
+              selector: "chosen",
               zones: ["play"],
-              cardTypes: ["character"],
             },
+            type: "gain-keyword",
           },
           {
-            type: "modify-stat",
-            stat: "strength",
-            modifier: 2,
-            target: "CHOSEN_CHARACTER",
             duration: "this-turn",
+            modifier: 2,
+            stat: "strength",
+            target: "CHOSEN_CHARACTER",
+            type: "modify-stat",
           },
         ],
+        type: "sequence",
       },
       id: "fzw-1",
       text: "EXTRACT OF RUBY 1 {I}, Banish this item — Chosen character gains Rush and gets +2 {S} this turn.",

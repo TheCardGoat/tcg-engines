@@ -10,10 +10,10 @@ export const jetsamUrsulasSpy: CharacterCard = {
     },
     {
       effect: {
-        type: "gain-keyword",
+        duration: "this-turn",
         keyword: "Evasive",
         target: "YOUR_CHARACTERS",
-        duration: "this-turn",
+        type: "gain-keyword",
       },
       id: "cdv-2",
       name: "SINISTER SLITHER",

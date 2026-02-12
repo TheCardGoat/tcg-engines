@@ -4,10 +4,10 @@ export const flotsamJetsamEntanglingEels: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "discard",
         amount: 2,
-        target: "CONTROLLER",
         chosen: false,
+        target: "CONTROLLER",
+        type: "discard",
       },
       id: "1j0-1",
       text: "Shift: Discard 2 cards",

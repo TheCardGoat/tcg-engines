@@ -4,10 +4,10 @@ export const ratigansPartySeedyBackRoom: LocationCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "lore",
         modifier: 2,
+        stat: "lore",
         target: "CHOSEN_CHARACTER",
+        type: "modify-stat",
       },
       id: "1nd-1",
       text: "MISFITS' REVELRY While you have a damaged character here, this location gets +2 {L}.",

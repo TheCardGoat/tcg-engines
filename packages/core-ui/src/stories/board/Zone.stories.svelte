@@ -3,10 +3,18 @@
   import Zone from "$lib/components/board/Zone.svelte";
 
   const { Story } = defineMeta({
-    title: "Board/Zone",
-    component: Zone,
-    tags: ["autodocs"],
     argTypes: {
+      cardSpacing: {
+        control: { type: "select" },
+        options: ["none", "tight", "normal", "loose", "overlap"],
+      },
+      dropHighlight: { control: "boolean" },
+      droppable: { control: "boolean" },
+      maxCards: { control: "number" },
+      orientation: {
+        control: { type: "select" },
+        options: ["horizontal", "vertical"],
+      },
       type: {
         control: { type: "select" },
         options: [
@@ -19,21 +27,13 @@
           "custom",
         ],
       },
-      orientation: {
-        control: { type: "select" },
-        options: ["horizontal", "vertical"],
-      },
-      cardSpacing: {
-        control: { type: "select" },
-        options: ["none", "tight", "normal", "loose", "overlap"],
-      },
-      maxCards: { control: "number" },
-      droppable: { control: "boolean" },
-      dropHighlight: { control: "boolean" },
     },
+    component: Zone,
     parameters: {
       layout: "centered",
     },
+    tags: ["autodocs"],
+    title: "Board/Zone",
   });
 </script>
 

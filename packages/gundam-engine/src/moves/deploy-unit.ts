@@ -70,20 +70,28 @@ export const deployUnitMove: GameMoveDefinition<GundamGameState> = {
     const { playerId } = context;
 
     // Must be in main phase
-    if (state.phase !== "main") return [];
+    if (state.phase !== "main") {
+      return [];
+    }
 
     // Must be current player
-    if (state.currentPlayer !== playerId) return [];
+    if (state.currentPlayer !== playerId) {
+      return [];
+    }
 
     // Get player's hand and battle area
     const hand = state.zones.hand[playerId];
     const battleArea = state.zones.battleArea[playerId];
 
-    if (!(hand && battleArea)) return [];
+    if (!(hand && battleArea)) {
+      return [];
+    }
 
     // Check battle area capacity
     const battleAreaSize = getZoneSize(battleArea);
-    if (battleAreaSize >= 6) return [];
+    if (battleAreaSize >= 6) {
+      return [];
+    }
 
     // Enumerate all cards in hand that are units
     const options = [];
@@ -92,7 +100,7 @@ export const deployUnitMove: GameMoveDefinition<GundamGameState> = {
         // Include all units, even those the player cannot currently afford.
         // Affordability filtering is deferred to the condition function rather than done here in the enumerator.
         // This architectural decision ensures the enumerator generates all possible moves for UI/AI purposes,
-        // while the condition enforces game rules at validation time, maintaining separation of concerns.
+        // While the condition enforces game rules at validation time, maintaining separation of concerns.
         options.push({ cardId });
       }
     }
@@ -111,10 +119,14 @@ export const deployUnitMove: GameMoveDefinition<GundamGameState> = {
     const { playerId } = context;
 
     // Must be in main phase
-    if (state.phase !== "main") return false;
+    if (state.phase !== "main") {
+      return false;
+    }
 
     // Must be current player
-    if (state.currentPlayer !== playerId) return false;
+    if (state.currentPlayer !== playerId) {
+      return false;
+    }
 
     // Get and validate card ID
     let cardId: CardId;
@@ -126,22 +138,32 @@ export const deployUnitMove: GameMoveDefinition<GundamGameState> = {
 
     // Card must be in player's hand
     const hand = state.zones.hand[playerId];
-    if (!(hand && isCardInZone(hand, cardId))) return false;
+    if (!(hand && isCardInZone(hand, cardId))) {
+      return false;
+    }
 
     // Card must be a unit card
-    if (!isUnitCard(cardId)) return false;
+    if (!isUnitCard(cardId)) {
+      return false;
+    }
 
     // Check battle area capacity (max 6)
     const battleArea = state.zones.battleArea[playerId];
-    if (!battleArea) return false;
+    if (!battleArea) {
+      return false;
+    }
 
     const battleAreaSize = getZoneSize(battleArea);
-    if (battleAreaSize >= 6) return false;
+    if (battleAreaSize >= 6) {
+      return false;
+    }
 
     // Check if player has sufficient resources
     const cost = getCardCost(cardId);
     const activeResources = state.gundam.activeResources[playerId] ?? 0;
-    if (activeResources < cost) return false;
+    if (activeResources < cost) {
+      return false;
+    }
 
     return true;
   },
@@ -161,7 +183,7 @@ export const deployUnitMove: GameMoveDefinition<GundamGameState> = {
 
     if (!(hand && battleArea)) {
       throw new Error(
-        `Missing zones for player ${playerId}: hand=${!!hand}, battleArea=${!!battleArea}`,
+        `Missing zones for player ${playerId}: hand=${Boolean(hand)}, battleArea=${Boolean(battleArea)}`,
       );
     }
 
@@ -181,9 +203,7 @@ export const deployUnitMove: GameMoveDefinition<GundamGameState> = {
     const activeResources = draft.gundam.activeResources[playerId] ?? 0;
 
     if (activeResources < cost) {
-      throw new Error(
-        `Insufficient resources: need ${cost}, have ${activeResources}`,
-      );
+      throw new Error(`Insufficient resources: need ${cost}, have ${activeResources}`);
     }
 
     // Deduct resources
@@ -204,10 +224,10 @@ export const deployUnitMove: GameMoveDefinition<GundamGameState> = {
   },
 
   metadata: {
-    category: "deployment",
-    tags: ["core", "main-phase-action"],
-    description: "Deploy unit from hand to battle area",
-    canBeUndone: false,
     affectsZones: ["hand", "battleArea"],
+    canBeUndone: false,
+    category: "deployment",
+    description: "Deploy unit from hand to battle area",
+    tags: ["core", "main-phase-action"],
   },
 };

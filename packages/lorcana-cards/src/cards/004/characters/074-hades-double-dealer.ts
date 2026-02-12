@@ -5,10 +5,10 @@ export const hadesDoubleDealer: CharacterCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "play-card",
-        from: "hand",
         cardType: "character",
         cost: "free",
+        from: "hand",
+        type: "play-card",
       },
       id: "i41-1",
       text: "HERE'S THE TRADE-OFF {E}, Banish one of your other characters — Play a character with the same name as the banished character for free.",

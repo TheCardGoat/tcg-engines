@@ -10,26 +10,26 @@ export const magicaDeSpellShadowForm: CharacterCard = {
     },
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "return-to-hand",
           target: {
-            selector: "all",
+            cardTypes: ["character"],
             count: "all",
             owner: "any",
+            selector: "all",
             zones: ["play"],
-            cardTypes: ["character"],
           },
+          type: "return-to-hand",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "sma-2",
       name: "DANCE OF DARKNESS",
       text: "DANCE OF DARKNESS When you play this character, you may return one of your other characters to your hand to draw a card.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

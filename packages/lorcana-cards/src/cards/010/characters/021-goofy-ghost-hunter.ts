@@ -4,18 +4,18 @@ export const goofyGhostHunter: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: -1,
+        stat: "strength",
         target: "CHOSEN_CHARACTER",
+        type: "modify-stat",
       },
       id: "1mg-1",
       name: "PERFECT TRAP",
       text: "PERFECT TRAP When you play this character, chosen opposing character gets -1 {S} until the start of your next turn.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

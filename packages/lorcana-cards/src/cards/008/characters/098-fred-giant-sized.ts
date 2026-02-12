@@ -13,17 +13,17 @@ export const fredGiantsized: CharacterCard = {
     },
     {
       effect: {
-        type: "shuffle-into-deck",
-        target: "CHOSEN_CHARACTER",
         intoDeck: "owner",
+        target: "CHOSEN_CHARACTER",
+        type: "shuffle-into-deck",
       },
       id: "1d3-2",
       name: "I LIKE WHERE THIS IS HEADING",
       text: "I LIKE WHERE THIS IS HEADING Whenever this character quests, reveal cards from the top of your deck until you reveal a Floodborn character card. Put that card into your hand and shuffle the rest into your deck.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

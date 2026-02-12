@@ -4,9 +4,9 @@ export const rlsLegacySolarGalleon: LocationCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Evasive",
         target: "CHARACTERS_HERE",
+        type: "gain-keyword",
       },
       id: "1ng-1",
       name: "THIS IS OUR SHIP",

@@ -4,10 +4,10 @@ export const marianoGuzmanHandsomeSuitor: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "lore",
         modifier: 1,
+        stat: "lore",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "15v-1",
       text: "I SEE YOU While you have a character named Dolores Madrigal in play, this character gets +1 {L}.",

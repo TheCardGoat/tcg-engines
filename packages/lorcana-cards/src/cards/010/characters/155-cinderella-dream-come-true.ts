@@ -4,17 +4,17 @@ export const cinderellaDreamComeTrue: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you played a Princess character this turn",
+          type: "if",
         },
         then: {
-          type: "put-into-inkwell",
+          facedown: true,
           source: "hand",
           target: "CONTROLLER",
-          facedown: true,
+          type: "put-into-inkwell",
         },
+        type: "conditional",
       },
       id: "1sh-1",
       text: "WHATEVER YOU WISH FOR At the end of your turn, if you played a Princess character this turn, you may put a card from your hand into your inkwell facedown to draw a card.",

@@ -4,9 +4,9 @@ export const minnieMouseSweetheartPrincess: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Support",
         target: "YOUR_CHARACTERS",
+        type: "gain-keyword",
       },
       id: "ofq-1",
       text: "ROYAL FAVOR Your characters named Mickey Mouse gain Support.",
@@ -14,18 +14,18 @@ export const minnieMouseSweetheartPrincess: CharacterCard = {
     },
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "banish",
           target: {
-            selector: "chosen",
+            cardTypes: ["character"],
             count: 1,
             owner: "any",
+            selector: "chosen",
             zones: ["play"],
-            cardTypes: ["character"],
           },
+          type: "banish",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "ofq-2",
       text: "BYE BYE, NOW Whenever this character quests, you may banish chosen exerted character with 5 {S} or more.",

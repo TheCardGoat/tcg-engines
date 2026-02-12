@@ -17,7 +17,7 @@ import { FlowManager } from "../flow-manager";
 
 interface GameState {
   currentPlayer: number;
-  players: Array<{ id: string; name: string; score: number }>;
+  players: { id: string; name: string; score: number }[];
   turnCount: number;
   phase?: string;
   step?: string;
@@ -44,32 +44,32 @@ describe("Flow Serialization - End to End", () => {
             },
             phases: {
               draw: {
-                order: 1,
                 next: "main",
                 onBegin: (context) => {
                   context.state.log.push("draw-phase");
                 },
+                order: 1,
               },
               end: {
-                order: 3,
                 next: undefined,
                 onBegin: (context) => {
                   context.state.log.push("end-phase");
                 },
+                order: 3,
               },
               main: {
-                order: 2,
                 next: "end",
                 onBegin: (context) => {
                   context.state.log.push("main-phase");
                 },
+                order: 2,
               },
               ready: {
-                order: 0,
                 next: "draw",
                 onBegin: (context) => {
                   context.state.log.push("ready-phase");
                 },
+                order: 0,
               },
             },
           },
@@ -126,10 +126,10 @@ describe("Flow Serialization - End to End", () => {
               context.state.turnCount += 1;
             },
             phases: {
-              draw: { order: 1, next: "main" },
-              end: { order: 3, next: undefined },
-              main: { order: 2, next: "end" },
-              ready: { order: 0, next: "draw" },
+              draw: { next: "main", order: 1 },
+              end: { next: undefined, order: 3 },
+              main: { next: "end", order: 2 },
+              ready: { next: "draw", order: 0 },
             },
           },
         },
@@ -197,26 +197,26 @@ describe("Flow Serialization - End to End", () => {
                 next: undefined,
                 order: 0,
                 steps: {
-                  declare: {
-                    order: 0,
-                    next: "target",
-                    onBegin: (context) => {
-                      context.state.log.push("declare-attackers");
-                    },
-                  },
-                  target: {
-                    order: 1,
-                    next: "damage",
-                    onBegin: (context) => {
-                      context.state.log.push("declare-targets");
-                    },
-                  },
                   damage: {
-                    order: 2,
                     next: undefined,
                     onBegin: (context) => {
                       context.state.log.push("deal-damage");
                     },
+                    order: 2,
+                  },
+                  declare: {
+                    next: "target",
+                    onBegin: (context) => {
+                      context.state.log.push("declare-attackers");
+                    },
+                    order: 0,
+                  },
+                  target: {
+                    next: "damage",
+                    onBegin: (context) => {
+                      context.state.log.push("declare-targets");
+                    },
+                    order: 1,
                   },
                 },
               },
@@ -387,7 +387,7 @@ describe("Flow Serialization - End to End", () => {
       log: [],
       players: [{ id: "p1", name: "Alice", score: 0 }],
       turnCount: 0,
-      zones: { hand: [], deck: [], discard: [] },
+      zones: { deck: [], discard: [], hand: [] },
     };
 
     const manager = new FlowManager(flow, initialState);
@@ -424,22 +424,19 @@ describe("Flow Serialization - End to End", () => {
           turn: {
             phases: {
               ready: {
-                order: 1,
                 next: undefined,
                 onBegin: (context) => {
                   context.state.log.push("all-players-ready");
                 },
+                order: 1,
               },
               waiting: {
-                order: 0,
+                endIf: (context) => context.state.players.every((p) => p.score > 0),
                 next: "ready",
-                endIf: (context) => {
-                  // Auto-transition when all players ready
-                  return context.state.players.every((p) => p.score > 0);
-                },
                 onBegin: (context) => {
                   context.state.log.push("waiting-for-players");
                 },
+                order: 0,
               },
             },
           },
@@ -503,8 +500,8 @@ describe("Flow Serialization - End to End", () => {
                 next: "phase2",
                 order: 0,
                 steps: {
-                  step1: { order: 0, next: "step2" },
-                  step2: { order: 1, next: undefined },
+                  step1: { next: "step2", order: 0 },
+                  step2: { next: undefined, order: 1 },
                 },
               },
               phase2: {

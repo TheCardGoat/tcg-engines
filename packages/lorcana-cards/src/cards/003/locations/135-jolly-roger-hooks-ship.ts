@@ -4,9 +4,9 @@ export const jollyRogerHooksShip: LocationCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Rush",
         target: "CHARACTERS_HERE",
+        type: "gain-keyword",
       },
       id: "f7n-1",
       text: "LOOK ALIVE, YOU SWABS! Characters gain Rush while here.",

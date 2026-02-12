@@ -4,9 +4,9 @@ export const beyondTheHorizon: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "draw",
         amount: 3,
         target: "CONTROLLER",
+        type: "draw",
       },
       id: "1cf-1",
       text: "Sing Together 7 Choose any number of players. They discard their hands and draw 3 cards each.",

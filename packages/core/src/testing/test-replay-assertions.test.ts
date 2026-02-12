@@ -2,26 +2,26 @@ import { describe, expect, it } from "bun:test";
 import { RuleEngine } from "../engine/rule-engine";
 import type { GameDefinition } from "../game-definition/game-definition";
 import type { GameMoveDefinitions } from "../game-definition/move-definitions";
-import { createPlayerId, type PlayerId } from "../types";
+import { type PlayerId, createPlayerId } from "../types";
 import { expectDeterministicReplay } from "./test-replay-assertions";
 
 /**
  * Test state for replay assertions
  */
-type ReplayTestState = {
-  players: Array<{
+interface ReplayTestState {
+  players: {
     id: PlayerId;
     name: string;
     score: number;
-  }>;
+  }[];
   turnNumber: number;
   randomValues: number[];
-};
+}
 
-type ReplayTestMoves = {
+interface ReplayTestMoves {
   addRandom: Record<string, never>;
   incrementScore: { amount: number };
-};
+}
 
 describe("test-replay-assertions", () => {
   function createTestEngine(seed?: string) {
@@ -44,6 +44,7 @@ describe("test-replay-assertions", () => {
     };
 
     const gameDefinition: GameDefinition<ReplayTestState, ReplayTestMoves> = {
+      moves,
       name: "Replay Test Game",
       setup: (players) => ({
         players: players.map((p) => ({
@@ -51,10 +52,9 @@ describe("test-replay-assertions", () => {
           name: p.name || "Player",
           score: 0,
         })),
-        turnNumber: 1,
         randomValues: [],
+        turnNumber: 1,
       }),
-      moves,
     };
 
     const players = [
@@ -71,16 +71,16 @@ describe("test-replay-assertions", () => {
 
       // Execute some moves
       engine.executeMove("incrementScore", {
-        playerId: createPlayerId("p1"),
         params: { amount: 5 },
+        playerId: createPlayerId("p1"),
       });
       engine.executeMove("addRandom", {
-        playerId: createPlayerId("p1"),
         params: {},
+        playerId: createPlayerId("p1"),
       });
       engine.executeMove("incrementScore", {
-        playerId: createPlayerId("p2"),
         params: { amount: 3 },
+        playerId: createPlayerId("p2"),
       });
 
       // Should not throw
@@ -93,8 +93,8 @@ describe("test-replay-assertions", () => {
       // Execute moves that use RNG
       for (let i = 0; i < 10; i++) {
         engine.executeMove("addRandom", {
-          playerId: createPlayerId("p1"),
           params: {},
+          playerId: createPlayerId("p1"),
         });
       }
 
@@ -107,24 +107,24 @@ describe("test-replay-assertions", () => {
 
       // Complex sequence
       engine.executeMove("incrementScore", {
-        playerId: createPlayerId("p1"),
         params: { amount: 1 },
+        playerId: createPlayerId("p1"),
       });
       engine.executeMove("addRandom", {
-        playerId: createPlayerId("p1"),
         params: {},
+        playerId: createPlayerId("p1"),
       });
       engine.executeMove("incrementScore", {
-        playerId: createPlayerId("p2"),
         params: { amount: 2 },
+        playerId: createPlayerId("p2"),
       });
       engine.executeMove("addRandom", {
-        playerId: createPlayerId("p2"),
         params: {},
+        playerId: createPlayerId("p2"),
       });
       engine.executeMove("incrementScore", {
-        playerId: createPlayerId("p1"),
         params: { amount: 3 },
+        playerId: createPlayerId("p1"),
       });
 
       expectDeterministicReplay(engine);
@@ -147,6 +147,7 @@ describe("test-replay-assertions", () => {
       };
 
       const gameDefinition: GameDefinition<ReplayTestState, ReplayTestMoves> = {
+        moves,
         name: "Non-deterministic Test",
         setup: (players) => ({
           players: players.map((p) => ({
@@ -154,21 +155,18 @@ describe("test-replay-assertions", () => {
             name: p.name || "Player",
             score: 0,
           })),
-          turnNumber: 1,
           randomValues: [],
+          turnNumber: 1,
         }),
-        moves,
       };
 
-      const engine = new RuleEngine(
-        gameDefinition,
-        [{ id: createPlayerId("p1"), name: "Alice" }],
-        { seed: "non-deterministic" },
-      );
+      const engine = new RuleEngine(gameDefinition, [{ id: createPlayerId("p1"), name: "Alice" }], {
+        seed: "non-deterministic",
+      });
 
       engine.executeMove("addRandom", {
-        playerId: createPlayerId("p1"),
         params: {},
+        playerId: createPlayerId("p1"),
       });
 
       // Should throw because replay will have different state
@@ -188,8 +186,8 @@ describe("test-replay-assertions", () => {
       const engine = createTestEngine("single-move");
 
       engine.executeMove("incrementScore", {
-        playerId: createPlayerId("p1"),
         params: { amount: 10 },
+        playerId: createPlayerId("p1"),
       });
 
       expectDeterministicReplay(engine);
@@ -215,6 +213,7 @@ describe("test-replay-assertions", () => {
       };
 
       const gameDefinition: GameDefinition<ReplayTestState, ReplayTestMoves> = {
+        moves,
         name: "Mismatch Test",
         setup: (players) => ({
           players: players.map((p) => ({
@@ -222,21 +221,18 @@ describe("test-replay-assertions", () => {
             name: p.name || "Player",
             score: 0,
           })),
-          turnNumber: 1,
           randomValues: [],
+          turnNumber: 1,
         }),
-        moves,
       };
 
-      const engine = new RuleEngine(
-        gameDefinition,
-        [{ id: createPlayerId("p1"), name: "Alice" }],
-        { seed: "mismatch" },
-      );
+      const engine = new RuleEngine(gameDefinition, [{ id: createPlayerId("p1"), name: "Alice" }], {
+        seed: "mismatch",
+      });
 
       engine.executeMove("addRandom", {
-        playerId: createPlayerId("p1"),
         params: {},
+        playerId: createPlayerId("p1"),
       });
 
       expect(() => {
@@ -247,14 +243,14 @@ describe("test-replay-assertions", () => {
 
   describe("integration with real game scenarios", () => {
     it("should verify card shuffling is deterministic", () => {
-      type CardGameState = {
-        players: Array<{ id: PlayerId; name: string }>;
+      interface CardGameState {
+        players: { id: PlayerId; name: string }[];
         deck: string[];
-      };
+      }
 
-      type CardMoves = {
+      interface CardMoves {
         shuffle: Record<string, never>;
-      };
+      }
 
       const moves: GameMoveDefinitions<CardGameState, CardMoves> = {
         shuffle: {
@@ -267,35 +263,33 @@ describe("test-replay-assertions", () => {
       };
 
       const gameDefinition: GameDefinition<CardGameState, CardMoves> = {
+        moves,
         name: "Card Shuffle Test",
         setup: (players) => ({
+          deck: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"],
           players: players.map((p) => ({
             id: p.id as PlayerId,
             name: p.name || "Player",
           })),
-          deck: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"],
         }),
-        moves,
       };
 
-      const engine = new RuleEngine(
-        gameDefinition,
-        [{ id: createPlayerId("p1"), name: "Alice" }],
-        { seed: "shuffle-test" },
-      );
+      const engine = new RuleEngine(gameDefinition, [{ id: createPlayerId("p1"), name: "Alice" }], {
+        seed: "shuffle-test",
+      });
 
       // Shuffle multiple times
       engine.executeMove("shuffle", {
-        playerId: createPlayerId("p1"),
         params: {},
+        playerId: createPlayerId("p1"),
       });
       engine.executeMove("shuffle", {
-        playerId: createPlayerId("p1"),
         params: {},
+        playerId: createPlayerId("p1"),
       });
       engine.executeMove("shuffle", {
-        playerId: createPlayerId("p1"),
         params: {},
+        playerId: createPlayerId("p1"),
       });
 
       // Replay should produce same sequence of shuffles
@@ -303,14 +297,14 @@ describe("test-replay-assertions", () => {
     });
 
     it("should verify dice rolls are deterministic", () => {
-      type DiceGameState = {
-        players: Array<{ id: PlayerId; name: string }>;
+      interface DiceGameState {
+        players: { id: PlayerId; name: string }[];
         rolls: number[];
-      };
+      }
 
-      type DiceMoves = {
+      interface DiceMoves {
         roll: Record<string, never>;
-      };
+      }
 
       const moves: GameMoveDefinitions<DiceGameState, DiceMoves> = {
         roll: {
@@ -324,6 +318,7 @@ describe("test-replay-assertions", () => {
       };
 
       const gameDefinition: GameDefinition<DiceGameState, DiceMoves> = {
+        moves,
         name: "Dice Roll Test",
         setup: (players) => ({
           players: players.map((p) => ({
@@ -332,20 +327,17 @@ describe("test-replay-assertions", () => {
           })),
           rolls: [],
         }),
-        moves,
       };
 
-      const engine = new RuleEngine(
-        gameDefinition,
-        [{ id: createPlayerId("p1"), name: "Alice" }],
-        { seed: "dice-test" },
-      );
+      const engine = new RuleEngine(gameDefinition, [{ id: createPlayerId("p1"), name: "Alice" }], {
+        seed: "dice-test",
+      });
 
       // Roll dice multiple times
       for (let i = 0; i < 20; i++) {
         engine.executeMove("roll", {
-          playerId: createPlayerId("p1"),
           params: {},
+          playerId: createPlayerId("p1"),
         });
       }
 

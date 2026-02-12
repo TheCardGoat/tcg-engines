@@ -4,25 +4,25 @@ export const yenSidPowerfulSorcerer: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "has-named-character",
-          name: "Magic Broom in play",
           controller: "you",
+          name: "Magic Broom in play",
+          type: "has-named-character",
         },
         then: {
-          type: "draw",
           amount: 1,
           target: "CONTROLLER",
+          type: "draw",
         },
+        type: "conditional",
       },
       id: "7ea-1",
       name: "TIMELY INTERVENTION",
       text: "TIMELY INTERVENTION When you play this character, if you have a character named Magic Broom in play, you may draw a card. ARCANE STUDY While you have 2 or more Broom characters in play, this character gets +2.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

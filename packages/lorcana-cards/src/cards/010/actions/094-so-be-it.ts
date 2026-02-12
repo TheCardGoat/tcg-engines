@@ -4,18 +4,18 @@ export const soBeIt: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "banish",
           target: {
-            selector: "chosen",
+            cardTypes: ["item"],
             count: 1,
             owner: "any",
+            selector: "chosen",
             zones: ["play"],
-            cardTypes: ["item"],
           },
+          type: "banish",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "7zl-1",
       text: "Each of your characters gets +1 {S} this turn. You may banish chosen item.",

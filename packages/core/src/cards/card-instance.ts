@@ -4,23 +4,23 @@ import type { CardId, PlayerId, ZoneId } from "../types";
  * Mandatory base fields that ALL TCGs need
  * Every card instance must have these core properties
  */
-export type CardInstanceBase = {
+export interface CardInstanceBase {
   // Identity (mandatory)
   id: CardId;
-  definitionId: string; // references card definition
+  definitionId: string; // References card definition
   owner: PlayerId;
-  controller: PlayerId; // can differ from owner (e.g., Mind Control effects)
+  controller: PlayerId; // Can differ from owner (e.g., Mind Control effects)
 
   // Location (mandatory)
   zone: ZoneId;
-  position?: number; // position within zone if ordered
+  position?: number; // Position within zone if ordered
 
   // State flags (mandatory)
-  tapped: boolean; // tapped/exhausted state
-  flipped: boolean; // face-up (false) or face-down (true)
-  revealed: boolean; // temporarily visible to all players
-  phased: boolean; // phased out (not in play but not in another zone)
-};
+  tapped: boolean; // Tapped/exhausted state
+  flipped: boolean; // Face-up (false) or face-down (true)
+  revealed: boolean; // Temporarily visible to all players
+  phased: boolean; // Phased out (not in play but not in another zone)
+}
 
 /**
  * Generic card instance - games extend with custom state
@@ -45,5 +45,4 @@ export type CardInstanceBase = {
  * type HearthstoneCard = CardInstance<HearthstoneCardState>;
  * ```
  */
-export type CardInstance<TCustomState = Record<string, never>> =
-  CardInstanceBase & TCustomState;
+export type CardInstance<TCustomState = Record<string, never>> = CardInstanceBase & TCustomState;

@@ -249,8 +249,7 @@ describe("Targets & Conditions Integration", () => {
    */
   describe.skip("real card examples", () => {
     it("parses Elsa - Snow Queen ability", () => {
-      const text =
-        "When you play this character, deal 2 damage to chosen character.";
+      const text = "When you play this character, deal 2 damage to chosen character.";
 
       const target = parseTargetFromText(text);
 
@@ -284,8 +283,7 @@ describe("Targets & Conditions Integration", () => {
     });
 
     it("parses Merlin - Crab for-each ability", () => {
-      const text =
-        "When you play this character, gain 1 lore for each character you have in play.";
+      const text = "When you play this character, gain 1 lore for each character you have in play.";
 
       // ParseTargetFromText finds first target in text
       const target = parseTargetFromText(text);
@@ -307,8 +305,7 @@ describe("Targets & Conditions Integration", () => {
     });
 
     it("parses Aladdin - Prince Ali sequence with target", () => {
-      const text =
-        "When you play this character, draw 2 cards, then discard 1 card.";
+      const text = "When you play this character, draw 2 cards, then discard 1 card.";
 
       // Test that targets can be parsed even within sequence effects
       const target = parseTargetFromText(text);
@@ -344,8 +341,7 @@ describe("Targets & Conditions Integration", () => {
     });
 
     it("parses Simba - Returned King conditional damage", () => {
-      const text =
-        "If you have 10 or more lore, deal 4 damage to chosen character.";
+      const text = "If you have 10 or more lore, deal 4 damage to chosen character.";
 
       const condition = parseConditionFromText(text);
       const target = parseTargetFromText(text);
@@ -478,14 +474,7 @@ describe("Targets & Conditions Integration", () => {
 
   describe("target and condition combinations", () => {
     it("parses all modifier types with all condition types", () => {
-      const modifiers = [
-        "chosen",
-        "another",
-        "each",
-        "all",
-        "your",
-        "opponent",
-      ];
+      const modifiers = ["chosen", "another", "each", "all", "your", "opponent"];
       const conditionTypes = [
         { prefix: "if you have 5 lore", type: "if" as const },
         { prefix: "during your turn", type: "during" as const },

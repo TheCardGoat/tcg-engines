@@ -8,9 +8,7 @@ describe("Inspector Tezuka - Resolute Officer", () => {
       play: [inspectorTezukaResoluteOfficer],
     });
 
-    const cardUnderTest = testEngine.getCardModel(
-      inspectorTezukaResoluteOfficer,
-    );
+    const cardUnderTest = testEngine.getCardModel(inspectorTezukaResoluteOfficer);
     expect(cardUnderTest.hasBodyguard()).toBe(true);
   });
 });

@@ -3,68 +3,58 @@ import type { CardRegistry } from "./card-registry";
 
 describe("CardRegistry Interface", () => {
   // Mock card definition type for testing
-  type TestCardDef = {
+  interface TestCardDef {
     id: string;
     name: string;
     cost: number;
     type: "monster" | "spell" | "trap";
     attack?: number;
     defense?: number;
-  };
+  }
 
   // Mock implementation for testing the interface structure
   const createMockCardRegistry = (): CardRegistry<TestCardDef> => {
     const cards: Record<string, TestCardDef> = {
       "monster-1": {
+        attack: 3000,
+        cost: 8,
+        defense: 2500,
         id: "monster-1",
         name: "Blue Eyes",
-        cost: 8,
         type: "monster",
-        attack: 3000,
-        defense: 2500,
       },
       "monster-2": {
+        attack: 2500,
+        cost: 7,
+        defense: 2100,
         id: "monster-2",
         name: "Dark Magician",
-        cost: 7,
         type: "monster",
-        attack: 2500,
-        defense: 2100,
       },
       "spell-1": {
+        cost: 1,
         id: "spell-1",
         name: "Lightning Bolt",
-        cost: 1,
         type: "spell",
       },
       "trap-1": {
+        cost: 3,
         id: "trap-1",
         name: "Mirror Force",
-        cost: 3,
         type: "trap",
       },
     };
 
     return {
-      getCard: (definitionId) => {
-        return cards[definitionId];
-      },
+      getAllCards: () => Object.values(cards),
 
-      hasCard: (definitionId) => {
-        return definitionId in cards;
-      },
+      getCard: (definitionId) => cards[definitionId],
 
-      getAllCards: () => {
-        return Object.values(cards);
-      },
+      getCardCount: () => Object.keys(cards).length,
 
-      queryCards: (predicate) => {
-        return Object.values(cards).filter(predicate);
-      },
+      hasCard: (definitionId) => definitionId in cards,
 
-      getCardCount: () => {
-        return Object.keys(cards).length;
-      },
+      queryCards: (predicate) => Object.values(cards).filter(predicate),
     };
   };
 
@@ -128,11 +118,11 @@ describe("CardRegistry Interface", () => {
 
     it("should return empty array for empty registry", () => {
       const emptyRegistry: CardRegistry<TestCardDef> = {
-        getCard: () => undefined,
-        hasCard: () => false,
         getAllCards: () => [],
-        queryCards: () => [],
+        getCard: () => undefined,
         getCardCount: () => 0,
+        hasCard: () => false,
+        queryCards: () => [],
       };
 
       const allCards = emptyRegistry.getAllCards();
@@ -190,11 +180,11 @@ describe("CardRegistry Interface", () => {
 
     it("should return 0 for empty registry", () => {
       const emptyRegistry: CardRegistry<TestCardDef> = {
-        getCard: () => undefined,
-        hasCard: () => false,
         getAllCards: () => [],
-        queryCards: () => [],
+        getCard: () => undefined,
         getCardCount: () => 0,
+        hasCard: () => false,
+        queryCards: () => [],
       };
 
       expect(emptyRegistry.getCardCount()).toBe(0);

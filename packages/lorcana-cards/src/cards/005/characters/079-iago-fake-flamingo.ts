@@ -10,16 +10,16 @@ export const iagoFakeFlamingo: CharacterCard = {
     },
     {
       effect: {
-        type: "play-card",
         from: "hand",
+        type: "play-card",
       },
       id: "1y2-2",
       name: "IN DISGUISE",
       text: "IN DISGUISE Whenever this character quests, you pay 2 {I} less for the next action you play this turn.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

@@ -4,18 +4,18 @@ export const thievery: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "lose-lore",
             amount: 1,
             target: "OPPONENT",
+            type: "lose-lore",
           },
           {
-            type: "gain-lore",
             amount: 1,
+            type: "gain-lore",
           },
         ],
+        type: "sequence",
       },
       id: "f60-1",
       text: "Chosen opponent loses 1 lore. Gain 1 lore.",

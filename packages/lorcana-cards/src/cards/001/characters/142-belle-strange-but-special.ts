@@ -4,14 +4,14 @@ export const belleStrangeButSpecial: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
-        effect: {
-          type: "modify-stat",
-          stat: "lore",
-          modifier: 4,
-          target: "SELF",
-        },
         chooser: "CONTROLLER",
+        effect: {
+          modifier: 4,
+          stat: "lore",
+          target: "SELF",
+          type: "modify-stat",
+        },
+        type: "optional",
       },
       id: "uxx-1",
       text: "**READ A BOOK** During your turn, you may put an additional card from your hand into your inkwell facedown.\n\n**MY FAVOURITE PART!** While you have 10 or more cards in your inkwell, this character gets +4 {L}.",

@@ -4,23 +4,23 @@ export const castleOfTheHornedKingBastionOfEvil: LocationCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "ready",
           target: {
-            selector: "chosen",
+            cardTypes: ["item"],
             count: 1,
             owner: "any",
+            selector: "chosen",
             zones: ["play"],
-            cardTypes: ["item"],
           },
+          type: "ready",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "lzh-1",
       name: "INTO THE GLOOM Once",
       text: "INTO THE GLOOM Once during your turn, whenever a character quests while here, you may ready chosen item.",
-      trigger: { event: "play", timing: "when", on: "SELF" },
+      trigger: { event: "play", on: "SELF", timing: "when" },
       type: "triggered",
     },
   ],

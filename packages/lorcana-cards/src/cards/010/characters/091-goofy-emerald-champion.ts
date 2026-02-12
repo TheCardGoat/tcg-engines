@@ -4,35 +4,35 @@ export const goofyEmeraldChampion: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "banish",
         target: "challenging-character",
+        type: "banish",
       },
       id: "bau-1",
       name: "EVEN THE SCORE",
       text: "EVEN THE SCORE Whenever one of your other Emerald characters is challenged and banished, banish the challenging character.",
       trigger: {
+        challengeContext: {
+          role: "defender",
+        },
         event: "banish-in-challenge",
-        timing: "whenever",
         on: {
           controller: "you",
           excludeSelf: true,
         },
-        challengeContext: {
-          role: "defender",
-        },
+        timing: "whenever",
       },
       type: "triggered",
     },
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Ward",
         target: {
-          selector: "all",
           count: "all",
-          filter: [{ type: "owner", owner: "you" }],
           excludeSelf: true,
+          filter: [{ owner: "you", type: "owner" }],
+          selector: "all",
         },
+        type: "gain-keyword",
       },
       id: "bau-2",
       name: "PROVIDE COVER",

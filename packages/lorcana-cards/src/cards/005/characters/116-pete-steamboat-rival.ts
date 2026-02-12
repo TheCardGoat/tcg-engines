@@ -4,26 +4,26 @@ export const peteSteamboatRival: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "banish",
           target: {
-            selector: "chosen",
+            cardTypes: ["character"],
             count: 1,
             owner: "opponent",
+            selector: "chosen",
             zones: ["play"],
-            cardTypes: ["character"],
           },
+          type: "banish",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "nvb-1",
       name: "SCRAM!",
       text: "SCRAM! When you play this character, if you have another character named Pete in play, you may banish chosen opposing character.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

@@ -4,25 +4,25 @@ export const visionOfTheFuture: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "scry",
             amount: 5,
-            target: "CONTROLLER",
             destinations: [
               {
-                zone: "deck-bottom",
-                remainder: true,
                 ordering: "player-choice",
+                remainder: true,
+                zone: "deck-bottom",
               },
             ],
+            target: "CONTROLLER",
+            type: "scry",
           },
           {
-            type: "put-on-bottom",
             target: "CHOSEN_CHARACTER",
+            type: "put-on-bottom",
           },
         ],
+        type: "sequence",
       },
       id: "xym-1",
       text: "Look at the top 5 cards of your deck. Put one into your hand and the rest on the bottom of your deck in any order.",

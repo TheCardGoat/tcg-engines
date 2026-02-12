@@ -13,16 +13,16 @@ export const basilGreatMouseDetective: CharacterCard = {
     },
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you used Shift to play this character",
+          type: "if",
         },
         then: {
-          type: "draw",
           amount: 2,
           target: "CONTROLLER",
+          type: "draw",
         },
+        type: "conditional",
       },
       id: "1vg-2",
       text: "THERE'S ALWAYS A CHANCE If you used Shift to play this character, you may draw 2 cards when he enters play.",

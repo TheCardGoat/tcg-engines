@@ -10,7 +10,7 @@ import type { TargetDefinition } from "./target-definition";
  * Provides information needed to evaluate targeting restrictions
  * @template TCustomState - The custom state type for CardInstance
  */
-export type TargetContext<TCustomState = unknown> = {
+export interface TargetContext<TCustomState = unknown> {
   /** The card that is the source of the targeting (e.g., the spell being cast) */
   sourceCard: CardInstance<TCustomState>;
 
@@ -19,15 +19,15 @@ export type TargetContext<TCustomState = unknown> = {
 
   /** Previously selected targets (for multi-target validation) */
   previousTargets: CardInstance<TCustomState>[];
-};
+}
 
 /**
  * Result of target validation
  */
-export type ValidationResult = {
+export interface ValidationResult {
   valid: boolean;
   error?: string;
-};
+}
 
 /**
  * Check if a card is a legal target for a given target definition
@@ -111,9 +111,7 @@ export function getLegalTargets<
   context: TargetContext<TCustomState>,
 ): CardInstance<TCustomState>[] {
   const allCards = Object.values(state.cards);
-  return allCards.filter((card) =>
-    isLegalTarget(card, targetDef, state, registry, context),
-  );
+  return allCards.filter((card) => isLegalTarget(card, targetDef, state, registry, context));
 }
 
 /**
@@ -144,8 +142,8 @@ export function validateTargetSelection<
     // Exact count required
     if (targets.length !== targetDef.count) {
       return {
-        valid: false,
         error: `Expected ${targetDef.count} target(s), but got ${targets.length}`,
+        valid: false,
       };
     }
   } else {
@@ -153,14 +151,14 @@ export function validateTargetSelection<
     const { min, max } = targetDef.count;
     if (targets.length < min) {
       return {
-        valid: false,
         error: `Expected at least ${min} target(s), but got ${targets.length}`,
+        valid: false,
       };
     }
     if (targets.length > max) {
       return {
-        valid: false,
         error: `Expected at most ${max} target(s), but got ${targets.length}`,
+        valid: false,
       };
     }
   }
@@ -170,8 +168,8 @@ export function validateTargetSelection<
     const target = targets[i];
     if (!target) {
       return {
-        valid: false,
         error: `Target at index ${i} is undefined`,
+        valid: false,
       };
     }
 
@@ -184,8 +182,8 @@ export function validateTargetSelection<
 
     if (!isLegalTarget(target, targetDef, state, registry, fullContext)) {
       return {
-        valid: false,
         error: `Target at index ${i} (${String(target.id)}) is not a legal target`,
+        valid: false,
       };
     }
   }
@@ -260,9 +258,7 @@ export function enumerateTargetCombinations<
         previousTargets: current,
       };
 
-      if (
-        isLegalTarget(candidate, targetDef, state, registry, updatedContext)
-      ) {
+      if (isLegalTarget(candidate, targetDef, state, registry, updatedContext)) {
         current.push(candidate);
         generateCombinations(i + 1, current, targetCount);
         current.pop();

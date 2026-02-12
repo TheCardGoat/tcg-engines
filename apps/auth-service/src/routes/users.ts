@@ -39,17 +39,17 @@ export const usersRoutes = new Elysia({ prefix: "/users" })
       }
 
       return {
-        id: fullUser.id,
-        email: fullUser.email,
-        name: fullUser.name,
-        username: fullUser.username,
-        displayUsername: fullUser.displayUsername,
-        image: fullUser.image,
-        emailVerified: fullUser.emailVerified,
-        subscriptionTier: fullUser.subscriptionTier,
-        subscriptionExpiresAt: fullUser.subscriptionExpiresAt,
         createdAt: fullUser.createdAt,
+        displayUsername: fullUser.displayUsername,
+        email: fullUser.email,
+        emailVerified: fullUser.emailVerified,
+        id: fullUser.id,
+        image: fullUser.image,
+        name: fullUser.name,
+        subscriptionExpiresAt: fullUser.subscriptionExpiresAt,
+        subscriptionTier: fullUser.subscriptionTier,
         updatedAt: fullUser.updatedAt,
+        username: fullUser.username,
       };
     },
     { auth: true },
@@ -73,26 +73,26 @@ export const usersRoutes = new Elysia({ prefix: "/users" })
       }
 
       return {
-        id: updatedUser.id,
-        email: updatedUser.email,
-        name: updatedUser.name,
-        username: updatedUser.username,
-        displayUsername: updatedUser.displayUsername,
-        image: updatedUser.image,
-        emailVerified: updatedUser.emailVerified,
-        subscriptionTier: updatedUser.subscriptionTier,
-        subscriptionExpiresAt: updatedUser.subscriptionExpiresAt,
         createdAt: updatedUser.createdAt,
+        displayUsername: updatedUser.displayUsername,
+        email: updatedUser.email,
+        emailVerified: updatedUser.emailVerified,
+        id: updatedUser.id,
+        image: updatedUser.image,
+        name: updatedUser.name,
+        subscriptionExpiresAt: updatedUser.subscriptionExpiresAt,
+        subscriptionTier: updatedUser.subscriptionTier,
         updatedAt: updatedUser.updatedAt,
+        username: updatedUser.username,
       };
     },
     {
       auth: true,
       body: t.Object({
-        name: t.Optional(t.String({ minLength: 1, maxLength: 100 })),
-        username: t.Optional(t.String({ minLength: 3, maxLength: 30 })),
-        displayUsername: t.Optional(t.String({ minLength: 1, maxLength: 50 })),
+        displayUsername: t.Optional(t.String({ maxLength: 50, minLength: 1 })),
         image: t.Optional(t.String({ format: "uri" })),
+        name: t.Optional(t.String({ maxLength: 100, minLength: 1 })),
+        username: t.Optional(t.String({ maxLength: 30, minLength: 3 })),
       }),
     },
   )
@@ -108,13 +108,13 @@ export const usersRoutes = new Elysia({ prefix: "/users" })
       const subscriptions = await getUserSubscriptions(authenticatedUser.id);
 
       return {
+        count: subscriptions.length,
         subscriptions: subscriptions.map((sub) => ({
-          id: sub.id,
+          createdAt: sub.createdAt,
           creatorId: sub.creatorId,
           gameId: sub.gameId,
-          createdAt: sub.createdAt,
+          id: sub.id,
         })),
-        count: subscriptions.length,
       };
     },
     { auth: true },
@@ -133,19 +133,19 @@ export const usersRoutes = new Elysia({ prefix: "/users" })
       if (!preferences) {
         // Return default preferences if none exist
         return {
-          frequency: "daily",
-          deliveryTime: "09:00:00",
-          isActive: false,
           createdAt: null,
+          deliveryTime: "09:00:00",
+          frequency: "daily",
+          isActive: false,
           updatedAt: null,
         };
       }
 
       return {
-        frequency: preferences.frequency,
-        deliveryTime: preferences.deliveryTime,
-        isActive: preferences.isActive,
         createdAt: preferences.createdAt,
+        deliveryTime: preferences.deliveryTime,
+        frequency: preferences.frequency,
+        isActive: preferences.isActive,
         updatedAt: preferences.updatedAt,
       };
     },
@@ -160,30 +160,25 @@ export const usersRoutes = new Elysia({ prefix: "/users" })
     async ({ user, set, body }) => {
       const authenticatedUser = requireAuth(user, set);
 
-      const preferences = await updateDigestPreferences(
-        authenticatedUser.id,
-        body,
-      );
+      const preferences = await updateDigestPreferences(authenticatedUser.id, body);
 
       return {
-        frequency: preferences.frequency,
-        deliveryTime: preferences.deliveryTime,
-        isActive: preferences.isActive,
         createdAt: preferences.createdAt,
+        deliveryTime: preferences.deliveryTime,
+        frequency: preferences.frequency,
+        isActive: preferences.isActive,
         updatedAt: preferences.updatedAt,
       };
     },
     {
       auth: true,
       body: t.Object({
-        frequency: t.Optional(
-          t.Union([t.Literal("daily"), t.Literal("weekly")]),
-        ),
         deliveryTime: t.Optional(
           t.String({
             pattern: "^([01]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$",
           }),
         ),
+        frequency: t.Optional(t.Union([t.Literal("daily"), t.Literal("weekly")])),
         isActive: t.Optional(t.Boolean()),
       }),
     },

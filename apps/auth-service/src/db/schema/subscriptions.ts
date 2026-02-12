@@ -16,10 +16,7 @@ import { users } from "./auth";
 /**
  * Digest frequency enum
  */
-export const digestFrequencyEnum = pgEnum("digest_frequency", [
-  "daily",
-  "weekly",
-]);
+export const digestFrequencyEnum = pgEnum("digest_frequency", ["daily", "weekly"]);
 
 /**
  * User subscriptions table - Creator follows
@@ -43,10 +40,7 @@ export const userSubscriptions = pgTable(
   (table) => [
     index("user_subscriptions_user_id_idx").on(table.userId),
     index("user_subscriptions_creator_id_idx").on(table.creatorId),
-    unique("user_subscriptions_user_creator_unique").on(
-      table.userId,
-      table.creatorId,
-    ),
+    unique("user_subscriptions_user_creator_unique").on(table.userId, table.creatorId),
   ],
 );
 
@@ -56,19 +50,19 @@ export const userSubscriptions = pgTable(
  * Stores user preferences for content digest emails.
  */
 export const digestPreferences = pgTable("digest_preferences", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  userId: text("user_id")
-    .references(() => users.id, { onDelete: "cascade" })
-    .notNull()
-    .unique(),
-  frequency: digestFrequencyEnum("frequency").notNull().default("daily"),
-  deliveryTime: time("delivery_time").notNull().default("09:00:00"),
-  isActive: boolean("is_active").notNull().default(true),
   createdAt: timestamp("created_at").defaultNow().notNull(),
+  deliveryTime: time("delivery_time").notNull().default("09:00:00"),
+  frequency: digestFrequencyEnum("frequency").notNull().default("daily"),
+  id: uuid("id").primaryKey().defaultRandom(),
+  isActive: boolean("is_active").notNull().default(true),
   updatedAt: timestamp("updated_at")
     .defaultNow()
     .$onUpdate(() => new Date())
     .notNull(),
+  userId: text("user_id")
+    .references(() => users.id, { onDelete: "cascade" })
+    .notNull()
+    .unique(),
 });
 
 /**
@@ -104,25 +98,19 @@ export type DigestHistoryRecord = typeof digestHistory.$inferSelect;
 export type NewDigestHistoryRecord = typeof digestHistory.$inferInsert;
 
 // Relations
-export const userSubscriptionsRelations = relations(
-  userSubscriptions,
-  ({ one }) => ({
-    user: one(users, {
-      fields: [userSubscriptions.userId],
-      references: [users.id],
-    }),
+export const userSubscriptionsRelations = relations(userSubscriptions, ({ one }) => ({
+  user: one(users, {
+    fields: [userSubscriptions.userId],
+    references: [users.id],
   }),
-);
+}));
 
-export const digestPreferencesRelations = relations(
-  digestPreferences,
-  ({ one }) => ({
-    user: one(users, {
-      fields: [digestPreferences.userId],
-      references: [users.id],
-    }),
+export const digestPreferencesRelations = relations(digestPreferences, ({ one }) => ({
+  user: one(users, {
+    fields: [digestPreferences.userId],
+    references: [users.id],
   }),
-);
+}));
 
 export const digestHistoryRelations = relations(digestHistory, ({ one }) => ({
   user: one(users, {

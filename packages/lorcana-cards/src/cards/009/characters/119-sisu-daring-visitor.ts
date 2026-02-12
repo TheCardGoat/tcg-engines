@@ -10,16 +10,16 @@ export const sisuDaringVisitor: CharacterCard = {
     },
     {
       effect: {
-        type: "play-card",
         from: "hand",
+        type: "play-card",
       },
       id: "1y1-2",
       name: "BRING ON THE HEAT!",
       text: "BRING ON THE HEAT! When you play this character, banish chosen opposing character with 1 {S} or less.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

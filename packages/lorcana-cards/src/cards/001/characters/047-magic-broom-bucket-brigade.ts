@@ -4,8 +4,8 @@ export const magicBroomBucketBrigade: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "play-card",
         from: "hand",
+        type: "play-card",
       },
       id: "zyc-1",
       text: "**SWEEP** When you play this character, you may shuffle a card from any discard into its player",

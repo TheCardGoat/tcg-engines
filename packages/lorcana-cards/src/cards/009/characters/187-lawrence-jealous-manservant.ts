@@ -4,10 +4,10 @@ export const lawrenceJealousManservant: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: 4,
+        stat: "strength",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "1rx-1",
       text: "PAYBACK While this character has no damage, he gets +4 {S}.",

@@ -18,18 +18,18 @@
 
 import { beforeEach, describe, expect, it } from "bun:test";
 import {
-  addCard,
   type CardId,
+  type PlayerId,
+  type Zone,
+  addCard,
   createCardId,
   createPlayerId,
   createZone,
   createZoneId,
   draw,
   moveCard,
-  type PlayerId,
   removeCard,
   shuffle,
-  type Zone,
 } from "@tcg/core";
 
 describe("Gundam Zone Operations - Core Integration", () => {
@@ -51,12 +51,12 @@ describe("Gundam Zone Operations - Core Integration", () => {
     it("should create a deck zone with proper configuration", () => {
       const deckZone = createZone(
         {
+          faceDown: true,
           id: createZoneId("deck"),
           name: "Deck",
-          visibility: "secret",
           ordered: true,
           owner: player1,
-          faceDown: true,
+          visibility: "secret",
         },
         [],
       );
@@ -74,12 +74,12 @@ describe("Gundam Zone Operations - Core Integration", () => {
       const deckCards = [card1, card2, card3];
       const deckZone = createZone(
         {
+          faceDown: true,
           id: createZoneId("deck"),
           name: "Deck",
-          visibility: "secret",
           ordered: true,
           owner: player1,
-          faceDown: true,
+          visibility: "secret",
         },
         deckCards,
       );
@@ -95,12 +95,12 @@ describe("Gundam Zone Operations - Core Integration", () => {
     it("should draw card from deck to hand", () => {
       const deckZone = createZone(
         {
+          faceDown: true,
           id: createZoneId("deck"),
           name: "Deck",
-          visibility: "secret",
           ordered: true,
           owner: player1,
-          faceDown: true,
+          visibility: "secret",
         },
         [card1, card2, card3],
       );
@@ -109,9 +109,9 @@ describe("Gundam Zone Operations - Core Integration", () => {
         {
           id: createZoneId("hand"),
           name: "Hand",
-          visibility: "private",
           ordered: false,
           owner: player1,
+          visibility: "private",
         },
         [],
       );
@@ -133,12 +133,12 @@ describe("Gundam Zone Operations - Core Integration", () => {
   describe("Resource Deck Operations", () => {
     it("should create resource deck zone with proper configuration", () => {
       const resourceDeckZone = createZone({
+        faceDown: true,
         id: createZoneId("resource-deck"),
         name: "Resource Deck",
-        visibility: "secret",
         ordered: true,
         owner: player1,
-        faceDown: true,
+        visibility: "secret",
       });
 
       expect(resourceDeckZone.config.name).toBe("Resource Deck");
@@ -150,12 +150,12 @@ describe("Gundam Zone Operations - Core Integration", () => {
       const resourceCards = [card1, card2, card3];
       const resourceDeckZone = createZone(
         {
+          faceDown: true,
           id: createZoneId("resource-deck"),
           name: "Resource Deck",
-          visibility: "secret",
           ordered: true,
           owner: player1,
-          faceDown: true,
+          visibility: "secret",
         },
         resourceCards,
       );
@@ -164,9 +164,9 @@ describe("Gundam Zone Operations - Core Integration", () => {
         {
           id: createZoneId("resource-hand"),
           name: "Resource Hand",
-          visibility: "private",
           ordered: false,
           owner: player1,
+          visibility: "private",
         },
         [],
       );
@@ -188,9 +188,9 @@ describe("Gundam Zone Operations - Core Integration", () => {
       const handZone = createZone({
         id: createZoneId("hand"),
         name: "Hand",
-        visibility: "private",
         ordered: false,
         owner: player1,
+        visibility: "private",
       });
 
       expect(handZone.config.name).toBe("Hand");
@@ -202,9 +202,9 @@ describe("Gundam Zone Operations - Core Integration", () => {
       const handZone = createZone({
         id: createZoneId("hand"),
         name: "Hand",
-        visibility: "private",
         ordered: false,
         owner: player1,
+        visibility: "private",
       });
 
       const updatedHand = addCard(handZone, card1);
@@ -218,9 +218,9 @@ describe("Gundam Zone Operations - Core Integration", () => {
         {
           id: createZoneId("hand"),
           name: "Hand",
-          visibility: "private",
           ordered: false,
           owner: player1,
+          visibility: "private",
         },
         [card1, card2],
       );
@@ -232,16 +232,14 @@ describe("Gundam Zone Operations - Core Integration", () => {
     });
 
     it("should enforce hand limit of 10 cards", () => {
-      const cards = Array.from({ length: 10 }, (_, i) =>
-        createCardId(`card-${i}`),
-      );
+      const cards = Array.from({ length: 10 }, (_, i) => createCardId(`card-${i}`));
       const handZone = createZone(
         {
           id: createZoneId("hand"),
           name: "Hand",
-          visibility: "private",
           ordered: false,
           owner: player1,
+          visibility: "private",
         },
         cards,
       );
@@ -256,9 +254,9 @@ describe("Gundam Zone Operations - Core Integration", () => {
       const battleZone = createZone({
         id: createZoneId("battle-area"),
         name: "Battle Area",
-        visibility: "public",
         ordered: true,
         owner: player1,
+        visibility: "public",
       });
 
       expect(battleZone.config.name).toBe("Battle Area");
@@ -271,9 +269,9 @@ describe("Gundam Zone Operations - Core Integration", () => {
         {
           id: createZoneId("hand"),
           name: "Hand",
-          visibility: "private",
           ordered: false,
           owner: player1,
+          visibility: "private",
         },
         [card1],
       );
@@ -281,9 +279,9 @@ describe("Gundam Zone Operations - Core Integration", () => {
       const battleZone = createZone({
         id: createZoneId("battle-area"),
         name: "Battle Area",
-        visibility: "public",
         ordered: true,
         owner: player1,
+        visibility: "public",
       });
 
       const { fromZone, toZone } = moveCard(handZone, battleZone, card1);
@@ -293,16 +291,14 @@ describe("Gundam Zone Operations - Core Integration", () => {
     });
 
     it("should enforce battle area limit of 6 units", () => {
-      const cards = Array.from({ length: 6 }, (_, i) =>
-        createCardId(`unit-${i}`),
-      );
+      const cards = Array.from({ length: 6 }, (_, i) => createCardId(`unit-${i}`));
       const battleZone = createZone(
         {
           id: createZoneId("battle-area"),
           name: "Battle Area",
-          visibility: "public",
           ordered: true,
           owner: player1,
+          visibility: "public",
         },
         cards,
       );
@@ -315,12 +311,12 @@ describe("Gundam Zone Operations - Core Integration", () => {
   describe("Shield Section Operations", () => {
     it("should create shield section zone with proper configuration", () => {
       const shieldZone = createZone({
+        faceDown: true,
         id: createZoneId("shield-section"),
         name: "Shield Section",
-        visibility: "secret",
         ordered: true,
         owner: player1,
-        faceDown: true,
+        visibility: "secret",
       });
 
       expect(shieldZone.config.name).toBe("Shield Section");
@@ -329,17 +325,15 @@ describe("Gundam Zone Operations - Core Integration", () => {
     });
 
     it("should place 6 shield cards during setup", () => {
-      const shieldCards = Array.from({ length: 6 }, (_, i) =>
-        createCardId(`shield-${i}`),
-      );
+      const shieldCards = Array.from({ length: 6 }, (_, i) => createCardId(`shield-${i}`));
       const shieldZone = createZone(
         {
+          faceDown: true,
           id: createZoneId("shield-section"),
           name: "Shield Section",
-          visibility: "secret",
           ordered: true,
           owner: player1,
-          faceDown: true,
+          visibility: "secret",
         },
         shieldCards,
       );
@@ -351,12 +345,12 @@ describe("Gundam Zone Operations - Core Integration", () => {
       const shieldCards = [card1, card2, card3];
       const shieldZone = createZone(
         {
+          faceDown: true,
           id: createZoneId("shield-section"),
           name: "Shield Section",
-          visibility: "secret",
           ordered: true,
           owner: player1,
-          faceDown: true,
+          visibility: "secret",
         },
         shieldCards,
       );
@@ -365,9 +359,9 @@ describe("Gundam Zone Operations - Core Integration", () => {
         {
           id: createZoneId("trash"),
           name: "Trash",
-          visibility: "public",
           ordered: true,
           owner: player1,
+          visibility: "public",
         },
         [],
       );
@@ -390,9 +384,9 @@ describe("Gundam Zone Operations - Core Integration", () => {
       const baseZone = createZone({
         id: createZoneId("base-section"),
         name: "Base Section",
-        visibility: "public",
         ordered: false,
         owner: player1,
+        visibility: "public",
       });
 
       expect(baseZone.config.name).toBe("Base Section");
@@ -404,9 +398,9 @@ describe("Gundam Zone Operations - Core Integration", () => {
       const baseZone = createZone({
         id: createZoneId("base-section"),
         name: "Base Section",
-        visibility: "public",
         ordered: false,
         owner: player1,
+        visibility: "public",
       });
 
       const updatedBase = addCard(baseZone, exBase);
@@ -421,9 +415,9 @@ describe("Gundam Zone Operations - Core Integration", () => {
         {
           id: createZoneId("base-section"),
           name: "Base Section",
-          visibility: "public",
           ordered: false,
           owner: player1,
+          visibility: "public",
         },
         [exBase],
       );
@@ -438,9 +432,9 @@ describe("Gundam Zone Operations - Core Integration", () => {
       const resourceZone = createZone({
         id: createZoneId("resource-area"),
         name: "Resource Area",
-        visibility: "public",
         ordered: false,
         owner: player1,
+        visibility: "public",
       });
 
       expect(resourceZone.config.name).toBe("Resource Area");
@@ -453,9 +447,9 @@ describe("Gundam Zone Operations - Core Integration", () => {
         {
           id: createZoneId("hand"),
           name: "Hand",
-          visibility: "private",
           ordered: false,
           owner: player1,
+          visibility: "private",
         },
         [card1],
       );
@@ -463,9 +457,9 @@ describe("Gundam Zone Operations - Core Integration", () => {
       const resourceZone = createZone({
         id: createZoneId("resource-area"),
         name: "Resource Area",
-        visibility: "public",
         ordered: false,
         owner: player1,
+        visibility: "public",
       });
 
       const { fromZone, toZone } = moveCard(handZone, resourceZone, card1);
@@ -475,16 +469,14 @@ describe("Gundam Zone Operations - Core Integration", () => {
     });
 
     it("should enforce resource area limit of 15 cards", () => {
-      const resources = Array.from({ length: 15 }, (_, i) =>
-        createCardId(`resource-${i}`),
-      );
+      const resources = Array.from({ length: 15 }, (_, i) => createCardId(`resource-${i}`));
       const resourceZone = createZone(
         {
           id: createZoneId("resource-area"),
           name: "Resource Area",
-          visibility: "public",
           ordered: false,
           owner: player1,
+          visibility: "public",
         },
         resources,
       );
@@ -498,9 +490,9 @@ describe("Gundam Zone Operations - Core Integration", () => {
       const resourceZone = createZone({
         id: createZoneId("resource-area"),
         name: "Resource Area",
-        visibility: "public",
         ordered: false,
         owner: player2,
+        visibility: "public",
       });
 
       const updatedResource = addCard(resourceZone, exResource);
@@ -514,9 +506,9 @@ describe("Gundam Zone Operations - Core Integration", () => {
       const trashZone = createZone({
         id: createZoneId("trash"),
         name: "Trash",
-        visibility: "public",
         ordered: true,
         owner: player1,
+        visibility: "public",
       });
 
       expect(trashZone.config.name).toBe("Trash");
@@ -529,9 +521,9 @@ describe("Gundam Zone Operations - Core Integration", () => {
         {
           id: createZoneId("battle-area"),
           name: "Battle Area",
-          visibility: "public",
           ordered: true,
           owner: player1,
+          visibility: "public",
         },
         [card1],
       );
@@ -539,9 +531,9 @@ describe("Gundam Zone Operations - Core Integration", () => {
       const trashZone = createZone({
         id: createZoneId("trash"),
         name: "Trash",
-        visibility: "public",
         ordered: true,
         owner: player1,
+        visibility: "public",
       });
 
       const { fromZone, toZone } = moveCard(battleZone, trashZone, card1);
@@ -555,9 +547,9 @@ describe("Gundam Zone Operations - Core Integration", () => {
         {
           id: createZoneId("trash"),
           name: "Trash",
-          visibility: "public",
           ordered: true,
           owner: player1,
+          visibility: "public",
         },
         [card1],
       );
@@ -573,9 +565,9 @@ describe("Gundam Zone Operations - Core Integration", () => {
       const removalZone = createZone({
         id: createZoneId("removal"),
         name: "Removal Area",
-        visibility: "public",
         ordered: false,
         owner: player1,
+        visibility: "public",
       });
 
       expect(removalZone.config.name).toBe("Removal Area");
@@ -588,9 +580,9 @@ describe("Gundam Zone Operations - Core Integration", () => {
         {
           id: createZoneId("battle-area"),
           name: "Battle Area",
-          visibility: "public",
           ordered: true,
           owner: player1,
+          visibility: "public",
         },
         [card1],
       );
@@ -598,9 +590,9 @@ describe("Gundam Zone Operations - Core Integration", () => {
       const removalZone = createZone({
         id: createZoneId("removal"),
         name: "Removal Area",
-        visibility: "public",
         ordered: false,
         owner: player1,
+        visibility: "public",
       });
 
       const { fromZone, toZone } = moveCard(battleZone, removalZone, card1);
@@ -615,9 +607,9 @@ describe("Gundam Zone Operations - Core Integration", () => {
       const originalZone = createZone({
         id: createZoneId("hand"),
         name: "Hand",
-        visibility: "private",
         ordered: false,
         owner: player1,
+        visibility: "private",
       });
 
       const updatedZone = addCard(originalZone, card1);
@@ -632,9 +624,9 @@ describe("Gundam Zone Operations - Core Integration", () => {
         {
           id: createZoneId("hand"),
           name: "Hand",
-          visibility: "private",
           ordered: false,
           owner: player1,
+          visibility: "private",
         },
         [card1],
       );
@@ -642,9 +634,9 @@ describe("Gundam Zone Operations - Core Integration", () => {
       const originalTo = createZone({
         id: createZoneId("battle-area"),
         name: "Battle Area",
-        visibility: "public",
         ordered: true,
         owner: player1,
+        visibility: "public",
       });
 
       const { fromZone, toZone } = moveCard(originalFrom, originalTo, card1);
@@ -661,12 +653,12 @@ describe("Gundam Zone Operations - Core Integration", () => {
       // Setup initial zones
       const deck = createZone(
         {
+          faceDown: true,
           id: createZoneId("deck"),
           name: "Deck",
-          visibility: "secret",
           ordered: true,
           owner: player1,
-          faceDown: true,
+          visibility: "secret",
         },
         [card1, card2, card3],
       );
@@ -674,25 +666,21 @@ describe("Gundam Zone Operations - Core Integration", () => {
       const hand = createZone({
         id: createZoneId("hand"),
         name: "Hand",
-        visibility: "private",
         ordered: false,
         owner: player1,
+        visibility: "private",
       });
 
       const battleArea = createZone({
         id: createZoneId("battle-area"),
         name: "Battle Area",
-        visibility: "public",
         ordered: true,
         owner: player1,
+        visibility: "public",
       });
 
       // Step 1: Draw card
-      const {
-        fromZone: updatedDeck,
-        toZone: handWithCard,
-        drawnCards,
-      } = draw(deck, hand, 1);
+      const { fromZone: updatedDeck, toZone: handWithCard, drawnCards } = draw(deck, hand, 1);
       const drawnCard = drawnCards[0];
       expect(drawnCard).toBeDefined();
 

@@ -13,9 +13,9 @@ export const donaldDuckPerfectGentleman: CharacterCard = {
     },
     {
       effect: {
-        type: "draw",
         amount: 1,
         target: "EACH_PLAYER",
+        type: "draw",
       },
       id: "wjj-2",
       text: "ALLOW ME At the start of your turn, each player may draw a card.",

@@ -4,22 +4,22 @@ export const iceSpikes: ItemCard = {
   abilities: [
     {
       effect: {
-        type: "exert",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "opponent",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "exert",
       },
       id: "k20-1",
       name: "HOLD STILL",
       text: "HOLD STILL When you play this item, exert chosen opposing character.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

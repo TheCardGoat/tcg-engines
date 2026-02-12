@@ -10,18 +10,18 @@ export const princeJohnGreediestOfAll: CharacterCard = {
     },
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "draw",
           amount: 1,
           target: "CONTROLLER",
+          type: "draw",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "9so-2",
       name: "I SENTENCE YOU",
       text: "I SENTENCE YOU Whenever your opponent discards 1 or more cards, you may draw a card for each card discarded.",
-      trigger: { event: "play", timing: "when", on: "SELF" },
+      trigger: { event: "play", on: "SELF", timing: "when" },
       type: "triggered",
     },
   ],

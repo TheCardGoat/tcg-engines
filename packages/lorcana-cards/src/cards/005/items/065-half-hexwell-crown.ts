@@ -7,9 +7,9 @@ export const halfHexwellCrown: ItemCard = {
         exert: true,
       },
       effect: {
-        type: "draw",
         amount: 1,
         target: "CONTROLLER",
+        type: "draw",
       },
       id: "1fp-1",
       text: "AN UNEXPECTED FIND {E}, 2 {I} — Draw a card.",

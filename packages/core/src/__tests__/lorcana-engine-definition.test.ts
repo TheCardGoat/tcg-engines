@@ -39,7 +39,7 @@ describe("Lorcana Game - Refactored Engine Features", () => {
 
   it("should have proper zone configuration", () => {
     const gameDefinition = createMockLorcanaGame();
-    const zones = gameDefinition.zones;
+    const { zones } = gameDefinition;
 
     expect(zones?.deck).toBeDefined();
     expect(zones?.hand).toBeDefined();
@@ -76,7 +76,7 @@ describe("Lorcana Game - Refactored Engine Features", () => {
     expect(putInkwell.condition).toBeDefined();
 
     // Questing uses per-card trackers
-    const quest = gameDefinition.moves.quest;
+    const { quest } = gameDefinition.moves;
     expect(quest.condition).toBeDefined();
   });
 

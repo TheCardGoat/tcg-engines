@@ -11,22 +11,13 @@ import type {
   ZoneId as CoreZoneId,
   GameMoveDefinitions,
 } from "@tcg/core";
-import type {
-  RiftboundCardMeta,
-  RiftboundGameState,
-  RiftboundMoves,
-} from "../../types";
+import type { RiftboundCardMeta, RiftboundGameState, RiftboundMoves } from "../../types";
 
 /**
  * Combat move definitions
  */
 export const combatMoves: Partial<
-  GameMoveDefinitions<
-    RiftboundGameState,
-    RiftboundMoves,
-    RiftboundCardMeta,
-    unknown
-  >
+  GameMoveDefinitions<RiftboundGameState, RiftboundMoves, RiftboundCardMeta, unknown>
 > = {
   /**
    * Contest Battlefield
@@ -176,9 +167,9 @@ export const combatMoves: Partial<
         draft.winner = playerId;
 
         context.endGame?.({
-          winner: playerId as CorePlayerId,
+          metadata: { finalScore: player.victoryPoints, method },
           reason: "victory_points",
-          metadata: { method, finalScore: player.victoryPoints },
+          winner: playerId as CorePlayerId,
         });
       }
     },
@@ -197,9 +188,7 @@ export const combatMoves: Partial<
 
       // Get all cards at this battlefield
       const battlefieldZoneId = `battlefield-${battlefieldId}`;
-      const unitsAtBattlefield = zones.getCardsInZone(
-        battlefieldZoneId as CoreZoneId,
-      );
+      const unitsAtBattlefield = zones.getCardsInZone(battlefieldZoneId as CoreZoneId);
 
       // Clear combat role for each unit
       for (const unitId of unitsAtBattlefield) {

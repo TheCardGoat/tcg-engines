@@ -4,30 +4,30 @@ export const merlinTurtle: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "scry",
             amount: 2,
-            target: "CONTROLLER",
             destinations: [
               {
-                zone: "deck-bottom",
-                remainder: true,
                 ordering: "player-choice",
+                remainder: true,
+                zone: "deck-bottom",
               },
             ],
+            target: "CONTROLLER",
+            type: "scry",
           },
           {
-            type: "put-on-bottom",
             target: "CHOSEN_CHARACTER",
+            type: "put-on-bottom",
           },
         ],
+        type: "sequence",
       },
       id: "1ed-1",
       name: "GIVE ME TIME TO THINK When you play this character and",
       text: "GIVE ME TIME TO THINK When you play this character and when he leaves play, look at the top 2 cards of your deck. Put one on the top of your deck and the other on the bottom.",
-      trigger: { event: "play", timing: "when", on: "SELF" },
+      trigger: { event: "play", on: "SELF", timing: "when" },
       type: "triggered",
     },
   ],

@@ -4,26 +4,26 @@ export const healWhatHasBeenHurt: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "remove-damage",
             amount: 3,
-            upTo: true,
             target: {
-              selector: "chosen",
+              cardTypes: ["character"],
               count: 1,
               owner: "any",
+              selector: "chosen",
               zones: ["play"],
-              cardTypes: ["character"],
             },
+            type: "remove-damage",
+            upTo: true,
           },
           {
-            type: "draw",
             amount: 1,
             target: "CONTROLLER",
+            type: "draw",
           },
         ],
+        type: "sequence",
       },
       id: "1mx-1",
       text: "Remove up to 3 damage from chosen character. Draw a card.",

@@ -10,10 +10,10 @@ export const minnieMouseDaringDefender: CharacterCard = {
     },
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: 1,
+        stat: "strength",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "7k3-2",
       text: "TRUE VALOR This character gets +1 {S} for each 1 damage on her.",

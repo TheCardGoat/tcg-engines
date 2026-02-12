@@ -13,26 +13,26 @@ export const kingCandySweetAbomination: CharacterCard = {
     },
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "put-on-bottom",
           target: {
-            selector: "chosen",
+            cardTypes: ["card"],
             count: 1,
             owner: "any",
+            selector: "chosen",
             zones: ["play"],
-            cardTypes: ["card"],
           },
+          type: "put-on-bottom",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "q61-2",
       name: "CHANGING THE CODE",
       text: "CHANGING THE CODE When you play this character, you may draw 2 cards, then put a card from your hand on the bottom of your deck.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

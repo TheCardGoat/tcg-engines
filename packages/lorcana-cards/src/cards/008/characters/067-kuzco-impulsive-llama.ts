@@ -13,26 +13,26 @@ export const kuzcoImpulsiveLlama: CharacterCard = {
     },
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "play-card",
             from: "hand",
+            type: "play-card",
           },
           {
-            type: "draw",
             amount: 1,
             target: "EACH_OPPONENT",
+            type: "draw",
           },
         ],
+        type: "sequence",
       },
       id: "1p1-2",
       name: "WHAT DOES THIS DO?",
       text: "WHAT DOES THIS DO? When you play this character, each opponent chooses one of their characters and puts that card on the bottom of their deck. Then, each opponent may draw a card.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

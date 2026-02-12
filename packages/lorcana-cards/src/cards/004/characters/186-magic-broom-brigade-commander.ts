@@ -11,10 +11,10 @@ export const magicBroomBrigadeCommander: CharacterCard = {
     },
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: 2,
+        stat: "strength",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "pct-2",
       text: "ARMY OF BROOMS This character gets +2 {S} for each other character named Magic Broom you have in play.",

@@ -4,23 +4,23 @@ export const yzmaTransformedKitten: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you have more cards in your hand than each opponent",
+          type: "if",
         },
         then: {
-          type: "return-to-hand",
           target: "SELF",
+          type: "return-to-hand",
         },
+        type: "conditional",
       },
       id: "192-1",
       name: "I WIN",
       text: "I WIN When this character is banished, if you have more cards in your hand than each opponent, you may return this card to your hand.",
       trigger: {
         event: "banish",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

@@ -4,19 +4,19 @@ export const kuzcosPalaceHomeOfTheEmperor: LocationCard = {
   abilities: [
     {
       effect: {
-        type: "banish",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "banish",
       },
       id: "aae-1",
       name: "CITY WALLS",
       text: "CITY WALLS Whenever a character is challenged and banished while here, banish the challenging character.",
-      trigger: { event: "play", timing: "when", on: "SELF" },
+      trigger: { event: "play", on: "SELF", timing: "when" },
       type: "triggered",
     },
   ],

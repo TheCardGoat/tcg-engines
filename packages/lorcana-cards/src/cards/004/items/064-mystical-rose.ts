@@ -7,41 +7,41 @@ export const mysticalRose: ItemCard = {
         banishSelf: true,
       },
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "modify-stat",
-            stat: "lore",
-            modifier: 0,
-            target: {
-              selector: "chosen",
-              count: 1,
-              filter: [{ type: "has-name", name: "Beast" }],
-            },
             duration: "this-turn",
+            modifier: 0,
+            stat: "lore",
+            target: {
+              count: 1,
+              filter: [{ name: "Beast", type: "has-name" }],
+              selector: "chosen",
+            },
+            type: "modify-stat",
           },
           {
-            type: "conditional",
             condition: {
-              type: "has-named-character",
-              name: "Belle",
               controller: "you",
+              name: "Belle",
+              type: "has-named-character",
             },
             then: {
-              type: "move-damage",
               amount: 0,
               from: {
-                selector: "chosen",
                 count: 1,
+                selector: "chosen",
               },
               to: {
-                selector: "chosen",
                 count: 1,
-                filter: [{ type: "owner", owner: "opponent" }],
+                filter: [{ owner: "opponent", type: "owner" }],
+                selector: "chosen",
               },
+              type: "move-damage",
             },
+            type: "conditional",
           },
         ],
+        type: "sequence",
       },
       id: "1il-1",
       name: "DISPEL THE ENTANGLEMENT",

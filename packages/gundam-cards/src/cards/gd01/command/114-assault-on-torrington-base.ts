@@ -1,24 +1,23 @@
 import type { CommandCardDefinition } from "@tcg/gundam-types";
 
 export const AssaultOnTorringtonBase: CommandCardDefinition = {
-  id: "gd01-114",
-  name: "Assault on Torrington Base",
   cardNumber: "GD01-114",
-  setCode: "GD01",
   cardType: "COMMAND",
-  rarity: "common",
   color: "red",
-  level: 1,
   cost: 1,
-  text: "【Action】Choose 2 friendly Units. They get AP+1 during this turn.\n【Pilot】[Yonem Kirks]",
-  imageUrl:
-    "https://www.gundam-gcg.com/en/images/cards/card/GD01-114.webp?26013001",
-  sourceTitle: "Mobile Suit Gundam Unicorn",
-  timing: "ACTION",
+  id: "gd01-114",
+  imageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-114.webp?26013001",
+  level: 1,
+  name: "Assault on Torrington Base",
   pilotProperties: {
-    name: "Yonem Kirks",
-    traits: ["zeon"],
     apModifier: 1,
     hpModifier: 0,
+    name: "Yonem Kirks",
+    traits: ["zeon"],
   },
+  rarity: "common",
+  setCode: "GD01",
+  sourceTitle: "Mobile Suit Gundam Unicorn",
+  text: "【Action】Choose 2 friendly Units. They get AP+1 during this turn.\n【Pilot】[Yonem Kirks]",
+  timing: "ACTION",
 };

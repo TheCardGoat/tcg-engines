@@ -4,23 +4,23 @@ export const idunaCaringMother: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "put-into-inkwell",
-          source: "this-card",
-          target: "CONTROLLER",
           exerted: true,
           facedown: true,
+          source: "this-card",
+          target: "CONTROLLER",
+          type: "put-into-inkwell",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "178-1",
       name: "ENDURING LOVE",
       text: "ENDURING LOVE When this character is banished, you may put this card into your inkwell facedown and exerted.",
       trigger: {
         event: "banish",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

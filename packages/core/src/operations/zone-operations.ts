@@ -118,12 +118,7 @@ export interface ZoneOperations {
    * });
    * ```
    */
-  drawCards(params: {
-    from: ZoneId;
-    to: ZoneId;
-    count: number;
-    playerId: PlayerId;
-  }): CardId[];
+  drawCards(params: { from: ZoneId; to: ZoneId; count: number; playerId: PlayerId }): CardId[];
 
   /**
    * Perform mulligan - shuffle hand back into deck and redraw
@@ -150,12 +145,7 @@ export interface ZoneOperations {
    * });
    * ```
    */
-  mulligan(params: {
-    hand: ZoneId;
-    deck: ZoneId;
-    drawCount: number;
-    playerId: PlayerId;
-  }): void;
+  mulligan(params: { hand: ZoneId; deck: ZoneId; drawCount: number; playerId: PlayerId }): void;
 
   /**
    * Move multiple cards in bulk

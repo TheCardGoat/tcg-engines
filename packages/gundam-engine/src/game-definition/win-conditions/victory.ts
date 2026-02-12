@@ -10,15 +10,13 @@ import type { GundamGameState } from "../../types";
  */
 export function checkVictory(
   state: GundamGameState,
-):
-  | { winner: string; reason: string; metadata: { finalShieldCount: number } }
-  | undefined {
+): { winner: string; reason: string; metadata: { finalShieldCount: number } } | undefined {
   for (const playerId of state.players) {
     if (state.zones.shieldSection[playerId].cards.length === 0) {
       return {
-        winner: playerId,
-        reason: "shield_victory",
         metadata: { finalShieldCount: 0 },
+        reason: "shield_victory",
+        winner: playerId,
       };
     }
   }

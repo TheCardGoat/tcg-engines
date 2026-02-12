@@ -32,7 +32,6 @@ function getAbsolutePath(value: string): any {
   return dirname(fileURLToPath(import.meta.resolve(`${value}/package.json`)));
 }
 const config: StorybookConfig = {
-  stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|ts|svelte)"],
   addons: [
     getAbsolutePath("@storybook/addon-svelte-csf"),
     getAbsolutePath("@chromatic-com/storybook"),
@@ -42,6 +41,7 @@ const config: StorybookConfig = {
     name: getAbsolutePath("@storybook/sveltekit"),
     options: {},
   },
+  stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|ts|svelte)"],
   async viteFinal(config) {
     const existingPlugins = config.plugins ?? [];
     const hasTailwind = existingPlugins.some((plugin) =>

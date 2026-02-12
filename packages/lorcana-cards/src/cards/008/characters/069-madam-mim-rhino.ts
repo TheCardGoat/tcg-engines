@@ -13,27 +13,27 @@ export const madamMimRhino: CharacterCard = {
     },
     {
       effect: {
-        type: "choice",
-        options: [
-          {
-            type: "play-card",
-            from: "hand",
-          },
-          {
-            type: "return-to-hand",
-            target: {
-              selector: "chosen",
-              count: 1,
-              owner: "any",
-              zones: ["play"],
-              cardTypes: ["character"],
-            },
-          },
-        ],
         optionLabels: [
           "MAKE WAY, COMING THROUGH! When you play this character, banish her",
           "return another chosen character of yours to your hand.",
         ],
+        options: [
+          {
+            from: "hand",
+            type: "play-card",
+          },
+          {
+            target: {
+              cardTypes: ["character"],
+              count: 1,
+              owner: "any",
+              selector: "chosen",
+              zones: ["play"],
+            },
+            type: "return-to-hand",
+          },
+        ],
+        type: "choice",
       },
       id: "1jr-2",
       text: "MAKE WAY, COMING THROUGH! When you play this character, banish her or return another chosen character of yours to your hand.",

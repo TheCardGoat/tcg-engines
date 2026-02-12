@@ -4,17 +4,17 @@ export const duckForCover: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
+        duration: "this-turn",
         keyword: "Resist",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "gain-keyword",
         value: 1,
-        duration: "this-turn",
       },
       id: "13l-1",
       text: "Chosen character gains Resist +1 and Evasive this turn.",

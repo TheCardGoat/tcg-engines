@@ -19,22 +19,22 @@ export const princePhillipVanquisherOfFoes: CharacterCard = {
     },
     {
       effect: {
-        type: "banish",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "banish",
       },
       id: "1db-3",
       name: "SWIFT AND SURE",
       text: "SWIFT AND SURE When you play this character, banish all opposing damaged characters.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

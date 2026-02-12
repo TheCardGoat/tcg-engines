@@ -10,11 +10,11 @@ import type { GundamGameState } from "../types";
 import type { EffectTarget, UnitSelector, ZoneSpec } from "./effect-types";
 
 // Local type definition for resolved targets
-type ResolvedTarget = {
+interface ResolvedTarget {
   cardIds: CardId[];
   players: PlayerId[];
   zones: string[];
-};
+}
 
 // ============================================================================
 // Target Resolution
@@ -33,23 +33,12 @@ export function resolveTarget(
 
   // Handle simple string targets
   if (typeof target === "string") {
-    return resolveStringTarget(
-      target,
-      state,
-      sourcePlayer,
-      opponent,
-      sourceCard,
-    );
+    return resolveStringTarget(target, state, sourcePlayer, opponent, sourceCard);
   }
 
   // Handle selector-based targets
   if ("selector" in target) {
-    return resolveSelectorTarget(
-      target.selector,
-      state,
-      sourcePlayer,
-      opponent,
-    );
+    return resolveSelectorTarget(target.selector, state, sourcePlayer, opponent);
   }
 
   return { cardIds: [], players: [], zones: [] };
@@ -70,40 +59,49 @@ function resolveStringTarget(
     case "this-card":
     case "this-unit":
     case "this-base":
-    case "this-pilot":
+    case "this-pilot": {
       return sourceCard
         ? { cardIds: [sourceCard], players: [], zones: [] }
         : { cardIds: [], players: [], zones: [] };
+    }
 
-    case "self":
+    case "self": {
       return { cardIds: [], players: [sourcePlayer], zones: [] };
+    }
 
-    case "opponent":
+    case "opponent": {
       return opponent
         ? { cardIds: [], players: [opponent], zones: [] }
         : { cardIds: [], players: [], zones: [] };
+    }
 
-    case "each-player":
+    case "each-player": {
       return { cardIds: [], players: state.players, zones: [] };
+    }
 
-    case "each-unit":
+    case "each-unit": {
       return getAllUnits(state);
+    }
 
-    case "each-opponent-unit":
+    case "each-opponent-unit": {
       return opponent
         ? getUnitsInBattleArea(state, opponent)
         : { cardIds: [], players: [], zones: [] };
+    }
 
-    case "each-friendly-unit":
+    case "each-friendly-unit": {
       return getUnitsInBattleArea(state, sourcePlayer);
+    }
 
     case "chosen-unit":
-    case "chosen-card":
+    case "chosen-card": {
       // These would be resolved from player input
       return { cardIds: [], players: [], zones: [] };
+    }
 
-    default:
+    default: {
       return { cardIds: [], players: [], zones: [] };
+    }
   }
 }
 
@@ -120,16 +118,18 @@ function resolveSelectorTarget(
   const playersToSearch =
     selector.controller === "self"
       ? [sourcePlayer]
-      : selector.controller === "opponent" && opponent
+      : (selector.controller === "opponent" && opponent
         ? [opponent]
-        : state.players;
+        : state.players);
 
   const results: CardId[] = [];
 
   // Search each player's battle area
   for (const player of playersToSearch) {
     const battleArea = state.zones.battleArea[player] as Zone | undefined;
-    if (!battleArea?.cards) continue;
+    if (!battleArea?.cards) {
+      continue;
+    }
 
     for (const cardId of battleArea.cards) {
       if (matchesSelector(cardId, selector, state, player)) {
@@ -154,23 +154,27 @@ function matchesSelector(
   if (selector.position !== undefined) {
     const position = state.gundam.cardPositions[cardId];
     const isRested = position === "rested";
-    if (selector.position === "active" && isRested) return false;
-    if (selector.position === "rested" && !isRested) return false;
+    if (selector.position === "active" && isRested) {
+      return false;
+    }
+    if (selector.position === "rested" && !isRested) {
+      return false;
+    }
   }
 
   // Check damage
   if (selector.damaged !== undefined) {
     // Would need to check damage from card metadata
-    // const meta = getCardMeta(state, cardId);
-    // if (selector.damaged && meta.damage <= 0) return false;
-    // if (!selector.damaged && meta.damage > 0) return false;
+    // Const meta = getCardMeta(state, cardId);
+    // If (selector.damaged && meta.damage <= 0) return false;
+    // If (!selector.damaged && meta.damage > 0) return false;
   }
 
   // Check keywords
   if (selector.hasKeyword !== undefined) {
     // Would need to check if card has keyword
-    // const definition = getCardDefinition(state, cardId);
-    // if (!definition.keywords.includes(selector.hasKeyword)) return false;
+    // Const definition = getCardDefinition(state, cardId);
+    // If (!definition.keywords.includes(selector.hasKeyword)) return false;
   }
 
   // Check level
@@ -215,10 +219,7 @@ export function getAllUnits(state: GundamGameState): ResolvedTarget {
 /**
  * Get units in a player's battle area
  */
-export function getUnitsInBattleArea(
-  state: GundamGameState,
-  player: PlayerId,
-): ResolvedTarget {
+export function getUnitsInBattleArea(state: GundamGameState, player: PlayerId): ResolvedTarget {
   const battleArea = state.zones.battleArea[player] as Zone | undefined;
   return {
     cardIds: battleArea?.cards ?? [],
@@ -230,10 +231,7 @@ export function getUnitsInBattleArea(
 /**
  * Get cards in a player's hand
  */
-export function getCardsInHand(
-  state: GundamGameState,
-  player: PlayerId,
-): ResolvedTarget {
+export function getCardsInHand(state: GundamGameState, player: PlayerId): ResolvedTarget {
   const hand = state.zones.hand[player] as Zone | undefined;
   return {
     cardIds: hand?.cards ?? [],
@@ -245,10 +243,7 @@ export function getCardsInHand(
 /**
  * Get cards in a player's deck
  */
-export function getCardsInDeck(
-  state: GundamGameState,
-  player: PlayerId,
-): ResolvedTarget {
+export function getCardsInDeck(state: GundamGameState, player: PlayerId): ResolvedTarget {
   const deck = state.zones.deck[player] as Zone | undefined;
   return {
     cardIds: deck?.cards ?? [],
@@ -260,10 +255,7 @@ export function getCardsInDeck(
 /**
  * Get cards in a player's trash
  */
-export function getCardsInTrash(
-  state: GundamGameState,
-  player: PlayerId,
-): ResolvedTarget {
+export function getCardsInTrash(state: GundamGameState, player: PlayerId): ResolvedTarget {
   const trash = state.zones.trash[player] as Zone | undefined;
   return {
     cardIds: trash?.cards ?? [],
@@ -291,10 +283,7 @@ export function getCardsInZone(
 /**
  * Get a player's shields
  */
-export function getShields(
-  state: GundamGameState,
-  player: PlayerId,
-): ResolvedTarget {
+export function getShields(state: GundamGameState, player: PlayerId): ResolvedTarget {
   const shieldSection = state.zones.shieldSection[player] as Zone | undefined;
   return {
     cardIds: shieldSection?.cards ?? [],
@@ -306,10 +295,7 @@ export function getShields(
 /**
  * Get a player's resources
  */
-export function getResources(
-  state: GundamGameState,
-  player: PlayerId,
-): ResolvedTarget {
+export function getResources(state: GundamGameState, player: PlayerId): ResolvedTarget {
   const resourceArea = state.zones.resourceArea[player] as Zone | undefined;
   return {
     cardIds: resourceArea?.cards ?? [],
@@ -321,10 +307,7 @@ export function getResources(
 /**
  * Get the base in a player's base section
  */
-export function getBase(
-  state: GundamGameState,
-  player: PlayerId,
-): ResolvedTarget {
+export function getBase(state: GundamGameState, player: PlayerId): ResolvedTarget {
   const baseSection = state.zones.baseSection[player] as Zone | undefined;
   return {
     cardIds: baseSection?.cards ?? [],
@@ -347,11 +330,7 @@ export function isValidTarget(
   sourceCard?: CardId,
 ): boolean {
   const resolved = resolveTarget(target, state, sourcePlayer, sourceCard);
-  return (
-    resolved.cardIds.length > 0 ||
-    resolved.players.length > 0 ||
-    resolved.zones.length > 0
-  );
+  return resolved.cardIds.length > 0 || resolved.players.length > 0 || resolved.zones.length > 0;
 }
 
 /**
@@ -413,10 +392,7 @@ export function filterTargetsByController(
 /**
  * Limit number of targets
  */
-export function limitTargets(
-  targets: ResolvedTarget,
-  max: number,
-): ResolvedTarget {
+export function limitTargets(targets: ResolvedTarget, max: number): ResolvedTarget {
   return {
     ...targets,
     cardIds: targets.cardIds.slice(0, max),
@@ -432,7 +408,7 @@ export function getRandomTargets(
   seed?: number,
 ): ResolvedTarget {
   // Would use seeded RNG for deterministic results
-  const shuffled = [...targets.cardIds].sort(() => Math.random() - 0.5);
+  const shuffled = [...targets.cardIds].toSorted(() => Math.random() - 0.5);
   return {
     ...targets,
     cardIds: shuffled.slice(0, count),

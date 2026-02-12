@@ -4,10 +4,10 @@ export const arielsGrottoASecretPlace: LocationCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "lore",
         modifier: 2,
+        stat: "lore",
         target: "CHOSEN_CHARACTER",
+        type: "modify-stat",
       },
       id: "1ca-1",
       text: "TREASURE TROVE While you have 3 or more items in play, this location gets +2 {L}.",

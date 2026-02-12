@@ -49,8 +49,7 @@ function parseCardTypeFilter(text: string): ScryCardFilter | null {
  */
 function parseClassificationFilter(text: string): ScryCardFilter | null {
   // Common classification patterns
-  const classificationPattern =
-    /(?:a\s+)?(\w+)\s+(?:character|item|location)\s+card/i;
+  const classificationPattern = /(?:a\s+)?(\w+)\s+(?:character|item|location)\s+card/i;
   const match = text.match(classificationPattern);
   if (match) {
     const classification = match[1];
@@ -87,8 +86,12 @@ function parseCostFilter(text: string): ScryCardFilter | null {
  */
 function combineFilters(filters: ScryCardFilter[]): ScryCardFilter | undefined {
   const validFilters = filters.filter(Boolean);
-  if (validFilters.length === 0) {return undefined;}
-  if (validFilters.length === 1) {return validFilters[0];}
+  if (validFilters.length === 0) {
+    return undefined;
+  }
+  if (validFilters.length === 1) {
+    return validFilters[0];
+  }
   return { filters: validFilters, type: "and" };
 }
 
@@ -128,8 +131,7 @@ function parseMayRevealPattern(
   text: string,
 ): { filter: ScryCardFilter | undefined; max: number } | null {
   // Pattern: "may reveal up to N [type] card"
-  const upToPattern =
-    /may\s+reveal\s+up\s+to\s+(\d+)\s+([\w\s]+?)\s*(?:card|and)/i;
+  const upToPattern = /may\s+reveal\s+up\s+to\s+(\d+)\s+([\w\s]+?)\s*(?:card|and)/i;
   let match = text.match(upToPattern);
   if (match) {
     const max = Number.parseInt(match[1], 10);
@@ -138,15 +140,21 @@ function parseMayRevealPattern(
 
     // Parse card type
     const typeFilter = parseCardTypeFilter(typeText);
-    if (typeFilter) {filters.push(typeFilter);}
+    if (typeFilter) {
+      filters.push(typeFilter);
+    }
 
     // Parse classification
     const classFilter = parseClassificationFilter(typeText);
-    if (classFilter) {filters.push(classFilter);}
+    if (classFilter) {
+      filters.push(classFilter);
+    }
 
     // Parse cost
     const costFilter = parseCostFilter(text);
-    if (costFilter) {filters.push(costFilter);}
+    if (costFilter) {
+      filters.push(costFilter);
+    }
 
     return {
       filter: combineFilters(filters),
@@ -162,13 +170,19 @@ function parseMayRevealPattern(
     const filters: ScryCardFilter[] = [];
 
     const typeFilter = parseCardTypeFilter(typeText);
-    if (typeFilter) {filters.push(typeFilter);}
+    if (typeFilter) {
+      filters.push(typeFilter);
+    }
 
     const classFilter = parseClassificationFilter(typeText);
-    if (classFilter) {filters.push(classFilter);}
+    if (classFilter) {
+      filters.push(classFilter);
+    }
 
     const costFilter = parseCostFilter(text);
-    if (costFilter) {filters.push(costFilter);}
+    if (costFilter) {
+      filters.push(costFilter);
+    }
 
     return {
       filter: combineFilters(filters),
@@ -196,10 +210,7 @@ function isPlayForFree(text: string): boolean {
  */
 function hasInkwellDestination(text: string): boolean {
   const lowerText = text.toLowerCase();
-  return (
-    lowerText.includes("into your inkwell") ||
-    lowerText.includes("into inkwell")
-  );
+  return lowerText.includes("into your inkwell") || lowerText.includes("into inkwell");
 }
 
 // ============================================================================
@@ -215,7 +226,9 @@ function parseScryEffect(text: string): ScryEffect | null {
   // Extract amount of cards to look at
   const amountPattern = /look\s+at\s+the\s+top\s+(\d+)\s+cards?/i;
   const amountMatch = text.match(amountPattern);
-  if (!amountMatch) {return null;}
+  if (!amountMatch) {
+    return null;
+  }
 
   const amount = Number.parseInt(amountMatch[1], 10);
   const destinations: ScryDestination[] = [];
@@ -264,8 +277,7 @@ function parseScryEffect(text: string): ScryEffect | null {
     }
 
     // Add inkwell destination
-    const isExerted =
-      lowerText.includes("exerted") || lowerText.includes("facedown");
+    const isExerted = lowerText.includes("exerted") || lowerText.includes("facedown");
     destinations.push({
       exerted: isExerted,
       facedown: true,
@@ -295,9 +307,13 @@ function parseScryEffect(text: string): ScryEffect | null {
       const type1 = multiMatch[2].trim();
       const filter1Filters: ScryCardFilter[] = [];
       const typeFilter1 = parseCardTypeFilter(type1);
-      if (typeFilter1) {filter1Filters.push(typeFilter1);}
+      if (typeFilter1) {
+        filter1Filters.push(typeFilter1);
+      }
       const classFilter1 = parseClassificationFilter(type1);
-      if (classFilter1) {filter1Filters.push(classFilter1);}
+      if (classFilter1) {
+        filter1Filters.push(classFilter1);
+      }
 
       destinations.push({
         filter: combineFilters(filter1Filters),
@@ -312,9 +328,13 @@ function parseScryEffect(text: string): ScryEffect | null {
       const type2 = multiMatch[4].trim();
       const filter2Filters: ScryCardFilter[] = [];
       const typeFilter2 = parseCardTypeFilter(type2);
-      if (typeFilter2) {filter2Filters.push(typeFilter2);}
+      if (typeFilter2) {
+        filter2Filters.push(typeFilter2);
+      }
       const classFilter2 = parseClassificationFilter(type2);
-      if (classFilter2) {filter2Filters.push(classFilter2);}
+      if (classFilter2) {
+        filter2Filters.push(classFilter2);
+      }
 
       destinations.push({
         filter: combineFilters(filter2Filters),
@@ -344,8 +364,7 @@ function parseScryEffect(text: string): ScryEffect | null {
   // Pattern: Basic hand + remainder
   // "Look at top X. Put one into your hand and the rest on the bottom."
   // ========================================================================
-  const handPattern =
-    /put\s+(?:one|(\d+))\s+into\s+your\s+hand|put\s+it\s+into\s+your\s+hand/i;
+  const handPattern = /put\s+(?:one|(\d+))\s+into\s+your\s+hand|put\s+it\s+into\s+your\s+hand/i;
   const handMatch = text.match(handPattern);
   if (handMatch) {
     const handCount = handMatch[1] ? Number.parseInt(handMatch[1], 10) : 1;
@@ -413,10 +432,8 @@ function parseScryEffect(text: string): ScryEffect | null {
  */
 function parseSearchDeckEffect(text: string): SearchDeckEffect | null {
   // Patterns for search effects
-  const searchAndShufflePattern =
-    /search\s+your\s+deck\s+for\s+(?:a\s+)?(\w+).*?shuffle/i;
-  const searchDeckPutPattern =
-    /search\s+your\s+deck\s+for\s+(?:a\s+)?(\w+).*?put/i;
+  const searchAndShufflePattern = /search\s+your\s+deck\s+for\s+(?:a\s+)?(\w+).*?shuffle/i;
+  const searchDeckPutPattern = /search\s+your\s+deck\s+for\s+(?:a\s+)?(\w+).*?put/i;
   const searchDeckPattern = /search\s+your\s+deck\s+for\s+(?:a\s+)?(\w+)/i;
 
   // Check for "search deck and shuffle"
@@ -505,13 +522,17 @@ function parseFromText(text: string): SearchDeckEffect | ScryEffect | null {
   // Try scry effect first (look at top X cards)
   if (/look\s+at\s+the\s+top/i.test(text)) {
     const scryEffect = parseScryEffect(text);
-    if (scryEffect) {return scryEffect;}
+    if (scryEffect) {
+      return scryEffect;
+    }
   }
 
   // Try search deck effect
   if (/search\s+your\s+deck/i.test(text)) {
     const searchEffect = parseSearchDeckEffect(text);
-    if (searchEffect) {return searchEffect;}
+    if (searchEffect) {
+      return searchEffect;
+    }
   }
 
   logger.debug("Search/scry effect pattern did not match");

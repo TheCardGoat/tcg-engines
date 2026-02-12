@@ -1,13 +1,6 @@
 // @ts-nocheck - Skipped tests contain expected values that don't match current types
 import { describe, expect, it } from "bun:test";
-import {
-  Abilities,
-  Conditions,
-  Costs,
-  Effects,
-  Targets,
-  Triggers,
-} from "@tcg/lorcana-types";
+import { Abilities, Conditions, Costs, Effects, Targets, Triggers } from "@tcg/lorcana-types";
 import { parseAbilityTextMulti } from "../../parser";
 
 describe("Set 004 Card Text Parser Tests - Actions Items", () => {
@@ -24,8 +17,6 @@ describe("Set 004 Card Text Parser Tests - Actions Items", () => {
       },
       type: "action",
     };
-    expect(result.abilities[0].ability).toEqual(
-      expect.objectContaining(swingIntoAction),
-    );
+    expect(result.abilities[0].ability).toEqual(expect.objectContaining(swingIntoAction));
   });
 });

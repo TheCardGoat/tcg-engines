@@ -4,8 +4,8 @@ export const bePrepared: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "banish",
         target: "ALL_CHARACTERS",
+        type: "banish",
       },
       id: "j9z-1",
       text: "Banish all characters.",

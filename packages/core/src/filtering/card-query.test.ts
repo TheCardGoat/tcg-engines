@@ -6,42 +6,42 @@ import { createCardRegistry } from "../operations/card-registry-impl";
 import { createCardId, createPlayerId, createZoneId } from "../types";
 import { CardQuery } from "./card-query";
 
-type TestGameState = {
+interface TestGameState {
   cards: Record<string, CardInstance<{ modifiers: Modifier[] }>>;
-};
+}
 
 describe("CardQuery Builder", () => {
   const definitions: CardDefinition[] = [
     {
+      abilities: [],
+      baseCost: 2,
+      basePower: 2,
+      baseToughness: 2,
       id: "bear",
       name: "Grizzly Bears",
       type: "creature",
-      basePower: 2,
-      baseToughness: 2,
-      baseCost: 2,
-      abilities: [],
     },
     {
+      abilities: ["flying"],
+      baseCost: 6,
+      basePower: 5,
+      baseToughness: 5,
       id: "dragon",
       name: "Shivan Dragon",
       type: "creature",
-      basePower: 5,
-      baseToughness: 5,
-      baseCost: 6,
-      abilities: ["flying"],
     },
     {
+      abilities: [],
+      baseCost: 1,
       id: "bolt",
       name: "Lightning Bolt",
       type: "instant",
-      baseCost: 1,
-      abilities: [],
     },
     {
+      abilities: [],
       id: "mountain",
       name: "Mountain",
       type: "land",
-      abilities: [],
     },
   ];
 
@@ -55,28 +55,28 @@ describe("CardQuery Builder", () => {
 
       const cards: CardInstance<{ modifiers: Modifier[] }>[] = [
         {
-          id: createCardId("card-1"),
-          definitionId: "bear",
-          owner: player1,
           controller: player1,
-          zone: playZone,
-          tapped: false,
+          definitionId: "bear",
           flipped: false,
-          revealed: false,
-          phased: false,
+          id: createCardId("card-1"),
           modifiers: [],
+          owner: player1,
+          phased: false,
+          revealed: false,
+          tapped: false,
+          zone: playZone,
         },
         {
-          id: createCardId("card-2"),
-          definitionId: "bolt",
-          owner: player1,
           controller: player1,
-          zone: handZone,
-          tapped: false,
+          definitionId: "bolt",
           flipped: false,
-          revealed: false,
-          phased: false,
+          id: createCardId("card-2"),
           modifiers: [],
+          owner: player1,
+          phased: false,
+          revealed: false,
+          tapped: false,
+          zone: handZone,
         },
       ];
 
@@ -84,9 +84,7 @@ describe("CardQuery Builder", () => {
         cards: Object.fromEntries(cards.map((c) => [String(c.id), c])),
       };
 
-      const result = CardQuery.create(state, registry)
-        .inZone(playZone)
-        .execute();
+      const result = CardQuery.create(state, registry).inZone(playZone).execute();
 
       expect(result).toHaveLength(1);
       expect(result[0].definitionId).toBe("bear");
@@ -100,40 +98,40 @@ describe("CardQuery Builder", () => {
 
       const cards: CardInstance<{ modifiers: Modifier[] }>[] = [
         {
-          id: createCardId("card-1"),
+          controller: player1,
           definitionId: "bear",
+          flipped: false,
+          id: createCardId("card-1"),
+          modifiers: [],
           owner: player1,
-          controller: player1,
+          phased: false,
+          revealed: false,
+          tapped: false,
           zone: playZone,
-          tapped: false,
-          flipped: false,
-          revealed: false,
-          phased: false,
-          modifiers: [],
         },
         {
-          id: createCardId("card-2"),
+          controller: player1,
           definitionId: "bolt",
-          owner: player1,
-          controller: player1,
-          zone: handZone,
-          tapped: false,
           flipped: false,
-          revealed: false,
-          phased: false,
+          id: createCardId("card-2"),
           modifiers: [],
+          owner: player1,
+          phased: false,
+          revealed: false,
+          tapped: false,
+          zone: handZone,
         },
         {
-          id: createCardId("card-3"),
-          definitionId: "mountain",
-          owner: player1,
           controller: player1,
-          zone: deckZone,
-          tapped: false,
+          definitionId: "mountain",
           flipped: false,
-          revealed: false,
-          phased: false,
+          id: createCardId("card-3"),
           modifiers: [],
+          owner: player1,
+          phased: false,
+          revealed: false,
+          tapped: false,
+          zone: deckZone,
         },
       ];
 
@@ -141,9 +139,7 @@ describe("CardQuery Builder", () => {
         cards: Object.fromEntries(cards.map((c) => [String(c.id), c])),
       };
 
-      const result = CardQuery.create(state, registry)
-        .inZone([playZone, handZone])
-        .execute();
+      const result = CardQuery.create(state, registry).inZone([playZone, handZone]).execute();
 
       expect(result).toHaveLength(2);
     });
@@ -155,28 +151,28 @@ describe("CardQuery Builder", () => {
 
       const cards: CardInstance<{ modifiers: Modifier[] }>[] = [
         {
-          id: createCardId("card-1"),
-          definitionId: "bear",
-          owner: player1,
           controller: player1,
-          zone: playZone,
-          tapped: false,
+          definitionId: "bear",
           flipped: false,
-          revealed: false,
-          phased: false,
+          id: createCardId("card-1"),
           modifiers: [],
+          owner: player1,
+          phased: false,
+          revealed: false,
+          tapped: false,
+          zone: playZone,
         },
         {
-          id: createCardId("card-2"),
-          definitionId: "dragon",
-          owner: player2,
           controller: player2,
-          zone: playZone,
-          tapped: false,
+          definitionId: "dragon",
           flipped: false,
-          revealed: false,
-          phased: false,
+          id: createCardId("card-2"),
           modifiers: [],
+          owner: player2,
+          phased: false,
+          revealed: false,
+          tapped: false,
+          zone: playZone,
         },
       ];
 
@@ -184,9 +180,7 @@ describe("CardQuery Builder", () => {
         cards: Object.fromEntries(cards.map((c) => [String(c.id), c])),
       };
 
-      const result = CardQuery.create(state, registry)
-        .ownedBy(player1)
-        .execute();
+      const result = CardQuery.create(state, registry).ownedBy(player1).execute();
 
       expect(result).toHaveLength(1);
       expect(result[0].owner).toBe(player1);
@@ -199,16 +193,16 @@ describe("CardQuery Builder", () => {
 
       const cards: CardInstance<{ modifiers: Modifier[] }>[] = [
         {
-          id: createCardId("card-1"),
-          definitionId: "bear",
-          owner: player1,
           controller: player2,
-          zone: playZone,
-          tapped: false,
+          definitionId: "bear",
           flipped: false,
-          revealed: false,
-          phased: false,
+          id: createCardId("card-1"),
           modifiers: [],
+          owner: player1,
+          phased: false,
+          revealed: false,
+          tapped: false,
+          zone: playZone,
         },
       ];
 
@@ -216,9 +210,7 @@ describe("CardQuery Builder", () => {
         cards: Object.fromEntries(cards.map((c) => [String(c.id), c])),
       };
 
-      const result = CardQuery.create(state, registry)
-        .controlledBy(player2)
-        .execute();
+      const result = CardQuery.create(state, registry).controlledBy(player2).execute();
 
       expect(result).toHaveLength(1);
     });
@@ -229,28 +221,28 @@ describe("CardQuery Builder", () => {
 
       const cards: CardInstance<{ modifiers: Modifier[] }>[] = [
         {
-          id: createCardId("card-1"),
-          definitionId: "bear",
-          owner: player1,
           controller: player1,
-          zone: playZone,
-          tapped: false,
+          definitionId: "bear",
           flipped: false,
-          revealed: false,
-          phased: false,
+          id: createCardId("card-1"),
           modifiers: [],
+          owner: player1,
+          phased: false,
+          revealed: false,
+          tapped: false,
+          zone: playZone,
         },
         {
-          id: createCardId("card-2"),
-          definitionId: "bolt",
-          owner: player1,
           controller: player1,
-          zone: playZone,
-          tapped: false,
+          definitionId: "bolt",
           flipped: false,
-          revealed: false,
-          phased: false,
+          id: createCardId("card-2"),
           modifiers: [],
+          owner: player1,
+          phased: false,
+          revealed: false,
+          tapped: false,
+          zone: playZone,
         },
       ];
 
@@ -258,9 +250,7 @@ describe("CardQuery Builder", () => {
         cards: Object.fromEntries(cards.map((c) => [String(c.id), c])),
       };
 
-      const result = CardQuery.create(state, registry)
-        .ofType("creature")
-        .execute();
+      const result = CardQuery.create(state, registry).ofType("creature").execute();
 
       expect(result).toHaveLength(1);
       expect(result[0].definitionId).toBe("bear");
@@ -272,16 +262,16 @@ describe("CardQuery Builder", () => {
 
       const cards: CardInstance<{ modifiers: Modifier[] }>[] = [
         {
-          id: createCardId("card-1"),
-          definitionId: "bear",
-          owner: player1,
           controller: player1,
-          zone: playZone,
-          tapped: false,
+          definitionId: "bear",
           flipped: false,
-          revealed: false,
-          phased: false,
+          id: createCardId("card-1"),
           modifiers: [],
+          owner: player1,
+          phased: false,
+          revealed: false,
+          tapped: false,
+          zone: playZone,
         },
       ];
 
@@ -289,9 +279,7 @@ describe("CardQuery Builder", () => {
         cards: Object.fromEntries(cards.map((c) => [String(c.id), c])),
       };
 
-      const result = CardQuery.create(state, registry)
-        .withName("Grizzly Bears")
-        .execute();
+      const result = CardQuery.create(state, registry).withName("Grizzly Bears").execute();
 
       expect(result).toHaveLength(1);
     });
@@ -302,28 +290,28 @@ describe("CardQuery Builder", () => {
 
       const cards: CardInstance<{ modifiers: Modifier[] }>[] = [
         {
-          id: createCardId("card-1"),
-          definitionId: "bear",
-          owner: player1,
           controller: player1,
-          zone: playZone,
-          tapped: false,
+          definitionId: "bear",
           flipped: false,
-          revealed: false,
-          phased: false,
+          id: createCardId("card-1"),
           modifiers: [],
+          owner: player1,
+          phased: false,
+          revealed: false,
+          tapped: false,
+          zone: playZone,
         },
         {
-          id: createCardId("card-2"),
-          definitionId: "dragon",
-          owner: player1,
           controller: player1,
-          zone: playZone,
-          tapped: false,
+          definitionId: "dragon",
           flipped: false,
-          revealed: false,
-          phased: false,
+          id: createCardId("card-2"),
           modifiers: [],
+          owner: player1,
+          phased: false,
+          revealed: false,
+          tapped: false,
+          zone: playZone,
         },
       ];
 
@@ -345,28 +333,28 @@ describe("CardQuery Builder", () => {
 
       const cards: CardInstance<{ modifiers: Modifier[] }>[] = [
         {
-          id: createCardId("card-1"),
-          definitionId: "bear",
-          owner: player1,
           controller: player1,
-          zone: playZone,
-          tapped: true,
+          definitionId: "bear",
           flipped: false,
-          revealed: false,
-          phased: false,
+          id: createCardId("card-1"),
           modifiers: [],
+          owner: player1,
+          phased: false,
+          revealed: false,
+          tapped: true,
+          zone: playZone,
         },
         {
-          id: createCardId("card-2"),
-          definitionId: "dragon",
-          owner: player1,
           controller: player1,
-          zone: playZone,
-          tapped: false,
+          definitionId: "dragon",
           flipped: false,
-          revealed: false,
-          phased: false,
+          id: createCardId("card-2"),
           modifiers: [],
+          owner: player1,
+          phased: false,
+          revealed: false,
+          tapped: false,
+          zone: playZone,
         },
       ];
 
@@ -386,28 +374,28 @@ describe("CardQuery Builder", () => {
 
       const cards: CardInstance<{ modifiers: Modifier[] }>[] = [
         {
-          id: createCardId("card-1"),
-          definitionId: "bear",
-          owner: player1,
           controller: player1,
-          zone: playZone,
-          tapped: true,
+          definitionId: "bear",
           flipped: false,
-          revealed: false,
-          phased: false,
+          id: createCardId("card-1"),
           modifiers: [],
+          owner: player1,
+          phased: false,
+          revealed: false,
+          tapped: true,
+          zone: playZone,
         },
         {
-          id: createCardId("card-2"),
-          definitionId: "dragon",
-          owner: player1,
           controller: player1,
-          zone: playZone,
-          tapped: false,
+          definitionId: "dragon",
           flipped: false,
-          revealed: false,
-          phased: false,
+          id: createCardId("card-2"),
           modifiers: [],
+          owner: player1,
+          phased: false,
+          revealed: false,
+          tapped: false,
+          zone: playZone,
         },
       ];
 
@@ -429,28 +417,28 @@ describe("CardQuery Builder", () => {
 
       const cards: CardInstance<{ modifiers: Modifier[] }>[] = [
         {
-          id: createCardId("card-1"),
-          definitionId: "bear",
-          owner: player1,
           controller: player1,
-          zone: playZone,
-          tapped: false,
+          definitionId: "bear",
           flipped: false,
-          revealed: false,
-          phased: false,
+          id: createCardId("card-1"),
           modifiers: [],
+          owner: player1,
+          phased: false,
+          revealed: false,
+          tapped: false,
+          zone: playZone,
         },
         {
-          id: createCardId("card-2"),
-          definitionId: "dragon",
-          owner: player1,
           controller: player1,
-          zone: playZone,
-          tapped: false,
+          definitionId: "dragon",
           flipped: false,
-          revealed: false,
-          phased: false,
+          id: createCardId("card-2"),
           modifiers: [],
+          owner: player1,
+          phased: false,
+          revealed: false,
+          tapped: false,
+          zone: playZone,
         },
       ];
 
@@ -472,28 +460,28 @@ describe("CardQuery Builder", () => {
 
       const cards: CardInstance<{ modifiers: Modifier[] }>[] = [
         {
-          id: createCardId("card-1"),
-          definitionId: "bear",
-          owner: player1,
           controller: player1,
-          zone: playZone,
-          tapped: false,
+          definitionId: "bear",
           flipped: false,
-          revealed: false,
-          phased: false,
+          id: createCardId("card-1"),
           modifiers: [],
+          owner: player1,
+          phased: false,
+          revealed: false,
+          tapped: false,
+          zone: playZone,
         },
         {
-          id: createCardId("card-2"),
-          definitionId: "dragon",
-          owner: player1,
           controller: player1,
-          zone: playZone,
-          tapped: false,
+          definitionId: "dragon",
           flipped: false,
-          revealed: false,
-          phased: false,
+          id: createCardId("card-2"),
           modifiers: [],
+          owner: player1,
+          phased: false,
+          revealed: false,
+          tapped: false,
+          zone: playZone,
         },
       ];
 
@@ -515,28 +503,28 @@ describe("CardQuery Builder", () => {
 
       const cards: CardInstance<{ modifiers: Modifier[] }>[] = [
         {
-          id: createCardId("card-1"),
-          definitionId: "bear",
-          owner: player1,
           controller: player1,
-          zone: playZone,
-          tapped: false,
+          definitionId: "bear",
           flipped: false,
-          revealed: false,
-          phased: false,
+          id: createCardId("card-1"),
           modifiers: [],
+          owner: player1,
+          phased: false,
+          revealed: false,
+          tapped: false,
+          zone: playZone,
         },
         {
-          id: createCardId("card-2"),
-          definitionId: "dragon",
-          owner: player1,
           controller: player1,
-          zone: playZone,
-          tapped: false,
+          definitionId: "dragon",
           flipped: false,
-          revealed: false,
-          phased: false,
+          id: createCardId("card-2"),
           modifiers: [],
+          owner: player1,
+          phased: false,
+          revealed: false,
+          tapped: false,
+          zone: playZone,
         },
       ];
 
@@ -558,40 +546,40 @@ describe("CardQuery Builder", () => {
 
       const cards: CardInstance<{ modifiers: Modifier[] }>[] = [
         {
-          id: createCardId("card-1"),
+          controller: player1,
           definitionId: "bear",
-          owner: player1,
-          controller: player1,
-          zone: playZone,
-          tapped: false,
           flipped: false,
-          revealed: false,
-          phased: false,
+          id: createCardId("card-1"),
           modifiers: [],
+          owner: player1,
+          phased: false,
+          revealed: false,
+          tapped: false,
+          zone: playZone,
         },
         {
-          id: createCardId("card-2"),
+          controller: player1,
           definitionId: "dragon",
-          owner: player1,
-          controller: player1,
-          zone: playZone,
-          tapped: false,
           flipped: false,
-          revealed: false,
-          phased: false,
+          id: createCardId("card-2"),
           modifiers: [],
+          owner: player1,
+          phased: false,
+          revealed: false,
+          tapped: false,
+          zone: playZone,
         },
         {
-          id: createCardId("card-3"),
-          definitionId: "bolt",
-          owner: player1,
           controller: player1,
-          zone: playZone,
-          tapped: false,
+          definitionId: "bolt",
           flipped: false,
-          revealed: false,
-          phased: false,
+          id: createCardId("card-3"),
           modifiers: [],
+          owner: player1,
+          phased: false,
+          revealed: false,
+          tapped: false,
+          zone: playZone,
         },
       ];
 
@@ -618,40 +606,40 @@ describe("CardQuery Builder", () => {
 
       const cards: CardInstance<{ modifiers: Modifier[] }>[] = [
         {
-          id: createCardId("card-1"),
+          controller: player1,
           definitionId: "bear",
-          owner: player1,
-          controller: player1,
-          zone: playZone,
-          tapped: false,
           flipped: false,
-          revealed: false,
-          phased: false,
+          id: createCardId("card-1"),
           modifiers: [],
+          owner: player1,
+          phased: false,
+          revealed: false,
+          tapped: false,
+          zone: playZone,
         },
         {
-          id: createCardId("card-2"),
+          controller: player1,
           definitionId: "dragon",
-          owner: player1,
-          controller: player1,
-          zone: playZone,
-          tapped: true,
           flipped: false,
-          revealed: false,
-          phased: false,
+          id: createCardId("card-2"),
           modifiers: [],
+          owner: player1,
+          phased: false,
+          revealed: false,
+          tapped: true,
+          zone: playZone,
         },
         {
-          id: createCardId("card-3"),
-          definitionId: "bolt",
-          owner: player1,
           controller: player1,
-          zone: playZone,
-          tapped: false,
+          definitionId: "bolt",
           flipped: false,
-          revealed: false,
-          phased: false,
+          id: createCardId("card-3"),
           modifiers: [],
+          owner: player1,
+          phased: false,
+          revealed: false,
+          tapped: false,
+          zone: playZone,
         },
       ];
 
@@ -677,28 +665,28 @@ describe("CardQuery Builder", () => {
 
       const cards: CardInstance<{ modifiers: Modifier[] }>[] = [
         {
-          id: createCardId("card-1"),
-          definitionId: "bear",
-          owner: player1,
           controller: player1,
-          zone: playZone,
-          tapped: false,
+          definitionId: "bear",
           flipped: false,
-          revealed: false,
-          phased: false,
+          id: createCardId("card-1"),
           modifiers: [],
+          owner: player1,
+          phased: false,
+          revealed: false,
+          tapped: false,
+          zone: playZone,
         },
         {
-          id: createCardId("card-2"),
-          definitionId: "dragon",
-          owner: player1,
           controller: player1,
-          zone: playZone,
-          tapped: false,
+          definitionId: "dragon",
           flipped: false,
-          revealed: false,
-          phased: false,
+          id: createCardId("card-2"),
           modifiers: [],
+          owner: player1,
+          phased: false,
+          revealed: false,
+          tapped: false,
+          zone: playZone,
         },
       ];
 
@@ -709,9 +697,7 @@ describe("CardQuery Builder", () => {
       const result = CardQuery.create(state, registry)
         .where((card, _state) => {
           const definition = registry.getCard(card.definitionId);
-          return (
-            definition?.baseCost !== undefined && definition.baseCost % 2 === 0
-          );
+          return definition?.baseCost !== undefined && definition.baseCost % 2 === 0;
         })
         .execute();
 
@@ -726,16 +712,16 @@ describe("CardQuery Builder", () => {
 
       const cards: CardInstance<{ modifiers: Modifier[] }>[] = [
         {
-          id: createCardId("card-1"),
-          definitionId: "bear",
-          owner: player1,
           controller: player1,
-          zone: playZone,
-          tapped: false,
+          definitionId: "bear",
           flipped: false,
-          revealed: false,
-          phased: false,
+          id: createCardId("card-1"),
           modifiers: [],
+          owner: player1,
+          phased: false,
+          revealed: false,
+          tapped: false,
+          zone: playZone,
         },
       ];
 
@@ -743,9 +729,7 @@ describe("CardQuery Builder", () => {
         cards: Object.fromEntries(cards.map((c) => [String(c.id), c])),
       };
 
-      const result = CardQuery.create(state, registry)
-        .inZone(playZone)
-        .execute();
+      const result = CardQuery.create(state, registry).inZone(playZone).execute();
 
       expect(Array.isArray(result)).toBe(true);
       expect(result).toHaveLength(1);
@@ -757,28 +741,28 @@ describe("CardQuery Builder", () => {
 
       const cards: CardInstance<{ modifiers: Modifier[] }>[] = [
         {
-          id: createCardId("card-1"),
-          definitionId: "bear",
-          owner: player1,
           controller: player1,
-          zone: playZone,
-          tapped: false,
+          definitionId: "bear",
           flipped: false,
-          revealed: false,
-          phased: false,
+          id: createCardId("card-1"),
           modifiers: [],
+          owner: player1,
+          phased: false,
+          revealed: false,
+          tapped: false,
+          zone: playZone,
         },
         {
-          id: createCardId("card-2"),
-          definitionId: "dragon",
-          owner: player1,
           controller: player1,
-          zone: playZone,
-          tapped: false,
+          definitionId: "dragon",
           flipped: false,
-          revealed: false,
-          phased: false,
+          id: createCardId("card-2"),
           modifiers: [],
+          owner: player1,
+          phased: false,
+          revealed: false,
+          tapped: false,
+          zone: playZone,
         },
       ];
 
@@ -786,10 +770,7 @@ describe("CardQuery Builder", () => {
         cards: Object.fromEntries(cards.map((c) => [String(c.id), c])),
       };
 
-      const count = CardQuery.create(state, registry)
-        .inZone(playZone)
-        .ofType("creature")
-        .count();
+      const count = CardQuery.create(state, registry).inZone(playZone).ofType("creature").count();
 
       expect(count).toBe(2);
     });
@@ -800,16 +781,16 @@ describe("CardQuery Builder", () => {
 
       const cards: CardInstance<{ modifiers: Modifier[] }>[] = [
         {
-          id: createCardId("card-1"),
-          definitionId: "bear",
-          owner: player1,
           controller: player1,
-          zone: playZone,
-          tapped: false,
+          definitionId: "bear",
           flipped: false,
-          revealed: false,
-          phased: false,
+          id: createCardId("card-1"),
           modifiers: [],
+          owner: player1,
+          phased: false,
+          revealed: false,
+          tapped: false,
+          zone: playZone,
         },
       ];
 
@@ -817,9 +798,7 @@ describe("CardQuery Builder", () => {
         cards: Object.fromEntries(cards.map((c) => [String(c.id), c])),
       };
 
-      const hasCreature = CardQuery.create(state, registry)
-        .ofType("creature")
-        .any();
+      const hasCreature = CardQuery.create(state, registry).ofType("creature").any();
 
       const hasLand = CardQuery.create(state, registry).ofType("land").any();
 
@@ -833,28 +812,28 @@ describe("CardQuery Builder", () => {
 
       const cards: CardInstance<{ modifiers: Modifier[] }>[] = [
         {
-          id: createCardId("card-1"),
-          definitionId: "bear",
-          owner: player1,
           controller: player1,
-          zone: playZone,
-          tapped: false,
+          definitionId: "bear",
           flipped: false,
-          revealed: false,
-          phased: false,
+          id: createCardId("card-1"),
           modifiers: [],
+          owner: player1,
+          phased: false,
+          revealed: false,
+          tapped: false,
+          zone: playZone,
         },
         {
-          id: createCardId("card-2"),
-          definitionId: "dragon",
-          owner: player1,
           controller: player1,
-          zone: playZone,
-          tapped: false,
+          definitionId: "dragon",
           flipped: false,
-          revealed: false,
-          phased: false,
+          id: createCardId("card-2"),
           modifiers: [],
+          owner: player1,
+          phased: false,
+          revealed: false,
+          tapped: false,
+          zone: playZone,
         },
       ];
 
@@ -862,9 +841,7 @@ describe("CardQuery Builder", () => {
         cards: Object.fromEntries(cards.map((c) => [String(c.id), c])),
       };
 
-      const first = CardQuery.create(state, registry)
-        .ofType("creature")
-        .first();
+      const first = CardQuery.create(state, registry).ofType("creature").first();
 
       expect(first).toBeDefined();
       expect(first?.definitionId).toBe("bear");
@@ -876,16 +853,16 @@ describe("CardQuery Builder", () => {
 
       const cards: CardInstance<{ modifiers: Modifier[] }>[] = [
         {
-          id: createCardId("card-1"),
-          definitionId: "bear",
-          owner: player1,
           controller: player1,
-          zone: playZone,
-          tapped: false,
+          definitionId: "bear",
           flipped: false,
-          revealed: false,
-          phased: false,
+          id: createCardId("card-1"),
           modifiers: [],
+          owner: player1,
+          phased: false,
+          revealed: false,
+          tapped: false,
+          zone: playZone,
         },
       ];
 

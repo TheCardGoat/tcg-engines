@@ -4,17 +4,17 @@ export const princeJohnPhonyKing: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "lose-lore",
         amount: 2,
         target: "EACH_OPPONENT",
+        type: "lose-lore",
       },
       id: "m61-1",
       name: "COLLECT TAXES",
       text: "COLLECT TAXES Whenever this character quests, each opponent with more lore than you loses 2 lore.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

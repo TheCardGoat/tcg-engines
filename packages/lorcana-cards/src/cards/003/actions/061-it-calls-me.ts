@@ -4,19 +4,19 @@ export const itCallsMe: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "draw",
             amount: 1,
             target: "CONTROLLER",
+            type: "draw",
           },
           {
-            type: "shuffle-into-deck",
-            target: "CHOSEN_CHARACTER",
             intoDeck: "owner",
+            target: "CHOSEN_CHARACTER",
+            type: "shuffle-into-deck",
           },
         ],
+        type: "sequence",
       },
       id: "1sd-1",
       text: "Draw a card. Then, choose up to 3 cards from chosen opponent's discard and shuffle them into their deck.",

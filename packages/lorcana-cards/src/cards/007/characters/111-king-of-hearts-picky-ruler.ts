@@ -4,9 +4,9 @@ export const kingOfHeartsPickyRuler: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "restriction",
         restriction: "cant-challenge",
         target: "SELF",
+        type: "restriction",
       },
       id: "om1-1",
       text: "OBJECTIONABLE STATE Damaged characters can't challenge your characters.",

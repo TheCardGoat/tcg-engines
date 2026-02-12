@@ -21,11 +21,7 @@ function parseFromText(text: string): PutIntoInkwellEffect | null {
   const youMayPutIntoInkwellPattern = /you\s+may\s+put.*?into\s+inkwell/i;
 
   // Check for inkwell patterns
-  if (
-    !(
-      putIntoInkwellPattern.test(text) || youMayPutIntoInkwellPattern.test(text)
-    )
-  ) {
+  if (!(putIntoInkwellPattern.test(text) || youMayPutIntoInkwellPattern.test(text))) {
     logger.debug("Inkwell effect pattern did not match");
     return null;
   }
@@ -43,10 +39,7 @@ function parseFromText(text: string): PutIntoInkwellEffect | null {
 
   if (text.includes("top card of your deck")) {
     source = "top-of-deck";
-  } else if (
-    text.includes("card from your hand") ||
-    text.includes("additional card")
-  ) {
+  } else if (text.includes("card from your hand") || text.includes("additional card")) {
     source = "hand";
   } else if (text.includes("this card")) {
     source = "this-card";
@@ -105,6 +98,5 @@ export const inkwellEffectParser: EffectParser = {
     return null;
   },
 
-  pattern:
-    /(?:put|add)(?:.*?)into\s+(?:your\s+|their\s+|their\s+player's\s+)?inkwell/i,
+  pattern: /(?:put|add)(?:.*?)into\s+(?:your\s+|their\s+|their\s+player's\s+)?inkwell/i,
 };

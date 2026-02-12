@@ -4,9 +4,9 @@ export const edHystericalPartygoer: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "restriction",
         restriction: "cant-challenge",
         target: "SELF",
+        type: "restriction",
       },
       id: "q6u-1",
       text: "ROWDY GUEST Damaged characters can't challenge this character.",

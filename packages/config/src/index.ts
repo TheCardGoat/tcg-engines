@@ -5,12 +5,6 @@
  */
 
 // Auth service environment exports
-export {
-  type AuthEnv,
-  assertAuthEnv,
-  authEnv,
-  getAuthEnv,
-  parseAuthEnv,
-} from "./auth";
+export { type AuthEnv, assertAuthEnv, authEnv, getAuthEnv, parseAuthEnv } from "./auth";
 // Schema exports
 export * from "./schema";

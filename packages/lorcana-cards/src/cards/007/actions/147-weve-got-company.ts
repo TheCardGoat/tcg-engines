@@ -4,19 +4,19 @@ export const weveGotCompany: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "ready",
             target: "YOUR_CHARACTERS",
+            type: "ready",
           },
           {
-            type: "gain-keyword",
+            duration: "this-turn",
             keyword: "Reckless",
             target: "CHOSEN_CHARACTER",
-            duration: "this-turn",
+            type: "gain-keyword",
           },
         ],
+        type: "sequence",
       },
       id: "inc-1",
       text: "Ready all your characters. They gain Reckless this turn.",

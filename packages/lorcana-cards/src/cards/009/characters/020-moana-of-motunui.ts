@@ -4,37 +4,37 @@ export const moanaOfMotunui: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "optional",
+            chooser: "CONTROLLER",
             effect: {
-              type: "ready",
               target: {
-                selector: "chosen",
+                cardTypes: ["character"],
                 count: 1,
                 owner: "any",
+                selector: "chosen",
                 zones: ["play"],
-                cardTypes: ["character"],
               },
+              type: "ready",
             },
-            chooser: "CONTROLLER",
+            type: "optional",
           },
           {
-            type: "restriction",
+            duration: "this-turn",
             restriction: "cant-quest",
             target: "SELF",
-            duration: "this-turn",
+            type: "restriction",
           },
         ],
+        type: "sequence",
       },
       id: "n94-1",
       name: "WE CAN FIX IT",
       text: "WE CAN FIX IT Whenever this character quests, you may ready your other exerted Princess characters. If you do, they can't quest for the rest of this turn.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

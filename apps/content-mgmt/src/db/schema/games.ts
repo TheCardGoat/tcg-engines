@@ -1,11 +1,4 @@
-import {
-  boolean,
-  index,
-  pgTable,
-  text,
-  timestamp,
-  uuid,
-} from "drizzle-orm/pg-core";
+import { boolean, index, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
 
 /**
  * Games table - Supported games for content categorization
@@ -13,12 +6,12 @@ import {
 export const games = pgTable(
   "games",
   {
-    id: uuid("id").primaryKey().defaultRandom(),
-    slug: text("slug").notNull().unique(),
-    name: text("name").notNull(),
-    description: text("description"),
-    isActive: boolean("is_active").default(true).notNull(),
     createdAt: timestamp("created_at").defaultNow().notNull(),
+    description: text("description"),
+    id: uuid("id").primaryKey().defaultRandom(),
+    isActive: boolean("is_active").default(true).notNull(),
+    name: text("name").notNull(),
+    slug: text("slug").notNull().unique(),
     updatedAt: timestamp("updated_at").defaultNow().notNull(),
   },
   (table) => [

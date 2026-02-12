@@ -4,17 +4,17 @@ export const daisyDuckPirateCaptain: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "draw",
         amount: 1,
         target: "CONTROLLER",
+        type: "draw",
       },
       id: "zzu-1",
       name: "DISTANT SHORES",
       text: "DISTANT SHORES Whenever one of your Pirate characters quests while at a location, draw a card.",
       trigger: {
         event: "banish",
-        timing: "whenever",
         on: "YOUR_OTHER_CHARACTERS",
+        timing: "whenever",
       },
       type: "triggered",
     },

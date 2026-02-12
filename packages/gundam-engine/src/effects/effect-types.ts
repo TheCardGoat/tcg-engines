@@ -679,9 +679,7 @@ export type Condition =
     }
   | { readonly lifeAtLeast?: number; readonly lifeAtMost?: number }
   | {
-      readonly turn?:
-        | number
-        | { readonly atLeast?: number; readonly atMost?: number };
+      readonly turn?: number | { readonly atLeast?: number; readonly atMost?: number };
     }
   | {
       readonly controlUnit?: {
@@ -848,12 +846,7 @@ export function isControlFlowEffect(
  */
 export function isStatModifyingEffect(
   effect: Effect,
-): effect is
-  | ModifyAPEffect
-  | ModifyHPEffect
-  | SetAPEffect
-  | SetHPEffect
-  | SwapStatsEffect {
+): effect is ModifyAPEffect | ModifyHPEffect | SetAPEffect | SetHPEffect | SwapStatsEffect {
   return (
     effect.type === "modify-ap" ||
     effect.type === "modify-hp" ||
@@ -892,9 +885,7 @@ export function isCombatEffect(
 /**
  * Check if amount is an expression
  */
-export function isAmountExpression(
-  amount: number | AmountExpression,
-): amount is AmountExpression {
+export function isAmountExpression(amount: number | AmountExpression): amount is AmountExpression {
   return typeof amount === "object";
 }
 
@@ -909,48 +900,42 @@ export function draw(
   amount: number | AmountExpression,
   player?: "self" | "opponent" | "each",
 ): DrawEffect {
-  return player ? { type: "draw", amount, player } : { type: "draw", amount };
+  return player ? { amount, player, type: "draw" } : { amount, type: "draw" };
 }
 
 /**
  * Create a damage effect
  */
-export function damage(
-  amount: number | AmountExpression,
-  target: EffectTarget,
-): DamageEffect {
-  return { type: "damage", amount, target };
+export function damage(amount: number | AmountExpression, target: EffectTarget): DamageEffect {
+  return { amount, target, type: "damage" };
 }
 
 /**
  * Create a destroy effect
  */
 export function destroy(target: EffectTarget): DestroyEffect {
-  return { type: "destroy", target };
+  return { target, type: "destroy" };
 }
 
 /**
  * Create a rest effect
  */
 export function rest(target: EffectTarget): RestEffect {
-  return { type: "rest", target };
+  return { target, type: "rest" };
 }
 
 /**
  * Create a stand effect
  */
 export function stand(target: EffectTarget): StandEffect {
-  return { type: "stand", target };
+  return { target, type: "stand" };
 }
 
 /**
  * Create a heal effect
  */
-export function heal(
-  amount: number | AmountExpression | "all",
-  target: EffectTarget,
-): HealEffect {
-  return { type: "heal", amount, target };
+export function heal(amount: number | AmountExpression | "all", target: EffectTarget): HealEffect {
+  return { amount, target, type: "heal" };
 }
 
 /**
@@ -962,8 +947,8 @@ export function modifyAP(
   duration?: "turn" | "permanent" | "while-condition",
 ): ModifyAPEffect {
   return duration
-    ? { type: "modify-ap", amount, target, duration }
-    : { type: "modify-ap", amount, target };
+    ? { amount, duration, target, type: "modify-ap" }
+    : { amount, target, type: "modify-ap" };
 }
 
 /**
@@ -975,22 +960,22 @@ export function modifyHP(
   duration?: "turn" | "permanent",
 ): ModifyHPEffect {
   return duration
-    ? { type: "modify-hp", amount, target, duration }
-    : { type: "modify-hp", amount, target };
+    ? { amount, duration, target, type: "modify-hp" }
+    : { amount, target, type: "modify-hp" };
 }
 
 /**
  * Create a return to hand effect
  */
 export function returnToHand(target: EffectTarget): ReturnToHandEffect {
-  return { type: "return-to-hand", target };
+  return { target, type: "return-to-hand" };
 }
 
 /**
  * Create a send to trash effect
  */
 export function sendToTrash(target: EffectTarget): SendToTrashEffect {
-  return { type: "send-to-trash", target };
+  return { target, type: "send-to-trash" };
 }
 
 /**
@@ -1002,8 +987,8 @@ export function grantKeyword(
   duration?: "turn" | "permanent" | "while-condition",
 ): GrantKeywordEffect {
   return duration
-    ? { type: "grant-keyword", keyword, target, duration }
-    : { type: "grant-keyword", keyword, target };
+    ? { duration, keyword, target, type: "grant-keyword" }
+    : { keyword, target, type: "grant-keyword" };
 }
 
 /**
@@ -1015,9 +1000,9 @@ export function searchDeck(
   options?: { amount?: number; reveal?: boolean; shuffle?: boolean },
 ): SearchDeckEffect {
   return {
-    type: "search-deck",
-    filter,
     destination,
+    filter,
+    type: "search-deck",
     ...options,
   };
 }
@@ -1025,35 +1010,22 @@ export function searchDeck(
 /**
  * Create a pair pilot effect
  */
-export function pairPilot(
-  pilot: EffectTarget,
-  unit: EffectTarget,
-): PairPilotEffect {
-  return { type: "pair-pilot", pilot, unit };
+export function pairPilot(pilot: EffectTarget, unit: EffectTarget): PairPilotEffect {
+  return { pilot, type: "pair-pilot", unit };
 }
 
 /**
  * Create a add shield effect
  */
-export function addShield(
-  amount: number,
-  player?: "self" | "opponent",
-): AddShieldEffect {
-  return player
-    ? { type: "add-shield", amount, player }
-    : { type: "add-shield", amount };
+export function addShield(amount: number, player?: "self" | "opponent"): AddShieldEffect {
+  return player ? { amount, player, type: "add-shield" } : { amount, type: "add-shield" };
 }
 
 /**
  * Create a break shield effect
  */
-export function breakShield(
-  target: EffectTarget,
-  amount?: number,
-): BreakShieldEffect {
-  return amount
-    ? { type: "break-shield", target, amount }
-    : { type: "break-shield", target };
+export function breakShield(target: EffectTarget, amount?: number): BreakShieldEffect {
+  return amount ? { amount, target, type: "break-shield" } : { target, type: "break-shield" };
 }
 
 /**
@@ -1069,8 +1041,8 @@ export function createToken(
   },
 ): CreateTokenEffect {
   return {
-    type: "create-token",
     token,
+    type: "create-token",
     ...options,
   };
 }
@@ -1079,26 +1051,21 @@ export function createToken(
  * Create a sequence of effects
  */
 export function sequence(...effects: Effect[]): SequenceEffect {
-  return { type: "sequence", effects };
+  return { effects, type: "sequence" };
 }
 
 /**
  * Create a choice effect
  */
 export function choice(...options: ChoiceOption[]): ChoiceEffect {
-  return { type: "choice", options };
+  return { options, type: "choice" };
 }
 
 /**
  * Create an optional effect
  */
-export function optional(
-  effect: Effect,
-  player?: "self" | "opponent",
-): OptionalEffect {
-  return player
-    ? { type: "optional", effect, player }
-    : { type: "optional", effect };
+export function optional(effect: Effect, player?: "self" | "opponent"): OptionalEffect {
+  return player ? { effect, player, type: "optional" } : { effect, type: "optional" };
 }
 
 /**
@@ -1110,25 +1077,22 @@ export function conditional(
   elseEffect?: Effect,
 ): ConditionalEffect {
   return elseEffect
-    ? { type: "conditional", condition, then, else: elseEffect }
-    : { type: "conditional", condition, then };
+    ? { condition, else: elseEffect, then, type: "conditional" }
+    : { condition, then, type: "conditional" };
 }
 
 /**
  * Create a for each effect
  */
 export function forEach(target: EffectTarget, effect: Effect): ForEachEffect {
-  return { type: "for-each", target, effect };
+  return { effect, target, type: "for-each" };
 }
 
 /**
  * Create a do times effect
  */
-export function doTimes(
-  times: number | AmountExpression,
-  effect: Effect,
-): DoTimesEffect {
-  return { type: "do-times", times, effect };
+export function doTimes(times: number | AmountExpression, effect: Effect): DoTimesEffect {
+  return { effect, times, type: "do-times" };
 }
 
 /**
@@ -1140,8 +1104,8 @@ export function addResources(
   active?: boolean,
 ): AddResourcesEffect {
   return player
-    ? { type: "add-resources", amount, player, active }
-    : { type: "add-resources", amount };
+    ? { active, amount, player, type: "add-resources" }
+    : { amount, type: "add-resources" };
 }
 
 /**
@@ -1152,7 +1116,7 @@ export function preventDamage(
   amount?: number | "all",
   duration?: "turn" | "permanent" | "next-battle",
 ): PreventDamageEffect {
-  return { type: "prevent-damage", target, amount, duration };
+  return { amount, duration, target, type: "prevent-damage" };
 }
 
 /**
@@ -1164,8 +1128,8 @@ export function gainAbility(
   duration?: "turn" | "permanent",
 ): GainAbilityEffect {
   return duration
-    ? { type: "gain-ability", ability, target, duration }
-    : { type: "gain-ability", ability, target };
+    ? { ability, duration, target, type: "gain-ability" }
+    : { ability, target, type: "gain-ability" };
 }
 
 /**
@@ -1175,7 +1139,7 @@ export function shuffle(
   player?: "self" | "opponent",
   deck?: "deck" | "resourceDeck",
 ): ShuffleEffect {
-  return player ? { type: "shuffle", player, deck } : { type: "shuffle" };
+  return player ? { deck, player, type: "shuffle" } : { type: "shuffle" };
 }
 
 /**
@@ -1186,9 +1150,7 @@ export function discard(
   player?: "self" | "opponent",
   from?: "hand" | "battleArea" | ZoneSpec,
 ): DiscardEffect {
-  return from
-    ? { type: "discard", amount, player, from }
-    : { type: "discard", amount, player };
+  return from ? { amount, from, player, type: "discard" } : { amount, player, type: "discard" };
 }
 
 /**
@@ -1201,8 +1163,8 @@ export function look(
   player?: "self" | "opponent",
 ): LookEffect {
   return player
-    ? { type: "look", amount, from, then, player }
-    : { type: "look", amount, from, then };
+    ? { amount, from, player, then, type: "look" }
+    : { amount, from, then, type: "look" };
 }
 
 /**
@@ -1214,9 +1176,9 @@ export function playFrom(
   options?: { ignoreCost?: boolean; rested?: boolean },
 ): PlayFromEffect {
   return {
-    type: "play-from",
-    target,
     from,
+    target,
+    type: "play-from",
     ...options,
   };
 }
@@ -1224,11 +1186,8 @@ export function playFrom(
 /**
  * Create a battle effect
  */
-export function battle(
-  attacker: EffectTarget,
-  defender: EffectTarget,
-): BattleEffect {
-  return { type: "battle", attacker, defender };
+export function battle(attacker: EffectTarget, defender: EffectTarget): BattleEffect {
+  return { attacker, defender, type: "battle" };
 }
 
 /**
@@ -1239,7 +1198,7 @@ export function redirectDamage(
   to: EffectTarget,
   amount?: number,
 ): RedirectDamageEffect {
-  return { type: "redirect-damage", from, to, amount };
+  return { amount, from, to, type: "redirect-damage" };
 }
 
 /**
@@ -1250,7 +1209,7 @@ export function changeController(
   newController: PlayerId | "self" | "opponent",
   duration?: "turn" | "permanent" | "until-end-of-turn",
 ): ChangeControllerEffect {
-  return { type: "change-controller", target, newController, duration };
+  return { duration, newController, target, type: "change-controller" };
 }
 
 /**
@@ -1260,30 +1219,28 @@ export function gainControl(
   target: EffectTarget,
   duration?: "turn" | "permanent" | "until-end-of-turn",
 ): GainControlEffect {
-  return duration
-    ? { type: "gain-control", target, duration }
-    : { type: "gain-control", target };
+  return duration ? { duration, target, type: "gain-control" } : { target, type: "gain-control" };
 }
 
 /**
  * Create a copy effect
  */
 export function copy(target: EffectTarget, onto?: EffectTarget): CopyEffect {
-  return onto ? { type: "copy", target, onto } : { type: "copy", target };
+  return onto ? { onto, target, type: "copy" } : { target, type: "copy" };
 }
 
 /**
  * Create a flip effect
  */
 export function flip(target: EffectTarget, faceDown?: boolean): FlipEffect {
-  return { type: "flip", target, faceDown };
+  return { faceDown, target, type: "flip" };
 }
 
 /**
  * Create a remove from game effect
  */
 export function removeFromGame(target: EffectTarget): RemoveFromGameEffect {
-  return { type: "remove-from-game", target };
+  return { target, type: "remove-from-game" };
 }
 
 /**
@@ -1295,8 +1252,8 @@ export function loseKeyword(
   duration?: "turn" | "permanent",
 ): LoseKeywordEffect {
   return duration
-    ? { type: "lose-keyword", keyword, target, duration }
-    : { type: "lose-keyword", keyword, target };
+    ? { duration, keyword, target, type: "lose-keyword" }
+    : { keyword, target, type: "lose-keyword" };
 }
 
 /**
@@ -1308,8 +1265,8 @@ export function loseAbility(
   duration?: "turn" | "permanent",
 ): LoseAbilityEffect {
   return duration
-    ? { type: "lose-ability", ability, target, duration }
-    : { type: "lose-ability", ability, target };
+    ? { ability, duration, target, type: "lose-ability" }
+    : { ability, target, type: "lose-ability" };
 }
 
 /**
@@ -1318,14 +1275,14 @@ export function loseAbility(
 export function counter(
   target?: "current-ability" | "current-event" | EffectTarget,
 ): CounterEffect {
-  return target ? { type: "counter", target } : { type: "counter" };
+  return target ? { target, type: "counter" } : { type: "counter" };
 }
 
 /**
  * Create a reveal effect
  */
 export function reveal(target: EffectTarget, from?: ZoneSpec): RevealEffect {
-  return from ? { type: "reveal", target, from } : { type: "reveal", target };
+  return from ? { from, target, type: "reveal" } : { target, type: "reveal" };
 }
 
 /**
@@ -1337,47 +1294,39 @@ export function searchPilot(
   reveal?: boolean,
 ): SearchPilotEffect {
   return {
-    type: "search-pilot",
-    pilotName,
     destination,
+    pilotName,
     reveal,
+    type: "search-pilot",
   };
 }
 
 /**
  * Create an attach as pilot effect
  */
-export function attachAsPilot(
-  pilot: EffectTarget,
-  unit: EffectTarget,
-): AttachAsPilotEffect {
-  return { type: "attach-as-pilot", pilot, unit };
+export function attachAsPilot(pilot: EffectTarget, unit: EffectTarget): AttachAsPilotEffect {
+  return { pilot, type: "attach-as-pilot", unit };
 }
 
 /**
  * Create an unpair pilot effect
  */
 export function unpairPilot(target: EffectTarget): UnpairPilotEffect {
-  return { type: "unpair-pilot", target };
+  return { target, type: "unpair-pilot" };
 }
 
 /**
  * Create a play resource effect
  */
-export function playResource(
-  from?: ZoneSpec,
-  target?: EffectTarget,
-): PlayResourceEffect {
-  return from
-    ? { type: "play-resource", from, target }
-    : { type: "play-resource" };
+export function playResource(from?: ZoneSpec, target?: EffectTarget): PlayResourceEffect {
+  return from ? { from, target, type: "play-resource" } : { type: "play-resource" };
 }
 
 /**
  * Create a rest for resource effect
  */
 export function restForResource(target: EffectTarget): RestForResourceEffect {
-  return { type: "rest-for-resource", target };
+  return { target, type: "rest-for-resource" };
 }
 
 /**
@@ -1389,8 +1338,8 @@ export function setAP(
   duration?: "turn" | "permanent",
 ): SetAPEffect {
   return duration
-    ? { type: "set-ap", amount, target, duration }
-    : { type: "set-ap", amount, target };
+    ? { amount, duration, target, type: "set-ap" }
+    : { amount, target, type: "set-ap" };
 }
 
 /**
@@ -1402,8 +1351,8 @@ export function setHP(
   duration?: "turn" | "permanent",
 ): SetHPEffect {
   return duration
-    ? { type: "set-hp", amount, target, duration }
-    : { type: "set-hp", amount, target };
+    ? { amount, duration, target, type: "set-hp" }
+    : { amount, target, type: "set-hp" };
 }
 
 /**
@@ -1415,8 +1364,8 @@ export function swapStats(
   duration?: "turn" | "permanent",
 ): SwapStatsEffect {
   return duration
-    ? { type: "swap-stats", target1, target2, duration }
-    : { type: "swap-stats", target1, target2 };
+    ? { duration, target1, target2, type: "swap-stats" }
+    : { target1, target2, type: "swap-stats" };
 }
 
 /**
@@ -1428,31 +1377,27 @@ export function repeatWhile(
   maxTimes?: number,
 ): RepeatWhileEffect {
   return maxTimes
-    ? { type: "repeat-while", condition, effect, maxTimes }
-    : { type: "repeat-while", condition, effect };
+    ? { condition, effect, maxTimes, type: "repeat-while" }
+    : { condition, effect, type: "repeat-while" };
 }
 
 /**
  * Create an if you do effect
  */
 export function ifYouDo(cost: Cost, then: Effect): IfYouDoEffect {
-  return { type: "if-you-do", cost, then };
+  return { cost, then, type: "if-you-do" };
 }
 
 /**
  * Create an until end of turn effect
  */
 export function untilEndOfTurn(effect: Effect): UntilEndOfTurnEffect {
-  return { type: "until-end-of-turn", effect };
+  return { effect, type: "until-end-of-turn" };
 }
 
 /**
  * Create a choice option
  */
-export function choiceOption(
-  label: string,
-  effect: Effect,
-  condition?: Condition,
-): ChoiceOption {
-  return condition ? { label, effect, condition } : { label, effect };
+export function choiceOption(label: string, effect: Effect, condition?: Condition): ChoiceOption {
+  return condition ? { condition, effect, label } : { effect, label };
 }

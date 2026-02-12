@@ -21,13 +21,13 @@ function getDrawCount(context: MoveContext): number {
   const count = context.params?.count;
 
   // Default to 1 if not specified
-  if (count === undefined) return 1;
+  if (count === undefined) {
+    return 1;
+  }
 
   // Validate type and value
   if (typeof count !== "number" || count < 0 || !Number.isInteger(count)) {
-    throw new Error(
-      `Invalid draw count: ${count}. Must be a non-negative integer.`,
-    );
+    throw new Error(`Invalid draw count: ${count}. Must be a non-negative integer.`);
   }
 
   return count;
@@ -39,7 +39,7 @@ function getDrawCount(context: MoveContext): number {
  * Extension of MoveContext with Gundam-specific operations.
  * This type can be used in move reducers for cleaner code.
  */
-export type GundamOperations = {
+export interface GundamOperations {
   /**
    * Rest a card (turn sideways)
    *
@@ -117,7 +117,7 @@ export type GundamOperations = {
   getCardType(cardId: CardId): string | undefined;
 
   drawCard(playerId: PlayerId): void;
-};
+}
 
 /**
  * Create Gundam operations from a MoveContext
@@ -140,28 +140,13 @@ export function createGundamOperations<TParams>(
   context: MoveContext<TParams, GundamCardMeta>,
 ): GundamOperations {
   return {
-    restCard(cardId: CardId): void {
-      context.cards.updateCardMeta(cardId, { isRested: true });
-    },
-
     activateCard(cardId: CardId): void {
       context.cards.updateCardMeta(cardId, { isRested: false });
     },
+
     addDamage(cardId: CardId, amount: number): number {
       const current = context.cards.getCardMeta(cardId)?.damage ?? 0;
       const newDamage = current + amount;
-      context.cards.updateCardMeta(cardId, { damage: newDamage });
-      return newDamage;
-    },
-
-    getDamage(cardId: CardId): number {
-      return context.cards.getCardMeta(cardId)?.damage ?? 0;
-    },
-
-    removeDamage(cardId: CardId, amount?: number): number {
-      const current = context.cards.getCardMeta(cardId)?.damage ?? 0;
-      const newDamage =
-        amount === undefined ? 0 : Math.max(0, current - amount);
       context.cards.updateCardMeta(cardId, { damage: newDamage });
       return newDamage;
     },
@@ -169,39 +154,49 @@ export function createGundamOperations<TParams>(
       const drawCount = getDrawCount(context);
 
       // Get player's zones
-      const deck = context.zones.getCardsInZone(
-        "deck" as ZoneId,
-        playerId as PlayerId,
-      );
-      const hand = context.zones.getCardsInZone(
-        "hand" as ZoneId,
-        playerId as PlayerId,
-      );
+      const deck = context.zones.getCardsInZone("deck" as ZoneId, playerId as PlayerId);
+      const hand = context.zones.getCardsInZone("hand" as ZoneId, playerId as PlayerId);
 
       // Validate zones exist (should never fail if condition passed)
       if (!(deck && hand)) {
         throw new Error(
-          `Missing zones for player ${playerId}: deck=${!!deck}, hand=${!!hand}`,
+          `Missing zones for player ${playerId}: deck=${Boolean(deck)}, hand=${Boolean(hand)}`,
         );
       }
 
       // Handle no-op case
-      if (drawCount === 0) return;
+      if (drawCount === 0) {
+        return;
+      }
 
       context.zones.drawCards({
-        from: "deck" as ZoneId,
-        to: "hand" as ZoneId,
-        playerId,
         count: drawCount,
+        from: "deck" as ZoneId,
+        playerId,
+        to: "hand" as ZoneId,
       });
-    },
-    isRested(cardId: CardId): boolean {
-      return context.cards.getCardMeta(cardId)?.isRested ?? false;
     },
 
     getCardType(cardId: CardId): string | undefined {
       const card = context.registry?.getCard(cardId);
       return card?.type;
+    },
+
+    getDamage(cardId: CardId): number {
+      return context.cards.getCardMeta(cardId)?.damage ?? 0;
+    },
+    isRested(cardId: CardId): boolean {
+      return context.cards.getCardMeta(cardId)?.isRested ?? false;
+    },
+    removeDamage(cardId: CardId, amount?: number): number {
+      const current = context.cards.getCardMeta(cardId)?.damage ?? 0;
+      const newDamage = amount === undefined ? 0 : Math.max(0, current - amount);
+      context.cards.updateCardMeta(cardId, { damage: newDamage });
+      return newDamage;
+    },
+
+    restCard(cardId: CardId): void {
+      context.cards.updateCardMeta(cardId, { isRested: true });
     },
   };
 }

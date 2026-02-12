@@ -7,16 +7,16 @@ export const beastsMirror: ItemCard = {
         exert: true,
       },
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you have no cards in your hand",
+          type: "if",
         },
         then: {
-          type: "draw",
           amount: 1,
           target: "CONTROLLER",
+          type: "draw",
         },
+        type: "conditional",
       },
       id: "6wc-1",
       text: "SHOW ME {E}, 3 {I} — If you have no cards in your hand, draw a card.",

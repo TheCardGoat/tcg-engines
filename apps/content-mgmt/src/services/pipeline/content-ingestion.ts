@@ -90,10 +90,10 @@ export class ContentIngestionService {
 
     // Initialize result
     const result: PipelineResult = {
+      blocked: false,
       contentId,
       sourceType,
       success: false,
-      blocked: false,
     };
 
     try {
@@ -196,8 +196,7 @@ export class ContentIngestionService {
       result.success = true;
       return result;
     } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : "Unknown error";
+      const errorMessage = error instanceof Error ? error.message : "Unknown error";
       const errorCode = this.getErrorCode(error);
 
       // Check if this error should block the content
@@ -234,43 +233,41 @@ export class ContentIngestionService {
 
       return {
         contentId,
-        rawContent,
-        metadata,
-        validation,
-        provider: adapter.serviceId,
-        success: validation.isValid,
         errorMessage: validation.isValid
           ? undefined
           : validation.errors.map((e) => e.message).join("; "),
+        metadata,
+        provider: adapter.serviceId,
+        rawContent,
+        success: validation.isValid,
+        validation,
       };
     } catch (error) {
       return {
         contentId,
+        errorMessage: error instanceof Error ? error.message : "Extraction failed",
+        metadata: {
+          sourceMetadata: {},
+          title: "",
+        },
+        provider: adapter.serviceId,
         rawContent: {
           contentId,
+          rawMetadata: {},
           sourceType: adapter.supportedSourceTypes[0] ?? "http",
           textContent: "",
-          rawMetadata: {},
         },
-        metadata: {
-          title: "",
-          sourceMetadata: {},
-        },
+        success: false,
         validation: {
-          isValid: false,
-          shouldBlock: this.shouldBlockOnError(this.getErrorCode(error)),
           errors: [
             {
               code: this.getErrorCode(error),
-              message:
-                error instanceof Error ? error.message : "Extraction failed",
+              message: error instanceof Error ? error.message : "Extraction failed",
             },
           ],
+          isValid: false,
+          shouldBlock: this.shouldBlockOnError(this.getErrorCode(error)),
         },
-        provider: adapter.serviceId,
-        success: false,
-        errorMessage:
-          error instanceof Error ? error.message : "Extraction failed",
       };
     }
   }
@@ -288,15 +285,15 @@ export class ContentIngestionService {
   ): Promise<PreprocessingResult> {
     // Placeholder - will be implemented in preprocessing service
     return {
-      contentId,
-      success: true,
       blocked: false,
+      contentId,
       entities: [],
-      themes: [],
-      segments: [],
       isGameRelated: true,
-      provider: "placeholder",
       modelId: "placeholder",
+      provider: "placeholder",
+      segments: [],
+      success: true,
+      themes: [],
     };
   }
 
@@ -313,20 +310,20 @@ export class ContentIngestionService {
   ): Promise<ProcessingResult> {
     // Placeholder - will be implemented in processing service
     return {
-      contentId,
-      success: true,
       blocked: false,
-      overview: {
-        logline: "",
-        fullOverview: "",
-        shortOverview: "",
-        clickbaitRating: { score: 1, explanation: "" },
-        mainThemes: [],
-        contentCategory: "other",
-      },
+      contentId,
       enhancedSummaries: [],
-      provider: "placeholder",
       modelId: "placeholder",
+      overview: {
+        clickbaitRating: { explanation: "", score: 1 },
+        contentCategory: "other",
+        fullOverview: "",
+        logline: "",
+        mainThemes: [],
+        shortOverview: "",
+      },
+      provider: "placeholder",
+      success: true,
     };
   }
 
@@ -342,12 +339,12 @@ export class ContentIngestionService {
   ): Promise<PostprocessingResult> {
     // Placeholder - will be implemented in postprocessing service
     return {
-      contentId,
-      success: true,
-      blocked: false,
-      tags: [],
-      hotnessScore: 0,
       baitRating: 1,
+      blocked: false,
+      contentId,
+      hotnessScore: 0,
+      success: true,
+      tags: [],
     };
   }
 
@@ -380,12 +377,12 @@ export class ContentIngestionService {
     reason: string,
   ): PipelineResult {
     return {
+      blockReason: reason,
+      blocked: true,
+      blockedAtStage: stage,
       contentId,
       sourceType,
       success: false,
-      blocked: true,
-      blockedAtStage: stage,
-      blockReason: reason,
     };
   }
 
@@ -408,9 +405,7 @@ export class ContentIngestionService {
    * Check if an error should block the content
    */
   private shouldBlockOnError(errorCode: string): boolean {
-    return BLOCKING_ERROR_CODES.includes(
-      errorCode as (typeof BLOCKING_ERROR_CODES)[number],
-    );
+    return BLOCKING_ERROR_CODES.includes(errorCode as (typeof BLOCKING_ERROR_CODES)[number]);
   }
 
   /**

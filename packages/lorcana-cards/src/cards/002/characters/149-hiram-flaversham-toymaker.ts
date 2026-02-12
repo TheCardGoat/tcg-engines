@@ -4,23 +4,23 @@ export const hiramFlavershamToymaker: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "banish",
           target: {
-            selector: "all",
+            cardTypes: ["item"],
             count: "all",
             owner: "you",
+            selector: "all",
             zones: ["play"],
-            cardTypes: ["item"],
           },
+          type: "banish",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "slt-1",
       name: "ARTIFICER When you play this character and",
       text: "ARTIFICER When you play this character and whenever he quests, you may banish one of your items to draw 2 cards.",
-      trigger: { event: "play", timing: "when", on: "SELF" },
+      trigger: { event: "play", on: "SELF", timing: "when" },
       type: "triggered",
     },
   ],

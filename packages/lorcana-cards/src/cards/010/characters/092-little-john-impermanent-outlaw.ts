@@ -11,13 +11,13 @@ export const littleJohnImpermanentOutlaw: CharacterCard = {
     },
     {
       effect: {
-        type: "ready",
         target: "CHOSEN_CHARACTER",
+        type: "ready",
       },
       id: "196-2",
       name: "READY TO RASSLE",
       text: "READY TO RASSLE Whenever you put a card under this character, ready him.",
-      trigger: { event: "play", timing: "when", on: "SELF" },
+      trigger: { event: "play", on: "SELF", timing: "when" },
       type: "triggered",
     },
   ],

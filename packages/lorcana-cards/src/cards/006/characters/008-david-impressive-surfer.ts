@@ -4,10 +4,10 @@ export const davidImpressiveSurfer: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "lore",
         modifier: 2,
+        stat: "lore",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "mrs-1",
       text: "SHOWING OFF While you have a character named Nani in play, this character gets +2 {L}.",

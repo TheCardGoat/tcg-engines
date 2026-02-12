@@ -21,10 +21,7 @@ import type { CardId, GameMoveDefinition, MoveContext } from "@tcg/core";
 import { isCardInZone } from "@tcg/core";
 import type { Draft } from "immer";
 import { enqueueBatchEffects } from "../../../effects/effect-stack";
-import {
-  detectAttackTriggers,
-  orderTriggeredEffects,
-} from "../../../effects/trigger-detection";
+import { detectAttackTriggers, orderTriggeredEffects } from "../../../effects/trigger-detection";
 import type { GundamGameState } from "../../../types";
 
 /**
@@ -72,22 +69,32 @@ export const attackMove: GameMoveDefinition<GundamGameState> = {
     const { playerId } = context;
 
     // Must be in main phase
-    if (state.phase !== "main") return [];
+    if (state.phase !== "main") {
+      return [];
+    }
 
     // Must be current player
-    if (state.currentPlayer !== playerId) return [];
+    if (state.currentPlayer !== playerId) {
+      return [];
+    }
 
     const options = [];
     const battleArea = state.zones.battleArea[playerId];
 
-    if (!battleArea) return [];
+    if (!battleArea) {
+      return [];
+    }
 
     // Get opponent
     const opponentId = state.players.find((p) => p !== playerId);
-    if (!opponentId) return [];
+    if (!opponentId) {
+      return [];
+    }
 
     const opponentBattleArea = state.zones.battleArea[opponentId];
-    if (!opponentBattleArea) return [];
+    if (!opponentBattleArea) {
+      return [];
+    }
 
     // For each active unit in player's battle area
     for (const attackerId of battleArea.cards) {
@@ -95,7 +102,9 @@ export const attackMove: GameMoveDefinition<GundamGameState> = {
       const hasAttacked = state.gundam.attackedThisTurn.includes(attackerId);
 
       // Skip if unit is rested or has already attacked
-      if (position !== "active" || hasAttacked) continue;
+      if (position !== "active" || hasAttacked) {
+        continue;
+      }
 
       // Can attack each opponent unit
       for (const targetId of opponentBattleArea.cards) {
@@ -121,10 +130,14 @@ export const attackMove: GameMoveDefinition<GundamGameState> = {
     const { playerId } = context;
 
     // Must be in main phase
-    if (state.phase !== "main") return false;
+    if (state.phase !== "main") {
+      return false;
+    }
 
     // Must be current player
-    if (state.currentPlayer !== playerId) return false;
+    if (state.currentPlayer !== playerId) {
+      return false;
+    }
 
     // Get and validate attacker ID
     let attackerId: CardId;
@@ -136,23 +149,30 @@ export const attackMove: GameMoveDefinition<GundamGameState> = {
 
     // Attacker must be in player's battle area
     const battleArea = state.zones.battleArea[playerId];
-    if (!(battleArea && isCardInZone(battleArea, attackerId))) return false;
+    if (!(battleArea && isCardInZone(battleArea, attackerId))) {
+      return false;
+    }
 
     // Attacker must be active (not rested)
     const position = state.gundam.cardPositions[attackerId];
-    if (position !== "active") return false;
+    if (position !== "active") {
+      return false;
+    }
 
     // Check if unit has already attacked this turn
-    const hasAttackedThisTurn =
-      state.gundam.attackedThisTurn.includes(attackerId);
-    if (hasAttackedThisTurn) return false;
+    const hasAttackedThisTurn = state.gundam.attackedThisTurn.includes(attackerId);
+    if (hasAttackedThisTurn) {
+      return false;
+    }
 
     // Validate target if specified
     const targetId = getTargetId(context);
     if (targetId !== undefined) {
       // Target must be in opponent's battle area
       const opponentId = state.players.find((p) => p !== playerId);
-      if (!opponentId) return false;
+      if (!opponentId) {
+        return false;
+      }
 
       const opponentBattleArea = state.zones.battleArea[opponentId];
       if (!(opponentBattleArea && isCardInZone(opponentBattleArea, targetId))) {
@@ -184,9 +204,7 @@ export const attackMove: GameMoveDefinition<GundamGameState> = {
     // Validate attacker is active
     const position = draft.gundam.cardPositions[attackerId];
     if (position !== "active") {
-      throw new Error(
-        `Attacker ${attackerId} is not active (currently ${position})`,
-      );
+      throw new Error(`Attacker ${attackerId} is not active (currently ${position})`);
     }
 
     // Rest (exhaust) the attacking unit
@@ -198,26 +216,14 @@ export const attackMove: GameMoveDefinition<GundamGameState> = {
     }
 
     // Detect and enqueue 【Attack】 triggered effects
-    const triggerResult = detectAttackTriggers(
-      draft,
-      attackerId,
-      targetId,
-      playerId,
-    );
+    const triggerResult = detectAttackTriggers(draft, attackerId, targetId, playerId);
 
     if (triggerResult.hasTriggers) {
       // Order effects: active player's effects first
-      const orderResult = orderTriggeredEffects(
-        triggerResult.effects,
-        draft.currentPlayer,
-      );
+      const orderResult = orderTriggeredEffects(triggerResult.effects, draft.currentPlayer);
 
       // Enqueue effects in the determined order
-      enqueueBatchEffects(
-        draft,
-        [...triggerResult.effects],
-        [...orderResult.order],
-      );
+      enqueueBatchEffects(draft, [...triggerResult.effects], [...orderResult.order]);
 
       console.log(
         `[ATTACK] Detected ${triggerResult.effects.length} attack triggers, enqueued in order: ${orderResult.order.join(", ")}`,
@@ -250,10 +256,10 @@ export const attackMove: GameMoveDefinition<GundamGameState> = {
   },
 
   metadata: {
-    category: "combat",
-    tags: ["core", "main-phase-action"],
-    description: "Attack with a unit",
-    canBeUndone: false,
     affectsZones: ["battleArea"],
+    canBeUndone: false,
+    category: "combat",
+    description: "Attack with a unit",
+    tags: ["core", "main-phase-action"],
   },
 };

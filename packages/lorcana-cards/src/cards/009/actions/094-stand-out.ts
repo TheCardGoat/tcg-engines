@@ -4,26 +4,26 @@ export const standOut: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "modify-stat",
-            stat: "strength",
             modifier: 3,
+            stat: "strength",
             target: {
-              selector: "chosen",
+              cardTypes: ["character"],
               count: 1,
               owner: "any",
+              selector: "chosen",
               zones: ["play"],
-              cardTypes: ["character"],
             },
+            type: "modify-stat",
           },
           {
-            type: "gain-keyword",
             keyword: "Evasive",
             target: "SELF",
+            type: "gain-keyword",
           },
         ],
+        type: "sequence",
       },
       id: "1gf-1",
       text: "Chosen character gets +3 {S} and gains Evasive until the start of your next turn.",

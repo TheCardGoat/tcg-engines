@@ -4,9 +4,9 @@ export const faZhouMulansFather: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "restriction",
         restriction: "cant-challenge",
         target: "SELF",
+        type: "restriction",
       },
       id: "gc0-1",
       name: "WAR INJURY",
@@ -16,10 +16,10 @@ export const faZhouMulansFather: CharacterCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "restriction",
+        duration: "this-turn",
         restriction: "cant-quest",
         target: "SELF",
-        duration: "this-turn",
+        type: "restriction",
       },
       id: "gc0-2",
       text: "HEAD OF THE HOUSEHOLD {E} — Ready chosen character named Mulan. She can't quest for the rest of this turn.",

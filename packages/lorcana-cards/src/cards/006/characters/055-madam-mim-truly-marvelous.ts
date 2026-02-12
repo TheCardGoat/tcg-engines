@@ -4,8 +4,8 @@ export const madamMimTrulyMarvelous: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-lore",
         amount: 1,
+        type: "gain-lore",
       },
       id: "182-1",
       text: "OH, BAT GIZZARDS 2 {I}, Choose and discard a card - Gain 1 lore.",

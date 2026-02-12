@@ -17,9 +17,7 @@ import { parseAbilityText } from "../index";
 
 describe("Static Ability Patterns - Restrictions", () => {
   it("should parse 'can't be challenged' restriction", () => {
-    const result = parseAbilityText(
-      "HIDDEN AWAY This character can't be challenged.",
-    );
+    const result = parseAbilityText("HIDDEN AWAY This character can't be challenged.");
 
     expect(result.success).toBe(true);
     const staticAbility = result.ability?.ability as any;
@@ -31,9 +29,7 @@ describe("Static Ability Patterns - Restrictions", () => {
   });
 
   it("should parse 'cannot challenge' restriction", () => {
-    const result = parseAbilityText(
-      "WAR WOUND This character cannot challenge.",
-    );
+    const result = parseAbilityText("WAR WOUND This character cannot challenge.");
 
     expect(result.success).toBe(true);
     const staticAbility = result.ability?.ability as any;
@@ -155,9 +151,7 @@ describe("Static Ability Patterns - Stat Modifiers", () => {
 
 describe("Static Ability Patterns - Location Effects", () => {
   it("should parse 'Characters gain Resist +{d} while here'", () => {
-    const result = parseAbilityText(
-      "ISOLATED Characters gain Resist +{d} while here.",
-    );
+    const result = parseAbilityText("ISOLATED Characters gain Resist +{d} while here.");
 
     expect(result.success).toBe(true);
     const staticAbility = result.ability?.ability as any;
@@ -207,9 +201,7 @@ describe("Static Ability Patterns - Location Effects", () => {
 
 describe("Static Ability Patterns - Special Ability Grants", () => {
   it("should parse 'can challenge ready characters'", () => {
-    const result = parseAbilityText(
-      "This character can challenge ready characters.",
-    );
+    const result = parseAbilityText("This character can challenge ready characters.");
 
     expect(result.success).toBe(true);
     const staticAbility = result.ability?.ability as any;

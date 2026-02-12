@@ -10,10 +10,10 @@ export const peterPanNeverLandHero: CharacterCard = {
     },
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: 2,
+        stat: "strength",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "h1y-2",
       text: "OVER HERE, TINK While you have a character named Tinker Bell in play, this character gets +2 {S}.",

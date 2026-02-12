@@ -5,23 +5,23 @@ export const miracleCandle: ItemCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you have 3 or more characters in play",
+          type: "if",
         },
         then: {
-          type: "remove-damage",
           amount: 2,
-          upTo: true,
           target: {
-            selector: "chosen",
+            cardTypes: ["location"],
             count: 1,
             owner: "any",
+            selector: "chosen",
             zones: ["play"],
-            cardTypes: ["location"],
           },
+          type: "remove-damage",
+          upTo: true,
         },
+        type: "conditional",
       },
       id: "1cb-1",
       text: "ABUELA'S GIFT Banish this item — If you have 3 or more characters in play, gain 2 lore and remove up to 2 damage from chosen location.",

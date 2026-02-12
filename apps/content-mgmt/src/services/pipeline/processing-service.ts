@@ -20,10 +20,10 @@ import type {
 } from "../../types/ingestion-pipeline";
 import type { AIProvider } from "./preprocessing-service";
 import {
-  formatTranscriptForPrompt,
   SUMMARY_FORMATS,
   SUMMARY_TYPES,
   SUPADATA_PROCESSING_PROMPTS,
+  formatTranscriptForPrompt,
 } from "./prompts";
 
 /**
@@ -93,10 +93,7 @@ export class ProcessingService {
         return this.createResultFromCache(contentId, cached);
       }
       if (cached && cached.status === "blocked") {
-        return this.createBlockedResult(
-          contentId,
-          cached.errorMessage ?? "Content is blocked",
-        );
+        return this.createBlockedResult(contentId, cached.errorMessage ?? "Content is blocked");
       }
     }
 
@@ -122,29 +119,22 @@ export class ProcessingService {
       await this.storeInCache(contentId, result, provider, modelId);
       return result;
     } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : "Processing failed";
+      const errorMessage = error instanceof Error ? error.message : "Processing failed";
       const shouldBlock = this.shouldBlockOnError(error);
 
       // Store failed result
-      await this.storeFailedInCache(
-        contentId,
-        provider,
-        modelId,
-        errorMessage,
-        shouldBlock,
-      );
+      await this.storeFailedInCache(contentId, provider, modelId, errorMessage, shouldBlock);
 
       return {
-        contentId,
-        success: false,
         blocked: shouldBlock,
-        errorMessage,
-        errorCode: shouldBlock ? "PROCESSING_BLOCKED" : "PROCESSING_FAILED",
-        overview: this.createEmptyOverview(),
+        contentId,
         enhancedSummaries: [],
-        provider,
+        errorCode: shouldBlock ? "PROCESSING_BLOCKED" : "PROCESSING_FAILED",
+        errorMessage,
         modelId,
+        overview: this.createEmptyOverview(),
+        provider,
+        success: false,
       };
     }
   }
@@ -167,8 +157,8 @@ export class ProcessingService {
     // Format data for prompts
     const formattedTranscript = formatTranscriptForPrompt(
       transcript.split("\n").map((text, i) => ({
-        text,
         offsetMs: i * 1000,
+        text,
       })),
     );
 
@@ -185,13 +175,7 @@ export class ProcessingService {
     // Generate all summaries in parallel (9 calls)
     const [overview, ...enhancedResults] = await Promise.all([
       // 1. Overview summary
-      this.generateOverview(
-        prompts.overview,
-        title,
-        formattedTranscript,
-        entitiesStr,
-        themesStr,
-      ),
+      this.generateOverview(prompts.overview, title, formattedTranscript, entitiesStr, themesStr),
       // 2-9. Enhanced summaries (4 types × 2 formats)
       ...this.generateEnhancedSummaryPromises(
         prompts,
@@ -203,13 +187,13 @@ export class ProcessingService {
     ]);
 
     return {
-      contentId,
-      success: true,
       blocked: false,
-      overview,
+      contentId,
       enhancedSummaries: enhancedResults,
-      provider,
       modelId,
+      overview,
+      provider,
+      success: true,
     };
   }
 
@@ -236,12 +220,12 @@ export class ProcessingService {
     const result = await this.aiProvider.generateJson<OverviewSummary>(prompt);
 
     return {
-      logline: result.logline ?? "",
-      fullOverview: result.fullOverview ?? "",
-      shortOverview: result.shortOverview ?? "",
-      clickbaitRating: result.clickbaitRating ?? { score: 1, explanation: "" },
-      mainThemes: result.mainThemes ?? [],
+      clickbaitRating: result.clickbaitRating ?? { explanation: "", score: 1 },
       contentCategory: result.contentCategory ?? "other",
+      fullOverview: result.fullOverview ?? "",
+      logline: result.logline ?? "",
+      mainThemes: result.mainThemes ?? [],
+      shortOverview: result.shortOverview ?? "",
     };
   }
 
@@ -290,10 +274,10 @@ export class ProcessingService {
   ): Promise<EnhancedSummary> {
     if (!this.aiProvider) {
       return {
-        summaryType,
+        detailed: "",
         format,
         short: "",
-        detailed: "",
+        summaryType,
       };
     }
 
@@ -317,19 +301,17 @@ export class ProcessingService {
     }
 
     return {
-      summaryType,
+      detailed,
       format,
       short: result.short ?? "",
-      detailed,
+      summaryType,
     };
   }
 
   /**
    * Get prompts for source type
    */
-  private getPromptsForSourceType(
-    sourceType: string,
-  ): typeof SUPADATA_PROCESSING_PROMPTS {
+  private getPromptsForSourceType(sourceType: string): typeof SUPADATA_PROCESSING_PROMPTS {
     // Currently only Supadata prompts are implemented
     return SUPADATA_PROCESSING_PROMPTS;
   }
@@ -339,12 +321,12 @@ export class ProcessingService {
    */
   private createEmptyOverview(): OverviewSummary {
     return {
-      logline: "",
-      fullOverview: "",
-      shortOverview: "",
-      clickbaitRating: { score: 1, explanation: "" },
-      mainThemes: [],
+      clickbaitRating: { explanation: "", score: 1 },
       contentCategory: "other",
+      fullOverview: "",
+      logline: "",
+      mainThemes: [],
+      shortOverview: "",
     };
   }
 
@@ -361,22 +343,22 @@ export class ProcessingService {
       .values({
         contentId,
         contentJson: {
-          overview: this.createEmptyOverview(),
           enhancedSummaries: [],
+          overview: this.createEmptyOverview(),
         },
-        status: "processing",
+        modelId,
         processingStartedAt: new Date(),
         provider,
-        modelId,
+        status: "processing",
       })
       .onConflictDoUpdate({
-        target: processingCache.contentId,
         set: {
-          status: "processing",
+          modelId,
           processingStartedAt: new Date(),
           provider,
-          modelId,
+          status: "processing",
         },
+        target: processingCache.contentId,
       });
   }
 
@@ -401,11 +383,11 @@ export class ProcessingService {
     }
 
     return {
-      status: cached.status as ProcessingStatus,
       data: cached.contentJson as ProcessingCacheData,
-      provider: cached.provider,
-      modelId: cached.modelId,
       errorMessage: cached.errorMessage ?? undefined,
+      modelId: cached.modelId,
+      provider: cached.provider,
+      status: cached.status as ProcessingStatus,
     };
   }
 
@@ -419,25 +401,25 @@ export class ProcessingService {
     modelId: string,
   ): Promise<void> {
     const cacheData: ProcessingCacheData = {
-      overview: result.overview,
       enhancedSummaries: result.enhancedSummaries,
+      overview: result.overview,
     };
 
     const status: ProcessingStatus = result.blocked
       ? "blocked"
-      : result.success
+      : (result.success
         ? "completed"
-        : "failed";
+        : "failed");
 
     await this.db
       .update(processingCache)
       .set({
         contentJson: cacheData,
-        status,
-        provider,
-        modelId,
-        errorMessage: result.errorMessage,
         errorCode: result.errorCode,
+        errorMessage: result.errorMessage,
+        modelId,
+        provider,
+        status,
       })
       .where(eq(processingCache.contentId, contentId));
   }
@@ -457,11 +439,11 @@ export class ProcessingService {
     await this.db
       .update(processingCache)
       .set({
-        status,
-        provider,
-        modelId,
-        errorMessage,
         errorCode: blocked ? "PROCESSING_BLOCKED" : "PROCESSING_FAILED",
+        errorMessage,
+        modelId,
+        provider,
+        status,
       })
       .where(eq(processingCache.contentId, contentId));
   }
@@ -480,33 +462,30 @@ export class ProcessingService {
     const data = cached.data!;
 
     return {
-      contentId,
-      success: true,
       blocked: false,
-      overview: data.overview,
+      contentId,
       enhancedSummaries: data.enhancedSummaries,
-      provider: cached.provider,
       modelId: cached.modelId,
+      overview: data.overview,
+      provider: cached.provider,
+      success: true,
     };
   }
 
   /**
    * Create a blocked result
    */
-  private createBlockedResult(
-    contentId: string,
-    errorMessage: string,
-  ): ProcessingResult {
+  private createBlockedResult(contentId: string, errorMessage: string): ProcessingResult {
     return {
-      contentId,
-      success: false,
       blocked: true,
-      errorMessage,
-      errorCode: "PROCESSING_BLOCKED",
-      overview: this.createEmptyOverview(),
+      contentId,
       enhancedSummaries: [],
-      provider: this.defaultProvider,
+      errorCode: "PROCESSING_BLOCKED",
+      errorMessage,
       modelId: this.defaultModelId,
+      overview: this.createEmptyOverview(),
+      provider: this.defaultProvider,
+      success: false,
     };
   }
 
@@ -525,8 +504,6 @@ export class ProcessingService {
 /**
  * Create a processing service instance
  */
-export function createProcessingService(
-  db: PostgresJsDatabase<typeof schema>,
-): ProcessingService {
+export function createProcessingService(db: PostgresJsDatabase<typeof schema>): ProcessingService {
   return new ProcessingService(db);
 }

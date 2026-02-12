@@ -224,9 +224,7 @@ describe("Action Effects - Task Group 2.5", () => {
 
   describe("2.5.6: Return X from discard to hand", () => {
     it("should parse 'Return a character from your discard to your hand'", () => {
-      const effect = parseEffect(
-        "Return a character from your discard to your hand",
-      );
+      const effect = parseEffect("Return a character from your discard to your hand");
 
       // Parser interprets "a character" as a target specification
       expect(effect).toMatchObject({
@@ -240,9 +238,7 @@ describe("Action Effects - Task Group 2.5", () => {
     });
 
     it("should parse 'Return an action from your discard to your hand'", () => {
-      const effect = parseEffect(
-        "Return an action from your discard to your hand",
-      );
+      const effect = parseEffect("Return an action from your discard to your hand");
 
       // Parser interprets "an action" as target - but "action" isn't a valid target cardType
       // So it falls back to CHOSEN_CHARACTER
@@ -253,9 +249,7 @@ describe("Action Effects - Task Group 2.5", () => {
     });
 
     it("should parse 'Return an item card from your discard to your hand'", () => {
-      const effect = parseEffect(
-        "Return an item card from your discard to your hand",
-      );
+      const effect = parseEffect("Return an item card from your discard to your hand");
 
       // Parser now has special handling for "from discard" pattern
       expect(effect).toMatchObject({
@@ -266,9 +260,7 @@ describe("Action Effects - Task Group 2.5", () => {
     });
 
     it("should parse 'Return a location from your discard to your hand'", () => {
-      const effect = parseEffect(
-        "Return a location from your discard to your hand",
-      );
+      const effect = parseEffect("Return a location from your discard to your hand");
 
       expect(effect).toMatchObject({
         target: {
@@ -281,9 +273,7 @@ describe("Action Effects - Task Group 2.5", () => {
     });
 
     it("should parse 'Return a song from your discard to your hand'", () => {
-      const effect = parseEffect(
-        "Return a song from your discard to your hand",
-      );
+      const effect = parseEffect("Return a song from your discard to your hand");
 
       // "song" is not a valid cardType, falls back to CHOSEN_CHARACTER
       expect(effect).toMatchObject({
@@ -346,9 +336,7 @@ describe("Action Effects - Task Group 2.5", () => {
     });
 
     it("should parse 'Chosen character gains Challenger +2 this turn'", () => {
-      const effect = parseEffect(
-        "Chosen character gains Challenger +2 this turn",
-      );
+      const effect = parseEffect("Chosen character gains Challenger +2 this turn");
 
       expect(effect).toEqual({
         duration: "this-turn",

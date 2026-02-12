@@ -4,21 +4,21 @@ export const genieSupportiveFriend: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
-        effect: {
-          type: "shuffle-into-deck",
-          target: "SELF",
-          intoDeck: "owner",
-        },
         chooser: "CONTROLLER",
+        effect: {
+          intoDeck: "owner",
+          target: "SELF",
+          type: "shuffle-into-deck",
+        },
+        type: "optional",
       },
       id: "146-1",
       name: "THREE WISHES",
       text: "THREE WISHES Whenever this character quests, you may shuffle this card into your deck to draw 3 cards.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

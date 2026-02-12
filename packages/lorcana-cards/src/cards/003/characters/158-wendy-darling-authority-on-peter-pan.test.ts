@@ -8,9 +8,7 @@ describe("Wendy Darling - Authority on Peter Pan", () => {
       play: [wendyDarlingAuthorityOnPeterPan],
     });
 
-    const cardUnderTest = testEngine.getCardModel(
-      wendyDarlingAuthorityOnPeterPan,
-    );
+    const cardUnderTest = testEngine.getCardModel(wendyDarlingAuthorityOnPeterPan);
     expect(cardUnderTest.hasWard()).toBe(true);
   });
 
@@ -19,9 +17,7 @@ describe("Wendy Darling - Authority on Peter Pan", () => {
       play: [wendyDarlingAuthorityOnPeterPan],
     });
 
-    const cardUnderTest = testEngine.getCardModel(
-      wendyDarlingAuthorityOnPeterPan,
-    );
+    const cardUnderTest = testEngine.getCardModel(wendyDarlingAuthorityOnPeterPan);
     expect(cardUnderTest.hasSupport()).toBe(true);
   });
 });

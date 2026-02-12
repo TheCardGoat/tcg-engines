@@ -10,26 +10,14 @@ import type {
   ZoneId as CoreZoneId,
   GameMoveDefinitions,
 } from "@tcg/core";
-import type {
-  RiftboundCardMeta,
-  RiftboundGameState,
-  RiftboundMoves,
-} from "../../types";
-import {
-  getBattlefieldZoneId,
-  getFacedownZoneId,
-} from "../../zones/zone-configs";
+import type { RiftboundCardMeta, RiftboundGameState, RiftboundMoves } from "../../types";
+import { getBattlefieldZoneId, getFacedownZoneId } from "../../zones/zone-configs";
 
 /**
  * Card play move definitions
  */
 export const cardPlayMoves: Partial<
-  GameMoveDefinitions<
-    RiftboundGameState,
-    RiftboundMoves,
-    RiftboundCardMeta,
-    unknown
-  >
+  GameMoveDefinitions<RiftboundGameState, RiftboundMoves, RiftboundCardMeta, unknown>
 > = {
   /**
    * Play a unit to Base or Battlefield
@@ -141,9 +129,7 @@ export const cardPlayMoves: Partial<
       const { zones, counters, cards } = context;
 
       // Get the card's hidden location
-      const meta = cards.getCardMeta(
-        cardId as CoreCardId,
-      ) as Partial<RiftboundCardMeta>;
+      const meta = cards.getCardMeta(cardId as CoreCardId) as Partial<RiftboundCardMeta>;
       const battlefieldId = meta.hiddenAt;
 
       if (battlefieldId) {

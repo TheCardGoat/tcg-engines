@@ -4,9 +4,9 @@ export const drCalicoGreeneyedMan: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Resist",
         target: "SELF",
+        type: "gain-keyword",
         value: 2,
       },
       id: "uk6-1",

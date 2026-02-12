@@ -4,9 +4,9 @@ export const pennyTheOrphanCleverChild: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Ward",
         target: "SELF",
+        type: "gain-keyword",
       },
       id: "szl-1",
       text: "OUR BOTTLE WORKED! While you have a Hero character in play, this character gains Ward.",

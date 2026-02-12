@@ -10,22 +10,22 @@ export const minnieMouseMusketeerChampion: CharacterCard = {
     },
     {
       effect: {
-        type: "banish",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "opponent",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "banish",
       },
       id: "1kb-2",
       name: "DRAMATIC ENTRANCE",
       text: "DRAMATIC ENTRANCE When you play this character, banish chosen opposing character with 5 {S} or more.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

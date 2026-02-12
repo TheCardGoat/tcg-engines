@@ -4,9 +4,9 @@ export const stampede: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "deal-damage",
         amount: 2,
         target: "CHOSEN_CHARACTER",
+        type: "deal-damage",
       },
       id: "1fs-1",
       text: "Deal 2 damage to chosen damaged character.",

@@ -10,17 +10,17 @@ export const belleOfTheBall: CharacterCard = {
     },
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Ward",
         target: "YOUR_CHARACTERS",
+        type: "gain-keyword",
       },
       id: "1j3-2",
       name: "USHERED INTO THE PARTY",
       text: "USHERED INTO THE PARTY When you play this character, your other characters gain Ward until the start of your next turn.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

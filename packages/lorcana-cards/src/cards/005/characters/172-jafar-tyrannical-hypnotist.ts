@@ -11,9 +11,9 @@ export const jafarTyrannicalHypnotist: CharacterCard = {
     },
     {
       effect: {
-        type: "restriction",
         restriction: "cant-challenge",
         target: "SELF",
+        type: "restriction",
       },
       id: "xg5-2",
       text: "INTIMIDATING GAZE Opposing characters with cost 4 or less can't challenge.",

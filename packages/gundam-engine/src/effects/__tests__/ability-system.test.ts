@@ -11,6 +11,10 @@ import type { GundamGameState } from "../../types";
 import {
   type ActivatedAbility,
   type CardAbility,
+  type StaticAbility,
+  type TriggerEvent,
+  type TriggerType,
+  type TriggeredAbility,
   canActivateAbility,
   clearAbilities,
   createActivatedAbility,
@@ -22,10 +26,6 @@ import {
   getActivatableAbilities,
   getStaticAbilities,
   registerAbilities,
-  type StaticAbility,
-  type TriggerEvent,
-  type TriggeredAbility,
-  type TriggerType,
 } from "../ability-system";
 import { damage, draw, modifyAP, rest, sequence } from "../effect-types";
 
@@ -56,9 +56,7 @@ describe("Ability Registry", () => {
 
   it("should clear all abilities", () => {
     registerAbilities("card1", [createTriggeredAbility("ON_DEPLOY", draw(1))]);
-    registerAbilities("card2", [
-      createTriggeredAbility("ON_ATTACK", damage(2, "chosen-unit")),
-    ]);
+    registerAbilities("card2", [createTriggeredAbility("ON_ATTACK", damage(2, "chosen-unit"))]);
 
     clearAbilities();
 
@@ -76,16 +74,16 @@ function createZone(
   ordered = false,
 ): GundamGameState["zones"][keyof GundamGameState["zones"]][PlayerId] {
   return {
+    cards,
     config: {
+      faceDown: visibility === "secret",
       id: createZoneId(`${zoneName}-${owner}`),
+      maxSize: undefined,
       name: zoneName,
-      visibility,
       ordered,
       owner,
-      maxSize: undefined,
-      faceDown: visibility === "secret",
+      visibility,
     },
-    cards,
   };
 }
 
@@ -102,67 +100,61 @@ describe("Triggered Abilities", () => {
     card2 = "card2" as CardId;
 
     mockState = {
-      players: [player1, player2],
       currentPlayer: player1,
-      turn: 1,
+      gundam: {
+        activeResources: { [player1]: 3, [player2]: 2 },
+        attackedThisTurn: [],
+        cardDamage: {},
+        cardPositions: { [card1]: "active", [card2]: "active" },
+        effectStack: { nextInstanceId: 0, stack: [] },
+        hasPlayedResourceThisTurn: { [player1]: false, [player2]: false },
+        revealedCards: [],
+        temporaryModifiers: {},
+      },
       phase: "main",
+      players: [player1, player2],
+      turn: 1,
       zones: {
+        baseSection: {
+          [player1]: createZone(player1, "baseSection", [], "public"),
+          [player2]: createZone(player2, "baseSection", [], "public"),
+        },
+        battleArea: {
+          [player1]: createZone(player1, "battleArea", [card1, card2], "public", true),
+          [player2]: createZone(player2, "battleArea", [], "public", true),
+        },
         deck: {
           [player1]: createZone(player1, "deck", [], "secret", true),
           [player2]: createZone(player2, "deck", [], "secret", true),
-        },
-        resourceDeck: {
-          [player1]: createZone(player1, "resourceDeck", [], "secret", true),
-          [player2]: createZone(player2, "resourceDeck", [], "secret", true),
         },
         hand: {
           [player1]: createZone(player1, "hand", [], "private"),
           [player2]: createZone(player2, "hand", [], "private"),
         },
-        battleArea: {
-          [player1]: createZone(
-            player1,
-            "battleArea",
-            [card1, card2],
-            "public",
-            true,
-          ),
-          [player2]: createZone(player2, "battleArea", [], "public", true),
-        },
-        shieldSection: {
-          [player1]: createZone(player1, "shieldSection", [], "secret", true),
-          [player2]: createZone(player2, "shieldSection", [], "secret", true),
-        },
-        baseSection: {
-          [player1]: createZone(player1, "baseSection", [], "public"),
-          [player2]: createZone(player2, "baseSection", [], "public"),
-        },
-        resourceArea: {
-          [player1]: createZone(player1, "resourceArea", [], "public"),
-          [player2]: createZone(player2, "resourceArea", [], "public"),
-        },
-        trash: {
-          [player1]: createZone(player1, "trash", [], "public", true),
-          [player2]: createZone(player2, "trash", [], "public", true),
+        limbo: {
+          [player1]: createZone(player1, "limbo", [], "public"),
+          [player2]: createZone(player2, "limbo", [], "public"),
         },
         removal: {
           [player1]: createZone(player1, "removal", [], "public"),
           [player2]: createZone(player2, "removal", [], "public"),
         },
-        limbo: {
-          [player1]: createZone(player1, "limbo", [], "public"),
-          [player2]: createZone(player2, "limbo", [], "public"),
+        resourceArea: {
+          [player1]: createZone(player1, "resourceArea", [], "public"),
+          [player2]: createZone(player2, "resourceArea", [], "public"),
         },
-      },
-      gundam: {
-        activeResources: { [player1]: 3, [player2]: 2 },
-        cardPositions: { [card1]: "active", [card2]: "active" },
-        attackedThisTurn: [],
-        hasPlayedResourceThisTurn: { [player1]: false, [player2]: false },
-        effectStack: { stack: [], nextInstanceId: 0 },
-        temporaryModifiers: {},
-        cardDamage: {},
-        revealedCards: [],
+        resourceDeck: {
+          [player1]: createZone(player1, "resourceDeck", [], "secret", true),
+          [player2]: createZone(player2, "resourceDeck", [], "secret", true),
+        },
+        shieldSection: {
+          [player1]: createZone(player1, "shieldSection", [], "secret", true),
+          [player2]: createZone(player2, "shieldSection", [], "secret", true),
+        },
+        trash: {
+          [player1]: createZone(player1, "trash", [], "public", true),
+          [player2]: createZone(player2, "trash", [], "public", true),
+        },
       },
     };
 
@@ -183,9 +175,9 @@ describe("Triggered Abilities", () => {
 
   it("should find matching abilities for trigger event", () => {
     const event: TriggerEvent = {
-      type: "ON_DEPLOY",
       cardId: card1,
       player: player1,
+      type: "ON_DEPLOY",
     };
 
     const matches = findMatchingAbilities(event, mockState);
@@ -197,9 +189,9 @@ describe("Triggered Abilities", () => {
 
   it("should find only ON_ATTACK abilities", () => {
     const event: TriggerEvent = {
-      type: "ON_ATTACK",
       cardId: card1,
       player: player1,
+      type: "ON_ATTACK",
     };
 
     const matches = findMatchingAbilities(event, mockState);
@@ -211,9 +203,9 @@ describe("Triggered Abilities", () => {
 
   it("should return empty for no matching abilities", () => {
     const event: TriggerEvent = {
-      type: "ON_DESTROY",
       cardId: card1,
       player: player1,
+      type: "ON_DESTROY",
     };
 
     const matches = findMatchingAbilities(event, mockState);
@@ -223,9 +215,7 @@ describe("Triggered Abilities", () => {
 
   it("should execute triggered ability", () => {
     const abilities = getAbilities(card1);
-    const deployAbility = abilities.find(
-      (a) => (a as TriggeredAbility).trigger === "ON_DEPLOY",
-    );
+    const deployAbility = abilities.find((a) => (a as TriggeredAbility).trigger === "ON_DEPLOY");
 
     expect(deployAbility).toBeDefined();
 
@@ -252,71 +242,69 @@ describe("Activated Abilities", () => {
     card1 = "card1" as CardId;
 
     mockState = {
-      players: [player1, player2],
       currentPlayer: player1,
-      turn: 1,
+      gundam: {
+        activeResources: { [player1]: 3, [player2]: 2 },
+        attackedThisTurn: [],
+        cardDamage: {},
+        cardPositions: { [card1]: "active" },
+        effectStack: { nextInstanceId: 0, stack: [] },
+        hasPlayedResourceThisTurn: { [player1]: false, [player2]: false },
+        revealedCards: [],
+        temporaryModifiers: {},
+      },
       phase: "main",
+      players: [player1, player2],
+      turn: 1,
       zones: {
-        deck: {
-          [player1]: createZone(player1, "deck", [], "secret", true),
-          [player2]: createZone(player2, "deck", [], "secret", true),
-        },
-        resourceDeck: {
-          [player1]: createZone(player1, "resourceDeck", [], "secret", true),
-          [player2]: createZone(player2, "resourceDeck", [], "secret", true),
-        },
-        hand: {
-          [player1]: createZone(player1, "hand", [], "private"),
-          [player2]: createZone(player2, "hand", [], "private"),
+        baseSection: {
+          [player1]: createZone(player1, "baseSection", [], "public"),
+          [player2]: createZone(player2, "baseSection", [], "public"),
         },
         battleArea: {
           [player1]: createZone(player1, "battleArea", [card1], "public", true),
           [player2]: createZone(player2, "battleArea", [], "public", true),
         },
-        shieldSection: {
-          [player1]: createZone(player1, "shieldSection", [], "secret", true),
-          [player2]: createZone(player2, "shieldSection", [], "secret", true),
+        deck: {
+          [player1]: createZone(player1, "deck", [], "secret", true),
+          [player2]: createZone(player2, "deck", [], "secret", true),
         },
-        baseSection: {
-          [player1]: createZone(player1, "baseSection", [], "public"),
-          [player2]: createZone(player2, "baseSection", [], "public"),
-        },
-        resourceArea: {
-          [player1]: createZone(player1, "resourceArea", [], "public"),
-          [player2]: createZone(player2, "resourceArea", [], "public"),
-        },
-        trash: {
-          [player1]: createZone(player1, "trash", [], "public", true),
-          [player2]: createZone(player2, "trash", [], "public", true),
-        },
-        removal: {
-          [player1]: createZone(player1, "removal", [], "public"),
-          [player2]: createZone(player2, "removal", [], "public"),
+        hand: {
+          [player1]: createZone(player1, "hand", [], "private"),
+          [player2]: createZone(player2, "hand", [], "private"),
         },
         limbo: {
           [player1]: createZone(player1, "limbo", [], "public"),
           [player2]: createZone(player2, "limbo", [], "public"),
         },
-      },
-      gundam: {
-        activeResources: { [player1]: 3, [player2]: 2 },
-        cardPositions: { [card1]: "active" },
-        attackedThisTurn: [],
-        hasPlayedResourceThisTurn: { [player1]: false, [player2]: false },
-        effectStack: { stack: [], nextInstanceId: 0 },
-        temporaryModifiers: {},
-        cardDamage: {},
-        revealedCards: [],
+        removal: {
+          [player1]: createZone(player1, "removal", [], "public"),
+          [player2]: createZone(player2, "removal", [], "public"),
+        },
+        resourceArea: {
+          [player1]: createZone(player1, "resourceArea", [], "public"),
+          [player2]: createZone(player2, "resourceArea", [], "public"),
+        },
+        resourceDeck: {
+          [player1]: createZone(player1, "resourceDeck", [], "secret", true),
+          [player2]: createZone(player2, "resourceDeck", [], "secret", true),
+        },
+        shieldSection: {
+          [player1]: createZone(player1, "shieldSection", [], "secret", true),
+          [player2]: createZone(player2, "shieldSection", [], "secret", true),
+        },
+        trash: {
+          [player1]: createZone(player1, "trash", [], "public", true),
+          [player2]: createZone(player2, "trash", [], "public", true),
+        },
       },
     };
 
     // Register abilities
     registerAbilities(card1, [
-      createActivatedAbility(
-        { payResources: 2, rest: true },
-        damage(3, "chosen-unit"),
-        { name: "Fire Beam" },
-      ),
+      createActivatedAbility({ payResources: 2, rest: true }, damage(3, "chosen-unit"), {
+        name: "Fire Beam",
+      }),
     ]);
   });
 
@@ -343,9 +331,7 @@ describe("Activated Abilities", () => {
     const abilities = getAbilities(card1);
     const ability = abilities[0] as ActivatedAbility;
 
-    expect(canActivateAbility(card1, ability, restedState, player1)).toBe(
-      false,
-    );
+    expect(canActivateAbility(card1, ability, restedState, player1)).toBe(false);
   });
 
   it("should not activate if not enough resources", () => {
@@ -385,82 +371,76 @@ describe("Static Abilities", () => {
     card2 = "card2" as CardId;
 
     mockState = {
-      players: [player1, player2],
       currentPlayer: player1,
-      turn: 1,
+      gundam: {
+        activeResources: { [player1]: 3, [player2]: 2 },
+        attackedThisTurn: [],
+        cardDamage: {},
+        cardPositions: { [card1]: "active", [card2]: "active" },
+        effectStack: { nextInstanceId: 0, stack: [] },
+        hasPlayedResourceThisTurn: { [player1]: false, [player2]: false },
+        revealedCards: [],
+        temporaryModifiers: {},
+      },
       phase: "main",
+      players: [player1, player2],
+      turn: 1,
       zones: {
+        baseSection: {
+          [player1]: createZone(player1, "baseSection", [], "public"),
+          [player2]: createZone(player2, "baseSection", [], "public"),
+        },
+        battleArea: {
+          [player1]: createZone(player1, "battleArea", [card1, card2], "public", true),
+          [player2]: createZone(player2, "battleArea", [], "public", true),
+        },
         deck: {
           [player1]: createZone(player1, "deck", [], "secret", true),
           [player2]: createZone(player2, "deck", [], "secret", true),
-        },
-        resourceDeck: {
-          [player1]: createZone(player1, "resourceDeck", [], "secret", true),
-          [player2]: createZone(player2, "resourceDeck", [], "secret", true),
         },
         hand: {
           [player1]: createZone(player1, "hand", [], "private"),
           [player2]: createZone(player2, "hand", [], "private"),
         },
-        battleArea: {
-          [player1]: createZone(
-            player1,
-            "battleArea",
-            [card1, card2],
-            "public",
-            true,
-          ),
-          [player2]: createZone(player2, "battleArea", [], "public", true),
-        },
-        shieldSection: {
-          [player1]: createZone(player1, "shieldSection", [], "secret", true),
-          [player2]: createZone(player2, "shieldSection", [], "secret", true),
-        },
-        baseSection: {
-          [player1]: createZone(player1, "baseSection", [], "public"),
-          [player2]: createZone(player2, "baseSection", [], "public"),
-        },
-        resourceArea: {
-          [player1]: createZone(player1, "resourceArea", [], "public"),
-          [player2]: createZone(player2, "resourceArea", [], "public"),
-        },
-        trash: {
-          [player1]: createZone(player1, "trash", [], "public", true),
-          [player2]: createZone(player2, "trash", [], "public", true),
+        limbo: {
+          [player1]: createZone(player1, "limbo", [], "public"),
+          [player2]: createZone(player2, "limbo", [], "public"),
         },
         removal: {
           [player1]: createZone(player1, "removal", [], "public"),
           [player2]: createZone(player2, "removal", [], "public"),
         },
-        limbo: {
-          [player1]: createZone(player1, "limbo", [], "public"),
-          [player2]: createZone(player2, "limbo", [], "public"),
+        resourceArea: {
+          [player1]: createZone(player1, "resourceArea", [], "public"),
+          [player2]: createZone(player2, "resourceArea", [], "public"),
         },
-      },
-      gundam: {
-        activeResources: { [player1]: 3, [player2]: 2 },
-        cardPositions: { [card1]: "active", [card2]: "active" },
-        attackedThisTurn: [],
-        hasPlayedResourceThisTurn: { [player1]: false, [player2]: false },
-        effectStack: { stack: [], nextInstanceId: 0 },
-        temporaryModifiers: {},
-        cardDamage: {},
-        revealedCards: [],
+        resourceDeck: {
+          [player1]: createZone(player1, "resourceDeck", [], "secret", true),
+          [player2]: createZone(player2, "resourceDeck", [], "secret", true),
+        },
+        shieldSection: {
+          [player1]: createZone(player1, "shieldSection", [], "secret", true),
+          [player2]: createZone(player2, "shieldSection", [], "secret", true),
+        },
+        trash: {
+          [player1]: createZone(player1, "trash", [], "public", true),
+          [player2]: createZone(player2, "trash", [], "public", true),
+        },
       },
     };
 
     // Register static abilities
     registerAbilities(card1, [
       createStaticAbility(modifyAP(2, "this"), {
-        name: "Boost +2",
         appliesTo: "this",
+        name: "Boost +2",
       }),
     ]);
 
     registerAbilities(card2, [
       createStaticAbility(modifyAP(1, "each-friendly-unit"), {
-        name: "Allies +1",
         appliesTo: "each-friendly-unit",
+        name: "Allies +1",
       }),
     ]);
   });
@@ -481,22 +461,21 @@ describe("Static Abilities", () => {
 describe("Ability Builders", () => {
   it("should create triggered ability", () => {
     const ability = createTriggeredAbility("ON_DEPLOY", draw(1), {
-      name: "Draw on Deploy",
       description: "Draw a card when this unit deploys",
+      name: "Draw on Deploy",
       oncePerTurn: false,
     });
 
     expect(ability.type).toBe("triggered");
     expect(ability.trigger).toBe("ON_DEPLOY");
-    expect(ability.effect).toEqual({ type: "draw", amount: 1 });
+    expect(ability.effect).toEqual({ amount: 1, type: "draw" });
     expect(ability.name).toBe("Draw on Deploy");
     expect(ability.description).toBe("Draw a card when this unit deploys");
     expect(ability.oncePerTurn).toBe(false);
   });
 
   it("should create triggered ability with trigger condition", () => {
-    const condition = (state: GundamGameState, cardId: string) =>
-      state.turn >= 3;
+    const condition = (state: GundamGameState, cardId: string) => state.turn >= 3;
     const ability = createTriggeredAbility("ON_DEPLOY", draw(2), {
       name: "Draw 2 on Deploy after turn 3",
       triggerCondition: condition,
@@ -511,8 +490,8 @@ describe("Ability Builders", () => {
       { payResources: 2, rest: true },
       damage(3, "chosen-unit"),
       {
-        name: "Fire Beam",
         description: "Pay 2 resources and rest: Deal 3 damage to target unit",
+        name: "Fire Beam",
         oncePerTurn: true,
       },
     );
@@ -520,9 +499,9 @@ describe("Ability Builders", () => {
     expect(ability.type).toBe("activated");
     expect(ability.cost).toEqual({ payResources: 2, rest: true });
     expect(ability.effect).toEqual({
-      type: "damage",
       amount: 3,
       target: "chosen-unit",
+      type: "damage",
     });
     expect(ability.name).toBe("Fire Beam");
     expect(ability.oncePerTurn).toBe(true);
@@ -531,13 +510,9 @@ describe("Ability Builders", () => {
   it("should create activated ability with activation condition", () => {
     const condition = (state: GundamGameState, cardId: string) =>
       state.gundam.activeResources[state.currentPlayer] >= 5;
-    const ability = createActivatedAbility(
-      { payResources: 3 },
-      damage(5, "chosen-unit"),
-      {
-        activationCondition: condition,
-      },
-    );
+    const ability = createActivatedAbility({ payResources: 3 }, damage(5, "chosen-unit"), {
+      activationCondition: condition,
+    });
 
     expect(ability.type).toBe("activated");
     expect(ability.activationCondition).toBeDefined();
@@ -545,27 +520,26 @@ describe("Ability Builders", () => {
 
   it("should create static ability", () => {
     const ability = createStaticAbility(modifyAP(2, "each-friendly-unit"), {
-      name: "Commander's Boost",
-      description: "Friendly units get +2 AP",
       appliesTo: "each-friendly-unit",
+      description: "Friendly units get +2 AP",
+      name: "Commander's Boost",
     });
 
     expect(ability.type).toBe("static");
     expect(ability.effect).toEqual({
-      type: "modify-ap",
       amount: 2,
       target: "each-friendly-unit",
+      type: "modify-ap",
     });
     expect(ability.name).toBe("Commander's Boost");
     expect(ability.appliesTo).toBe("each-friendly-unit");
   });
 
   it("should create static ability with condition", () => {
-    const condition = (state: GundamGameState, cardId: string) =>
-      state.turn >= 5;
+    const condition = (state: GundamGameState, cardId: string) => state.turn >= 5;
     const ability = createStaticAbility(modifyAP(3, "this"), {
-      name: "Late Game Boost",
       condition,
+      name: "Late Game Boost",
     });
 
     expect(ability.type).toBe("static");

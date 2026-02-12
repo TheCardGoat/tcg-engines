@@ -13,9 +13,9 @@ export const judyHoppsLeadDetective: CharacterCard = {
     },
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Alert",
         target: "YOUR_CHARACTERS",
+        type: "gain-keyword",
       },
       id: "1c8-2",
       text: "LATERAL THINKING During your turn, your Detective characters gain Alert and Resist +2.",

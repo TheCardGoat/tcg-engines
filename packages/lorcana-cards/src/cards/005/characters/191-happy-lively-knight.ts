@@ -4,9 +4,9 @@ export const happyLivelyKnight: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Evasive",
         target: "SELF",
+        type: "gain-keyword",
       },
       id: "g6u-1",
       text: "BURST OF SPEED During your turn, this character gains Evasive.",

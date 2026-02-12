@@ -15,10 +15,7 @@
 import type { GameMoveDefinition, MoveContext } from "@tcg/core";
 import type { Draft } from "immer";
 import { enqueueBatchEffects } from "../../../effects/effect-stack";
-import {
-  detectEndOfTurnTriggers,
-  orderTriggeredEffects,
-} from "../../../effects/trigger-detection";
+import { detectEndOfTurnTriggers, orderTriggeredEffects } from "../../../effects/trigger-detection";
 import type { GundamGameState } from "../../../types";
 
 /**
@@ -33,18 +30,13 @@ export const handleTurnEndMove: GameMoveDefinition<GundamGameState> = {
    *
    * This move is called internally by game flow.
    */
-  enumerator: () => {
-    // Internal move - not enumerable
-    return [];
-  },
+  enumerator: () => [],
 
   /**
    * Condition: Can execute if:
    * - Game is in valid state
    */
-  condition: (_state: GundamGameState, _context: MoveContext): boolean => {
-    return true;
-  },
+  condition: (_state: GundamGameState, _context: MoveContext): boolean => true,
 
   /**
    * Reducer: Execute turn end logic
@@ -60,17 +52,10 @@ export const handleTurnEndMove: GameMoveDefinition<GundamGameState> = {
 
     if (triggerResult.hasTriggers) {
       // Order effects: active player's effects first
-      const orderResult = orderTriggeredEffects(
-        triggerResult.effects,
-        draft.currentPlayer,
-      );
+      const orderResult = orderTriggeredEffects(triggerResult.effects, draft.currentPlayer);
 
       // Enqueue effects in the determined order
-      enqueueBatchEffects(
-        draft,
-        [...triggerResult.effects],
-        [...orderResult.order],
-      );
+      enqueueBatchEffects(draft, [...triggerResult.effects], [...orderResult.order]);
 
       console.log(
         `[TURN_END] Detected ${triggerResult.effects.length} end of turn triggers, enqueued in order: ${orderResult.order.join(", ")}`,
@@ -79,10 +64,10 @@ export const handleTurnEndMove: GameMoveDefinition<GundamGameState> = {
   },
 
   metadata: {
-    category: "turn-management",
-    tags: ["automatic", "trigger-detection"],
-    description: "Handle turn end and detect triggered effects",
-    canBeUndone: false,
     affectsZones: [],
+    canBeUndone: false,
+    category: "turn-management",
+    description: "Handle turn end and detect triggered effects",
+    tags: ["automatic", "trigger-detection"],
   },
 };

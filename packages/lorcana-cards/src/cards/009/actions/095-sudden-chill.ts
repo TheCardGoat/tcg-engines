@@ -4,10 +4,10 @@ export const suddenChill: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "discard",
         amount: 1,
-        target: "EACH_OPPONENT",
         chosen: true,
+        target: "EACH_OPPONENT",
+        type: "discard",
       },
       id: "1ck-1",
       text: "Each opponent chooses and discards a card.",

@@ -176,7 +176,7 @@ export function createPinoFormatter(level: VerbosityPreset): unknown {
       ignore: "pid,hostname",
       // Customize format based on level
       messageFormat:
-        level === "DEVELOPER" ? "{msg} {context}" : level === "ADVANCED_PLAYER" ? "{msg}" : "{msg}",
+        level === "DEVELOPER" ? "{msg} {context}" : (level === "ADVANCED_PLAYER" ? "{msg}" : "{msg}"),
     },
     target: "pino-pretty",
   };

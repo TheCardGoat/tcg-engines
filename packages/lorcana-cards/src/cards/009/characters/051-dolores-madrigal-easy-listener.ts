@@ -4,24 +4,24 @@ export const doloresMadrigalEasyListener: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "an opponent has an exerted character in play",
+          type: "if",
         },
         then: {
-          type: "draw",
           amount: 1,
           target: "CONTROLLER",
+          type: "draw",
         },
+        type: "conditional",
       },
       id: "n9k-1",
       name: "MAGICAL INFORMANT",
       text: "MAGICAL INFORMANT When you play this character, if an opponent has an exerted character in play, you may draw a card.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

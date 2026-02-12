@@ -5,9 +5,6 @@
 
   // More on how to set up stories at: https://storybook.js.org/docs/writing-stories
   const { Story } = defineMeta({
-    title: "Example/Button",
-    component: Button,
-    tags: ["autodocs"],
     argTypes: {
       backgroundColor: { control: "color" },
       size: {
@@ -18,6 +15,9 @@
     args: {
       onclick: fn(),
     },
+    component: Button,
+    tags: ["autodocs"],
+    title: "Example/Button",
   });
 </script>
 

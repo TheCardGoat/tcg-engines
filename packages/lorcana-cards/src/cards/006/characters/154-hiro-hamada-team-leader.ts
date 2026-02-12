@@ -4,9 +4,9 @@ export const hiroHamadaTeamLeader: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Resist",
         target: "CHOSEN_CHARACTER",
+        type: "gain-keyword",
         value: 1,
       },
       id: "1yr-1",
@@ -16,8 +16,8 @@ export const hiroHamadaTeamLeader: CharacterCard = {
     },
     {
       effect: {
-        type: "put-on-bottom",
         target: "CHOSEN_CHARACTER",
+        type: "put-on-bottom",
       },
       id: "1yr-2",
       text: "SHAPE THE FUTURE 2 {I} - Look at the top card of your deck. Put it on either the top or the bottom of your deck.",

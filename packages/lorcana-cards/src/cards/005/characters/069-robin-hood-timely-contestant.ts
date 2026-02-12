@@ -4,8 +4,8 @@ export const robinHoodTimelyContestant: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "play-card",
         from: "hand",
+        type: "play-card",
       },
       id: "jfv-1",
       text: "TAG ME IN! For each 1 damage on opposing characters, you pay 1 {I} less to play this character.",

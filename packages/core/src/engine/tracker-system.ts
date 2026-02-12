@@ -3,14 +3,14 @@ import type { PlayerId } from "../types/branded";
 /**
  * Configuration for the tracker system
  */
-export type TrackerConfig = {
+export interface TrackerConfig {
   /** Trackers that reset at the end of each turn */
   perTurn?: string[];
   /** Trackers that reset at the end of specific phases */
   perPhase?: Record<string, string[]>;
   /** Whether trackers are per-player or global */
   perPlayer?: boolean;
-};
+}
 
 /**
  * Internal storage for tracker state
@@ -47,9 +47,9 @@ export class TrackerSystem {
 
   constructor(config: TrackerConfig = {}) {
     this.config = {
+      perPhase: config.perPhase ?? {},
       perPlayer: config.perPlayer ?? true,
       perTurn: config.perTurn ?? [],
-      perPhase: config.perPhase ?? {},
     };
   }
 
@@ -155,7 +155,7 @@ export class TrackerSystem {
   public getState(): Record<string, (PlayerId | "global")[]> {
     const result: Record<string, (PlayerId | "global")[]> = {};
     for (const [name, playerSet] of this.state.entries()) {
-      result[name] = Array.from(playerSet);
+      result[name] = [...playerSet];
     }
     return result;
   }

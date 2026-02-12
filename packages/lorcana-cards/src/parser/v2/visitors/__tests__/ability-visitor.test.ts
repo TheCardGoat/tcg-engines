@@ -32,9 +32,7 @@ describe.skip("AbilityVisitor", () => {
     const cst = (parser as any)[rule]();
 
     if (parser.errors.length > 0) {
-      throw new Error(
-        `Parsing failed: ${parser.errors.map((e) => e.message).join(", ")}`,
-      );
+      throw new Error(`Parsing failed: ${parser.errors.map((e) => e.message).join(", ")}`);
     }
 
     return visitor.visit(cst);
@@ -117,10 +115,7 @@ describe.skip("AbilityVisitor", () => {
     });
 
     it("handles 'whenever' trigger", () => {
-      const result = parseAndVisit(
-        "whenever you play, draw 2",
-        "triggeredAbility",
-      );
+      const result = parseAndVisit("whenever you play, draw 2", "triggeredAbility");
 
       expect(result.type).toBe("triggered");
       expect(result.trigger).toBeDefined();
@@ -202,9 +197,7 @@ describe.skip("AbilityVisitor", () => {
         name: "effectPhrase",
       };
 
-      expect(() => visitor.visit(malformedCst)).toThrow(
-        "Unknown effect phrase type",
-      );
+      expect(() => visitor.visit(malformedCst)).toThrow("Unknown effect phrase type");
     });
   });
 
@@ -232,9 +225,7 @@ describe.skip("AbilityVisitor", () => {
         name: "atomicEffect",
       };
 
-      expect(() => visitor.visit(malformedCst)).toThrow(
-        "Unknown atomic effect type",
-      );
+      expect(() => visitor.visit(malformedCst)).toThrow("Unknown atomic effect type");
     });
   });
 
@@ -295,10 +286,7 @@ describe.skip("AbilityVisitor", () => {
     });
 
     it("preserves all semantic information", () => {
-      const result = parseAndVisit(
-        "whenever you play, draw 2",
-        "triggeredAbility",
-      );
+      const result = parseAndVisit("whenever you play, draw 2", "triggeredAbility");
 
       expect(result.type).toBe("triggered");
       expect(result.trigger.triggerWord).toBe("whenever");

@@ -4,12 +4,12 @@ export const morphSpaceGoo: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
-        effect: {
-          type: "play-card",
-          from: "hand",
-        },
         chooser: "CONTROLLER",
+        effect: {
+          from: "hand",
+          type: "play-card",
+        },
+        type: "optional",
       },
       id: "vo5-1",
       text: "MIMICRY You may play any character with Shift on this character as if this character had any name.",

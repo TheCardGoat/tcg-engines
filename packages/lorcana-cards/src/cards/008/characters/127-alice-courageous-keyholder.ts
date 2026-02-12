@@ -4,22 +4,22 @@ export const aliceCourageousKeyholder: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "restriction",
+          duration: "this-turn",
           restriction: "cant-quest",
           target: "SELF",
-          duration: "this-turn",
+          type: "restriction",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "65f-1",
       name: "THIS WAY OUT",
       text: "THIS WAY OUT When you play this character, you may ready chosen damaged character of yours. They can't quest for the rest of this turn.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

@@ -8,9 +8,7 @@ describe("Snowanna Rainbeau - Cool Competitor", () => {
       play: [snowannaRainbeauCoolCompetitor],
     });
 
-    const cardUnderTest = testEngine.getCardModel(
-      snowannaRainbeauCoolCompetitor,
-    );
+    const cardUnderTest = testEngine.getCardModel(snowannaRainbeauCoolCompetitor);
     expect(cardUnderTest.hasRush).toBe(true);
   });
 });

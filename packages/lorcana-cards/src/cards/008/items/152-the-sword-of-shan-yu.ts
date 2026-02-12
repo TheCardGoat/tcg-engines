@@ -5,10 +5,10 @@ export const theSwordOfShanyu: ItemCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "restriction",
+        duration: "this-turn",
         restriction: "cant-quest",
         target: "SELF",
-        duration: "this-turn",
+        type: "restriction",
       },
       id: "1wb-1",
       text: "WORTHY WEAPON {E}, {E} one of your characters — Ready chosen character. They can't quest for the rest of this turn.",

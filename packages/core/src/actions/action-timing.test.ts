@@ -5,9 +5,9 @@ import { createCardRegistry } from "../operations/card-registry-impl";
 import { createCardId, createPlayerId, createZoneId } from "../types";
 import type { ActionDefinition, ActionInstance } from "./action-definition";
 import {
+  type TimingContext,
   getAvailableActions,
   hasAvailableActions,
-  type TimingContext,
   validateAction,
   validateActionTiming,
 } from "./action-timing";
@@ -29,35 +29,35 @@ describe("Action Timing Validation", () => {
   ]);
 
   const baseState: TestGameState = {
-    currentSegment: "gameplay",
-    currentPhase: "mainPhase",
-    currentStep: null,
     cards: {
       [card1]: {
-        id: card1,
-        definitionId: "creature1",
-        owner: player1,
         controller: player1,
-        zone: playZone,
-        tapped: false,
+        definitionId: "creature1",
         flipped: false,
-        revealed: false,
-        phased: false,
+        id: card1,
         modifiers: [],
+        owner: player1,
+        phased: false,
+        revealed: false,
+        tapped: false,
+        zone: playZone,
       },
       [card2]: {
-        id: card2,
-        definitionId: "creature1",
-        owner: player2,
         controller: player2,
-        zone: playZone,
-        tapped: false,
+        definitionId: "creature1",
         flipped: false,
-        revealed: false,
-        phased: false,
+        id: card2,
         modifiers: [],
+        owner: player2,
+        phased: false,
+        revealed: false,
+        tapped: false,
+        zone: playZone,
       },
     },
+    currentPhase: "mainPhase",
+    currentSegment: "gameplay",
+    currentStep: null,
   };
 
   describe("validateActionTiming", () => {
@@ -68,8 +68,8 @@ describe("Action Timing Validation", () => {
       };
 
       const timingContext: TimingContext = {
-        currentSegment: "gameplay",
         currentPhase: "mainPhase",
+        currentSegment: "gameplay",
       };
 
       expect(validateActionTiming(action, timingContext)).toBe(true);
@@ -86,15 +86,15 @@ describe("Action Timing Validation", () => {
 
       expect(
         validateActionTiming(action, {
-          currentSegment: "gameplay",
           currentPhase: "mainPhase",
+          currentSegment: "gameplay",
         }),
       ).toBe(true);
 
       expect(
         validateActionTiming(action, {
-          currentSegment: "setup",
           currentPhase: "draft",
+          currentSegment: "setup",
         }),
       ).toBe(false);
     });
@@ -110,15 +110,15 @@ describe("Action Timing Validation", () => {
 
       expect(
         validateActionTiming(action, {
-          currentSegment: "gameplay",
           currentPhase: "mainPhase",
+          currentSegment: "gameplay",
         }),
       ).toBe(true);
 
       expect(
         validateActionTiming(action, {
-          currentSegment: "gameplay",
           currentPhase: "combatPhase",
+          currentSegment: "gameplay",
         }),
       ).toBe(false);
     });
@@ -134,16 +134,16 @@ describe("Action Timing Validation", () => {
 
       expect(
         validateActionTiming(action, {
-          currentSegment: "gameplay",
           currentPhase: "combatPhase",
+          currentSegment: "gameplay",
           currentStep: "attackStep",
         }),
       ).toBe(true);
 
       expect(
         validateActionTiming(action, {
-          currentSegment: "gameplay",
           currentPhase: "combatPhase",
+          currentSegment: "gameplay",
           currentStep: "blockStep",
         }),
       ).toBe(false);
@@ -210,19 +210,19 @@ describe("Action Timing Validation", () => {
         id: "ultimate-ability",
         name: "Ultimate Ability",
         timing: {
-          segments: ["gameplay"],
-          phases: ["mainPhase"],
           custom: (state) => state.hasSpecialToken,
+          phases: ["mainPhase"],
+          segments: ["gameplay"],
         },
       };
 
       expect(
         validateActionTiming(
           action,
-          { currentSegment: "gameplay", currentPhase: "mainPhase" },
+          { currentPhase: "mainPhase", currentSegment: "gameplay" },
           {
-            currentSegment: "gameplay",
             currentPhase: "mainPhase",
+            currentSegment: "gameplay",
             hasSpecialToken: true,
           },
         ),
@@ -231,10 +231,10 @@ describe("Action Timing Validation", () => {
       expect(
         validateActionTiming(
           action,
-          { currentSegment: "gameplay", currentPhase: "mainPhase" },
+          { currentPhase: "mainPhase", currentSegment: "gameplay" },
           {
-            currentSegment: "gameplay",
             currentPhase: "mainPhase",
+            currentSegment: "gameplay",
             hasSpecialToken: false,
           },
         ),
@@ -257,13 +257,7 @@ describe("Action Timing Validation", () => {
         playerId: player1,
       };
 
-      const result = validateAction(
-        instance,
-        action,
-        baseState,
-        baseState,
-        registry,
-      );
+      const result = validateAction(instance, action, baseState, baseState, registry);
 
       expect(result.valid).toBe(true);
     });
@@ -282,13 +276,7 @@ describe("Action Timing Validation", () => {
         playerId: player1,
       };
 
-      const result = validateAction(
-        instance,
-        action,
-        baseState,
-        baseState,
-        registry,
-      );
+      const result = validateAction(instance, action, baseState, baseState, registry);
 
       expect(result.valid).toBe(false);
       expect(result.reason).toBe("timing");
@@ -298,7 +286,7 @@ describe("Action Timing Validation", () => {
       const action: ActionDefinition = {
         id: "lightning-bolt",
         name: "Lightning Bolt",
-        targets: [{ filter: { type: "creature" }, count: 1 }],
+        targets: [{ count: 1, filter: { type: "creature" } }],
       };
 
       const instance: ActionInstance = {
@@ -306,13 +294,7 @@ describe("Action Timing Validation", () => {
         playerId: player1,
       };
 
-      const result = validateAction(
-        instance,
-        action,
-        baseState,
-        baseState,
-        registry,
-      );
+      const result = validateAction(instance, action, baseState, baseState, registry);
 
       expect(result.valid).toBe(false);
       expect(result.reason).toBe("targets");
@@ -323,7 +305,7 @@ describe("Action Timing Validation", () => {
       const action: ActionDefinition = {
         id: "lightning-bolt",
         name: "Lightning Bolt",
-        targets: [{ filter: { type: "creature" }, count: 1 }],
+        targets: [{ count: 1, filter: { type: "creature" } }],
       };
 
       const instance: ActionInstance = {
@@ -332,13 +314,7 @@ describe("Action Timing Validation", () => {
         targets: [[card2]],
       };
 
-      const result = validateAction(
-        instance,
-        action,
-        baseState,
-        baseState,
-        registry,
-      );
+      const result = validateAction(instance, action, baseState, baseState, registry);
 
       expect(result.valid).toBe(true);
     });
@@ -347,7 +323,7 @@ describe("Action Timing Validation", () => {
       const action: ActionDefinition = {
         id: "lightning-bolt",
         name: "Lightning Bolt",
-        targets: [{ filter: { type: "creature" }, count: 1 }],
+        targets: [{ count: 1, filter: { type: "creature" } }],
       };
 
       const nonexistentCard = createCardId("nonexistent");
@@ -357,13 +333,7 @@ describe("Action Timing Validation", () => {
         targets: [[nonexistentCard]],
       };
 
-      const result = validateAction(
-        instance,
-        action,
-        baseState,
-        baseState,
-        registry,
-      );
+      const result = validateAction(instance, action, baseState, baseState, registry);
 
       expect(result.valid).toBe(false);
       expect(result.reason).toBe("targets");
@@ -455,9 +425,7 @@ describe("Action Timing Validation", () => {
         },
       ];
 
-      expect(hasAvailableActions(actions, { currentSegment: "gameplay" })).toBe(
-        true,
-      );
+      expect(hasAvailableActions(actions, { currentSegment: "gameplay" })).toBe(true);
     });
 
     it("should return false when no actions are available", () => {
@@ -474,17 +442,13 @@ describe("Action Timing Validation", () => {
         },
       ];
 
-      expect(hasAvailableActions(actions, { currentSegment: "gameplay" })).toBe(
-        false,
-      );
+      expect(hasAvailableActions(actions, { currentSegment: "gameplay" })).toBe(false);
     });
 
     it("should return true when actions have no timing restrictions", () => {
       const actions: ActionDefinition[] = [{ id: "pass", name: "Pass" }];
 
-      expect(hasAvailableActions(actions, { currentSegment: "any" })).toBe(
-        true,
-      );
+      expect(hasAvailableActions(actions, { currentSegment: "any" })).toBe(true);
     });
   });
 });

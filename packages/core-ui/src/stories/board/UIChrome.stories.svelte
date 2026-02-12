@@ -3,9 +3,6 @@
   import UIChrome from "$lib/components/board/UIChrome.svelte";
 
   const { Story } = defineMeta({
-    title: "Board/UIChrome",
-    component: UIChrome,
-    tags: ["autodocs"],
     argTypes: {
       position: {
         control: { type: "select" },
@@ -22,9 +19,12 @@
       },
       zIndex: { control: "number" },
     },
+    component: UIChrome,
     parameters: {
       layout: "fullscreen",
     },
+    tags: ["autodocs"],
+    title: "Board/UIChrome",
   });
 </script>
 

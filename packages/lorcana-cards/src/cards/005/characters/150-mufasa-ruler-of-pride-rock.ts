@@ -4,58 +4,58 @@ export const mufasaRulerOfPrideRock: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "exert",
             target: {
-              selector: "all",
+              cardTypes: ["card"],
               count: "all",
               owner: "any",
+              selector: "all",
               zones: ["play"],
-              cardTypes: ["card"],
             },
+            type: "exert",
           },
           {
-            type: "return-to-hand",
             target: {
-              selector: "chosen",
+              cardTypes: ["card"],
               count: 1,
               owner: "any",
+              selector: "chosen",
               zones: ["play"],
-              cardTypes: ["card"],
             },
+            type: "return-to-hand",
           },
         ],
+        type: "sequence",
       },
       id: "163-1",
       name: "A DELICATE BALANCE",
       text: "A DELICATE BALANCE When you play this character, exert all cards in your inkwell, then return 2 cards at random from your inkwell to your hand.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },
     {
       effect: {
-        type: "ready",
         target: {
-          selector: "all",
+          cardTypes: ["card"],
           count: "all",
           owner: "any",
+          selector: "all",
           zones: ["play"],
-          cardTypes: ["card"],
         },
+        type: "ready",
       },
       id: "163-2",
       name: "EVERYTHING THE LIGHT TOUCHES",
       text: "EVERYTHING THE LIGHT TOUCHES Whenever this character quests, ready all cards in your inkwell.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

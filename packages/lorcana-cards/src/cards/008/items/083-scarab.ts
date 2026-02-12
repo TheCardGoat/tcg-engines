@@ -4,8 +4,8 @@ export const scarab: ItemCard = {
   abilities: [
     {
       effect: {
-        type: "return-from-discard",
         target: "CONTROLLER",
+        type: "return-from-discard",
       },
       id: "1wa-1",
       text: "SEARCH THE SANDS {E} 2 {I} – Return an Illusion character card from your discard to your hand.",

@@ -15,11 +15,11 @@ import type {
 } from "../abilities";
 import type {
   BattlefieldCard,
-  createCardId,
   EquipmentCard,
   GearCard,
   SpellCard,
   UnitCard,
+  createCardId,
 } from "./card-types";
 
 // ============================================================================
@@ -35,30 +35,30 @@ import type {
  * When you play me, discard 2.
  */
 export const AGGRESSIVE_WARRIOR_EXAMPLE: UnitCard = {
-  id: "aggressive-warrior" as UnitCard["id"],
-  name: "Aggressive Warrior",
-  cardType: "unit",
-  might: 4,
-  energyCost: 3,
-  powerCost: ["fury"],
-  tags: ["Warrior"],
   abilities: [
     {
-      type: "keyword",
-      keyword: "Accelerate",
       cost: { energy: 1, power: ["fury"] },
+      keyword: "Accelerate",
+      type: "keyword",
     },
     {
-      type: "keyword",
       keyword: "Assault",
+      type: "keyword",
       value: 2,
     },
     {
-      type: "triggered",
+      effect: { amount: 2, player: "self", type: "discard" },
       trigger: { event: "play-self" },
-      effect: { type: "discard", amount: 2, player: "self" },
+      type: "triggered",
     },
   ],
+  cardType: "unit",
+  energyCost: 3,
+  id: "aggressive-warrior" as UnitCard["id"],
+  might: 4,
+  name: "Aggressive Warrior",
+  powerCost: ["fury"],
+  tags: ["Warrior"],
 };
 
 /**
@@ -69,23 +69,23 @@ export const AGGRESSIVE_WARRIOR_EXAMPLE: UnitCard = {
  * When you play me, draw 1.
  */
 export const STALWART_DEFENDER_EXAMPLE: UnitCard = {
-  id: "stalwart-defender" as UnitCard["id"],
-  name: "Stalwart Defender",
-  cardType: "unit",
-  might: 3,
-  energyCost: 2,
-  powerCost: ["body"],
   abilities: [
     {
-      type: "keyword",
       keyword: "Tank",
+      type: "keyword",
     },
     {
-      type: "triggered",
+      effect: { amount: 1, type: "draw" },
       trigger: { event: "play-self" },
-      effect: { type: "draw", amount: 1 },
+      type: "triggered",
     },
   ],
+  cardType: "unit",
+  energyCost: 2,
+  id: "stalwart-defender" as UnitCard["id"],
+  might: 3,
+  name: "Stalwart Defender",
+  powerCost: ["body"],
 };
 
 /**
@@ -96,27 +96,27 @@ export const STALWART_DEFENDER_EXAMPLE: UnitCard = {
  * When I move to a battlefield, play a 1 Might Recruit unit token here.
  */
 export const MOBILE_SCOUT_EXAMPLE: UnitCard = {
-  id: "mobile-scout" as UnitCard["id"],
-  name: "Mobile Scout",
-  cardType: "unit",
-  might: 2,
-  energyCost: 2,
-  powerCost: ["order"],
   abilities: [
     {
-      type: "keyword",
       keyword: "Ganking",
+      type: "keyword",
     },
     {
-      type: "triggered",
-      trigger: { event: "move-to-battlefield", on: "self" },
       effect: {
-        type: "create-token",
-        token: { name: "Recruit", type: "unit", might: 1 },
         location: "here",
+        token: { might: 1, name: "Recruit", type: "unit" },
+        type: "create-token",
       },
+      trigger: { event: "move-to-battlefield", on: "self" },
+      type: "triggered",
     },
   ],
+  cardType: "unit",
+  energyCost: 2,
+  id: "mobile-scout" as UnitCard["id"],
+  might: 2,
+  name: "Mobile Scout",
+  powerCost: ["order"],
 };
 
 /**
@@ -126,19 +126,19 @@ export const MOBILE_SCOUT_EXAMPLE: UnitCard = {
  * [Deathknell] — Draw 1. (When I die, get the effect.)
  */
 export const DYING_SAGE_EXAMPLE: UnitCard = {
-  id: "dying-sage" as UnitCard["id"],
-  name: "Dying Sage",
-  cardType: "unit",
-  might: 2,
-  energyCost: 2,
-  powerCost: ["mind"],
   abilities: [
     {
-      type: "keyword",
+      effect: { amount: 1, type: "draw" },
       keyword: "Deathknell",
-      effect: { type: "draw", amount: 1 },
+      type: "keyword",
     },
   ],
+  cardType: "unit",
+  energyCost: 2,
+  id: "dying-sage" as UnitCard["id"],
+  might: 2,
+  name: "Dying Sage",
+  powerCost: ["mind"],
 };
 
 /**
@@ -148,23 +148,23 @@ export const DYING_SAGE_EXAMPLE: UnitCard = {
  * While I'm [Mighty], I have [Deflect], [Ganking], and [Shield]. (I'm Mighty while I have 5+ Might.)
  */
 export const MIGHTY_CHAMPION_EXAMPLE: UnitCard = {
-  id: "mighty-champion" as UnitCard["id"],
-  name: "Mighty Champion",
-  cardType: "unit",
-  might: 4,
-  energyCost: 4,
-  powerCost: ["body", "body"],
   abilities: [
     {
-      type: "static",
       condition: { type: "while-mighty" },
       effect: {
-        type: "grant-keywords",
         keywords: ["Deflect", "Ganking", "Shield"],
         target: "self",
+        type: "grant-keywords",
       },
+      type: "static",
     },
   ],
+  cardType: "unit",
+  energyCost: 4,
+  id: "mighty-champion" as UnitCard["id"],
+  might: 4,
+  name: "Mighty Champion",
+  powerCost: ["body", "body"],
 };
 
 /**
@@ -174,20 +174,20 @@ export const MIGHTY_CHAMPION_EXAMPLE: UnitCard = {
  * [Legion] — When you play me, buff me. (If I don't have a buff, I get a +1 Might buff. Get the effect if you've played another card this turn.)
  */
 export const LEGION_SOLDIER_EXAMPLE: UnitCard = {
-  id: "legion-soldier" as UnitCard["id"],
-  name: "Legion Soldier",
-  cardType: "unit",
-  might: 2,
-  energyCost: 1,
-  powerCost: ["order"],
   abilities: [
     {
-      type: "keyword",
-      keyword: "Legion",
-      effect: { type: "buff", target: "self" },
       condition: { type: "legion" },
+      effect: { target: "self", type: "buff" },
+      keyword: "Legion",
+      type: "keyword",
     },
   ],
+  cardType: "unit",
+  energyCost: 1,
+  id: "legion-soldier" as UnitCard["id"],
+  might: 2,
+  name: "Legion Soldier",
+  powerCost: ["order"],
 };
 
 /**
@@ -197,27 +197,27 @@ export const LEGION_SOLDIER_EXAMPLE: UnitCard = {
  * Other friendly units here have +1 Might.
  */
 export const INSPIRING_LEADER_EXAMPLE: UnitCard = {
-  id: "inspiring-leader" as UnitCard["id"],
-  name: "Inspiring Leader",
-  cardType: "unit",
-  might: 3,
-  energyCost: 3,
-  powerCost: ["order"],
   abilities: [
     {
-      type: "static",
       effect: {
-        type: "modify-might",
         amount: 1,
         target: {
-          type: "unit",
           controller: "friendly",
-          location: "here",
           excludeSelf: true,
+          location: "here",
+          type: "unit",
         },
+        type: "modify-might",
       },
+      type: "static",
     },
   ],
+  cardType: "unit",
+  energyCost: 3,
+  id: "inspiring-leader" as UnitCard["id"],
+  might: 3,
+  name: "Inspiring Leader",
+  powerCost: ["order"],
 };
 
 /**
@@ -227,28 +227,28 @@ export const INSPIRING_LEADER_EXAMPLE: UnitCard = {
  * When I attack, deal 3 to all enemy units here.
  */
 export const SWEEPING_STRIKER_EXAMPLE: UnitCard = {
-  id: "sweeping-striker" as UnitCard["id"],
-  name: "Sweeping Striker",
-  cardType: "unit",
-  might: 4,
-  energyCost: 4,
-  powerCost: ["fury", "fury"],
   abilities: [
     {
-      type: "triggered",
-      trigger: { event: "attack", on: "self" },
       effect: {
-        type: "damage",
         amount: 3,
         target: {
-          type: "unit",
           controller: "enemy",
           location: "here",
           quantity: "all",
+          type: "unit",
         },
+        type: "damage",
       },
+      trigger: { event: "attack", on: "self" },
+      type: "triggered",
     },
   ],
+  cardType: "unit",
+  energyCost: 4,
+  id: "sweeping-striker" as UnitCard["id"],
+  might: 4,
+  name: "Sweeping Striker",
+  powerCost: ["fury", "fury"],
 };
 
 // ============================================================================
@@ -263,23 +263,23 @@ export const SWEEPING_STRIKER_EXAMPLE: UnitCard = {
  * Deal 3 to a unit at a battlefield.
  */
 export const LIGHTNING_STRIKE_EXAMPLE: SpellCard = {
-  id: "lightning-strike" as SpellCard["id"],
-  name: "Lightning Strike",
-  cardType: "spell",
-  timing: "action",
-  energyCost: 2,
-  powerCost: ["fury"],
   abilities: [
     {
-      type: "spell",
-      timing: "action",
       effect: {
-        type: "damage",
         amount: 3,
-        target: { type: "unit", location: "battlefield" },
+        target: { location: "battlefield", type: "unit" },
+        type: "damage",
       },
+      timing: "action",
+      type: "spell",
     },
   ],
+  cardType: "spell",
+  energyCost: 2,
+  id: "lightning-strike" as SpellCard["id"],
+  name: "Lightning Strike",
+  powerCost: ["fury"],
+  timing: "action",
 };
 
 /**
@@ -291,25 +291,25 @@ export const LIGHTNING_STRIKE_EXAMPLE: SpellCard = {
  * Give a unit +2 Might this turn.
  */
 export const BATTLE_SURGE_EXAMPLE: SpellCard = {
-  id: "battle-surge" as SpellCard["id"],
-  name: "Battle Surge",
-  cardType: "spell",
-  timing: "reaction",
-  energyCost: 1,
-  repeatCost: { energy: 2 },
   abilities: [
     {
-      type: "spell",
-      timing: "reaction",
-      repeat: { energy: 2 },
       effect: {
-        type: "modify-might",
         amount: 2,
-        target: { type: "unit" },
         duration: "turn",
+        target: { type: "unit" },
+        type: "modify-might",
       },
+      repeat: { energy: 2 },
+      timing: "reaction",
+      type: "spell",
     },
   ],
+  cardType: "spell",
+  energyCost: 1,
+  id: "battle-surge" as SpellCard["id"],
+  name: "Battle Surge",
+  repeatCost: { energy: 2 },
+  timing: "reaction",
 };
 
 /**
@@ -321,27 +321,27 @@ export const BATTLE_SURGE_EXAMPLE: SpellCard = {
  * Kill a unit at a battlefield.
  */
 export const HIDDEN_ASSASSINATION_EXAMPLE: SpellCard = {
-  id: "hidden-assassination" as SpellCard["id"],
-  name: "Hidden Assassination",
-  cardType: "spell",
-  timing: "action",
-  energyCost: 4,
-  powerCost: ["chaos"],
-  hasHidden: true,
   abilities: [
     {
-      type: "keyword",
       keyword: "Hidden",
+      type: "keyword",
     },
     {
-      type: "spell",
-      timing: "action",
       effect: {
+        target: { location: "battlefield", type: "unit" },
         type: "kill",
-        target: { type: "unit", location: "battlefield" },
       },
+      timing: "action",
+      type: "spell",
     },
   ],
+  cardType: "spell",
+  energyCost: 4,
+  hasHidden: true,
+  id: "hidden-assassination" as SpellCard["id"],
+  name: "Hidden Assassination",
+  powerCost: ["chaos"],
+  timing: "action",
 };
 
 /**
@@ -352,22 +352,22 @@ export const HIDDEN_ASSASSINATION_EXAMPLE: SpellCard = {
  * Counter a spell.
  */
 export const COUNTERSPELL_EXAMPLE: SpellCard = {
-  id: "counterspell" as SpellCard["id"],
-  name: "Counterspell",
-  cardType: "spell",
-  timing: "reaction",
-  energyCost: 3,
-  powerCost: ["mind"],
   abilities: [
     {
-      type: "spell",
-      timing: "reaction",
       effect: {
-        type: "counter",
         target: "spell",
+        type: "counter",
       },
+      timing: "reaction",
+      type: "spell",
     },
   ],
+  cardType: "spell",
+  energyCost: 3,
+  id: "counterspell" as SpellCard["id"],
+  name: "Counterspell",
+  powerCost: ["mind"],
+  timing: "reaction",
 };
 
 // ============================================================================
@@ -382,19 +382,19 @@ export const COUNTERSPELL_EXAMPLE: SpellCard = {
  * +2 Might
  */
 export const FURY_BLADE_EXAMPLE: EquipmentCard = {
-  id: "fury-blade" as EquipmentCard["id"],
-  name: "Fury Blade",
-  cardType: "equipment",
-  energyCost: 2,
-  mightBonus: 2,
-  equipCost: { power: ["fury"] },
   abilities: [
     {
-      type: "keyword",
-      keyword: "Equip",
       cost: { power: ["fury"] },
+      keyword: "Equip",
+      type: "keyword",
     },
   ],
+  cardType: "equipment",
+  energyCost: 2,
+  equipCost: { power: ["fury"] },
+  id: "fury-blade" as EquipmentCard["id"],
+  mightBonus: 2,
+  name: "Fury Blade",
 };
 
 /**
@@ -406,24 +406,24 @@ export const FURY_BLADE_EXAMPLE: EquipmentCard = {
  * +1 Might
  */
 export const QUICK_SHIELD_EXAMPLE: EquipmentCard = {
-  id: "quick-shield" as EquipmentCard["id"],
-  name: "Quick Shield",
-  cardType: "equipment",
-  energyCost: 1,
-  mightBonus: 1,
-  hasQuickDraw: true,
-  equipCost: { power: ["calm"] },
   abilities: [
     {
-      type: "keyword",
       keyword: "Quick-Draw",
+      type: "keyword",
     },
     {
-      type: "keyword",
-      keyword: "Equip",
       cost: { power: ["calm"] },
+      keyword: "Equip",
+      type: "keyword",
     },
   ],
+  cardType: "equipment",
+  energyCost: 1,
+  equipCost: { power: ["calm"] },
+  hasQuickDraw: true,
+  id: "quick-shield" as EquipmentCard["id"],
+  mightBonus: 1,
+  name: "Quick Shield",
 };
 
 // ============================================================================
@@ -437,18 +437,18 @@ export const QUICK_SHIELD_EXAMPLE: EquipmentCard = {
  * :rb_exhaust:: [Reaction] — [Add] :rb_energy_1:. (Abilities that add resources can't be reacted to.)
  */
 export const GOLD_TOKEN_EXAMPLE: GearCard = {
-  id: "gold-token" as GearCard["id"],
-  name: "Gold",
-  cardType: "gear",
-  isToken: true,
   abilities: [
     {
-      type: "activated",
       cost: { exhaust: true },
+      effect: { energy: 1, type: "add-resource" },
       timing: "reaction",
-      effect: { type: "add-resource", energy: 1 },
+      type: "activated",
     },
   ],
+  cardType: "gear",
+  id: "gold-token" as GearCard["id"],
+  isToken: true,
+  name: "Gold",
 };
 
 // ============================================================================
@@ -462,16 +462,16 @@ export const GOLD_TOKEN_EXAMPLE: GearCard = {
  * When you conquer here, draw 1.
  */
 export const ANCIENT_LIBRARY_EXAMPLE: BattlefieldCard = {
-  id: "ancient-library" as BattlefieldCard["id"],
-  name: "Ancient Library",
-  cardType: "battlefield",
   abilities: [
     {
-      type: "triggered",
+      effect: { amount: 1, type: "draw" },
       trigger: { event: "conquer", on: "controller" },
-      effect: { type: "draw", amount: 1 },
+      type: "triggered",
     },
   ],
+  cardType: "battlefield",
+  id: "ancient-library" as BattlefieldCard["id"],
+  name: "Ancient Library",
 };
 
 /**
@@ -481,17 +481,17 @@ export const ANCIENT_LIBRARY_EXAMPLE: BattlefieldCard = {
  * When you hold here, you may channel 1 rune exhausted.
  */
 export const MYSTIC_NEXUS_EXAMPLE: BattlefieldCard = {
-  id: "mystic-nexus" as BattlefieldCard["id"],
-  name: "Mystic Nexus",
-  cardType: "battlefield",
   abilities: [
     {
-      type: "triggered",
-      trigger: { event: "hold", on: "controller" },
+      effect: { amount: 1, exhausted: true, type: "channel" },
       optional: true,
-      effect: { type: "channel", amount: 1, exhausted: true },
+      trigger: { event: "hold", on: "controller" },
+      type: "triggered",
     },
   ],
+  cardType: "battlefield",
+  id: "mystic-nexus" as BattlefieldCard["id"],
+  name: "Mystic Nexus",
 };
 
 /**
@@ -501,19 +501,19 @@ export const MYSTIC_NEXUS_EXAMPLE: BattlefieldCard = {
  * Units here have [Ganking]. (They can move from battlefield to battlefield.)
  */
 export const CROSSROADS_EXAMPLE: BattlefieldCard = {
-  id: "crossroads" as BattlefieldCard["id"],
-  name: "Crossroads",
-  cardType: "battlefield",
   abilities: [
     {
-      type: "static",
       effect: {
-        type: "grant-keyword",
         keyword: "Ganking",
-        target: { type: "unit", location: "here", quantity: "all" },
+        target: { location: "here", quantity: "all", type: "unit" },
+        type: "grant-keyword",
       },
+      type: "static",
     },
   ],
+  cardType: "battlefield",
+  id: "crossroads" as BattlefieldCard["id"],
+  name: "Crossroads",
 };
 
 // ============================================================================
@@ -529,31 +529,31 @@ export const CROSSROADS_EXAMPLE: BattlefieldCard = {
  * I have +1 Might for each friendly gear.
  */
 export const MASTER_ARMORER_EXAMPLE: UnitCard = {
-  id: "master-armorer" as UnitCard["id"],
-  name: "Master Armorer",
-  cardType: "unit",
-  might: 3,
-  energyCost: 4,
-  powerCost: ["body", "order"],
   abilities: [
     {
-      type: "keyword",
       keyword: "Deflect",
+      type: "keyword",
       value: 2,
     },
     {
-      type: "keyword",
       keyword: "Weaponmaster",
+      type: "keyword",
     },
     {
-      type: "static",
       effect: {
-        type: "modify-might",
-        amount: { count: { type: "gear", controller: "friendly" } },
+        amount: { count: { controller: "friendly", type: "gear" } },
         target: "self",
+        type: "modify-might",
       },
+      type: "static",
     },
   ],
+  cardType: "unit",
+  energyCost: 4,
+  id: "master-armorer" as UnitCard["id"],
+  might: 3,
+  name: "Master Armorer",
+  powerCost: ["body", "order"],
 };
 
 /**
@@ -567,52 +567,52 @@ export const MASTER_ARMORER_EXAMPLE: UnitCard = {
  * * Give me [Ganking] this turn.
  */
 export const VERSATILE_WARRIOR_EXAMPLE: UnitCard = {
-  id: "versatile-warrior" as UnitCard["id"],
-  name: "Versatile Warrior",
-  cardType: "unit",
-  might: 3,
-  energyCost: 3,
-  powerCost: ["chaos"],
   abilities: [
     {
-      type: "activated",
       cost: { spend: "buff" },
       effect: {
-        type: "choice",
         notChosenThisTurn: true,
         options: [
           {
-            label: "Deal 2 to a unit at a battlefield",
             effect: {
-              type: "damage",
               amount: 2,
-              target: { type: "unit", location: "battlefield" },
+              target: { location: "battlefield", type: "unit" },
+              type: "damage",
             },
+            label: "Deal 2 to a unit at a battlefield",
           },
           {
-            label: "Stun a unit at a battlefield",
             effect: {
+              target: { location: "battlefield", type: "unit" },
               type: "stun",
-              target: { type: "unit", location: "battlefield" },
             },
+            label: "Stun a unit at a battlefield",
           },
           {
+            effect: { target: "self", type: "ready" },
             label: "Ready me",
-            effect: { type: "ready", target: "self" },
           },
           {
-            label: "Give me [Ganking] this turn",
             effect: {
-              type: "grant-keyword",
+              duration: "turn",
               keyword: "Ganking",
               target: "self",
-              duration: "turn",
+              type: "grant-keyword",
             },
+            label: "Give me [Ganking] this turn",
           },
         ],
+        type: "choice",
       },
+      type: "activated",
     },
   ],
+  cardType: "unit",
+  energyCost: 3,
+  id: "versatile-warrior" as UnitCard["id"],
+  might: 3,
+  name: "Versatile Warrior",
+  powerCost: ["chaos"],
 };
 
 /**
@@ -623,32 +623,32 @@ export const VERSATILE_WARRIOR_EXAMPLE: UnitCard = {
  * [Accelerate] (You may pay :rb_energy_1::rb_rune_body: as an additional cost to have me enter ready.)
  */
 export const MIGHTY_REINFORCEMENT_EXAMPLE: UnitCard = {
-  id: "mighty-reinforcement" as UnitCard["id"],
-  name: "Mighty Reinforcement",
-  cardType: "unit",
-  might: 5,
-  energyCost: 6,
-  powerCost: ["body"],
   abilities: [
     {
-      type: "static",
+      condition: {
+        comparison: { gte: 1 },
+        target: { controller: "friendly", filter: "mighty", type: "unit" },
+        type: "count",
+      },
       effect: {
         type: "modify-might", // This should be a cost modifier, but using modify-might as placeholder
         amount: -2,
         target: "self",
       },
-      condition: {
-        type: "count",
-        target: { type: "unit", controller: "friendly", filter: "mighty" },
-        comparison: { gte: 1 },
-      },
+      type: "static",
     },
     {
-      type: "keyword",
-      keyword: "Accelerate",
       cost: { energy: 1, power: ["body"] },
+      keyword: "Accelerate",
+      type: "keyword",
     },
   ],
+  cardType: "unit",
+  energyCost: 6,
+  id: "mighty-reinforcement" as UnitCard["id"],
+  might: 5,
+  name: "Mighty Reinforcement",
+  powerCost: ["body"],
 };
 
 // ============================================================================

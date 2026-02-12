@@ -29,9 +29,7 @@ describe("Activated Ability Parser", () => {
     });
 
     it("should parse {E} - Deal 3 damage to chosen character", () => {
-      const result = parseActivatedAbility(
-        "{E} - Deal 3 damage to chosen character.",
-      );
+      const result = parseActivatedAbility("{E} - Deal 3 damage to chosen character.");
 
       expect(result.success).toBe(true);
       expect(result.ability?.ability.type).toBe("activated");
@@ -67,9 +65,7 @@ describe("Activated Ability Parser", () => {
 
   describe("Combined Exert + Ink Costs", () => {
     it("should parse {E}, {d} {I} - Deal {d} damage with placeholders", () => {
-      const result = parseActivatedAbility(
-        "{E}, {d} {I} - Deal {d} damage to chosen character.",
-      );
+      const result = parseActivatedAbility("{E}, {d} {I} - Deal {d} damage to chosen character.");
 
       expect(result.success).toBe(true);
       expect(result.ability?.ability.type).toBe("activated");
@@ -79,9 +75,7 @@ describe("Activated Ability Parser", () => {
     });
 
     it("should parse {E}, 2 {I} - Deal 3 damage with numeric costs", () => {
-      const result = parseActivatedAbility(
-        "{E}, 2 {I} - Deal 3 damage to chosen character.",
-      );
+      const result = parseActivatedAbility("{E}, 2 {I} - Deal 3 damage to chosen character.");
 
       expect(result.success).toBe(true);
       expect(result.ability?.ability.type).toBe("activated");
@@ -103,9 +97,7 @@ describe("Activated Ability Parser", () => {
 
   describe("Combined Exert + Banish Costs", () => {
     it("should parse {E}, Banish this item - Gain 2 lore", () => {
-      const result = parseActivatedAbility(
-        "{E}, Banish this item - Gain 2 lore.",
-      );
+      const result = parseActivatedAbility("{E}, Banish this item - Gain 2 lore.");
 
       expect(result.success).toBe(true);
       expect(result.ability?.ability.type).toBe("activated");
@@ -115,9 +107,7 @@ describe("Activated Ability Parser", () => {
     });
 
     it("should parse {E}, Banish this character - Draw 2 cards", () => {
-      const result = parseActivatedAbility(
-        "{E}, Banish this character - Draw 2 cards.",
-      );
+      const result = parseActivatedAbility("{E}, Banish this character - Draw 2 cards.");
 
       expect(result.success).toBe(true);
       expect(result.ability?.ability.type).toBe("activated");
@@ -155,9 +145,7 @@ describe("Activated Ability Parser", () => {
     });
 
     it("should parse SKIRMISH {E} - Deal {d} damage", () => {
-      const result = parseActivatedAbility(
-        "SKIRMISH {E} - Deal {d} damage to chosen character.",
-      );
+      const result = parseActivatedAbility("SKIRMISH {E} - Deal {d} damage to chosen character.");
 
       expect(result.success).toBe(true);
       expect(result.ability?.ability.type).toBe("activated");
@@ -211,9 +199,7 @@ describe("Activated Ability Parser", () => {
     });
 
     it("should parse named ability with en dash: SKIRMISH {E} − Deal {d} damage", () => {
-      const result = parseActivatedAbility(
-        "SKIRMISH {E} − Deal {d} damage to chosen character.",
-      );
+      const result = parseActivatedAbility("SKIRMISH {E} − Deal {d} damage to chosen character.");
 
       expect(result.success).toBe(true);
       expect(result.ability?.name).toBe("SKIRMISH");
@@ -266,9 +252,7 @@ describe("Activated Ability Parser", () => {
     });
 
     it("should parse Beast - Hardheaded activated ability", () => {
-      const result = parseActivatedAbility(
-        "{E}, 2 {I} - Ready chosen character.",
-      );
+      const result = parseActivatedAbility("{E}, 2 {I} - Ready chosen character.");
 
       expect(result.success).toBe(true);
       const ability = result.ability?.ability as ActivatedAbility;

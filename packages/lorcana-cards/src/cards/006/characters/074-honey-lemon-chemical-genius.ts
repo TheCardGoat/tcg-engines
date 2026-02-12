@@ -4,22 +4,22 @@ export const honeyLemonChemicalGenius: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
-        effect: {
-          type: "discard",
-          amount: 1,
-          target: "EACH_OPPONENT",
-          chosen: true,
-        },
         chooser: "CONTROLLER",
+        effect: {
+          amount: 1,
+          chosen: true,
+          target: "EACH_OPPONENT",
+          type: "discard",
+        },
+        type: "optional",
       },
       id: "q86-1",
       name: "HERE'S THE BEST PART",
       text: "HERE'S THE BEST PART When you play this character, you may pay 2 {I} to have each opponent choose and discard a card.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

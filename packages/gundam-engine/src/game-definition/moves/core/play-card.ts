@@ -1,16 +1,7 @@
-import { createMove, type ZoneId } from "@tcg/core";
+import { type ZoneId, createMove } from "@tcg/core";
 import { useGundamOps } from "../../../operations";
-import type {
-  GundamCardMeta,
-  GundamGameState,
-  GundamMoves,
-} from "../../../types";
-import {
-  and,
-  cardInHand,
-  cardOwnedByPlayer,
-  isMainPhase,
-} from "../../../validators";
+import type { GundamCardMeta, GundamGameState, GundamMoves } from "../../../types";
+import { and, cardInHand, cardOwnedByPlayer, isMainPhase } from "../../../validators";
 
 /**
  * Play Card Move
@@ -30,17 +21,11 @@ import {
  * 7-5-2-2-4. Play the card. (See 3. Card Types)
  *
  */
-export const playCard = createMove<
-  GundamGameState,
-  GundamMoves,
-  "playCard",
-  GundamCardMeta
->({
+export const playCard = createMove<GundamGameState, GundamMoves, "playCard", GundamCardMeta>({
   condition: and(
     isMainPhase(),
     (state, context) => cardInHand(context.params.cardId)(state, context),
-    (state, context) =>
-      cardOwnedByPlayer(context.params.cardId)(state, context),
+    (state, context) => cardOwnedByPlayer(context.params.cardId)(state, context),
   ),
   reducer: (draft, context) => {
     const { cardId } = context.params;
@@ -48,9 +33,7 @@ export const playCard = createMove<
 
     // Determine target zone (command go to trash, others to play)
     const cardType = ops.getCardType(cardId);
-    const targetZone = (
-      cardType === "COMMAND" ? "trash" : "battleArea"
-    ) as ZoneId;
+    const targetZone = (cardType === "COMMAND" ? "trash" : "battleArea") as ZoneId;
 
     // Move card
     context.zones.moveCard({

@@ -11,31 +11,31 @@ export const jasmineSoothingPrincess: CharacterCard = {
     },
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "there’s a card under her",
+          type: "if",
         },
         then: {
-          type: "remove-damage",
           amount: 3,
-          upTo: true,
           target: {
-            selector: "all",
+            cardTypes: ["character"],
             count: "all",
             owner: "you",
+            selector: "all",
             zones: ["play"],
-            cardTypes: ["character"],
           },
+          type: "remove-damage",
+          upTo: true,
         },
+        type: "conditional",
       },
       id: "1rh-2",
       name: "UPLIFTING AURA",
       text: "UPLIFTING AURA Whenever this character quests, if there’s a card under her, remove up to 3 damage from each of your characters.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

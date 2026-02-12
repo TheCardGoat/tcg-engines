@@ -4,20 +4,20 @@ export const cruellaDeVilMiserableAsUsual: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
-        effect: {
-          type: "return-to-hand",
-          target: "CHOSEN_CHARACTER",
-        },
         chooser: "CONTROLLER",
+        effect: {
+          target: "CHOSEN_CHARACTER",
+          type: "return-to-hand",
+        },
+        type: "optional",
       },
       id: "cw0-1",
       name: "YOU'LL BE SORRY!",
       text: "YOU'LL BE SORRY! When this character is challenged and banished, you may return chosen character to their player's hand.",
       trigger: {
         event: "challenged",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

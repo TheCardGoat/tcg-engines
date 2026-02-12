@@ -31,17 +31,17 @@
   // Helper to parse URL params
   function getParamsFromUrl(url: URL) {
     return {
-      q: url.searchParams.get("q") || "",
-      ink: url.searchParams.getAll("ink"),
       cost: url.searchParams.getAll("cost").map(Number),
-      type: url.searchParams.getAll("type"),
-      set: url.searchParams.getAll("set"),
       crop:
         (url.searchParams.get("crop") as
           | "full"
           | "art_only"
           | "art_and_name") || "full",
+      ink: url.searchParams.getAll("ink"),
       logic: (url.searchParams.get("logic") as "AND" | "OR") || "AND",
+      q: url.searchParams.get("q") || "",
+      set: url.searchParams.getAll("set"),
+      type: url.searchParams.getAll("type"),
     };
   }
 
@@ -63,7 +63,7 @@
 
   // Hydrate from session storage if URL params are empty
   onMount(() => {
-    if (!browser) return;
+    if (!browser) {return;}
 
     const hasUrlParams = $page.url.searchParams.toString().length > 0;
     if (!hasUrlParams) {
@@ -78,8 +78,8 @@
           selectedSets = s.set ?? [];
           selectedCrop = s.crop ?? "full";
           filterLogic = s.logic ?? "AND";
-        } catch (e) {
-          console.error("Failed to parse session storage", e);
+        } catch (error) {
+          console.error("Failed to parse session storage", error);
         }
       }
     }
@@ -88,16 +88,16 @@
 
   // Sync state to URL and SessionStorage
   $effect(() => {
-    if (!(browser && isInitialized)) return;
+    if (!(browser && isInitialized)) {return;}
 
     const state = {
-      q: searchQuery,
-      ink: selectedInk,
       cost: selectedCost,
-      type: selectedType,
-      set: selectedSets,
       crop: selectedCrop,
+      ink: selectedInk,
       logic: filterLogic,
+      q: searchQuery,
+      set: selectedSets,
+      type: selectedType,
     };
 
     // 1. Persist to Session Storage
@@ -105,23 +105,23 @@
 
     // 2. Update URL
     const params = new URLSearchParams();
-    if (state.q) params.set("q", state.q);
-    for (const i of state.ink) params.append("ink", i);
-    for (const c of state.cost) params.append("cost", c.toString());
-    for (const t of state.type) params.append("type", t);
-    for (const s of state.set) params.append("set", s);
-    if (state.crop !== "full") params.set("crop", state.crop);
-    if (state.logic !== "AND") params.set("logic", state.logic);
+    if (state.q) {params.set("q", state.q);}
+    for (const i of state.ink) {params.append("ink", i);}
+    for (const c of state.cost) {params.append("cost", c.toString());}
+    for (const t of state.type) {params.append("type", t);}
+    for (const s of state.set) {params.append("set", s);}
+    if (state.crop !== "full") {params.set("crop", state.crop);}
+    if (state.logic !== "AND") {params.set("logic", state.logic);}
 
     const queryString = params.toString();
     const currentUrl = $page.url.searchParams.toString();
 
     if (queryString !== currentUrl) {
-      // use replaceState to avoid cluttering history stack for every filter change
+      // Use replaceState to avoid cluttering history stack for every filter change
       goto(`?${queryString}`, {
-        replaceState: true,
         keepFocus: true,
         noScroll: true,
+        replaceState: true,
       });
     }
   });
@@ -130,13 +130,13 @@
   const availableSets = $derived.by(() => {
     const sets = new Set<string>();
     data.cards.forEach((c: { paramSet?: string }) => {
-      if (c.paramSet) sets.add(c.paramSet);
+      if (c.paramSet) {sets.add(c.paramSet);}
     });
-    return Array.from(sets).sort();
+    return [...sets].toSorted();
   });
 
   const filteredCards = $derived.by(() => {
-    const cards = data.cards;
+    const {cards} = data;
 
     // Text search (always AND)
     let result = cards;
@@ -169,7 +169,7 @@
       }) => {
         // Helper to check individual criteria
         // Normalize to lowercase for comparison just in case
-        // inkType is always an array in the current type system
+        // InkType is always an array in the current type system
         const cInk = c.inkType
           ? c.inkType.map((k: string) => k.toLowerCase())
           : [];
@@ -181,16 +181,16 @@
         const matchCost = hasCost ? selectedCost.includes(c.cost) : false;
         const matchType = hasType ? selectedType.includes(cType) : false;
         const matchSet = hasSet
-          ? c.paramSet
+          ? (c.paramSet
             ? selectedSets.includes(c.paramSet)
-            : false
+            : false)
           : false;
 
         if (filterLogic === "AND") {
-          if (hasInk && !matchInk) return false;
-          if (hasCost && !matchCost) return false;
-          if (hasType && !matchType) return false;
-          if (hasSet && !matchSet) return false;
+          if (hasInk && !matchInk) {return false;}
+          if (hasCost && !matchCost) {return false;}
+          if (hasType && !matchType) {return false;}
+          if (hasSet && !matchSet) {return false;}
           return true;
         }
         // OR logic

@@ -1,9 +1,9 @@
 import {
+  type RuleEngineOptions,
   createCardId,
   createCardOperations,
   createPlayerId,
   createZoneOperations,
-  type RuleEngineOptions,
 } from "@tcg/core";
 import type {
   BaseCardDefinition,
@@ -35,7 +35,7 @@ export const PLAYER_TWO = createPlayerId("player_two");
  * Zones can be configured with either a number (to create placeholder cards)
  * or an array of GundamCardDefinitionInput (to create cards with actual definitions).
  */
-export type TestInitialState = {
+export interface TestInitialState {
   /** Cards in hand - number or card definitions */
   hand?: number | GundamCardDefinitionInput[];
   /** Cards in deck - number or card definitions */
@@ -46,24 +46,24 @@ export type TestInitialState = {
   resourceArea?: number | GundamCardDefinitionInput[];
   /** Cards in discard - number or card definitions */
   discard?: number | GundamCardDefinitionInput[];
-};
+}
 
 /**
  * Test Card Definition
  *
  * Minimal card definition for testing combat and stats
  */
-export type TestCardDefinition = {
+export interface TestCardDefinition {
   id: string;
   name?: string;
   ap?: number;
   hp?: number;
-};
+}
 
 /**
  * Test Engine Options
  */
-export type TestEngineOptions = {
+export interface TestEngineOptions {
   /** Skip pre-game phase (start directly in main game) */
   skipPreGame?: boolean;
   /** Optional RNG seed for deterministic tests */
@@ -72,7 +72,7 @@ export type TestEngineOptions = {
   debug?: boolean;
   /** Optional card definitions for testing (with stats like strength, willpower) */
   cardDefinitions?: Record<string, TestCardDefinition>;
-};
+}
 
 /**
  * Test Card Model
@@ -102,8 +102,7 @@ export class GundamTestEngine {
   private cardCounter = 0;
 
   // Registry of Gundam card definitions placed in play (for getCardModel)
-  private playedCardDefinitions: Map<string, GundamCardDefinitionInput> =
-    new Map();
+  private playedCardDefinitions = new Map<string, GundamCardDefinitionInput>();
 
   constructor(
     _playerOneState: TestInitialState = {},
@@ -133,7 +132,7 @@ export class GundamTestEngine {
     if (opts.skipPreGame) {
       // Set OTP to skip chooseFirstPlayer phase
       // @ts-expect-error - Accessing internal properties for testing setup
-      const internalState = this.engine.internalState;
+      const { internalState } = this.engine;
       if (internalState) {
         internalState.otp = createPlayerId(PLAYER_ONE);
         internalState.pendingMulligan = []; // Clear mulligan requirement
@@ -175,12 +174,9 @@ export class GundamTestEngine {
    *
    * TODO: @tcg/core should expose a proper TestEngine base class with this capability
    */
-  private initializeZones(
-    playerOneState: TestInitialState,
-    playerTwoState: TestInitialState,
-  ) {
+  private initializeZones(playerOneState: TestInitialState, playerTwoState: TestInitialState) {
     // Access internal state directly (testing backdoor)
-    const internalState = (this.engine as any).internalState;
+    const { internalState } = this.engine as any;
 
     if (!internalState) {
       throw new Error("Cannot access engine internal state for test setup");
@@ -213,7 +209,9 @@ export class GundamTestEngine {
       value: number | GundamCardDefinitionInput[] | undefined,
       shuffle: boolean,
     ) => {
-      if (value === undefined) return;
+      if (value === undefined) {
+        return;
+      }
 
       if (this.isCardDefinitionsArray(value)) {
         // Handle card definitions array
@@ -223,19 +221,19 @@ export class GundamTestEngine {
         }
         // Create placeholder cards for the count (cards are registered for keyword lookup)
         const cardIds = zoneOps.createDeck({
-          zoneId: zoneId as any,
-          playerId: createPlayerId(playerId),
           cardCount: value.length,
+          playerId: createPlayerId(playerId),
           shuffle,
+          zoneId: zoneId as any,
         });
         initializeCardMetadata(cardIds);
       } else {
         // Handle number - create placeholder cards
         const cardIds = zoneOps.createDeck({
-          zoneId: zoneId as any,
-          playerId: createPlayerId(playerId),
           cardCount: value,
+          playerId: createPlayerId(playerId),
           shuffle,
+          zoneId: zoneId as any,
         });
         initializeCardMetadata(cardIds);
       }
@@ -301,33 +299,30 @@ export class GundamTestEngine {
 
     // Access internal state for test purposes
     // @ts-expect-error - Accessing private property for testing
-    const internalState = this.engine.internalState;
+    const { internalState } = this.engine;
 
     // Access tracker system for test purposes
     // @ts-expect-error - Accessing private property for testing
-    const trackerSystem = this.engine.trackerSystem;
+    const { trackerSystem } = this.engine;
 
     return {
-      currentPhase: flowManager.getCurrentPhase(),
-      currentSegment: flowManager.getCurrentSegment(),
-      turnNumber: flowManager.getTurnNumber(),
-      currentPlayer: flowManager.getCurrentPlayer(),
-      otp: internalState?.otp,
       choosingFirstPlayer: internalState?.choosingFirstPlayer,
-      pendingMulligan: internalState?.pendingMulligan,
-      trackers: trackerSystem
-        ? {
-            check: (name: string, playerId: any) =>
-              trackerSystem.check(name, playerId),
-            mark: (name: string, playerId: any) =>
-              trackerSystem.mark(name, playerId),
-            unmark: (name: string, playerId: any) =>
-              trackerSystem.unmark(name, playerId),
-          }
-        : undefined,
+      currentPhase: flowManager.getCurrentPhase(),
+      currentPlayer: flowManager.getCurrentPlayer(),
+      currentSegment: flowManager.getCurrentSegment(),
       flow: {
         currentPhase: flowManager.getCurrentPhase(),
       },
+      otp: internalState?.otp,
+      pendingMulligan: internalState?.pendingMulligan,
+      trackers: trackerSystem
+        ? {
+            check: (name: string, playerId: any) => trackerSystem.check(name, playerId),
+            mark: (name: string, playerId: any) => trackerSystem.mark(name, playerId),
+            unmark: (name: string, playerId: any) => trackerSystem.unmark(name, playerId),
+          }
+        : undefined,
+      turnNumber: flowManager.getTurnNumber(),
     };
   }
 
@@ -355,7 +350,7 @@ export class GundamTestEngine {
     const segment = this.getGameSegment();
     if (segment === "startingAGame") {
       // No turn player during startingAGame until OTP is chosen
-      const otp = this.getCtx().otp;
+      const { otp } = this.getCtx();
       return otp;
     }
 
@@ -402,8 +397,8 @@ export class GundamTestEngine {
 
     // Execute on engine
     const result = this.engine.executeMove(moveId, {
-      playerId,
       params,
+      playerId,
     });
 
     if (!result.success) {
@@ -490,10 +485,7 @@ export class GundamTestEngine {
    * @returns Error information or null
    */
   whyCannotExecuteMove(moveId: string, params: any) {
-    return this.engine.whyCannotExecuteMove(
-      moveId as keyof GundamMoves,
-      params,
-    );
+    return this.engine.whyCannotExecuteMove(moveId as keyof GundamMoves, params);
   }
 
   // ========== Zone Access Helpers ==========
@@ -503,7 +495,7 @@ export class GundamTestEngine {
    */
   getZone(zoneId: string, playerId: string): string[] {
     // Access internal state directly (testing backdoor)
-    const internalState = (this.engine as any).internalState;
+    const { internalState } = this.engine as any;
 
     if (!internalState) {
       return [];
@@ -526,7 +518,7 @@ export class GundamTestEngine {
    */
   getDamage(cardId: string): number {
     // Access internal state directly (testing backdoor)
-    const internalState = (this.engine as any).internalState;
+    const { internalState } = this.engine as any;
 
     if (!internalState) {
       return 0;
@@ -542,7 +534,7 @@ export class GundamTestEngine {
    */
   getCardMeta(cardId: string): GundamCardMeta | undefined {
     // Access internal state directly (testing backdoor)
-    const internalState = (this.engine as any).internalState;
+    const { internalState } = this.engine as any;
 
     if (!internalState) {
       return undefined;
@@ -566,7 +558,7 @@ export class GundamTestEngine {
     stats: { ap?: number; hp?: number; cost?: number } = {},
   ): string {
     // Access internal state directly (testing backdoor)
-    const internalState = (this.engine as any).internalState;
+    const { internalState } = this.engine as any;
 
     if (!internalState) {
       throw new Error("Cannot access engine internal state for test setup");
@@ -584,27 +576,27 @@ export class GundamTestEngine {
     }
     internalState.zones["play"].cardIds.push(cardId);
     internalState.cards[cardId] = {
+      controller: pid,
       definitionId: "placeholder",
       owner: pid,
-      controller: pid,
-      zone: "play" as any,
       position: internalState.zones["play"].cardIds.length - 1,
+      zone: "play" as any,
     };
 
     // Add card definition to registry (modifying this.cardDefinitions which the registry wraps)
     this.cardDefinitions[cardId] = {
+      ap: stats.ap ?? 1,
+      hp: stats.hp ?? 1,
       id: cardId,
       name: "Test Character",
-      hp: stats.hp ?? 1,
-      ap: stats.ap ?? 1,
     };
 
     // Initialize card metadata (unit enters play ready to act)
     const cardOps = createCardOperations(internalState);
     cardOps.setCardMeta(createCardId(cardId), {
       damage: 0,
-      state: "ready",
-      isDrying: false, // Unit is active and can attack or act immediately
+      isDrying: false,
+      state: "ready", // Unit is active and can attack or act immediately
     } as any);
 
     return cardId;
@@ -617,7 +609,7 @@ export class GundamTestEngine {
    * Useful for test setup
    */
   moveCard(cardId: string, targetZone: string, playerId?: string) {
-    const internalState = (this.engine as any).internalState;
+    const { internalState } = this.engine as any;
     const zoneOps = createZoneOperations(internalState);
 
     zoneOps.moveCard({

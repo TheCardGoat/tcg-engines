@@ -4,10 +4,10 @@ export const magicBroomTheBigSweeper: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: 2,
+        stat: "strength",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "xj7-1",
       text: "CLEAN SWEEP While this character is at a location, it gets +2 {S}.",

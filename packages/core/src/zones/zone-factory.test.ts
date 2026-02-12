@@ -7,11 +7,11 @@ describe("Zone Factory", () => {
   describe("createZone", () => {
     it("should create a zone with valid configuration", () => {
       const config: CardZoneConfig = {
+        faceDown: true,
         id: createZoneId("deck"),
         name: "Deck",
-        visibility: "secret",
         ordered: true,
-        faceDown: true,
+        visibility: "secret",
       };
 
       const zone = createZone(config);
@@ -25,8 +25,8 @@ describe("Zone Factory", () => {
       const config: CardZoneConfig = {
         id: createZoneId("hand"),
         name: "Hand",
-        visibility: "private",
         ordered: false,
+        visibility: "private",
       };
 
       const initialCards = [createCardId("card-1"), createCardId("card-2")];
@@ -40,8 +40,8 @@ describe("Zone Factory", () => {
       const config: CardZoneConfig = {
         id: createZoneId("play"),
         name: "Play Area",
-        visibility: "public",
         ordered: false,
+        visibility: "public",
       };
 
       const zone = createZone(config);
@@ -57,10 +57,10 @@ describe("Zone Factory", () => {
     it("should validate maxSize when provided", () => {
       const config: CardZoneConfig = {
         id: createZoneId("hand"),
-        name: "Hand",
-        visibility: "private",
-        ordered: false,
         maxSize: 7,
+        name: "Hand",
+        ordered: false,
+        visibility: "private",
       };
 
       const zone = createZone(config);
@@ -70,17 +70,13 @@ describe("Zone Factory", () => {
     it("should throw error if initial cards exceed maxSize", () => {
       const config: CardZoneConfig = {
         id: createZoneId("hand"),
-        name: "Hand",
-        visibility: "private",
-        ordered: false,
         maxSize: 2,
+        name: "Hand",
+        ordered: false,
+        visibility: "private",
       };
 
-      const tooManyCards = [
-        createCardId("card-1"),
-        createCardId("card-2"),
-        createCardId("card-3"),
-      ];
+      const tooManyCards = [createCardId("card-1"), createCardId("card-2"), createCardId("card-3")];
 
       expect(() => createZone(config, tooManyCards)).toThrow(
         "Cannot create zone: initial cards (3) exceed maxSize (2)",
@@ -89,11 +85,11 @@ describe("Zone Factory", () => {
 
     it("should create ordered zone (deck)", () => {
       const config: CardZoneConfig = {
+        faceDown: true,
         id: createZoneId("deck"),
         name: "Deck",
-        visibility: "secret",
         ordered: true,
-        faceDown: true,
+        visibility: "secret",
       };
 
       const zone = createZone(config);
@@ -106,8 +102,8 @@ describe("Zone Factory", () => {
       const config: CardZoneConfig = {
         id: createZoneId("play"),
         name: "Play Area",
-        visibility: "public",
         ordered: false,
+        visibility: "public",
       };
 
       const zone = createZone(config);
@@ -120,9 +116,9 @@ describe("Zone Factory", () => {
       const config: CardZoneConfig = {
         id: createZoneId("hand"),
         name: "Hand",
-        visibility: "private",
         ordered: false,
         owner: playerId,
+        visibility: "private",
       };
 
       const zone = createZone(config);
@@ -134,8 +130,8 @@ describe("Zone Factory", () => {
       const config: CardZoneConfig = {
         id: createZoneId("graveyard"),
         name: "Graveyard",
-        visibility: "public",
         ordered: true,
+        visibility: "public",
       };
 
       const zone = createZone(config);
@@ -146,33 +142,29 @@ describe("Zone Factory", () => {
     it("should validate zone id is provided", () => {
       const invalidConfig = {
         name: "Test Zone",
-        visibility: "public",
         ordered: false,
+        visibility: "public",
       } as CardZoneConfig;
 
-      expect(() => createZone(invalidConfig)).toThrow(
-        "Zone configuration must include an id",
-      );
+      expect(() => createZone(invalidConfig)).toThrow("Zone configuration must include an id");
     });
 
     it("should validate zone name is provided", () => {
       const invalidConfig = {
         id: createZoneId("test"),
-        visibility: "public",
         ordered: false,
+        visibility: "public",
       } as CardZoneConfig;
 
-      expect(() => createZone(invalidConfig)).toThrow(
-        "Zone configuration must include a name",
-      );
+      expect(() => createZone(invalidConfig)).toThrow("Zone configuration must include a name");
     });
 
     it("should validate visibility is valid", () => {
       const invalidConfig = {
         id: createZoneId("test"),
         name: "Test Zone",
-        visibility: "invalid",
         ordered: false,
+        visibility: "invalid",
       } as unknown as CardZoneConfig;
 
       expect(() => createZone(invalidConfig)).toThrow(

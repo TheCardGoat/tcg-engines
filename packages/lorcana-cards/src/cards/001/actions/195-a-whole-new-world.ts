@@ -4,9 +4,9 @@ export const aWholeNewWorld: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "draw",
         amount: 7,
         target: "EACH_PLAYER",
+        type: "draw",
       },
       id: "u8m-1",
       text: "_(A character with cost 5 or more can {E} to sing this\nsong for free.)_\nEach player discards their hand and draws 7 cards.",

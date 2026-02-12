@@ -4,19 +4,19 @@ export const tinkerBellGiantFairy: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "deal-damage",
           amount: 1,
           target: {
-            selector: "all",
+            cardTypes: ["character"],
             count: "all",
             owner: "opponent",
+            selector: "all",
             zones: ["play"],
-            cardTypes: ["character"],
           },
+          type: "deal-damage",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "c3s-1",
       text: "**FAIRY DUST** When you play this character, you may deal 1 damage to each opposing character.",

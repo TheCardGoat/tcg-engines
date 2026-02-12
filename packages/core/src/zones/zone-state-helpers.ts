@@ -75,17 +75,10 @@ export function moveCardInState<
   const toZone = state[toZoneKey];
 
   if (!(fromZone && toZone)) {
-    throw new Error(
-      `Zone not found: ${fromZone ? String(toZoneKey) : String(fromZoneKey)}`,
-    );
+    throw new Error(`Zone not found: ${fromZone ? String(toZoneKey) : String(fromZoneKey)}`);
   }
 
-  const { fromZone: updatedFrom, toZone: updatedTo } = moveCard(
-    fromZone,
-    toZone,
-    cardId,
-    position,
-  );
+  const { fromZone: updatedFrom, toZone: updatedTo } = moveCard(fromZone, toZone, cardId, position);
 
   return {
     ...state,

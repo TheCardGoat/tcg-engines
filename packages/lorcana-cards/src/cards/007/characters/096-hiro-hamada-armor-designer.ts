@@ -13,9 +13,9 @@ export const hiroHamadaArmorDesigner: CharacterCard = {
     },
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Evasive",
         target: "YOUR_CHARACTERS",
+        type: "gain-keyword",
       },
       id: "zri-2",
       text: "YOU CAN BE WAY MORE Your Floodborn characters that have a card under them gain Evasive and Ward.",

@@ -13,11 +13,7 @@ import type { CardId, PlayerId } from "@tcg/core";
 import { attackMove } from "../../game-definition/moves/core/attack";
 import { deployUnitMove } from "../../moves/deploy-unit";
 import type { GundamGameState } from "../../types";
-import type {
-  DestroyAction,
-  EffectDefinition,
-  TargetingSpec,
-} from "../../types/effects";
+import type { DestroyAction, EffectDefinition, TargetingSpec } from "../../types/effects";
 import type { ActionContext } from "../action-handlers";
 import {
   clearCardDefinitions,
@@ -32,34 +28,34 @@ import {
 /** Creates a minimal game state for testing */
 function createMockGameState(players: PlayerId[]): GundamGameState {
   const state: GundamGameState = {
-    players,
     currentPlayer: players[0]!,
-    phase: "main",
-    turn: 1,
-    zones: {
-      deck: {},
-      resourceDeck: {},
-      hand: {},
-      battleArea: {},
-      shieldSection: {},
-      baseSection: {},
-      resourceArea: {},
-      trash: {},
-      removal: {},
-      limbo: {},
-    },
     gundam: {
-      cardPositions: {},
-      cardDamage: {},
       activeResources: {},
       attackedThisTurn: [],
+      cardDamage: {},
+      cardPositions: {},
       effectStack: {
-        stack: [],
         nextInstanceId: 0,
+        stack: [],
       },
-      temporaryModifiers: {},
-      revealedCards: [],
       hasPlayedResourceThisTurn: {},
+      revealedCards: [],
+      temporaryModifiers: {},
+    },
+    phase: "main",
+    players,
+    turn: 1,
+    zones: {
+      baseSection: {},
+      battleArea: {},
+      deck: {},
+      hand: {},
+      limbo: {},
+      removal: {},
+      resourceArea: {},
+      resourceDeck: {},
+      shieldSection: {},
+      trash: {},
     },
   } as GundamGameState;
 
@@ -123,58 +119,44 @@ function setupPlayerZones(
 }
 
 /** Sets up active resources for a player */
-function setupResources(
-  state: GundamGameState,
-  playerId: PlayerId,
-  amount: number,
-): void {
+function setupResources(state: GundamGameState, playerId: PlayerId, amount: number): void {
   state.gundam.activeResources[playerId] = amount;
 }
 
 /** Creates a card with deploy trigger effect */
-function createDeployTriggerCard(
-  cardId: CardId,
-  cost: number,
-  effects: EffectDefinition[],
-): void {
+function createDeployTriggerCard(cardId: CardId, cost: number, effects: EffectDefinition[]): void {
   registerCardDefinition(cardId, {
-    id: cardId,
-    name: `Deploy Trigger Unit ${cardId}`,
     cardType: "UNIT",
     cost,
-    level: 1,
     effects,
+    id: cardId,
+    level: 1,
+    name: `Deploy Trigger Unit ${cardId}`,
   });
 }
 
 /** Creates a card with attack trigger effect */
-function createAttackTriggerCard(
-  cardId: CardId,
-  effects: EffectDefinition[],
-): void {
+function createAttackTriggerCard(cardId: CardId, effects: EffectDefinition[]): void {
   registerCardDefinition(cardId, {
-    id: cardId,
-    name: `Attack Trigger Unit ${cardId}`,
     cardType: "UNIT",
     cost: 2,
-    level: 1,
     effects,
+    id: cardId,
+    level: 1,
+    name: `Attack Trigger Unit ${cardId}`,
   });
 }
 
 /** Creates a card with destroyed trigger effect */
-function createDestroyedTriggerCard(
-  cardId: CardId,
-  effects: EffectDefinition[],
-): void {
+function createDestroyedTriggerCard(cardId: CardId, effects: EffectDefinition[]): void {
   registerCardDefinition(cardId, {
-    id: cardId,
-    name: `Destroyed Trigger Unit ${cardId}`,
     cardType: "UNIT",
     cost: 2,
-    level: 1,
-    hp: 3,
     effects,
+    hp: 3,
+    id: cardId,
+    level: 1,
+    name: `Destroyed Trigger Unit ${cardId}`,
   });
 }
 
@@ -204,26 +186,26 @@ describe("Trigger Integration", () => {
 
       const cardId = "unit-deploy-trigger" as CardId;
       setupPlayerZones(state, player1, {
-        hand: [cardId],
         battleArea: [],
+        hand: [cardId],
       });
       setupResources(state, player1, 3);
 
       // Create a unit with deploy trigger
       const deployEffect: EffectDefinition = {
-        id: "deploy-effect",
+        actions: [{ count: 1, player: "self", type: "DRAW" }],
         category: "triggered",
-        timing: { type: "DEPLOY" },
-        actions: [{ type: "DRAW", count: 1, player: "self" }],
+        id: "deploy-effect",
         text: "When this unit deploys, draw 1 card",
+        timing: { type: "DEPLOY" },
       };
       createDeployTriggerCard(cardId, 2, [deployEffect]);
 
       // Execute deploy move
       const initialStackSize = state.gundam.effectStack.stack.length;
       deployUnitMove.reducer(state, {
-        playerId: player1,
         params: { cardId },
+        playerId: player1,
       } as any);
 
       // Verify effect was enqueued
@@ -241,25 +223,25 @@ describe("Trigger Integration", () => {
       const existingCard = "unit-002" as CardId;
 
       setupPlayerZones(state, player1, {
-        hand: [deployingCard],
         battleArea: [existingCard],
+        hand: [deployingCard],
       });
       setupResources(state, player1, 5);
 
       // Both cards have deploy triggers
       const deployEffect1: EffectDefinition = {
-        id: "deploy-effect-1",
-        category: "triggered",
-        timing: { type: "DEPLOY" },
         actions: [],
+        category: "triggered",
+        id: "deploy-effect-1",
         text: "Deploy effect 1",
+        timing: { type: "DEPLOY" },
       };
       const deployEffect2: EffectDefinition = {
-        id: "deploy-effect-2",
-        category: "triggered",
-        timing: { type: "DEPLOY" },
         actions: [],
+        category: "triggered",
+        id: "deploy-effect-2",
         text: "Deploy effect 2",
+        timing: { type: "DEPLOY" },
       };
 
       createDeployTriggerCard(deployingCard, 2, [deployEffect1]);
@@ -267,8 +249,8 @@ describe("Trigger Integration", () => {
 
       const initialStackSize = getEffectStackSize(state);
       deployUnitMove.reducer(state, {
-        playerId: player1,
         params: { cardId: deployingCard },
+        playerId: player1,
       } as any);
 
       // Both effects should be enqueued
@@ -284,8 +266,8 @@ describe("Trigger Integration", () => {
       const opponentCard = "unit-002" as CardId;
 
       setupPlayerZones(state, player1, {
-        hand: [deployingCard],
         battleArea: [],
+        hand: [deployingCard],
       });
       setupPlayerZones(state, player2, {
         battleArea: [opponentCard],
@@ -294,18 +276,18 @@ describe("Trigger Integration", () => {
 
       // Both cards have deploy triggers
       const deployEffect1: EffectDefinition = {
-        id: "deploy-effect-1",
-        category: "triggered",
-        timing: { type: "DEPLOY" },
         actions: [],
+        category: "triggered",
+        id: "deploy-effect-1",
         text: "Deploy effect 1",
+        timing: { type: "DEPLOY" },
       };
       const deployEffect2: EffectDefinition = {
-        id: "deploy-effect-2",
-        category: "triggered",
-        timing: { type: "DEPLOY" },
         actions: [],
+        category: "triggered",
+        id: "deploy-effect-2",
         text: "Deploy effect 2",
+        timing: { type: "DEPLOY" },
       };
 
       createDeployTriggerCard(deployingCard, 2, [deployEffect1]);
@@ -313,8 +295,8 @@ describe("Trigger Integration", () => {
 
       const initialStackSize = getEffectStackSize(state);
       deployUnitMove.reducer(state, {
-        playerId: player1,
         params: { cardId: deployingCard },
+        playerId: player1,
       } as any);
 
       // Both effects should be enqueued
@@ -338,18 +320,18 @@ describe("Trigger Integration", () => {
 
       // Create attacker with attack trigger
       const attackEffect: EffectDefinition = {
-        id: "attack-effect",
+        actions: [{ count: 1, player: "self", type: "DRAW" }],
         category: "triggered",
-        timing: { type: "ATTACK" },
-        actions: [{ type: "DRAW", count: 1, player: "self" }],
+        id: "attack-effect",
         text: "When this unit attacks, draw 1 card",
+        timing: { type: "ATTACK" },
       };
       createAttackTriggerCard(attackerId, [attackEffect]);
 
       const initialStackSize = getEffectStackSize(state);
       attackMove.reducer(state, {
-        playerId: player1,
         params: { attackerId },
+        playerId: player1,
       } as any);
 
       // Verify effect was enqueued
@@ -369,11 +351,11 @@ describe("Trigger Integration", () => {
 
       // Create card with destroyed trigger
       const destroyedEffect: EffectDefinition = {
-        id: "destroyed-effect",
+        actions: [{ count: 1, player: "self", type: "DRAW" }],
         category: "triggered",
-        timing: { type: "DESTROYED" },
-        actions: [{ type: "DRAW", count: 1, player: "self" }],
+        id: "destroyed-effect",
         text: "When this unit is destroyed, draw 1 card",
+        timing: { type: "DESTROYED" },
       };
       createDestroyedTriggerCard(destroyedCard, [destroyedEffect]);
 
@@ -381,17 +363,17 @@ describe("Trigger Integration", () => {
 
       // Execute destroy action with proper TargetingSpec
       const destroyAction: DestroyAction = {
-        type: "DESTROY",
         target: {
-          count: 1,
-          validTargets: [{ type: "card", owner: "any" }],
           chooser: "controller",
+          count: 1,
           timing: "on_resolution",
+          validTargets: [{ owner: "any", type: "card" }],
         },
+        type: "DESTROY",
       };
       const actionContext: ActionContext = {
-        sourceCardId: destroyedCard,
         controllerId: player1,
+        sourceCardId: destroyedCard,
         targets: [destroyedCard],
       };
       handleDestroyAction(state, destroyAction, actionContext);
@@ -399,9 +381,7 @@ describe("Trigger Integration", () => {
       // Verify effect was enqueued
       expect(getEffectStackSize(state)).toBe(initialStackSize + 1);
       expect(state.zones.trash[player1].cards).toContain(destroyedCard);
-      expect(state.zones.battleArea[player1].cards).not.toContain(
-        destroyedCard,
-      );
+      expect(state.zones.battleArea[player1].cards).not.toContain(destroyedCard);
     });
 
     it("should detect destroyed triggers from multiple cards", () => {
@@ -416,18 +396,18 @@ describe("Trigger Integration", () => {
 
       // Both cards have destroyed triggers
       const destroyedEffect1: EffectDefinition = {
-        id: "destroyed-effect-1",
-        category: "triggered",
-        timing: { type: "DESTROYED" },
         actions: [],
+        category: "triggered",
+        id: "destroyed-effect-1",
         text: "Destroyed effect 1",
+        timing: { type: "DESTROYED" },
       };
       const destroyedEffect2: EffectDefinition = {
-        id: "destroyed-effect-2",
-        category: "triggered",
-        timing: { type: "DESTROYED" },
         actions: [],
+        category: "triggered",
+        id: "destroyed-effect-2",
         text: "Destroyed effect 2",
+        timing: { type: "DESTROYED" },
       };
 
       createDestroyedTriggerCard(destroyedCard, [destroyedEffect1]);
@@ -437,17 +417,17 @@ describe("Trigger Integration", () => {
 
       // Execute destroy action with proper TargetingSpec
       const destroyAction: DestroyAction = {
-        type: "DESTROY",
         target: {
-          count: 1,
-          validTargets: [{ type: "card", owner: "any" }],
           chooser: "controller",
+          count: 1,
           timing: "on_resolution",
+          validTargets: [{ owner: "any", type: "card" }],
         },
+        type: "DESTROY",
       };
       const actionContext: ActionContext = {
-        sourceCardId: destroyedCard,
         controllerId: player1,
+        sourceCardId: destroyedCard,
         targets: [destroyedCard],
       };
       handleDestroyAction(state, destroyAction, actionContext);
@@ -467,8 +447,8 @@ describe("Trigger Integration", () => {
       const opponentCard = "unit-002" as CardId;
 
       setupPlayerZones(state, player1, {
-        hand: [deployingCard],
         battleArea: [],
+        hand: [deployingCard],
       });
       setupPlayerZones(state, player2, {
         battleArea: [opponentCard],
@@ -477,26 +457,26 @@ describe("Trigger Integration", () => {
 
       // Both cards have deploy triggers
       const deployEffect1: EffectDefinition = {
-        id: "deploy-effect-1",
-        category: "triggered",
-        timing: { type: "DEPLOY" },
         actions: [],
+        category: "triggered",
+        id: "deploy-effect-1",
         text: "Deploy effect 1",
+        timing: { type: "DEPLOY" },
       };
       const deployEffect2: EffectDefinition = {
-        id: "deploy-effect-2",
-        category: "triggered",
-        timing: { type: "DEPLOY" },
         actions: [],
+        category: "triggered",
+        id: "deploy-effect-2",
         text: "Deploy effect 2",
+        timing: { type: "DEPLOY" },
       };
 
       createDeployTriggerCard(deployingCard, 2, [deployEffect1]);
       createDeployTriggerCard(opponentCard, 2, [deployEffect2]);
 
       deployUnitMove.reducer(state, {
-        playerId: player1,
         params: { cardId: deployingCard },
+        playerId: player1,
       } as any);
 
       // Both effects should be enqueued

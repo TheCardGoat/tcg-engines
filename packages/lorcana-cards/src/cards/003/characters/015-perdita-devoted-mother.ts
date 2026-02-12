@@ -4,13 +4,13 @@ export const perditaDevotedMother: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
-        effect: {
-          type: "play-card",
-          from: "discard",
-          cost: "free",
-        },
         chooser: "CONTROLLER",
+        effect: {
+          cost: "free",
+          from: "discard",
+          type: "play-card",
+        },
+        type: "optional",
       },
       id: "1dc-1",
       text: "COME ALONG, CHILDREN When you play this character and whenever she quests, you may play a character with cost 2 or less from your discard for free.",

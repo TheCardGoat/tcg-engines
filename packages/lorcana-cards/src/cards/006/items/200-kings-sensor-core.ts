@@ -4,9 +4,9 @@ export const kingsSensorCore: ItemCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Resist",
         target: "CHOSEN_CHARACTER",
+        type: "gain-keyword",
         value: 1,
       },
       id: "1jp-1",
@@ -16,8 +16,8 @@ export const kingsSensorCore: ItemCard = {
     },
     {
       effect: {
-        type: "reveal-top-card",
         target: "CONTROLLER",
+        type: "reveal-top-card",
       },
       id: "1jp-2",
       text: "ROYAL SEARCH {E}, 2 {I} – Reveal the top card of your deck. If it's a Prince or King character card, you may put that card into your hand. Otherwise, put it on the top of your deck.",

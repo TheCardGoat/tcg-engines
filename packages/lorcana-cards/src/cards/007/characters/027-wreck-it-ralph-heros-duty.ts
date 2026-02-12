@@ -4,19 +4,19 @@ export const wreckitRalphHerosDuty: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "lore",
-        modifier: 1,
-        target: "SELF",
         duration: "this-turn",
+        modifier: 1,
+        stat: "lore",
+        target: "SELF",
+        type: "modify-stat",
       },
       id: "1p2-1",
       name: "OUTFLANK",
       text: "OUTFLANK During your turn, whenever one of your other characters is banished, this character gets +1 {L} this turn.",
       trigger: {
         event: "banish",
-        timing: "whenever",
         on: "YOUR_OTHER_CHARACTERS",
+        timing: "whenever",
       },
       type: "triggered",
     },

@@ -5,25 +5,25 @@ export const ursulasCauldron: ItemCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "scry",
             amount: 2,
-            target: "CONTROLLER",
             destinations: [
               {
-                zone: "deck-bottom",
-                remainder: true,
                 ordering: "player-choice",
+                remainder: true,
+                zone: "deck-bottom",
               },
             ],
+            target: "CONTROLLER",
+            type: "scry",
           },
           {
-            type: "put-on-bottom",
             target: "CHOSEN_CHARACTER",
+            type: "put-on-bottom",
           },
         ],
+        type: "sequence",
       },
       id: "1ad-1",
       text: "PEER INTO THE DEPTHS {E} — Look at the top 2 cards of your deck. Put one on the top of your deck and the other on the bottom.",

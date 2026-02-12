@@ -38,10 +38,9 @@ import type { RuleEngine } from "../engine/rule-engine";
  * expectDeterministicReplay(engine);
  * ```
  */
-export function expectDeterministicReplay<
-  TState,
-  TMoves extends Record<string, any>,
->(engine: RuleEngine<TState, TMoves>): void {
+export function expectDeterministicReplay<TState, TMoves extends Record<string, any>>(
+  engine: RuleEngine<TState, TMoves>,
+): void {
   // Get current state
   const originalState = engine.getState();
 
@@ -83,9 +82,7 @@ function findStateDifferences(original: any, replayed: any): string {
 
   const findDiffs = (obj1: any, obj2: any, path = "") => {
     if (typeof obj1 !== typeof obj2) {
-      differences.push(
-        `${path || "root"}: type mismatch (${typeof obj1} vs ${typeof obj2})`,
-      );
+      differences.push(`${path || "root"}: type mismatch (${typeof obj1} vs ${typeof obj2})`);
       return;
     }
 
@@ -114,8 +111,8 @@ function findStateDifferences(original: any, replayed: any): string {
     }
 
     // Check objects
-    const keys1 = Object.keys(obj1).sort();
-    const keys2 = Object.keys(obj2).sort();
+    const keys1 = Object.keys(obj1).toSorted();
+    const keys2 = Object.keys(obj2).toSorted();
 
     const allKeys = new Set([...keys1, ...keys2]);
 

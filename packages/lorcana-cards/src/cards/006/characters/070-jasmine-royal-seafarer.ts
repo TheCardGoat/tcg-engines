@@ -4,9 +4,9 @@ export const jasmineRoyalSeafarer: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Reckless",
         target: "CHOSEN_CHARACTER",
+        type: "gain-keyword",
       },
       id: "1pj-3",
       text: "* Chosen opposing character gains Reckless during their next turn.",

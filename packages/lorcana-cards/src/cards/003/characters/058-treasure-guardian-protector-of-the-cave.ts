@@ -4,9 +4,9 @@ export const treasureGuardianProtectorOfTheCave: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "restriction",
         restriction: "cant-challenge",
         target: "SELF",
+        type: "restriction",
       },
       id: "1bw-1",
       name: "WHO DISTURBS MY SLUMBER?",

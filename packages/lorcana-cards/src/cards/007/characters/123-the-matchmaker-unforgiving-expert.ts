@@ -4,17 +4,17 @@ export const theMatchmakerUnforgivingExpert: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "lose-lore",
         amount: 1,
         target: "EACH_OPPONENT",
+        type: "lose-lore",
       },
       id: "fhg-1",
       name: "YOU ARE A DISGRACE!",
       text: "YOU ARE A DISGRACE! Whenever this character challenges another character, each opponent loses 1 lore.",
       trigger: {
         event: "challenge",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

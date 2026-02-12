@@ -4,9 +4,9 @@ export const megaraPartOfThePlan: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Challenger",
         target: "SELF",
+        type: "gain-keyword",
         value: 2,
       },
       id: "d0s-1",

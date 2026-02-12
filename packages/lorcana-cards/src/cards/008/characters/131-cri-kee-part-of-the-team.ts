@@ -4,10 +4,10 @@ export const crikeePartOfTheTeam: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "lore",
         modifier: 2,
+        stat: "lore",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "17k-1",
       text: "AT HER SIDE While you have 2 or more other exerted characters in play, this character gets +2 {L}.",

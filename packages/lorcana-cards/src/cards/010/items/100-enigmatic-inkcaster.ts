@@ -5,15 +5,15 @@ export const enigmaticInkcaster: ItemCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you've played 2 or more cards this turn",
+          type: "if",
         },
         then: {
-          type: "gain-lore",
           amount: 1,
+          type: "gain-lore",
         },
+        type: "conditional",
       },
       id: "pr8-1",
       text: "ITS OWN REWARD {E} — If you've played 2 or more cards this turn, gain 1 lore.",

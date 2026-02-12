@@ -4,14 +4,14 @@ export const shenziHeadHyena: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: {
-          type: "classification-character-count",
           classification: "Hyena",
           controller: "you",
+          type: "classification-character-count",
         },
+        stat: "strength",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "19k-1",
       name: "STICK AROUND FOR DINNER",
@@ -20,23 +20,23 @@ export const shenziHeadHyena: CharacterCard = {
     },
     {
       effect: {
-        type: "gain-lore",
         amount: 0,
+        type: "gain-lore",
       },
       id: "19k-2",
       name: "WHAT HAVE WE GOT HERE?",
       text: "WHAT HAVE WE GOT HERE? Whenever one of your Hyena characters challenges a damaged character, gain 2 lore.",
       trigger: {
-        event: "challenge",
-        timing: "whenever",
-        on: {
-          controller: "you",
-          classification: "Hyena",
-        },
         challengeContext: {
-          role: "attacker",
           filters: [{ type: "damaged" }],
+          role: "attacker",
         },
+        event: "challenge",
+        on: {
+          classification: "Hyena",
+          controller: "you",
+        },
+        timing: "whenever",
       },
       type: "triggered",
     },

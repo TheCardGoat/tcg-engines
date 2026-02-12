@@ -4,19 +4,19 @@ export const grandCouncilwomanFederationLeader: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "lore",
-        modifier: 1,
-        target: "SELF",
         duration: "this-turn",
+        modifier: 1,
+        stat: "lore",
+        target: "SELF",
+        type: "modify-stat",
       },
       id: "zvy-1",
       name: "FIND IT!",
       text: "FIND IT! Whenever this character quests, your other Alien characters get +1 {L} this turn.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

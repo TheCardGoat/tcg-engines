@@ -4,12 +4,12 @@ export const marshmallowPersistentGuardian: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
-        effect: {
-          type: "return-to-hand",
-          target: "SELF",
-        },
         chooser: "CONTROLLER",
+        effect: {
+          target: "SELF",
+          type: "return-to-hand",
+        },
+        type: "optional",
       },
       id: "it5-1",
       text: "**DURABLE** When this character is banished in a challenge, you may return this card to your hand.",

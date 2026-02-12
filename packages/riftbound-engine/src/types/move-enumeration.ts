@@ -17,9 +17,7 @@ export interface AvailableMoveInfo {
 /**
  * Options for move parameters
  */
-export interface MoveParameterOptions {
-  readonly [key: string]: ParameterInfo;
-}
+export type MoveParameterOptions = Readonly<Record<string, ParameterInfo>>;
 
 /**
  * Information about a single parameter

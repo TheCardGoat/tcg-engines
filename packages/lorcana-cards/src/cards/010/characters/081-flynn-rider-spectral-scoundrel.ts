@@ -11,10 +11,10 @@ export const flynnRiderSpectralScoundrel: CharacterCard = {
     },
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: 2,
+        stat: "strength",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "73r-2",
       text: "I'LL TAKE THAT As long as this character has at least one card under it, it gets +2 {S} and +1 {L}.",

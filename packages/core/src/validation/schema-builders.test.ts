@@ -37,7 +37,7 @@ describe("schema-builders", () => {
 
       const invalidCard = {
         id: "dragon-1",
-        // missing name
+        // Missing name
         type: "creature",
       };
 
@@ -47,19 +47,19 @@ describe("schema-builders", () => {
 
     it("should support optional fields", () => {
       const schema = createCardSchema({
+        basePower: z.number().optional(),
+        baseToughness: z.number().optional(),
         id: z.string(),
         name: z.string(),
         type: z.string(),
-        basePower: z.number().optional(),
-        baseToughness: z.number().optional(),
       });
 
       const cardWithOptional = {
+        basePower: 5,
+        baseToughness: 5,
         id: "dragon-1",
         name: "Dragon",
         type: "creature",
-        basePower: 5,
-        baseToughness: 5,
       };
 
       const cardWithoutOptional = {
@@ -87,11 +87,11 @@ describe("schema-builders", () => {
       });
 
       const validCard = {
+        basePower: 5,
+        baseToughness: 5,
         id: "dragon-1",
         name: "Dragon",
         type: "creature",
-        basePower: 5,
-        baseToughness: 5,
       };
 
       const result = extendedSchema.safeParse(validCard);
@@ -126,17 +126,17 @@ describe("schema-builders", () => {
       });
 
       const schema2 = createCardSchema({
-        type: z.string(),
         cost: z.number(),
+        type: z.string(),
       });
 
       const merged = mergeSchemas(schema1, schema2);
 
       const validCard = {
+        cost: 5,
         id: "dragon-1",
         name: "Dragon",
         type: "creature",
-        cost: 5,
       };
 
       expect(merged.safeParse(validCard).success).toBe(true);
@@ -162,9 +162,9 @@ describe("schema-builders", () => {
       const validCard = {
         id: "dragon-1",
         name: "Dragon",
-        type: "creature",
         power: 5,
         toughness: 5,
+        type: "creature",
       };
 
       expect(merged.safeParse(validCard).success).toBe(true);
@@ -223,7 +223,7 @@ describe("schema-builders", () => {
 
       const partialCard = {
         id: "dragon-1",
-        // missing name and type
+        // Missing name and type
       };
 
       expect(optionalSchema.safeParse(partialCard).success).toBe(true);
@@ -239,7 +239,7 @@ describe("schema-builders", () => {
 
       const invalidCard = {
         id: "dragon-1",
-        power: "not-a-number", // wrong type
+        power: "not-a-number", // Wrong type
       };
 
       expect(optionalSchema.safeParse(invalidCard).success).toBe(false);
@@ -254,9 +254,9 @@ describe("schema-builders", () => {
       });
 
       const cardWithExtra = {
+        extraField: "not allowed",
         id: "dragon-1",
         name: "Dragon",
-        extraField: "not allowed",
       };
 
       const result = schema.safeParse(cardWithExtra);
@@ -281,21 +281,21 @@ describe("schema-builders", () => {
   describe("game-specific schemas", () => {
     it("should create Gundam card schema", () => {
       const gundamCardSchema = createCardSchema({
+        cost: z.number().min(0),
+        deployText: z.string().optional(),
         id: z.string(),
         name: z.string(),
-        type: z.enum(["unit", "command", "character", "base"]),
-        cost: z.number().min(0),
         power: z.number().min(0).optional(),
-        deployText: z.string().optional(),
+        type: z.enum(["unit", "command", "character", "base"]),
       });
 
       const validGundamCard = {
+        cost: 6,
+        deployText: "【Deploy】Draw 2 cards",
         id: "gundam-1",
         name: "RX-78-2 Gundam",
-        type: "unit",
-        cost: 6,
         power: 7,
-        deployText: "【Deploy】Draw 2 cards",
+        type: "unit",
       };
 
       expect(gundamCardSchema.safeParse(validGundamCard).success).toBe(true);
@@ -303,25 +303,25 @@ describe("schema-builders", () => {
 
     it("should create Lorcana card schema", () => {
       const lorcanaCardSchema = createCardSchema({
-        id: z.string(),
-        name: z.string(),
-        type: z.enum(["character", "action", "item", "location"]),
         cost: z.number().min(0),
+        id: z.string(),
         inkable: z.boolean(),
-        strength: z.number().optional(),
-        willpower: z.number().optional(),
         lore: z.number().optional(),
+        name: z.string(),
+        strength: z.number().optional(),
+        type: z.enum(["character", "action", "item", "location"]),
+        willpower: z.number().optional(),
       });
 
       const validLorcanaCard = {
-        id: "mickey-1",
-        name: "Mickey Mouse - Brave Little Tailor",
-        type: "character",
         cost: 5,
+        id: "mickey-1",
         inkable: true,
-        strength: 4,
-        willpower: 5,
         lore: 2,
+        name: "Mickey Mouse - Brave Little Tailor",
+        strength: 4,
+        type: "character",
+        willpower: 5,
       };
 
       expect(lorcanaCardSchema.safeParse(validLorcanaCard).success).toBe(true);
@@ -344,9 +344,9 @@ describe("schema-builders", () => {
       const validCreature = {
         id: "dragon-1",
         name: "Dragon",
-        type: "creature",
         power: 5,
         toughness: 5,
+        type: "creature",
       };
 
       expect(creatureSchema.safeParse(validCreature).success).toBe(true);
@@ -369,10 +369,10 @@ describe("schema-builders", () => {
       const fullSchema = composeSchemas([baseSchema, typeSchema, costSchema]);
 
       const validCard = {
+        cost: 5,
         id: "dragon-1",
         name: "Dragon",
         type: "creature",
-        cost: 5,
       };
 
       expect(fullSchema.safeParse(validCard).success).toBe(true);

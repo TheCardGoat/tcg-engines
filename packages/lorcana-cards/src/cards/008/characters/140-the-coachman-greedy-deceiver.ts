@@ -4,20 +4,20 @@ export const theCoachmanGreedyDeceiver: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "modify-stat",
-            stat: "strength",
             modifier: 2,
+            stat: "strength",
             target: "SELF",
+            type: "modify-stat",
           },
           {
-            type: "gain-keyword",
             keyword: "Evasive",
             target: "SELF",
+            type: "gain-keyword",
           },
         ],
+        type: "sequence",
       },
       id: "1ym-1",
       text: "WILD RIDE While 2 or more characters of yours are exerted, this character gets +2 {S} and gains Evasive.",

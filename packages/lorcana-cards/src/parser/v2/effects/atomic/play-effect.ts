@@ -25,12 +25,8 @@ function parseFromText(text: string): PlayCardEffect | null {
   // Check for "play from discard"
   if (playFromDiscardPattern.test(text)) {
     const isFree = text.includes("for free");
-    const cardTypeMatch = text.match(
-      /play\s+(?:a\s+)?(\w+)\s+(?:card\s+)?from/i,
-    );
-    const cardTypeStr = cardTypeMatch
-      ? cardTypeMatch[1].toLowerCase()
-      : undefined;
+    const cardTypeMatch = text.match(/play\s+(?:a\s+)?(\w+)\s+(?:card\s+)?from/i);
+    const cardTypeStr = cardTypeMatch ? cardTypeMatch[1].toLowerCase() : undefined;
     const cardType = cardTypeStr ? parseCardType(cardTypeStr) : undefined;
 
     logger.info("Parsed play from discard effect", { cardType, isFree });
@@ -98,8 +94,7 @@ function parseFromText(text: string): PlayCardEffect | null {
  * Play effect parser implementation
  */
 export const playEffectParser: EffectParser = {
-  description:
-    "Parses play card effects (e.g., 'play a character for free', 'play from discard')",
+  description: "Parses play card effects (e.g., 'play a character for free', 'play from discard')",
   parse: (input: CstNode | string): PlayCardEffect | null => {
     if (typeof input === "string") {
       return parseFromText(input);
@@ -109,6 +104,5 @@ export const playEffectParser: EffectParser = {
     return null;
   },
 
-  pattern:
-    /play\s+(?:a\s+)?(?:character|action|item|card)|play\s+.*?from\s+discard/i,
+  pattern: /play\s+(?:a\s+)?(?:character|action|item|card)|play\s+.*?from\s+discard/i,
 };

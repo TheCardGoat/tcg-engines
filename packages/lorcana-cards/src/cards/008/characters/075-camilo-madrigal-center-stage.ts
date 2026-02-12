@@ -4,16 +4,16 @@ export const camiloMadrigalCenterStage: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "return-to-hand",
         target: "SELF",
+        type: "return-to-hand",
       },
       id: "p4d-1",
       name: "ENCORE! ENCORE!",
       text: "ENCORE! ENCORE! When this character is banished in a challenge, return this card to your hand.",
       trigger: {
         event: "banish",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

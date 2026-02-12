@@ -14,9 +14,9 @@ export const madamMimRivalOfMerlin: CharacterCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "gain-keyword",
         keyword: "Rush",
         target: "CHOSEN_CHARACTER",
+        type: "gain-keyword",
       },
       id: "dz2-2",
       text: "GRUESOME AND GRIM {E} — Play a character with cost 4 or less for free. They gain Rush. At the end of the turn, banish them.",

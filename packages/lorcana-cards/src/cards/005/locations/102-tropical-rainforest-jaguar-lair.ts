@@ -4,9 +4,9 @@ export const tropicalRainforestJaguarLair: LocationCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Reckless",
         target: "CHOSEN_CHARACTER",
+        type: "gain-keyword",
       },
       id: "n0b-1",
       name: "SNACK TIME Opposing damaged",

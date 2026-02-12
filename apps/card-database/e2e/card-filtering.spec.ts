@@ -12,14 +12,10 @@ test.describe("Card Database", () => {
     await expect(page.getByText("Results")).toBeVisible();
 
     // Check for the "Lorcana Database" header
-    await expect(
-      page.getByRole("heading", { name: "Lorcana Database" }),
-    ).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Lorcana Database" })).toBeVisible();
 
     // Check internal count matches visual indication (approximate check usually, but here we can check text)
-    const resultsText = await page
-      .getByText(/Results \d+/, { exact: false })
-      .textContent();
+    const resultsText = await page.getByText(/Results \d+/, { exact: false }).textContent();
     // Expect "Results 1865" or similar number
     expect(resultsText).toMatch(/Results \d+/);
   });
@@ -31,16 +27,12 @@ test.describe("Card Database", () => {
     await page.getByTestId("filter-ink-ruby").click({ force: true });
 
     // Wait for list to update
-    await expect(page.getByText(/Results \d+/)).not.toHaveText(
-      initialCountStr || "",
-    );
+    await expect(page.getByText(/Results \d+/)).not.toHaveText(initialCountStr || "");
 
     const newCountStr = await page.getByText(/Results \d+/).textContent();
     const newCount = Number.parseInt(newCountStr?.split(" ")[1] || "0");
 
-    expect(newCount).toBeLessThan(
-      Number.parseInt(initialCountStr?.split(" ")[1] || "0"),
-    );
+    expect(newCount).toBeLessThan(Number.parseInt(initialCountStr?.split(" ")[1] || "0"));
     expect(newCount).toBeGreaterThan(0);
   });
 
@@ -71,9 +63,7 @@ test.describe("Card Database", () => {
     await expect(page.getByText(/Results \d+/)).toBeVisible();
 
     // Check that at least one result has "Stitch" visible
-    await expect(
-      page.locator(".group").filter({ hasText: "Stitch" }).first(),
-    ).toBeVisible();
+    await expect(page.locator(".group").filter({ hasText: "Stitch" }).first()).toBeVisible();
   });
 
   test("should support AND logic with multiple filters", async ({ page }) => {

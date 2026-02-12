@@ -10,23 +10,23 @@ export const bagheeraGuardianJaguar: CharacterCard = {
     },
     {
       effect: {
-        type: "deal-damage",
         amount: 2,
         target: {
-          selector: "all",
+          cardTypes: ["character"],
           count: "all",
           owner: "opponent",
+          selector: "all",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "deal-damage",
       },
       id: "132-2",
       name: "YOU MUST BE BRAVE",
       text: "YOU MUST BE BRAVE When this character is banished during an opponent's turn, deal 2 damage to each opposing character.",
       trigger: {
         event: "banish",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

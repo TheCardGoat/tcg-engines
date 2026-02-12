@@ -4,8 +4,8 @@ export const snowWhiteUnexpectedHouseguest: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "play-card",
         from: "hand",
+        type: "play-card",
       },
       id: "1sk-1",
       text: "HOW DO YOU DO? You pay 1 {I} less to play Seven Dwarfs characters.",

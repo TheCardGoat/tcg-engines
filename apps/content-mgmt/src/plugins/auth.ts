@@ -1,9 +1,5 @@
 import { Elysia } from "elysia";
-import {
-  type AuthPayload,
-  extractBearerToken,
-  verifyAuthToken,
-} from "../lib/auth-verify";
+import { type AuthPayload, extractBearerToken, verifyAuthToken } from "../lib/auth-verify";
 import { UnauthorizedError } from "../lib/errors";
 
 /**
@@ -23,9 +19,9 @@ export interface AuthUser {
  * Valid subscription tiers
  */
 export const SUBSCRIPTION_TIERS = {
+  admin: 2,
   free: 0,
   premium: 1,
-  admin: 2,
 } as const;
 
 export type SubscriptionTier = keyof typeof SUBSCRIPTION_TIERS;
@@ -35,8 +31,8 @@ export type SubscriptionTier = keyof typeof SUBSCRIPTION_TIERS;
  */
 function payloadToUser(payload: AuthPayload): AuthUser {
   return {
-    id: payload.id,
     email: payload.email,
+    id: payload.id,
     name: payload.name,
     subscriptionTier: payload.subscriptionTier,
   };
@@ -72,6 +68,21 @@ export const authPlugin = new Elysia({ name: "content-auth" })
      * When `auth: false` or not set, authentication is skipped entirely.
      */
     auth: (required: boolean) => ({
+      async beforeHandle({
+        user,
+        set,
+      }: {
+        user?: AuthUser | null;
+        set: { status?: number | string };
+      }) {
+        if (required && !user) {
+          set.status = 401;
+          return {
+            error: "UNAUTHORIZED",
+            message: "Authentication required",
+          };
+        }
+      },
       async resolve({ request }: { request: Request }) {
         // Skip authentication entirely for non-protected routes
         if (!required) {
@@ -94,21 +105,6 @@ export const authPlugin = new Elysia({ name: "content-auth" })
         return {
           user: payloadToUser(payload),
         };
-      },
-      async beforeHandle({
-        user,
-        set,
-      }: {
-        user?: AuthUser | null;
-        set: { status?: number | string };
-      }) {
-        if (required && !user) {
-          set.status = 401;
-          return {
-            error: "UNAUTHORIZED",
-            message: "Authentication required",
-          };
-        }
       },
     }),
   })
@@ -134,10 +130,7 @@ export const authPlugin = new Elysia({ name: "content-auth" })
  * })
  * ```
  */
-export function requireAuth(
-  user: AuthUser | null,
-  set: { status?: number | string },
-): AuthUser {
+export function requireAuth(user: AuthUser | null, set: { status?: number | string }): AuthUser {
   if (!user) {
     set.status = 401;
     throw new UnauthorizedError();
@@ -152,10 +145,7 @@ export function requireAuth(
  * @param requiredTier - Required subscription tier
  * @returns True if user has required tier or higher
  */
-export function hasSubscriptionTier(
-  user: AuthUser,
-  requiredTier: SubscriptionTier,
-): boolean {
+export function hasSubscriptionTier(user: AuthUser, requiredTier: SubscriptionTier): boolean {
   const userTierName = user.subscriptionTier || "free";
 
   // Validate that userTier is a known tier

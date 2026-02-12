@@ -4,9 +4,9 @@ export const doItAgain: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "return-from-discard",
         cardType: "action",
         target: "CONTROLLER",
+        type: "return-from-discard",
       },
       id: "8s5-1",
       text: "Return an action card from your discard to your hand.",

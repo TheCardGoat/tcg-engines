@@ -39,9 +39,7 @@ function parseKeywordWithValue(text: string): {
   value?: number;
 } | null {
   // Check for parameterized keywords: "Challenger +X" or "Resist +X"
-  const challengerMatch = text.match(
-    /Challenger\s*\+(\d+|\{d\})(?:\s+(.+))?$/i,
-  );
+  const challengerMatch = text.match(/Challenger\s*\+(\d+|\{d\})(?:\s+(.+))?$/i);
   if (challengerMatch) {
     const value = parseNumericValue(challengerMatch[1]);
     const condition = challengerMatch[2]?.trim();
@@ -108,9 +106,7 @@ function parseFromCst(
   logger.debug("Attempting to parse keyword effect from CST", { ctx });
 
   if (!(ctx && ctx.Identifier) || ctx.Identifier.length === 0) {
-    logger.debug(
-      "Keyword effect CST missing Identifier token or invalid context",
-    );
+    logger.debug("Keyword effect CST missing Identifier token or invalid context");
     return null;
   }
 
@@ -138,9 +134,7 @@ function parseFromText(text: string): GainKeywordEffect | null {
 
   // Check for duration "this turn" clause
   const hasDuration = /this turn/i.test(text);
-  const duration: "this-turn" | undefined = hasDuration
-    ? "this-turn"
-    : undefined;
+  const duration: "this-turn" | undefined = hasDuration ? "this-turn" : undefined;
 
   // Updated pattern to support both singular and plural forms
   // Pattern: "Your characters gain Ward", "chosen character gains Evasive"
@@ -232,8 +226,7 @@ function parseFromText(text: string): GainKeywordEffect | null {
  * Keyword effect parser implementation
  */
 export const keywordEffectParser: EffectParser = {
-  description:
-    "Parses keyword grant effects (e.g., 'gains Evasive', 'Your characters gain Ward')",
+  description: "Parses keyword grant effects (e.g., 'gains Evasive', 'Your characters gain Ward')",
   parse: (input: CstNode | string): GainKeywordEffect | null => {
     if (typeof input === "string") {
       return parseFromText(input);

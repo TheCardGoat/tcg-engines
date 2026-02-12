@@ -1,34 +1,22 @@
 import { describe, expect, it } from "bun:test";
 import type { SeededRNG } from "../rng/seeded-rng";
-import {
-  createDeterministicRNG,
-  expectDeterministicBehavior,
-  withSeed,
-} from "./test-rng-helpers";
+import { createDeterministicRNG, expectDeterministicBehavior, withSeed } from "./test-rng-helpers";
 
 describe("test-rng-helpers", () => {
   describe("withSeed", () => {
     it("should execute function with deterministic RNG", () => {
-      const result1 = withSeed("test-seed", (rng) => {
-        return rng.randomInt(1, 100);
-      });
+      const result1 = withSeed("test-seed", (rng) => rng.randomInt(1, 100));
 
-      const result2 = withSeed("test-seed", (rng) => {
-        return rng.randomInt(1, 100);
-      });
+      const result2 = withSeed("test-seed", (rng) => rng.randomInt(1, 100));
 
       // Same seed should produce same results
       expect(result1).toBe(result2);
     });
 
     it("should produce different results with different seeds", () => {
-      const result1 = withSeed("seed-1", (rng) => {
-        return rng.randomInt(1, 100);
-      });
+      const result1 = withSeed("seed-1", (rng) => rng.randomInt(1, 100));
 
-      const result2 = withSeed("seed-2", (rng) => {
-        return rng.randomInt(1, 100);
-      });
+      const result2 = withSeed("seed-2", (rng) => rng.randomInt(1, 100));
 
       // Different seeds should (very likely) produce different results
       // This test could theoretically fail but probability is very low
@@ -36,21 +24,17 @@ describe("test-rng-helpers", () => {
     });
 
     it("should work with multiple RNG operations", () => {
-      const results1 = withSeed("test-seed", (rng) => {
-        return [
-          rng.randomInt(1, 10),
-          rng.randomInt(1, 10),
-          rng.randomInt(1, 10),
-        ];
-      });
+      const results1 = withSeed("test-seed", (rng) => [
+        rng.randomInt(1, 10),
+        rng.randomInt(1, 10),
+        rng.randomInt(1, 10),
+      ]);
 
-      const results2 = withSeed("test-seed", (rng) => {
-        return [
-          rng.randomInt(1, 10),
-          rng.randomInt(1, 10),
-          rng.randomInt(1, 10),
-        ];
-      });
+      const results2 = withSeed("test-seed", (rng) => [
+        rng.randomInt(1, 10),
+        rng.randomInt(1, 10),
+        rng.randomInt(1, 10),
+      ]);
 
       // Same seed should produce same sequence
       expect(results1).toEqual(results2);
@@ -59,13 +43,9 @@ describe("test-rng-helpers", () => {
     it("should work with shuffle operations", () => {
       const array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-      const shuffled1 = withSeed("shuffle-seed", (rng) => {
-        return rng.shuffle(array);
-      });
+      const shuffled1 = withSeed("shuffle-seed", (rng) => rng.shuffle(array));
 
-      const shuffled2 = withSeed("shuffle-seed", (rng) => {
-        return rng.shuffle(array);
-      });
+      const shuffled2 = withSeed("shuffle-seed", (rng) => rng.shuffle(array));
 
       // Same seed should produce same shuffle
       expect(shuffled1).toEqual(shuffled2);
@@ -74,22 +54,24 @@ describe("test-rng-helpers", () => {
     it("should work with pick operations", () => {
       const array = ["a", "b", "c", "d", "e"];
 
-      const picked1 = withSeed("pick-seed", (rng) => {
-        return [rng.pick(array), rng.pick(array), rng.pick(array)];
-      });
+      const picked1 = withSeed("pick-seed", (rng) => [
+        rng.pick(array),
+        rng.pick(array),
+        rng.pick(array),
+      ]);
 
-      const picked2 = withSeed("pick-seed", (rng) => {
-        return [rng.pick(array), rng.pick(array), rng.pick(array)];
-      });
+      const picked2 = withSeed("pick-seed", (rng) => [
+        rng.pick(array),
+        rng.pick(array),
+        rng.pick(array),
+      ]);
 
       // Same seed should produce same picks
       expect(picked1).toEqual(picked2);
     });
 
     it("should return function result", () => {
-      const result = withSeed("test", (rng) => {
-        return { value: rng.randomInt(1, 10), text: "hello" };
-      });
+      const result = withSeed("test", (rng) => ({ text: "hello", value: rng.randomInt(1, 10) }));
 
       expect(result).toHaveProperty("value");
       expect(result).toHaveProperty("text");
@@ -156,9 +138,9 @@ describe("test-rng-helpers", () => {
 
     it("should work with complex return values", () => {
       const fn = (rng: SeededRNG) => ({
-        roll: rng.randomInt(1, 6),
         flip: rng.flipCoin(),
         pick: rng.pick(["a", "b", "c"]),
+        roll: rng.randomInt(1, 6),
       });
 
       // Should not throw
@@ -166,9 +148,7 @@ describe("test-rng-helpers", () => {
     });
 
     it("should work with array returns", () => {
-      const fn = (rng: SeededRNG) => {
-        return Array.from({ length: 10 }, () => rng.randomInt(1, 100));
-      };
+      const fn = (rng: SeededRNG) => Array.from({ length: 10 }, () => rng.randomInt(1, 100));
 
       // Should not throw
       expectDeterministicBehavior(fn, "array-seed");
@@ -179,11 +159,9 @@ describe("test-rng-helpers", () => {
       const fn = (rng: SeededRNG) => {
         // Each call uses a different RNG seed due to external state
         callCount++;
-        const tempRng = new (
-          rng.constructor as new (
-            seed: string,
-          ) => SeededRNG
-        )(`seed-${callCount}`);
+        const tempRng = new (rng.constructor as new (seed: string) => SeededRNG)(
+          `seed-${callCount}`,
+        );
         return tempRng.randomInt(1, 100);
       };
 
@@ -230,7 +208,7 @@ describe("test-rng-helpers", () => {
 
     it("should help test dice rolls", () => {
       const rollAttack = (rng: SeededRNG) => {
-        const attack = rng.rollDice(20) as number; // d20
+        const attack = rng.rollDice(20) as number; // D20
         const damage = rng.rollDice(6, 2) as number[]; // 2d6
         return { attack, damage };
       };
@@ -242,9 +220,8 @@ describe("test-rng-helpers", () => {
     });
 
     it("should help test probability distributions", () => {
-      const generateResults = (rng: SeededRNG) => {
-        return Array.from({ length: 100 }, () => rng.randomInt(1, 6));
-      };
+      const generateResults = (rng: SeededRNG) =>
+        Array.from({ length: 100 }, () => rng.randomInt(1, 6));
 
       const results1 = withSeed("distribution-seed", generateResults);
       const results2 = withSeed("distribution-seed", generateResults);

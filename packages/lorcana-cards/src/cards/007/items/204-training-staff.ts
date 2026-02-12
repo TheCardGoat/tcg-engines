@@ -5,17 +5,17 @@ export const trainingStaff: ItemCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "gain-keyword",
+        duration: "this-turn",
         keyword: "Challenger",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "gain-keyword",
         value: 2,
-        duration: "this-turn",
       },
       id: "1rn-1",
       text: "PRECISION STRIKE {E}, 1 {I} — Chosen character gains Challenger +2 this turn.",

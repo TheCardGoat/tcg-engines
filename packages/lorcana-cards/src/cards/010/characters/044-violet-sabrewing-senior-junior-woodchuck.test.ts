@@ -8,9 +8,7 @@ describe("Violet Sabrewing - Senior Junior Woodchuck", () => {
       play: [violetSabrewingSeniorJuniorWoodchuck],
     });
 
-    const cardUnderTest = testEngine.getCardModel(
-      violetSabrewingSeniorJuniorWoodchuck,
-    );
+    const cardUnderTest = testEngine.getCardModel(violetSabrewingSeniorJuniorWoodchuck);
     expect(cardUnderTest.hasEvasive).toBe(true);
   });
 });

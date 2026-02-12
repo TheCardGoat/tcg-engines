@@ -11,13 +11,7 @@
 
 import type { CardId } from "@tcg/core";
 import { produce } from "immer";
-import type {
-  Domain,
-  DomainPower,
-  PlayerId,
-  RiftboundGameState,
-  RunePool,
-} from "../types";
+import type { Domain, DomainPower, PlayerId, RiftboundGameState, RunePool } from "../types";
 
 /**
  * Add victory points to a player
@@ -145,10 +139,7 @@ export function spendPower(
  * @param playerId - Player whose pool to empty
  * @returns Updated game state
  */
-export function emptyRunePool(
-  state: RiftboundGameState,
-  playerId: PlayerId,
-): RiftboundGameState {
+export function emptyRunePool(state: RiftboundGameState, playerId: PlayerId): RiftboundGameState {
   return produce(state, (draft) => {
     const pool = draft.runePools[playerId];
     if (pool) {
@@ -251,9 +242,7 @@ export function trackScoredBattlefield(
  * @param state - Current game state
  * @returns Updated game state
  */
-export function clearTurnTracking(
-  state: RiftboundGameState,
-): RiftboundGameState {
+export function clearTurnTracking(state: RiftboundGameState): RiftboundGameState {
   return produce(state, (draft) => {
     for (const playerId of Object.keys(draft.conqueredThisTurn)) {
       draft.conqueredThisTurn[playerId] = [];

@@ -4,41 +4,41 @@ export const heiheiNotsotrickyChicken: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "exert",
             target: {
-              selector: "chosen",
+              cardTypes: ["item"],
               count: 1,
               owner: "opponent",
+              selector: "chosen",
               zones: ["play"],
-              cardTypes: ["item"],
             },
+            type: "exert",
           },
           {
-            type: "restriction",
+            duration: "next-turn",
             restriction: "cant-ready",
             target: "SELF",
-            duration: "next-turn",
+            type: "restriction",
           },
         ],
+        type: "sequence",
       },
       id: "1qk-1",
       name: "EAT ANYTHING",
       text: "EAT ANYTHING When you play this character, exert chosen opposing item. It can't ready at the start of its next turn.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Evasive",
         target: "SELF",
+        type: "gain-keyword",
       },
       id: "1qk-2",
       text: "OUT TO LUNCH During your turn, this character gains Evasive.",

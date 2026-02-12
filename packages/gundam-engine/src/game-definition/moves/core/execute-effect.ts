@@ -68,10 +68,7 @@ export const executeEffectMove: GameMoveDefinition<GundamGameState> = {
    * This move is called internally by resolveEffectStack,
    * not directly by players.
    */
-  enumerator: () => {
-    // Internal move - not enumerable
-    return [];
-  },
+  enumerator: () => [],
 
   /**
    * Condition: Can execute if:
@@ -89,7 +86,9 @@ export const executeEffectMove: GameMoveDefinition<GundamGameState> = {
 
     // Find effect instance
     const instance = findEffectInstance(state, effectInstanceId);
-    if (!instance) return false;
+    if (!instance) {
+      return false;
+    }
 
     // Check effect state
     if (instance.state !== "pending" && instance.state !== "resolving") {
@@ -123,11 +122,7 @@ export const executeEffectMove: GameMoveDefinition<GundamGameState> = {
     markEffectResolving(draft, effectInstanceId);
 
     // Load effect definition from source card
-    const effectDefinition = getEffectDefinition(
-      draft,
-      sourceCardId,
-      effectRef.effectId,
-    );
+    const effectDefinition = getEffectDefinition(draft, sourceCardId, effectRef.effectId);
 
     if (!effectDefinition) {
       // Effect definition not found - this could happen if:
@@ -145,8 +140,8 @@ export const executeEffectMove: GameMoveDefinition<GundamGameState> = {
     for (const action of actions) {
       // Create action context
       const actionContext = {
-        sourceCardId,
         controllerId,
+        sourceCardId,
         targets,
       };
 
@@ -156,9 +151,7 @@ export const executeEffectMove: GameMoveDefinition<GundamGameState> = {
       // Advance current action index
       const updatedInstance = findEffectInstance(draft, effectInstanceId);
       if (updatedInstance) {
-        (
-          updatedInstance as { currentActionIndex: number }
-        ).currentActionIndex += 1;
+        (updatedInstance as { currentActionIndex: number }).currentActionIndex += 1;
       }
     }
 
@@ -172,10 +165,10 @@ export const executeEffectMove: GameMoveDefinition<GundamGameState> = {
   },
 
   metadata: {
-    category: "effect-execution",
-    tags: ["internal"],
-    description: "Execute effect actions",
-    canBeUndone: false,
     affectsZones: [],
+    canBeUndone: false,
+    category: "effect-execution",
+    description: "Execute effect actions",
+    tags: ["internal"],
   },
 };

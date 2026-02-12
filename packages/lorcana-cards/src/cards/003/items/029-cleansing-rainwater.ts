@@ -5,16 +5,16 @@ export const cleansingRainwater: ItemCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "remove-damage",
         amount: 2,
-        upTo: true,
         target: {
-          selector: "all",
+          cardTypes: ["character"],
           count: "all",
           owner: "you",
+          selector: "all",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "remove-damage",
+        upTo: true,
       },
       id: "w7f-1",
       text: "ANCIENT POWER Banish this item — Remove up to 2 damage from each of your characters.",

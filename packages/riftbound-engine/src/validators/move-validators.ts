@@ -19,16 +19,14 @@ export interface ValidationResult {
  * Create a successful validation result
  */
 export function validResult(): ValidationResult {
-  return { isValid: true, errors: [] };
+  return { errors: [], isValid: true };
 }
 
 /**
  * Create a failed validation result
  */
-export function invalidResult(
-  ...errors: MoveValidationError[]
-): ValidationResult {
-  return { isValid: false, errors };
+export function invalidResult(...errors: MoveValidationError[]): ValidationResult {
+  return { errors, isValid: false };
 }
 
 /**
@@ -57,9 +55,7 @@ export function validateActivePlayer(
  * @param state - Current game state
  * @returns Validation result
  */
-export function validateGameInProgress(
-  state: RiftboundGameState,
-): ValidationResult {
+export function validateGameInProgress(state: RiftboundGameState): ValidationResult {
   if (state.status !== "playing") {
     return invalidResult({
       code: "GAME_NOT_IN_PROGRESS",
@@ -75,9 +71,7 @@ export function validateGameInProgress(
  * @param results - Validation results to combine
  * @returns Combined validation result
  */
-export function combineValidations(
-  ...results: ValidationResult[]
-): ValidationResult {
+export function combineValidations(...results: ValidationResult[]): ValidationResult {
   const errors: MoveValidationError[] = [];
 
   for (const result of results) {

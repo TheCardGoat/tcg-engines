@@ -4,8 +4,8 @@ export const drFacilierundefined: ItemCard = {
   abilities: [
     {
       effect: {
-        type: "play-card",
         from: "hand",
+        type: "play-card",
       },
       id: "s8n-1",
       text: "**THE CARDS WILL TELL** {E} − You pay 1 {I} less for the next action you play this turn.",

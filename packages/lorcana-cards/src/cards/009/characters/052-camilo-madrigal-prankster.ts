@@ -4,11 +4,11 @@ export const camiloMadrigalPrankster: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "lore",
-        modifier: 1,
-        target: "SELF",
         duration: "this-turn",
+        modifier: 1,
+        stat: "lore",
+        target: "SELF",
+        type: "modify-stat",
       },
       id: "1vj-2",
       text: "- This character gets +1 {L} this turn.",
@@ -16,11 +16,11 @@ export const camiloMadrigalPrankster: CharacterCard = {
     },
     {
       effect: {
-        type: "gain-keyword",
+        duration: "this-turn",
         keyword: "Challenger",
         target: "SELF",
+        type: "gain-keyword",
         value: 2,
-        duration: "this-turn",
       },
       id: "1vj-3",
       text: "- This character gains Challenger +2 this turn.",

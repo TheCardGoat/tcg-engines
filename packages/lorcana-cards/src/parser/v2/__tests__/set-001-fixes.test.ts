@@ -99,9 +99,7 @@ describe("Set 001 Parsing Fixes", () => {
     // One Jump Ahead
     // "Put the top card of your deck into your inkwell facedown."
     it("should parse One Jump Ahead (top card)", () => {
-      const effect = parseEffect(
-        "Put the top card of your deck into your inkwell facedown",
-      );
+      const effect = parseEffect("Put the top card of your deck into your inkwell facedown");
       expect(effect).toBeDefined();
       expect(effect?.type).toBe("put-into-inkwell");
       expect((effect as any).source).toBe("top-of-deck");
@@ -110,9 +108,7 @@ describe("Set 001 Parsing Fixes", () => {
     // Gramma Tala - Storyteller
     // "When this character is banished, you may put this card into your inkwell facedown."
     it("should parse Gramma Tala (this card)", () => {
-      const effect = parseEffect(
-        "You may put this card into your inkwell facedown",
-      );
+      const effect = parseEffect("You may put this card into your inkwell facedown");
       expect(effect).toBeDefined();
       expect(effect?.type).toBe("optional");
       const inner = (effect as any).effect;
@@ -149,9 +145,7 @@ describe("Set 001 Parsing Fixes", () => {
     // Mickey Mouse - Artful Rogue
     // "Whenever you play an action, chosen opposing character can't quest during their next turn."
     it("should parse can't quest restriction as an effect", () => {
-      const effect = parseEffect(
-        "chosen opposing character can't quest during their next turn",
-      );
+      const effect = parseEffect("chosen opposing character can't quest during their next turn");
       expect(effect).toBeDefined();
       expect(effect?.type).toBe("restriction");
       const restriction = effect as any;
@@ -162,9 +156,7 @@ describe("Set 001 Parsing Fixes", () => {
     // Jasper - Common Crook
     // "At the start of your turn, chosen opposing character can't quest this turn."
     it("should parse can't quest this turn", () => {
-      const effect = parseEffect(
-        "chosen opposing character can't quest this turn",
-      );
+      const effect = parseEffect("chosen opposing character can't quest this turn");
       expect(effect).toBeDefined();
       expect(effect?.type).toBe("restriction");
       const restriction = effect as any;

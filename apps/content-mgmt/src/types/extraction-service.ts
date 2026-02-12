@@ -180,10 +180,7 @@ export interface ExtractionServiceAdapter {
    * @param contentId - Source-specific content identifier
    * @param options - Optional fetch options
    */
-  fetchContent(
-    contentId: string,
-    options?: FetchContentOptions,
-  ): Promise<RawContent>;
+  fetchContent(contentId: string, options?: FetchContentOptions): Promise<RawContent>;
 
   /**
    * Extract normalized metadata from raw content

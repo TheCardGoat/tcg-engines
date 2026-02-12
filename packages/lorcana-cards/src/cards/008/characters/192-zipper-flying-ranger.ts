@@ -4,15 +4,15 @@ export const zipperFlyingRanger: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you have a character named Monterey Jack in play",
+          type: "if",
         },
         then: {
-          type: "play-card",
           from: "hand",
+          type: "play-card",
         },
+        type: "conditional",
       },
       id: "8ix-1",
       text: "BEST MATES If you have a character named Monterey Jack in play, you pay 1 {I} less to play this character.",
@@ -20,9 +20,9 @@ export const zipperFlyingRanger: CharacterCard = {
     },
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Evasive",
         target: "SELF",
+        type: "gain-keyword",
       },
       id: "8ix-2",
       text: "BURST OF SPEED During your turn, this character gains Evasive.",

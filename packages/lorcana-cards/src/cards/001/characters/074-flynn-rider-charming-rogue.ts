@@ -4,18 +4,18 @@ export const flynnRiderCharmingRogue: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "discard",
         amount: 1,
-        target: "CONTROLLER",
         chosen: true,
+        target: "CONTROLLER",
+        type: "discard",
       },
       id: "qk8-1",
       name: "HERE COMES THE SMOLDER",
       text: "HERE COMES THE SMOLDER Whenever this character is challenged, the challenging player chooses and discards a card.",
       trigger: {
         event: "challenged",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

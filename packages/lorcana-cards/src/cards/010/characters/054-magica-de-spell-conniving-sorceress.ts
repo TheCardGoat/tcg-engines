@@ -13,23 +13,23 @@ export const magicaDeSpellConnivingSorceress: CharacterCard = {
     },
     {
       effect: {
-        type: "conditional",
         condition: {
           type: "used-shift",
         },
         then: {
-          type: "draw",
           amount: 4,
           target: "CONTROLLER",
+          type: "draw",
         },
+        type: "conditional",
       },
       id: "x7f-2",
       name: "SHADOW'S GRASP",
       text: "SHADOW'S GRASP When you play this character, if you used Shift to play her, you may draw 4 cards.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

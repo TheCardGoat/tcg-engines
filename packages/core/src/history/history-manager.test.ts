@@ -20,17 +20,17 @@ describe("HistoryManager", () => {
 
     it("should add entries with generated IDs", () => {
       const entry = manager.addEntry({
-        moveId: "testMove",
-        playerId: PLAYER_ONE,
-        params: { test: true },
-        timestamp: Date.now(),
-        success: true,
         messages: {
-          visibility: "PUBLIC",
           messages: {
             casual: { key: "test.message" },
           },
+          visibility: "PUBLIC",
         },
+        moveId: "testMove",
+        params: { test: true },
+        playerId: PLAYER_ONE,
+        success: true,
+        timestamp: Date.now(),
       });
 
       expect(entry.id).toBeDefined();
@@ -40,27 +40,27 @@ describe("HistoryManager", () => {
 
     it("should retrieve all entries", () => {
       manager.addEntry({
-        moveId: "move1",
-        playerId: PLAYER_ONE,
-        params: {},
-        timestamp: Date.now(),
-        success: true,
         messages: {
-          visibility: "PUBLIC",
           messages: { casual: { key: "msg1" } },
+          visibility: "PUBLIC",
         },
+        moveId: "move1",
+        params: {},
+        playerId: PLAYER_ONE,
+        success: true,
+        timestamp: Date.now(),
       });
 
       manager.addEntry({
-        moveId: "move2",
-        playerId: PLAYER_TWO,
-        params: {},
-        timestamp: Date.now(),
-        success: true,
         messages: {
-          visibility: "PUBLIC",
           messages: { casual: { key: "msg2" } },
+          visibility: "PUBLIC",
         },
+        moveId: "move2",
+        params: {},
+        playerId: PLAYER_TWO,
+        success: true,
+        timestamp: Date.now(),
       });
 
       const entries = manager.getAllEntries();
@@ -71,15 +71,15 @@ describe("HistoryManager", () => {
 
     it("should clear all entries", () => {
       manager.addEntry({
-        moveId: "move1",
-        playerId: PLAYER_ONE,
-        params: {},
-        timestamp: Date.now(),
-        success: true,
         messages: {
-          visibility: "PUBLIC",
           messages: { casual: { key: "msg1" } },
+          visibility: "PUBLIC",
         },
+        moveId: "move1",
+        params: {},
+        playerId: PLAYER_ONE,
+        success: true,
+        timestamp: Date.now(),
       });
 
       expect(manager.getCount()).toBe(1);
@@ -92,17 +92,17 @@ describe("HistoryManager", () => {
     it("should show public entries to all players", () => {
       const timestamp = Date.now();
       manager.addEntry({
-        moveId: "publicMove",
-        playerId: PLAYER_ONE,
-        params: {},
-        timestamp,
-        success: true,
         messages: {
-          visibility: "PUBLIC",
           messages: {
             casual: { key: "public.message", values: { player: "One" } },
           },
+          visibility: "PUBLIC",
         },
+        moveId: "publicMove",
+        params: {},
+        playerId: PLAYER_ONE,
+        success: true,
+        timestamp,
       });
 
       const p1History = manager.query({ playerId: PLAYER_ONE });
@@ -121,18 +121,18 @@ describe("HistoryManager", () => {
   describe("Private Visibility", () => {
     it("should show private entries only to specified player", () => {
       manager.addEntry({
-        moveId: "privateMove",
-        playerId: PLAYER_ONE,
-        params: {},
-        timestamp: Date.now(),
-        success: true,
         messages: {
-          visibility: "PRIVATE",
-          visibleTo: [PLAYER_ONE],
           messages: {
             casual: { key: "private.message" },
           },
+          visibility: "PRIVATE",
+          visibleTo: [PLAYER_ONE],
         },
+        moveId: "privateMove",
+        params: {},
+        playerId: PLAYER_ONE,
+        success: true,
+        timestamp: Date.now(),
       });
 
       const p1History = manager.query({ playerId: PLAYER_ONE });
@@ -144,18 +144,18 @@ describe("HistoryManager", () => {
 
     it("should show private entries to multiple specified players", () => {
       manager.addEntry({
-        moveId: "privateMove",
-        playerId: PLAYER_ONE,
-        params: {},
-        timestamp: Date.now(),
-        success: true,
         messages: {
-          visibility: "PRIVATE",
-          visibleTo: [PLAYER_ONE, PLAYER_TWO],
           messages: {
             casual: { key: "private.message" },
           },
+          visibility: "PRIVATE",
+          visibleTo: [PLAYER_ONE, PLAYER_TWO],
         },
+        moveId: "privateMove",
+        params: {},
+        playerId: PLAYER_ONE,
+        success: true,
+        timestamp: Date.now(),
       });
 
       const p1History = manager.query({ playerId: PLAYER_ONE });
@@ -172,21 +172,9 @@ describe("HistoryManager", () => {
       const cardsDrawn = ["Knight", "Wizard", "Dragon"];
 
       manager.addEntry({
-        moveId: "mulligan",
-        playerId: PLAYER_ONE,
-        params: { cardIds: ["card1", "card2", "card3"] },
-        timestamp,
-        turn: 1,
-        phase: "mulligan",
-        success: true,
         messages: {
-          visibility: "PLAYER_SPECIFIC",
           messages: {
             [PLAYER_ONE]: {
-              casual: {
-                key: "mulligan.self",
-                values: { cards: cardsDrawn, count: 3 },
-              },
               advanced: {
                 key: "mulligan.self.detailed",
                 values: {
@@ -194,19 +182,31 @@ describe("HistoryManager", () => {
                   cards: cardsDrawn,
                 },
               },
+              casual: {
+                key: "mulligan.self",
+                values: { cards: cardsDrawn, count: 3 },
+              },
             },
             [PLAYER_TWO]: {
-              casual: {
-                key: "mulligan.opponent",
-                values: { count: 3 },
-              },
               advanced: {
                 key: "mulligan.opponent.detailed",
                 values: { count: 3, playerId: PLAYER_ONE },
               },
+              casual: {
+                key: "mulligan.opponent",
+                values: { count: 3 },
+              },
             },
           },
+          visibility: "PLAYER_SPECIFIC",
         },
+        moveId: "mulligan",
+        params: { cardIds: ["card1", "card2", "card3"] },
+        phase: "mulligan",
+        playerId: PLAYER_ONE,
+        success: true,
+        timestamp,
+        turn: 1,
       });
 
       // Player one sees their cards
@@ -233,36 +233,36 @@ describe("HistoryManager", () => {
   describe("Verbosity Levels", () => {
     beforeEach(() => {
       manager.addEntry({
-        moveId: "drawCards",
-        playerId: PLAYER_ONE,
-        params: { count: 5 },
-        timestamp: Date.now(),
-        success: true,
         messages: {
-          visibility: "PUBLIC",
           messages: {
-            casual: {
-              key: "draw.casual",
-              values: { player: "One", count: 5 },
-            },
             advanced: {
               key: "draw.advanced",
               values: {
-                player: "One",
-                count: 5,
                 cardIds: ["c1", "c2", "c3", "c4", "c5"],
+                count: 5,
+                player: "One",
               },
+            },
+            casual: {
+              key: "draw.casual",
+              values: { count: 5, player: "One" },
             },
             developer: {
               key: "draw.developer",
               values: {
-                playerId: PLAYER_ONE,
-                params: { count: 5 },
                 fullContext: {},
+                params: { count: 5 },
+                playerId: PLAYER_ONE,
               },
             },
           },
+          visibility: "PUBLIC",
         },
+        moveId: "drawCards",
+        params: { count: 5 },
+        playerId: PLAYER_ONE,
+        success: true,
+        timestamp: Date.now(),
       });
     });
 
@@ -284,18 +284,18 @@ describe("HistoryManager", () => {
     it("should fallback to CASUAL if ADVANCED not available", () => {
       manager.clear();
       manager.addEntry({
-        moveId: "simpleMove",
-        playerId: PLAYER_ONE,
-        params: {},
-        timestamp: Date.now(),
-        success: true,
         messages: {
-          visibility: "PUBLIC",
           messages: {
             casual: { key: "simple.casual" },
             // No advanced or developer
           },
+          visibility: "PUBLIC",
         },
+        moveId: "simpleMove",
+        params: {},
+        playerId: PLAYER_ONE,
+        success: true,
+        timestamp: Date.now(),
       });
 
       const advancedHistory = manager.query({ verbosity: "ADVANCED" });
@@ -308,19 +308,19 @@ describe("HistoryManager", () => {
     it("should fallback through verbosity chain", () => {
       manager.clear();
       manager.addEntry({
-        moveId: "partialMove",
-        playerId: PLAYER_ONE,
-        params: {},
-        timestamp: Date.now(),
-        success: true,
         messages: {
-          visibility: "PUBLIC",
           messages: {
             casual: { key: "partial.casual" },
             developer: { key: "partial.developer" },
             // No advanced
           },
+          visibility: "PUBLIC",
         },
+        moveId: "partialMove",
+        params: {},
+        playerId: PLAYER_ONE,
+        success: true,
+        timestamp: Date.now(),
       });
 
       const advancedHistory = manager.query({ verbosity: "ADVANCED" });
@@ -336,40 +336,40 @@ describe("HistoryManager", () => {
       const baseTime = Date.now();
 
       manager.addEntry({
-        moveId: "move1",
-        playerId: PLAYER_ONE,
-        params: {},
-        timestamp: baseTime,
-        success: true,
         messages: {
-          visibility: "PUBLIC",
           messages: { casual: { key: "msg1" } },
+          visibility: "PUBLIC",
         },
+        moveId: "move1",
+        params: {},
+        playerId: PLAYER_ONE,
+        success: true,
+        timestamp: baseTime,
       });
 
       manager.addEntry({
-        moveId: "move2",
-        playerId: PLAYER_TWO,
-        params: {},
-        timestamp: baseTime + 1000,
-        success: false,
         error: { code: "ERROR", message: "Failed" },
         messages: {
-          visibility: "PUBLIC",
           messages: { casual: { key: "msg2" } },
+          visibility: "PUBLIC",
         },
+        moveId: "move2",
+        params: {},
+        playerId: PLAYER_TWO,
+        success: false,
+        timestamp: baseTime + 1000,
       });
 
       manager.addEntry({
-        moveId: "move3",
-        playerId: PLAYER_ONE,
-        params: {},
-        timestamp: baseTime + 2000,
-        success: true,
         messages: {
-          visibility: "PUBLIC",
           messages: { casual: { key: "msg3" } },
+          visibility: "PUBLIC",
         },
+        moveId: "move3",
+        params: {},
+        playerId: PLAYER_ONE,
+        success: true,
+        timestamp: baseTime + 2000,
       });
     });
 
@@ -401,23 +401,13 @@ describe("HistoryManager", () => {
   describe("Failed Moves", () => {
     it("should include error information in failed move entries", () => {
       manager.addEntry({
-        moveId: "failedMove",
-        playerId: PLAYER_ONE,
-        params: {},
-        timestamp: Date.now(),
-        success: false,
         error: {
           code: "INVALID_TARGET",
-          message: "Target no longer exists",
           context: { targetId: "card-123" },
+          message: "Target no longer exists",
         },
         messages: {
-          visibility: "PUBLIC",
           messages: {
-            casual: {
-              key: "move.failed",
-              values: { reason: "Invalid target" },
-            },
             advanced: {
               key: "move.failed.technical",
               values: {
@@ -425,8 +415,18 @@ describe("HistoryManager", () => {
                 targetId: "card-123",
               },
             },
+            casual: {
+              key: "move.failed",
+              values: { reason: "Invalid target" },
+            },
           },
+          visibility: "PUBLIC",
         },
+        moveId: "failedMove",
+        params: {},
+        playerId: PLAYER_ONE,
+        success: false,
+        timestamp: Date.now(),
       });
 
       const casualHistory = manager.query({ verbosity: "CASUAL" });
@@ -443,19 +443,19 @@ describe("HistoryManager", () => {
   describe("Metadata", () => {
     it("should include metadata in DEVELOPER mode only", () => {
       manager.addEntry({
-        moveId: "metadataMove",
-        playerId: PLAYER_ONE,
-        params: { test: true },
-        timestamp: Date.now(),
-        success: true,
-        metadata: { debug: "info", internal: "data" },
         messages: {
-          visibility: "PUBLIC",
           messages: {
             casual: { key: "move.msg" },
             developer: { key: "move.dev" },
           },
+          visibility: "PUBLIC",
         },
+        metadata: { debug: "info", internal: "data" },
+        moveId: "metadataMove",
+        params: { test: true },
+        playerId: PLAYER_ONE,
+        success: true,
+        timestamp: Date.now(),
       });
 
       const casualHistory = manager.query({ verbosity: "CASUAL" });
@@ -473,18 +473,18 @@ describe("HistoryManager", () => {
   describe("Turn and Phase Information", () => {
     it("should include turn and phase information", () => {
       manager.addEntry({
+        messages: {
+          messages: { casual: { key: "move.msg" } },
+          visibility: "PUBLIC",
+        },
         moveId: "phaseMove",
-        playerId: PLAYER_ONE,
         params: {},
-        timestamp: Date.now(),
-        turn: 3,
         phase: "main",
+        playerId: PLAYER_ONE,
         segment: "step1",
         success: true,
-        messages: {
-          visibility: "PUBLIC",
-          messages: { casual: { key: "move.msg" } },
-        },
+        timestamp: Date.now(),
+        turn: 3,
       });
 
       const history = manager.query();

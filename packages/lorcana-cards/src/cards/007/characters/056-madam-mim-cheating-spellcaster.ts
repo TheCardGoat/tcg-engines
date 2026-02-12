@@ -4,22 +4,22 @@ export const madamMimCheatingSpellcaster: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "exert",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "opponent",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "exert",
       },
       id: "1rw-1",
       name: "PLAY ROUGH",
       text: "PLAY ROUGH Whenever this character quests, exert chosen opposing character.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

@@ -4,9 +4,9 @@ export const findersKeepers: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "draw",
         amount: 3,
         target: "CONTROLLER",
+        type: "draw",
       },
       id: "q4f-1",
       text: "Draw 3 cards.",

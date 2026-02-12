@@ -10,10 +10,10 @@ export const clarabelleNewsReporter: CharacterCard = {
     },
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: 1,
+        stat: "strength",
         target: "YOUR_CHARACTERS",
+        type: "modify-stat",
       },
       id: "1r6-2",
       text: "BREAKING STORY Your other characters with Support get +1 {S}.",

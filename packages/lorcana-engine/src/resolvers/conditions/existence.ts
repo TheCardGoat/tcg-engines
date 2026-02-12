@@ -184,7 +184,9 @@ conditionRegistry.register<ResourceCountCondition>("resource-count", {
       case "characters": {
         // This duplicates has-character-count but under resource-count umbrella
         count = countCards(state, (c) => {
-          if (c.zone !== "play" || !isTargetController(c.controller)) {return false;}
+          if (c.zone !== "play" || !isTargetController(c.controller)) {
+            return false;
+          }
           const def = registry.getCard(c.definitionId);
           return def?.cardType === "character";
         });
@@ -193,7 +195,9 @@ conditionRegistry.register<ResourceCountCondition>("resource-count", {
 
       case "items": {
         count = countCards(state, (c) => {
-          if (c.zone !== "play" || !isTargetController(c.controller)) {return false;}
+          if (c.zone !== "play" || !isTargetController(c.controller)) {
+            return false;
+          }
           const def = registry.getCard(c.definitionId);
           return def?.cardType === "item";
         });
@@ -202,7 +206,9 @@ conditionRegistry.register<ResourceCountCondition>("resource-count", {
 
       case "locations": {
         count = countCards(state, (c) => {
-          if (c.zone !== "play" || !isTargetController(c.controller)) {return false;}
+          if (c.zone !== "play" || !isTargetController(c.controller)) {
+            return false;
+          }
           const def = registry.getCard(c.definitionId);
           return def?.cardType === "location";
         });

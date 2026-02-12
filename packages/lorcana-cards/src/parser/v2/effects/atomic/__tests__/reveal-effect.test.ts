@@ -52,9 +52,7 @@ describe("revealEffectParser", () => {
     });
 
     it("parses 'reveal the top card of your deck' correctly", () => {
-      const result = revealEffectParser.parse(
-        "reveal the top card of your deck",
-      );
+      const result = revealEffectParser.parse("reveal the top card of your deck");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("reveal-top-card");
@@ -101,18 +99,14 @@ describe("revealEffectParser", () => {
 
   describe("text parsing - reveal and put in hand (not yet implemented)", () => {
     it("returns null for 'reveal and put it into your hand' (not yet implemented)", () => {
-      const result = revealEffectParser.parse(
-        "reveal and put it into your hand",
-      );
+      const result = revealEffectParser.parse("reveal and put it into your hand");
 
       // Parser doesn't currently support reveal-and-put-in-hand
       expect(result).toBeNull();
     });
 
     it("returns null for 'reveal and put them into your hand' (not yet implemented)", () => {
-      const result = revealEffectParser.parse(
-        "reveal and put them into your hand",
-      );
+      const result = revealEffectParser.parse("reveal and put them into your hand");
 
       // Parser doesn't currently support reveal-and-put-in-hand
       expect(result).toBeNull();
@@ -213,27 +207,21 @@ describe("revealEffectParser", () => {
     });
 
     it("returns null for 'reveal 3 cards and put them into your hand' (not implemented)", () => {
-      const result = revealEffectParser.parse(
-        "reveal 3 cards and put them into your hand",
-      );
+      const result = revealEffectParser.parse("reveal 3 cards and put them into your hand");
 
       // Parser doesn't currently support reveal-and-put-in-hand
       expect(result).toBeNull();
     });
 
     it("prioritizes reveal-hand over other patterns", () => {
-      const result = revealEffectParser.parse(
-        "reveal your hand and discard a card",
-      );
+      const result = revealEffectParser.parse("reveal your hand and discard a card");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("reveal-hand");
     });
 
     it("prioritizes reveal-top-card over reveal-cards when matching", () => {
-      const result = revealEffectParser.parse(
-        "reveal the top card of your deck",
-      );
+      const result = revealEffectParser.parse("reveal the top card of your deck");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("reveal-top-card");

@@ -14,34 +14,34 @@ import { type GameDefinition, type Player, RuleEngine } from "../index";
 import { createPlayerId } from "../types/branded-utils";
 
 // Test game state
-type TestGameState = {
-  players: Array<{
+interface TestGameState {
+  players: {
     id: string;
     name: string;
     hand: string[];
     field: string[];
     mana: number;
-  }>;
+  }[];
   currentPlayerIndex: number;
-};
+}
 
 // Test move parameters
-type PlayCardParams = {
+interface PlayCardParams {
   cardId: string;
-};
+}
 
-type AttackParams = {
+interface AttackParams {
   attackerId: string;
   targetId: string;
-};
+}
 
 type PassTurnParams = Record<string, never>;
 
-type TestMoves = {
+interface TestMoves {
   playCard: PlayCardParams;
   attack: AttackParams;
   passTurn: PassTurnParams;
-};
+}
 
 describe("Move Enumeration System", () => {
   describe("Basic Enumeration", () => {
@@ -52,65 +52,65 @@ describe("Move Enumeration System", () => {
       ];
 
       const gameDefinition: GameDefinition<TestGameState, TestMoves> = {
-        name: "Test Game",
-        setup: (players) => ({
-          players: players.map((p) => ({
-            id: p.id,
-            name: p.name ?? "",
-            hand: ["card1", "card2", "card3"],
-            field: [],
-            mana: 5,
-          })),
-          currentPlayerIndex: 0,
-        }),
         moves: {
+          attack: {
+            condition: () => false,
+            enumerator: () => [],
+            reducer: () => {},
+          },
+          passTurn: {
+            condition: () => true,
+            enumerator: () => [{}],
+            reducer: () => {},
+          },
           playCard: {
-            enumerator: (
-              state: TestGameState,
-              context: import("../moves/move-enumeration").MoveEnumerationContext,
-            ) => {
-              const player = state.players.find(
-                (p) => p.id === context.playerId,
-              );
-              if (!player) return [];
-
-              // Return all cards in hand as possible parameters
-              return player.hand.map((cardId: string) => ({ cardId }));
-            },
             condition: (state, context) => {
-              const player = state.players.find(
-                (p) => p.id === context.playerId,
-              );
-              if (!player) return false;
+              const player = state.players.find((p) => p.id === context.playerId);
+              if (!player) {
+                return false;
+              }
 
               // Check if card is in hand
               return player.hand.includes(context.params.cardId);
             },
+            enumerator: (
+              state: TestGameState,
+              context: import("../moves/move-enumeration").MoveEnumerationContext,
+            ) => {
+              const player = state.players.find((p) => p.id === context.playerId);
+              if (!player) {
+                return [];
+              }
+
+              // Return all cards in hand as possible parameters
+              return player.hand.map((cardId: string) => ({ cardId }));
+            },
             reducer: (draft, context) => {
-              const player = draft.players.find(
-                (p) => p.id === context.playerId,
-              );
-              if (!player) return;
+              const player = draft.players.find((p) => p.id === context.playerId);
+              if (!player) {
+                return;
+              }
 
               // Move card from hand to field
               const index = player.hand.indexOf(context.params.cardId);
-              if (index >= 0) {
+              if (index !== -1) {
                 player.hand.splice(index, 1);
                 player.field.push(context.params.cardId);
               }
             },
           },
-          attack: {
-            enumerator: () => [],
-            condition: () => false,
-            reducer: () => {},
-          },
-          passTurn: {
-            enumerator: () => [{}],
-            condition: () => true,
-            reducer: () => {},
-          },
         },
+        name: "Test Game",
+        setup: (players) => ({
+          currentPlayerIndex: 0,
+          players: players.map((p) => ({
+            field: [],
+            hand: ["card1", "card2", "card3"],
+            id: p.id,
+            mana: 5,
+            name: p.name ?? "",
+          })),
+        }),
       };
 
       const engine = new RuleEngine(gameDefinition, players);
@@ -127,9 +127,7 @@ describe("Move Enumeration System", () => {
       expect(passMoves.length).toBe(1);
 
       // Check that all cards are enumerated
-      const cardIds = playCardMoves.map(
-        (m) => (m.params as PlayCardParams).cardId,
-      );
+      const cardIds = playCardMoves.map((m) => (m.params as PlayCardParams).cardId);
       expect(cardIds).toContain("card1");
       expect(cardIds).toContain("card2");
       expect(cardIds).toContain("card3");
@@ -144,31 +142,29 @@ describe("Move Enumeration System", () => {
       const players: Player[] = [{ id: "p1", name: "Player 1" }];
 
       const gameDefinition: GameDefinition<TestGameState, TestMoves> = {
-        name: "Test Game",
-        setup: () => ({
-          players: [
-            { id: "p1", name: "Player 1", hand: [], field: [], mana: 0 },
-          ],
-          currentPlayerIndex: 0,
-        }),
         moves: {
-          playCard: {
-            enumerator: () => [],
-            condition: () => false,
-            reducer: () => {},
-          },
           attack: {
-            enumerator: () => [],
             condition: () => false,
+            enumerator: () => [],
             reducer: () => {},
           },
           passTurn: {
             // Enumerator returns single empty object for moves without params
-            enumerator: () => [{}],
             condition: () => true,
+            enumerator: () => [{}],
+            reducer: () => {},
+          },
+          playCard: {
+            condition: () => false,
+            enumerator: () => [],
             reducer: () => {},
           },
         },
+        name: "Test Game",
+        setup: () => ({
+          currentPlayerIndex: 0,
+          players: [{ field: [], hand: [], id: "p1", mana: 0, name: "Player 1" }],
+        }),
       };
 
       const engine = new RuleEngine(gameDefinition, players);
@@ -189,46 +185,38 @@ describe("Move Enumeration System", () => {
       const players: Player[] = [{ id: "p1", name: "Player 1" }];
 
       const gameDefinition: GameDefinition<TestGameState, TestMoves> = {
-        name: "Test Game",
-        setup: () => ({
-          players: [
-            { id: "p1", name: "Player 1", hand: ["card1"], field: [], mana: 0 },
-          ],
-          currentPlayerIndex: 0,
-        }),
         moves: {
+          attack: {
+            condition: () => false,
+            enumerator: () => [],
+            reducer: () => {},
+          },
+          passTurn: {
+            condition: () => true,
+            enumerator: () => [{}],
+            reducer: () => {},
+          },
           playCard: {
             enumerator: (
               state: TestGameState,
               context: import("../moves/move-enumeration").MoveEnumerationContext,
             ) => {
-              const player = state.players.find(
-                (p) => p.id === context.playerId,
-              );
-              return player
-                ? player.hand.map((cardId: string) => ({ cardId }))
-                : [];
+              const player = state.players.find((p) => p.id === context.playerId);
+              return player ? player.hand.map((cardId: string) => ({ cardId })) : [];
             },
             // Condition requires mana (which player doesn't have)
             condition: (state, context) => {
-              const player = state.players.find(
-                (p) => p.id === context.playerId,
-              );
+              const player = state.players.find((p) => p.id === context.playerId);
               return (player?.mana ?? 0) > 0;
             },
             reducer: () => {},
           },
-          attack: {
-            enumerator: () => [],
-            condition: () => false,
-            reducer: () => {},
-          },
-          passTurn: {
-            enumerator: () => [{}],
-            condition: () => true,
-            reducer: () => {},
-          },
         },
+        name: "Test Game",
+        setup: () => ({
+          currentPlayerIndex: 0,
+          players: [{ field: [], hand: ["card1"], id: "p1", mana: 0, name: "Player 1" }],
+        }),
       };
 
       const engine = new RuleEngine(gameDefinition, players);
@@ -257,39 +245,36 @@ describe("Move Enumeration System", () => {
       const players: Player[] = [{ id: "p1", name: "Player 1" }];
 
       const gameDefinition: GameDefinition<TestGameState, TestMoves> = {
-        name: "Test Game",
-        setup: () => ({
-          players: [
-            { id: "p1", name: "Player 1", hand: ["card1"], field: [], mana: 0 },
-          ],
-          currentPlayerIndex: 0,
-        }),
         moves: {
+          attack: {
+            condition: () => false,
+            enumerator: () => [],
+            reducer: () => {},
+          },
+          passTurn: {
+            condition: () => true,
+            enumerator: () => [{}],
+            reducer: () => {},
+          },
           playCard: {
             enumerator: (
               state: TestGameState,
               context: import("../moves/move-enumeration").MoveEnumerationContext,
             ) => {
-              const player = state.players.find(
-                (p) => p.id === context.playerId,
-              );
-              return player
-                ? player.hand.map((cardId: string) => ({ cardId }))
-                : [];
+              const player = state.players.find((p) => p.id === context.playerId);
+              return player ? player.hand.map((cardId: string) => ({ cardId })) : [];
             },
             // Return detailed failure information
             condition: (state, context) => {
-              const player = state.players.find(
-                (p) => p.id === context.playerId,
-              );
+              const player = state.players.find((p) => p.id === context.playerId);
               const required = 5;
               const available = player?.mana ?? 0;
 
               if (available < required) {
                 return {
-                  reason: `Not enough mana. Required: ${required}, Available: ${available}`,
+                  context: { available, required },
                   errorCode: "INSUFFICIENT_MANA",
-                  context: { required, available },
+                  reason: `Not enough mana. Required: ${required}, Available: ${available}`,
                 };
               }
 
@@ -297,17 +282,12 @@ describe("Move Enumeration System", () => {
             },
             reducer: () => {},
           },
-          attack: {
-            enumerator: () => [],
-            condition: () => false,
-            reducer: () => {},
-          },
-          passTurn: {
-            enumerator: () => [{}],
-            condition: () => true,
-            reducer: () => {},
-          },
         },
+        name: "Test Game",
+        setup: () => ({
+          currentPlayerIndex: 0,
+          players: [{ field: [], hand: ["card1"], id: "p1", mana: 0, name: "Player 1" }],
+        }),
       };
 
       const engine = new RuleEngine(gameDefinition, players);
@@ -319,15 +299,11 @@ describe("Move Enumeration System", () => {
       expect(playCardMove).toBeDefined();
       expect(playCardMove?.isValid).toBe(false);
       expect(playCardMove?.validationError).toBeDefined();
-      expect(playCardMove?.validationError?.errorCode).toBe(
-        "INSUFFICIENT_MANA",
-      );
-      expect(playCardMove?.validationError?.reason).toContain(
-        "Not enough mana",
-      );
+      expect(playCardMove?.validationError?.errorCode).toBe("INSUFFICIENT_MANA");
+      expect(playCardMove?.validationError?.reason).toContain("Not enough mana");
       expect(playCardMove?.validationError?.context).toEqual({
-        required: 5,
         available: 0,
+        required: 5,
       });
     });
   });
@@ -337,47 +313,41 @@ describe("Move Enumeration System", () => {
       const players: Player[] = [{ id: "p1", name: "Player 1" }];
 
       const gameDefinition: GameDefinition<TestGameState, TestMoves> = {
-        name: "Test Game",
-        setup: () => ({
-          players: [
-            { id: "p1", name: "Player 1", hand: ["card1"], field: [], mana: 5 },
-          ],
-          currentPlayerIndex: 0,
-        }),
         moves: {
+          attack: {
+            condition: () => false,
+            enumerator: () => [],
+            reducer: () => {},
+          },
+          passTurn: {
+            condition: () => true,
+            enumerator: () => [{}],
+            reducer: () => {},
+          },
           playCard: {
+            condition: () => true,
             enumerator: (
               state: TestGameState,
               context: import("../moves/move-enumeration").MoveEnumerationContext,
             ) => {
-              const player = state.players.find(
-                (p) => p.id === context.playerId,
-              );
-              return player
-                ? player.hand.map((cardId: string) => ({ cardId }))
-                : [];
+              const player = state.players.find((p) => p.id === context.playerId);
+              return player ? player.hand.map((cardId: string) => ({ cardId })) : [];
             },
-            condition: () => true,
-            reducer: () => {},
             metadata: {
-              displayName: "Play Card",
-              description: "Play a card from your hand",
               category: "action",
-              tags: ["card", "play"],
+              description: "Play a card from your hand",
+              displayName: "Play Card",
               priority: 1,
+              tags: ["card", "play"],
             },
-          },
-          attack: {
-            enumerator: () => [],
-            condition: () => false,
-            reducer: () => {},
-          },
-          passTurn: {
-            enumerator: () => [{}],
-            condition: () => true,
             reducer: () => {},
           },
         },
+        name: "Test Game",
+        setup: () => ({
+          currentPlayerIndex: 0,
+          players: [{ field: [], hand: ["card1"], id: "p1", mana: 5, name: "Player 1" }],
+        }),
       };
 
       const engine = new RuleEngine(gameDefinition, players);
@@ -387,24 +357,18 @@ describe("Move Enumeration System", () => {
       const movesWithoutMeta = engine.enumerateMoves(playerId, {
         includeMetadata: false,
       });
-      const playCardWithoutMeta = movesWithoutMeta.find(
-        (m) => m.moveId === "playCard",
-      );
+      const playCardWithoutMeta = movesWithoutMeta.find((m) => m.moveId === "playCard");
       expect(playCardWithoutMeta?.metadata).toBeUndefined();
 
       // With metadata
       const movesWithMeta = engine.enumerateMoves(playerId, {
         includeMetadata: true,
       });
-      const playCardWithMeta = movesWithMeta.find(
-        (m) => m.moveId === "playCard",
-      );
+      const playCardWithMeta = movesWithMeta.find((m) => m.moveId === "playCard");
 
       expect(playCardWithMeta?.metadata).toBeDefined();
       expect(playCardWithMeta?.metadata?.displayName).toBe("Play Card");
-      expect(playCardWithMeta?.metadata?.description).toBe(
-        "Play a card from your hand",
-      );
+      expect(playCardWithMeta?.metadata?.description).toBe("Play a card from your hand");
       expect(playCardWithMeta?.metadata?.category).toBe("action");
       expect(playCardWithMeta?.metadata?.tags).toEqual(["card", "play"]);
       expect(playCardWithMeta?.metadata?.priority).toBe(1);
@@ -416,30 +380,28 @@ describe("Move Enumeration System", () => {
       const players: Player[] = [{ id: "p1", name: "Player 1" }];
 
       const gameDefinition: GameDefinition<TestGameState, TestMoves> = {
-        name: "Test Game",
-        setup: () => ({
-          players: [
-            { id: "p1", name: "Player 1", hand: [], field: [], mana: 0 },
-          ],
-          currentPlayerIndex: 0,
-        }),
         moves: {
+          attack: {
+            condition: () => false,
+            enumerator: () => [],
+            reducer: () => {},
+          },
+          passTurn: {
+            condition: () => true,
+            enumerator: () => [{}],
+            reducer: () => {},
+          },
           playCard: {
             // No enumerator provided
             condition: () => true,
             reducer: () => {},
           },
-          attack: {
-            enumerator: () => [],
-            condition: () => false,
-            reducer: () => {},
-          },
-          passTurn: {
-            enumerator: () => [{}],
-            condition: () => true,
-            reducer: () => {},
-          },
         },
+        name: "Test Game",
+        setup: () => ({
+          currentPlayerIndex: 0,
+          players: [{ field: [], hand: [], id: "p1", mana: 0, name: "Player 1" }],
+        }),
       };
 
       const engine = new RuleEngine(gameDefinition, players);
@@ -452,9 +414,7 @@ describe("Move Enumeration System", () => {
       expect(playCardMove).toBeDefined();
       expect(playCardMove?.isValid).toBe(false);
       expect(playCardMove?.validationError?.errorCode).toBe("NO_ENUMERATOR");
-      expect(playCardMove?.validationError?.reason).toContain(
-        "no enumerator provided",
-      );
+      expect(playCardMove?.validationError?.reason).toContain("no enumerator provided");
 
       // With validOnly: true, should not include move
       const validMoves = engine.enumerateMoves(playerId, { validOnly: true });
@@ -468,33 +428,31 @@ describe("Move Enumeration System", () => {
       const players: Player[] = [{ id: "p1", name: "Player 1" }];
 
       const gameDefinition: GameDefinition<TestGameState, TestMoves> = {
-        name: "Test Game",
-        setup: () => ({
-          players: [
-            { id: "p1", name: "Player 1", hand: [], field: [], mana: 0 },
-          ],
-          currentPlayerIndex: 0,
-        }),
         moves: {
-          playCard: {
-            // Enumerator that throws an error
-            enumerator: () => {
-              throw new Error("Test enumerator error");
-            },
-            condition: () => true,
-            reducer: () => {},
-          },
           attack: {
-            enumerator: () => [],
             condition: () => false,
+            enumerator: () => [],
             reducer: () => {},
           },
           passTurn: {
-            enumerator: () => [{}],
             condition: () => true,
+            enumerator: () => [{}],
+            reducer: () => {},
+          },
+          playCard: {
+            // Enumerator that throws an error
+            condition: () => true,
+            enumerator: () => {
+              throw new Error("Test enumerator error");
+            },
             reducer: () => {},
           },
         },
+        name: "Test Game",
+        setup: () => ({
+          currentPlayerIndex: 0,
+          players: [{ field: [], hand: [], id: "p1", mana: 0, name: "Player 1" }],
+        }),
       };
 
       const engine = new RuleEngine(gameDefinition, players, {
@@ -509,9 +467,7 @@ describe("Move Enumeration System", () => {
       expect(playCardMove).toBeDefined();
       expect(playCardMove?.isValid).toBe(false);
       expect(playCardMove?.validationError?.errorCode).toBe("ENUMERATOR_ERROR");
-      expect(playCardMove?.validationError?.reason).toContain(
-        "Test enumerator error",
-      );
+      expect(playCardMove?.validationError?.reason).toContain("Test enumerator error");
     });
   });
 
@@ -520,40 +476,34 @@ describe("Move Enumeration System", () => {
       const players: Player[] = [{ id: "p1", name: "Player 1" }];
 
       const gameDefinition: GameDefinition<TestGameState, TestMoves> = {
-        name: "Test Game",
-        setup: () => ({
-          players: [
-            { id: "p1", name: "Player 1", hand: ["card1"], field: [], mana: 5 },
-          ],
-          currentPlayerIndex: 0,
-        }),
         moves: {
+          attack: {
+            condition: () => true,
+            enumerator: () => [{ attackerId: "a1", targetId: "t1" }],
+            reducer: () => {},
+          },
+          passTurn: {
+            condition: () => true,
+            enumerator: () => [{}],
+            reducer: () => {},
+          },
           playCard: {
+            condition: () => true,
             enumerator: (
               state: TestGameState,
               context: import("../moves/move-enumeration").MoveEnumerationContext,
             ) => {
-              const player = state.players.find(
-                (p) => p.id === context.playerId,
-              );
-              return player
-                ? player.hand.map((cardId: string) => ({ cardId }))
-                : [];
+              const player = state.players.find((p) => p.id === context.playerId);
+              return player ? player.hand.map((cardId: string) => ({ cardId })) : [];
             },
-            condition: () => true,
-            reducer: () => {},
-          },
-          attack: {
-            enumerator: () => [{ attackerId: "a1", targetId: "t1" }],
-            condition: () => true,
-            reducer: () => {},
-          },
-          passTurn: {
-            enumerator: () => [{}],
-            condition: () => true,
             reducer: () => {},
           },
         },
+        name: "Test Game",
+        setup: () => ({
+          currentPlayerIndex: 0,
+          players: [{ field: [], hand: ["card1"], id: "p1", mana: 5, name: "Player 1" }],
+        }),
       };
 
       const engine = new RuleEngine(gameDefinition, players);
@@ -574,46 +524,42 @@ describe("Move Enumeration System", () => {
       const players: Player[] = [{ id: "p1", name: "Player 1" }];
 
       const gameDefinition: GameDefinition<TestGameState, TestMoves> = {
-        name: "Test Game",
-        setup: () => ({
-          players: [
-            {
-              id: "p1",
-              name: "Player 1",
-              hand: ["card1", "card2", "card3", "card4", "card5"],
-              field: [],
-              mana: 5,
-            },
-          ],
-          currentPlayerIndex: 0,
-        }),
         moves: {
+          attack: {
+            condition: () => false,
+            enumerator: () => [],
+            reducer: () => {},
+          },
+          passTurn: {
+            condition: () => true,
+            enumerator: () => [{}],
+            reducer: () => {},
+          },
           playCard: {
+            condition: () => true,
             enumerator: (
               state: TestGameState,
               context: import("../moves/move-enumeration").MoveEnumerationContext,
             ) => {
-              const player = state.players.find(
-                (p) => p.id === context.playerId,
-              );
-              return player
-                ? player.hand.map((cardId: string) => ({ cardId }))
-                : [];
+              const player = state.players.find((p) => p.id === context.playerId);
+              return player ? player.hand.map((cardId: string) => ({ cardId })) : [];
             },
-            condition: () => true,
-            reducer: () => {},
-          },
-          attack: {
-            enumerator: () => [],
-            condition: () => false,
-            reducer: () => {},
-          },
-          passTurn: {
-            enumerator: () => [{}],
-            condition: () => true,
             reducer: () => {},
           },
         },
+        name: "Test Game",
+        setup: () => ({
+          currentPlayerIndex: 0,
+          players: [
+            {
+              field: [],
+              hand: ["card1", "card2", "card3", "card4", "card5"],
+              id: "p1",
+              mana: 5,
+              name: "Player 1",
+            },
+          ],
+        }),
       };
 
       const engine = new RuleEngine(gameDefinition, players);
@@ -642,39 +588,22 @@ describe("Move Enumeration System", () => {
       ];
 
       const gameDefinition: GameDefinition<TestGameState, TestMoves> = {
-        name: "Test Game",
-        setup: (players) => ({
-          players: players.map((p) => ({
-            id: p.id,
-            name: p.name ?? "",
-            hand: [],
-            field: p.id === "p1" ? ["attacker1", "attacker2"] : ["target1"],
-            mana: 5,
-          })),
-          currentPlayerIndex: 0,
-        }),
         moves: {
-          playCard: {
-            enumerator: () => [],
-            condition: () => false,
-            reducer: () => {},
-          },
           attack: {
             // Enumerate all attacker-target combinations
+            condition: () => true,
             enumerator: (
               state: TestGameState,
               context: import("../moves/move-enumeration").MoveEnumerationContext,
             ) => {
               const results: AttackParams[] = [];
-              const player = state.players.find(
-                (p) => p.id === context.playerId,
-              );
-              if (!player) return [];
+              const player = state.players.find((p) => p.id === context.playerId);
+              if (!player) {
+                return [];
+              }
 
               // Get all opponent creatures
-              const opponents = state.players.filter(
-                (p) => p.id !== context.playerId,
-              );
+              const opponents = state.players.filter((p) => p.id !== context.playerId);
 
               for (const attackerId of player.field) {
                 for (const opponent of opponents) {
@@ -686,15 +615,30 @@ describe("Move Enumeration System", () => {
 
               return results;
             },
-            condition: () => true,
             reducer: () => {},
           },
           passTurn: {
-            enumerator: () => [{}],
             condition: () => true,
+            enumerator: () => [{}],
+            reducer: () => {},
+          },
+          playCard: {
+            condition: () => false,
+            enumerator: () => [],
             reducer: () => {},
           },
         },
+        name: "Test Game",
+        setup: (players) => ({
+          currentPlayerIndex: 0,
+          players: players.map((p) => ({
+            field: p.id === "p1" ? ["attacker1", "attacker2"] : ["target1"],
+            hand: [],
+            id: p.id,
+            mana: 5,
+            name: p.name ?? "",
+          })),
+        }),
       };
 
       const engine = new RuleEngine(gameDefinition, players);

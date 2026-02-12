@@ -5,15 +5,15 @@ export const televisionSet: ItemCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "it's a Puppy character card",
+          type: "if",
         },
         then: {
-          type: "put-on-bottom",
           target: "CHOSEN_CHARACTER",
+          type: "put-on-bottom",
         },
+        type: "conditional",
       },
       id: "pbp-1",
       text: "IS IT ON YET? {E}, 1 {I} —  Look at the top card of your deck. If it's a Puppy character card, you may reveal it and put it into your hand. Otherwise, put it on the bottom of your deck.",

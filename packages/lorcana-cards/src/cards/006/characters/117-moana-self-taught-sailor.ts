@@ -4,9 +4,9 @@ export const moanaSelftaughtSailor: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "restriction",
         restriction: "cant-challenge",
         target: "SELF",
+        type: "restriction",
       },
       id: "13o-1",
       name: "LEARNING THE ROPES",

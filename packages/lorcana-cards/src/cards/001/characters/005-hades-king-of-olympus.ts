@@ -13,14 +13,14 @@ export const hadesKingOfOlympus: CharacterCard = {
     },
     {
       effect: {
-        type: "modify-stat",
-        stat: "lore",
         modifier: {
-          type: "classification-character-count",
           classification: "Villain",
           controller: "you",
+          type: "classification-character-count",
         },
+        stat: "lore",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "1e5-2",
       name: "SINISTER PLOT",

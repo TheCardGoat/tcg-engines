@@ -4,10 +4,10 @@ export const shenziHyenaPackLeader: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: 3,
+        stat: "strength",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "qk2-1",
       text: "I'LL HANDLE THIS While this character is at a location, she gets +3 {S}.",
@@ -15,13 +15,13 @@ export const shenziHyenaPackLeader: CharacterCard = {
     },
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "draw",
           amount: 1,
           target: "CONTROLLER",
+          type: "draw",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "qk2-2",
       text: "WHAT'S THE HURRY? While this character is at a location, whenever she challenges another character, you may draw a card.",

@@ -4,16 +4,16 @@ export const dinglehopperundefined: ItemCard = {
   abilities: [
     {
       effect: {
-        type: "remove-damage",
         amount: 1,
-        upTo: true,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "remove-damage",
+        upTo: true,
       },
       id: "qef-1",
       text: "**STRAIGHTEN HAIR** {E} - Remove up to 1 damage from chosen character.",

@@ -11,30 +11,30 @@ export const robinHoodEphemeralArcher: CharacterCard = {
     },
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "there's a card under him",
+          type: "if",
         },
         then: {
-          type: "deal-damage",
           amount: 1,
           target: {
-            selector: "chosen",
+            cardTypes: ["character"],
             count: 1,
             owner: "any",
+            selector: "chosen",
             zones: ["play"],
-            cardTypes: ["character"],
           },
+          type: "deal-damage",
         },
+        type: "conditional",
       },
       id: "1pw-2",
       name: "EXPERT SHOT",
       text: "EXPERT SHOT Whenever this character quests, if there's a card under him, deal 1 damage to up to 2 chosen characters.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },

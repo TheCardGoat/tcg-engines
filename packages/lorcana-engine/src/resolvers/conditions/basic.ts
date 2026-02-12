@@ -51,7 +51,8 @@ conditionRegistry.register<NoDamageCondition>("no-damage", {
 
 conditionRegistry.register<InChallengeCondition>("in-challenge", {
   complexity: 5,
-  evaluate: (_condition, _sourceCard, { context }) => Boolean(context?.attacker || context?.defender),
+  evaluate: (_condition, _sourceCard, { context }) =>
+    Boolean(context?.attacker || context?.defender),
 });
 
 // Register IfCondition handler (parser catch-all)

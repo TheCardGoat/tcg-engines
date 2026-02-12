@@ -4,8 +4,8 @@ export const lefouInstigator: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "play-card",
         from: "hand",
+        type: "play-card",
       },
       id: "dx9-1",
       text: "**FAN THE FLAMES** When you play this character, ready chosen character. They can",

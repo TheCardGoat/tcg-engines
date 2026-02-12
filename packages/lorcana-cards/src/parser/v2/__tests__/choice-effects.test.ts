@@ -15,9 +15,7 @@ import { parseEffect } from "../parsers/effect-parser";
 describe("Choice Effect Parser", () => {
   describe("'Choose one:' with period separators", () => {
     it("should parse 'Choose one: Draw a card. Deal 2 damage to chosen character.'", () => {
-      const effect = parseEffect(
-        "Choose one: Draw a card. Deal 2 damage to chosen character.",
-      );
+      const effect = parseEffect("Choose one: Draw a card. Deal 2 damage to chosen character.");
 
       expect(effect).toBeDefined();
       expect(effect?.type).toBe("choice");
@@ -44,10 +42,7 @@ describe("Choice Effect Parser", () => {
         type: "deal-damage",
       });
 
-      expect(choice.optionLabels).toEqual([
-        "Draw a card",
-        "Deal 2 damage to chosen character",
-      ]);
+      expect(choice.optionLabels).toEqual(["Draw a card", "Deal 2 damage to chosen character"]);
     });
 
     it("should parse 'Choose one: Gain 2 lore. Draw 2 cards. Deal 3 damage to chosen opposing character.'", () => {
@@ -92,9 +87,7 @@ describe("Choice Effect Parser", () => {
     });
 
     it("should parse 'Choose one: Exert chosen character. Ready chosen character.'", () => {
-      const effect = parseEffect(
-        "Choose one: Exert chosen character. Ready chosen character.",
-      );
+      const effect = parseEffect("Choose one: Exert chosen character. Ready chosen character.");
 
       expect(effect).toBeDefined();
       expect(effect?.type).toBe("choice");
@@ -163,9 +156,7 @@ describe("Choice Effect Parser", () => {
 
   describe("'Choose one:' with bullet separators", () => {
     it("should parse 'Choose one: • Draw a card • Deal 2 damage to chosen character'", () => {
-      const effect = parseEffect(
-        "Choose one: • Draw a card • Deal 2 damage to chosen character",
-      );
+      const effect = parseEffect("Choose one: • Draw a card • Deal 2 damage to chosen character");
 
       expect(effect).toBeDefined();
       expect(effect?.type).toBe("choice");
@@ -192,10 +183,7 @@ describe("Choice Effect Parser", () => {
         type: "deal-damage",
       });
 
-      expect(choice.optionLabels).toEqual([
-        "Draw a card",
-        "Deal 2 damage to chosen character",
-      ]);
+      expect(choice.optionLabels).toEqual(["Draw a card", "Deal 2 damage to chosen character"]);
     });
 
     it("should parse 'Choose one: • Gain 2 lore • Draw 2 cards • Banish chosen character'", () => {
@@ -242,9 +230,7 @@ describe("Choice Effect Parser", () => {
 
   describe("'or' format", () => {
     it("should parse 'Draw a card or deal 2 damage to chosen character'", () => {
-      const effect = parseEffect(
-        "Draw a card or deal 2 damage to chosen character",
-      );
+      const effect = parseEffect("Draw a card or deal 2 damage to chosen character");
 
       expect(effect).toBeDefined();
       expect(effect?.type).toBe("choice");
@@ -271,10 +257,7 @@ describe("Choice Effect Parser", () => {
         type: "deal-damage",
       });
 
-      expect(choice.optionLabels).toEqual([
-        "Draw a card",
-        "deal 2 damage to chosen character",
-      ]);
+      expect(choice.optionLabels).toEqual(["Draw a card", "deal 2 damage to chosen character"]);
     });
 
     it("should parse 'Gain 1 lore or draw a card'", () => {
@@ -300,9 +283,7 @@ describe("Choice Effect Parser", () => {
     });
 
     it("should parse 'Exert chosen character or ready chosen character'", () => {
-      const effect = parseEffect(
-        "Exert chosen character or ready chosen character",
-      );
+      const effect = parseEffect("Exert chosen character or ready chosen character");
 
       expect(effect).toBeDefined();
       expect(effect?.type).toBe("choice");
@@ -335,9 +316,7 @@ describe("Choice Effect Parser", () => {
     });
 
     it("should parse 'Deal 3 damage to chosen character or banish chosen character'", () => {
-      const effect = parseEffect(
-        "Deal 3 damage to chosen character or banish chosen character",
-      );
+      const effect = parseEffect("Deal 3 damage to chosen character or banish chosen character");
 
       expect(effect).toBeDefined();
       expect(effect?.type).toBe("choice");
@@ -381,9 +360,7 @@ describe("Choice Effect Parser", () => {
     });
 
     it("should return undefined if a choice option is unparsable", () => {
-      const effect = parseEffect(
-        "Choose one: Draw a card. Do something unparsable.",
-      );
+      const effect = parseEffect("Choose one: Draw a card. Do something unparsable.");
 
       expect(effect).toBeUndefined();
     });
@@ -416,9 +393,7 @@ describe("Choice Effect Parser", () => {
     });
 
     it("should handle mixed case 'choose one'", () => {
-      const effect = parseEffect(
-        "choose one: Draw a card. Deal 2 damage to chosen character.",
-      );
+      const effect = parseEffect("choose one: Draw a card. Deal 2 damage to chosen character.");
 
       expect(effect).toBeDefined();
       expect(effect?.type).toBe("choice");

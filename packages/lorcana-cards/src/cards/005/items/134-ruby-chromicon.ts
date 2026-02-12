@@ -5,17 +5,17 @@ export const rubyChromicon: ItemCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "modify-stat",
-        stat: "strength",
+        duration: "this-turn",
         modifier: 1,
+        stat: "strength",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
-        duration: "this-turn",
+        type: "modify-stat",
       },
       id: "1tf-1",
       text: "RUBY LIGHT {E} — Chosen character gets +1 {S} this turn.",

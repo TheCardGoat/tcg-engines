@@ -10,22 +10,22 @@ export const goofyMusketeer: CharacterCard = {
     },
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "remove-damage",
           amount: 2,
           target: "CHOSEN_CHARACTER",
+          type: "remove-damage",
           upTo: true,
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "11w-2",
       name: "AND TWO FOR TEA!",
       text: "AND TWO FOR TEA! When you play this character, you may remove up to 2 damage from each of your Musketeer characters.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

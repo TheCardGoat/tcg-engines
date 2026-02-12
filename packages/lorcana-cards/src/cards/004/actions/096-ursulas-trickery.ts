@@ -4,20 +4,20 @@ export const ursulasTrickery: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "discard",
             amount: 1,
-            target: "EACH_OPPONENT",
             chosen: true,
+            target: "EACH_OPPONENT",
+            type: "discard",
           },
           {
-            type: "draw",
             amount: 1,
             target: "EACH_OPPONENT",
+            type: "draw",
           },
         ],
+        type: "sequence",
       },
       id: "1sb-1",
       text: "Each opponent may choose and discard a card. For each opponent who doesn't, you draw a card.",

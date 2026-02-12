@@ -4,20 +4,20 @@ export const hypnotize: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "discard",
             amount: 1,
-            target: "EACH_OPPONENT",
             chosen: true,
+            target: "EACH_OPPONENT",
+            type: "discard",
           },
           {
-            type: "draw",
             amount: 1,
             target: "CONTROLLER",
+            type: "draw",
           },
         ],
+        type: "sequence",
       },
       id: "1kn-1",
       text: "Each opponent chooses and discards a card. Draw a card.",

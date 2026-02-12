@@ -10,13 +10,13 @@ export const theQueenConceitedRuler: CharacterCard = {
     },
     {
       effect: {
-        type: "optional",
-        effect: {
-          type: "return-from-discard",
-          target: "CONTROLLER",
-          cardType: "character",
-        },
         chooser: "CONTROLLER",
+        effect: {
+          cardType: "character",
+          target: "CONTROLLER",
+          type: "return-from-discard",
+        },
+        type: "optional",
       },
       id: "3l5-2",
       text: "ROYAL SUMMONS At the start of your turn, you may choose and discard a Princess or Queen character card to return a character card from your discard to your hand.",

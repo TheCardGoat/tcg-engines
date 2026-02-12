@@ -4,32 +4,32 @@ export const inkrunner: ItemCard = {
   abilities: [
     {
       effect: {
-        type: "draw",
         amount: 1,
         target: "CONTROLLER",
+        type: "draw",
       },
       id: "u80-1",
       name: "PREFLIGHT CHECK",
       text: "PREFLIGHT CHECK When you play this item, draw a card.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },
     {
       effect: {
-        type: "gain-keyword",
+        duration: "this-turn",
         keyword: "Alert",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
-        duration: "this-turn",
+        type: "gain-keyword",
       },
       id: "u80-2",
       text: "READY TO RIDE {E}, 1 {I} - Chosen character gains Alert this turn.",

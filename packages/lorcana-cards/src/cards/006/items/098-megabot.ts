@@ -4,9 +4,9 @@ export const megabot: ItemCard = {
   abilities: [
     {
       effect: {
-        type: "restriction",
         restriction: "enters-play-exerted",
         target: "SELF",
+        type: "restriction",
       },
       id: "137-1",
       name: "HAPPY FACE",

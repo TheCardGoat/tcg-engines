@@ -13,9 +13,9 @@ export const nickWildeSlyFox: CharacterCard = {
     },
     {
       effect: {
-        type: "restriction",
         restriction: "cant-be-challenged",
         target: "SELF",
+        type: "restriction",
       },
       id: "jsd-2",
       text: "CAN'T TOUCH ME While you have an item in play, this character can't be challenged.",

@@ -17,9 +17,7 @@ describe("playEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("play-card");
-      expect((result as Effect & { cardType?: string }).cardType).toBe(
-        "character",
-      );
+      expect((result as Effect & { cardType?: string }).cardType).toBe("character");
       // Cost is only set when it's "free"
       expect((result as Effect & { cost?: string }).cost).toBeUndefined();
     });
@@ -30,9 +28,7 @@ describe("playEffectParser", () => {
       expect(result).not.toBeNull();
       expect(result?.type).toBe("play-card");
       // Parser now correctly captures "character" (first word after article)
-      expect((result as Effect & { cardType?: string }).cardType).toBe(
-        "character",
-      );
+      expect((result as Effect & { cardType?: string }).cardType).toBe("character");
       expect((result as Effect & { cost?: string }).cost).toBe("free");
     });
 
@@ -42,9 +38,7 @@ describe("playEffectParser", () => {
       expect(result).not.toBeNull();
       expect(result?.type).toBe("play-card");
       // Parser now correctly skips the article "an" and captures "action"
-      expect((result as Effect & { cardType?: string }).cardType).toBe(
-        "action",
-      );
+      expect((result as Effect & { cardType?: string }).cardType).toBe("action");
     });
 
     it("parses 'play an item' correctly", () => {
@@ -62,39 +56,29 @@ describe("playEffectParser", () => {
       expect(result).not.toBeNull();
       expect(result?.type).toBe("play-card");
       // "card" is not a valid cardType (character, action, item, location, song, floodborn)
-      expect(
-        (result as Effect & { cardType?: string }).cardType,
-      ).toBeUndefined();
+      expect((result as Effect & { cardType?: string }).cardType).toBeUndefined();
     });
   });
 
   describe("text parsing - play from discard", () => {
     it("parses 'play a character from your discard' correctly", () => {
-      const result = playEffectParser.parse(
-        "play a character from your discard",
-      );
+      const result = playEffectParser.parse("play a character from your discard");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("play-card");
       expect((result as Effect & { from: string }).from).toBe("discard");
-      expect((result as Effect & { cardType?: string }).cardType).toBe(
-        "character",
-      );
+      expect((result as Effect & { cardType?: string }).cardType).toBe("character");
       // Cost is only set when it's "free"
       expect((result as Effect & { cost?: string }).cost).toBeUndefined();
     });
 
     it("parses 'play a character card from your discard for free' correctly", () => {
-      const result = playEffectParser.parse(
-        "play a character card from your discard for free",
-      );
+      const result = playEffectParser.parse("play a character card from your discard for free");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("play-card");
       expect((result as Effect & { from: string }).from).toBe("discard");
-      expect((result as Effect & { cardType?: string }).cardType).toBe(
-        "character",
-      );
+      expect((result as Effect & { cardType?: string }).cardType).toBe("character");
       expect((result as Effect & { cost: string }).cost).toBe("free");
     });
 
@@ -109,35 +93,27 @@ describe("playEffectParser", () => {
 
   describe("text parsing - play cost X or less", () => {
     it("parses 'play a character that costs 3 or less for free' correctly", () => {
-      const result = playEffectParser.parse(
-        "play a character that costs 3 or less for free",
-      );
+      const result = playEffectParser.parse("play a character that costs 3 or less for free");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("play-card");
       expect((result as Effect & { cost?: string }).cost).toBe("free");
       // Implementation uses costRestriction instead of filter
-      const {costRestriction} = (
-        result as Effect & {
-          costRestriction?: { comparison: string; value: number };
-        }
-      );
+      const { costRestriction } = result as Effect & {
+        costRestriction?: { comparison: string; value: number };
+      };
       expect(costRestriction?.value).toBe(3);
       expect(costRestriction?.comparison).toBe("less-or-equal");
     });
 
     it("parses 'play a card that costs 5 or less for free' correctly", () => {
-      const result = playEffectParser.parse(
-        "play a card that costs 5 or less for free",
-      );
+      const result = playEffectParser.parse("play a card that costs 5 or less for free");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("play-card");
-      const {costRestriction} = (
-        result as Effect & {
-          costRestriction?: { comparison: string; value: number };
-        }
-      );
+      const { costRestriction } = result as Effect & {
+        costRestriction?: { comparison: string; value: number };
+      };
       expect(costRestriction?.value).toBe(5);
     });
 
@@ -146,11 +122,9 @@ describe("playEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("play-card");
-      const {costRestriction} = (
-        result as Effect & {
-          costRestriction?: { comparison: string; value: number };
-        }
-      );
+      const { costRestriction } = result as Effect & {
+        costRestriction?: { comparison: string; value: number };
+      };
       expect(costRestriction?.value).toBe(2);
     });
   });
@@ -161,9 +135,7 @@ describe("playEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("play-card");
-      expect((result as Effect & { cardType?: string }).cardType).toBe(
-        "character",
-      );
+      expect((result as Effect & { cardType?: string }).cardType).toBe("character");
     });
 
     it("parses 'Play A Character For Free' in mixed case - cost not detected", () => {
@@ -172,9 +144,7 @@ describe("playEffectParser", () => {
       expect(result).not.toBeNull();
       expect(result?.type).toBe("play-card");
       // Parser now correctly skips the article "A" and captures "character"
-      expect((result as Effect & { cardType?: string }).cardType).toBe(
-        "character",
-      );
+      expect((result as Effect & { cardType?: string }).cardType).toBe("character");
       // Text.includes("for free") is case-sensitive, so "For Free" doesn't match
       expect((result as Effect & { cost?: string }).cost).toBeUndefined();
     });
@@ -185,9 +155,7 @@ describe("playEffectParser", () => {
       expect(result).not.toBeNull();
       expect(result?.type).toBe("play-card");
       // Parser now correctly skips the article "aN" and captures "aCtIoN"
-      expect((result as Effect & { cardType?: string }).cardType).toBe(
-        "action",
-      );
+      expect((result as Effect & { cardType?: string }).cardType).toBe("action");
     });
   });
 
@@ -196,27 +164,21 @@ describe("playEffectParser", () => {
       const result = playEffectParser.parse("play a character");
 
       expect(result).not.toBeNull();
-      expect((result as Effect & { cardType?: string }).cardType).toBe(
-        "character",
-      );
+      expect((result as Effect & { cardType?: string }).cardType).toBe("character");
     });
 
     it("parses with multiple spaces", () => {
       const result = playEffectParser.parse("play  a  character");
 
       expect(result).not.toBeNull();
-      expect((result as Effect & { cardType?: string }).cardType).toBe(
-        "character",
-      );
+      expect((result as Effect & { cardType?: string }).cardType).toBe("character");
     });
 
     it("parses with tabs", () => {
       const result = playEffectParser.parse("play\ta\tcharacter");
 
       expect(result).not.toBeNull();
-      expect((result as Effect & { cardType?: string }).cardType).toBe(
-        "character",
-      );
+      expect((result as Effect & { cardType?: string }).cardType).toBe("character");
     });
   });
 
@@ -267,9 +229,7 @@ describe("playEffectParser", () => {
       expect(result?.type).toBe("play-card");
       // Parser now correctly captures "character" (first word after article)
       // The second word "card" is ignored but "character" is a valid cardType
-      expect((result as Effect & { cardType?: string }).cardType).toBe(
-        "character",
-      );
+      expect((result as Effect & { cardType?: string }).cardType).toBe("character");
     });
 
     it("handles play cost 0 for free", () => {
@@ -277,34 +237,26 @@ describe("playEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("play-card");
-      const {costRestriction} = (
-        result as Effect & {
-          costRestriction?: { comparison: string; value: number };
-        }
-      );
+      const { costRestriction } = result as Effect & {
+        costRestriction?: { comparison: string; value: number };
+      };
       expect(costRestriction?.value).toBe(0);
     });
 
     it("handles play cost large numbers", () => {
-      const result = playEffectParser.parse(
-        "play that costs 10 or less for free",
-      );
+      const result = playEffectParser.parse("play that costs 10 or less for free");
 
       expect(result).not.toBeNull();
-      const {costRestriction} = (
-        result as Effect & {
-          costRestriction?: { comparison: string; value: number };
-        }
-      );
+      const { costRestriction } = result as Effect & {
+        costRestriction?: { comparison: string; value: number };
+      };
       expect(costRestriction?.value).toBe(10);
     });
   });
 
   describe("pattern priority", () => {
     it("prioritizes play-from-discard over general play", () => {
-      const result = playEffectParser.parse(
-        "play a character from your discard",
-      );
+      const result = playEffectParser.parse("play a character from your discard");
 
       expect(result).not.toBeNull();
       expect((result as Effect & { from?: string }).from).toBe("discard");
@@ -314,11 +266,9 @@ describe("playEffectParser", () => {
       const result = playEffectParser.parse("play that costs 3 for free");
 
       expect(result).not.toBeNull();
-      const {costRestriction} = (
-        result as Effect & {
-          costRestriction?: { comparison: string; value: number };
-        }
-      );
+      const { costRestriction } = result as Effect & {
+        costRestriction?: { comparison: string; value: number };
+      };
       expect(costRestriction?.value).toBe(3);
     });
   });

@@ -4,15 +4,15 @@ export const slightlyLostBoy: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you have a character named Peter Pan in play",
+          type: "if",
         },
         then: {
-          type: "play-card",
           from: "hand",
+          type: "play-card",
         },
+        type: "conditional",
       },
       id: "1pb-1",
       text: "THE FOX If you have a character named Peter Pan in play, you pay 1 {I} less to play this character.",

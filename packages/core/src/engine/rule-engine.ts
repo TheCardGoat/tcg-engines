@@ -1,30 +1,11 @@
-import {
-  enablePatches,
-  applyPatches as immerApplyPatches,
-  type Patch,
-  produce,
-} from "immer";
+import { type Patch, enablePatches, applyPatches as immerApplyPatches, produce } from "immer";
 import { FlowManager } from "../flow/flow-manager";
-import type {
-  GameDefinition,
-  Player,
-} from "../game-definition/game-definition";
-import {
-  type FormattedHistoryEntry,
-  HistoryManager,
-  type HistoryQueryOptions,
-} from "../history";
+import type { GameDefinition, Player } from "../game-definition/game-definition";
+import { type FormattedHistoryEntry, HistoryManager, type HistoryQueryOptions } from "../history";
 import { createHistoryOperations } from "../history/history-operations";
 import { Logger, type LoggerOptions } from "../logging";
-import type {
-  EnumeratedMove,
-  MoveEnumerationOptions,
-} from "../moves/move-enumeration";
-import type {
-  ConditionFailure,
-  MoveContext,
-  MoveContextInput,
-} from "../moves/move-system";
+import type { EnumeratedMove, MoveEnumerationOptions } from "../moves/move-enumeration";
+import type { ConditionFailure, MoveContext, MoveContextInput } from "../moves/move-system";
 import type { CardRegistry } from "../operations/card-registry";
 import { createCardRegistry } from "../operations/card-registry-impl";
 import {
@@ -45,7 +26,7 @@ import { TrackerSystem } from "./tracker-system";
  *
  * Configuration options for RuleEngine initialization
  */
-export type RuleEngineOptions = {
+export interface RuleEngineOptions {
   /** Optional RNG seed for deterministic gameplay */
   seed?: string;
   /** Optional initial patches (for replay/restore) */
@@ -56,7 +37,7 @@ export type RuleEngineOptions = {
   telemetry?: TelemetryOptions;
   /** Optional player ID to designate as the choosing player (e.g., loser of previous game in best-of-three). If not provided, randomly selected. */
   choosingFirstPlayer?: string;
-};
+}
 
 /**
  * Move Execution Result
@@ -84,17 +65,13 @@ export type MoveExecutionResult =
  *
  * Note: For user-facing history with localization, use HistoryEntry from @tcg/core/history
  */
-export type ReplayHistoryEntry<
-  TParams = any,
-  TCardMeta = any,
-  TCardDefinition = any,
-> = {
+export interface ReplayHistoryEntry<TParams = any, TCardMeta = any, TCardDefinition = any> {
   moveId: string;
   context: MoveContext<TParams, TCardMeta, TCardDefinition>;
   patches: Patch[];
   inversePatches: Patch[];
   timestamp: number;
-};
+}
 
 /**
  * RuleEngine - Core game engine
@@ -133,18 +110,9 @@ export class RuleEngine<
   TCardMeta = any,
 > {
   private currentState: TState;
-  protected readonly gameDefinition: GameDefinition<
-    TState,
-    TMoves,
-    TCardDefinition,
-    TCardMeta
-  >;
+  protected readonly gameDefinition: GameDefinition<TState, TMoves, TCardDefinition, TCardMeta>;
   private readonly rng: SeededRNG;
-  private readonly history: ReplayHistoryEntry<
-    any,
-    TCardMeta,
-    TCardDefinition
-  >[] = [];
+  private readonly history: ReplayHistoryEntry<any, TCardMeta, TCardDefinition>[] = [];
   private historyIndex = -1;
   private readonly moveHistory: HistoryManager; // New move history system
   private flowManager?: FlowManager<TState, TCardMeta>;
@@ -181,9 +149,7 @@ export class RuleEngine<
 
     // Initialize logging and telemetry FIRST (before any other operations)
     this.logger = new Logger(options?.logger ?? { level: "SILENT" });
-    this.telemetry = new TelemetryManager(
-      options?.telemetry ?? { enabled: false },
-    );
+    this.telemetry = new TelemetryManager(options?.telemetry ?? { enabled: false });
 
     this.gameDefinition = gameDefinition;
     this.initialPlayers = players;
@@ -203,9 +169,9 @@ export class RuleEngine<
 
     // Initialize internal state with zones from game definition
     this.internalState = {
-      zones: {},
-      cards: {},
       cardMetas: {},
+      cards: {},
+      zones: {},
     };
 
     // Create zone instances from zone configs (if provided)
@@ -214,8 +180,8 @@ export class RuleEngine<
         const zoneConfig = gameDefinition.zones[zoneId];
         if (zoneConfig) {
           this.internalState.zones[zoneId] = {
-            config: zoneConfig,
             cardIds: [],
+            config: zoneConfig,
           };
         }
       }
@@ -228,17 +194,13 @@ export class RuleEngine<
     if (players.length > 0) {
       if (options?.choosingFirstPlayer) {
         // Use explicitly specified choosing player (e.g., loser of previous game in best-of-three)
-        this.internalState.choosingFirstPlayer = createPlayerId(
-          options.choosingFirstPlayer,
-        );
+        this.internalState.choosingFirstPlayer = createPlayerId(options.choosingFirstPlayer);
       } else {
         // Randomly select if not specified
         const randomIndex = Math.floor(this.rng.random() * players.length);
         const choosingPlayer = players[randomIndex];
         if (choosingPlayer) {
-          this.internalState.choosingFirstPlayer = createPlayerId(
-            choosingPlayer.id,
-          );
+          this.internalState.choosingFirstPlayer = createPlayerId(choosingPlayer.id);
         }
       }
     }
@@ -250,39 +212,27 @@ export class RuleEngine<
     if (gameDefinition.flow) {
       // Create operations for flow manager
       const zoneOps = createZoneOperations(this.internalState);
-      const cardOps = createCardOperations<TCardDefinition, TCardMeta>(
-        this.internalState,
-      );
+      const cardOps = createCardOperations<TCardDefinition, TCardMeta>(this.internalState);
       const gameOps = createGameOperations(this.internalState);
 
-      this.flowManager = new FlowManager(
-        gameDefinition.flow,
-        this.currentState,
-        {
-          onTurnEnd: () => this.trackerSystem.resetTurn(),
-          onPhaseEnd: (phaseName) => this.trackerSystem.resetPhase(phaseName),
-          gameOperations: gameOps,
-          zoneOperations: zoneOps,
-          cardOperations: cardOps,
-          logger: this.logger.child("flow"),
-          telemetry: this.telemetry,
-        },
-      );
+      this.flowManager = new FlowManager(gameDefinition.flow, this.currentState, {
+        cardOperations: cardOps,
+        gameOperations: gameOps,
+        logger: this.logger.child("flow"),
+        onPhaseEnd: (phaseName) => this.trackerSystem.resetPhase(phaseName),
+        onTurnEnd: () => this.trackerSystem.resetTurn(),
+        telemetry: this.telemetry,
+        zoneOperations: zoneOps,
+      });
     }
 
     // Register telemetry hooks from game definition
     if (gameDefinition.telemetryHooks) {
       if (gameDefinition.telemetryHooks.onPlayerAction) {
-        this.telemetry.registerHook(
-          "onPlayerAction",
-          gameDefinition.telemetryHooks.onPlayerAction,
-        );
+        this.telemetry.registerHook("onPlayerAction", gameDefinition.telemetryHooks.onPlayerAction);
       }
       if (gameDefinition.telemetryHooks.onStateChange) {
-        this.telemetry.registerHook(
-          "onStateChange",
-          gameDefinition.telemetryHooks.onStateChange,
-        );
+        this.telemetry.registerHook("onStateChange", gameDefinition.telemetryHooks.onStateChange);
       }
       if (gameDefinition.telemetryHooks.onRuleEvaluation) {
         this.telemetry.registerHook(
@@ -297,16 +247,10 @@ export class RuleEngine<
         );
       }
       if (gameDefinition.telemetryHooks.onEngineError) {
-        this.telemetry.registerHook(
-          "onEngineError",
-          gameDefinition.telemetryHooks.onEngineError,
-        );
+        this.telemetry.registerHook("onEngineError", gameDefinition.telemetryHooks.onEngineError);
       }
       if (gameDefinition.telemetryHooks.onPerformance) {
-        this.telemetry.registerHook(
-          "onPerformance",
-          gameDefinition.telemetryHooks.onPerformance,
-        );
+        this.telemetry.registerHook("onPerformance", gameDefinition.telemetryHooks.onPerformance);
       }
     }
   }
@@ -323,8 +267,8 @@ export class RuleEngine<
    */
   getState(): TState {
     // Use structuredClone for deep cloning with better performance and type safety
-    // than JSON serialization. Note: structuredClone preserves more types (Date, Map, Set, etc.)
-    // but still creates a deep copy to ensure immutability
+    // Than JSON serialization. Note: structuredClone preserves more types (Date, Map, Set, etc.)
+    // But still creates a deep copy to ensure immutability
     return structuredClone(this.currentState);
   }
 
@@ -341,10 +285,7 @@ export class RuleEngine<
    */
   getPlayerView(playerId: string): TState {
     if (this.gameDefinition.playerView) {
-      const filteredState = this.gameDefinition.playerView(
-        this.currentState,
-        playerId,
-      );
+      const filteredState = this.gameDefinition.playerView(this.currentState, playerId);
       // Use structuredClone for deep cloning filtered state
       return structuredClone(filteredState);
     }
@@ -431,17 +372,14 @@ export class RuleEngine<
    * @param context - Move context (player, typed params, targets)
    * @returns Execution result with patches or error
    */
-  executeMove(
-    moveId: string,
-    contextInput: MoveContextInput<any>,
-  ): MoveExecutionResult {
+  executeMove(moveId: string, contextInput: MoveContextInput<any>): MoveExecutionResult {
     const startTime = Date.now();
 
     // Log move execution start (INFO level)
     this.logger.info(`Executing move: ${moveId}`, {
       moveId,
-      playerId: contextInput.playerId,
       params: contextInput.params as Record<string, unknown>,
+      playerId: contextInput.playerId,
     });
 
     // Task 11.7: Validate move exists
@@ -450,9 +388,9 @@ export class RuleEngine<
       const error = `Move '${moveId}' not found`;
       this.logger.error(error, { moveId });
       return {
-        success: false,
         error,
         errorCode: "MOVE_NOT_FOUND",
+        success: false,
       };
     }
 
@@ -462,9 +400,9 @@ export class RuleEngine<
       const error = "Game has already ended";
       this.logger.warn(error, { moveId });
       return {
-        success: false,
         error,
         errorCode: "GAME_ENDED",
+        success: false,
       };
     }
 
@@ -481,60 +419,60 @@ export class RuleEngine<
 
       // Log condition failure (WARN level)
       this.logger.warn(`Move condition failed: ${moveId}`, {
-        moveId,
-        playerId: contextInput.playerId,
         error: failure.error,
         errorCode: failure.errorCode,
+        moveId,
+        playerId: contextInput.playerId,
       });
 
       // Add history entry for failed move
       this.moveHistory.addEntry({
-        moveId,
-        playerId: contextInput.playerId,
-        params: contextInput.params,
-        timestamp: contextInput.timestamp ?? Date.now(),
-        turn: this.flowManager?.getTurnNumber(),
-        phase: this.flowManager?.getCurrentPhase(),
-        segment: this.flowManager?.getCurrentSegment(),
-        success: false,
         error: {
           code: failure.errorCode,
-          message: failure.error,
           context: failure.errorContext,
+          message: failure.error,
         },
         messages: {
-          visibility: "PUBLIC",
           messages: {
-            casual: {
-              key: `moves.${moveId}.failure`,
-              values: {
-                playerId: contextInput.playerId,
-                error: failure.error,
-              },
-            },
             advanced: {
               key: `moves.${moveId}.failure.detailed`,
               values: {
-                playerId: contextInput.playerId,
                 error: failure.error,
                 errorCode: failure.errorCode,
+                playerId: contextInput.playerId,
+              },
+            },
+            casual: {
+              key: `moves.${moveId}.failure`,
+              values: {
+                error: failure.error,
+                playerId: contextInput.playerId,
               },
             },
           },
+          visibility: "PUBLIC",
         },
+        moveId,
+        params: contextInput.params,
+        phase: this.flowManager?.getCurrentPhase(),
+        playerId: contextInput.playerId,
+        segment: this.flowManager?.getCurrentSegment(),
+        success: false,
+        timestamp: contextInput.timestamp ?? Date.now(),
+        turn: this.flowManager?.getTurnNumber(),
       });
 
       // Emit telemetry event for failed move
       this.telemetry.emitEvent({
-        type: "playerAction",
-        moveId,
-        playerId: contextInput.playerId,
-        params: contextInput.params,
-        result: "failure",
+        duration: Date.now() - startTime,
         error: failure.error,
         errorCode: failure.errorCode,
-        duration: Date.now() - startTime,
+        moveId,
+        params: contextInput.params,
+        playerId: contextInput.playerId,
+        result: "failure",
         timestamp: startTime,
+        type: "playerAction",
       });
 
       return failure;
@@ -542,22 +480,10 @@ export class RuleEngine<
 
     // Task 11.25, 11.26: Add RNG to context for deterministic randomness
     // Also add operations API for zone and card management
-    const zoneOps = createZoneOperations(
-      this.internalState,
-      this.logger.child("zones"),
-    );
-    const cardOps = createCardOperations(
-      this.internalState,
-      this.logger.child("cards"),
-    );
-    const gameOps = createGameOperations(
-      this.internalState,
-      this.logger.child("game"),
-    );
-    const counterOps = createCounterOperations(
-      this.internalState,
-      this.logger.child("counters"),
-    );
+    const zoneOps = createZoneOperations(this.internalState, this.logger.child("zones"));
+    const cardOps = createCardOperations(this.internalState, this.logger.child("cards"));
+    const gameOps = createGameOperations(this.internalState, this.logger.child("game"));
+    const counterOps = createCounterOperations(this.internalState, this.logger.child("counters"));
 
     // Track pending flow transitions
     let pendingPhaseEnd = false;
@@ -601,32 +527,31 @@ export class RuleEngine<
     // Create history operations for this move
     const historyOps = createHistoryOperations(this.moveHistory, {
       moveId,
-      playerId: contextInput.playerId,
       params: contextInput.params,
+      phase: flowState?.currentPhase,
+      playerId: contextInput.playerId,
+      segment: flowState?.currentSegment,
       timestamp: contextInput.timestamp ?? Date.now(),
       turn: flowState?.turn,
-      phase: flowState?.currentPhase,
-      segment: flowState?.currentSegment,
     });
 
-    const contextWithOperations: MoveContext<any, TCardMeta, TCardDefinition> =
-      {
-        ...contextInput,
-        rng: this.rng,
-        zones: zoneOps,
-        cards: cardOps,
-        game: gameOps,
-        counters: counterOps,
-        history: historyOps,
-        registry: this.cardRegistry,
-        flow: flowState,
-        endGame,
-        trackers: {
-          check: (name, playerId) => this.trackerSystem.check(name, playerId),
-          mark: (name, playerId) => this.trackerSystem.mark(name, playerId),
-          unmark: (name, playerId) => this.trackerSystem.unmark(name, playerId),
-        },
-      };
+    const contextWithOperations: MoveContext<any, TCardMeta, TCardDefinition> = {
+      ...contextInput,
+      cards: cardOps,
+      counters: counterOps,
+      endGame,
+      flow: flowState,
+      game: gameOps,
+      history: historyOps,
+      registry: this.cardRegistry,
+      rng: this.rng,
+      trackers: {
+        check: (name, playerId) => this.trackerSystem.check(name, playerId),
+        mark: (name, playerId) => this.trackerSystem.mark(name, playerId),
+        unmark: (name, playerId) => this.trackerSystem.unmark(name, playerId),
+      },
+      zones: zoneOps,
+    };
 
     // Task 11.9: Execute reducer with Immer and capture patches
     let patches: Patch[] = [];
@@ -646,35 +571,35 @@ export class RuleEngine<
 
       // Task 11.10: Update history (store full context for replay)
       this.addToHistory({
-        moveId,
         context: contextWithOperations,
-        patches,
         inversePatches,
+        moveId,
+        patches,
         timestamp: Date.now(),
       });
 
       // Add automatic base history entry for successful move
       this.moveHistory.addEntry({
-        moveId,
-        playerId: contextInput.playerId,
-        params: contextInput.params,
-        timestamp: contextInput.timestamp ?? Date.now(),
-        turn: flowState?.turn,
-        phase: flowState?.currentPhase,
-        segment: flowState?.currentSegment,
-        success: true,
         messages: {
-          visibility: "PUBLIC",
           messages: {
             casual: {
               key: `moves.${moveId}.success`,
               values: {
-                playerId: contextInput.playerId,
                 params: contextInput.params,
+                playerId: contextInput.playerId,
               },
             },
           },
+          visibility: "PUBLIC",
         },
+        moveId,
+        params: contextInput.params,
+        phase: flowState?.currentPhase,
+        playerId: contextInput.playerId,
+        segment: flowState?.currentSegment,
+        success: true,
+        timestamp: contextInput.timestamp ?? Date.now(),
+        turn: flowState?.turn,
       });
 
       // Execute any pending flow transitions after move completes
@@ -701,66 +626,65 @@ export class RuleEngine<
       // Log successful completion (DEBUG level)
       const duration = Date.now() - startTime;
       this.logger.debug(`Move completed: ${moveId}`, {
-        moveId,
-        playerId: contextInput.playerId,
         duration,
+        moveId,
         patchCount: patches.length,
+        playerId: contextInput.playerId,
       });
 
       // Emit telemetry events for successful move
       this.telemetry.emitEvent({
-        type: "playerAction",
-        moveId,
-        playerId: contextInput.playerId,
-        params: contextInput.params,
-        result: "success",
         duration,
+        moveId,
+        params: contextInput.params,
+        playerId: contextInput.playerId,
+        result: "success",
         timestamp: startTime,
+        type: "playerAction",
       });
 
       this.telemetry.emitEvent({
-        type: "stateChange",
-        patches,
         inversePatches,
         moveId,
+        patches,
         timestamp: Date.now(),
+        type: "stateChange",
       });
 
       return {
-        success: true,
-        patches,
         inversePatches,
+        patches,
+        success: true,
       };
     } catch (error) {
       // Log error (ERROR level)
-      const errorMessage =
-        error instanceof Error ? error.message : "Move execution failed";
+      const errorMessage = error instanceof Error ? error.message : "Move execution failed";
       this.logger.error(`Move execution error: ${moveId}`, {
+        error: errorMessage,
         moveId,
         playerId: contextInput.playerId,
-        error: errorMessage,
         stack: error instanceof Error ? error.stack : undefined,
       });
 
       // Emit telemetry error event
       this.telemetry.emitEvent({
-        type: "engineError",
-        error: errorMessage,
-        stack: error instanceof Error ? error.stack : undefined,
         context: {
           moveId,
-          playerId: contextInput.playerId,
           params: contextInput.params,
+          playerId: contextInput.playerId,
         },
+        error: errorMessage,
         moveId,
         playerId: contextInput.playerId,
+        stack: error instanceof Error ? error.stack : undefined,
         timestamp: Date.now(),
+        type: "engineError",
       });
 
       return {
-        success: false,
         error: errorMessage,
         errorCode: "EXECUTION_ERROR",
+        success: false,
       };
     }
   }
@@ -778,22 +702,10 @@ export class RuleEngine<
   private buildMoveContext(
     contextInput: MoveContextInput<any>,
   ): MoveContext<any, TCardMeta, TCardDefinition> {
-    const zoneOps = createZoneOperations(
-      this.internalState,
-      this.logger.child("zones"),
-    );
-    const cardOps = createCardOperations(
-      this.internalState,
-      this.logger.child("cards"),
-    );
-    const gameOps = createGameOperations(
-      this.internalState,
-      this.logger.child("game"),
-    );
-    const counterOps = createCounterOperations(
-      this.internalState,
-      this.logger.child("counters"),
-    );
+    const zoneOps = createZoneOperations(this.internalState, this.logger.child("zones"));
+    const cardOps = createCardOperations(this.internalState, this.logger.child("cards"));
+    const gameOps = createGameOperations(this.internalState, this.logger.child("game"));
+    const counterOps = createCounterOperations(this.internalState, this.logger.child("counters"));
 
     // Add flow state for condition checks
     const flowState = this.flowManager
@@ -804,7 +716,7 @@ export class RuleEngine<
           currentPlayer: this.flowManager.getCurrentPlayer() as PlayerId,
           isFirstTurn: this.flowManager.getTurnNumber() === 1,
           // Condition doesn't need control methods (endPhase, endSegment, endTurn)
-          // as conditions should be side-effect free
+          // As conditions should be side-effect free
           endPhase: () => {},
           endSegment: () => {},
           endTurn: () => {},
@@ -821,19 +733,19 @@ export class RuleEngine<
 
     return {
       ...contextInput,
-      rng: this.rng,
-      zones: zoneOps,
       cards: cardOps,
-      game: gameOps,
       counters: counterOps,
+      flow: flowState,
+      game: gameOps,
       history: dummyHistoryOps,
       registry: this.cardRegistry,
-      flow: flowState,
+      rng: this.rng,
       trackers: {
         check: (name, playerId) => this.trackerSystem.check(name, playerId),
         mark: (name, playerId) => this.trackerSystem.mark(name, playerId),
         unmark: (name, playerId) => this.trackerSystem.unmark(name, playerId),
       },
+      zones: zoneOps,
     };
   }
 
@@ -887,24 +799,24 @@ export class RuleEngine<
         reason: "Condition returned false",
       });
       return {
-        success: false,
         error: `Move '${moveId}' condition not met`,
         errorCode: "CONDITION_FAILED",
+        success: false,
       };
     }
 
     // Detailed ConditionFailure object (result must be ConditionFailure here)
     const failure = result as ConditionFailure; // TypeScript narrowing
     this.logger.debug(`Condition failed: ${moveId}`, {
+      errorCode: failure.errorCode,
       moveId,
       reason: failure.reason,
-      errorCode: failure.errorCode,
     });
     return {
-      success: false,
       error: failure.reason,
       errorCode: failure.errorCode,
       errorContext: failure.context,
+      success: false,
     };
   }
 
@@ -960,8 +872,8 @@ export class RuleEngine<
     for (const moveId of Object.keys(this.gameDefinition.moves)) {
       // Create a minimal context for validation (params will be empty object for moves requiring no params)
       const context: MoveContextInput<any> = {
-        playerId,
-        params: {}, // Empty params - moves with required params won't validate with empty context
+        params: {},
+        playerId, // Empty params - moves with required params won't validate with empty context
       };
 
       if (this.canExecuteMove(moveId, context)) {
@@ -1013,10 +925,7 @@ export class RuleEngine<
    * });
    * ```
    */
-  enumerateMoves(
-    playerId: PlayerId,
-    options?: MoveEnumerationOptions,
-  ): EnumeratedMove<unknown>[] {
+  enumerateMoves(playerId: PlayerId, options?: MoveEnumerationOptions): EnumeratedMove<unknown>[] {
     const results: EnumeratedMove<unknown>[] = [];
     const validOnly = options?.validOnly ?? false;
     const includeMetadata = options?.includeMetadata ?? false;
@@ -1025,10 +934,10 @@ export class RuleEngine<
 
     // Log enumeration start (DEBUG level)
     this.logger.debug("Enumerating moves", {
-      playerId,
-      validOnly,
       includeMetadata,
       moveIdsFilter,
+      playerId,
+      validOnly,
     });
 
     // Build enumeration context (similar to move execution context)
@@ -1045,13 +954,13 @@ export class RuleEngine<
       if (!moveDef.enumerator) {
         if (!validOnly) {
           results.push({
-            moveId,
-            playerId,
-            params: {} as any,
             isValid: false,
+            moveId,
+            params: {} as any,
+            playerId,
             validationError: {
-              reason: "Move requires parameters but no enumerator provided",
               errorCode: "NO_ENUMERATOR",
+              reason: "Move requires parameters but no enumerator provided",
             },
           });
         }
@@ -1060,10 +969,7 @@ export class RuleEngine<
 
       try {
         // Invoke enumerator to get parameter combinations
-        const paramCombinations = moveDef.enumerator(
-          this.currentState,
-          context,
-        );
+        const paramCombinations = moveDef.enumerator(this.currentState, context);
 
         // Limit results per move if specified
         const limitedCombinations = maxPerMove
@@ -1074,35 +980,34 @@ export class RuleEngine<
         this.logger.trace(
           `Enumerated ${limitedCombinations.length} parameter combinations for ${moveId}`,
           {
-            moveId,
             count: limitedCombinations.length,
+            moveId,
           },
         );
 
         // Validate each parameter combination
         for (const params of limitedCombinations) {
           const contextInput: MoveContextInput<any> = {
-            playerId,
             params,
+            playerId,
           };
 
           // Check if this move is valid
           const conditionResult = this.checkMoveCondition(moveId, contextInput);
 
-          const enumeratedMove: import("../moves/move-enumeration").EnumeratedMove<any> =
-            {
-              moveId,
-              playerId,
-              params,
-              isValid: conditionResult.success,
-            };
+          const enumeratedMove: import("../moves/move-enumeration").EnumeratedMove<any> = {
+            isValid: conditionResult.success,
+            moveId,
+            params,
+            playerId,
+          };
 
           // Add validation error if failed
           if (!conditionResult.success) {
             enumeratedMove.validationError = {
-              reason: conditionResult.error,
-              errorCode: conditionResult.errorCode,
               context: conditionResult.errorContext,
+              errorCode: conditionResult.errorCode,
+              reason: conditionResult.error,
             };
           }
 
@@ -1119,26 +1024,24 @@ export class RuleEngine<
       } catch (error) {
         // Log enumerator error (ERROR level)
         const errorMessage =
-          error instanceof Error
-            ? error.message
-            : "Enumerator function threw an error";
+          error instanceof Error ? error.message : "Enumerator function threw an error";
         this.logger.error(`Enumerator error for move: ${moveId}`, {
-          moveId,
           error: errorMessage,
+          moveId,
           stack: error instanceof Error ? error.stack : undefined,
         });
 
         // Add error result if not validOnly
         if (!validOnly) {
           results.push({
-            moveId,
-            playerId,
-            params: {} as any,
             isValid: false,
+            moveId,
+            params: {} as any,
+            playerId,
             validationError: {
-              reason: `Enumerator failed: ${errorMessage}`,
-              errorCode: "ENUMERATOR_ERROR",
               context: { error: errorMessage },
+              errorCode: "ENUMERATOR_ERROR",
+              reason: `Enumerator failed: ${errorMessage}`,
             },
           });
         }
@@ -1147,8 +1050,8 @@ export class RuleEngine<
 
     // Log completion (DEBUG level)
     this.logger.debug(`Enumeration complete: ${results.length} moves found`, {
-      playerId,
       count: results.length,
+      playerId,
       validCount: results.filter((m) => m.isValid).length,
     });
 
@@ -1167,47 +1070,32 @@ export class RuleEngine<
    */
   private buildEnumerationContext(
     playerId: PlayerId,
-  ): import("../moves/move-enumeration").MoveEnumerationContext<
-    TCardMeta,
-    TCardDefinition
-  > {
-    const zoneOps = createZoneOperations(
-      this.internalState,
-      this.logger.child("zones"),
-    );
-    const cardOps = createCardOperations(
-      this.internalState,
-      this.logger.child("cards"),
-    );
-    const gameOps = createGameOperations(
-      this.internalState,
-      this.logger.child("game"),
-    );
-    const counterOps = createCounterOperations(
-      this.internalState,
-      this.logger.child("counters"),
-    );
+  ): import("../moves/move-enumeration").MoveEnumerationContext<TCardMeta, TCardDefinition> {
+    const zoneOps = createZoneOperations(this.internalState, this.logger.child("zones"));
+    const cardOps = createCardOperations(this.internalState, this.logger.child("cards"));
+    const gameOps = createGameOperations(this.internalState, this.logger.child("game"));
+    const counterOps = createCounterOperations(this.internalState, this.logger.child("counters"));
 
     // Add flow state if available
     const flowState = this.flowManager
       ? {
           currentPhase: this.flowManager.getCurrentPhase(),
-          currentSegment: this.flowManager.getCurrentSegment(),
-          turn: this.flowManager.getTurnNumber(),
           currentPlayer: this.flowManager.getCurrentPlayer() as PlayerId,
+          currentSegment: this.flowManager.getCurrentSegment(),
           isFirstTurn: this.flowManager.isFirstTurn(),
+          turn: this.flowManager.getTurnNumber(),
         }
       : undefined;
 
     return {
-      playerId,
-      zones: zoneOps,
       cards: cardOps,
-      game: gameOps,
       counters: counterOps,
-      registry: this.cardRegistry,
       flow: flowState,
+      game: gameOps,
+      playerId,
+      registry: this.cardRegistry,
       rng: this.rng,
+      zones: zoneOps,
     };
   }
 
@@ -1261,11 +1149,7 @@ export class RuleEngine<
    *
    * @returns Array of history entries with full context, patches, and inverse patches
    */
-  getReplayHistory(): readonly ReplayHistoryEntry<
-    any,
-    TCardMeta,
-    TCardDefinition
-  >[] {
+  getReplayHistory(): readonly ReplayHistoryEntry<any, TCardMeta, TCardDefinition>[] {
     return this.history;
   }
 
@@ -1306,10 +1190,7 @@ export class RuleEngine<
   applyPatches(patches: Patch[]): void {
     // Use Immer's built-in applyPatches for correct patch application
     // Type assertion is safe here because Immer patches preserve the type
-    this.currentState = immerApplyPatches(
-      this.currentState as object,
-      patches,
-    ) as TState;
+    this.currentState = immerApplyPatches(this.currentState as object, patches) as TState;
   }
 
   /**
@@ -1364,10 +1245,7 @@ export class RuleEngine<
 
     // Apply forward patches to redo the move using Immer's applyPatches
     // Type assertion is safe here because Immer patches preserve the type
-    this.currentState = immerApplyPatches(
-      this.currentState as object,
-      entry.patches,
-    ) as TState;
+    this.currentState = immerApplyPatches(this.currentState as object, entry.patches) as TState;
 
     this.historyIndex++;
     return true;
@@ -1391,9 +1269,9 @@ export class RuleEngine<
 
     // Reset internal state (zones, cards, choosingFirstPlayer, etc.)
     this.internalState = {
-      zones: {},
-      cards: {},
       cardMetas: {},
+      cards: {},
+      zones: {},
     };
 
     // Recreate zones from game definition
@@ -1402,8 +1280,8 @@ export class RuleEngine<
         const zoneConfig = this.gameDefinition.zones[zoneId];
         if (zoneConfig) {
           this.internalState.zones[zoneId] = {
-            config: zoneConfig,
             cardIds: [],
+            config: zoneConfig,
           };
         }
       }
@@ -1414,19 +1292,13 @@ export class RuleEngine<
     if (this.initialPlayers.length > 0) {
       if (this.initialChoosingFirstPlayer) {
         // Use explicitly specified choosing player (stored from initial options)
-        this.internalState.choosingFirstPlayer = createPlayerId(
-          this.initialChoosingFirstPlayer,
-        );
+        this.internalState.choosingFirstPlayer = createPlayerId(this.initialChoosingFirstPlayer);
       } else {
         // Randomly select if not specified (must match constructor)
-        const randomIndex = Math.floor(
-          this.rng.random() * this.initialPlayers.length,
-        );
+        const randomIndex = Math.floor(this.rng.random() * this.initialPlayers.length);
         const choosingPlayer = this.initialPlayers[randomIndex];
         if (choosingPlayer) {
-          this.internalState.choosingFirstPlayer = createPlayerId(
-            choosingPlayer.id,
-          );
+          this.internalState.choosingFirstPlayer = createPlayerId(choosingPlayer.id);
         }
       }
     }
@@ -1438,7 +1310,9 @@ export class RuleEngine<
 
     for (let i = 0; i < endIndex; i++) {
       const entry = this.history[i];
-      if (!entry) break;
+      if (!entry) {
+        break;
+      }
 
       // Re-execute the move
       this.executeMove(entry.moveId, entry.context);

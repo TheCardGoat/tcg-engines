@@ -15,7 +15,7 @@ import { FlowManager } from "../flow-manager";
 
 interface GameState {
   currentPlayer: number;
-  players: Array<{ id: string; ready: boolean }>;
+  players: { id: string; ready: boolean }[];
   turnCount: number;
   phase?: string;
   step?: string;
@@ -32,9 +32,9 @@ describe("FlowManager - State Machine", () => {
             order: 1,
             turn: {
               phases: {
-                draw: { order: 1, next: "main" },
-                main: { order: 2, next: undefined },
-                ready: { order: 0, next: "draw" },
+                draw: { next: "main", order: 1 },
+                main: { next: undefined, order: 2 },
+                ready: { next: "draw", order: 0 },
               },
             },
           },
@@ -61,9 +61,9 @@ describe("FlowManager - State Machine", () => {
             order: 1,
             turn: {
               phases: {
-                draw: { order: 1, next: "main" },
-                main: { order: 2, next: undefined },
-                ready: { order: 0, next: "draw" },
+                draw: { next: "main", order: 1 },
+                main: { next: undefined, order: 2 },
+                ready: { next: "draw", order: 0 },
               },
             },
           },
@@ -107,9 +107,9 @@ describe("FlowManager - State Machine", () => {
                   next: undefined,
                   order: 0,
                   steps: {
-                    declare: { order: 0, next: "target" },
-                    target: { order: 1, next: "damage" },
-                    damage: { order: 2, next: undefined },
+                    damage: { next: undefined, order: 2 },
+                    declare: { next: "target", order: 0 },
+                    target: { next: "damage", order: 1 },
                   },
                 },
               },
@@ -186,15 +186,15 @@ describe("FlowManager - State Machine", () => {
             turn: {
               phases: {
                 draw: {
-                  order: 1,
                   next: undefined,
+                  order: 1,
                 },
                 ready: {
-                  order: 0,
                   next: "draw",
                   onEnd: (context) => {
                     context.state.log.push("ready-end");
                   },
+                  order: 0,
                 },
               },
             },
@@ -230,7 +230,6 @@ describe("FlowManager - State Machine", () => {
                   order: 0,
                   steps: {
                     declare: {
-                      order: 0,
                       next: "target",
                       onBegin: (context) => {
                         context.state.log.push("declare-begin");
@@ -238,10 +237,11 @@ describe("FlowManager - State Machine", () => {
                       onEnd: (context) => {
                         context.state.log.push("declare-end");
                       },
+                      order: 0,
                     },
                     target: {
-                      order: 1,
                       next: undefined,
+                      order: 1,
                     },
                   },
                 },
@@ -279,16 +279,13 @@ describe("FlowManager - State Machine", () => {
             turn: {
               phases: {
                 draw: {
-                  order: 1,
                   next: undefined,
+                  order: 1,
                 },
                 ready: {
-                  order: 0,
+                  endIf: (context) => context.state.players.every((p) => p.ready),
                   next: "draw",
-                  endIf: (context) => {
-                    // Auto-end when all players are ready
-                    return context.state.players.every((p) => p.ready);
-                  },
+                  order: 0,
                 },
               },
             },
@@ -329,13 +326,13 @@ describe("FlowManager - State Machine", () => {
             turn: {
               phases: {
                 end: {
-                  order: 1,
                   next: undefined,
+                  order: 1,
                 },
                 main: {
-                  order: 0,
-                  next: "end",
                   endIf: (context) => context.state.turnCount >= 5,
+                  next: "end",
+                  order: 0,
                 },
               },
             },
@@ -373,11 +370,10 @@ describe("FlowManager - State Machine", () => {
             turn: {
               phases: {
                 draw: {
-                  order: 1,
                   next: undefined,
+                  order: 1,
                 },
                 ready: {
-                  order: 0,
                   next: "draw",
                   onBegin: (context) => {
                     // Skip this phase if no players
@@ -385,6 +381,7 @@ describe("FlowManager - State Machine", () => {
                       context.endPhase();
                     }
                   },
+                  order: 0,
                 },
               },
             },
@@ -417,17 +414,17 @@ describe("FlowManager - State Machine", () => {
                   order: 0,
                   steps: {
                     declare: {
-                      order: 0,
                       next: "target",
                       onBegin: (context) => {
                         if (context.state.players.length === 0) {
                           context.endStep();
                         }
                       },
+                      order: 0,
                     },
                     target: {
-                      order: 1,
                       next: undefined,
+                      order: 1,
                     },
                   },
                 },
@@ -498,7 +495,7 @@ describe("FlowManager - State Machine", () => {
                   next: undefined,
                   onBegin: (context) => {
                     // For games that don't have special setup, we should set currentPlayer
-                    // in the turn onBegin. For testing, we'll set it here.
+                    // In the turn onBegin. For testing, we'll set it here.
                     if (!context.getCurrentPlayer()) {
                       context.setCurrentPlayer("p1");
                     }
@@ -540,8 +537,8 @@ describe("FlowManager - State Machine", () => {
             order: 1,
             turn: {
               phases: {
-                draw: { order: 1, next: undefined },
-                ready: { order: 0, next: "draw" },
+                draw: { next: undefined, order: 1 },
+                ready: { next: "draw", order: 0 },
               },
             },
           },
@@ -608,8 +605,8 @@ describe("FlowManager - State Machine", () => {
                   next: undefined,
                   order: 0,
                   steps: {
-                    declare: { order: 0, next: "target" },
-                    target: { order: 1, next: undefined },
+                    declare: { next: "target", order: 0 },
+                    target: { next: undefined, order: 1 },
                   },
                 },
               },
@@ -644,16 +641,16 @@ describe("FlowManager - State Machine", () => {
             turn: {
               phases: {
                 end: {
-                  order: 1,
                   next: undefined,
+                  order: 1,
                 },
                 main: {
-                  order: 0,
                   next: "end",
+                  order: 0,
                   steps: {
-                    start: { order: 0, next: "middle" },
-                    middle: { order: 1, next: "finish" },
-                    finish: { order: 2, next: undefined },
+                    finish: { next: undefined, order: 2 },
+                    middle: { next: "finish", order: 1 },
+                    start: { next: "middle", order: 0 },
                   },
                 },
               },
@@ -712,7 +709,6 @@ describe("FlowManager - State Machine", () => {
                   order: 0,
                   steps: {
                     start: {
-                      order: 0,
                       next: undefined,
                       onBegin: (context) => {
                         context.state.log.push("step-begin");
@@ -720,6 +716,7 @@ describe("FlowManager - State Machine", () => {
                       onEnd: (context) => {
                         context.state.log.push("step-end");
                       },
+                      order: 0,
                     },
                   },
                 },

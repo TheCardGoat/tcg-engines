@@ -4,29 +4,29 @@ export const yzmaOnEdge: CharacterCard = {
   abilities: [
     {
       condition: {
+        cardName: "Pull the Lever!",
+        controller: "you",
+        hasCards: true,
         type: "zone",
         zone: "discard",
-        controller: "you",
-        cardName: "Pull the Lever!",
-        hasCards: true,
       },
       effect: {
-        type: "optional",
         effect: {
-          type: "search-deck",
           cardName: "Wrong Lever!",
           putInto: "hand",
           reveal: true,
           shuffle: true,
+          type: "search-deck",
         },
+        type: "optional",
       },
       id: "594-1",
       name: "WHY DO WE EVEN HAVE THAT LEVER?",
       text: "WHY DO WE EVEN HAVE THAT LEVER? When you play this character, if you have a card named Pull the Lever! in your discard, you may search your deck for a card named Wrong Lever! and reveal that card to all players. Put that card into your hand and shuffle your deck.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

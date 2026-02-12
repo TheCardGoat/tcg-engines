@@ -5,18 +5,18 @@ export const lefouCakeThief: CharacterCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "lose-lore",
             amount: 1,
             target: "OPPONENT",
+            type: "lose-lore",
           },
           {
-            type: "gain-lore",
             amount: 1,
+            type: "gain-lore",
           },
         ],
+        type: "sequence",
       },
       id: "13j-1",
       text: "ALL FOR ME {E}, Banish one of your items — Chosen opponent loses 1 lore and you gain 1 lore.",

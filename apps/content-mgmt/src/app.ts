@@ -38,8 +38,7 @@ export function createApp(options: AppOptions = {}) {
     // Global error handler - converts thrown errors to JSON responses
     .onError(({ code, error, set }) => {
       // Get error message safely
-      const errorMessage =
-        error instanceof Error ? error.message : "An unexpected error occurred";
+      const errorMessage = error instanceof Error ? error.message : "An unexpected error occurred";
 
       // Handle UNAUTHORIZED errors using proper error class
       if (isUnauthorizedError(error)) {
@@ -91,10 +90,10 @@ export function createApp(options: AppOptions = {}) {
     )
     .use(
       cors({
-        origin: corsOrigin,
+        allowedHeaders: ["Content-Type", "Authorization"],
         credentials: true,
         methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-        allowedHeaders: ["Content-Type", "Authorization"],
+        origin: corsOrigin,
       }),
     )
     .use(authPlugin);
@@ -113,20 +112,16 @@ export function createApp(options: AppOptions = {}) {
     app
       // Health endpoint - no user PII, only service status
       .get("/health", () => ({
+        service: "content-mgmt",
         status: "ok",
         timestamp: new Date().toISOString(),
-        service: "content-mgmt",
       }))
       // API v1 routes - placeholder for future routes
       .group("/v1", (app) =>
         app
           .get("/", () => ({
+            endpoints: ["GET /v1/contents", "GET /v1/games", "GET /v1/creators"],
             message: "Content Management Service API v1",
-            endpoints: [
-              "GET /v1/contents",
-              "GET /v1/games",
-              "GET /v1/creators",
-            ],
           }))
           // Protected endpoint example
           .get(

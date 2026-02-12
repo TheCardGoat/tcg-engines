@@ -38,18 +38,16 @@ let cardCounter = 0;
  * });
  * ```
  */
-export function createTestCard(
-  overrides?: Partial<CardDefinition>,
-): CardDefinition {
+export function createTestCard(overrides?: Partial<CardDefinition>): CardDefinition {
   const id = `test-card-${cardCounter++}`;
 
   return {
+    baseCost: 1,
+    basePower: 1,
+    baseToughness: 1,
     id,
     name: `Test Card ${cardCounter}`,
     type: "creature",
-    basePower: 1,
-    baseToughness: 1,
-    baseCost: 1,
     ...overrides,
   };
 }
@@ -83,10 +81,7 @@ export function createTestCard(
  * ];
  * ```
  */
-export function createTestCards(
-  count = 3,
-  overrides?: Partial<CardDefinition>,
-): CardDefinition[] {
+export function createTestCards(count = 3, overrides?: Partial<CardDefinition>): CardDefinition[] {
   const cards: CardDefinition[] = [];
 
   for (let i = 0; i < count; i++) {

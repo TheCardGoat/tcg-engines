@@ -4,15 +4,15 @@ export const baymaxPersonalHealthcareCompanion: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you have an Inventor character in play",
+          type: "if",
         },
         then: {
-          type: "play-card",
           from: "hand",
+          type: "play-card",
         },
+        type: "conditional",
       },
       id: "1p5-1",
       text: "FULLY CHARGED If you have an Inventor character in play, you pay 1 {I} less to play this character.",
@@ -20,16 +20,16 @@ export const baymaxPersonalHealthcareCompanion: CharacterCard = {
     },
     {
       effect: {
-        type: "remove-damage",
         amount: 1,
-        upTo: true,
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "remove-damage",
+        upTo: true,
       },
       id: "1p5-2",
       text: "YOU SAID 'OW' 2 {I} - Remove up to 1 damage from another chosen character.",

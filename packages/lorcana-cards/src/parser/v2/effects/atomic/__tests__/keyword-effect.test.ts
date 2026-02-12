@@ -22,9 +22,7 @@ describe("keywordEffectParser", () => {
       const result = keywordEffectParser.parse("gains Challenger");
 
       expect(result).not.toBeNull();
-      expect((result as Effect & { keyword: string }).keyword).toBe(
-        "Challenger",
-      );
+      expect((result as Effect & { keyword: string }).keyword).toBe("Challenger");
     });
 
     it("parses 'gains Rush' correctly", () => {
@@ -45,9 +43,7 @@ describe("keywordEffectParser", () => {
       const result = keywordEffectParser.parse("gains Bodyguard");
 
       expect(result).not.toBeNull();
-      expect((result as Effect & { keyword: string }).keyword).toBe(
-        "Bodyguard",
-      );
+      expect((result as Effect & { keyword: string }).keyword).toBe("Bodyguard");
     });
 
     it("parses 'gains Resist' correctly", () => {
@@ -222,9 +218,7 @@ describe("keywordEffectParser", () => {
 
   describe("text parsing - in longer text", () => {
     it("parses keyword in full ability text", () => {
-      const result = keywordEffectParser.parse(
-        "chosen character gains Evasive this turn",
-      );
+      const result = keywordEffectParser.parse("chosen character gains Evasive this turn");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("gain-keyword");
@@ -232,9 +226,7 @@ describe("keywordEffectParser", () => {
     });
 
     it("parses keyword with target", () => {
-      const result = keywordEffectParser.parse(
-        "this character gets Ward until end of turn",
-      );
+      const result = keywordEffectParser.parse("this character gets Ward until end of turn");
 
       expect(result).not.toBeNull();
       expect((result as Effect & { keyword: string }).keyword).toBe("Ward");
@@ -284,9 +276,7 @@ describe("keywordEffectParser", () => {
       const result = keywordEffectParser.parse(cstNode);
 
       expect(result).not.toBeNull();
-      expect((result as Effect & { keyword: string }).keyword).toBe(
-        "Bodyguard",
-      );
+      expect((result as Effect & { keyword: string }).keyword).toBe("Bodyguard");
     });
 
     it("returns null when Identifier token is missing", () => {

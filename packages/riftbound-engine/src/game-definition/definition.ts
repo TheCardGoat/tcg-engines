@@ -6,11 +6,7 @@
  */
 
 import type { GameDefinition } from "@tcg/core";
-import type {
-  RiftboundCardMeta,
-  RiftboundGameState,
-  RiftboundMoves,
-} from "../types";
+import type { RiftboundCardMeta, RiftboundGameState, RiftboundMoves } from "../types";
 import { riftboundZones } from "../zones/zone-configs";
 import { riftboundMoves } from "./moves";
 import { createInitialState } from "./setup/game-setup";
@@ -45,8 +41,8 @@ export const riftboundDefinition: GameDefinition<
       const player = state.players[playerId];
       if (player && player.victoryPoints >= state.victoryScore) {
         return {
-          winner: playerId,
           reason: "victory_points",
+          winner: playerId,
         };
       }
     }
@@ -55,8 +51,5 @@ export const riftboundDefinition: GameDefinition<
 
   // Player view - in tabletop simulator, most info is public
   // Only hide opponent's hand and facedown cards
-  playerView: (state, playerId) => {
-    // For now, return full state - players enforce rules themselves
-    return state;
-  },
+  playerView: (state, playerId) => state,
 };

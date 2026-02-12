@@ -50,23 +50,16 @@ describe("extractNumericValues", () => {
 
   it("should extract multiple values in order", () => {
     expect(
-      extractNumericValues(
-        "Pay 1 {I} less, gain 2 lore",
-        "Pay {d} {I} less, gain {d} lore",
-      ),
+      extractNumericValues("Pay 1 {I} less, gain 2 lore", "Pay {d} {I} less, gain {d} lore"),
     ).toEqual([1, 2]);
   });
 
   it("should handle positive signs", () => {
-    expect(extractNumericValues("Deal +5 damage", "Deal +{d} damage")).toEqual([
-      5,
-    ]);
+    expect(extractNumericValues("Deal +5 damage", "Deal +{d} damage")).toEqual([5]);
   });
 
   it("should handle negative signs", () => {
-    expect(extractNumericValues("Deal -2 damage", "Deal -{d} damage")).toEqual([
-      -2,
-    ]);
+    expect(extractNumericValues("Deal -2 damage", "Deal -{d} damage")).toEqual([-2]);
   });
 
   it("should return empty array if patterns don't match", () => {
@@ -127,24 +120,17 @@ describe("replacePlaceholders", () => {
 
 describe("resolvePlaceholders", () => {
   it("should resolve single placeholder", () => {
-    expect(resolvePlaceholders("Gain {d} lore", "Gain 3 lore")).toBe(
-      "Gain 3 lore",
-    );
+    expect(resolvePlaceholders("Gain {d} lore", "Gain 3 lore")).toBe("Gain 3 lore");
   });
 
   it("should resolve multiple placeholders", () => {
     expect(
-      resolvePlaceholders(
-        "Pay {d} {I} less, gain {d} lore",
-        "Pay 1 {I} less, gain 2 lore",
-      ),
+      resolvePlaceholders("Pay {d} {I} less, gain {d} lore", "Pay 1 {I} less, gain 2 lore"),
     ).toBe("Pay 1 {I} less, gain 2 lore");
   });
 
   it("should return normalized text if patterns don't match", () => {
-    expect(resolvePlaceholders("Gain {d} lore", "Draw 3 cards")).toBe(
-      "Gain {d} lore",
-    );
+    expect(resolvePlaceholders("Gain {d} lore", "Draw 3 cards")).toBe("Gain {d} lore");
   });
 
   it("should handle complex real-world example", () => {

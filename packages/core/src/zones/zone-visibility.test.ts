@@ -11,8 +11,8 @@ describe("Zone Visibility", () => {
         {
           id: createZoneId("play"),
           name: "Play Area",
-          visibility: "public",
           ordered: false,
+          visibility: "public",
         },
         cards,
       );
@@ -31,9 +31,9 @@ describe("Zone Visibility", () => {
         {
           id: createZoneId("hand"),
           name: "Hand",
-          visibility: "private",
           ordered: false,
           owner: ownerId,
+          visibility: "private",
         },
         cards,
       );
@@ -51,9 +51,9 @@ describe("Zone Visibility", () => {
         {
           id: createZoneId("hand"),
           name: "Hand",
-          visibility: "private",
           ordered: false,
           owner: ownerId,
+          visibility: "private",
         },
         cards,
       );
@@ -68,11 +68,11 @@ describe("Zone Visibility", () => {
       const cards = [createCardId("card-1"), createCardId("card-2")];
       const zone = createZone(
         {
+          faceDown: true,
           id: createZoneId("deck"),
           name: "Deck",
-          visibility: "secret",
           ordered: true,
-          faceDown: true,
+          visibility: "secret",
         },
         cards,
       );
@@ -86,18 +86,14 @@ describe("Zone Visibility", () => {
     it("should show card count but hide contents for private zone", () => {
       const ownerId = createPlayerId("player-1");
       const viewerId = createPlayerId("player-2");
-      const cards = [
-        createCardId("card-1"),
-        createCardId("card-2"),
-        createCardId("card-3"),
-      ];
+      const cards = [createCardId("card-1"), createCardId("card-2"), createCardId("card-3")];
       const zone = createZone(
         {
           id: createZoneId("hand"),
           name: "Hand",
-          visibility: "private",
           ordered: false,
           owner: ownerId,
+          visibility: "private",
         },
         cards,
       );
@@ -111,17 +107,13 @@ describe("Zone Visibility", () => {
     });
 
     it("should show card count but hide contents for secret zone", () => {
-      const cards = [
-        createCardId("card-1"),
-        createCardId("card-2"),
-        createCardId("card-3"),
-      ];
+      const cards = [createCardId("card-1"), createCardId("card-2"), createCardId("card-3")];
       const zone = createZone(
         {
           id: createZoneId("deck"),
           name: "Deck",
-          visibility: "secret",
           ordered: true,
+          visibility: "secret",
         },
         cards,
       );
@@ -141,8 +133,8 @@ describe("Zone Visibility", () => {
         {
           id: createZoneId("graveyard"),
           name: "Graveyard",
-          visibility: "public",
           ordered: true,
+          visibility: "public",
         },
         cards,
       );

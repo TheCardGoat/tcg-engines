@@ -5,11 +5,11 @@ export const heartOfTeFiti: ItemCard = {
     {
       cost: { exert: true },
       effect: {
-        type: "put-into-inkwell",
-        source: "top-of-deck",
-        target: "CONTROLLER",
         exerted: true,
         facedown: true,
+        source: "top-of-deck",
+        target: "CONTROLLER",
+        type: "put-into-inkwell",
       },
       id: "1vi-1",
       text: "CREATE LIFE {E}, 2 {I} — Put the top card of your deck into your inkwell facedown and exerted.",

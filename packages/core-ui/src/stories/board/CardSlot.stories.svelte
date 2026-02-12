@@ -3,22 +3,22 @@
   import CardSlot from "$lib/components/board/CardSlot.svelte";
 
   const { Story } = defineMeta({
-    title: "Board/CardSlot",
-    component: CardSlot,
-    tags: ["autodocs"],
     argTypes: {
       cardAspectRatio: {
         control: { type: "select" },
         options: ["2.5/3.5", "5/7", "63/88", "1/1"],
       },
+      droppable: { control: "boolean" },
       empty: { control: "boolean" },
       highlighted: { control: "boolean" },
-      droppable: { control: "boolean" },
       index: { control: "number" },
     },
+    component: CardSlot,
     parameters: {
       layout: "centered",
     },
+    tags: ["autodocs"],
+    title: "Board/CardSlot",
   });
 </script>
 

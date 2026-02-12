@@ -10,10 +10,10 @@ export const donaldDuckNotAgain: CharacterCard = {
     },
     {
       effect: {
-        type: "modify-stat",
-        stat: "lore",
         modifier: 1,
+        stat: "lore",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "1mm-2",
       text: "PHOOEY! This character gets +1 {L} for each 1 damage on him.",

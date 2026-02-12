@@ -4,32 +4,32 @@ export const lastditchEffort: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "sequence",
         steps: [
           {
-            type: "exert",
             target: {
-              selector: "chosen",
+              cardTypes: ["character"],
               count: 1,
               owner: "opponent",
+              selector: "chosen",
               zones: ["play"],
-              cardTypes: ["character"],
             },
+            type: "exert",
           },
           {
-            type: "gain-keyword",
+            duration: "this-turn",
             keyword: "Challenger",
             target: {
-              selector: "chosen",
+              cardTypes: ["character"],
               count: 1,
               owner: "any",
+              selector: "chosen",
               zones: ["play"],
-              cardTypes: ["character"],
             },
+            type: "gain-keyword",
             value: 2,
-            duration: "this-turn",
           },
         ],
+        type: "sequence",
       },
       id: "1lj-1",
       text: "Exert chosen opposing character. Chosen character of yours gains Challenger +2 this turn.",

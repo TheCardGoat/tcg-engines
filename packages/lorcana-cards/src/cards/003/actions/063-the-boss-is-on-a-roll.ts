@@ -4,29 +4,29 @@ export const theBossIsOnARoll: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "choice",
-        options: [
-          {
-            type: "scry",
-            amount: 5,
-            target: "CONTROLLER",
-            destinations: [
-              {
-                zone: "deck-bottom",
-                remainder: true,
-                ordering: "player-choice",
-              },
-            ],
-          },
-          {
-            type: "gain-lore",
-            amount: 1,
-          },
-        ],
         optionLabels: [
           "Look at the top 5 cards of your deck. Put any number of them on the top",
           "the bottom of your deck in any order. Gain 1 lore.",
         ],
+        options: [
+          {
+            amount: 5,
+            destinations: [
+              {
+                ordering: "player-choice",
+                remainder: true,
+                zone: "deck-bottom",
+              },
+            ],
+            target: "CONTROLLER",
+            type: "scry",
+          },
+          {
+            amount: 1,
+            type: "gain-lore",
+          },
+        ],
+        type: "choice",
       },
       id: "18j-1",
       text: "Look at the top 5 cards of your deck. Put any number of them on the top or the bottom of your deck in any order. Gain 1 lore.",

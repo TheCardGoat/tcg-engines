@@ -4,25 +4,25 @@ export const mrsPottsEnchantedTeapot: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "has-named-character",
-          name: "Lumiere or Cogsworth in play",
           controller: "you",
+          name: "Lumiere or Cogsworth in play",
+          type: "has-named-character",
         },
         then: {
-          type: "draw",
           amount: 1,
           target: "CONTROLLER",
+          type: "draw",
         },
+        type: "conditional",
       },
       id: "1mj-1",
       name: "IT'LL TURN OUT ALL RIGHT",
       text: "IT'LL TURN OUT ALL RIGHT When you play this character, if you have a character named Lumiere or Cogsworth in play, you may draw a card.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

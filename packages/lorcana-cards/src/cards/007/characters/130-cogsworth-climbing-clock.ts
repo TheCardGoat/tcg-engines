@@ -4,10 +4,10 @@ export const cogsworthClimbingClock: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: 2,
+        stat: "strength",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "1th-1",
       text: "STILL USEFUL While you have an item card in your discard, this character gets +2 {S}.",

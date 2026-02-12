@@ -253,8 +253,12 @@ function getFilterSuffix(filter: LorcanaFilter): string | undefined {
       return `with move cost ${getComparisonSymbol(filter.comparison)} ${filter.value}`;
     }
     case "name": {
-      if ("equals" in filter) {return `named ${filter.equals}`;}
-      if ("contains" in filter) {return `with "${filter.contains}" in name`;}
+      if ("equals" in filter) {
+        return `named ${filter.equals}`;
+      }
+      if ("contains" in filter) {
+        return `with "${filter.contains}" in name`;
+      }
       return undefined;
     }
     // State filters handled in getFilterAdjective

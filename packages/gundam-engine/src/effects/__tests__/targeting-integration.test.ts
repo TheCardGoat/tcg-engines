@@ -7,15 +7,8 @@ import { describe, expect, it } from "bun:test";
 import type { CardId, PlayerId } from "@tcg/core";
 import { createCardId, createPlayerId } from "@tcg/core";
 import type { GundamGameState } from "../../types";
-import type {
-  BaseEffectCardDefinition,
-  TargetingSpec,
-} from "../../types/effects";
-import {
-  enumerateValidTargets,
-  type TargetingContext,
-  validateTargets,
-} from "../targeting-system";
+import type { BaseEffectCardDefinition, TargetingSpec } from "../../types/effects";
+import { type TargetingContext, enumerateValidTargets, validateTargets } from "../targeting-system";
 
 // Helper to create a complete game state
 function createGameState(
@@ -30,288 +23,285 @@ function createGameState(
   const player2 = "player-2" as PlayerId;
 
   return {
-    players: [player1, player2],
     currentPlayer: player1,
-    turn: 2,
-    phase: "main",
-    zones: {
-      deck: {
-        [player1]: {
-          config: {
-            id: "deck-p1",
-            name: "Deck",
-            visibility: "secret" as const,
-            ordered: true,
-            owner: player1,
-            faceDown: true,
-            maxSize: 50,
-          },
-          cards: (config.player1Cards?.deck ?? []) as CardId[],
-        },
-        [player2]: {
-          config: {
-            id: "deck-p2",
-            name: "Deck",
-            visibility: "secret" as const,
-            ordered: true,
-            owner: player2,
-            faceDown: true,
-            maxSize: 50,
-          },
-          cards: (config.player2Cards?.deck ?? []) as CardId[],
-        },
-      } as any,
-      resourceDeck: {
-        [player1]: {
-          config: {
-            id: "res-deck-p1",
-            name: "Resource Deck",
-            visibility: "secret" as const,
-            ordered: true,
-            owner: player1,
-            faceDown: true,
-            maxSize: 10,
-          },
-          cards: [] as CardId[],
-        },
-        [player2]: {
-          config: {
-            id: "res-deck-p2",
-            name: "Resource Deck",
-            visibility: "secret" as const,
-            ordered: true,
-            owner: player2,
-            faceDown: true,
-            maxSize: 10,
-          },
-          cards: [] as CardId[],
-        },
-      } as any,
-      hand: {
-        [player1]: {
-          config: {
-            id: "hand-p1",
-            name: "Hand",
-            visibility: "private" as const,
-            ordered: false,
-            owner: player1,
-            maxSize: 10,
-          },
-          cards: (config.player1Cards?.hand ?? []) as CardId[],
-        },
-        [player2]: {
-          config: {
-            id: "hand-p2",
-            name: "Hand",
-            visibility: "private" as const,
-            ordered: false,
-            owner: player2,
-            maxSize: 10,
-          },
-          cards: (config.player2Cards?.hand ?? []) as CardId[],
-        },
-      } as any,
-      battleArea: {
-        [player1]: {
-          config: {
-            id: "ba-p1",
-            name: "Battle Area",
-            visibility: "public" as const,
-            ordered: true,
-            owner: player1,
-            maxSize: 6,
-          },
-          cards: (config.player1Cards?.battleArea ?? []) as CardId[],
-        },
-        [player2]: {
-          config: {
-            id: "ba-p2",
-            name: "Battle Area",
-            visibility: "public" as const,
-            ordered: true,
-            owner: player2,
-            maxSize: 6,
-          },
-          cards: (config.player2Cards?.battleArea ?? []) as CardId[],
-        },
-      } as any,
-      shieldSection: {
-        [player1]: {
-          config: {
-            id: "shield-p1",
-            name: "Shield Section",
-            visibility: "secret" as const,
-            ordered: true,
-            owner: player1,
-            faceDown: true,
-            maxSize: 6,
-          },
-          cards: [] as CardId[],
-        },
-        [player2]: {
-          config: {
-            id: "shield-p2",
-            name: "Shield Section",
-            visibility: "secret" as const,
-            ordered: true,
-            owner: player2,
-            faceDown: true,
-            maxSize: 6,
-          },
-          cards: [] as CardId[],
-        },
-      } as any,
-      baseSection: {
-        [player1]: {
-          config: {
-            id: "base-p1",
-            name: "Base Section",
-            visibility: "public" as const,
-            ordered: false,
-            owner: player1,
-            maxSize: 1,
-          },
-          cards: [] as CardId[],
-        },
-        [player2]: {
-          config: {
-            id: "base-p2",
-            name: "Base Section",
-            visibility: "public" as const,
-            ordered: false,
-            owner: player2,
-            maxSize: 1,
-          },
-          cards: [] as CardId[],
-        },
-      } as any,
-      resourceArea: {
-        [player1]: {
-          config: {
-            id: "res-area-p1",
-            name: "Resource Area",
-            visibility: "public" as const,
-            ordered: false,
-            owner: player1,
-            maxSize: 15,
-          },
-          cards: [] as CardId[],
-        },
-        [player2]: {
-          config: {
-            id: "res-area-p2",
-            name: "Resource Area",
-            visibility: "public" as const,
-            ordered: false,
-            owner: player2,
-            maxSize: 15,
-          },
-          cards: [] as CardId[],
-        },
-      } as any,
-      trash: {
-        [player1]: {
-          config: {
-            id: "trash-p1",
-            name: "Trash",
-            visibility: "public" as const,
-            ordered: true,
-            owner: player1,
-            maxSize: 0,
-          },
-          cards: [] as CardId[],
-        },
-        [player2]: {
-          config: {
-            id: "trash-p2",
-            name: "Trash",
-            visibility: "public" as const,
-            ordered: true,
-            owner: player2,
-            maxSize: 0,
-          },
-          cards: [] as CardId[],
-        },
-      } as any,
-      removal: {
-        [player1]: {
-          config: {
-            id: "removal-p1",
-            name: "Removal",
-            visibility: "public" as const,
-            ordered: false,
-            owner: player1 as PlayerId,
-            maxSize: 0,
-          },
-          cards: [] as CardId[],
-        },
-        [player2]: {
-          config: {
-            id: "removal-p2",
-            name: "Removal",
-            visibility: "public" as const,
-            ordered: false,
-            owner: player2 as PlayerId,
-            maxSize: 0,
-          },
-          cards: [] as CardId[],
-        },
-      } as any,
-      limbo: {
-        [player1]: {
-          config: {
-            id: "limbo-p1",
-            name: "Limbo",
-            visibility: "public" as const,
-            ordered: false,
-            owner: player1 as PlayerId,
-            maxSize: 0,
-          },
-          cards: [] as CardId[],
-        },
-        [player2]: {
-          config: {
-            id: "limbo-p2",
-            name: "Limbo",
-            visibility: "public" as const,
-            ordered: false,
-            owner: player2 as PlayerId,
-            maxSize: 0,
-          },
-          cards: [] as CardId[],
-        },
-      } as any,
-    },
     gundam: {
       activeResources: {
         [player1]: 3,
         [player2]: 2,
       } as Record<PlayerId, number>,
-      cardPositions: (config.cardPositions ?? {}) as Record<
-        CardId,
-        "active" | "rested"
-      >,
       attackedThisTurn: [] as CardId[],
+      cardDamage: {} as Record<CardId, number>,
+      cardPositions: (config.cardPositions ?? {}) as Record<CardId, "active" | "rested">,
+      effectStack: {
+        nextInstanceId: 0,
+        stack: [],
+      },
       hasPlayedResourceThisTurn: {
         [player1]: true,
         [player2]: false,
       } as Record<PlayerId, boolean>,
-      effectStack: {
-        stack: [],
-        nextInstanceId: 0,
-      },
+      revealedCards: [] as CardId[],
       temporaryModifiers:
         (config.temporaryModifiers as any) ??
         ({} as GundamGameState["gundam"]["temporaryModifiers"]),
-      cardDamage: {} as Record<CardId, number>,
-      revealedCards: [] as CardId[],
+    },
+    phase: "main",
+    players: [player1, player2],
+    turn: 2,
+    zones: {
+      baseSection: {
+        [player1]: {
+          cards: [] as CardId[],
+          config: {
+            id: "base-p1",
+            maxSize: 1,
+            name: "Base Section",
+            ordered: false,
+            owner: player1,
+            visibility: "public" as const,
+          },
+        },
+        [player2]: {
+          cards: [] as CardId[],
+          config: {
+            id: "base-p2",
+            maxSize: 1,
+            name: "Base Section",
+            ordered: false,
+            owner: player2,
+            visibility: "public" as const,
+          },
+        },
+      } as any,
+      battleArea: {
+        [player1]: {
+          cards: (config.player1Cards?.battleArea ?? []) as CardId[],
+          config: {
+            id: "ba-p1",
+            maxSize: 6,
+            name: "Battle Area",
+            ordered: true,
+            owner: player1,
+            visibility: "public" as const,
+          },
+        },
+        [player2]: {
+          cards: (config.player2Cards?.battleArea ?? []) as CardId[],
+          config: {
+            id: "ba-p2",
+            maxSize: 6,
+            name: "Battle Area",
+            ordered: true,
+            owner: player2,
+            visibility: "public" as const,
+          },
+        },
+      } as any,
+      deck: {
+        [player1]: {
+          cards: (config.player1Cards?.deck ?? []) as CardId[],
+          config: {
+            faceDown: true,
+            id: "deck-p1",
+            maxSize: 50,
+            name: "Deck",
+            ordered: true,
+            owner: player1,
+            visibility: "secret" as const,
+          },
+        },
+        [player2]: {
+          cards: (config.player2Cards?.deck ?? []) as CardId[],
+          config: {
+            faceDown: true,
+            id: "deck-p2",
+            maxSize: 50,
+            name: "Deck",
+            ordered: true,
+            owner: player2,
+            visibility: "secret" as const,
+          },
+        },
+      } as any,
+      hand: {
+        [player1]: {
+          cards: (config.player1Cards?.hand ?? []) as CardId[],
+          config: {
+            id: "hand-p1",
+            maxSize: 10,
+            name: "Hand",
+            ordered: false,
+            owner: player1,
+            visibility: "private" as const,
+          },
+        },
+        [player2]: {
+          cards: (config.player2Cards?.hand ?? []) as CardId[],
+          config: {
+            id: "hand-p2",
+            maxSize: 10,
+            name: "Hand",
+            ordered: false,
+            owner: player2,
+            visibility: "private" as const,
+          },
+        },
+      } as any,
+      limbo: {
+        [player1]: {
+          cards: [] as CardId[],
+          config: {
+            id: "limbo-p1",
+            maxSize: 0,
+            name: "Limbo",
+            ordered: false,
+            owner: player1 as PlayerId,
+            visibility: "public" as const,
+          },
+        },
+        [player2]: {
+          cards: [] as CardId[],
+          config: {
+            id: "limbo-p2",
+            maxSize: 0,
+            name: "Limbo",
+            ordered: false,
+            owner: player2 as PlayerId,
+            visibility: "public" as const,
+          },
+        },
+      } as any,
+      removal: {
+        [player1]: {
+          cards: [] as CardId[],
+          config: {
+            id: "removal-p1",
+            maxSize: 0,
+            name: "Removal",
+            ordered: false,
+            owner: player1 as PlayerId,
+            visibility: "public" as const,
+          },
+        },
+        [player2]: {
+          cards: [] as CardId[],
+          config: {
+            id: "removal-p2",
+            maxSize: 0,
+            name: "Removal",
+            ordered: false,
+            owner: player2 as PlayerId,
+            visibility: "public" as const,
+          },
+        },
+      } as any,
+      resourceArea: {
+        [player1]: {
+          cards: [] as CardId[],
+          config: {
+            id: "res-area-p1",
+            maxSize: 15,
+            name: "Resource Area",
+            ordered: false,
+            owner: player1,
+            visibility: "public" as const,
+          },
+        },
+        [player2]: {
+          cards: [] as CardId[],
+          config: {
+            id: "res-area-p2",
+            maxSize: 15,
+            name: "Resource Area",
+            ordered: false,
+            owner: player2,
+            visibility: "public" as const,
+          },
+        },
+      } as any,
+      resourceDeck: {
+        [player1]: {
+          cards: [] as CardId[],
+          config: {
+            faceDown: true,
+            id: "res-deck-p1",
+            maxSize: 10,
+            name: "Resource Deck",
+            ordered: true,
+            owner: player1,
+            visibility: "secret" as const,
+          },
+        },
+        [player2]: {
+          cards: [] as CardId[],
+          config: {
+            faceDown: true,
+            id: "res-deck-p2",
+            maxSize: 10,
+            name: "Resource Deck",
+            ordered: true,
+            owner: player2,
+            visibility: "secret" as const,
+          },
+        },
+      } as any,
+      shieldSection: {
+        [player1]: {
+          cards: [] as CardId[],
+          config: {
+            faceDown: true,
+            id: "shield-p1",
+            maxSize: 6,
+            name: "Shield Section",
+            ordered: true,
+            owner: player1,
+            visibility: "secret" as const,
+          },
+        },
+        [player2]: {
+          cards: [] as CardId[],
+          config: {
+            faceDown: true,
+            id: "shield-p2",
+            maxSize: 6,
+            name: "Shield Section",
+            ordered: true,
+            owner: player2,
+            visibility: "secret" as const,
+          },
+        },
+      } as any,
+      trash: {
+        [player1]: {
+          cards: [] as CardId[],
+          config: {
+            id: "trash-p1",
+            maxSize: 0,
+            name: "Trash",
+            ordered: true,
+            owner: player1,
+            visibility: "public" as const,
+          },
+        },
+        [player2]: {
+          cards: [] as CardId[],
+          config: {
+            id: "trash-p2",
+            maxSize: 0,
+            name: "Trash",
+            ordered: true,
+            owner: player2,
+            visibility: "public" as const,
+          },
+        },
+      } as any,
     },
   };
 }
 
 // Helper to create card definitions
 function createCardDefinitions(
-  cards: Array<{
+  cards: {
     id: string;
     name: string;
     cardType: "UNIT" | "COMMAND" | "BASE";
@@ -319,19 +309,19 @@ function createCardDefinitions(
     lv: number;
     color?: string;
     traits?: string[];
-  }>,
+  }[],
 ): Record<CardId, BaseEffectCardDefinition> {
   const result: Record<CardId, BaseEffectCardDefinition> = {};
 
   for (const card of cards) {
     result[card.id as CardId] = {
-      id: card.id,
-      name: card.name,
       cardType: card.cardType,
       cost: card.cost,
-      lv: card.lv,
-      text: "",
       effects: [],
+      id: card.id,
+      lv: card.lv,
+      name: card.name,
+      text: "",
       ...(card.color ? { color: card.color as any } : {}),
       ...(card.traits ? { traits: card.traits } : {}),
     } as any;
@@ -347,9 +337,9 @@ function createContext(
   cardDefinitions: Record<CardId, BaseEffectCardDefinition>,
 ): TargetingContext {
   return {
+    cardDefinitions,
     controllerId: controllerId as PlayerId,
     sourceCardId: sourceCardId as CardId,
-    cardDefinitions,
   };
 }
 
@@ -372,24 +362,24 @@ describe("targeting integration with actual effect definitions", () => {
       });
 
       const cardDefs = createCardDefinitions([
-        { id: RX78, name: "RX-78-2 Gundam", cardType: "UNIT", cost: 3, lv: 2 },
-        { id: ZAKU, name: "Zaku II", cardType: "UNIT", cost: 2, lv: 1 },
-        { id: GM, name: "GM", cardType: "UNIT", cost: 1, lv: 1 },
-        { id: DOM, name: "Dom", cardType: "UNIT", cost: 3, lv: 2 },
+        { cardType: "UNIT", cost: 3, id: RX78, lv: 2, name: "RX-78-2 Gundam" },
+        { cardType: "UNIT", cost: 2, id: ZAKU, lv: 1, name: "Zaku II" },
+        { cardType: "UNIT", cost: 1, id: GM, lv: 1, name: "GM" },
+        { cardType: "UNIT", cost: 3, id: DOM, lv: 2, name: "Dom" },
       ]);
 
       const targetingSpec: TargetingSpec = {
+        chooser: "controller",
         count: 1,
+        timing: "on_resolution",
         validTargets: [
           {
-            type: "unit",
             owner: "opponent",
-            zone: "battleArea",
             properties: { cost: { max: 2 } },
+            type: "unit",
+            zone: "battleArea",
           },
         ],
-        chooser: "controller",
-        timing: "on_resolution",
       };
 
       const context = createContext(PLAYER_1, RX78, cardDefs);
@@ -408,24 +398,24 @@ describe("targeting integration with actual effect definitions", () => {
       });
 
       const cardDefs = createCardDefinitions([
-        { id: RX78, name: "RX-78-2 Gundam", cardType: "UNIT", cost: 3, lv: 2 },
-        { id: ZAKU, name: "Zaku II", cardType: "UNIT", cost: 2, lv: 1 },
-        { id: GM, name: "GM", cardType: "UNIT", cost: 1, lv: 1 },
-        { id: DOM, name: "Dom", cardType: "UNIT", cost: 3, lv: 2 },
+        { cardType: "UNIT", cost: 3, id: RX78, lv: 2, name: "RX-78-2 Gundam" },
+        { cardType: "UNIT", cost: 2, id: ZAKU, lv: 1, name: "Zaku II" },
+        { cardType: "UNIT", cost: 1, id: GM, lv: 1, name: "GM" },
+        { cardType: "UNIT", cost: 3, id: DOM, lv: 2, name: "Dom" },
       ]);
 
       const targetingSpec: TargetingSpec = {
+        chooser: "controller",
         count: 1,
+        timing: "on_resolution",
         validTargets: [
           {
-            type: "unit",
             owner: "opponent",
-            zone: "battleArea",
             properties: { cost: { max: 2 } },
+            type: "unit",
+            zone: "battleArea",
           },
         ],
-        chooser: "controller",
-        timing: "on_resolution",
       };
 
       const context = createContext(PLAYER_1, RX78, cardDefs);
@@ -438,49 +428,45 @@ describe("targeting integration with actual effect definitions", () => {
       expect(validateTargets(state, targetingSpec, [DOM], context)).toBe(false);
 
       // Invalid: wrong count
-      expect(validateTargets(state, targetingSpec, [ZAKU, GM], context)).toBe(
-        false,
-      );
+      expect(validateTargets(state, targetingSpec, [ZAKU, GM], context)).toBe(false);
 
       // Invalid: own card
-      expect(validateTargets(state, targetingSpec, [RX78], context)).toBe(
-        false,
-      );
+      expect(validateTargets(state, targetingSpec, [RX78], context)).toBe(false);
     });
   });
 
   describe("rest effect - rest up to 2 units", () => {
     it("should find valid targets for rest effect", () => {
       const state = createGameState({
-        player1Cards: { battleArea: [RX78, ZAKU, GM] },
-        player2Cards: { battleArea: [DOM] },
         cardPositions: {
           [RX78]: "active",
           [ZAKU]: "active",
           [GM]: "rested",
           [DOM]: "active",
         },
+        player1Cards: { battleArea: [RX78, ZAKU, GM] },
+        player2Cards: { battleArea: [DOM] },
       });
 
       const cardDefs = createCardDefinitions([
-        { id: RX78, name: "RX-78-2 Gundam", cardType: "UNIT", cost: 3, lv: 2 },
-        { id: ZAKU, name: "Zaku II", cardType: "UNIT", cost: 2, lv: 1 },
-        { id: GM, name: "GM", cardType: "UNIT", cost: 1, lv: 1 },
-        { id: DOM, name: "Dom", cardType: "UNIT", cost: 3, lv: 2 },
+        { cardType: "UNIT", cost: 3, id: RX78, lv: 2, name: "RX-78-2 Gundam" },
+        { cardType: "UNIT", cost: 2, id: ZAKU, lv: 1, name: "Zaku II" },
+        { cardType: "UNIT", cost: 1, id: GM, lv: 1, name: "GM" },
+        { cardType: "UNIT", cost: 3, id: DOM, lv: 2, name: "Dom" },
       ]);
 
       const targetingSpec: TargetingSpec = {
-        count: { min: 0, max: 2 },
+        chooser: "controller",
+        count: { max: 2, min: 0 },
+        timing: "on_resolution",
         validTargets: [
           {
-            type: "unit",
             owner: "opponent",
-            zone: "battleArea",
             state: { rested: false },
+            type: "unit",
+            zone: "battleArea",
           },
         ],
-        chooser: "controller",
-        timing: "on_resolution",
       };
 
       const context = createContext(PLAYER_1, RX78, cardDefs);
@@ -493,30 +479,30 @@ describe("targeting integration with actual effect definitions", () => {
 
     it("should validate optional targets", () => {
       const state = createGameState({
-        player1Cards: { battleArea: [RX78] },
-        player2Cards: { battleArea: [ZAKU] },
         cardPositions: {
           [RX78]: "active",
           [ZAKU]: "active",
         },
+        player1Cards: { battleArea: [RX78] },
+        player2Cards: { battleArea: [ZAKU] },
       });
 
       const cardDefs = createCardDefinitions([
-        { id: RX78, name: "RX-78-2 Gundam", cardType: "UNIT", cost: 3, lv: 2 },
-        { id: ZAKU, name: "Zaku II", cardType: "UNIT", cost: 2, lv: 1 },
+        { cardType: "UNIT", cost: 3, id: RX78, lv: 2, name: "RX-78-2 Gundam" },
+        { cardType: "UNIT", cost: 2, id: ZAKU, lv: 1, name: "Zaku II" },
       ]);
 
       const targetingSpec: TargetingSpec = {
-        count: { min: 0, max: 1 },
+        chooser: "controller",
+        count: { max: 1, min: 0 },
+        timing: "on_resolution",
         validTargets: [
           {
-            type: "unit",
             owner: "opponent",
+            type: "unit",
             zone: "battleArea",
           },
         ],
-        chooser: "controller",
-        timing: "on_resolution",
       };
 
       const context = createContext(PLAYER_1, RX78, cardDefs);
@@ -528,9 +514,7 @@ describe("targeting integration with actual effect definitions", () => {
       expect(validateTargets(state, targetingSpec, [ZAKU], context)).toBe(true);
 
       // Cannot choose more than max
-      expect(validateTargets(state, targetingSpec, [ZAKU, RX78], context)).toBe(
-        false,
-      );
+      expect(validateTargets(state, targetingSpec, [ZAKU, RX78], context)).toBe(false);
     });
   });
 
@@ -542,28 +526,28 @@ describe("targeting integration with actual effect definitions", () => {
       });
 
       const cardDefs = createCardDefinitions([
-        { id: RX78, name: "RX-78-2 Gundam", cardType: "UNIT", cost: 3, lv: 2 },
-        { id: ZAKU, name: "Zaku II", cardType: "UNIT", cost: 2, lv: 1 },
-        { id: GOUF, name: "Gouf", cardType: "COMMAND", cost: 2, lv: 1 },
+        { cardType: "UNIT", cost: 3, id: RX78, lv: 2, name: "RX-78-2 Gundam" },
+        { cardType: "UNIT", cost: 2, id: ZAKU, lv: 1, name: "Zaku II" },
+        { cardType: "COMMAND", cost: 2, id: GOUF, lv: 1, name: "Gouf" },
       ]);
 
       const targetingSpec: TargetingSpec = {
+        chooser: "controller",
         count: 1,
+        timing: "on_resolution",
         validTargets: [
           {
-            type: "unit",
             owner: "any",
+            type: "unit",
             zone: "battleArea",
           },
           {
-            type: "card",
             owner: "self",
-            zone: "hand",
             properties: { cardType: "COMMAND" },
+            type: "card",
+            zone: "hand",
           },
         ],
-        chooser: "controller",
-        timing: "on_resolution",
       };
 
       const context = createContext(PLAYER_1, RX78, cardDefs);
@@ -585,51 +569,51 @@ describe("targeting integration with actual effect definitions", () => {
 
       const cardDefs = createCardDefinitions([
         {
-          id: RX78,
-          name: "RX-78-2 Gundam",
           cardType: "UNIT",
           cost: 3,
+          id: RX78,
           lv: 2,
+          name: "RX-78-2 Gundam",
           traits: ["E.F.S.F", "Mobile Suit"],
         },
         {
-          id: ZAKU,
-          name: "Zaku II",
           cardType: "UNIT",
           cost: 2,
+          id: ZAKU,
           lv: 1,
+          name: "Zaku II",
           traits: ["Zeon", "Mobile Suit"],
         },
         {
-          id: GM,
-          name: "GM",
           cardType: "UNIT",
           cost: 1,
+          id: GM,
           lv: 1,
+          name: "GM",
           traits: ["E.F.S.F", "Mobile Suit"],
         },
         {
-          id: DOM,
-          name: "Dom",
           cardType: "UNIT",
           cost: 3,
+          id: DOM,
           lv: 2,
+          name: "Dom",
           traits: ["Zeon", "Mobile Suit"],
         },
       ]);
 
       const targetingSpec: TargetingSpec = {
+        chooser: "controller",
         count: 1,
+        timing: "on_resolution",
         validTargets: [
           {
-            type: "unit",
             owner: "opponent",
-            zone: "battleArea",
             properties: { trait: ["Zeon"] },
+            type: "unit",
+            zone: "battleArea",
           },
         ],
-        chooser: "controller",
-        timing: "on_resolution",
       };
 
       const context = createContext(PLAYER_1, RX78, cardDefs);
@@ -652,36 +636,36 @@ describe("targeting integration with actual effect definitions", () => {
 
       const cardDefs = createCardDefinitions([
         {
-          id: RX78,
-          name: "RX-78-2 Gundam",
           cardType: "UNIT",
-          cost: 3,
-          lv: 2,
           color: "Blue",
+          cost: 3,
+          id: RX78,
+          lv: 2,
+          name: "RX-78-2 Gundam",
         },
         {
-          id: ZAKU,
-          name: "Zaku II",
           cardType: "UNIT",
-          cost: 2,
-          lv: 1,
           color: "Red",
+          cost: 2,
+          id: ZAKU,
+          lv: 1,
+          name: "Zaku II",
         },
-        { id: GM, name: "GM", cardType: "UNIT", cost: 1, lv: 1, color: "Blue" },
+        { cardType: "UNIT", color: "Blue", cost: 1, id: GM, lv: 1, name: "GM" },
       ]);
 
       const targetingSpec: TargetingSpec = {
+        chooser: "controller",
         count: 1,
+        timing: "on_resolution",
         validTargets: [
           {
-            type: "unit",
             owner: "opponent",
-            zone: "battleArea",
             properties: { color: "Blue" },
+            type: "unit",
+            zone: "battleArea",
           },
         ],
-        chooser: "controller",
-        timing: "on_resolution",
       };
 
       const context = createContext(PLAYER_1, RX78, cardDefs);
@@ -701,22 +685,22 @@ describe("dynamic game state changes", () => {
     });
 
     const cardDefs = createCardDefinitions([
-      { id: RX78, name: "RX-78-2 Gundam", cardType: "UNIT", cost: 3, lv: 2 },
-      { id: ZAKU, name: "Zaku II", cardType: "UNIT", cost: 2, lv: 1 },
-      { id: GM, name: "GM", cardType: "UNIT", cost: 1, lv: 1 },
+      { cardType: "UNIT", cost: 3, id: RX78, lv: 2, name: "RX-78-2 Gundam" },
+      { cardType: "UNIT", cost: 2, id: ZAKU, lv: 1, name: "Zaku II" },
+      { cardType: "UNIT", cost: 1, id: GM, lv: 1, name: "GM" },
     ]);
 
     const targetingSpec: TargetingSpec = {
+      chooser: "controller",
       count: 1,
+      timing: "on_resolution",
       validTargets: [
         {
-          type: "unit",
           owner: "opponent",
+          type: "unit",
           zone: "battleArea",
         },
       ],
-      chooser: "controller",
-      timing: "on_resolution",
     };
 
     const context = createContext(PLAYER_1, RX78, cardDefs);
@@ -739,33 +723,33 @@ describe("dynamic game state changes", () => {
 
   it("should update valid targets when card state changes", () => {
     const state = createGameState({
-      player1Cards: { battleArea: [RX78] },
-      player2Cards: { battleArea: [ZAKU, GM] },
       cardPositions: {
         [RX78]: "active",
         [ZAKU]: "active",
         [GM]: "rested",
       },
+      player1Cards: { battleArea: [RX78] },
+      player2Cards: { battleArea: [ZAKU, GM] },
     });
 
     const cardDefs = createCardDefinitions([
-      { id: RX78, name: "RX-78-2 Gundam", cardType: "UNIT", cost: 3, lv: 2 },
-      { id: ZAKU, name: "Zaku II", cardType: "UNIT", cost: 2, lv: 1 },
-      { id: GM, name: "GM", cardType: "UNIT", cost: 1, lv: 1 },
+      { cardType: "UNIT", cost: 3, id: RX78, lv: 2, name: "RX-78-2 Gundam" },
+      { cardType: "UNIT", cost: 2, id: ZAKU, lv: 1, name: "Zaku II" },
+      { cardType: "UNIT", cost: 1, id: GM, lv: 1, name: "GM" },
     ]);
 
     const targetingSpec: TargetingSpec = {
+      chooser: "controller",
       count: 1,
+      timing: "on_resolution",
       validTargets: [
         {
-          type: "unit",
           owner: "opponent",
-          zone: "battleArea",
           state: { rested: false },
+          type: "unit",
+          zone: "battleArea",
         },
       ],
-      chooser: "controller",
-      timing: "on_resolution",
     };
 
     const context = createContext(PLAYER_1, RX78, cardDefs);
@@ -787,47 +771,39 @@ describe("complex targeting scenarios", () => {
       });
 
       const cardDefs = createCardDefinitions([
-        { id: RX78, name: "RX-78-2 Gundam", cardType: "UNIT", cost: 3, lv: 2 },
-        { id: ZAKU, name: "Zaku II", cardType: "UNIT", cost: 2, lv: 1 },
-        { id: GM, name: "GM", cardType: "UNIT", cost: 1, lv: 1 },
-        { id: DOM, name: "Dom", cardType: "UNIT", cost: 3, lv: 2 },
-        { id: GOUF, name: "Gouf", cardType: "UNIT", cost: 2, lv: 2 },
+        { cardType: "UNIT", cost: 3, id: RX78, lv: 2, name: "RX-78-2 Gundam" },
+        { cardType: "UNIT", cost: 2, id: ZAKU, lv: 1, name: "Zaku II" },
+        { cardType: "UNIT", cost: 1, id: GM, lv: 1, name: "GM" },
+        { cardType: "UNIT", cost: 3, id: DOM, lv: 2, name: "Dom" },
+        { cardType: "UNIT", cost: 2, id: GOUF, lv: 2, name: "Gouf" },
       ]);
 
       const targetingSpec: TargetingSpec = {
-        count: { min: 2, max: 3 },
+        chooser: "controller",
+        count: { max: 3, min: 2 },
+        timing: "on_resolution",
         validTargets: [
           {
-            type: "unit",
             owner: "self",
+            type: "unit",
             zone: "battleArea",
           },
         ],
-        chooser: "controller",
-        timing: "on_resolution",
       };
 
       const context = createContext(PLAYER_1, RX78, cardDefs);
 
       // Valid: 2 targets
-      expect(validateTargets(state, targetingSpec, [RX78, ZAKU], context)).toBe(
-        true,
-      );
+      expect(validateTargets(state, targetingSpec, [RX78, ZAKU], context)).toBe(true);
 
       // Valid: 3 targets
-      expect(
-        validateTargets(state, targetingSpec, [RX78, ZAKU, GM], context),
-      ).toBe(true);
+      expect(validateTargets(state, targetingSpec, [RX78, ZAKU, GM], context)).toBe(true);
 
       // Invalid: 1 target (below min)
-      expect(validateTargets(state, targetingSpec, [RX78], context)).toBe(
-        false,
-      );
+      expect(validateTargets(state, targetingSpec, [RX78], context)).toBe(false);
 
       // Invalid: 4 targets (above max)
-      expect(
-        validateTargets(state, targetingSpec, [RX78, ZAKU, GM, DOM], context),
-      ).toBe(false);
+      expect(validateTargets(state, targetingSpec, [RX78, ZAKU, GM, DOM], context)).toBe(false);
     });
   });
 
@@ -839,20 +815,20 @@ describe("complex targeting scenarios", () => {
       });
 
       const cardDefs = createCardDefinitions([
-        { id: RX78, name: "RX-78-2 Gundam", cardType: "UNIT", cost: 3, lv: 2 },
+        { cardType: "UNIT", cost: 3, id: RX78, lv: 2, name: "RX-78-2 Gundam" },
       ]);
 
       const targetingSpec: TargetingSpec = {
+        chooser: "controller",
         count: 1,
+        timing: "on_resolution",
         validTargets: [
           {
-            type: "unit",
             owner: "opponent",
+            type: "unit",
             zone: "battleArea",
           },
         ],
-        chooser: "controller",
-        timing: "on_resolution",
       };
 
       const context = createContext(PLAYER_1, RX78, cardDefs);
@@ -869,34 +845,34 @@ describe("complex targeting scenarios", () => {
 describe("integration with effect resolution", () => {
   it("should provide targets for multi-action effects", () => {
     const state = createGameState({
-      player1Cards: { battleArea: [RX78] },
-      player2Cards: { battleArea: [ZAKU, GM] },
       cardPositions: {
         [RX78]: "active",
         [ZAKU]: "active",
         [GM]: "active",
       },
+      player1Cards: { battleArea: [RX78] },
+      player2Cards: { battleArea: [ZAKU, GM] },
     });
 
     const cardDefs = createCardDefinitions([
-      { id: RX78, name: "RX-78-2 Gundam", cardType: "UNIT", cost: 3, lv: 2 },
-      { id: ZAKU, name: "Zaku II", cardType: "UNIT", cost: 2, lv: 1 },
-      { id: GM, name: "GM", cardType: "UNIT", cost: 1, lv: 1 },
+      { cardType: "UNIT", cost: 3, id: RX78, lv: 2, name: "RX-78-2 Gundam" },
+      { cardType: "UNIT", cost: 2, id: ZAKU, lv: 1, name: "Zaku II" },
+      { cardType: "UNIT", cost: 1, id: GM, lv: 1, name: "GM" },
     ]);
 
     // Effect: Rest 1 target unit, then deal 2 damage to it
     const restTargeting: TargetingSpec = {
+      chooser: "controller",
       count: 1,
+      timing: "on_resolution",
       validTargets: [
         {
-          type: "unit",
           owner: "opponent",
-          zone: "battleArea",
           state: { rested: false },
+          type: "unit",
+          zone: "battleArea",
         },
       ],
-      chooser: "controller",
-      timing: "on_resolution",
     };
 
     const context = createContext(PLAYER_1, RX78, cardDefs);
@@ -906,9 +882,7 @@ describe("integration with effect resolution", () => {
 
     // Player chooses ZAKU
     const chosenTarget = ZAKU;
-    expect(validateTargets(state, restTargeting, [chosenTarget], context)).toBe(
-      true,
-    );
+    expect(validateTargets(state, restTargeting, [chosenTarget], context)).toBe(true);
 
     // After resting, the target would still be valid for damage effect
     // (This simulates the flow of effect resolution)

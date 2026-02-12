@@ -44,16 +44,16 @@ function createZone(
   ordered = false,
 ): GundamGameState["zones"][keyof GundamGameState["zones"]][PlayerId] {
   return {
+    cards,
     config: {
+      faceDown: visibility === "secret",
       id: createZoneId(`${zoneName}-${owner}`),
+      maxSize: undefined,
       name: zoneName,
-      visibility,
       ordered,
       owner,
-      maxSize: undefined,
-      faceDown: visibility === "secret",
+      visibility,
     },
-    cards,
   };
 }
 
@@ -71,61 +71,61 @@ describe("Target Resolution", () => {
     card2 = "card2" as CardId;
 
     mockState = {
-      players: [player1, player2],
       currentPlayer: player1,
-      turn: 1,
+      gundam: {
+        activeResources: { [player1]: 3, [player2]: 2 },
+        attackedThisTurn: [],
+        cardDamage: {},
+        cardPositions: { [card1]: "active", [card2]: "rested" },
+        effectStack: { nextInstanceId: 0, stack: [] },
+        hasPlayedResourceThisTurn: { [player1]: false, [player2]: false },
+        revealedCards: [],
+        temporaryModifiers: {},
+      },
       phase: "main",
+      players: [player1, player2],
+      turn: 1,
       zones: {
-        deck: {
-          [player1]: createZone(player1, "deck", [], "secret", true),
-          [player2]: createZone(player2, "deck", [], "secret", true),
-        },
-        resourceDeck: {
-          [player1]: createZone(player1, "resourceDeck", [], "secret", true),
-          [player2]: createZone(player2, "resourceDeck", [], "secret", true),
-        },
-        hand: {
-          [player1]: createZone(player1, "hand", [card1], "private"),
-          [player2]: createZone(player2, "hand", [], "private"),
+        baseSection: {
+          [player1]: createZone(player1, "baseSection", [], "public"),
+          [player2]: createZone(player2, "baseSection", [], "public"),
         },
         battleArea: {
           [player1]: createZone(player1, "battleArea", [card2], "public", true),
           [player2]: createZone(player2, "battleArea", [], "public", true),
         },
-        shieldSection: {
-          [player1]: createZone(player1, "shieldSection", [], "secret", true),
-          [player2]: createZone(player2, "shieldSection", [], "secret", true),
+        deck: {
+          [player1]: createZone(player1, "deck", [], "secret", true),
+          [player2]: createZone(player2, "deck", [], "secret", true),
         },
-        baseSection: {
-          [player1]: createZone(player1, "baseSection", [], "public"),
-          [player2]: createZone(player2, "baseSection", [], "public"),
-        },
-        resourceArea: {
-          [player1]: createZone(player1, "resourceArea", [], "public"),
-          [player2]: createZone(player2, "resourceArea", [], "public"),
-        },
-        trash: {
-          [player1]: createZone(player1, "trash", [], "public", true),
-          [player2]: createZone(player2, "trash", [], "public", true),
-        },
-        removal: {
-          [player1]: createZone(player1, "removal", [], "public"),
-          [player2]: createZone(player2, "removal", [], "public"),
+        hand: {
+          [player1]: createZone(player1, "hand", [card1], "private"),
+          [player2]: createZone(player2, "hand", [], "private"),
         },
         limbo: {
           [player1]: createZone(player1, "limbo", [], "public"),
           [player2]: createZone(player2, "limbo", [], "public"),
         },
-      },
-      gundam: {
-        activeResources: { [player1]: 3, [player2]: 2 },
-        cardPositions: { [card1]: "active", [card2]: "rested" },
-        attackedThisTurn: [],
-        hasPlayedResourceThisTurn: { [player1]: false, [player2]: false },
-        effectStack: { stack: [], nextInstanceId: 0 },
-        temporaryModifiers: {},
-        cardDamage: {},
-        revealedCards: [],
+        removal: {
+          [player1]: createZone(player1, "removal", [], "public"),
+          [player2]: createZone(player2, "removal", [], "public"),
+        },
+        resourceArea: {
+          [player1]: createZone(player1, "resourceArea", [], "public"),
+          [player2]: createZone(player2, "resourceArea", [], "public"),
+        },
+        resourceDeck: {
+          [player1]: createZone(player1, "resourceDeck", [], "secret", true),
+          [player2]: createZone(player2, "resourceDeck", [], "secret", true),
+        },
+        shieldSection: {
+          [player1]: createZone(player1, "shieldSection", [], "secret", true),
+          [player2]: createZone(player2, "shieldSection", [], "secret", true),
+        },
+        trash: {
+          [player1]: createZone(player1, "trash", [], "public", true),
+          [player2]: createZone(player2, "trash", [], "public", true),
+        },
       },
     };
   });
@@ -237,61 +237,61 @@ describe("Target Validation", () => {
     card2 = "card2" as CardId;
 
     mockState = {
-      players: [player1, player2],
       currentPlayer: player1,
-      turn: 1,
+      gundam: {
+        activeResources: { [player1]: 3, [player2]: 2 },
+        attackedThisTurn: [],
+        cardDamage: {},
+        cardPositions: { [card1]: "active", [card2]: "rested" },
+        effectStack: { nextInstanceId: 0, stack: [] },
+        hasPlayedResourceThisTurn: { [player1]: false, [player2]: false },
+        revealedCards: [],
+        temporaryModifiers: {},
+      },
       phase: "main",
+      players: [player1, player2],
+      turn: 1,
       zones: {
-        deck: {
-          [player1]: createZone(player1, "deck", [], "secret", true),
-          [player2]: createZone(player2, "deck", [], "secret", true),
-        },
-        resourceDeck: {
-          [player1]: createZone(player1, "resourceDeck", [], "secret", true),
-          [player2]: createZone(player2, "resourceDeck", [], "secret", true),
-        },
-        hand: {
-          [player1]: createZone(player1, "hand", [card1], "private"),
-          [player2]: createZone(player2, "hand", [], "private"),
+        baseSection: {
+          [player1]: createZone(player1, "baseSection", [], "public"),
+          [player2]: createZone(player2, "baseSection", [], "public"),
         },
         battleArea: {
           [player1]: createZone(player1, "battleArea", [card2], "public", true),
           [player2]: createZone(player2, "battleArea", [], "public", true),
         },
-        shieldSection: {
-          [player1]: createZone(player1, "shieldSection", [], "secret", true),
-          [player2]: createZone(player2, "shieldSection", [], "secret", true),
+        deck: {
+          [player1]: createZone(player1, "deck", [], "secret", true),
+          [player2]: createZone(player2, "deck", [], "secret", true),
         },
-        baseSection: {
-          [player1]: createZone(player1, "baseSection", [], "public"),
-          [player2]: createZone(player2, "baseSection", [], "public"),
-        },
-        resourceArea: {
-          [player1]: createZone(player1, "resourceArea", [], "public"),
-          [player2]: createZone(player2, "resourceArea", [], "public"),
-        },
-        trash: {
-          [player1]: createZone(player1, "trash", [], "public", true),
-          [player2]: createZone(player2, "trash", [], "public", true),
-        },
-        removal: {
-          [player1]: createZone(player1, "removal", [], "public"),
-          [player2]: createZone(player2, "removal", [], "public"),
+        hand: {
+          [player1]: createZone(player1, "hand", [card1], "private"),
+          [player2]: createZone(player2, "hand", [], "private"),
         },
         limbo: {
           [player1]: createZone(player1, "limbo", [], "public"),
           [player2]: createZone(player2, "limbo", [], "public"),
         },
-      },
-      gundam: {
-        activeResources: { [player1]: 3, [player2]: 2 },
-        cardPositions: { [card1]: "active", [card2]: "rested" },
-        attackedThisTurn: [],
-        hasPlayedResourceThisTurn: { [player1]: false, [player2]: false },
-        effectStack: { stack: [], nextInstanceId: 0 },
-        temporaryModifiers: {},
-        cardDamage: {},
-        revealedCards: [],
+        removal: {
+          [player1]: createZone(player1, "removal", [], "public"),
+          [player2]: createZone(player2, "removal", [], "public"),
+        },
+        resourceArea: {
+          [player1]: createZone(player1, "resourceArea", [], "public"),
+          [player2]: createZone(player2, "resourceArea", [], "public"),
+        },
+        resourceDeck: {
+          [player1]: createZone(player1, "resourceDeck", [], "secret", true),
+          [player2]: createZone(player2, "resourceDeck", [], "secret", true),
+        },
+        shieldSection: {
+          [player1]: createZone(player1, "shieldSection", [], "secret", true),
+          [player2]: createZone(player2, "shieldSection", [], "secret", true),
+        },
+        trash: {
+          [player1]: createZone(player1, "trash", [], "public", true),
+          [player2]: createZone(player2, "trash", [], "public", true),
+        },
       },
     };
   });
@@ -309,18 +309,10 @@ describe("Target Validation", () => {
   });
 
   it("should validate target ID", () => {
-    expect(isValidTargetId(card1, "this", mockState, player1, card1)).toBe(
-      true,
-    );
-    expect(isValidTargetId(card2, "this", mockState, player1, card2)).toBe(
-      true,
-    );
-    expect(isValidTargetId(card1, "this", mockState, player1, card2)).toBe(
-      false,
-    );
-    expect(isValidTargetId(card2, "this", mockState, player1, card1)).toBe(
-      false,
-    );
+    expect(isValidTargetId(card1, "this", mockState, player1, card1)).toBe(true);
+    expect(isValidTargetId(card2, "this", mockState, player1, card2)).toBe(true);
+    expect(isValidTargetId(card1, "this", mockState, player1, card2)).toBe(false);
+    expect(isValidTargetId(card2, "this", mockState, player1, card1)).toBe(false);
   });
 });
 
@@ -340,65 +332,65 @@ describe("Target Query Functions", () => {
     card3 = "card3" as CardId;
 
     mockState = {
-      players: [player1, player2],
       currentPlayer: player1,
-      turn: 1,
-      phase: "main",
-      zones: {
-        deck: {
-          [player1]: createZone(player1, "deck", [card3], "secret", true),
-          [player2]: createZone(player2, "deck", [], "secret", true),
-        },
-        resourceDeck: {
-          [player1]: createZone(player1, "resourceDeck", [], "secret", true),
-          [player2]: createZone(player2, "resourceDeck", [], "secret", true),
-        },
-        hand: {
-          [player1]: createZone(player1, "hand", [card1], "private"),
-          [player2]: createZone(player2, "hand", [], "private"),
-        },
-        battleArea: {
-          [player1]: createZone(player1, "battleArea", [card2], "public", true),
-          [player2]: createZone(player2, "battleArea", [], "public", true),
-        },
-        shieldSection: {
-          [player1]: createZone(player1, "shieldSection", [], "secret", true),
-          [player2]: createZone(player2, "shieldSection", [], "secret", true),
-        },
-        baseSection: {
-          [player1]: createZone(player1, "baseSection", [], "public"),
-          [player2]: createZone(player2, "baseSection", [], "public"),
-        },
-        resourceArea: {
-          [player1]: createZone(player1, "resourceArea", [], "public"),
-          [player2]: createZone(player2, "resourceArea", [], "public"),
-        },
-        trash: {
-          [player1]: createZone(player1, "trash", [], "public", true),
-          [player2]: createZone(player2, "trash", [], "public", true),
-        },
-        removal: {
-          [player1]: createZone(player1, "removal", [], "public"),
-          [player2]: createZone(player2, "removal", [], "public"),
-        },
-        limbo: {
-          [player1]: createZone(player1, "limbo", [], "public"),
-          [player2]: createZone(player2, "limbo", [], "public"),
-        },
-      },
       gundam: {
         activeResources: { [player1]: 3, [player2]: 2 },
+        attackedThisTurn: [],
+        cardDamage: {},
         cardPositions: {
           [card1]: "active",
           [card2]: "rested",
           [card3]: "active",
         },
-        attackedThisTurn: [],
+        effectStack: { nextInstanceId: 0, stack: [] },
         hasPlayedResourceThisTurn: { [player1]: false, [player2]: false },
-        effectStack: { stack: [], nextInstanceId: 0 },
-        temporaryModifiers: {},
-        cardDamage: {},
         revealedCards: [],
+        temporaryModifiers: {},
+      },
+      phase: "main",
+      players: [player1, player2],
+      turn: 1,
+      zones: {
+        baseSection: {
+          [player1]: createZone(player1, "baseSection", [], "public"),
+          [player2]: createZone(player2, "baseSection", [], "public"),
+        },
+        battleArea: {
+          [player1]: createZone(player1, "battleArea", [card2], "public", true),
+          [player2]: createZone(player2, "battleArea", [], "public", true),
+        },
+        deck: {
+          [player1]: createZone(player1, "deck", [card3], "secret", true),
+          [player2]: createZone(player2, "deck", [], "secret", true),
+        },
+        hand: {
+          [player1]: createZone(player1, "hand", [card1], "private"),
+          [player2]: createZone(player2, "hand", [], "private"),
+        },
+        limbo: {
+          [player1]: createZone(player1, "limbo", [], "public"),
+          [player2]: createZone(player2, "limbo", [], "public"),
+        },
+        removal: {
+          [player1]: createZone(player1, "removal", [], "public"),
+          [player2]: createZone(player2, "removal", [], "public"),
+        },
+        resourceArea: {
+          [player1]: createZone(player1, "resourceArea", [], "public"),
+          [player2]: createZone(player2, "resourceArea", [], "public"),
+        },
+        resourceDeck: {
+          [player1]: createZone(player1, "resourceDeck", [], "secret", true),
+          [player2]: createZone(player2, "resourceDeck", [], "secret", true),
+        },
+        shieldSection: {
+          [player1]: createZone(player1, "shieldSection", [], "secret", true),
+          [player2]: createZone(player2, "shieldSection", [], "secret", true),
+        },
+        trash: {
+          [player1]: createZone(player1, "trash", [], "public", true),
+          [player2]: createZone(player2, "trash", [], "public", true),
+        },
       },
     };
   });
@@ -471,45 +463,45 @@ describe("Target Filtering", () => {
     const card3 = "card3" as CardId;
 
     const mockState: GundamGameState = {
-      players: [player1],
       currentPlayer: player1,
-      turn: 1,
-      phase: "main",
-      zones: {
-        deck: { [player1]: createZone(player1, "deck", [], "secret", true) },
-        resourceDeck: {
-          [player1]: createZone(player1, "resourceDeck", [], "secret", true),
-        },
-        hand: { [player1]: createZone(player1, "hand", [], "private") },
-        battleArea: {
-          [player1]: createZone(player1, "battleArea", [], "public", true),
-        },
-        shieldSection: {
-          [player1]: createZone(player1, "shieldSection", [], "secret", true),
-        },
-        baseSection: {
-          [player1]: createZone(player1, "baseSection", [], "public"),
-        },
-        resourceArea: {
-          [player1]: createZone(player1, "resourceArea", [], "public"),
-        },
-        trash: { [player1]: createZone(player1, "trash", [], "public", true) },
-        removal: { [player1]: createZone(player1, "removal", [], "public") },
-        limbo: { [player1]: createZone(player1, "limbo", [], "public") },
-      },
       gundam: {
         activeResources: { [player1]: 0 },
+        attackedThisTurn: [],
+        cardDamage: {},
         cardPositions: {
           [card1]: "active",
           [card2]: "rested",
           [card3]: "active",
         },
-        attackedThisTurn: [],
+        effectStack: { nextInstanceId: 0, stack: [] },
         hasPlayedResourceThisTurn: { [player1]: false },
-        effectStack: { stack: [], nextInstanceId: 0 },
-        temporaryModifiers: {},
-        cardDamage: {},
         revealedCards: [],
+        temporaryModifiers: {},
+      },
+      phase: "main",
+      players: [player1],
+      turn: 1,
+      zones: {
+        baseSection: {
+          [player1]: createZone(player1, "baseSection", [], "public"),
+        },
+        battleArea: {
+          [player1]: createZone(player1, "battleArea", [], "public", true),
+        },
+        deck: { [player1]: createZone(player1, "deck", [], "secret", true) },
+        hand: { [player1]: createZone(player1, "hand", [], "private") },
+        limbo: { [player1]: createZone(player1, "limbo", [], "public") },
+        removal: { [player1]: createZone(player1, "removal", [], "public") },
+        resourceArea: {
+          [player1]: createZone(player1, "resourceArea", [], "public"),
+        },
+        resourceDeck: {
+          [player1]: createZone(player1, "resourceDeck", [], "secret", true),
+        },
+        shieldSection: {
+          [player1]: createZone(player1, "shieldSection", [], "secret", true),
+        },
+        trash: { [player1]: createZone(player1, "trash", [], "public", true) },
       },
     };
 

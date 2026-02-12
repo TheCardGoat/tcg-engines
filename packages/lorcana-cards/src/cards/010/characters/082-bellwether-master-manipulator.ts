@@ -4,23 +4,23 @@ export const bellwetherMasterManipulator: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "put-damage",
         amount: 1,
         target: {
-          selector: "all",
+          cardTypes: ["character"],
           count: "all",
           owner: "opponent",
+          selector: "all",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "put-damage",
       },
       id: "x28-1",
       name: "VENDETTA",
       text: "VENDETTA When this character is challenged and banished, put 1 damage counter on each opposing character.",
       trigger: {
         event: "challenged",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

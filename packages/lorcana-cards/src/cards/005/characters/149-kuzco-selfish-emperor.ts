@@ -4,20 +4,20 @@ export const kuzcoSelfishEmperor: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
         effect: {
-          type: "put-into-inkwell",
-          source: "chosen-card-in-play",
           exerted: true,
+          source: "chosen-card-in-play",
+          type: "put-into-inkwell",
         },
+        type: "optional",
       },
       id: "c7f-1",
       name: "OUTPLACEMENT",
       text: "OUTPLACEMENT When you play this character, you may put chosen item or location into its player's inkwell facedown and exerted.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },
@@ -26,16 +26,16 @@ export const kuzcoSelfishEmperor: CharacterCard = {
         ink: 0,
       },
       effect: {
-        type: "gain-keyword",
-        keyword: "Resist",
-        value: 0,
-        target: {
-          selector: "all",
-          count: "all",
-          filter: [{ type: "owner", owner: "you" }],
-          excludeSelf: true,
-        },
         duration: "until-start-of-next-turn",
+        keyword: "Resist",
+        target: {
+          count: "all",
+          excludeSelf: true,
+          filter: [{ owner: "you", type: "owner" }],
+          selector: "all",
+        },
+        type: "gain-keyword",
+        value: 0,
       },
       id: "c7f-2",
       name: "BY INVITE ONLY",

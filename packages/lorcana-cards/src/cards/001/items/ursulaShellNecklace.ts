@@ -4,13 +4,13 @@ export const ursulaundefined: ItemCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "draw",
           amount: 1,
           target: "CONTROLLER",
+          type: "draw",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "nba-1",
       text: "**NOW, SING!** Whenever you play a song, you may pay 1 {I} to draw a card.",

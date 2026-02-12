@@ -49,8 +49,7 @@ export const BOOST_PATTERN = /^Boost (\{d\}|\d+)(?: \{I\})?$/;
  * 2. Cost value (either {d} or numeric)
  * 3. Optional ink symbol {I}
  */
-export const SHIFT_PATTERN =
-  /^(Shift|Puppy Shift|Universal Shift) (\{d\}|\d+)(?: \{I\})?$/;
+export const SHIFT_PATTERN = /^(Shift|Puppy Shift|Universal Shift) (\{d\}|\d+)(?: \{I\})?$/;
 
 /**
  * Combined keyword patterns export

@@ -4,10 +4,10 @@ export const enchantressUnexpectedJudge: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "strength",
         modifier: 2,
+        stat: "strength",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "mk4-1",
       text: "TRUE FORM While being challenged, this character gets +2 {S}.",

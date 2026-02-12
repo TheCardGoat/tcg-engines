@@ -13,17 +13,17 @@ export const yzmaScaryBeyondAllReason: CharacterCard = {
     },
     {
       effect: {
-        type: "draw",
         amount: 2,
         target: "CONTROLLER",
+        type: "draw",
       },
       id: "1c0-2",
       name: "CRUEL IRONY",
       text: "CRUEL IRONY When you play this character, shuffle another chosen character card into their player's deck. That player draws 2 cards.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

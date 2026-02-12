@@ -4,14 +4,14 @@ export const bounce: ActionCard = {
   abilities: [
     {
       effect: {
-        type: "return-to-hand",
         target: {
-          selector: "chosen",
+          cardTypes: ["character"],
           count: 1,
           owner: "any",
+          selector: "chosen",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "return-to-hand",
       },
       id: "1fq-1",
       text: "Return chosen character of yours to your hand to return another chosen character to their player's hand.",

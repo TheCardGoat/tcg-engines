@@ -4,21 +4,21 @@ export const goldenHarpEnchanterOfTheLand: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "conditional",
         condition: {
-          type: "if",
           expression: "you didn't play a song this turn",
+          type: "if",
         },
         then: {
-          type: "banish",
           target: {
-            selector: "self",
+            cardTypes: ["character"],
             count: 1,
             owner: "any",
+            selector: "self",
             zones: ["play"],
-            cardTypes: ["character"],
           },
+          type: "banish",
         },
+        type: "conditional",
       },
       id: "1vy-1",
       text: "STOLEN AWAY At the end of your turn, if you didn't play a song this turn, banish this character.",

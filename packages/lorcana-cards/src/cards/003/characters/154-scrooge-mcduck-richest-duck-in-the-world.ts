@@ -4,9 +4,9 @@ export const scroogeMcduckRichestDuckInTheWorld: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Evasive",
         target: "SELF",
+        type: "gain-keyword",
       },
       id: "1f8-1",
       text: "I'M GOING HOME! During your turn, this character gains Evasive.",
@@ -14,22 +14,22 @@ export const scroogeMcduckRichestDuckInTheWorld: CharacterCard = {
     },
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "play-card",
-          from: "hand",
           cardType: "item",
           cost: "free",
+          from: "hand",
+          type: "play-card",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "1f8-2",
       name: "I DIDN'T GET RICH BY BEING STUPID",
       text: "I DIDN'T GET RICH BY BEING STUPID During your turn, whenever this character banishes another character in a challenge, you may play an item for free.",
       trigger: {
         event: "banish",
-        timing: "whenever",
         on: "OPPONENT_CHARACTERS",
+        timing: "whenever",
       },
       type: "triggered",
     },

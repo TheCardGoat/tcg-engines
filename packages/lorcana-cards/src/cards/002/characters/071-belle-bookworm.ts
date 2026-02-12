@@ -4,10 +4,10 @@ export const belleBookworm: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "modify-stat",
-        stat: "lore",
         modifier: 2,
+        stat: "lore",
         target: "SELF",
+        type: "modify-stat",
       },
       id: "1rv-1",
       text: "USE YOUR IMAGINATION While an opponent has no cards in their hand, this character gets +2 {L}.",

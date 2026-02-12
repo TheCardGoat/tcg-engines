@@ -10,23 +10,23 @@ export const mickeyMouseGiantMouse: CharacterCard = {
     },
     {
       effect: {
-        type: "deal-damage",
         amount: 5,
         target: {
-          selector: "all",
+          cardTypes: ["character"],
           count: "all",
           owner: "opponent",
+          selector: "all",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "deal-damage",
       },
       id: "17p-2",
       name: "THE BIGGEST STAR EVER",
       text: "THE BIGGEST STAR EVER When this character is banished, deal 5 damage to each opposing character.",
       trigger: {
         event: "banish",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

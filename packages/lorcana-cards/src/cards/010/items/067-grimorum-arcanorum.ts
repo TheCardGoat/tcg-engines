@@ -4,20 +4,20 @@ export const grimorumArcanorum: ItemCard = {
   abilities: [
     {
       effect: {
-        type: "gain-lore",
         amount: 1,
+        type: "gain-lore",
       },
       id: "177-1",
       name: "DOCTRINA ADDUCERE",
       text: "DOCTRINA ADDUCERE During your turn, whenever an opposing character becomes exerted, gain 1 lore.",
-      trigger: { event: "play", timing: "when", on: "SELF" },
+      trigger: { event: "play", on: "SELF", timing: "when" },
       type: "triggered",
     },
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Rush",
         target: "YOUR_CHARACTERS",
+        type: "gain-keyword",
       },
       id: "177-2",
       text: "CELERITAS Your characters named Demona gain Rush.",

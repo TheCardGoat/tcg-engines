@@ -4,10 +4,10 @@ export const pascalRapunzelsCompanion: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
+        duration: "this-turn",
         keyword: "Evasive",
         target: "SELF",
-        duration: "this-turn",
+        type: "gain-keyword",
       },
       id: "1f9-1",
       name: "CAMOUFLAGE",

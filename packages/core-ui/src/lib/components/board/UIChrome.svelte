@@ -32,14 +32,14 @@
 
   // Position classes for fixed positioning
   const positionClasses: Record<Position, string> = {
-    "top-left": "top-4 left-4",
-    "top-right": "top-4 right-4",
+    "bottom-center": "bottom-4 left-1/2 -translate-x-1/2",
     "bottom-left": "bottom-4 left-4",
     "bottom-right": "bottom-4 right-4",
-    "top-center": "top-4 left-1/2 -translate-x-1/2",
-    "bottom-center": "bottom-4 left-1/2 -translate-x-1/2",
     "left-center": "left-4 top-1/2 -translate-y-1/2",
     "right-center": "right-4 top-1/2 -translate-y-1/2",
+    "top-center": "top-4 left-1/2 -translate-x-1/2",
+    "top-left": "top-4 left-4",
+    "top-right": "top-4 right-4",
   };
 </script>
 

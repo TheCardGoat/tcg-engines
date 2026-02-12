@@ -4,7 +4,10 @@ import { createTypeGuard } from "./type-guard-builder";
 describe("createTypeGuard", () => {
   describe("basic type guards", () => {
     it("should create a type guard for a string field", () => {
-      interface Card { type: string; name: string }
+      interface Card {
+        type: string;
+        name: string;
+      }
       const isCreature = createTypeGuard<Card, "type", "creature">("type", "creature");
 
       const creature: Card = { name: "Dragon", type: "creature" };
@@ -15,7 +18,10 @@ describe("createTypeGuard", () => {
     });
 
     it("should create a type guard for a number field", () => {
-      interface Item { id: number; category: string }
+      interface Item {
+        id: number;
+        category: string;
+      }
       const isItem42 = createTypeGuard<Item, "id", 42>("id", 42);
 
       const item42: Item = { category: "test", id: 42 };
@@ -26,7 +32,10 @@ describe("createTypeGuard", () => {
     });
 
     it("should create a type guard for a boolean field", () => {
-      interface Config { enabled: boolean; name: string }
+      interface Config {
+        enabled: boolean;
+        name: string;
+      }
       const isEnabled = createTypeGuard<Config, "enabled", true>("enabled", true);
 
       const enabledConfig: Config = { enabled: true, name: "test" };
@@ -39,7 +48,10 @@ describe("createTypeGuard", () => {
 
   describe("complex types", () => {
     it("should work with union types", () => {
-      interface Card { type: "creature" | "instant" | "sorcery"; name: string }
+      interface Card {
+        type: "creature" | "instant" | "sorcery";
+        name: string;
+      }
       const isCreature = createTypeGuard<Card, "type", "creature">("type", "creature");
       const isInstant = createTypeGuard<Card, "type", "instant">("type", "instant");
 
@@ -53,7 +65,10 @@ describe("createTypeGuard", () => {
     });
 
     it("should work with optional fields", () => {
-      interface Card { type?: string; name: string }
+      interface Card {
+        type?: string;
+        name: string;
+      }
       const isCreature = createTypeGuard<Card, "type", "creature">("type", "creature");
 
       const creature: Card = { name: "Dragon", type: "creature" };
@@ -111,7 +126,10 @@ describe("createTypeGuard", () => {
 
   describe("edge cases", () => {
     it("should handle null and undefined gracefully", () => {
-      interface Card { type: string | null | undefined; name: string }
+      interface Card {
+        type: string | null | undefined;
+        name: string;
+      }
       const isCreature = createTypeGuard<Card, "type", "creature">("type", "creature");
 
       const nullCard: Card = { name: "Card", type: null };
@@ -124,7 +142,10 @@ describe("createTypeGuard", () => {
     });
 
     it("should handle empty strings", () => {
-      interface Card { type: string; name: string }
+      interface Card {
+        type: string;
+        name: string;
+      }
       const isEmpty = createTypeGuard<Card, "type", "">("type", "");
 
       const emptyCard: Card = { name: "Card", type: "" };
@@ -135,7 +156,10 @@ describe("createTypeGuard", () => {
     });
 
     it("should handle objects without the specified field", () => {
-      interface PartialCard { name: string; type?: string }
+      interface PartialCard {
+        name: string;
+        type?: string;
+      }
       const isCreature = createTypeGuard<PartialCard, "type", "creature">("type", "creature");
 
       const card: PartialCard = { name: "Card" };
@@ -146,7 +170,10 @@ describe("createTypeGuard", () => {
 
   describe("array values", () => {
     it("should create a type guard for array field values", () => {
-      interface Card { types: string[]; name: string }
+      interface Card {
+        types: string[];
+        name: string;
+      }
       const hasCreatureTypes = createTypeGuard<Card, "types", string[]>("types", [
         "creature",
         "dragon",
@@ -168,7 +195,10 @@ describe("createTypeGuard", () => {
 
   describe("performance", () => {
     it("should be efficient for multiple checks", () => {
-      interface Card { type: string; name: string }
+      interface Card {
+        type: string;
+        name: string;
+      }
       const isCreature = createTypeGuard<Card, "type", "creature">("type", "creature");
 
       const creature: Card = { name: "Dragon", type: "creature" };

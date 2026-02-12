@@ -4,23 +4,23 @@ export const queenOfHeartsQuicktempered: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "deal-damage",
         amount: 1,
         target: {
-          selector: "all",
+          cardTypes: ["character"],
           count: "all",
           owner: "opponent",
+          selector: "all",
           zones: ["play"],
-          cardTypes: ["character"],
         },
+        type: "deal-damage",
       },
       id: "hry-1",
       name: "ROYAL RAGE",
       text: "ROYAL RAGE When you play this character, deal 1 damage to chosen damaged opposing character.",
       trigger: {
         event: "play",
-        timing: "when",
         on: "SELF",
+        timing: "when",
       },
       type: "triggered",
     },

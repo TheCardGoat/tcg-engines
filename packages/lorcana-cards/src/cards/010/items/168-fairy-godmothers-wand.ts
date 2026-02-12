@@ -4,14 +4,14 @@ export const fairyGodmothersWand: ItemCard = {
   abilities: [
     {
       effect: {
-        type: "gain-keyword",
         keyword: "Ward",
         target: "CHOSEN_CHARACTER",
+        type: "gain-keyword",
       },
       id: "1y8-1",
       name: "ONLY TILL MIDNIGHT",
       text: "ONLY TILL MIDNIGHT During your turn, whenever you put a card into your inkwell, chosen Princess character of yours gains Ward until the start of your next turn.",
-      trigger: { event: "play", timing: "when", on: "SELF" },
+      trigger: { event: "play", on: "SELF", timing: "when" },
       type: "triggered",
     },
   ],

@@ -4,8 +4,8 @@ export const gastonPureParagon: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "play-card",
         from: "hand",
+        type: "play-card",
       },
       id: "z5u-1",
       text: "A MAN AMONG MEN! For each damaged character you have in play, you pay 2 {I} less to play this character.",

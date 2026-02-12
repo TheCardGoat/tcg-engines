@@ -4,12 +4,12 @@ export const sherwoodForestOutlawHideaway: LocationCard = {
   abilities: [
     {
       effect: {
-        type: "move-cost-reduction",
         filter: {
           name: "Robin Hood",
         },
-        reduction: "free",
         location: "here",
+        reduction: "free",
+        type: "move-cost-reduction",
       },
       id: "1kh-1",
       name: "FOREST HOME",
@@ -18,32 +18,32 @@ export const sherwoodForestOutlawHideaway: LocationCard = {
     },
     {
       effect: {
-        type: "grant-abilities-while-here",
         abilities: [
           {
-            type: "keyword",
             keyword: "Ward",
+            type: "keyword",
           },
           {
-            type: "activated",
             cost: {
               exert: true,
               ink: 1,
             },
             effect: {
-              type: "deal-damage",
               amount: 2,
               target: {
-                selector: "chosen",
                 filters: [
                   {
                     type: "damaged",
                   },
                 ],
+                selector: "chosen",
               },
+              type: "deal-damage",
             },
+            type: "activated",
           },
         ],
+        type: "grant-abilities-while-here",
       },
       id: "1kh-2",
       name: "FAMILIAR TERRAIN",

@@ -75,7 +75,7 @@ function validateTargets(
   for (const action of actions) {
     const targetingSpec = extractTargetingSpec(action);
     if (targetingSpec) {
-      const count = targetingSpec.count;
+      const { count } = targetingSpec;
       if (typeof count === "number") {
         minRequiredTargets = Math.max(minRequiredTargets, count);
       } else {
@@ -93,8 +93,8 @@ function validateTargets(
   // Check target count
   if (targets.length < minRequiredTargets) {
     return {
-      valid: false,
       reason: `Insufficient targets: ${targets.length} provided, ${minRequiredTargets} required`,
+      valid: false,
     };
   }
 
@@ -103,8 +103,8 @@ function validateTargets(
     const zoneInfo = findCardZone(targetId, draft);
     if (!zoneInfo) {
       return {
-        valid: false,
         reason: `Target ${targetId} not found in any zone`,
+        valid: false,
       };
     }
   }
@@ -126,23 +126,27 @@ function validateTargets(
  */
 function extractTargetingSpec(action: EffectAction): TargetingSpec | null {
   switch (action.type) {
-    case "DAMAGE":
+    case "DAMAGE": {
       // DAMAGE actions have implicit targeting
       return null;
+    }
     case "REST":
     case "ACTIVATE":
     case "DESTROY":
     case "MOVE_CARD":
     case "MODIFY_STATS":
-    case "GRANT_KEYWORD":
+    case "GRANT_KEYWORD": {
       return action.target;
+    }
     case "DRAW":
     case "DISCARD":
-    case "SEARCH":
+    case "SEARCH": {
       // These don't use target spec for card targets
       return null;
-    default:
+    }
+    default: {
       return null;
+    }
   }
 }
 
@@ -161,7 +165,9 @@ export const resolveEffectStackMove: GameMoveDefinition<GundamGameState> = {
    */
   enumerator: (state: GundamGameState, context) => {
     // If stack is empty, no moves available
-    if (isEffectStackEmpty(state)) return [];
+    if (isEffectStackEmpty(state)) {
+      return [];
+    }
 
     // If stack has effects, return single option (no params needed)
     return [{}];
@@ -174,7 +180,9 @@ export const resolveEffectStackMove: GameMoveDefinition<GundamGameState> = {
    */
   condition: (state: GundamGameState, context: MoveContext): boolean => {
     // Stack must not be empty
-    if (isEffectStackEmpty(state)) return false;
+    if (isEffectStackEmpty(state)) {
+      return false;
+    }
 
     return true;
   },
@@ -221,7 +229,9 @@ export const resolveEffectStackMove: GameMoveDefinition<GundamGameState> = {
           break;
         }
       }
-      if (sourceCardExists) break;
+      if (sourceCardExists) {
+        break;
+      }
     }
 
     // If source card missing, mark effect as fizzled and pop
@@ -257,13 +267,8 @@ export const resolveEffectStackMove: GameMoveDefinition<GundamGameState> = {
     const actions = effectDefinition?.actions ?? [];
 
     // Target validation: Analyze actions for target-requiring actions
-    // and verify targets exist and satisfy effect filters
-    const targetsValidationResult = validateTargets(
-      draft,
-      actions,
-      targets ?? [],
-      controllerId,
-    );
+    // And verify targets exist and satisfy effect filters
+    const targetsValidationResult = validateTargets(draft, actions, targets ?? [], controllerId);
 
     if (!targetsValidationResult.valid) {
       // Invalid or missing required targets - fizzle effect
@@ -320,10 +325,10 @@ export const resolveEffectStackMove: GameMoveDefinition<GundamGameState> = {
   },
 
   metadata: {
-    category: "effect-resolution",
-    tags: ["automatic"],
-    description: "Resolve next effect from stack",
-    canBeUndone: false,
     affectsZones: ["limbo", "trash"],
+    canBeUndone: false,
+    category: "effect-resolution",
+    description: "Resolve next effect from stack",
+    tags: ["automatic"],
   },
 };

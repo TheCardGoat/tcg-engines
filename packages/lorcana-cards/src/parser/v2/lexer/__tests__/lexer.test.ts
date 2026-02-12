@@ -101,9 +101,7 @@ describe("LorcanaLexer", () => {
     });
 
     it("tokenizes card type keywords", () => {
-      const result = LorcanaLexer.tokenize(
-        "character item location card cards",
-      );
+      const result = LorcanaLexer.tokenize("character item location card cards");
 
       expect(result.errors).toHaveLength(0);
       expect(result.tokens[0].tokenType).toBe(Character);
@@ -151,9 +149,7 @@ describe("LorcanaLexer", () => {
     });
 
     it("tokenizes Lorcana-specific keywords", () => {
-      const result = LorcanaLexer.tokenize(
-        "lore ink quest challenge strength willpower",
-      );
+      const result = LorcanaLexer.tokenize("lore ink quest challenge strength willpower");
 
       expect(result.errors).toHaveLength(0);
       expect(result.tokens[0].tokenType).toBe(Lore);
@@ -343,9 +339,7 @@ describe("LorcanaLexer", () => {
     });
 
     it("tokenizes triggered ability", () => {
-      const result = LorcanaLexer.tokenize(
-        "when you play this character, draw 2 cards.",
-      );
+      const result = LorcanaLexer.tokenize("when you play this character, draw 2 cards.");
 
       expect(result.errors).toHaveLength(0);
       const tokenTypes = result.tokens.map((t) => t.tokenType.name);

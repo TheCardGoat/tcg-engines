@@ -10,9 +10,7 @@ import { env } from "../config/env";
 function generateFallbackIdentifier(request: Request): string {
   const userAgent = request.headers.get("User-Agent") || "unknown-ua";
   // Create a hash-like string from the User-Agent to distinguish different clients
-  const uaHash = userAgent
-    .split("")
-    .reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  const uaHash = [...userAgent].reduce((acc, char) => acc + char.charCodeAt(0), 0);
   return `fallback:${uaHash}`;
 }
 
@@ -22,10 +20,7 @@ function generateFallbackIdentifier(request: Request): string {
  * Priority: User ID -> IP Address -> Fallback
  * Uses Cloudflare headers if available.
  */
-function getClientIdentifier(
-  request: Request,
-  user?: { id: string } | null,
-): string {
+function getClientIdentifier(request: Request, user?: { id: string } | null): string {
   // If user is authenticated, use user ID
   if (user?.id) {
     return `user:${user.id}`;
@@ -70,17 +65,13 @@ export function globalRateLimiter() {
   return rateLimit({
     duration: 60_000, // 1 minute window
     max: env.RATE_LIMIT_GLOBAL_MAX,
-    generator: (request) => {
-      // Note: We don't have access to user context in the rate limiter generator
-      // because it runs before the auth plugin. This is expected behavior.
-      return getClientIdentifier(request);
-    },
+    generator: (request) => getClientIdentifier(request),
     errorResponse: new Response(
       JSON.stringify({
         error: "RATE_LIMITED",
         message: "Too many requests. Please try again later.",
       }),
-      { status: 429, headers: { "Content-Type": "application/json" } },
+      { headers: { "Content-Type": "application/json" }, status: 429 },
     ),
   });
 }
@@ -105,7 +96,7 @@ export function healthRateLimiter() {
         error: "RATE_LIMITED",
         message: "Too many health check requests.",
       }),
-      { status: 429, headers: { "Content-Type": "application/json" } },
+      { headers: { "Content-Type": "application/json" }, status: 429 },
     ),
   });
 }
@@ -121,20 +112,16 @@ export function contentSubmissionRateLimiter() {
   }
 
   return rateLimit({
-    duration: 3600_000, // 1 hour window
+    duration: 3_600_000, // 1 hour window
     max: 10, // 10 submissions per hour
     scoping: "scoped",
-    generator: (request) => {
-      // Note: We don't have access to user context in the rate limiter generator
-      // because it runs before the auth plugin. This is expected behavior.
-      return getClientIdentifier(request);
-    },
+    generator: (request) => getClientIdentifier(request),
     errorResponse: new Response(
       JSON.stringify({
         error: "RATE_LIMITED",
         message: "Content submission limit reached. Please try again later.",
       }),
-      { status: 429, headers: { "Content-Type": "application/json" } },
+      { headers: { "Content-Type": "application/json" }, status: 429 },
     ),
   });
 }

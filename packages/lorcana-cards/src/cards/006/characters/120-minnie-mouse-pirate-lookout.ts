@@ -4,13 +4,13 @@ export const minnieMousePirateLookout: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
-        effect: {
-          type: "return-from-discard",
-          target: "CONTROLLER",
-          cardType: "location",
-        },
         chooser: "CONTROLLER",
+        effect: {
+          cardType: "location",
+          target: "CONTROLLER",
+          type: "return-from-discard",
+        },
+        type: "optional",
       },
       id: "1hl-1",
       text: "LAND, HO! Once during your turn, whenever a card is put into your inkwell, you may return a location card from your discard to your hand.",

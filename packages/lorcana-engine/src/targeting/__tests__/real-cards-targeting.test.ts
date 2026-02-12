@@ -37,7 +37,7 @@ const mockDefinitions: Record<string, LorcanaCardDefinition> = {
     willpower: 5,
   } as any,
   "char-support": {
-    abilities: [{ type: "keyword", keyword: "Support" }],
+    abilities: [{ keyword: "Support", type: "keyword" }],
     cardType: "character",
     color: "sapphire",
     cost: 3,
@@ -239,7 +239,7 @@ describe("Real Card Targeting Scenarios", () => {
           {
             filters: [
               { type: "card-type", value: "character" },
-              { type: "has-classification", classification: "Villain" },
+              { classification: "Villain", type: "has-classification" },
             ],
             type: "and",
           },

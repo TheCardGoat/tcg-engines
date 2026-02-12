@@ -4,28 +4,28 @@ export const theQueenMirrorSeeker: CharacterCard = {
   abilities: [
     {
       effect: {
-        type: "optional",
+        chooser: "CONTROLLER",
         effect: {
-          type: "scry",
           amount: 3,
-          target: "CONTROLLER",
           destinations: [
             {
-              zone: "deck-top",
-              remainder: true,
               ordering: "player-choice",
+              remainder: true,
+              zone: "deck-top",
             },
           ],
+          target: "CONTROLLER",
+          type: "scry",
         },
-        chooser: "CONTROLLER",
+        type: "optional",
       },
       id: "fah-1",
       name: "CALCULATING AND VAIN",
       text: "CALCULATING AND VAIN Whenever this character quests, you may look at the top 3 cards of your deck and put them back in any order.",
       trigger: {
         event: "quest",
-        timing: "whenever",
         on: "SELF",
+        timing: "whenever",
       },
       type: "triggered",
     },
